@@ -1,0 +1,7 @@
+<Main/*.byte>: use_str, use_stdlib, use_astutils
+<Main/*.native>: use_str, use_stdlib, use_astutils
+<Astutils/*.ml>: use_str, use_stdlib
+<Astutils/*.cmx>: use_str, use_stdlib
+<Stdlib/*.ml>: use_str
+<Stdlib/*.cmx>: use_str
+"Stdlib" or "Astutils": include
