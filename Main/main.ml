@@ -42,11 +42,15 @@ let () = Format.fprintf Format.std_formatter "%a\n= %a\n"
 let myprog2 =
   Prog.declarefun
     "calc"
-    ["n"; "a"; "b"]
+    Type.integer
     [
-     Instr.declare "i";
-     Instr.declare "d";
-     Instr.declare "tab";
+     "n", Type.integer;
+     "a", Type.integer;
+     "b", Type.integer
+   ]
+    [
+     Instr.declare "i" Type.integer (Expr.integer 0);
+     Instr.declare "d" Type.integer (Expr.integer 0);
      Instr.alloc_array "tab" Type.integer (Expr.binding "n");     
      Instr.loop "i" (Expr.integer 2) (Expr.binding "n") (Expr.integer 1)
        [
