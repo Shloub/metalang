@@ -52,10 +52,16 @@ class printer = object(self)
       | Type.Array a -> Format.fprintf f "array(%a)" self#ptype a
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]@\n"
+      Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]"
 	self#binding binding
 	self#ptype type_
 	self#expr len
+
+  method affectarray f binding e1 e2 =
+    Format.fprintf f "@[<h>%a[%a]@ =@ %a;@]"
+      self#binding binding
+      self#expr e1
+      self#expr e2
 
   method instr f t =
     match Instr.unfix t with
@@ -67,6 +73,8 @@ class printer = object(self)
     | Instr.Return e -> self#return f e
     | Instr.AllocArray (binding, type_, len) ->
 	self#allocarray f binding type_ len
+    | Instr.AffectArray (binding, e1, e2) ->
+	self#affectarray f binding e1 e2
 
   method expr f t =
     let printp f e =

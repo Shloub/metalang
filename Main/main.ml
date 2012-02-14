@@ -46,8 +46,11 @@ let myprog2 =
     [
      Instr.declare "i";
      Instr.declare "d";
+     Instr.declare "tab";
+     Instr.alloc_array "tab" Type.integer (Expr.binding "n");     
      Instr.loop "i" (Expr.integer 2) (Expr.binding "n") (Expr.integer 1)
        [
+	Instr.affect_array "tab" (Expr.binding "i") (Expr.binding "a");
 	Instr.affect "d" (Expr.binding "b");
 	Instr.affect "b" (Expr.add (Expr.binding "b") (Expr.binding "a"));
 	Instr.affect "a" (Expr.binding "d");
