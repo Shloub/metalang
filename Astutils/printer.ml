@@ -50,6 +50,7 @@ class printer = object(self)
       | Type.String -> Format.fprintf f "string"
       | Type.Float -> Format.fprintf f "float"
       | Type.Array a -> Format.fprintf f "array(%a)" self#ptype a
+      | Type.Void ->  Format.fprintf f "void"
 
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]"
