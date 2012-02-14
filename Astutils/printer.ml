@@ -55,6 +55,7 @@ class printer = object(self)
       | Type.Float -> Format.fprintf f "float"
       | Type.Array a -> Format.fprintf f "array(%a)" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
+      | Type.Bool -> Format.fprintf f "bool"
 
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]"
@@ -80,6 +81,18 @@ class printer = object(self)
 	self#allocarray f binding type_ len
     | Instr.AffectArray (binding, e1, e2) ->
 	self#affectarray f binding e1 e2
+    | Instr.If (e, ifcase, elsecase) ->
+	self#if_ f e ifcase elsecase
+
+  method if_ f e ifcase elsecase =
+    Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
+      self#expr e
+      self#bloc ifcase
+	  self#bloc elsecase
+
+  method bool f = function
+    | true -> Format.fprintf f "true"
+    | false -> Format.fprintf f "false"
 
   method expr f t =
     let printp f e =
@@ -99,6 +112,7 @@ class printer = object(self)
     in
     let t = Expr.unfix t in
     match t with
+    | Expr.Bool b -> self#bool f b
     | Expr.Sub (a, b) -> binop "-" a b
     | Expr.Add (a, b) -> binop "+" a b
     | Expr.Mul (a, b) -> binop "*" a b
@@ -214,13 +228,12 @@ class phpPrinter = object(self)
       self#expr e
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ array()@]"
+    Format.fprintf f "@[<h>%a@ =@ array();@]"
       self#binding binding
 end
 
 
-let printer = new cPrinter;;
-
+let printer = new phpPrinter;;
 let expr = printer#expr;;
 let instr = printer#instr;;
 let prog = printer#prog;;

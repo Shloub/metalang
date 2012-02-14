@@ -1,6 +1,6 @@
 open Stdlib
 open Ast
-
+(*
 let myprog =
   Expr.add
 
@@ -38,7 +38,7 @@ let () = Format.fprintf Format.std_formatter "%a\n= %a\n"
     Printer.expr myprog
     Expr.Eval.print
     (Expr.Eval.eval myprog);;
-
+*)
 let myprog2 =
   Prog.declarefun
     "calc"
@@ -52,6 +52,11 @@ let myprog2 =
      Instr.declare "i" Type.integer (Expr.integer 0);
      Instr.declare "d" Type.integer (Expr.integer 0);
      Instr.alloc_array "tab" Type.integer (Expr.binding "n");     
+     Instr.if_
+	 (Expr.bool true)
+	 [Instr.affect "d" (Expr.integer 0) ]
+	 [Instr.affect "d" (Expr.integer 1) ]
+	 ;
      Instr.loop "i" (Expr.integer 2) (Expr.binding "n") (Expr.integer 1)
        [
 	Instr.affect_array "tab" (Expr.binding "i") (Expr.binding "a");

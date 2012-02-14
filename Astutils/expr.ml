@@ -10,6 +10,7 @@ type 'a tofix =
   | Float of float
   | Integer of int
   | Binding of varname
+  | Bool of bool
   | AccessArray of varname * 'a
 
 type t = F of int * t tofix
@@ -26,8 +27,10 @@ let map f = function
   | Float f -> Float f
   | String s -> String s
   | Binding b -> Binding b
+  | Bool b -> Bool b
   | AccessArray (i, a) -> AccessArray (i, f a)
 
+let bool b = fix (Bool b)
 let add a b = fix (Add (a, b))
 let sub a b = fix (Sub (a, b))
 let mul a b = fix (Mul (a, b))
@@ -117,4 +120,5 @@ module Eval = struct
       | Binding b ->
 	  assert false (*TODO*)
       | String f -> assert false
+      | Bool b -> assert false (* TODO *)
 end

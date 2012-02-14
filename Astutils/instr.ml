@@ -9,6 +9,7 @@ type 'a tofix =
   | Comment of string
   | Return of Expr.t
   | AllocArray of varname * Type.t * Expr.t
+  | If of Expr.t * 'a list * 'a list
 
 type t = F of t tofix
 let unfix = function F x -> x
@@ -22,6 +23,9 @@ let comment s = Comment s |> fix
 let return e = Return e |> fix
 let alloc_array binding t len =
   AllocArray(binding, t, len) |> fix
+let if_ e cif celse =
+  If (e, cif, celse) |> fix
+
 
 let map f acc t = match t with
   | Declare (_, _, _) -> t
@@ -31,5 +35,9 @@ let map f acc t = match t with
   | Loop (var, e1, e2, e3, li) ->
       Loop (var, e1, e2, e3,
 	    List.map ( fix @* f @* unfix ) li)
+  | If (e, cif, celse) ->
+      let cif = List.map (fix @* f @* unfix) cif in
+      let celse = List.map (fix @* f @* unfix) celse in
+      If (e, cif, celse)
   | Return e -> Return e
   | AllocArray (_, _, _) -> t
