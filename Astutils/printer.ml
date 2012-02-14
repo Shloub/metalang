@@ -44,6 +44,19 @@ class printer = object(self)
   method return f e =
     Format.fprintf f "@[<h>return@ %a;@]" self#expr e
 
+  method ptype f t =
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "int"
+      | Type.String -> Format.fprintf f "string"
+      | Type.Float -> Format.fprintf f "float"
+      | Type.Array a -> Format.fprintf f "array(%a)" self#ptype a
+
+  method allocarray f binding type_ len =
+      Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]@\n"
+	self#binding binding
+	self#ptype type_
+	self#expr len
+
   method instr f t =
     match Instr.unfix t with
     | Instr.Declare varname -> self#declaration f varname
@@ -52,23 +65,24 @@ class printer = object(self)
 	self#forloop f varname expr1 expr2 expr3 li
     | Instr.Comment str -> self#comment f str
     | Instr.Return e -> self#return f e
+    | Instr.AllocArray (binding, type_, len) ->
+	self#allocarray f binding type_ len
 
   method expr f t =
     let printp f e =
       Format.fprintf f "@[<h 2>(%a)@]" self#expr e
     in
+    let nop = function
+      | Expr.Integer _ -> true
+      | Expr.Float _ -> true
+      | Expr.String _ -> true
+      | Expr.Binding _ -> true
+      | Expr.AccessArray (_, _) -> true
+      | _ -> false
+    in
     let binop op a b =
-      match (a, b) with
-      | Expr.F (_, Expr.Integer _), 
-	Expr.F (_, Expr.Integer _) ->
-	  Format.fprintf f "%a@ %s@ %a" self#expr a op self#expr b
-      | _, 
-	Expr.F (_, Expr.Integer _) ->
-	  Format.fprintf f "%a@ %s@ %a" printp a op self#expr b
-      | Expr.F (_, Expr.Integer _), _ ->
-	  Format.fprintf f "%a@ %s@ %a" self#expr a op printp b
-      | _ ->
-	  Format.fprintf f "%a@ %s@ %a" printp a op printp b
+      let chf x = if nop (Expr.unfix x) then self#expr else printp
+      in Format.fprintf f "%a@ %s@ %a" (chf a) a op (chf b) b
     in
     let t = Expr.unfix t in
     match t with
@@ -80,6 +94,13 @@ class printer = object(self)
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
     | Expr.Binding b -> self#binding f b
+    | Expr.AccessArray (arr, index) ->
+	self#access_array f arr index
+
+  method access_array f arr index =
+    Format.fprintf f "@[<h>%a[%a]@]"
+      self#binding arr
+      self#expr index
 
   method print_fun f funname li instrs =
     Format.fprintf f "@[<h>function %a(%a)@]@\n@[<v 2>{@\n%a@]@\n}@\n"

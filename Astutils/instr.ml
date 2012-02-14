@@ -7,6 +7,7 @@ type 'a tofix =
   | Loop of varname * Expr.t * Expr.t * Expr.t * 'a list
   | Comment of string
   | Return of Expr.t
+  | AllocArray of varname * Type.t * Expr.t
 
 type t = F of t tofix
 let unfix = function F x -> x
@@ -26,3 +27,4 @@ let map f acc t = match t with
       Loop (var, e1, e2, e3,
 	    List.map ( fix @* f @* unfix ) li)
   | Return e -> Return e
+  | AllocArray (_, _, _) -> t

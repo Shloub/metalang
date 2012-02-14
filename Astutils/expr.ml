@@ -10,6 +10,7 @@ type 'a tofix =
   | Float of float
   | Integer of int
   | Binding of varname
+  | AccessArray of varname * 'a
 
 type t = F of int * t tofix
 let annot = function F (i, _) -> i
@@ -25,6 +26,7 @@ let map f = function
   | Float f -> Float f
   | String s -> String s
   | Binding b -> Binding b
+  | AccessArray (i, a) -> AccessArray (i, f a)
 
 let add a b = fix (Add (a, b))
 let sub a b = fix (Sub (a, b))
@@ -34,6 +36,7 @@ let integer i = fix (Integer i)
 let float f = fix (Float f)
 let string f = fix (String f)
 let binding b = fix (Binding b)
+let access_array i a = fix (AccessArray (i, a) )
 
 module Writer = AstWriter.F (struct
   type alias = t;;
@@ -61,6 +64,9 @@ module Writer = AstWriter.F (struct
     | Float _ -> acc, t
     | String _ -> acc, t
     | Binding _ -> acc, t
+    | AccessArray (arr, index) ->
+	let acc, index = f acc index in
+	(acc, F (annot, AccessArray(arr, index) ) )
 end)
 
 module Eval = struct
@@ -107,6 +113,8 @@ module Eval = struct
       | Div (a, b) -> div a b
       | Integer i -> RInteger i
       | Float f -> RFloat f
-      | Binding b -> assert false (*TODO*)
+      | AccessArray (arr, index) -> assert false (* TODO *)
+      | Binding b ->
+	  assert false (*TODO*)
       | String f -> assert false
 end

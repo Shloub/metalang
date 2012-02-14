@@ -4,3 +4,4 @@ Expr
 Instr
 Printer
 Prog
+Type
