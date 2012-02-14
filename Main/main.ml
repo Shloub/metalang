@@ -39,7 +39,22 @@ let () = Format.fprintf Format.std_formatter "%a\n= %a\n"
     Expr.Eval.print
     (Expr.Eval.eval myprog);;
 
-let myprog2 = Expr.string "ma petite chaine\"\n lalala";;
+let myprog2 =
+  Prog.declarefun
+    "calc"
+    ["n"; "a"; "b"]
+    [
+     Instr.declare "i";
+     Instr.declare "d";
+     Instr.loop "i" (Expr.integer 2) (Expr.binding "n") (Expr.integer 1)
+       [
+	Instr.affect "d" (Expr.binding "b");
+	Instr.affect "b" (Expr.add (Expr.binding "b") (Expr.binding "a"));
+	Instr.affect "a" (Expr.binding "d");
+      ];
+     Instr.return (Expr.binding "b");
+   ]
+
 
 let () = Format.fprintf Format.std_formatter "%a\n"
-    Printer.expr myprog2;;
+    Printer.prog myprog2;;

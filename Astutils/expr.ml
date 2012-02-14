@@ -10,10 +10,11 @@ type 'a tofix =
   | Float of float
   | Integer of int
   | Binding of varname
-type t = F of t tofix
 
-let unfix = function F x -> x
-let fix x = F x
+type t = F of int * t tofix
+let annot = function F (i, _) -> i
+let unfix = function F (_, x) -> x
+let fix x = F ((next ()), x)
 
 let map f = function
   | Sub (a, b) -> Sub ((f a), f b)
@@ -38,23 +39,24 @@ module Writer = AstWriter.F (struct
   type alias = t;;
   type t = alias;;
   let foldmap f acc t =
+    let annot = annot t in
     match unfix t with
     | Add (a, b) ->
 	let acc, a = f acc a in
 	let acc, b = f acc b in
-	(acc, F ( Add (a, b) ) )
+	(acc, F (annot, Add (a, b) ) )
     | Sub (a, b) ->
 	let acc, a = f acc a in
 	let acc, b = f acc b in
-	(acc, F ( Sub (a, b) ) )
+	(acc, F (annot, Sub (a, b) ) )
     | Mul (a, b) ->
 	let acc, a = f acc a in
 	let acc, b = f acc b in
-	(acc, F ( Mul (a, b) ) )
+	(acc, F (annot, Mul (a, b) ) )
     | Div (a, b) ->
 	let acc, a = f acc a in
 	let acc, b = f acc b in
-	(acc, F ( Div (a, b) ) )
+	(acc, F (annot, Div (a, b) ) )
     | Integer _ -> acc, t
     | Float _ -> acc, t
     | String _ -> acc, t
