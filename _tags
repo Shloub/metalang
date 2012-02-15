@@ -1,7 +1,10 @@
-<Main/*.byte>: use_str, use_stdlib, use_astutils
-<Main/*.native>: use_str, use_stdlib, use_astutils
+<Main/*.byte>: use_str, use_stdlib, use_astutils, use_parser
+<Main/*.native>: use_str, use_stdlib, use_astutils, use_parser
+<Parser/*.ml>: use_str, use_stdlib, use_astutils
+<Parser/*.cmx>: use_str, use_stdlib, use_astutils
+<Parser/*.native>: use_str, use_stdlib, use_astutils
 <Astutils/*.ml>: use_str, use_stdlib
 <Astutils/*.cmx>: use_str, use_stdlib
 <Stdlib/*.ml>: use_str
 <Stdlib/*.cmx>: use_str
-"Stdlib" or "Astutils": include
+"Stdlib" or "Astutils" or "Parser": include

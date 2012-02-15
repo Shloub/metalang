@@ -1,0 +1,14 @@
+array // DONE
+if // DONE
+mieux gérer else if ou if sans else
+boolean operations
+type ast // DONE
+type checker
+call dans l'ast
+debug printer
+php stdout
+php stdin
+print C
+print ocaml
+parser
+autres printers

@@ -2,10 +2,23 @@ open Stdlib
 open Ast
 
 type 'a tofix =
+(*operations numeriques*)
     Add of 'a * 'a
   | Sub of 'a * 'a
   | Mul of 'a * 'a
   | Div of 'a * 'a
+  | Mod of 'a * 'a
+(*operations boolean*)
+  | Or of 'a * 'a
+  | And of 'a * 'a
+  | Not of 'a
+(*operations binaires*)
+  | BinOr of 'a * 'a
+  | BinAnd of 'a * 'a
+  | BinNot of 'a
+  | RShift of 'a * 'a
+  | LShift of 'a * 'a
+(* liefs *)
   | String of string
   | Float of float
   | Integer of int
@@ -23,6 +36,18 @@ let map f = function
   | Add (a, b) -> Add ((f a), f b)
   | Mul (a, b) -> Mul ((f a), f b)
   | Div (a, b) -> Div ((f a), f b)
+  | Mod (a, b) -> Mod ((f a), f b)
+
+  | Or (a, b) -> Or ((f a), f b)
+  | And (a, b) -> And ((f a), f b)
+  | Not (a) -> Not (f a)
+
+  | BinOr (a, b) -> BinOr ((f a), f b)
+  | BinAnd (a, b) -> BinAnd ((f a), f b)
+  | BinNot (a) -> BinNot (f a)
+  | LShift (a, b) -> LShift ((f a), f b)
+  | RShift (a, b) -> RShift ((f a), f b)
+
   | Integer i -> Integer i
   | Float f -> Float f
   | String s -> String s
@@ -30,11 +55,25 @@ let map f = function
   | Bool b -> Bool b
   | AccessArray (i, a) -> AccessArray (i, f a)
 
+
 let bool b = fix (Bool b)
+
 let add a b = fix (Add (a, b))
 let sub a b = fix (Sub (a, b))
 let mul a b = fix (Mul (a, b))
 let div a b = fix (Div (a, b))
+let modulo a b = fix (Mod (a, b))
+
+let boolor a b = fix (Or (a, b))
+let booland a b = fix (And (a, b))
+let boolnot a = fix (Not a)
+
+let binand a b = fix (BinAnd (a, b))
+let binor a b = fix (BinOr (a, b))
+let binnot a = fix (BinNot (a))
+let rshift a b = fix (RShift (a, b))
+let lshift a b = fix (LShift (a, b))
+
 let integer i = fix (Integer i)
 let float f = fix (Float f)
 let string f = fix (String f)
@@ -63,10 +102,45 @@ module Writer = AstWriter.F (struct
 	let acc, a = f acc a in
 	let acc, b = f acc b in
 	(acc, F (annot, Div (a, b) ) )
+    | Mod (a, b) ->
+	let acc, a = f acc a in
+	let acc, b = f acc b in
+	(acc, F (annot, Mod (a, b) ) )
+    | Or (a, b) ->
+	let acc, a = f acc a in
+	let acc, b = f acc b in
+	(acc, F (annot, Or (a, b) ) )
+    | And (a, b) ->
+	let acc, a = f acc a in
+	let acc, b = f acc b in
+	(acc, F (annot, And (a, b) ) )
+    | Not a ->
+	let acc, a = f acc a in
+	(acc, F (annot, Not a ) )
+    | BinOr (a, b) ->
+	let acc, a = f acc a in
+	let acc, b = f acc b in
+	(acc, F (annot, BinOr (a, b) ) )
+    | BinAnd (a, b) ->
+	let acc, a = f acc a in
+	let acc, b = f acc b in
+	(acc, F (annot, BinAnd (a, b) ) )
+    | BinNot a ->
+	let acc, a = f acc a in
+	(acc, F (annot, BinNot a ) )
+    | LShift (a, b) ->
+	let acc, a = f acc a in
+	let acc, b = f acc b in
+	(acc, F (annot, LShift (a, b) ) )
+    | RShift (a, b) ->
+	let acc, a = f acc a in
+	let acc, b = f acc b in
+	(acc, F (annot, RShift (a, b) ) )
     | Integer _ -> acc, t
     | Float _ -> acc, t
     | String _ -> acc, t
     | Binding _ -> acc, t
+    | Bool _ -> acc, t
     | AccessArray (arr, index) ->
 	let acc, index = f acc index in
 	(acc, F (annot, AccessArray(arr, index) ) )
@@ -76,10 +150,13 @@ module Eval = struct
   type result =
     | RInteger of int
     | RFloat of float
+    | RBool of bool
 
   let print p = function
     | RInteger i -> Format.fprintf p "%i" i
     | RFloat f -> Format.fprintf p "%f" f
+    | RBool false -> Format.fprintf p "false"
+    | RBool true -> Format.fprintf p "true"
 
   let add a b =
     match (a, b) with
