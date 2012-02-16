@@ -45,6 +45,7 @@ result :
 | result O_MUL result { Expr.mul $1 $3 }
 | result O_NEG result { Expr.sub $1 $3 }
 | result O_ADD result { Expr.add $1 $3 }
+| LPARENT result RPARENT { $2 }
 | int { $1 }
 
 main:

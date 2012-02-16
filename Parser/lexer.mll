@@ -12,4 +12,10 @@ rule token = parse
   | "+" { O_ADD }
   | "-" { O_NEG }
   | "%" { O_MOD }
+  | "[" { LBRACE }
+  | "]" { RBRACE }
+  | "{" { LHOOK }
+  | "}" { RHOOK }
+  | "(" { LPARENT }
+  | ")" { RPARENT }
   | eof{ EOF }
