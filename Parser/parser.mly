@@ -11,8 +11,6 @@
 %token LPARENT
 %token RPARENT
 
-
-
 %token O_ADD
 %token O_NEG
 %token O_MUL
@@ -35,7 +33,7 @@
 %token EOF
 
 %start main
-%type <Expr.tOB> main
+%type <Expr.t> main
 %%
 
 eof : EOF { () } ;

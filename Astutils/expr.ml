@@ -12,6 +12,14 @@ type 'a tofix =
   | Or of 'a * 'a
   | And of 'a * 'a
   | Not of 'a
+(* cmp functions *)
+  | Lower of 'a * 'a
+  | LowerEq of 'a * 'a
+  | Higher of 'a * 'a
+  | HigherEq of 'a * 'a
+  | Eq of 'a * 'a
+  | Neq of 'a * 'a
+
 (*operations binaires*)
   | BinOr of 'a * 'a
   | BinAnd of 'a * 'a
