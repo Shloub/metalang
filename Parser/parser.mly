@@ -35,6 +35,8 @@
 
 %token EOF
 
+%left TOKENKEXISTEPASLOL
+
 %left SPACING
 %left INT
 %left LPARENT
@@ -43,6 +45,8 @@
 %left RHOOK
 %left LBRACE
 %left RBRACE
+
+%left O_NOT
 
 %left O_AND
 %left O_OR
@@ -56,7 +60,7 @@
 
 %left O_HIGHEREQ
 %left O_HIGHER
-%left O_LOWERQE
+%left O_LOWEREQ
 %left O_LOWER
 %left O_BRSHIFT
 %left O_BLSHIFT
@@ -90,14 +94,20 @@ result :
 | result O_HIGHER result { Expr.binop Expr.Higher $1 $3 }
 | result O_HIGHEREQ result { Expr.binop Expr.HigherEq $1 $3 }
 | result O_EQ result { Expr.binop Expr.Eq $1 $3 }
+
 | result O_DIFF result { Expr.binop Expr.Diff $1 $3 }
 | result O_BAND result { Expr.binop Expr.BinAnd $1 $3 }
 | result O_BOR result { Expr.binop Expr.BinOr $1 $3 }
 | result O_OR result { Expr.binop Expr.Or $1 $3 }
 | result O_AND result { Expr.binop Expr.And $1 $3 }
+
+
 | O_NEG result { Expr.unop Expr.Neg $2 }
 | O_BNOT result { Expr.unop Expr.BNot $2 }
 | O_NOT result { Expr.unop Expr.Not $2 }
+
+
+
 | LPARENT result RPARENT { $2 }
 | int { $1 }
 | VARNAME { Expr.binding $1 }
