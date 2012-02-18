@@ -94,6 +94,16 @@ class printer = object(self)
     | true -> Format.fprintf f "true"
     | false -> Format.fprintf f "false"
 
+  method print_op f op =
+    Format.fprintf f
+      "%s"
+      (match op with
+      | Expr.Add -> "+"
+      | Expr.Mul -> "*"
+      | Expr.Sub -> "-"
+      | Expr.Div -> "/"
+      )
+    
   method expr f t =
     let printp f e =
       Format.fprintf f "@[<h 2>(%a)@]" self#expr e
@@ -108,15 +118,12 @@ class printer = object(self)
     in
     let binop op a b =
       let chf x = if nop (Expr.unfix x) then self#expr else printp
-      in Format.fprintf f "%a@ %s@ %a" (chf a) a op (chf b) b
+      in Format.fprintf f "%a@ %a@ %a" (chf a) a self#print_op op (chf b) b
     in
     let t = Expr.unfix t in
     match t with
     | Expr.Bool b -> self#bool f b
-    | Expr.Sub (a, b) -> binop "-" a b
-    | Expr.Add (a, b) -> binop "+" a b
-    | Expr.Mul (a, b) -> binop "*" a b
-    | Expr.Div (a, b) -> binop "/" a b
+    | Expr.BinOp (a, op, b) -> binop op a b
     | Expr.Integer i -> Format.fprintf f "%i" i
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
@@ -207,6 +214,15 @@ class cPrinter = object(self)
 
 end
 
+
+class pythonPrinter = object(self)
+    inherit printer as super
+  method bool f = function
+    | true -> Format.fprintf f "True"
+    | false -> Format.fprintf f "False"
+end
+
+
 class phpPrinter = object(self)
   inherit cPrinter as super
 
@@ -233,7 +249,8 @@ class phpPrinter = object(self)
 end
 
 
-let printer = new phpPrinter;;
-let expr = printer#expr;;
-let instr = printer#instr;;
-let prog = printer#prog;;
+let phpprinter = new phpPrinter;;
+let pythonprinter = new pythonPrinter;;
+let pythonexpr = pythonprinter#expr;;
+let phpinstr = phpprinter#instr;;
+let phpprog = phpprinter#prog;;
