@@ -1,7 +1,18 @@
 open Ast
 
 
-let print_list func sep f li =
+let print_list
+    (func : Format.formatter -> 'a -> unit)
+    (sep :
+       Format.formatter ->
+	 (Format.formatter -> 'a -> unit) -> 'a ->
+	   (Format.formatter -> 'a list -> unit) -> 'a list ->
+	     unit
+    )
+    (f : Format.formatter)
+    (li : 'a list)
+    : unit
+    =
   let rec p t = function
     | [] -> ()
     | [hd] -> func t hd
@@ -69,6 +80,31 @@ class printer = object(self)
       self#expr e1
       self#expr e2
 
+  method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+    Format.fprintf
+      f
+      "@[<h>%a(%a);@]"
+	  self#funname var
+	  (print_list
+	     self#expr
+	     (fun t f1 e1 f2 e2 ->
+	       Format.fprintf t "%a,@ %a" f1 e1 f2 e2
+	     )
+	  ) li
+
+  method apply (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+    Format.fprintf
+      f
+      "%a(%a)"
+	  self#funname var
+	  (print_list
+	     self#expr
+	     (fun t f1 e1 f2 e2 ->
+	       Format.fprintf t "%a,@ %a" f1 e1 f2 e2
+	     )
+	  ) li
+
+
   method instr f t =
     match Instr.unfix t with
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
@@ -83,6 +119,7 @@ class printer = object(self)
 	self#affectarray f binding e1 e2
     | Instr.If (e, ifcase, elsecase) ->
 	self#if_ f e ifcase elsecase
+    | Instr.Call (var, li) -> self#call f var li
 
   method if_ f e ifcase elsecase =
     Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
@@ -114,6 +151,7 @@ class printer = object(self)
       | Expr.String _ -> true
       | Expr.Binding _ -> true
       | Expr.AccessArray (_, _) -> true
+      | Expr.Call (_, _) -> true
       | _ -> false
     in
     let binop op a b =
@@ -130,6 +168,7 @@ class printer = object(self)
     | Expr.Binding b -> self#binding f b
     | Expr.AccessArray (arr, index) ->
 	self#access_array f arr index
+    | Expr.Call (funname, li) -> self#apply f funname li
 
   method access_array f arr index =
     Format.fprintf f "@[<h>%a[%a]@]"
@@ -154,11 +193,34 @@ class printer = object(self)
       (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a@\n%a" f1 e1 f2 e2)) instrs
 
-  method prog f t =
+  method prog_item f t =
     match t with
     | Prog.DeclarFun (var, t, li, instrs) ->
 	self#print_fun f var t li instrs
 
+
+  method prog f (funs, main) =
+    Format.fprintf f "%a%a@\n"
+      self#proglist funs
+      self#main main
+
+  method proglist f funs =
+    Format.fprintf f "%a@\n"
+    (print_list
+       self#prog_item
+       (fun t print1 item1 print2 item2 ->
+	 Format.fprintf t "%a%a" print1 item1 print2 item2
+       )
+    ) funs
+
+  method main f main =
+    Format.fprintf f "%a"
+      (print_list
+	 self#instr
+	 (fun t print1 item1 print2 item2 ->
+	   Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+	 )
+      ) main
 end
 
 class cPrinter = object(self)
@@ -226,6 +288,10 @@ end
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+  method prog f (funs, main) =
+    Format.fprintf f "<?php@\n%a%a@\n?>@\n"
+      self#proglist funs
+      self#main main
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "function %a(%a)"

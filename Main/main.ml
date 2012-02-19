@@ -4,15 +4,9 @@ open Ast
 let () =
   let lexbuf = Lexing.from_channel (stdin) in
   try
-    let funs, main = Parser.main Lexer.token lexbuf
+    let prog = Parser.main Lexer.token lexbuf
     in let () =
-      Format.fprintf Format.std_formatter "%a\n"
-	(Printer.print_list
-	   Printer.phpprog
-	   (fun t print1 item1 print2 item2 ->
-	     Format.fprintf t "%a%a" print1 item1 print2 item2
-	   )
-	) funs
+      Printer.phpprog Format.std_formatter prog
     in ()
   with Parsing.Parse_error ->
     let curr = lexbuf.Lexing.lex_curr_p in
