@@ -10,11 +10,13 @@ type 'a tofix =
   | Return of Expr.t
   | AllocArray of varname * Type.t * Expr.t
   | If of Expr.t * 'a list * 'a list
+  | Call of funname * Expr.t list
 
 type t = F of t tofix
 let unfix = function F x -> x
 let fix x = F x
 
+let call v p = Call (v, p) |> fix
 let declare v t e =  Declare (v, t, e) |> fix
 let affect v e = Affect (v, e) |> fix
 let affect_array v e1 e2 = AffectArray (v, e1, e2) |> fix

@@ -7,8 +7,23 @@ let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z']*
 
 rule token = parse
 
-(*    spacing { token lexbuf } *)
-    spacing { SPACING }
+    spacing { token lexbuf }
+(*    spacing { SPACING } *)
+
+| "prog" { PROG }
+| "var" { DECLAREVAR }
+| "function" { FUNCTION }
+| "return" { RETURN }
+| "," { COMMA }
+| ";" { DOTCOMMA }
+| ":=" { AFFECT }
+| "bool" { TYPE( Type.bool ) }
+| "integer" { TYPE( Type.integer ) }
+| "void" { TYPE( Type.void ) }
+| "float" { TYPE( Type.float ) }
+
+| "string" { TYPE( Type.string ) }
+| "array" { ARRAY }
 
   | ['0'-'9']+ '.' ['0'-'9']* as t { FLOAT( float_of_string t) }
   | ['0'-'9']+ as t { INT( int_of_string t) }
@@ -52,7 +67,8 @@ rule token = parse
   | "}" { RHOOK }
   | "(" { LPARENT }
   | ")" { RPARENT }
-  | "%" (ident as b) { VARNAME(b)}
+  | "%" (ident as b) { VARNAME(b) }
+  | (ident as b) { NAME(b) }
 
 
   | eof{ EOF }

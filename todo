@@ -1,14 +1,17 @@
 array // DONE
-if // DONE
+if
 mieux gérer else if ou if sans else
-boolean operations
+boolean operations // DONE
 type ast // DONE
 type checker
-call dans l'ast
+names checker
+call dans l'ast // DONE
 debug printer
 php stdout
 php stdin
 print C
 print ocaml
-parser
+parser // WIP
 autres printers
+virer les warnings
+tester les conflits dans le parser

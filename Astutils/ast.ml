@@ -1,6 +1,8 @@
 open Stdlib
 
 type varname = string
+type typename = string
+type funname = string
 
 let next =
   let r = ref 0 in

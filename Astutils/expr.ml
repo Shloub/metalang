@@ -20,6 +20,7 @@ type 'a tofix =
   | Binding of varname
   | Bool of bool
   | AccessArray of varname * 'a
+  | Call of funname * 'a list
 
 type t = F of int * t tofix
 let annot = function F (i, _) -> i
@@ -35,7 +36,7 @@ let map f = function
   | Binding b -> Binding b
   | Bool b -> Bool b
   | AccessArray (i, a) -> AccessArray (i, f a)
-
+  | Call (n, li) -> Call (n, List.map f li)
 
 let bool b = fix (Bool b)
 
@@ -47,6 +48,7 @@ let float f = fix (Float f)
 let string f = fix (String f)
 let binding b = fix (Binding b)
 let access_array i a = fix (AccessArray (i, a) )
+let call name li = fix( Call(name, li))
 
 module Writer = AstWriter.F (struct
   type alias = t;;
@@ -69,6 +71,9 @@ module Writer = AstWriter.F (struct
     | AccessArray (arr, index) ->
 	let acc, index = f acc index in
 	(acc, F (annot, AccessArray(arr, index) ) )
+    | Call (name, li) ->
+	let acc, li = List.fold_left_map f acc li in
+	(acc, F (annot, Call(name, li)) )
 end)
 
 module Eval = struct

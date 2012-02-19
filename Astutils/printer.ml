@@ -253,4 +253,5 @@ let phpprinter = new phpPrinter;;
 let pythonprinter = new pythonPrinter;;
 let pythonexpr = pythonprinter#expr;;
 let phpinstr = phpprinter#instr;;
+let phpexpr = phpprinter#expr;;
 let phpprog = phpprinter#prog;;
