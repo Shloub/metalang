@@ -1,0 +1,13 @@
+function integer double(integer %a){
+	 return %a * 2;
+}
+
+function void foo(integer %i, float %b){
+	 print(%a + double(%b));
+}
+
+prog{
+	var integer %a := 2;
+	var integer %b := 3;
+	foo(%a + %b);
+}

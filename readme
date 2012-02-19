@@ -1,0 +1,18 @@
+Readme
+
+But du projet:
+    Ce projet à été fait pour le concours prologin (http://www.prologin.org)
+    L'idée est de nénérer des lecteurs printers pour beaucoup de langages
+
+Outils:
+   Generateur:
+	Main/main.native
+   Calculatrice :
+     Cet outil à été fait pour pouvoir vérifier le parseur d'Expressions
+     source ocaml : Parser/testCalc.ml
+     tests
+       tests/testsExpr2.sh
+         Ce fichier permet de lancer des tests en comparaison avec python
+       tests/testsExpr.sh
+         Ce fichier permet de tester le printer d'ast,
+	 pour voir si rien n'a changé entre deux versions.
