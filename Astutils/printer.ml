@@ -135,10 +135,23 @@ class printer = object(self)
     Format.fprintf f
       "%s"
       (match op with
-      | Expr.Add -> "+"
-      | Expr.Mul -> "*"
-      | Expr.Sub -> "-"
-      | Expr.Div -> "/"
+       | Expr.Add -> "+"
+       | Expr.Sub -> "-"
+       | Expr.Mul -> "*"
+       | Expr.Div -> "/"
+       | Expr.Mod -> "%"
+       | Expr.Or -> "||"
+       | Expr.And -> "&&"
+       | Expr.Lower -> "<"
+       | Expr.LowerEq -> "<="
+       | Expr.Higher -> ">"
+       | Expr.HigherEq -> ">="
+       | Expr.Eq -> "=="
+       | Expr.Diff -> "!="
+       | Expr.BinOr -> "|"
+       | Expr.BinAnd -> "&"
+       | Expr.RShift -> ">>"
+       | Expr.LShift -> "<<"
       )
     
   method expr f t =

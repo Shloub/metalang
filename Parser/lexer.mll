@@ -11,6 +11,8 @@ rule token = parse
 (*    spacing { SPACING } *)
 
 | "prog" { PROG }
+| "if" { IF }
+| "else" { ELSE }
 | "var" { DECLAREVAR }
 | "function" { FUNCTION }
 | "return" { RETURN }

@@ -1,5 +1,9 @@
 function integer double(integer %a){
-	 return %a * 2;
+	 if (%a == 0){
+	    return %a * 2;
+	 }else{
+		return %a * 2;
+	 }
 }
 
 function void foo(integer %i, float %b){

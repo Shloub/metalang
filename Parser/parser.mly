@@ -18,6 +18,8 @@
 %token PROG
 %token RETURN
 %token DECLAREVAR
+%token IF
+%token ELSE
 
 %token O_ADD
 %token O_NEG
@@ -82,6 +84,11 @@
 %left O_DIV
 %left O_MUL
 
+
+%left IF
+%left ELSE
+
+
 %start main result
 %type <Prog.t_fun list * Instr.t list> main
 %type <Expr.t> result
@@ -137,6 +144,9 @@ instruction:
 | RETURN result DOTCOMMA { Instr.return $2 }
 | NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }
 | DECLAREVAR type VARNAME AFFECT result DOTCOMMA { Instr.declare $3 $2 $5 }
+| IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE LHOOK instructions RHOOK { Instr.if_ $3 $6 $10 }
+| IF LPARENT result RPARENT LHOOK instructions RHOOK { Instr.if_ $3 $6 [] }
+
 
 instructions:
 | instruction { [$1] }
