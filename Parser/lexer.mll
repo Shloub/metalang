@@ -4,18 +4,25 @@
 
 let spacing = [' ' '\t' '\n']+
 let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z']*
+let commentignore = '#' [^'\n']*
 
 rule token = parse
-
-    spacing { token lexbuf }
+    commentignore { token lexbuf }
+| spacing { token lexbuf }
 (*    spacing { SPACING } *)
 
+| "print" { PRINT }
+| "read" { READ }
 | "prog" { PROG }
 | "if" { IF }
 | "else" { ELSE }
 | "var" { DECLAREVAR }
 | "function" { FUNCTION }
 | "return" { RETURN }
+| "for" { FOR }
+| "to" { TO }
+| "step" { STEP }
+| "dim" { DIM }
 | "," { COMMA }
 | ";" { DOTCOMMA }
 | ":=" { AFFECT }
@@ -62,6 +69,10 @@ rule token = parse
   | "!" { O_NOT }
   | "<>" { O_DIFF }
 
+  | ">" { O_HIGHER }
+  | ">=" { O_HIGHEREQ }
+  | "<" { O_LOWER }
+  | "<=" { O_LOWEREQ }
 
   | "[" { LBRACE }
   | "]" { RBRACE }

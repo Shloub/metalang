@@ -4,7 +4,11 @@ open Ast
 let () =
   let lexbuf = Lexing.from_channel (stdin) in
   try
-    let prog = Parser.main Lexer.token lexbuf
+    let prog = Parser.main Lexer.token lexbuf in
+    let () = Fresh.fresh_init prog
+    in let prog = prog
+      |> Passes.WalkNopend.apply
+      |> Passes.WalkExpandPrint.apply
     in let () =
       Printer.phpprog Format.std_formatter prog
     in ()

@@ -6,12 +6,22 @@ function integer double(integer %a){
 	 }
 }
 
-function void foo(integer %i, float %b){
-	 print(%a + double(%b));
+function void foo(integer %a, float %b){
+	 %a := double(%a);
+	 pinteuh(%a + double(%b));
 }
 
 prog{
 	var integer %a := 2;
 	var integer %b := 3;
+	var integer %i := 0;
+	dim integer array %tab[%a];
+	for %i := 0 to 5 step 1
+	{
+		%a := %a + 1;
+	}
 	foo(%a + %b);
+	read<integer>(%a);
+	print<integer>(%b + %a);
+	print<integer array>(%tab);
 }

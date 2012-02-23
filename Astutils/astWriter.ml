@@ -17,11 +17,13 @@ module F (T : SigAst) = struct
   end
   module Deep = struct
     let fold f0 acc t =
-      let f acc t =
+      let rec f acc t =
+	let acc, t = T.foldmap f acc t in
 	(f0 acc t), t
       in
       let (acc, t) =
-	T.foldmap f acc t
+	T.foldmap f acc t in
+      let (acc, t) = f acc t
       in acc
   end
   module Traverse = struct

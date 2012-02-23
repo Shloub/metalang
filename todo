@@ -1,5 +1,6 @@
 array // DONE
-if
+if // DONE
+clarifier la boucle for : syntaxe et sémentique
 mieux gérer else if ou if sans else
 boolean operations // DONE
 type ast // DONE

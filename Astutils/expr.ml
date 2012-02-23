@@ -20,6 +20,7 @@ type 'a tofix =
   | Binding of varname
   | Bool of bool
   | AccessArray of varname * 'a
+  | Length of varname
   | Call of funname * 'a list
 
 type t = F of int * t tofix
@@ -48,7 +49,8 @@ let float f = fix (Float f)
 let string f = fix (String f)
 let binding b = fix (Binding b)
 let access_array i a = fix (AccessArray (i, a) )
-let call name li = fix( Call(name, li))
+let call name li = fix ( Call(name, li))
+let length name = fix ( Length name)
 
 module Writer = AstWriter.F (struct
   type alias = t;;

@@ -121,6 +121,15 @@ class printer = object(self)
 	self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li
 
+    | Instr.Read (t, binding) -> self#read f t binding
+    | Instr.Print (t, expr) -> self#print f t expr
+
+  method read f t binding =
+    Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#binding binding
+
+  method print f t expr =
+    Format.fprintf f "@[print<%a>(%a);@]" self#ptype t self#expr expr
+
   method if_ f e ifcase elsecase =
     Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
       self#expr e
@@ -182,6 +191,11 @@ class printer = object(self)
     | Expr.AccessArray (arr, index) ->
 	self#access_array f arr index
     | Expr.Call (funname, li) -> self#apply f funname li
+    | Expr.Length (tab) ->
+      self#length f tab
+
+  method length f tab =
+    Format.fprintf f "count(%a)" self#binding tab
 
   method access_array f arr index =
     Format.fprintf f "@[<h>%a[%a]@]"

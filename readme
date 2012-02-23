@@ -2,7 +2,27 @@ Readme
 
 But du projet:
     Ce projet à été fait pour le concours prologin (http://www.prologin.org)
-    L'idée est de nénérer des lecteurs printers pour beaucoup de langages
+    L'idée est de générer des lecteurs printers pour beaucoup de langages
+    Ce projet devrait servir pour les demies finales de prologin, pour générer les codes des candidats.
+    On peut imaginer pousser le concept beaucoup plus loin, mais le but principal reste la génération de codes lisibles par des humains, dans le but de présenter des squelettes de codes ou des codes lisibles, pour les candidats de prologin.
+    Le choix s'est porté vers un langage impératif, ce qui facilite la génération de codes lisibles dans les langages les plus utilisés.
+    Ce langage impératif est typé, pour pouvoir compiler vers des langages typés assez facilement.
+    La syntaxe ne contient pas toutes les instructions de controles de flux, de cette manière, on a plus de facilités à générer du code lisible dans tout les langages cibles.
+
+Langages cibles :
+  C
+  C++
+  java
+  C#
+  ocaml
+  ruby
+  python
+  pascal
+  php
+  javascript
+  F#
+  VB.net
+  ADA
 
 Outils:
    Generateur:
@@ -16,3 +36,9 @@ Outils:
        tests/testsExpr.sh
          Ce fichier permet de tester le printer d'ast,
 	 pour voir si rien n'a changé entre deux versions.
+
+Choix de syntaxe :
+  Pour la boucle for, la syntaxe caml like (ou basic like) s'est imposé.
+  Les raisons sont multiples, d'une part, cette syntaxe se traduit facilement par une boucle for dans n'importe quel langage
+  d'autre part, si on avait eu une boucle for C-like, on aurait du la traduir par un while dans beaucoup d'autres langages, et on y aurait perdu en lisibilité, ce qui n'est pas le but de ce langage.
+  Enfin, si on avait autorisé la syntaxe C-like, il aurait été naturel de faire un while, un break, et un continue, or là, ça aurait vraiment été relou pour certains langages, et ça aurait favorisé l'écriture de spagettis.
