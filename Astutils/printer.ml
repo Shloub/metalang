@@ -306,14 +306,16 @@ class cPrinter = object(self)
 
   method format_type f t = match Type.unfix t with
     | Type.Integer -> Format.fprintf f "%%d"
-    | Type.Float -> Format.fprintf f "%%f"
+    | Type.Float -> Format.fprintf f "%%.2f"
     | _ -> Format.fprintf f "TODO"
 
   method read f t binding =
-    Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#binding binding
+    Format.fprintf f "@[scanf(\"%a\", &%a);@]"
+      self#format_type t
+      self#binding binding
 
   method print f t expr =
-    Format.fprintf f "@[printf(\"%a\", %a);@]" self#format_type t self#expr expr
+    Format.fprintf f "@[printf(\"%a \", %a);@]" self#format_type t self#expr expr
 
   method prog f (funs, main) =
     Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n@[<h>int@ count(void*@ a){@ return@ ((int*)a)[-1];@ }@]@\n@\n%a%a@\n@\n"
@@ -333,6 +335,12 @@ end
 
 class phpPrinter = object(self)
   inherit cPrinter as super
+
+
+  method read f t binding =
+    Format.fprintf f "@[list(%a) = fscanf(STDIN, \"%a\");@]"
+      self#binding binding
+      self#format_type t
 
   method main f main =
       self#instructions f main
