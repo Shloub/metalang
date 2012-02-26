@@ -129,10 +129,12 @@ result:
 | O_NOT result { Expr.unop Expr.Not $2 }
 | LPARENT result RPARENT { $2 }
 | int { $1 }
+| VARNAME LBRACE result RBRACE { Expr.access_array $1 $3 }
 | VARNAME { Expr.binding $1 }
 | SPACING result { $2 }
 | result SPACING { $1 }
 | NAME LPARENT params RPARENT { Expr.call $1 $3 }
+
 ;
 
 
@@ -147,6 +149,7 @@ type:
 
 instruction:
 | VARNAME AFFECT result DOTCOMMA { Instr.affect $1 $3 }
+| VARNAME LBRACE result RBRACE AFFECT result DOTCOMMA { Instr.affect_array $1 $3 $6 }
 | RETURN result DOTCOMMA { Instr.return $2 }
 | DIM type VARNAME LBRACE result RBRACE DOTCOMMA
 {

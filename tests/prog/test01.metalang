@@ -1,4 +1,4 @@
-function integer double(integer %a){
+function integer double_(integer %a){
 	 if (%a == 0){
 	    return %a * 2;
 	 }else{
@@ -7,21 +7,22 @@ function integer double(integer %a){
 }
 
 function void foo(integer %a, float %b){
-	 %a := double(%a);
-	 pinteuh(%a + double(%b));
+	 %a := double_(%a);
+	 print<float>(%a + double_(%b));
 }
 
 prog{
 	var integer %a := 2;
 	var integer %b := 3;
 	var integer %i := 0;
-	dim integer array %tab[%a];
-	for %i := 0 to 5 step 1
-	{
-		%a := %a + 1;
-	}
-	foo(%a + %b);
 	read<integer>(%a);
+	dim integer array %tab[%a];
+	for %i := 0 to %a step 1
+	{
+		%tab[%i] := %i * (%i + 1) / 2;
+		%b := %b + %tab[%i];
+	}
+	foo(%a, %b);
 	print<integer>(%b + %a);
 	print<integer array>(%tab);
 }

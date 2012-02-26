@@ -32,7 +32,7 @@ let alloc_array binding t len =
 let if_ e cif celse =
   If (e, cif, celse) |> fix
 
-let map_bloc f t = match t with
+let map_bloc ( f : 'a list -> 'b list) (t : 'a tofix) : 'b tofix = match t with
   | Declare (_, _, _) -> t
   | Affect (var, e) -> t
   | AffectArray (var, e1, e2) -> t
@@ -46,7 +46,9 @@ let map_bloc f t = match t with
   | Print _ -> t
   | Read _ -> t
   | Call _ -> t
-let map f t = map_bloc (List.map f) t
+
+let map (f : 'a -> 'b) (t : 'a tofix) : 'b tofix =
+  map_bloc (List.map f) t
 
 module Writer = AstWriter.F (struct
   type alias = t;;

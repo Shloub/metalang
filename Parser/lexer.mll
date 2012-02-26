@@ -3,7 +3,7 @@
 }
 
 let spacing = [' ' '\t' '\n']+
-let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z']*
+let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z' '_']*
 let commentignore = '#' [^'\n']*
 
 rule token = parse

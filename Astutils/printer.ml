@@ -217,8 +217,7 @@ class printer = object(self)
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#print_proto (funname, t, li)
-      (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a@\n%a" f1 e1 f2 e2)) instrs
+      self#instructions instrs
 
   method prog_item f t =
     match t with
@@ -231,6 +230,14 @@ class printer = object(self)
       self#proglist funs
       self#main main
 
+  method instructions f instrs =
+    (print_list
+       self#instr
+       (fun t print1 item1 print2 item2 ->
+	 Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+       )
+      ) f instrs
+
   method proglist f funs =
     Format.fprintf f "%a@\n"
     (print_list
@@ -242,12 +249,7 @@ class printer = object(self)
 
   method main f main =
     Format.fprintf f "%a"
-      (print_list
-	 self#instr
-	 (fun t print1 item1 print2 item2 ->
-	   Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-	 )
-      ) main
+     self#instructions main
 end
 
 class cPrinter = object(self)
@@ -261,14 +263,16 @@ class cPrinter = object(self)
       self#binding var
       self#expr e
 
-
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ (%a)@ *@ sizeof(%a));@]"
-      self#ptype type_
-      self#binding binding
-      self#expr len
-      self#ptype type_
-
+      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ (%a)@ *@ sizeof(%a) + sizeof(int));@]@\n((int*)%a)[0]=%a;@\n((int*)%a)++;"
+	self#ptype type_
+	self#binding binding
+	self#expr len
+	self#ptype type_
+	self#binding binding
+	self#expr len
+	self#binding binding
+  
   method forloop f varname expr1 expr2 expr3 li =
     Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <@ %a;@ %a@ +=@ %a)@\n@]%a"
       self#binding varname
@@ -279,11 +283,12 @@ class cPrinter = object(self)
       self#expr expr3
       self#bloc li
 
-
+  method main f main =
+    Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}"
+      self#instructions main
+      
   method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
-      (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a@\n%a" f1 e1 f2 e2)) li
-
+     self#instructions li
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "%a %a(%a)"
@@ -299,7 +304,21 @@ class cPrinter = object(self)
 	     "%a,@ %a" f1 e1 f2 e2)
       ) li
 
+  method format_type f t = match Type.unfix t with
+    | Type.Integer -> Format.fprintf f "%%d"
+    | Type.Float -> Format.fprintf f "%%f"
+    | _ -> Format.fprintf f "TODO"
 
+  method read f t binding =
+    Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#binding binding
+
+  method print f t expr =
+    Format.fprintf f "@[printf(\"%a\", %a);@]" self#format_type t self#expr expr
+
+  method prog f (funs, main) =
+    Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n@[<h>int@ count(void*@ a){@ return@ ((int*)a)[-1];@ }@]@\n@\n%a%a@\n@\n"
+      self#proglist funs
+      self#main main
 
 end
 
@@ -315,6 +334,9 @@ end
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+  method main f main =
+      self#instructions f main
+      
   method prog f (funs, main) =
     Format.fprintf f "<?php@\n%a%a@\n?>@\n"
       self#proglist funs
@@ -344,7 +366,5 @@ end
 
 let phpprinter = new phpPrinter;;
 let pythonprinter = new pythonPrinter;;
+let cprinter = new cPrinter;;
 let pythonexpr = pythonprinter#expr;;
-let phpinstr = phpprinter#instr;;
-let phpexpr = phpprinter#expr;;
-let phpprog = phpprinter#prog;;
