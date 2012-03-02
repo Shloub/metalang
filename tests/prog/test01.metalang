@@ -13,7 +13,6 @@ function void foo(integer %a, integer %b){
 prog{
 	var integer %a := 2;
 	var integer %b := 3;
-	var integer %i := 0;
 	read<integer>(%a);
 	dim integer array %tab[%a];
 	for %i := 0 to %a step 1
