@@ -2,13 +2,12 @@ function integer double_(integer %a){
 	 if (%a == 0){
 	    return %a * 2;
 	 }else{
-		return %a * 2;
+		return %a * 2 + 1;
 	 }
 }
 
-function void foo(integer %a, float %b){
-	 %a := double_(%a);
-	 print<float>(%a + double_(%b));
+function void foo(integer %a, integer %b){
+	 print<integer>(%a + double_(%b));
 }
 
 prog{
