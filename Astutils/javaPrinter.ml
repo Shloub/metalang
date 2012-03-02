@@ -5,9 +5,10 @@ open CppPrinter
 
 class javaPrinter = object(self) (* TODO scanf et printf*)
   inherit cppPrinter as super
-  method prog f (funs, main) =
+  method prog f (progname, funs, main) =
     Format.fprintf f
-      "public class ClassName@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"
+      "public class %s@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"
+      progname
       self#proglist funs
       self#main main
 

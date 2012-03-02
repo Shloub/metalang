@@ -12,7 +12,7 @@ class camlPrinter = object(self)
     Format.fprintf f "@[<v 2>@[<h>let () =@\n@[<v 2>begin@\n%a@]@\nend@\n"
       self#instructions main
       
-  method prog f (funs, main) =
+  method prog f (progname, funs, main) =
     Format.fprintf f "%a%a"
       self#proglist funs
       self#main main

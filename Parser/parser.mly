@@ -195,7 +195,7 @@ bloc:
       | function_ functions { $1::$2 }
 	  ;
 prog:
-    functions main_prog {Prog.prog $1 $2}
+    functions main_prog { ( $1, $2) }
 ;
 
 main:

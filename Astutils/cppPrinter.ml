@@ -5,7 +5,7 @@ open CPrinter
 
 class cppPrinter = object(self)
 inherit cPrinter as super
-  method prog f (funs, main) =
+  method prog f (progname, funs, main) =
     Format.fprintf f
       "#include<cstdlib>@\n#include<iostream>@\n#include<vector>@\n%a@\n%a\n"
       self#proglist funs

@@ -14,7 +14,7 @@ class phpPrinter = object(self)
   method main f main =
       self#instructions f main
       
-  method prog f (funs, main) =
+  method prog f (progname, funs, main) =
     Format.fprintf f "<?php@\n%a%a@\n?>@\n"
       self#proglist funs
       self#main main

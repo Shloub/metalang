@@ -41,18 +41,20 @@ end
 
 module ExpandPrint : SigPass = struct
   let rec write t b =
-    let i = fresh ()
-    in let b2 = fresh ()
-    in let b2i = Instr.declare b2 Type.integer (Expr.access_array b (Expr.binding i))
-       in
-       [ Instr.declare i Type.integer (Expr.integer 0);
-	 Instr.loop i (Expr.integer 0) (Expr.length b) (Expr.integer 1)
-	   (
-	     match t with
-	       | Type.F ( Type.Array _) -> write t b2
-	       | _ -> [ b2i ; Instr.print t (Expr.binding b2 )]
-	   )
-       ]
+    let i = fresh () in
+    let b2 = fresh () in
+    let b2e = Expr.access_array b (Expr.binding i) in
+    let b2i = Instr.declare b2 t b2e
+    in
+    [
+	 (* Instr.declare i Type.integer (Expr.integer 0); *)
+      Instr.loop i (Expr.integer 0) (Expr.length b) (Expr.integer 1)
+	(
+	  match t with
+	    | Type.F ( Type.Array _) -> (b2i) :: (write t b2)
+	    | _ -> [ Instr.print t b2e]
+	)
+    ]
 
   let rec rewrite (i : Instr.t) : Instr.t list = match Instr.unfix i with
     | Instr.Print(Type.F (Type.Array t), Expr.F (annot, Expr.Binding b) ) ->

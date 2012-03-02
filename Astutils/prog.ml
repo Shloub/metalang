@@ -7,4 +7,5 @@ type t_fun =
 
 let declarefun var t li1 li2 = DeclarFun (var, t, li1, li2)
 
-let prog functions main = (functions, main)
+type t =
+    string * t_fun list * Instr.t list

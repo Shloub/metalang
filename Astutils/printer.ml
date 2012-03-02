@@ -232,7 +232,7 @@ class printer = object(self)
 	self#print_fun f var t li instrs
 
 
-  method prog f (funs, main) =
+  method prog f ((progname, funs, main):Prog.t) =
     Format.fprintf f "%a%a@\n"
       self#proglist funs
       self#main main
