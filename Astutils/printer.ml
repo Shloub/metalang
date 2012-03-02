@@ -124,6 +124,11 @@ class printer = object(self)
     | Instr.Read (t, binding) -> self#read f t binding
     | Instr.Print (t, expr) -> self#print f t expr
 
+  method format_type f t = match Type.unfix t with
+    | Type.Integer -> Format.fprintf f "%%d"
+    | Type.Float -> Format.fprintf f "%%.2f"
+    | _ -> Format.fprintf f "TODO"
+
   method read f t binding =
     Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#binding binding
 
@@ -187,12 +192,14 @@ class printer = object(self)
     | Expr.Integer i -> Format.fprintf f "%i" i
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
-    | Expr.Binding b -> self#binding f b
+    | Expr.Binding b -> self#expr_binding f b
     | Expr.AccessArray (arr, index) ->
 	self#access_array f arr index
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Length (tab) ->
       self#length f tab
+
+  method expr_binding f e = self#binding f e
 
   method length f tab =
     Format.fprintf f "count(%a)" self#binding tab
@@ -304,11 +311,6 @@ class cPrinter = object(self)
 	     "%a,@ %a" f1 e1 f2 e2)
       ) li
 
-  method format_type f t = match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "%%d"
-    | Type.Float -> Format.fprintf f "%%.2f"
-    | _ -> Format.fprintf f "TODO"
-
   method read f t binding =
     Format.fprintf f "@[scanf(\"%a\", &%a);@]"
       self#format_type t
@@ -324,6 +326,93 @@ class cPrinter = object(self)
 
 end
 
+class camlPrinter = object(self)
+  inherit printer as super
+
+  method main f main =
+    Format.fprintf f "@[<v 2>@[<h>let@ ()@ =@]@ %a@]@\n"
+      self#instructions main
+      
+  method prog f (funs, main) =
+    Format.fprintf f "%a%a"
+      self#proglist funs
+      self#main main
+
+  method print_proto f (funname, t, li) =
+    Format.fprintf f "let@ %a@ %a ="
+      self#funname funname
+      (print_list
+	 (fun t (a, b) -> self#binding t a)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t
+	  "%a@ %a" f1 e1 f2 e2)) li
+
+
+  method binding f i = Format.fprintf f "%s" i
+
+  method affect f var expr =
+    Format.fprintf f "@[<h>let () = %a@ :=@ %a in@]" self#binding var self#expr expr
+
+  method declaration f var t e =
+    Format.fprintf f "@[<h>let %a@ =@ ref@ %a in@]"
+      self#binding var
+      self#expr e
+
+  method read f t binding =
+    Format.fprintf f "@[let () = Scanf.scanf \"%a\" (fun value -> %a := value) in@]"
+      self#format_type t
+      self#binding binding
+
+  val mutable params = BindingSet.empty
+
+  method print_fun f funname t li instrs =
+    let ex = params in
+    let () = params <- List.fold_left
+      (fun acc (v, _) -> BindingSet.add v acc) params li in
+    let out =
+      match t with
+	| Type.F Type.Void ->
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@] ()@\n@\n"
+	    self#print_proto (funname, t, li)
+	    self#instructions instrs
+	| _ ->
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	    self#print_proto (funname, t, li)
+	    self#instructions instrs
+    in let () = params <- ex
+    in out
+
+
+
+  method expr_binding f e =
+    if BindingSet.mem e params
+    then
+      Format.fprintf f "%a" self#binding e
+    else
+      Format.fprintf f "!%a" self#binding e
+      
+  method access_array f arr index =
+    Format.fprintf f "@[<h>%a.(%a)@]"
+      self#binding arr
+      self#expr index
+
+
+  method print f t expr =
+    Format.fprintf f "@[let () = Printf.printf \"%a\" %a in@]"
+      self#format_type t
+      self#expr expr
+
+  method comment f str =
+    Format.fprintf f "(*%s*)" str
+
+  method return f e =
+    Format.fprintf f "@[<h>%a;@]" self#expr e
+
+  method allocarray f binding type_ len =
+    Format.fprintf f "@[<h>let@ %a@ =@ Array.make@ len@ (Obj.magic@ 0)@ in@]"
+      self#binding binding
+
+
+end
 
 class pythonPrinter = object(self)
     inherit printer as super
@@ -375,4 +464,7 @@ end
 let phpprinter = new phpPrinter;;
 let pythonprinter = new pythonPrinter;;
 let cprinter = new cPrinter;;
+let camlprinter = new camlPrinter;;
+
+
 let pythonexpr = pythonprinter#expr;;

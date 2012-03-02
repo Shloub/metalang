@@ -10,7 +10,7 @@ let () =
       |> Passes.WalkNopend.apply
       |> Passes.WalkExpandPrint.apply
     in let () =
-      Printer.phpprinter#prog Format.std_formatter prog
+      Printer.camlprinter#prog Format.std_formatter prog
     in ()
   with Parsing.Parse_error ->
     let curr = lexbuf.Lexing.lex_curr_p in
