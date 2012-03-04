@@ -4,8 +4,8 @@ open Ast
 
 let () =
   (* TODO parser args *)
-  let filename = "tests/prog/test01.metalang" in
-  let progname = "test01" in
+  let filename = Sys.argv.(1) in
+  let progname = Filename.basename filename |> Filename.chop_extension in
   let out ext printer prog =
     let chan = open_out (progname ^ "." ^ ext) in
     let buf = Format.formatter_of_out_channel chan in
