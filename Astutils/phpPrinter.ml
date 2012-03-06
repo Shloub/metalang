@@ -38,6 +38,11 @@ class phpPrinter = object(self)
   method allocarray f binding type_ len =
     Format.fprintf f "@[<h>%a@ =@ array();@]"
       self#binding binding
+
+
+  method forloop f varname expr1 expr2 expr3 li =
+      self#forloop_content f (varname, expr1, expr2, expr3, li)
+
 end
 
 let printer = new phpPrinter;;
