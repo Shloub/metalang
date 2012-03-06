@@ -1,7 +1,9 @@
 open Stdlib
 open Ast
 open Printer
-
+(*
+TODO ajouter des conversions de types pour les entiers / float
+*)
 class camlPrinter = object(self)
   inherit printer as super
 
