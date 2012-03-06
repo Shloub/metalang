@@ -5,9 +5,10 @@ open CPrinter
 
 class cppPrinter = object(self)
 inherit cPrinter as super
+
   method prog f (progname, funs, main) =
     Format.fprintf f
-      "#include<cstdlib>@\n#include<iostream>@\n#include<vector>@\n%a@\n%a\n"
+      "#include <cstdlib>@\n#include <cstdio>@\n#include <iostream>@\n#include <vector>@\n%a@\n%a\n"
       self#proglist funs
       self#main main
 
@@ -15,7 +16,7 @@ inherit cPrinter as super
     Format.fprintf f "%a.size()" self#binding tab
 
   method allocarray f binding type_ len =
-       Format.fprintf f "@[<h>std::vector<%a> *%a; /*length : %a */@]"
+       Format.fprintf f "@[<h>std::vector<%a> %a( %a );@]"
 	self#ptype type_
 	self#binding binding
 	self#expr len
