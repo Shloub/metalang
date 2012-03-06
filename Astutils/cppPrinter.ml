@@ -6,6 +6,19 @@ open CPrinter
 class cppPrinter = object(self)
 inherit cPrinter as super
 
+  method ptype f t =
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "int"
+      | Type.String -> Format.fprintf f "std::string"
+      | Type.Float -> Format.fprintf f "float"
+      | Type.Array a -> Format.fprintf f "std::vector<%a>" self#ptype a
+      | Type.Void ->  Format.fprintf f "void"
+      | Type.Bool -> Format.fprintf f "bool"
+
+  method bool f = function
+    | true -> Format.fprintf f "true"
+    | false -> Format.fprintf f "false"
+
   method prog f (progname, funs, main) =
     Format.fprintf f
       "#include <cstdlib>@\n#include <cstdio>@\n#include <iostream>@\n#include <vector>@\n%a@\n%a\n"

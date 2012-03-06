@@ -5,6 +5,17 @@ open CppPrinter
 
 class javaPrinter = object(self) (* TODO scanf et printf*)
   inherit cppPrinter as super
+
+
+  method ptype f t =
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "int"
+      | Type.String -> Format.fprintf f "String"
+      | Type.Float -> Format.fprintf f "float"
+      | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
+      | Type.Void ->  Format.fprintf f "void"
+      | Type.Bool -> Format.fprintf f "boolean"
+
   method prog f (progname, funs, main) =
     Format.fprintf f
       "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"

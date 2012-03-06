@@ -6,6 +6,10 @@ open CPrinter
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+  method bool f = function
+    | true -> Format.fprintf f "true"
+    | false -> Format.fprintf f "false"
+
   method read f t binding =
     Format.fprintf f "@[list(%a) = fscanf(STDIN, \"%a\");@]"
       self#binding binding

@@ -7,6 +7,20 @@ class cPrinter = object(self)
 
   method binding f i = Format.fprintf f "%s" i
   
+  method bool f = function
+    | true -> Format.fprintf f "1"
+    | false -> Format.fprintf f "0"
+
+  method ptype f t =
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "int"
+      | Type.String -> Format.fprintf f "char*"
+      | Type.Float -> Format.fprintf f "float"
+      | Type.Array a -> Format.fprintf f "%a*" self#ptype a
+      | Type.Void ->  Format.fprintf f "void"
+      | Type.Bool -> Format.fprintf f "int"
+
+
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ %a@ =@ %a;@]"
       self#ptype t
