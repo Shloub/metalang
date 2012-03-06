@@ -4,7 +4,7 @@ open Printer
 
 class cPrinter = object(self)
   inherit printer as super
-  
+
   method binding f i = Format.fprintf f "%s" i
   
   method declaration f var t e =
