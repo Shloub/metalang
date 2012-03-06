@@ -1,18 +1,15 @@
-array // DONE
-if // DONE
 clarifier la boucle for : syntaxe et sémentique
 mieux gérer else if ou if sans else
-boolean operations // DONE
-type ast // DONE
+type ast
 type checker
 names checker
-call dans l'ast // DONE
-debug printer
-php stdout
-php stdin
-print C
-print ocaml
-parser // WIP
 autres printers
 virer les warnings
-tester les conflits dans le parser
+
+gestion des chaines
+mapping de fonctions (de chaines par exemple): multiBSL
+
+script bash de test
+
+AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
+alloc array avec instructions d'initialisation
