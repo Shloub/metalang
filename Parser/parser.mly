@@ -106,6 +106,9 @@ eof : EOF { () } ;
 int :
   INT { Expr.integer $1 } ;
 
+bool :
+  BOOL { Expr.bool $1 } ;
+
 string :
   STRING { Expr.string (Stdlib.String.unescape $1) } ;
 
@@ -132,6 +135,7 @@ result:
 | O_NOT result { Expr.unop Expr.Not $2 }
 | LPARENT result RPARENT { $2 }
 | int { $1 }
+| bool { $1 }
 | string { $1 }
 | VARNAME LBRACE result RBRACE { Expr.access_array $1 $3 }
 | VARNAME { Expr.binding $1 }
