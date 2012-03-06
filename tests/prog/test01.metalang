@@ -12,6 +12,7 @@ function void foo(integer %a, integer %b){
 
 function void testStr(){
 	 var string %str := " \" foo";
+	 var bool %b := true;
 }
 
 prog{
