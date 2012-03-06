@@ -6,11 +6,13 @@ let spacing = [' ' '\t' '\n']+
 let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z' '_']*
 let commentignore = '#' [^'\n']*
 
+  let string = (( "\\\"" | [^'"'] )*)
+
 rule token = parse
     commentignore { token lexbuf }
 | spacing { token lexbuf }
 (*    spacing { SPACING } *)
-
+| '"' (string as str) '"' { STRING(str) }
 | "print" { PRINT }
 | "read" { READ }
 | "prog" { PROG }

@@ -10,7 +10,12 @@ function void foo(integer %a, integer %b){
 	 print<integer>(%a + double_(%b));
 }
 
+function void testStr(){
+	 var string %str := " \" foo";
+}
+
 prog{
+	testStr();
 	var integer %a := 2;
 	var integer %b := 3;
 	read<integer>(%a);

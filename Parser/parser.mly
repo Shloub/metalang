@@ -106,6 +106,9 @@ eof : EOF { () } ;
 int :
   INT { Expr.integer $1 } ;
 
+string :
+  STRING { Expr.string (Stdlib.String.unescape $1) } ;
+
 result:
 | result O_MUL result { Expr.binop Expr.Mul $1 $3 }
 | result O_DIV result { Expr.binop Expr.Div $1 $3 }
@@ -129,11 +132,13 @@ result:
 | O_NOT result { Expr.unop Expr.Not $2 }
 | LPARENT result RPARENT { $2 }
 | int { $1 }
+| string { $1 }
 | VARNAME LBRACE result RBRACE { Expr.access_array $1 $3 }
 | VARNAME { Expr.binding $1 }
 | SPACING result { $2 }
 | result SPACING { $1 }
 | NAME LPARENT params RPARENT { Expr.call $1 $3 }
+| NAME LPARENT RPARENT { Expr.call $1 [] }
 
 ;
 
@@ -158,6 +163,7 @@ match $2 with
     Instr.alloc_array $3 t $5
   (* TODO *)
 }
+| NAME LPARENT RPARENT DOTCOMMA { Instr.call $1 [] }
 | NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }
 | DECLAREVAR type VARNAME AFFECT result DOTCOMMA { Instr.declare $3 $2 $5 }
 | IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE LHOOK instructions RHOOK { Instr.if_ $3 $6 $10 }
@@ -181,19 +187,21 @@ param_list:
 | type VARNAME COMMA param_list { ($2, $1) :: $4 }
 
 bloc:
-    LHOOK instructions RHOOK { $2 } ;
+LHOOK instructions RHOOK { $2 } ;
 
-  main_prog:
-    PROG bloc { $2 } ;
+main_prog:
+  PROG bloc { $2 } ;
 
-      function_:
-	| FUNCTION type NAME LPARENT param_list RPARENT bloc {
-	      Prog.declarefun $3 $2 $5 $7 } ;
+function_:
+    | FUNCTION type NAME LPARENT param_list RPARENT bloc {
+      Prog.declarefun $3 $2 $5 $7 }
+    | FUNCTION type NAME LPARENT RPARENT bloc {
+      Prog.declarefun $3 $2 [] $6 } ;
   
-  functions:
-      | function_ { [$1] }
-      | function_ functions { $1::$2 }
-	  ;
+functions:
+    | function_ { [$1] }
+    | function_ functions { $1::$2 };
+
 prog:
     functions main_prog { ( $1, $2) }
 ;
