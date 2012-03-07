@@ -127,6 +127,7 @@ class printer = object(self)
   method format_type f t = match Type.unfix t with
     | Type.Integer -> Format.fprintf f "%%d"
     | Type.Float -> Format.fprintf f "%%.2f"
+    | Type.Char -> Format.fprintf f "%%c"
     | _ -> Format.fprintf f "TODO"
 
   method read f t binding =
@@ -168,6 +169,12 @@ class printer = object(self)
        | Expr.LShift -> "<<"
       )
     
+  method unop f op a =
+    match op with
+      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+      | Expr.Not -> Format.fprintf f "!(%a)" self#expr a
+      | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
+
   method expr f t =
     let printp f e =
       Format.fprintf f "@[<h 2>(%a)@]" self#expr e
@@ -188,6 +195,7 @@ class printer = object(self)
     let t = Expr.unfix t in
     match t with
     | Expr.Bool b -> self#bool f b
+    | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> binop op a b
     | Expr.Integer i -> Format.fprintf f "%i" i
     | Expr.Float i -> self#float f i

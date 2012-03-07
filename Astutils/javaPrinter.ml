@@ -56,6 +56,8 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       | Type.Integer ->
 	Format.fprintf f "@[<h>%a = scanner.nextInt();@]"
 	  self#binding binding
+      | Type.String -> (* TODO configure Scanner, read int and do it*)
+	Format.fprintf f "TODO" (* TODO *)
 
   method print f t expr =
     Format.fprintf f "@[System.out.printf(\"%a \", %a);@]" self#format_type t self#expr expr

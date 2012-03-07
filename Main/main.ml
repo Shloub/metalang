@@ -30,7 +30,7 @@ let () =
   with Parsing.Parse_error ->
     let curr = lexbuf.Lexing.lex_curr_p in
     let line = curr.Lexing.pos_lnum in
-    let cnum = curr.Lexing.pos_cnum - curr.Lexing.pos_bol in
+    let cnum = curr.Lexing.pos_cnum - curr.Lexing.pos_bol - 1 in
     let tok = Lexing.lexeme lexbuf in
     Format.printf "error line %d char %d on token %s\n"
       line cnum

@@ -14,6 +14,7 @@ type 'a tofix =
     BinOp of 'a * binop * 'a
   | UnOp of 'a * unop
 (* liefs *)
+  | Char of char
   | String of string
   | Float of float
   | Integer of int
@@ -45,6 +46,7 @@ let unop op a = fix (UnOp (a, op))
 let binop op a b = fix (BinOp (a, op, b))
 
 let integer i = fix (Integer i)
+let char i = fix (Char i)
 let float f = fix (Float f)
 let string f = fix (String f)
 let binding b = fix (Binding b)

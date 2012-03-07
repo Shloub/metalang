@@ -2,16 +2,28 @@
   open Parser
 }
 
-let spacing = [' ' '\t' '\n']+
+let spacing = [' ' '\t' '\r']+
+let newline = [ '\n' ]
 let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z' '_']*
 let commentignore = '#' [^'\n']*
 
-  let string = (( "\\\"" | [^'"'] )*)
+let char = ('\\' '\'') | [^'\'' '\\']
+
+let string = (( "\\\"" | [^'"'] )*)
 
 rule token = parse
     commentignore { token lexbuf }
+  | newline {
+    let pos = lexbuf.Lexing.lex_curr_p in 
+    lexbuf.Lexing.lex_curr_p <- { pos with
+      Lexing.pos_lnum = pos.Lexing.pos_lnum +1;
+      Lexing.pos_bol = pos.Lexing.pos_cnum;
+    };
+token lexbuf
+  }
 | spacing { token lexbuf }
 (*    spacing { SPACING } *)
+| '\'' (char as str) '\'' { CHAR( String.get str 0 ) }
 | '"' (string as str) '"' { STRING(str) }
 | "print" { PRINT }
 | "read" { READ }
@@ -30,6 +42,7 @@ rule token = parse
 | ":=" { AFFECT }
 | "bool" { TYPE( Type.bool ) }
 | "integer" { TYPE( Type.integer ) }
+| "char" { TYPE(Type.char) }
 | "void" { TYPE( Type.void ) }
 | "float" { TYPE( Type.float ) }
 
@@ -84,6 +97,10 @@ rule token = parse
   | ")" { RPARENT }
   | "%" (ident as b) { VARNAME(b) }
   | (ident as b) { NAME(b) }
-
-
   | eof{ EOF }
+  | _ {failwith ("lexing error at line " ^
+		    (string_of_int lexbuf.Lexing.lex_curr_p.Lexing.pos_lnum)
+		 ^ " char : "^
+		   (string_of_int
+		      (lexbuf.Lexing.lex_curr_p.Lexing.pos_cnum - lexbuf.Lexing.lex_curr_p.Lexing.pos_bol - 1))
+		 ^" near : " ^(Lexing.lexeme lexbuf) ) }

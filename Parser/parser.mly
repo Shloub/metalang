@@ -1,6 +1,7 @@
 %token <int> INT
 %token <float> FLOAT
 %token <string> STRING
+%token <char> CHAR
 %token <bool> BOOL
 %token <string> VARNAME
 %token <string> NAME
@@ -106,6 +107,9 @@ eof : EOF { () } ;
 int :
   INT { Expr.integer $1 } ;
 
+char :
+  CHAR { Expr.char $1 } ;
+
 bool :
   BOOL { Expr.bool $1 } ;
 
@@ -137,6 +141,7 @@ result:
 | int { $1 }
 | bool { $1 }
 | string { $1 }
+| char { $1 }
 | VARNAME LBRACE result RBRACE { Expr.access_array $1 $3 }
 | VARNAME { Expr.binding $1 }
 | SPACING result { $2 }

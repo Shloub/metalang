@@ -4,6 +4,7 @@ type 'a tofix =
   | Integer
   | Float
   | String
+  | Char
   | Array of 'a
   | Void
   | Bool
@@ -17,4 +18,5 @@ let integer = Integer |> fix
 let void = Void |> fix
 let float = Float |> fix
 let string = String |> fix
+let char = Char |> fix
 let array t = Array t |> fix
