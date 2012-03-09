@@ -88,8 +88,9 @@ class camlPrinter = object(self)
     match b with
       | [Instr.F (Instr.Return b)] ->
 	Format.fprintf f "@[<h>%a@]" self#expr b
-      | _ -> super#bloc f b
-
+      | _ ->
+	Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
+      
   method binding f i = Format.fprintf f "%s" i
 
   method affect f var expr =
@@ -108,7 +109,6 @@ class camlPrinter = object(self)
   val mutable params = BindingSet.empty
 
   method print_fun f funname t li instrs =
-    let ex = params in
     let () = params <- List.fold_left
       (fun acc (v, _) -> BindingSet.add v acc) params li in
     let out =
@@ -121,7 +121,7 @@ class camlPrinter = object(self)
 	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
 	    self#print_proto (funname, t, li)
 	    self#instructions instrs
-    in let () = params <- ex
+    in let () = params <- BindingSet.empty
     in out
 
   method expr_binding f e =
@@ -149,6 +149,7 @@ class camlPrinter = object(self)
     Format.fprintf f "@[<h>%a@]" self#expr e
 
   method allocarray f binding type_ len =
+    let () = params <- BindingSet.add binding params in
     Format.fprintf f "@[<h>let@ %a@ =@ Array.make@ %a@ (Obj.magic@ 0)@ in@]"
       self#binding binding
       self#expr len
