@@ -8,7 +8,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
 
 
   method stdin_sep f =
-Format.fprintf f "@[<v>scanner.skip(\"\\n\");@]"
+Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
 
   method ptype f t =
       match Type.unfix t with
