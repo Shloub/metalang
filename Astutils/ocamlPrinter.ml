@@ -140,7 +140,7 @@ class camlPrinter = object(self)
     Format.fprintf f "(*%s*)" str
 
   method return f e =
-    Format.fprintf f "@[<h>%a;@]" self#expr e
+    Format.fprintf f "@[<h>%a@]" self#expr e
 
   method allocarray f binding type_ len =
     Format.fprintf f "@[<h>let@ %a@ =@ Array.make@ %a@ (Obj.magic@ 0)@ in@]"
@@ -162,12 +162,12 @@ class camlPrinter = object(self)
       | _ ->    
 	Format.fprintf
 	  f
-	  "@[<h>(%a %a)@]"
+	  "@[<h>%a %a@]"
 	  self#funname var
 	  (print_list
 	     self#expr
 	     (fun t f1 e1 f2 e2 ->
-	       Format.fprintf t "%a@ (%a)" f1 e1 f2 e2
+	       Format.fprintf t "(%a)@ %a" f1 e1 f2 e2
 	     )
 	  ) li
 
@@ -185,7 +185,7 @@ class camlPrinter = object(self)
 	  (print_list
 	     self#expr
 	     (fun t f1 e1 f2 e2 ->
-	       Format.fprintf t "%a@ (%a)" f1 e1 f2 e2
+	       Format.fprintf t "(%a)@ %a" f1 e1 f2 e2
 	     )
 	  ) li
 
