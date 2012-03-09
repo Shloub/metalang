@@ -48,6 +48,12 @@ inherit cPrinter as super
       self#expr expr2
       self#binding varname
       self#bloc li
+
+  method prototype f t =
+    match Type.unfix t with
+      | Type.Array _ ->
+	Format.fprintf f "%a&" self#ptype t
+      | _ -> self#ptype f t
 end
 
 let printer = new cppPrinter;;

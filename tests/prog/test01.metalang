@@ -19,7 +19,7 @@ function void testStr(){
 	 read<integer>(%d);
 	 stdin_sep();
 	 dim char array %tab[%d];
-	 for %i := 0 to %d step 1
+	 for %i := 0 to %d-1
 	 {
 		var char %c := ' ';
 		read<char>(%c);
@@ -34,7 +34,7 @@ prog{
 	var integer %b := 3;
 	read<integer>(%a);
 	dim integer array %tab[%a];
-	for %i := 0 to %a step 1
+	for %i := 0 to %a-1
 	{
 		%tab[%i] := %i * (%i + 1) / 2;
 		%b := %b + %tab[%i];

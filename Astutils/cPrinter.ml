@@ -58,6 +58,8 @@ class cPrinter = object(self)
   method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
      self#instructions li
 
+  method prototype f t = self#ptype f t
+
   method print_proto f (funname, t, li) =
     Format.fprintf f "%a %a(%a)"
       self#ptype t
@@ -65,7 +67,7 @@ class cPrinter = object(self)
       (print_list
 	 (fun t (binding, type_) ->
 	   Format.fprintf t "%a@ %a"
-	     self#ptype type_
+	     self#prototype type_
 	     self#binding binding
 	 )
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t

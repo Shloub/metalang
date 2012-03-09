@@ -7,6 +7,8 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   inherit cppPrinter as super
 
 
+  method prototype f t = self#ptype f t
+
   method stdin_sep f =
 Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
 

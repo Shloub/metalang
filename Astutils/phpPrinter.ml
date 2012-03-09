@@ -21,6 +21,13 @@ function scantrim(){
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+
+  method prototype f t =
+    match Type.unfix t with
+      | Type.Array _ ->
+	Format.fprintf f "&"
+      | _ -> ()
+
   method stdin_sep f =
     Format.fprintf f "@[scantrim();@]"
 
@@ -49,7 +56,11 @@ class phpPrinter = object(self)
     Format.fprintf f "function %a(%a)"
       self#funname funname
       (print_list
-	 (fun t (a, b) -> self#binding t a)
+	 (fun t (a, type_) ->
+	   Format.fprintf t
+	     "%a%a"
+	     self#prototype type_
+	     self#binding a)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a,@ %a" f1 e1 f2 e2)) li
 
