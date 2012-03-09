@@ -44,12 +44,11 @@ class printer = object(self)
       (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a@\n%a" f1 e1 f2 e2)) li
 
-  method forloop f varname expr1 expr2 expr3 li =
-    Format.fprintf f "@[<h>for@ %a=%a@ to@ %a@ step@ %a@\n@]%a"
+  method forloop f varname expr1 expr2 li =
+    Format.fprintf f "@[<h>for@ %a=%a@ to@ %a@\n@]%a"
       self#binding varname
       self#expr expr1
       self#expr expr2
-      self#expr expr3
       self#bloc li
 
 
@@ -114,8 +113,8 @@ class printer = object(self)
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
     | Instr.Affect (varname, expr) -> self#affect f varname expr
-    | Instr.Loop (varname, expr1, expr2, expr3, li) ->
-	self#forloop f varname expr1 expr2 expr3 li
+    | Instr.Loop (varname, expr1, expr2, li) ->
+	self#forloop f varname expr1 expr2 li
     | Instr.Comment str -> self#comment f str
     | Instr.Return e -> self#return f e
     | Instr.AllocArray (binding, type_, len) ->

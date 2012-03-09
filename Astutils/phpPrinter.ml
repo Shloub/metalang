@@ -66,8 +66,8 @@ class phpPrinter = object(self)
       self#binding binding
 
 
-  method forloop f varname expr1 expr2 expr3 li =
-      self#forloop_content f (varname, expr1, expr2, expr3, li)
+  method forloop f varname expr1 expr2 li =
+      self#forloop_content f (varname, expr1, expr2, li)
 
 end
 

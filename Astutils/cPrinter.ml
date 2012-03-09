@@ -38,18 +38,17 @@ class cPrinter = object(self)
 	self#binding binding
 	self#binding binding
   
-  method forloop f varname expr1 expr2 expr3 li =
+  method forloop f varname expr1 expr2 li =
     Format.fprintf f "int %a;@\n%a"
       self#binding varname
-      self#forloop_content (varname, expr1, expr2, expr3, li)
-  method forloop_content f (varname, expr1, expr2, expr3, li) =
-    Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <@ %a;@ %a@ +=@ %a)@\n@]%a"
+      self#forloop_content (varname, expr1, expr2, li)
+  method forloop_content f (varname, expr1, expr2, li) =
+    Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <=@ %a;@ %a++)@\n@]%a"
       self#binding varname
       self#expr expr1
       self#binding varname
       self#expr expr2
       self#binding varname
-      self#expr expr3
       self#bloc li
 
   method main f main =

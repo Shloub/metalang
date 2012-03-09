@@ -185,8 +185,8 @@ match $2 with
 | READ O_LOWER type O_HIGHER LPARENT VARNAME RPARENT DOTCOMMA {
       Instr.read $3 $6
     }
-| FOR VARNAME AFFECT result TO result STEP result LHOOK instructions RHOOK
-{ Instr.loop $2 $4 $6 $8 $10 }
+| FOR VARNAME AFFECT result TO result LHOOK instructions RHOOK
+{ Instr.loop $2 $4 $6 $8 }
 | STDINSEP { Instr.stdin_sep }
 
 instructions:

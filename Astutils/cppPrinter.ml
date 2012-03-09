@@ -40,14 +40,13 @@ inherit cPrinter as super
       self#binding arr
       self#expr index
 
-  method forloop f varname expr1 expr2 expr3 li =
-    Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <@ %a;@ %a@ +=@ %a)@\n@]%a"
+  method forloop f varname expr1 expr2 li =
+    Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <=@ %a;@ %a@ ++)@\n@]%a"
       self#binding varname
       self#expr expr1
       self#binding varname
       self#expr expr2
       self#binding varname
-      self#expr expr3
       self#bloc li
 end
 

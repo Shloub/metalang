@@ -189,25 +189,16 @@ class camlPrinter = object(self)
 	     )
 	  ) li
 
-  method forloop f varname expr1 expr2 expr3 li =
+  method forloop f varname expr1 expr2 li =
     let ex = params in
     let () = params <- BindingSet.add varname params in
     let out =
-      match expr3 with
-	| Expr.F (_, (Expr.Integer 1)) ->
-	  Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a - 1@\n@]do@[<v 2>@\n%a@]@\ndone;"
-	    self#binding varname
-	    self#expr expr1
-	    self#expr expr2
- 	    self#instructions li
-	| _ ->
-	  Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a - 1@ (*TODO step@ %a*) @\n@]do@[<v 2>@\n%a@]@\ndone;"
-	    self#binding varname
-	    self#expr expr1
-	    self#expr expr2
-	    self#expr expr3
- 	    self#instructions li
-    in let () = params <- ex
+      Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone;"
+	self#binding varname
+	self#expr expr1
+	self#expr expr2
+ 	self#instructions li
+	in let () = params <- ex
     in out
 
 end
