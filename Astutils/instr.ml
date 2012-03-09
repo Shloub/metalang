@@ -47,6 +47,7 @@ let map_bloc ( f : 'a list -> 'b list) (t : 'a tofix) : 'b tofix = match t with
   | Print _ -> t
   | Read _ -> t
   | Call _ -> t
+  | StdinSep -> t
 
 let map (f : 'a -> 'b) (t : 'a tofix) : 'b tofix =
   map_bloc (List.map f) t
