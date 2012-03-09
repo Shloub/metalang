@@ -141,9 +141,15 @@ class printer = object(self)
     Format.fprintf f "@[print<%a>(%a);@]" self#ptype t self#expr expr
 
   method if_ f e ifcase elsecase =
-    Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
-      self#expr e
-      self#bloc ifcase
+    match elsecase with
+      | [] ->
+	Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
+	  self#expr e
+	  self#bloc ifcase
+      | _ ->
+	Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
+	  self#expr e
+	  self#bloc ifcase
 	  self#bloc elsecase
 
   method bool f = function

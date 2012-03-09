@@ -73,6 +73,12 @@ class camlPrinter = object(self)
 	  "%a@\n%a" f1 e1 f2 e2)) li
 
   method if_ f e ifcase elsecase =
+    match elsecase with
+      | [] ->
+	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a"
+	  self#expr e
+	  self#bloc ifcase
+      | _ ->
     Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\nelse@\n%a"
       self#expr e
       self#bloc ifcase
