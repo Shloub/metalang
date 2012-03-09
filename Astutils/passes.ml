@@ -48,7 +48,11 @@ module ExpandPrint : SigPass = struct
     in
     [
 	 (* Instr.declare i Type.integer (Expr.integer 0); *)
-      Instr.loop i (Expr.integer 0) (Expr.length b)
+      Instr.loop i (Expr.integer 0)
+	(Expr.binop
+	   Expr.Sub
+	   (Expr.length b)
+	   (Expr.integer 1))
 	(
 	  match t with
 	    | Type.F ( Type.Array _) -> (b2i) :: (write t b2)
