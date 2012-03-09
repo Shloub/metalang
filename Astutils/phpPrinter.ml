@@ -65,7 +65,6 @@ class phpPrinter = object(self)
     Format.fprintf f "@[<h>%a@ =@ array();@]"
       self#binding binding
 
-
   method forloop f varname expr1 expr2 li =
       self#forloop_content f (varname, expr1, expr2, li)
 
