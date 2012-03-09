@@ -3,9 +3,46 @@ open Ast
 open Printer
 (*
 TODO ajouter des conversions de types pour les entiers / float
+virer plus de refs
+virer plus de nopending : inliner un peu
 *)
 class camlPrinter = object(self)
   inherit printer as super
+
+  method stdin_sep f =
+    Format.fprintf f
+    "@[<h>Scanf.scanf \"%%[\\n \010]\" (fun _ -> ());@]"
+
+  method print_op f op =
+    Format.fprintf f
+      "%s"
+      (match op with
+	| Expr.Add -> "+"
+	| Expr.Sub -> "-"
+	| Expr.Mul -> "*"
+	| Expr.Div -> "/"
+	| Expr.Mod -> "mod"
+	| Expr.Or -> "or"
+	| Expr.And -> "&&"
+	| Expr.Lower -> "<"
+	| Expr.LowerEq -> "<="
+	| Expr.Higher -> ">"
+	| Expr.HigherEq -> ">="
+	| Expr.Eq -> "="
+	| Expr.Diff -> "<>"
+	| Expr.BinOr -> "lor"
+	| Expr.BinAnd -> "land"
+	| Expr.RShift -> "lsl"
+	| Expr.LShift -> "lsr"
+      )
+
+
+  method unop f op a =
+    match op with
+      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+      | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
+      | Expr.BNot -> Format.fprintf f "lnot(%a)" self#expr a
+
 
   method length f tab =
     Format.fprintf f "(Array.length %a)" self#binding tab
@@ -20,12 +57,16 @@ class camlPrinter = object(self)
       self#main main
 
   method print_proto f (funname, t, li) =
-    Format.fprintf f "let@ %a@ %a ="
-      self#funname funname
-      (print_list
-	 (fun t (a, b) -> self#binding t a)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a@ %a" f1 e1 f2 e2)) li
+    match li with
+      | [] -> Format.fprintf f "let@ %a@ () ="
+	self#funname funname
+      | _ ->
+	Format.fprintf f "let@ %a@ %a ="
+	  self#funname funname
+	  (print_list
+	     (fun t (a, b) -> self#binding t a)
+	     (fun t f1 e1 f2 e2 -> Format.fprintf t
+	       "%a@ %a" f1 e1 f2 e2)) li
 
   method bloc f li = Format.fprintf f "@[<v 2>begin@\n%a@]@\nend"
       (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
@@ -112,11 +153,34 @@ class camlPrinter = object(self)
       self#expr e1
       self#expr e2
 
+
+  method apply (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+    match li with
+      | [] ->
+	Format.fprintf f "@[<h>(%a ())@]"
+	  self#funname var
+      | _ ->    
+	Format.fprintf
+	  f
+	  "@[<h>(%a %a)@]"
+	  self#funname var
+	  (print_list
+	     self#expr
+	     (fun t f1 e1 f2 e2 ->
+	       Format.fprintf t "%a@ (%a)" f1 e1 f2 e2
+	     )
+	  ) li
+
 (* Todo virer les parentheses quand on peut*)
   method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
-    Format.fprintf
-      f
-      "@[<h>%a %a;@]"
+    match li with
+      | [] ->
+	Format.fprintf f "@[<h>%a ();@]"
+	  self#funname var
+      | _ ->    
+	Format.fprintf
+	  f
+	  "@[<h>%a %a;@]"
 	  self#funname var
 	  (print_list
 	     self#expr

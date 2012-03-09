@@ -50,6 +50,8 @@
 %token O_EQ
 %token O_DIFF
 
+%token STDINSEP
+
 %token AFFECT
 %token ARRAY
 %token <Type.t> TYPE
@@ -185,6 +187,7 @@ match $2 with
     }
 | FOR VARNAME AFFECT result TO result STEP result LHOOK instructions RHOOK
 { Instr.loop $2 $4 $6 $8 $10 }
+| STDINSEP { Instr.stdin_sep }
 
 instructions:
 | instruction { [$1] }

@@ -14,6 +14,7 @@ inherit cPrinter as super
       | Type.Array a -> Format.fprintf f "std::vector<%a>" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
+      | Type.Char -> Format.fprintf f "char"
 
   method bool f = function
     | true -> Format.fprintf f "true"

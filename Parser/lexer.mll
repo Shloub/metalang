@@ -48,7 +48,7 @@ token lexbuf
 
 | "string" { TYPE( Type.string ) }
 | "array" { ARRAY }
-
+| "stdin_sep();" { STDINSEP }
   | ['0'-'9']+ '.' ['0'-'9']* as t { FLOAT( float_of_string t) }
   | ['0'-'9']+ as t { INT( int_of_string t) }
   | "true" { BOOL(true) }

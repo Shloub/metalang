@@ -13,17 +13,19 @@ function void foo(integer %a, integer %b){
 function void testStr(){
 	 var string %str := " \" foo";
 	 var bool %b := true && (false || (!true) == false ) && 1 mod 2 == 0 ;
-	 read<string>(%str);
+	 #read<string>(%str);
 
 	 var integer %d := 0;
 	 read<integer>(%d);
+	 stdin_sep();
 	 dim char array %tab[%d];
 	 for %i := 0 to %d step 1
 	 {
 		var char %c := ' ';
 		read<char>(%c);
-		tab[%i] := %c;
+		%tab[%i] := %c;
 	 }
+	 stdin_sep();
 }
 
 prog{

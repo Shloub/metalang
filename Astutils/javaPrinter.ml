@@ -7,6 +7,9 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   inherit cppPrinter as super
 
 
+  method stdin_sep f =
+Format.fprintf f "@[<v>scanner.skip(\"\\n\");@]"
+
   method ptype f t =
       match Type.unfix t with
       | Type.Integer -> Format.fprintf f "int"
@@ -15,11 +18,13 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "boolean"
+      | Type.Char -> Format.fprintf f "char"
 
   method prog f (progname, funs, main) =
     Format.fprintf f
-      "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"
+      "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@\n%a@]@\n}@\n"
       (*(String.capitalize *) progname (*)*)
+      self#print_scanner main
       self#proglist funs
       self#main main
 
@@ -31,17 +36,15 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
 	 self#expr len
 
   method main f main =
-    Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"
-      self#print_scanner main
+    Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#instructions main
 
   method length f tab =
     Format.fprintf f "%a.length" self#binding tab
 
   method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a@]@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"
+    Format.fprintf f "@[<h>%a@]@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#print_proto (funname, t, li)
-      self#print_scanner instrs
       self#instructions instrs
 
   method print_proto f triplet =
@@ -49,15 +52,17 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       super#print_proto triplet
 
   method print_scanner f _ = (* TODO if read node... *)
-    Format.fprintf f "@[<h>Scanner scanner = new Scanner(System.in);@]"
+    Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
 
   method read f t binding =
     match Type.unfix t with
       | Type.Integer ->
-	Format.fprintf f "@[<h>%a = scanner.nextInt();@]"
+	Format.fprintf f "@[<h>scanner.useDelimiter(\"\\\\s\");@]@\n@[<h>%a = scanner.nextInt();@]"
 	  self#binding binding
       | Type.String -> (* TODO configure Scanner, read int and do it*)
 	Format.fprintf f "TODO" (* TODO *)
+      | Type.Char -> Format.fprintf f "@[<h>scanner.useDelimiter(\".\");@]@\n@[<h>%a = scanner.findInLine(\".\").charAt(0);@]"
+	self#binding binding
 
   method print f t expr =
     Format.fprintf f "@[System.out.printf(\"%a \", %a);@]" self#format_type t self#expr expr

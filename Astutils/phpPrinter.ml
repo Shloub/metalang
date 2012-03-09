@@ -3,20 +3,42 @@ open Ast
 open Printer
 open CPrinter
 
+let header = "
+$stdin='';
+while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function scan($format){
+	 global $stdin;
+	 $out = sscanf($stdin, $format);
+	 $stdin = substr($stdin, strlen($out[0]));
+	 return $out;
+}
+function scantrim(){
+	 global $stdin;
+	 $stdin = trim($stdin);
+}
+";
+
 class phpPrinter = object(self)
   inherit cPrinter as super
+
+  method stdin_sep f =
+    Format.fprintf f "@[scantrim();@]"
+
 
   method bool f = function
     | true -> Format.fprintf f "true"
     | false -> Format.fprintf f "false"
 
   method read f t binding =
-    Format.fprintf f "@[list(%a) = fscanf(STDIN, \"%a\");@]"
+    Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
       self#binding binding
       self#format_type t
 
   method main f main =
-      self#instructions f main
+      Format.fprintf
+	f "%s%a"
+	header
+	self#instructions main
       
   method prog f (progname, funs, main) =
     Format.fprintf f "<?php@\n%a%a@\n?>@\n"

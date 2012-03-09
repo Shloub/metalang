@@ -13,11 +13,12 @@ type 'a tofix =
   | Call of funname * Expr.t list
   | Print of Type.t * Expr.t
   | Read of Type.t * varname
+  | StdinSep
 
 type t = F of t tofix
 let unfix = function F x -> x
 let fix x = F x
-
+let stdin_sep = StdinSep |> fix
 let print t v = Print (t, v) |> fix
 let read t v = Read (t, v) |> fix
 let call v p = Call (v, p) |> fix
@@ -55,6 +56,7 @@ module Writer = AstWriter.F (struct
   type t = alias;;
   let foldmap f acc t =
     match unfix t with
+      | StdinSep -> acc, t
       | Declare (_, _, _) -> acc, t
       | Affect (_, _) -> acc, t
       | AffectArray (_, _, _) -> acc, t

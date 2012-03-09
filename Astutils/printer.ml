@@ -67,6 +67,7 @@ class printer = object(self)
       | Type.Array a -> Format.fprintf f "array(%a)" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
+      | Type.Char -> Format.fprintf f "char"
 
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]"
@@ -104,9 +105,13 @@ class printer = object(self)
 	     )
 	  ) li
 
+  method stdin_sep f =
+    Format.fprintf f "@[read_blank(STDIN);@]"
+
 
   method instr f t =
     match Instr.unfix t with
+      | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
     | Instr.Affect (varname, expr) -> self#affect f varname expr
     | Instr.Loop (varname, expr1, expr2, expr3, li) ->
@@ -206,6 +211,9 @@ class printer = object(self)
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Length (tab) ->
       self#length f tab
+    | Expr.Char (c) -> self#char f c
+
+  method char f c = Format.fprintf f "'%c'" c (* TODO *)
 
   method expr_binding f e = self#binding f e
 

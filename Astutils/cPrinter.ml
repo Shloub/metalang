@@ -19,7 +19,7 @@ class cPrinter = object(self)
       | Type.Array a -> Format.fprintf f "%a*" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "int"
-
+      | Type.Char -> Format.fprintf f "char"
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ %a@ =@ %a;@]"
@@ -72,6 +72,9 @@ class cPrinter = object(self)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
 	     "%a,@ %a" f1 e1 f2 e2)
       ) li
+
+  method stdin_sep f =
+    Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\", 0);@]"
 
   method read f t binding =
     Format.fprintf f "@[scanf(\"%a\", &%a);@]"
