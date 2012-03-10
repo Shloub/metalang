@@ -1,12 +1,17 @@
 open Stdlib
 open Ast
 
+let default_passes prog =
+     prog
+     |> Passes.WalkNopend.apply
+     |> Passes.WalkExpandPrint.apply
+	 
 
 let () =
-  (* TODO parser args *)
   let filename = Sys.argv.(1) in
   let progname = Filename.basename filename |> Filename.chop_extension in
-  let out ext printer prog =
+  let out ext printer prog passes =
+    let () = Fresh.fresh_init prog in (* var names generation init *)
     let chan = open_out (progname ^ "." ^ ext) in
     let buf = Format.formatter_of_out_channel chan in
     let () = Format.fprintf buf "%a@;" printer prog in
@@ -14,18 +19,14 @@ let () =
   in
   let lexbuf = Lexing.from_channel (open_in filename) in
   try
-    let prog = Parser.main Lexer.token lexbuf in
-    let () = Fresh.fresh_init prog
-    in let (funs, main) = prog
-      |> Passes.WalkNopend.apply
-      |> Passes.WalkExpandPrint.apply
-       in let prog = (progname, funs, main)
+    let (funs, main) = Parser.main Lexer.token lexbuf in
+    let prog = (progname, funs, main)
     in begin
-      out "java" JavaPrinter.printer#prog prog;
-      out "c" CPrinter.printer#prog prog;
-      out "cc" CppPrinter.printer#prog prog;
-      out "ml" OcamlPrinter.printer#prog prog;
-      out "php" PhpPrinter.printer#prog prog;
+      out "java" JavaPrinter.printer#prog prog default_passes;
+      out "c" CPrinter.printer#prog prog default_passes;
+      out "cc" CppPrinter.printer#prog prog default_passes;
+      out "ml" OcamlPrinter.printer#prog prog default_passes;
+      out "php" PhpPrinter.printer#prog prog default_passes;
     end
   with Parsing.Parse_error ->
     let curr = lexbuf.Lexing.lex_curr_p in

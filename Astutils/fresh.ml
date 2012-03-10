@@ -13,7 +13,7 @@ let var_of_int =
 
 let bindings = ref BindingSet.empty
 
-let fresh_init (toplvl, instrs) =
+let fresh_init (progname, toplvl, instrs) =
   let addset acc i = Instr.Writer.Deep.fold
     (fun acc i ->
       match Instr.unfix i with
