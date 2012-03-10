@@ -31,7 +31,6 @@ token lexbuf
 | "if" { IF }
 | "else" { ELSE }
 | "var" { DECLAREVAR }
-| "function" { FUNCTION }
 | "return" { RETURN }
 | "for" { FOR }
 | "to" { TO }
@@ -96,7 +95,6 @@ token lexbuf
   | "}" { RHOOK }
   | "(" { LPARENT }
   | ")" { RPARENT }
-  | "%" (ident as b) { VARNAME(b) }
   | (ident as b) { NAME(b) }
   | eof{ EOF }
   | _ {failwith ("lexing error at line " ^
