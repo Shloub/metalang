@@ -3,7 +3,6 @@
 %token <string> STRING
 %token <char> CHAR
 %token <bool> BOOL
-%token <string> VARNAME
 %token <string> NAME
 
 %token SPACING
@@ -15,7 +14,6 @@
 %token RPARENT
 %token COMMA
 %token DOTCOMMA
-%token FUNCTION
 %token PROG
 %token RETURN
 %token DECLAREVAR
@@ -146,8 +144,8 @@ result:
 | bool { $1 }
 | string { $1 }
 | char { $1 }
-| VARNAME LBRACE result RBRACE { Expr.access_array $1 $3 }
-| VARNAME { Expr.binding $1 }
+| NAME LBRACE result RBRACE { Expr.access_array $1 $3 }
+| NAME { Expr.binding $1 }
 | SPACING result { $2 }
 | result SPACING { $1 }
 | NAME LPARENT params RPARENT { Expr.call $1 $3 }
@@ -166,10 +164,10 @@ type:
   | TYPE { $1 } 
 
 instruction:
-| VARNAME AFFECT result DOTCOMMA { Instr.affect $1 $3 }
-| VARNAME LBRACE result RBRACE AFFECT result DOTCOMMA { Instr.affect_array $1 $3 $6 }
+| NAME AFFECT result DOTCOMMA { Instr.affect $1 $3 }
+| NAME LBRACE result RBRACE AFFECT result DOTCOMMA { Instr.affect_array $1 $3 $6 }
 | RETURN result DOTCOMMA { Instr.return $2 }
-| DIM type VARNAME LBRACE result RBRACE DOTCOMMA
+| DIM type NAME LBRACE result RBRACE DOTCOMMA
 {
 match $2 with
   | Type.F (Type.Array t) ->
@@ -178,16 +176,16 @@ match $2 with
 }
 | NAME LPARENT RPARENT DOTCOMMA { Instr.call $1 [] }
 | NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }
-| DECLAREVAR type VARNAME AFFECT result DOTCOMMA { Instr.declare $3 $2 $5 }
+| DECLAREVAR type NAME AFFECT result DOTCOMMA { Instr.declare $3 $2 $5 }
 | IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE LHOOK instructions RHOOK { Instr.if_ $3 $6 $10 }
 | IF LPARENT result RPARENT LHOOK instructions RHOOK { Instr.if_ $3 $6 [] }
 | PRINT O_LOWER type O_HIGHER LPARENT result RPARENT DOTCOMMA {
       Instr.print $3 $6
     }
-| READ O_LOWER type O_HIGHER LPARENT VARNAME RPARENT DOTCOMMA {
+| READ O_LOWER type O_HIGHER LPARENT NAME RPARENT DOTCOMMA {
       Instr.read $3 $6
     }
-| FOR VARNAME AFFECT result TO result LHOOK instructions RHOOK
+| FOR NAME AFFECT result TO result LHOOK instructions RHOOK
 { Instr.loop $2 $4 $6 $8 }
 | STDINSEP { Instr.stdin_sep }
 
@@ -197,8 +195,8 @@ instructions:
 ;
 
 param_list:
-| type VARNAME { [($2, $1)] }
-| type VARNAME COMMA param_list { ($2, $1) :: $4 }
+| type NAME { [($2, $1)] }
+| type NAME COMMA param_list { ($2, $1) :: $4 }
 
 bloc:
 LHOOK instructions RHOOK { $2 } ;
@@ -207,11 +205,11 @@ main_prog:
   PROG bloc { $2 } ;
 
 function_:
-    | FUNCTION type NAME LPARENT param_list RPARENT bloc {
-      Prog.declarefun $3 $2 $5 $7 }
-    | FUNCTION type NAME LPARENT RPARENT bloc {
-      Prog.declarefun $3 $2 [] $6 } ;
-  
+    | type NAME LPARENT param_list RPARENT bloc {
+      Prog.declarefun $2 $1 $4 $6 }
+    | type NAME LPARENT RPARENT bloc {
+      Prog.declarefun $2 $1 [] $5 } ;
+
 functions:
     | function_ { [$1] }
     | function_ functions { $1::$2 };
