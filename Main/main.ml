@@ -11,6 +11,7 @@ let () =
   let filename = Sys.argv.(1) in
   let progname = Filename.basename filename |> Filename.chop_extension in
   let out ext printer prog passes =
+    let prog = passes prog in
     let () = Fresh.fresh_init prog in (* var names generation init *)
     let chan = open_out (progname ^ "." ^ ext) in
     let buf = Format.formatter_of_out_channel chan in

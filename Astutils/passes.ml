@@ -74,11 +74,11 @@ end
 module Walk (T:SigPass) = struct
   let apply_prog acc p = acc, p (* TODO *)
   let apply_instr acc i = T.process acc i
-  let apply (p, m) =
+  let apply (name, p, m) =
     let acc = T.init_acc () in
     let acc, p = List.fold_left_map apply_prog acc p in
     let acc, m = apply_instr acc m in
-    (p, m)
+    (name, p, m)
 end
 
 module WalkNopend = Walk(NoPend);;
