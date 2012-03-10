@@ -5,7 +5,7 @@ void sort_(integer array tab, integer len){
 	   for j := i + 1 to len - 1
 	   {
 		if (tab[i] > tab[j]){
-		   var integer tmp := tab[i];
+		   integer tmp := tab[i];
 		   tab[i] := tab[j];
 		   tab[j] := tmp;
 		}
@@ -14,13 +14,13 @@ void sort_(integer array tab, integer len){
 }
 
 prog{
-	var integer len := 2;
+	integer len := 2;
 	read<integer>(len);
 	stdin_sep();
-	dim integer array tab[len];
+	integer array tab[len];
 	for i := 0 to len - 1
 	{
-		var integer tmp := 0;
+		integer tmp := 0;
 		read<integer>(tmp);
 		stdin_sep();
 		tab[i] := tmp;

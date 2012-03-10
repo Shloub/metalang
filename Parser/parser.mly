@@ -16,7 +16,6 @@
 %token DOTCOMMA
 %token PROG
 %token RETURN
-%token DECLAREVAR
 %token IF
 %token ELSE
 %token PRINT
@@ -24,8 +23,6 @@
 %token COMMENT
 %token FOR
 %token TO
-%token STEP
-%token DIM
 
 %token O_ADD
 %token O_NEG
@@ -167,16 +164,16 @@ instruction:
 | NAME AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | NAME LBRACE result RBRACE AFFECT result DOTCOMMA { Instr.affect_array $1 $3 $6 }
 | RETURN result DOTCOMMA { Instr.return $2 }
-| DIM type NAME LBRACE result RBRACE DOTCOMMA
+| type NAME LBRACE result RBRACE DOTCOMMA
 {
-match $2 with
+match $1 with
   | Type.F (Type.Array t) ->
-    Instr.alloc_array $3 t $5
+    Instr.alloc_array $2 t $4
   (* TODO *)
 }
 | NAME LPARENT RPARENT DOTCOMMA { Instr.call $1 [] }
 | NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }
-| DECLAREVAR type NAME AFFECT result DOTCOMMA { Instr.declare $3 $2 $5 }
+| type NAME AFFECT result DOTCOMMA { Instr.declare $2 $1 $4 }
 | IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE LHOOK instructions RHOOK { Instr.if_ $3 $6 $10 }
 | IF LPARENT result RPARENT LHOOK instructions RHOOK { Instr.if_ $3 $6 [] }
 | PRINT O_LOWER type O_HIGHER LPARENT result RPARENT DOTCOMMA {

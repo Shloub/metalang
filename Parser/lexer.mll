@@ -30,12 +30,9 @@ token lexbuf
 | "prog" { PROG }
 | "if" { IF }
 | "else" { ELSE }
-| "var" { DECLAREVAR }
 | "return" { RETURN }
 | "for" { FOR }
 | "to" { TO }
-| "step" { STEP }
-| "dim" { DIM }
 | "," { COMMA }
 | ";" { DOTCOMMA }
 | ":=" { AFFECT }
