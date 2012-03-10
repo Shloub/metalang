@@ -74,6 +74,16 @@ class printer = object(self)
 	self#ptype type_
 	self#expr len
 
+
+  method allocarray_lambda f binding type_ len binding2 lambda =
+      Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a] (%a[%a]=%a);@]"
+	self#binding binding
+	self#ptype type_
+	self#expr len
+	self#binding binding
+	self#binding binding
+	self#bloc lambda
+
   method affectarray f binding e1 e2 =
     Format.fprintf f "@[<h>%a[%a]@ =@ %a;@]"
       self#binding binding
@@ -117,8 +127,10 @@ class printer = object(self)
 	self#forloop f varname expr1 expr2 li
     | Instr.Comment str -> self#comment f str
     | Instr.Return e -> self#return f e
-    | Instr.AllocArray (binding, type_, len) ->
+    | Instr.AllocArray (binding, type_, len, None) ->
 	self#allocarray f binding type_ len
+    | Instr.AllocArray (binding, type_, len, Some ( (b, l) )) ->
+	self#allocarray_lambda f binding type_ len b l
     | Instr.AffectArray (binding, e1, e2) ->
 	self#affectarray f binding e1 e2
     | Instr.If (e, ifcase, elsecase) ->

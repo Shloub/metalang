@@ -14,7 +14,7 @@ module NoPend : SigPass = struct
     let rec inner_map t : Instr.t list =
       match Instr.unfix t with
 
-	| Instr.AllocArray(_, _, Expr.F (_, Expr.Binding _))
+	| Instr.AllocArray(_, _, Expr.F (_, Expr.Binding _), _)
 	| Instr.Print(_, Expr.F (_, Expr.Binding _)) ->
 	  [fixed_map t]
 	| Instr.Print(t, e) ->
@@ -23,11 +23,11 @@ module NoPend : SigPass = struct
 	    Instr.Declare (b, t, e) |> Instr.fix;
 	    Instr.Print(t, Expr.binding b) |> Instr.fix;
 	  ]
-	| Instr.AllocArray(b0, t, e) ->
+	| Instr.AllocArray(b0, t, e, lambdaopt) ->
 	  let b = fresh () in
 	  [
 	    Instr.Declare (b, t, e) |> Instr.fix;
-	    Instr.AllocArray(b0, t, Expr.binding b) |> Instr.fix;
+	    Instr.AllocArray(b0, t, Expr.binding b, lambdaopt) |> Instr.fix;
 	  ]
 	| _ -> [fixed_map t]
     and fixed_map (t:Instr.t) =

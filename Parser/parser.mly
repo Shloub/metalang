@@ -54,6 +54,8 @@
 
 %token AFFECT
 %token ARRAY
+%token ARROW
+
 %token <Type.t> TYPE
 
 %token EOF

@@ -40,6 +40,7 @@ token lexbuf
 | "," { COMMA }
 | ";" { DOTCOMMA }
 | ":=" { AFFECT }
+| "->" { ARROW }
 | "bool" { TYPE( Type.bool ) }
 | "integer" { TYPE( Type.integer ) }
 | "char" { TYPE(Type.char) }

@@ -8,7 +8,7 @@ type 'a tofix =
   | Loop of varname * Expr.t * Expr.t * 'a list
   | Comment of string
   | Return of Expr.t
-  | AllocArray of varname * Type.t * Expr.t
+  | AllocArray of varname * Type.t * Expr.t * (varname * 'a list) option
   | If of Expr.t * 'a list * 'a list
   | Call of funname * Expr.t list
   | Print of Type.t * Expr.t
@@ -29,7 +29,9 @@ let loop v e1 e2 li = Loop (v, e1, e2, li) |> fix
 let comment s = Comment s |> fix
 let return e = Return e |> fix
 let alloc_array binding t len =
-  AllocArray(binding, t, len) |> fix
+  AllocArray(binding, t, len, None) |> fix
+let alloc_array_lambda binding t len b e=
+  AllocArray(binding, t, len, Some ( (b, e) ) ) |> fix
 let if_ e cif celse =
   If (e, cif, celse) |> fix
 
@@ -43,7 +45,10 @@ let map_bloc ( f : 'a list -> 'b list) (t : 'a tofix) : 'b tofix = match t with
   | If (e, cif, celse) ->
       If (e, f cif, f celse)
   | Return e -> Return e
-  | AllocArray (_, _, _) -> t
+  | AllocArray (b, t, l, Some ((b2, li))) ->
+    AllocArray (b, t, l, Some((b2, f li)))
+  | AllocArray (_, _, _, None) ->
+    t
   | Print _ -> t
   | Read _ -> t
   | Call _ -> t
@@ -70,7 +75,10 @@ module Writer = AstWriter.F (struct
 	let acc, celse = List.fold_left_map f acc celse in
 	acc, fix (If(e, cif, celse))
       | Return e -> acc, t
-      | AllocArray (_, _, _) -> acc, t
+      | AllocArray (_, _, _, None) -> acc, t
+      | AllocArray (b, t, l, Some (b2, li)) ->
+	let acc, li = List.fold_left_map f acc li in
+	acc, fix(AllocArray (b, t, l, Some (b2, li)) )
       | Print _ -> acc, t
       | Read _ -> acc, t
       | Call _ -> acc, t
