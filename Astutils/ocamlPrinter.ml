@@ -11,7 +11,7 @@ class camlPrinter = object(self)
 
   method stdin_sep f =
     Format.fprintf f
-    "@[<h>Scanf.scanf \"%%[\\n \010]\" (fun _ -> ());@]"
+    "@[<h>Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ());@]"
 
   method print_op f op =
     Format.fprintf f
