@@ -30,12 +30,35 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
       self#proglist funs
       self#main main
 
+
+  method prefix_type f t =
+    match Type.unfix t with
+      | Type.Array t2 -> self#prefix_type f t2
+      | t2 -> self#ptype f t
+
+  method suffix_type f t =
+    match Type.unfix t with
+      | Type.Array t2 ->
+	Format.fprintf f "[]%a" self#suffix_type t2
+      | _ -> Format.fprintf f ""
+
   method allocarray f binding type_ len =
-       Format.fprintf f "@[<h>%a %a[] = new %a[%a];@]"
-	 self#ptype type_
-	 self#binding binding
-	 self#ptype type_
-	 self#expr len
+    match Type.unfix type_ with
+      | Type.Array t2 ->
+	Format.fprintf f "@[<h>%a %a[]%a = new %a[%a]%a;@]"
+	  self#prefix_type type_
+	  self#binding binding
+	  self#suffix_type type_
+
+	  self#prefix_type t2
+	  self#expr len
+	  self#suffix_type type_
+      | _ ->
+	Format.fprintf f "@[<h>%a %a[] = new %a[%a];@]"
+	  self#ptype type_
+	  self#binding binding
+	  self#ptype type_
+	  self#expr len
 
   method main f main =
     Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@]@\n}@\n"
