@@ -26,7 +26,7 @@ module NoPend : SigPass = struct
 	| Instr.AllocArray(b0, t, e, lambdaopt) ->
 	  let b = fresh () in
 	  [
-	    Instr.Declare (b, t, e) |> Instr.fix;
+	    Instr.Declare (b, Type.integer, e) |> Instr.fix;
 	    Instr.AllocArray(b0, t, Expr.binding b, lambdaopt) |> Instr.fix;
 	  ]
 	| _ -> [fixed_map t]
