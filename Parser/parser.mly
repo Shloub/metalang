@@ -157,7 +157,7 @@ params:
 
 
 type:
-  | TYPE ARRAY { Type.array $1 }
+  | type ARRAY { Type.array $1 }
   | TYPE { $1 } 
 
 instruction:
@@ -196,7 +196,8 @@ param_list:
 | type NAME COMMA param_list { ($2, $1) :: $4 }
 
 bloc:
-LHOOK instructions RHOOK { $2 } ;
+    | LHOOK instructions RHOOK { $2 } ;
+    | LHOOK RHOOK { [] } ;
 
 main_prog:
   PROG bloc { $2 } ;
@@ -212,7 +213,8 @@ functions:
     | function_ functions { $1::$2 };
 
 prog:
-    functions main_prog { ( $1, $2) }
+    | functions main_prog { ( $1, $2) }
+    | main_prog { ([], $1) }
 ;
 
 main:
