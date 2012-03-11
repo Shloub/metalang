@@ -7,14 +7,20 @@ let header = "
 $stdin='';
 while (!feof(STDIN)) $stdin.=fgets(STDIN);
 function scan($format){
-	 global $stdin;
-	 $out = sscanf($stdin, $format);
-	 $stdin = substr($stdin, strlen($out[0]));
-	 return $out;
+  global $stdin;
+  $out = sscanf($stdin, $format);
+  $stdin = substr($stdin, strlen($out[0]));
+  return $out;
 }
 function scantrim(){
-	 global $stdin;
-	 $stdin = trim($stdin);
+  global $stdin;
+  $stdin = trim($stdin);
+}
+function nextChar(){
+  global $stdin;
+  $out = $stdin[0];
+  $stdin = substr($stdin, 1);
+  return $out;
 }
 ";
 
@@ -37,9 +43,14 @@ class phpPrinter = object(self)
     | false -> Format.fprintf f "false"
 
   method read f t binding =
-    Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
-      self#binding binding
-      self#format_type t
+    match Type.unfix t with
+      | Type.Char ->
+	Format.fprintf f "@[%a = nextChar();@]"
+	  self#binding binding
+      | _ ->
+	Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
+	  self#binding binding
+	  self#format_type t
 
   method main f main =
       Format.fprintf
