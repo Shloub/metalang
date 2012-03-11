@@ -11,7 +11,7 @@ inherit cPrinter as super
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "std::string"
       | Type.Float -> Format.fprintf f "float"
-      | Type.Array a -> Format.fprintf f "std::vector<%a>" self#ptype a
+      | Type.Array a -> Format.fprintf f "std::vector<%a >" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
@@ -30,7 +30,7 @@ inherit cPrinter as super
     Format.fprintf f "%a.size()" self#binding tab
 
   method allocarray f binding type_ len =
-       Format.fprintf f "@[<h>std::vector<%a> %a( %a );@]"
+       Format.fprintf f "@[<h>std::vector<%a > %a( %a );@]"
 	self#ptype type_
 	self#binding binding
 	self#expr len
