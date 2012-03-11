@@ -7,7 +7,7 @@ let newline = [ '\n' ]
 let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z' '_']*
 let commentignore = '#' [^'\n']*
 
-let char = ('\\' '\'') | [^'\'' '\\']
+let char = "\\'" | [^'\'' '\\'] | "\\0" | "\\n" | "\\r"
 
 let string = (( "\\\"" | [^'"'] )*)
 
