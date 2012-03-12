@@ -9,6 +9,8 @@ virer plus de nopending : inliner un peu
 class camlPrinter = object(self)
   inherit printer as super
 
+  val mutable refbindings = BindingSet.empty
+
   method stdin_sep f =
     Format.fprintf f
     "@[<h>Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ());@]"
@@ -48,6 +50,7 @@ class camlPrinter = object(self)
     Format.fprintf f "(Array.length %a)" self#binding tab
   
   method main f main =
+    let () = self#calc_refs main in
     Format.fprintf f "@[<v 2>@[<h>let () =@\n@[<v 2>begin@\n%a@]@\nend@\n"
       self#instructions main
       
@@ -97,20 +100,36 @@ class camlPrinter = object(self)
     Format.fprintf f "@[<h>%a@ :=@ %a;@]" self#binding var self#expr expr
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>let %a@ =@ ref(@ %a )@ in@]"
-      self#binding var
-      self#expr e
+    if BindingSet.mem var refbindings then
+      Format.fprintf f "@[<h>let %a@ =@ ref(@ %a )@ in@]"
+	self#binding var
+	self#expr e
+    else
+      Format.fprintf f "@[<h>let %a@ =@ %a@ in@]"
+	self#binding var
+	self#expr e
 
   method read f t binding =
     Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a := value);@]"
       self#format_type t
       self#binding binding
 
-  val mutable params = BindingSet.empty
+  method calc_refs instrs =
+    refbindings <-
+      List.fold_left
+      (Instr.Writer.Deep.fold
+	 (fun acc i ->
+	   match Instr.unfix i with
+	     | Instr.Read (_, varname) -> BindingSet.add varname acc
+	     | Instr.Affect (varname, _) -> BindingSet.add varname acc
+	     | _ -> acc
+	 ))
+      BindingSet.empty
+      instrs
+      
 
   method print_fun f funname t li instrs =
-    let () = params <- List.fold_left
-      (fun acc (v, _) -> BindingSet.add v acc) params li in
+    let () = self#calc_refs instrs in
     let out =
       match t with
 	| Type.F Type.Void ->
@@ -121,15 +140,14 @@ class camlPrinter = object(self)
 	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
 	    self#print_proto (funname, t, li)
 	    self#instructions instrs
-    in let () = params <- BindingSet.empty
     in out
 
   method expr_binding f e =
-    if BindingSet.mem e params
+    if BindingSet.mem e refbindings
     then
-      Format.fprintf f "%a" self#binding e
-    else
       Format.fprintf f "!%a" self#binding e
+    else
+      Format.fprintf f "%a" self#binding e
       
   method access_array f arr index =
     Format.fprintf f "@[<h>%a.(%a)@]"
@@ -155,7 +173,6 @@ class camlPrinter = object(self)
     Format.fprintf f "@[<h>%a@]" self#expr e
 
   method allocarray f binding type_ len =
-    let () = params <- BindingSet.add binding params in
     Format.fprintf f "@[<h>let@ %a@ =@ Array.make@ %a@ (Obj.magic@ 0)@ in@]"
       self#binding binding
       self#expr len
@@ -203,16 +220,11 @@ class camlPrinter = object(self)
 	  ) li
 
   method forloop f varname expr1 expr2 li =
-    let ex = params in
-    let () = params <- BindingSet.add varname params in
-    let out =
-      Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone;"
-	self#binding varname
-	self#expr expr1
-	self#expr expr2
- 	self#instructions li
-	in let () = params <- ex
-    in out
+    Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone;"
+      self#binding varname
+      self#expr expr1
+      self#expr expr2
+      self#instructions li
 
 end
 
