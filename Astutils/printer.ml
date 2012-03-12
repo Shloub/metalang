@@ -151,7 +151,7 @@ class printer = object(self)
     | Type.Integer -> Format.fprintf f "%%d"
     | Type.Float -> Format.fprintf f "%%.2f"
     | Type.Char -> Format.fprintf f "%%c"
-    | _ -> Format.fprintf f "TODO"
+    | Type.String -> Format.fprintf f "%%s"
 
   method read f t mutable_ =
     Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#mutable_ mutable_
@@ -204,21 +204,22 @@ class printer = object(self)
       | Expr.Not -> Format.fprintf f "!(%a)" self#expr a
       | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
 
+
+  method nop = function
+    | Expr.Integer _ -> true
+    | Expr.Float _ -> true
+    | Expr.String _ -> true
+    | Expr.Binding _ -> true
+    | Expr.AccessArray (_, _) -> true
+    | Expr.Call (_, _) -> true
+    | _ -> false
+
   method expr f t =
     let printp f e =
       Format.fprintf f "@[<h 2>(%a)@]" self#expr e
     in
-    let nop = function
-      | Expr.Integer _ -> true
-      | Expr.Float _ -> true
-      | Expr.String _ -> true
-      | Expr.Binding _ -> true
-      | Expr.AccessArray (_, _) -> true
-      | Expr.Call (_, _) -> true
-      | _ -> false
-    in
     let binop op a b =
-      let chf x = if nop (Expr.unfix x) then self#expr else printp
+      let chf x = if self#nop (Expr.unfix x) then self#expr else printp
       in Format.fprintf f "%a@ %a@ %a" (chf a) a self#print_op op (chf b) b
     in
     let t = Expr.unfix t in

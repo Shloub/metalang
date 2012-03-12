@@ -59,25 +59,39 @@ class camlPrinter = object(self)
       self#proglist funs
       self#main main
 
-  method print_proto f (funname, t, li) =
+  method rec_ f b =
+    if b then Format.fprintf f "rec@ "
+
+  method print_rec_proto f triplet = self#print_proto_aux f true triplet
+  method print_proto f triplet = self#print_proto_aux f false triplet
+
+  method print_proto_aux f rec_ (funname, t, li) =
     match li with
-      | [] -> Format.fprintf f "let@ %a@ () ="
+      | [] -> Format.fprintf f "let@ %a%a@ () ="
+	self#rec_ rec_
 	self#funname funname
       | _ ->
-	Format.fprintf f "let@ %a@ %a ="
+	Format.fprintf f "let@ %a%a@ %a ="
+	  self#rec_ rec_
 	  self#funname funname
 	  (print_list
 	     (fun t (a, b) -> self#binding t a)
 	     (fun t f1 e1 f2 e2 -> Format.fprintf t
 	       "%a@ %a" f1 e1 f2 e2)) li
 
+
+
   method bloc f li = Format.fprintf f "@[<v 2>begin@\n%a@]@\nend"
       (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a@\n%a" f1 e1 f2 e2)) li
 
   method if_ f e ifcase elsecase =
-    match elsecase with
-      | [] ->
+    match ifcase, elsecase with
+      | [Instr.F (Instr.Return out)], [] -> (* TODO begin et end apres le else... *)
+	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\nelse"
+	  self#expr e
+	  self#bloc ifcase
+      | _, [] ->
 	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a"
 	  self#expr e
 	  self#bloc ifcase
@@ -142,10 +156,23 @@ class camlPrinter = object(self)
       | Instr.Array (binding, indexes) -> self#access_array f binding indexes
 
       
+  method is_rec funname instrs =
+    true (* TODO *)
 
   method print_fun f funname t li instrs =
     let () = self#calc_refs instrs in
-    let out =
+    let is_rec = self#is_rec funname instrs in
+    if is_rec then
+      match t with
+	| Type.F Type.Void ->
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@] ()@\n@\n"
+	    self#print_rec_proto (funname, t, li)
+	    self#instructions instrs
+	| _ ->
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	    self#print_rec_proto (funname, t, li)
+	    self#instructions instrs
+    else
       match t with
 	| Type.F Type.Void ->
 	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@] ()@\n@\n"
@@ -155,8 +182,7 @@ class camlPrinter = object(self)
 	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
 	    self#print_proto (funname, t, li)
 	    self#instructions instrs
-    in out
-
+    
   method expr_binding f e =
     if BindingSet.mem e refbindings
     then
@@ -203,6 +229,16 @@ class camlPrinter = object(self)
       self#expr e2
 
 
+  method nop = function
+    | Expr.Integer _ -> true
+    | Expr.Float _ -> true
+    | Expr.String _ -> true
+    | Expr.Binding _ -> true
+    | Expr.AccessArray (_, _) -> true
+    | Expr.Call (_, _) -> false
+    | _ -> false
+
+(* Todo virer les parentheses quand on peut*)
   method apply (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
     match li with
       | [] ->
@@ -214,29 +250,17 @@ class camlPrinter = object(self)
 	  "@[<h>%a %a@]"
 	  self#funname var
 	  (print_list
-	     self#expr
+	     (fun t e ->
+	       if self#nop (Expr.unfix e) then self#expr f e
+	       else Format.fprintf f "(%a)" self#expr e
+	     )
 	     (fun t f1 e1 f2 e2 ->
-	       Format.fprintf t "(%a)@ %a" f1 e1 f2 e2
+	       Format.fprintf t "%a@ %a" f1 e1 f2 e2
 	     )
 	  ) li
 
-(* Todo virer les parentheses quand on peut*)
   method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
-    match li with
-      | [] ->
-	Format.fprintf f "@[<h>%a ();@]"
-	  self#funname var
-      | _ ->    
-	Format.fprintf
-	  f
-	  "@[<h>%a %a;@]"
-	  self#funname var
-	  (print_list
-	     self#expr
-	     (fun t f1 e1 f2 e2 ->
-	       Format.fprintf t "(%a)@ %a" f1 e1 f2 e2
-	     )
-	  ) li
+    self#apply f var li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone;"
