@@ -238,7 +238,7 @@ class printer = object(self)
       self#length f tab
     | Expr.Char (c) -> self#char f c
 
-  method char f c = Format.fprintf f "'\\%c'" c
+  method char f c = Format.fprintf f "%C" c
 
   method expr_binding f e = self#binding f e
 
