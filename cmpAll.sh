@@ -1,15 +1,15 @@
 #!/bin/bash
 
 echo -e "\nC"
-gcc $1.c
+gcc $1.c || exit 1
 cat $2 | ./a.out
 echo -e "\nC++"
-g++ $1.cc
+g++ $1.cc || exit 1
 cat $2 | ./a.out
 echo -e "\njava"
-javac $1.java
+javac $1.java || exit 1
 cat $2 | java $1
 echo -e "\nphp"
-cat $2 | php $1.php
+cat $2 | php $1.php || exit 1
 echo -e "\nocaml"
-cat $2 | ocaml $1.ml
+cat $2 | ocaml $1.ml || exit 1
