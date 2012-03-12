@@ -13,7 +13,7 @@ class camlPrinter = object(self)
 
   method stdin_sep f =
     Format.fprintf f
-    "@[<h>Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ());@]"
+    "@[<h>Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ())@]"
 
   method print_op f op =
     Format.fprintf f
@@ -86,32 +86,43 @@ class camlPrinter = object(self)
 	  "%a@\n%a" f1 e1 f2 e2)) li
 
   method if_ f e ifcase elsecase =
-    match ifcase, elsecase with
-      | [Instr.F (Instr.Return out)], [] -> (* TODO begin et end apres le else... *)
-	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\nelse"
-	  self#expr e
-	  self#bloc ifcase
-      | _, [] ->
-	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a"
+    match elsecase with
+      | [] ->
+	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\n"
 	  self#expr e
 	  self#bloc ifcase
       | _ ->
-    Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\nelse@\n%a"
-      self#expr e
-      self#bloc ifcase
-	  self#bloc elsecase
+      Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\nelse@\n%a"
+	self#expr e
+	self#bloc ifcase
+	self#bloc elsecase
+
+  method instructions f instrs =
+    (print_list
+       self#instr
+       (fun t print1 item1 print2 item2 ->
+	 Format.fprintf t "%a@\n%a"
+	   (fun t i ->
+	     match Instr.unfix i with
+	       | Instr.AllocArray _ -> self#instr f i
+	       | Instr.Declare _ -> self#instr f i
+	       | _ -> Format.fprintf f "%a;" self#instr i
+	   )
+	   item1 print2 item2
+       )
+      ) f instrs
 
   method bloc f b =
     match b with
-      | [Instr.F (Instr.Return b)] ->
-	Format.fprintf f "@[<h>%a@]" self#expr b
+      | [i] ->
+	Format.fprintf f "@[<h>%a@]" self#instr i
       | _ ->
 	Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
       
   method binding f i = Format.fprintf f "%s" i
 
   method affect f m expr =
-    Format.fprintf f "@[<h>%a@ %s@ %a;@]"
+    Format.fprintf f "@[<h>%a@ %s@ %a@]"
       self#mutable_ m
       (match m with
 	| Instr.Var _ -> ":="
@@ -129,7 +140,7 @@ class camlPrinter = object(self)
 	self#expr e
 
   method read f t m =
-    Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value);@]"
+    Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value)@]"
       self#format_type t
       self#mutable_ m
       (match m with
@@ -162,27 +173,18 @@ class camlPrinter = object(self)
   method print_fun f funname t li instrs =
     let () = self#calc_refs instrs in
     let is_rec = self#is_rec funname instrs in
-    if is_rec then
-      match t with
-	| Type.F Type.Void ->
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@] ()@\n@\n"
-	    self#print_rec_proto (funname, t, li)
-	    self#instructions instrs
-	| _ ->
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
-	    self#print_rec_proto (funname, t, li)
-	    self#instructions instrs
-    else
-      match t with
-	| Type.F Type.Void ->
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@] ()@\n@\n"
-	    self#print_proto (funname, t, li)
-	    self#instructions instrs
-	| _ ->
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
-	    self#print_proto (funname, t, li)
-	    self#instructions instrs
-    
+    let proto = if is_rec then self#print_rec_proto else self#print_proto
+    in
+    match t with
+      | Type.F Type.Void ->
+	Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	  proto (funname, t, li)
+	  self#instructions instrs
+      | _ ->
+	Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	  proto (funname, t, li)
+	  self#instructions instrs
+
   method expr_binding f e =
     if BindingSet.mem e refbindings
     then
@@ -203,7 +205,7 @@ class camlPrinter = object(self)
 
 
   method print f t expr = (* TODO virer les parentheses quand on peut *)
-    Format.fprintf f "@[Printf.printf \"%a \" (%a);@]"
+    Format.fprintf f "@[Printf.printf \"%a \" (%a)@]"
       self#format_type t
       self#expr expr
 
@@ -219,7 +221,7 @@ class camlPrinter = object(self)
       self#expr len
 
   method affectarray f binding indexes e2 =
-    Format.fprintf f "@[<h>%a.(%a)@ <-@ %a;@]"
+    Format.fprintf f "@[<h>%a.(%a)@ <-@ %a@]"
       self#binding binding
       (print_list
       self#expr
@@ -263,7 +265,7 @@ class camlPrinter = object(self)
     self#apply f var li
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone;"
+    Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone"
       self#binding varname
       self#expr expr1
       self#expr expr2
