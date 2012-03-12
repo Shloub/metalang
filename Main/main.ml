@@ -5,7 +5,9 @@ let default_passes prog =
      prog
      |> Passes.WalkNopend.apply
      |> Passes.WalkExpandPrint.apply
-	 
+
+let ocaml_passes prog =
+  prog |> default_passes |> Passes.WalkIfMerge.apply
 
 let () =
   let filename = Sys.argv.(1) in
@@ -26,7 +28,7 @@ let () =
       out "java" JavaPrinter.printer#prog prog default_passes;
       out "c" CPrinter.printer#prog prog default_passes;
       out "cc" CppPrinter.printer#prog prog default_passes;
-      out "ml" OcamlPrinter.printer#prog prog default_passes;
+      out "ml" OcamlPrinter.printer#prog prog ocaml_passes;
       out "php" PhpPrinter.printer#prog prog default_passes;
     end
   with Parsing.Parse_error ->

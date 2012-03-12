@@ -8,6 +8,41 @@ module type SigPass = sig
   val init_acc : unit -> acc;;
   val process : acc -> Instr.t list -> (acc * Instr.t list)
 end
+
+
+let rec returns instrs =
+  List.fold_left
+    returns_i false instrs
+and returns_i acc i = match Instr.unfix i with
+  | Instr.Return _ -> true
+  | Instr.If (_, li1, li2) ->
+    acc or ( (returns li1) && returns li2 )
+  | _ -> acc
+
+module IfMerge : SigPass = struct
+  type acc = unit;;
+  let init_acc () = ();;
+  let process () i =
+    let rec f acc = function
+      | [] -> List.rev acc
+      | [i] -> List.rev (i :: acc)
+      | hd::tl ->
+	match Instr.unfix hd with
+	  | Instr.If (e, l1, l2) ->
+	    let l1 = f [] l1 in
+	    let l2 = f [] l2 in
+	    if returns l1 then
+	      let tl = f [] tl in
+	      (Instr.if_ e l1 (l2 @ tl ) ) :: acc |> List.rev
+	    else if returns l2 then
+	      let tl = f [] tl in
+	      (Instr.if_ e (l1 @ tl) l2 ) :: acc |> List.rev
+	    else f (hd :: acc) tl
+	  | _ -> f (hd :: acc) tl
+    in
+    (), f [] i;;
+end
+
 module NoPend : SigPass = struct
   type acc = unit
   let process (acc:acc) i =
@@ -72,14 +107,26 @@ module ExpandPrint : SigPass = struct
 end
 
 module Walk (T:SigPass) = struct
-  let apply_prog acc p = acc, p (* TODO *)
+
   let apply_instr acc i = T.process acc i
+  let apply_prog acc p =
+    List.fold_left_map
+      (fun acc item ->
+	match item with
+	  | Prog.DeclareType _ -> acc, item
+	  | Prog.DeclarFun (name, t, params, instrs) ->
+	    let acc, instrs = apply_instr acc instrs
+	    in acc, Prog.DeclarFun (name, t, params, instrs)
+      )
+      acc
+      p
   let apply (name, p, m) =
     let acc = T.init_acc () in
-    let acc, p = List.fold_left_map apply_prog acc p in
+    let acc, p =  apply_prog acc p in
     let acc, m = apply_instr acc m in
     (name, p, m)
 end
 
 module WalkNopend = Walk(NoPend);;
 module WalkExpandPrint = Walk(ExpandPrint);;
+module WalkIfMerge = Walk(IfMerge);;
