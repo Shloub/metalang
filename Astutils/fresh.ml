@@ -19,6 +19,7 @@ let fresh_init (progname, toplvl, instrs) =
       match Instr.unfix i with
 	| Instr.Declare (b, _, _)
 	| Instr.AllocArray (b, _, _, _)
+	| Instr.Loop (b, _, _, _)
 	    -> BindingSet.add b acc
 	| _ -> acc
     ) acc i
