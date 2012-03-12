@@ -1,24 +1,24 @@
-function integer fibo(integer %a, integer %b, integer %i){
-	 var integer %out := 0;
-	 var integer %a2 := %a;
-	 var integer %b2 := %b;
-	 for %j:=0 to %i+1
+integer fibo(integer a, integer b, integer i){
+	 integer out := 0;
+	 integer a2 := a;
+	 integer b2 := b;
+	 for j:=0 to i+1
 	 {
-	   %out := %out + %a2;
-	   var integer %tmp := %b2;
-	   %b2 := %b2 + %a2;
-	   %a2 := %tmp;
+	   out := out + a2;
+	   integer tmp := b2;
+	   b2 := b2 + a2;
+	   a2 := tmp;
 	 }
-	 return %out;
+	 return out;
 }
 prog{
-	var integer %a := 0;
-	var integer %b := 0;
-	var integer %i := 0;
-	read<integer>(%a);
+	integer a := 0;
+	integer b := 0;
+	integer i := 0;
+	read<integer>(a);
 	stdin_sep();
-	read<integer>(%b);
+	read<integer>(b);
 	stdin_sep();
-	read<integer>(%i);
-	print<integer>(fibo(%a, %b, %i));
+	read<integer>(i);
+	print<integer>(fibo(a, b, i));
 }

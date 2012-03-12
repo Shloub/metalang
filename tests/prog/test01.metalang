@@ -1,45 +1,44 @@
-function integer double_(integer %a){
-	 if (%a == 0){
-	    return %a * 2;
+integer double_(integer a){
+	 if (a == 0){
+	    return a * 2;
 	 }else{
-		return %a * 2 + 1;
+		return a * 2 + 1;
 	 }
 }
 
-function void foo(integer %a, integer %b){
-	 print<integer>(%a + double_(%b));
+void foo(integer a, integer b){
+	 print<integer>(a + double_(b));
 }
 
-function void testStr(){
-	 var string %str := " \" foo";
-	 var bool %b := true && (false || (!true) == false ) && 1 mod 2 == 0 ;
-	 #read<string>(%str);
-
-	 var integer %d := 0;
-	 read<integer>(%d);
+void testStr(){
+	 string str := " \" foo";
+	 bool b := true && (false || (!true) == false ) && 1 mod 2 == 0 ;
+	 #read<string>(str);
+	 integer d := 0;
+	 read<integer>(d);
 	 stdin_sep();
-	 dim char array %tab[%d];
-	 for %i := 0 to %d-1
+	 char array tab[d];
+	 for i := 0 to d-1
 	 {
-		var char %c := ' ';
-		read<char>(%c);
-		%tab[%i] := %c;
+		char c := ' ';
+		read<char>(c);
+		tab[i] := c;
 	 }
 	 stdin_sep();
 }
 
 prog{
 	testStr();
-	var integer %a := 2;
-	var integer %b := 3;
-	read<integer>(%a);
-	dim integer array %tab[%a];
-	for %i := 0 to %a-1
+	integer a := 2;
+	integer b := 3;
+	read<integer>(a);
+	integer array tab[a];
+	for i := 0 to a-1
 	{
-		%tab[%i] := %i * (%i + 1) / 2;
-		%b := %b + %tab[%i];
+		tab[i] := i * (i + 1) / 2;
+		b := b + tab[i];
 	}
-	foo(%a, %b);
-	print<integer>(%b + %a);
-	print<integer array>(%tab);
+	foo(a, b);
+	print<integer>(b + a);
+	print<integer array>(tab);
 }
