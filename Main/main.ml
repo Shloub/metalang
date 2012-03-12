@@ -9,6 +9,9 @@ let default_passes prog =
 let ocaml_passes prog =
   prog |> default_passes |> Passes.WalkIfMerge.apply
 
+let clike_passes prog =
+    prog |> default_passes |> Passes.WalkAllocArrayExpend.apply
+
 let () =
   let filename = Sys.argv.(1) in
   let progname = Filename.basename filename |> Filename.chop_extension in
@@ -25,11 +28,11 @@ let () =
     let (funs, main) = Parser.main Lexer.token lexbuf in
     let prog = (progname, funs, main)
     in begin
-      out "java" JavaPrinter.printer#prog prog default_passes;
-      out "c" CPrinter.printer#prog prog default_passes;
-      out "cc" CppPrinter.printer#prog prog default_passes;
+      out "java" JavaPrinter.printer#prog prog clike_passes;
+      out "c" CPrinter.printer#prog prog clike_passes;
+      out "cc" CppPrinter.printer#prog prog clike_passes;
       out "ml" OcamlPrinter.printer#prog prog ocaml_passes;
-      out "php" PhpPrinter.printer#prog prog default_passes;
+      out "php" PhpPrinter.printer#prog prog clike_passes;
     end
   with Parsing.Parse_error ->
     let curr = lexbuf.Lexing.lex_curr_p in

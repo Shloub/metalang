@@ -38,18 +38,15 @@ prog{
 	integer len := 0;
 	read<integer>(len);
 	stdin_sep();
-	integer array array tab[len];
-	for i := 1 to len
-	{
-		integer len2 := i;
-		integer array tab2[len2];
-		tab[i-1] := tab2;
-		for j := 1 to len2
-		{
-			read<integer>(tab[i - 1][j-1]);
+	integer array array tab[len] (i ->
+		integer array tab2[i+1] (j->
+			integer tmp := 0;
+			read<integer>(tmp);
 			stdin_sep();
-		}
-	}
+			return tmp;
+		);
+		return tab2;
+	);
 	print<integer>(find(len, tab));
 	print<integer array array>(tab);
 }

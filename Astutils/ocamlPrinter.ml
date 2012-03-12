@@ -215,6 +215,13 @@ class camlPrinter = object(self)
   method return f e =
     Format.fprintf f "@[<h>%a@]" self#expr e
 
+  method allocarray_lambda f binding type_ len binding2 lambda =
+      Format.fprintf f "@[<h>let %a@ =@ Array.init@ %a@ (fun@ %a@ ->@\n@[<v 2>  %a@])@ in@]"
+	self#binding binding
+	self#expr len
+	self#binding binding2
+	self#instructions lambda
+
   method allocarray f binding type_ len =
     Format.fprintf f "@[<h>let@ %a@ =@ Array.make@ %a@ (Obj.magic@ 0)@ in@]"
       self#binding binding

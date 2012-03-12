@@ -171,6 +171,14 @@ mutable_:
 instruction:
 |  mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | RETURN result DOTCOMMA { Instr.return $2 }
+| type NAME LBRACE result RBRACE
+LPARENT NAME ARROW instructions RPARENT DOTCOMMA
+{
+match $1 with
+  | Type.F (Type.Array t) ->
+    Instr.alloc_array_lambda $2 t $4 $7 $9
+  (* TODO *)
+}
 | type NAME LBRACE result RBRACE DOTCOMMA
 {
 match $1 with

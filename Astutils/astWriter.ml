@@ -29,5 +29,13 @@ module F (T : SigAst) = struct
   module Traverse = struct
     let rec foldmap f acc t =
       T.foldmap (f (foldmap f)) acc t
+
+    let rec map f t =
+      let f2 tra acc t =
+	acc, f (fun t ->
+	  let (), t = tra () t
+	  in t) t
+      in let (), t = foldmap f2 () t in
+	 t
   end
 end

@@ -43,6 +43,34 @@ module IfMerge : SigPass = struct
     (), f [] i;;
 end
 
+module AllocArrayExpend : SigPass = struct
+  type acc = unit;;
+  let init_acc () = ();;
+
+  let mapret tab index instructions =
+    let f tra i = match Instr.unfix i with
+      | Instr.Return e -> Instr.affect (Instr.mutable_array tab [Expr.binding index]) e
+      | Instr.AllocArray _ -> i
+      | _ -> tra i
+    in let instructions = List.map (f (Instr.Writer.Traverse.map f)) instructions in
+     instructions
+
+  let expand i = match Instr.unfix i with
+    | Instr.AllocArray (b,t, len, Some (b2, instrs)) ->
+      [ Instr.fix (Instr.AllocArray (b, t, len, None) );
+	Instr.loop b2 (Expr.integer 0) (Expr.binop Expr.Sub len (Expr.integer 1))
+	  (mapret b b2 instrs)
+      ]
+    | _ -> [i]
+
+  let mapi i =
+    Instr.map_bloc
+      (List.flatten @* (List.map expand) )
+      (Instr.unfix i) |> Instr.fix
+
+  let process () is = (), List.map mapi (List.flatten (List.map expand is))
+end
+
 module NoPend : SigPass = struct
   type acc = unit
   let process (acc:acc) i =
@@ -130,3 +158,4 @@ end
 module WalkNopend = Walk(NoPend);;
 module WalkExpandPrint = Walk(ExpandPrint);;
 module WalkIfMerge = Walk(IfMerge);;
+module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
