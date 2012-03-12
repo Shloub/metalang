@@ -36,6 +36,7 @@ let () =
     let line = curr.Lexing.pos_lnum in
     let cnum = curr.Lexing.pos_cnum - curr.Lexing.pos_bol - 1 in
     let tok = Lexing.lexeme lexbuf in
-    Format.printf "error line %d char %d on token %s\n"
+    let () = Format.printf "error line %d char %d on token %s\n"
       line cnum
       tok
+    in exit 1;;
