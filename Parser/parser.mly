@@ -164,12 +164,12 @@ type:
   | type ARRAY { Type.array $1 }
   | TYPE { $1 } 
 
+mutable_:
+  | NAME { Instr.mutable_var $1 }
+  | NAME arrayaccess { Instr.mutable_array $1 $2}
+
 instruction:
-| NAME AFFECT result DOTCOMMA { Instr.affect (Instr.mutable_var $1) $3 }
-| NAME arrayaccess AFFECT result DOTCOMMA
-    {
-      Instr.affect (Instr.mutable_array $1 $2) $4
-    }
+|  mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | RETURN result DOTCOMMA { Instr.return $2 }
 | type NAME LBRACE result RBRACE DOTCOMMA
 {
@@ -186,7 +186,7 @@ match $1 with
 | PRINT O_LOWER type O_HIGHER LPARENT result RPARENT DOTCOMMA {
       Instr.print $3 $6
     }
-| READ O_LOWER type O_HIGHER LPARENT NAME RPARENT DOTCOMMA {
+| READ O_LOWER type O_HIGHER LPARENT mutable_ RPARENT DOTCOMMA {
       Instr.read $3 $6
     }
 | FOR NAME AFFECT result TO result LHOOK instructions RHOOK

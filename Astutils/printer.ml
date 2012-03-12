@@ -37,8 +37,8 @@ class printer = object(self)
       self#ptype t
       self#expr e
 
-  method affect f var expr =
-    Format.fprintf f "@[<h>%a@ =@ %a;@]" self#binding var self#expr expr
+  method affect f mutable_ expr =
+    Format.fprintf f "@[<h>%a@ =@ %a;@]" self#mutable_ mutable_ self#expr expr
 
   method bloc f li = Format.fprintf f "@[<v 2>do@\n%a@]@\ndone"
       (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
@@ -84,16 +84,18 @@ class printer = object(self)
 	self#binding binding
 	self#bloc lambda
 
-  method affectarray f binding indexes e2 =
-    Format.fprintf f "@[<h>%a[%a]@ =@ %a;@]"
-      self#binding binding
-      (print_list
-      self#expr
-      (fun f f1 e1 f2 e2 ->
-	Format.fprintf f "%a][%a" f1 e1 f2 e2
-      ))
-      indexes
-      self#expr e2
+  method mutable_ f m =
+    match m with
+      | Instr.Var binding -> self#binding f binding
+      | Instr.Array (binding, indexes) ->
+	Format.fprintf f "%a[%a]"
+	  self#binding binding
+	  (print_list
+	     self#expr
+	     (fun f f1 e1 f2 e2 ->
+	       Format.fprintf f "%a][%a" f1 e1 f2 e2
+	     ))
+	  indexes
 
   method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
     Format.fprintf
@@ -128,10 +130,7 @@ class printer = object(self)
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
     
-    | Instr.Affect (Instr.Var varname, expr) -> self#affect f varname expr
-    | Instr.Affect (Instr.Array (varname, indexes), expr) ->
-      self#affectarray f varname indexes expr
-    
+    | Instr.Affect (mutable_, expr) -> self#affect f mutable_ expr    
 
     | Instr.Loop (varname, expr1, expr2, li) ->
 	self#forloop f varname expr1 expr2 li
@@ -145,7 +144,7 @@ class printer = object(self)
 	self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li
 
-    | Instr.Read (t, binding) -> self#read f t binding
+    | Instr.Read (t, mutable_) -> self#read f t mutable_
     | Instr.Print (t, expr) -> self#print f t expr
 
   method format_type f t = match Type.unfix t with
@@ -154,8 +153,8 @@ class printer = object(self)
     | Type.Char -> Format.fprintf f "%%c"
     | _ -> Format.fprintf f "TODO"
 
-  method read f t binding =
-    Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#binding binding
+  method read f t mutable_ =
+    Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#mutable_ mutable_
 
   method print f t expr =
     Format.fprintf f "@[print<%a>(%a);@]" self#ptype t self#expr expr

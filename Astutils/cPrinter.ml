@@ -77,10 +77,10 @@ class cPrinter = object(self)
   method stdin_sep f =
     Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\", 0);@]"
 
-  method read f t binding =
+  method read f t m =
     Format.fprintf f "@[scanf(\"%a\", &%a);@]"
       self#format_type t
-      self#binding binding
+      self#mutable_ m
 
   method print f t expr =
     Format.fprintf f "@[printf(\"%a \", %a);@]" self#format_type t self#expr expr

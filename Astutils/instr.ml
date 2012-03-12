@@ -18,7 +18,7 @@ type 'a tofix =
   | If of Expr.t * 'a list * 'a list
   | Call of funname * Expr.t list
   | Print of Type.t * Expr.t
-  | Read of Type.t * varname
+  | Read of Type.t * mutable_
   | StdinSep
 
 type t = F of t tofix

@@ -42,14 +42,14 @@ class phpPrinter = object(self)
     | true -> Format.fprintf f "true"
     | false -> Format.fprintf f "false"
 
-  method read f t binding =
+  method read f t m =
     match Type.unfix t with
       | Type.Char ->
 	Format.fprintf f "@[%a = nextChar();@]"
-	  self#binding binding
+	  self#mutable_ m
       | _ ->
 	Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
-	  self#binding binding
+	  self#mutable_ m
 	  self#format_type t
 
   method main f main =

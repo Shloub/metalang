@@ -79,15 +79,15 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
   method print_scanner f _ = (* TODO if read node... *)
     Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
 
-  method read f t binding =
+  method read f t m =
     match Type.unfix t with
       | Type.Integer ->
 	Format.fprintf f "@[<h>scanner.useDelimiter(\"\\\\s\");@]@\n@[<h>%a = scanner.nextInt();@]"
-	  self#binding binding
+	  self#mutable_ m
       | Type.String -> (* TODO configure Scanner, read int and do it*)
 	Format.fprintf f "TODO" (* TODO *)
       | Type.Char -> Format.fprintf f "@[<h>scanner.useDelimiter(\".\");@]@\n@[<h>%a = scanner.findInLine(\".\").charAt(0);@]"
-	self#binding binding
+	self#mutable_ m
 
   method print f t expr =
     Format.fprintf f "@[System.out.printf(\"%a \", %a);@]" self#format_type t self#expr expr

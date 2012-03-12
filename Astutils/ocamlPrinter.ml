@@ -96,8 +96,13 @@ class camlPrinter = object(self)
       
   method binding f i = Format.fprintf f "%s" i
 
-  method affect f var expr =
-    Format.fprintf f "@[<h>%a@ :=@ %a;@]" self#binding var self#expr expr
+  method affect f m expr =
+    Format.fprintf f "@[<h>%a@ %s@ %a;@]"
+      self#mutable_ m
+      (match m with
+	| Instr.Var _ -> ":="
+	| Instr.Array _ -> "<-")     
+      self#expr expr
 
   method declaration f var t e =
     if BindingSet.mem var refbindings then
@@ -109,10 +114,13 @@ class camlPrinter = object(self)
 	self#binding var
 	self#expr e
 
-  method read f t binding =
-    Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a := value);@]"
+  method read f t m =
+    Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value);@]"
       self#format_type t
-      self#binding binding
+      self#mutable_ m
+      (match m with
+	| Instr.Var _ -> ":="
+	| Instr.Array _ -> "<-")
 
   method calc_refs instrs =
     refbindings <-
@@ -120,12 +128,19 @@ class camlPrinter = object(self)
       (Instr.Writer.Deep.fold
 	 (fun acc i ->
 	   match Instr.unfix i with
-	     | Instr.Read (_, varname) -> BindingSet.add varname acc
+	     | Instr.Read (_, Instr.Var varname) -> BindingSet.add varname acc
 	     | Instr.Affect (Instr.Var varname, _) -> BindingSet.add varname acc
 	     | _ -> acc
 	 ))
       BindingSet.empty
       instrs
+
+
+  method mutable_ f m =
+    match m with
+      | Instr.Var binding -> self#binding f binding
+      | Instr.Array (binding, indexes) -> self#access_array f binding indexes
+
       
 
   method print_fun f funname t li instrs =
