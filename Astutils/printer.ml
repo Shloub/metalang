@@ -275,6 +275,7 @@ class printer = object(self)
 
   method prog_item f t =
     match t with
+      | Prog.Comment s -> self#comment f s
     | Prog.DeclarFun (var, t, li, instrs) ->
 	self#print_fun f var t li instrs
 

@@ -20,7 +20,7 @@
 %token ELSE
 %token PRINT
 %token READ
-%token COMMENT
+%token <string>COMMENT
 %token FOR
 %token TO
 
@@ -169,6 +169,7 @@ mutable_:
   | NAME arrayaccess { Instr.mutable_array $1 $2}
 
 instruction:
+| COMMENT { Instr.comment $1}
 |  mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | RETURN result DOTCOMMA { Instr.return $2 }
 | type NAME LBRACE result RBRACE
@@ -224,9 +225,10 @@ function_:
       Prog.declarefun $2 $1 [] $5 } ;
 
 functions:
+	| COMMENT { [Prog.comment $1 ]}
+	| COMMENT functions { (Prog.comment $1) :: $2}
     | function_ { [$1] }
     | function_ functions { $1::$2 };
-
 prog:
     | functions main_prog { ( $1, $2) }
     | main_prog { ([], $1) }

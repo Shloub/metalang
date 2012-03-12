@@ -7,12 +7,16 @@ let newline = [ '\n' ]
 let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z' '_']*
 let commentignore = '#' [^'\n']*
 
+  let comment = ([^'*'] | ('*' [^'/'] ) )*
+
+
 let char = "\\'" | [^'\'' '\\'] | "\\0" | "\\n" | "\\r"
 
 let string = (( "\\\"" | [^'"'] )*)
 
 rule token = parse
-    commentignore { token lexbuf }
+  | "/*" (comment as str ) "*/" { COMMENT(str) }
+  |  commentignore { token lexbuf }
   | newline {
     let pos = lexbuf.Lexing.lex_curr_p in 
     lexbuf.Lexing.lex_curr_p <- { pos with

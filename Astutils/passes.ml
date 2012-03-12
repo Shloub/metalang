@@ -141,6 +141,7 @@ module Walk (T:SigPass) = struct
     List.fold_left_map
       (fun acc item ->
 	match item with
+	  | Prog.Comment _ -> acc, item
 	  | Prog.DeclareType _ -> acc, item
 	  | Prog.DeclarFun (name, t, params, instrs) ->
 	    let acc, instrs = apply_instr acc instrs
