@@ -121,7 +121,7 @@ class camlPrinter = object(self)
 	 (fun acc i ->
 	   match Instr.unfix i with
 	     | Instr.Read (_, varname) -> BindingSet.add varname acc
-	     | Instr.Affect (varname, _) -> BindingSet.add varname acc
+	     | Instr.Affect (Instr.Var varname, _) -> BindingSet.add varname acc
 	     | _ -> acc
 	 ))
       BindingSet.empty
@@ -177,10 +177,14 @@ class camlPrinter = object(self)
       self#binding binding
       self#expr len
 
-  method affectarray f binding e1 e2 =
+  method affectarray f binding indexes e2 =
     Format.fprintf f "@[<h>%a.(%a)@ <-@ %a;@]"
       self#binding binding
-      self#expr e1
+      (print_list
+      self#expr
+      (fun f f1 e1 f2 e2 ->
+	Format.fprintf f "%a).(%a" f1 e1 f2 e2
+      )) indexes
       self#expr e2
 
 

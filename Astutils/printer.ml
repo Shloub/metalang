@@ -84,10 +84,15 @@ class printer = object(self)
 	self#binding binding
 	self#bloc lambda
 
-  method affectarray f binding e1 e2 =
+  method affectarray f binding indexes e2 =
     Format.fprintf f "@[<h>%a[%a]@ =@ %a;@]"
       self#binding binding
-      self#expr e1
+      (print_list
+      self#expr
+      (fun f f1 e1 f2 e2 ->
+	Format.fprintf f "%a][%a" f1 e1 f2 e2
+      ))
+      indexes
       self#expr e2
 
   method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
@@ -122,7 +127,12 @@ class printer = object(self)
     match Instr.unfix t with
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
-    | Instr.Affect (varname, expr) -> self#affect f varname expr
+    
+    | Instr.Affect (Instr.Var varname, expr) -> self#affect f varname expr
+    | Instr.Affect (Instr.Array (varname, indexes), expr) ->
+      self#affectarray f varname indexes expr
+    
+
     | Instr.Loop (varname, expr1, expr2, li) ->
 	self#forloop f varname expr1 expr2 li
     | Instr.Comment str -> self#comment f str
@@ -131,8 +141,6 @@ class printer = object(self)
 	self#allocarray f binding type_ len
     | Instr.AllocArray (binding, type_, len, Some ( (b, l) )) ->
 	self#allocarray_lambda f binding type_ len b l
-    | Instr.AffectArray (binding, e1, e2) ->
-	self#affectarray f binding e1 e2
     | Instr.If (e, ifcase, elsecase) ->
 	self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li
