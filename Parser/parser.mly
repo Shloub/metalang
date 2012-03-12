@@ -165,8 +165,11 @@ type:
   | TYPE { $1 } 
 
 instruction:
-| NAME AFFECT result DOTCOMMA { Instr.affect (Instr.mutablevar $1) $3 }
-| NAME LBRACE result RBRACE AFFECT result DOTCOMMA { Instr.affect_array $1 $3 $6 }
+| NAME AFFECT result DOTCOMMA { Instr.affect (Instr.mutable_var $1) $3 }
+| NAME arrayaccess AFFECT result DOTCOMMA
+    {
+      Instr.affect (Instr.mutable_array $1 $2) $4
+    }
 | RETURN result DOTCOMMA { Instr.return $2 }
 | type NAME LBRACE result RBRACE DOTCOMMA
 {
