@@ -55,7 +55,7 @@ module ExpandPrint : SigPass = struct
 	   (Expr.integer 1))
 	(
 	  match t with
-	    | Type.F ( Type.Array _) -> (b2i) :: (write t b2)
+	    | Type.F ( Type.Array t2) -> (b2i) :: (write t2 b2)
 	    | _ -> [ Instr.print t b2e]
 	)
     ]
