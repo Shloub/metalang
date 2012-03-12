@@ -115,6 +115,10 @@ bool :
 string :
   STRING { Expr.string (Stdlib.String.unescape $1) } ;
 
+arrayaccess:
+		 |  LBRACE result RBRACE { [$2] }
+		 | LBRACE result RBRACE arrayaccess  {$2 :: $4}
+
 result:
 | result O_MUL result { Expr.binop Expr.Mul $1 $3 }
 | result O_DIV result { Expr.binop Expr.Div $1 $3 }
@@ -141,7 +145,7 @@ result:
 | bool { $1 }
 | string { $1 }
 | char { $1 }
-| NAME LBRACE result RBRACE { Expr.access_array $1 $3 }
+| NAME arrayaccess { Expr.access_array $1 $2 }
 | NAME { Expr.binding $1 }
 | SPACING result { $2 }
 | result SPACING { $1 }

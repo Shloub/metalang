@@ -20,7 +20,7 @@ type 'a tofix =
   | Integer of int
   | Binding of varname
   | Bool of bool
-  | AccessArray of varname * 'a
+  | AccessArray of varname * 'a list
   | Length of varname
   | Call of funname * 'a list
 
@@ -37,7 +37,7 @@ let map f = function
   | String s -> String s
   | Binding b -> Binding b
   | Bool b -> Bool b
-  | AccessArray (i, a) -> AccessArray (i, f a)
+  | AccessArray (i, a) -> AccessArray (i, List.map f a)
   | Call (n, li) -> Call (n, List.map f li)
 
 let bool b = fix (Bool b)
@@ -51,6 +51,7 @@ let float f = fix (Float f)
 let string f = fix (String f)
 let binding b = fix (Binding b)
 let access_array i a = fix (AccessArray (i, a) )
+let access_array1 i a = fix (AccessArray (i, [a]) )
 let call name li = fix ( Call(name, li))
 let length name = fix ( Length name)
 
@@ -73,7 +74,7 @@ module Writer = AstWriter.F (struct
     | Binding _ -> acc, t
     | Bool _ -> acc, t
     | AccessArray (arr, index) ->
-	let acc, index = f acc index in
+	let acc, index = List.fold_left_map f acc index in
 	(acc, F (annot, AccessArray(arr, index) ) )
     | Call (name, li) ->
 	let acc, li = List.fold_left_map f acc li in

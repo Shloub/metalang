@@ -92,11 +92,16 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
   method print f t expr =
     Format.fprintf f "@[System.out.printf(\"%a \", %a);@]" self#format_type t self#expr expr
 
-
   method access_array f arr index =
     Format.fprintf f "@[<h>%a[%a]@]"
       self#binding arr
-      self#expr index
+      (print_list
+	 self#expr
+	 (fun f f1 e1 f2 e2 ->
+	   Format.fprintf f "%a][%a"
+	     f1 e1
+	     f2 e2
+	 )) index
 
 
 end

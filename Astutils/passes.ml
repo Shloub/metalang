@@ -43,7 +43,7 @@ module ExpandPrint : SigPass = struct
   let rec write t b =
     let i = fresh () in
     let b2 = fresh () in
-    let b2e = Expr.access_array b (Expr.binding i) in
+    let b2e = Expr.access_array1 b (Expr.binding i) in
     let b2i = Instr.declare b2 t b2e
     in
     [

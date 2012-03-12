@@ -35,10 +35,17 @@ inherit cPrinter as super
 	self#binding binding
 	self#expr len
 
+
   method access_array f arr index =
     Format.fprintf f "@[<h>%a.at(%a)@]"
       self#binding arr
-      self#expr index
+      (print_list
+	 self#expr
+	 (fun f f1 e1 f2 e2 ->
+	   Format.fprintf f "%a).at(%a"
+	     f1 e1
+	     f2 e2
+	 )) index
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <=@ %a;@ %a@ ++)@\n@]%a"
