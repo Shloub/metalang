@@ -1,15 +1,39 @@
-clarifier la boucle for : syntaxe et sémentique
-mieux gérer else if ou if sans else
+mieux gérer else if ou if sans else ou if avec une seule instruction
 type ast
 type checker
 names checker
-autres printers
+return checker
+vérifier qu'on n'écrase pas de paramètre de fonction
+
+
+autres printers :
+  C#
+  ruby
+  python
+  pascal
+
 virer les warnings
 
-gestion des chaines
+php stdin : ne pas forcer à faire ctrl+d
+
+
+commentaires
 mapping de fonctions (de chaines par exemple): multiBSL
-
-script bash de test
-
+definir des choses comme max_int, min_int
 AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
-alloc array avec instructions d'initialisation
+
+mode emacs ? (pas prioritaire)
+
+pouvoir faire des structures
+
+
+tests
+  - rectangles
+  - laine a vendre
+  - gateau d'anniversaire
+  - interpreteur lisp ?
+  - interpreteur NPI
+  - dire si c'est bien parenthesé
+  - pathFinding
+  - trouver le plus petit entier qui n'est pas dans la liste
+  - immeuble
