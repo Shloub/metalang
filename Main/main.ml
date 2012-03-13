@@ -16,11 +16,13 @@ let () =
   let filename = Sys.argv.(1) in
   let progname = Filename.basename filename |> Filename.chop_extension in
   let out ext printer prog passes =
-    let () = Fresh.fresh_init prog in (* var names generation init *)
+    let filename = progname ^ "." ^ ext in
+    Printf.printf "Generating %s\n%!" filename;
+    Fresh.fresh_init prog; (* var names generation init *)
     let prog = passes prog in
-    let chan = open_out (progname ^ "." ^ ext) in
+    let chan = open_out filename in
     let buf = Format.formatter_of_out_channel chan in
-    let () = Format.fprintf buf "%a@;" printer prog in
+    let () = Format.fprintf buf "%a@;%!" printer prog in
     let () = close_out chan in ()
   in
   let lexbuf = Lexing.from_channel (open_in filename) in

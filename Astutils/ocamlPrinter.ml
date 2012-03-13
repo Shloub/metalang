@@ -183,9 +183,15 @@ class camlPrinter = object(self)
     in
     match t with
       | Type.F Type.Void ->
-	Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%s@]@\n@\n"
 	  proto (funname, t, li)
 	  self#instructions instrs
+	  (match List.rev instrs with
+	    | (Instr.F (Instr.AllocArray _) ) :: _
+	    | (Instr.F (Instr.Declare _) ) :: _
+	    | [] -> " ()"
+	    | _ -> ""
+	  )
       | _ ->
 	Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
 	  proto (funname, t, li)
