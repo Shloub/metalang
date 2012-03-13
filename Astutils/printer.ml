@@ -289,9 +289,9 @@ class printer = object(self)
   method prog_item f t =
     match t with
       | Prog.Comment s -> self#comment f s
-    | Prog.DeclarFun (var, t, li, instrs) ->
+      | Prog.DeclarFun (var, t, li, instrs) ->
 	self#print_fun f var t li instrs
-
+      | Prog.Macro _ -> ()
 
   method prog f ((progname, funs, main):Prog.t) =
     Format.fprintf f "%a%a@\n"

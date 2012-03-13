@@ -37,6 +37,7 @@ token lexbuf
 | "return" { RETURN }
 | "for" { FOR }
 | "while" { WHILE }
+| "macro" { MACRO }
 | "to" { TO }
 | "," { COMMA }
 | ";" { DOTCOMMA }

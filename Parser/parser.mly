@@ -5,6 +5,7 @@
 %token <bool> BOOL
 %token <string> NAME
 
+%token MACRO
 %token SPACING
 %token LBRACE
 %token RBRACE
@@ -233,11 +234,25 @@ function_:
     | type NAME LPARENT RPARENT bloc {
       Prog.declarefun $2 $1 [] $5 } ;
 
+macro_content_:
+	| NAME ARROW STRING DOTCOMMA { ($1, $3) }
+	| O_MUL ARROW STRING DOTCOMMA { ("", $3) };
+
+macro_content:
+	| macro_content_ { [$1] }
+	| macro_content_ macro_content { $1 :: $2 };
+macro:
+	| MACRO type NAME LPARENT param_list RPARENT LHOOK macro_content RHOOK {
+	  Prog.macro $3 $2 $5 $8
+	};
+
 functions:
 	| COMMENT { [Prog.comment $1 ]}
 	| COMMENT functions { (Prog.comment $1) :: $2}
-    | function_ { [$1] }
-    | function_ functions { $1::$2 };
+	| macro { [$1] }
+	| function_ { [$1] }
+	| function_ functions { $1::$2 }
+	| macro functions { $1::$2 };
 prog:
     | functions main_prog { ( $1, $2) }
     | main_prog { ([], $1) }
