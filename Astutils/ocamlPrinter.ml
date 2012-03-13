@@ -106,6 +106,7 @@ class camlPrinter = object(self)
 	     match Instr.unfix i with
 	       | Instr.AllocArray _ -> self#instr f i
 	       | Instr.Declare _ -> self#instr f i
+	       | Instr.Comment _ -> self#instr f i
 	       | _ -> Format.fprintf f "%a;" self#instr i
 	   )
 	   item1 print2 item2

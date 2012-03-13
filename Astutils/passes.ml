@@ -32,11 +32,13 @@ module IfMerge : SigPass = struct
 	    let l1 = f [] l1 in
 	    let l2 = f [] l2 in
 	    if returns l1 then
-	      let tl = f [] tl in
-	      (Instr.if_ e l1 (l2 @ tl ) ) :: acc |> List.rev
+	      let l2 = l2 @ tl in
+	      let l2 = f [] l2 in
+	      (Instr.if_ e l1 l2 ) :: acc |> List.rev
 	    else if returns l2 then
-	      let tl = f [] tl in
-	      (Instr.if_ e (l1 @ tl) l2 ) :: acc |> List.rev
+	      let l1 = l1 @ tl in
+	      let l1 = f [] l1 in
+	      (Instr.if_ e l1 l2 ) :: acc |> List.rev
 	    else f (hd :: acc) tl
 	  | _ -> f (hd :: acc) tl
     in

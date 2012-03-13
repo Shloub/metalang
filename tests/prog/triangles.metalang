@@ -9,11 +9,9 @@ integer find0(integer len, integer array array tab, integer array array cache, i
 	*/
 	if (y == len - 1){
 	  return tab[y][x];
-	}
-	if (x > y){
+	}else if (x > y){
 	  return 100000;
-	}
-	if (cache[y][x] != 0){
+	}else if (cache[y][x] != 0){
 	  return cache[y][x];
 	}
 	integer result := 0;
