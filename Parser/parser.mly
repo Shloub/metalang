@@ -168,6 +168,13 @@ mutable_:
   | NAME { Instr.mutable_var $1 }
   | NAME arrayaccess { Instr.mutable_array $1 $2}
 
+
+if_:
+| IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE LHOOK instructions RHOOK { Instr.if_ $3 $6 $10 }
+| IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE if_ { Instr.if_ $3 $6 [$9] }
+| IF LPARENT result RPARENT LHOOK instructions RHOOK { Instr.if_ $3 $6 [] }
+
+
 instruction:
 | COMMENT { Instr.comment $1}
 |  mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
@@ -190,8 +197,7 @@ match $1 with
 | NAME LPARENT RPARENT DOTCOMMA { Instr.call $1 [] }
 | NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }
 | type NAME AFFECT result DOTCOMMA { Instr.declare $2 $1 $4 }
-| IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE LHOOK instructions RHOOK { Instr.if_ $3 $6 $10 }
-| IF LPARENT result RPARENT LHOOK instructions RHOOK { Instr.if_ $3 $6 [] }
+| if_ {$1}
 | PRINT O_LOWER type O_HIGHER LPARENT result RPARENT DOTCOMMA {
       Instr.print $3 $6
     }
