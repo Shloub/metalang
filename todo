@@ -10,17 +10,23 @@ autres printers :
   C#
   ruby
   python
+  javascript
   pascal
+  f#
+  vb.net
+  lisp
+  perl
+  bash
+  ada
 
 virer les warnings
 
 php stdin : ne pas forcer à faire ctrl+d
 
-
-commentaires
 mapping de fonctions (de chaines par exemple): multiBSL
 definir des choses comme max_int, min_int
 AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
+commentaires indentation
 
 mode emacs ? (pas prioritaire)
 
