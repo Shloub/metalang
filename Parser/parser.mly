@@ -22,6 +22,7 @@
 %token READ
 %token <string>COMMENT
 %token FOR
+%token WHILE
 %token TO
 
 %token O_ADD
@@ -206,6 +207,8 @@ match $1 with
     }
 | FOR NAME AFFECT result TO result LHOOK instructions RHOOK
 { Instr.loop $2 $4 $6 $8 }
+| WHILE LPARENT result RPARENT LHOOK instructions RHOOK
+{ Instr.while_ $3 $6 }
 | STDINSEP { Instr.stdin_sep }
 
 instructions:

@@ -277,6 +277,12 @@ class camlPrinter = object(self)
   method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
     self#apply f var li
 
+
+  method whileloop f expr li =
+    Format.fprintf f "@[<h>while %a@]@\ndo@[<v 2>@\n%a@]@\ndone"
+      self#expr expr
+      self#bloc li
+
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone"
       self#binding varname

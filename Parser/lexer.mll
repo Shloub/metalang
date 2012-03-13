@@ -36,6 +36,7 @@ token lexbuf
 | "else" { ELSE }
 | "return" { RETURN }
 | "for" { FOR }
+| "while" { WHILE }
 | "to" { TO }
 | "," { COMMA }
 | ";" { DOTCOMMA }

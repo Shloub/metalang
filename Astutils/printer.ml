@@ -51,6 +51,11 @@ class printer = object(self)
       self#expr expr2
       self#bloc li
 
+  method whileloop f expr li =
+    Format.fprintf f "@[<h>while (%a)@]%a"
+      self#expr expr
+      self#bloc li
+
 
   method comment f str =
     Format.fprintf f "/*%s*/" str
@@ -134,6 +139,8 @@ class printer = object(self)
 
     | Instr.Loop (varname, expr1, expr2, li) ->
 	self#forloop f varname expr1 expr2 li
+    | Instr.While (expr, li) ->
+	self#whileloop f expr li
     | Instr.Comment str -> self#comment f str
     | Instr.Return e -> self#return f e
     | Instr.AllocArray (binding, type_, len, None) ->
