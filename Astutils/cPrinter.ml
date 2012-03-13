@@ -28,7 +28,7 @@ class cPrinter = object(self)
       self#expr e
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ (%a)@ *@ sizeof(%a) + sizeof(int));@]@\n((int*)%a)[0]=%a;@\n%a=((int*)%a)+1;"
+      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ (%a)@ *@ sizeof(%a) + sizeof(int));@]@\n((int*)%a)[0]=%a;@\n%a=(%a*)( ((int*)%a)+1);"
 	self#ptype type_
 	self#binding binding
 	self#expr len
@@ -36,8 +36,9 @@ class cPrinter = object(self)
 	self#binding binding
 	self#expr len
 	self#binding binding
+	self#ptype type_
 	self#binding binding
-  
+	
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "int %a;@\n%a"
       self#binding varname
@@ -55,7 +56,12 @@ class cPrinter = object(self)
     Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}"
       self#instructions main
       
-  method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
+(* on ne peut pas faire ça a cause des boucles for qu'on étend*)
+  method bloc f li = (*match li with
+    | [i] ->
+      Format.fprintf f "  %a"
+	self#instr i
+    | _ -> *) Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
      self#instructions li
 
   method prototype f t = self#ptype f t

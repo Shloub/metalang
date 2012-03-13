@@ -165,6 +165,12 @@ class printer = object(self)
 	Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
 	  self#expr e
 	  self#bloc ifcase
+      
+      | [Instr.F ( Instr.If (condition, instrs1, instrs2) ) as instr] ->
+      Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse %a"
+	self#expr e
+	self#bloc ifcase
+	self#instr instr
       | _ ->
 	Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
 	  self#expr e
