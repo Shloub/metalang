@@ -1,0 +1,13 @@
+integer a(){
+	print<integer>(4);
+	return 0;
+}
+integer b(){
+	print<integer>(2);
+	return 0;
+}
+void c(integer a, integer b){
+}
+prog{
+	c(a(), b());
+}
