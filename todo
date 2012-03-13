@@ -24,11 +24,11 @@ virer les warnings
 php stdin : ne pas forcer à faire ctrl+d
 
 throw pour les dirty returns en ocaml
-boucle while
 mapping de fonctions (de chaines par exemple): multiBSL
 definir des choses comme max_int, min_int
 AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
 commentaires indentation
+downto et upto, step sur les boucles for
 
 mode emacs ? (pas prioritaire)
 
