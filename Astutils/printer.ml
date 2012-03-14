@@ -1,5 +1,5 @@
 open Ast
-
+open Stdlib
 
 let print_list
     (func : Format.formatter -> 'a -> unit)
@@ -25,6 +25,8 @@ let print_list
 
 
 class printer = object(self)
+
+  val mutable macros = BindingMap.empty
 
   method binding f i = Format.fprintf f "%%%s" i
   method funname f i = Format.fprintf f "%s" i
@@ -102,7 +104,44 @@ class printer = object(self)
 	     ))
 	  indexes
 
+  method expand_macro_apply f name t params code li =
+    self#expand_macro_call f name t params code li
+
+  method lang () = "abstract"
+
+  method expand_macro_call f name t params code li =
+    let lang = self#lang () in
+    let code_to_expand = List.fold_left
+      (fun acc (clang, expantion) ->
+	match acc with
+	  | Some _ -> acc
+	  | None ->
+	    if clang = "" or clang = lang then
+	      Some expantion
+	    else None
+      ) None
+      code
+    in match code_to_expand with
+      | None -> failwith ("no definition for macro "^name^" in language "^lang)
+      | Some s ->
+	let listr = List.map
+	  (fun e ->
+	    self#expr Format.str_formatter e;
+	    Format.flush_str_formatter ()
+	  ) li in
+	let expanded = List.fold_left
+	  (fun s ((param, _type), string) ->
+	    String.replace ("$"^param) string s
+	  )
+	  s
+	  (List.combine params listr)
+	in Format.fprintf f "%s" expanded
+
   method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+    match BindingMap.find_opt var macros with
+      | Some ( (t, params, code) ) ->
+	self#expand_macro_call f var t params code li
+      | None ->
     Format.fprintf
       f
       "@[<h>%a(%a);@]"
@@ -115,6 +154,10 @@ class printer = object(self)
 	  ) li
 
   method apply (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+    match BindingMap.find_opt var macros with
+      | Some ( (t, params, code) ) ->
+	self#expand_macro_apply f var t params code li
+      | None ->
     Format.fprintf
       f
       "%a(%a)"
@@ -291,7 +334,11 @@ class printer = object(self)
       | Prog.Comment s -> self#comment f s
       | Prog.DeclarFun (var, t, li, instrs) ->
 	self#print_fun f var t li instrs
-      | Prog.Macro _ -> ()
+      | Prog.Macro (name, t, params, code) ->
+	macros <- BindingMap.add
+	  name (t, params, code)
+	  macros;
+	()
 
   method prog f ((progname, funs, main):Prog.t) =
     Format.fprintf f "%a%a@\n"

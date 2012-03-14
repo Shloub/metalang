@@ -40,12 +40,11 @@ prog{
 	integer len := 0;
 	read<integer>(len);
 	stdin_sep();
-	char array tab[len + 1] (i ->
+	char array tab[len] (i ->
 		char tmp := '\0';
 		read<char>(tmp);
 		return tmp;
 	);
-	tab[len] := '\0';
 	integer result := npi(tab, len);
 	print<integer>(result);
 }

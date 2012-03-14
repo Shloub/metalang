@@ -27,6 +27,7 @@ function nextChar(){
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+  method lang () = "php"
 
   method prototype f t =
     match Type.unfix t with

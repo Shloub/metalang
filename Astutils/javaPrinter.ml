@@ -6,6 +6,7 @@ open CppPrinter
 class javaPrinter = object(self) (* TODO scanf et printf*)
   inherit cppPrinter as super
 
+  method lang () = "java"
 
   method prototype f t = self#ptype f t
 

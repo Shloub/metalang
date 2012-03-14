@@ -6,6 +6,8 @@ open CPrinter
 class cppPrinter = object(self)
 inherit cPrinter as super
 
+  method lang () = "cpp"
+
   method ptype f t =
       match Type.unfix t with
       | Type.Integer -> Format.fprintf f "int"

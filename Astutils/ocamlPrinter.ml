@@ -10,6 +10,7 @@ class camlPrinter = object(self)
   inherit printer as super
 
   val mutable refbindings = BindingSet.empty
+  method lang () = "ml"
 
   method stdin_sep f =
     Format.fprintf f
@@ -261,6 +262,10 @@ class camlPrinter = object(self)
 
 (* Todo virer les parentheses quand on peut*)
   method apply (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+    match BindingMap.find_opt var macros with
+      | Some ( (t, params, code) ) ->
+	self#expand_macro_call f var t params code li
+      | None ->
     match li with
       | [] ->
 	Format.fprintf f "@[<h>(%a ())@]"
