@@ -1,6 +1,24 @@
 open Stdlib
 open Ast
 open Printer
+
+let contains_return li =
+  List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
+    | Instr.Return _ -> true
+    | _ -> acc) false) li
+
+let rec contains_sad_return instrs =
+  let rec f tra acc i = match Instr.unfix i with
+    | Instr.Loop(_, _, _, li) -> acc || ( contains_return li)
+    | Instr.While (_, li) -> acc || (contains_return li)
+    | Instr.If (_, li1, li2) ->
+      acc ||
+	(contains_sad_return li1) || (contains_sad_return li2) ||
+	(( contains_return li1) && not( contains_return li2)) ||
+	(( contains_return li2) && not( contains_return li1))
+    | _ -> tra acc i
+  in List.fold_left (f (Instr.Writer.Traverse.fold f)) false instrs
+
 (*
 TODO ajouter des conversions de types pour les entiers / float
 virer plus de refs
@@ -10,6 +28,9 @@ class camlPrinter = object(self)
   inherit printer as super
 
   val mutable refbindings = BindingSet.empty
+  val mutable sad_returns = false
+  val mutable printed_exn = 0
+
   method lang () = "ml"
 
   method stdin_sep f =
@@ -180,23 +201,37 @@ class camlPrinter = object(self)
   method print_fun f funname t li instrs =
     let () = self#calc_refs instrs in
     let is_rec = self#is_rec funname instrs in
-    let proto = if is_rec then self#print_rec_proto else self#print_proto
-    in
+    let proto = if is_rec then self#print_rec_proto else self#print_proto in
+    let () = sad_returns <- contains_sad_return instrs in
     match t with
       | Type.F Type.Void ->
-	Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%s@]@\n@\n"
-	  proto (funname, t, li)
-	  self#instructions instrs
-	  (match List.rev instrs with
-	    | (Instr.F (Instr.AllocArray _) ) :: _
-	    | (Instr.F (Instr.Declare _) ) :: _
-	    | [] -> " ()"
-	    | _ -> ""
-	  )
+	if sad_returns then failwith("return in a void function : "^funname)
+	else
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%s@]@\n@\n"
+	    proto (funname, t, li)
+	    self#instructions instrs
+	    (match List.rev instrs with
+	      | (Instr.F (Instr.AllocArray _) ) :: _
+	      | (Instr.F (Instr.Declare _) ) :: _
+	      | [] -> " ()"
+	      | _ -> ""
+	    )
       | _ ->
-	Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
-	  proto (funname, t, li)
-	  self#instructions instrs
+	if not(sad_returns) then
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	    proto (funname, t, li)
+	    self#instructions instrs
+	else
+	  let () =
+	    Warner.warn funname (fun t () -> Format.fprintf t "The returns will make a dirty ocaml code")
+	  in
+	  let () = printed_exn <- printed_exn + 1 in
+	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n  @[<v 2>try@\n%a@\nwith Found_%d(out) -> out@]@\n@\n"
+	    printed_exn
+	    self#ptype t
+	    proto (funname, t, li)
+	    self#instructions instrs
+	    printed_exn
 
   method expr_binding f e =
     if BindingSet.mem e refbindings
@@ -226,8 +261,11 @@ class camlPrinter = object(self)
     Format.fprintf f "(*%s*)" str
 
   method return f e =
-    Format.fprintf f "@[<h>%a@]" self#expr e
-
+    if sad_returns then
+      Format.fprintf f "@[<h>raise (Found_%d(%a))@]" printed_exn self#expr e
+    else
+      Format.fprintf f "@[<h>%a@]" self#expr e
+   
   method allocarray_lambda f binding type_ len binding2 lambda =
       Format.fprintf f "@[<h>let %a@ =@ Array.init@ %a@ (fun@ %a@ ->@\n@[<v 2>  %a@])@ in@]"
 	self#binding binding

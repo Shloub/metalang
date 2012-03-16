@@ -37,5 +37,16 @@ module F (T : SigAst) = struct
 	  in t) t
       in let (), t = foldmap f2 () t in
 	 t
+
+    let rec fold f acc t =
+      let f2 tra acc t =
+	let acc = f (fun acc t ->
+	  let acc, t = tra acc t
+	  in acc
+	) acc t
+	in acc, t
+      in let acc, _ = foldmap f2 acc t in
+	 acc
+
   end
 end
