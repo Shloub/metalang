@@ -1,5 +1,13 @@
 Readme
 
+Quick start:
+  ouvrir une console
+  aller dans le dossier metalang
+  taper ocamlbuild Main/main.native
+  taper ./main.native tests/prog/npi.metalang
+  on voit alors apparaitre des implémentations d'une calculette en notation polonaise inversée
+  dans les langages php, java, ocaml, C et C++
+
 But du projet:
     Ce projet à été fait pour le concours prologin (http://www.prologin.org)
     L'idée est de générer des lecteurs printers pour beaucoup de langages
