@@ -1,11 +1,7 @@
-mieux gérer else if ou if sans else ou if avec une seule instruction
 type ast
 type checker
-names checker
 return checker
-vérifier qu'on n'écrase pas de paramètre de fonction
 warnings pour les choses laides dans les différents langages
-pas de commentaires en derniere instruction.
 
 autres printers :
   C#
@@ -24,12 +20,8 @@ virer les warnings
 
 php stdin : ne pas forcer à faire ctrl+d
 position dans les expressions / annot dans les instructions
-throw pour les dirty returns en ocaml
-mapping de fonctions (de chaines par exemple): multiBSL
-definir des choses comme max_int, min_int
 AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
 commentaires indentation
-downto et upto, step sur les boucles for
 
 mode emacs ? (pas prioritaire)
 
@@ -41,7 +33,6 @@ tests
   - laine a vendre
   - gateau d'anniversaire
   - interpreteur lisp ?
-  - interpreteur NPI
   - dire si c'est bien parenthesé
   - pathFinding
   - trouver le plus petit entier qui n'est pas dans la liste
