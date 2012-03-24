@@ -6,7 +6,7 @@ integer b(){
 	print<integer>(2);
 	return 0;
 }
-void c(integer a, integer b){
+void c(integer d, integer e){
 }
 prog{
 	c(a(), b());

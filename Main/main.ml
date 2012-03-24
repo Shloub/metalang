@@ -3,6 +3,7 @@ open Ast
 
 let default_passes prog =
      prog
+     |> Passes.WalkCheckNaming.apply
      |> Passes.WalkNopend.apply
      |> Passes.WalkExpandPrint.apply
 

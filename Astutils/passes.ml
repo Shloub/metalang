@@ -163,3 +163,170 @@ module WalkNopend = Walk(NoPend);;
 module WalkExpandPrint = Walk(ExpandPrint);;
 module WalkIfMerge = Walk(IfMerge);;
 module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
+
+module type SigPassTop = sig
+  type acc;;
+  val init_acc : unit -> acc;;
+  val process : acc -> Prog.t_fun -> (acc * Prog.t_fun)
+  val process_main : acc -> Instr.t list -> (acc * Instr.t list)
+end
+
+module WalkTop (T:SigPassTop) = struct
+  let apply (name, p, m) =
+    let acc = T.init_acc () in
+    let acc, p =  List.fold_left_map T.process acc p in
+    let acc, m = T.process_main acc m in
+    (name, p, m)
+end
+
+
+module CheckNaming : SigPassTop = struct
+  type acc = {
+    functions : BindingSet.t;
+    parameters : BindingSet.t;
+    variables : BindingSet.t;
+    array : BindingSet.t;
+    types : BindingSet.t;
+  }
+  let init_acc _ =
+    {
+      functions = BindingSet.empty;
+      parameters = BindingSet.empty;
+      variables = BindingSet.empty;
+      array = BindingSet.empty;
+      types = BindingSet.empty;
+    }
+
+  let check_name0 funname acc name =
+    if BindingSet.mem name acc then
+      Warner.err funname (fun t () -> Format.fprintf t "%s is re-declared" name)
+
+  let check_name funname acc name =
+    begin
+      check_name0 funname acc.functions name;
+      check_name0 funname acc.parameters name;
+      check_name0 funname acc.variables name;
+      check_name0 funname acc.types name;
+      check_name0 funname acc.array name
+    end
+
+  let add_type_in_acc funname name acc out =
+    let () = check_name funname acc name in
+    let acc = { acc with types = BindingSet.add name acc.types }
+    in acc, out
+
+  let add_fun_in_acc funname name acc out =
+    let () = check_name funname acc name in
+    let acc = { acc with functions = BindingSet.add name acc.functions }
+    in acc, out
+
+  let add_param_in_acc funname name acc  =
+    let () = check_name funname acc name in
+    let acc = { acc with parameters = BindingSet.add name acc.parameters }
+    in acc
+
+  let add_array_in_acc funname name acc  =
+    let () = check_name funname acc name in
+    let acc = { acc with array = BindingSet.add name acc.array }
+    in acc
+
+  let add_local_in_acc funname name acc  =
+    let () = check_name funname acc name in
+    let acc = { acc with variables = BindingSet.add name acc.variables }
+    in acc
+
+  let is_local funname acc name =
+(* TODO if is parameter, change message *)
+    if not(BindingSet.mem name acc.variables) then
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable" name)
+
+
+  let is_array funname acc name =
+    if not(BindingSet.mem name acc.array)
+      && not( BindingSet.mem name acc.parameters)
+    then
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not an array" name)
+
+  let is_fun funname acc name =
+    if not(BindingSet.mem name acc.functions)
+    then
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a function" name)
+
+
+  let check_expr funname acc e = () (* TODO *)
+
+  let rec check_instr funname acc instr =
+    match Instr.unfix instr with
+      | Instr.Declare (var, t, e) ->
+	let () = check_expr funname acc e in
+	add_local_in_acc funname var acc
+      | Instr.Affect ((Instr.Var v), e) ->
+	let () = is_local funname acc v in
+	let () = check_expr funname acc e in
+	acc
+      | Instr.Affect ((Instr.Array (arr, el)), e) ->
+	let () = List.iter ( check_expr funname acc ) el in
+	let () = check_expr funname acc e in
+	let () = is_array funname acc arr
+	in acc
+      | Instr.Loop (v, e1, e2, li) ->
+	let () = check_expr funname acc e1 in
+	let () = check_expr funname acc e2 in
+	let acc2 = add_param_in_acc funname v acc in
+	let acc2 = List.fold_left (check_instr funname) acc2 li
+	in acc
+      | Instr.While (e, li) ->
+	let () = check_expr funname acc e in
+	let _ = List.fold_left (check_instr funname) acc li
+	in acc
+      | Instr.Comment _ -> acc
+      | Instr.Return e ->
+	let () = check_expr funname acc e in acc
+      | Instr.AllocArray (v, t, e, liopt) ->
+	let () = check_expr funname acc e in
+	let _ = match liopt with
+	  | None -> acc
+	  | Some (varname, li) ->
+	    let () = check_name funname acc varname in
+	    let acc = add_param_in_acc funname varname acc in
+	    List.fold_left (check_instr funname) acc li
+	in add_array_in_acc funname v acc
+      | Instr.If (e, li1, li2) ->
+	let () = check_expr funname acc e in
+	let _ = List.fold_left (check_instr funname) acc li1 in
+	let _ = List.fold_left (check_instr funname) acc li2
+	in acc
+      | Instr.Call (name, li) ->
+	let () = is_fun funname acc name in
+	let () = List.iter (check_expr funname acc) li
+	in acc
+      | Instr.Print (t, e) ->
+	let () = check_expr funname acc e in acc
+      | Instr.Read (t, Instr.Var v) ->
+	let () = is_local funname acc v in
+	acc
+      | Instr.Read (t, Instr.Array (v, el)) ->
+	let () = List.iter ( check_expr funname acc ) el in
+	let () = is_array funname acc v
+	in acc
+      | Instr.StdinSep -> acc
+
+  let process acc f = match f with
+    | Prog.Macro (name, _, _, _) ->
+      add_fun_in_acc name name acc f
+    | Prog.Comment _ -> acc, f
+    | Prog.DeclareType (name, _) ->
+      add_type_in_acc name name acc f
+    | Prog.DeclarFun (funname, t, params, instrs) ->
+      let acc, f = add_fun_in_acc funname funname acc f in
+      let acc0 = List.fold_left (fun acc (name, t) ->
+	add_param_in_acc funname name acc
+      ) acc params in
+      let _ = List.fold_left (check_instr funname) acc0 instrs
+      in acc, f
+  let process_main acc f =
+    let _ = List.fold_left (check_instr "main") acc f in
+    (acc, f)
+end
+
+module WalkCheckNaming = WalkTop(CheckNaming);;
