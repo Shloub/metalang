@@ -7,4 +7,9 @@ for i in `ls tests/prog/*.metalang`; do
     echo $test
     ./main.native "$i"  || exit 1
     bash cmpAll.sh "$test" "tests/prog/$test.in"  || exit 1
+    rm "$test.c"
+    rm "$test.cc"
+    rm "$test.java"
+    rm "$test.ml"
+    rm "$test.php"
 done
