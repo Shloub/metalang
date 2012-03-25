@@ -110,7 +110,7 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
     Format.fprintf f "public static %a"
       super#print_proto triplet
 
-  method print_scanner f _ = (* TODO if read node... *)
+  method print_scanner f _ =
     Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
 
   method read f t m =
