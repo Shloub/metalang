@@ -69,6 +69,7 @@ let () =
       out "cc" CppPrinter.printer#prog prog clike_passes;
       out "ml" OcamlPrinter.printer#prog prog ocaml_passes;
       out "php" PhpPrinter.printer#prog prog clike_passes;
+      (* out "sch" SchemePrinter.printer#prog prog clike_passes; *)
       (* out "sh" BashPrinter.printer#prog prog clike_passes; *)
     end
   with Parsing.Parse_error ->
