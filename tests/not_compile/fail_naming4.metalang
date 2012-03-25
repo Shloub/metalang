@@ -1,0 +1,7 @@
+void naming()
+{
+	integer foo := a + 1;
+}
+prog{
+
+}

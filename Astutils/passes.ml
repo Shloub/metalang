@@ -267,6 +267,16 @@ module CheckNaming : SigPassTop = struct
     let acc = { acc with variables = BindingSet.add name acc.variables }
     in acc
 
+
+  let is_value funname acc name =
+(* TODO if is parameter, change message *)
+    if not(BindingSet.mem name acc.variables) &&
+      not(BindingSet.mem name acc.parameters) &&
+      not(BindingSet.mem name acc.array)
+    then
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable" name)
+
+
   let is_local funname acc name =
 (* TODO if is parameter, change message *)
     if not(BindingSet.mem name acc.variables) then
@@ -285,9 +295,24 @@ module CheckNaming : SigPassTop = struct
       Warner.err funname (fun t () -> Format.fprintf t "%s is not a function" name)
 
 
-  let check_expr funname acc e = () (* TODO *)
-
-  let rec check_instr funname acc instr =
+  let check_expr funname acc e =
+    let f () e = match Expr.unfix e with
+      | Expr.Binding b ->
+	is_value funname acc b
+      | Expr.AccessArray (tab, li) ->
+	is_array funname acc tab
+      | Expr.Length tab ->
+	is_array funname acc tab
+      | Expr.Call (function_, _) ->
+	is_fun funname acc function_
+      | _ -> ()
+    in
+    Expr.Writer.Deep.fold
+      f
+      (f () e)
+      e
+ 
+ let rec check_instr funname acc instr =
     match Instr.unfix instr with
       | Instr.Declare (var, t, e) ->
 	let () = check_expr funname acc e in

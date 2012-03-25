@@ -1,0 +1,8 @@
+
+void naming2()
+{
+	integer foo := call(1);
+}
+prog{
+
+}

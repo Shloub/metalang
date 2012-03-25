@@ -100,11 +100,13 @@ module Writer = AstWriter.F (struct
 	let acc, a = f acc a in
 	let acc, b = f acc b in
 	(acc, F (annot, BinOp (a, op, b) ) )
-    | Integer _ -> acc, t
-    | Float _ -> acc, t
+    | Char _ -> acc, t
     | String _ -> acc, t
+    | Float _ -> acc, t
+    | Integer _ -> acc, t
     | Binding _ -> acc, t
     | Bool _ -> acc, t
+    | Length _ -> acc, t
     | AccessArray (arr, index) ->
 	let acc, index = List.fold_left_map f acc index in
 	(acc, F (annot, AccessArray(arr, index) ) )
