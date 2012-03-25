@@ -79,8 +79,8 @@ class printer = object(self)
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ %a@ =@ %a@]"
-      self#binding var
       self#ptype t
+      self#binding var
       self#expr e
 
   method affect f mutable_ expr =
