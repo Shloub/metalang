@@ -55,6 +55,18 @@ let print_list
 	  p tl
   in p f li
 
+let print_list_indexed print sep f li =
+  print_list
+    (fun f (toprint, index) ->
+      print f toprint index
+    )
+    sep
+    f
+    (snd (List.fold_left_map
+	    (fun i m -> (i+1), (m, i))
+	    0
+	    li
+     ))
 
 class printer = object(self)
 
