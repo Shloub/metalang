@@ -37,6 +37,7 @@ open Ast
 let default_passes prog =
      prog
      |> Passes.WalkCheckNaming.apply
+     |> Passes.WalkRename.apply
      |> Passes.WalkNopend.apply
      |> Passes.WalkExpandPrint.apply
 
@@ -49,6 +50,10 @@ let clike_passes prog =
 let () =
   let filename = Sys.argv.(1) in
   let progname = Filename.basename filename |> Filename.chop_extension in
+  let () = begin
+    Passes.Rename.add "out"; (* noms à renommer automatiquement *)
+    Passes.Rename.add progname;
+  end in
   let out ext printer prog passes =
     let filename = progname ^ "." ^ ext in
     Printf.printf "Generating %s\n%!" filename;

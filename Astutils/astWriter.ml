@@ -47,7 +47,9 @@ module F (T : SigAst) = struct
 	T.foldmap f acc t
       in acc
   end
+
   module Deep = struct
+
     let fold f0 acc t =
       let rec f acc t =
 	let acc, t = T.foldmap f acc t in
@@ -57,6 +59,18 @@ module F (T : SigAst) = struct
 	T.foldmap f acc t in
       let (acc, t) = f acc t
       in acc
+
+    let map f0 m =
+      let rec f () m =
+	let (), m = T.foldmap f () m in
+	(), f0 m
+      in
+      let ((), m) =
+	T.foldmap f () m in
+      let (_, m) = f () m
+      in m
+
+
   end
   module Traverse = struct
     let rec foldmap f acc t =
