@@ -16,3 +16,6 @@ echo -e "\nphp"
 cat $2 | php $1.php || exit 1
 echo -e "\nocaml"
 cat $2 | ocaml $1.ml || exit 1
+echo -e "\nC#"
+gmcs $1.cs
+cat $2 | mono $1.exe || exit 1
