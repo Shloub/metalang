@@ -50,6 +50,10 @@ module F (T : SigAst) = struct
 
   module Deep = struct
 
+    let rec foldmap f acc t =
+      let acc, t = T.foldmap (foldmap f) acc t
+      in f acc t
+
     let fold f0 acc t =
       let rec f acc t =
 	let acc, t = T.foldmap f acc t in
