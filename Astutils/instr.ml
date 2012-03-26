@@ -124,3 +124,55 @@ module Writer = AstWriter.F (struct
       | Read _ -> acc, t
       | Call _ -> acc, t
 end)
+
+let foldmap_expr
+    (f : 'acc -> Expr.t -> 'acc * Expr.t)
+    (acc:'acc)
+    (instruction:t) =
+  Writer.Deep.foldmap
+    (fun acc i ->
+      let out, i =
+	match unfix i with
+	  | Declare (v, t, e) ->
+	    let acc, e = f acc e in
+	    acc, Declare (v, t, e)
+	  | Affect (m, e) ->
+	    let acc, e = f acc e in
+	    acc, Affect (m, e)
+	  | Loop (v, e1, e2, li) ->
+	    let acc, e1 = f acc e1 in
+	    let acc, e2 = f acc e2 in
+	    acc, Loop(v, e1, e2, li)
+	  | While (e, li) ->
+	    let acc, e = f acc e in
+	    acc, While (e, li)
+	  | Comment s -> acc, Comment s
+	  | Return e ->
+	    let acc, e = f acc e in
+	    acc, Return e
+	  | AllocArray (v, t, e, liopt) ->
+	    let acc, e = f acc e in
+	    acc, AllocArray (v, t, e, liopt)
+	  | If (e, li1, li2) ->
+	    let acc, e = f acc e in
+	    acc, If (e, li1, li2)
+	  | Call (funname, li) ->
+	    let acc, li = List.fold_left_map f acc li in
+	    acc, Call (funname, li)
+	  | Print (t, e) ->
+	    let acc, e = f acc e in
+	    acc, Print (t, e)
+	  | Read (t, m) -> acc, Read (t, m)
+	  | StdinSep -> acc, StdinSep
+      in out, fix i
+    ) acc instruction
+
+let map_expr f i =
+  let f2 () e = (), (f e) in
+  let (), i = foldmap_expr f2 () i
+  in i
+
+let fold_expr f acc i =
+  let f2 acc e = (f acc e), e in
+  let acc, _ = foldmap_expr f2 acc i
+  in acc
