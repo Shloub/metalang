@@ -131,8 +131,9 @@
 %left ELSE
 
 
-%start main result
+%start main result functions
 %type <Prog.t_fun list * Instr.t list> main
+%type <Prog.t_fun list> functions
 %type <Expr.t> result
 %type <Type.t> type
 %%

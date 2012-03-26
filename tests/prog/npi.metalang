@@ -2,15 +2,6 @@
 Notation polonaise inversée
 */
 
-macro integer int_of_char(char c){ 
-ml -> "int_of_char ($c)";
-* -> "$c";
-}
-
-bool is_number(char c){
-     return c <= '9' && c >= '0';
-}
-
 integer npi(char array str, integer len){
 	integer array stack[len];
 	integer ptrStack := 0;

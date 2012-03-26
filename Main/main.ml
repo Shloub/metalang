@@ -48,6 +48,7 @@ let clike_passes prog =
     prog |> default_passes |> Passes.WalkAllocArrayExpend.apply
 
 let () =
+  let stdlib_file = "Stdlib/stdlib.metalang" in
   let filename = Sys.argv.(1) in
   let progname = Filename.basename filename |> Filename.chop_extension in
   let () = begin
@@ -65,10 +66,22 @@ let () =
     let () = close_out chan in ()
   in
   let lexbuf = Lexing.from_channel (open_in filename) in
+  let stdlib_buf = Lexing.from_channel (open_in stdlib_file) in
   try
     let (funs, main) = Parser.main Lexer.token lexbuf in
-    let prog = (progname, funs, main)
-    in begin
+    let stdlib_functions = Parser.functions Lexer.token stdlib_buf in
+    let prog = (progname, funs, main) in    
+    let used_functions = Passes.WalkCollectCalls.fold prog in
+    let funs = (List.filter (* sélection des fonctions de la stdlib *)
+		  (function
+		    | Prog.DeclarFun (v, _,_, _)
+		    | Prog.Macro (v, _, _, _) -> BindingSet.mem v used_functions
+		    | _ -> failwith ("bad stdlib")
+		  )
+		  stdlib_functions
+    ) @ funs in
+    let prog = (progname, funs, main) in
+    begin
       out "java" JavaPrinter.printer#prog prog clike_passes;
       out "c" CPrinter.printer#prog prog clike_passes;
       out "cc" CppPrinter.printer#prog prog clike_passes;

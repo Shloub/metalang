@@ -209,6 +209,11 @@ module WalkTop (T:SigPassTop) = struct
     let acc, p =  List.fold_left_map T.process acc p in
     let acc, m = T.process_main acc m in
     (name, p, m)
+  let fold (name, p, m) =
+    let acc = T.init_acc () in
+    let acc, p =  List.fold_left_map T.process acc p in
+    let acc, m = T.process_main acc m in
+    acc
 end
 
 module CheckNaming : SigPassTop = struct
@@ -434,6 +439,9 @@ module Rename = struct
       | Instr.Return e -> Instr.Return (process_expr map e)
       | Instr.AllocArray (name, t, e, None) ->
 	Instr.AllocArray ((mapname map name), t, (process_expr map e), None)
+      | Instr.AllocArray (name, t, e, Some ((var, li))) ->
+	let li2 = List.map (process_instr map) li in
+	Instr.AllocArray ((mapname map name), t, (process_expr map e), Some ((var, li2)))
       | Instr.If (e, li1, li2) ->
 	Instr.If ((process_expr map e),
 		  (List.map (process_instr map) li1 ),
@@ -460,3 +468,36 @@ module Rename = struct
 end
 
 module WalkRename = WalkTop(Rename);;
+
+module CollectCalls = struct
+  type acc = BindingSet.t
+
+  let init_acc () = BindingSet.empty
+
+  let process_expr acc e =
+    let f acc e = match Expr.unfix e with
+      | Expr.Call (funname, _) -> BindingSet.add funname acc
+      | e -> acc
+    in Expr.Writer.Deep.fold f acc e
+
+  let collect_instr acc i =
+    let f acc i =
+      match Instr.unfix i with
+	| Instr.Call (name, li) ->
+	  BindingSet.add name acc
+	| _ -> acc
+    in
+    let acc = Instr.Writer.Deep.fold f acc i
+    in Instr.fold_expr process_expr acc i
+
+  let process_main acc m = (List.fold_left collect_instr acc m), m
+
+  let process acc p =
+    let acc = match p with
+      | Prog.DeclarFun (_funname, _t, _params, instrs) ->
+	List.fold_left collect_instr acc instrs
+      | _ -> acc
+    in acc, p
+end
+
+module WalkCollectCalls = WalkTop(CollectCalls);;
