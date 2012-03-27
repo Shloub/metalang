@@ -1,0 +1,41 @@
+
+integer pathfind_aux(integer array cache, integer array tab, integer len, integer pos){
+	if (pos >= len - 1){
+	   return 0;
+	}else if (cache[pos] != -1){
+	      return cache[pos];
+	}else{
+	   cache[pos] := len * 2;
+	   integer posval := pathfind_aux(cache, tab, len, tab[pos]);
+	   integer oneval := pathfind_aux(cache, tab, len, pos + 1);
+	   integer out := 0;
+	   if (posval < oneval){
+	      out := 1 + posval;
+	   }else{
+	      out := 1 + oneval;
+	   }
+	   cache[pos] := out;
+	   return out;
+	}
+}
+
+integer pathfind(integer array tab, integer len){
+	integer array cache[len] (i ->
+		return -1;
+	);
+	return pathfind_aux(cache, tab, len, 0);
+}
+
+prog{
+	integer len := 0;
+	read<integer>(len);
+	stdin_sep();
+	integer array tab[len] (i ->
+		integer tmp := 0;
+		read<integer>(tmp);
+		stdin_sep();
+		return tmp;
+	);
+	integer result := pathfind(tab, len);
+	print<integer>(result);
+}
