@@ -53,6 +53,9 @@ let () =
   let progname = Filename.basename filename |> Filename.chop_extension in
   let () = begin
     Passes.Rename.add "out"; (* noms à renommer automatiquement *)
+    Passes.Rename.add "exp";
+    Passes.Rename.add "min";
+    Passes.Rename.add "max";
     Passes.Rename.add progname;
   end in
   let out ext printer prog passes =
