@@ -21,6 +21,7 @@ virer les warnings
 php stdin : ne pas forcer à faire ctrl+d
 position dans les expressions / annot dans les instructions
 AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
+break et continue (attention au caml)
 commentaires indentation
 
 mode emacs ? (pas prioritaire)
