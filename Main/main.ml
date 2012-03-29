@@ -72,14 +72,27 @@ let () =
     let stdlib_functions = Parser.functions Lexer.token stdlib_buf in
     let prog = (progname, funs, main) in    
     let used_functions = Passes.WalkCollectCalls.fold prog in
-    let funs = (List.filter (* sélection des fonctions de la stdlib *)
+(*    let funs_add = List.filter (* sélection des fonctions de la stdlib *)
 		  (function
 		    | Prog.DeclarFun (v, _,_, _)
 		    | Prog.Macro (v, _, _, _) -> BindingSet.mem v used_functions
 		    | _ -> failwith ("bad stdlib")
 		  )
 		  stdlib_functions
-    ) @ funs in
+    in *)
+    let funs_add, _ = List.fold_right
+      (fun f (li, used_functions) -> match f with
+	| Prog.DeclarFun (v, _,_, _)
+	| Prog.Macro (v, _, _, _) ->
+	  if BindingSet.mem v used_functions
+	  then (f::li, (Passes.WalkCollectCalls.fold_fun used_functions f) )
+	  else (li, used_functions)
+	| _ -> failwith ("bad stdlib")
+      )
+      stdlib_functions
+      ([], used_functions)
+
+    in let funs = funs_add @ funs in
     let prog = (progname, funs, main) in
     begin
       out "java" JavaPrinter.printer#prog prog clike_passes;
