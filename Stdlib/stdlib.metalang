@@ -6,3 +6,18 @@ ml -> "int_of_char ($c)";
 bool is_number(char c){
      return c <= '9' && c >= '0';
 }
+
+integer min2(integer a, integer b){
+	if (a < b){
+	 return a;
+	}
+	return b;
+}
+
+integer min3(integer a, integer b, integer c){
+	return min2(min2(a, b), c);
+}
+
+integer min4(integer a, integer b, integer c, integer d){
+	return min3(min2(a, b), c, d);
+}
