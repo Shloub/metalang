@@ -214,6 +214,10 @@ module WalkTop (T:SigPassTop) = struct
     let acc, p =  List.fold_left_map T.process acc p in
     let acc, m = T.process_main acc m in
     acc
+
+  let fold_fun acc p =
+    let acc, p =  T.process acc p in
+    acc
 end
 
 module CheckNaming : SigPassTop = struct
