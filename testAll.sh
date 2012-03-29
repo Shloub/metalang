@@ -12,4 +12,5 @@ for i in `ls tests/prog/*.metalang`; do
     rm "$test.java"
     rm "$test.ml"
     rm "$test.php"
+    rm "$test.cs"
 done
