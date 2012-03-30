@@ -1,0 +1,33 @@
+
+bool devine(integer nombre, integer array tab, integer len){
+     integer min := tab[0];
+     integer max := tab[1];
+     for i := 2 to len - 1
+     {
+	if (tab[i] > max || tab[i] < min){
+	  return false;
+	}
+	if (tab[i] < nombre){ min := tab[i]; }
+	if (tab[i] > nombre){ max := tab[i]; }
+	if (tab[i] == nombre && len != i + 1){
+	   return false;
+     	}
+     }
+     return true;
+}
+
+prog{
+	integer nombre := 0;
+	read<integer>(nombre);
+	stdin_sep();
+	integer len := 0;
+	read<integer>(len);
+	stdin_sep();
+	integer array tab[len] ( i ->
+		integer tmp := 0;
+		read<integer>(tmp);
+		stdin_sep();
+		return tmp;
+	);
+	print<bool>(devine(nombre, tab, len));
+}
