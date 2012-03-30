@@ -137,6 +137,12 @@ module NoPend : SigPass = struct
 end
 
 module ExpandPrint : SigPass = struct
+  
+  let rec write_bool e =
+    Instr.if_ (Expr.binding e)
+      [ Instr.print Type.string (Expr.string "True") ]
+      [ Instr.print Type.string (Expr.string "False") ]
+
   let rec write t b =
     let i = fresh () in
     let b2 = fresh () in
@@ -153,6 +159,7 @@ module ExpandPrint : SigPass = struct
 	(
 	  match t with
 	    | Type.F ( Type.Array t2) -> (b2i) :: (write t2 b2)
+	    | Type.F Type.Bool -> [b2i ; write_bool b2]
 	    | _ -> [ Instr.print t b2e]
 	)
     ]
@@ -160,6 +167,8 @@ module ExpandPrint : SigPass = struct
   let rec rewrite (i : Instr.t) : Instr.t list = match Instr.unfix i with
     | Instr.Print(Type.F (Type.Array t), Expr.F (annot, Expr.Binding b) ) ->
       write t b
+    | Instr.Print(Type.F (Type.Bool), Expr.F (annot, Expr.Binding b) ) ->
+      [write_bool b]
     | j -> [ Instr.map_bloc (List.flatten @* List.map rewrite) j |> Instr.fix ]
 
   type acc = unit
