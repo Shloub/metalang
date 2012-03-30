@@ -246,6 +246,7 @@ class printer = object(self)
     | Type.Float -> Format.fprintf f "%%.2f"
     | Type.Char -> Format.fprintf f "%%c"
     | Type.String -> Format.fprintf f "%%s"
+    | Type.Bool -> Format.fprintf f "%%b"
 
   method read f t mutable_ =
     Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#mutable_ mutable_
