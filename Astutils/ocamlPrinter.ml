@@ -104,6 +104,7 @@ class camlPrinter = object(self)
     Format.fprintf f "(Array.length %a)" self#binding tab
   
   method main f main =
+    let () = sad_returns <- contains_sad_return main in
     let () = self#calc_refs main in
     Format.fprintf f "@[<v 2>@[<h>let () =@\n@[<v 2>begin@\n%a@]@\nend@\n"
       self#instructions main
