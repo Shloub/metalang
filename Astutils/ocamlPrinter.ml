@@ -167,6 +167,7 @@ class camlPrinter = object(self)
 	       | Instr.AllocArray _ -> self#instr f i
 	       | Instr.Declare _ -> self#instr f i
 	       | Instr.Comment _ -> self#instr f i
+	       | Instr.Return _ -> self#instr f i
 	       | _ -> Format.fprintf f "%a;" self#instr i
 	   )
 	   item1 print2 item2
@@ -246,6 +247,7 @@ class camlPrinter = object(self)
 	    (match List.rev instrs with
 	      | (Instr.F (Instr.AllocArray _) ) :: _
 	      | (Instr.F (Instr.Declare _) ) :: _
+	      | (Instr.F (Instr.Comment _) ) :: _
 	      | [] -> " ()"
 	      | _ -> ""
 	    )
