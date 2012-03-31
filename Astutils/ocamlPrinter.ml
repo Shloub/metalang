@@ -175,11 +175,20 @@ class camlPrinter = object(self)
       ) f instrs
 
   method bloc f b =
-    match b with
-      | [i] ->
-	Format.fprintf f "@[<h>%a@]" self#instr i
-      | _ ->
+    if List.forall
+      (function
+	| Instr.F (Instr.Comment _) -> true
+	| _ -> false
+      )
+      b
+    then
 	Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
+    else
+      match b with
+	| [i] ->
+	  Format.fprintf f "@[<h>%a@]" self#instr i
+	| _ ->
+	  Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
       
   method binding f i = Format.fprintf f "%s" i
 
