@@ -132,7 +132,7 @@ class printer = object(self)
 	self#ptype type_
 	self#expr len
 	self#binding binding
-	self#binding binding
+	self#binding binding2
 	self#bloc lambda
 
   method mutable_ f m =
@@ -310,6 +310,7 @@ class printer = object(self)
     | Expr.Integer _ -> true
     | Expr.Float _ -> true
     | Expr.String _ -> true
+    | Expr.Char _ -> true
     | Expr.Binding _ -> true
     | Expr.AccessArray (_, _) -> true
     | Expr.Call (_, _) -> true
