@@ -131,6 +131,8 @@
 %left ELSE
 
 
+%left COMMENT
+
 %start main result functions
 %type <Prog.t_fun list * Instr.t list> main
 %type <Prog.t_fun list> functions
@@ -205,15 +207,14 @@ mutable_:
   | NAME { Instr.mutable_var $1 }
   | NAME arrayaccess { Instr.mutable_array $1 $2}
 
-
 if_:
-| IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE LHOOK instructions RHOOK { Instr.if_ $3 $6 $10 }
-| IF LPARENT result RPARENT LHOOK instructions RHOOK ELSE if_ { Instr.if_ $3 $6 [$9] }
-| IF LPARENT result RPARENT LHOOK instructions RHOOK { Instr.if_ $3 $6 [] }
+| IF LPARENT result RPARENT bloc ELSE bloc { Instr.if_ $3 $5 $7 }
+| IF LPARENT result RPARENT bloc { Instr.if_ $3 $5 [] }
 
+comment:
+| COMMENT { Instr.comment $1; } ;
 
 instruction:
-| COMMENT { Instr.comment $1}
 |  mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | RETURN result DOTCOMMA { Instr.return $2 }
 | type NAME LBRACE result RBRACE
@@ -241,17 +242,28 @@ match $1 with
 | READ O_LOWER type O_HIGHER LPARENT mutable_ RPARENT DOTCOMMA {
       Instr.read $3 $6
     }
-| FOR NAME AFFECT result TO result LHOOK instructions RHOOK
-{ Instr.loop $2 $4 $6 $8 }
-| WHILE LPARENT result RPARENT LHOOK instructions RHOOK
-{ Instr.while_ $3 $6 }
+| FOR NAME AFFECT result TO result bloc
+{ Instr.loop $2 $4 $6 $7 }
+| WHILE LPARENT result RPARENT bloc
+{ Instr.while_ $3 $5 }
 | STDINSEP { Instr.stdin_sep }
 
 instructions:
+| instruction comments { $1 :: $2 }
 | instruction { [$1] }
-| instruction instructions { $1::$2 }
+| instruction instructions { $1 :: $2 }
+| comments instructions { List.append $1 $2}
 ;
 
+comments:
+| comment comments { $1 :: $2 }
+| comment { [$1] }
+
+one_instruction:
+| comments one_instruction { List.append $1 $2 }
+| instruction comments { $1 :: $2 }
+| instruction { [$1] }
+ 
 param_list:
 | type NAME { [($2, $1)] }
 | type NAME COMMA param_list { ($2, $1) :: $4 }
@@ -259,6 +271,8 @@ param_list:
 bloc:
     | LHOOK instructions RHOOK { $2 } ;
     | LHOOK RHOOK { [] } ;
+    | one_instruction { $1 }
+    | LHOOK comments RHOOK { $2 }
 
 main_prog:
   PROG bloc { $2 } ;
