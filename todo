@@ -30,11 +30,12 @@ pouvoir faire des structures
 
 
 tests
+  - isPrime
+  - euclide
   - rectangles
   - laine a vendre
   - gateau d'anniversaire
   - interpreteur lisp ?
   - dire si c'est bien parenthesé
-  - pathFinding
   - trouver le plus petit entier qui n'est pas dans la liste
   - immeuble
