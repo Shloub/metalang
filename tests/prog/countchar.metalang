@@ -14,17 +14,17 @@ prog{
 	integer len := 0;
 	read<integer>(len);
 	stdin_sep();
-	char tofind := '\0';
+	char tofind := '\000';
 	read<char>(tofind);
 	stdin_sep();
 	char array tab[len + 1];
 	for i := 0 to len - 1
 	{
-		char tmp := '\0';
+		char tmp := '\000';
 		read<char>(tmp);
 		tab[i] := tmp;
 	}
-	tab[len] := '\0';
+	tab[len] := '\000';
 	integer result := nth(tab, tofind, len);
 	print<integer>(result);
 }

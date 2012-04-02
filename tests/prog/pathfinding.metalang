@@ -41,7 +41,7 @@ prog{
 	stdin_sep();
 	char array array tab[y] (i ->
 		char array tab2[x] (j ->
-		     char tmp := '\0';
+		     char tmp := '\000';
 		     read<char>(tmp);
 		     return tmp;
 		);

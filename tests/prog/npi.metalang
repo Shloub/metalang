@@ -32,7 +32,7 @@ prog{
 	read<integer>(len);
 	stdin_sep();
 	char array tab[len] (i ->
-		char tmp := '\0';
+		char tmp := '\000';
 		read<char>(tmp);
 		return tmp;
 	);
