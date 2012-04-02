@@ -45,7 +45,7 @@ let commentignore = '#' [^'\n']*
   let comment = ([^'*'] | ('*' [^'/'] ) )*
 
 
-let char = "\\'" | [^'\'' '\\'] | "\\0" | "\\n" | "\\r"
+let char = "\\'" | [^'\'' '\\'] | "\\n" | "\\r" | ("\\" ['0'-'9']* )
 
 let string = (( "\\\"" | [^'"'] )*)
 
@@ -62,7 +62,7 @@ token lexbuf
   }
 | spacing { token lexbuf }
 (*    spacing { SPACING } *)
-| '\'' (char as str) '\'' { CHAR( String.get str 0 ) }
+| '\'' (char as str) '\'' { CHAR( Scanf.sscanf ("'"^str^"'") "%C" (fun x -> x ) ) }
 | '"' (string as str) '"' { STRING(str) }
 | "print" { PRINT }
 | "read" { READ }
