@@ -16,6 +16,10 @@ echo -e "php"
 phpstdout=`php $1.php < $2` || exit 1
 echo -e "ocaml"
 mlstdout=`ocaml $1.ml < $2` || exit 1
+echo -e "\nlatex"
+pdflatex "$1.tex" || exit 1
+rm "$1.pdf"
+
 #echo -e "\nC#"
 #gmcs $1.cs
 #cat $2 | mono $1.exe || exit 1

@@ -41,6 +41,8 @@ let default_passes prog =
      |> Passes.WalkNopend.apply
      |> Passes.WalkExpandPrint.apply
 
+let tex_passes prog = prog
+
 let ocaml_passes prog =
   prog |> default_passes |> Passes.WalkIfMerge.apply
 
@@ -104,6 +106,7 @@ let () =
       out "ml" OcamlPrinter.printer#prog prog ocaml_passes;
       out "php" PhpPrinter.printer#prog prog clike_passes;
       out "cs" CsharpPrinter.printer#prog prog clike_passes;
+      out "tex" TexPrinter.printer#prog prog tex_passes;
       (* out "sch" SchemePrinter.printer#prog prog clike_passes; *)
       (* out "sh" BashPrinter.printer#prog prog clike_passes; *)
     end
