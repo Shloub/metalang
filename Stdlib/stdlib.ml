@@ -309,21 +309,21 @@ module String = struct
     with Not_found -> false
     
 
-  let index s1 s2 =
+  let index from s1 s2 =
     let len1 = length s1 in
     let len2 = length s2 in
     try
-      for i = 0 to (len2 - len1) do
+      for i = from to (len2 - len1) do
 	if match_from s1 s2 i then raise (Found i)
       done;
       -1
     with Found i -> i
 
-  let replace_1 tofind replacement instring =
+  let replace_1 tofind replacement instring from =
     let diff_size = (length replacement) - (length tofind ) in
-    let i = index tofind instring in
+    let i = index from tofind instring in
     (* Printf.printf "%d %s %s %s \n%!" i tofind replacement instring; *)
-    if i = -1 then instring else
+    if i = -1 then instring, (String.length instring) else
       let out = String.create ((String.length instring) + diff_size) in
       for j = 0 to i - 1 do
 	String.set out j (String.get instring j);
@@ -334,12 +334,14 @@ module String = struct
       for j = 0 to (String.length replacement) - 1 do
 	String.set out (i + j) (String.get replacement j);
       done;
-      out
+      out, i + diff_size
 
   let rec replace tofind replacement instring =
-    let out = replace_1 tofind replacement instring in
-    if out = instring then out else
-      replace tofind replacement out
+    let rec f tofind replacement instring from =
+      let out, nextFrom = replace_1 tofind replacement instring from in
+      if out = instring then out else
+	f tofind replacement out (nextFrom+1)
+    in f tofind replacement instring 0
 
 end
 
