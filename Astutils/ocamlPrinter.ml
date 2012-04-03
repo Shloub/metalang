@@ -152,22 +152,51 @@ class camlPrinter = object(self)
 	self#bloc elsecase
 
   method instructions f instrs =
-    (print_list
-       self#instr
-       (fun t print1 item1 print2 item2 ->
-	 Format.fprintf t "%a@\n%a"
-	   (fun t i ->
-	     match Instr.unfix i with
-	       | Instr.AllocArray _ -> self#instr f i
-	       | Instr.Declare _ -> self#instr f i
-	       | Instr.Comment _ -> self#instr f i
-	       | Instr.Return _ -> self#instr f i
-	       | _ -> Format.fprintf f "%a;" self#instr i
-	   )
-	   item1 print2 item2
-       )
-      ) f instrs
+    Format.fprintf f "%a%s"
+      (print_list
+	 self#instr
+	 (fun t print1 item1 print2 item2 ->
+	   Format.fprintf t "%a@\n%a"
+	     (fun t i ->
+	       match Instr.unfix i with
+		 | Instr.AllocArray _ -> self#instr f i (* letin -> pas de ; *)
+		 | Instr.Declare _ -> self#instr f i (* letin -> pas de ; *)
+		 | Instr.Comment _ -> self#instr f i
+		 | Instr.Return _ -> self#instr f i
+		 | _ ->
+		   if (* Si on a que des commentaires ensuite, alors on ne met pas de ; *)
+		     (List.for_all
+			(function
+			  | (Instr.F (Instr.Comment _) ) -> true
+			  | _ -> false
+			)
+			item2
+		     )
+		   then
+		       self#instr f i
+		   else
+		     Format.fprintf f "%a;" self#instr i
+	     )
+	     item1 print2 item2
+	 )
+      ) instrs
+      (self#need_unit instrs)
 
+  method need_unit instrs =
+    match List.rev
+      (List.filter
+	 (function
+	   | (Instr.F (Instr.Comment _) ) -> false
+	   | _ -> true
+	 )
+	 instrs
+      )
+    with
+      | (Instr.F (Instr.AllocArray _) ) :: _
+      | (Instr.F (Instr.Declare _) ) :: _
+      | [] -> " ()"
+      | _ -> ""
+	    
   method bloc f b =
     if List.forall
       (function
@@ -180,10 +209,11 @@ class camlPrinter = object(self)
     else
       match b with
 	| [i] ->
-	  Format.fprintf f "@[<h>%a@]" self#instr i
+	  Format.fprintf f "@[<h>%a%s@]" self#instr i
+	    (self#need_unit b)
 	| _ ->
 	  Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
-      
+  
   method binding f i = Format.fprintf f "%s" i
 
   method affect f m expr =
@@ -244,16 +274,9 @@ class camlPrinter = object(self)
       | Type.F Type.Void ->
 	if sad_returns then failwith("return in a void function : "^funname)
 	else
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%s@]@\n@\n"
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
 	    proto (funname, t, li)
 	    self#instructions instrs
-	    (match List.rev instrs with
-	      | (Instr.F (Instr.AllocArray _) ) :: _
-	      | (Instr.F (Instr.Declare _) ) :: _
-	      | (Instr.F (Instr.Comment _) ) :: _
-	      | [] -> " ()"
-	      | _ -> ""
-	    )
       | _ ->
 	if not(sad_returns) then
 	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
