@@ -23,6 +23,9 @@ position dans les expressions / annot dans les instructions
 AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
 break et continue (attention au caml)
 commentaires indentation
+chercher a faire un sort correct
+ajouter du code dans les bypass, et résoudre correctement les dépendences
+operateurs en ocaml
 
 mode emacs ? (pas prioritaire)
 
