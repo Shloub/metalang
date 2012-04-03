@@ -1,5 +1,9 @@
 #!/bin/bash
 
+rme(){
+    if [ -e "$1" ]; then rm "$1"; fi 
+}
+
 ocamlbuild Main/main.byte  || exit 1
 
 for i in `ls tests/prog/*.metalang`; do
@@ -7,12 +11,12 @@ for i in `ls tests/prog/*.metalang`; do
     echo $test
     ./main.byte "$i"  || exit 1
     bash cmpAll.sh "$test" "tests/prog/$test.in"  || exit 1
-    rm "$test.tex"
-    rm "$test.log"
-    rm "$test.c"
-    rm "$test.cc"
-    rm "$test.java"
-    rm "$test.ml"
-    rm "$test.php"
-    rm "$test.cs"
+    rme "$test.tex"
+    rme "$test.log"
+    rme "$test.c"
+    rme "$test.cc"
+    rme "$test.java"
+    rme "$test.ml"
+    rme "$test.php"
+    rme "$test.cs"
 done
