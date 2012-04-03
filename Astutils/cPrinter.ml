@@ -75,7 +75,7 @@ class cPrinter = object(self)
 	self#binding binding
 	
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "int %a;@\n%a"
+    Format.fprintf f "{int %a;@\n%a}"
       self#binding varname
       self#forloop_content (varname, expr1, expr2, li)
   method forloop_content f (varname, expr1, expr2, li) =
