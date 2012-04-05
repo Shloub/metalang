@@ -61,11 +61,14 @@ let fix x = F ((next ()), x)
 let map f = function
   | BinOp (a, op, b) -> BinOp ((f a), op, f b)
   | UnOp (a, op) -> UnOp((f a), op)
-  | Integer i -> Integer i
-  | Float f -> Float f
-  | String s -> String s
-  | Binding b -> Binding b
-  | Bool b -> Bool b
+  | (
+    Integer _ 
+	| Length _
+	| Float _ 
+	| String _ 
+	| Binding _ 
+	| Char _
+	| Bool _) as lief -> lief
   | AccessArray (i, a) -> AccessArray (i, List.map f a)
   | Call (n, li) -> Call (n, List.map f li)
 
@@ -272,10 +275,6 @@ let calc_and a b = match (a, b) with
 
       | Integer i -> RInteger i
       | Float f -> RFloat f
-      | AccessArray (arr, index) -> assert false (* TODO *)
-      | Binding b -> RInteger 0
-(*
-	  assert false (*TODO*) *)
-      | String f -> assert false
-      | Bool b -> assert false (* TODO *)
+      | _ -> assert false (* TODO *)
+
 end

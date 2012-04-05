@@ -220,14 +220,16 @@ LPARENT NAME ARROW instructions RPARENT DOTCOMMA
 match $1 with
   | Type.F (Type.Array t) ->
     Instr.alloc_array_lambda $2 t $4 $7 $9
-  (* TODO *)
+  | _ -> raise Parsing.Parse_error
+  (* TODO ajouter un message *)
 }
 | type NAME LBRACE result RBRACE DOTCOMMA
 {
 match $1 with
   | Type.F (Type.Array t) ->
     Instr.alloc_array $2 t $4
-  (* TODO *)
+  | _ -> raise Parsing.Parse_error
+  (* TODO ajouter un message*)
 }
 | NAME LPARENT RPARENT DOTCOMMA { Instr.call $1 [] }
 | NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }

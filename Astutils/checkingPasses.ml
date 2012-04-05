@@ -151,7 +151,7 @@ module CheckNaming : SigPassTop = struct
 	let () = check_expr funname acc e1 in
 	let () = check_expr funname acc e2 in
 	let acc2 = add_param_in_acc funname v acc in
-	let acc2 = List.fold_left (check_instr funname) acc2 li
+	let _acc2 = List.fold_left (check_instr funname) acc2 li
 	in acc
       | Instr.While (e, li) ->
 	let () = check_expr funname acc e in
