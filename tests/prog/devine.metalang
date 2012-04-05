@@ -17,11 +17,9 @@ bool devine(integer nombre, integer array tab, integer len){
 }
 
 prog{
-	integer nombre := 0;
-	read<integer>(nombre);
+	read integer nombre;
 	stdin_sep();
-	integer len := 0;
-	read<integer>(len);
+	read integer len;
 	stdin_sep();
 	integer array tab[len] ( i ->
 		read integer tmp;

@@ -6,5 +6,8 @@ Printer
 Prog
 Type
 Passes
+PassesUtils
+CheckingPasses
+ExpandPasses
 Fresh
 Warner
