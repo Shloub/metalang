@@ -49,6 +49,7 @@ type 'a tofix =
   | Call of funname * Expr.t list
   | Print of Type.t * Expr.t
   | Read of Type.t * mutable_
+  | DeclRead of Type.t * varname
   | StdinSep
 
 type t = F of t tofix
@@ -57,6 +58,7 @@ let fix x = F x
 let stdin_sep = StdinSep |> fix
 let print t v = Print (t, v) |> fix
 let read t v = Read (t, v) |> fix
+let readdecl t v = DeclRead (t, v) |> fix
 let call v p = Call (v, p) |> fix
 let declare v t e =  Declare (v, t, e) |> fix
 let affect v e = Affect (v, e) |> fix
@@ -87,6 +89,7 @@ let map_bloc ( f : 'a list -> 'b list) (t : 'a tofix) : 'b tofix = match t with
     t
   | Print _ -> t
   | Read _ -> t
+  | DeclRead _ -> t
   | Call _ -> t
   | StdinSep -> t
 
@@ -119,6 +122,7 @@ module Writer = AstWriter.F (struct
 	acc, fix(AllocArray (b, t, l, Some (b2, li)) )
       | Print _ -> acc, t
       | Read _ -> acc, t
+      | DeclRead _ -> acc, t
       | Call _ -> acc, t
 end)
 
@@ -160,6 +164,7 @@ let foldmap_expr
 	    let acc, e = f acc e in
 	    acc, Print (t, e)
 	  | Read (t, m) -> acc, Read (t, m)
+	  | DeclRead (t, m) -> acc, DeclRead (t, m)
 	  | StdinSep -> acc, StdinSep
       in out, fix i
     ) acc instruction

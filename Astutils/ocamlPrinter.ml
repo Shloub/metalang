@@ -158,6 +158,7 @@ class camlPrinter = object(self)
 	       match Instr.unfix i with
 		 | Instr.AllocArray _ -> self#instr f i (* letin -> pas de ; *)
 		 | Instr.Declare _ -> self#instr f i (* letin -> pas de ; *)
+		 | Instr.DeclRead _ -> self#instr f i
 		 | Instr.Comment _ -> self#instr f i
 		 | Instr.Return _ -> self#instr f i
 		 | _ ->
@@ -191,6 +192,7 @@ class camlPrinter = object(self)
     with
       | (Instr.F (Instr.AllocArray _) ) :: _
       | (Instr.F (Instr.Declare _) ) :: _
+      | (Instr.F (Instr.DeclRead _)) :: _
       | [] -> " ()"
       | _ -> ""
 	    
@@ -238,6 +240,13 @@ class camlPrinter = object(self)
       (match m with
 	| Instr.Var _ -> ":="
 	| Instr.Array _ -> "<-")
+
+
+  method read_decl f t v =
+    Format.fprintf f "@[let %a = Scanf.scanf \"%a\" (fun x -> x) in@]"
+      self#binding v
+      self#format_type t
+
 
   method calc_refs instrs =
     refbindings <-

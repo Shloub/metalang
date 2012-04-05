@@ -236,6 +236,7 @@ class printer = object(self)
     | Instr.Call (var, li) -> self#call f var li
 
     | Instr.Read (t, mutable_) -> self#read f t mutable_
+    | Instr.DeclRead (t, var) -> self#read_decl f t var
     | Instr.Print (t, expr) -> self#print f t expr
 
   method format_type f t = match Type.unfix t with
@@ -247,6 +248,12 @@ class printer = object(self)
 
   method read f t mutable_ =
     Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#mutable_ mutable_
+
+  method read_decl f t v =
+    Format.fprintf f "@[%a %a := read<%a>();@]"
+      self#ptype t
+      self#binding v
+      self#ptype t
 
   method print f t expr =
     Format.fprintf f "@[print<%a>(%a);@]" self#ptype t self#expr expr

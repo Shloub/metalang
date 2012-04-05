@@ -74,6 +74,26 @@ module IfMerge : SigPass = struct
     (), f [] i;;
 end
 
+module ExpandReadDecl : SigPass = struct
+  type acc = unit;;
+  let init_acc () = ();;
+
+  let expand i = match Instr.unfix i with
+    | Instr.DeclRead (t, binding) ->
+      [ Instr.fix (Instr.Declare (binding, t, Expr.default_value t) );
+	Instr.read t (Instr.mutable_var binding);
+      ]
+    | _ -> [i]
+
+  let mapi i =
+    Instr.map_bloc
+      (List.flatten @* (List.map expand) )
+      (Instr.unfix i) |> Instr.fix
+
+  let process () is = (), List.map mapi (List.flatten (List.map expand is))
+
+end
+
 module AllocArrayExpend : SigPass = struct
   type acc = unit;;
   let init_acc () = ();;
@@ -201,6 +221,7 @@ module WalkNopend = Walk(NoPend);;
 module WalkExpandPrint = Walk(ExpandPrint);;
 module WalkIfMerge = Walk(IfMerge);;
 module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
+module WalkExpandReadDecl = Walk(ExpandReadDecl);;
 
 module type SigPassTop = sig
   type acc;;
@@ -373,6 +394,8 @@ module CheckNaming : SigPassTop = struct
 	in acc
       | Instr.Print (t, e) ->
 	let () = check_expr funname acc e in acc
+      | Instr.DeclRead (t, v) ->
+	add_local_in_acc funname v acc
       | Instr.Read (t, Instr.Var v) ->
 	let () = is_local funname acc v in
 	acc
@@ -463,6 +486,7 @@ module Rename = struct
 	Instr.Print (t, process_expr map e)
       | Instr.Read (t, m) ->
 	Instr.Read (t, mapmutable map m)
+      | (Instr.DeclRead (t, v) ) as i -> i
       | Instr.StdinSep -> Instr.StdinSep
     in Instr.fix i
 

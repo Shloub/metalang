@@ -238,7 +238,10 @@ match $1 with
     }
 | READ O_LOWER type O_HIGHER LPARENT mutable_ RPARENT DOTCOMMA {
       Instr.read $3 $6
-    }
+}
+| READ type NAME DOTCOMMA {
+  Instr.readdecl $2 $3
+}
 | FOR NAME AFFECT result TO result bloc
 { Instr.loop $2 $4 $6 $7 }
 | WHILE LPARENT result RPARENT bloc

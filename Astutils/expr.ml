@@ -78,11 +78,22 @@ let integer i = fix (Integer i)
 let char i = fix (Char i)
 let float f = fix (Float f)
 let string f = fix (String f)
+let boolean b = fix (Bool b)
 let binding b = fix (Binding b)
 let access_array i a = fix (AccessArray (i, a) )
 let access_array1 i a = fix (AccessArray (i, [a]) )
 let call name li = fix ( Call(name, li))
 let length name = fix ( Length name)
+
+
+let default_value t = match Type.unfix t with
+  | Type.Integer -> integer 0
+  | Type.Float -> float 0.
+  | Type.String -> string ""
+  | Type.Char -> char '_'
+  | Type.Array _ -> failwith ("new array is not an expression")
+  | Type.Void -> failwith ("no dummy expression for void")
+  | Type.Bool -> boolean false
 
 module Writer = AstWriter.F (struct
   type alias = t;;

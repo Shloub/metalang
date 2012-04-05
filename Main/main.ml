@@ -45,7 +45,7 @@ let ocaml_passes prog =
 
 let clike_passes prog =
     prog |> default_passes |> Passes.WalkAllocArrayExpend.apply
-
+     |> Passes.WalkExpandReadDecl.apply
 let () =
   let stdlib_file = "Stdlib/stdlib.metalang" in
   let filename = Sys.argv.(1) in
