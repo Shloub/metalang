@@ -2,7 +2,6 @@ Ast
 AstWriter
 Expr
 Instr
-Printer
 Prog
 Type
 Passes
