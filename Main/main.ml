@@ -31,9 +31,9 @@
 open Stdlib
 open Ast
 
-let default_passes prog =
+let default_passes (prog : Prog.t) : Prog.t =
      prog
-     |> Passes.WalkCheckNaming.apply
+(*     |> Passes.WalkCheckNaming.apply *)
      |> Passes.WalkRename.apply
      |> Passes.WalkNopend.apply
      |> Passes.WalkExpandPrint.apply
@@ -72,7 +72,10 @@ let () =
   try
     let (funs, main) = Parser.main Lexer.token lexbuf in
     let stdlib_functions = Parser.functions Lexer.token stdlib_buf in
-    let prog = (progname, funs, main) in    
+    let prog = {
+      Prog.progname = progname;
+      Prog.funs = funs;
+      Prog.main = main} in    
     let used_functions = Passes.WalkCollectCalls.fold prog in
 (*    let funs_add = List.filter (* sélection des fonctions de la stdlib *)
 		  (function
@@ -95,7 +98,7 @@ let () =
       ([], used_functions)
 
     in let funs = funs_add @ funs in
-    let prog = (progname, funs, main) in
+    let prog = { prog with Prog.funs = funs } in
     begin
       out "java" JavaPrinter.printer#prog prog clike_passes;
       out "c" CPrinter.printer#prog prog clike_passes;

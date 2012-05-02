@@ -40,16 +40,12 @@ class csharpPrinter = object(self)
 
   method lang () = "csharp"
 
-
-  method print_scanner f _ = ()
-
-  method prog f (progname, funs, main) =
+  method prog f prog =
     Format.fprintf f
-      "using System;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@\n%a@]@\n}@\n"
-      progname
-      self#print_scanner main
-      self#proglist funs
-      self#main main
+      "using System;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"
+      prog.Prog.progname
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
 
   method print f t expr =
     Format.fprintf f "@[Console.Write(%a);@]" self#expr expr

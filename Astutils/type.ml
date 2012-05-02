@@ -29,6 +29,12 @@
 
 open Stdlib
 open Ast
+
+type structparams = 
+{
+  tuple : bool
+}
+
 type 'a tofix =
   | Integer
   | Float
@@ -37,6 +43,9 @@ type 'a tofix =
   | Array of 'a
   | Void
   | Bool
+  | Typename of typename
+  | Struct of
+      (fieldname * 'a) list * structparams
 
 type t = F of t tofix
 let unfix = function F x -> x

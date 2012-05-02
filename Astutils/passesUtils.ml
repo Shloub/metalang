@@ -39,15 +39,25 @@ module type SigPassTop = sig
 end
 
 module WalkTop (T:SigPassTop) = struct
-  let apply (name, p, m) =
+  let apply ( prog : Prog.t ) =
     let acc = T.init_acc () in
-    let acc, p =  List.fold_left_map T.process acc p in
-    let acc, m = T.process_main acc m in
-    (name, p, m)
-  let fold (name, p, m) =
+    let acc, p =  List.fold_left_map T.process acc prog.Prog.funs in
+    let acc, m = match prog.Prog.main with
+      | None -> acc, None
+      | Some m -> match T.process_main acc m with
+	  | (acc, main) -> acc, Some main
+    in
+    { prog with
+      Prog.funs = p;
+      Prog.main = m;
+    }
+  
+  let fold ( prog : Prog.t ) =
     let acc = T.init_acc () in
-    let acc, p =  List.fold_left_map T.process acc p in
-    let acc, m = T.process_main acc m in
+    let acc, funs =  List.fold_left_map T.process acc prog.Prog.funs in
+    let acc, _ = match prog.Prog.main with
+      | None -> acc, []
+      | Some m -> T.process_main acc m in
     acc
 
   let fold_fun acc p =
@@ -77,9 +87,16 @@ module Walk (T:SigPass) = struct
       )
       acc
       p
-  let apply (name, p, m) =
+  let apply ( prog : Prog.t ) : Prog.t  =
     let acc = T.init_acc () in
-    let acc, p =  apply_prog acc p in
-    let acc, m = apply_instr acc m in
-    (name, p, m)
+    let acc, p = apply_prog acc prog.Prog.funs in
+    let acc, m = match prog.Prog.main with
+      | None -> acc, None
+      | Some m -> match apply_instr acc m with
+	  | (a, b) -> a, Some b
+    in
+    {prog with
+      Prog.main = m;
+      Prog.funs = p;
+    }
 end

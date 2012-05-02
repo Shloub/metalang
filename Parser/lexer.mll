@@ -61,6 +61,10 @@ token lexbuf
 (*    spacing { SPACING } *)
 | '\'' (char as str) '\'' { CHAR( Scanf.sscanf ("'"^str^"'") "%C" (fun x -> x ) ) }
 | '"' (string as str) '"' { STRING(str) }
+| "type" { DECLTYPE }
+| "extern" { EXTERN }
+| "struct" { STRUCT }
+| "global" { GLOBAL }
 | "print" { PRINT }
 | "read" { READ }
 | "prog" { PROG }
@@ -74,6 +78,7 @@ token lexbuf
 | "," { COMMA }
 | ";" { DOTCOMMA }
 | ":=" { AFFECT }
+| ":" { DOUBLEPOINT }
 | "->" { ARROW }
 | "bool" { TYPE( Type.bool ) }
 | "integer" { TYPE( Type.integer ) }

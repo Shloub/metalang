@@ -32,6 +32,7 @@ open Stdlib
 type varname = string
 type typename = string
 type funname = string
+type fieldname = string
 
 module BindingSet = MakeSet (struct
   type t = string

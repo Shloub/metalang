@@ -83,6 +83,11 @@
 %token AFFECT
 %token ARRAY
 %token ARROW
+%token DECLTYPE
+%token STRUCT
+%token DOUBLEPOINT
+%token EXTERN
+%token GLOBAL
 
 %token <Type.t> TYPE
 
@@ -131,7 +136,7 @@
 %left COMMENT
 
 %start main result functions
-%type <Prog.t_fun list * Instr.t list> main
+%type <Prog.t_fun list * Instr.t list option> main
 %type <Prog.t_fun list> functions
 %type <Expr.t> result
 %type <Type.t> type
@@ -277,7 +282,8 @@ bloc:
     | LHOOK comments RHOOK { $2 }
 
 main_prog:
-  PROG bloc { $2 } ;
+  PROG bloc EOF { Some $2 } ;
+    | EOF { None };
 
 function_:
     | type NAME LPARENT param_list RPARENT bloc {

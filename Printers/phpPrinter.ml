@@ -88,10 +88,10 @@ class phpPrinter = object(self)
 	header
 	self#instructions main
       
-  method prog f (progname, funs, main) =
+  method prog f prog =
     Format.fprintf f "<?php@\n%a%a@\n?>@\n"
-      self#proglist funs
-      self#main main
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
 
    method print_proto f (funname, t, li) =
     Format.fprintf f "function %a(%a)"

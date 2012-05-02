@@ -30,6 +30,11 @@
 open Ast
 open Stdlib
 
+let print_option (f : Format.formatter -> 'a -> unit) t obj =
+  match obj with
+    | None -> ()
+    | Some s -> f t s
+
 let print_list
     (func : Format.formatter -> 'a -> unit)
     (sep :
@@ -390,10 +395,10 @@ class printer = object(self)
 	  macros;
 	()
 
-  method prog f ((progname, funs, main):Prog.t) =
+  method prog f (prog:Prog.t) =
     Format.fprintf f "%a%a@\n"
-      self#proglist funs
-      self#main main
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
 
   method instructions f instrs =
     (print_list

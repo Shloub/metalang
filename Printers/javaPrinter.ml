@@ -53,13 +53,13 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
       | Type.Bool -> Format.fprintf f "boolean"
       | Type.Char -> Format.fprintf f "char"
 
-  method prog f (progname, funs, main) =
+  method prog f prog =
     Format.fprintf f
       "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@\n%a@]@\n}@\n"
-      progname
-      self#print_scanner main
-      self#proglist funs
-      self#main main
+      prog.Prog.progname
+      self#print_scanner ()
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
 
 
   method prefix_type f t =
@@ -107,7 +107,7 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
     Format.fprintf f "public static %a"
       super#print_proto triplet
 
-  method print_scanner f _ =
+  method print_scanner f () =
     Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
 
   method read f t m =

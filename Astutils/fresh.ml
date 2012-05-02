@@ -42,7 +42,7 @@ let var_of_int =
 
 let bindings = ref BindingSet.empty
 
-let fresh_init (progname, toplvl, instrs) =
+let fresh_init (prog: Prog.t) =
   let addset acc i = Instr.Writer.Deep.fold
     (fun acc i ->
       match Instr.unfix i with
@@ -64,8 +64,10 @@ let fresh_init (progname, toplvl, instrs) =
     | _ -> acc
   in
   let set = BindingSet.empty in
-  let set = List.fold_left addset set instrs in
-  let set = List.fold_left addtop set toplvl in
+  let set = match prog.Prog.main with
+    | None -> set
+    | Some instrs -> List.fold_left addset set instrs in
+  let set = List.fold_left addtop set prog.Prog.funs in
   (*let () = BindingSet.iter
     (fun s -> Printf.printf "%s\n" s) set in
   let () = Printf.printf "len = %d\n" (BindingSet.cardinal set) in

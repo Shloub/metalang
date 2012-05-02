@@ -51,11 +51,11 @@ inherit cPrinter as super
     | true -> Format.fprintf f "true"
     | false -> Format.fprintf f "false"
 
-  method prog f (progname, funs, main) =
+  method prog f prog =
     Format.fprintf f
       "#include <cstdlib>@\n#include <cstdio>@\n#include <iostream>@\n#include <vector>@\n%a@\n%a\n"
-      self#proglist funs
-      self#main main
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
 
   method length f tab =
     Format.fprintf f "%a.size()" self#binding tab

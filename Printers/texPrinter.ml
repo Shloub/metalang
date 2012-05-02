@@ -80,7 +80,7 @@ class texPrinter = object(self)
     let s = Printf.sprintf "%S" (String.make 1 c)
     in self#texString f s
 
-  method prog f (progname, funs, main) =
+  method prog f prog =
     Format.fprintf f
       "\\documentclass[8pt]{article}
 \\usepackage[ruled,vlined]{algorithm2e}
@@ -91,9 +91,9 @@ class texPrinter = object(self)
 %a
 \\end{document}
 "
-      self#texString progname
-      self#proglist funs
-      self#main main
+      self#texString prog.Prog.progname
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
 
 
   method allocarray_lambda f binding type_ len binding2 lambda =
