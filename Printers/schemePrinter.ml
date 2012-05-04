@@ -99,7 +99,7 @@ inherit printer as super
     | Expr.String i -> self#string f i
     | Expr.Binding b -> self#expr_binding f b
     | Expr.AccessArray (arr, index) ->
-	self#access_array f arr index
+	self#access_array f self#binding arr index
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Length (tab) ->
       self#length f tab

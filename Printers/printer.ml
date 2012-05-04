@@ -120,6 +120,21 @@ class printer = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
+      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Struct (li, p) ->
+	Format.fprintf f "struct{%a}%a"
+	  (print_list
+	     (fun t (name, type_) ->
+	       Format.fprintf t "%a : %a;" self#binding name self#ptype type_
+	     )
+	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	  ) li
+	  (fun t p ->
+	    match p with
+	      | {Type.tuple=t} ->
+		if t then
+		  Format.fprintf f " as tuple"
+	  ) p
 
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]"
@@ -137,18 +152,27 @@ class printer = object(self)
 	self#binding binding2
 	self#bloc lambda
 
+  method field f field =
+    Format.fprintf f "%s" field
+
   method mutable_ f m =
     match m with
+      | Instr.Dot (m, field) ->
+	Format.fprintf f "%a.%a"
+	  self#mutable_ m
+	  self#field field
       | Instr.Var binding -> self#binding f binding
-      | Instr.Array (binding, indexes) ->
+      | Instr.Array (m, indexes) ->
 	Format.fprintf f "%a[%a]"
-	  self#binding binding
+	  self#mutable_ m
 	  (print_list
 	     self#expr
 	     (fun f f1 e1 f2 e2 ->
 	       Format.fprintf f "%a][%a" f1 e1 f2 e2
 	     ))
 	  indexes
+
+	
 
   method expand_macro_apply f name t params code li =
     self#expand_macro_call f name t params code li
@@ -343,7 +367,7 @@ class printer = object(self)
     | Expr.String i -> self#string f i
     | Expr.Binding b -> self#expr_binding f b
     | Expr.AccessArray (arr, index) ->
-	self#access_array f arr index
+	self#access_array f self#binding arr index
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Length (tab) ->
       self#length f tab
@@ -356,9 +380,9 @@ class printer = object(self)
   method length f tab =
     Format.fprintf f "count(%a)" self#binding tab
 
-  method access_array f arr index =
+  method access_array f mprinter arr index =
     Format.fprintf f "@[<h>%a[%a]@]"
-      self#binding arr
+      mprinter arr
       (print_list
 	 self#expr
 	 (fun f f1 e1 f2 e2 ->
@@ -394,6 +418,10 @@ class printer = object(self)
 	  name (t, params, code)
 	  macros;
 	()
+      | Prog.DeclareType (name, t) -> self#decl_type f name t
+
+  method decl_type f name t =
+    Format.fprintf f "type %a = %a;" self#binding name self#ptype t
 
   method prog f (prog:Prog.t) =
     Format.fprintf f "%a%a@\n"

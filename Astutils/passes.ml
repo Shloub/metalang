@@ -95,11 +95,11 @@ module Rename = struct
       | e -> e)
     in Expr.Writer.Deep.map f e
 
-  let mapmutable map m =
+  let rec mapmutable map m =
     match m with
       | Instr.Var v -> Instr.Var (mapname map v)
       | Instr.Array (v, li) ->
-	Instr.Array ((mapname map v), List.map (process_expr map) li)
+	Instr.Array ((mapmutable map v), List.map (process_expr map) li)
 
   let rec process_instr map i =
     let i = match Instr.unfix i with

@@ -46,6 +46,8 @@ inherit cPrinter as super
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
+      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Struct (li, p) -> Format.fprintf f "a struct"
 
   method bool f = function
     | true -> Format.fprintf f "true"
@@ -67,9 +69,9 @@ inherit cPrinter as super
 	self#expr len
 
 
-  method access_array f arr index =
+  method access_array f mprinter arr index =
     Format.fprintf f "@[<h>%a.at(%a)@]"
-      self#binding arr
+      mprinter arr
       (print_list
 	 self#expr
 	 (fun f f1 e1 f2 e2 ->

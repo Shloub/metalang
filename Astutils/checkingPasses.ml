@@ -115,6 +115,11 @@ module CheckNaming : SigPassTop = struct
     then
       Warner.err funname (fun t () -> Format.fprintf t "%s is not a function" name)
 
+  let check_mutable funname acc mut = ()
+(* TODO *)
+(*	let () = List.iter ( check_expr funname acc ) el in
+	let () = is_array funname acc v
+*)
 
   let check_expr funname acc e =
     let f () e = match Expr.unfix e with
@@ -138,15 +143,10 @@ module CheckNaming : SigPassTop = struct
       | Instr.Declare (var, t, e) ->
 	let () = check_expr funname acc e in
 	add_local_in_acc funname var acc
-      | Instr.Affect ((Instr.Var v), e) ->
-	let () = is_local funname acc v in
+      | Instr.Affect (mut, e) ->
+	let () = check_mutable funname acc mut in
 	let () = check_expr funname acc e in
 	acc
-      | Instr.Affect ((Instr.Array (arr, el)), e) ->
-	let () = List.iter ( check_expr funname acc ) el in
-	let () = check_expr funname acc e in
-	let () = is_array funname acc arr
-	in acc
       | Instr.Loop (v, e1, e2, li) ->
 	let () = check_expr funname acc e1 in
 	let () = check_expr funname acc e2 in
@@ -182,13 +182,9 @@ module CheckNaming : SigPassTop = struct
 	let () = check_expr funname acc e in acc
       | Instr.DeclRead (t, v) ->
 	add_local_in_acc funname v acc
-      | Instr.Read (t, Instr.Var v) ->
-	let () = is_local funname acc v in
+      | Instr.Read (t, mut) ->
+	let () = check_mutable funname acc mut in
 	acc
-      | Instr.Read (t, Instr.Array (v, el)) ->
-	let () = List.iter ( check_expr funname acc ) el in
-	let () = is_array funname acc v
-	in acc
       | Instr.StdinSep -> acc
 
   let process acc f = match f with

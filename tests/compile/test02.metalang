@@ -1,0 +1,10 @@
+
+type toto := struct {
+     foo : integer;
+     bar : integer;
+} as tuple;
+
+integer lib(toto param){
+     param.foo := 4;
+     return param.foo;
+}

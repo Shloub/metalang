@@ -265,7 +265,16 @@ class camlPrinter = object(self)
   method mutable_ f m =
     match m with
       | Instr.Var binding -> self#binding f binding
-      | Instr.Array (binding, indexes) -> self#access_array f binding indexes
+      | Instr.Array (mut, indexes) ->
+	Format.fprintf f "@[<h>%a.(%a)@]"
+	  self#mutable_ mut
+	  (print_list
+	     self#expr
+	     (fun f f1 e1 f2 e2 ->
+	       Format.fprintf f "%a).(%a"
+		 f1 e1
+		 f2 e2
+	     )) indexes
 
       
   method is_rec funname instrs =
@@ -307,9 +316,9 @@ class camlPrinter = object(self)
     else
       Format.fprintf f "%a" self#binding e
       
-  method access_array f arr index =
+  method access_array f mprint arr index =
     Format.fprintf f "@[<h>%a.(%a)@]"
-      self#binding arr
+      mprint arr
       (print_list
 	 self#expr
 	 (fun f f1 e1 f2 e2 ->

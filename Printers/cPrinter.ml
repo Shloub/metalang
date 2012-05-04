@@ -52,6 +52,8 @@ class cPrinter = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "int"
       | Type.Char -> Format.fprintf f "char"
+      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Struct (li, p) -> Format.fprintf f "a struct"
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ %a@ =@ %a;@]"
@@ -127,6 +129,23 @@ class cPrinter = object(self)
     Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n@[<h>int@ count(void*@ a){@ return@ ((int*)a)[-1];@ }@]@\n@\n%a%a@\n@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
+
+
+  method decl_type f name t =
+    match (Type.unfix t) with
+	Type.Struct (li, _) ->
+	Format.fprintf f "typedef struct {%a} %a;"
+	  (print_list
+	     (fun t (name, type_) ->
+	       Format.fprintf t "%a %a;" self#ptype type_ self#binding name
+	     )
+	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	  ) li
+	  self#binding name
+      | _ ->
+	Format.fprintf f "typedef %a %a;"
+	super#ptype t
+	  super#binding name
 
 end
 

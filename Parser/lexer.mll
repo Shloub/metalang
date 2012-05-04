@@ -62,6 +62,8 @@ token lexbuf
 | '\'' (char as str) '\'' { CHAR( Scanf.sscanf ("'"^str^"'") "%C" (fun x -> x ) ) }
 | '"' (string as str) '"' { STRING(str) }
 | "type" { DECLTYPE }
+| "as" { AS }
+| "tuple" { TUPLE }
 | "extern" { EXTERN }
 | "struct" { STRUCT }
 | "global" { GLOBAL }
@@ -135,6 +137,7 @@ token lexbuf
   | "}" { RHOOK }
   | "(" { LPARENT }
   | ")" { RPARENT }
+  | "." { DOT }
   | (ident as b) { NAME(b) }
   | eof{ EOF }
   | _ {failwith ("lexing error at line " ^

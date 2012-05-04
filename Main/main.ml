@@ -71,7 +71,7 @@ let () =
   let stdlib_buf = Lexing.from_channel (open_in stdlib_file) in
   try
     let (funs, main) = Parser.main Lexer.token lexbuf in
-    let stdlib_functions = Parser.functions Lexer.token stdlib_buf in
+    let stdlib_functions = Parser.toplvls Lexer.token stdlib_buf in
     let prog = {
       Prog.progname = progname;
       Prog.funs = funs;

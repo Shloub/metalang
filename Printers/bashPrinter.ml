@@ -125,7 +125,7 @@ inherit printer as super
       | Instr.Var binding -> self#binding_decl f binding
       | Instr.Array (binding, indexes) ->
 	Format.fprintf f "%a[%a]"
-	  self#binding_decl binding
+	  self#mutable_ binding
 	  (print_list
 	     self#expr
 	     (fun f f1 e1 f2 e2 ->

@@ -46,6 +46,7 @@ type 'a tofix =
   | Typename of typename
   | Struct of
       (fieldname * 'a) list * structparams
+  | Named of typename
 
 type t = F of t tofix
 let unfix = function F x -> x
@@ -58,3 +59,5 @@ let float = Float |> fix
 let string = String |> fix
 let char = Char |> fix
 let array t = Array t |> fix
+let struct_ (s, p) = Struct (s, p) |> fix
+let named n = Named n |> fix

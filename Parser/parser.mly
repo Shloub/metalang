@@ -88,6 +88,9 @@
 %token DOUBLEPOINT
 %token EXTERN
 %token GLOBAL
+%token TUPLE
+%token AS
+%token DOT
 
 %token <Type.t> TYPE
 
@@ -135,11 +138,11 @@
 
 %left COMMENT
 
-%start main result functions
+%start main result toplvls
 %type <Prog.t_fun list * Instr.t list option> main
-%type <Prog.t_fun list> functions
+%type <Prog.t_fun list> toplvls
 %type <Expr.t> result
-%type <Type.t> type
+%type <Type.t> type_
 %%
 
 eof : EOF { () } ;
@@ -201,13 +204,34 @@ params:
   | result COMMA params { $1 :: $3 }
 
 
-type:
-  | type ARRAY { Type.array $1 }
-  | TYPE { $1 } 
+type_:
+  | type_ ARRAY { Type.array $1 }
+  | TYPE { $1 }
+  | NAME { Type.named $1 }
+
+struct_types_lst:
+| NAME DOUBLEPOINT type_ DOTCOMMA RHOOK { [($1, $3)] }
+| NAME DOUBLEPOINT type_ DOTCOMMA struct_types_lst { ($1, $3) :: $5 }
+
+typedecl:
+  | DECLTYPE NAME AFFECT STRUCT LHOOK
+      struct_types_lst
+      AS TUPLE DOTCOMMA
+      {
+	Prog.DeclareType ($2, Type.struct_ ($6, {Type.tuple=true} ) )
+      }
+  | DECLTYPE NAME AFFECT STRUCT LHOOK
+      struct_types_lst
+      DOTCOMMA
+      {
+	Prog.DeclareType ($2, Type.struct_ ($6, {Type.tuple=false} ) )
+      }
+
 
 mutable_:
   | NAME { Instr.mutable_var $1 }
-  | NAME arrayaccess { Instr.mutable_array $1 $2}
+  | mutable_ arrayaccess { Instr.mutable_array $1 $2}
+  | DOT mutable_ NAME { Instr.mutable_dot $2 $3 }
 
 if_:
 | IF LPARENT result RPARENT bloc ELSE bloc { Instr.if_ $3 $5 $7 }
@@ -219,7 +243,7 @@ comment:
 instruction:
 |  mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | RETURN result DOTCOMMA { Instr.return $2 }
-| type NAME LBRACE result RBRACE
+| type_ NAME LBRACE result RBRACE
 LPARENT NAME ARROW instructions RPARENT DOTCOMMA
 {
 match $1 with
@@ -228,7 +252,7 @@ match $1 with
   | _ -> raise Parsing.Parse_error
   (* TODO ajouter un message *)
 }
-| type NAME LBRACE result RBRACE DOTCOMMA
+| type_ NAME LBRACE result RBRACE DOTCOMMA
 {
 match $1 with
   | Type.F (Type.Array t) ->
@@ -238,15 +262,15 @@ match $1 with
 }
 | NAME LPARENT RPARENT DOTCOMMA { Instr.call $1 [] }
 | NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }
-| type NAME AFFECT result DOTCOMMA { Instr.declare $2 $1 $4 }
+| type_ NAME AFFECT result DOTCOMMA { Instr.declare $2 $1 $4 }
 | if_ {$1}
-| PRINT O_LOWER type O_HIGHER LPARENT result RPARENT DOTCOMMA {
+| PRINT O_LOWER type_ O_HIGHER LPARENT result RPARENT DOTCOMMA {
       Instr.print $3 $6
     }
-| READ O_LOWER type O_HIGHER LPARENT mutable_ RPARENT DOTCOMMA {
+| READ O_LOWER type_ O_HIGHER LPARENT mutable_ RPARENT DOTCOMMA {
       Instr.read $3 $6
 }
-| READ type NAME DOTCOMMA {
+| READ type_ NAME DOTCOMMA {
   Instr.readdecl $2 $3
 }
 | FOR NAME AFFECT result TO result bloc
@@ -272,8 +296,8 @@ one_instruction:
 | instruction { [$1] }
  
 param_list:
-| type NAME { [($2, $1)] }
-| type NAME COMMA param_list { ($2, $1) :: $4 }
+| type_ NAME { [($2, $1)] }
+| type_ NAME COMMA param_list { ($2, $1) :: $4 }
 
 bloc:
     | LHOOK instructions RHOOK { $2 } ;
@@ -286,9 +310,9 @@ main_prog:
     | EOF { None };
 
 function_:
-    | type NAME LPARENT param_list RPARENT bloc {
+    | type_ NAME LPARENT param_list RPARENT bloc {
       Prog.declarefun $2 $1 $4 $6 }
-    | type NAME LPARENT RPARENT bloc {
+    | type_ NAME LPARENT RPARENT bloc {
       Prog.declarefun $2 $1 [] $5 } ;
 
 macro_content_:
@@ -296,22 +320,25 @@ macro_content_:
 	| O_MUL ARROW STRING DOTCOMMA { ("", $3) };
 
 macro_content:
-	| macro_content_ { [$1] }
+	| macro_content_ RHOOK { [$1] }
 	| macro_content_ macro_content { $1 :: $2 };
 macro:
-	| MACRO type NAME LPARENT param_list RPARENT LHOOK macro_content RHOOK {
+	| MACRO type_ NAME LPARENT param_list RPARENT LHOOK macro_content {
 	  Prog.macro $3 $2 $5 $8
 	};
 
-functions:
-	| COMMENT { [Prog.comment $1 ]}
-	| COMMENT functions { (Prog.comment $1) :: $2}
-	| macro { [$1] }
-	| function_ { [$1] }
-	| function_ functions { $1::$2 }
-	| macro functions { $1::$2 };
+toplvl:
+| COMMENT { Prog.comment $1 }
+| macro { $1 }
+| function_ { $1 }
+| typedecl { $1 }
+
+toplvls:
+| toplvl toplvls { $1 :: $2 }
+| toplvl { [$1] }
+
 prog:
-    | functions main_prog { ( $1, $2) }
+    | toplvls main_prog { ( $1, $2) }
     | main_prog { ([], $1) }
 ;
 

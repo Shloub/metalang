@@ -71,7 +71,7 @@ module AllocArrayExpend : SigPass = struct
 
   let mapret tab index instructions =
     let f tra i = match Instr.unfix i with
-      | Instr.Return e -> Instr.affect (Instr.mutable_array tab [Expr.binding index]) e
+      | Instr.Return e -> Instr.affect (Instr.mutable_array (Instr.mutable_var tab) [Expr.binding index]) e
       | Instr.AllocArray _ -> i
       | _ -> tra i
     in let instructions = List.map (f (Instr.Writer.Traverse.map f)) instructions in

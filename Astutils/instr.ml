@@ -30,12 +30,11 @@
 open Stdlib
 open Ast
 
-type mutable_ =
-    Var of varname
-  | Array of varname * Expr.t list
 
-let mutable_var varname = Var varname
-let mutable_array varname indexes = Array (varname, indexes)
+let mutable_var varname = Mutable.Var varname |> Mutable.fix
+let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.fix
+let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.fix
+
 
 type 'a tofix =
     Declare of varname * Type.t * Expr.t

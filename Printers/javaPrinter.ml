@@ -52,6 +52,21 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "boolean"
       | Type.Char -> Format.fprintf f "char"
+      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Struct (li, p) -> Format.fprintf f "a struct"
+
+  method decl_type f name t =
+    match (Type.unfix t) with
+	Type.Struct (li, _) ->
+	Format.fprintf f "Class %a {%a}"
+	  self#binding name
+	  (print_list
+	     (fun t (name, type_) ->
+	       Format.fprintf t "%a %a;" self#ptype type_ self#binding name
+	     )
+	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	  ) li
+      | _ -> super#decl_type f name t
 
   method prog f prog =
     Format.fprintf f
@@ -124,9 +139,9 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
   method print f t expr =
     Format.fprintf f "@[System.out.printf(\"%a \", %a);@]" self#format_type t self#expr expr
 
-  method access_array f arr index =
+  method access_array f mprinter arr index =
     Format.fprintf f "@[<h>%a[%a]@]"
-      self#binding arr
+      mprinter arr
       (print_list
 	 self#expr
 	 (fun f f1 e1 f2 e2 ->
