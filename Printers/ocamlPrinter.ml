@@ -323,7 +323,7 @@ class camlPrinter = object(self)
       Format.fprintf f "%a" self#binding e
 
   method print f t expr = (* TODO virer les parentheses quand on peut *)
-    Format.fprintf f "@[Printf.printf \"%a \" (%a)@]"
+    Format.fprintf f "@[Printf.printf \"%a\" (%a)@]"
       self#format_type t
       self#expr expr
 

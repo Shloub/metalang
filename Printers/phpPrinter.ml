@@ -89,7 +89,7 @@ class phpPrinter = object(self)
 	self#instructions main
       
   method prog f prog =
-    Format.fprintf f "<?php@\n%a%a@\n?>@\n"
+    Format.fprintf f "<?php@\n%a%a@\n?>"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

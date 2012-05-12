@@ -137,7 +137,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
       | _ -> failwith("unsuported read")
 
   method print f t expr =
-    Format.fprintf f "@[System.out.printf(\"%a \", %a);@]" self#format_type t self#expr expr
+    Format.fprintf f "@[System.out.printf(\"%a\", %a);@]" self#format_type t self#expr expr
 
 
   method mutable_ f m =

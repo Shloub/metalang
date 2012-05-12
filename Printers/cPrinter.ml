@@ -123,7 +123,7 @@ class cPrinter = object(self)
       self#mutable_ m
 
   method print f t expr =
-    Format.fprintf f "@[printf(\"%a \", %a);@]" self#format_type t self#expr expr
+    Format.fprintf f "@[printf(\"%a\", %a);@]" self#format_type t self#expr expr
 
   method prog f prog =
     Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n@[<h>int@ count(void*@ a){@ return@ ((int*)a)[-1];@ }@]@\n@\n%a%a@\n@\n"
