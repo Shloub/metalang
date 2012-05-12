@@ -69,16 +69,24 @@ inherit cPrinter as super
 	self#expr len
 
 
-  method access_array f mprinter arr index =
-    Format.fprintf f "@[<h>%a.at(%a)@]"
-      mprinter arr
-      (print_list
-	 self#expr
-	 (fun f f1 e1 f2 e2 ->
-	   Format.fprintf f "%a).at(%a"
-	     f1 e1
-	     f2 e2
-	 )) index
+  method mutable_ f m =
+    match Mutable.unfix m with
+      | Mutable.Dot (m, field) ->
+	Format.fprintf f "%a->%s"
+	  self#mutable_ m
+	  field
+      | Mutable.Var b ->
+	self#binding f b
+      | Mutable.Array (m, index) ->
+	  Format.fprintf f "@[<h>%a.at(%a)@]"
+	    self#mutable_ m
+	    (print_list
+	       self#expr
+	       (fun f f1 e1 f2 e2 ->
+		 Format.fprintf f "%a).at(%a"
+		   f1 e1
+		   f2 e2
+	       )) index
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <=@ %a;@ %a@ ++)@\n@]%a"

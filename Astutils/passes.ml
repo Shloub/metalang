@@ -78,28 +78,29 @@ module Rename = struct
 
   let init_acc () = !map
 
-
   let mapname map name =
     match BindingMap.find_opt name map with
       | Some s -> s
       | None -> name
 
-  let process_expr map e =
+  let rec mapmutable map m =
+    match m |> Mutable.unfix with
+      | Mutable.Var v -> Mutable.Var (mapname map v) |> Mutable.fix
+      | Mutable.Array (v, li) ->
+	Mutable.Array ((mapmutable map v), List.map (process_expr map) li) |> Mutable.fix
+      | Mutable.Dot (m, f) ->
+	Mutable.Dot ((mapmutable map m), f) |> Mutable.fix
+
+  and process_expr map e =
     let f e = Expr.fix (match Expr.unfix e with
       | Expr.Binding b ->
 	Expr.Binding (mapname map b)
-      | Expr.AccessArray (v, li) ->
-	Expr.AccessArray ((mapname map v), li)
+      | Expr.Access mutable_ ->
+	Expr.Access (mapmutable map mutable_)
       | Expr.Call (funname, li) ->
 	Expr.Call ((mapname map funname), li)
       | e -> e)
     in Expr.Writer.Deep.map f e
-
-  let rec mapmutable map m =
-    match m with
-      | Instr.Var v -> Instr.Var (mapname map v)
-      | Instr.Array (v, li) ->
-	Instr.Array ((mapmutable map v), List.map (process_expr map) li)
 
   let rec process_instr map i =
     let i = match Instr.unfix i with

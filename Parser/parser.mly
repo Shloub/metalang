@@ -148,20 +148,25 @@
 eof : EOF { () } ;
 
 int :
-  INT { Expr.integer $1 } ;
+| INT { Expr.integer $1 }
+;
 
 char :
-  CHAR { Expr.char $1 } ;
+| CHAR { Expr.char $1 }
+;
 
 bool :
-  BOOL { Expr.bool $1 } ;
+| BOOL { Expr.bool $1 }
+;
 
 string :
-  STRING { Expr.string (Stdlib.String.unescape $1) } ;
+| STRING { Expr.string (Stdlib.String.unescape $1) }
+;
 
 arrayaccess:
-		 |  LBRACE result RBRACE { [$2] }
-		 | LBRACE result RBRACE arrayaccess  {$2 :: $4}
+| LBRACE result RBRACE { [$2] }
+| LBRACE result RBRACE arrayaccess  {$2 :: $4}
+;
 
 result:
 | result O_MUL result { Expr.binop Expr.Mul $1 $3 }
@@ -189,7 +194,7 @@ result:
 | bool { $1 }
 | string { $1 }
 | char { $1 }
-| NAME arrayaccess { Expr.access_array $1 $2 }
+| mutable_ { Expr.access $1 }
 | NAME { Expr.binding $1 }
 | SPACING result { $2 }
 | result SPACING { $1 }
@@ -231,7 +236,7 @@ typedecl:
 mutable_:
   | NAME { Instr.mutable_var $1 }
   | mutable_ arrayaccess { Instr.mutable_array $1 $2}
-  | DOT mutable_ NAME { Instr.mutable_dot $2 $3 }
+  | mutable_ DOT NAME { Instr.mutable_dot $1 $3 }
 
 if_:
 | IF LPARENT result RPARENT bloc ELSE bloc { Instr.if_ $3 $5 $7 }
@@ -241,7 +246,7 @@ comment:
 | COMMENT { Instr.comment $1; } ;
 
 instruction:
-|  mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
+| mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | RETURN result DOTCOMMA { Instr.return $2 }
 | type_ NAME LBRACE result RBRACE
 LPARENT NAME ARROW instructions RPARENT DOTCOMMA

@@ -156,13 +156,13 @@ class printer = object(self)
     Format.fprintf f "%s" field
 
   method mutable_ f m =
-    match m with
-      | Instr.Dot (m, field) ->
+    match Mutable.unfix m with
+      | Mutable.Dot (m, field) ->
 	Format.fprintf f "%a.%a"
 	  self#mutable_ m
 	  self#field field
-      | Instr.Var binding -> self#binding f binding
-      | Instr.Array (m, indexes) ->
+      | Mutable.Var binding -> self#binding f binding
+      | Mutable.Array (m, indexes) ->
 	Format.fprintf f "%a[%a]"
 	  self#mutable_ m
 	  (print_list
@@ -345,7 +345,7 @@ class printer = object(self)
     | Expr.String _ -> true
     | Expr.Char _ -> true
     | Expr.Binding _ -> true
-    | Expr.AccessArray (_, _) -> true
+    | Expr.Access _ -> true
     | Expr.Call (_, _) -> true
     | _ -> false
 
@@ -366,8 +366,8 @@ class printer = object(self)
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
     | Expr.Binding b -> self#expr_binding f b
-    | Expr.AccessArray (arr, index) ->
-	self#access_array f self#binding arr index
+    | Expr.Access m ->
+	self#access f m
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Length (tab) ->
       self#length f tab
@@ -380,16 +380,8 @@ class printer = object(self)
   method length f tab =
     Format.fprintf f "count(%a)" self#binding tab
 
-  method access_array f mprinter arr index =
-    Format.fprintf f "@[<h>%a[%a]@]"
-      mprinter arr
-      (print_list
-	 self#expr
-	 (fun f f1 e1 f2 e2 ->
-	   Format.fprintf f "%a][%a"
-	     f1 e1
-	     f2 e2
-	 )) index
+  method access f m =
+    self#mutable_ f m
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "function@ %a(%a)@ returns %a"

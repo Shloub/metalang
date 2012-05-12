@@ -98,8 +98,7 @@ inherit printer as super
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
     | Expr.Binding b -> self#expr_binding f b
-    | Expr.AccessArray (arr, index) ->
-	self#access_array f self#binding arr index
+    | Expr.Access a -> self#access f a
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Length (tab) ->
       self#length f tab

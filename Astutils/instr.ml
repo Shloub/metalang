@@ -35,10 +35,9 @@ let mutable_var varname = Mutable.Var varname |> Mutable.fix
 let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.fix
 let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.fix
 
-
 type 'a tofix =
     Declare of varname * Type.t * Expr.t
-  | Affect of mutable_ * Expr.t
+  | Affect of Expr.t Mutable.t * Expr.t
   | Loop of varname * Expr.t * Expr.t * 'a list
   | While of Expr.t * 'a list
   | Comment of string
@@ -47,7 +46,7 @@ type 'a tofix =
   | If of Expr.t * 'a list * 'a list
   | Call of funname * Expr.t list
   | Print of Type.t * Expr.t
-  | Read of Type.t * mutable_
+  | Read of Type.t * Expr.t Mutable.t
   | DeclRead of Type.t * varname
   | StdinSep
 

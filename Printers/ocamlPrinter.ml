@@ -218,9 +218,11 @@ class camlPrinter = object(self)
   method affect f m expr =
     Format.fprintf f "@[<h>%a@ %s@ %a@]"
       self#mutable_ m
-      (match m with
-	| Instr.Var _ -> ":="
-	| Instr.Array _ -> "<-")     
+      (match m |> Mutable.unfix with
+	| Mutable.Var _ -> ":="
+	| Mutable.Array _ -> "<-"
+	| Mutable.Dot _ -> "<-"
+      )     
       self#expr expr
 
   method declaration f var t e =
@@ -237,9 +239,11 @@ class camlPrinter = object(self)
     Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value)@]"
       self#format_type t
       self#mutable_ m
-      (match m with
-	| Instr.Var _ -> ":="
-	| Instr.Array _ -> "<-")
+      (match m |> Mutable.unfix with
+	| Mutable.Var _ -> ":="
+	| Mutable.Array _ -> "<-"
+	| Mutable.Dot _ -> "<-"
+      )
 
 
   method read_decl f t v =
@@ -254,18 +258,21 @@ class camlPrinter = object(self)
       (Instr.Writer.Deep.fold
 	 (fun acc i ->
 	   match Instr.unfix i with
-	     | Instr.Read (_, Instr.Var varname) -> BindingSet.add varname acc
-	     | Instr.Affect (Instr.Var varname, _) -> BindingSet.add varname acc
+	     | Instr.Read (_, Mutable.F (Mutable.Var varname)) -> BindingSet.add varname acc
+	     | Instr.Affect (Mutable.F (Mutable.Var varname), _) -> BindingSet.add varname acc
 	     | _ -> acc
 	 ))
       BindingSet.empty
       instrs
 
-
   method mutable_ f m =
-    match m with
-      | Instr.Var binding -> self#binding f binding
-      | Instr.Array (mut, indexes) ->
+    match m |> Mutable.unfix with
+      | Mutable.Var binding -> self#binding f binding
+      | Mutable.Dot (mutable_, field) ->
+	Format.fprintf f "@[<h>%a.%a@]"
+	  self#mutable_ mutable_
+	  self#field field
+      | Mutable.Array (mut, indexes) ->
 	Format.fprintf f "@[<h>%a.(%a)@]"
 	  self#mutable_ mut
 	  (print_list
@@ -275,7 +282,6 @@ class camlPrinter = object(self)
 		 f1 e1
 		 f2 e2
 	     )) indexes
-
       
   method is_rec funname instrs =
     true (* TODO *)
@@ -315,18 +321,6 @@ class camlPrinter = object(self)
       Format.fprintf f "!%a" self#binding e
     else
       Format.fprintf f "%a" self#binding e
-      
-  method access_array f mprint arr index =
-    Format.fprintf f "@[<h>%a.(%a)@]"
-      mprint arr
-      (print_list
-	 self#expr
-	 (fun f f1 e1 f2 e2 ->
-	   Format.fprintf f "%a).(%a"
-	     f1 e1
-	     f2 e2
-	 )) index
-
 
   method print f t expr = (* TODO virer les parentheses quand on peut *)
     Format.fprintf f "@[Printf.printf \"%a \" (%a)@]"
@@ -370,7 +364,7 @@ class camlPrinter = object(self)
     | Expr.Float _ -> true
     | Expr.String _ -> true
     | Expr.Binding _ -> true
-    | Expr.AccessArray (_, _) -> true
+    | Expr.Access _ -> true
     | Expr.Call (_, _) -> false
     | _ -> false
 

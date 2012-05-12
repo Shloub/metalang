@@ -121,11 +121,11 @@ inherit printer as super
       self#mutable_ mutable_ self#expr expr
 
   method mutable_ f m =
-    match m with
-      | Instr.Var binding -> self#binding_decl f binding
-      | Instr.Array (binding, indexes) ->
+    match Mutable.unfix m with
+      | Mutable.Var binding -> self#binding_decl f binding
+      | Mutable.Array (m, indexes) ->
 	Format.fprintf f "%a[%a]"
-	  self#mutable_ binding
+	  self#mutable_ m
 	  (print_list
 	     self#expr
 	     (fun f f1 e1 f2 e2 ->

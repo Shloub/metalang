@@ -6,5 +6,6 @@ type toto := struct {
 
 integer lib(toto param){
      param.foo := 4;
+     read<integer>(param.bar);
      return param.foo;
 }

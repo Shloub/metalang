@@ -1,0 +1,9 @@
+void test(){
+     integer array array cache[10] (i ->
+		integer array tmp[10] (j ->
+			return -1;
+		);
+		return tmp;
+	);
+	integer i := 0 + cache[0][0];
+}

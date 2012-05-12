@@ -41,7 +41,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method prototype f t = self#ptype f t
 
   method stdin_sep f =
-Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
+Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next();@]"
 
   method ptype f t =
       match Type.unfix t with
@@ -132,24 +132,32 @@ Format.fprintf f "@[<v>scanner.skip(\"\\\\r*\\\\n*\\\\s*\");@]"
 	  self#mutable_ m
       | Type.String -> (* TODO configure Scanner, read int and do it*)
 	Format.fprintf f "TODO" (* TODO *)
-      | Type.Char -> Format.fprintf f "@[<h>scanner.useDelimiter(\".\");@]@\n@[<h>%a = scanner.findInLine(\".\").charAt(0);@]"
+      | Type.Char -> Format.fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
 	self#mutable_ m
       | _ -> failwith("unsuported read")
 
   method print f t expr =
     Format.fprintf f "@[System.out.printf(\"%a \", %a);@]" self#format_type t self#expr expr
 
-  method access_array f mprinter arr index =
-    Format.fprintf f "@[<h>%a[%a]@]"
-      mprinter arr
-      (print_list
-	 self#expr
-	 (fun f f1 e1 f2 e2 ->
-	   Format.fprintf f "%a][%a"
-	     f1 e1
-	     f2 e2
-	 )) index
 
+  method mutable_ f m =
+    match Mutable.unfix m with
+      | Mutable.Dot (m, field) ->
+	Format.fprintf f "%a.%s"
+	  self#mutable_ m
+	  field
+      | Mutable.Var b ->
+	self#binding f b
+      | Mutable.Array (m, index) ->
+	  Format.fprintf f "@[<h>%a[%a]@]"
+	    self#mutable_ m
+	    (print_list
+	       self#expr
+	       (fun f f1 e1 f2 e2 ->
+		 Format.fprintf f "%a][%a"
+		   f1 e1
+		   f2 e2
+	       )) index
 
 end
 
