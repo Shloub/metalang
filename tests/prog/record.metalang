@@ -1,0 +1,13 @@
+
+type toto := struct {
+     foo : integer;
+     bar : integer;
+} as tuple;
+
+prog{
+     toto param := {foo:=0; bar:=0;};
+     read<integer>(param.bar);
+     stdin_sep();
+     read<integer>(param.foo);
+     print<integer>(param.bar + param.foo * param.bar);
+}
