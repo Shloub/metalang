@@ -25,15 +25,16 @@ TMPFILES	:=\
 	$(addsuffix .cc.bin.out, $(TESTS)) \
 	$(addsuffix .bin.outs, $(TESTS)) \
 	$(addsuffix .int.outs, $(TESTS)) \
-	$(addsuffix .managed.outs, $(TESTS))
+	$(addsuffix .managed.outs, $(TESTS)) \
 	$(addsuffix .outs, $(TESTS))
 
 .SECONDARY: $(TMPFILES)
 
 TESTBASENAME	= `echo "$<" | cut -d . -f 1`
 GEN	= \
-	@./main.byte $< > /dev/null || exit 0
+	@./main.byte $< || exit 1
 
+.PHONY: main.byte
 main.byte :
 	@ocamlbuild Main/main.byte
 
@@ -41,31 +42,31 @@ main.byte :
 	$(GEN)
 
 %.c.bin : %.c
-	@gcc $< -o $@ || exit 0
+	@gcc $< -o $@ || exit 1
 
 %.cc.bin : %.cc
-	@g++ $< -o $@ || exit 0
+	@g++ $< -o $@ || exit 1
 
 %.class : %.java
-	@javac $< || exit 0
+	@javac $< || exit 1
 
 %.exe : %.cs
-	@gmcs $< || exit 0
+	@gmcs $< || exit 1
 
 %.bin.out : %.bin
-	@./$< < tests/prog/$(TESTBASENAME).in > $@ || exit 0
+	@./$< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
 
 %.class.out : %.class
-	@java $(TESTBASENAME) < tests/prog/$(TESTBASENAME).in > $@ || exit 0
+	@java $(TESTBASENAME) < tests/prog/$(TESTBASENAME).in > $@ || exit 1
 
 %.ml.out : %.ml
-	@ocaml $< < tests/prog/$(TESTBASENAME).in > $@ || exit 0
+	@ocaml $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
 
 %.php.out : %.php
-	@php $< < tests/prog/$(TESTBASENAME).in > $@ || exit 0
+	@php $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
 
 %.exe.out : %.exe
-	@mono $< < tests/prog/$(TESTBASENAME).in > $@ || exit 0
+	@mono $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
 
 reset	= \033[0m
 red	= \033[0;31m
@@ -93,7 +94,7 @@ TESTPROGS	=\
 %.managed.outs : %.class.out # %.exe.out
 	$(TESTPROGS)
 
-%.outs : %.bin.outs %.int.outs # %.managed.outs
+%.outs : %.bin.outs %.int.outs %.managed.outs
 	@echo "$(yellow)TESTING $(TESTBASENAME)$(reset)"
 	$(TESTPROGS)
 	@echo "$(green)OK $(TESTBASENAME)$(reset)";
