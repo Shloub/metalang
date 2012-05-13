@@ -82,6 +82,25 @@ class phpPrinter = object(self)
 	  self#mutable_ m
 	  self#format_type t
 
+
+  method mutable_ f m =
+    match Mutable.unfix m with
+      | Mutable.Dot (m, field) ->
+	Format.fprintf f "%a[\"%a\"]"
+	  self#mutable_ m
+	  self#field field
+      | Mutable.Var binding -> self#binding f binding
+      | Mutable.Array (m, indexes) ->
+	Format.fprintf f "%a[%a]"
+	  self#mutable_ m
+	  (print_list
+	     self#expr
+	     (fun f f1 e1 f2 e2 ->
+	       Format.fprintf f "%a][%a" f1 e1 f2 e2
+	     ))
+	  indexes
+
+
   method main f main =
       Format.fprintf
 	f "%s%a"
@@ -119,6 +138,29 @@ class phpPrinter = object(self)
 
   method forloop f varname expr1 expr2 li =
       self#forloop_content f (varname, expr1, expr2, li)
+
+  method decl_type f name t = ()
+
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "@[<h>\"%a\"=>%a@]"
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a,@\n%a" f1 e1 f2 e2)
+      f
+      li
+
+
+  method allocrecord f name t el =
+    Format.fprintf f "%a = array(@\n@[<v 2>  %a@]@\n);@\n"
+      self#binding name
+      (self#def_fields name) el
+
 
 end
 

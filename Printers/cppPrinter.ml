@@ -68,6 +68,12 @@ inherit cPrinter as super
 	self#binding binding
 	self#expr len
 
+  method allocrecord f name t el =
+    Format.fprintf f "%a *%a = new %a();@\n%a"
+      self#ptype t
+      self#binding name
+      self#ptype t
+      (self#def_fields name) el
 
   method mutable_ f m =
     match Mutable.unfix m with

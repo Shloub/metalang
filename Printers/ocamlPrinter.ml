@@ -156,6 +156,7 @@ class camlPrinter = object(self)
 	   Format.fprintf t "%a@\n%a"
 	     (fun t i ->
 	       match Instr.unfix i with
+		 | Instr.AllocRecord _ -> self#instr f i (* letin -> pas de ; *)
 		 | Instr.AllocArray _ -> self#instr f i (* letin -> pas de ; *)
 		 | Instr.Declare _ -> self#instr f i (* letin -> pas de ; *)
 		 | Instr.DeclRead _ -> self#instr f i
@@ -408,6 +409,43 @@ class camlPrinter = object(self)
       self#expr expr1
       self#expr expr2
       self#instructions li
+
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "@[<h>%a=%a;@]"
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a@\n%a" f1 e1 f2 e2)
+      f
+      li
+
+  method allocrecord f name t el =
+    Format.fprintf f "let %a = {@\n@[<v 2>  %a@]@\n} in@\n"
+      self#binding name
+      (self#def_fields name) el
+
+  method decl_type f name t =
+    match (Type.unfix t) with
+	Type.Struct (li, _) ->
+	Format.fprintf f "type %a = {@\n@[<v 2>  %a@]@\n};;@\n"
+	  self#binding name
+	  (print_list
+	     (fun t (name, type_) ->
+	       Format.fprintf t "@[<h>mutable %a : %a;@]"
+		 self#binding name
+		 self#ptype type_
+	     )
+	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+	  ) li
+      | _ ->
+	Format.fprintf f "type %a = %a;;"
+	  super#binding name
+	  super#ptype t
 
 end
 

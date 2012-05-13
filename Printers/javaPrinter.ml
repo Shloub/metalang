@@ -58,7 +58,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
   method decl_type f name t =
     match (Type.unfix t) with
 	Type.Struct (li, _) ->
-	Format.fprintf f "Class %a {%a}"
+	Format.fprintf f "static class %a {%a}"
 	  self#binding name
 	  (print_list
 	     (fun t (name, type_) ->
@@ -138,6 +138,28 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
 
   method print f t expr =
     Format.fprintf f "@[System.out.printf(\"%a\", %a);@]" self#format_type t self#expr expr
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "@[<h>%a.%a = %a;@]"
+	  self#binding name
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a@\n%a" f1 e1 f2 e2)
+      f
+      li
+
+
+  method allocrecord f name t el =
+    Format.fprintf f "%a %a = new %a();@\n%a"
+      self#ptype t
+      self#binding name
+      self#ptype t
+      (self#def_fields name) el
 
 
   method mutable_ f m =

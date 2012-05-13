@@ -120,7 +120,7 @@ class printer = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Named n -> Format.fprintf f "struct %s" n
       | Type.Struct (li, p) ->
 	Format.fprintf f "struct{%a}%a"
 	  (print_list
@@ -242,6 +242,26 @@ class printer = object(self)
   method stdin_sep f =
     Format.fprintf f "@[read_blank(STDIN);@]"
 
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "%a->%a=%a;"
+	  self#binding name
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a@\n%a" f1 e1 f2 e2)
+      f
+      li
+
+  method allocrecord f name t el =
+    Format.fprintf f "%a *%a = malloc (sizeof(struct %a) );@\n%a"
+      self#ptype t
+      self#binding name
+      self#ptype t
+      (self#def_fields name) el
 
   method instr f t =
     match Instr.unfix t with
@@ -256,6 +276,8 @@ class printer = object(self)
 	self#whileloop f expr li
     | Instr.Comment str -> self#comment f str
     | Instr.Return e -> self#return f e
+    | Instr.AllocRecord (name, t, el) ->
+      self#allocrecord f name t el
     | Instr.AllocArray (binding, type_, len, None) ->
 	self#allocarray f binding type_ len
     | Instr.AllocArray (binding, type_, len, Some ( (b, l) )) ->

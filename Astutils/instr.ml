@@ -43,6 +43,7 @@ type 'a tofix =
   | Comment of string
   | Return of Expr.t
   | AllocArray of varname * Type.t * Expr.t * (varname * 'a list) option
+  | AllocRecord of varname * Type.t * (fieldname * Expr.t) list
   | If of Expr.t * 'a list * 'a list
   | Call of funname * Expr.t list
   | Print of Type.t * Expr.t
@@ -66,6 +67,8 @@ let comment s = Comment s |> fix
 let return e = Return e |> fix
 let alloc_array binding t len =
   AllocArray(binding, t, len, None) |> fix
+let alloc_record binding t fields =
+  AllocRecord(binding, t, fields) |> fix
 let alloc_array_lambda binding t len b e=
   AllocArray(binding, t, len, Some ( (b, e) ) ) |> fix
 let if_ e cif celse =
@@ -84,6 +87,8 @@ let map_bloc ( f : 'a list -> 'b list) (t : 'a tofix) : 'b tofix = match t with
   | AllocArray (b, t, l, Some ((b2, li))) ->
     AllocArray (b, t, l, Some((b2, f li)))
   | AllocArray (_, _, _, None) ->
+    t
+  | AllocRecord (_, _, _) ->
     t
   | Print _ -> t
   | Read _ -> t
@@ -118,6 +123,8 @@ module Writer = AstWriter.F (struct
       | AllocArray (b, t, l, Some (b2, li)) ->
 	let acc, li = List.fold_left_map f acc li in
 	acc, fix(AllocArray (b, t, l, Some (b2, li)) )
+      | AllocRecord (_, _, _) ->
+	acc, t
       | Print _ -> acc, t
       | Read _ -> acc, t
       | DeclRead _ -> acc, t
@@ -152,6 +159,13 @@ let foldmap_expr
 	  | AllocArray (v, t, e, liopt) ->
 	    let acc, e = f acc e in
 	    acc, AllocArray (v, t, e, liopt)
+	  | AllocRecord (v, t, el) ->
+	    let acc, el = List.fold_left_map
+	      (fun acc (field, e) ->
+		let acc, e = f acc e
+		in acc, (field, e))
+	      acc el
+	    in acc, AllocRecord (v, t, el)
 	  | If (e, li1, li2) ->
 	    let acc, e = f acc e in
 	    acc, If (e, li1, li2)

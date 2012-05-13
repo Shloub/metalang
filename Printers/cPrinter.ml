@@ -117,6 +117,24 @@ class cPrinter = object(self)
   method stdin_sep f =
     Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\", 0);@]"
 
+
+  method mutable_ f m =
+    match Mutable.unfix m with
+      | Mutable.Dot (m, field) ->
+	Format.fprintf f "%a->%a"
+	  self#mutable_ m
+	  self#field field
+      | Mutable.Var binding -> self#binding f binding
+      | Mutable.Array (m, indexes) ->
+	Format.fprintf f "%a[%a]"
+	  self#mutable_ m
+	  (print_list
+	     self#expr
+	     (fun f f1 e1 f2 e2 ->
+	       Format.fprintf f "%a][%a" f1 e1 f2 e2
+	     ))
+	  indexes
+
   method read f t m =
     Format.fprintf f "@[scanf(\"%a\", &%a);@]"
       self#format_type t
@@ -134,7 +152,8 @@ class cPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
 	Type.Struct (li, _) ->
-	Format.fprintf f "typedef struct {%a} %a;"
+	Format.fprintf f "typedef struct %a {%a} %a;"
+	  self#binding name
 	  (print_list
 	     (fun t (name, type_) ->
 	       Format.fprintf t "%a %a;" self#ptype type_ self#binding name

@@ -245,9 +245,17 @@ if_:
 comment:
 | COMMENT { Instr.comment $1; } ;
 
+record:
+| LHOOK NAME AFFECT result DOTCOMMA { [$2, $4] }
+| record NAME AFFECT result DOTCOMMA { ($2, $4) :: $1 }
+
 instruction:
 | mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
 | RETURN result DOTCOMMA { Instr.return $2 }
+| type_ NAME AFFECT record RHOOK DOTCOMMA
+{
+  Instr.alloc_record $2 $1 (List.rev $4)
+}
 | type_ NAME LBRACE result RBRACE
 LPARENT NAME ARROW instructions RPARENT DOTCOMMA
 {
