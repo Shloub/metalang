@@ -60,7 +60,9 @@ class phpPrinter = object(self)
 
   method prototype f t =
     match Type.unfix t with
-      | Type.Array _ ->
+      | Type.Array _
+      | Type.Named _
+	->
 	Format.fprintf f "&"
       | _ -> ()
 

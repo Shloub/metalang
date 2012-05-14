@@ -257,10 +257,10 @@ class printer = object(self)
       li
 
   method allocrecord f name t el =
-    Format.fprintf f "%a *%a = malloc (sizeof(struct %a) );@\n%a"
+    Format.fprintf f "%a %a = malloc (sizeof(%a) );@\n%a"
       self#ptype t
       self#binding name
-      self#ptype t
+      self#binding name
       (self#def_fields name) el
 
   method instr f t =

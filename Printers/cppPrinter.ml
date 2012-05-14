@@ -46,7 +46,7 @@ inherit cPrinter as super
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Named n -> Format.fprintf f "%s *" n
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
 
   method bool f = function
@@ -69,11 +69,14 @@ inherit cPrinter as super
 	self#expr len
 
   method allocrecord f name t el =
-    Format.fprintf f "%a *%a = new %a();@\n%a"
-      self#ptype t
-      self#binding name
-      self#ptype t
-      (self#def_fields name) el
+    match Type.unfix t with
+      | Type.Named typename ->
+	Format.fprintf f "%a %a = new %s();@\n%a"
+	  self#ptype t
+	  self#binding name
+	  typename
+	  (self#def_fields name) el
+      | _ -> assert false
 
   method mutable_ f m =
     match Mutable.unfix m with

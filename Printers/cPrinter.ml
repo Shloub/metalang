@@ -52,7 +52,7 @@ class cPrinter = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "int"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Named n -> Format.fprintf f "%s *" n
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
 
   method declaration f var t e =
