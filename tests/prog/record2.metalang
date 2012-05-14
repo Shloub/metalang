@@ -1,0 +1,25 @@
+
+type toto := struct {
+     foo : integer;
+     bar : integer;
+     blah : integer;
+} as tuple;
+
+toto mktoto(integer v1){
+     toto t := {foo:=v1; bar:=0; blah:=0;};
+     return t;
+}
+
+integer result(toto t){
+	t.blah := t.blah + 1;
+	return t.foo + t.blah * t.bar + t.bar * t.foo;
+}
+
+prog{
+     toto t := mktoto(4);
+     read<integer>(t.bar);
+     stdin_sep();
+     read<integer>(t.blah);
+     print<integer>(result(t));
+     print<integer>(t.blah);
+}
