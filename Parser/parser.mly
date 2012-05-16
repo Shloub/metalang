@@ -96,6 +96,8 @@
 
 %token EOF
 
+%right NAME
+
 %left TOKENKEXISTEPASLOL
 
 %left SPACING

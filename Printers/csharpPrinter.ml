@@ -64,6 +64,21 @@ class csharpPrinter = object(self)
       | Type.Char -> Format.fprintf f "@[<h>%a = Console.ReadKey();@]"
 	self#mutable_ m
 
+
+  method decl_type f name t =
+    match (Type.unfix t) with
+	Type.Struct (li, _) ->
+	Format.fprintf f "public class %a {%a}"
+	  self#binding name
+	  (print_list
+	     (fun t (name, type_) ->
+	       Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
+	     )
+	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	  ) li
+      | _ -> super#decl_type f name t
+
+
 end
 
 let printer = new csharpPrinter;;

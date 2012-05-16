@@ -62,7 +62,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
 	  self#binding name
 	  (print_list
 	     (fun t (name, type_) ->
-	       Format.fprintf t "%a %a;" self#ptype type_ self#binding name
+	       Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
 	  ) li
@@ -91,7 +91,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
   method allocarray f binding type_ len =
     match Type.unfix type_ with
       | Type.Array t2 ->
-	Format.fprintf f "@[<h>%a %a[]%a = new %a[%a]%a;@]"
+	Format.fprintf f "@[<h>%a[]%a %a = new %a[%a]%a;@]"
 	  self#prefix_type type_
 	  self#binding binding
 	  self#suffix_type type_
@@ -100,7 +100,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
 	  self#expr len
 	  self#suffix_type type_
       | _ ->
-	Format.fprintf f "@[<h>%a %a[] = new %a[%a];@]"
+	Format.fprintf f "@[<h>%a[] %a = new %a[%a];@]"
 	  self#ptype type_
 	  self#binding binding
 	  self#ptype type_
