@@ -91,11 +91,10 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
   method allocarray f binding type_ len =
     match Type.unfix type_ with
       | Type.Array t2 ->
-	Format.fprintf f "@[<h>%a[]%a %a = new %a[%a]%a;@]"
-	  self#prefix_type type_
+	Format.fprintf f "@[<h>%a[] %a = new %a[%a]%a;@]"
+	  self#ptype type_
 	  self#binding binding
-	  self#suffix_type type_
-
+	  
 	  self#prefix_type t2
 	  self#expr len
 	  self#suffix_type type_

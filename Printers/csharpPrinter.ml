@@ -35,14 +35,90 @@ open Ast
 open Printer
 open JavaPrinter
 
+
 class csharpPrinter = object(self)
   inherit javaPrinter as super
 
   method lang () = "csharp"
 
+  method char f c =
+    if (c >= 'A' && c <= 'Z' ) ||
+      (c >= 'a' && c <= 'z' ) ||
+      (c >= '0' && c <= '9' ) ||
+      (c = '-' || c = '_' )
+    then Format.fprintf f "%C" c
+    else Format.fprintf f "(char)%d" (int_of_char c)
+
+
+  method ptype f t =
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "int"
+      | Type.String -> Format.fprintf f "String"
+      | Type.Float -> Format.fprintf f "float"
+      | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
+      | Type.Void ->  Format.fprintf f "void"
+      | Type.Bool -> Format.fprintf f "bool"
+      | Type.Char -> Format.fprintf f "char"
+      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Struct (li, p) -> Format.fprintf f "a struct"
+
+
   method prog f prog =
     Format.fprintf f
-      "using System;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@]@\n}@\n"
+      "using System;@\n@\npublic class %s@\n@[<v 2>{
+
+
+static bool eof;
+static String buffer;
+public static char readChar_(){
+  if (buffer == null){
+    buffer = Console.ReadLine();
+  }
+  if (buffer.Length == 0){
+    String tmp = Console.ReadLine();
+    eof = tmp == null;
+    buffer = \"\\n\"+tmp;
+  }
+  char c = buffer[0];
+  return c;
+}
+public static void consommeChar(){
+       readChar_();
+  buffer = buffer.Substring(1);
+}
+public static char readChar(){
+  char out_ = readChar_();
+  consommeChar();
+  return out_;
+}
+
+public static void stdin_sep(){
+  do{
+    if (eof) return;
+    char c = readChar_();
+    if (c == ' ' || c == '\\n' || c == '\\t' || c == '\\r'){
+      consommeChar();
+    }else{
+      return;
+    }
+  } while(true);
+}
+
+public static int readInt(){
+  int i = 0;
+  do{
+    char c = readChar_();
+    if (c <= '9' && c >= '0'){
+      i = i * 10 + c - '0';
+      consommeChar();
+    }else{
+      return i;
+    }
+  } while(true);
+}
+
+
+@\n%a@\n%a@]@\n}@\n"
       prog.Prog.progname
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -54,14 +130,18 @@ class csharpPrinter = object(self)
     Format.fprintf f "public static void Main(String[] args)@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#instructions main
 
-  method stdin_sep f = ()
+  method stdin_sep f  =
+    Format.fprintf f "@[stdin_sep();@]"
+
+  method length f tab =
+    Format.fprintf f "%a.Length" self#binding tab
 
   method read f t m =
     match Type.unfix t with
       | Type.Integer ->
-	Format.fprintf f "@[<h>%a = Console.Read();@]"
+	Format.fprintf f "@[<h>%a = readInt();@]"
 	  self#mutable_ m
-      | Type.Char -> Format.fprintf f "@[<h>%a = Console.ReadKey();@]"
+      | Type.Char -> Format.fprintf f "@[<h>%a = readChar();@]"
 	self#mutable_ m
 
 
