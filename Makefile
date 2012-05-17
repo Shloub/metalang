@@ -1,7 +1,7 @@
 
 TESTSFILES	:= $(filter %.metalang, $(shell ls tests/prog/))
 TESTS		:= $(basename $(TESTSFILES))
-TESTSDEPS	:= $(addsuffix .outs, $(TESTS))
+TESTSDEPS	:= $(addsuffix .test, $(TESTS))
 
 TMPFILES	:=\
 	$(addsuffix .c, $(TESTS)) \
@@ -91,13 +91,19 @@ TESTPROGS	=\
 %.bin.outs : %.cc.bin.out %.c.bin.out
 	$(TESTPROGS)
 
-%.managed.outs : %.class.out # %.exe.out
+%.managed.outs : %.class.out %.exe.out
 	$(TESTPROGS)
 
+%.startTest :
+	@echo "$(yellow)TESTING $(basename $@)$(reset)"
+	@touch $@
+
 %.outs : %.bin.outs %.int.outs %.managed.outs
-	@echo "$(yellow)TESTING $(TESTBASENAME)$(reset)"
 	$(TESTPROGS)
+
+%.test : %.startTest %.outs
 	@echo "$(green)OK $(TESTBASENAME)$(reset)";
+	@touch $@
 
  #never remove tmp files : powerfull for debug
 .PHONY: testCompare
