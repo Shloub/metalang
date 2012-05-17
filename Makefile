@@ -11,6 +11,8 @@ TMPFILES	:=\
 	$(addsuffix .ml.out, $(TESTS)) \
 	$(addsuffix .java, $(TESTS)) \
 	$(addsuffix .java.out, $(TESTS)) \
+	$(addsuffix .py, $(TESTS)) \
+	$(addsuffix .py.out, $(TESTS)) \
 	$(addsuffix .php, $(TESTS)) \
 	$(addsuffix .php.out, $(TESTS)) \
 	$(addsuffix .tex, $(TESTS)) \
@@ -38,7 +40,7 @@ GEN	= \
 main.byte :
 	@ocamlbuild Main/main.byte
 
-%.c %.cc %.php %.ml %.java %.cs: tests/prog/%.metalang main.byte
+%.c %.cc %.php %.py %.ml %.java %.cs: tests/prog/%.metalang main.byte
 	$(GEN)
 
 %.c.bin : %.c
@@ -65,6 +67,9 @@ main.byte :
 %.php.out : %.php
 	@php $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
 
+%.py.out : %.py
+	@python3 $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
+
 %.exe.out : %.exe
 	@mono $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
 
@@ -85,7 +90,7 @@ TESTPROGS	=\
 	done; \
 	cp $< $@ ;\
 
-%.int.outs : %.ml.out %.php.out
+%.int.outs : %.ml.out %.py.out %.php.out
 	$(TESTPROGS)
 
 %.bin.outs : %.cc.bin.out %.c.bin.out

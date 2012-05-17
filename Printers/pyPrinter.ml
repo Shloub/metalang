@@ -1,0 +1,112 @@
+(*
+* Copyright (c) 2012, Prologin
+* All rights reserved.
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above copyright
+*       notice, this list of conditions and the following disclaimer in the
+*       documentation and/or other materials provided with the distribution.
+*
+* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+* @see http://prologin.org
+* @author Prologin <info@prologin.org>
+* @author Maxime Audouin <coucou747@gmail.com>
+*
+*)
+
+(*
+TODO console
+*)
+open Stdlib
+open Ast
+open Printer
+open CPrinter
+
+class pyPrinter = object(self)
+  inherit cPrinter as super
+
+  method lang () = "python"
+
+
+  method main f main =
+    self#instructions f main
+      
+  method prog f prog =
+    Format.fprintf f "%a%a@\n"
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
+
+
+  method declaration f var t e =
+    Format.fprintf f "@[<h>%a@ =@ %a;@]"
+      self#binding var
+      self#expr e
+
+  method bloc f li = Format.fprintf f "@[<v 2>  %a@]" self#instructions li
+
+
+  method if_ f e ifcase elsecase =
+    match elsecase with
+      | [] ->
+	Format.fprintf f "@[<h>if@ %a:@]@\n%a"
+	  self#expr e
+	  self#bloc ifcase
+      
+      | [Instr.F ( Instr.If (condition, instrs1, instrs2) ) as instr] ->
+      Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse %a"
+	self#expr e
+	self#bloc ifcase
+	self#instr instr
+      | _ ->
+	Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse@\n%a"
+	  self#expr e
+	  self#bloc ifcase
+	  self#bloc elsecase
+
+
+  method print_fun f funname t li instrs =
+    Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\n"
+      self#print_proto (funname, t, li)
+      self#instructions instrs
+
+  method decl_type f name t = ()
+
+  method forloop f varname expr1 expr2 li =
+      self#forloop_content f (varname, expr1, expr2, li)
+  method forloop_content f (varname, expr1, expr2, li) =
+    Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
+      self#binding varname
+      self#expr expr1
+      self#expr expr2
+      self#bloc li
+
+   method print_proto f (funname, t, li) =
+    Format.fprintf f "def %a( %a ):"
+      self#funname funname
+      (print_list
+	 (fun t (a, type_) ->
+	     self#binding t a)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t
+	  "%a,@ %a" f1 e1 f2 e2)) li
+
+
+  method print f t expr =
+    Format.fprintf f "@[print(\"%a\" %% %a, end='');@]" self#format_type t self#expr expr
+
+
+end
+
+let printer = new pyPrinter;;
