@@ -24,6 +24,7 @@
 * @see http://prologin.org
 * @author Prologin <info@prologin.org>
 * @author Maxime Audouin <coucou747@gmail.com>
+* @author Arthur Wendling <art.wendling@gmail.com>
 *
 *)
 
@@ -137,143 +138,54 @@ module Eval = struct
     | RBool false -> Format.fprintf p "False"
     | RBool true -> Format.fprintf p "True"
 
-  let add a b =
-    match (a, b) with
+	let num_op ( + ) ( +. ) a b = match a, b with
     | RFloat i, RFloat j -> RFloat (i +. j)
     | RInteger i, RInteger j -> RInteger (i + j)
-    | RInteger i, RFloat j -> RFloat ((float_of_int i) +. j)
-    | RFloat i, RInteger j -> RFloat (i +. (float_of_int j))
-    | RBool _, _ -> assert false
-    | _, RBool _ -> assert false
-
-  let sub a b =
-    match (a, b) with
-    | RFloat i, RFloat j -> RFloat (i -. j)
-    | RInteger i, RInteger j -> RInteger (i - j)
-    | RInteger i, RFloat j -> RFloat ((float_of_int i) -. j)
-    | RFloat i, RInteger j -> RFloat (i -. (float_of_int j))
-    | RBool _, _ -> assert false
-    | _, RBool _ -> assert false
-
-  let modulo a b =
-    match (a, b) with
-    | RInteger i, RInteger j -> RInteger (i mod j)
-    | _ -> assert false
-
-  let mul a b =
-    match (a, b) with
-    | RFloat i, RFloat j -> RFloat (i *. j)
-    | RInteger i, RInteger j -> RInteger (i * j)
-    | RInteger i, RFloat j -> RFloat ((float_of_int i) *. j)
-    | RFloat i, RInteger j -> RFloat (i *. (float_of_int j))
-    | RBool _, _ -> assert false
-    | _, RBool _ -> assert false
-
-  let div a b =
-    match (a, b) with
-    | RFloat i, RFloat j -> RFloat (i /. j)
-    | RInteger i, RInteger j -> RInteger (i / j)
-    | RInteger i, RFloat j -> RFloat ((float_of_int i) /. j)
-    | RFloat i, RInteger j -> RFloat (i /. (float_of_int j))
-    | _ -> assert false
-
-  let calc_lower_eq a b = match (a, b) with
-    | RFloat i, RFloat j -> RBool (i <= j)
-    | RInteger i, RInteger j -> RBool (i <= j)
-    | RInteger i, RFloat j -> RBool ((float_of_int i) <= j)
-    | RFloat i, RInteger j -> RBool (i <= (float_of_int j))
-    | _ -> assert false
-
-  let calc_lower a b = match (a, b) with
+    | RInteger i, RFloat j -> RFloat (float_of_int i +. j)
+    | RFloat i, RInteger j -> RFloat (i +. float_of_int j)
+		| _ -> assert false
+	let int_op f = num_op f (fun _ _ -> assert false)
+  let num_cmp ( < ) a b = match a, b with
     | RFloat i, RFloat j -> RBool (i < j)
-    | RInteger i, RInteger j -> RBool (i < j)
-    | RInteger i, RFloat j -> RBool ((float_of_int i) < j)
-    | RFloat i, RInteger j -> RBool (i < (float_of_int j))
+    | RInteger i, RInteger j -> RBool (float_of_int i < float_of_int j)
+    | RInteger i, RFloat j -> RBool (float_of_int i < j)
+    | RFloat i, RInteger j -> RBool (i < float_of_int j)
     | _ -> assert false
-
-  let calc_higher_eq a b = match (a, b) with
-    | RFloat i, RFloat j -> RBool (i >= j)
-    | RInteger i, RInteger j -> RBool (i >= j)
-    | RInteger i, RFloat j -> RBool ((float_of_int i) >= j)
-    | RFloat i, RInteger j -> RBool (i >= (float_of_int j))
-    | _ -> assert false
-
-  let calc_higher a b = match (a, b) with
-    | RFloat i, RFloat j -> RBool (i > j)
-    | RInteger i, RInteger j -> RBool (i > j)
-    | RInteger i, RFloat j -> RBool ((float_of_int i) > j)
-    | RFloat i, RInteger j -> RBool (i > (float_of_int j))
-    | _ -> assert false
-
-let calc_eq a b = match (a, b) with
-    | RFloat i, RFloat j -> RBool (i = j)
-    | RInteger i, RInteger j -> RBool (i = j)
-    | RInteger i, RFloat j -> RBool ((float_of_int i) = j)
-    | RFloat i, RInteger j -> RBool (i = (float_of_int j))
-    | _ -> assert false
-
-let calc_diff a b = match (a, b) with
-    | RFloat i, RFloat j -> RBool (i <> j)
-    | RInteger i, RInteger j -> RBool (i <> j)
-    | RInteger i, RFloat j -> RBool ((float_of_int i) <> j)
-    | RFloat i, RInteger j -> RBool (i <> (float_of_int j))
-    | _ -> assert false
-
-let calc_binor a b = match (a, b) with
-    | RInteger i, RInteger j -> RInteger (i lor j)
-    | _ -> assert false
-
-let calc_binand a b = match (a, b) with
-    | RInteger i, RInteger j -> RInteger (i land j)
-    | _ -> assert false
-
-let calc_rshift a b = match (a, b) with
-    | RInteger i, RInteger j -> RInteger (i lsr j)
-    | _ -> assert false
-
-let calc_lshift a b = match (a, b) with
-    | RInteger i, RInteger j -> RInteger (i lsl j)
+	let bool_op ( = ) a b = match a, b with
+    | RBool i, RBool j -> RBool (i = j)
     | _ -> assert false
 
 
-let calc_or a b = match (a, b) with
-    | RBool i, RBool j -> RBool (i or j)
-    | _ -> assert false
+	let binop = function
+	| Add -> num_op ( + ) ( +. )
+  | Sub -> num_op ( - ) ( -. )
+  | Mul -> num_op ( * ) ( *. )
+  | Div -> num_op ( / ) ( /. )
+	| Mod -> int_op ( mod )
 
-let calc_and a b = match (a, b) with
-    | RBool i, RBool j -> RBool (i && j)
-    | _ -> assert false
+  | LowerEq -> num_cmp ( <= )
+  | Lower -> num_cmp ( < )
+  | HigherEq -> num_cmp ( >= )
+  | Higher -> num_cmp ( > )
+	| Eq -> num_cmp ( = )
+	| Diff -> num_cmp ( <> )
+
+	| BinOr -> int_op ( lor )
+	| BinAnd -> int_op ( land )
+	| RShift -> int_op ( lsr )
+	| LShift -> int_op ( lsl )
+
+	| BinOr -> bool_op ( || )
+	| BinAnd -> bool_op ( && )
 
   let rec eval t = match map eval (unfix t) with
-  | UnOp (RInteger i, Neg) -> RInteger (-i)
-  | UnOp (RBool i, Not) -> RBool (not i)
-  | UnOp (RInteger i, BNot) -> RInteger (lnot i)
-  | UnOp (RFloat i, Neg) -> RFloat (-.i)
-  | UnOp (_, _) -> assert false
-
-      | BinOp (a, Add, b) -> add a b
-      | BinOp (a, Sub, b) -> sub a b
-      | BinOp (a, Mul, b) -> mul a b
-      | BinOp (a, Div, b) -> div a b
-      | BinOp (a, Mod, b) -> modulo a b
-
-      | BinOp (a, And, b) -> calc_and a b
-      | BinOp (a, Or, b) -> calc_or a b
-
-      | BinOp (a, Lower, b) -> calc_lower a b
-      | BinOp (a, LowerEq, b) -> calc_lower_eq a b
-      | BinOp (a, Higher, b) -> calc_higher a b
-      | BinOp (a, HigherEq, b) -> calc_higher_eq a b
-      | BinOp (a, Eq, b) -> calc_eq a b
-      | BinOp (a, Diff, b) -> calc_diff a b
-
-      | BinOp (a, BinOr, b) -> calc_binor a b
-      | BinOp (a, BinAnd, b) -> calc_binand a b
-      | BinOp (a, RShift, b) -> calc_rshift a b
-      | BinOp (a, LShift, b) -> calc_lshift a b
-
-      | Integer i -> RInteger i
-      | Float f -> RFloat f
-      | _ -> assert false (* TODO *)
-
+		| Integer i -> RInteger i
+		| Float f -> RFloat f
+		| BinOp (a, op, b) -> binop op a b
+  	| UnOp (RInteger i, Neg) -> RInteger (-i)
+		| UnOp (RBool i, Not) -> RBool (not i)
+		| UnOp (RInteger i, BNot) -> RInteger (lnot i)
+		| UnOp (RFloat i, Neg) -> RFloat (-. i)
+		| UnOp (_, _) -> assert false
+		| _ -> assert false (* TODO *)
 end
