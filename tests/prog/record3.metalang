@@ -1,0 +1,30 @@
+
+type toto := struct {
+     foo : integer;
+     bar : integer;
+     blah : integer;
+} as tuple;
+
+toto mktoto(integer v1){
+     toto t := {foo:=v1; bar:=0; blah:=0;};
+     return t;
+}
+
+integer result(toto array t, integer len){
+	integer out := 0;
+	for j := 0 to len - 1
+	{
+		t[j].blah := t[j].blah + 1;
+		out := out + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
+	}
+	return out;
+}
+
+prog{
+     toto array t[4] (i -> return mktoto(i); );
+     read<integer>(t[0].bar);
+     stdin_sep();
+     read<integer>(t[1].blah);
+     print<integer>(result(t, 4));
+     print<integer>(t[2].blah);
+}
