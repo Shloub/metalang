@@ -1,5 +1,6 @@
 macro integer int_of_char(char c){ 
 ml -> "int_of_char ($c)";
+py -> "ord($c)";
 * -> "$c";
 }
 
