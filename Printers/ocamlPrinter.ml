@@ -401,7 +401,7 @@ class camlPrinter = object(self)
   method whileloop f expr li =
     Format.fprintf f "@[<h>while %a@]@\ndo@[<v 2>@\n%a@]@\ndone"
       self#expr expr
-      self#bloc li
+      self#instructions li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone"
