@@ -35,17 +35,74 @@ open Ast
 open Printer
 open CPrinter
 
+let header =
+"
+import sys
+
+char=None
+
+def readchar_():
+  global char;
+  if char == None:
+    char = sys.stdin.read(1);
+  return char;
+
+def skipchar():
+  global char;
+  char = None;
+  return;
+
+def readchar():
+  out = readchar_();
+  skipchar();
+  return out;
+
+def stdinsep():
+  while True:
+    c = readchar_();
+    if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
+      skipchar();
+    else:
+      return;
+
+def readint():
+  out = 0;
+  while True:
+    c = readchar_();
+    if c <= '9' and c >= '0' :
+      out = out * 10 + int(c);
+      skipchar();
+    else:
+      return out;
+"
+
 class pyPrinter = object(self)
   inherit cPrinter as super
 
   method lang () = "python"
 
 
+  method read f t mutable_ =
+match Type.unfix t with
+  | Type.Integer ->
+    Format.fprintf f "@[%a=readint();@]"
+      self#mutable_ mutable_
+  | Type.Char ->
+    Format.fprintf f "@[%a=readchar();@]"
+      self#mutable_ mutable_
+
+
+  method stdin_sep f =
+    Format.fprintf f "@[stdinsep();@]"
+
+
+
   method main f main =
     self#instructions f main
       
   method prog f prog =
-    Format.fprintf f "%a%a@\n"
+    Format.fprintf f "%s%a%a@\n"
+      header
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
@@ -76,6 +133,10 @@ class pyPrinter = object(self)
 	  self#bloc ifcase
 	  self#bloc elsecase
 
+  method allocarray f binding type_ len =
+      Format.fprintf f "@[<h>%a@ =@ [None] * (%a);@]"
+	self#binding binding
+	self#expr len
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\n"
