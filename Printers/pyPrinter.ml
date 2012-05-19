@@ -79,8 +79,41 @@ def readint():
 class pyPrinter = object(self)
   inherit cPrinter as super
 
-  method lang () = "python"
+  method lang () = "py"
 
+  method unop f op a =
+    match op with
+      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+      | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
+      | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
+
+
+  method print_op f op =
+    Format.fprintf f
+      "%s"
+      (match op with
+	| Expr.Add -> "+"
+	| Expr.Sub -> "-"
+	| Expr.Mul -> "*"
+	| Expr.Div -> "//"
+	| Expr.Mod -> "%"
+	| Expr.Or -> "or"
+	| Expr.And -> "and"
+	| Expr.Lower -> "<"
+	| Expr.LowerEq -> "<="
+	| Expr.Higher -> ">"
+	| Expr.HigherEq -> ">="
+	| Expr.Eq -> "=="
+	| Expr.Diff -> "!="
+	| Expr.BinOr -> "lor"
+	| Expr.BinAnd -> "land"
+	| Expr.RShift -> "lsl"
+	| Expr.LShift -> "lsr"
+      )
+
+  method bool f = function
+    | true -> Format.fprintf f "True"
+    | false -> Format.fprintf f "False"
 
   method read f t mutable_ =
 match Type.unfix t with
@@ -112,7 +145,11 @@ match Type.unfix t with
       self#binding var
       self#expr e
 
-  method bloc f li = Format.fprintf f "@[<v 2>  %a@]" self#instructions li
+  method bloc f li =
+    match li with
+      | [] -> Format.fprintf f "@[<h>  pass;@]"
+      | _ ->
+	Format.fprintf f "@[<v 2>  %a@]" self#instructions li
 
 
   method if_ f e ifcase elsecase =
@@ -123,15 +160,25 @@ match Type.unfix t with
 	  self#bloc ifcase
       
       | [Instr.F ( Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse %a"
+      Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nel%a"
 	self#expr e
 	self#bloc ifcase
 	self#instr instr
       | _ ->
-	Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse@\n%a"
+	Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse:@\n%a"
 	  self#expr e
 	  self#bloc ifcase
 	  self#bloc elsecase
+
+
+  method comment f str =
+    Format.fprintf f "\"\"\"%s\"\"\"" str
+
+
+  method whileloop f expr li =
+    Format.fprintf f "@[<h>while (%a):@]@\n%a"
+      self#expr expr
+      self#bloc li
 
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>%a@ =@ [None] * (%a);@]"
@@ -141,7 +188,7 @@ match Type.unfix t with
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\n"
       self#print_proto (funname, t, li)
-      self#instructions instrs
+      self#bloc instrs
 
   method decl_type f name t = ()
 
@@ -166,6 +213,48 @@ match Type.unfix t with
 
   method print f t expr =
     Format.fprintf f "@[print(\"%a\" %% %a, end='');@]" self#format_type t self#expr expr
+
+  method field f field =
+    Format.fprintf f "%S" field
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "@[<h>%a:%a@]"
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a, %a" f1 e1 f2 e2)
+      f
+      li
+
+  method length f tab =
+    Format.fprintf f "%a.__len__()" self#binding tab
+
+  method allocrecord f name t el =
+    Format.fprintf f "%a = {%a};@\n"
+      self#binding name
+      (self#def_fields name) el
+
+
+  method mutable_ f m =
+    match Mutable.unfix m with
+      | Mutable.Dot (m, field) ->
+	Format.fprintf f "%a[%a]"
+	  self#mutable_ m
+	  self#field field
+      | Mutable.Var binding -> self#binding f binding
+      | Mutable.Array (m, indexes) ->
+	Format.fprintf f "%a[%a]"
+	  self#mutable_ m
+	  (print_list
+	     self#expr
+	     (fun f f1 e1 f2 e2 ->
+	       Format.fprintf f "%a][%a" f1 e1 f2 e2
+	     ))
+	  indexes
 
 
 end
