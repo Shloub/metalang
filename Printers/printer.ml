@@ -100,7 +100,7 @@ class printer = object(self)
       self#bloc li
 
   method whileloop f expr li =
-    Format.fprintf f "@[<h>while (%a)@]%a"
+    Format.fprintf f "@[<h>while (%a)@]@\n%a"
       self#expr expr
       self#bloc li
 
@@ -462,11 +462,4 @@ class printer = object(self)
   method main f main =
     Format.fprintf f "%a"
      self#instructions main
-end
-
-class pythonPrinter = object(self)
-    inherit printer as super
-  method bool f = function
-    | true -> Format.fprintf f "True"
-    | false -> Format.fprintf f "False"
 end
