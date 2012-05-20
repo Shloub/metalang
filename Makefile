@@ -38,7 +38,7 @@ GEN	= \
 
 .PHONY: main.byte
 main.byte :
-	@ocamlbuild Main/main.byte
+	@ocamlbuild -lflag -g -cflag -g Main/main.byte
 
 %.c %.cc %.php %.py %.ml %.java %.cs: tests/prog/%.metalang main.byte
 	$(GEN)
