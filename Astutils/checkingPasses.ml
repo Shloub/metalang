@@ -169,6 +169,12 @@ module CheckNaming : SigPassTop = struct
 	    let acc = add_param_in_acc funname varname acc in
 	    List.fold_left (check_instr funname) acc li
 	in add_array_in_acc funname v acc
+      | Instr.AllocRecord (varname, t, li) ->
+	let () = check_name funname acc varname in
+	let () = List.iter (fun (_field, expr) ->
+	  check_expr funname acc expr) li
+	in let acc = add_param_in_acc funname varname acc in
+	acc (* TODO adding this name*)
       | Instr.If (e, li1, li2) ->
 	let () = check_expr funname acc e in
 	let _ = List.fold_left (check_instr funname) acc li1 in
