@@ -33,7 +33,7 @@ open Ast
 
 let default_passes (prog : Prog.t) : Prog.t =
      prog
-(*     |> Passes.WalkCheckNaming.apply *)
+     |> Passes.WalkCheckNaming.apply
      |> Passes.WalkRename.apply
      |> Passes.WalkNopend.apply
      |> Passes.WalkExpandPrint.apply
