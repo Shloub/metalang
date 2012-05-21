@@ -20,20 +20,15 @@
 * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-* @author Arthur Wendling <art.wendling@gmail.com>
-*
 *)
 
+(** Standard library
 
-module Either = struct
-  type ('a, 'b) t =
-    | A of 'a
-    | B of 'b
-end
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
+@author Arthur Wendling (art.wendling\@gmail.com)
+*)
 
 let id x = x
 let ( $ ) f x = f x
@@ -56,8 +51,23 @@ let snoc xs x = x::xs
 let int = int_of_float
 let float = float_of_int
 
-exception Found of int
+(** {2 Standard modules } *)
 
+module Int = struct
+	type t = int
+	let compare = Pervasives.compare
+	let sqrt = int @* sqrt @* float
+	let abs t = if t > 0 then t else -t
+
+	let exp =
+		let rec go r a b =
+			if b = 0
+			then r
+			else if b mod 2 = 0
+			then go r (a * a) (b / 2)
+			else go (a * r) a (b - 1)
+		in go 1
+end
 
 module Option = struct
 
@@ -80,18 +90,10 @@ module Option = struct
 	let snoc xs = map_default xs (snoc xs)
 end
 
-module MakeSet (K : Set.OrderedType)= struct
-  include Set.Make (K)
-  let of_list = List.fold_left (flip add) empty
-end
-
-module MakeMap (K : Map.OrderedType) = struct
-  include Map.Make (K)
-
-  let merge a b = (fun k v acc -> add k v acc) a b
-  let to_list map = fold (curry cons) map []
-  let from_list xs = List.fold_left (flip (uncurry add)) empty xs
-  let find_opt key = Option.catch (find key)
+module Either = struct
+  type ('a, 'b) t =
+    | A of 'a
+    | B of 'b
 end
 
 module List = struct
@@ -235,21 +237,22 @@ module String = struct
 	let replace = Str.global_replace @* Str.regexp @* Str.quote
 end
 
-module Int = struct
-	type t = int
-	let compare = Pervasives.compare
+(** {2 Collections} *)
+
+module MakeSet (K : Set.OrderedType)= struct
+  include Set.Make (K)
+  let of_list = List.fold_left (flip add) empty
 end
+
+module MakeMap (K : Map.OrderedType) = struct
+  include Map.Make (K)
+
+  let merge a b = (fun k v acc -> add k v acc) a b
+  let to_list map = fold (curry cons) map []
+  let from_list xs = List.fold_left (flip (uncurry add)) empty xs
+  let find_opt key = Option.catch (find key)
+end
+
+
 module IntSet = MakeSet (Int)
 module IntSetIntSet = MakeSet (IntSet)
-
-let sqrt_i = int @* sqrt @* float
-let abs_i t = if t > 0 then t else -t
-
-let exp_i =
-	let rec go r a b =
-		if b = 0
-		then r
-		else if b mod 2 = 0
-		then go r (a * a) (b / 2)
-		else go (a * r) a (b - 1)
-	in go 1
