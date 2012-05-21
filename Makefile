@@ -34,13 +34,15 @@ TMPFILES	:=\
 
 TESTBASENAME	= `echo "$<" | cut -d . -f 1`
 GEN	= \
-	@./main.byte $< || exit 1
+	@./metalang $< || exit 1
 
-.PHONY: main.byte
+.PHONY: metalang
+metalang : main.byte
+	@mv main.byte metalang
 main.byte :
 	@ocamlbuild -lflag -g -cflag -g Main/main.byte
 
-%.c %.cc %.php %.py %.ml %.java %.cs: tests/prog/%.metalang main.byte
+%.c %.cc %.php %.py %.ml %.java %.cs: tests/prog/%.metalang metalang
 	$(GEN)
 
 %.c.bin : %.c
