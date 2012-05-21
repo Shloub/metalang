@@ -119,3 +119,6 @@ testCompare : $(TESTSDEPS)
 clean :
 	@rm $(TMPFILES) 2> /dev/null || true
 	@echo "OK"
+
+doc :
+	ocamlbuild metalang.docdir/index.html
