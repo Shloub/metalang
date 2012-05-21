@@ -1,6 +1,6 @@
 
 TESTSFILES	:= $(filter %.metalang, $(shell ls tests/prog/))
-TESTS		:= $(basename $(TESTSFILES))
+TESTS		:= $(addprefix out/, $(basename $(TESTSFILES)))
 TESTSDEPS	:= $(addsuffix .test, $(TESTS))
 
 TMPFILES	:=\
@@ -32,7 +32,6 @@ TMPFILES	:=\
 
 .SECONDARY: $(TMPFILES)
 
-TESTBASENAME	= `echo "$<" | cut -d . -f 1`
 GEN	= \
 	@./metalang $< || exit 1
 
@@ -42,38 +41,42 @@ metalang : main.byte
 main.byte :
 	@ocamlbuild -lflag -g -cflag -g Main/main.byte
 
-%.c %.cc %.php %.py %.ml %.java %.cs: tests/prog/%.metalang metalang
-	$(GEN)
+out :
+	@mkdir out
 
-%.c.bin : %.c
+out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.java out/%.cs: tests/prog/%.metalang metalang out
+	$(GEN)
+	@for f in `ls $(notdir $*).*`; do mv $$f out/$$f ; done
+
+out/%.c.bin : out/%.c
 	@gcc $< -o $@ || exit 1
 
-%.cc.bin : %.cc
+out/%.cc.bin : out/%.cc
 	@g++ $< -o $@ || exit 1
 
-%.class : %.java
+out/%.class : out/%.java
 	@javac $< || exit 1
 
-%.exe : %.cs
+out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
-%.bin.out : %.bin
-	@./$< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
+out/%.bin.out : out/%.bin
+	@./$< < tests/prog/$(basename $*).in > $@ || exit 1
 
-%.class.out : %.class
-	@java $(TESTBASENAME) < tests/prog/$(TESTBASENAME).in > $@ || exit 1
+out/%.class.out : out/%.class
+	@java -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1
 
-%.ml.out : %.ml
-	@ocaml $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
+out/%.ml.out : out/%.ml
+	@ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1
 
-%.php.out : %.php
-	@php $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
+out/%.php.out : out/%.php
+	@php $< < tests/prog/$(basename $*).in > $@ || exit 1
 
-%.py.out : %.py
-	@python3 $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
+out/%.py.out : out/%.py
+	@python3 $< < tests/prog/$(basename $*).in > $@ || exit 1
 
-%.exe.out : %.exe
-	@mono $< < tests/prog/$(TESTBASENAME).in > $@ || exit 1
+out/%.exe.out : out/%.exe
+	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1
 
 reset	= \033[0m
 red	= \033[0;31m
@@ -92,24 +95,24 @@ TESTPROGS	=\
 	done; \
 	cp $< $@ ;\
 
-%.int.outs : %.ml.out %.py.out %.php.out
+out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out
 	$(TESTPROGS)
 
-%.bin.outs : %.cc.bin.out %.c.bin.out
+out/%.bin.outs : out/%.cc.bin.out out/%.c.bin.out
 	$(TESTPROGS)
 
-%.managed.outs : %.class.out %.exe.out
+out/%.managed.outs : out/%.class.out out/%.exe.out
 	$(TESTPROGS)
 
-%.startTest :
+out/%.startTest :
 	@echo "$(yellow)TESTING $(basename $@)$(reset)"
 	@touch $@
 
-%.outs : %.bin.outs %.int.outs %.managed.outs
+out/%.outs : out/%.bin.outs out/%.int.outs #out/%.managed.outs
 	$(TESTPROGS)
 
-%.test : %.startTest %.outs
-	@echo "$(green)OK $(TESTBASENAME)$(reset)";
+out/%.test : out/%.startTest out/%.outs
+	@echo "$(green)OK $(basename $*)$(reset)";
 	@touch $@
 
  #never remove tmp files : powerfull for debug
@@ -119,8 +122,7 @@ testCompare : $(TESTSDEPS)
 
 .PHONY: clean
 clean :
-	@rm $(TMPFILES) 2> /dev/null || true
-	@echo "OK"
+	@rm -rf out || true
 
 doc :
-	ocamlbuild metalang.docdir/index.html
+	@ocamlbuild metalang.docdir/index.html
