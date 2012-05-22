@@ -59,6 +59,7 @@ class camlPrinter = object(self)
   val mutable refbindings = BindingSet.empty
   val mutable sad_returns = false
   val mutable printed_exn = 0
+  val mutable in_expr = false
 
   method lang () = "ml"
 
@@ -266,16 +267,38 @@ class camlPrinter = object(self)
       BindingSet.empty
       instrs
 
+  method expr f e =
+    begin
+      in_expr <- true;
+      super#expr f e;
+      in_expr <- false;
+    end
+
   method mutable_ f m =
     match m |> Mutable.unfix with
-      | Mutable.Var binding -> self#binding f binding
+      | Mutable.Var binding ->
+	  if in_expr && BindingSet.mem binding refbindings
+	then
+	  Format.fprintf f "(!%a)" self#binding binding
+	else
+	self#binding f binding
+      | _ -> self#mutable_rec f m
+
+  method mutable_rec f m =
+    match m |> Mutable.unfix with
+      | Mutable.Var binding ->
+	if BindingSet.mem binding refbindings
+	then
+	  Format.fprintf f "(!%a)" self#binding binding
+	else
+	self#binding f binding
       | Mutable.Dot (mutable_, field) ->
 	Format.fprintf f "@[<h>%a.%a@]"
-	  self#mutable_ mutable_
+	  self#mutable_rec mutable_
 	  self#field field
       | Mutable.Array (mut, indexes) ->
 	Format.fprintf f "@[<h>%a.(%a)@]"
-	  self#mutable_ mut
+	  self#mutable_rec mut
 	  (print_list
 	     self#expr
 	     (fun f f1 e1 f2 e2 ->
@@ -338,16 +361,34 @@ class camlPrinter = object(self)
       Format.fprintf f "@[<h>%a@]" self#expr e
    
   method allocarray_lambda f binding type_ len binding2 lambda =
-      Format.fprintf f "@[<h>let %a@ =@ Array.init@ %a@ (fun@ %a@ ->@\n@[<v 2>  %a@])@ in@]"
+    let b = BindingSet.mem binding refbindings in
+      Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->@\n@[<v 2>  %a@])%a@ in@]"
 	self#binding binding
+	(fun t () ->
+	  if b then
+	    Format.fprintf t "ref(@ "
+	) ()
 	self#expr len
 	self#binding binding2
 	self#instructions lambda
+      (fun t () ->
+	if b then
+	  Format.fprintf t ")"
+      ) ()
 
   method allocarray f binding type_ len =
-    Format.fprintf f "@[<h>let@ %a@ =@ Array.make@ %a@ (Obj.magic@ 0)@ in@]"
+    let b = BindingSet.mem binding refbindings in
+    Format.fprintf f "@[<h>let@ %a@ %a=@ Array.make@ %a@ (Obj.magic@ 0)%a@ in@]"
       self#binding binding
+      (fun t () ->
+	  if b then
+	    Format.fprintf t "ref(@ "
+	) ()
       self#expr len
+      (fun t () ->
+	if b then
+	  Format.fprintf t ")"
+      ) ()
 
   method affectarray f binding indexes e2 =
     Format.fprintf f "@[<h>%a.(%a)@ <-@ %a@]"
@@ -425,9 +466,18 @@ class camlPrinter = object(self)
       li
 
   method allocrecord f name t el =
-    Format.fprintf f "let %a = {@\n@[<v 2>  %a@]@\n} in@\n"
+    let b = BindingSet.mem name refbindings in
+    Format.fprintf f "let %a = %a{@\n@[<v 2>  %a@]@\n}%a in@\n"
       self#binding name
+      (fun t () ->
+	  if b then
+	    Format.fprintf t "ref(@ "
+	) ()
       (self#def_fields name) el
+      (fun t () ->
+	if b then
+	  Format.fprintf t ")"
+      ) ()
 
   method decl_type f name t =
     match (Type.unfix t) with
