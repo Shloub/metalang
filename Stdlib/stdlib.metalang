@@ -1,29 +1,28 @@
-macro integer int_of_char(char c){ 
-ml -> "int_of_char ($c)";
-py -> "ord($c)";
-* -> "$c";
-}
+macro int int_of_char(char c)
+	ml do "int_of_char ($c)"
+	py do "ord($c)"
+	*  do "$c"
+end
 
-macro float float_of_int(integer c){ 
-ml -> "float_of_int ($c)";
-* -> "(float)($c)";
-}
+macro float float_of_int(int c)
+	ml do "float_of_int ($c)"
+	*  do "(float)($c)"
+end
 
-bool is_number(char c){
-     return c <= '9' && c >= '0';
-}
+def bool is_number(char c)
+	return c <= '9' && c >= '0'
+end
 
-integer min2(integer a, integer b){
-	if (a < b){
-	 return a;
-	}
-	return b;
-}
+def int min2(int a, int b)
+	if a < b
+	then return a end
+	return b
+end
 
-integer min3(integer a, integer b, integer c){
-	return min2(min2(a, b), c);
-}
+def int min3(int a, int b, int c)
+	return min2(min2(a, b), c)
+end
 
-integer min4(integer a, integer b, integer c, integer d){
-	return min3(min2(a, b), c, d);
-}
+def int min4(int a, int b, int c, int d)
+	return min3(min2(a, b), c, d)
+end

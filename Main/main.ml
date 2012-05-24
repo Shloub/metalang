@@ -70,7 +70,7 @@ let () =
   let lexbuf = Lexing.from_channel (open_in filename) in
   let stdlib_buf = Lexing.from_channel (open_in stdlib_file) in
   try
-    let (funs, main) = Parser.main Lexer.token lexbuf in
+    let (funs, main) = Parser.prog Lexer.token lexbuf in
     let stdlib_functions = Parser.toplvls Lexer.token stdlib_buf in
     let prog = {
       Prog.progname = progname;
@@ -111,7 +111,8 @@ let () =
       (* out "sch" SchemePrinter.printer#prog prog clike_passes; *)
       (* out "sh" BashPrinter.printer#prog prog clike_passes; *)
     end
-  with Parsing.Parse_error ->
+  with Parsing.Parse_error
+	   | Parser.Error ->
     let curr = lexbuf.Lexing.lex_curr_p in
     let line = curr.Lexing.pos_lnum in
     let cnum = curr.Lexing.pos_cnum - curr.Lexing.pos_bol - 1 in

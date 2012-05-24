@@ -9,4 +9,6 @@
 <Stdlib/*.cmx>: use_str
 <Printers/*.ml>: use_stdlib, use_astutils
 
+true : use_menhir
+
 "Stdlib" or "Astutils" or "Parser" or "Printers": include

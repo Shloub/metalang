@@ -1,362 +1,171 @@
-/*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
-*/
+%{
+	module E = Expr
+	module M = Mutable
+	module I = Instr
+	module T = Type
+	module P = Prog
+%}
 
-
-
-%token <int> INT
-%token <float> FLOAT
-%token <string> STRING
-%token <char> CHAR
-%token <bool> BOOL
-%token <string> NAME
-
-%token MACRO
-%token SPACING
-%token LBRACE
-%token RBRACE
-%token LHOOK
-%token RHOOK
-%token LPARENT
-%token RPARENT
-%token COMMA
-%token DOTCOMMA
-%token PROG
-%token RETURN
-%token IF
-%token ELSE
-%token PRINT
-%token READ
-%token <string>COMMENT
-%token FOR
-%token WHILE
-%token TO
-
-%token O_ADD
-%token O_NEG
-%token O_MUL
-%token O_DIV
-%token O_MOD
-%token O_OR
-%token O_AND
-%token O_NOT
-%token O_BOR
-%token O_BAND
-%token O_BNOT
-%token O_BRSHIFT
-%token O_BLSHIFT
-
-%token O_LOWER
-%token O_LOWEREQ
-%token O_HIGHER
-%token O_HIGHEREQ
-%token O_EQ
-%token O_DIFF
-
-%token STDINSEP
-
-%token AFFECT
-%token ARRAY
-%token ARROW
-%token DECLTYPE
-%token STRUCT
-%token DOUBLEPOINT
-%token EXTERN
-%token GLOBAL
-%token TUPLE
-%token AS
-%token DOT
-
-%token <Type.t> TYPE
-
+%token MAIN IF THEN ELSE END DO FOR TO WHILE RETURN
+%token DEF MACRO WITH
+%token READ PRINT SKIP
+%token ENUM RECORD
+%token SET DOT COMMA PERIOD
+%token LEFT_PARENS RIGHT_PARENS LEFT_BRACKET RIGHT_BRACKET
+%token NOT AND OR
+%token EQUAL NOT_EQUAL LOWER HIGHER LOWER_OR_EQUAL HIGHER_OR_EQUAL
+%token ADD NEG MUL DIV MODULO
+%token TYPE_INT TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY
+%token TRUE FALSE
+%token<int> INT
+%token<char> CHAR
+%token<string> STRING
+%token<string> IDENT
 %token EOF
 
-%right NAME
-
-%left TOKENKEXISTEPASLOL
-
-%left SPACING
-%left INT
-%left LPARENT
-%left RPARENT
-%left LHOOK
-%left RHOOK
-%left LBRACE
-%left RBRACE
-
-%left O_NOT
-
-%left O_AND
-%left O_OR
-
-%left O_DIFF
-%left O_EQ
-
-%left O_BOR
-%left O_BAND
-%left O_BNOT
-
-%left O_HIGHEREQ
-%left O_HIGHER
-%left O_LOWEREQ
-%left O_LOWER
-%left O_BRSHIFT
-%left O_BLSHIFT
-%left O_ADD
-%left O_NEG
-%left O_BNEG
-%left O_MOD
-%left O_DIV
-%left O_MUL
-
-%left IF
-%left ELSE
-
-
-%left COMMENT
-
-%start main result toplvls
-%type <Prog.t_fun list * Instr.t list option> main
-%type <Prog.t_fun list> toplvls
-%type <Expr.t> result
-%type <Type.t> type_
+%start prog toplvls
+%type<Prog.t_fun list * Instr.t list option> prog
+%type<Prog.t_fun list> toplvls
 %%
 
-eof : EOF { () } ;
-
-int :
-| INT { Expr.integer $1 }
+prog :
+| define* main EOF { $1, $2 }
 ;
 
-char :
-| CHAR { Expr.char $1 }
+toplvls : define* EOF { $1 } ;
+
+main :
+| { None }
+| MAIN instrs END { Some $2 }
 ;
 
-bool :
-| BOOL { Expr.bool $1 }
+value :
+| TRUE  { E.bool true }
+| FALSE { E.bool false }
+| INT   { E.integer $1 }
+| CHAR  { E.char $1 }
 ;
 
-string :
-| STRING { Expr.string (Stdlib.String.unescape $1) }
+typ :
+| TYPE_INT { T.integer }
+| TYPE_FLOAT { T.float }
+| TYPE_CHAR { T.char }
+| TYPE_BOOL { T.bool }
+| TYPE_ARRAY LOWER typ HIGHER { T.array $3 }
 ;
 
-arrayaccess:
-| LBRACE result RBRACE { [$2] }
-| LBRACE result RBRACE arrayaccess  {$2 :: $4}
+expr :
+| value { $1 }
+| mutabl { E.access $1 }
+| LEFT_PARENS expr RIGHT_PARENS { $2 }
+| unary_op  { $1 }
+| binary_op { $1 }
+| IDENT LEFT_PARENS exprs RIGHT_PARENS { E.call $1 $3 }
 ;
 
-result:
-| result O_MUL result { Expr.binop Expr.Mul $1 $3 }
-| result O_DIV result { Expr.binop Expr.Div $1 $3 }
-| result O_MOD result { Expr.binop Expr.Mod $1 $3 }
-| result O_ADD result { Expr.binop Expr.Add $1 $3 }
-| result O_NEG result { Expr.binop Expr.Sub $1 $3 }
-| result O_BLSHIFT result { Expr.binop Expr.LShift $1 $3 }
-| result O_BRSHIFT result { Expr.binop Expr.RShift $1 $3 }
-| result O_LOWER result { Expr.binop Expr.Lower $1 $3 }
-| result O_LOWEREQ result { Expr.binop Expr.LowerEq $1 $3 }
-| result O_HIGHER result { Expr.binop Expr.Higher $1 $3 }
-| result O_HIGHEREQ result { Expr.binop Expr.HigherEq $1 $3 }
-| result O_EQ result { Expr.binop Expr.Eq $1 $3 }
-| result O_DIFF result { Expr.binop Expr.Diff $1 $3 }
-| result O_BAND result { Expr.binop Expr.BinAnd $1 $3 }
-| result O_BOR result { Expr.binop Expr.BinOr $1 $3 }
-| result O_OR result { Expr.binop Expr.Or $1 $3 }
-| result O_AND result { Expr.binop Expr.And $1 $3 }
-| O_NEG result { Expr.unop Expr.Neg $2 }
-| O_BNOT result { Expr.unop Expr.BNot $2 }
-| O_NOT result { Expr.unop Expr.Not $2 }
-| LPARENT result RPARENT { $2 }
-| int { $1 }
-| bool { $1 }
-| string { $1 }
-| char { $1 }
-| mutable_ { Expr.access $1 }
-| NAME { Expr.binding $1 }
-| SPACING result { $2 }
-| result SPACING { $1 }
-| NAME LPARENT params RPARENT { Expr.call $1 $3 }
-| NAME LPARENT RPARENT { Expr.call $1 [] }
+mutabl :
+| IDENT { M.var $1 }
+| mutabl LEFT_BRACKET exprs RIGHT_BRACKET { M.array $1 $3 }
+;
 
+exprs :
+| { [] }
+| expr { [$1] }
+| expr COMMA exprs { $1 :: $3 }
+;
+
+unop :
+| NOT { E.Not }
+| NEG { E.Neg }
+;
+
+unary_op :
+| unop expr { E.unop $1 $2 }
+;
+
+binop :
+| ADD { E.Add }
+| NEG { E.Sub }
+| MUL { E.Mul }
+| DIV { E.Div }
+| AND { E.And }
+| OR  { E.Or  }
+| EQUAL { E.Eq }
+| NOT_EQUAL { E.Diff }
+| HIGHER { E.Higher }
+| LOWER  { E.Lower }
+| HIGHER_OR_EQUAL { E.HigherEq }
+| LOWER_OR_EQUAL  { E.LowerEq }
+;
+
+binary_op :
+| expr binop expr { E.binop $2 $1 $3 }
 ;
 
 
-params:
-  | result { [$1] }
-  | result COMMA params { $1 :: $3 }
-
-
-type_:
-  | type_ ARRAY { Type.array $1 }
-  | TYPE { $1 }
-  | NAME { Type.named $1 }
-
-struct_types_lst:
-| NAME DOUBLEPOINT type_ DOTCOMMA RHOOK { [($1, $3)] }
-| NAME DOUBLEPOINT type_ DOTCOMMA struct_types_lst { ($1, $3) :: $5 }
-
-typedecl:
-  | DECLTYPE NAME AFFECT STRUCT LHOOK
-      struct_types_lst
-      AS TUPLE DOTCOMMA
-      {
-	Prog.DeclareType ($2, Type.struct_ ($6, {Type.tuple=true} ) )
-      }
-  | DECLTYPE NAME AFFECT STRUCT LHOOK
-      struct_types_lst
-      DOTCOMMA
-      {
-	Prog.DeclareType ($2, Type.struct_ ($6, {Type.tuple=false} ) )
-      }
-
-
-mutable_:
-  | NAME { Instr.mutable_var $1 }
-  | mutable_ arrayaccess { Instr.mutable_array $1 $2}
-  | mutable_ DOT NAME { Instr.mutable_dot $1 $3 }
-
-if_:
-| IF LPARENT result RPARENT bloc ELSE bloc { Instr.if_ $3 $5 $7 }
-| IF LPARENT result RPARENT bloc { Instr.if_ $3 $5 [] }
-
-comment:
-| COMMENT { Instr.comment $1; } ;
-
-record:
-| LHOOK NAME AFFECT result DOTCOMMA { [$2, $4] }
-| record NAME AFFECT result DOTCOMMA { ($2, $4) :: $1 }
-
-instruction:
-| mutable_ AFFECT result DOTCOMMA { Instr.affect $1 $3 }
-| RETURN result DOTCOMMA { Instr.return $2 }
-| type_ NAME AFFECT record RHOOK DOTCOMMA
-{
-  Instr.alloc_record $2 $1 (List.rev $4)
-}
-| type_ NAME LBRACE result RBRACE
-LPARENT NAME ARROW instructions RPARENT DOTCOMMA
-{
-match $1 with
-  | Type.F (Type.Array t) ->
-    Instr.alloc_array_lambda $2 t $4 $7 $9
-  | _ -> raise Parsing.Parse_error
-  (* TODO ajouter un message *)
-}
-| type_ NAME LBRACE result RBRACE DOTCOMMA
-{
-match $1 with
-  | Type.F (Type.Array t) ->
-    Instr.alloc_array $2 t $4
-  | _ -> raise Parsing.Parse_error
-  (* TODO ajouter un message*)
-}
-| NAME LPARENT RPARENT DOTCOMMA { Instr.call $1 [] }
-| NAME LPARENT params RPARENT DOTCOMMA { Instr.call $1 $3 }
-| type_ NAME AFFECT result DOTCOMMA { Instr.declare $2 $1 $4 }
-| if_ {$1}
-| PRINT O_LOWER type_ O_HIGHER LPARENT result RPARENT DOTCOMMA {
-      Instr.print $3 $6
-    }
-| READ O_LOWER type_ O_HIGHER LPARENT mutable_ RPARENT DOTCOMMA {
-      Instr.read $3 $6
-}
-| READ type_ NAME DOTCOMMA {
-  Instr.readdecl $2 $3
-}
-| FOR NAME AFFECT result TO result bloc
-{ Instr.loop $2 $4 $6 $7 }
-| WHILE LPARENT result RPARENT bloc
-{ Instr.while_ $3 $5 }
-| STDINSEP { Instr.stdin_sep }
-
-instructions:
-| instruction comments { $1 :: $2 }
-| instruction { [$1] }
-| instruction instructions { $1 :: $2 }
-| comments instructions { List.append $1 $2}
+define_var :
+| DEF typ IDENT SET expr { I.declare $3 $2 $5 }
+| DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
+	{ match T.unfix $2 with
+	  | T.Array x -> I.alloc_array_lambda $3 x $5 $8 $10
+		| _ -> failwith "expected array"
+	}
+| DEF READ typ IDENT { I.readdecl $3 $4 }
 ;
 
-comments:
-| comment comments { $1 :: $2 }
-| comment { [$1] }
-
-one_instruction:
-| comments one_instruction { List.append $1 $2 }
-| instruction comments { $1 :: $2 }
-| instruction { [$1] }
- 
-param_list:
-| type_ NAME { [($2, $1)] }
-| type_ NAME COMMA param_list { ($2, $1) :: $4 }
-
-bloc:
-    | LHOOK instructions RHOOK { $2 } ;
-    | LHOOK RHOOK { [] } ;
-    | one_instruction { $1 }
-    | LHOOK comments RHOOK { $2 }
-
-main_prog:
-  PROG bloc EOF { Some $2 } ;
-    | EOF { None };
-
-function_:
-    | type_ NAME LPARENT param_list RPARENT bloc {
-      Prog.declarefun $2 $1 $4 $6 }
-    | type_ NAME LPARENT RPARENT bloc {
-      Prog.declarefun $2 $1 [] $5 } ;
-
-macro_content_:
-	| NAME ARROW STRING DOTCOMMA { ($1, $3) }
-	| O_MUL ARROW STRING DOTCOMMA { ("", $3) };
-
-macro_content:
-	| macro_content_ RHOOK { [$1] }
-	| macro_content_ macro_content { $1 :: $2 };
-macro:
-	| MACRO type_ NAME LPARENT param_list RPARENT LHOOK macro_content {
-	  Prog.macro $3 $2 $5 $8
-	};
-
-toplvl:
-| COMMENT { Prog.comment $1 }
-| macro { $1 }
-| function_ { $1 }
-| typedecl { $1 }
-
-toplvls:
-| toplvl toplvls { $1 :: $2 }
-| toplvl { [$1] }
-
-prog:
-    | toplvls main_prog { ( $1, $2) }
-    | main_prog { ([], $1) }
+control_flow :
+| IF expr THEN instrs ELSE instrs END { I.if_ $2 $4 $6 }
+| IF expr THEN instrs END { I.if_ $2 $4 [] }
+| FOR IDENT SET expr TO expr DO instrs END { I.loop $2 $4 $6 $8 }
+| WHILE expr DO instrs END { I.while_ $2 $4 }
+| RETURN expr { I.return $2 }
 ;
 
-main:
-  prog eof { $1 }
+instr :
+| define_var { $1 }
+| control_flow { $1 }
+| mutabl SET expr { I.affect $1 $3 }
+| READ typ mutabl { I.read $2 $3 }
+| PRINT typ expr { I.print $2 $3 }
+| SKIP { I.stdin_sep }
 ;
+
+instrs :
+| { [] }
+| instr PERIOD? instrs { $1 :: $3 }
+;
+
+arg :
+| typ IDENT { $2, $1 }
+;
+
+args :
+| { [] }
+| arg { [$1] }
+| arg COMMA args { $1 :: $3 }
+;
+
+define :
+| DEF typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
+	{ P.declarefun $3 $2 $5 $7 }
+
+| MACRO typ IDENT LEFT_PARENS args RIGHT_PARENS macro* END
+	{ P.macro $3 $2 $5 $7 }
+;
+
+macro :
+| ident_language DO STRING PERIOD? { $1, $3 }
+;
+
+ident_language :
+| IDENT { $1 }
+| MUL { "*" }
+;
+
+(*
+def_type :
+| ENUM NAME ... END
+| RECORD NAME ... END
+;
+*)
+

@@ -1,148 +1,103 @@
 {
+	open Stdlib
+	open Lexing
+	let newline lexbuf =
+		let p = lexbuf.lex_curr_p in
+    lexbuf.lex_curr_p <- { p with
+      pos_lnum = 1 + p.pos_lnum ;
+      pos_bol  = p.pos_cnum ;
+    }
 
-(*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
-*)
+	let error lexbuf =
+		let x = lexbuf.lex_curr_p in
+		failwith $ Printf.sprintf "lexing error at line %i, char %i, near %s"
+			x.pos_lnum
+			(x.pos_cnum - x.pos_bol - 1)
+			(lexeme lexbuf)
 
-
-
-  open Parser
+	open Parser
 }
 
-let spacing = [' ' '\t' '\r']+
-let newline = [ '\n' ]
-let ident = ['a'-'z'] ['0'-'9' 'a'-'z' 'A'-'Z' '_']*
-let commentignore = '#' [^'\n']*
+let ignore = '#' [^ '\n']*
+let space = [' ' '\t' '\r']
 
-  let comment = ([^'*'] | ('*' [^'/'] ) )*
-
-
-let char = "\\'" | [^'\'' '\\'] | "\\n" | "\\r" | ("\\" ['0'-'9']* )
-
+let int = ['0'-'9']+
+let char = "\\'" | [^'\'' '\\'] | "\\n" | "\\r" | ("\\" int)
 let string = (( "\\\"" | [^'"'] )*)
 
+let ident = ['a'-'z'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
+
 rule token = parse
-  | "/*" (comment as str ) "*/" { COMMENT(str) }
-  |  commentignore { token lexbuf }
-  | newline {
-    let pos = lexbuf.Lexing.lex_curr_p in 
-    lexbuf.Lexing.lex_curr_p <- { pos with
-      Lexing.pos_lnum = pos.Lexing.pos_lnum +1;
-      Lexing.pos_bol = pos.Lexing.pos_cnum;
-    };
-token lexbuf
-  }
-| spacing { token lexbuf }
-(*    spacing { SPACING } *)
-| '\'' (char as str) '\'' { CHAR( Scanf.sscanf ("'"^str^"'") "%C" (fun x -> x ) ) }
-| '"' (string as str) '"' { STRING(str) }
-| "type" { DECLTYPE }
-| "as" { AS }
-| "tuple" { TUPLE }
-| "extern" { EXTERN }
-| "struct" { STRUCT }
-| "global" { GLOBAL }
+(* whitespace *)
+| '\n' { newline lexbuf ; token lexbuf }
+| ignore { token lexbuf }
+| space { token lexbuf }
+
+(* keyword *)
+| "def"  { DEF }
+| "with" { WITH }
+| "main" { MAIN }
+| "end"  { END }
+| "read"  { READ }
 | "print" { PRINT }
-| "read" { READ }
-| "prog" { PROG }
-| "if" { IF }
-| "else" { ELSE }
-| "return" { RETURN }
-| "for" { FOR }
-| "while" { WHILE }
+| "skip"  { SKIP }
 | "macro" { MACRO }
-| "to" { TO }
+
+(* control flow *)
+| "if"   { IF }
+| "then" { THEN }
+| "else" { ELSE }
+| "do"   { DO }
+| "for"  { FOR }
+| "to"   { TO }
+| "while"  { WHILE }
+| "return" { RETURN }
+
+(* type *)
+| "enum"   { ENUM }
+| "record" { RECORD }
+| "int"    { TYPE_INT }
+| "float"  { TYPE_FLOAT }
+| "char"   { TYPE_CHAR }
+| "bool"   { TYPE_BOOL }
+| "array"  { TYPE_ARRAY }
+
+(* punctuation *)
+| "=" { SET }
+| "." { DOT }
 | "," { COMMA }
-| ";" { DOTCOMMA }
-| ":=" { AFFECT }
-| ":" { DOUBLEPOINT }
-| "->" { ARROW }
-| "bool" { TYPE( Type.bool ) }
-| "integer" { TYPE( Type.integer ) }
-| "char" { TYPE(Type.char) }
-| "void" { TYPE( Type.void ) }
-| "float" { TYPE( Type.float ) }
+| ";" { PERIOD }
+| "(" { LEFT_PARENS }
+| ")" { RIGHT_PARENS }
+| "[" { LEFT_BRACKET }
+| "]" { RIGHT_BRACKET }
 
-| "string" { TYPE( Type.string ) }
-| "array" { ARRAY }
-| "stdin_sep();" { STDINSEP }
-  | ['0'-'9']+ '.' ['0'-'9']* as t { FLOAT( float_of_string t) }
-  | ['0'-'9']+ as t { INT( int_of_string t) }
-  | "true" { BOOL(true) }
-  | "false" { BOOL(false) }
-  | "+" { O_ADD }
-  | "-" { O_NEG }
-  | "*" { O_MUL }
-  | "/" { O_DIV }
-  | "%" { O_MOD }
-  | "mod" { O_MOD }
+(* operator *)
+| "!"  { NOT }
+| "&&" { AND }
+| "||" { OR }
 
-  | "||" { O_OR }
-  | "&&" { O_AND }
+| "==" { EQUAL }
+| "!=" | "<>" { NOT_EQUAL }
+| "<"  { LOWER }
+| ">"  { HIGHER }
+| "<=" | "=<" { LOWER_OR_EQUAL }
+| ">=" | "=>" { HIGHER_OR_EQUAL }
 
-  | "or" { O_OR }
-  | "and" { O_AND }
-  | "not" { O_NOT }
+| "+" { ADD }
+| "-" { NEG }
+| "*" { MUL }
+| "/" { DIV }
+| "%" { MODULO }
 
-  | "|" { O_BOR }
-  | "lor" { O_BOR }
-  | "&" { O_BAND }
-  | "land" { O_BAND }
-  | "~" { O_BNOT }
-  | "lnot" { O_BNOT }
-  | "<<" { O_BLSHIFT }
-  | "lsl" { O_BLSHIFT }
-  | ">>" { O_BRSHIFT }
-  | "lsr" { O_BRSHIFT }
+(* value *)
+| "true"  { TRUE }
+| "false" { FALSE }
 
-  | "==" { O_EQ }
-  | "!=" { O_DIFF }
+| int as x { INT (int_of_string x) }
+| '\'' char '\'' as x { CHAR (Scanf.sscanf x "%C" (fun x -> x)) }
+| '"' (string as x) '"' { STRING x }
+| ident as x { IDENT x }
 
-  | "!" { O_NOT }
-  | "<>" { O_DIFF }
-
-  | ">" { O_HIGHER }
-  | ">=" { O_HIGHEREQ }
-  | "<" { O_LOWER }
-  | "<=" { O_LOWEREQ }
-
-  | "[" { LBRACE }
-  | "]" { RBRACE }
-  | "{" { LHOOK }
-  | "}" { RHOOK }
-  | "(" { LPARENT }
-  | ")" { RPARENT }
-  | "." { DOT }
-  | (ident as b) { NAME(b) }
-  | eof{ EOF }
-  | _ {failwith ("lexing error at line " ^
-		    (string_of_int lexbuf.Lexing.lex_curr_p.Lexing.pos_lnum)
-		 ^ " char : "^
-		   (string_of_int
-		      (lexbuf.Lexing.lex_curr_p.Lexing.pos_cnum - lexbuf.Lexing.lex_curr_p.Lexing.pos_bol - 1))
-		 ^" near : " ^(Lexing.lexeme lexbuf) ) }
+| eof { EOF }
+| _ { error lexbuf }

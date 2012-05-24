@@ -1,29 +1,23 @@
-integer nth(char array tab, char tofind, integer len){
-	integer out := 0;
-	for i := 0 to len - 1
-	{
-		if (tab[i] == tofind){
-		   out := out +1;
-		}
-	}
-	return out;
-}
+def int nth(array<char> tab, char tofind, int len)
+	def int out = 0
+	for i = 0 to len - 1 do
+		if tab[i] == tofind then
+		   out = out + 1
+		end
+	end
+	return out
+end
 
-
-prog{
-	integer len := 0;
-	read<integer>(len);
-	stdin_sep();
-	char tofind := '\000';
-	read<char>(tofind);
-	stdin_sep();
-	char array tab[len];
-	for i := 0 to len - 1
-	{
-		char tmp := '\000';
-		read<char>(tmp);
-		tab[i] := tmp;
-	}
-	integer result := nth(tab, tofind, len);
-	print<integer>(result);
-}
+main
+	def int len = 0
+	read int len skip
+	def char tofind = '\000'
+	read char tofind skip
+	def array<char> tab[len] with i do
+		def char tmp = '\000'
+		read char tmp
+		return tmp
+	end
+	def int result = nth(tab, tofind, len)
+	print int result
+end
