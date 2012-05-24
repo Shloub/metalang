@@ -123,6 +123,7 @@ testCompare : $(TESTSDEPS)
 .PHONY: clean
 clean :
 	@rm -rf out || true
+	@ocamlbuild -clean
 
 doc :
 	@ocamlbuild metalang.docdir/index.html
