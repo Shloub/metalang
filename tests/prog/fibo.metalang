@@ -1,24 +1,21 @@
-integer fibo(integer a, integer b, integer i){
-	 integer out := 0;
-	 integer a2 := a;
-	 integer b2 := b;
-	 for j:=0 to i+1
-	 {
-	   out := out + a2;
-	   integer tmp := b2;
-	   b2 := b2 + a2;
-	   a2 := tmp;
-	 }
-	 return out;
-}
-prog{
-	integer a := 0;
-	integer b := 0;
-	integer i := 0;
-	read<integer>(a);
-	stdin_sep();
-	read<integer>(b);
-	stdin_sep();
-	read<integer>(i);
-	print<integer>(fibo(a, b, i));
-}
+def int fibo(int a, int b, int i)
+	def int out = 0
+	def int a2 = a
+	def int b2 = b
+	for j=0 to i+1 do
+	  out = out + a2
+	  def int tmp = b2
+	  b2 = b2 + a2
+	  a2 = tmp
+	end
+	return out
+end
+main
+	def int a = 0
+	def int b = 0
+	def int i = 0
+	read int a skip
+	read int b skip
+	read int i
+	print int fibo(a, b, i)
+end

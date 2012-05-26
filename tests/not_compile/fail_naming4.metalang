@@ -1,7 +1,3 @@
-void naming()
-{
-	integer foo := a + 1;
-}
-prog{
-
-}
+def void naming()
+	int foo = a + 1;
+end

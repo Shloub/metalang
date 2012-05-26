@@ -3,55 +3,50 @@
    dans les épreuves de prologin
 */
 
-integer find0(integer len, integer array array tab, integer array array cache, integer x, integer y){
+def int find0(int len, array<array<int>> tab, array<array<int>> cache, int x, int y)
 	/*
 	Cette fonction est récursive
 	*/
-	if (y == len - 1){
-	  return tab[y][x];
-	}else if (x > y){
-	  return 100000;
-	}else if (cache[y][x] != 0){
-	  return cache[y][x];
-	}
-	integer result := 0;
-	integer out0 := find0(len, tab, cache, x, y+1);
-	integer out1 := find0(len, tab, cache, x+1, y+1);
-	if (out0 < out1){
-	  result := out0 + tab[y][x];
-	}else{
-	  result := out1 + tab[y][x];
-	}
-	cache[y][y] := result;
-	return result;
-}
+	if y == len - 1 then
+	  return tab[y][x]
+	elsif x > y then
+	  return 100000
+	elsif cache[y][x] != 0 then
+	  return cache[y][x]
+	end
+	def int result = 0
+	def int out0 = find0(len, tab, cache, x, y+1)
+	def int out1 = find0(len, tab, cache, x+1, y+1)
+	if out0 < out1 then
+	  result = out0 + tab[y][x]
+	else
+	  result = out1 + tab[y][x]
+	end
+	cache[y][y] = result
+	return result
+end
 
-integer find(integer len, integer array array tab){
-	integer array array tab2[len];
-	for i := 0 to len - 1
-	{
-	  integer array tab3[i+1];
-	  for j := 0 to i {
-	      tab3[j] := 0;
-	  }
-	  tab2[i] := tab3;
-	}
-	return find0(len, tab, tab2, 0, 0);
-}
+def int find(int len, array<array<int>> tab)
+	def array<array<int>> tab2[len] with i do
+	  def array<int> tab3[i+1] with j do
+			return 0
+		end
+	  return tab3
+	end
+	return find0(len, tab, tab2, 0, 0)
+end
 
-prog{
-	integer len := 0;
-	read<integer>(len);
-	stdin_sep();
-	integer array array tab[len] (i ->
-		integer array tab2[i+1] (j->
-			integer tmp := 0;
-			read<integer>(tmp);
-			stdin_sep();
-			return tmp;
-		);
-		return tab2;
-	);
-	print<integer>(find(len, tab));
-	print<integer array array>(tab);
-}
+main
+	def int len = 0
+	read int len skip
+	def array<array<int>> tab[len] with i do
+		def array<int> tab2[i+1] with j do
+			def int tmp = 0
+			read int tmp skip
+			return tmp
+		end
+		return tab2
+	end
+	print int find(len, tab)
+	print array<array<int>> tab
+end

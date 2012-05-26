@@ -1,12 +1,6 @@
+def void naming(int a)
+end
 
-void naming(integer a)
-{
-}
-
-void naming2()
-{
-	integer foo := naming + 1;
-}
-prog{
-
-}
+def naming2()
+	int foo = naming + 1;
+end

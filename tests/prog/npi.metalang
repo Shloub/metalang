@@ -2,40 +2,44 @@
 Notation polonaise inversée
 */
 
-integer npi(char array str, integer len){
-	integer array stack[len];
-	integer ptrStack := 0;
-	integer ptrStr := 0;
-	while (ptrStr < len){
-
-	if (str[ptrStr] == ' '){
-	   ptrStr := ptrStr + 1;
-	} else if ( is_number( str[ptrStr] ) ) {
-	   integer num := 0;
-	   while( str[ptrStr] != ' ' ){
-	     num := num * 10 + int_of_char(str[ptrStr]) - int_of_char('0');
-	     ptrStr := ptrStr + 1;
-	   }
-	   stack[ptrStack] := num;
-	   ptrStack := ptrStack + 1;
-	}else if (str[ptrStr] == '+'){
-	      stack[ptrStack - 2] := stack[ptrStack - 2] + stack[ptrStack - 1];
-	      ptrStack := ptrStack - 1;
-	      ptrStr := ptrStr + 1;
-	}
-     }
-	return stack[0];
-}
-
-prog{
-	integer len := 0;
-	read<integer>(len);
-	stdin_sep();
-	char array tab[len] (i ->
-		char tmp := '\000';
-		read<char>(tmp);
-		return tmp;
-	);
-	integer result := npi(tab, len);
-	print<integer>(result);
-}
+def int npi(array<char> str, int len)
+  def array<int> stack[len] with i do
+		return 0
+	end
+  def int ptrStack = 0
+  def int ptrStr = 0
+  while ptrStr < len do
+		if str[ptrStr] == ' ' then
+			ptrStr = ptrStr + 1
+		else
+			if is_number( str[ptrStr] ) then
+				def int num = 0
+				while str[ptrStr] != ' ' do
+					num = num * 10 + int_of_char(str[ptrStr]) - int_of_char('0')
+					ptrStr = ptrStr + 1
+        end
+				stack[ptrStack] = num
+				ptrStack = ptrStack + 1
+			else
+				if str[ptrStr] == '+' then
+					stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1]
+					ptrStack = ptrStack - 1
+					ptrStr = ptrStr + 1
+				end
+			end
+		end
+  end
+  return stack[0]
+end
+	 
+main
+	def int len = 0
+	read int len skip
+	def array<char> tab[len] with i do
+		def char tmp = '\000'
+		read char tmp
+		return tmp
+	end
+	def int result = npi(tab, len)
+	print int result
+end

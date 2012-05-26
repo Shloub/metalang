@@ -1,8 +1,4 @@
 
-void naming2()
-{
-	integer foo := call(1);
-}
-prog{
-
-}
+def void naming2()
+	def int foo = call(1)
+end

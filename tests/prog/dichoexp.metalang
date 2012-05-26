@@ -1,21 +1,20 @@
 
-integer exp(integer a, integer b){
-	if (b == 0){
-	   return 1;
-	}
-	if (b % 2 == 0){
-	   integer o := exp(a, b / 2);
-	   return o * o;
-	}else{
-	   return a * exp(a, b - 1);
-	}
-}
+def int exp(int a, int b)
+	if b == 0 then
+	  return 1
+	end
+	if b % 2 == 0 then
+	  def int o = exp(a, b / 2)
+	  return o * o
+		else
+			return a * exp(a, b - 1)
+		end
+end
 
-prog{
-	integer a := 0;
-	integer b := 0;
-	read<integer>(a);
-	stdin_sep();
-	read<integer>(b);
-	print<integer>(exp(a, b));
-}
+main
+	def int a = 0
+	def int b = 0
+	read int a skip
+	read int b
+	print int exp(a, b)
+end

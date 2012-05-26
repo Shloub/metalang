@@ -6,7 +6,7 @@
 	module P = Prog
 %}
 
-%token MAIN IF THEN ELSE END DO FOR TO WHILE RETURN
+%token MAIN IF THEN ELSE ELSIF END DO FOR TO WHILE RETURN
 %token DEF MACRO WITH
 %token READ PRINT SKIP
 %token ENUM RECORD
@@ -15,13 +15,36 @@
 %token NOT AND OR
 %token EQUAL NOT_EQUAL LOWER HIGHER LOWER_OR_EQUAL HIGHER_OR_EQUAL
 %token ADD NEG MUL DIV MODULO
-%token TYPE_INT TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY
+%token TYPE_INT TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID
 %token TRUE FALSE
 %token<int> INT
 %token<char> CHAR
 %token<string> STRING
 %token<string> IDENT
 %token EOF
+
+
+
+%left NOT
+%left AND
+%left OR
+%left NOT_EQUAL
+%left EQUAL
+%left BOR
+%left BAND
+%left BNOT
+%left HIGHER_OR_EQUAL
+%left HIGHER
+%left LOWER_OR_EQUAL
+%left LOWER
+%left BRSHIFT
+%left BLSHIFT
+%left ADD
+%left NEG
+%left BNEG
+%left MODULO
+%left DIV
+%left MUL
 
 %start prog toplvls
 %type<Prog.t_fun list * Instr.t list option> prog
@@ -52,6 +75,7 @@ typ :
 | TYPE_CHAR { T.char }
 | TYPE_BOOL { T.bool }
 | TYPE_ARRAY LOWER typ HIGHER { T.array $3 }
+| TYPE_VOID { T.void }
 ;
 
 expr :
@@ -83,11 +107,16 @@ unary_op :
 | unop expr { E.unop $1 $2 }
 ;
 
-binop :
+binary_op :
+| e1=expr op=binop e2=expr { E.binop op e1 e2 }
+;
+
+%inline binop :
 | ADD { E.Add }
 | NEG { E.Sub }
 | MUL { E.Mul }
 | DIV { E.Div }
+| MODULO { E.Mod }
 | AND { E.And }
 | OR  { E.Or  }
 | EQUAL { E.Eq }
@@ -96,10 +125,6 @@ binop :
 | LOWER  { E.Lower }
 | HIGHER_OR_EQUAL { E.HigherEq }
 | LOWER_OR_EQUAL  { E.LowerEq }
-;
-
-binary_op :
-| expr binop expr { E.binop $2 $1 $3 }
 ;
 
 
@@ -113,12 +138,18 @@ define_var :
 | DEF READ typ IDENT { I.readdecl $3 $4 }
 ;
 
+cond :
+| expr THEN instrs ELSE instrs END { I.if_ $1 $3 $5 }
+| expr THEN instrs END { I.if_ $1 $3 [] }
+| expr THEN instrs ELSIF cond { I.if_ $1 $3 [$5] }
+;
+
 control_flow :
-| IF expr THEN instrs ELSE instrs END { I.if_ $2 $4 $6 }
-| IF expr THEN instrs END { I.if_ $2 $4 [] }
+| IF cond { $2 }
 | FOR IDENT SET expr TO expr DO instrs END { I.loop $2 $4 $6 $8 }
 | WHILE expr DO instrs END { I.while_ $2 $4 }
 | RETURN expr { I.return $2 }
+| IDENT LEFT_PARENS exprs RIGHT_PARENS { I.call $1 $3 }
 ;
 
 instr :
@@ -159,7 +190,7 @@ macro :
 
 ident_language :
 | IDENT { $1 }
-| MUL { "*" }
+| MUL { "" }
 ;
 
 (*

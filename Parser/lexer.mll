@@ -24,11 +24,15 @@ let space = [' ' '\t' '\r']
 let int = ['0'-'9']+
 let char = "\\'" | [^'\'' '\\'] | "\\n" | "\\r" | ("\\" int)
 let string = (( "\\\"" | [^'"'] )*)
-
+let comment = ([^'*'] | ('*' [^'/'] ) )*
 let ident = ['a'-'z'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
 rule token = parse
 (* whitespace *)
+| "/*" (comment as str ) "*/" {
+	token lexbuf 
+(* COMMENT(str) TODO *)
+}
 | '\n' { newline lexbuf ; token lexbuf }
 | ignore { token lexbuf }
 | space { token lexbuf }
@@ -47,6 +51,7 @@ rule token = parse
 | "if"   { IF }
 | "then" { THEN }
 | "else" { ELSE }
+| "elsif" { ELSIF }
 | "do"   { DO }
 | "for"  { FOR }
 | "to"   { TO }
@@ -61,6 +66,7 @@ rule token = parse
 | "char"   { TYPE_CHAR }
 | "bool"   { TYPE_BOOL }
 | "array"  { TYPE_ARRAY }
+| "void"  { TYPE_VOID }
 
 (* punctuation *)
 | "=" { SET }

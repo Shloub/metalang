@@ -1,11 +1,8 @@
 
-void naming(integer a)
-{
-}
+def void naming(int a)
+end
 
-void naming(integer a)
-{
-}
-prog{
-
-}
+void naming(int a)
+end
+main
+end

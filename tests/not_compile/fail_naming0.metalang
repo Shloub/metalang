@@ -1,8 +1,8 @@
 
-void naming(integer a)
-{
-   integer a := 0;
-}
-prog{
+def void naming(int a)
+   def int a = 0
+end
 
-}
+main
+  def int b = 0
+end

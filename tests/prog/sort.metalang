@@ -1,30 +1,26 @@
 
-void sort_(integer array tab, integer len){
-	for i := 0 to len -1
-	{
-	   for j := i + 1 to len - 1
-	   {
-		if (tab[i] > tab[j]){
-		   integer tmp := tab[i];
-		   tab[i] := tab[j];
-		   tab[j] := tmp;
-		}
-	   }
-	}
-}
+def void sort_(array<int> tab, int len)
+	for i = 0 to len -1
+	do
+	  for j = i + 1 to len - 1
+	  do
+			if tab[i] > tab[j] then
+				def int tmp = tab[i]
+				tab[i] = tab[j]
+				tab[j] = tmp
+			end
+	  end
+	end
+end
 
-prog{
-	integer len := 2;
-	read<integer>(len);
-	stdin_sep();
-	integer array tab[len];
-	for i := 0 to len - 1
-	{
-		integer tmp := 0;
-		read<integer>(tmp);
-		stdin_sep();
-		tab[i] := tmp;
-	}
-	sort_(tab, len);
-	print<integer array>(tab);
-}
+main
+	def int len = 2
+	read int len skip
+	def array<int> tab[len] with i do
+		def int tmp = 0
+		read int tmp skip
+		return tmp
+	end
+	sort_(tab, len)
+	print array<int> tab
+end

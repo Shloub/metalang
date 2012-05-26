@@ -1,41 +1,39 @@
 
-integer pathfind_aux(integer array cache, integer array tab, integer len, integer pos){
-	if (pos >= len - 1){
-	   return 0;
-	}else if (cache[pos] != -1){
-	      return cache[pos];
-	}else{
-	   cache[pos] := len * 2;
-	   integer posval := pathfind_aux(cache, tab, len, tab[pos]);
-	   integer oneval := pathfind_aux(cache, tab, len, pos + 1);
-	   integer out := 0;
-	   if (posval < oneval){
-	      out := 1 + posval;
-	   }else{
-	      out := 1 + oneval;
-	   }
-	   cache[pos] := out;
-	   return out;
-	}
-}
+def int pathfind_aux(array<int> cache, array<int> tab, int len, int pos)
+	if pos >= len - 1 then
+	  return 0
+	elsif cache[pos] != -1 then
+		return cache[pos]
+	else
+	  cache[pos] = len * 2
+	  def int posval = pathfind_aux(cache, tab, len, tab[pos])
+	  def int oneval = pathfind_aux(cache, tab, len, pos + 1)
+	  def int out = 0
+	  if posval < oneval then
+	    out = 1 + posval
+	  else
+	    out = 1 + oneval
+	  end
+	  cache[pos] = out
+	  return out
+	end
+end
 
-integer pathfind(integer array tab, integer len){
-	integer array cache[len] (i ->
-		return -1;
-	);
-	return pathfind_aux(cache, tab, len, 0);
-}
+def int pathfind(array<int> tab, int len)
+	def array<int> cache[len] with i do
+		return -1
+	end
+	return pathfind_aux(cache, tab, len, 0)
+end
 
-prog{
-	integer len := 0;
-	read<integer>(len);
-	stdin_sep();
-	integer array tab[len] (i ->
-		integer tmp := 0;
-		read<integer>(tmp);
-		stdin_sep();
-		return tmp;
-	);
-	integer result := pathfind(tab, len);
-	print<integer>(result);
-}
+main
+	def int len = 0
+	read int len skip
+	def array<int> tab[len] with i do
+		def int tmp = 0
+		read int tmp skip
+		return tmp
+	end
+	def int result = pathfind(tab, len)
+	print int result
+end
