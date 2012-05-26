@@ -362,7 +362,7 @@ class camlPrinter = object(self)
    
   method allocarray_lambda f binding type_ len binding2 lambda =
     let b = BindingSet.mem binding refbindings in
-      Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->@\n@[<v 2>  %a@])%a@ in@]"
+      Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ (%a)@ (fun@ %a@ ->@\n@[<v 2>  %a@])%a@ in@]"
 	self#binding binding
 	(fun t () ->
 	  if b then
