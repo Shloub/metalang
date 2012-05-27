@@ -23,20 +23,15 @@
 %token<string> IDENT
 %token EOF
 
-%left NOT
-%left AND
 %left OR
-%left NOT_EQUAL
-%left EQUAL
-%left HIGHER_OR_EQUAL
-%left HIGHER
-%left LOWER_OR_EQUAL
-%left LOWER
-%left ADD
-%left NEG
-%left MODULO
-%left DIV
-%left MUL
+%left AND
+
+%left NOT_EQUAL EQUAL HIGHER_OR_EQUAL HIGHER LOWER_OR_EQUAL LOWER
+
+%left ADD NEG
+%left MUL DIV MODULO
+
+%left NOT
 
 %start prog toplvls
 %type<Prog.t_fun list * Instr.t list option> prog
@@ -97,7 +92,7 @@ unop :
 ;
 
 unary_op :
-| x=unop y=expr { E.unop x y }
+| x=unop y=expr %prec NOT { E.unop x y }
 ;
 
 binary_op :
