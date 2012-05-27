@@ -23,25 +23,17 @@
 %token<string> IDENT
 %token EOF
 
-
-
 %left NOT
 %left AND
 %left OR
 %left NOT_EQUAL
 %left EQUAL
-%left BOR
-%left BAND
-%left BNOT
 %left HIGHER_OR_EQUAL
 %left HIGHER
 %left LOWER_OR_EQUAL
 %left LOWER
-%left BRSHIFT
-%left BLSHIFT
 %left ADD
 %left NEG
-%left BNEG
 %left MODULO
 %left DIV
 %left MUL
@@ -98,13 +90,14 @@ exprs :
 | expr COMMA exprs { $1 :: $3 }
 ;
 
+%inline
 unop :
 | NOT { E.Not }
 | NEG { E.Neg }
 ;
 
 unary_op :
-| unop expr { E.unop $1 $2 }
+| x=unop y=expr { E.unop x y }
 ;
 
 binary_op :
