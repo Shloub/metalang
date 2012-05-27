@@ -48,7 +48,6 @@ type 'a tofix =
   | String of string
   | Float of float
   | Integer of int
-  | Binding of varname
   | Bool of bool
   | Access of 'a Mutable.t
   | Length of varname
@@ -66,11 +65,12 @@ let map f = function
     Integer _ 
 	| Length _
 	| Float _ 
-	| String _ 
-	| Binding _ 
+	| String _
 	| Char _
 	| Bool _) as lief -> lief
-  | Access m -> assert false (* TODO *)
+  | Access m ->
+		let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
+															 Access m2
   | Call (n, li) -> Call (n, List.map f li)
 
 let bool b = fix (Bool b)
@@ -83,13 +83,11 @@ let char i = fix (Char i)
 let float f = fix (Float f)
 let string f = fix (String f)
 let boolean b = fix (Bool b)
-let binding b = fix (Binding b)
 
 let access m = fix (Access m )
 
 let call name li = fix ( Call(name, li))
 let length name = fix ( Length name)
-
 
 let default_value t = match Type.unfix t with
   | Type.Integer -> integer 0
@@ -117,13 +115,14 @@ module Writer = AstWriter.F (struct
     | String _ -> acc, t
     | Float _ -> acc, t
     | Integer _ -> acc, t
-    | Binding _ -> acc, t
     | Bool _ -> acc, t
     | Length _ -> acc, t
-    | Access m -> acc, t (* TODO *)
+    | Access m ->
+			let acc, m = Mutable.foldmap_expr f acc m in
+			acc, F (annot, Access m)
     | Call (name, li) ->
-	let acc, li = List.fold_left_map f acc li in
-	(acc, F (annot, Call(name, li)) )
+			let acc, li = List.fold_left_map f acc li in
+			(acc, F (annot, Call(name, li)) )
 end)
 
 module Eval = struct
@@ -186,6 +185,5 @@ module Eval = struct
 		| UnOp (RBool i, Not) -> RBool (not i)
 		| UnOp (RInteger i, BNot) -> RInteger (lnot i)
 		| UnOp (RFloat i, Neg) -> RFloat (-. i)
-		| UnOp (_, _) -> assert false
-		| _ -> assert false (* TODO *)
+		| _ -> assert false
 end

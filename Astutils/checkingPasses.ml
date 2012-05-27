@@ -123,8 +123,6 @@ module CheckNaming : SigPassTop = struct
 
   let check_expr funname acc e =
     let f () e = match Expr.unfix e with
-      | Expr.Binding b ->
-	is_value funname acc b
       | Expr.Access m ->
 	check_mutable funname acc m
       | Expr.Length tab ->

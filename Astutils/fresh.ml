@@ -47,9 +47,14 @@ let fresh_init (prog: Prog.t) =
     (fun acc i ->
       match Instr.unfix i with
 	| Instr.Declare (b, _, _)
-	| Instr.AllocArray (b, _, _, _)
+	| Instr.DeclRead (_, b)
+	| Instr.AllocRecord(b, _, _)
+	| Instr.AllocArray (b, _, _, None)
 	| Instr.Loop (b, _, _, _)
 	    -> BindingSet.add b acc
+	| Instr.AllocArray (b1, _, _, Some (b2, _))
+	    ->
+		BindingSet.add b1 (BindingSet.add b2 acc)
 	| _ -> acc
     ) acc i
   in
@@ -59,8 +64,9 @@ let fresh_init (prog: Prog.t) =
       let acc:BindingSet.t = List.fold_left
 	(fun acc ((v:string), _ ) -> BindingSet.add v acc)
 	acc params in
+
       let acc:BindingSet.t = List.fold_left addset acc instrs in
-      acc
+      acc (* TODO *)
     | _ -> acc
   in
   let set = BindingSet.empty in
@@ -68,10 +74,10 @@ let fresh_init (prog: Prog.t) =
     | None -> set
     | Some instrs -> List.fold_left addset set instrs in
   let set = List.fold_left addtop set prog.Prog.funs in
-  (*let () = BindingSet.iter
+ (* let () = BindingSet.iter
     (fun s -> Printf.printf "%s\n" s) set in
   let () = Printf.printf "len = %d\n" (BindingSet.cardinal set) in
-  *)
+ *)
   let () = bindings := set
   in ();;
 

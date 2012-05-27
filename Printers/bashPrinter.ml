@@ -108,7 +108,6 @@ inherit printer as super
 
   method expr f e =
     match Expr.unfix e with
-      | Expr.Binding _
       | Expr.Call _
       | Expr.Integer _ -> super#expr f e
       | _ ->

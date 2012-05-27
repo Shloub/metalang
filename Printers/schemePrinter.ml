@@ -97,7 +97,6 @@ inherit printer as super
     | Expr.Integer i -> Format.fprintf f "%i" i
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
-    | Expr.Binding b -> self#expr_binding f b
     | Expr.Access a -> self#access f a
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Length (tab) ->

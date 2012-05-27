@@ -40,3 +40,14 @@ let unfix = function F x -> x
 let fix x = F x
 let array a el = Array (a, el) |> fix
 let var a = Var a |> fix
+
+let rec foldmap_expr f acc mut =
+	match unfix mut with
+		| Var v -> acc, fix (Var v)
+		| Dot (m, field) ->
+			let acc, m = foldmap_expr f acc m in
+			acc, fix (Dot (m, field))
+		| Array (mut, li) ->
+			let acc, mut = foldmap_expr f acc mut in
+			let acc, li = List.fold_left_map f acc li in
+			acc, fix (Array (mut, li) )

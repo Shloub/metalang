@@ -93,8 +93,6 @@ module Rename = struct
 
   and process_expr map e =
     let f e = Expr.fix (match Expr.unfix e with
-      | Expr.Binding b ->
-	Expr.Binding (mapname map b)
       | Expr.Access mutable_ ->
 	Expr.Access (mapmutable map mutable_)
       | Expr.Call (funname, li) ->
@@ -147,7 +145,7 @@ module Rename = struct
 	Prog.DeclarFun (mapname acc funname, t,
 			 (List.map (fun (n, t) -> (mapname acc n), t) params),
 			 (List.map (process_instr acc) instrs))
-      | _ -> p
+      | _ -> p (* TODO *)
     in acc, p
 end
 

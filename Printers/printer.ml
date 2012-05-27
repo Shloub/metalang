@@ -366,7 +366,6 @@ class printer = object(self)
     | Expr.Float _ -> true
     | Expr.String _ -> true
     | Expr.Char _ -> true
-    | Expr.Binding _ -> true
     | Expr.Access _ -> true
     | Expr.Call (_, _) -> true
     | _ -> false
@@ -387,7 +386,6 @@ class printer = object(self)
     | Expr.Integer i -> Format.fprintf f "%i" i
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
-    | Expr.Binding b -> self#expr_binding f b
     | Expr.Access m ->
 	self#access f m
     | Expr.Call (funname, li) -> self#apply f funname li

@@ -35,24 +35,35 @@ open PassesUtils
 
 module NoPend : SigPass = struct
   type acc = unit
-  let process (acc:acc) i =
+  let rec process (acc:acc) i =
     let rec inner_map t : Instr.t list =
       match Instr.unfix t with
 
-	| Instr.AllocArray(_, _, Expr.F (_, Expr.Binding _), _)
-	| Instr.Print(_, Expr.F (_, Expr.Binding _)) ->
+				| Instr.AllocArray(_, _, Expr.F (_, Expr.Access ( Mutable.F
+																														(Mutable.Var _))), _)
+	| Instr.Print(_, Expr.F (_,
+													 Expr.Access ( Mutable.F
+																					 (Mutable.Var _))
+	)) ->
 	  [fixed_map t]
 	| Instr.Print(t, e) ->
 	  let b = fresh () in
 	  [
 	    Instr.Declare (b, t, e) |> Instr.fix;
-	    Instr.Print(t, Expr.binding b) |> Instr.fix;
+	    Instr.Print(t, Expr.access (Mutable.var b)) |> Instr.fix;
 	  ]
 	| Instr.AllocArray(b0, t, e, lambdaopt) ->
+		let lambdaopt = match lambdaopt with
+			| None -> None
+			| Some (name, li) ->
+				let li = List.map inner_map li in
+				let li = List.flatten li in
+				Some (name, li)
+		in
 	  let b = fresh () in
 	  [
 	    Instr.Declare (b, Type.integer, e) |> Instr.fix;
-	    Instr.AllocArray(b0, t, Expr.binding b, lambdaopt) |> Instr.fix;
+	    Instr.AllocArray(b0, t, Expr.access (Mutable.var b), lambdaopt) |> Instr.fix;
 	  ]
 	| _ -> [fixed_map t]
     and fixed_map (t:Instr.t) =
@@ -71,7 +82,8 @@ module AllocArrayExpend : SigPass = struct
 
   let mapret tab index instructions =
     let f tra i = match Instr.unfix i with
-      | Instr.Return e -> Instr.affect (Instr.mutable_array (Instr.mutable_var tab) [Expr.binding index]) e
+      | Instr.Return e -> Instr.affect (Instr.mutable_array
+																					(Instr.mutable_var tab) [Expr.access (Mutable.var index)]) e
       | Instr.AllocArray _ -> i
       | _ -> tra i
     in let instructions = List.map (f (Instr.Writer.Traverse.map f)) instructions in
@@ -117,14 +129,15 @@ end
 module ExpandPrint : SigPass = struct
   
   let rec write_bool e =
-    Instr.if_ (Expr.binding e)
+    Instr.if_ (Expr.access (Mutable.var e))
       [ Instr.print Type.string (Expr.string "True") ]
       [ Instr.print Type.string (Expr.string "False") ]
 
   let rec write t b =
     let i = fresh () in
     let b2 = fresh () in
-    let b2e = Expr.access (Mutable.array (Mutable.var b) [Expr.binding i]) in
+    let b2e = Expr.access (Mutable.array (Mutable.var b) [Expr.access
+																														 (Mutable.var i)]) in
     let b2i = Instr.declare b2 t b2e
     in
     [
@@ -143,9 +156,15 @@ module ExpandPrint : SigPass = struct
     ]
 
   let rec rewrite (i : Instr.t) : Instr.t list = match Instr.unfix i with
-    | Instr.Print(Type.F (Type.Array t), Expr.F (annot, Expr.Binding b) ) ->
+    | Instr.Print(Type.F (Type.Array t), Expr.F (annot,
+					Expr.Access ( Mutable.F
+													(Mutable.Var b))																			 
+		) ) ->
       write t b
-    | Instr.Print(Type.F (Type.Bool), Expr.F (annot, Expr.Binding b) ) ->
+    | Instr.Print(Type.F (Type.Bool), Expr.F (annot,
+																							Expr.Access ( Mutable.F
+																															(Mutable.Var b))
+		) ) ->
       [write_bool b]
     | j -> [ Instr.map_bloc (List.flatten @* List.map rewrite) j |> Instr.fix ]
 

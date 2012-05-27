@@ -405,7 +405,6 @@ class camlPrinter = object(self)
     | Expr.Integer _ -> true
     | Expr.Float _ -> true
     | Expr.String _ -> true
-    | Expr.Binding _ -> true
     | Expr.Access _ -> true
     | Expr.Call (_, _) -> false
     | _ -> false
