@@ -55,6 +55,11 @@ metalang : main.byte
 main.byte :
 	@ocamlbuild -lflag -g -cflag -g Main/main.byte
 
+.PHONY: repl.byte
+repl.byte :
+	@ocamlbuild -lflag -g -cflag -g Main/repl.byte
+
+
 out :
 	@mkdir out
 

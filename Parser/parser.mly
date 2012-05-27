@@ -33,9 +33,10 @@
 
 %left NOT
 
-%start prog toplvls
+%start prog toplvls toplvl_expr
 %type<Prog.t_fun list * Instr.t list option> prog
 %type<Prog.t_fun list> toplvls
+%type<Expr.t> toplvl_expr
 %%
 
 prog :
@@ -43,6 +44,7 @@ prog :
 ;
 
 toplvls : define* EOF { $1 } ;
+toplvl_expr : expr EOF { $1 } ;
 
 main :
 | { None }
