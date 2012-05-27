@@ -1,13 +1,19 @@
-type ast
 type checker
 number of args checker
 return checker
 warnings pour les choses laides dans les différents langages
+gérer les entrées d'entiers négatifs (en C#, php, python)
+virer les warnings
+php stdin : ne pas forcer à faire ctrl+d
+AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
+break et continue (attention au caml)
+commentaires indentation
+chercher a faire un sort correct
+operateurs en ocaml
+gérer la division entiere en php
 
 autres printers :
-  C#
   ruby
-  python
   javascript
   pascal
   f#
@@ -16,30 +22,3 @@ autres printers :
   perl
   bash
   ada
-
-virer les warnings
-
-php stdin : ne pas forcer à faire ctrl+d
-position dans les expressions / annot dans les instructions
-AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
-break et continue (attention au caml)
-commentaires indentation
-chercher a faire un sort correct
-ajouter du code dans les bypass, et résoudre correctement les dépendences
-operateurs en ocaml
-
-mode emacs ? (pas prioritaire)
-
-pouvoir faire des structures
-
-
-tests
-  - isPrime
-  - euclide
-  - rectangles
-  - laine a vendre
-  - gateau d'anniversaire
-  - interpreteur lisp ?
-  - dire si c'est bien parenthesé
-  - trouver le plus petit entier qui n'est pas dans la liste
-  - immeuble
