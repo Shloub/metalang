@@ -53,12 +53,13 @@ let ocaml_passes prog =
   prog |> default_passes
   |> Passes.WalkIfMerge.apply
 
-let tex_passes prog = prog
+let no_passes prog = prog
 
 module L = MakeMap (String)
 let languages, printers =
   let ( => ) pa pr out prog = pr out (pa prog) in
   let ls = [
+    "metalang", no_passes => Printer.printer#prog ;
     "c",    clike_passes => CPrinter.printer#prog ;
     "cc",   clike_passes => CppPrinter.printer#prog ;
     "cs",   clike_passes => CsharpPrinter.printer#prog ;
@@ -67,7 +68,7 @@ let languages, printers =
     "php",  clike_passes => PhpPrinter.printer#prog ;
     "rb",   clike_passes => RbPrinter.printer#prog ;
     "py",   clike_passes => PyPrinter.printer#prog ;
-    "tex",  tex_passes   =>  TexPrinter.printer#prog ;
+    "tex",  no_passes   =>  TexPrinter.printer#prog ;
     "sch",  ocaml_passes   =>  SchemePrinter.printer#prog ;
   ] in
   List.map fst ls, L.from_list ls
@@ -86,12 +87,16 @@ type config = {
   mutable languages : string list ;
   mutable output_dir : string ;
   mutable filenames : string list ;
+  mutable quiet : bool;
+  mutable stdlib : bool;
 }
 
 let default_config () = {
   languages = languages ;
   output_dir = "." ;
   filenames = [] ;
+  quiet = false ;
+  stdlib = true;
 }
 
 let config () =
@@ -106,7 +111,13 @@ let config () =
 
     "-o", String (fun o -> c.output_dir <- o),
     "Output directory [default is .]" ;
-  ] in
+
+    "-quiet", Unit (fun () -> c.quiet <- true),
+    "Display error and warnings only";
+
+     "-nostdlib", Unit (fun () -> c.stdlib <- false),
+    "Don't use the standard library";
+ ] in
   Arg.parse spec (fun f -> c.filenames <- f :: c.filenames) descr ;
   c
 
@@ -124,10 +135,10 @@ let parse_file parse filename =
       filename line cnum tok ;
     exit 1
 
-let make_prog filename =
+let make_prog stdlib filename =
   let progname = Filename.chop_extension $ Filename.basename filename in
   let funs, main = parse_file Parser.prog filename in
-  let stdlib = parse_file Parser.toplvls stdlib_file in
+  let stdlib = if stdlib then parse_file Parser.toplvls stdlib_file else [] in
   let prog = {
     Prog.progname = progname ;
     Prog.funs = funs ;
@@ -145,21 +156,21 @@ let make_prog filename =
   let funs = funs_add @ funs in
   { prog with Prog.funs = funs }
 
-let process output_dir languages filename =
-  let prog = make_prog filename in
+let process c filename =
+  let prog = make_prog c.stdlib filename in
   let go lang =
     let printer = L.find lang printers in
-    let output = output_dir ^ "/" ^ prog.Prog.progname ^ "." ^ lang in
-    Printf.printf "Generating %s\n%!" output ;
+    let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^ lang in
+    if not c.quiet then Printf.printf "Generating %s\n%!" output ;
     Fresh.fresh_init prog ;
     let chan = open_out output in
     let buf = Format.formatter_of_out_channel chan in
     Format.fprintf buf "%a@;%!" printer prog ;
     close_out chan in
-  List.iter go languages
+  List.iter go c.languages
 
 let process_config c =
-  List.iter (process c.output_dir c.languages) c.filenames
+  List.iter (process c) c.filenames
 
 let () =
   (* noms à renommer automatiquement *)
