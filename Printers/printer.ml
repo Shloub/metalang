@@ -74,13 +74,13 @@ class printer = object(self)
 
   val mutable macros = BindingMap.empty
 
-  method binding f i = Format.fprintf f "%%%s" i
+  method binding f i = Format.fprintf f "%s" i
   method funname f i = Format.fprintf f "%s" i
   method string f i = Format.fprintf f "%S" i (* TODO faire mieux *)
   method float f i = Format.fprintf f "%f" i (* TODO faire mieux *)
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ %a@ =@ %a@]"
+    Format.fprintf f "@[<h>def %a@ %a@ =@ %a@]"
       self#ptype t
       self#binding var
       self#expr e
@@ -88,7 +88,7 @@ class printer = object(self)
   method affect f mutable_ expr =
     Format.fprintf f "@[<h>%a@ =@ %a;@]" self#mutable_ mutable_ self#expr expr
 
-  method bloc f li = Format.fprintf f "@[<v 2>do@\n%a@]@\ndone"
+  method bloc f li = Format.fprintf f "@[<v 2>do@\n%a@]@\nend"
       (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a@\n%a" f1 e1 f2 e2)) li
 
@@ -100,7 +100,7 @@ class printer = object(self)
       self#bloc li
 
   method whileloop f expr li =
-    Format.fprintf f "@[<h>while (%a)@]@\n%a"
+    Format.fprintf f "@[<h>while %a@]@\n%a"
       self#expr expr
       self#bloc li
 
@@ -109,14 +109,14 @@ class printer = object(self)
     Format.fprintf f "/*%s*/" str
 
   method return f e =
-    Format.fprintf f "@[<h>return@ %a;@]" self#expr e
+    Format.fprintf f "@[<h>return@ %a@]" self#expr e
 
   method ptype f t =
       match Type.unfix t with
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
       | Type.Float -> Format.fprintf f "float"
-      | Type.Array a -> Format.fprintf f "array(%a)" self#ptype a
+      | Type.Array a -> Format.fprintf f "array<%a>" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
@@ -137,20 +137,19 @@ class printer = object(self)
 	  ) p
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a];@]"
-	self#binding binding
+      Format.fprintf f "@[<h>def array<%a> %a[%a]"
 	self#ptype type_
+	self#binding binding
 	self#expr len
 
 
   method allocarray_lambda f binding type_ len binding2 lambda =
-      Format.fprintf f "@[<h>%a@ =@ new@ array@ of@ %a[%a] (%a[%a]=%a);@]"
-	self#binding binding
+      Format.fprintf f "@[<h>def array<%a>%a[%a] with %a do@\n@[<v 2>  %a@]@\nend@]"
 	self#ptype type_
-	self#expr len
 	self#binding binding
+	self#expr len
 	self#binding binding2
-	self#bloc lambda
+	self#instructions lambda
 
   method field f field =
     Format.fprintf f "%s" field
@@ -172,7 +171,7 @@ class printer = object(self)
 	     ))
 	  indexes
 
-	
+
 
   method expand_macro_apply f name t params code li =
     self#expand_macro_call f name t params code li
@@ -240,13 +239,12 @@ class printer = object(self)
 	  ) li
 
   method stdin_sep f =
-    Format.fprintf f "@[read_blank(STDIN);@]"
+    Format.fprintf f "@[skip@]"
 
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "%a->%a=%a;"
-	  self#binding name
+	Format.fprintf f "%a = %a"
 	  self#field fieldname
 	  self#expr expr
       )
@@ -257,9 +255,8 @@ class printer = object(self)
       li
 
   method allocrecord f name t el =
-    Format.fprintf f "%a %a = malloc (sizeof(%a) );@\n%a"
+    Format.fprintf f "def %a %a = with %a end"
       self#ptype t
-      self#binding name
       self#binding name
       (self#def_fields name) el
 
@@ -267,8 +264,8 @@ class printer = object(self)
     match Instr.unfix t with
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
-    
-    | Instr.Affect (mutable_, expr) -> self#affect f mutable_ expr    
+
+    | Instr.Affect (mutable_, expr) -> self#affect f mutable_ expr
 
     | Instr.Loop (varname, expr1, expr2, li) ->
 	self#forloop f varname expr1 expr2 li
@@ -298,34 +295,32 @@ class printer = object(self)
     | Type.Bool -> Format.fprintf f "%%b"
 
   method read f t mutable_ =
-    Format.fprintf f "@[read<%a>(%a);@]" self#ptype t self#mutable_ mutable_
+    Format.fprintf f "@[read %a %a@]" self#ptype t self#mutable_ mutable_
 
   method read_decl f t v =
-    Format.fprintf f "@[%a %a := read<%a>();@]"
+    Format.fprintf f "@[def read %a %a@]"
       self#ptype t
       self#binding v
-      self#ptype t
 
   method print f t expr =
-    Format.fprintf f "@[print<%a>(%a);@]" self#ptype t self#expr expr
+    Format.fprintf f "@[print %a %a@]" self#ptype t self#expr expr
 
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] ->
-	Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
-	  self#expr e
-	  self#bloc ifcase
-      
+	      Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v2>  %a@]@\nend"
+	        self#expr e
+	        self#instructions ifcase
       | [Instr.F ( Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse %a"
-	self#expr e
-	self#bloc ifcase
-	self#instr instr
+      Format.fprintf f "@[<h>if@ %a@]then@\n@[<v 2>  %a@]@\nels%a"
+	      self#expr e
+	      self#instructions ifcase
+	      self#instr instr
       | _ ->
-	Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
+	Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]@\nend"
 	  self#expr e
-	  self#bloc ifcase
-	  self#bloc elsecase
+	  self#instructions ifcase
+	  self#instructions elsecase
 
   method bool f = function
     | true -> Format.fprintf f "true"
@@ -353,7 +348,7 @@ class printer = object(self)
        | Expr.RShift -> ">>"
        | Expr.LShift -> "<<"
       )
-    
+
   method unop f op a =
     match op with
       | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
@@ -404,19 +399,20 @@ class printer = object(self)
     self#mutable_ f m
 
   method print_proto f (funname, t, li) =
-    Format.fprintf f "function@ %a(%a)@ returns %a"
+    Format.fprintf f "def@ %a %a(%a)"
+      self#ptype t
       self#funname funname
       (print_list
 	 (fun f (n, t) ->
-	   Format.fprintf f "%a@ (%a)"
-	     self#binding n
-	     self#ptype t)
+	   Format.fprintf f "%a@ %a"
+	     self#ptype t
+	     self#binding n)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a,@ %a" f1 e1 f2 e2)) li
-      self#ptype t
+
 
   method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a@]@\n@[<v 2>{@\n%a@]@\n}@\n"
+    Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\nend@\n"
       self#print_proto (funname, t, li)
       self#instructions instrs
 
@@ -458,6 +454,8 @@ class printer = object(self)
     ) funs
 
   method main f main =
-    Format.fprintf f "%a"
+    Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
      self#instructions main
 end
+
+let printer = new printer;;

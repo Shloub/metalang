@@ -38,7 +38,7 @@ class cPrinter = object(self)
 
 
   method binding f i = Format.fprintf f "%s" i
-  
+
   method bool f = function
     | true -> Format.fprintf f "1"
     | false -> Format.fprintf f "0"
@@ -61,6 +61,29 @@ class cPrinter = object(self)
       self#binding var
       self#expr e
 
+  method allocrecord f name t el =
+    Format.fprintf f "%a %a = malloc (sizeof(%a) );@\n%a"
+      self#ptype t
+      self#binding name
+      self#binding name
+      (self#def_fields name) el
+
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "%a.%a=%a;"
+	  self#binding name
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a@\n%a" f1 e1 f2 e2)
+      f
+      li
+
+
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ (%a)@ *@ sizeof(%a) + sizeof(int));@]@\n((int*)%a)[0]=%a;@\n%a=(%a*)( ((int*)%a)+1);"
 	self#ptype type_
@@ -72,7 +95,7 @@ class cPrinter = object(self)
 	self#binding binding
 	self#ptype type_
 	self#binding binding
-	
+
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "{int %a;@\n%a}"
       self#binding varname
@@ -89,7 +112,7 @@ class cPrinter = object(self)
   method main f main =
     Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}"
       self#instructions main
-      
+
 (* on ne peut pas faire ça a cause des boucles for qu'on étend*)
   method bloc f li = (*match li with
     | [i] ->
@@ -166,6 +189,36 @@ class cPrinter = object(self)
 	super#ptype t
 	  super#binding name
 
+
+  method print_fun f funname t li instrs =
+    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"
+      self#print_proto (funname, t, li)
+      self#instructions instrs
+
+  method return f e =
+    Format.fprintf f "@[<h>return@ %a;@]" self#expr e
+
+  method whileloop f expr li =
+    Format.fprintf f "@[<h>while (%a)@]@\n%a"
+      self#expr expr
+      self#bloc li
+
+  method if_ f e ifcase elsecase =
+    match elsecase with
+      | [] ->
+	      Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
+ 	      self#expr e
+	        self#bloc ifcase
+      | [Instr.F ( Instr.If (condition, instrs1, instrs2) ) as instr] ->
+        Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse %a"
+ 	      self#expr e
+        	self#bloc ifcase
+ 	      self#instr instr
+      | _ ->
+        Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
+ 	      self#expr e
+        	self#bloc ifcase
+        	self#bloc elsecase
 end
 
 let printer = new cPrinter;;
