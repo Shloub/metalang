@@ -31,6 +31,10 @@ TMPFILES	:=\
 	$(addsuffix .class, $(TESTS)) \
 	$(addsuffix .class.out, $(TESTS)) \
 	$(addsuffix .cs, $(TESTS)) \
+	$(addsuffix .sch, $(TESTS)) \
+	$(addsuffix .sch.out, $(TESTS)) \
+	$(addsuffix .rb, $(TESTS)) \
+	$(addsuffix .rb.out, $(TESTS)) \
 	$(addsuffix .cc, $(TESTS)) \
 	$(addsuffix .cc.bin, $(TESTS)) \
 	$(addsuffix .cc.bin.out, $(TESTS)) \
@@ -63,7 +67,8 @@ repl.byte :
 out :
 	@mkdir out
 
-out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.java out/%.cs: tests/prog/%.metalang metalang out
+out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.rb \
+out/%.sch out/%.java out/%.cs: tests/prog/%.metalang metalang out
 	$(GEN)
 	@for f in `ls $(notdir $*).*`; do mv $$f out/$$f ; done
 
@@ -111,6 +116,12 @@ out/%.php.out : out/%.php
 out/%.py.out : out/%.py
 	@$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1
 
+out/%.sch.out : out/%.sch
+	@gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1
+
+out/%.rb.out : out/%.rb
+	@ruby $< < tests/prog/$(basename $*).in > $@ || exit 1
+
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1
 
@@ -131,7 +142,7 @@ TESTPROGS	=\
 	done; \
 	cp $< $@ ;\
 
-out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out
+out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out #out/%.sch.out
 	$(TESTPROGS)
 
 out/%.bin.outs : out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out
@@ -170,7 +181,7 @@ FASTTESTSDEPS	:= $(addsuffix .fasttest, $(TESTS))
 fastTestCmp : $(FASTTESTSDEPS)
 	@echo "$(green)FAST TESTS OK$(reset)"
 
-%.not_compile : %.startTest metalang 
+%.not_compile : %.startTest metalang
 	@./metalang tests/not_compile/$(TESTBASENAME).metalang || exit 0
 	@if [ -e $(TESTBASENAME).ml ]; then exit 1; fi
 	@echo "$(green)OK $(TESTBASENAME)$(reset)"

@@ -87,7 +87,6 @@ class pyPrinter = object(self)
       | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
       | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
 
-
   method print_op f op =
     Format.fprintf f
       "%s"
@@ -131,11 +130,14 @@ match Type.unfix t with
 
 
   method main f main =
-    self#instructions f main
-      
+   self#instructions f main
+
+  method header f () =
+    Format.fprintf f "%s" header
+
   method prog f prog =
-    Format.fprintf f "%s%a%a@\n"
-      header
+    Format.fprintf f "%a%a%a@\n"
+      self#header ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
@@ -158,7 +160,7 @@ match Type.unfix t with
 	Format.fprintf f "@[<h>if@ %a:@]@\n%a"
 	  self#expr e
 	  self#bloc ifcase
-      
+
       | [Instr.F ( Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nel%a"
 	self#expr e
@@ -194,7 +196,8 @@ match Type.unfix t with
 
   method forloop f varname expr1 expr2 li =
       self#forloop_content f (varname, expr1, expr2, li)
-  method forloop_content f (varname, expr1, expr2, li) =
+
+ method forloop_content f (varname, expr1, expr2, li) =
     Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
       self#binding varname
       self#expr expr1

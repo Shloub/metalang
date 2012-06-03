@@ -1,7 +1,9 @@
 macro int int_of_char(char c)
-	ml do "int_of_char ($c)"
-	py do "ord($c)"
-	*  do "$c"
+  ml do "int_of_char ($c)"
+  py do "ord($c)"
+  scheme do "(char->integer $c)"
+  ruby do "$c.ord"
+  *  do "$c"
 end
 
 macro float float_of_int(int c)
@@ -10,7 +12,8 @@ macro float float_of_int(int c)
 end
 
 def bool is_number(char c)
-	return c <= '9' && c >= '0'
+	return int_of_char(c) <= int_of_char('9') &&
+  int_of_char(c) >= int_of_char('0')
 end
 
 def int min2(int a, int b)
