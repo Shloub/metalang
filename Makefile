@@ -46,12 +46,10 @@ TMPFILES	:=\
 	$(addsuffix .fasttest, $(TESTS)) \
 	$(addsuffix .test, $(TESTS)) \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)) \
-	$(addsuffix .outs, $(TESTS))
+	$(addsuffix .outs, $(TESTS)) \
+	$(addsuffix .metalang, $(TESTS))
 
 .SECONDARY: $(TMPFILES)
-
-GEN	= \
-	@./metalang $< || exit 1
 
 .PHONY: metalang
 metalang : main.byte
@@ -67,13 +65,24 @@ repl.byte :
 out :
 	@mkdir out
 
-out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.rb \
+out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.rb out/%.metalang \
 out/%.sch out/%.java out/%.cs: tests/prog/%.metalang metalang out
-	$(GEN)
-	@for f in `ls $(notdir $*).*`; do mv $$f out/$$f ; done
+	@./metalang -quiet -o out $< || exit 1
 
-TESTBASENAME	= `echo "$<" | cut -d . -f 1`
-
+out/%.metalang.test : out/%.startTest out/%.metalang
+	@mkdir -p out/foo/out
+	@./metalang -nostdlib -quiet -o out/foo/out $(basename $<).metalang
+	@for i in `ls $(basename $<).*`; do \
+	if [ -e "out/foo/$$i" ]; then \
+	if diff "$$i" "out/foo/$$i" &> /dev/null ; then \
+		echo "" > /dev/null; \
+	else \
+		echo "FAIL $^ $$i out/foo/$$i" > $@ \
+		echo "$(red)FAIL $^$(reset) $$i out/foo/$$i "; \
+		return 1; \
+	fi; \
+	fi; \
+	done;
 
 out/%.c.bin : out/%.c
 	@gcc $< -o $@ || exit 1
@@ -176,20 +185,24 @@ CMPTESTSDEPS	:= $(addsuffix .test, $(TESTS))
 testCompare : $(CMPTESTSDEPS)
 	@echo "$(green)ALL TESTS OK$(reset)"
 
-#never remove tmp files : powerfull for debug
 FASTTESTSDEPS	:= $(addsuffix .fasttest, $(TESTS))
 fastTestCmp : $(FASTTESTSDEPS)
 	@echo "$(green)FAST TESTS OK$(reset)"
 
 %.not_compile : %.startTest metalang
-	@./metalang tests/not_compile/$(TESTBASENAME).metalang || exit 0
-	@if [ -e $(TESTBASENAME).ml ]; then exit 1; fi
-	@echo "$(green)OK $(TESTBASENAME)$(reset)"
-	@touch $@
+	./metalang tests/not_compile/$(notdir $(basename $<)).metalang || exit 0
+	if [ -e $(basename $<).ml ]; then exit 1; fi
+	echo "$(green)OK $(basename $<)$(reset)"
+	touch $@
 
 TESTSNOTCOMPILE	:= $(addprefix out/, $(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)))
 testNotCompile : $(TESTSNOTCOMPILE)
 	@echo "$(green)NOT COMPILE TESTS OK$(reset)"
+
+
+METATESTSDEPS	:= $(addsuffix .metalang.test, $(TESTS))
+metatest : $(METATESTSDEPS)
+	@echo "$(green)METALANG TESTS OK$(reset)"
 
 
 doc :
