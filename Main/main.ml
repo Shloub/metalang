@@ -167,15 +167,18 @@ let process c filename =
     let buf = Format.formatter_of_out_channel chan in
     Format.fprintf buf "%a@;%!" printer prog ;
     close_out chan in
-  List.iter go c.languages
+  begin  (* noms à renommer automatiquement *)
+    Passes.Rename.clear ();
+    Passes.Rename.add prog.Prog.progname ;
+    Passes.Rename.add "out" ;
+    Passes.Rename.add "exp" ;
+    Passes.Rename.add "min" ;
+    Passes.Rename.add "max" ;
+    List.iter go c.languages
+  end
 
 let process_config c =
   List.iter (process c) c.filenames
 
 let () =
-  (* noms à renommer automatiquement *)
-  Passes.Rename.add "out" ;
-  Passes.Rename.add "exp" ;
-  Passes.Rename.add "min" ;
-  Passes.Rename.add "max" ;
   process_config $ config ()

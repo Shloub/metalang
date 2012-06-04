@@ -73,8 +73,12 @@ module Rename = struct
   type acc = varname BindingMap.t
 
   let map = ref BindingMap.empty;;
+
   let add name =
-    map := BindingMap.add name (name ^ "_") !map;;
+    map := BindingMap.add name (name ^ "_") !map
+
+  let clear () =
+    map := BindingMap.empty
 
   let init_acc () = !map
 
