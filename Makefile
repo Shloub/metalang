@@ -157,14 +157,14 @@ out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out #out/%.sch
 out/%.bin.outs : out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out
 	$(TESTPROGS)
 
-out/%.managed.outs : out/%.class.out out/%.exe.out out/%.byte.out
+out/%.managed.outs : out/%.class.out out/%.exe.out # out/%.byte.out
 	$(TESTPROGS)
 
 out/%.startTest :
 	@echo "$(yellow)TESTING $(basename $@)$(reset)"
 	@touch $@
 
-out/%.outs : out/%.bin.outs out/%.int.outs #out/%.managed.outs
+out/%.outs : out/%.bin.outs out/%.int.outs out/%.managed.outs
 	$(TESTPROGS)
 
 out/%.test : out/%.startTest out/%.outs

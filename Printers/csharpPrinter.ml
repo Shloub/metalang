@@ -106,13 +106,19 @@ public static void stdin_sep(){
 
 public static int readInt(){
   int i = 0;
+  char s = readChar_();
+  int sign = 1;
+  if (s == '-'){
+    sign = -1;
+    consommeChar();
+  }
   do{
     char c = readChar_();
     if (c <= '9' && c >= '0'){
       i = i * 10 + c - '0';
       consommeChar();
     }else{
-      return i;
+      return i * sign;
     }
   } while(true);
 }

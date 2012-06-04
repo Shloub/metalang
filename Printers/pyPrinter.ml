@@ -66,6 +66,12 @@ def stdinsep():
       return;
 
 def readint():
+  c = readchar_();
+  if c == '-':
+    sign = -1;
+    skipchar();
+  else:
+    sign = 1;
   out = 0;
   while True:
     c = readchar_();
@@ -73,7 +79,7 @@ def readint():
       out = out * 10 + int(c);
       skipchar();
     else:
-      return out;
+      return out * sign;
 "
 
 class pyPrinter = object(self)
