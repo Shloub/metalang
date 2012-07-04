@@ -30,7 +30,7 @@
 open Stdlib
 open Ast
 
-type structparams = 
+type structparams =
 {
   tuple : bool
 }
@@ -59,5 +59,5 @@ let float = Float |> fix
 let string = String |> fix
 let char = Char |> fix
 let array t = Array t |> fix
-let struct_ (s, p) = Struct (s, p) |> fix
+let struct_ s p = Struct (s, p) |> fix
 let named n = Named n |> fix

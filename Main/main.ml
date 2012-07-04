@@ -69,7 +69,7 @@ let languages, printers =
     "rb",   clike_passes => RbPrinter.printer#prog ;
     "py",   clike_passes => PyPrinter.printer#prog ;
     "tex",  no_passes   =>  TexPrinter.printer#prog ;
-    "sch",  ocaml_passes   =>  SchemePrinter.printer#prog ;
+(*    "sch",  ocaml_passes   =>  SchemePrinter.printer#prog ;*)
   ] in
   List.map fst ls, L.from_list ls
 

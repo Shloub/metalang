@@ -30,13 +30,12 @@ let ident = ['a'-'z'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 rule token = parse
 (* whitespace *)
 | "/*" (comment as str ) "*/" {
-	token lexbuf 
+	token lexbuf
 (* COMMENT(str) TODO *)
 }
 | '\n' { newline lexbuf ; token lexbuf }
 | ignore { token lexbuf }
 | space { token lexbuf }
-
 (* keyword *)
 | "def"  { DEF }
 | "with" { WITH }
@@ -61,6 +60,7 @@ rule token = parse
 (* type *)
 | "enum"   { ENUM }
 | "record" { RECORD }
+| "string"    { TYPE_STRING }
 | "int"    { TYPE_INT }
 | "float"  { TYPE_FLOAT }
 | "char"   { TYPE_CHAR }
@@ -73,6 +73,7 @@ rule token = parse
 | "." { DOT }
 | "," { COMMA }
 | ";" { PERIOD }
+| ":" { COLON }
 | "(" { LEFT_PARENS }
 | ")" { RIGHT_PARENS }
 | "[" { LEFT_BRACKET }

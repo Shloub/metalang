@@ -10,12 +10,12 @@
 %token DEF MACRO WITH
 %token READ PRINT SKIP
 %token ENUM RECORD
-%token SET DOT COMMA PERIOD
+%token SET DOT COMMA PERIOD COLON
 %token LEFT_PARENS RIGHT_PARENS LEFT_BRACKET RIGHT_BRACKET
 %token NOT AND OR
 %token EQUAL NOT_EQUAL LOWER HIGHER LOWER_OR_EQUAL HIGHER_OR_EQUAL
 %token ADD NEG MUL DIV MODULO
-%token TYPE_INT TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID
+%token TYPE_INT TYPE_STRING TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID
 %token TRUE FALSE
 %token<int> INT
 %token<char> CHAR
@@ -56,15 +56,18 @@ value :
 | FALSE { E.bool false }
 | INT   { E.integer $1 }
 | CHAR  { E.char $1 }
+| STRING  { E.string $1 }
 ;
 
 typ :
+| TYPE_STRING { T.string }
 | TYPE_INT { T.integer }
 | TYPE_FLOAT { T.float }
 | TYPE_CHAR { T.char }
 | TYPE_BOOL { T.bool }
 | TYPE_ARRAY LOWER typ HIGHER { T.array $3 }
 | TYPE_VOID { T.void }
+| IDENT { T.named $1 }
 ;
 
 expr :
@@ -79,6 +82,7 @@ expr :
 mutabl :
 | IDENT { M.var $1 }
 | mutabl LEFT_BRACKET exprs RIGHT_BRACKET { M.array $1 $3 }
+| mutabl DOT IDENT { M.fix (M.Dot ($1, $3)) }
 ;
 
 exprs :
@@ -117,6 +121,14 @@ binary_op :
 | LOWER_OR_EQUAL  { E.LowerEq }
 ;
 
+affect_field :
+| IDENT SET expr PERIOD? { ($1, $3) }
+;
+
+alloc_record :
+| DEF typ IDENT SET RECORD affect_field* END
+    { I.alloc_record $3 $2 $6 }
+;
 
 define_var :
 | DEF typ IDENT SET expr { I.declare $3 $2 $5 }
@@ -149,6 +161,7 @@ instr :
 | READ typ mutabl { I.read $2 $3 }
 | PRINT typ expr { I.print $2 $3 }
 | SKIP { I.stdin_sep }
+| alloc_record { $1 }
 ;
 
 instrs :
@@ -172,6 +185,13 @@ define :
 
 | MACRO typ IDENT LEFT_PARENS args RIGHT_PARENS macro* END
 	{ P.macro $3 $2 $5 $7 }
+
+| RECORD IDENT decl_field* END
+    { P.DeclareType ($2, (T.struct_ $3 {T.tuple = false} )) }
+;
+
+decl_field :
+| IDENT COLON typ PERIOD? { $1, $3 }
 ;
 
 macro :
@@ -182,11 +202,3 @@ ident_language :
 | IDENT { $1 }
 | MUL { "" }
 ;
-
-(*
-def_type :
-| ENUM NAME ... END
-| RECORD NAME ... END
-;
-*)
-
