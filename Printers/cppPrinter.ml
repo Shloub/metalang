@@ -106,6 +106,13 @@ inherit cPrinter as super
       self#binding varname
       self#bloc li
 
+  method print f t expr =
+    match Type.unfix t with
+      | Type.String ->
+        Format.fprintf f "@[std::cout << %a;@]"
+          self#expr expr
+      | _ -> super#print f t expr
+
   method prototype f t =
     match Type.unfix t with
       | Type.Array _ ->

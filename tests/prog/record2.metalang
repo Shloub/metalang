@@ -1,8 +1,8 @@
 
 record toto
-     foo : integer;
-     bar : integer;
-     blah : integer;
+     foo : int;
+     bar : int;
+     blah : int;
 end
 
 def toto mktoto(int v1)

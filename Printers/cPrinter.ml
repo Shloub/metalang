@@ -72,7 +72,7 @@ class cPrinter = object(self)
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "%a.%a=%a;"
+	Format.fprintf f "%a->%a=%a;"
 	  self#binding name
 	  self#field fieldname
 	  self#expr expr

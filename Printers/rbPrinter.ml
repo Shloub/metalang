@@ -152,6 +152,28 @@ match Type.unfix t with
   method return f e =
     Format.fprintf f "@[<h>return@ (%a);@]" self#expr e
 
+  method field f field =
+    Format.fprintf f "%S" field
+
+  method allocrecord f name t el =
+    Format.fprintf f "%a = {@[<v>%a@]};"
+      self#binding name
+      (self#def_fields name) el
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "%a => %a"
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a,@\n%a" f1 e1 f2 e2)
+      f
+      li
+
+
 end
 
 let printer = new rbPrinter;;
