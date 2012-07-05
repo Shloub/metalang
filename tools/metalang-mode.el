@@ -7,15 +7,28 @@
 (defvar metalang-mode-hook nil)
 (defvar metalang-font-lock-keywords
    '(
+
+      ("[-a-zA-Z0-9_.]+\\s-:\\s-\\([-a-zA-Z0-9_.<>]+\\)" (1 font-lock-type-face))
+
      ("\\('[^']+'\\)" (1 font-lock-constant-face)) ; char regexp
      ("\\([-a-zA-Z0-9_]+\\)\\s-*(" (1 font-lock-function-name-face)) ; function regexp
-     ("\\(def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)" (1 font-lock-keyword-face))
-		 ("def\\s-\\([^ ]+\\)\\s-[-a-zA-Z0-9_.]+" (1 font-lock-type-face))
-		 ("read\\s-\\([^ ]+\\)\\s-[-a-zA-Z0-9_.]+" (1 font-lock-type-face))
-		 ("print\\s-\\([^ ]+\\)\\s-[-a-zA-Z0-9_.]+" (1 font-lock-type-face))
-		 ("([ \t]*\\([^ ,\n)]+\\)\\s-[-a-zA-Z0-9_.]+" (1 font-lock-type-face))
-		 (",[ \t]*\\([^ ,\n)]+\\)\\s-[-a-zA-Z0-9_.]+" (1 font-lock-type-face))
-     ("\\(true\\|false\\)" (1 font-lock-constant-face t t))
+     ("\\s-\\(record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
+      (1 font-lock-keyword-face))
+     ("^\\(record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
+      (1 font-lock-keyword-face))
+
+      ("record\\s-\\([-a-zA-Z0-9_.<>]+\\)" (1 font-lock-type-face))
+      ("def\\s-\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
+       (1 font-lock-type-face))
+      ("read\\s-\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
+       (1 font-lock-type-face))
+      ("print\\s-\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
+       (1 font-lock-type-face))
+      ("([ \t]*\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
+       (1 font-lock-type-face))
+      (",[ \t]*\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
+       (1 font-lock-type-face))
+      ("\\(true\\|false\\)" (1 font-lock-constant-face t t))
      )
    "Keyword highlighting specification for `metalang-mode'.")
 (defvar metalang-mode-map
@@ -36,7 +49,7 @@
 (defun metalang-isbegin ()
 	""
 	(or
-	 (looking-at "[^\n]*\\(main\\|\\do\\|then\\|else\\)")
+	 (looking-at "[^\n]*\\(main\\|\\do\\|then\\|else\\|record\\)")
 	 (looking-at "[^\n]*\\(def\\s-[^ ]+\\s-[-a-zA-Z0-9_.]+(\\)[^\n]*")
 	 )
 	)
@@ -55,7 +68,7 @@
 							(setq cur-indent (- (current-indentation) default-tab-width)))
 						(if (< cur-indent 0)
 								(setq cur-indent 0)))
-        (save-excursion 
+        (save-excursion
           (while not-indented
             (forward-line -1)
 						(if
@@ -87,7 +100,7 @@
   (setq default-tab-width 2)
   (setq major-mode 'metalang-mode)
   (setq mode-name "Metalang")
-  (set (make-local-variable 'indent-line-function) 'metalang-indent-line)  
+  (set (make-local-variable 'indent-line-function) 'metalang-indent-line)
  ; (set-syntax-table metalang-mode-syntax-table)
   (use-local-map metalang-mode-map)
  ; (run-hooks 'metalang-mode-hook)

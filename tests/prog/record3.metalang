@@ -1,12 +1,13 @@
 
 record toto
-foo : int;
-bar : int;
-blah : int;
+  foo : int;
+  bar : int;
+  blah : int;
 end
 
 def toto mktoto(int v1)
-  def toto t = record foo=v1 bar=0 ; blah=0 ;
+  def toto t = record
+    foo=v1 bar=0 ; blah=0 ;
   end
   return t
 end
