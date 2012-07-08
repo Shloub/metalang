@@ -34,15 +34,9 @@ type typename = string
 type funname = string
 type fieldname = string
 
-module BindingSet = MakeSet (struct
-  type t = string
-  let compare = String.compare
-end)
+module BindingSet = StringSet
 
-module BindingMap = MakeMap (struct
-  type t = string
-  let compare = String.compare
-end)
+module BindingMap = StringMap
 
 let next =
   let r = ref 0 in

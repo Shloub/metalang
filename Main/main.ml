@@ -57,19 +57,30 @@ let no_passes prog = prog
 
 module L = MakeMap (String)
 let languages, printers =
-  let ( => ) pa pr out prog = pr out (pa prog) in
+  let ( => )
+      (pa : Prog.t -> Prog.t )
+      pr
+      (out: Format.formatter)
+      (prog : Prog.t) =
+    let processed = pa prog in
+    let typerEnv = Typer.process processed in
+    begin
+      pr#setTyperEnv typerEnv;
+      pr#prog out processed
+    end
+  in
   let ls = [
-    "metalang", no_passes => Printer.printer#prog ;
-    "c",    clike_passes => CPrinter.printer#prog ;
-    "cc",   clike_passes => CppPrinter.printer#prog ;
-    "cs",   clike_passes => CsharpPrinter.printer#prog ;
-    "java", clike_passes => JavaPrinter.printer#prog ;
-    "ml",   ocaml_passes => OcamlPrinter.printer#prog ;
-    "php",  clike_passes => PhpPrinter.printer#prog ;
-    "rb",   clike_passes => RbPrinter.printer#prog ;
-    "py",   clike_passes => PyPrinter.printer#prog ;
-    "tex",  no_passes   =>  TexPrinter.printer#prog ;
-(*    "sch",  ocaml_passes   =>  SchemePrinter.printer#prog ;*)
+    "metalang", no_passes => Printer.printer ;
+    "c",    clike_passes => CPrinter.printer ;
+    "cc",   clike_passes => CppPrinter.printer;
+    "cs",   clike_passes => CsharpPrinter.printer ;
+    "java", clike_passes => JavaPrinter.printer ;
+    "ml",   ocaml_passes => OcamlPrinter.printer ;
+    "php",  clike_passes => PhpPrinter.printer ;
+    "rb",   clike_passes => RbPrinter.printer ;
+    "py",   clike_passes => PyPrinter.printer ;
+    "tex",  no_passes   =>  TexPrinter.printer ;
+(*    "sch",  ocaml_passes   =>  SchemePrinter.printer ;*)
   ] in
   List.map fst ls, L.from_list ls
 

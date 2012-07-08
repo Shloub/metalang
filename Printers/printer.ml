@@ -72,6 +72,10 @@ let print_list_indexed print sep f li =
 
 class printer = object(self)
 
+  val mutable typerEnv : Typer.env = Obj.magic(0)
+
+  method setTyperEnv t = typerEnv <- t
+
   val mutable macros = BindingMap.empty
 
   method binding f i = Format.fprintf f "%s" i

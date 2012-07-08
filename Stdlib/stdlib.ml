@@ -55,7 +55,7 @@ let float = float_of_int
 
 module Int = struct
 	type t = int
-	let compare = Pervasives.compare
+	let compare : int -> int -> int = Pervasives.compare
 	let sqrt = int @* sqrt @* float
 	let abs t = if t > 0 then t else -t
 
@@ -255,4 +255,6 @@ end
 
 
 module IntSet = MakeSet (Int)
-module IntSetIntSet = MakeSet (IntSet)
+module IntMap = MakeMap (Int)
+module StringMap = MakeMap (String)
+module StringSet = MakeSet (String)

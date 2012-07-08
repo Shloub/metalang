@@ -43,7 +43,6 @@ type 'a tofix =
   | Array of 'a
   | Void
   | Bool
-  | Typename of typename
   | Struct of
       (fieldname * 'a) list * structparams
   | Named of typename
