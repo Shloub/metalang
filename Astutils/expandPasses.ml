@@ -21,11 +21,15 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
 *)
+
+
+(** Some expantion passes
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
+*)
+
 
 open Stdlib
 
@@ -127,7 +131,7 @@ module ExpandReadDecl : SigPass = struct
 end
 
 module ExpandPrint : SigPass = struct
-  
+
   let rec write_bool e =
     Instr.if_ (Expr.access (Mutable.var e))
       [ Instr.print Type.string (Expr.string "True") ]
@@ -158,7 +162,7 @@ module ExpandPrint : SigPass = struct
   let rec rewrite (i : Instr.t) : Instr.t list = match Instr.unfix i with
     | Instr.Print(Type.F (Type.Array t), Expr.F (annot,
 					Expr.Access ( Mutable.F
-													(Mutable.Var b))																			 
+													(Mutable.Var b))
 		) ) ->
       write t b
     | Instr.Print(Type.F (Type.Bool), Expr.F (annot,

@@ -21,12 +21,15 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-* @author Arthur Wendling <art.wendling@gmail.com>
-*
 *)
+
+(** Expressions Ast
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
+@author Arthur Wendling (art.wendling\@gmail.com)
+*)
+
 
 open Stdlib
 open Ast
@@ -62,9 +65,9 @@ let map f = function
   | BinOp (a, op, b) -> BinOp ((f a), op, f b)
   | UnOp (a, op) -> UnOp((f a), op)
   | (
-    Integer _ 
+    Integer _
 	| Length _
-	| Float _ 
+	| Float _
 	| String _
 	| Char _
 	| Bool _) as lief -> lief

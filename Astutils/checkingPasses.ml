@@ -21,10 +21,13 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
+*)
+
+
+(** Some checking passes like name checking
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -135,7 +138,7 @@ module CheckNaming : SigPassTop = struct
       f
       (f () e)
       e
- 
+
  let rec check_instr funname acc instr =
     match Instr.unfix instr with
       | Instr.Declare (var, t, e) ->

@@ -20,11 +20,12 @@
 * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
+*)
+
+(** Ocaml Printer
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -100,13 +101,13 @@ class camlPrinter = object(self)
 
   method length f tab =
     Format.fprintf f "(Array.length %a)" self#binding tab
-  
+
   method main f main =
     let () = sad_returns <- contains_sad_return main in
     let () = self#calc_refs main in
     Format.fprintf f "@[<v 2>@[<h>let () =@\n@[<v 2>begin@\n%a@]@\nend@\n"
       self#instructions main
-      
+
   method prog f prog =
     Format.fprintf f "%a%a"
       self#proglist prog.Prog.funs
@@ -197,7 +198,7 @@ class camlPrinter = object(self)
       | (Instr.F (Instr.DeclRead _)) :: _
       | [] -> " ()"
       | _ -> ""
-	    
+
   method bloc f b =
     if List.forall
       (function
@@ -214,7 +215,7 @@ class camlPrinter = object(self)
 	    (self#need_unit b)
 	| _ ->
 	  Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
-  
+
   method binding f i = Format.fprintf f "%s" i
 
   method affect f m expr =
@@ -224,7 +225,7 @@ class camlPrinter = object(self)
 	| Mutable.Var _ -> ":="
 	| Mutable.Array _ -> "<-"
 	| Mutable.Dot _ -> "<-"
-      )     
+      )
       self#expr expr
 
   method declaration f var t e =
@@ -306,7 +307,7 @@ class camlPrinter = object(self)
 		 f1 e1
 		 f2 e2
 	     )) indexes
-      
+
   method is_rec funname instrs =
     true (* TODO *)
 
@@ -359,7 +360,7 @@ class camlPrinter = object(self)
       Format.fprintf f "@[<h>raise (Found_%d(%a))@]" printed_exn self#expr e
     else
       Format.fprintf f "@[<h>%a@]" self#expr e
-   
+
   method allocarray_lambda f binding type_ len binding2 lambda =
     let b = BindingSet.mem binding refbindings in
       Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ (%a)@ (fun@ %a@ ->@\n@[<v 2>  %a@])%a@ in@]"
@@ -419,7 +420,7 @@ class camlPrinter = object(self)
       | [] ->
 	Format.fprintf f "@[<h>(%a ())@]"
 	  self#funname var
-      | _ ->    
+      | _ ->
 	Format.fprintf
 	  f
 	  "@[<h>%a %a@]"

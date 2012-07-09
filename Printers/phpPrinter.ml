@@ -21,10 +21,13 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
+*)
+
+
+(** php Printer
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -108,7 +111,7 @@ class phpPrinter = object(self)
 	f "%s%a"
 	header
 	self#instructions main
-      
+
   method prog f prog =
     Format.fprintf f "<?php@\n%a%a@\n?>"
       self#proglist prog.Prog.funs

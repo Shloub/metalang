@@ -21,10 +21,13 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
+*)
+
+
+(** Passes seignatures and functors
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -51,7 +54,7 @@ module WalkTop (T:SigPassTop) = struct
       Prog.funs = p;
       Prog.main = m;
     }
-  
+
   let fold ( prog : Prog.t ) =
     let acc = T.init_acc () in
     let acc, funs =  List.fold_left_map T.process acc prog.Prog.funs in

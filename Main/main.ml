@@ -23,11 +23,12 @@
  *)
 
 (** Main
-    *
-    * @see <http://prologin.org> Prologin
-    * @author Prologin (info@prologin.org)
-    * @author Maxime Audouin (coucou747@gmail.com)
-    * @author Arthur Wendling (art.wendling@gmail.com)
+    This file is the entry point of the compiler.
+    This file read options, call all passes and all printers.
+    @see <http://prologin.org> Prologin
+    @author Prologin (info@prologin.org)
+    @author Maxime Audouin (coucou747@gmail.com)
+    @author Arthur Wendling (art.wendling@gmail.com)
 *)
 
 

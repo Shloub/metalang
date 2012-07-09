@@ -21,12 +21,14 @@
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* @see http://prologin.org
-* @author Prologin <info@prologin.org>
-* @author Maxime Audouin <coucou747@gmail.com>
-*
 *)
 
+
+(** java Printer
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
+*)
 
 open Stdlib
 open Ast
@@ -94,7 +96,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
 	Format.fprintf f "@[<h>%a[] %a = new %a[%a]%a;@]"
 	  self#ptype type_
 	  self#binding binding
-	  
+
 	  self#prefix_type t2
 	  self#expr len
 	  self#suffix_type type_
