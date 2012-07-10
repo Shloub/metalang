@@ -160,13 +160,19 @@ class phpPrinter = object(self)
       f
       li
 
-
   method allocrecord f name t el =
     Format.fprintf f "%a = array(@\n@[<v 2>  %a@]@\n);@\n"
       self#binding name
       (self#def_fields name) el
 
-
+  method binop f op a b =
+    match op with
+      | Expr.Div ->
+        if Typer.is_int (super#getTyperEnv ()) a
+        then Format.fprintf f "intval(%a)"
+          (fun f () -> super#binop f op a b) ()
+        else super#binop f op a b
+      | _ -> super#binop f op a b
 end
 
 let printer = new phpPrinter;;

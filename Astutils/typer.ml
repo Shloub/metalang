@@ -37,6 +37,11 @@ type functionType = Type.t list * Type.t
 (* Changer ça pour inferer les definitions de variables *)
 type varType = Type.t
 
+type typeContrainte =
+  | Unknown
+  | PreTyped of typeContrainte ref Type.tofix
+  | Typed of Type.t
+
 let error_ty t1 t2 =
   let () = Printf.printf "Cannot unify %s and %s\n%!"
     (Type.type_t_to_string t1)
@@ -47,17 +52,18 @@ let not_found name =
   let () = Printf.printf "Cannot find variable %s\n%!" name
   in assert false
 
-type typeContrainte =
-  | Unknown
-  | PreTyped of typeContrainte ref Type.tofix
-  | Typed of Type.t
-
 let rec contr2str t =
   match t with
-    | Unknown -> "Unknown"
-    | PreTyped ty ->
-      "PreTyped("^(Type.type2String (Type.map (fun t -> contr2str !t) ty))^")"
-    | Typed ty -> "Typed("^(Type.type_t_to_string ty)^")"
+    | Unknown -> "*"
+    | PreTyped ty -> Type.type2String (Type.map (fun t -> contr2str !t) ty)
+    | Typed ty -> Type.type_t_to_string ty
+
+
+let error_cty t1 t2 =
+  let () = Printf.printf "Cannot unify %s and %s\n%!"
+    (contr2str t1)
+    (contr2str t2)
+  in assert false
 
 let rec check_types (t1:Type.t) (t2:Type.t) =
   match (Type.unfix t1), (Type.unfix t2) with
@@ -117,18 +123,14 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         t1 := Typed (Type.fix tt1);
         unify t1 t2
       end
-    (* TODO une vraie erreur*)
     | PreTyped Type.Array a1, PreTyped Type.Array a2 -> unify a1 a2
-    | PreTyped Type.Array _, PreTyped _ -> assert false
-    (* TODO une vraie erreur*)
-
+    | PreTyped Type.Array _, PreTyped _ -> error_cty !t1 !t2
     | PreTyped (Type.Array r1), Typed (Type.F (Type.Array ty)) ->
       begin
         r1 := Typed ty;
         true
       end
-    | PreTyped (Type.Array r1), Typed _ -> assert false
-    (* TODO une vraie erreur*)
+    | PreTyped (Type.Array r1), Typed _ -> error_cty !t1 !t2
     | PreTyped (Type.Struct (li, _)), Typed (Type.F (Type.Struct (li2, _))) ->
       List.fold_left
         (fun acc (name, t) ->
@@ -137,8 +139,7 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
             li2
           in acc || unify t (ref (Typed ty))
         ) false li
-    | PreTyped (Type.Struct _), Typed _ -> assert false
-    (* TODO une vraie erreur*)
+    | PreTyped (Type.Struct _), Typed _ -> error_cty !t1 !t2
     | PreTyped (Type.Struct (li, _)), PreTyped (Type.Struct (li2, _)) ->
       List.fold_left
         (fun acc (name, t) ->
@@ -147,19 +148,28 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
             li2
           in acc || unify t t2
         ) false li
-    |  PreTyped (Type.Struct _), PreTyped _ -> assert false
-    (* TODO une vraie erreur*)
+    |  PreTyped (Type.Struct _), PreTyped _ -> error_cty !t1 !t2
 
 type env =
     {
       contrainteMap : typeContrainte ref IntMap.t;
-      typeMap : Type.t IntMap.t;
       fields : (Type.t * Type.t) StringMap.t;
       gamma : Type.t StringMap.t;
       functions : functionType StringMap.t;
       locales : varType StringMap.t;
       contraintes : (typeContrainte ref * typeContrainte ref) list;
     }
+
+
+let is_int env expr =
+  match !(IntMap.find (Expr.annot expr) env.contrainteMap) with
+    | Typed (Type.F (Type.Integer)) -> true
+    | _ -> false
+
+let is_float env expr =
+  match !(IntMap.find (Expr.annot expr) env.contrainteMap) with
+    | Typed (Type.F (Type.Float)) -> true
+    | _ -> false
 
 let expand env ty =
   let rec f ty =
@@ -266,7 +276,14 @@ and collect_contraintes_mutable env mut =
           not_found name
       in
       env, ref (Typed ty)
-    | Mutable.Array (mut, eli) -> env, ref Unknown (* TODO *)
+    | Mutable.Array (mut, eli) ->
+      let contrainte = ref Unknown in
+      let env, contrainte_mut = collect_contraintes_mutable env mut in
+      let contrainte_mut2 = ref (PreTyped (Type.Array contrainte) ) in
+      let env = { env with contraintes =
+          (contrainte_mut, contrainte_mut2) :: env.contraintes
+                } in
+      env, contrainte
     | Mutable.Dot (mut, name) ->
       let (ty_dot, ty_mut) = StringMap.find name env.fields in
       let env, contrainte = collect_contraintes_mutable env mut in
@@ -447,7 +464,6 @@ let process (prog: Prog.t) =
   let empty = {
     gamma = StringMap.empty;
     contrainteMap = IntMap.empty;
-    typeMap = IntMap.empty;
     fields = StringMap.empty;
     functions = StringMap.empty;
     locales = StringMap.empty;

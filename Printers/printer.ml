@@ -77,6 +77,9 @@ class printer = object(self)
 
   val mutable typerEnv : Typer.env = Obj.magic(0)
 
+
+  method getTyperEnv () = typerEnv
+
   method setTyperEnv t = typerEnv <- t
 
   val mutable macros = BindingMap.empty
@@ -372,19 +375,19 @@ class printer = object(self)
     | Expr.Call (_, _) -> true
     | _ -> false
 
+  method printp f e =
+    Format.fprintf f "@[<h 2>(%a)@]" self#expr e
+
+  method binop f op a b =
+    let chf x = if self#nop (Expr.unfix x) then self#expr else self#printp
+    in Format.fprintf f "%a@ %a@ %a" (chf a) a self#print_op op (chf b) b
+
   method expr f t =
-    let printp f e =
-      Format.fprintf f "@[<h 2>(%a)@]" self#expr e
-    in
-    let binop op a b =
-      let chf x = if self#nop (Expr.unfix x) then self#expr else printp
-      in Format.fprintf f "%a@ %a@ %a" (chf a) a self#print_op op (chf b) b
-    in
     let t = Expr.unfix t in
     match t with
     | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a
-    | Expr.BinOp (a, op, b) -> binop op a b
+    | Expr.BinOp (a, op, b) -> self#binop f op a b
     | Expr.Integer i -> Format.fprintf f "%i" i
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
