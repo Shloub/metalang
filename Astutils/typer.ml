@@ -32,8 +32,8 @@
 
 open Stdlib
 
+(** {2 Types} *)
 type functionType = Type.t list * Type.t
-
 (* Changer ça pour inferer les definitions de variables *)
 type varType = Type.t
 
@@ -42,6 +42,24 @@ type typeContrainte =
   | PreTyped of typeContrainte ref Type.tofix
   | Typed of Type.t
 
+type env =
+    {
+      contrainteMap : typeContrainte ref IntMap.t;
+      fields : (Type.t * Type.t) StringMap.t;
+      gamma : Type.t StringMap.t;
+      functions : functionType StringMap.t;
+      locales : varType StringMap.t;
+      contraintes : (typeContrainte ref * typeContrainte ref) list;
+    }
+
+(** {2 Printers} *)
+let rec contr2str t =
+  match t with
+    | Unknown -> "*"
+    | PreTyped ty -> Type.type2String (Type.map (fun t -> contr2str !t) ty)
+    | Typed ty -> Type.type_t_to_string ty
+
+(** {2 Error reporters} *)
 let error_ty t1 t2 =
   let () = Printf.printf "Cannot unify %s and %s\n%!"
     (Type.type_t_to_string t1)
@@ -52,19 +70,13 @@ let not_found name =
   let () = Printf.printf "Cannot find variable %s\n%!" name
   in assert false
 
-let rec contr2str t =
-  match t with
-    | Unknown -> "*"
-    | PreTyped ty -> Type.type2String (Type.map (fun t -> contr2str !t) ty)
-    | Typed ty -> Type.type_t_to_string ty
-
-
 let error_cty t1 t2 =
   let () = Printf.printf "Cannot unify %s and %s\n%!"
     (contr2str t1)
     (contr2str t2)
   in assert false
 
+(** {2 Unify} *)
 let rec check_types (t1:Type.t) (t2:Type.t) =
   match (Type.unfix t1), (Type.unfix t2) with
     | Type.Integer, Type.Integer -> ()
@@ -150,17 +162,9 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         ) false li
     |  PreTyped (Type.Struct _), PreTyped _ -> error_cty !t1 !t2
 
-type env =
-    {
-      contrainteMap : typeContrainte ref IntMap.t;
-      fields : (Type.t * Type.t) StringMap.t;
-      gamma : Type.t StringMap.t;
-      functions : functionType StringMap.t;
-      locales : varType StringMap.t;
-      contraintes : (typeContrainte ref * typeContrainte ref) list;
-    }
 
 
+(** {2 Accessors}*)
 let is_int env expr =
   match !(IntMap.find (Expr.annot expr) env.contrainteMap) with
     | Typed (Type.F (Type.Integer)) -> true
@@ -171,6 +175,7 @@ let is_float env expr =
     | Typed (Type.F (Type.Float)) -> true
     | _ -> false
 
+(** {2 Types anti alias-ing}*)
 let expand env ty =
   let rec f ty =
     match Type.unfix ty with
@@ -180,6 +185,7 @@ let expand env ty =
   in f ty
 
 
+(** {2 Collect contraintes functions} *)
 let rec collect_contraintes_expr env e =
 (*  let () = Format.printf "collecting expr contraintes@\n" in
  let () =
@@ -434,6 +440,7 @@ let collect_contraintes e
   let e = collect_contraintes_instructions e instructions ty in
   e
 
+(** {2 Main function} *)
 let process (prog: Prog.t) =
   let not_done ((t1 : typeContrainte ref), (t2 : typeContrainte ref)) : bool=
     let rec not_done_type t = match Type.map
