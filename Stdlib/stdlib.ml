@@ -172,7 +172,7 @@ end
 
 module String = struct
   include String
-
+  let equals a b = 0 = compare a b
   let lines = Str.split $ Str.regexp "\n+"
   let unlines = String.concat "\n"
   let words = Str.split $ Str.regexp "[ \t]+"

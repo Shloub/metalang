@@ -52,6 +52,38 @@ type t = F of t tofix
 let unfix = function F x -> x
 let fix x = F x
 
+let map f = function
+  | Integer -> Integer
+  | Float -> Float
+  | String -> String
+  | Char -> Char
+  | Array t -> Array (f t)
+  | Void -> Void
+  | Bool -> Bool
+  | Struct (li, p) ->
+    Struct (List.map (fun (name, t) -> (name, f t)) li, p)
+  | Named t -> Named t
+
+let type2String (t : string tofix) : string =
+  match t with
+    | Integer -> "Integer"
+    | Float -> "Float"
+    | String -> "String"
+    | Char -> "Char"
+    | Array t -> "Array("^t^")"
+    | Void -> "Void"
+    | Bool -> "Bool"
+    | Struct (li, p) ->
+      let str = List.fold_left
+        (fun acc (name, t) ->
+          acc ^ name ^ ":"^t^"; "
+        ) "" li
+      in "Struct("^str^")"
+    | Named t -> "Named("^t^")"
+
+let rec type_t_to_string (t:t) : string =
+  type2String (map type_t_to_string (unfix t))
+
 let bool = Bool |> fix
 let integer = Integer |> fix
 let void = Void |> fix

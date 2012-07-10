@@ -37,10 +37,12 @@ open Ast
 type unop = Neg | Not | BNot
 
 type binop =
-  | Add | Sub | Mul | Div | Mod | Or | And
-  | Lower | LowerEq | Higher | HigherEq
-  | Eq | Diff
-  | BinOr | BinAnd | RShift | LShift
+  | Add | Sub | Mul | Div (* int or float *)
+  | Mod (* int *)
+  | Or | And (* bool *)
+  | Lower | LowerEq | Higher | HigherEq (* 'a *)
+  | Eq | Diff (* 'a *)
+  | BinOr | BinAnd | RShift | LShift (* int *)
 
 type 'a tofix =
 (*operations numeriques*)
