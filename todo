@@ -1,19 +1,22 @@
-type checker
-number of args checker
-return checker
-warnings pour les choses laides dans les différents langages
+Langage & Compilateur :
+améliorer les erreurs du typer
 gérer les entrées d'entiers négatifs (en C#, php, python)
-virer les warnings
 php stdin : ne pas forcer à faire ctrl+d
-AST : foreach like : ça serait plus beau dans pas mal de langages pour tout les parcours de tableaux
+number of args checker
+
+return checker
+gérer les floats (parser, +., *., /., + printers)
+lambda ast + typeAst + syntax + lambdalifting
+  eg : fun int x, int y = x + y end
+warnings pour les choses laides dans les différents langages
+virer les warnings
+AST : foreach like : ça serait plus beau dans pas mal de
+  langages pour tout les parcours de tableaux
 break et continue (attention au caml)
 commentaires indentation
 chercher a faire un sort correct
-operateurs en ocaml
-gérer la division entiere en php
 
 autres printers :
-  ruby
   javascript
   pascal
   f#
@@ -22,3 +25,4 @@ autres printers :
   perl
   bash
   ada
+  html (code printer)

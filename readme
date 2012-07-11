@@ -3,21 +3,32 @@ Readme
 Quick start:
   ouvrir une console
   aller dans le dossier metalang
-  taper ocamlbuild Main/main.native
-  taper ./main.native tests/prog/npi.metalang
-  on voit alors apparaitre des implémentations d'une calculette en notation polonaise inversée
-  dans les langages php, java, ocaml, python, C#, C et C++
+  taper make metalang
+  taper ./metalang tests/prog/npi.metalang
+  on voit alors apparaitre des implémentations d'une calculette
+  en notation polonaise inversée
+  dans les langages C# ocaml python c++ java php ruby C
 
 Le dossier tools contient des outils comme le mode emacs
 
 But du projet:
     Ce projet à été fait pour le concours prologin (http://www.prologin.org)
     L'idée est de générer des lecteurs printers pour beaucoup de langages
-    Ce projet devrait servir pour les demies finales de prologin, pour générer les codes à compléter pour les candidats.
-    On peut imaginer pousser le concept beaucoup plus loin, mais le but principal reste la génération de codes lisibles par des humains, dans le but de présenter des squelettes de codes ou des codes lisibles, pour les candidats de prologin.
-    Le choix s'est porté vers un langage impératif, ce qui facilite la génération de codes lisibles dans les langages les plus utilisés.
-    Ce langage impératif est typé, pour pouvoir compiler vers des langages typés assez facilement, éviter les erreurs, et offrir un code lisible plus facilement en sortie.
-    La syntaxe ne contient pas toutes les instructions de controles de flux, de cette manière, on a plus de facilités à générer du code lisible dans tout les langages cibles.
+    Ce projet devrait servir pour les demies finales de prologin,
+    pour générer les codes à compléter pour les candidats.
+    On peut imaginer pousser le concept beaucoup plus loin, mais
+    le but principal reste la génération de codes lisibles par des humains,
+    dans le but de présenter des squelettes de codes ou des codes lisibles,
+    pour les candidats de prologin.
+    Le choix s'est porté vers un langage impératif, ce qui facilite
+    la génération de codes lisibles dans les langages les plus utilisés.
+    Ce langage impératif est typé, pour pouvoir compiler vers des langages
+    typés assez facilement, éviter les erreurs, et offrir un code lisible
+    plus facilement en sortie.
+    La syntaxe ne contient pas toutes les instructions de controles de flux,
+    (break et continue n'existent pas)
+    de cette manière, on a plus de facilités à générer du code lisible
+    dans tout les langages cibles.
 
 Langages cibles :
   C
@@ -27,16 +38,3 @@ Langages cibles :
   ocaml
   python
 	php
-
-Outils:
-   Generateur:
-	Main/main.native
-   Calculatrice :
-     Cet outil à été fait pour pouvoir vérifier le parseur d'Expressions
-     source ocaml : Parser/testCalc.ml
-     tests
-       tests/testsExpr2.sh
-         Ce fichier permet de lancer des tests en comparaison avec python
-       tests/testsExpr.sh
-         Ce fichier permet de tester le printer d'ast,
-	 pour voir si rien n'a changé entre deux versions.
