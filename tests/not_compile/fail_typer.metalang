@@ -1,0 +1,5 @@
+main
+  def string b = "";
+  def int a = 1 + b;
+  def int c = 1 + 2 + 2;
+end
