@@ -1,9 +1,10 @@
 
-def naming(int a)
+def void naming(int a)
 end
 
 def void naming2()
   def int foo = foo + 1
 end
+
 main
 end

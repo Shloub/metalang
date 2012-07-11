@@ -1,6 +1,6 @@
 def void naming(int a)
 end
 
-def naming2()
-	int foo = naming + 1;
+def void naming2()
+	def int foo = naming + 1
 end

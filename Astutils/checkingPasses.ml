@@ -118,14 +118,21 @@ module CheckNaming : SigPassTop = struct
     then
       Warner.err funname (fun t () -> Format.fprintf t "%s is not a function" name)
 
-  let check_mutable funname acc mut = ()
-(* TODO *)
-(*	let () = List.iter ( check_expr funname acc ) el in
-	let () = is_array funname acc v
-*)
+  let rec check_mutable funname acc mut =
+    match Mutable.unfix mut with
+      | Mutable.Var varname ->
+        is_value funname acc varname
+      | Mutable.Array (mut, li) ->
+        begin
+          check_mutable funname acc mut;
+          List.iter (check_expr funname acc) li;
+        end
+      | Mutable.Dot (mut, field) ->
+        check_mutable funname acc mut
 
-  let check_expr funname acc e =
-    let f () e = match Expr.unfix e with
+  and check_expr funname acc e =
+    let f () e =
+      match Expr.unfix e with
       | Expr.Access m ->
 	check_mutable funname acc m
       | Expr.Length tab ->
@@ -174,8 +181,9 @@ module CheckNaming : SigPassTop = struct
 	let () = check_name funname acc varname in
 	let () = List.iter (fun (_field, expr) ->
 	  check_expr funname acc expr) li
-	in let acc = add_param_in_acc funname varname acc in
-	acc (* TODO adding this name*)
+	in
+  let acc = add_local_in_acc funname varname acc in
+	acc
       | Instr.If (e, li1, li2) ->
 	let () = check_expr funname acc e in
 	let _ = List.fold_left (check_instr funname) acc li1 in
@@ -194,7 +202,8 @@ module CheckNaming : SigPassTop = struct
 	acc
       | Instr.StdinSep -> acc
 
-  let process acc f = match f with
+  let process acc f =
+    match f with
     | Prog.Macro (name, _, _, _) ->
       add_fun_in_acc name name acc f
     | Prog.Comment _ -> acc, f

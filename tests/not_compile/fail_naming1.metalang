@@ -2,7 +2,7 @@
 def void naming(int a)
 end
 
-void naming(int a)
+def void naming(int a)
 end
 main
 end

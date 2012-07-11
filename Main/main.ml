@@ -71,7 +71,6 @@ let languages, printers =
     end
   in
   let ls = [
-    "metalang", no_passes => Printer.printer ;
     "c",    clike_passes => CPrinter.printer ;
     "cc",   clike_passes => CppPrinter.printer;
     "cs",   clike_passes => CsharpPrinter.printer ;
@@ -82,6 +81,11 @@ let languages, printers =
     "py",   clike_passes => PyPrinter.printer ;
     "tex",  no_passes   =>  TexPrinter.printer ;
 (*    "sch",  ocaml_passes   =>  SchemePrinter.printer ;*)
+
+    "metalang", no_passes => Printer.printer ;
+  (* Si on met cette passe en premier,
+     on se retrouve avec les erreurs de typages avant les erreurs de naming
+  *)
   ] in
   List.map fst ls, L.from_list ls
 

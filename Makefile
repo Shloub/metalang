@@ -182,11 +182,11 @@ out/%.test : out/%.startTest out/%.outs
 #never remove tmp files : powerfull for debug
 CMPTESTSDEPS	:= $(addsuffix .test, $(TESTS))
 .PHONY: testCompare
-testCompare : $(CMPTESTSDEPS)
+testCompare : out $(CMPTESTSDEPS)
 	@echo "$(green)ALL TESTS OK$(reset)"
 
 FASTTESTSDEPS	:= $(addsuffix .fasttest, $(TESTS))
-fastTestCmp : $(FASTTESTSDEPS)
+fastTestCmp : out $(FASTTESTSDEPS)
 	@echo "$(green)FAST TESTS OK$(reset)"
 
 %.not_compile : %.startTest metalang
@@ -196,12 +196,12 @@ fastTestCmp : $(FASTTESTSDEPS)
 	touch $@
 
 TESTSNOTCOMPILE	:= $(addprefix out/, $(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)))
-testNotCompile : $(TESTSNOTCOMPILE)
+testNotCompile : out $(TESTSNOTCOMPILE)
 	@echo "$(green)NOT COMPILE TESTS OK$(reset)"
 
 
 METATESTSDEPS	:= $(addsuffix .metalang.test, $(TESTS))
-metatest : $(METATESTSDEPS)
+metatest : out $(METATESTSDEPS)
 	@echo "$(green)METALANG TESTS OK$(reset)"
 
 
