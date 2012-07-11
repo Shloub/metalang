@@ -1,33 +1,33 @@
 (*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*)
+ * Copyright (c) 2012, Prologin
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *)
 
 
 (** Typer
-@see <http://prologin.org> Prologin
-@author Prologin (info\@prologin.org)
-@author Maxime Audouin (coucou747\@gmail.com)
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -104,8 +104,8 @@ let rec check_types (t1:Type.t) (t2:Type.t) =
     | _ -> error_ty t1 t2
 
 let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
-(*  let () =
-    Printf.printf "Unify %s and %s\n" (contr2str !t1) (contr2str !t2)
+  (*  let () =
+      Printf.printf "Unify %s and %s\n" (contr2str !t1) (contr2str !t2)
       in *)
   match !t1, !t2 with
     | Typed tt1, Typed tt2 ->
@@ -126,10 +126,9 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
       end
     | Typed _, PreTyped _ -> unify t2 t1
     | PreTyped
-        ( (Type.Integer | Type
-.Float | Type.String | Type.Char | Type.Void |
+        ( (Type.Integer | Type.Float | Type.String | Type.Char | Type.Void |
             Type.Bool | Type.Named _)
-           as tt1
+            as tt1
         ), _ ->
       begin
         t1 := Typed (Type.fix tt1);
@@ -179,31 +178,31 @@ let is_float env expr =
 let expand env ty =
   let rec f ty =
     match Type.unfix ty with
-    | Type.Named name ->
-      StringMap.find name env.gamma
-    | x -> Type.fix (Type.map f x)
+      | Type.Named name ->
+        StringMap.find name env.gamma
+      | x -> Type.fix (Type.map f x)
   in f ty
 
 
 (** {2 Collect contraintes functions} *)
 let rec collect_contraintes_expr env e =
-(*  let () = Format.printf "collecting expr contraintes@\n" in
- let () =
-    Format.fprintf
+  (*  let () = Format.printf "collecting expr contraintes@\n" in
+      let () =
+      Format.fprintf
       Format.std_formatter
       "collecting contraintes in %a@\n"
       Printer.printer#expr  e
-  in*)
+      in*)
   let add_contrainte env c1 c2 =
     { env with
       contraintes = (c1, c2) :: env.contraintes
     } in
   let env, contrainte = match Expr.unfix e with
     | Expr.BinOp (a, (Expr.Mod
-                     | Expr.BinOr
-                     | Expr.BinAnd
-                     | Expr.RShift
-                     | Expr.LShift), b) ->
+                         | Expr.BinOr
+                         | Expr.BinAnd
+                         | Expr.RShift
+                         | Expr.LShift), b) ->
       let env, acontrainte = collect_contraintes_expr env a in
       let env, bcontrainte = collect_contraintes_expr env b in
       let env = add_contrainte env acontrainte (ref (Typed Type.integer)) in
@@ -299,7 +298,7 @@ and collect_contraintes_mutable env mut =
       env, ref (Typed ty_dot)
 
 let rec collect_contraintes_instructions env instructions ty_ret=
-(*  let () = Format.printf "collecting instructions contraintes\n" in *)
+  (*  let () = Format.printf "collecting instructions contraintes\n" in *)
   List.fold_left
     (fun env instruction ->
       match Instr.unfix instruction with
@@ -375,7 +374,7 @@ let rec collect_contraintes_instructions env instructions ty_ret=
             (fun env (name, expr) ->
               let env, c2 = collect_contraintes_expr env expr in
               let c1 = ref ( Typed( snd (List.find
-                                    ((String.equals name) @* fst) li_type
+                                           ((String.equals name) @* fst) li_type
               ))) in
               {env with contraintes = (c1, c2) :: env.contraintes }
             ) env li
@@ -388,41 +387,41 @@ let rec collect_contraintes_instructions env instructions ty_ret=
               env.contraintes} in
           let env = collect_contraintes_instructions env instrs1 ty_ret in
           let env = collect_contraintes_instructions env instrs2 ty_ret in
-             env
-         | Instr.Call (f, eli) ->
-           let (args, ty) = StringMap.find f env.functions in (*TODO option*)
-           let void_contraint = ref (Typed Type.void) in
-           let out_contraint = ref (Typed ty) in
-           let env = List.fold_left
-             (fun (env:env) (arg_ty, arg_e) ->
-               let contrainte_ty = ref (Typed arg_ty) in
-               let env, contrainte_e = collect_contraintes_expr env arg_e in
-               {env with
-                 contraintes = (contrainte_e, contrainte_ty) ::
-                   env.contraintes}
-             ) env (List.zip args eli) in
-           {env with
-             contraintes = (void_contraint, out_contraint) ::
-               env.contraintes}
-         | Instr.Print (ty, e) ->
-           let ty = expand env ty in
-           let contrainte_ty = ref (Typed ty) in
-           let env, contrainte_expr = collect_contraintes_expr env e in
-           {env with
-             contraintes = (contrainte_ty, contrainte_expr) ::
-               env.contraintes}
-         | Instr.Read (ty, mut) ->
-           let ty = expand env ty in
-           let env, contrainte_mut = collect_contraintes_mutable env mut in
-           let contrainte_expr = ref (Typed ty) in
-           {env with
-             contraintes = (contrainte_mut, contrainte_expr) ::
-               env.contraintes}
-         | Instr.DeclRead (ty, var) ->
-           let ty = expand env ty in
-           let env = { env with locales = StringMap.add var ty env.locales }
-           in env
-         | Instr.StdinSep -> env
+          env
+        | Instr.Call (f, eli) ->
+          let (args, ty) = StringMap.find f env.functions in (*TODO option*)
+          let void_contraint = ref (Typed Type.void) in
+          let out_contraint = ref (Typed ty) in
+          let env = List.fold_left
+            (fun (env:env) (arg_ty, arg_e) ->
+              let contrainte_ty = ref (Typed arg_ty) in
+              let env, contrainte_e = collect_contraintes_expr env arg_e in
+              {env with
+                contraintes = (contrainte_e, contrainte_ty) ::
+                  env.contraintes}
+            ) env (List.zip args eli) in
+          {env with
+            contraintes = (void_contraint, out_contraint) ::
+              env.contraintes}
+        | Instr.Print (ty, e) ->
+          let ty = expand env ty in
+          let contrainte_ty = ref (Typed ty) in
+          let env, contrainte_expr = collect_contraintes_expr env e in
+          {env with
+            contraintes = (contrainte_ty, contrainte_expr) ::
+              env.contraintes}
+        | Instr.Read (ty, mut) ->
+          let ty = expand env ty in
+          let env, contrainte_mut = collect_contraintes_mutable env mut in
+          let contrainte_expr = ref (Typed ty) in
+          {env with
+            contraintes = (contrainte_mut, contrainte_expr) ::
+              env.contraintes}
+        | Instr.DeclRead (ty, var) ->
+          let ty = expand env ty in
+          let env = { env with locales = StringMap.add var ty env.locales }
+          in env
+        | Instr.StdinSep -> env
     ) env instructions
 
 let collect_contraintes e
