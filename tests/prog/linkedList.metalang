@@ -1,0 +1,28 @@
+record intlist
+  head : int
+  tail : intlist
+end
+
+def intlist cons(intlist list, int i)
+  def intlist out = record
+    head = i;
+    tail = list;
+  end
+  return out;
+end
+
+def void test(intlist empty)
+  def intlist list = empty
+  def int i = -1
+  while i != 0 do
+    read int i
+    if i != 0 then
+      list = cons(list, i)
+    end
+  end
+end
+
+main
+
+end
+
