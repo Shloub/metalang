@@ -130,7 +130,7 @@ class printer = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "struct %s" n
+      | Type.Named n -> Format.fprintf f "%s" n
       | Type.Struct (li, p) ->
 	Format.fprintf f "struct{%a}%a"
 	  (print_list

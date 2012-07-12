@@ -136,7 +136,7 @@ class camlPrinter = object(self)
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] ->
-	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\n"
+	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a"
 	  self#expr e
 	  self#bloc ifcase
       | [Instr.F ( Instr.If (condition, instrs1, instrs2) ) as instr] ->
@@ -467,7 +467,7 @@ class camlPrinter = object(self)
 
   method allocrecord f name t el =
     let b = BindingSet.mem name refbindings in
-    Format.fprintf f "let %a = %a{@\n@[<v 2>  %a@]@\n}%a in@\n"
+    Format.fprintf f "let %a = %a{@\n@[<v 2>  %a@]@\n}%a in"
       self#binding name
       (fun t () ->
 	  if b then

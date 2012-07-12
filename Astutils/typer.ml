@@ -76,8 +76,17 @@ let error_cty t1 t2 =
     (contr2str t2)
   in assert false
 
+(** {2 Types anti alias-ing}*)
+let expand env ty =
+  let rec f ty =
+    match Type.unfix ty with
+      | Type.Named name ->
+        StringMap.find name env.gamma
+      | x -> Type.fix (Type.map f x)
+  in f ty
+
 (** {2 Unify} *)
-let rec check_types (t1:Type.t) (t2:Type.t) =
+let rec check_types env (t1:Type.t) (t2:Type.t) =
   match (Type.unfix t1), (Type.unfix t2) with
     | Type.Integer, Type.Integer -> ()
     | Type.Integer, _ -> error_ty t1 t2
@@ -93,24 +102,38 @@ let rec check_types (t1:Type.t) (t2:Type.t) =
     | Type.Void, _ -> error_ty t1 t2
     | Type.Named n, Type.Named n2 ->
       if String.equals n n2 then () else error_ty t1 t2
+    | _, Type.Named n ->
+      check_types env t1 (expand env t2)
+    | Type.Named n, _ ->
+      check_types env (expand env t1) t2
     | Type.Array t, Type.Array t2 ->
-      check_types t t2
+      check_types env t t2
     | Type.Struct (li, _), Type.Struct (li2, _) ->
       List.iter
         (fun (name, ty) ->
           let (_, ty2) = List.find ((String.equals name) @* fst) li2 in
-          check_types ty ty2
+          check_types env ty ty2
         ) li
     | _ -> error_ty t1 t2
 
-let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
+let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
   (*  let () =
       Printf.printf "Unify %s and %s\n" (contr2str !t1) (contr2str !t2)
       in *)
   match !t1, !t2 with
+    | Typed ((Type.F (Type.Named _)) as t), _ ->
+      begin
+        t1 := Typed (expand env t);
+        true
+      end
+    | _, Typed ((Type.F (Type.Named _)) as t) ->
+      begin
+        t2 := Typed (expand env t);
+        true
+      end
     | Typed tt1, Typed tt2 ->
       begin
-        check_types tt1 tt2;
+        check_types env tt1 tt2;
         false
       end
     | Unknown, Unknown -> false
@@ -124,7 +147,7 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         t2 := !t1;
         true
       end
-    | Typed _, PreTyped _ -> unify t2 t1
+    | Typed _, PreTyped _ -> unify env t2 t1
     | PreTyped
         ( (Type.Integer | Type.Float | Type.String | Type.Char | Type.Void |
             Type.Bool | Type.Named _)
@@ -132,9 +155,9 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         ), _ ->
       begin
         t1 := Typed (Type.fix tt1);
-        unify t1 t2
+        true
       end
-    | PreTyped Type.Array a1, PreTyped Type.Array a2 -> unify a1 a2
+    | PreTyped Type.Array a1, PreTyped Type.Array a2 -> unify env a1 a2
     | PreTyped Type.Array _, PreTyped _ -> error_cty !t1 !t2
     | PreTyped (Type.Array r1), Typed (Type.F (Type.Array ty)) ->
       begin
@@ -148,7 +171,7 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
           let (_, ty) = List.find
             ((String.equals name) @* fst)
             li2
-          in acc || unify t (ref (Typed ty))
+          in acc || unify env t (ref (Typed ty))
         ) false li
     | PreTyped (Type.Struct _), Typed _ -> error_cty !t1 !t2
     | PreTyped (Type.Struct (li, _)), PreTyped (Type.Struct (li2, _)) ->
@@ -157,7 +180,7 @@ let rec unify (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
           let (_, t2) = List.find
             ((String.equals name) @* fst)
             li2
-          in acc || unify t t2
+          in acc || unify env t t2
         ) false li
     |  PreTyped (Type.Struct _), PreTyped _ -> error_cty !t1 !t2
 
@@ -174,14 +197,6 @@ let is_float env expr =
     | Typed (Type.F (Type.Float)) -> true
     | _ -> false
 
-(** {2 Types anti alias-ing}*)
-let expand env ty =
-  let rec f ty =
-    match Type.unfix ty with
-      | Type.Named name ->
-        StringMap.find name env.gamma
-      | x -> Type.fix (Type.map f x)
-  in f ty
 
 
 (** {2 Collect contraintes functions} *)
@@ -456,7 +471,7 @@ let process (prog: Prog.t) =
   in
   let unify_once env =
     let modified = List.fold_left (fun acc (a, b) ->
-      unify a b || acc) false env.contraintes in
+      unify env a b || acc) false env.contraintes in
     modified , {env with contraintes = List.filter not_done env.contraintes}
   in
   let rec unify_contraintes env =

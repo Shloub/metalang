@@ -4,6 +4,9 @@ gérer les entrées d'entiers négatifs (en C#, php, python)
 php stdin : ne pas forcer à faire ctrl+d
 number of args checker
 
+templates
+types abstract (pour ouvrir un fichier par exemple)
+
 return checker
 gérer les floats (parser, +., *., /., + printers)
 lambda ast + typeAst + syntax + lambdalifting

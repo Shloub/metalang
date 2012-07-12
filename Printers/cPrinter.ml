@@ -54,7 +54,7 @@ class cPrinter = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "int"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s *" n
+      | Type.Named n -> Format.fprintf f "struct %s *" n
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
 
   method declaration f var t e =
@@ -177,7 +177,8 @@ class cPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
 	Type.Struct (li, _) ->
-	Format.fprintf f "typedef struct %a {%a} %a;"
+	Format.fprintf f "struct %a; typedef struct %a {%a} %a;"
+	  self#binding name
 	  self#binding name
 	  (print_list
 	     (fun t (name, type_) ->
