@@ -5,10 +5,26 @@ end
 
 def intlist cons(intlist list, int i)
   def intlist out = record
-    head = i;
-    tail = list;
+    head = i
+    tail = list
   end
-  return out;
+  return out
+end
+
+def intlist rev2(intlist empty, intlist acc, intlist torev)
+  if torev == empty then
+    return acc
+  else
+    def intlist acc2 = record
+      head = torev.head
+      tail = acc
+    end
+    return rev2(empty, acc, torev.tail);
+  end
+end
+
+def intlist rev(intlist empty, intlist torev)
+  return rev2(empty, empty, torev);
 end
 
 def void test(intlist empty)
