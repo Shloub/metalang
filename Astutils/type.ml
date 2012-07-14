@@ -47,12 +47,14 @@ type 'a tofix =
   | Struct of
       (fieldname * 'a) list * structparams
   | Named of typename
+  | Auto
 
 type t = F of t tofix
 let unfix = function F x -> x
 let fix x = F x
 
 let map f = function
+  | Auto -> Auto
   | Integer -> Integer
   | Float -> Float
   | String -> String
@@ -66,6 +68,7 @@ let map f = function
 
 let type2String (t : string tofix) : string =
   match t with
+    | Auto -> "Auto"
     | Integer -> "Integer"
     | Float -> "Float"
     | String -> "String"
@@ -93,3 +96,4 @@ let char = Char |> fix
 let array t = Array t |> fix
 let struct_ s p = Struct (s, p) |> fix
 let named n = Named n |> fix
+let auto = Auto |> fix

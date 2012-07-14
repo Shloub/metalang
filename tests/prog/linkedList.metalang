@@ -29,9 +29,9 @@ end
 
 def void test(intlist empty)
   def intlist list = empty
-  def int i = -1
+  def auto i = -1
   while i != 0 do
-    read int i
+    read auto i
     if i != 0 then
       list = cons(list, i)
     end

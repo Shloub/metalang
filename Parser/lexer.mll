@@ -62,6 +62,7 @@ rule token = parse
 | "record" { RECORD }
 | "string"    { TYPE_STRING }
 | "int"    { TYPE_INT }
+| "auto"    { TYPE_AUTO }
 | "float"  { TYPE_FLOAT }
 | "char"   { TYPE_CHAR }
 | "bool"   { TYPE_BOOL }

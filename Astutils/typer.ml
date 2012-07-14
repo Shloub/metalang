@@ -34,13 +34,19 @@ open Stdlib
 
 (** {2 Types} *)
 type functionType = Type.t list * Type.t
-(* Changer ça pour inferer les definitions de variables *)
-type varType = Type.t
+(* Changer ça pour inferer les definitions de fonctions *)
 
 type typeContrainte =
   | Unknown
   | PreTyped of typeContrainte ref Type.tofix
   | Typed of Type.t
+
+let rec ty2typeContrainte (t : Type.t) : typeContrainte =
+  match Type.unfix t with
+    | Type.Auto -> Unknown
+    | t -> PreTyped ( Type.map (fun t -> ref (ty2typeContrainte t) ) t )
+
+type varType = typeContrainte ref
 
 let rec is_typed (t : typeContrainte ref) : bool =
   match !t with
@@ -290,11 +296,11 @@ let rec collect_contraintes_expr env e =
       let env = List.fold_left
         (fun env (ty1, arg) ->
           let env, contrainte = collect_contraintes_expr env arg in
-          let contrainte2 = ref (Typed ty1) in
+          let contrainte2 = ref (ty2typeContrainte ty1) in
           let env = {env with contraintes = (contrainte, contrainte2) ::
               env.contraintes} in env
         ) env (List.zip args_ty li) in
-      env, ref (Typed out_ty)
+      env, ref (ty2typeContrainte out_ty)
   in
   let env = { env with
     contrainteMap = IntMap.add (Expr.annot e) contrainte env.contrainteMap }
@@ -311,7 +317,7 @@ and collect_contraintes_mutable env mut =
         with Not_found ->
           not_found name
       in
-      env, ref (Typed ty)
+      env, ty
     | Mutable.Array (mut, eli) ->
       let contrainte = ref Unknown in
       let env, contrainte_mut = collect_contraintes_mutable env mut in
@@ -323,10 +329,10 @@ and collect_contraintes_mutable env mut =
     | Mutable.Dot (mut, name) ->
       let (ty_dot, ty_mut) = StringMap.find name env.fields in
       let env, contrainte = collect_contraintes_mutable env mut in
-      let contrainte2 = ref (Typed ty_mut) in
+      let contrainte2 = ref (ty2typeContrainte ty_mut) in
       let env = {env with
         contraintes = (contrainte, contrainte2) :: env.contraintes} in
-      env, ref (Typed ty_dot)
+      env, ref (ty2typeContrainte ty_dot)
 
 let rec collect_contraintes_instructions env instructions ty_ret=
   (*  let () = Format.printf "collecting instructions contraintes\n" in *)
@@ -336,8 +342,10 @@ let rec collect_contraintes_instructions env instructions ty_ret=
         | Instr.Declare (var, ty, e) ->
           let ty = expand env ty in
           let env, contrainte_expr = collect_contraintes_expr env e in
-          let env = { env with locales = StringMap.add var ty env.locales } in
-          let contrainte_ty = ref (Typed ty) in
+          let contrainte_ty = ref (ty2typeContrainte ty) in
+          let env =
+            { env with locales =
+                StringMap.add var contrainte_ty env.locales } in
           {env with
             contraintes = (contrainte_ty, contrainte_expr) ::
               env.contraintes}
@@ -349,9 +357,9 @@ let rec collect_contraintes_instructions env instructions ty_ret=
               env.contraintes}
 
         | Instr.Loop (var, e1, e2, li) ->
-          let env = {env with locales = StringMap.add var Type.integer
-              env.locales } in
           let contrainte_integer = ref (Typed Type.integer ) in
+          let env = {env with locales = StringMap.add var contrainte_integer
+              env.locales } in
           let env, contrainte_e1 = collect_contraintes_expr env e1 in
           let env, contrainte_e2 = collect_contraintes_expr env e2 in
           let env = {env with
@@ -368,7 +376,7 @@ let rec collect_contraintes_instructions env instructions ty_ret=
           in env
         | Instr.Comment _ -> env
         | Instr.Return e ->
-          let contrainte_out = ref (Typed ty_ret) in
+          let contrainte_out = ref (ty2typeContrainte ty_ret) in
           let env, contrainte_expr = collect_contraintes_expr env e in
           {env with
             contraintes = (contrainte_out, contrainte_expr) ::
@@ -386,20 +394,19 @@ let rec collect_contraintes_instructions env instructions ty_ret=
             | None -> env
             | Some (var, instrs) ->
               let env = {env with
-                locales = StringMap.add var Type.integer env.locales}
+                locales = StringMap.add var contrainte_integer env.locales}
               in collect_contraintes_instructions env instrs ty
           in
           let env = {env with
-            locales = StringMap.add var (Type.array ty) env.locales}
+            locales = StringMap.add var
+              (ref (PreTyped (Type.Array (ref (ty2typeContrainte ty)))))
+                      env.locales}
           in env
         | Instr.AllocRecord (var, ty, li) ->
           let ty = expand env ty in
           let li_type = match Type.unfix ty with
             | Type.Struct (li, _) -> li
             | _ -> assert false
-          in
-          let env = {env with
-            locales = StringMap.add var ty env.locales}
           in
           let env = List.fold_left
             (fun env (name, expr) ->
@@ -409,6 +416,10 @@ let rec collect_contraintes_instructions env instructions ty_ret=
               ))) in
               {env with contraintes = (c1, c2) :: env.contraintes }
             ) env li
+          in
+          let env = {env with
+            locales = StringMap.add var
+              (ref (ty2typeContrainte ty)) env.locales}
           in env
         | Instr.If (e, instrs1, instrs2) ->
           let contrainte_ty = ref (Typed Type.bool) in
@@ -422,10 +433,10 @@ let rec collect_contraintes_instructions env instructions ty_ret=
         | Instr.Call (f, eli) ->
           let (args, ty) = StringMap.find f env.functions in (*TODO option*)
           let void_contraint = ref (Typed Type.void) in
-          let out_contraint = ref (Typed ty) in
+          let out_contraint = ref (ty2typeContrainte ty) in
           let env = List.fold_left
             (fun (env:env) (arg_ty, arg_e) ->
-              let contrainte_ty = ref (Typed arg_ty) in
+              let contrainte_ty = ref (ty2typeContrainte arg_ty) in
               let env, contrainte_e = collect_contraintes_expr env arg_e in
               {env with
                 contraintes = (contrainte_e, contrainte_ty) ::
@@ -436,7 +447,7 @@ let rec collect_contraintes_instructions env instructions ty_ret=
               env.contraintes}
         | Instr.Print (ty, e) ->
           let ty = expand env ty in
-          let contrainte_ty = ref (Typed ty) in
+          let contrainte_ty = ref (ty2typeContrainte ty) in
           let env, contrainte_expr = collect_contraintes_expr env e in
           {env with
             contraintes = (contrainte_ty, contrainte_expr) ::
@@ -444,13 +455,15 @@ let rec collect_contraintes_instructions env instructions ty_ret=
         | Instr.Read (ty, mut) ->
           let ty = expand env ty in
           let env, contrainte_mut = collect_contraintes_mutable env mut in
-          let contrainte_expr = ref (Typed ty) in
+          let contrainte_expr = ref (ty2typeContrainte ty) in
           {env with
             contraintes = (contrainte_mut, contrainte_expr) ::
               env.contraintes}
         | Instr.DeclRead (ty, var) ->
           let ty = expand env ty in
-          let env = { env with locales = StringMap.add var ty env.locales }
+          let env =
+            { env with locales =
+                StringMap.add var (ref (ty2typeContrainte ty)) env.locales }
           in env
         | Instr.StdinSep -> env
     ) env instructions
@@ -463,6 +476,7 @@ let collect_contraintes e
     functions = StringMap.add funname function_type e.functions;
     locales = List.fold_left (fun acc (name, ty) ->
       let ty = expand e ty in
+      let ty = ref (ty2typeContrainte ty) in
       StringMap.add name ty acc
     )
       StringMap.empty params
