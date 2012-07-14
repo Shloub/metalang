@@ -42,6 +42,25 @@ type typeContrainte =
   | PreTyped of typeContrainte ref Type.tofix
   | Typed of Type.t
 
+let rec is_typed (t : typeContrainte ref) : bool =
+  match !t with
+    | Unknown -> false
+    | PreTyped t ->
+      let out = ref true in
+      Type.map (fun t -> if not (is_typed t) then out := false) t;
+      !out
+    | Typed t -> true
+
+
+let rec extract_typed (t : typeContrainte ref) : Type.t =
+  match !t with
+    | Unknown -> assert false
+    | PreTyped t ->
+      Type.map extract_typed t |> Type.fix
+    | Typed t -> t
+
+
+
 type env =
     {
       contrainteMap : typeContrainte ref IntMap.t;
@@ -56,8 +75,9 @@ type env =
 let rec contr2str t =
   match t with
     | Unknown -> "*"
-    | PreTyped ty -> Type.type2String (Type.map (fun t -> contr2str !t) ty)
-    | Typed ty -> Type.type_t_to_string ty
+    | PreTyped ty -> "P_"^
+      (Type.type2String (Type.map (fun t -> contr2str !t) ty))
+    | Typed ty -> "T_" ^ (Type.type_t_to_string ty)
 
 (** {2 Error reporters} *)
 let error_ty t1 t2 =
@@ -117,9 +137,9 @@ let rec check_types env (t1:Type.t) (t2:Type.t) =
     | _ -> error_ty t1 t2
 
 let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
-  (*  let () =
+  (* let () =
       Printf.printf "Unify %s and %s\n" (contr2str !t1) (contr2str !t2)
-      in *)
+    in *)
   match !t1, !t2 with
     | Typed ((Type.F (Type.Named _)) as t), _ ->
       begin
@@ -148,13 +168,9 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         true
       end
     | Typed _, PreTyped _ -> unify env t2 t1
-    | PreTyped
-        ( (Type.Integer | Type.Float | Type.String | Type.Char | Type.Void |
-            Type.Bool | Type.Named _)
-            as tt1
-        ), _ ->
+    | PreTyped _, _ when is_typed t1 ->
       begin
-        t1 := Typed (Type.fix tt1);
+        t1 := Typed (extract_typed t1);
         true
       end
     | PreTyped Type.Array a1, PreTyped Type.Array a2 -> unify env a1 a2
@@ -456,27 +472,40 @@ let collect_contraintes e
 
 (** {2 Main function} *)
 let process (prog: Prog.t) =
-  let not_done ((t1 : typeContrainte ref), (t2 : typeContrainte ref)) : bool=
-    let rec not_done_type t = match Type.map
-        (fun x -> not_done_contrainte !x) t with
-          | Type.Array t -> t
-          | Type.Struct (li, _) ->
-            List.exists (fun (_name, t) -> t ) li
-          | _ -> false
-    and not_done_contrainte = function
-      | Unknown -> true
-      | PreTyped t -> not_done_type t
-      | Typed t -> false
-    in (not_done_contrainte !t1) || (not_done_contrainte !t2)
+  let not_done
+      (env:env)
+      ((t1 : typeContrainte ref), (t2 : typeContrainte ref)) : bool=
+    match !t1, !t2 with
+      | Typed t1, Typed t2 ->
+        check_types env t1 t2;
+        false
+      | _ -> true
   in
   let unify_once env =
     let modified = List.fold_left (fun acc (a, b) ->
       unify env a b || acc) false env.contraintes in
-    modified , {env with contraintes = List.filter not_done env.contraintes}
+    (modified ,
+     {env with
+       contraintes = List.filter (not_done env) env.contraintes
+     }
+    )
   in
   let rec unify_contraintes env =
     let modified, env = unify_once env in
-    if modified then unify_contraintes env else env
+    if modified
+    then unify_contraintes env
+    else
+      match env.contraintes with
+        | [] -> env
+        | li ->
+          begin
+            List.iter
+              (fun (a, b) ->
+                Printf.printf "No contrainte to unify %s and %s\n%!"
+                  (contr2str !a) (contr2str !b)
+              ) li
+            ; assert false
+          end
   in
   let process e tuple =
     let e = collect_contraintes e tuple in
