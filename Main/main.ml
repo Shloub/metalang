@@ -56,7 +56,7 @@ let ocaml_passes prog =
 
 let no_passes prog = prog
 
-module L = MakeMap (String)
+module L = StringMap
 let languages, printers =
   let ( => )
       (pa : Prog.t -> Prog.t )
