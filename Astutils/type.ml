@@ -20,7 +20,7 @@
 * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *)
+*)
 
 (** Type Ast
    @see <http://prologin.org> Prologin
@@ -49,9 +49,10 @@ type 'a tofix =
   | Named of typename
   | Auto
 
-type t = F of t tofix
-let unfix = function F x -> x
-let fix x = F x
+type t = F of int * t tofix
+let annot = function F (i, _) -> i
+let unfix = function F (_, x) -> x
+let fix x = F ((next ()), x)
 
 let map f = function
   | Auto -> Auto

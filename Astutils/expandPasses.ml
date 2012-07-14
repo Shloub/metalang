@@ -153,19 +153,19 @@ module ExpandPrint : SigPass = struct
 	   (Expr.integer 1))
 	(
 	  match t with
-	    | Type.F ( Type.Array t2) -> (b2i) :: (write t2 b2)
-	    | Type.F Type.Bool -> [b2i ; write_bool b2]
+	    | Type.F ( _, (Type.Array t2)) -> (b2i) :: (write t2 b2)
+	    | Type.F (_, Type.Bool) -> [b2i ; write_bool b2]
 	    | _ -> [ Instr.print t b2e]
 	)
     ]
 
   let rec rewrite (i : Instr.t) : Instr.t list = match Instr.unfix i with
-    | Instr.Print(Type.F (Type.Array t), Expr.F (annot,
+    | Instr.Print(Type.F (_, (Type.Array t)), Expr.F (annot,
 					Expr.Access ( Mutable.F
 													(Mutable.Var b))
 		) ) ->
       write t b
-    | Instr.Print(Type.F (Type.Bool), Expr.F (annot,
+    | Instr.Print(Type.F (_, Type.Bool), Expr.F (annot,
 																							Expr.Access ( Mutable.F
 																															(Mutable.Var b))
 		) ) ->

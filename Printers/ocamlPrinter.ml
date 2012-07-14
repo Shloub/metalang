@@ -317,7 +317,7 @@ class camlPrinter = object(self)
     let proto = if is_rec then self#print_rec_proto else self#print_proto in
     let () = sad_returns <- contains_sad_return instrs in
     match t with
-      | Type.F Type.Void ->
+      | Type.F (_, Type.Void) ->
 	if sad_returns then failwith("return in a void function : "^funname)
 	else
 	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"

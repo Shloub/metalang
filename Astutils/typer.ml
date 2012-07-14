@@ -147,12 +147,12 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
       Printf.printf "Unify %s and %s\n" (contr2str !t1) (contr2str !t2)
     in *)
   match !t1, !t2 with
-    | Typed ((Type.F (Type.Named _)) as t), _ ->
+    | Typed ((Type.F (_, Type.Named _)) as t), _ ->
       begin
         t1 := Typed (expand env t);
         true
       end
-    | _, Typed ((Type.F (Type.Named _)) as t) ->
+    | _, Typed ((Type.F (_, Type.Named _)) as t) ->
       begin
         t2 := Typed (expand env t);
         true
@@ -181,13 +181,13 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
       end
     | PreTyped Type.Array a1, PreTyped Type.Array a2 -> unify env a1 a2
     | PreTyped Type.Array _, PreTyped _ -> error_cty !t1 !t2
-    | PreTyped (Type.Array r1), Typed (Type.F (Type.Array ty)) ->
+    | PreTyped (Type.Array r1), Typed (Type.F (_, Type.Array ty)) ->
       begin
         r1 := Typed ty;
         true
       end
     | PreTyped (Type.Array r1), Typed _ -> error_cty !t1 !t2
-    | PreTyped (Type.Struct (li, _)), Typed (Type.F (Type.Struct (li2, _))) ->
+    | PreTyped (Type.Struct (li, _)), Typed (Type.F (_, Type.Struct (li2, _))) ->
       List.fold_left
         (fun acc (name, t) ->
           let (_, ty) = List.find
@@ -211,12 +211,12 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
 (** {2 Accessors}*)
 let is_int env expr =
   match !(IntMap.find (Expr.annot expr) env.contrainteMap) with
-    | Typed (Type.F (Type.Integer)) -> true
+    | Typed (Type.F (_, Type.Integer)) -> true
     | _ -> false
 
 let is_float env expr =
   match !(IntMap.find (Expr.annot expr) env.contrainteMap) with
-    | Typed (Type.F (Type.Float)) -> true
+    | Typed (Type.F (_, Type.Float)) -> true
     | _ -> false
 
 
