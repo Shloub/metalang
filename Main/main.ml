@@ -64,7 +64,7 @@ let languages, printers =
       (out: Format.formatter)
       (prog : Prog.t) =
     let processed = pa prog in
-    let typerEnv = Typer.process processed in
+    let typerEnv, processed  = Typer.process processed in
     begin
       pr#setTyperEnv typerEnv;
       pr#prog out processed

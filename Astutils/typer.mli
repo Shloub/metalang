@@ -32,6 +32,6 @@
 
 type env
 
-val process : Prog.t -> env
+val process : Prog.t -> env * Prog.t
 val is_int : env -> Expr.t -> bool
 val is_float : env -> Expr.t -> bool

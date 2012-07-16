@@ -62,7 +62,7 @@ value :
 typ :
 | TYPE_STRING { T.string }
 | TYPE_INT { T.integer }
-| TYPE_AUTO { T.auto }
+| TYPE_AUTO { T.auto () }
 | TYPE_FLOAT { T.float }
 | TYPE_CHAR { T.char }
 | TYPE_BOOL { T.bool }

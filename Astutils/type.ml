@@ -67,6 +67,26 @@ let map f = function
     Struct (List.map (fun (name, t) -> (name, f t)) li, p)
   | Named t -> Named t
 
+module Writer = AstWriter.F (struct
+  type alias = t
+  type t = alias
+  let foldmap f acc t =
+    let annot = annot t in
+    match unfix t with
+      | Auto | Integer | Float | String | Char | Void | Bool | Named _ ->
+        acc, t
+      | Array t ->
+        let acc, t = f acc t in
+        acc, F (annot, Array t)
+      | Struct (li, p) ->
+        let acc, li = List.fold_left_map
+          (fun acc (name, t) ->
+            let acc, t = f acc t in
+            acc, (name, t)
+          ) acc li
+        in acc, F (annot, Struct (li, p))
+end)
+
 let type2String (t : string tofix) : string =
   match t with
     | Auto -> "Auto"
@@ -97,4 +117,4 @@ let char = Char |> fix
 let array t = Array t |> fix
 let struct_ s p = Struct (s, p) |> fix
 let named n = Named n |> fix
-let auto = Auto |> fix
+let auto () = Auto |> fix
