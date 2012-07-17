@@ -136,6 +136,7 @@ define_var :
 | DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
 	{ match T.unfix $2 with
 	  | T.Array x -> I.alloc_array_lambda $3 x $5 $8 $10
+    | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10
 		| _ -> failwith "expected array"
 	}
 | DEF READ typ IDENT { I.readdecl $3 $4 }
