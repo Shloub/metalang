@@ -94,6 +94,14 @@ let rec contr2str t =
     | Typed ty -> "T_" ^ (Type.type_t_to_string ty)
 
 (** {2 Error reporters} *)
+
+let error_field_not_found name t =
+  let () = Printf.printf "Field %s is not found in %s\n%!"
+    name
+    (Type.type_t_to_string t)
+  in assert false
+
+
 let error_ty t1 t2 =
   let () = Printf.printf "Cannot unify %s and %s\n%!"
     (Type.type_t_to_string t1)
@@ -145,7 +153,12 @@ let rec check_types env (t1:Type.t) (t2:Type.t) =
     | Type.Struct (li, _), Type.Struct (li2, _) ->
       List.iter
         (fun (name, ty) ->
-          let (_, ty2) = List.find ((String.equals name) @* fst) li2 in
+          let (_, ty2) =
+            try
+              List.find ((String.equals name) @* fst) li2
+            with Not_found ->
+              error_field_not_found name t2
+          in
           check_types env ty ty2
         ) li
     | _ -> error_ty t1 t2
