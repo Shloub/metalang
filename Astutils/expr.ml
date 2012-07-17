@@ -102,6 +102,9 @@ let default_value t = match Type.unfix t with
   | Type.Array _ -> failwith ("new array is not an expression")
   | Type.Void -> failwith ("no dummy expression for void")
   | Type.Bool -> boolean false
+  | Type.Named _ -> failwith ("new named is not an expression")
+  | Type.Auto -> failwith ("auto is not an expression")
+  | Type.Struct _ -> failwith ("new named is not an expression")
 
 module Writer = AstWriter.F (struct
   type alias = t;;
@@ -179,8 +182,8 @@ module Eval = struct
     | RShift -> int_op ( lsr )
     | LShift -> int_op ( lsl )
 
-    | BinOr -> bool_op ( || )
-    | BinAnd -> bool_op ( && )
+    | Or -> bool_op ( || )
+    | And -> bool_op ( && )
 
   let rec eval t = match map eval (unfix t) with
     | Integer i -> RInteger i

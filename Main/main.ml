@@ -38,6 +38,8 @@ open Arg
 
 (** {2 Languages definition } *)
 
+let typed f (a, b) = (a, f b)
+
 let default_passes (prog : Prog.t) : Prog.t =
   prog
   |> Passes.WalkCheckNaming.apply
@@ -47,24 +49,27 @@ let default_passes (prog : Prog.t) : Prog.t =
 
 let clike_passes prog =
   prog |> default_passes
-  |> Passes.WalkAllocArrayExpend.apply
-  |> Passes.WalkExpandReadDecl.apply
+  |> Typer.process
+  |> typed Passes.WalkAllocArrayExpend.apply
+  |> typed Passes.WalkExpandReadDecl.apply
 
 let ocaml_passes prog =
   prog |> default_passes
   |> Passes.WalkIfMerge.apply
+  |> Typer.process
 
-let no_passes prog = prog
+let no_passes prog =
+  prog
+  |> Typer.process
 
 module L = StringMap
 let languages, printers =
   let ( => )
-      (pa : Prog.t -> Prog.t )
+      (pa : Prog.t -> Typer.env * Prog.t )
       pr
       (out: Format.formatter)
       (prog : Prog.t) =
-    let processed = pa prog in
-    let typerEnv, processed  = Typer.process processed in
+    let typerEnv, processed  = pa prog  in
     begin
       pr#setTyperEnv typerEnv;
       pr#prog out processed

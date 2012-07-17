@@ -65,7 +65,7 @@ type env =
     {
       automap : typeContrainte ref IntMap.t;
       contrainteMap : typeContrainte ref IntMap.t;
-      fields : (Type.t * Type.t) StringMap.t;
+      fields : (Type.t * Type.t * string) StringMap.t;
       gamma : Type.t StringMap.t;
       functions : functionType StringMap.t;
       locales : varType StringMap.t;
@@ -335,7 +335,7 @@ and collect_contraintes_mutable env mut =
                 } in
       env, contrainte
     | Mutable.Dot (mut, name) ->
-      let (ty_dot, ty_mut) = StringMap.find name env.fields in
+      let (ty_dot, ty_mut, _) = StringMap.find name env.fields in
       let env, contrainte = collect_contraintes_mutable env mut in
       let env, contrainte2 = ty2typeContrainte env ty_mut in
       let env, ty_dot = ty2typeContrainte env ty_dot in
@@ -414,8 +414,12 @@ let rec collect_contraintes_instructions env instructions
           in env
         | Instr.AllocRecord (var, ty, li) ->
           let ty = expand env ty in
-          let li_type = match Type.unfix ty with
-            | Type.Struct (li, _) -> li
+          let li_type = match li with
+            | (name, _) :: _ ->
+              begin match StringMap.find name env.fields with
+                | (_, Type.F (_, Type.Struct (li, _)), _) -> li
+                | _ -> assert false
+              end
             | _ -> assert false
           in
           let env = List.fold_left
@@ -513,6 +517,9 @@ let map_ty env prog =
               annot;
             t
         end
+      | Type.Struct ( ( (name, _ ):: _), _) ->
+        let (_, _, name) =StringMap.find name env.fields in
+        Type.named name
       | _ -> t
     in Type.Writer.Deep.map f (f ty)
   in
@@ -613,8 +620,8 @@ let process (prog: Prog.t) =
           fields = match (Type.unfix ty) with
             | Type.Struct (li, _) ->
               List.fold_left
-                (fun acc (name, ty_field) ->
-                  StringMap.add name (ty_field, ty) acc
+                (fun acc (fieldname, ty_field) ->
+                  StringMap.add fieldname (ty_field, ty, name) acc
                 ) env.fields li
             | _ -> env.fields
         }
