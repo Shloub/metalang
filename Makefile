@@ -97,11 +97,11 @@ out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
 out/%.ml.native : out/%.ml
-	@ocamlbuild out/$(basename $*).native || exit 1
+	@ocamlbuild -lflag -g -cflag -g out/$(basename $*).native || exit 1
 	@mv _build/out/$(basename $*).native $@
 
 out/%.ml.byte : out/%.ml
-	@ocamlbuild out/$(basename $*).byte || exit 1
+	@ocamlbuild -lflag -g -cflag -g out/$(basename $*).byte || exit 1
 	@mv _build/out/$(basename $*).byte $@
 
 out/%.bin.out : out/%.bin
