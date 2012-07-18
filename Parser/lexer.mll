@@ -104,7 +104,7 @@ rule token = parse
 
 | int as x { INT (int_of_string x) }
 | '\'' char '\'' as x { CHAR (Scanf.sscanf x "%C" (fun x -> x)) }
-| '"' (string as x) '"' { STRING x }
+| ('"' string '"') as x { STRING (Scanf.sscanf x "%S" (fun x -> x)) }
 | ident as x { IDENT x }
 
 | eof { EOF }
