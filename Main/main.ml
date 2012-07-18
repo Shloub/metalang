@@ -195,6 +195,7 @@ let process c filename =
     Passes.Rename.add "exp" ;
     Passes.Rename.add "min" ;
     Passes.Rename.add "max" ;
+    Passes.Rename.add "eval" ;
     List.iter go c.languages
   end
 
