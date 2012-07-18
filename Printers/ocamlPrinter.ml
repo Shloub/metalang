@@ -64,6 +64,26 @@ class camlPrinter = object(self)
 
   method lang () = "ml"
 
+
+  method ptype f t =
+      match Type.unfix t with
+      | Type.Integer -> Format.fprintf f "int"
+      | Type.String -> Format.fprintf f "string"
+      | Type.Float -> Format.fprintf f "float"
+      | Type.Array a -> Format.fprintf f "%a array" self#ptype a
+      | Type.Void ->  Format.fprintf f "void"
+      | Type.Bool -> Format.fprintf f "bool"
+      | Type.Char -> Format.fprintf f "char"
+      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Struct (li, p) ->
+	Format.fprintf f "record{%a}"
+	  (print_list
+	     (fun t (name, type_) ->
+	       Format.fprintf t "%a : %a;" self#binding name self#ptype type_
+	     )
+	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	  ) li
+
   method stdin_sep f =
     Format.fprintf f
     "@[<h>Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ())@]"
