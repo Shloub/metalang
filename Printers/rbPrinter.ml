@@ -49,6 +49,12 @@ inherit pyPrinter as super
   method header f () =
     Format.fprintf f "%s" header
 
+  method unop f op a =
+    match op with
+      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+      | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
+      | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
+
    method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a )"
       self#funname funname
