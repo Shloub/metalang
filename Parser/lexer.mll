@@ -97,6 +97,7 @@ rule token = parse
 | "*" { MUL }
 | "/" { DIV }
 | "%" { MODULO }
+| "@" { AT }
 
 (* value *)
 | "true"  { TRUE }

@@ -1,18 +1,18 @@
 
-record toto
+record @toto
   foo : int;
   bar : int;
   blah : int;
 end
 
-def toto mktoto(int v1)
-  def toto t = record
+def @toto mktoto(int v1)
+  def @toto t = record
     foo=v1 bar=0 ; blah=0 ;
   end
   return t
 end
 
-def int result(array<toto> t, int len)
+def int result(array<@toto> t, int len)
 	def int out = 0;
 	for j = 0 to len - 1
 	do
@@ -23,7 +23,7 @@ def int result(array<toto> t, int len)
 end
 
 main
-  def array<toto> t[4] with i do
+  def array<@toto> t[4] with i do
     return mktoto(i)
   end
   read int t[0].bar skip

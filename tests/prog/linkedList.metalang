@@ -1,21 +1,21 @@
-record intlist
+record @intlist
   head : int
-  tail : intlist
+  tail : @intlist
 end
 
-def intlist cons(intlist list, int i)
-  def intlist out = record
+def @intlist cons(@intlist list, int i)
+  def @intlist out = record
     head = i
     tail = list
   end
   return out
 end
 
-def intlist rev2(intlist empty, intlist acc, intlist torev)
+def @intlist rev2(@intlist empty, @intlist acc, @intlist torev)
   if torev == empty then
     return acc
   else
-    def intlist acc2 = record
+    def @intlist acc2 = record
       head = torev.head
       tail = acc
     end
@@ -23,12 +23,12 @@ def intlist rev2(intlist empty, intlist acc, intlist torev)
   end
 end
 
-def intlist rev(intlist empty, intlist torev)
+def @intlist rev(@intlist empty, @intlist torev)
   return rev2(empty, empty, torev);
 end
 
-def void test(intlist empty)
-  def intlist list = empty
+def void test(@intlist empty)
+  def @intlist list = empty
   def auto i = -1
   while i != 0 do
     read auto i

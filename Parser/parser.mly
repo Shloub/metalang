@@ -10,7 +10,7 @@
 %token DEF MACRO WITH
 %token READ PRINT SKIP
 %token ENUM RECORD
-%token SET DOT COMMA PERIOD COLON
+%token SET DOT COMMA PERIOD COLON AT
 %token LEFT_PARENS RIGHT_PARENS LEFT_BRACKET RIGHT_BRACKET
 %token NOT AND OR
 %token EQUAL NOT_EQUAL LOWER HIGHER LOWER_OR_EQUAL HIGHER_OR_EQUAL
@@ -68,7 +68,7 @@ typ :
 | TYPE_BOOL { T.bool }
 | TYPE_ARRAY LOWER typ HIGHER { T.array $3 }
 | TYPE_VOID { T.void }
-| IDENT { T.named $1 }
+| AT IDENT { T.named $2 }
 ;
 
 expr :
@@ -127,18 +127,24 @@ affect_field :
 ;
 
 alloc_record :
+| DEF IDENT SET RECORD affect_field* END
+    { I.alloc_record $2 (Type.auto ()) $5 }
 | DEF typ IDENT SET RECORD affect_field* END
     { I.alloc_record $3 $2 $6 }
 ;
 
 define_var :
+| DEF IDENT SET expr { I.declare $2 (Type.auto ()) $4 }
 | DEF typ IDENT SET expr { I.declare $3 $2 $5 }
+| DEF IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
+    { I.alloc_array_lambda $2 (Type.auto ()) $4 $7 $9 }
 | DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
 	{ match T.unfix $2 with
 	  | T.Array x -> I.alloc_array_lambda $3 x $5 $8 $10
     | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10
 		| _ -> failwith "expected array"
 	}
+| DEF READ IDENT { I.readdecl (Type.auto ()) $3 }
 | DEF READ typ IDENT { I.readdecl $3 $4 }
 ;
 
@@ -161,6 +167,7 @@ instr :
 | control_flow { $1 }
 | mutabl SET expr { I.affect $1 $3 }
 | READ typ mutabl { I.read $2 $3 }
+| PRINT expr { I.print (Type.auto ()) $2 }
 | PRINT typ expr { I.print $2 $3 }
 | SKIP { I.stdin_sep }
 | alloc_record { $1 }
@@ -188,8 +195,8 @@ define :
 | MACRO typ IDENT LEFT_PARENS args RIGHT_PARENS macro* END
 	{ P.macro $3 $2 $5 $7 }
 
-| RECORD IDENT decl_field* END
-    { P.DeclareType ($2, (T.struct_ $3 {T.tuple = false} )) }
+| RECORD AT IDENT decl_field* END
+    { P.DeclareType ($3, (T.struct_ $4 {T.tuple = false} )) }
 ;
 
 decl_field :

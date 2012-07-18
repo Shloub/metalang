@@ -1,11 +1,11 @@
 
-record toto
+record @toto
      foo : int;
      bar : int;
 end
 
 main
-     def toto param = record foo=0 bar=0 end
+     def @toto param = record foo=0 bar=0 end
      read int param.bar skip
      read int param.foo
      print int (param.bar + param.foo * param.bar)

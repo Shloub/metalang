@@ -1,21 +1,21 @@
 
-record toto
+record @toto
   foo : int
   bar : int
   blah : int
 end
 
-def toto mktoto(int v1)
-  def toto t = record
+def @toto mktoto(int v1)
+  def @toto t = record
     foo=v1 bar=v1 blah=v1
   end
   return t
 end
 
-def int result(toto t_, toto t2_)
-	def toto t = t_
-	def toto t2 = t2_
-	def toto t3 = record
+def int result(@toto t_, @toto t2_)
+	def @toto t = t_
+	def @toto t2 = t2_
+	def @toto t3 = record
     foo=0 bar=0 blah=0
   end
 	t3 = t2
@@ -35,8 +35,8 @@ def int result(toto t_, toto t2_)
 	return t.foo + t.blah * t.bar + t.bar * t.foo
 end
 main
-  def toto t = mktoto(4)
-  def toto t2 = mktoto(5)
+  def @toto t = mktoto(4)
+  def @toto t2 = mktoto(5)
   read int t.bar skip
   read int t.blah skip
   read int t2.bar skip

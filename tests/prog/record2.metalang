@@ -1,22 +1,22 @@
 
-record toto
+record @toto
      foo : int;
      bar : int;
      blah : int;
 end
 
-def toto mktoto(int v1)
-     def toto t = record foo=v1; bar=0; blah=0; end
+def @toto mktoto(int v1)
+     def @toto t = record foo=v1; bar=0; blah=0; end
      return t
 end
 
-def int result(toto t)
+def int result(@toto t)
 	t.blah = t.blah + 1;
 	return t.foo + t.blah * t.bar + t.bar * t.foo;
 end
 
 main
-     def toto t = mktoto(4)
+     def @toto t = mktoto(4)
      read int t.bar skip
      read int t.blah
      print int result(t)
