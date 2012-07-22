@@ -11,6 +11,7 @@ Passes
 PassesUtils
 Prog
 Type
+Typer
 Warner
 Printer
 BashPrinter
