@@ -3,6 +3,7 @@ améliorer les erreurs du typer
 gérer les entrées d'entiers négatifs (en C#, php, python)
 php stdin : ne pas forcer à faire ctrl+d
 number of args checker
+flush sur stdout
 
 templates
 types abstract (pour ouvrir un fichier par exemple)
