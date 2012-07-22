@@ -1,0 +1,301 @@
+<html>
+<head>
+  <title>Metalang</title>
+  <meta http-equiv="Content-Type" Content="text/html; charset=ISO-8859-15"/>
+</head>
+<style>
+blockquote {
+  background-color:#DDDDDD;
+}
+span.keyword {
+  font-weight: bold;
+}
+</style>
+<body>
+
+<h1>Metalang</h1>
+
+
+<a href="#intro"><h2>Introduction</h2></a>
+<a href="#quickstart"><h2>Quick start</h2></a>
+<ul>
+<li><a href="#compiler"><h3>Compiler</h3></a></li>
+<li><a href="#helloworld"><h3>Hello world</h3></a></li>
+</ul>
+<a href="#types"><h2>Types</h2></a>
+<a href="#expressions"><h2>Expressions</h2></a>
+<ul>
+<li><a href="#operators"><h3>Operators</h3></a></li>
+<li><a href="#calls"><h3>Calls</h3></a></li>
+</ul>
+<a href="#io"><h2>IO</h2></a>
+<a href="#functions"><h2>Functions</h2></a>
+<a href="#scope"><h2>Variables & Scope</h2></a>
+
+<a href="#flux"><h2>Flux D'Execution</h2></a>
+<ul>
+<li><a href="#if"><h3>If</h3></a></li>
+<li><a href="#for"><h3>For</h3></a></li>
+<li><a href="#while"><h3>While</h3></a></li>
+</ul>
+
+<a name="intro"/>
+<h2>Introduction</h2>
+<p>Metalang est un langage de programmation. Il permet d'écrire un programme dans un seul langage, et de l'obtenir dans plusieurs autres.</p>
+<p>Ce langage fut créé dans le but de pouvoir écrire des algorithmes ou des
+codes à completer pour le concours
+<a href="http://www.prologin.org">prologin</a>.
+Dans ce concours, les candidats ont des algorithmes à écrire pour résoudre des
+problèmes. Ils peuvent le faire dans différents langages.
+Il est donc essentiel pour nous de pouvoir leur donner des codes à complèter
+dans leur langage, et de pouvoir mesurer les performances de leurs algorithmes
+en se basant sur l'algorithme idéal écrit dans leur langage.
+Il nous est donc utile de pouvoir écrire un algorithme en metalang, et de
+pouvoir obtenir le même algorithme dans les langages des candidats.
+</p>
+<p>
+Pour cette raison, le langage metalang a été créé. Mais ce langage n'a pas pour
+but de se limiter au concours prologin : ses ambitions sont d'être suffisement
+utilisable pour pouvoir écrire beaucoup d'algorithmes et de les obtenir dans
+beaucoup de langages.
+</p>
+<hr/>
+
+<a name="quickstart"/>
+<h2>Quick start</h2>
+<a name="compiler">
+<h3>Compiler</h3>
+<p>Pour compiler metalang, il faut taper la commande :</p>
+<blockquote>
+make metalang
+</blockquote>
+<p>ensuite, nous obtennons alors une commande metalang, qui nous permet de compiler un fichier metalang en fichiers python, php, C, C++, etc...</p>
+<blockquote>
+./metalang fichier.metalang
+</blockquote>
+<p>Metalang ne permet pas de compiler deux fichiers ensemble.
+Tout le code doit-être dans un seul fichier.</p>
+<a name="helloworld">
+<h3>Hello world</h3>
+<p>Voici le contenu d'un hello world en metalang</p>
+<blockquote>
+<span class="keyword">main</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span> "Hello World\n"<br/>
+<span class="keyword">end</span>
+</blockquote>
+<hr/>
+
+<a name="types"/>
+<h2>Types</h2>
+<p>Voici la liste des types definis en metalang</p>
+<table width="100%">
+<tr>
+<td>int</td><td>un entier de taille non definie</td>
+</tr>
+<tr>
+<td>string</td><td>une chaine de caractère de taille non definie</td>
+</tr>
+<tr>
+<td>char</td><td>un char</td>
+</tr>
+</table>
+<p>Il existe une façon de créer des types construits</p>
+<blockquote>
+<span class="keyword">record</span> record_name<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;field1 : type1<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;field2 : type2<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;field3 : type3<br/>
+<span class="keyword">end</span>
+</blockquote>
+<p>Attention, un record peut-être récursif, mais il devient alors difficile
+de l'utiliser : en effet, il n'existe pas de valeur null en metalang,
+cependant, on peut utiliser des tableaux pour simuler un type option.</p>
+<p>Le système d'inférence de metalang permet d'inférer des types, on peut
+donc écrire auto a la place de n'importe quel type pour que le compilateur
+détecte automatiquement quel type mettre à la place. Un sucre syntaxique
+permet aussi de ne pas écrire le type dans la plupart des instructions.</p>
+<p>Il n'existe aucune forme de polymorphisme en metalang, chaque fonction
+doit avoir tout ses types inférés lors de sa definition.</p>
+<hr/>
+
+<a name="expressions"/>
+<h2>Expressions</h2>
+<a name="operators"/>
+<h3>Operators</h3>
+<table width="100%">
+<tr>
+  <td>/</td>
+  <td>La division</td>
+  <td> ('a / 'a) = 'a </td>
+</tr>
+<tr>
+  <td>*</td>
+  <td>La multiplication</td>
+  <td> ('a * 'a) = 'a </td>
+</tr>
+<tr>
+  <td>+</td>
+  <td>La multiplication</td>
+  <td> ('a + 'a) = 'a </td>
+</tr>
+<tr>
+  <td>-</td>
+  <td>La multiplication</td>
+  <td> ('a - 'a) = 'a </td>
+</tr>
+<tr>
+  <td>%</td>
+  <td>Le reste de la division</td>
+  <td> (int % int) = int </td>
+</tr>
+<tr>
+  <td>&&</td>
+  <td>et logique</td>
+  <td> (bool && bool) = bool </td>
+  <td>Si le premier paramètre est a false, alors le second n'est pas évalué</td>
+</tr>
+<tr>
+  <td>||</td>
+  <td>ou logique</td>
+  <td> (bool || bool) = bool </td>
+  <td>Si le premier paramètre est a true, alors le second n'est pas évalué</td>
+</tr>
+<tr>
+  <td>==</td>
+  <td>égalité</td>
+  <td>('a == 'a) = 'a</td>
+</t>
+<tr>
+  <td>!=</td>
+  <td>égalité</td>
+  <td>('a != 'a) = 'a</td>
+</tr>
+</table>
+<a name="calls"/>
+<h3>Calls</h3>
+Les appels de fonctions se font de la façon suivante :
+<blockquote>
+function_name(param1, param2)
+</blockquote>
+Comme en C
+<hr/>
+
+<a name="io"/>
+<h2>IO</h2>
+
+<a name="print"/>
+<h3>Print</h3>
+La syntaxe pour afficher sur la sortie standard est :
+<blockquote>
+<span class="keyword">print</span> type value
+</blockquote>
+Le type est optionnel.
+Actuellement, il est possible d'afficher des chaines, des entiers, et des tableaux
+<a name="read"/>
+<h3>Read</h3>
+<p>La lecture sur l'entrée standard peut se faire de deux façons : en écrivant le résultat dans une variable, ou en en déclarant une nouvelle.</p>
+En écrivant dans une variable :
+<blockquote>
+<span class="keyword">read</span> type variable
+</blockquote>
+En déclarant une nouvelle variable :
+<blockquote>
+<span class="keyword">def</span> <span class="keyword">read</span> type variable
+</blockquote>
+Dans ces deux exemples, il n'est pas obligatoire d'écrire le type.
+On ne peut pas lire un tableau, une chaine ou un record
+<hr/>
+<a name="functions"/>
+<h2>Functions</h2>
+Les declarations de fonctions se font sous cette forme
+<blockquote>
+<span class="keyword">def</span> ret_type function_name( type param1, type param2)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;// Contenu de la fonction<br />
+<span class="keyword">end</span>
+</blockquote>
+Ces fonctions peuvent être récursives
+<hr/>
+<a name="scope"/>
+<h2>Variables & Scope</h2>
+<p>Les variables ont pour portée le bloc, mais on ne peut pas definir deux variables de même nom dans la même fonction même si elles sont dans deux blocs différents.</p>
+<blockquote>
+<span class="keyword">def</span> type variablename = value
+</blockquote>
+<p>Toute definition de variable doit avoir une valeur.</p>
+<p>Ecrire le type est optionnel</p>
+<br/>
+<p>Pour definir un record :</p>
+<blockquote>
+<span class="keyword">def</span> @recordName variablename = <span class="keyword">record</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;field1 = valeur1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;field2 = valeur2<br />
+<span class="keyword">end
+</blockquote>
+<p>Pour definir un array :</p>
+<blockquote>
+<span class="keyword">def</span> array&lt;type&gt; variablename[taille] <span class="keyword">with</span> index <span class="keyword">do</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> value(index)<br />
+<span class="keyword">end</span>
+</blockquote>
+<p>Encore une fois, le type est optionnel : on peut retirer array&lt;type&gt;
+et ça fonctionne pareil. Chaque tableau doit-être defini avec une taille
+et une valeur par case du tableau..</p>
+
+<hr/>
+
+<a name="flux"/>
+<h2>Flux</h2>
+
+<a name="if"/>
+<h3>If</h3>
+
+<blockquote>
+<span class="keyword">if</span> confition <span class="keyword">then</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions si vrai<br />
+<span class="keyword">end</span>
+</blockquote>
+
+
+<blockquote>
+<span class="keyword">if</span> confition <span class="keyword">then</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions si vrai<br />
+<span class="keyword">else</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions si faux<br />
+<span class="keyword">end</span>
+</blockquote>
+
+
+
+<blockquote>
+<span class="keyword">if</span> confition1 <span class="keyword">then</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions si condition1 vrai<br />
+<span class="keyword">elsif</span> condition2 <span class="keyword">then</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions si condition2 vrai<br />
+<span class="keyword">else</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions si faux<br />
+<span class="keyword">end</span>
+</blockquote>
+
+<a name="for"/>
+<h3>For</h3>
+
+<blockquote>
+<span class="keyword">for</span> variable = valeur_initiale <span class="keyword">to</span> valeur_finale <span class="keyword">do</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions<br />
+<span class="keyword">end</span>
+</blockquote>
+<p>La variable ne doit pas être déclarée avant, la boucle for la déclare toute seule. les instructions sont executées pour les valeurs dans l'interval [valeur_initiale ; valeur_finale]</p>
+
+<a name="while"/>
+<h3>While</h3>
+
+<blockquote>
+<span class="keyword">while</span> condition <span class="keyword">do</span><br />
+&nbsp;&nbsp;&nbsp;&nbsp;// instructions<br />
+<span class="keyword">end</span>
+</blockquote>
+<p>Il n'existe pas d'instruction break ou continue.</p>
+<hr />
+
+</body
+</html>
