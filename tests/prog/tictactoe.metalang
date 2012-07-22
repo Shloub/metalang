@@ -1,0 +1,215 @@
+
+record @gamestate
+  cases : array<array<int>>
+  firstToPlay : bool
+  note : int
+  ended : bool
+end
+
+record @move
+  x : int
+  y : int
+end
+
+def void print_state(@gamestate g)
+  print "\n|"
+  for y = 0 to 2 do
+    for x = 0 to 2 do
+      if g.cases[x][y] == 0 then
+        print " "
+      elsif g.cases[x][y] == 1 then
+        print "O"
+      else
+        print "X"
+      end
+      print "|"
+    end
+    if y != 2 then
+      print "\n|-|-|-|\n|"
+    end
+  end
+  print "\n"
+end
+
+def void eval(@gamestate g)
+  def win = 0
+  def freecase = 0;
+  for y = 0 to 2 do
+    def col = -1
+    def lin = -1
+    for x = 0 to 2 do
+      if g.cases[x][y] == 0 then
+        freecase = freecase + 1
+      end
+      def colv = g.cases[x][y]
+      def linv = g.cases[y][x]
+      if col == -1 && colv != 0 then
+        col = colv
+      elsif colv != col then
+        col = -2
+      end
+      if lin == -1 && linv != 0 then
+        lin = linv
+      elsif linv != lin then
+        lin = -2
+      end
+    end
+    if col >= 0 then
+      win = col
+    elsif lin >= 0 then
+      win = lin
+    end
+  end
+  for x = 1 to 2 do
+    if g.cases[0][0] == x && g.cases[1][1] == x && g.cases[2][2] == x then
+      win = x
+    end
+    if g.cases[0][2] == x && g.cases[1][1] == x && g.cases[2][0] == x then
+      win = x
+    end
+  end
+  g.ended = win != 0 || freecase == 0
+  if win == 1 then
+    g.note = 1000
+  elsif win == 2 then
+    g.note =  -1000
+  else
+    g.note = 0
+  end
+end
+
+
+def void apply_move(@move m, @gamestate g)
+  def player = 2
+  if g.firstToPlay then
+    player = 1
+  end
+  g.cases[m.x][m.y] = player
+  g.firstToPlay = ! g.firstToPlay
+end
+
+def void cancel_move(@move m, @gamestate g)
+  g.cases[m.x][m.y] = 0
+  g.firstToPlay = ! g.firstToPlay
+  g.ended = false
+end
+
+def bool can_move(@move m, @gamestate g)
+  return g.cases[m.x][m.y] == 0
+end
+
+
+def int minmax(@gamestate g)
+  eval(g)
+  if g.ended then
+    return g.note
+  end
+  def maxNote = -10000
+  if ! g.firstToPlay then
+    maxNote = 10000
+  end
+  def currentMove = record
+    x = 0
+    y = 0
+  end
+  for x = 0 to 2 do
+    currentMove.x = x
+    for y = 0 to 2 do
+      currentMove.y = y
+      if can_move(currentMove, g) then
+        apply_move(currentMove, g)
+        def currentNote = minmax(g)
+        cancel_move(currentMove, g)
+        if currentNote > maxNote == g.firstToPlay
+        then
+          maxNote = currentNote
+        end
+      end
+    end
+  end
+  return maxNote
+end
+
+def @move play(@gamestate g)
+  def currentMove = record
+    x = 0
+    y = 0
+  end
+  def minMove = record
+    x = 0
+    y = 0
+  end
+  def minNote = 10000
+  for x = 0 to 2 do
+    currentMove.x = x
+    for y = 0 to 2 do
+      currentMove.y = y
+      if can_move(currentMove, g) then
+        apply_move(currentMove, g)
+        def currentNote = minmax(g)
+        print x
+        print ", "
+        print y
+        print ", "
+        print currentNote
+        print "\n"
+        cancel_move(currentMove, g)
+        if currentNote < minNote then
+          minNote = currentNote
+          minMove.x = currentMove.x
+          minMove.y = currentMove.y
+        end
+      end
+    end
+  end
+  print minMove.x
+  print minMove.y
+  print "\n"
+  return minMove
+end
+
+def @gamestate init()
+  def cases[3] with i do
+    def auto tab[3] with j do
+      return 0
+    end
+    return tab
+  end
+  def auto out = record
+    cases = cases
+    firstToPlay = true
+    note = 0
+    ended = false
+  end
+  return out
+end
+
+def @move read_move()
+  def read x skip
+  def read y skip
+  def out = record
+    x = x
+    y = y
+  end
+  return out
+end
+
+main
+  def state = init()
+  while !state.ended do
+    print_state(state)
+    def m = read_move()
+    if can_move(m, state) then
+      apply_move(m, state)
+      eval(state)
+      print_state(state)
+      if !state.ended then
+        apply_move(play(state), state)
+        eval(state)
+      end
+    end
+  end
+  print_state(state)
+  print state.note
+  print "\n"
+end
