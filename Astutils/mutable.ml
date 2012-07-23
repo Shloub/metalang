@@ -41,17 +41,19 @@ type 'expr t = F of (int * ('expr, 'expr t) tofix)
 let annot = function F (i, _) -> i
 let unfix = function F (_, x) -> x
 let fix x = F ((next ()), x)
+let fixa a x = F (a, x)
 
 let array a el = Array (a, el) |> fix
 let var a = Var a |> fix
 
 let rec foldmap_expr f acc mut =
+  let annot = annot mut in
 	match unfix mut with
-		| Var v -> acc, fix (Var v)
+		| Var v -> acc, fixa annot (Var v)
 		| Dot (m, field) ->
 			let acc, m = foldmap_expr f acc m in
-			acc, fix (Dot (m, field))
+			acc, fixa annot (Dot (m, field))
 		| Array (mut, li) ->
 			let acc, mut = foldmap_expr f acc mut in
 			let acc, li = List.fold_left_map f acc li in
-			acc, fix (Array (mut, li) )
+			acc, fixa annot (Array (mut, li) )

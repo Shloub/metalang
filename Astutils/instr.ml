@@ -58,6 +58,7 @@ type t = F of int * t tofix
 let annot = function F (i, _) -> i
 let unfix = function F (_, x) -> x
 let fix x = F ((next ()), x)
+let fixa a x = F (a, x)
 
 let stdin_sep = StdinSep |> fix
 let print t v = Print (t, v) |> fix
@@ -108,6 +109,7 @@ module Writer = AstWriter.F (struct
   type alias = t;;
   type t = alias;;
   let foldmap f acc t =
+    let annot = annot t in
     match unfix t with
       | StdinSep -> acc, t
       | Declare (_, _, _) -> acc, t
@@ -115,19 +117,19 @@ module Writer = AstWriter.F (struct
       | Comment _ -> acc, t
       | Loop (var, e1, e2, li) ->
         let acc, li = List.fold_left_map f acc li in
-        acc, fix (Loop(var, e1, e2, li))
+        acc, fixa annot (Loop(var, e1, e2, li))
       | While (e, li) ->
         let acc, li = List.fold_left_map f acc li in
-        acc, fix (While (e, li))
+        acc, fixa annot (While (e, li))
       | If (e, cif, celse) ->
         let acc, cif = List.fold_left_map f acc cif in
         let acc, celse = List.fold_left_map f acc celse in
-        acc, fix (If(e, cif, celse))
+        acc, fixa annot (If(e, cif, celse))
       | Return e -> acc, t
       | AllocArray (_, _, _, None) -> acc, t
       | AllocArray (b, t, l, Some (b2, li)) ->
         let acc, li = List.fold_left_map f acc li in
-        acc, fix(AllocArray (b, t, l, Some (b2, li)) )
+        acc, fixa annot (AllocArray (b, t, l, Some (b2, li)) )
       | AllocRecord (_, _, _) ->
         acc, t
       | Print _ -> acc, t

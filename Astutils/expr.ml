@@ -62,6 +62,7 @@ type t = F of int * t tofix
 let annot = function F (i, _) -> i
 let unfix = function F (_, x) -> x
 let fix x = F ((next ()), x)
+let fixa a x = F (a, x)
 
 let map f = function
   | BinOp (a, op, b) -> BinOp ((f a), op, f b)

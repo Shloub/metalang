@@ -97,7 +97,7 @@ module Rename = struct
         Mutable.Dot ((mapmutable map m), f) |> Mutable.fix
 
   and process_expr map e =
-    let f e = Expr.fix (match Expr.unfix e with
+    let f e = Expr.fixa (Expr.annot e) (match Expr.unfix e with
       | Expr.Access mutable_ ->
         Expr.Access (mapmutable map mutable_)
       | Expr.Call (funname, li) ->
@@ -106,7 +106,7 @@ module Rename = struct
     in Expr.Writer.Deep.map f e
 
   let rec process_instr map i =
-    let i = match Instr.unfix i with
+    let i2 = match Instr.unfix i with
       | Instr.Declare (v, t, e) ->
         Instr.Declare ( (mapname map v), t, process_expr map e)
       | Instr.Affect (m, e) ->
@@ -141,7 +141,7 @@ module Rename = struct
         Instr.Read (t, mapmutable map m)
       | (Instr.DeclRead (t, v) ) as i -> i
       | Instr.StdinSep -> Instr.StdinSep
-    in Instr.fix i
+    in Instr.fixa (Instr.annot i) i2
 
   let process_main acc m = acc, List.map (process_instr acc) m
   let process acc p =

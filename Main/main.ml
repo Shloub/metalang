@@ -46,6 +46,7 @@ let default_passes (prog : Prog.t) : Prog.t =
   |> Passes.WalkRename.apply
   |> Passes.WalkNopend.apply
   |> Passes.WalkExpandPrint.apply
+  |> Typer.process |> (fun (a, b) -> b)
 
 let clike_passes prog =
   prog |> default_passes

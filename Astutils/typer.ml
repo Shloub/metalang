@@ -101,21 +101,32 @@ let error_field_not_found name t =
     (Type.type_t_to_string t)
   in assert false
 
+let ploc f ((l1, c1), (l2, c2)) =
+  if l1 = l2 then
+    Printf.fprintf f "(on %d:%d-%d)"
+      l1 c1 c2
+  else
+    Printf.fprintf f "(on %d:%d to %d:%d)"
+    l1 c1 l2 c2
 
-let error_ty t1 t2 =
-  let () = Printf.printf "Cannot unify %s and %s\n%!"
+let error_ty t1 t2 loc1 loc2 =
+  let () = Printf.printf "Cannot unify %s %a and %s %a\n%!"
     (Type.type_t_to_string t1)
+    ploc loc1
     (Type.type_t_to_string t2)
+    ploc loc2
   in assert false
 
 let not_found name =
   let () = Printf.printf "Cannot find variable %s\n%!" name
   in assert false
 
-let error_cty t1 t2 =
-  let () = Printf.printf "Cannot unify %s and %s\n%!"
+let error_cty t1 t2 loc1 loc2 =
+  let () = Printf.printf "Cannot unify %s %a and %s %a\n%!"
     (contr2str t1)
+    ploc loc1
     (contr2str t2)
+    ploc loc2
   in assert false
 
 (** {2 Types anti alias-ing}*)
@@ -128,28 +139,28 @@ let expand env ty =
   in f ty
 
 (** {2 Unify} *)
-let rec check_types env (t1:Type.t) (t2:Type.t) =
+let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
   match (Type.unfix t1), (Type.unfix t2) with
     | Type.Integer, Type.Integer -> ()
-    | Type.Integer, _ -> error_ty t1 t2
+    | Type.Integer, _ -> error_ty t1 t2 loc1 loc2
     | Type.Bool, Type.Bool -> ()
-    | Type.Bool, _ -> error_ty t1 t2
+    | Type.Bool, _ -> error_ty t1 t2 loc1 loc2
     | Type.String, Type.String -> ()
-    | Type.String, _ -> error_ty t1 t2
+    | Type.String, _ -> error_ty t1 t2 loc1 loc2
     | Type.Float, Type.Float -> ()
-    | Type.Float, _ -> error_ty t1 t2
+    | Type.Float, _ -> error_ty t1 t2 loc1 loc2
     | Type.Char, Type.Char -> ()
-    | Type.Char, _ -> error_ty t1 t2
+    | Type.Char, _ -> error_ty t1 t2 loc1 loc2
     | Type.Void, Type.Void -> ()
-    | Type.Void, _ -> error_ty t1 t2
+    | Type.Void, _ -> error_ty t1 t2 loc1 loc2
     | Type.Named n, Type.Named n2 ->
-      if String.equals n n2 then () else error_ty t1 t2
+      if String.equals n n2 then () else error_ty t1 t2 loc1 loc2
     | _, Type.Named n ->
-      check_types env t1 (expand env t2)
+      check_types env t1 (expand env t2) loc1 loc2
     | Type.Named n, _ ->
-      check_types env (expand env t1) t2
+      check_types env (expand env t1) t2 loc1 loc2
     | Type.Array t, Type.Array t2 ->
-      check_types env t t2
+      check_types env t t2 loc1 loc2
     | Type.Struct (li, _), Type.Struct (li2, _) ->
       List.iter
         (fun (name, ty) ->
@@ -159,9 +170,9 @@ let rec check_types env (t1:Type.t) (t2:Type.t) =
             with Not_found ->
               error_field_not_found name t2
           in
-          check_types env ty ty2
+          check_types env ty ty2 loc1 loc2
         ) li
-    | _ -> error_ty t1 t2
+    | _ -> error_ty t1 t2 loc1 loc2
 
 let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
   (* let () =
@@ -180,7 +191,7 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
       end
     | Typed (tt1, loc1), Typed (tt2, loc2) ->
       begin
-        check_types env tt1 tt2;
+        check_types env tt1 tt2 loc1 loc2;
         false
       end
     | Unknown _, Unknown _-> false
@@ -203,14 +214,14 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
     | PreTyped (Type.Array a1, loc1), PreTyped (Type.Array a2, loc2) ->
       unify env a1 a2
     | PreTyped (Type.Array _, loc1), PreTyped (_, loc2) ->
-      error_cty !t1 !t2
+      error_cty !t1 !t2 loc1 loc2
     | PreTyped (Type.Array r1, loc1), Typed (Type.F (_, Type.Array ty), loc2) ->
       begin
         r1 := Typed (ty, loc1);
         true
       end
     | PreTyped ((Type.Array r1), loc1), Typed (_, loc2) ->
-      error_cty !t1 !t2
+      error_cty !t1 !t2 loc1 loc2
     | PreTyped (Type.Struct (li, _), loc1),
       Typed (Type.F (_, Type.Struct (li2, _)), loc2) ->
       List.fold_left
@@ -221,7 +232,7 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
           in acc || unify env t (ref (Typed (ty, loc2)))
         ) false li
     | PreTyped (Type.Struct _, loc1), Typed (_, loc2) ->
-      error_cty !t1 !t2
+      error_cty !t1 !t2 loc1 loc2
     | PreTyped (Type.Struct (li, _), loc1),
       PreTyped (Type.Struct (li2, _), loc2) ->
       List.fold_left
@@ -232,6 +243,7 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
           in acc || unify env t t2
         ) false li
     |  PreTyped (Type.Struct _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2
+      loc1 loc2
 
 
 
@@ -342,6 +354,8 @@ let rec collect_contraintes_expr env e =
   env, contrainte
 
 and collect_contraintes_mutable env mut =
+  let loc m = Ast.PosMap.get (Mutable.annot m) in
+  let tloc = loc mut in
   (*  let () = Format.printf "collecting mutable contraintes@\n" in *)
   match Mutable.unfix mut with
     | Mutable.Var name ->
@@ -353,20 +367,18 @@ and collect_contraintes_mutable env mut =
       in
       env, ty
     | Mutable.Array (mut, eli) ->
-      let loc = ((-1, -1), (-1, -1)) in (* TODO *)
-      let contrainte = ref (Unknown loc) in
+      let contrainte = ref (Unknown tloc) in
       let env, contrainte_mut = collect_contraintes_mutable env mut in
-      let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, loc) ) in
+      let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, loc mut) ) in
       let env = { env with contraintes =
           (contrainte_mut, contrainte_mut2) :: env.contraintes
                 } in
       env, contrainte
     | Mutable.Dot (mut, name) ->
-      let loc = ((-1, -1), (-1, -1)) in (* TODO *)
       let (ty_dot, ty_mut, _) = StringMap.find name env.fields in
       let env, contrainte = collect_contraintes_mutable env mut in
-      let env, contrainte2 = ty2typeContrainte env ty_mut loc in
-      let env, ty_dot = ty2typeContrainte env ty_dot loc in
+      let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
+      let env, ty_dot = ty2typeContrainte env ty_dot tloc in
       let env = {env with
         contraintes = (contrainte, contrainte2) :: env.contraintes} in
       env, ty_dot
@@ -376,9 +388,9 @@ let rec collect_contraintes_instructions env instructions
   (*  let () = Format.printf "collecting instructions contraintes\n" in *)
   List.fold_left
     (fun env instruction ->
+      let loc = Ast.PosMap.get (Instr.annot instruction) in
       match Instr.unfix instruction with
         | Instr.Declare (var, ty, e) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let ty = expand env ty in
           let env, contrainte_expr = collect_contraintes_expr env e in
           let env, contrainte_ty = ty2typeContrainte env ty loc in
@@ -396,7 +408,6 @@ let rec collect_contraintes_instructions env instructions
               env.contraintes}
 
         | Instr.Loop (var, e1, e2, li) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let contrainte_integer = ref (Typed (Type.integer, loc) ) in
           let env = {env with locales = StringMap.add var contrainte_integer
               env.locales } in
@@ -421,7 +432,6 @@ let rec collect_contraintes_instructions env instructions
             contraintes = (ty_ret, contrainte_expr) ::
               env.contraintes}
         | Instr.AllocArray (var, ty, e, instrsopt) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let ty = expand env ty in
           let env, ty = ty2typeContrainte env ty loc in
           let contrainte_integer = ref (Typed (Type.integer, loc) ) in
@@ -444,7 +454,6 @@ let rec collect_contraintes_instructions env instructions
                       env.locales}
           in env
         | Instr.AllocRecord (var, ty, li) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let ty = expand env ty in
           let li_type = match li with
             | (name, _) :: _ ->
@@ -469,7 +478,6 @@ let rec collect_contraintes_instructions env instructions
               ty env.locales}
           in env
         | Instr.If (e, instrs1, instrs2) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let contrainte_ty = ref (Typed (Type.bool, loc)) in
           let env, contrainte_expr = collect_contraintes_expr env e in
           let env = {env with
@@ -479,7 +487,6 @@ let rec collect_contraintes_instructions env instructions
           let env = collect_contraintes_instructions env instrs2 ty_ret in
           env
         | Instr.Call (f, eli) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let (args, out_contraint) =
             StringMap.find f env.functions in (*TODO option*)
           let void_contraint = ref (Typed (Type.void, loc)) in
@@ -495,7 +502,6 @@ let rec collect_contraintes_instructions env instructions
             contraintes = (void_contraint, out_contraint) ::
               env.contraintes}
         | Instr.Print (ty, e) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let ty = expand env ty in
           let env, contrainte_ty = ty2typeContrainte env ty loc in
           let env, contrainte_expr = collect_contraintes_expr env e in
@@ -503,7 +509,6 @@ let rec collect_contraintes_instructions env instructions
             contraintes = (contrainte_ty, contrainte_expr) ::
               env.contraintes}
         | Instr.Read (ty, mut) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let ty = expand env ty in
           let env, contrainte_mut = collect_contraintes_mutable env mut in
           let env, contrainte_expr = ty2typeContrainte env ty loc in
@@ -511,7 +516,6 @@ let rec collect_contraintes_instructions env instructions
             contraintes = (contrainte_mut, contrainte_expr) ::
               env.contraintes}
         | Instr.DeclRead (ty, var) ->
-          let loc = ((-1, -1), (-1, -1)) in (* TODO *)
           let ty = expand env ty in
           let env, ty = ty2typeContrainte env ty loc in
           let env =
@@ -604,7 +608,7 @@ let process (prog: Prog.t) =
       ((t1 : typeContrainte ref), (t2 : typeContrainte ref)) : bool=
     match !t1, !t2 with
       | Typed (t1, loc1), Typed (t2, loc2) ->
-        check_types env t1 t2;
+        check_types env t1 t2 loc1 loc2;
         false
       | _ -> true
   in
