@@ -8,27 +8,24 @@
 (defvar metalang-font-lock-keywords
    '(
 
-      ("[-a-zA-Z0-9_.]+\\s-:\\s-\\([-a-zA-Z0-9_.<>]+\\)" (1 font-lock-type-face))
+     ("\\(\\#.*\\)" (1 font-lock-comment-face))
 
      ("\\('[^']+'\\)" (1 font-lock-constant-face)) ; char regexp
-     ("\\([-a-zA-Z0-9_]+\\)\\s-*(" (1 font-lock-function-name-face)) ; function regexp
+     ("\\([-a-zA-Z0-9_]+\\)\\s-*(" (1 font-lock-function-name-face))
+                                        ; function regexp
      ("\\s-\\(record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
       (1 font-lock-keyword-face))
      ("^\\(record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
       (1 font-lock-keyword-face))
+     ("\\(array<[-a-zA-Z0-9_.<>]+>\\)" (1 font-lock-type-face))
+     ("\\(@[-a-zA-Z0-9_.]+\\)" (1 font-lock-type-face))
+     ("\\(int\\|string\\|bool\\|void\\)" (1 font-lock-type-face))
+     ("\\(true\\|false\\)" (1 font-lock-constant-face t t))
 
-      ("record\\s-\\([-a-zA-Z0-9_.<>]+\\)" (1 font-lock-type-face))
-      ("def\\s-\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
-       (1 font-lock-type-face))
-      ("read\\s-\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
-       (1 font-lock-type-face))
-      ("print\\s-\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
-       (1 font-lock-type-face))
-      ("([ \t]*\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
-       (1 font-lock-type-face))
-      (",[ \t]*\\([-a-zA-Z0-9_.<>]+\\)\\s-[-a-zA-Z0-9_.]+"
-       (1 font-lock-type-face))
-      ("\\(true\\|false\\)" (1 font-lock-constant-face t t))
+     ("\\(\\.[-a-zA-Z0-9_.]+\\)"
+      (1 font-lock-reference-face))
+     ("\\([-a-zA-Z0-9_.]+\\)\\s-:"
+      (1 font-lock-reference-face))
      )
    "Keyword highlighting specification for `metalang-mode'.")
 (defvar metalang-mode-map
@@ -42,7 +39,8 @@
 	(or
 	 (looking-at "^[ \t]*else")
 	 (looking-at "^[ \t]*elsif")
-	 (looking-at "^[ \t]*end")
+	 (looking-at "^[ \t]*end$")
+	 (looking-at "^[ \t]*end\\s-")
 	 )
 	)
 
@@ -90,6 +88,14 @@
 				)
 			)))
 
+
+(defvar metalang-mode-syntax-table
+  (let ((st (make-syntax-table)))
+    (modify-syntax-entry ?/ ". 14" st)
+    (modify-syntax-entry ?* ". 23" st)
+    st )
+  "syntax table" )
+
 (defun metalang-mode ()
   "Metalang major mode"
   (interactive)
@@ -101,7 +107,7 @@
   (setq major-mode 'metalang-mode)
   (setq mode-name "Metalang")
   (set (make-local-variable 'indent-line-function) 'metalang-indent-line)
- ; (set-syntax-table metalang-mode-syntax-table)
+  (set-syntax-table metalang-mode-syntax-table)
   (use-local-map metalang-mode-map)
  ; (run-hooks 'metalang-mode-hook)
 )
