@@ -6,8 +6,15 @@
 	module T = Type
 	module P = Prog
 
+
   let locate pos e =
     let () = Ast.PosMap.add (E.annot e) pos
+    in e
+  let locati pos e =
+    let () = Ast.PosMap.add (I.annot e) pos
+    in e
+  let locatm pos e =
+    let () = Ast.PosMap.add (M.annot e) pos
     in e
 %}
 
@@ -93,9 +100,12 @@ expr :
 ;
 
 mutabl :
-| IDENT { M.var $1 }
-| mutabl LEFT_BRACKET exprs RIGHT_BRACKET { M.array $1 $3 }
-| mutabl DOT IDENT { M.fix (M.Dot ($1, $3)) }
+| IDENT { M.var $1  |> locatm ( Ast.location ($startpos($1), $endpos($1))) }
+| mutabl LEFT_BRACKET exprs RIGHT_BRACKET
+    { M.array $1 $3  |> locatm ( Ast.location ($startpos($1), $endpos($4))) }
+| mutabl DOT IDENT
+        { M.fix (M.Dot ($1, $3))
+            |> locatm ( Ast.location ($startpos($1), $endpos($3)))  }
 ;
 
 exprs :
@@ -175,14 +185,27 @@ control_flow :
 ;
 
 instr :
-| define_var { $1 }
-| control_flow { $1 }
-| mutabl SET expr { I.affect $1 $3 }
-| READ typ mutabl { I.read $2 $3 }
-| PRINT expr { I.print (Type.auto ()) $2 }
-| PRINT typ expr { I.print $2 $3 }
-| SKIP { I.stdin_sep }
-| alloc_record { $1 }
+| define_var { $1
+        |> locati ( Ast.location ($startpos($1), $endpos($1)))}
+| control_flow { $1 |> locati ( Ast.location ($startpos($1), $endpos($1))) }
+| mutabl SET expr { I.affect $1 $3
+                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+                  }
+| READ typ mutabl { I.read $2 $3
+                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+                  }
+| PRINT expr { I.print (Type.auto ()) $2
+                 |> locati ( Ast.location ($startpos($1), $endpos($2)))
+             }
+| PRINT typ expr { I.print $2 $3
+                 |> locati ( Ast.location ($startpos($1), $endpos($3)))
+                 }
+| SKIP { I.stdin_sep
+       |> locati ( Ast.location ($startpos($1), $endpos($1)))
+       }
+| alloc_record { $1
+                   |> locati ( Ast.location ($startpos($1), $endpos($1)))
+               }
 ;
 
 instrs :
