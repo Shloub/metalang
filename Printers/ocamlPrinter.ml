@@ -113,11 +113,14 @@ class camlPrinter = object(self)
 
 
   method unop f op a =
-    match op with
-      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
-      | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
-      | Expr.BNot -> Format.fprintf f "lnot(%a)" self#expr a
-
+    let pop f () = match op with
+      | Expr.Neg -> Format.fprintf f "-"
+      | Expr.Not -> Format.fprintf f "not "
+      | Expr.BNot -> Format.fprintf f "lnot "
+    in if self#nop (Expr.unfix a) then
+        Format.fprintf f "%a%a" pop () self#expr a
+      else
+        Format.fprintf f "%a(%a)" pop () self#expr a
 
   method length f tab =
     Format.fprintf f "(Array.length %a)" self#binding tab
@@ -125,7 +128,7 @@ class camlPrinter = object(self)
   method main f main =
     let () = sad_returns <- contains_sad_return main in
     let () = self#calc_refs main in
-    Format.fprintf f "@[<v 2>@[<h>let () =@\n@[<v 2>begin@\n%a@]@\nend@\n"
+    Format.fprintf f "@[<v 2>@[<h>let () =@\nbegin@\n@[<v 2>  %a@]@\nend@\n"
       self#instructions main
 
   method prog f prog =
@@ -156,16 +159,16 @@ class camlPrinter = object(self)
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] ->
-	Format.fprintf f "@[<h>if@ %a@ then@]@\n%a"
+	Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]"
 	  self#expr e
 	  self#bloc ifcase
       | [Instr.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\nelse %a"
+      Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse %a"
 	self#expr e
 	self#bloc ifcase
 	self#instr instr
       | _ ->
-      Format.fprintf f "@[<h>if@ %a@ then@]@\n%a@\nelse@\n%a"
+      Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]"
 	self#expr e
 	self#bloc ifcase
 	self#bloc elsecase
@@ -227,14 +230,14 @@ class camlPrinter = object(self)
       )
       b
     then
-	Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
+	Format.fprintf f "begin@\n@[<v 2>  %a@]@\nend" self#instructions b
     else
       match b with
 	| [i] ->
 	  Format.fprintf f "@[<h>%a%s@]" self#instr i
 	    (self#need_unit b)
 	| _ ->
-	  Format.fprintf f "begin@[<v 2>@\n%a@]@\nend" self#instructions b
+	  Format.fprintf f "begin@\n@[<v 2>  %a@]@\nend" self#instructions b
 
   method binding f i = Format.fprintf f "%s" i
 
@@ -340,13 +343,13 @@ class camlPrinter = object(self)
       | Type.F (_, Type.Void) ->
 	if sad_returns then failwith("return in a void function : "^funname)
 	else
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%a@]@\n@\n"
+	  Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n@\n"
 	    proto (funname, t, li)
 	    self#ref_alias li
 	    self#instructions instrs
       | _ ->
 	if not(sad_returns) then
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%a@]@\n@\n"
+	  Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n@\n"
 	    proto (funname, t, li)
 	    self#ref_alias li
 	    self#instructions instrs
@@ -355,7 +358,7 @@ class camlPrinter = object(self)
 	    Warner.warn funname (fun t () -> Format.fprintf t "The returns will make a dirty ocaml code")
 	  in
 	  let () = printed_exn <- printed_exn + 1 in
-	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n  @[<v 2>%atry@\n%a@\nwith Found_%d(out) -> out@]@\n@\n"
+	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith Found_%d(out) -> out@]@\n@\n"
 	    printed_exn
 	    self#ptype t
 	    proto (funname, t, li)
@@ -480,7 +483,7 @@ class camlPrinter = object(self)
       self#instructions li
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@[<v 2>@\n%a@]@\ndone"
+    Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@\n@[<v 2>  %a@]@\ndone"
       self#binding varname
       self#expr expr1
       self#expr expr2

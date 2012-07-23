@@ -360,11 +360,14 @@ class printer = object(self)
       )
 
   method unop f op a =
-    match op with
-      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
-      | Expr.Not -> Format.fprintf f "!(%a)" self#expr a
-      | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
-
+    let pop f () = match op with
+      | Expr.Neg -> Format.fprintf f "-"
+      | Expr.Not -> Format.fprintf f "!"
+      | Expr.BNot -> Format.fprintf f "~"
+    in if self#nop (Expr.unfix a) then
+        Format.fprintf f "%a%a" pop () self#expr a
+      else
+        Format.fprintf f "%a(%a)" pop () self#expr a
 
   method nop = function
     | Expr.Integer _ -> true

@@ -52,8 +52,15 @@ module NoPend : SigPass = struct
             Mutable.F
               (_, Mutable.Var _))), _)
         | Instr.Print(_, Expr.F
-          (_, Expr.Access ( Mutable.F
-                              (_, Mutable.Var _))
+          (_,
+           (Expr.Access ( Mutable.F
+                            (_, Mutable.Var _))
+               | Expr.Char _
+               | Expr.String _
+               | Expr.Float _
+               | Expr.Integer _
+               | Expr.Bool _
+           )
           )) ->
           [fixed_map t0]
         | Instr.Print(t, e) ->

@@ -99,7 +99,7 @@ class cPrinter = object(self)
 	self#binding binding
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "{int %a;@\n%a}"
+    Format.fprintf f "{@\n@[<v 2>  int %a;@\n%a@]@\n}"
       self#binding varname
       self#forloop_content (varname, expr1, expr2, li)
   method forloop_content f (varname, expr1, expr2, li) =
@@ -177,14 +177,14 @@ class cPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
 	Type.Struct (li, _) ->
-	Format.fprintf f "struct %a; typedef struct %a {%a} %a;"
+	Format.fprintf f "struct %a;@\ntypedef struct %a {@\n@[<v 2>  %a@]@\n} %a;@\n"
 	  self#binding name
 	  self#binding name
 	  (print_list
 	     (fun t (name, type_) ->
 	       Format.fprintf t "%a %a;" self#ptype type_ self#binding name
 	     )
-	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	  ) li
 	  self#binding name
       | _ ->
