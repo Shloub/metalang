@@ -54,9 +54,11 @@ type 'a tofix =
   | DeclRead of Type.t * varname
   | StdinSep
 
-type t = F of t tofix
-let unfix = function F x -> x
-let fix x = F x
+type t = F of int * t tofix
+let annot = function F (i, _) -> i
+let unfix = function F (_, x) -> x
+let fix x = F ((next ()), x)
+
 let stdin_sep = StdinSep |> fix
 let print t v = Print (t, v) |> fix
 let read t v = Read (t, v) |> fix
