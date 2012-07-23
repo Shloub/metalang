@@ -1,9 +1,14 @@
 %{
+  open Stdlib
 	module E = Expr
 	module M = Mutable
 	module I = Instr
 	module T = Type
 	module P = Prog
+
+  let locate pos e =
+    let () = Ast.PosMap.add (E.annot e) pos
+    in e
 %}
 
 %token MAIN IF THEN ELSE ELSIF END DO FOR TO WHILE RETURN
@@ -72,12 +77,19 @@ typ :
 ;
 
 expr :
-| value { $1 }
-| mutabl { E.access $1 }
-| LEFT_PARENS expr RIGHT_PARENS { $2 }
-| unary_op  { $1 }
-| binary_op { $1 }
-| IDENT LEFT_PARENS exprs RIGHT_PARENS { E.call $1 $3 }
+| value { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
+| mutabl
+    { E.access $1 |>
+        locate ( Ast.location ($startpos($1), $endpos($1))) }
+| LEFT_PARENS expr RIGHT_PARENS
+    { $2 |> locate ( Ast.location ($startpos($1), $endpos($3))) }
+| unary_op  { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
+| binary_op { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
+| IDENT LEFT_PARENS exprs RIGHT_PARENS
+{
+  E.call $1 $3
+    |> locate ( Ast.location ($startpos($1), $endpos($4)))
+}
 ;
 
 mutabl :

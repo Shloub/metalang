@@ -38,7 +38,6 @@ type funname = string
 type fieldname = string
 
 module BindingSet = StringSet
-
 module BindingMap = StringMap
 
 let next =
@@ -49,3 +48,24 @@ let next =
      r := (out + 1);
       out
     end
+
+type location = ( (int * int ) * ( int * int ) )
+let position p =
+  let line = p.Lexing.pos_lnum in
+  let cnum = p.Lexing.pos_cnum - p.Lexing.pos_bol - 1 in
+  (line, cnum)
+let location (p1, p2) =
+  (position p1, position p2)
+
+module PosMap : sig
+  val add : int -> location -> unit
+  val get : int -> location
+end = struct
+  let map = ref IntMap.empty
+  let add i l =
+    map := IntMap.add i l !map
+  let get i =
+    try
+      IntMap.find i !map
+    with Not_found -> (-1, -1), (-1, -1)
+end
