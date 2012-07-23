@@ -42,12 +42,12 @@ module NoPend : SigPass = struct
   let rec process (acc:acc) i =
     let rec inner_map t : Instr.t list =
       match Instr.unfix t with
-
-				| Instr.AllocArray(_, _, Expr.F (_, Expr.Access ( Mutable.F
-																														(Mutable.Var _))), _)
+        | Instr.AllocArray(_, _,
+                           Expr.F (_, Expr.Access ( Mutable.F
+																											(_, Mutable.Var _))), _)
 	| Instr.Print(_, Expr.F (_,
 													 Expr.Access ( Mutable.F
-																					 (Mutable.Var _))
+																					 (_, Mutable.Var _))
 	)) ->
 	  [fixed_map t]
 	| Instr.Print(t, e) ->
@@ -162,12 +162,12 @@ module ExpandPrint : SigPass = struct
   let rec rewrite (i : Instr.t) : Instr.t list = match Instr.unfix i with
     | Instr.Print(Type.F (_, (Type.Array t)), Expr.F (annot,
 					Expr.Access ( Mutable.F
-													(Mutable.Var b))
+													(_, Mutable.Var b))
 		) ) ->
       write t b
     | Instr.Print(Type.F (_, Type.Bool), Expr.F (annot,
 																							Expr.Access ( Mutable.F
-																															(Mutable.Var b))
+																															(_, Mutable.Var b))
 		) ) ->
       [write_bool b]
     | j -> [ Instr.map_bloc (List.flatten @* List.map rewrite) j |> Instr.fix ]

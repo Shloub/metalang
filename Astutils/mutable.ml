@@ -37,9 +37,11 @@ type ('expr, 'mutable_) tofix =
   | Array of 'mutable_ * 'expr list
   | Dot of 'mutable_ * fieldname
 
-type 'expr t = F of ('expr, 'expr t) tofix
-let unfix = function F x -> x
-let fix x = F x
+type 'expr t = F of (int * ('expr, 'expr t) tofix)
+let annot = function F (i, _) -> i
+let unfix = function F (_, x) -> x
+let fix x = F ((next ()), x)
+
 let array a el = Array (a, el) |> fix
 let var a = Var a |> fix
 

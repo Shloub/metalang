@@ -281,8 +281,8 @@ class camlPrinter = object(self)
       (Instr.Writer.Deep.fold
 	 (fun acc i ->
 	   match Instr.unfix i with
-	     | Instr.Read (_, Mutable.F (Mutable.Var varname)) -> BindingSet.add varname acc
-	     | Instr.Affect (Mutable.F (Mutable.Var varname), _) -> BindingSet.add varname acc
+	     | Instr.Read (_, Mutable.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+	     | Instr.Affect (Mutable.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
 	     | _ -> acc
 	 ))
       BindingSet.empty
