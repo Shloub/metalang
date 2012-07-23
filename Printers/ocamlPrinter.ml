@@ -340,25 +340,40 @@ class camlPrinter = object(self)
       | Type.F (_, Type.Void) ->
 	if sad_returns then failwith("return in a void function : "^funname)
 	else
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%a@]@\n@\n"
 	    proto (funname, t, li)
+	    self#ref_alias li
 	    self#instructions instrs
       | _ ->
 	if not(sad_returns) then
-	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a@]@\n@\n"
+	  Format.fprintf f "@[<h>%a@]@\n  @[<v 2>%a%a@]@\n@\n"
 	    proto (funname, t, li)
+	    self#ref_alias li
 	    self#instructions instrs
 	else
 	  let () =
 	    Warner.warn funname (fun t () -> Format.fprintf t "The returns will make a dirty ocaml code")
 	  in
 	  let () = printed_exn <- printed_exn + 1 in
-	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n  @[<v 2>try@\n%a@\nwith Found_%d(out) -> out@]@\n@\n"
+	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n  @[<v 2>%atry@\n%a@\nwith Found_%d(out) -> out@]@\n@\n"
 	    printed_exn
 	    self#ptype t
 	    proto (funname, t, li)
-	    self#instructions instrs
+	    self#ref_alias li
+      self#instructions instrs
 	    printed_exn
+
+  method ref_alias f li = match li with
+    | [] -> ()
+    | (name, _) :: tl ->
+      let b = BindingSet.mem name refbindings in
+      if b then
+        Format.fprintf f "let %a = ref %a in@\n%a"
+          self#binding name
+          self#binding name
+          self#ref_alias tl
+      else
+        self#ref_alias f tl
 
   method expr_binding f e =
     if BindingSet.mem e refbindings
