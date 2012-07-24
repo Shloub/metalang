@@ -1,0 +1,7 @@
+def void foo()
+
+end
+
+main
+  def int a = foo(1)
+end

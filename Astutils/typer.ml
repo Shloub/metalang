@@ -109,6 +109,12 @@ let ploc f ((l1, c1), (l2, c2)) =
     Printf.fprintf f "(on %d:%d to %d:%d)"
     l1 c1 l2 c2
 
+let error_arrity funname l1 l2 loc =
+  let () = Printf.printf "The function %s expects %d arguments, %d given %a.\n%!"
+    funname l1 l2
+    ploc loc
+  in assert false
+
 let error_ty t1 t2 loc1 loc2 =
   let () = Printf.printf "Cannot unify %s %a and %s %a\n%!"
     (Type.type_t_to_string t1)
@@ -339,6 +345,11 @@ let rec collect_contraintes_expr env e =
       env, ref (Typed (Type.integer, loc e))
     | Expr.Call (name, li) ->
       let (args_ty, out_ty) = StringMap.find name env.functions in
+      let len1 = List.length args_ty in
+      let len2 = List.length li in
+      let () = if len1 != len2
+        then error_arrity name len1 len2 (loc e)
+      in
       let env = List.fold_left
         (fun env (ty1, arg) ->
           let env, contrainte = collect_contraintes_expr env arg in
