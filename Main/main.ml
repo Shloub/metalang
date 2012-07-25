@@ -42,11 +42,11 @@ let typed f (a, b) = (a, f b)
 
 let default_passes (prog : Prog.t) : Prog.t =
   prog
+  |> Typer.process |> snd
   |> Passes.WalkCheckNaming.apply
   |> Passes.WalkRename.apply
   |> Passes.WalkNopend.apply
   |> Passes.WalkExpandPrint.apply
-  |> Typer.process |> (fun (a, b) -> b)
 
 let clike_passes prog =
   prog |> default_passes

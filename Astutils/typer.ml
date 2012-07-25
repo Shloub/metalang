@@ -95,12 +95,6 @@ let rec contr2str t =
 
 (** {2 Error reporters} *)
 
-let error_field_not_found name t =
-  let () = Printf.printf "Field %s is not found in %s\n%!"
-    name
-    (Type.type_t_to_string t)
-  in assert false
-
 let ploc f ((l1, c1), (l2, c2)) =
   if l1 = l2 then
     Printf.fprintf f "(on %d:%d-%d)"
@@ -108,6 +102,27 @@ let ploc f ((l1, c1), (l2, c2)) =
   else
     Printf.fprintf f "(on %d:%d to %d:%d)"
     l1 c1 l2 c2
+
+let error_field_not_found loc name t = (* TODO location *)
+  let () = Printf.printf "Field %s is not found in %s %a\n%!"
+    name
+    (Type.type_t_to_string t)
+    ploc loc
+  in assert false
+
+let rec plistring f li =
+  match li with
+    | hd::tl ->
+      Printf.fprintf f "  %s\n%a" hd plistring tl
+    | [] -> ()
+
+let error_record_types lval lt loc =
+  let () = Printf.printf "Fields does not match in %a\n%aagainst\n%a%!"
+    (* TODO show lists & diff *)
+    ploc loc
+    plistring lval
+    plistring lt
+  in assert false
 
 let error_arrity funname l1 l2 loc =
   let () = Printf.printf "The function %s expects %d arguments, %d given %a.\n%!"
@@ -123,8 +138,10 @@ let error_ty t1 t2 loc1 loc2 =
     ploc loc2
   in assert false
 
-let not_found name =
-  let () = Printf.printf "Cannot find variable %s\n%!" name
+let not_found name loc =
+  let () = Printf.printf "Cannot find variable %s %a \n%!"
+    name
+    ploc loc
   in assert false
 
 let error_cty t1 t2 loc1 loc2 =
@@ -174,7 +191,7 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
             try
               List.find ((String.equals name) @* fst) li2
             with Not_found ->
-              error_field_not_found name t2
+              error_field_not_found loc1 name t2
           in
           check_types env ty ty2 loc1 loc2
         ) li
@@ -374,7 +391,7 @@ and collect_contraintes_mutable env mut =
         try
           StringMap.find name env.locales
         with Not_found ->
-          not_found name
+          not_found name tloc
       in
       env, ty
     | Mutable.Array (mut, eli) ->
@@ -468,11 +485,19 @@ let rec collect_contraintes_instructions env instructions
           let ty = expand env ty in
           let li_type = match li with
             | (name, _) :: _ ->
-              begin match StringMap.find name env.fields with
+              begin try match StringMap.find name env.fields with
                 | (_, Type.F (_, Type.Struct (li, _)), _) -> li
                 | _ -> assert false
+                with Not_found ->
+                  error_field_not_found loc name ty
               end
             | _ -> assert false
+          in
+          let () =
+            let fields1 = List.map fst li |> List.sort String.compare in
+            let fields2 = List.map fst li_type |> List.sort String.compare in
+            if fields1 <> fields2 then
+              error_record_types fields1 fields2 loc
           in
           let env = List.fold_left
             (fun env (name, expr) ->
@@ -500,6 +525,11 @@ let rec collect_contraintes_instructions env instructions
         | Instr.Call (f, eli) ->
           let (args, out_contraint) =
             StringMap.find f env.functions in (*TODO option*)
+          let len1 = List.length args in
+          let len2 = List.length eli in
+          let () = if len1 != len2
+            then error_arrity f len1 len2 loc
+          in
           let void_contraint = ref (Typed (Type.void, loc)) in
           let env = List.fold_left
             (fun (env:env) (arg_ty, arg_e) ->
