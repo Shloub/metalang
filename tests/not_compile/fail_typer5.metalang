@@ -1,0 +1,10 @@
+record @foo
+  bar : int
+  blah : int
+end
+
+main
+  def @foo blah = record
+    undef = 4
+  end
+end

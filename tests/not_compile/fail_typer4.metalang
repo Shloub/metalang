@@ -1,0 +1,7 @@
+def void foo()
+
+end
+
+main
+  foo(1)
+end
