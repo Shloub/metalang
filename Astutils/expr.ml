@@ -55,7 +55,7 @@ type 'a tofix =
   | Integer of int
   | Bool of bool
   | Access of 'a Mutable.t
-  | Length of varname
+  | Length of 'a Mutable.t
   | Call of funname * 'a list
 
 type t = F of int * t tofix
@@ -69,7 +69,6 @@ let map f = function
   | UnOp (a, op) -> UnOp((f a), op)
   | (
     Integer _
-        | Length _
         | Float _
         | String _
         | Char _
@@ -77,6 +76,9 @@ let map f = function
   | Access m ->
     let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
     Access m2
+  | Length m ->
+    let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
+    Length m2
   | Call (n, li) -> Call (n, List.map f li)
 
 let bool b = fix (Bool b)
@@ -93,7 +95,7 @@ let boolean b = fix (Bool b)
 let access m = fix (Access m )
 
 let call name li = fix ( Call(name, li))
-let length name = fix ( Length name)
+let length m = fix ( Length (Mutable.var m) )
 
 let default_value t = match Type.unfix t with
   | Type.Integer -> integer 0
@@ -125,10 +127,12 @@ module Writer = AstWriter.F (struct
       | Float _ -> acc, t
       | Integer _ -> acc, t
       | Bool _ -> acc, t
-      | Length _ -> acc, t
       | Access m ->
         let acc, m = Mutable.foldmap_expr f acc m in
         acc, F (annot, Access m)
+      | Length m ->
+        let acc, m = Mutable.foldmap_expr f acc m in
+        acc, F (annot, Length m)
       | Call (name, li) ->
         let acc, li = List.fold_left_map f acc li in
         (acc, F (annot, Call(name, li)) )

@@ -112,7 +112,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
       self#instructions main
 
   method length f tab =
-    Format.fprintf f "%a.length" self#binding tab
+    Format.fprintf f "%a.length" self#mutable_ tab
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>{@\n%a@]@\n}@\n"

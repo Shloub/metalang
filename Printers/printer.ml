@@ -406,7 +406,7 @@ class printer = object(self)
   method expr_binding f e = self#binding f e
 
   method length f tab =
-    Format.fprintf f "count(%a)" self#binding tab
+    Format.fprintf f "count(%a)" self#mutable_ tab
 
   method access f m =
     self#mutable_ f m

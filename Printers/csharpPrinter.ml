@@ -139,7 +139,7 @@ public static int readInt(){
     Format.fprintf f "@[stdin_sep();@]"
 
   method length f tab =
-    Format.fprintf f "%a.Length" self#binding tab
+    Format.fprintf f "%a.Length" self#mutable_ tab
 
   method read f t m =
     match Type.unfix t with

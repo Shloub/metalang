@@ -239,7 +239,7 @@ match Type.unfix t with
       li
 
   method length f tab =
-    Format.fprintf f "%a.__len__()" self#binding tab
+    Format.fprintf f "%a.__len__()" self#mutable_ tab
 
   method allocrecord f name t el =
     Format.fprintf f "%a = {%a};@\n"

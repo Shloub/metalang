@@ -63,7 +63,7 @@ inherit cPrinter as super
       (print_option self#main) prog.Prog.main
 
   method length f tab =
-    Format.fprintf f "%a.size()" self#binding tab
+    Format.fprintf f "%a.size()" self#mutable_ tab
 
   method allocarray f binding type_ len =
        Format.fprintf f "@[<h>std::vector<%a > %a( %a );@]"
