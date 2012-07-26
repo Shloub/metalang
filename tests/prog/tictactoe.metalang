@@ -1,8 +1,3 @@
-/*
-Un jeu de tictactoe
-*/
-
-# comment
 
 record @gamestate
   cases : array<array<int>>

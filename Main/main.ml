@@ -111,6 +111,7 @@ type config = {
   mutable filenames : string list ;
   mutable quiet : bool;
   mutable stdlib : bool;
+  mutable eval : bool;
 }
 
 let default_config () = {
@@ -119,6 +120,7 @@ let default_config () = {
   filenames = [] ;
   quiet = false ;
   stdlib = true;
+  eval = false;
 }
 
 let config () =
@@ -139,6 +141,9 @@ let config () =
 
      "-nostdlib", Unit (fun () -> c.stdlib <- false),
     "Don't use the standard library";
+
+    "-eval", Unit (fun () -> c.eval <- true),
+    "Eval this file";
  ] in
   Arg.parse spec (fun f -> c.filenames <- f :: c.filenames) descr ;
   c
@@ -180,6 +185,12 @@ let make_prog stdlib filename =
 
 let process c filename =
   let prog = make_prog c.stdlib filename in
+  if c.eval then
+    let env, prog = Typer.process prog in begin
+      Eval.eval_prog prog;
+      ()
+    end
+  else
   let go lang =
     let printer = L.find lang printers in
     let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^ lang in

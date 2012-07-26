@@ -54,6 +54,10 @@ val snoc : 'a list -> 'a -> 'a list
 val int : float -> int
 val float : int -> float
 
+val float_of_char : char -> float
+val float_of_bool : bool -> float
+val int_of_bool : bool -> int
+
 (** {2 Standard modules } *)
 
 module Int :

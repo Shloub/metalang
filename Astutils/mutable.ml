@@ -57,3 +57,5 @@ let rec foldmap_expr f acc mut =
 			let acc, mut = foldmap_expr f acc mut in
 			let acc, li = List.fold_left_map f acc li in
 			acc, fixa annot (Array (mut, li) )
+
+let map_expr f m = foldmap_expr (fun () e -> (), f e) () m |> snd

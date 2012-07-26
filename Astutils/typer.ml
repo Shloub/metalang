@@ -31,6 +31,7 @@
 *)
 
 open Stdlib
+open Warner
 
 (** {2 Types} *)
 type typeContrainte =
@@ -94,14 +95,6 @@ let rec contr2str t =
     | Typed (ty, _) -> "T_" ^ (Type.type_t_to_string ty)
 
 (** {2 Error reporters} *)
-
-let ploc f ((l1, c1), (l2, c2)) =
-  if l1 = l2 then
-    Printf.fprintf f "(on %d:%d-%d)"
-      l1 c1 c2
-  else
-    Printf.fprintf f "(on %d:%d to %d:%d)"
-    l1 c1 l2 c2
 
 let error_field_not_found loc name t = (* TODO location *)
   let () = Printf.printf "Field %s is not found in %s %a\n%!"

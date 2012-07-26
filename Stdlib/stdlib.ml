@@ -51,6 +51,12 @@ let snoc xs x = x::xs
 let int = int_of_float
 let float = float_of_int
 
+let int_of_bool b = if b then 1 else 0
+
+let float_of_char = float_of_int @* int_of_char
+let float_of_bool = float_of_int @* int_of_bool
+
+
 (** {2 Standard modules } *)
 
 module Int = struct

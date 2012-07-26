@@ -9,6 +9,7 @@ TESTS		:= $(addprefix out/, $(basename $(TESTSFILES)))
 TESTSDEPS	:= $(addsuffix .test, $(TESTS))
 
 TMPFILES	:=\
+	$(addsuffix .eval.out, $(TESTS)) \
 	$(addsuffix .c, $(TESTS)) \
 	$(addsuffix .c.bin, $(TESTS)) \
 	$(addsuffix .c.bin.out, $(TESTS)) \
@@ -107,6 +108,9 @@ out/%.ml.byte : out/%.ml
 out/%.bin.out : out/%.bin
 	@./$< < tests/prog/$(basename $*).in > $@ || exit 1
 
+out/%.eval.out : metalang
+	./metalang -eval tests/prog/$(basename $*).metalang < tests/prog/$(basename $*).in > $@ || exit 1
+
 out/%.ml.native.out : out/%.ml.native
 	@./$< < tests/prog/$(basename $*).in > $@ || exit 1
 
@@ -151,7 +155,7 @@ TESTPROGS	=\
 	done; \
 	cp $< $@ ;\
 
-out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out #out/%.sch.out
+out/%.int.outs : out/%.eval.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out #out/%.sch.out
 	$(TESTPROGS)
 
 out/%.bin.outs : out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out

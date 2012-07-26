@@ -29,6 +29,13 @@
 @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
+let ploc f ((l1, c1), (l2, c2)) =
+  if l1 = l2 then
+    Printf.fprintf f "(on %d:%d-%d)"
+      l1 c1 c2
+  else
+    Printf.fprintf f "(on %d:%d to %d:%d)"
+    l1 c1 l2 c2
 
 let warn funname msg =
   Format.fprintf Format.std_formatter
