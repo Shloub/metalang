@@ -54,8 +54,8 @@ TODO ajouter des conversions de types pour les entiers / float
 virer plus de refs
 virer plus de nopending : inliner un peu
 *)
-class camlPrinter = object(self)
-  inherit printer as super
+class ['lex] camlPrinter = object(self)
+  inherit ['lex] printer as super
 
   val mutable refbindings = BindingSet.empty
   val mutable sad_returns = false
@@ -449,7 +449,7 @@ class camlPrinter = object(self)
     | _ -> false
 
 (* Todo virer les parentheses quand on peut*)
-  method apply (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+  method apply f var li =
     match BindingMap.find_opt var macros with
       | Some ( (t, params, code) ) ->
 	self#expand_macro_call f var t params code li
@@ -473,7 +473,7 @@ class camlPrinter = object(self)
 	     )
 	  ) li
 
-  method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+  method call f var li =
     self#apply f var li
 
 
@@ -536,5 +536,3 @@ class camlPrinter = object(self)
 	  super#ptype t
 
 end
-
-let printer = new camlPrinter;;

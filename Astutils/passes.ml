@@ -45,7 +45,7 @@ and returns_i acc i = match Instr.unfix i with
   | _ -> acc
 
 module IfMerge : SigPass = struct
-  type acc = unit;;
+  type 'a acc = unit;;
   let init_acc () = ();;
   let process () i =
     let rec f acc = function
@@ -71,7 +71,7 @@ module IfMerge : SigPass = struct
 end
 
 module Rename = struct
-  type acc = varname BindingMap.t
+  type 'a acc = varname BindingMap.t
 
   let map = ref BindingMap.empty;;
 
@@ -155,7 +155,7 @@ module Rename = struct
 end
 
 module CollectCalls = struct
-  type acc = BindingSet.t
+  type 'a acc = BindingSet.t
 
   let init_acc () = BindingSet.empty
 

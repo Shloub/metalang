@@ -44,7 +44,7 @@ type binop =
   | Eq | Diff (* 'a *)
   | BinOr | BinAnd | RShift | LShift (* int *)
 
-type 'a tofix =
+type ('a, 'lex) tofix =
     (*operations numeriques*)
     BinOp of 'a * binop * 'a
   | UnOp of 'a * unop
@@ -57,8 +57,8 @@ type 'a tofix =
   | Access of 'a Mutable.t
   | Length of 'a Mutable.t
   | Call of funname * 'a list
-
-type t = F of int * t tofix
+  | Lexems of 'lex list
+type 'lex t = F of int * ('lex t, 'lex) tofix
 let annot = function F (i, _) -> i
 let unfix = function F (_, x) -> x
 let fix x = F ((next ()), x)
@@ -110,8 +110,8 @@ let default_value t = match Type.unfix t with
   | Type.Struct _ -> failwith ("new named is not an expression")
 
 module Writer = AstWriter.F (struct
-  type alias = t;;
-  type t = alias;;
+  type 'a alias = 'a t;;
+  type 'a t = 'a alias;;
   let foldmap f acc t =
     let annot = annot t in
     match unfix t with

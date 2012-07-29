@@ -1,5 +1,5 @@
-<Main/*.byte>: use_str, use_stdlib, use_astutils, use_printers, use_parser
-<Main/*.native>: use_str, use_stdlib, use_astutils, use_printers, use_parser
+<Main/*.byte>: use_str, use_stdlib, use_astutils, use_printers, use_parser, use_eval
+<Main/*.native>: use_str, use_stdlib, use_astutils, use_printers, use_parser, use_eval
 <Parser/*.ml>: use_str, use_stdlib, use_astutils
 <Parser/*.cmx>: use_str, use_stdlib, use_astutils
 <Parser/*.native>: use_str, use_stdlib, use_astutils
@@ -11,4 +11,4 @@
 
 true : use_menhir
 
-"Stdlib" or "Astutils" or "Parser" or "Printers": include
+"Stdlib" or "Astutils" or "Parser" or "Printers" or "Eval": include

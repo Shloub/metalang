@@ -81,8 +81,8 @@ def readint():
       return out * sign;
 "
 
-class pyPrinter = object(self)
-  inherit cPrinter as super
+class ['lex] pyPrinter = object(self)
+  inherit ['lex] cPrinter as super
 
   method lang () = "py"
 
@@ -266,5 +266,3 @@ match Type.unfix t with
 
 
 end
-
-let printer = new pyPrinter;;

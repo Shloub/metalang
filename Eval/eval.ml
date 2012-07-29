@@ -40,9 +40,9 @@ let get_bool = function
   | Bool a -> a
   | _ -> assert false
 
-type env = {
+type  env = {
   vars : result StringMap.t;
-  functions : (string list * Instr.t list) StringMap.t;
+  functions : (string list * Parser.token Instr.t list) StringMap.t;
 }
 
 let empty_env =
@@ -129,7 +129,7 @@ and eval_mut (env:env) (mut : result Mutable.t) : result =
     | _ -> !(mut_refval env mut |> Option.extract)
 and exprmut_to_resmut env mut =
   Mutable.map_expr (eval_expr env) mut
-and eval_expr (env:env) (t:Expr.t) =
+and eval_expr (env:env) (t:Parser.token Expr.t) =
   let loc = PosMap.get (Expr.annot t) in
   match Expr.map (eval_expr env) (Expr.unfix t) with
     | Expr.Char c -> Char c
@@ -296,7 +296,7 @@ and eval_instrs env instrs =
         )
         (env, None) instrs
 
-let eval_prog (p:Prog.t) =
+let eval_prog (p:Parser.token Prog.t) =
   let f env p = match p with
     | Prog.DeclarFun (var, t, li, instrs) ->
       {env with functions =

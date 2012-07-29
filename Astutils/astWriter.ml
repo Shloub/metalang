@@ -36,8 +36,8 @@
 open Stdlib
 
 module type SigAst = sig
-  type t
-  val foldmap : ('acc -> t -> 'acc * t) -> 'acc -> t -> 'acc * t
+  type 'a t
+  val foldmap : ('acc -> 'a t -> 'acc * 'a t) -> 'acc -> 'a t -> 'acc * 'a t
 end
 
 module F (T : SigAst) = struct

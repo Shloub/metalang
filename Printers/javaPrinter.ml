@@ -35,8 +35,8 @@ open Ast
 open Printer
 open CppPrinter
 
-class javaPrinter = object(self) (* TODO scanf et printf*)
-  inherit cppPrinter as super
+class ['lex] javaPrinter = object(self) (* TODO scanf et printf*)
+  inherit ['lex] cppPrinter as super
 
   method lang () = "java"
 
@@ -183,5 +183,3 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
 	       )) index
 
 end
-
-let printer = new javaPrinter;;

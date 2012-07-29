@@ -56,8 +56,8 @@ function nextChar(){
 }
 ";
 
-class phpPrinter = object(self)
-  inherit cPrinter as super
+class ['lex] phpPrinter = object(self)
+  inherit ['lex] cPrinter as super
 
   method lang () = "php"
 
@@ -174,5 +174,3 @@ class phpPrinter = object(self)
         else super#binop f op a b
       | _ -> super#binop f op a b
 end
-
-let printer = new phpPrinter;;

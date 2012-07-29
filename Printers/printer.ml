@@ -73,7 +73,7 @@ let print_list_indexed print sep f li =
 	    li
      ))
 
-class printer = object(self)
+class ['lex] printer = object(self)
 
   val mutable typerEnv : Typer.env = Obj.magic(0)
 
@@ -95,7 +95,7 @@ class printer = object(self)
       self#binding var
       self#expr e
 
-  method affect f mutable_ expr =
+  method affect f mutable_ (expr : 'lex Expr.t) =
     Format.fprintf f "@[<h>%a@ =@ %a;@]" self#mutable_ mutable_ self#expr expr
 
   method bloc f li = Format.fprintf f "@[<v 2>do@\n%a@]@\nend"
@@ -216,7 +216,7 @@ class printer = object(self)
 	  (List.combine params listr)
 	in Format.fprintf f "%s" expanded
 
-  method call (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+  method call f var li =
     match BindingMap.find_opt var macros with
       | Some ( (t, params, code) ) ->
 	self#expand_macro_call f var t params code li
@@ -232,7 +232,7 @@ class printer = object(self)
 	     )
 	  ) li
 
-  method apply (f:Format.formatter) (var:funname) (li:Expr.t list) : unit =
+  method apply f var li =
     match BindingMap.find_opt var macros with
       | Some ( (t, params, code) ) ->
 	self#expand_macro_apply f var t params code li
@@ -444,7 +444,7 @@ class printer = object(self)
   method decl_type f name t =
     Format.fprintf f "type %a = %a;" self#binding name self#ptype t
 
-  method prog f (prog:Prog.t) =
+  method prog f prog =
     Format.fprintf f "%a%a@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -470,5 +470,3 @@ class printer = object(self)
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
      self#instructions main
 end
-
-let printer = new printer;;

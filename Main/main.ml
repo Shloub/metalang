@@ -40,7 +40,7 @@ open Arg
 
 let typed f (a, b) = (a, f b)
 
-let default_passes (prog : Prog.t) : Prog.t =
+let default_passes (prog : Parser.token Prog.t) : Parser.token Prog.t =
   prog
   |> Typer.process |> snd
   |> Passes.WalkCheckNaming.apply
@@ -66,10 +66,10 @@ let no_passes prog =
 module L = StringMap
 let languages, printers =
   let ( => )
-      (pa : Prog.t -> Typer.env * Prog.t )
+      (pa : Parser.token Prog.t -> Typer.env * Parser.token Prog.t )
       pr
       (out: Format.formatter)
-      (prog : Prog.t) =
+      (prog : Parser.token Prog.t) =
     let typerEnv, processed  = pa prog  in
     begin
       pr#setTyperEnv typerEnv;
@@ -77,18 +77,18 @@ let languages, printers =
     end
   in
   let ls = [
-    "c",    clike_passes => CPrinter.printer ;
-    "cc",   clike_passes => CppPrinter.printer;
-    "cs",   clike_passes => CsharpPrinter.printer ;
-    "java", clike_passes => JavaPrinter.printer ;
-    "ml",   ocaml_passes => OcamlPrinter.printer ;
-    "php",  clike_passes => PhpPrinter.printer ;
-    "rb",   clike_passes => RbPrinter.printer ;
-    "py",   clike_passes => PyPrinter.printer ;
-    "tex",  no_passes   =>  TexPrinter.printer ;
+    "c",    clike_passes => new CPrinter.cPrinter ;
+    "cc",   clike_passes => new CppPrinter.cppPrinter ;
+    "cs",   clike_passes => new CsharpPrinter.csharpPrinter ;
+    "java", clike_passes => new JavaPrinter.javaPrinter ;
+    "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
+    "php",  clike_passes => new PhpPrinter.phpPrinter ;
+    "rb",   clike_passes => new RbPrinter.rbPrinter ;
+    "py",   clike_passes => new PyPrinter.pyPrinter ;
+    "tex",  no_passes   =>  new TexPrinter.texPrinter ;
 (*    "sch",  ocaml_passes   =>  SchemePrinter.printer ;*)
 
-    "metalang", no_passes => Printer.printer ;
+    "metalang", no_passes => new Printer.printer ;
   (* Si on met cette passe en premier,
      on se retrouve avec les erreurs de typages avant les erreurs de naming
   *)

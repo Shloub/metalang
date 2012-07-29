@@ -2,7 +2,8 @@
 java	?=	java
 python	?=	python3
 
-TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, $(shell ls tests/not_compile/)))
+TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, \
+	$(shell ls tests/not_compile/)))
 
 TESTSFILES	:= $(filter %.metalang, $(shell ls tests/prog/))
 TESTS		:= $(addprefix out/, $(basename $(TESTSFILES)))
@@ -155,7 +156,8 @@ TESTPROGS	=\
 	done; \
 	cp $< $@ ;\
 
-out/%.int.outs : out/%.eval.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out #out/%.sch.out
+out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out \
+	out/%.rb.out #out/%.sch.out #  out/%.eval.out
 	$(TESTPROGS)
 
 out/%.bin.outs : out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out
@@ -199,7 +201,8 @@ fastTestCmp : out $(FASTTESTSDEPS)
 	echo "$(green)OK $(basename $<)$(reset)"
 	touch $@
 
-TESTSNOTCOMPILE	:= $(addprefix out/, $(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)))
+TESTSNOTCOMPILE	:= $(addprefix out/, \
+	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)))
 testNotCompile : out $(TESTSNOTCOMPILE)
 	@echo "$(green)NOT COMPILE TESTS OK$(reset)"
 

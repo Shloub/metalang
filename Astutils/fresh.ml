@@ -46,7 +46,7 @@ let var_of_int =
 
 let bindings = ref BindingSet.empty
 
-let fresh_init (prog: Prog.t) =
+let fresh_init prog =
   let addset acc i = Instr.Writer.Deep.fold
     (fun acc i ->
       match Instr.unfix i with

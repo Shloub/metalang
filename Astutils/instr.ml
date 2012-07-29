@@ -38,23 +38,23 @@ let mutable_var varname = Mutable.Var varname |> Mutable.fix
 let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.fix
 let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.fix
 
-type 'a tofix =
-    Declare of varname * Type.t * Expr.t
-  | Affect of Expr.t Mutable.t * Expr.t
-  | Loop of varname * Expr.t * Expr.t * 'a list
-  | While of Expr.t * 'a list
+type ('a, 'lex) tofix =
+    Declare of varname * Type.t * 'lex Expr.t
+  | Affect of 'lex Expr.t Mutable.t * 'lex Expr.t
+  | Loop of varname * 'lex Expr.t * 'lex Expr.t * 'a list
+  | While of 'lex Expr.t * 'a list
   | Comment of string
-  | Return of Expr.t
-  | AllocArray of varname * Type.t * Expr.t * (varname * 'a list) option
-  | AllocRecord of varname * Type.t * (fieldname * Expr.t) list
-  | If of Expr.t * 'a list * 'a list
-  | Call of funname * Expr.t list
-  | Print of Type.t * Expr.t
-  | Read of Type.t * Expr.t Mutable.t
+  | Return of 'lex Expr.t
+  | AllocArray of varname * Type.t * 'lex Expr.t * (varname * 'a list) option
+  | AllocRecord of varname * Type.t * (fieldname * 'lex Expr.t) list
+  | If of 'lex Expr.t * 'a list * 'a list
+  | Call of funname * 'lex Expr.t list
+  | Print of Type.t * 'lex Expr.t
+  | Read of Type.t * 'lex Expr.t Mutable.t
   | DeclRead of Type.t * varname
   | StdinSep
 
-type t = F of int * t tofix
+type 'lex t = F of int * ('lex t, 'lex) tofix
 let annot = function F (i, _) -> i
 let unfix = function F (_, x) -> x
 let fix x = F ((next ()), x)
@@ -80,7 +80,7 @@ let alloc_array_lambda binding t len b e=
 let if_ e cif celse =
   If (e, cif, celse) |> fix
 
-let map_bloc ( f : 'a list -> 'b list) (t : 'a tofix) : 'b tofix = match t with
+let map_bloc f t = match t with
   | Declare (_, _, _) -> t
   | Affect (var, e) -> t
   | Comment s -> t
@@ -102,12 +102,12 @@ let map_bloc ( f : 'a list -> 'b list) (t : 'a tofix) : 'b tofix = match t with
   | Call _ -> t
   | StdinSep -> t
 
-let map (f : 'a -> 'b) (t : 'a tofix) : 'b tofix =
+let map f t =
   map_bloc (List.map f) t
 
 module Writer = AstWriter.F (struct
-  type alias = t;;
-  type t = alias;;
+  type 'a alias = 'a t;;
+  type 'a t = 'a alias;;
   let foldmap f acc t =
     let annot = annot t in
     match unfix t with
@@ -139,9 +139,7 @@ module Writer = AstWriter.F (struct
 end)
 
 let foldmap_expr
-    (f : 'acc -> Expr.t -> 'acc * Expr.t)
-    (acc:'acc)
-    (instruction:t) =
+    f acc instruction =
   Writer.Deep.foldmap
     (fun acc i ->
       let out, i =

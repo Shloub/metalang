@@ -35,14 +35,14 @@ open Ast
 open Fresh
 
 module type SigPassTop = sig
-  type acc;;
-  val init_acc : unit -> acc;;
-  val process : acc -> Prog.t_fun -> (acc * Prog.t_fun)
-  val process_main : acc -> Instr.t list -> (acc * Instr.t list)
+  type 'lex acc;;
+  val init_acc : unit -> 'lex acc;;
+  val process : 'lex acc -> 'lex Prog.t_fun -> ('lex acc * 'lex Prog.t_fun)
+  val process_main : 'lex acc -> 'lex Instr.t list -> ('lex acc * 'lex Instr.t list)
 end
 
 module WalkTop (T:SigPassTop) = struct
-  let apply ( prog : Prog.t ) =
+  let apply ( prog : 'lex Prog.t ) =
     let acc = T.init_acc () in
     let acc, p =  List.fold_left_map T.process acc prog.Prog.funs in
     let acc, m = match prog.Prog.main with
@@ -55,7 +55,7 @@ module WalkTop (T:SigPassTop) = struct
       Prog.main = m;
     }
 
-  let fold ( prog : Prog.t ) =
+  let fold ( prog : 'lex Prog.t ) =
     let acc = T.init_acc () in
     let acc, funs =  List.fold_left_map T.process acc prog.Prog.funs in
     let acc, _ = match prog.Prog.main with
@@ -69,9 +69,9 @@ module WalkTop (T:SigPassTop) = struct
 end
 
 module type SigPass = sig
-  type acc;;
-  val init_acc : unit -> acc;;
-  val process : acc -> Instr.t list -> (acc * Instr.t list)
+  type 'lex acc;;
+  val init_acc : unit -> 'lex acc;;
+  val process : 'lex acc -> 'lex Instr.t list -> ('lex acc * 'lex Instr.t list)
 end
 
 module Walk (T:SigPass) = struct
@@ -90,7 +90,7 @@ module Walk (T:SigPass) = struct
       )
       acc
       p
-  let apply ( prog : Prog.t ) : Prog.t  =
+  let apply ( prog : 'lex Prog.t ) : 'lex Prog.t  =
     let acc = T.init_acc () in
     let acc, p = apply_prog acc prog.Prog.funs in
     let acc, m = match prog.Prog.main with

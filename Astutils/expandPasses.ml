@@ -38,13 +38,13 @@ open Fresh
 open PassesUtils
 
 module NoPend : SigPass = struct
-  type acc = unit
+  type 'lex acc = unit
 
   let locate loc instr =
     PosMap.add (Instr.annot instr) loc; instr
 
-  let rec process (acc:acc) i =
-    let rec inner_map t0 : Instr.t list =
+  let rec process (acc:'lex acc) i =
+    let rec inner_map t0 : 'lex Instr.t list =
       match Instr.unfix t0 with
         | Instr.AllocArray(
           _, _,
@@ -88,7 +88,7 @@ module NoPend : SigPass = struct
                              lambdaopt) |> Instr.fix  |> locate loc;
           ]
         | _ -> [fixed_map t0]
-    and fixed_map (t:Instr.t) =
+    and fixed_map (t:'lex Instr.t) =
       Instr.map_bloc
         (List.flatten @* (List.map inner_map))
         (Instr.unfix t)
@@ -99,7 +99,7 @@ end
 
 
 module AllocArrayExpend : SigPass = struct
-  type acc = unit;;
+  type 'lex acc = unit;;
   let init_acc () = ();;
 
   let locate loc e =
@@ -153,7 +153,7 @@ end
 
 (*TODO propager les positions*)
 module ExpandReadDecl : SigPass = struct
-  type acc = unit;;
+  type 'lex acc = unit;;
   let init_acc () = ();;
 
   let expand i = match Instr.unfix i with
@@ -201,7 +201,7 @@ module ExpandPrint : SigPass = struct
         )
     ]
 
-  let rec rewrite (i : Instr.t) : Instr.t list = match Instr.unfix i with
+  let rec rewrite (i : 'lex Instr.t) : 'lex Instr.t list = match Instr.unfix i with
     | Instr.Print(Type.F (_, (Type.Array t)), Expr.F (annot,
                                                       Expr.Access ( Mutable.F
                                                                       (_, Mutable.Var b))
@@ -214,7 +214,7 @@ module ExpandPrint : SigPass = struct
       [write_bool b]
     | j -> [ Instr.map_bloc (List.flatten @* List.map rewrite) j |> Instr.fix ]
 
-  type acc = unit
+  type 'lex acc = unit
   let init_acc _ = ()
   let process acc i =
     acc, List.map rewrite i |> List.flatten

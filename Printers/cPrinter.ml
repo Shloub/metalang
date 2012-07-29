@@ -33,8 +33,8 @@ open Ast
 open Stdlib
 open Printer
 
-class cPrinter = object(self)
-  inherit printer as super
+class ['lex] cPrinter = object(self)
+  inherit ['lex] printer as super
 
   method lang () = "c"
 
@@ -223,5 +223,3 @@ class cPrinter = object(self)
         	self#bloc ifcase
         	self#bloc elsecase
 end
-
-let printer = new cPrinter;;

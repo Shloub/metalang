@@ -636,7 +636,7 @@ let map_ty env prog =
   }
 
 (** {2 Main function} *)
-let process (prog: Prog.t) =
+let process (prog: 'lex Prog.t) =
   let not_done
       (env:env)
       ((t1 : typeContrainte ref), (t2 : typeContrainte ref)) : bool=

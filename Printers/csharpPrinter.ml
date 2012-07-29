@@ -35,8 +35,8 @@ open Printer
 open JavaPrinter
 
 
-class csharpPrinter = object(self)
-  inherit javaPrinter as super
+class ['lex] csharpPrinter = object(self)
+  inherit ['lex] javaPrinter as super
 
   method lang () = "csharp"
 
@@ -165,6 +165,3 @@ public static int readInt(){
 
 
 end
-
-let printer = new csharpPrinter;;
-

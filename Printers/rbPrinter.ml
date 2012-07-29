@@ -41,8 +41,8 @@ require \"scanf.rb\"
 
 "
 
-class rbPrinter = object(self)
-inherit pyPrinter as super
+class ['lex] rbPrinter = object(self)
+  inherit ['lex] pyPrinter as super
 
   method lang () = "ruby"
 
@@ -186,5 +186,3 @@ match Type.unfix t with
 
 
 end
-
-let printer = new rbPrinter;;

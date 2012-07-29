@@ -69,7 +69,7 @@ let map f = function
 
 module Writer = AstWriter.F (struct
   type alias = t
-  type t = alias
+  type 'a t = alias
   let foldmap f acc t =
     let annot = annot t in
     match unfix t with

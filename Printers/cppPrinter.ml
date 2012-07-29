@@ -35,8 +35,8 @@ open Ast
 open Printer
 open CPrinter
 
-class cppPrinter = object(self)
-inherit cPrinter as super
+class ['lex] cppPrinter = object(self)
+  inherit ['lex] cPrinter as super
 
   method lang () = "cpp"
 
@@ -122,5 +122,3 @@ inherit cPrinter as super
 	Format.fprintf f "%a&" self#ptype t
       | _ -> self#ptype f t
 end
-
-let printer = new cppPrinter;;

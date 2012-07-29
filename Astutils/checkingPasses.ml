@@ -37,7 +37,7 @@ open Fresh
 open PassesUtils
 
 module CheckNaming : SigPassTop = struct
-  type acc = {
+  type 'a acc = {
     functions : BindingSet.t;
     parameters : BindingSet.t;
     variables : BindingSet.t;
