@@ -33,7 +33,9 @@
 %token<char> CHAR
 %token<string> STRING
 %token<string> IDENT
+%token<token list> LEXEMS
 %token EOF
+%token END_QUOTE
 
 %left OR
 %left AND
@@ -97,6 +99,7 @@ expr :
   E.call $1 $3
     |> locate ( Ast.location ($startpos($1), $endpos($4)))
 }
+| LEXEMS { Expr.lexems $1 }
 ;
 
 mutabl :

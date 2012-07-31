@@ -33,6 +33,15 @@ rule token = parse
 	token lexbuf
 (* COMMENT(str) TODO *)
 }
+| "{"
+    {
+      let rec f li =
+        match token lexbuf with
+          | END_QUOTE -> List.rev li
+          | t -> f (t :: li)
+      in LEXEMS (f [])
+    }
+| "}" { END_QUOTE }
 | '\n' { newline lexbuf ; token lexbuf }
 | ignore { token lexbuf }
 | space { token lexbuf }

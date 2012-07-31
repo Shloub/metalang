@@ -92,6 +92,8 @@ let float f = fix (Float f)
 let string f = fix (String f)
 let boolean b = fix (Bool b)
 
+let lexems li = fix (Lexems li)
+
 let access m = fix (Access m )
 
 let call name li = fix ( Call(name, li))
