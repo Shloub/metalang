@@ -3,14 +3,9 @@ Ast
 AstWriter
 CheckingPasses
 ExpandPasses
-Expr
 Fresh
-Instr
-Mutable
 Passes
 PassesUtils
-Prog
-Type
 Typer
 Warner
 Printer

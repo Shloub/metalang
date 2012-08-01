@@ -1,6 +1,5 @@
 Ast
 AstWriter
-Prog
 Passes
 PassesUtils
 CheckingPasses

@@ -4,7 +4,7 @@
 	module M = Ast.Mutable
 	module I = Ast.Instr
 	module T = Ast.Type
-	module P = Prog
+	module P = Ast.Prog
 
 
   let locate pos e =
@@ -48,8 +48,8 @@
 %left NOT
 
 %start prog toplvls toplvl_expr
-%type<token Prog.t_fun list * token Ast.Instr.t list option> prog
-%type<token Prog.t_fun list> toplvls
+%type<token Ast.Prog.t_fun list * token Ast.Instr.t list option> prog
+%type<token Ast.Prog.t_fun list> toplvls
 %type<token Ast.Expr.t> toplvl_expr
 %%
 
