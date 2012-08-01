@@ -69,3 +69,37 @@ end = struct
       IntMap.find i !map
     with Not_found -> (-1, -1), (-1, -1)
 end
+
+module Mutable = struct
+  type ('mutable_, 'expr) tofix =
+      Var of varname
+    | Array of 'mutable_ * 'expr list
+    | Dot of 'mutable_ * fieldname
+  module Fixed = Fix(struct
+    type ('a, 'b) alias = ('a, 'b) tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
+    let map f = function
+      | Var v -> Var v
+      | Array (m, el) -> Array( f m, el)
+      | Dot (m, fi) -> Dot (f m, fi)
+    let next () = next ()
+  end)
+  type 'a t = 'a Fixed.t
+  let fix = Fixed.fix
+  let unfix = Fixed.unfix
+  let array a el = Array (a, el) |> Fixed.fix
+  let var a = Var a |> Fixed.fix
+  let rec foldmap_expr f acc mut =
+    let annot = Fixed.annot mut in
+    match Fixed.unfix mut with
+      | Var v -> acc, Fixed.fixa annot (Var v)
+      | Dot (m, field) ->
+        let acc, m = foldmap_expr f acc m in
+        acc, Fixed.fixa annot (Dot (m, field))
+      | Array (mut, li) ->
+        let acc, mut = foldmap_expr f acc mut in
+        let acc, li = List.fold_left_map f acc li in
+        acc, Fixed.fixa annot (Array (mut, li) )
+
+  let map_expr f m = foldmap_expr (fun () e -> (), f e) () m |> snd
+end

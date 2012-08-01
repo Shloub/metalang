@@ -31,6 +31,7 @@
 *)
 
 open Stdlib
+open Ast
 open Warner
 
 (** {2 Types} *)
@@ -375,10 +376,10 @@ let rec collect_contraintes_expr env e =
   env, contrainte
 
 and collect_contraintes_mutable env mut =
-  let loc m = Ast.PosMap.get (Mutable.annot m) in
+  let loc m = Ast.PosMap.get (Mutable.Fixed.annot m) in
   let tloc = loc mut in
   (*  let () = Format.printf "collecting mutable contraintes@\n" in *)
-  match Mutable.unfix mut with
+  match Mutable.Fixed.unfix mut with
     | Mutable.Var name ->
       let ty =
         try

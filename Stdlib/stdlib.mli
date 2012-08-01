@@ -396,3 +396,19 @@ sig
   val split : elt -> t -> t * bool * t
   val of_list : elt list -> t
 end
+
+module type Fixable = sig
+  type ('a, 'b) tofix
+  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
+  val next : unit -> int
+end
+
+module Fix : functor (F : Fixable ) ->
+sig
+  type 'a t = F of int * ('a t, 'a) F.tofix
+  val annot : 'a t -> int
+  val unfix : 'a t -> ('a t , 'a) F.tofix
+  val fix : ('a t , 'a) F.tofix -> 'a t
+  val fixa : int -> ('a t , 'a) F.tofix -> 'a t
+  val map : ('a -> 'b) -> ('a, 'c) F.tofix -> ('b, 'c) F.tofix
+end

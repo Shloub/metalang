@@ -49,11 +49,11 @@ module NoPend : SigPass = struct
         | Instr.AllocArray(
           _, _,
           Expr.F (_, Expr.Access (
-            Mutable.F
+            Mutable.Fixed.F
               (_, Mutable.Var _))), _)
         | Instr.Print(_, Expr.F
           (_,
-           (Expr.Access ( Mutable.F
+           (Expr.Access ( Mutable.Fixed.F
                             (_, Mutable.Var _))
                | Expr.Char _
                | Expr.String _
@@ -106,7 +106,7 @@ module AllocArrayExpend : SigPass = struct
     PosMap.add (Expr.annot e) loc; e
 
   let locatm loc m =
-    PosMap.add (Mutable.annot m) loc; m
+    PosMap.add (Mutable.Fixed.annot m) loc; m
 
   let locati loc instr =
     PosMap.add (Instr.annot instr) loc; instr
@@ -203,12 +203,12 @@ module ExpandPrint : SigPass = struct
 
   let rec rewrite (i : 'lex Instr.t) : 'lex Instr.t list = match Instr.unfix i with
     | Instr.Print(Type.F (_, (Type.Array t)), Expr.F (annot,
-                                                      Expr.Access ( Mutable.F
+                                                      Expr.Access ( Mutable.Fixed.F
                                                                       (_, Mutable.Var b))
     ) ) ->
       write t b
     | Instr.Print(Type.F (_, Type.Bool), Expr.F (annot,
-                                                 Expr.Access ( Mutable.F
+                                                 Expr.Access ( Mutable.Fixed.F
                                                                  (_, Mutable.Var b))
     ) ) ->
       [write_bool b]

@@ -244,7 +244,7 @@ class ['lex] camlPrinter = object(self)
   method affect f m expr =
     Format.fprintf f "@[<h>%a@ %s@ %a@]"
       self#mutable_ m
-      (match m |> Mutable.unfix with
+      (match m |> Mutable.Fixed.unfix with
 	| Mutable.Var _ -> ":="
 	| Mutable.Array _ -> "<-"
 	| Mutable.Dot _ -> "<-"
@@ -265,7 +265,7 @@ class ['lex] camlPrinter = object(self)
     Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value)@]"
       self#format_type t
       self#mutable_ m
-      (match m |> Mutable.unfix with
+      (match m |> Mutable.Fixed.unfix with
 	| Mutable.Var _ -> ":="
 	| Mutable.Array _ -> "<-"
 	| Mutable.Dot _ -> "<-"
@@ -284,8 +284,8 @@ class ['lex] camlPrinter = object(self)
       (Instr.Writer.Deep.fold
 	 (fun acc i ->
 	   match Instr.unfix i with
-	     | Instr.Read (_, Mutable.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-	     | Instr.Affect (Mutable.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
+	     | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+	     | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
 	     | _ -> acc
 	 ))
       BindingSet.empty
@@ -299,7 +299,7 @@ class ['lex] camlPrinter = object(self)
     end
 
   method mutable_ f m =
-    match m |> Mutable.unfix with
+    match m |> Mutable.Fixed.unfix with
       | Mutable.Var binding ->
 	  if in_expr && BindingSet.mem binding refbindings
 	then

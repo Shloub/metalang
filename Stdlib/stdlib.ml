@@ -264,3 +264,18 @@ module IntSet = MakeSet (Int)
 module IntMap = MakeMap (Int)
 module StringMap = MakeMap (String)
 module StringSet = MakeSet (String)
+
+module type Fixable = sig
+  type ('a, 'b) tofix
+  val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix
+  val next : unit -> int
+end
+
+module Fix (F : Fixable) = struct
+  type 'a t = F of int * ('a t, 'a) F.tofix
+  let annot = function F (i, _) -> i
+  let unfix = function F (_, x) -> x
+  let fix x = F (F.next (), x)
+  let fixa a x = F (a, x)
+  let map = F.map
+end

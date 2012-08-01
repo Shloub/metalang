@@ -1,5 +1,6 @@
 %{
   open Stdlib
+  open Ast
 	module E = Expr
 	module M = Mutable
 	module I = Instr
@@ -14,7 +15,7 @@
     let () = Ast.PosMap.add (I.annot e) pos
     in e
   let locatm pos e =
-    let () = Ast.PosMap.add (M.annot e) pos
+    let () = Ast.PosMap.add (M.Fixed.annot e) pos
     in e
 %}
 
@@ -203,7 +204,7 @@ instr :
 | PRINT typ expr { I.print $2 $3
                  |> locati ( Ast.location ($startpos($1), $endpos($3)))
                  }
-| SKIP { I.stdin_sep
+| SKIP { I.stdin_sep ()
        |> locati ( Ast.location ($startpos($1), $endpos($1)))
        }
 | alloc_record { $1

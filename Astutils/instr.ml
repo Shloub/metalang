@@ -60,7 +60,7 @@ let unfix = function F (_, x) -> x
 let fix x = F ((next ()), x)
 let fixa a x = F (a, x)
 
-let stdin_sep = StdinSep |> fix
+let stdin_sep () = StdinSep |> fix
 let print t v = Print (t, v) |> fix
 let read t v = Read (t, v) |> fix
 let readdecl t v = DeclRead (t, v) |> fix
