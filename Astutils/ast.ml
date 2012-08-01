@@ -312,3 +312,173 @@ module Expr = struct
           (acc, Fixed.fixa annot (Call(name, li)) )
   end)
 end
+
+module Instr = struct
+  let mutable_var varname = Mutable.Var varname |> Mutable.Fixed.fix
+  let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.Fixed.fix
+  let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.Fixed.fix
+
+  type ('a, 'lex) tofix =
+      Declare of varname * Type.t * 'lex Expr.t
+    | Affect of 'lex Expr.t Mutable.t * 'lex Expr.t
+    | Loop of varname * 'lex Expr.t * 'lex Expr.t * 'a list
+    | While of 'lex Expr.t * 'a list
+    | Comment of string
+    | Return of 'lex Expr.t
+    | AllocArray of varname * Type.t * 'lex Expr.t * (varname * 'a list) option
+    | AllocRecord of varname * Type.t * (fieldname * 'lex Expr.t) list
+    | If of 'lex Expr.t * 'a list * 'a list
+    | Call of funname * 'lex Expr.t list
+    | Print of Type.t * 'lex Expr.t
+    | Read of Type.t * 'lex Expr.t Mutable.t
+    | DeclRead of Type.t * varname
+    | StdinSep
+
+
+  let map_bloc f t = match t with
+    | Declare (a, b, c) -> Declare (a, b, c)
+    | Affect (var, e) -> Affect (var, e)
+    | Comment s -> Comment s
+    | Loop (var, e1, e2, li) ->
+      Loop (var, e1, e2, f li)
+    | While (e, li) -> While (e, f li)
+    | If (e, cif, celse) ->
+      If (e, f cif, f celse)
+    | Return e -> Return e
+    | AllocArray (b, t, l, Some ((b2, li))) ->
+      AllocArray (b, t, l, Some((b2, f li)))
+    | AllocArray (a, b, c, None) ->
+      AllocArray (a, b, c, None)
+    | AllocRecord (a, b, c) ->
+      AllocRecord (a, b, c)
+    | Print (a, b) -> Print (a, b)
+    | Read (a, b) -> Read (a, b)
+    | DeclRead (a, b) -> DeclRead (a, b)
+    | Call (a, b) -> Call (a, b)
+    | StdinSep -> StdinSep
+
+  let map f t =
+    map_bloc (List.map f) t
+
+  module Fixed = Fix(struct
+    type ('a, 'b) alias = ('a, 'b) tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
+    let map = map
+    let next () = next ()
+  end)
+  type 'a t = 'a Fixed.t
+  let fix = Fixed.fix
+  let unfix = Fixed.unfix
+
+  let stdin_sep () = StdinSep |> fix
+  let print t v = Print (t, v) |> fix
+  let read t v = Read (t, v) |> fix
+  let readdecl t v = DeclRead (t, v) |> fix
+  let call v p = Call (v, p) |> fix
+  let declare v t e =  Declare (v, t, e) |> fix
+  let affect v e = Affect (v, e) |> fix
+  let loop v e1 e2 li = Loop (v, e1, e2, li) |> fix
+  let while_ e li = While (e, li) |> fix
+  let comment s = Comment s |> fix
+  let return e = Return e |> fix
+  let alloc_array binding t len =
+    AllocArray(binding, t, len, None) |> fix
+  let alloc_record binding t fields =
+    AllocRecord(binding, t, fields) |> fix
+  let alloc_array_lambda binding t len b e=
+    AllocArray(binding, t, len, Some ( (b, e) ) ) |> fix
+  let if_ e cif celse =
+    If (e, cif, celse) |> fix
+
+  module Writer = AstWriter.F (struct
+    type 'a alias = 'a t;;
+    type 'a t = 'a alias;;
+    let foldmap f acc t =
+      let annot = Fixed.annot t in
+      match unfix t with
+        | StdinSep -> acc, t
+        | Declare (_, _, _) -> acc, t
+        | Affect (_, _) -> acc, t
+        | Comment _ -> acc, t
+        | Loop (var, e1, e2, li) ->
+          let acc, li = List.fold_left_map f acc li in
+          acc, Fixed.fixa annot (Loop(var, e1, e2, li))
+        | While (e, li) ->
+          let acc, li = List.fold_left_map f acc li in
+          acc, Fixed.fixa annot (While (e, li))
+        | If (e, cif, celse) ->
+          let acc, cif = List.fold_left_map f acc cif in
+          let acc, celse = List.fold_left_map f acc celse in
+          acc, Fixed.fixa annot (If(e, cif, celse))
+        | Return e -> acc, t
+        | AllocArray (_, _, _, None) -> acc, t
+        | AllocArray (b, t, l, Some (b2, li)) ->
+          let acc, li = List.fold_left_map f acc li in
+          acc, Fixed.fixa annot (AllocArray (b, t, l, Some (b2, li)) )
+        | AllocRecord (_, _, _) ->
+          acc, t
+        | Print _ -> acc, t
+        | Read _ -> acc, t
+        | DeclRead _ -> acc, t
+        | Call _ -> acc, t
+  end)
+
+  let foldmap_expr
+      f acc instruction =
+    Writer.Deep.foldmap
+      (fun acc i ->
+        let out, i =
+          match unfix i with
+            | Declare (v, t, e) ->
+              let acc, e = f acc e in
+              acc, Declare (v, t, e)
+            | Affect (m, e) ->
+              let acc, e = f acc e in
+              acc, Affect (m, e)
+            | Loop (v, e1, e2, li) ->
+              let acc, e1 = f acc e1 in
+              let acc, e2 = f acc e2 in
+              acc, Loop(v, e1, e2, li)
+            | While (e, li) ->
+              let acc, e = f acc e in
+              acc, While (e, li)
+            | Comment s -> acc, Comment s
+            | Return e ->
+              let acc, e = f acc e in
+              acc, Return e
+            | AllocArray (v, t, e, liopt) ->
+              let acc, e = f acc e in
+              acc, AllocArray (v, t, e, liopt)
+            | AllocRecord (v, t, el) ->
+              let acc, el = List.fold_left_map
+                (fun acc (field, e) ->
+                  let acc, e = f acc e
+                  in acc, (field, e))
+                acc el
+              in acc, AllocRecord (v, t, el)
+            | If (e, li1, li2) ->
+              let acc, e = f acc e in
+              acc, If (e, li1, li2)
+            | Call (funname, li) ->
+              let acc, li = List.fold_left_map f acc li in
+              acc, Call (funname, li)
+            | Print (t, e) ->
+              let acc, e = f acc e in
+              acc, Print (t, e)
+            | Read (t, m) -> acc, Read (t, m)
+            | DeclRead (t, m) -> acc, DeclRead (t, m)
+            | StdinSep -> acc, StdinSep
+        in out, fix i
+      ) acc instruction
+
+  let map_expr f i =
+    let f2 () e = (), (f e) in
+    let (), i = foldmap_expr f2 () i
+    in i
+
+  let fold_expr f acc i =
+    let f2 acc e = (f acc e), e in
+    let acc, _ = foldmap_expr f2 acc i
+    in acc
+
+end

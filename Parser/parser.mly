@@ -2,7 +2,7 @@
   open Stdlib
 	module E = Ast.Expr
 	module M = Ast.Mutable
-	module I = Instr
+	module I = Ast.Instr
 	module T = Ast.Type
 	module P = Prog
 
@@ -11,7 +11,7 @@
     let () = Ast.PosMap.add (E.Fixed.annot e) pos
     in e
   let locati pos e =
-    let () = Ast.PosMap.add (I.annot e) pos
+    let () = Ast.PosMap.add (I.Fixed.annot e) pos
     in e
   let locatm pos e =
     let () = Ast.PosMap.add (M.Fixed.annot e) pos
@@ -48,7 +48,7 @@
 %left NOT
 
 %start prog toplvls toplvl_expr
-%type<token Prog.t_fun list * token Instr.t list option> prog
+%type<token Prog.t_fun list * token Ast.Instr.t list option> prog
 %type<token Prog.t_fun list> toplvls
 %type<token Ast.Expr.t> toplvl_expr
 %%

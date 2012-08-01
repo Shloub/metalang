@@ -41,11 +41,11 @@ module NoPend : SigPass = struct
   type 'lex acc = unit
 
   let locate loc instr =
-    PosMap.add (Instr.annot instr) loc; instr
+    PosMap.add (Instr.Fixed.annot instr) loc; instr
 
   let rec process (acc:'lex acc) i =
     let rec inner_map t0 : 'lex Instr.t list =
-      match Instr.unfix t0 with
+      match Instr.Fixed.unfix t0 with
         | Instr.AllocArray(
           _, _,
           Expr.Fixed.F (_, Expr.Access (
@@ -64,7 +64,7 @@ module NoPend : SigPass = struct
           )) ->
           [fixed_map t0]
         | Instr.Print(t, e) ->
-          let loc = PosMap.get (Instr.annot t0) in
+          let loc = PosMap.get (Instr.Fixed.annot t0) in
           let b = fresh () in
           [
             Instr.Declare (b, t, e) |> Instr.fix |> locate loc;
@@ -79,7 +79,7 @@ module NoPend : SigPass = struct
               let li = List.flatten li in
               Some (name, li)
           in
-          let loc = PosMap.get (Instr.annot t0) in
+          let loc = PosMap.get (Instr.Fixed.annot t0) in
           let b = fresh () in
           [
             Instr.Declare (b, Type.integer, e) |> Instr.fix;
@@ -109,7 +109,7 @@ module AllocArrayExpend : SigPass = struct
     PosMap.add (Mutable.Fixed.annot m) loc; m
 
   let locati loc instr =
-    PosMap.add (Instr.annot instr) loc; instr
+    PosMap.add (Instr.Fixed.annot instr) loc; instr
 
 
   let mapret tab index instructions =
@@ -132,14 +132,14 @@ module AllocArrayExpend : SigPass = struct
   let expand i = match Instr.unfix i with
     | Instr.AllocArray (b,t, len, Some (b2, instrs)) ->
       [ Instr.fix (Instr.AllocArray (b, t, len, None) )
-          |> locati (PosMap.get (Instr.annot i))
+          |> locati (PosMap.get (Instr.Fixed.annot i))
       ;
         Instr.loop b2 (Expr.integer 0)
           (Expr.binop Expr.Sub len (Expr.integer 1)
               |> locate (PosMap.get (Expr.Fixed.annot len))
           )
           (mapret b b2 instrs)
-          |> locati (PosMap.get (Instr.annot i))
+          |> locati (PosMap.get (Instr.Fixed.annot i))
       ]
     | _ -> [i]
 

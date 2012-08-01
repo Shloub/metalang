@@ -162,7 +162,7 @@ class ['lex] camlPrinter = object(self)
 	Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]"
 	  self#expr e
 	  self#bloc ifcase
-      | [Instr.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
+      | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse %a"
 	self#expr e
 	self#bloc ifcase
@@ -191,7 +191,7 @@ class ['lex] camlPrinter = object(self)
 		   if (* Si on a que des commentaires ensuite, alors on ne met pas de ; *)
 		     (List.for_all
 			(function
-			  | (Instr.F (_, Instr.Comment _) ) -> true
+			  | (Instr.Fixed.F (_, Instr.Comment _) ) -> true
 			  | _ -> false
 			)
 			item2
@@ -210,22 +210,22 @@ class ['lex] camlPrinter = object(self)
     match List.rev
       (List.filter
 	 (function
-	   | (Instr.F (_, Instr.Comment _) ) -> false
+	   | (Instr.Fixed.F (_, Instr.Comment _) ) -> false
 	   | _ -> true
 	 )
 	 instrs
       )
     with
-      | (Instr.F (_, Instr.AllocArray _) ) :: _
-      | (Instr.F (_, Instr.Declare _) ) :: _
-      | (Instr.F (_, Instr.DeclRead _)) :: _
+      | (Instr.Fixed.F (_, Instr.AllocArray _) ) :: _
+      | (Instr.Fixed.F (_, Instr.Declare _) ) :: _
+      | (Instr.Fixed.F (_, Instr.DeclRead _)) :: _
       | [] -> " ()"
       | _ -> ""
 
   method bloc f b =
     if List.forall
       (function
-	      | Instr.F (_, Instr.Comment _) -> true
+	      | Instr.Fixed.F (_, Instr.Comment _) -> true
 	| _ -> false
       )
       b

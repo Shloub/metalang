@@ -212,7 +212,7 @@ class ['lex] cPrinter = object(self)
 	      Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
  	      self#expr e
 	        self#bloc ifcase
-      | [Instr.F ( _, Instr.If (condition, instrs1, instrs2) ) as instr] ->
+      | [Instr.Fixed.F ( _, Instr.If (condition, instrs1, instrs2) ) as instr] ->
         Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse %a"
  	      self#expr e
         	self#bloc ifcase

@@ -106,7 +106,7 @@ module Rename = struct
     in Expr.Writer.Deep.map f e
 
   let rec process_instr map i =
-    let i2 = match Instr.unfix i with
+    let i2 = match Instr.Fixed.unfix i with
       | Instr.Declare (v, t, e) ->
         Instr.Declare ( (mapname map v), t, process_expr map e)
       | Instr.Affect (m, e) ->
@@ -141,7 +141,7 @@ module Rename = struct
         Instr.Read (t, mapmutable map m)
       | (Instr.DeclRead (t, v) ) as i -> i
       | Instr.StdinSep -> Instr.StdinSep
-    in Instr.fixa (Instr.annot i) i2
+    in Instr.Fixed.fixa (Instr.Fixed.annot i) i2
 
   let process_main acc m = acc, List.map (process_instr acc) m
   let process acc p =

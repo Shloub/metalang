@@ -410,7 +410,7 @@ let rec collect_contraintes_instructions env instructions
   (*  let () = Format.printf "collecting instructions contraintes\n" in *)
   List.fold_left
     (fun env instruction ->
-      let loc = Ast.PosMap.get (Instr.annot instruction) in
+      let loc = Ast.PosMap.get (Instr.Fixed.annot instruction) in
       match Instr.unfix instruction with
         | Instr.Declare (var, ty, e) ->
           let ty = expand env ty in
