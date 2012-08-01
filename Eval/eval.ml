@@ -2,6 +2,19 @@ open Ast
 open Stdlib
 open Warner
 
+module StringMap = struct
+  module H = Hashtbl.Make (struct
+    type t = string
+    let equal = ( = )
+    let hash = Hashtbl.hash
+  end)
+
+  type 'a t = 'a H.t
+  let empty () = H.create 0
+  let add x v h = H.add h x v ; h
+  let find x h = H.find h x
+end
+
 type result =
   | Integer of int
   | Float of float
@@ -50,8 +63,8 @@ and precompiledExpr =
 
 let empty_env =
   {
-    vars = StringMap.empty;
-    functions = StringMap.empty;
+    vars = StringMap.empty () ;
+    functions = StringMap.empty () ;
   }
 
 let tyerr loc =
@@ -190,7 +203,7 @@ and eval_call env name paramsv =
       (fun env (name, value) ->
         add_in_env env name value
       )
-      env
+      { env with vars = StringMap.empty () }
       (List.combine params paramsv)
     in let env, val_ = eval_instrs env instrs in val_
   with Not_found ->
@@ -253,7 +266,7 @@ and eval_instr env (instr: precompiledExpr Instr.t)
     let v = Array v
     in (add_in_env env var v), None
   | Instr.AllocRecord (var, t, fields) ->
-    let v = StringMap.empty in
+    let v = StringMap.empty () in
     let v = List.fold_left
       (fun v (name, e) ->
         let e = eval_expr env e in
