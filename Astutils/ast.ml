@@ -103,3 +103,212 @@ module Mutable = struct
 
   let map_expr f m = foldmap_expr (fun () e -> (), f e) () m |> snd
 end
+
+module Type = struct
+  type structparams =
+      {
+        tuple : bool
+      }
+
+  type 'a tofix =
+    | Integer
+    | Float
+    | String
+    | Char
+    | Array of 'a
+    | Void
+    | Bool
+    | Struct of
+        (fieldname * 'a) list * structparams
+    | Named of typename
+    | Auto
+
+  module Fixed = Fix(struct
+    type ('a, 'b) alias = 'a tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
+
+    let map f = function
+      | Auto -> Auto
+      | Integer -> Integer
+      | Float -> Float
+      | String -> String
+      | Char -> Char
+      | Array t -> Array (f t)
+      | Void -> Void
+      | Bool -> Bool
+      | Struct (li, p) ->
+        Struct (List.map (fun (name, t) -> (name, f t)) li, p)
+      | Named t -> Named t
+
+    let next () = next ()
+  end)
+
+  type t = unit Fixed.t
+  let fix = Fixed.fix
+  let unfix = Fixed.unfix
+
+  module Writer = AstWriter.F (struct
+    type alias = t
+    type 'a t = alias
+    let foldmap f acc t =
+      let annot = Fixed.annot t in
+      match unfix t with
+        | Auto | Integer | Float | String | Char | Void | Bool | Named _ ->
+          acc, t
+        | Array t ->
+          let acc, t = f acc t in
+          acc, Fixed.fixa annot (Array t)
+        | Struct (li, p) ->
+          let acc, li = List.fold_left_map
+            (fun acc (name, t) ->
+              let acc, t = f acc t in
+              acc, (name, t)
+            ) acc li
+          in acc, Fixed.fixa annot (Struct (li, p))
+  end)
+
+  let type2String (t : string tofix) : string =
+    match t with
+      | Auto -> "Auto"
+      | Integer -> "Integer"
+      | Float -> "Float"
+      | String -> "String"
+      | Char -> "Char"
+      | Array t -> "Array("^t^")"
+      | Void -> "Void"
+      | Bool -> "Bool"
+      | Struct (li, p) ->
+        let str = List.fold_left
+          (fun acc (name, t) ->
+            acc ^ name ^ ":"^t^"; "
+          ) "" li
+        in "Struct("^str^")"
+      | Named t -> "Named("^t^")"
+
+  let rec type_t_to_string (t:t) : string =
+    type2String (Fixed.map type_t_to_string (unfix t))
+
+  let bool:t = Bool |> fix
+  let integer:t = Integer |> fix
+  let void:t = Void |> fix
+  let float:t = Float |> fix
+  let string:t = String |> fix
+  let char:t = Char |> fix
+  let array t = Array t |> fix
+  let struct_ s p = Struct (s, p) |> fix
+  let named n = Named n |> fix
+  let auto () = Auto |> fix
+
+end
+
+
+module Expr = struct
+  type unop = Neg | Not | BNot
+  type binop =
+    | Add | Sub | Mul | Div (* int or float *)
+    | Mod (* int *)
+    | Or | And (* bool *)
+    | Lower | LowerEq | Higher | HigherEq (* 'a *)
+    | Eq | Diff (* 'a *)
+    | BinOr | BinAnd | RShift | LShift (* int *)
+
+  type ('a, 'lex) tofix =
+    (*operations numeriques*)
+      BinOp of 'a * binop * 'a
+    | UnOp of 'a * unop
+    (* liefs *)
+    | Char of char
+    | String of string
+    | Float of float
+    | Integer of int
+    | Bool of bool
+    | Access of 'a Mutable.t
+    | Length of 'a Mutable.t
+    | Call of funname * 'a list
+    | Lexems of 'lex list
+
+  module Fixed = Fix(struct
+    type ('a, 'b) alias = ('a, 'b) tofix
+    type ('a, 'b) tofix = ('a, 'b) alias
+    let map f = function
+      | BinOp (a, op, b) -> BinOp ((f a), op, f b)
+      | UnOp (a, op) -> UnOp((f a), op)
+      | (
+        Integer _
+            | Float _
+            | String _
+            | Char _
+            | Bool _) as lief -> lief
+      | Access m ->
+        let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
+        Access m2
+      | Length m ->
+        let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
+        Length m2
+      | Call (n, li) -> Call (n, List.map f li)
+    let next () = next ()
+  end)
+  type 'a t = 'a Fixed.t
+  let fix = Fixed.fix
+  let unfix = Fixed.unfix
+
+
+  let bool b = fix (Bool b)
+
+  let unop op a = fix (UnOp (a, op))
+  let binop op a b = fix (BinOp (a, op, b))
+
+  let integer i = fix (Integer i)
+  let char i = fix (Char i)
+  let float f = fix (Float f)
+  let string f = fix (String f)
+  let boolean b = fix (Bool b)
+
+  let lexems li = fix (Lexems li)
+
+  let access m = fix (Access m )
+
+  let call name li = fix ( Call(name, li))
+  let length m = fix ( Length (Mutable.var m) )
+
+  let default_value t = match Type.unfix t with
+    | Type.Integer -> integer 0
+    | Type.Float -> float 0.
+    | Type.String -> string ""
+    | Type.Char -> char '_'
+    | Type.Array _ -> failwith ("new array is not an expression")
+    | Type.Void -> failwith ("no dummy expression for void")
+    | Type.Bool -> boolean false
+    | Type.Named _ -> failwith ("new named is not an expression")
+    | Type.Auto -> failwith ("auto is not an expression")
+    | Type.Struct _ -> failwith ("new named is not an expression")
+
+  module Writer = AstWriter.F (struct
+    type 'a alias = 'a t;;
+    type 'a t = 'a alias;;
+    let foldmap f acc t =
+      let annot = Fixed.annot t in
+      match unfix t with
+        | UnOp (a, op) ->
+          let acc, a = f acc a in
+          (acc, Fixed.fixa annot (UnOp(a, op)))
+        | BinOp (a, op, b) ->
+          let acc, a = f acc a in
+          let acc, b = f acc b in
+          (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
+        | Char _ -> acc, t
+        | String _ -> acc, t
+        | Float _ -> acc, t
+        | Integer _ -> acc, t
+        | Bool _ -> acc, t
+        | Access m ->
+          let acc, m = Mutable.foldmap_expr f acc m in
+          acc, Fixed.fixa annot (Access m)
+        | Length m ->
+          let acc, m = Mutable.foldmap_expr f acc m in
+          acc, Fixed.fixa annot (Length m)
+        | Call (name, li) ->
+          let acc, li = List.fold_left_map f acc li in
+          (acc, Fixed.fixa annot (Call(name, li)) )
+  end)
+end

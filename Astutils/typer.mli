@@ -33,5 +33,5 @@
 type env
 
 val process : 'lex Prog.t -> env * 'lex Prog.t
-val is_int : env -> 'lex Expr.t -> bool
-val is_float : env -> 'lex Expr.t -> bool
+val is_int : env -> 'lex Ast.Expr.t -> bool
+val is_float : env -> 'lex Ast.Expr.t -> bool

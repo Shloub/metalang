@@ -1,15 +1,14 @@
 %{
   open Stdlib
-  open Ast
-	module E = Expr
-	module M = Mutable
+	module E = Ast.Expr
+	module M = Ast.Mutable
 	module I = Instr
-	module T = Type
+	module T = Ast.Type
 	module P = Prog
 
 
   let locate pos e =
-    let () = Ast.PosMap.add (E.annot e) pos
+    let () = Ast.PosMap.add (E.Fixed.annot e) pos
     in e
   let locati pos e =
     let () = Ast.PosMap.add (I.annot e) pos
@@ -51,7 +50,7 @@
 %start prog toplvls toplvl_expr
 %type<token Prog.t_fun list * token Instr.t list option> prog
 %type<token Prog.t_fun list> toplvls
-%type<token Expr.t> toplvl_expr
+%type<token Ast.Expr.t> toplvl_expr
 %%
 
 prog :
@@ -100,7 +99,7 @@ expr :
   E.call $1 $3
     |> locate ( Ast.location ($startpos($1), $endpos($4)))
 }
-| LEXEMS { Expr.lexems $1 }
+| LEXEMS { E.lexems $1 }
 ;
 
 mutabl :
@@ -154,23 +153,23 @@ affect_field :
 
 alloc_record :
 | DEF IDENT SET RECORD affect_field* END
-    { I.alloc_record $2 (Type.auto ()) $5 }
+    { I.alloc_record $2 (T.auto ()) $5 }
 | DEF typ IDENT SET RECORD affect_field* END
     { I.alloc_record $3 $2 $6 }
 ;
 
 define_var :
-| DEF IDENT SET expr { I.declare $2 (Type.auto ()) $4 }
+| DEF IDENT SET expr { I.declare $2 (T.auto ()) $4 }
 | DEF typ IDENT SET expr { I.declare $3 $2 $5 }
 | DEF IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-    { I.alloc_array_lambda $2 (Type.auto ()) $4 $7 $9 }
+    { I.alloc_array_lambda $2 (T.auto ()) $4 $7 $9 }
 | DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
 	{ match T.unfix $2 with
 	  | T.Array x -> I.alloc_array_lambda $3 x $5 $8 $10
     | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10
 		| _ -> failwith "expected array"
 	}
-| DEF READ IDENT { I.readdecl (Type.auto ()) $3 }
+| DEF READ IDENT { I.readdecl (T.auto ()) $3 }
 | DEF READ typ IDENT { I.readdecl $3 $4 }
 ;
 
@@ -198,7 +197,7 @@ instr :
 | READ typ mutabl { I.read $2 $3
                       |> locati ( Ast.location ($startpos($1), $endpos($3)))
                   }
-| PRINT expr { I.print (Type.auto ()) $2
+| PRINT expr { I.print (T.auto ()) $2
                  |> locati ( Ast.location ($startpos($1), $endpos($2)))
              }
 | PRINT typ expr { I.print $2 $3

@@ -66,7 +66,7 @@ class ['lex] camlPrinter = object(self)
 
 
   method ptype f t =
-      match Type.unfix t with
+      match Type.Fixed.unfix t with
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
       | Type.Float -> Format.fprintf f "float"
@@ -340,7 +340,7 @@ class ['lex] camlPrinter = object(self)
     let proto = if is_rec then self#print_rec_proto else self#print_proto in
     let () = sad_returns <- contains_sad_return instrs in
     match t with
-      | Type.F (_, Type.Void) ->
+      | Type.Fixed.F (_, Type.Void) ->
 	if sad_returns then failwith("return in a void function : "^funname)
 	else
 	  Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n@\n"

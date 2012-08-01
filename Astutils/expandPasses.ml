@@ -48,10 +48,10 @@ module NoPend : SigPass = struct
       match Instr.unfix t0 with
         | Instr.AllocArray(
           _, _,
-          Expr.F (_, Expr.Access (
+          Expr.Fixed.F (_, Expr.Access (
             Mutable.Fixed.F
               (_, Mutable.Var _))), _)
-        | Instr.Print(_, Expr.F
+        | Instr.Print(_, Expr.Fixed.F
           (_,
            (Expr.Access ( Mutable.Fixed.F
                             (_, Mutable.Var _))
@@ -103,7 +103,7 @@ module AllocArrayExpend : SigPass = struct
   let init_acc () = ();;
 
   let locate loc e =
-    PosMap.add (Expr.annot e) loc; e
+    PosMap.add (Expr.Fixed.annot e) loc; e
 
   let locatm loc m =
     PosMap.add (Mutable.Fixed.annot m) loc; m
@@ -117,11 +117,11 @@ module AllocArrayExpend : SigPass = struct
       | Instr.Return e -> Instr.affect
         (Instr.mutable_array
            (Instr.mutable_var tab
-               |> locatm (PosMap.get (Expr.annot e))
+               |> locatm (PosMap.get (Expr.Fixed.annot e))
            ) [Expr.access (Mutable.var index
-                              |> locatm (PosMap.get (Expr.annot e))
+                              |> locatm (PosMap.get (Expr.Fixed.annot e))
            )
-             |> locate (PosMap.get (Expr.annot e))
+             |> locate (PosMap.get (Expr.Fixed.annot e))
              ]) e
       | Instr.AllocArray _ -> i
       | _ -> tra i
@@ -136,7 +136,7 @@ module AllocArrayExpend : SigPass = struct
       ;
         Instr.loop b2 (Expr.integer 0)
           (Expr.binop Expr.Sub len (Expr.integer 1)
-              |> locate (PosMap.get (Expr.annot len))
+              |> locate (PosMap.get (Expr.Fixed.annot len))
           )
           (mapret b b2 instrs)
           |> locati (PosMap.get (Instr.annot i))
@@ -195,19 +195,19 @@ module ExpandPrint : SigPass = struct
            (Expr.integer 1))
         (
           match t with
-            | Type.F ( _, (Type.Array t2)) -> (b2i) :: (write t2 b2)
-            | Type.F (_, Type.Bool) -> [b2i ; write_bool b2]
+            | Type.Fixed.F ( _, (Type.Array t2)) -> (b2i) :: (write t2 b2)
+            | Type.Fixed.F (_, Type.Bool) -> [b2i ; write_bool b2]
             | _ -> [ Instr.print t b2e]
         )
     ]
 
   let rec rewrite (i : 'lex Instr.t) : 'lex Instr.t list = match Instr.unfix i with
-    | Instr.Print(Type.F (_, (Type.Array t)), Expr.F (annot,
+    | Instr.Print(Type.Fixed.F (_, (Type.Array t)), Expr.Fixed.F (annot,
                                                       Expr.Access ( Mutable.Fixed.F
                                                                       (_, Mutable.Var b))
     ) ) ->
       write t b
-    | Instr.Print(Type.F (_, Type.Bool), Expr.F (annot,
+    | Instr.Print(Type.Fixed.F (_, Type.Bool), Expr.Fixed.F (annot,
                                                  Expr.Access ( Mutable.Fixed.F
                                                                  (_, Mutable.Var b))
     ) ) ->

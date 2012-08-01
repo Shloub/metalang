@@ -130,8 +130,8 @@ and eval_mut (env:env) (mut : result Mutable.t) : result =
 and exprmut_to_resmut env mut =
   Mutable.map_expr (eval_expr env) mut
 and eval_expr (env:env) (t:Parser.token Expr.t) =
-  let loc = PosMap.get (Expr.annot t) in
-  match Expr.map (eval_expr env) (Expr.unfix t) with
+  let loc = PosMap.get (Expr.Fixed.annot t) in
+  match Expr.Fixed.map (eval_expr env) (Expr.Fixed.unfix t) with
     | Expr.Char c -> Char c
     | Expr.String s -> String s
     | Expr.Integer i -> Integer i

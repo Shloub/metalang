@@ -97,7 +97,7 @@ module Rename = struct
         Mutable.Dot ((mapmutable map m), f) |> Mutable.fix
 
   and process_expr map e =
-    let f e = Expr.fixa (Expr.annot e) (match Expr.unfix e with
+    let f e = Expr.Fixed.fixa (Expr.Fixed.annot e) (match Expr.Fixed.unfix e with
       | Expr.Access mutable_ ->
         Expr.Access (mapmutable map mutable_)
       | Expr.Call (funname, li) ->
@@ -160,7 +160,7 @@ module CollectCalls = struct
   let init_acc () = BindingSet.empty
 
   let process_expr acc e =
-    let f acc e = match Expr.unfix e with
+    let f acc e = match Expr.Fixed.unfix e with
       | Expr.Call (funname, _) -> BindingSet.add funname acc
       | e -> acc
     in Expr.Writer.Deep.fold f acc e

@@ -1,9 +1,7 @@
 Ast
 AstWriter
-Expr
 Instr
 Prog
-Type
 Passes
 PassesUtils
 CheckingPasses

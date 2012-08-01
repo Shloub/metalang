@@ -121,7 +121,7 @@ class ['lex] printer = object(self)
   method return f e =
     Format.fprintf f "@[<h>return@ %a@]" self#expr e
 
-  method ptype f t =
+  method ptype f (t:Type.t) =
       match Type.unfix t with
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
@@ -297,7 +297,7 @@ class ['lex] printer = object(self)
     | Instr.DeclRead (t, var) -> self#read_decl f t var
     | Instr.Print (t, expr) -> self#print f t expr
 
-  method format_type f t = match Type.unfix t with
+  method format_type f (t:Type.t) = match Type.unfix t with
     | Type.Integer -> Format.fprintf f "%%d"
     | Type.Float -> Format.fprintf f "%%.2f"
     | Type.Char -> Format.fprintf f "%%c"
