@@ -48,7 +48,7 @@
 %left NOT
 
 %start prog toplvls toplvl_expr
-%type<token Ast.Prog.t_fun list * token Ast.Instr.t list option> prog
+%type<token Ast.Prog.t_fun list * token Ast.Expr.t Ast.Instr.t list option> prog
 %type<token Ast.Prog.t_fun list> toplvls
 %type<token Ast.Expr.t> toplvl_expr
 %%

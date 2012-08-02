@@ -318,22 +318,21 @@ module Instr = struct
   let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.Fixed.fix
   let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.Fixed.fix
 
-  type ('a, 'lex) tofix =
-      Declare of varname * Type.t * 'lex Expr.t
-    | Affect of 'lex Expr.t Mutable.t * 'lex Expr.t
-    | Loop of varname * 'lex Expr.t * 'lex Expr.t * 'a list
-    | While of 'lex Expr.t * 'a list
+  type ('a, 'expr) tofix =
+      Declare of varname * Type.t * 'expr
+    | Affect of 'expr Mutable.t * 'expr
+    | Loop of varname * 'expr * 'expr * 'a list
+    | While of 'expr * 'a list
     | Comment of string
-    | Return of 'lex Expr.t
-    | AllocArray of varname * Type.t * 'lex Expr.t * (varname * 'a list) option
-    | AllocRecord of varname * Type.t * (fieldname * 'lex Expr.t) list
-    | If of 'lex Expr.t * 'a list * 'a list
-    | Call of funname * 'lex Expr.t list
-    | Print of Type.t * 'lex Expr.t
-    | Read of Type.t * 'lex Expr.t Mutable.t
+    | Return of 'expr
+    | AllocArray of varname * Type.t * 'expr * (varname * 'a list) option
+    | AllocRecord of varname * Type.t * (fieldname * 'expr) list
+    | If of 'expr * 'a list * 'a list
+    | Call of funname * 'expr list
+    | Print of Type.t * 'expr
+    | Read of Type.t * 'expr Mutable.t
     | DeclRead of Type.t * varname
     | StdinSep
-
 
   let map_bloc f t = match t with
     | Declare (a, b, c) -> Declare (a, b, c)
@@ -485,7 +484,8 @@ end
 
 module Prog = struct
 type 'lex t_fun =
-    DeclarFun of varname * Type.t * ( varname * Type.t ) list * 'lex Instr.t list
+    DeclarFun of varname * Type.t *
+        ( varname * Type.t ) list * 'lex Expr.t Instr.t list
   | DeclareType of typename * Type.t
   | Macro of varname * Type.t * (varname * Type.t) list * (string * string) list
   | Comment of string
@@ -499,7 +499,7 @@ type 'lex t =
     {
       progname : string;
       funs : 'lex t_fun list;
-      main : 'lex Instr.t list option;
+      main : 'lex Expr.t Instr.t list option;
     }
 
 end

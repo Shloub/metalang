@@ -42,7 +42,7 @@ let get_bool = function
 
 type  env = {
   vars : result StringMap.t;
-  functions : (string list * Parser.token Instr.t list) StringMap.t;
+  functions : (string list * Parser.token Expr.t Instr.t list) StringMap.t;
 }
 
 let empty_env =
@@ -59,49 +59,44 @@ let tyerr loc =
 let num_op loc ( + ) ( +. ) a b = match a, b with
   | Float i, Float j -> Float (i +. j)
   | Integer i, Integer j -> Integer (i + j)
-  | Integer i, Float j -> Float (float_of_int i +. j)
-  | Float i, Integer j -> Float (i +. float_of_int j)
   | _ -> tyerr loc
-let int_op loc f = num_op loc f (fun _ _ -> tyerr loc)
-let num_cmp loc ( < ) a b = match a, b with
-  | Float i, Float j -> Bool (i < j)
-  | Integer i, Integer j -> Bool (float_of_int i < float_of_int j)
-  | Integer i, Float j -> Bool (float_of_int i < j)
-  | Float i, Integer j -> Bool (i < float_of_int j)
-  | Bool i, Bool j -> Bool (float_of_bool i < float_of_bool j)
-  | Char i, Char j -> Bool (float_of_char i < float_of_char j)
-  | _ -> tyerr loc
+let int_op loc f a b = num_op loc f (fun _ _ -> tyerr loc) a b
+let num_cmp loc f a b =
+  let (<) = Obj.magic f in
+  match a, b with
+    | Float i, Float j -> Bool (i < j)
+    | Integer i, Integer j -> Bool (i < j)
+    | Bool i, Bool j -> Bool ( i < j)
+    | Char i, Char j -> Bool ( i < j)
+    | _ -> tyerr loc
 let bool_op loc ( = ) a b = match a, b with
   | Bool i, Bool j -> Bool (i = j)
   | _ -> tyerr loc
 
-let binop loc = function
-  | Expr.Add -> num_op loc ( + ) ( +. )
-  | Expr.Sub -> num_op loc ( - ) ( -. )
-  | Expr.Mul -> num_op loc ( * ) ( *. )
-  | Expr.Div -> num_op loc ( / ) ( /. )
-  | Expr.Mod -> int_op loc ( mod )
-
-  | Expr.LowerEq -> num_cmp loc ( <= )
-  | Expr.Lower -> num_cmp loc ( < )
-  | Expr.HigherEq -> num_cmp loc ( >= )
-  | Expr.Higher -> num_cmp loc ( > )
-  | Expr.Eq -> num_cmp loc ( = )
-  | Expr.Diff -> num_cmp loc ( <> )
-
-  | Expr.BinOr -> int_op loc ( lor )
-  | Expr.BinAnd -> int_op loc ( land )
-  | Expr.RShift -> int_op loc ( lsr )
-  | Expr.LShift -> int_op loc ( lsl )
-
-  | Expr.Or -> bool_op loc ( || )
-  | Expr.And -> bool_op loc ( && )
+let binop loc op a b = match op with
+  | Expr.Add -> num_op loc ( + ) ( +. ) a b
+  | Expr.Sub -> num_op loc ( - ) ( -. ) a b
+  | Expr.Mul -> num_op loc ( * ) ( *. ) a b
+  | Expr.Div -> num_op loc ( / ) ( /. ) a b
+  | Expr.Mod -> int_op loc ( mod ) a b
+  | Expr.LowerEq -> num_cmp loc ( <= ) a b
+  | Expr.Lower -> num_cmp loc ( < ) a b
+  | Expr.HigherEq -> num_cmp loc ( >= ) a b
+  | Expr.Higher -> num_cmp loc ( > ) a b
+  | Expr.Eq -> num_cmp loc ( = ) a b
+  | Expr.Diff -> num_cmp loc ( <> ) a b
+  | Expr.BinOr -> int_op loc ( lor ) a b
+  | Expr.BinAnd -> int_op loc ( land ) a b
+  | Expr.RShift -> int_op loc ( lsr ) a b
+  | Expr.LShift -> int_op loc ( lsl ) a b
+  | Expr.Or -> bool_op loc ( || ) a b
+  | Expr.And -> bool_op loc ( && ) a b
 
 let find_in_env (env:env) v : result =
   StringMap.find v env.vars
+
 let add_in_env (env:env) v (r : result) =
   {env with vars = StringMap.add v r env.vars}
-
 
 let rec mut_refval (env:env) (mut : result Mutable.t)
     : result ref option =

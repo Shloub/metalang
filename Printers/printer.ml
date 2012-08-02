@@ -444,7 +444,7 @@ class ['lex] printer = object(self)
   method decl_type f name t =
     Format.fprintf f "type %a = %a;" self#binding name self#ptype t
 
-  method prog f prog =
+  method prog f (prog: 'a Prog.t) =
     Format.fprintf f "%a%a@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -466,7 +466,7 @@ class ['lex] printer = object(self)
        )
     ) funs
 
-  method main f main =
+  method main f (main : 'a Expr.t Instr.t list) =
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
      self#instructions main
 end
