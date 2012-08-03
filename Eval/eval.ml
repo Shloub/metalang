@@ -42,8 +42,11 @@ let get_bool = function
 
 type  env = {
   vars : result StringMap.t;
-  functions : (string list * Parser.token Expr.t Instr.t list) StringMap.t;
+  functions : (string list * precompiledExpr Instr.t list) StringMap.t;
 }
+and precompiledExpr =
+  | Result of result
+  | WithEnv of (env -> result)
 
 let empty_env =
   {
@@ -98,7 +101,65 @@ let find_in_env (env:env) v : result =
 let add_in_env (env:env) v (r : result) =
   {env with vars = StringMap.add v r env.vars}
 
-let rec mut_refval (env:env) (mut : result Mutable.t)
+
+
+let eval_expr env (e : precompiledExpr) : result = match e with
+  | Result r -> r
+  | WithEnv f -> f env
+
+let rec precompile_expr (t:Parser.token Expr.t) : precompiledExpr =
+  let loc = PosMap.get (Expr.Fixed.annot t) in
+  let res x = Result x in
+  match Expr.Fixed.map (precompile_expr)
+    (Expr.Fixed.unfix t) with
+      | Expr.Char c -> Char c |> res
+      | Expr.String s -> String s |> res
+      | Expr.Integer i -> Integer i |> res
+      | Expr.Float f -> Float f |> res
+      | Expr.Bool b -> Bool b |> res
+      | Expr.BinOp (Result a, op, Result b) ->
+        binop loc op a b |> res
+      | Expr.BinOp (Result a, op, WithEnv b) ->
+        WithEnv (fun (env:env) ->
+          binop loc op a (b env)
+        )
+      | Expr.BinOp (WithEnv a, op, Result b) ->
+        WithEnv (fun (env:env) ->
+          binop loc op (a env) b
+        )
+      | Expr.BinOp (WithEnv a, op, WithEnv b) ->
+        WithEnv (fun (env:env) ->
+          binop loc op (a env) (b env)
+        )
+      | Expr.UnOp (Result r, Expr.Neg) ->
+        Integer (- (get_integer r  ) ) |>  res
+      | Expr.UnOp (WithEnv f, Expr.Neg) ->
+        WithEnv (fun (env:env) ->
+          Integer (- (get_integer (f env ) ) )
+        )
+      | Expr.UnOp (Result r, Expr.Not) ->
+        Bool (not (get_bool r ) ) |> res
+      | Expr.UnOp (WithEnv f, Expr.Not) ->
+        WithEnv (fun (env:env) ->
+          Bool (not (get_bool (f env) ) )
+        )
+      | Expr.Access mut ->
+        WithEnv (fun (env:env) -> eval_mut env mut )
+      | Expr.Length arr ->
+        WithEnv (fun (env:env) ->
+          let a = eval_mut env arr |> get_array in
+          Integer (Array.length a) )
+      | Expr.Call (name, params) ->
+        WithEnv (fun (env:env) ->
+          let params = List.map (eval_expr env) params in
+          eval_call env name params |> Option.extract
+        )
+      (*| Expr.UnOp (Integer i, Expr.BNot) -> Integer (lnot )
+        | Expr.UnOp (Float i, Expr.Neg) -> Float (-. i) *)
+      | Expr.UnOp (_, _) -> assert false
+
+
+and  mut_refval (env:env) (mut : precompiledExpr Mutable.t)
     : result ref option =
   match Mutable.unfix mut with
     | Mutable.Var v ->
@@ -107,7 +168,7 @@ let rec mut_refval (env:env) (mut : result Mutable.t)
       let m = eval_mut env m in
       Some (List.fold_left
               (fun m index ->
-                (get_array (!m)).(get_integer index)
+                (get_array (!m)).(get_integer (eval_expr env index))
               )
               (ref m)
               li)
@@ -117,33 +178,11 @@ let rec mut_refval (env:env) (mut : result Mutable.t)
           Some (StringMap.find field map)
         | _ -> assert false
       end
-and eval_mut (env:env) (mut : result Mutable.t) : result =
+and eval_mut (env:env) (mut : precompiledExpr Mutable.t) : result =
   match Mutable.unfix mut with
     | Mutable.Var v ->
       find_in_env env v
     | _ -> !(mut_refval env mut |> Option.extract)
-and exprmut_to_resmut env mut =
-  Mutable.map_expr (eval_expr env) mut
-and eval_expr (env:env) (t:Parser.token Expr.t) =
-  let loc = PosMap.get (Expr.Fixed.annot t) in
-  match Expr.Fixed.map (eval_expr env) (Expr.Fixed.unfix t) with
-    | Expr.Char c -> Char c
-    | Expr.String s -> String s
-    | Expr.Integer i -> Integer i
-    | Expr.Float f -> Float f
-    | Expr.Bool b -> Bool b
-    | Expr.Access mut -> eval_mut env mut
-    | Expr.Length arr ->
-      let a = eval_mut env arr |> get_array in
-      Integer (Array.length a)
-    | Expr.Call (name, params) ->
-      eval_call env name params |> Option.extract
-    | Expr.BinOp (a, op, b) -> binop loc op a b
-    | Expr.UnOp (Integer i, Expr.Neg) -> Integer (-i)
-    | Expr.UnOp (Bool i, Expr.Not) -> Bool (not i)
-    | Expr.UnOp (Integer i, Expr.BNot) -> Integer (lnot i)
-    | Expr.UnOp (Float i, Expr.Neg) -> Float (-. i)
-    | Expr.UnOp (_, _) -> assert false
 and eval_call env name paramsv =
   try
     let (params, instrs) = StringMap.find name env.functions in
@@ -162,7 +201,8 @@ and eval_call env name paramsv =
         Some (Float (float_of_int (get_integer param) ))
       | _ -> failwith ("The Macro "^name^" cannot be evaluated with
     "^(string_of_int (List.length paramsv))^" arguments")
-and eval_instr env instr = match Instr.unfix instr with
+and eval_instr env (instr: precompiledExpr Instr.t)
+    = match Instr.unfix instr with
   | Instr.Declare (varname, _, e) ->
     let e = eval_expr env e in
     let env = add_in_env env varname e in
@@ -171,8 +211,7 @@ and eval_instr env instr = match Instr.unfix instr with
     let e () = eval_expr env e in
     let env = match Mutable.unfix mutable_ with
       | Mutable.Var v -> add_in_env env v (e ())
-      | _ -> match mut_refval env
-          (exprmut_to_resmut env mutable_) with
+      | _ -> match mut_refval env mutable_ with
             | None -> assert false
             | Some x -> let () = x := e () in env
     in env, None
@@ -241,7 +280,7 @@ and eval_instr env instr = match Instr.unfix instr with
       let env =
         match Mutable.unfix mut with
           | Mutable.Var v -> add_in_env env v value
-          | _ -> match mut_refval env (exprmut_to_resmut env mut) with
+          | _ -> match mut_refval env mut with
               | None -> assert false
               | Some x -> let () = x := value in env
       in env, None
@@ -291,12 +330,46 @@ and eval_instrs env instrs =
         )
         (env, None) instrs
 
+let rec precompile_instrs li =
+  List.map precompile_instr li
+and precompile_instr i =
+  let i = match Instr.unfix i with
+    | Instr.Declare (v, t, e) -> Instr.Declare (v, t, precompile_expr e)
+    | Instr.Affect (mut, e) -> Instr.Affect (Mutable.map_expr precompile_expr
+                                               mut, precompile_expr e)
+    | Instr.Loop (v, e1, e2, li) ->
+      Instr.Loop (v,
+                  precompile_expr e1,
+                  precompile_expr e2,
+                  precompile_instrs li)
+    | Instr.While (e, li) ->
+      Instr.While (precompile_expr e, precompile_instrs li)
+    | Instr.Comment s -> Instr.Comment s
+    | Instr.Return e -> Instr.Return (precompile_expr e)
+    | Instr.AllocArray (v, t, e, opt) ->
+      let opt = match opt with
+        | None -> None
+        | Some ((v, li)) -> Some (v, precompile_instrs li)
+      in Instr.AllocArray(v, t, precompile_expr e, opt)
+    | Instr.AllocRecord (v, t, li) ->
+      let li = List.map
+        (fun (name, e) -> (name, precompile_expr e)) li
+      in Instr.AllocRecord (v, t, li)
+    | Instr.If (e, l1, l2) ->
+      Instr.If (precompile_expr e, precompile_instrs l1, precompile_instrs l2)
+    | Instr.Call (name, li) -> Instr.Call (name, List.map precompile_expr li)
+    | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
+    | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
+    | Instr.DeclRead (t, v) -> Instr.DeclRead (t, v)
+    | Instr.StdinSep -> Instr.StdinSep
+  in Instr.Fixed.fix i
+
 let eval_prog (p:Parser.token Prog.t) =
   let f env p = match p with
     | Prog.DeclarFun (var, t, li, instrs) ->
       {env with functions =
           StringMap.add var
-            (List.map fst li, instrs)
+            (List.map fst li, precompile_instrs instrs)
             env.functions
       }
     | Prog.DeclareType _ -> env
@@ -305,5 +378,5 @@ let eval_prog (p:Parser.token Prog.t) =
     | Prog.Global (var, ty, e) -> env (* TODO *)
   in let env = List.fold_left f empty_env p.Prog.funs
   in match p.Prog.main with
-    | Some instrs -> eval_instrs env instrs
+    | Some instrs -> eval_instrs env (precompile_instrs instrs)
     | None -> env, None
