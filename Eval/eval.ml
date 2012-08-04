@@ -35,28 +35,24 @@ let typeof = function
 
 let get_array = function
   | Array a -> a
-  | _ -> assert false
 
 let get_integer = function
   | Integer a -> a
-  | _ -> assert false
 
 let get_char = function
   | Char a -> a
-  | _ -> assert false
 
 let get_string = function
   | String a -> a
-  | _ -> assert false
 
 let get_bool = function
   | Bool a -> a
-  | _ -> assert false
 
 type  env = {
-  vars : result StringMap.t;
+  vars : result ref StringMap.t;
   functions : (string list * precompiledExpr Instr.t list) StringMap.t;
 }
+
 and precompiledExpr =
   | Result of result
   | WithEnv of (env -> result)
@@ -108,10 +104,10 @@ let binop loc op a b = match op with
   | Expr.Or -> bool_op loc ( || ) a b
   | Expr.And -> bool_op loc ( && ) a b
 
-let find_in_env (env:env) v : result =
+let find_in_env (env:env) v : result ref =
   StringMap.find v env.vars
 
-let add_in_env (env:env) v (r : result) =
+let add_in_env (env:env) v (r : result ref) =
   {env with vars = StringMap.add v r env.vars}
 
 
@@ -157,10 +153,10 @@ let rec precompile_expr (t:Parser.token Expr.t) : precompiledExpr =
           Bool (not (get_bool (f env) ) )
         )
       | Expr.Access mut ->
-        WithEnv (fun (env:env) -> eval_mut env mut )
+        WithEnv (fun (env:env) -> !(mut_refval env mut))
       | Expr.Length arr ->
         WithEnv (fun (env:env) ->
-          let a = eval_mut env arr |> get_array in
+          let a = !(mut_refval env arr) |> get_array in
           Integer (Array.length a) )
       | Expr.Call (name, params) ->
         WithEnv (fun (env:env) ->
@@ -173,35 +169,30 @@ let rec precompile_expr (t:Parser.token Expr.t) : precompiledExpr =
 
 
 and  mut_refval (env:env) (mut : precompiledExpr Mutable.t)
-    : result ref option =
+    : result ref =
   match Mutable.unfix mut with
     | Mutable.Var v ->
-      None
+      StringMap.find v env.vars
     | Mutable.Array (m, li) ->
-      let m = eval_mut env m in
-      Some (List.fold_left
-              (fun m index ->
-                (get_array (!m)).(get_integer (eval_expr env index))
-              )
-              (ref m)
-              li)
+      let m = mut_refval env m in
+      List.fold_left
+        (fun m index ->
+          (get_array (!m)).(get_integer (eval_expr env index))
+        )
+        m
+        li
     | Mutable.Dot (m, field) ->
-      begin match eval_mut env m with
+      begin match !(mut_refval env m) with
         | Record map ->
-          Some (StringMap.find field map)
+          StringMap.find field map
         | _ -> assert false
       end
-and eval_mut (env:env) (mut : precompiledExpr Mutable.t) : result =
-  match Mutable.unfix mut with
-    | Mutable.Var v ->
-      find_in_env env v
-    | _ -> !(mut_refval env mut |> Option.extract)
 and eval_call env name paramsv =
   try
     let (params, instrs) = StringMap.find name env.functions in
     let env = List.fold_left
       (fun env (name, value) ->
-        add_in_env env name value
+        add_in_env env name (ref value)
       )
       { env with vars = StringMap.empty () }
       (List.combine params paramsv)
@@ -217,24 +208,22 @@ and eval_call env name paramsv =
 and eval_instr env (instr: precompiledExpr Instr.t)
     = match Instr.unfix instr with
   | Instr.Declare (varname, _, e) ->
-    let e = eval_expr env e in
+    let e = ref (eval_expr env e) in
     let env = add_in_env env varname e in
     env, None
   | Instr.Affect (mutable_, e) ->
     let e () = eval_expr env e in
-    let env = match Mutable.unfix mutable_ with
-      | Mutable.Var v -> add_in_env env v (e ())
-      | _ -> match mut_refval env mutable_ with
-            | None -> assert false
-            | Some x -> let () = x := e () in env
-    in env, None
+    let mut = mut_refval env mutable_
+    in mut := e (); env, None
   | Instr.Loop (varname, e1, e2, instrs) ->
     let e1 = eval_expr env e1 in
     let e2 = eval_expr env e2 in
+    let mut = ref e1 in
+    let env = add_in_env env varname mut in
     let rec f env e =
+      let () = mut := e in
       if (get_integer e) > (get_integer e2) then env, None
       else
-        let env = add_in_env env varname e in
         let env, opt = eval_instrs env instrs in
         match opt with
           | Some _ -> env, opt
@@ -256,14 +245,16 @@ and eval_instr env (instr: precompiledExpr Instr.t)
     let v = match opt with
       | None -> Array.make len (Obj.magic 0)
       | Some ((name, lambda)) ->
+        let r = ref (Integer 0) in
+        let env = add_in_env env name r in
         Array.init len (fun i ->
-          let env = add_in_env env name (Integer i) in
+          let () = r := Integer i in
           match eval_instrs env lambda with
             | _, None -> assert false
             | _, Some e -> ref e
         )
     in
-    let v = Array v
+    let v = ref (Array v)
     in (add_in_env env var v), None
   | Instr.AllocRecord (var, t, fields) ->
     let v = StringMap.empty () in
@@ -274,7 +265,7 @@ and eval_instr env (instr: precompiledExpr Instr.t)
       )
       v
       fields
-    in let v = Record v
+    in let v = ref (Record v)
     in (add_in_env env var v), None
   | Instr.If (e, l1, l2) ->
     let e = eval_expr env e in
@@ -290,17 +281,15 @@ and eval_instr env (instr: precompiledExpr Instr.t)
     print env t e
   | Instr.Read (t, mut) ->
     let f value =
-      let env =
-        match Mutable.unfix mut with
-          | Mutable.Var v -> add_in_env env v value
-          | _ -> match mut_refval env mut with
-              | None -> assert false
-              | Some x -> let () = x := value in env
+      let () = (mut_refval env mut) := value
       in env, None
     in read t f
   | Instr.DeclRead (t, var) ->
+    let r = ref (Obj.magic 0) in
+    let env = add_in_env env var r in
     read t (fun v ->
-      add_in_env env var v, None)
+      let () = r := v in
+      env, None)
   | Instr.StdinSep _ ->
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     env, None
@@ -330,11 +319,6 @@ and read ty k = match Type.unfix ty with
     )
   | _ -> failwith ("cannot read type "^(Type.type_t_to_string ty))
 and eval_instrs env instrs =
-(*  let () = match instrs with
-    | hd::tl -> Printf.printf
-        "eval %a\n%!" ploc (PosMap.get (Instr.annot hd ))
-    | [] -> ()
-    in *)
       List.fold_left
         (fun (env, ret) instr ->
           match ret with
