@@ -3,6 +3,7 @@ def int fibo(int a, int b, int i)
 	def int a2 = a
 	def int b2 = b
 	for j=0 to i+1 do
+    print j
 		out_ = out_ + a2
 		def int tmp = b2
 		b2 = b2 + a2
