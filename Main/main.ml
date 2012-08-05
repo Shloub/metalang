@@ -187,7 +187,7 @@ let process c filename =
   let prog = make_prog c.stdlib filename in
   if c.eval then
     let env, prog = Typer.process prog in begin
-      Eval.eval_prog prog;
+      Eval.eval_prog env prog;
       ()
     end
   else

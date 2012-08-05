@@ -16,14 +16,13 @@ module StringMap = struct
 end
 *)
 
-
 type result =
   | Integer of int
   | Float of float
   | Bool of bool
   | Char of char
   | String of string
-  | Record of result ref StringMap.t
+  | Record of result ref array
   | Array of result ref array
   | Nil
 
@@ -72,14 +71,16 @@ type  env = {
   functions :
     (int * (execenv -> unit) ) ref
     StringMap.t;
+  tyenv : Typer.env;
 }
 
 and precompiledExpr =
   | Result of result
   | WithEnv of (execenv -> result)
 
-let empty_env =
+let empty_env te =
   {
+    tyenv = te;
     nvars = 0;
     vars = StringMap.empty;
     functions = StringMap.empty;
@@ -142,6 +143,12 @@ let add_in_env (env:env) v : env * int =
 let eval_expr execenv (e : precompiledExpr) :  result = match e with
   | Result r -> r
   | WithEnv f -> f execenv
+
+let index_for_field env field =
+  match Type.unfix (Typer.type_of_field env.tyenv field) with
+    | Type.Struct (li, _) ->
+      let li = List.map fst li |> List.sort String.compare in
+      List.indexof field li
 
 let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
   let loc = PosMap.get (Expr.Fixed.annot t) in
@@ -222,15 +229,12 @@ and  mut_refval (env:env) (mut : precompiledExpr Mutable.t)
         m
         li
     | Mutable.Dot (m, field) ->
+      let index = index_for_field env field in
       let m = mut_refval env m in
       (fun execenv ->
         match !(m execenv) with
           | Record map ->
-            begin try
-                    StringMap.find field map
-              with Not_found ->
-                Printf.printf "Cannot find field %s\n" field; assert false
-            end
+            map.(index)
           | x ->
             Printf.printf "Got %s expected Record\n" (typeof x);
             assert false
@@ -329,17 +333,19 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
         in env, f
     end
   | Instr.AllocRecord (var, t, fields) ->
-    let fields = List.map (fun (name, e) -> name, e env) fields in
+    let fields = List.map (fun (name, e) ->
+      index_for_field env name, e env) fields in
+    let len = List.length fields in
     let env, r = add_in_env env var in
     let f execenv =
-      let v = List.fold_left
-        (fun v (name, e) ->
+      let record = Array.make len (ref Nil) in
+      let () = List.iter
+        (fun (index, e) ->
           let e = eval_expr execenv e in
-          StringMap.add name (ref e) v
+          record.(index) <- ref e
         )
-        StringMap.empty
       fields
-      in execenv.(r) := Record v
+      in execenv.(r) := (Record record)
     in env, f
   | Instr.If (e, l1, l2) ->
     let e = e env in
@@ -443,7 +449,7 @@ and precompile_instr i =
     | Instr.StdinSep -> Instr.StdinSep
   in Instr.Fixed.fix i
 
-let eval_prog (p:Parser.token Prog.t) =
+let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
   let f env p = match p with
     | Prog.DeclarFun (var, t, li, instrs) ->
       let nvars = List.length li in
@@ -471,7 +477,7 @@ let eval_prog (p:Parser.token Prog.t) =
     | Prog.Macro (varname, t, li, impls) -> env
     | Prog.Comment s -> env
     | Prog.Global (var, ty, e) -> env (* TODO *)
-  in let env = List.fold_left f empty_env p.Prog.funs
+  in let env = List.fold_left f (empty_env te) p.Prog.funs
   in match p.Prog.main with
     | Some instrs ->
       let env, f = eval_instrs {env with nvars = 0} (precompile_instrs instrs)

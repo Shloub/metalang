@@ -74,6 +74,9 @@ type env =
       contraintes : (typeContrainte ref * typeContrainte ref) list;
     }
 
+let type_of_field env field =
+  let (_, t, _) = StringMap.find field env.fields in t
+
 let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
     : (env * typeContrainte ref) =
   let refenv = ref env in

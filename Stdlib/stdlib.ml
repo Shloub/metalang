@@ -105,6 +105,13 @@ end
 module List = struct
   include List
 
+  let indexof item li =
+    fold_left
+      (fun (found, index) i ->
+        if i = item then index, index + 1
+          else (found, index + 1)
+       ) (-1, 0) li |> fst
+
   let zip = combine
   let zip_with = List.map2
   let unzip = split
