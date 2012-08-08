@@ -538,7 +538,9 @@ and eval_instrs env
       eval_instr env instr
     )
     env instrs
-  in env, fun execenv -> List.iter (fun f -> f execenv) precompiled
+  in let arr = Array.of_list precompiled
+  in env, fun execenv ->
+    Array.iter (fun f -> f execenv) arr
 
 let rec precompile_instrs li =
   List.map precompile_instr li
