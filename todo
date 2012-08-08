@@ -1,21 +1,17 @@
 Langage & Compilateur :
-améliorer les erreurs du typer
+gestion des positions sur les commentaires
+reporter les commentaires
+améliorer les erreurs du typer (DONE : 50%)
 gérer les entrées d'entiers négatifs (en C#, php, python)
 php stdin : ne pas forcer à faire ctrl+d
-number of args checker
 flush sur stdout
-
-templates
+Une gestion des macros
 types abstract (pour ouvrir un fichier par exemple)
 
 return checker
 gérer les floats (parser, +., *., /., + printers)
-lambda ast + typeAst + syntax + lambdalifting
-  eg : fun int x, int y = x + y end
 warnings pour les choses laides dans les différents langages
 virer les warnings
-AST : foreach like : ça serait plus beau dans pas mal de
-  langages pour tout les parcours de tableaux
 break et continue (attention au caml)
 commentaires indentation
 chercher a faire un sort correct
@@ -29,4 +25,6 @@ autres printers :
   perl
   bash
   ada
+  sql
+  objective C
   html (code printer)
