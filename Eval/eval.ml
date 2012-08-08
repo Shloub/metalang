@@ -48,6 +48,11 @@ let get_integer = function
   | x ->
     Printf.printf "Got %s expected int" (typeof x); assert false
 
+let get_float = function
+  | Float a -> a
+  | x ->
+    Printf.printf "Got %s expected float" (typeof x); assert false
+
 let get_char = function
   | Char a -> a
   | x ->
@@ -86,28 +91,116 @@ let empty_env te =
     functions = StringMap.empty;
   }
 
+let eval_expr execenv (e : precompiledExpr) :  result = match e with
+  | Result r -> r
+  | WithEnv f -> f execenv
+
 let tyerr loc =
   let () = Printf.printf "Type error %a\n%!"
     ploc loc
   in assert false
 
-let num_op loc ( + ) ( +. ) a b = match a, b with
-  | Float i, Float j -> Float (i +. j)
-  | Integer i, Integer j -> Integer (i + j)
-  | _ -> tyerr loc
+let num_op loc ( + ) ( +. ) a b = (* TODO *)
+  match a, b with
+    | Result a, Result b ->
+      Result begin match a, b with
+        | Float i, Float j -> Float (i +. j)
+        | Integer i, Integer j -> Integer (i + j)
+        | _ -> tyerr loc
+      end
+    | WithEnv a, Result b ->
+      begin match b with
+        | Float j -> WithEnv (fun execenv ->
+          Float ((get_float (a execenv)) +. j))
+        | Integer j -> WithEnv (fun execenv ->
+          Integer ((get_integer (a execenv)) + j))
+        | _ -> tyerr loc
+      end
+      | Result b, WithEnv a ->
+        begin match b with
+          | Float i -> WithEnv (fun execenv ->
+            Float (i +. (get_float (a execenv))))
+          | Integer i -> WithEnv (fun execenv ->
+            Integer (i + (get_integer (a execenv))))
+          | _ -> tyerr loc
+        end
+      | WithEnv a, WithEnv b ->
+        WithEnv (fun execenv ->
+          match a execenv, b execenv with
+            | Float i, Float j -> Float (i +. j)
+            | Integer i, Integer j -> Integer (i + j)
+            | _ -> tyerr loc
+        )
 let int_op loc f a b = num_op loc f (fun _ _ -> tyerr loc) a b
 let num_cmp loc f a b =
   let (<) = Obj.magic f in
   match a, b with
-    | Float i, Float j -> Bool (i < j)
-    | Integer i, Integer j -> Bool (i < j)
-    | Bool i, Bool j -> Bool ( i < j)
-    | Char i, Char j -> Bool ( i < j)
-    | _ -> tyerr loc
-let bool_op loc ( = ) a b = match a, b with
-  | Bool i, Bool j -> Bool (i = j)
-  | _ -> tyerr loc
-
+    | Result ra, Result rb ->
+      Result
+        (match ra, rb with
+          | Float i, Float j -> Bool (i < j)
+          | Integer i, Integer j -> Bool (i < j)
+          | Bool i, Bool j -> Bool ( i < j)
+          | Char i, Char j -> Bool ( i < j)
+          | _ -> tyerr loc)
+    | WithEnv fa, WithEnv fb ->
+      WithEnv (fun execenv ->
+        let a = fa execenv in
+        let b = fb execenv in
+        match a, b with
+          | Float i, Float j -> Bool (i < j)
+          | Integer i, Integer j -> Bool (i < j)
+          | Bool i, Bool j -> Bool ( i < j)
+          | Char i, Char j -> Bool ( i < j)
+          | _ -> tyerr loc)
+    | WithEnv fa, Result rb ->
+      begin match rb with
+        | Float j -> WithEnv (fun execenv ->
+          match fa execenv with
+            | Float i -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | Integer j -> WithEnv (fun execenv ->
+          match fa execenv with
+            | Integer i -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | Bool j -> WithEnv (fun execenv ->
+          match fa execenv with
+            | Bool i -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | Char j -> WithEnv (fun execenv ->
+          match fa execenv with
+            | Char i -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | _ -> tyerr loc
+      end
+    | Result ra, WithEnv fb ->
+      begin match ra with
+        | Float i -> WithEnv (fun execenv ->
+          match fb execenv with
+            | Float j -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | Integer i -> WithEnv (fun execenv ->
+          match fb execenv with
+            | Integer j -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | Bool i -> WithEnv (fun execenv ->
+          match fb execenv with
+            | Bool j -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | Char i -> WithEnv (fun execenv ->
+          match fb execenv with
+            | Char j -> Bool (i < j)
+            | _ -> tyerr loc
+        )
+        | _ -> tyerr loc
+      end
 let binop loc op a b = match op with
   | Expr.Add -> num_op loc ( + ) ( +. ) a b
   | Expr.Sub -> num_op loc ( - ) ( -. ) a b
@@ -124,8 +217,24 @@ let binop loc op a b = match op with
   | Expr.BinAnd -> int_op loc ( land ) a b
   | Expr.RShift -> int_op loc ( lsr ) a b
   | Expr.LShift -> int_op loc ( lsl ) a b
-  | Expr.Or -> bool_op loc ( || ) a b
-  | Expr.And -> bool_op loc ( && ) a b
+  | Expr.Or ->
+    begin match a with
+      | Result r -> if get_bool r then a else b
+      | WithEnv f -> WithEnv (fun execenv ->
+        let r = f execenv in
+        if get_bool r
+        then r
+        else eval_expr execenv b)
+    end
+  | Expr.And ->
+    begin match a with
+      | Result r -> if get_bool r then b else a
+      | WithEnv f -> WithEnv (fun execenv ->
+        let r = f execenv in
+        if get_bool r
+        then eval_expr execenv b
+        else r)
+    end
 
 let init_eenv nvars = Array.make nvars Nil
 
@@ -139,10 +248,6 @@ let add_in_env (env:env) v : env * int =
       nvars = out + 1;
       vars = StringMap.add v out env.vars
   }, out
-
-let eval_expr execenv (e : precompiledExpr) :  result = match e with
-  | Result r -> r
-  | WithEnv f -> f execenv
 
 let index_for_field env field =
   match Type.unfix (Typer.type_of_field env.tyenv field) with
@@ -160,20 +265,8 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
       | Expr.Integer i -> Integer i |> res
       | Expr.Float f -> Float f |> res
       | Expr.Bool b -> Bool b |> res
-      | Expr.BinOp (Result a, op, Result b) ->
-        binop loc op a b |> res
-      | Expr.BinOp (Result a, op, WithEnv b) ->
-        WithEnv (fun execenv ->
-          binop loc op a (b execenv)
-        )
-      | Expr.BinOp (WithEnv a, op, Result b) ->
-        WithEnv (fun execenv ->
-          binop loc op (a execenv) b
-        )
-      | Expr.BinOp (WithEnv a, op, WithEnv b) ->
-        WithEnv (fun execenv ->
-          binop loc op (a execenv) (b execenv)
-        )
+      | Expr.BinOp (a, op, b) ->
+          binop loc op a b
       | Expr.UnOp (Result r, Expr.Neg) ->
         Integer (- (get_integer r  ) ) |>  res
       | Expr.UnOp (WithEnv f, Expr.Neg) ->
