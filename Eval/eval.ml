@@ -287,12 +287,11 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
         WithEnv (fun execenv ->
           let a = (mut execenv) |> get_array in
           Integer (Array.length a) )
-      | Expr.Call (name, params) -> (* TODO *)
-        let call = eval_call env name in
+      | Expr.Call (name, params) ->
+        let call = eval_call env name params  in
         WithEnv (fun execenv ->
   (* Printf.printf "Call %s\n" name; *)
-          let params = List.map (eval_expr execenv) params in
-          call params
+          call execenv
         )
       (*| Expr.UnOp (Integer i, Expr.BNot) -> Integer (lnot )
         | Expr.UnOp (Float i, Expr.Neg) -> Float (-. i) *)
@@ -364,31 +363,32 @@ and mut_val (env:env) (mut : precompiledExpr Mutable.t)
             Printf.printf "Got %s expected Record\n" (typeof x);
             assert false
       )
-and eval_call env name  : result list -> result =
-  let r = StringMap.find name env.functions in
-  fun paramsv ->
-    try
+and eval_call env name params : execenv -> result =
+  try
+    let r = StringMap.find name env.functions in
+    let params = Array.of_list params in
+    let nparams = Array.length params - 1 in
+    (fun ex_execenv ->
       let (nvars, instrs) = !r in
       let eenv:execenv = init_eenv nvars in
       (*    let () = Printf.printf "calling %s with %d vars\n" name nvars in *)
-      let _ = List.fold_left
-        (fun f (value:result) ->
-          let () = eenv.(f) <- value
-          in f+1
-        ) 0 paramsv
+      let () = for i = 0 to nparams do
+          eenv.(i) <- eval_expr ex_execenv params.(i)
+        done
       in try
-           instrs eenv;
-  (* let () = Printf.printf "nothing to return...\n%!" in *) Nil
-        with Return e ->
-        (* Printf.printf "Returning ..."; *) e
-    with Not_found ->
-      match name, paramsv with
+           instrs eenv; Nil
+        with Return e -> e
+    )
+  with Not_found ->
+    (fun execenv ->
+      match name, (List.map (eval_expr execenv) params) with
         | "int_of_char", [param] ->
           Integer (int_of_char (get_char param))
         | "float_of_int", [param] ->
           Float (float_of_int (get_integer param))
         | _ -> failwith ("The Macro "^name^" cannot be evaluated with
-    "^(string_of_int (List.length paramsv))^" arguments")
+    "^(string_of_int (List.length params))^" arguments")
+      )
 and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     (env * (execenv -> unit))
     = match Instr.unfix instr with
@@ -486,10 +486,9 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     in env, f
   | Instr.Call (funname, el) ->
     let el = List.map (fun f -> f env) el in
-    let call = eval_call env funname in
+    let call = eval_call env funname el in
     let f execenv =
-      let el = List.map (eval_expr execenv) el in
-      let _ = call el in ()
+      let _ = call execenv in ()
     in env, f
   | Instr.Print (t, e) ->
     let e = e env in
