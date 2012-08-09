@@ -460,16 +460,19 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
   | Instr.AllocRecord (var, t, fields) ->
     let fields = List.map (fun (name, e) ->
       index_for_field env name, e env) fields in
-    let len = List.length fields in
+    let index, fields = List.unzip fields in
+    let index = Array.of_list index in
+    let fields = Array.of_list fields in
+    let len = Array.length fields in
     let env, r = add_in_env env var in
     let f execenv =
       let record = Array.make len Nil in
-      let () = List.iter
-        (fun (index, e) ->
+      let () = for i = 0 to len - 1 do
+          let index = index.(i) in
+          let e = fields.(i) in
           let e = eval_expr execenv e in
           record.(index) <- e
-        )
-      fields
+        done
       in execenv.(r) <- (Record record)
     in env, f
   | Instr.If (e, l1, l2) ->
