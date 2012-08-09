@@ -100,7 +100,7 @@ let tyerr loc =
     ploc loc
   in assert false
 
-let num_op loc ( + ) ( +. ) a b = (* TODO *)
+let num_op loc ( + ) ( +. ) a b =
   match a, b with
     | Result a, Result b ->
       Result begin match a, b with
