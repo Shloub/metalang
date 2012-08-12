@@ -1,3 +1,21 @@
+#
+#  Makefile du projet metalang
+#
+#  Ce Makefile contient essentiellement les règles pour compiler le projet
+#  metalang, ainsi que les règles pour le tester
+#
+#  usages :
+#    make clean
+#    make metalang
+#    make fastTestCmp
+#        lance un test rapide
+#    make testCompare
+#        lance un teste approfondi
+#    make testNotCompile
+#        lance les tests qui ne doivent pas compiler
+#    make doc
+#        compile la documentation
+#
 
 java	?=	java
 python	?=	python3
@@ -57,11 +75,11 @@ TMPFILES	:=\
 metalang : main.byte
 	@mv _build/Main/main.byte metalang
 main.byte :
-	@ocamlbuild -lflag -g -cflag -g Main/main.byte
+	@ocamlbuild -tag debug Main/main.byte
 
 .PHONY: repl.byte
 repl.byte :
-	@ocamlbuild -lflag -g -cflag -g Main/repl.byte
+	@ocamlbuild -tag debug Main/repl.byte
 
 
 out :
@@ -99,11 +117,11 @@ out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
 out/%.ml.native : out/%.ml
-	@ocamlbuild -lflag -g -cflag -g out/$(basename $*).native || exit 1
+	@ocamlbuild -tag debug out/$(basename $*).native || exit 1
 	@mv _build/out/$(basename $*).native $@
 
 out/%.ml.byte : out/%.ml
-	@ocamlbuild -lflag -g -cflag -g out/$(basename $*).byte || exit 1
+	@ocamlbuild -tag debug out/$(basename $*).byte || exit 1
 	@mv _build/out/$(basename $*).byte $@
 
 out/%.bin.out : out/%.bin
@@ -157,7 +175,7 @@ TESTPROGS	=\
 	cp $< $@ ;\
 
 out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out \
-	out/%.rb.out #out/%.sch.out #  out/%.eval.out
+	out/%.rb.out out/%.eval.out #out/%.sch.out
 	$(TESTPROGS)
 
 out/%.bin.outs : out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out

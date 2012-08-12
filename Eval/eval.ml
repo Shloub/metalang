@@ -444,9 +444,9 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
           execenv.(r) <- Array (Array.make len Nil)
         )
       | Some ((name, lambda)) ->
-        let env, instrs = eval_instrs env lambda in
         let env, rout = add_in_env env var in
         let env, rname = add_in_env env name in
+        let env, instrs = eval_instrs env lambda in
         let f execenv =
           let len = get_integer (eval_expr execenv e) in
           execenv.(rout) <- Array (Array.init len (fun i ->
