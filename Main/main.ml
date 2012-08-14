@@ -78,8 +78,10 @@ let languages, printers =
   in
   let ls = [
     "c",    clike_passes => new CPrinter.cPrinter ;
+    "pas",    clike_passes => new PasPrinter.pasPrinter ;
     "cc",   clike_passes => new CppPrinter.cppPrinter ;
     "cs",   clike_passes => new CsharpPrinter.csharpPrinter ;
+    "js",   clike_passes => new JsPrinter.jsPrinter ;
     "java", clike_passes => new JavaPrinter.javaPrinter ;
     "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
     "php",  clike_passes => new PhpPrinter.phpPrinter ;

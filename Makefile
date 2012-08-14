@@ -40,6 +40,8 @@ TMPFILES	:=\
 	$(addsuffix .ml.byte.out, $(TESTS)) \
 	$(addsuffix .java, $(TESTS)) \
 	$(addsuffix .java.out, $(TESTS)) \
+	$(addsuffix .js, $(TESTS)) \
+	$(addsuffix .js.out, $(TESTS)) \
 	$(addsuffix .py, $(TESTS)) \
 	$(addsuffix .py.out, $(TESTS)) \
 	$(addsuffix .php, $(TESTS)) \
@@ -58,6 +60,9 @@ TMPFILES	:=\
 	$(addsuffix .cc, $(TESTS)) \
 	$(addsuffix .cc.bin, $(TESTS)) \
 	$(addsuffix .cc.bin.out, $(TESTS)) \
+	$(addsuffix .pas, $(TESTS)) \
+	$(addsuffix .pas.bin, $(TESTS)) \
+	$(addsuffix .pas.bin.out, $(TESTS)) \
 	$(addsuffix .bin.outs, $(TESTS)) \
 	$(addsuffix .int.outs, $(TESTS)) \
 	$(addsuffix .managed.outs, $(TESTS)) \
@@ -86,7 +91,8 @@ out :
 	@mkdir out
 
 out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.rb out/%.metalang \
-out/%.sch out/%.java out/%.cs: tests/prog/%.metalang metalang out
+out/%.sch out/%.java out/%.js out/%.cs out/%.pas : tests/prog/%.metalang \
+metalang out
 	@./metalang -quiet -o out $< || exit 1
 
 out/%.metalang.test : out/%.startTest out/%.metalang
@@ -109,6 +115,11 @@ out/%.c.bin : out/%.c
 
 out/%.cc.bin : out/%.cc
 	@g++ $< -o $@ || exit 1
+
+out/%.pas.bin : out/%.pas
+	@fpc $< || exit 1
+	mv out/$(basename $*) $@
+	rm out/$(basename $*).o
 
 out/%.class : out/%.java
 	@javac $< || exit 1
@@ -138,6 +149,9 @@ out/%.ml.byte.out : out/%.ml.byte
 
 out/%.class.out : out/%.class
 	@$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1
+
+out/%.js.out : out/%.js
+	gjs $< < tests/prog/$(basename $*).in > $@ || exit 1
 
 out/%.ml.out : out/%.ml
 	@ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1
@@ -175,10 +189,10 @@ TESTPROGS	=\
 	cp $< $@ ;\
 
 out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out \
-	out/%.rb.out out/%.eval.out #out/%.sch.out
+	out/%.rb.out out/%.eval.out out/%.js.out #out/%.sch.out
 	$(TESTPROGS)
 
-out/%.bin.outs : out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out
+out/%.bin.outs : out/%.cc.bin.out out/%.pas.bin.out out/%.c.bin.out out/%.ml.native.out
 	$(TESTPROGS)
 
 out/%.managed.outs : out/%.class.out out/%.exe.out # out/%.byte.out
