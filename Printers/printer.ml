@@ -322,7 +322,7 @@ class ['lex] printer = object(self)
 	        self#expr e
 	        self#instructions ifcase
       | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a@]then@\n@[<v 2>  %a@]@\nels%a"
+      Format.fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nels%a"
 	      self#expr e
 	      self#instructions ifcase
 	      self#instr instr
