@@ -343,13 +343,13 @@ class ['lex] camlPrinter = object(self)
       | Type.Fixed.F (_, Type.Void) ->
 	if sad_returns then failwith("return in a void function : "^funname)
 	else
-	  Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n@\n"
+	  Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
 	    proto (funname, t, li)
 	    self#ref_alias li
 	    self#instructions instrs
       | _ ->
 	if not(sad_returns) then
-	  Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n@\n"
+	  Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
 	    proto (funname, t, li)
 	    self#ref_alias li
 	    self#instructions instrs
@@ -358,7 +358,7 @@ class ['lex] camlPrinter = object(self)
 	    Warner.warn funname (fun t () -> Format.fprintf t "The returns will make a dirty ocaml code")
 	  in
 	  let () = printed_exn <- printed_exn + 1 in
-	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith Found_%d(out) -> out@]@\n@\n"
+	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith Found_%d(out) -> out@]@\n"
 	    printed_exn
 	    self#ptype t
 	    proto (funname, t, li)
@@ -483,7 +483,7 @@ class ['lex] camlPrinter = object(self)
       self#instructions li
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@\n@]do@\n@[<v 2>  %a@]@\ndone"
+    Format.fprintf f "@[<h>for@ %a@ =@ %a@ to@ %a@ do@\n@]@[<v 2>  %a@]@\ndone"
       self#binding varname
       self#expr expr1
       self#expr expr2
