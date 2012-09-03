@@ -22,7 +22,7 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *)
 
-(** Ocaml Printer
+(** Javascript Printer
 @see <http://prologin.org> Prologin
 @author Prologin (info\@prologin.org)
 @author Maxime Audouin (coucou747\@gmail.com)
@@ -79,5 +79,49 @@ class ['lex] jsPrinter = object(self)
 
   method print f t expr =
     Format.fprintf f "@[print(%a);@]" self#expr expr
+
+
+
+  method allocrecord f name t el =
+    Format.fprintf f "@[<h>%a@ =@ {@[<v2>@\n%a@]@\n};@]"
+      self#binding name
+      (self#def_fields name) el
+
+  method allocarray f binding type_ len =
+      Format.fprintf f "@[<h>%a@ =@ new Array(%a);@]"
+        self#binding binding
+        self#expr len
+
+  method mutable_ f m =
+    match Mutable.unfix m with
+      | Mutable.Dot (m, field) ->
+	Format.fprintf f "%a.%a"
+	  self#mutable_ m
+	  self#field field
+      | Mutable.Var binding -> self#binding f binding
+      | Mutable.Array (m, indexes) ->
+	Format.fprintf f "%a[%a]"
+	  self#mutable_ m
+	  (print_list
+	     self#expr
+	     (fun f f1 e1 f2 e2 ->
+	       Format.fprintf f "%a][%a" f1 e1 f2 e2
+	     ))
+	  indexes
+
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "%a : %a"
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a,@\n%a" f1 e1 f2 e2)
+      f
+      li
+
 
 end
