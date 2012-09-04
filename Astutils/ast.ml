@@ -369,6 +369,14 @@ module Instr = struct
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
+  let rec deep_map_bloc f t =
+    map_bloc (
+      f @* List.map (fun i ->
+        let annot = Fixed.annot i in
+        let i = deep_map_bloc f (unfix i) in
+        (Fixed.fixa annot i)
+      )) t
+
   let stdin_sep () = StdinSep |> fix
   let print t v = Print (t, v) |> fix
   let read t v = Read (t, v) |> fix

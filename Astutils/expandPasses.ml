@@ -89,7 +89,7 @@ module NoPend : SigPass = struct
           ]
         | _ -> [fixed_map t0]
     and fixed_map (t:'lex Instr.t) =
-      Instr.map_bloc
+      Instr.deep_map_bloc
         (List.flatten @* (List.map inner_map))
         (Instr.unfix t)
         |> Instr.fix
@@ -144,7 +144,7 @@ module AllocArrayExpend : SigPass = struct
     | _ -> [i]
 
   let mapi i =
-    Instr.map_bloc
+    Instr.deep_map_bloc
       (List.flatten @* (List.map expand) )
       (Instr.unfix i) |> Instr.fix
 
@@ -164,7 +164,7 @@ module ExpandReadDecl : SigPass = struct
     | _ -> [i]
 
   let mapi i =
-    Instr.map_bloc
+    Instr.deep_map_bloc
       (List.flatten @* (List.map expand) )
       (Instr.unfix i) |> Instr.fix
 
@@ -212,7 +212,7 @@ module ExpandPrint : SigPass = struct
                                                                  (_, Mutable.Var b))
     ) ) ->
       [write_bool b]
-    | j -> [ Instr.map_bloc (List.flatten @* List.map rewrite) j |> Instr.fix ]
+    | j -> [ Instr.deep_map_bloc (List.flatten @* List.map rewrite) j |> Instr.fix ]
 
   type 'lex acc = unit
   let init_acc _ = ()
