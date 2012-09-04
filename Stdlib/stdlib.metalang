@@ -16,6 +16,12 @@ def bool is_number(char c)
   int_of_char(c) >= int_of_char('0')
 end
 
+def int max2(int a, int b)
+	if a > b
+	then return a end
+	return b
+end
+
 def int min2(int a, int b)
 	if a < b
 	then return a end
