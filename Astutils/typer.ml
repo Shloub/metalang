@@ -107,6 +107,12 @@ let error_field_not_found loc name t = (* TODO location *)
     ploc loc
   in assert false
 
+let error_function_not_found loc name =
+  let () = Printf.printf "Function %s is not found in %a\n%!"
+    name
+    ploc loc
+  in assert false
+
 let rec plistring f li =
   match li with
     | hd::tl ->
@@ -358,7 +364,12 @@ let rec collect_contraintes_expr env e =
       (* TODO ajouter var comme étant un tableau *)
       env, ref (Typed (Type.integer, loc e))
     | Expr.Call (name, li) ->
-      let (args_ty, out_ty) = StringMap.find name env.functions in
+      let (args_ty, out_ty) =
+        try
+          StringMap.find name env.functions
+        with Not_found ->
+          error_function_not_found (loc e) name
+      in
       let len1 = List.length args_ty in
       let len2 = List.length li in
       let () = if len1 != len2
