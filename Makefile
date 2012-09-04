@@ -189,10 +189,11 @@ TESTPROGS	=\
 	cp $< $@ ;\
 
 out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out \
-	out/%.rb.out out/%.eval.out out/%.js.out #out/%.sch.out
+	out/%.rb.out out/%.eval.out #out/%.js.out out/%.sch.out
 	$(TESTPROGS)
 
-out/%.bin.outs : out/%.cc.bin.out out/%.pas.bin.out out/%.c.bin.out out/%.ml.native.out
+out/%.bin.outs : out/%.cc.bin.out \
+	out/%.c.bin.out out/%.ml.native.out #out/%.pas.bin.out
 	$(TESTPROGS)
 
 out/%.managed.outs : out/%.class.out out/%.exe.out # out/%.byte.out
