@@ -139,7 +139,8 @@ module Rename = struct
         Instr.Print (t, process_expr map e)
       | Instr.Read (t, m) ->
         Instr.Read (t, mapmutable map m)
-      | (Instr.DeclRead (t, v) ) as i -> i
+      | Instr.DeclRead (t, v)->
+        Instr.DeclRead (t, mapname map v)
       | Instr.StdinSep -> Instr.StdinSep
     in Instr.Fixed.fixa (Instr.Fixed.annot i) i2
 
