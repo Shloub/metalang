@@ -196,6 +196,7 @@ sig
   val fold_left : ('a -> char -> 'a) -> 'a -> string -> 'a
   val list_of_map : (char -> 'a) -> string -> 'a list
   val of_list : char list -> string
+  val of_char : char -> string
   val list_of_fold_map :
     ('a -> char -> 'a * 'b) -> string -> 'a -> 'a * 'b list
   val unescape : string -> string

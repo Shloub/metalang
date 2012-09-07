@@ -75,7 +75,16 @@ class ['lex] pasPrinter = object(self)
         Format.fprintf f "%a(%a)" pop () self#expr a
 
 
-  method string f i = Format.fprintf f "'%s'" (String.escaped i) (* TODO faire mieux *)
+  method string f i =
+    Format.fprintf f "'";
+    String.fold_left (fun () c ->
+      let ns = match c with
+        | '\t' | '\r'
+        | '\n' -> "'#"^(string_of_int (int_of_char c))^"'"
+        | _ -> String.of_char c
+      in Format.fprintf f "%s" ns
+    ) () i;
+    Format.fprintf f "'"
 
   method whileloop f expr li =
     Format.fprintf f "@[<h>while %a@] do@\n%a;"
@@ -274,8 +283,11 @@ class ['lex] pasPrinter = object(self)
 	  "%a@\n%a" f1 e1 f2 e2)) li
 
   method return f e =
-    Format.fprintf f "@[<h>%a@ :=@ %a;@]"
+(*    Format.fprintf f "@[<h>%a@ :=@ %a;@]"
       self#binding current_function
+      self#expr e
+*)
+    Format.fprintf f "@[<h>exit(%a);@]"
       self#expr e
 
   method print f t expr =

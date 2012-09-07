@@ -229,6 +229,10 @@ module String = struct
 		List.iteri (String.set s) li ;
     s
 
+  let of_char c =
+    let s = String.create 1 in
+		String.set s 0 c; s
+
   let list_of_fold_map f s a =
 		fold_left (fun (a, xs) -> map_snd (snoc xs) @* f a) (a, []) s
 
