@@ -3,6 +3,7 @@ macro int int_of_char(char c)
   py do "ord($c)"
   scheme do "(char->integer $c)"
   ruby do "$c.ord"
+  pas do "ord($c)"
   *  do "$c"
 end
 

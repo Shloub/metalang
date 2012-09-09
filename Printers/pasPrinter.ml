@@ -35,11 +35,26 @@ open Printer
 class ['lex] pasPrinter = object(self)
   inherit ['lex] printer as super
 
+  method lang () = "pas"
+
   method decl_type f name t = ()
 
   val mutable current_function = ""
   val mutable bindings = BindingSet.empty
 
+
+  method length f tab =
+    Format.fprintf f "length(%a)" self#mutable_ tab
+
+  method binop f op a b =
+    match op with
+      | Expr.Div ->
+        if Typer.is_int (super#getTyperEnv ()) a
+        then Format.fprintf f "%a Div %a"
+          self#expr a
+          self#expr b
+        else super#binop f op a b
+      | _ -> super#binop f op a b
 
   method print_op f op =
     Format.fprintf f
@@ -49,7 +64,7 @@ class ['lex] pasPrinter = object(self)
        | Expr.Sub -> "-"
        | Expr.Mul -> "*"
        | Expr.Div -> "/"
-       | Expr.Mod -> "%"
+       | Expr.Mod -> "Mod"
        | Expr.Or -> "or"
        | Expr.And -> "and"
        | Expr.Lower -> "<"
@@ -58,10 +73,10 @@ class ['lex] pasPrinter = object(self)
        | Expr.HigherEq -> ">="
        | Expr.Eq -> "="
        | Expr.Diff -> "<>"
-       | Expr.BinOr -> "|"
-       | Expr.BinAnd -> "&"
-       | Expr.RShift -> ">>"
-       | Expr.LShift -> "<<"
+       | Expr.BinOr -> "or"
+       | Expr.BinAnd -> "and"
+       | Expr.RShift -> "shl"
+       | Expr.LShift -> "shr"
       )
 
   method unop f op a =
@@ -74,6 +89,8 @@ class ['lex] pasPrinter = object(self)
       else
         Format.fprintf f "%a(%a)" pop () self#expr a
 
+
+  method char f c = Format.fprintf f "#%d" (int_of_char c)
 
   method string f i =
     Format.fprintf f "'";
@@ -104,18 +121,22 @@ class ['lex] pasPrinter = object(self)
       self#binding var
       self#expr e
 
-  method ptype f t =
-      match Type.unfix t with
-      | Type.Integer -> Format.fprintf f "integer"
-      | Type.String -> Format.fprintf f "char*"
-      | Type.Float -> Format.fprintf f "float"
-      | Type.Array a -> Format.fprintf f "array of %a" self#ptype a
-      | Type.Void ->  Format.fprintf f "void"
-      | Type.Bool -> Format.fprintf f "boolean"
-      | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s" n
-      | Type.Struct (li, p) -> Format.fprintf f "a struct"
+  val mutable declared_types : string TypeMap.t = TypeMap.empty
 
+  method ptype f t =
+    match TypeMap.find_opt t declared_types with
+      | Some s -> Format.fprintf f "%s" s
+      | None ->
+        match Type.unfix t with
+          | Type.Integer -> Format.fprintf f "integer"
+          | Type.String -> Format.fprintf f "char*"
+          | Type.Float -> Format.fprintf f "float"
+          | Type.Array a -> Format.fprintf f "array of %a" self#ptype a
+          | Type.Void ->  Format.fprintf f "void"
+          | Type.Bool -> Format.fprintf f "boolean"
+          | Type.Char -> Format.fprintf f "char"
+          | Type.Named n -> Format.fprintf f "%s" n
+          | Type.Struct (li, p) -> Format.fprintf f "a struct"
 
   method print_proto f (funname, t, li) =
     match Type.unfix t with
@@ -152,6 +173,8 @@ class ['lex] pasPrinter = object(self)
 
   method print_fun f funname t li instrs =
     let () = current_function <- funname in
+    self#declare_types f instrs;
+    List.iter (fun (_, t) -> self#declare_type f t) li;
     Format.fprintf f "%a%a;@\n"
       self#print_proto (funname, t, li)
       self#print_body instrs
@@ -172,6 +195,36 @@ class ['lex] pasPrinter = object(self)
 	  self#expr e
 	  self#bloc ifcase
 	  self#bloc elsecase
+
+  method declare_type f t =
+    match Type.unfix t with
+      | Type.Array _ ->
+        begin
+          match TypeMap.find_opt t declared_types with
+            | Some _ -> ()
+            | None ->
+              let name : string = Fresh.fresh () in
+              Format.fprintf f "type %s = %a;@\n" name self#ptype t;
+              declared_types <- TypeMap.add t name declared_types
+        end
+      | _ -> ()
+
+  method declare_types f instrs =
+    List.fold_left
+      (Instr.Writer.Deep.fold
+         (fun () i ->
+           match Instr.Fixed.unfix i with
+             | Instr.Declare (b, t, _) ->
+               self#declare_type f t
+             | Instr.AllocArray (b, t, _, _) ->
+               self#declare_type f t
+             | Instr.AllocRecord (b, t, _) ->
+               self#declare_type f t
+             | _ -> ()
+         )
+      )
+      ()
+      instrs
 
 
   method declarevars f instrs =
@@ -250,11 +303,16 @@ class ['lex] pasPrinter = object(self)
       f
       li
 
-  method stdin_sep f = () (* TODO *)
+  method stdin_sep f =
+      Format.fprintf f "@[<h>skip();@]"
 
-  method read f t m = (* TODO *)
-    Format.fprintf f "@[<h>Read(%a);@]"
-      self#mutable_ m
+  method read f t m = match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[<h>%a := read_int();@]"
+        self#mutable_ m
+    | Type.Char ->
+      Format.fprintf f "@[<h>%a := read_char();@]"
+        self#mutable_ m
 
   method print f t expr =
     Format.fprintf f "@[<h>Write(%a);@]" self#expr expr
@@ -265,8 +323,87 @@ class ['lex] pasPrinter = object(self)
         self#expr len
 
   method prog f prog =
-    Format.fprintf f "program %s;@\n%a%a.@\n@\n"
+    let header = "
+
+var global_char : char;
+var global_has_char : boolean;
+
+procedure skip_char();
+begin
+   global_has_char := true;
+   read(global_char);
+end;
+
+procedure skip();
+var
+   n : char;
+   t : char;
+   s : char;
+begin
+   n := #13;
+   t := #10;
+   s := #32;
+   if not( global_has_char ) then
+      skip_char();
+   while (global_char = s) or (global_char = n) or (global_char = t) do
+   begin
+      skip_char();
+   end;
+end;
+
+function read_char_aux() : char;
+begin
+   if global_has_char then
+      read_char_aux := global_char
+   else
+   begin
+      skip_char();
+      read_char_aux := global_char;
+   end
+end;
+
+function read_char() : char;
+var
+   c : char;
+begin
+   c := read_char_aux();
+   skip_char();
+   read_char := c;
+end;
+
+
+
+function read_int() : integer;
+var
+   c    : char;
+   i    : integer;
+   sign :  integer;
+begin
+   i := 0;
+   c := read_char_aux();
+   if c = '-' then begin
+      skip_char();
+      sign := -1;
+   end
+   else
+      sign := 1;
+
+   repeat
+      c := read_char_aux();
+      if (ord(c) <=57) and (ord(c) >= 48) then
+      begin
+         i := i * 10 + ord(c) - 48;
+         skip_char();
+      end
+      else
+         exit(i * sign);
+   until false;
+end;
+
+" in
+    Format.fprintf f "program %s;@\n%s@\n%a%a.@\n@\n"
       prog.Prog.progname
+      header
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
@@ -297,7 +434,9 @@ class ['lex] pasPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
         Type.Struct (li, _) ->
-          Format.fprintf f "type %a_r = record@\n@[<v 2>  %a@]@\nend;@\ntype %a=^%a_r;@\n"
+          Format.fprintf f "type@[<v>@\n%a=^%a_r;@\n%a_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
+            self#binding name
+            self#binding name
             self#binding name
             (print_list
                (fun t (name, type_) ->
@@ -305,8 +444,6 @@ class ['lex] pasPrinter = object(self)
                )
                (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
             ) li
-    super#binding name
-    super#binding name
       | _ ->
         Format.fprintf f "type %a = %a;"
     super#ptype t

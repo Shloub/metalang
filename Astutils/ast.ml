@@ -147,6 +147,44 @@ module Type = struct
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
+  let rec compare (ta : t) (tb : t) : int =
+    match (unfix ta), (unfix tb) with
+      | Auto, Auto -> 0
+      | Auto, _ -> -1
+      | Integer, Integer -> 0
+      | Integer, Auto -> 1
+      | Integer, _ -> -1
+      | Float, Float -> 0
+      | Float, (Auto | Integer) -> 1
+      | Float, _ -> -1
+      | String, String -> 0
+      | String, (Auto | Integer | Float ) -> 1
+      | String, _ -> -1
+      | Char, Char -> 0
+      | Char, (Auto | Integer | Float | String) -> 1
+      | Char, _ -> -1
+      | Array ca, Array cb -> compare ca cb
+      | Array _, (Char | Auto | Integer | Float | String) -> 1
+      | Array _, _ -> -1
+      | Void, Void -> 0
+      | Void, (Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Void, _ -> -1
+      | Bool, Bool -> 0
+      | Bool, (Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Bool, _ -> -1
+      | Struct (s1, _), Struct (s2, _) ->
+        List.fold_left (fun result ((n1, t1), (n2, t2)) ->
+          if result <> 0 then result else
+            let result = String.compare n1 n2 in
+            if result <> 0 then result else
+              compare t1 t2
+        ) 0 (List.combine s1 s2)
+      | Struct _, (Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Struct _, _ -> -1
+      | Named n1, Named n2 -> String.compare n1 n2
+      | Named _, (Struct _ | Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Named _, _ -> -1
+
   module Writer = AstWriter.F (struct
     type alias = t
     type 'a t = alias
@@ -201,6 +239,7 @@ module Type = struct
 
 end
 
+module TypeMap = MakeMap (Type)
 
 module Expr = struct
   type unop = Neg | Not | BNot
