@@ -92,6 +92,21 @@ class ['lex] pyPrinter = object(self)
       | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
       | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
 
+
+  method binop f op a b =
+    match op with
+      | Expr.Div ->
+        if Typer.is_int (super#getTyperEnv ()) a
+        then Format.fprintf f "%a %a %a"
+          self#expr a
+          self#divi ()
+          self#expr b
+        else super#binop f op a b
+      | _ -> super#binop f op a b
+
+  method divi f () =
+    Format.fprintf f "//"
+
   method print_op f op =
     Format.fprintf f
       "%s"
@@ -99,7 +114,7 @@ class ['lex] pyPrinter = object(self)
 	| Expr.Add -> "+"
 	| Expr.Sub -> "-"
 	| Expr.Mul -> "*"
-	| Expr.Div -> "//"
+	| Expr.Div -> "/"
 	| Expr.Mod -> "%"
 	| Expr.Or -> "or"
 	| Expr.And -> "and"

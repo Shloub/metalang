@@ -94,6 +94,9 @@ match Type.unfix t with
       self#expr e
 
 
+  method divi f () =
+    Format.fprintf f "/"
+
   method print_op f op =
     Format.fprintf f
       "%s"
