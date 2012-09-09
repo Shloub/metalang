@@ -101,59 +101,54 @@ let rec contr2str t =
 (** {2 Error reporters} *)
 
 let error_field_not_found loc name t = (* TODO location *)
-  let () = Printf.printf "Field %s is not found in %s %a\n%!"
-    name
-    (Type.type_t_to_string t)
-    ploc loc
-  in assert false
+  raise ( Error (fun f ->
+    Format.fprintf f "Field %s is not found in %s %a\n%!"
+      name
+      (Type.type_t_to_string t)
+      ploc loc))
 
 let error_function_not_found loc name =
-  let () = Printf.printf "Function %s is not found in %a\n%!"
+  raise (Error (fun f -> Format.fprintf f "Function %s is not found in %a\n%!"
     name
-    ploc loc
-  in assert false
+    ploc loc))
 
 let rec plistring f li =
   match li with
     | hd::tl ->
-      Printf.fprintf f "  %s\n%a" hd plistring tl
+      Format.fprintf f "  %s\n%a" hd plistring tl
     | [] -> ()
 
 let error_record_types lval lt loc =
-  let () = Printf.printf "Fields does not match in %a\n%aagainst\n%a%!"
+  raise (Error (fun f -> Format.fprintf f "Fields does not match in %a\n%aagainst\n%a%!"
     (* TODO show lists & diff *)
     ploc loc
     plistring lval
-    plistring lt
-  in assert false
+    plistring lt))
 
 let error_arrity funname l1 l2 loc =
-  let () = Printf.printf "The function %s expects %d arguments, %d given %a.\n%!"
-    funname l1 l2
-    ploc loc
-  in assert false
+  raise (Error (fun f ->
+    Format.fprintf f "The function %s expects %d arguments, %d given %a.\n%!"
+      funname l1 l2
+      ploc loc))
 
 let error_ty t1 t2 loc1 loc2 =
-  let () = Printf.printf "Cannot unify %s %a and %s %a\n%!"
+  raise (Error (fun f  -> Format.fprintf f "Cannot unify %s %a and %s %a\n%!"
     (Type.type_t_to_string t1)
     ploc loc1
     (Type.type_t_to_string t2)
-    ploc loc2
-  in assert false
+    ploc loc2))
 
 let not_found name loc =
-  let () = Printf.printf "Cannot find variable %s %a \n%!"
+  raise (Error (fun f -> Format.fprintf f "Cannot find variable %s %a \n%!"
     name
-    ploc loc
-  in assert false
+    ploc loc))
 
 let error_cty t1 t2 loc1 loc2 =
-  let () = Printf.printf "Cannot unify %s %a and %s %a\n%!"
+  raise (Error (fun f -> Format.fprintf f "Cannot unify %s %a and %s %a\n%!"
     (contr2str t1)
     ploc loc1
     (contr2str t2)
-    ploc loc2
-  in assert false
+    ploc loc2))
 
 (** {2 Types anti alias-ing}*)
 let expand env ty =

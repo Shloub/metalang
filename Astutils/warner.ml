@@ -31,19 +31,19 @@
 
 let ploc f ((l1, c1), (l2, c2)) =
   if l1 = l2 then
-    Printf.fprintf f "(on %d:%d-%d)"
+    Format.fprintf f "(on %d:%d-%d)"
       l1 c1 c2
   else
-    Printf.fprintf f "(on %d:%d to %d:%d)"
+    Format.fprintf f "(on %d:%d to %d:%d)"
     l1 c1 l2 c2
 
 let warn funname msg =
   Format.fprintf Format.std_formatter
     "Warning : in function %s,@\n@[<h>  %a@]@\n" funname msg ()
 
+exception Error of (Format.formatter -> unit);;
+
 let err funname msg =
-  begin
-    Format.fprintf Format.std_formatter
-      "Error : in function %s,@\n@[<h>  %a@]@\n" funname msg ();
-    exit 1;
-  end
+  raise (Error (fun f ->
+    Format.fprintf f
+      "Error : in function %s,@\n@[<h>  %a@]@\n" funname msg ()))

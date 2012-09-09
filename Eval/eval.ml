@@ -96,9 +96,8 @@ let eval_expr execenv (e : precompiledExpr) :  result = match e with
   | WithEnv f -> f execenv
 
 let tyerr loc =
-  let () = Printf.printf "Type error %a\n%!"
-    ploc loc
-  in assert false
+  raise (Error (fun f -> Format.fprintf f "Type error %a\n%!"
+    ploc loc))
 
 let num_op loc ( + ) ( +. ) a b =
   match a, b with
@@ -306,7 +305,8 @@ and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
               let out = StringMap.find v env.vars in fun execenv v->
                 execenv.(out) <- v
         with Not_found ->
-          Printf.printf "Cannot find var %s\n" v; assert false
+          raise (Error (fun f ->
+            Format.fprintf f "Cannot find var %s\n" v))
       end
     | Mutable.Array (m, li) ->
       let m, index = match List.rev li with

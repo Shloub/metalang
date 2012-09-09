@@ -186,32 +186,35 @@ let make_prog stdlib filename =
   { prog with Prog.funs = funs }
 
 let process c filename =
-  let prog = make_prog c.stdlib filename in
-  if c.eval then
-    let env, prog = Typer.process prog in begin
-      Eval.eval_prog env prog;
-      ()
-    end
-  else
-  let go lang =
-    let printer = L.find lang printers in
-    let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^ lang in
-    if not c.quiet then Printf.printf "Generating %s\n%!" output ;
-    Fresh.fresh_init prog ;
-    let chan = open_out output in
-    let buf = Format.formatter_of_out_channel chan in
-    Format.fprintf buf "%a@;%!" printer prog ;
-    close_out chan in
-  begin  (* noms à renommer automatiquement *)
-    Passes.Rename.clear ();
-    Passes.Rename.add prog.Prog.progname ;
-    Passes.Rename.add "out" ;
-    Passes.Rename.add "exp" ;
-    Passes.Rename.add "min" ;
-    Passes.Rename.add "max" ;
-    Passes.Rename.add "eval" ;
-    List.iter go c.languages
-  end
+  try
+    let prog = make_prog c.stdlib filename in
+    if c.eval then
+      let env, prog = Typer.process prog in begin
+        Eval.eval_prog env prog;
+        ()
+      end
+    else
+      let go lang =
+        let printer = L.find lang printers in
+        let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^ lang in
+        if not c.quiet then Printf.printf "Generating %s\n%!" output ;
+        Fresh.fresh_init prog ;
+        let chan = open_out output in
+        let buf = Format.formatter_of_out_channel chan in
+        Format.fprintf buf "%a@;%!" printer prog ;
+        close_out chan in
+      begin  (* noms à renommer automatiquement *)
+        Passes.Rename.clear ();
+        Passes.Rename.add prog.Prog.progname ;
+        Passes.Rename.add "out" ;
+        Passes.Rename.add "exp" ;
+        Passes.Rename.add "min" ;
+        Passes.Rename.add "max" ;
+        Passes.Rename.add "eval" ;
+        List.iter go c.languages
+      end
+  with Warner.Error e ->
+    e Format.err_formatter;;
 
 let process_config c =
   List.iter (process c) c.filenames
