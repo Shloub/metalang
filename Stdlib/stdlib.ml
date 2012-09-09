@@ -138,6 +138,13 @@ module List = struct
     | [x] -> x
     | _ :: xs -> last xs
 
+  let split_last xs =
+    let rec go ys = function
+    | [] -> invalid_arg "List.split_last"
+    | [x] -> x, List.rev ys
+    | y :: xs -> go (y::ys) xs
+    in go [] xs
+
   let rec split_at n =
 		let rec go n xs ys = match n, ys with
 			| 0, _ | _, [] -> List.rev xs, ys
@@ -185,6 +192,7 @@ end
 
 module String = struct
   include String
+  let of_string (s:string) = (s:t)
   let equals a b = 0 = compare a b
   let lines = Str.split $ Str.regexp "\n+"
   let unlines = String.concat "\n"

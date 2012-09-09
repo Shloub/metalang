@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <title>métalang</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href="CodeMirror-2.33/theme/ambiance.css">
+
+    <script src="CodeMirror-2.33/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css">
+    <script src="syntax-metalang.js"></script>
+    <script language="javascript" src="meta.js"></script>
+
+    <style type="text/css">
+body { margin:0; padding:0; background-color: #1a1a1a }
+#left {
+  width: 50%;
+  float: left;
+}
+#left h1 { color: white ; font-variant: small-caps; padding-left: 1em; font-size: 1.5em; font-weight: normal }
+#input_text { margin: 1%; width: 98%; }
+#right { height: 100%; margin-left: 50%;}
+#right pre { padding: 0 3em; color: #fafafa; font-size: 1.1em }
+#top { display: none }
+#tools { padding: 1em; text-align: right }
+#tools input, #tools select { font-size: 1.5em }
+.CodeMirror-scroll {
+  height: auto;
+    overflow-y: hidden;
+      overflow-x: auto;
+      }
+.CodeMirror-lines { padding-left: 1em }
+#stderr { background: #222222; color:#ff1111; }
+    </style>
+  </head>
+  <body>
+
+    <div id="left">
+
+      <h1>Métalang</h1>
+
+      <div id="top">
+        I'm top!
+      </div>
+
+      <p><textarea id="input_text" rows="16" cols="80">def int montagnes(array<int> tab, int len)
+  def int max = 1
+  def int j = 1
+  def int i = len - 2
+  while i >= 0 do
+    def int x = tab[i]
+    while j >= 0 && x > tab[len - j] do
+      j = j - 1
+    end
+    j = j + 1
+    tab[len - j] = x
+    if j > max then
+      max = j
+    end
+    i = i - 1
+  end
+  return max
+end
+
+main
+  def int len = 0
+  read int len skip
+  def array<int> tab[len] with i do
+    def int x = 0
+    read int x skip
+    return x
+  end
+  print int montagnes(tab, len)
+end</textarea></p>
+
+      <p><textarea id="stderr" rows="5" cols="80"></textarea></p>
+
+    </div>
+
+    <div id="right">
+      <div id="tools">
+        <select id="language">
+          <option value="c">C</option>
+          <option value="cc">C++</option>
+          <option value="cs">C#</option>
+          <option value="java">Java</option>
+          <option value="ml">OCaml</option>
+          <option value="py">Python</option>
+          <option value="rb">Ruby</option>
+        </select>
+
+        <input id="replicate" type="submit" value="métalèche" style="display:none"/>
+        <input type="submit" value="métalèche2" onclick="update();" />
+      </div>
+
+      <pre id="copy"></pre>
+
+    </div>
+
+    <script language="javascript">
+
+      var ed = CodeMirror.fromTextArea(document.getElementById('input_text'), {
+        lineNumbers: true,
+        mode: 'metalang',
+      });
+      ed.setOption("theme", "ambiance");
+      var update = function(){
+        document.getElementById("input_text").value=ed.getValue();
+        document.getElementById("replicate").click();
+      }
+    </script>
+
+  </body>
+</html>

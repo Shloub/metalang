@@ -248,6 +248,17 @@ metatest : out $(METATESTSDEPS)
 doc :
 	@ocamlbuild metalang.docdir/index.html
 
+libmetalang.cma :
+	@ocamlbuild Main/libmetalang.cma
+
+js/test.js : libmetalang.cma
+	ocamlc -I +js_of_ocaml -I _build/Main/ -pp "camlp4o js_of_ocaml/pa_js.cmo" str.cma libmetalang.cma js_of_ocaml.cma js/test.ml -o js/test.byte
+	js_of_ocaml js/test.byte
+	rm js/test.cmo js/test.cmi js/test.byte
+
+js/meta.js : js/test.js
+	cat js/header.js js/test.js > js/meta.js
+
 .PHONY: clean
 clean :
 	@rm -rf out 2> /dev/null || true

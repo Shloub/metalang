@@ -79,16 +79,22 @@ let type_of_field env field =
 
 let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
     : (env * typeContrainte ref) =
-  let refenv = ref env in
-  let rec f t = match Type.Fixed.unfix t with
+
+  let fold env t = match Type.Fixed.unfix t with
     | Type.Auto ->
       let out = ref (Unknown loc) in
-      let e = !refenv in
-      let () = refenv := { e with automap =
-          IntMap.add (Type.Fixed.annot t) out e.automap }
-      in out
+      let env = {env with automap = IntMap.add (Type.Fixed.annot t)
+          out env.automap }
+      in env
+    | _ -> env
+  in
+  let env = Type.Writer.Deep.fold fold (fold env t) t
+  in
+  let rec f t = match Type.Fixed.unfix t with
+    | Type.Auto ->
+      IntMap.find (Type.Fixed.annot t) env.automap
     | t -> ref ( PreTyped ( (Type.Fixed.map f t ), loc) )
-  in let t = f t in !refenv, t
+  in let t = f t in env, t
 
 (** {2 Printers} *)
 let rec contr2str t =
@@ -99,6 +105,26 @@ let rec contr2str t =
     | Typed (ty, _) -> "T_" ^ (Type.type_t_to_string ty)
 
 (** {2 Error reporters} *)
+
+let error_no_auto_type map annot ty =
+  raise ( Error (fun f ->
+    Format.fprintf f
+      "Cannot find type of auto in %s (%d)\n%!"
+      (Type.type_t_to_string ty) annot;
+    IntMap.iter (fun k v ->
+      Format.fprintf f "annot %d : %s@\n" k
+        (contr2str !v)
+    ) map
+))
+
+let error_no_contraintes li =
+  raise ( Error (fun f ->
+    List.iter
+      (fun (a, b) ->
+        Format.fprintf f "No contrainte to unify %s and %s\n%!"
+          (contr2str !a) (contr2str !b)
+      ) li
+  ))
 
 let error_field_not_found loc name t = (* TODO location *)
   raise ( Error (fun f ->
@@ -196,9 +222,6 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
     | _ -> error_ty t1 t2 loc1 loc2
 
 let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
-  (* let () =
-      Printf.printf "Unify %s and %s\n" (contr2str !t1) (contr2str !t2)
-    in *)
   match !t1, !t2 with
     | Typed (((Type.Fixed.F (_, Type.Named _)) as t), loc), _ ->
       begin
@@ -579,10 +602,10 @@ let collect_contraintes e
     functions = StringMap.add funname function_type e.functions;
     locales = StringMap.empty
   } in
-  let e = List.fold_left (fun env (name, ty) ->
+  let e = List.fold_left (fun e (name, ty) ->
     let ty = expand e ty in
-    let env, ty = ty2typeContrainte env ty loc in
-    {env with locales = StringMap.add name ty env.locales}
+    let e, ty = ty2typeContrainte e ty loc in
+    {e with locales = StringMap.add name ty e.locales}
   ) e params
   in
   let e = collect_contraintes_instructions e instructions ty in
@@ -594,15 +617,12 @@ let map_ty env prog =
     let f t = match Type.Fixed.unfix t with
       | Type.Auto ->
         let annot = Type.Fixed.annot t in
-        begin try
-                let contrainte = IntMap.find annot env.automap in
-                extract_typed contrainte
+        let contrainte =
+          try IntMap.find annot env.automap
           with Not_found ->
-            Printf.printf "Cannot find type of auto in %s (%d) \n%!"
-              (Type.type_t_to_string ty)
-              annot;
-            t
-        end
+            error_no_auto_type env.automap annot t
+        in extract_typed contrainte
+
       | Type.Struct ( ( (name, _ ):: _), _) ->
         let (_, _, name) =StringMap.find name env.fields in
         Type.named name
@@ -674,16 +694,23 @@ let process (prog: 'lex Prog.t) =
         | [] -> env
         | li ->
           begin
-            List.iter
-              (fun (a, b) ->
-                Printf.printf "No contrainte to unify %s and %s\n%!"
-                  (contr2str !a) (contr2str !b)
-              ) li
-            ; assert false
+            error_no_contraintes li
           end
   in
-  let process e tuple =
+  let process e ((funname, ty, params, instructions) as tuple) =
     let e = collect_contraintes e tuple in
+(*    raise (Error (fun f ->
+      Format.fprintf f "Funname : %s@\n" funname;
+          (*IntMap.iter (fun k v ->
+            Format.fprintf f "annot %d : %s@\n" k
+              (contr2str !v)) e.contrainteMap*)
+
+          IntMap.iter (fun k v ->
+            Format.fprintf f "annot %d : %s@\n" k
+              (contr2str !v)) e.automap
+
+
+      )); *)
     unify_contraintes e
   in
   let empty = {
