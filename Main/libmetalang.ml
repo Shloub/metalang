@@ -117,9 +117,14 @@ let parse_file parse filename =
   try parse Lexer.token lexbuf
   with Parser.Error -> warn_error_of_parse_error filename lexbuf
 
-let make_prog_helper (funs, main) =
+let parse_string parse str =
+  let lexbuf = Lexing.from_string str in
+  try parse Lexer.token lexbuf
+  with Parser.Error -> warn_error_of_parse_error "string" lexbuf
+
+let make_prog_helper (funs, main) stdlib =
   let progname = "js_magic" in
-  let stdlib = [] in
+  let stdlib = parse_string Parser.toplvls stdlib in
   let prog = {
     Prog.progname = progname ;
     Prog.funs = funs ;
@@ -193,7 +198,7 @@ let process err c filename =
 let process_config err c =
   List.iter (process err c) c.filenames
 
-let test_process err (lang:string) txt =
+let test_process err (lang:string) txt stdlib =
   let progress = ref "" in
   let log txt = progress := !progress ^ "\n  " ^ txt in
   try
@@ -206,7 +211,7 @@ let test_process err (lang:string) txt =
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
     log "prog'" ;
-    let prog = make_prog_helper prog' in
+    let prog = make_prog_helper prog' stdlib in
     log "prog" ;
     let printer = L.find lang printers in
     log "printer" ;
@@ -224,3 +229,42 @@ let test_process err (lang:string) txt =
     txt
   with Warner.Error e ->
     let () = err e in ""
+
+
+
+module E = struct
+  let add_str = ref (fun s -> ())
+  let b = ref (Scanf.Scanning.from_string "")
+  let print_int i =
+    let _ = Format.flush_str_formatter () in
+    let () = Format.fprintf Format.str_formatter "%d" i in
+    (!add_str) (Format.flush_str_formatter ())
+  let print_char c =
+    let _ = Format.flush_str_formatter () in
+    let () = Format.fprintf Format.str_formatter "%c" c in
+    (!add_str) (Format.flush_str_formatter ())
+  let print_string s = (!add_str) s
+  let print_bool b =  (!add_str) ( if b then "True" else "False")
+
+  let read_int () = Scanf.bscanf (!b) "%d" (fun x -> x)
+  let read_char () = Scanf.bscanf (!b) "%c" (fun x -> x)
+  let skip () = Scanf.bscanf (!b) "%[\n \010]" (fun _ -> ())
+
+end
+
+module EVString = Eval.EvalF(E)
+let eval_string code stdlib err stdin stdout =
+  let () = E.b := Scanf.Scanning.from_string stdin in
+  let () = E.add_str := stdout in
+  try
+    let lexbuf = Lexing.from_string code in
+    let prog' =
+      try
+        Parser.prog Lexer.token lexbuf
+      with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
+    in
+    let prog = make_prog_helper prog' stdlib in
+    let env, prog = Typer.process prog in
+    EVString.eval_prog env prog
+  with Warner.Error e ->
+    err e

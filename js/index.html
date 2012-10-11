@@ -15,13 +15,47 @@ body { margin:0; padding:0; background-color: #1a1a1a }
 #left {
   width: 50%;
   float: left;
+  padding-right : 1em;
 }
-#left h1 { color: white ; font-variant: small-caps; padding-left: 1em; font-size: 1.5em; font-weight: normal }
+#footer2_col1 {
+  width: 30%;
+  float: left;
+  padding-right : 1em;
+  text-align:center;
+}
+#footer2_col2 {
+  width: 30%;
+  float: left;
+  padding-right : 1em;
+  border-right : 1px solid #000;
+  text-align:center;
+}
+#footer2_col3 {
+  width: 30%;
+  float: left;
+  padding-right : 1em;
+  text-align:center;
+}
+
+a{
+  color: #ADF;
+  font-size: 1.2em;
+}
+
+h1 { color: white ; font-variant: small-caps; padding-left: 1em; font-size: 1.5em; font-weight: normal }
+h2 { color: white ; font-variant: small-caps; padding-left: 1em; font-size: 1.3em; font-weight: normal;}
+
+#footer1 {
+border-bottom: 1px solid #000;
+border-top: 1px solid #000;
+}
+#footer1_left { width : 45%; float:left; padding-left: 1em;}
+#footer1_right { margin-left: 50%; padding-left: 1em; padding-right: 1em; }
+
 #input_text { margin: 1%; width: 98%; }
-#right { height: 100%; margin-left: 50%;}
+#right { height: 80%; margin-left: 50%; overflow:auto; }
 #right pre { padding: 0 3em; color: #fafafa; font-size: 1.1em }
-#top { display: none }
-#tools { padding: 1em; text-align: right }
+#tools { padding: 1em;}
 #tools input, #tools select { font-size: 1.5em }
 .CodeMirror-scroll {
   height: auto;
@@ -30,71 +64,206 @@ body { margin:0; padding:0; background-color: #1a1a1a }
       }
 .CodeMirror-lines { padding-left: 1em }
 #stderr { background: #222222; color:#ff1111; }
+#legend {
+  margin-left : 10%;
+  margin-right : 10%;
+  font-size: 0.8em;
+  color: #AAA;
+  padding-top : 5em;
+  padding-right : 5em;
+}
+
+#legend p:first-letter {
+  margin-left:4em;
+  font-size:1em;
+}
+
+ul {
+list-style-type : none;
+}
+
     </style>
   </head>
   <body>
+<textarea id="stdlib" style="display:none">
+macro int int_of_char(char c)
+  ml do "int_of_char ($c)"
+  py do "ord($c)"
+  scheme do "(char->integer $c)"
+  ruby do "$c.ord"
+  pas do "ord($c)"
+  *  do "$c"
+end
 
+macro float float_of_int(int c)
+	ml do "float_of_int ($c)"
+	*  do "(float)($c)"
+end
+
+def bool is_number(char c)
+	return int_of_char(c) <= int_of_char('9') &&
+  int_of_char(c) >= int_of_char('0')
+end
+
+def int max2(int a, int b)
+	if a > b
+	then return a end
+	return b
+end
+
+def int min2(int a, int b)
+	if a < b
+	then return a end
+	return b
+end
+
+def int min3(int a, int b, int c)
+	return min2(min2(a, b), c)
+end
+
+def int min4(int a, int b, int c, int d)
+	return min3(min2(a, b), c, d)
+end
+
+</textarea>
+
+    <h1>Métalang</h1>
     <div id="left">
+      <h2>Code source</h2>
+      <div style="height:60%; overflow:auto"><textarea id="input_text" cols="80">
+def int pathfind_aux(array<array<int>> cache, array<array<char>> tab, int x, int y, int posX, int posY)
+	if posX == x - 1 && posY == y - 1 then
+		return 0
+	elsif posX < 0 || posY < 0 || posX >= x || posY >= y then
+		return x * y * 10
+	elsif tab[posY][posX] == '#' then
+		return x * y * 10
+	elsif cache[posY][posX] != -1 then
+		return cache[posY][posX]
+	else
+		cache[posY][posX] = x * y * 10
+		def int val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY)
+		def int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
+		def int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
+		def int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
+		def int out = 1 + min4(val1, val2, val3, val4)
+		cache[posY][posX] = out
+		return out
+	end
+end
 
-      <h1>Métalang</h1>
 
-      <div id="top">
-        I'm top!
-      </div>
-
-      <p><textarea id="input_text" rows="16" cols="80">def int montagnes(array<int> tab, int len)
-  def int max = 1
-  def int j = 1
-  def int i = len - 2
-  while i >= 0 do
-    def int x = tab[i]
-    while j >= 0 && x > tab[len - j] do
-      j = j - 1
-    end
-    j = j + 1
-    tab[len - j] = x
-    if j > max then
-      max = j
-    end
-    i = i - 1
-  end
-  return max
+def int pathfind(array<array<char>> tab, int x, int y)
+	def array<array<int>> cache[y] with i do
+		def array<int> tmp[x] with j do
+			return -1
+		end
+		return tmp
+	end
+	return pathfind_aux(cache, tab, x, y, 0, 0)
 end
 
 main
-  def int len = 0
-  read int len skip
-  def array<int> tab[len] with i do
-    def int x = 0
-    read int x skip
-    return x
-  end
-  print int montagnes(tab, len)
-end</textarea></p>
+	def int x = 0
+	def int y = 0
+	read int x skip
+	read int y skip
+	def array<array<char>> tab[y] with i do
+		def array<char> tab2[x] with j do
+		  def char tmp = '\000'
+		  read char tmp
+		  return tmp
+		end
+		skip
+		return tab2
+	end
+	def int result = pathfind(tab, x, y)
+	print int result
+end
 
-      <p><textarea id="stderr" rows="5" cols="80"></textarea></p>
+</textarea></div>
+
+      <h2>stderr</h2>
+      <p><textarea id="stderr" rows="5" style="width: 100%"></textarea></p>
 
     </div>
 
     <div id="right">
+      <h2 style="float:left; width:50%">Compiler</h2>
       <div id="tools">
         <select id="language">
           <option value="c">C</option>
           <option value="cc">C++</option>
+          <option value="pas">Pascal</option>
           <option value="cs">C#</option>
           <option value="java">Java</option>
           <option value="ml">OCaml</option>
+          <option value="php">Php</option>
           <option value="py">Python</option>
           <option value="rb">Ruby</option>
         </select>
 
         <input id="replicate" type="submit" value="métalèche" style="display:none"/>
-        <input type="submit" value="métalèche2" onclick="update();" />
+        <input type="submit" value="métalèche" onclick="update();" />
       </div>
-
+      <div style="clear:both;"></div>
       <pre id="copy"></pre>
-
     </div>
+
+<div style="clear:both;"></div>
+<div id="footer1">
+  <div id="footer1_left">
+    <h2>stdin</h2>
+    <p><textarea id="stdin" rows="5" style="width: 100%">10
+10
+__#___####
+#___#____#
+##___###_#
+##_#__##_#
+___##__#_#
+_#_###_#_#
+__####_#_#
+#_####___#
+#_____##__
+#####_____
+</textarea></p>
+  </div>
+  <div id="footer1_right">
+    <h2>stdout</h2>
+    <p><textarea id="stdout" rows="5" style="width:100%"></textarea></p>
+  </div>
+<input id="eval_btn" type="submit" value="Eval" style="display:none"/>
+<input type="submit" value="Eval" onclick="updateEval();" />
+</div>
+<div style="clear:both;"></div>
+<div id="legend">
+  <p>Metalang est un projet fait en ocaml, cette version web fonctionne grace au projet js_of_ocaml. Le compilateur est donc un gros tas d'ocaml avec un peu de menhir pour le parser.</p>
+  <p>Le langage Metalang est inspiré de ruby, sauf qu'il est statiquement typé (inféré ou non) et ne gère aucune forme de polymorphisme. Le choix du statiquement typé a été simple : ça permet d'éviter les erreurs et ça marche dans tout les langages dignes de ce nom ce qui nous simplifiait la tache. Pour l'inférence, nous nous sommes dit que c'était nécéssaire pour séduire les utilisateurs de python.</p>
+  <p>Parmi les backends proposés, nous avons pris les langages gérés à prologin, et avons ajouté quelque langages qui nous semblaient importants (comme le ruby par exemple). D'autres langages seront ajoutés dans les prochains mois.</p>
+  <p>Le but est d'avoir un langage de programmation agréable et fonctionnel, de façon à pouvoir écrire de simples algorithmes rapidement, et d'obtenir une version de cet algorithme dans les différents langages proposés.</p>
+</div>
+<div id="footer2">
+  <div id="footer2_col1">
+    <ul>
+      <li><a href="http://opensource.org/licenses/bsd-license.php">BSD Licence</a></li>
+      <li><a href="http://www.prologin.org">Prologin</a></li>
+      <li><a href="http://www.prologin.org">Prologin</a></li>
+    </ul>
+  </div>
+  <div id="footer2_col2">
+    <ul>
+      <li><a href="http://www.prologin.org">Prologin</a></li>
+    </ul>
+  </div>
+  <div id="footer2_col3">
+    <p>Copyright</p>
+    <ul>
+      <li><a href="mailto:info@prologin.org">Prologin</a></li>
+      <li><a href="mailto:coucou747@gmail.com">Maxime Audouin</a></li>
+    </ul>
+  </div>
+</div>
+
 
     <script language="javascript">
 
@@ -102,10 +271,16 @@ end</textarea></p>
         lineNumbers: true,
         mode: 'metalang',
       });
+
       ed.setOption("theme", "ambiance");
+
       var update = function(){
         document.getElementById("input_text").value=ed.getValue();
         document.getElementById("replicate").click();
+      }
+      var updateEval = function(){
+        document.getElementById("input_text").value=ed.getValue();
+        document.getElementById("eval_btn").click();
       }
     </script>
 

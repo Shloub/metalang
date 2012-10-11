@@ -7,6 +7,7 @@ CodeMirror.defineMode('metalang', function(config) {
     'if': 'keyword',
     'then': 'keyword',
     'else': 'keyword',
+    'elsif': 'keyword',
     'for': 'keyword',
     'to': 'keyword',
     'while': 'keyword',
@@ -18,6 +19,9 @@ CodeMirror.defineMode('metalang', function(config) {
     'main': 'keyword',
     'return': 'keyword',
     'int': 'builtin',
+    'string': 'builtin',
+    'bool': 'builtin',
+    'char': 'builtin',
     'array': 'builtin',
     'skip': 'builtin',
     'read': 'builtin',
@@ -98,5 +102,5 @@ CodeMirror.defineMode('metalang', function(config) {
     }
   };
 });
-  
+
 CodeMirror.defineMIME('text/x-metalang', 'metalang');

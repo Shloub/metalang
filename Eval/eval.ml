@@ -1,6 +1,18 @@
 open Ast
 open Stdlib
 open Warner
+
+module type EvalIO = sig
+  val print_int : int -> unit
+  val print_char : char -> unit
+  val print_string : string -> unit
+  val print_bool : bool -> unit
+  val read_int : unit -> int
+  val skip : unit -> unit
+  val read_char : unit -> char
+end
+
+
 (*
 module StringMap = struct
   module H = Hashtbl.Make (struct
@@ -254,6 +266,9 @@ let index_for_field env field =
       let li = List.map fst li |> List.sort String.compare in
       List.indexof field li
 
+
+module EvalF (IO : EvalIO) = struct
+
 let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
   let loc = PosMap.get (Expr.Fixed.annot t) in
   let res x = Result x in
@@ -327,8 +342,7 @@ and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
           | Record map ->
             map.(index) <- v
           | x ->
-            Printf.printf "Got %s expected Record\n" (typeof x);
-            assert false
+            raise (Error (fun f -> Format.fprintf f "Got %s expected Record\n" (typeof x)))
       )
 and mut_val (env:env) (mut : precompiledExpr Mutable.t)
     : execenv -> result =
@@ -338,11 +352,7 @@ and mut_val (env:env) (mut : precompiledExpr Mutable.t)
               let out = StringMap.find v env.vars in fun execenv ->
                 execenv.(out)
         with Not_found ->
-(*          StringMap.iter
-            (fun k i ->
-              Printf.printf "%s=>%d\n" k i
-            ) env.vars;*)
-          Printf.printf "Cannot find var %s\n" v; assert false
+          raise (Error (fun f -> Format.fprintf f "Cannot find var %s\n" v))
       end
     | Mutable.Array (m, li) ->
       let m = mut_val env m in
@@ -360,8 +370,7 @@ and mut_val (env:env) (mut : precompiledExpr Mutable.t)
           | Record map ->
             map.(index)
           | x ->
-            Printf.printf "Got %s expected Record\n" (typeof x);
-            assert false
+            raise (Error (fun f -> Format.fprintf f "Got %s expected Record\n" (typeof x)))
       )
 and eval_call env name params : execenv -> result =
   try
@@ -505,7 +514,7 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     let env, r = add_in_env env var in
     env, (fun execenv -> read t (fun v -> execenv.(r) <- v))
   | Instr.StdinSep _ ->
-    let f execenv = Scanf.scanf "%[\n \010]" (fun _ -> ()) in
+    let f execenv = IO.skip () in
     env, f
 and print ty e =
   let () = match Type.unfix ty with
@@ -514,23 +523,15 @@ and print ty e =
         Array.map (fun e -> print ty e) (get_array e);
         ()
       end
-    | Type.Integer -> Printf.printf "%d%!" (get_integer e)
-    | Type.Char -> Printf.printf "%c%!" (get_char e)
-    | Type.Bool -> if get_bool e
-      then Printf.printf "True"
-      else Printf.printf "False"
-    | Type.String -> Printf.printf "%s%!" (get_string e)
+    | Type.Integer -> IO.print_int (get_integer e)
+    | Type.Char -> IO.print_char (get_char e)
+    | Type.Bool -> IO.print_bool (get_bool e)
+    | Type.String -> IO.print_string (get_string e)
     | _ -> failwith ("cannot print type "^(Type.type_t_to_string ty))
   in ()
 and read ty k = match Type.unfix ty with
-  | Type.Integer ->
-    Scanf.scanf "%d" (fun x ->
-      k (Integer x)
-    )
-  | Type.Char ->
-    Scanf.scanf "%c" (fun x ->
-      k (Char x)
-    )
+  | Type.Integer -> k ( Integer (IO.read_int ()))
+  | Type.Char -> k (Char (IO.read_char ()))
   | _ -> failwith ("cannot read type "^(Type.type_t_to_string ty))
 and eval_instrs env
     (instrs : (env -> precompiledExpr) Ast.Instr.t list)
@@ -612,3 +613,30 @@ let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
       let env, f = eval_instrs {env with nvars = 0} (precompile_instrs instrs)
       in f (init_eenv ( env.nvars + 1 ))
     | None -> ()
+
+
+end
+
+
+
+module E = struct
+  let print_int i =
+    Printf.printf "%d%!" i
+  let print_char c = Printf.printf "%c%!" c
+  let print_bool b =
+    if b
+    then Printf.printf "True"
+    else Printf.printf "False"
+  let print_string s =
+    Printf.printf "%s%!" s
+  let read_int () =
+    Scanf.scanf "%d" (fun x -> x )
+  let skip () =
+    Scanf.scanf "%[\n \010]" (fun _ -> ())
+  let read_char () =
+    Scanf.scanf "%c" (fun x -> x)
+end
+
+module EVAL = EvalF(E)
+
+let eval_prog t p = EVAL.eval_prog t p
