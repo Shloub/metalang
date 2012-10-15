@@ -1,4 +1,8 @@
+/*
+Tictactoe : un tictactoe avec une IA
+*/
 
+/* La structure de donnée */
 record @gamestate
   cases : array<array<int>>
   firstToPlay : bool
@@ -6,11 +10,13 @@ record @gamestate
   ended : bool
 end
 
+/* Un Mouvement */
 record @move
   x : int
   y : int
 end
 
+/* On affiche l'état */
 def void print_state(@gamestate g)
   print "\n|"
   for y = 0 to 2 do
@@ -31,6 +37,7 @@ def void print_state(@gamestate g)
   print "\n"
 end
 
+/* On dit qui gagne (info stoquées dans g.ended et g.note ) */
 def void eval(@gamestate g)
   def win = 0
   def freecase = 0;
@@ -78,7 +85,7 @@ def void eval(@gamestate g)
   end
 end
 
-
+/* On applique un mouvement */
 def void apply_move(@move m, @gamestate g)
   def player = 2
   if g.firstToPlay then
