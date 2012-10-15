@@ -64,6 +64,6 @@ let config () =
 
 let () =
   process_config (fun e ->
-    e Format.err_formatter;
+    Format.fprintf Format.err_formatter "%a%!" (fun f () -> e f) ();
     exit 1
   ) $ config ()
