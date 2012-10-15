@@ -1,0 +1,60 @@
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.3em; }
+h1, h2, h3 {
+  color: black ;
+  font-variant: small-caps;
+  padding-left: 1em;
+  font-weight: normal;
+}
+#left {
+float:left;
+width: 20%;
+padding-bottom: 2em;
+padding-right: 1em;
+margin-right: 1em;
+}
+
+#right{
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 60%;
+  margin-left: 20%;
+}
+
+#anchors {
+  padding-left: 3em;
+  width: 19%;
+  float:right;
+}
+
+a {
+  color: #07F;
+}
+
+a:visited {
+  color: #7AF;
+}
+
+.editor {
+margin-left:10px;
+margin-bottom:10px;
+border: 1px solid #EEF;
+}
+
+.editor h3 {
+  color: black;
+  margin:0px;
+  padding-left:3em;
+  background: #EEF;
+}
+
+.CodeMirror-scroll {
+  height: auto !important;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines { padding-left: 1em }
+
+li{
+  list-style: none;
+}

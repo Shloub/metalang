@@ -2,16 +2,20 @@
   <head>
     <title>métalang</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <link rel="stylesheet" href="CodeMirror-2.33/theme/ambiance.css">
-
-    <script src="CodeMirror-2.33/lib/codemirror.js"></script>
-    <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css">
-    <script src="syntax-metalang.js"></script>
+    <link rel="stylesheet" href="CodeMirror-2.33/theme/elegant.css">
     <script language="javascript" src="meta.js"></script>
+    <script src="CodeMirror-2.33/lib/codemirror.js"></script>
+    <script src="CodeMirror-2.33/mode/clike/clike.js"></script>
+    <script src="CodeMirror-2.33/mode/ocaml/ocaml.js"></script>
+    <script src="CodeMirror-2.33/mode/pascal/pascal.js"></script>
+    <script src="CodeMirror-2.33/mode/php/php.js"></script>
+    <script src="CodeMirror-2.33/mode/python/python.js"></script>
+    <script src="CodeMirror-2.33/mode/ruby/ruby.js"></script>
+    <script language="javascript" src="syntax-metalang.js"></script>
+    <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css">
 
     <style type="text/css">
-body { margin:0; padding:0; background-color: #1a1a1a }
+body { margin:0; padding:0; }
 #left {
   width: 50%;
   float: left;
@@ -38,23 +42,23 @@ body { margin:0; padding:0; background-color: #1a1a1a }
 }
 
 a{
-  color: #ADF;
+  color: #7AF;
   font-size: 1.2em;
 }
-
-h1 { color: white ; font-variant: small-caps; padding-left: 1em; font-size: 1.5em; font-weight: normal }
-h2 { color: white ; font-variant: small-caps; padding-left: 1em; font-size: 1.3em; font-weight: normal;}
-
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.3em; }
+h1, h2 {
+  color: black ;
+  font-variant: small-caps;
+  padding-left: 1em;
+  font-weight: normal;
+}
 #footer1 {
-border-bottom: 1px solid #000;
-border-top: 1px solid #000;
 }
 #footer1_left { width : 45%; float:left; padding-left: 1em;}
 #footer1_right { margin-left: 50%; padding-left: 1em; padding-right: 1em; }
 
-#input_text { margin: 1%; width: 98%; }
-#right { height: 80%; margin-left: 50%; overflow:auto; }
-#right pre { padding: 0 3em; color: #fafafa; font-size: 1.1em }
+#right { margin-left: 50%; width: 48%; }
 #tools { padding: 1em;}
 #tools input, #tools select { font-size: 1.5em }
 .CodeMirror-scroll {
@@ -62,13 +66,13 @@ border-top: 1px solid #000;
     overflow-y: hidden;
       overflow-x: auto;
       }
-.CodeMirror-lines { padding-left: 1em }
-#stderr { background: #222222; color:#ff1111; }
+.CodeMirror-lines { padding-left: 0em }
+#stderr { color:#ff1111; }
 #legend {
   margin-left : 10%;
   margin-right : 10%;
   font-size: 0.8em;
-  color: #AAA;
+  color: #444;
   padding-top : 5em;
   padding-right : 5em;
 }
@@ -130,7 +134,7 @@ end
     <h1>Métalang</h1>
     <div id="left">
       <h2>Code source</h2>
-      <div style="height:60%; overflow:auto"><textarea id="input_text" cols="80">
+      <div><textarea id="input_text" cols="80">
 def int pathfind_aux(array<array<int>> cache, array<array<char>> tab, int x, int y, int posX, int posY)
 	if posX == x - 1 && posY == y - 1 then
 		return 0
@@ -182,10 +186,6 @@ main
 end
 
 </textarea></div>
-
-      <h2>stderr</h2>
-      <p><textarea id="stderr" rows="5" style="width: 100%"></textarea></p>
-
     </div>
 
     <div id="right">
@@ -203,11 +203,18 @@ end
           <option value="rb">Ruby</option>
         </select>
 
+
         <input id="replicate" type="submit" value="métalèche" style="display:none"/>
         <input type="submit" value="métalèche" onclick="update();" />
       </div>
-      <div style="clear:both;"></div>
-      <pre id="copy"></pre>
+
+      <div id="stderr_box" style="display:none">
+      <h2>stderr</h2>
+      <p><textarea id="stderr" rows="5" style="width: 80%"></textarea></p>
+      </div>
+      <div id="copy_box" style="display:none">
+      <textarea id="copy" style="width: 80%"></textarea>
+      </div>
     </div>
 
 <div style="clear:both;"></div>
@@ -229,8 +236,10 @@ __####_#_#
 </textarea></p>
   </div>
   <div id="footer1_right">
+      <div id="stdout_box" style="display:none">
     <h2>stdout</h2>
     <p><textarea id="stdout" rows="5" style="width:100%"></textarea></p>
+</div>
   </div>
 <input id="eval_btn" type="submit" value="Eval" style="display:none"/>
 <input type="submit" value="Eval" onclick="updateEval();" />
@@ -247,19 +256,21 @@ __####_#_#
     <ul>
       <li><a href="http://opensource.org/licenses/bsd-license.php">BSD Licence</a></li>
       <li><a href="http://www.prologin.org">Prologin</a></li>
-      <li><a href="http://www.prologin.org">Prologin</a></li>
     </ul>
   </div>
   <div id="footer2_col2">
     <ul>
-      <li><a href="http://www.prologin.org">Prologin</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tarball.tar.gz">Sources</a></li>
+      <li><a href="site.html">Exemples</a></li>
+      <li><a href="doc.html">Documentation</a></li>
     </ul>
   </div>
   <div id="footer2_col3">
     <p>Copyright</p>
     <ul>
       <li><a href="mailto:info@prologin.org">Prologin</a></li>
-      <li><a href="mailto:coucou747@gmail.com">Maxime Audouin</a></li>
+      <li><a href="../">Maxime Audouin</a></li>
     </ul>
   </div>
 </div>
@@ -267,20 +278,69 @@ __####_#_#
 
     <script language="javascript">
 
+      var showHide = function(){
+        if (document.getElementById("copy").value == ""){
+          document.getElementById("stderr_box").style.display="block";
+          document.getElementById("copy_box").style.display="none";
+          document.getElementById("stdout_box").style.display="none";
+          return false;
+        }else{
+          document.getElementById("stderr_box").style.display="none";
+          document.getElementById("copy_box").style.display="block";
+          document.getElementById("stdout_box").style.display="block";
+          return true;
+        }
+      }
+
+      var code = null;
       var ed = CodeMirror.fromTextArea(document.getElementById('input_text'), {
         lineNumbers: true,
-        mode: 'metalang',
+        mode: 'text/x-metalang',
       });
 
-      ed.setOption("theme", "ambiance");
+      ed.setOption("theme", "elegant");
 
       var update = function(){
         document.getElementById("input_text").value=ed.getValue();
         document.getElementById("replicate").click();
+
+      if (showHide()){
+        var lng = 'text/x-csrc';
+        switch (document.getElementById("language")){
+          case 'ml':
+            lng = 'text/x-ocaml';
+          break;
+          case 'pas':
+            lng = 'text/x-pascal';
+          break;
+          case 'php':
+            lng = 'text/x-php';
+          break;
+          case 'py':
+            lng = 'text/x-python';
+          break;
+          case 'rb':
+            lng = 'text/x-ruby';
+          break;
+        }
+
+        if (code == null){
+          code = CodeMirror.fromTextArea(document.getElementById('copy'), {
+            lineNumbers: true,
+            mode: lng,
+          });
+          code.setOption("theme", "elegant");
+        }else{
+          code.setValue( document.getElementById("copy").value );
+          code.setOption( "mode", lng );
+        }
+        }
       }
+
       var updateEval = function(){
         document.getElementById("input_text").value=ed.getValue();
         document.getElementById("eval_btn").click();
+        showHide();
       }
     </script>
 

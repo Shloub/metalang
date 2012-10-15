@@ -13,6 +13,7 @@ CodeMirror.defineMode('metalang', function(config) {
     'while': 'keyword',
     'do': 'keyword',
     'type': 'keyword',
+    'record': 'keyword',
     'with': 'keyword',
     'try': 'keyword',
     'end': 'keyword',

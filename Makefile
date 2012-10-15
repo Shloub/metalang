@@ -17,6 +17,35 @@
 #        compile la documentation
 #
 
+
+tar :
+	rm -rf tarball
+	@mkdir tarball tarball/Astutils tarball/Eval tarball/Parser tarball/Main tarball/Printers tarball/tools tarball/Stdlib tarball/tests tarball/tests/prog tarball/tests/compile tarball/tests/not_compile || true
+	for i in Astutils Eval Main Parser Printers Stdlib tools tests/not_compile tests/prog tests/compile; do \
+	echo $$i; \
+	find ./$$i -name "*.mllib" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*.mly" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*.mll" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*.mli" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*.ml" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*.el" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*.in" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*.metalang" -exec cp {} tarball/{} \;; \
+	find ./$$i -name "*_tags" -exec cp {} tarball/{} \;; \
+	done;
+	cp _tags tarball/_tags
+	cp myocamlbuild.ml tarball/myocamlbuild.ml
+	cp Makefile tarball/Makefile
+	rm tarball/tests/prog/cambriolage.in
+	rm tarball/tests/prog/cambriolage.metalang
+	rm tarball/tests/prog/montagnes.in
+	rm tarball/tests/prog/montagnes.metalang
+	rm tarball/tests/prog/summax_souslist.in
+	rm tarball/tests/prog/summax_souslist.metalang
+	tar -czf tarball.tar.gz tarball
+	rm -rf tarball
+
+
 java	?=	java
 python	?=	python3
 

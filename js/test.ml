@@ -5,19 +5,20 @@ let doc = Html.document
 let get x = Js.Opt.get x (fun () -> assert false)
 let element id = get (doc##getElementById(Js.string id))
 
-let to_remove = ref None
-
-
 let process_error e =
   let stderr = match Html.tagged (element "stderr") with
     | Html.Textarea t -> t
     | _ -> assert false  in
+  let copy = match Html.tagged (element "copy") with
+    | Html.Textarea t -> t
+    | _ -> assert false in
   let () = begin
     ignore (Format.flush_str_formatter ());
     e Format.str_formatter;
   end in
   let se = Format.flush_str_formatter () in
   let () = stderr##value <- (Js.string se) in
+  let () = copy##value <- (Js.string "") in
   ()
 
 let txt () =
@@ -36,7 +37,9 @@ let stdlib () =
 
 let click_replicate _ =
   let txt = txt () in
-  let copy = element "copy" in
+  let copy = match Html.tagged (element "copy") with
+    | Html.Textarea t -> t
+    | _ -> assert false in
   let select_lang = match Html.tagged (element "language") with
     | Html.Select e -> e
     | _ -> assert false in
@@ -45,11 +48,7 @@ let click_replicate _ =
   let output = Libmetalang.test_process
     process_error
     lang txt (stdlib ()) in
-  begin match !to_remove with
-  Some node -> Dom.removeChild copy node | _ -> () end ;
-  let node = doc##createTextNode (Js.string output) in
-  to_remove := Some node ;
-  Dom.appendChild copy node ;
+  let () = copy##value <- (Js.string output) in
   Js._true
 
 let click_eval _ =
@@ -73,9 +72,9 @@ let run _ =
   eval_btn##onclick <- Html.handler click_eval ;
   let replicate = element "replicate" in
   replicate##onclick <- Html.handler click_replicate ;
-  begin match Html.tagged (element "language") with
+  (* begin match Html.tagged (element "language") with
     | Html.Select e -> e##onchange <- Html.handler click_replicate
-    | _ -> () end ;
+     | _ -> () end ; *)
   Js._false
 
 let _ = Html.window##onload <- Html.handler run

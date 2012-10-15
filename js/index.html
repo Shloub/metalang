@@ -1,0 +1,155 @@
+<html>
+<head>
+  <title>métalang</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="CodeMirror-2.33/theme/elegant.css">
+    <link rel="stylesheet" href="global.css" />
+    <script src="CodeMirror-2.33/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css" />
+    <script src="syntax-metalang.js"></script>
+    <script src="CodeMirror-2.33/mode/ocaml/ocaml.js"></script>
+</head>
+<body>
+
+<h1>Métalang</h1>
+<div id="left">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="tarball.tar.gz">Sources.tar.gz</a></li>
+<li><a href="site.html">Exemples</a></li>
+<li><a href="doc.html">Documentation</a></li>
+<li><a href="demo.html">Démonstration</a></li>
+<li><a href="http://www.prologin.org">Prologin</a></li>
+<li><a href="../">main author</a></li>
+</ul>
+</div>
+<div id="right">
+<h2>Le langage Métalang</h2>
+<p>Le langage Métalang a pour but de pouvoir écrire un algorithme dans un seul langage et de pouvoir ensuite l'utiliser dans une dizaine d'autres.</p>
+<p>Ce projet a vu le jour pour pouvoir écrire les références et les codes a compléter pour le concours prologin : on écrit une solution a un exercice d'algo, et on obtient ensuite les références dans les différents langages du concours. Ces références servent ensuite a déterminer le temps et la mémoire que prendra l'algorithme a s'executer.</p>
+
+<div class="editor">
+<h3>Un hello world</h3>
+<textarea id="exemple0">
+main
+  print "Hello world\n"
+end</textarea>
+</div>
+<p>Ce langage est statiquement typé, avec de l'inférence et sans polymorphisme. Le code produit (code C, ocaml, php, etc...) devrait-être lisible par un humain (même si parfois ce code n'est pas de toute beauté.) </p>
+
+
+<table>
+<tr>
+<td>
+<div class="editor">
+<h3>Sort</h3>
+<textarea id="exemple1">
+def void sort_(array<int> tab, int len)
+	for i = 0 to len -1 do
+	  for j = i + 1 to len - 1 do
+			if tab[i] > tab[j] then
+				def int tmp = tab[i]
+				tab[i] = tab[j]
+				tab[j] = tmp
+			end
+	  end
+	end
+end
+
+main
+	def int len = 2
+	read int len skip
+	def array<int> tab[len] with i do
+		def int tmp = 0
+		read int tmp skip
+		return tmp
+	end
+	sort_(tab, len)
+	print array<int> tab
+end
+</textarea>
+L'exemple ci-dessous permet de trier un tableau d'entiers avec un tri quadratique.
+</div>
+</td>
+<td>
+<div class="editor">
+<h3>La version ocaml</h3>
+<textarea id="exemple_ml_0">
+let rec sort_ tab len =
+  for i = 0 to len - 1 do
+    for j = i + 1 to len - 1 do
+      if tab.(i) > tab.(j) then
+        begin
+          let tmp = tab.(i) in
+          tab.(i) <- tab.(j);
+          tab.(j) <- tmp
+        end
+    done
+  done
+
+let () =
+begin
+  let len = ref( 2 ) in
+  Scanf.scanf "%d" (fun value -> len := value);
+  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let tab = Array.init ((!len)) (fun i ->
+    let tmp = ref( 0 ) in
+    Scanf.scanf "%d" (fun value -> tmp := value);
+    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    (!tmp)) in
+  sort_ tab (!len);
+  for a = 0 to ((Array.length tab)) - 1 do
+    Printf.printf "%d" (tab.(a))
+  done
+end
+</textarea>
+Et voici la version ocaml correspondante générée grace à Métalang
+</div>
+</td></tr></table>
+
+
+
+
+<h2>Backends</h2>
+<p>Métalang peut s'exporter vers les langages suivants :</p>
+<ul>
+<li>C</li>
+<li>C++</li>
+<li>C#</li>
+<li>java</li>
+<li>ocaml</li>
+<li>php</li>
+<li>python</li>
+<li>ruby</li>
+<li>pascal</li>
+</ul>
+<h2>Changelog</h2>
+<p>Metalang est un langage de programmation en développement a partir de février 2012, premiere version stable en aout 2012.</p>
+<ul>
+  <li>V0.1 aout 2012</li>
+  <ul>
+    <li>Premiere version comprennant un compilateur et un interpréteur</li>
+  </ul>
+</ul>
+</div>
+<div style="clear:both"></div>
+    <script language="javascript">
+      for (var i = 0; ; i++){
+        var item = document.getElementById('exemple'+i);
+        if (item == null) break;
+        var ed = CodeMirror.fromTextArea(item, {
+          mode: 'metalang',
+        });
+        ed.setOption("theme", "elegant");
+      }
+      for (var i = 0; ; i++){
+        var item = document.getElementById('exemple_ml_'+i);
+        if (item == null) break;
+        var ed = CodeMirror.fromTextArea(item, {
+          mode: 'text/x-ocaml',
+        });
+        ed.setOption("theme", "elegant");
+      }
+    </script>
+</body>
+</html>
