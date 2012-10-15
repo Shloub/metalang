@@ -1,7 +1,7 @@
 {
 	open Stdlib
 	open Lexing
-	let newline lexbuf =
+  let newline lexbuf =
 		let p = lexbuf.lex_curr_p in
     lexbuf.lex_curr_p <- { p with
       pos_lnum = 1 + p.pos_lnum ;
@@ -30,8 +30,11 @@ let ident = ['a'-'z'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 rule token = parse
 (* whitespace *)
 | "/*" (comment as str ) "*/" {
-	token lexbuf
-(* COMMENT(str) TODO *)
+(*	token lexbuf *)
+  let () = String.fold_left (fun () c ->
+    if c == '\n' then
+      newline lexbuf) () str in
+  COMMENT(str)
 }
 | "{"
     {

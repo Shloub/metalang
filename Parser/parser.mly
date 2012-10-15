@@ -17,7 +17,7 @@
     let () = Ast.PosMap.add (M.Fixed.annot e) pos
     in e
 %}
-
+%token<string> COMMENT
 %token MAIN IF THEN ELSE ELSIF END DO FOR TO WHILE RETURN
 %token DEF MACRO WITH
 %token READ PRINT SKIP
@@ -188,6 +188,7 @@ control_flow :
 ;
 
 instr :
+| COMMENT { I.comment $1 }
 | define_var { $1
         |> locati ( Ast.location ($startpos($1), $endpos($1)))}
 | control_flow { $1 |> locati ( Ast.location ($startpos($1), $endpos($1))) }
@@ -227,6 +228,7 @@ args :
 ;
 
 define :
+| COMMENT { P.comment $1 }
 | DEF typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
 	{ P.declarefun $3 $2 $5 $7 }
 

@@ -42,6 +42,8 @@ class ['lex] pasPrinter = object(self)
   val mutable current_function = ""
   val mutable bindings = BindingSet.empty
 
+  method comment f str =
+    Format.fprintf f "{%s}" str
 
   method length f tab =
     Format.fprintf f "length(%a)" self#mutable_ tab

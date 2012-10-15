@@ -49,6 +49,11 @@ class ['lex] rbPrinter = object(self)
   method header f () =
     Format.fprintf f "%s" header
 
+
+  method comment f str =
+    Format.fprintf f "\n=begin\n%s\n=end\n" str
+
+
   method unop f op a =
     match op with
       | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
