@@ -559,7 +559,11 @@ let rec collect_contraintes_instructions env instructions
           env
         | Instr.Call (f, eli) ->
           let (args, out_contraint) =
-            StringMap.find f env.functions in (*TODO option*)
+            try
+              StringMap.find f env.functions
+          with Not_found ->
+            error_function_not_found loc f
+          in
           let len1 = List.length args in
           let len2 = List.length eli in
           let () = if len1 != len2
