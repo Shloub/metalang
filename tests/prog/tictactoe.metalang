@@ -86,25 +86,34 @@ def void eval(@gamestate g)
 end
 
 /* On applique un mouvement */
-def void apply_move(@move m, @gamestate g)
+def void apply_move_xy(int x, int y, @gamestate g)
   def player = 2
   if g.firstToPlay then
     player = 1
   end
-  g.cases[m.x][m.y] = player
+  g.cases[x][y] = player
   g.firstToPlay = ! g.firstToPlay
 end
 
-def void cancel_move(@move m, @gamestate g)
-  g.cases[m.x][m.y] = 0
+def void apply_move(@move m, @gamestate g)
+  apply_move_xy(m.x, m.y, g)
+end
+
+def void cancel_move_xy(int x, int y, @gamestate g)
+  g.cases[x][y] = 0
   g.firstToPlay = ! g.firstToPlay
   g.ended = false
 end
-
-def bool can_move(@move m, @gamestate g)
-  return g.cases[m.x][m.y] == 0
+def void cancel_move(@move m, @gamestate g)
+  cancel_move_xy(m.x, m.y, g)
 end
 
+def bool can_move_xy(int x, int y, @gamestate g)
+  return g.cases[x][y] == 0
+end
+def bool can_move(@move m, @gamestate g)
+  return can_move_xy(m.x, m.y, g)
+end
 
 def int minmax(@gamestate g)
   eval(g)
@@ -115,18 +124,12 @@ def int minmax(@gamestate g)
   if ! g.firstToPlay then
     maxNote = 10000
   end
-  def currentMove = record
-    x = 0
-    y = 0
-  end
   for x = 0 to 2 do
-    currentMove.x = x
     for y = 0 to 2 do
-      currentMove.y = y
-      if can_move(currentMove, g) then
-        apply_move(currentMove, g)
+      if can_move_xy(x, y, g) then
+        apply_move_xy(x, y, g)
         def currentNote = minmax(g)
-        cancel_move(currentMove, g)
+        cancel_move_xy(x, y, g)
         if currentNote > maxNote == g.firstToPlay
         then
           maxNote = currentNote
@@ -138,21 +141,15 @@ def int minmax(@gamestate g)
 end
 
 def @move play(@gamestate g)
-  def currentMove = record
-    x = 0
-    y = 0
-  end
   def minMove = record
     x = 0
     y = 0
   end
   def minNote = 10000
   for x = 0 to 2 do
-    currentMove.x = x
     for y = 0 to 2 do
-      currentMove.y = y
-      if can_move(currentMove, g) then
-        apply_move(currentMove, g)
+      if can_move_xy(x, y, g) then
+        apply_move_xy(x, y, g)
         def currentNote = minmax(g)
         print x
         print ", "
@@ -160,11 +157,11 @@ def @move play(@gamestate g)
         print ", "
         print currentNote
         print "\n"
-        cancel_move(currentMove, g)
+        cancel_move_xy(x, y, g)
         if currentNote < minNote then
           minNote = currentNote
-          minMove.x = currentMove.x
-          minMove.y = currentMove.y
+          minMove.x = x
+          minMove.y = y
         end
       end
     end
@@ -202,21 +199,20 @@ def @move read_move()
 end
 
 main
+  for i = 0 to 1 do
   def state = init()
   while !state.ended do
     print_state(state)
-    def m = read_move()
-    if can_move(m, state) then
-      apply_move(m, state)
+      apply_move(play(state), state)
       eval(state)
       print_state(state)
       if !state.ended then
         apply_move(play(state), state)
         eval(state)
       end
-    end
   end
   print_state(state)
   print state.note
   print "\n"
+  end
 end
