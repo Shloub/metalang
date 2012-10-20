@@ -126,7 +126,7 @@ let error_no_contraintes li =
       ) li
   ))
 
-let error_field_not_found loc name t = (* TODO location *)
+let error_field_not_found loc name t =
   raise ( Error (fun f ->
     Format.fprintf f "Field %s is not found in %s %a\n%!"
       name
@@ -388,7 +388,9 @@ let rec collect_contraintes_expr env e =
     | Expr.Access mut ->
       collect_contraintes_mutable env mut
     | Expr.Length var ->
-      (* TODO ajouter var comme étant un tableau *)
+      let env, vcontrainte = collect_contraintes_mutable env var in
+      let contrainte = (ref (PreTyped (Type.Array (ref (Unknown (loc e))), loc e))) in
+      let env = add_contrainte env vcontrainte contrainte in
       env, ref (Typed (Type.integer, loc e))
     | Expr.Call (name, li) ->
       let (args_ty, out_ty) =
@@ -607,17 +609,20 @@ let rec collect_contraintes_instructions env instructions
 
 let collect_contraintes e
     (funname, ty, params, instructions ) =
-  let loc = ((-1, -1), (-1, -1)) in (* TODO *)
-  let ty = expand e ty loc in
-  let e, ty = ty2typeContrainte e ty loc in
-  let function_type = (List.map ((fun x -> expand e x loc) @*snd) params), ty in
+  let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
+  let ty = expand e ty tyloc in
+  let e, ty = ty2typeContrainte e ty tyloc in
+  let function_type = (List.map ((fun x ->
+    let loc = Ast.PosMap.get (Type.Fixed.annot x) in
+    expand e x loc) @*snd) params), ty in
   let e = { e with
     functions = StringMap.add funname function_type e.functions;
     locales = StringMap.empty
   } in
   let e = List.fold_left (fun e (name, ty) ->
-    let ty = expand e ty loc in
-    let e, ty = ty2typeContrainte e ty loc in
+    let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
+    let ty = expand e ty tyloc in
+    let e, ty = ty2typeContrainte e ty tyloc in
     {e with locales = StringMap.add name ty e.locales}
   ) e params
   in
@@ -752,10 +757,12 @@ let process (prog: 'lex Prog.t) =
             | _ -> env.fields
         }
       | Prog.Macro (name, ty, params, _) ->
-        let loc = ((-1, -1), (-1, -1)) in (* TODO *)
-        let ty = expand env ty loc in
-        let env, ty = ty2typeContrainte env ty loc in
-        let function_type = (List.map ((fun x -> expand env x loc) @* snd) params), ty in
+        let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
+        let ty = expand env ty tyloc in
+        let env, ty = ty2typeContrainte env ty tyloc in
+        let function_type = (List.map ((fun x ->
+          let tyloc = Ast.PosMap.get (Type.Fixed.annot x) in
+          expand env x tyloc) @* snd) params), ty in
         { env with functions = StringMap.add name function_type env.functions}
       | Prog.Comment _ -> env
       | Prog.Global (name, ty, e) -> env (* TODO *)
