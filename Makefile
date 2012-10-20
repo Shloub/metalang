@@ -49,6 +49,9 @@ tar :
 java	?=	java
 python	?=	python3
 
+CFLAGS ?= -O3
+CCFLAGS ?= -O3
+
 TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, \
 	$(shell ls tests/not_compile/)))
 
@@ -106,10 +109,12 @@ TMPFILES	:=\
 .SECONDARY: $(TMPFILES)
 
 .PHONY: metalang
-metalang : main.byte
-	@mv _build/Main/main.byte metalang
+metalang : main.native
+	@mv _build/Main/main.native metalang
 main.byte :
 	@ocamlbuild -tag debug Main/main.byte
+main.native:
+	@ocamlbuild Main/main.native
 
 .PHONY: repl.byte
 repl.byte :
@@ -140,10 +145,10 @@ out/%.metalang.test : out/%.startTest out/%.metalang
 	done;
 
 out/%.c.bin : out/%.c
-	@gcc $< -o $@ || exit 1
+	@gcc $(CFLAGS) $< -o $@ || exit 1
 
 out/%.cc.bin : out/%.cc
-	@g++ $< -o $@ || exit 1
+	@g++ $(CCFLAGS) $< -o $@ || exit 1
 
 out/%.pas.bin : out/%.pas
 	@fpc $< || exit 1
@@ -165,40 +170,76 @@ out/%.ml.byte : out/%.ml
 	@mv _build/out/$(basename $*).byte $@
 
 out/%.bin.out : out/%.bin
-	@./$< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.eval.out : metalang
-	./metalang -eval tests/prog/$(basename $*).metalang < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	./metalang -eval tests/prog/$(basename $*).metalang < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.native.out : out/%.ml.native
-	@./$< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.byte.out : out/%.ml.byte
-	@./$< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.class.out : out/%.class
-	@$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.js.out : out/%.js
-	gjs $< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	gjs $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.out : out/%.ml
-	@ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.php.out : out/%.php
-	@php $< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	php $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.py.out : out/%.py
-	@$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.sch.out : out/%.sch
-	@gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.rb.out : out/%.rb
-	@ruby $< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	ruby $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.exe.out : out/%.exe
-	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1
+	DATE=` date +%s.%N`; \
+	mono $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	DATE2=` date +%s.%N`; \
+	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 reset	= \033[0m
 red	= \033[0;31m
@@ -234,6 +275,13 @@ out/%.startTest :
 
 out/%.outs : out/%.bin.outs out/%.int.outs out/%.managed.outs
 	$(TESTPROGS)
+
+out/%.time.html : out/%.bin.outs out/%.int.outs out/%.managed.outs
+	echo "<h3>Bench de : $(basename $@)</h3><table>" > $@
+	for i in `ls $(basename $(basename $@))*.time`; do \
+	echo "<tr><td>$$i</td><td>`cat $$i`</td></tr>" >> $@; \
+	done;
+	echo "</table>" >> $@
 
 out/%.test : out/%.startTest out/%.outs
 	@echo "$(green)OK $(basename $*)$(reset)";
