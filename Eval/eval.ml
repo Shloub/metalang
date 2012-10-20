@@ -143,8 +143,12 @@ let num_op loc ( + ) ( +. ) a b =
             | _ -> tyerr loc
         )
 let int_op loc f a b = num_op loc f (fun _ _ -> tyerr loc) a b
-let num_cmp loc f a b =
-  let (<) = Obj.magic f in
+
+type compare = { cmp : 'a . 'a -> 'a -> bool }
+
+let num_cmp f =
+  let (<) = f.cmp in
+  fun loc a b ->
   match a, b with
     | Result ra, Result rb ->
       Result
@@ -212,18 +216,25 @@ let num_cmp loc f a b =
         )
         | _ -> tyerr loc
       end
-let binop loc op a b = match op with
+let binop =
+  let leq = num_cmp { cmp = ( <= ) }  in
+  let le = num_cmp { cmp = ( < ) } in
+  let heq = num_cmp { cmp = ( >= ) } in
+  let he = num_cmp { cmp = ( > ) } in
+  let eq = num_cmp { cmp = ( = ) } in
+  let diff = num_cmp { cmp = ( <> ) } in
+  fun loc op a b -> match op with
   | Expr.Add -> num_op loc ( + ) ( +. ) a b
   | Expr.Sub -> num_op loc ( - ) ( -. ) a b
   | Expr.Mul -> num_op loc ( * ) ( *. ) a b
   | Expr.Div -> num_op loc ( / ) ( /. ) a b
   | Expr.Mod -> int_op loc ( mod ) a b
-  | Expr.LowerEq -> num_cmp loc ( <= ) a b
-  | Expr.Lower -> num_cmp loc ( < ) a b
-  | Expr.HigherEq -> num_cmp loc ( >= ) a b
-  | Expr.Higher -> num_cmp loc ( > ) a b
-  | Expr.Eq -> num_cmp loc ( = ) a b
-  | Expr.Diff -> num_cmp loc ( <> ) a b
+  | Expr.LowerEq -> leq loc a b
+  | Expr.Lower -> le loc a b
+  | Expr.HigherEq -> heq loc a b
+  | Expr.Higher -> he loc a b
+  | Expr.Eq -> eq loc a b
+  | Expr.Diff -> diff loc a b
   | Expr.BinOr -> int_op loc ( lor ) a b
   | Expr.BinAnd -> int_op loc ( land ) a b
   | Expr.RShift -> int_op loc ( lsr ) a b
@@ -265,6 +276,9 @@ let index_for_field env field =
     | Type.Struct (li, _) ->
       let li = List.map fst li |> List.sort String.compare in
       List.indexof field li
+    | _ -> raise (Error (fun f ->
+      Format.fprintf f "type error : waiting for field %s" field
+    ))
 
 
 module EvalF (IO : EvalIO) = struct
@@ -325,6 +339,8 @@ and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
       end
     | Mutable.Array (m, li) ->
       let m, index = match List.rev li with
+        | [] -> raise (Error (fun f ->
+            Format.fprintf f "Cannot find array indexes\n"))
         | [index] -> mut_val env m, index
         | index::tl ->
           let tl = List.rev tl in
@@ -606,7 +622,7 @@ let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
     | Prog.DeclareType _ -> env
     | Prog.Macro (varname, t, li, impls) -> env
     | Prog.Comment s -> env
-    | Prog.Global (var, ty, e) -> env (* TODO *)
+
   in let env = List.fold_left f (empty_env te) p.Prog.funs
   in match p.Prog.main with
     | Some instrs ->

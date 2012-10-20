@@ -765,7 +765,6 @@ let process (prog: 'lex Prog.t) =
           expand env x tyloc) @* snd) params), ty in
         { env with functions = StringMap.add name function_type env.functions}
       | Prog.Comment _ -> env
-      | Prog.Global (name, ty, e) -> env (* TODO *)
     ) empty prog.Prog.funs
   in
   let env = match prog.Prog.main with

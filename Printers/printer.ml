@@ -123,6 +123,7 @@ class ['lex] printer = object(self)
 
   method ptype f (t:Type.t) =
       match Type.unfix t with
+      | Type.Auto -> ()
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
       | Type.Float -> Format.fprintf f "float"

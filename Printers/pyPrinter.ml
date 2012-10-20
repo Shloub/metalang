@@ -142,7 +142,9 @@ match Type.unfix t with
   | Type.Char ->
     Format.fprintf f "@[%a=readchar();@]"
       self#mutable_ mutable_
-
+  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
+    (Type.type_t_to_string t)
+  ))
 
   method stdin_sep f =
     Format.fprintf f "@[stdinsep();@]"

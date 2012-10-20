@@ -536,7 +536,6 @@ type 'lex t_fun =
   | DeclareType of typename * Type.t
   | Macro of varname * Type.t * (varname * Type.t) list * (string * string) list
   | Comment of string
-  | Global of varname * Type.t * 'lex Expr.t
 
 let comment s = Comment s
 let declarefun var t li1 li2 = DeclarFun (var, t, li1, li2)
