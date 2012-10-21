@@ -139,6 +139,7 @@ class ['lex] pasPrinter = object(self)
           | Type.Char -> Format.fprintf f "char"
           | Type.Named n -> Format.fprintf f "%s" n
           | Type.Struct (li, p) -> Format.fprintf f "a struct"
+          | Type.Auto -> assert false
 
   method print_proto f (funname, t, li) =
     match Type.unfix t with

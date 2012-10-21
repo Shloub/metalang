@@ -56,6 +56,7 @@ class ['lex] cPrinter = object(self)
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "struct %s *" n
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
+      | Type.Auto -> assert false
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ %a@ =@ %a;@]"

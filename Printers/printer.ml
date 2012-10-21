@@ -304,6 +304,7 @@ class ['lex] printer = object(self)
     | Type.Char -> Format.fprintf f "%%c"
     | Type.String -> Format.fprintf f "%%s"
     | Type.Bool -> Format.fprintf f "%%b"
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
   method read f t mutable_ =
     Format.fprintf f "@[read %a %a@]" self#ptype t self#mutable_ mutable_
@@ -389,6 +390,7 @@ class ['lex] printer = object(self)
   method expr f t =
     let t = Expr.unfix t in
     match t with
+    | Expr.Lexems _ -> assert false
     | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> self#binop f op a b

@@ -83,6 +83,7 @@ class ['lex] camlPrinter = object(self)
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
 	  ) li
+      | Type.Auto -> assert false
 
   method stdin_sep f =
     Format.fprintf f

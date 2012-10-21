@@ -56,6 +56,7 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s" n
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
+      | Type.Auto -> assert false
 
   method decl_type f name t =
     match (Type.unfix t) with

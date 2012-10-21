@@ -60,7 +60,7 @@ class ['lex] csharpPrinter = object(self)
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s" n
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
-
+      | Type.Auto -> assert false
 
   method prog f prog =
     Format.fprintf f
@@ -148,6 +148,7 @@ public static int readInt(){
 	  self#mutable_ m
       | Type.Char -> Format.fprintf f "@[<h>%a = readChar();@]"
 	self#mutable_ m
+      | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
 
   method decl_type f name t =

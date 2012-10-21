@@ -285,6 +285,8 @@ module Expr = struct
         let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
         Length m2
       | Call (n, li) -> Call (n, List.map f li)
+      | Lexems x -> Lexems x
+
     let next () = next ()
   end)
   type 'a t = 'a Fixed.t
@@ -349,6 +351,7 @@ module Expr = struct
         | Call (name, li) ->
           let acc, li = List.fold_left_map f acc li in
           (acc, Fixed.fixa annot (Call(name, li)) )
+        | Lexems x -> acc, Fixed.fixa annot (Lexems x)
   end)
 end
 

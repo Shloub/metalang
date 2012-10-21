@@ -51,6 +51,7 @@ class ['lex] cppPrinter = object(self)
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s *" n
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
+      | Type.Auto -> Format.fprintf f "auto"
 
   method bool f = function
     | true -> Format.fprintf f "true"
