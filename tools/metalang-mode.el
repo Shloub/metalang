@@ -13,9 +13,9 @@
      ("\\('[^']+'\\)" (1 font-lock-constant-face)) ; char regexp
      ("\\([-a-zA-Z0-9_]+\\)\\s-*(" (1 font-lock-function-name-face))
                                         ; function regexp
-     ("\\s-\\(record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
+     ("\\s-\\(enum\\|record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
       (1 font-lock-keyword-face))
-     ("^\\(record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
+     ("^\\(enum\\|record\\|def\\|while\\|with\\|for\\|to\\|if\\|then\\|else\\|elsif\\|do\\|end\\|return\\|main\\|print\\|read\\|skip\\)\\s-"
       (1 font-lock-keyword-face))
      ("\\(array<[-a-zA-Z0-9_.<>]+>\\)" (1 font-lock-type-face))
      ("\\(@[-a-zA-Z0-9_.]+\\)" (1 font-lock-type-face))
@@ -47,7 +47,7 @@
 (defun metalang-isbegin ()
 	""
 	(or
-	 (looking-at "[^\n]*\\(main\\|\\do\\|then\\|else\\|record\\)")
+	 (looking-at "[^\n]*\\(main\\|\\do\\|then\\|else\\|record\\|enum\\)")
 	 (looking-at "[^\n]*\\(def\\s-[^ ]+\\s-[-a-zA-Z0-9_.]+(\\)[^\n]*")
 	 )
 	)
