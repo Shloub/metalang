@@ -1,0 +1,7 @@
+enum @foo_t
+  Foo Bar Blah
+end
+
+main
+  def @foo_t foo_val = Foo
+end
