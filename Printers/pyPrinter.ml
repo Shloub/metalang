@@ -86,12 +86,14 @@ class ['lex] pyPrinter = object(self)
 
   method lang () = "py"
 
+  method enum f e =
+    Format.fprintf f "\"%s\"" e
+
   method unop f op a =
     match op with
       | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
       | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
       | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
-
 
   method binop f op a b =
     match op with

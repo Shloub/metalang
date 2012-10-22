@@ -447,6 +447,18 @@ end;
                )
                (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
             ) li
+
+
+      | Type.Enum li ->
+        Format.fprintf f "Type %a = (@\n@[<v2>  %a@]);@\n"
+          self#binding name
+          (print_list
+	           (fun t name ->
+               self#binding t name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+	        ) li
+
       | _ ->
         Format.fprintf f "type %a = %a;"
     super#ptype t

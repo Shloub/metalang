@@ -32,6 +32,7 @@
 %token<int> INT
 %token<char> CHAR
 %token<string> STRING
+%token<string> ENUM_FIELD
 %token<string> IDENT
 %token<token list> LEXEMS
 %token EOF
@@ -71,6 +72,7 @@ value :
 | INT   { E.integer $1 }
 | CHAR  { E.char $1 }
 | STRING  { E.string $1 }
+| ENUM_FIELD { E.enum $1 }
 ;
 
 typ :
@@ -237,11 +239,16 @@ define :
 
 | RECORD AT IDENT decl_field* END
     { P.DeclareType ($3, (T.struct_ $4 {T.tuple = false} )) }
+| ENUM AT IDENT ENUM_FIELD* END
+    { P.DeclareType ($3, T.enum $4 ) }
 ;
 
 decl_field :
 | IDENT COLON typ PERIOD? { $1, $3 }
 ;
+
+
+
 
 macro :
 | ident_language DO STRING PERIOD? { $1, $3 }

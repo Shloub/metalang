@@ -146,6 +146,14 @@ class ['lex] printer = object(self)
 		if t then
 		  Format.fprintf f " as tuple"
 	  ) p
+      | Type.Enum li ->
+	      Format.fprintf f "enum{%a}"
+	        (print_list
+	           (fun t name ->
+	             Format.fprintf t "%a " self#binding name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	        ) li
 
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>def array<%a> %a[%a]"
@@ -387,9 +395,13 @@ class ['lex] printer = object(self)
     let chf x = if self#nop (Expr.unfix x) then self#expr else self#printp
     in Format.fprintf f "%a@ %a@ %a" (chf a) a self#print_op op (chf b) b
 
+  method enum f e =
+    Format.fprintf f "%s" e
+
   method expr f t =
     let t = Expr.unfix t in
     match t with
+    | Expr.Enum e -> self#enum f e
     | Expr.Lexems _ -> assert false
     | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a

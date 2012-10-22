@@ -27,6 +27,8 @@ let string = (( "\\\"" | [^'"'] )*)
 let comment = ([^'*'] | ('*' [^'/'] ) )*
 let ident = ['a'-'z'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
 
+let enum_field = ['A'-'Z'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
+
 rule token = parse
 (* whitespace *)
 | "/*" (comment as str ) "*/" {
@@ -72,6 +74,7 @@ rule token = parse
 (* type *)
 | "enum"   { ENUM }
 | "record" { RECORD }
+| "enum" { ENUM }
 | "string"    { TYPE_STRING }
 | "int"    { TYPE_INT }
 | "auto"    { TYPE_AUTO }
@@ -119,6 +122,6 @@ rule token = parse
 | '\'' char '\'' as x { CHAR (Scanf.sscanf x "%C" (fun x -> x)) }
 | ('"' string '"') as x { STRING (Scanf.sscanf x "%S" (fun x -> x)) }
 | ident as x { IDENT x }
-
+| enum_field as x { ENUM_FIELD x }
 | eof { EOF }
 | _ { error lexbuf }

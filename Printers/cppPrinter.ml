@@ -49,7 +49,14 @@ class ['lex] cppPrinter = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s *" n
+      | Type.Named n -> begin match Typer.expand (super#getTyperEnv ()) t
+          default_location |> Type.unfix with
+            | Type.Struct _ ->
+              Format.fprintf f "struct %s *" n
+            | Type.Enum _ ->
+              Format.fprintf f "%s" n
+      end
+      | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
       | Type.Auto -> Format.fprintf f "auto"
 

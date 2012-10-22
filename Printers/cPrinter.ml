@@ -54,8 +54,15 @@ class ['lex] cPrinter = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "int"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "struct %s *" n
-      | Type.Struct (li, p) -> Format.fprintf f "a struct"
+      | Type.Named n -> begin match Typer.expand (super#getTyperEnv ()) t
+          default_location |> Type.unfix with
+            | Type.Struct _ ->
+              Format.fprintf f "struct %s *" n
+            | Type.Enum _ ->
+              Format.fprintf f "%s" n
+      end
+      | Type.Enum _ -> Format.fprintf f "an enum"
+      | Type.Struct _ -> Format.fprintf f "a struct"
       | Type.Auto -> assert false
 
   method declaration f var t e =
@@ -188,6 +195,16 @@ class ['lex] cPrinter = object(self)
 	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	  ) li
 	  self#binding name
+      | Type.Enum li ->
+        Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
+          self#binding name
+          (print_list
+	           (fun t name ->
+               self#binding t name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+	        ) li
+          self#binding name
       | _ ->
 	Format.fprintf f "typedef %a %a;"
 	super#ptype t

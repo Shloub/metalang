@@ -68,6 +68,7 @@ type env =
       automap : typeContrainte ref IntMap.t;
       contrainteMap : typeContrainte ref IntMap.t;
       fields : (Type.t * Type.t * string) StringMap.t;
+      enum : (Type.t * string) StringMap.t;
       gamma : Type.t StringMap.t;
       functions : functionType StringMap.t;
       locales : varType StringMap.t;
@@ -227,6 +228,15 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
               error_field_not_found loc1 name t2
           in
           check_types env ty ty2 loc1 loc2
+        ) li
+    | Type.Enum li, Type.Enum li2 ->
+      List.iter
+        (fun name ->
+          (try
+            List.find (String.equals name) li2
+          with Not_found ->
+            error_field_not_found loc1 name t2
+          ); ()
         ) li
     | _ -> error_ty t1 t2 loc1 loc2
 
@@ -412,6 +422,10 @@ let rec collect_contraintes_expr env e =
               env.contraintes} in env
         ) env (List.zip args_ty li) in
       env, out_ty
+    | Expr.Enum en ->
+      let (t, _) = StringMap.find en env.enum in (* TODO not found*)
+      let contrainte = ref (Typed (t, loc e) ) in
+      env, contrainte
   in
   let env = { env with
     contrainteMap = IntMap.add (Expr.Fixed.annot e) contrainte env.contrainteMap }
@@ -736,6 +750,7 @@ let process (prog: 'lex Prog.t) =
     gamma = StringMap.empty;
     contrainteMap = IntMap.empty;
     fields = StringMap.empty;
+    enum = StringMap.empty;
     functions = StringMap.empty;
     locales = StringMap.empty;
     contraintes = [];
@@ -748,13 +763,21 @@ let process (prog: 'lex Prog.t) =
       | Prog.DeclareType (name, ty) ->
         { env with
           gamma = StringMap.add name ty env.gamma;
-          fields = match (Type.Fixed.unfix ty) with
+          fields = (match (Type.Fixed.unfix ty) with
             | Type.Struct (li, _) ->
               List.fold_left
                 (fun acc (fieldname, ty_field) ->
                   StringMap.add fieldname (ty_field, ty, name) acc
                 ) env.fields li
-            | _ -> env.fields
+            | _ -> env.fields);
+          enum = (match (Type.Fixed.unfix ty) with
+            | Type.Enum li ->
+              List.fold_left
+                (fun acc fname ->
+                  StringMap.add fname (ty, name) acc
+                ) env.enum li
+            | _ -> env.enum
+          )
         }
       | Prog.Macro (name, ty, params, _) ->
         let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
@@ -773,3 +796,11 @@ let process (prog: 'lex Prog.t) =
   in
   let prog = map_ty env prog
   in env, prog
+
+let type_for_enum en env =
+  let (t, _) = StringMap.find en env.enum in
+      t
+
+let typename_for_enum en env =
+  let (_, name) = StringMap.find en env.enum in
+      name

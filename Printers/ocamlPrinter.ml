@@ -83,6 +83,14 @@ class ['lex] camlPrinter = object(self)
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
 	  ) li
+      | Type.Enum li ->
+	      Format.fprintf f "%a"
+	        (print_list
+	           (fun t name ->
+	             Format.fprintf t "%a" self#binding name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
+	  ) li
       | Type.Auto -> assert false
 
   method stdin_sep f =
@@ -531,6 +539,15 @@ class ['lex] camlPrinter = object(self)
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	  ) li
+      | Type.Enum li ->
+        Format.fprintf f "type %a = @\n@[<v2>    %a@]@\n"
+          self#binding name
+          (print_list
+	           (fun t name ->
+               self#binding t name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
+	        ) li
       | _ ->
 	Format.fprintf f "type %a = %a;;"
 	  super#binding name

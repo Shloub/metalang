@@ -69,7 +69,20 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
 	  ) li
+      | Type.Enum li ->
+        Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
+          self#binding name
+          (print_list
+	           (fun t name ->
+               self#binding t name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+	        ) li
       | _ -> super#decl_type f name t
+
+  method enum f e =
+    let t = Typer.typename_for_enum e (super#getTyperEnv ()) in
+    Format.fprintf f "%s.%s" t e
 
   method prog f prog =
     Format.fprintf f

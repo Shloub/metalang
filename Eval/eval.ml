@@ -324,7 +324,16 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
       (*| Expr.UnOp (Integer i, Expr.BNot) -> Integer (lnot )
         | Expr.UnOp (Float i, Expr.Neg) -> Float (-. i) *)
       | Expr.UnOp (_, _) -> assert false
-
+      | Expr.Enum e ->
+        let t = Typer.type_for_enum e env.tyenv in
+        match Type.unfix t with
+          | Type.Enum li ->
+            let rec f n = function
+              | [] -> assert false
+              | hd::tl -> if String.equals hd e then n else
+                  f (n + 1) tl in
+            Integer (f 0 li) |> res
+          | _ -> assert false
 
 and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
     : execenv -> result -> unit =

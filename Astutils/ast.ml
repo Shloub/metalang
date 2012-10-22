@@ -50,6 +50,7 @@ let next =
     end
 
 type location = ( (int * int ) * ( int * int ) )
+let default_location = (-1, -1), (-1, -1)
 let position p =
   let line = p.Lexing.pos_lnum in
   let cnum = p.Lexing.pos_cnum - p.Lexing.pos_bol - 1 in
@@ -120,6 +121,7 @@ module Type = struct
     | Bool
     | Struct of
         (fieldname * 'a) list * structparams
+    | Enum of fieldname list
     | Named of typename
     | Auto
 
@@ -139,6 +141,7 @@ module Type = struct
       | Struct (li, p) ->
         Struct (List.map (fun (name, t) -> (name, f t)) li, p)
       | Named t -> Named t
+      | Enum x -> Enum x
 
     let next () = next ()
   end)
@@ -172,6 +175,14 @@ module Type = struct
       | Bool, Bool -> 0
       | Bool, (Void | Array _ | Char | Auto | Integer | Float | String) -> 1
       | Bool, _ -> -1
+      | Enum _, (Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Enum e1, Enum e2 ->
+        List.fold_left (fun result (n1, n2) ->
+          if result <> 0 then result else
+            String.compare n1 n2
+        ) 0 (List.combine e1 e2)
+      | Enum _, _ -> -1
+
       | Struct (s1, _), Struct (s2, _) ->
         List.fold_left (fun result ((n1, t1), (n2, t2)) ->
           if result <> 0 then result else
@@ -179,10 +190,10 @@ module Type = struct
             if result <> 0 then result else
               compare t1 t2
         ) 0 (List.combine s1 s2)
-      | Struct _, (Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
       | Struct _, _ -> -1
       | Named n1, Named n2 -> String.compare n1 n2
-      | Named _, (Struct _ | Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
       | Named _, _ -> -1
 
   module Writer = AstWriter.F (struct
@@ -191,7 +202,8 @@ module Type = struct
     let foldmap f acc t =
       let annot = Fixed.annot t in
       match unfix t with
-        | Auto | Integer | Float | String | Char | Void | Bool | Named _ ->
+        | Auto | Integer | Float | String | Char | Void | Bool | Named _
+        | Enum _ ->
           acc, t
         | Array t ->
           let acc, t = f acc t in
@@ -215,6 +227,11 @@ module Type = struct
       | Array t -> "Array("^t^")"
       | Void -> "Void"
       | Bool -> "Bool"
+      | Enum e -> let str = List.fold_left
+          (fun acc name ->
+            acc ^ name ^ ", "
+          ) "" e
+        in "Enum("^str^")"
       | Struct (li, p) ->
         let str = List.fold_left
           (fun acc (name, t) ->
@@ -233,6 +250,7 @@ module Type = struct
   let string:t = String |> fix
   let char:t = Char |> fix
   let array t = Array t |> fix
+  let enum s = Enum (s) |> fix
   let struct_ s p = Struct (s, p) |> fix
   let named n = Named n |> fix
   let auto () = Auto |> fix
@@ -265,6 +283,7 @@ module Expr = struct
     | Length of 'a Mutable.t
     | Call of funname * 'a list
     | Lexems of 'lex list
+    | Enum of string
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = ('a, 'b) tofix
@@ -286,6 +305,7 @@ module Expr = struct
         Length m2
       | Call (n, li) -> Call (n, List.map f li)
       | Lexems x -> Lexems x
+      | Enum e -> Enum e
 
     let next () = next ()
   end)
@@ -295,6 +315,8 @@ module Expr = struct
 
 
   let bool b = fix (Bool b)
+
+  let enum e = fix (Enum e)
 
   let unop op a = fix (UnOp (a, op))
   let binop op a b = fix (BinOp (a, op, b))
@@ -322,7 +344,8 @@ module Expr = struct
     | Type.Bool -> boolean false
     | Type.Named _ -> failwith ("new named is not an expression")
     | Type.Auto -> failwith ("auto is not an expression")
-    | Type.Struct _ -> failwith ("new named is not an expression")
+    | Type.Struct _ -> failwith ("new struct is not an expression")
+    | Type.Enum _ -> failwith ("new enum is not an expression")
 
   module Writer = AstWriter.F (struct
     type 'a alias = 'a t;;
@@ -352,6 +375,7 @@ module Expr = struct
           let acc, li = List.fold_left_map f acc li in
           (acc, Fixed.fixa annot (Call(name, li)) )
         | Lexems x -> acc, Fixed.fixa annot (Lexems x)
+        | Enum x -> acc, Fixed.fixa annot (Enum x)
   end)
 end
 
