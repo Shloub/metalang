@@ -36,6 +36,8 @@ open CPrinter
 class ['lex] jsPrinter = object(self)
   inherit ['lex] cPrinter as super
 
+  method lang () = "js"
+
   method decl_type f name t = ()
 
 
@@ -68,7 +70,43 @@ class ['lex] jsPrinter = object(self)
 
 
   method prog f prog =
-    Format.fprintf f "%a%a@\n@\n"
+    Format.fprintf f "
+var util = require(\"util\");
+var fs = require(\"fs\");
+var current_char = null;
+var read_char0 = function(){
+    return fs.readSync(process.stdin.fd, 1)[0];
+}
+var read_char = function(){
+    if (current_char == null) current_char = read_char0();
+    var out = current_char;
+    current_char = read_char0();
+    return out;
+}
+var stdinsep = function(){
+    if (current_char == null) current_char = read_char0();
+    while (current_char == '\\n' || current_char == ' ' || current_char == '\\t')
+        current_char = read_char0();
+}
+var read_int = function(){
+    if (current_char == null) current_char = read_char0();
+    var sign = 1;
+    if (current_char == '-'){
+        current_char = read_char0();
+        sign = -1;
+    }
+    var out = 0;
+    while (true){
+        if (current_char.charCodeAt(0) >= '0'.charCodeAt(0) && current_char.charCodeAt(0) <= '9'.charCodeAt(0)){
+            out = out * 10 + current_char.charCodeAt(0) - '0'.charCodeAt(0);
+            current_char = read_char0();
+        }else{
+            return out * sign;
+        }
+    }
+}
+
+@\n%a%a@\n@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
@@ -76,19 +114,19 @@ class ['lex] jsPrinter = object(self)
   method main f main =
     self#instructions f main
 
-
   method print f t expr =
-    Format.fprintf f "@[print(%a);@]" self#expr expr
-
-
+    Format.fprintf f "@[util.print(%a);@]" self#expr expr
 
   method allocrecord f name t el =
-    Format.fprintf f "@[<h>%a@ =@ {@[<v2>@\n%a@]@\n};@]"
+    Format.fprintf f "@[<h>var %a@ =@ {@[<v2>@\n%a@]@\n};@]"
       self#binding name
       (self#def_fields name) el
 
+  method length f tab =
+    Format.fprintf f "%a.length" self#mutable_ tab
+
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ new Array(%a);@]"
+      Format.fprintf f "@[<h>var %a@ =@ new Array(%a);@]"
         self#binding binding
         self#expr len
 
@@ -123,5 +161,23 @@ class ['lex] jsPrinter = object(self)
       f
       li
 
+
+  method read f t mutable_ =
+match Type.unfix t with
+  | Type.Integer ->
+    Format.fprintf f "@[%a=read_int();@]"
+      self#mutable_ mutable_
+  | Type.Char ->
+    Format.fprintf f "@[%a=read_char();@]"
+      self#mutable_ mutable_
+  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
+    (Type.type_t_to_string t)
+  ))
+
+  method stdin_sep f =
+    Format.fprintf f "@[stdinsep();@]"
+
+  method enum f e =
+    Format.fprintf f "%S" e
 
 end

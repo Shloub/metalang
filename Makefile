@@ -201,7 +201,7 @@ out/%.class.out : out/%.class
 
 out/%.js.out : out/%.js
 	DATE=` date +%s.%N`; \
-	gjs $< < tests/prog/$(basename $*).in > $@ || exit 1; \
+	node $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
@@ -259,7 +259,7 @@ TESTPROGS	=\
 	cp $< $@ ;\
 
 out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out \
-	out/%.rb.out out/%.eval.out #out/%.js.out out/%.sch.out
+	out/%.rb.out out/%.eval.out out/%.js.out #out/%.sch.out
 	$(TESTPROGS)
 
 out/%.bin.outs : out/%.cc.bin.out \

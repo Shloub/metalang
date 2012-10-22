@@ -57,6 +57,7 @@ let languages, printers =
     "cc",   clike_passes => new CppPrinter.cppPrinter ;
     "cs",   clike_passes => new CsharpPrinter.csharpPrinter ;
     "java", clike_passes => new JavaPrinter.javaPrinter ;
+    "js",   clike_passes => new JsPrinter.jsPrinter ;
     "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
     "php",  clike_passes => new PhpPrinter.phpPrinter ;
     "rb",   clike_passes => new RbPrinter.rbPrinter ;

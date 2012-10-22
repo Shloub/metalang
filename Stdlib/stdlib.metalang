@@ -4,6 +4,7 @@ macro int int_of_char(char c)
   scheme do "(char->integer $c)"
   ruby do "$c.ord"
   pas do "ord($c)"
+  js do "$c.charCodeAt(0)"
   *  do "$c"
 end
 
