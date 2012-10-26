@@ -123,9 +123,7 @@ let parse_string parse str =
   try parse Lexer.token lexbuf
   with Parser.Error -> warn_error_of_parse_error "string" lexbuf
 
-let make_prog_helper (funs, main) stdlib =
-  let progname = "js_magic" in
-  let stdlib = parse_string Parser.toplvls stdlib in
+let make_prog_helper progname (funs, main) stdlib =
   let prog = {
     Prog.progname = progname ;
     Prog.funs = funs ;
@@ -142,28 +140,17 @@ let make_prog_helper (funs, main) stdlib =
   let funs_add, _ = List.fold_right go stdlib ([], used_functions) in
   let funs = funs_add @ funs in
   { prog with Prog.funs = funs }
-
 
 let make_prog stdlib filename =
   let progname = Filename.chop_extension $ Filename.basename filename in
   let funs, main = parse_file Parser.prog filename in
   let stdlib = if stdlib then parse_file Parser.toplvls stdlib_file else [] in
-  let prog = {
-    Prog.progname = progname ;
-    Prog.funs = funs ;
-    Prog.main = main ;
-  } in
-  let used_functions = Passes.WalkCollectCalls.fold prog in
-  let go f (li, used_functions) = match f with
-    | Prog.DeclarFun (v, _,_, _)
-    | Prog.Macro (v, _, _, _) ->
-      if BindingSet.mem v used_functions
-      then (f::li, (Passes.WalkCollectCalls.fold_fun used_functions f) )
-      else (li, used_functions)
-    | _ -> failwith ("bad stdlib") in
-  let funs_add, _ = List.fold_right go stdlib ([], used_functions) in
-  let funs = funs_add @ funs in
-  { prog with Prog.funs = funs }
+  make_prog_helper progname (funs, main) stdlib
+
+let make_prog_helper (funs, main) stdlib =
+  let progname = "js_magic" in
+  let stdlib = parse_string Parser.toplvls stdlib in
+  make_prog_helper progname (funs, main) stdlib
 
 let process err c filename =
   try
