@@ -6,36 +6,34 @@ open Ast
 
 let typed f (a, b) = (a, f b)
 
-let default_passes (prog : Parser.token Prog.t) : Parser.token Prog.t =
+let default_passes (prog : Typer.env * Parser.token Prog.t) :
+    (Typer.env * Parser.token Prog.t ) =
   prog
-  |> Typer.process |> snd
-  |> Passes.WalkCheckNaming.apply
-  |> Passes.WalkRename.apply
-  |> Passes.WalkNopend.apply
-  |> Passes.WalkExpandPrint.apply
+  |> typed Passes.WalkCheckNaming.apply
+  |> typed  Passes.WalkRename.apply
+  |> typed  Passes.WalkNopend.apply
+  |> typed  Passes.WalkExpandPrint.apply
 
 let clike_passes prog =
   prog |> default_passes
-  |> Typer.process
   |> typed Passes.WalkAllocArrayExpend.apply
   |> typed Passes.WalkExpandReadDecl.apply
 
 let ocaml_passes prog =
   prog |> default_passes
-  |> Passes.WalkIfMerge.apply
-  |> Typer.process
+  |> typed Passes.WalkIfMerge.apply
+  |> snd |> Typer.process
 
 let no_passes prog =
   prog
-  |> Typer.process
 
 module L = StringMap
 let languages, printers =
   let ( => )
-      (pa : Parser.token Prog.t -> Typer.env * Parser.token Prog.t )
+      (pa : (Typer.env * Parser.token Prog.t) -> Typer.env * Parser.token Prog.t )
       pr
       (out: Format.formatter)
-      (prog : Parser.token Prog.t) :
+      (prog : Typer.env * Parser.token Prog.t) :
       (((Format.formatter -> unit) ->  unit)) -> unit
     =
     (fun (err : ((Format.formatter -> unit) -> unit)) ->
@@ -139,7 +137,9 @@ let make_prog_helper progname (funs, main) stdlib =
     | _ -> failwith ("bad stdlib") in
   let funs_add, _ = List.fold_right go stdlib ([], used_functions) in
   let funs = funs_add @ funs in
-  { prog with Prog.funs = funs }
+  let prog = { prog with Prog.funs = funs } in
+  let tyenv, prog = Typer.process prog in
+  tyenv, prog
 
 let make_prog stdlib filename =
   let progname = Filename.chop_extension $ Filename.basename filename in
@@ -154,12 +154,9 @@ let make_prog_helper (funs, main) stdlib =
 
 let process err c filename =
   try
-    let prog = make_prog c.stdlib filename in
+    let env, prog = make_prog c.stdlib filename in
     if c.eval then
-      let env, prog = Typer.process prog in begin
-        Eval.eval_prog env prog;
-        ()
-      end
+      let _ = Eval.eval_prog env prog in ()
     else
       let go lang =
         let printer = L.find lang printers in
@@ -168,7 +165,7 @@ let process err c filename =
         Fresh.fresh_init prog ;
         let chan = open_out output in
         let buf = Format.formatter_of_out_channel chan in
-        Format.fprintf buf "%a@;%!" (fun f () -> printer f prog err) ();
+        Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
         close_out chan in
       begin  (* noms à renommer automatiquement *)
         Passes.Rename.clear ();
@@ -199,7 +196,7 @@ let test_process err (lang:string) txt stdlib =
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
     log "prog'" ;
-    let prog = make_prog_helper prog' stdlib in
+    let tyenv, prog = make_prog_helper prog' stdlib in
     log "prog" ;
     let printer = L.find lang printers in
     log "printer" ;
@@ -210,7 +207,7 @@ let test_process err (lang:string) txt stdlib =
     Format.flush_str_formatter () ;
     log "flush" ;
     Format.fprintf Format.str_formatter "%a@;%!"
-      (fun f () -> printer f prog err) ();
+      (fun f () -> printer f (tyenv, prog) err) ();
     log "fprintf" ;
     let txt = Buffer.contents buf in
     log "txt" ;
@@ -251,8 +248,7 @@ let eval_string code stdlib err stdin stdout =
         Parser.prog Lexer.token lexbuf
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
-    let prog = make_prog_helper prog' stdlib in
-    let env, prog = Typer.process prog in
+    let env, prog = make_prog_helper prog' stdlib in
     EVString.eval_prog env prog
   with Warner.Error e ->
     err e
