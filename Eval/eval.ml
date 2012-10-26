@@ -604,30 +604,38 @@ and precompile_instr i =
     | Instr.StdinSep -> Instr.StdinSep
   in Instr.Fixed.fix i
 
+let compile_fun env var t li instrs =
+  let nvars = List.length li in
+  let thisfunc = ref (0, fun _ -> ()) in
+  let env = {env with
+    nvars = nvars + 1;
+    vars = List.fold_left
+      (fun (f, i) (v, _) ->
+        (StringMap.add v i f), i+1
+      )
+      (StringMap.empty, 0) li |> fst;
+    functions =
+      StringMap.add var
+        thisfunc
+        env.functions
+  }
+  in
+      (*      let () = Printf.printf "Precompiling %s\n" var in *)
+  let env, instrs = eval_instrs env (precompile_instrs instrs) in
+      (*      let () = Printf.printf "the function %s need %d vars" var env.nvars
+              in *)
+  let () = thisfunc := (env.nvars, instrs)
+  in env
+
+let precompile_eval_expr (env:env) (e:Parser.token Expr.t) : result =
+  let precompiled = precompile_expr e env in
+  let execenv = init_eenv 0 in
+  eval_expr execenv precompiled
+
 let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
   let f env p = match p with
     | Prog.DeclarFun (var, t, li, instrs) ->
-      let nvars = List.length li in
-      let thisfunc = ref (0, fun _ -> ()) in
-      let env = {env with
-        nvars = nvars + 1;
-        vars = List.fold_left
-          (fun (f, i) (v, _) ->
-            (StringMap.add v i f), i+1
-          )
-          (StringMap.empty, 0) li |> fst;
-        functions =
-          StringMap.add var
-            thisfunc
-            env.functions
-      }
-      in
-(*      let () = Printf.printf "Precompiling %s\n" var in *)
-      let env, instrs = eval_instrs env (precompile_instrs instrs) in
-  (*      let () = Printf.printf "the function %s need %d vars" var env.nvars
-          in *)
-      let () = thisfunc := (env.nvars, instrs)
-      in env
+      compile_fun env var t li instrs
     | Prog.DeclareType _ -> env
     | Prog.Macro (varname, t, li, impls) -> env
     | Prog.Comment s -> env
@@ -665,3 +673,51 @@ end
 module EVAL = EvalF(E)
 
 let eval_prog t p = EVAL.eval_prog t p
+
+
+module EvalConstantes = struct
+
+  let process_expr acc e =
+    let f acc e = match Expr.Fixed.unfix e with
+      | Expr.Call ("instant", [param]) ->
+        let new_expr = match EVAL.precompile_eval_expr acc param with
+          | Integer x -> Expr.integer x
+          | Float x -> Expr.float x
+          | Bool x -> Expr.bool x
+          | Char x -> Expr.char x
+          | String x -> Expr.string x
+          | _ -> raise (Error (fun f -> Format.fprintf f "type error...")) (* TODO *)
+        in acc, new_expr
+      | _ -> acc, e
+    in Expr.Writer.Deep.foldmap f acc e
+
+  let collect_instr acc i =
+    Instr.foldmap_expr process_expr acc i
+
+  let process_main acc m = List.fold_left_map collect_instr acc m
+
+  let process acc p =
+    match p with
+      | Prog.DeclarFun (funname, t, params, instrs) ->
+        let acc, li = List.fold_left_map collect_instr acc instrs in
+        let acc = EVAL.compile_fun acc funname t params instrs in
+        acc, Prog.DeclarFun (funname, t, params, li)
+      | _ -> acc, p
+
+  let apply_prog acc p =
+    List.fold_left_map process acc p
+
+  let apply typerEnv ( prog : Parser.token Prog.t ) : Parser.token Prog.t  =
+    let acc =  empty_env typerEnv in
+    let acc, p = apply_prog acc prog.Prog.funs in
+    let acc, m = match prog.Prog.main with
+      | None -> acc, None
+      | Some m -> let (a, b) = process_main acc m
+	                in a, Some b
+    in
+    {prog with
+      Prog.main = m;
+      Prog.funs = p;
+    }
+
+end

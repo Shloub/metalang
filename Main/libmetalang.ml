@@ -139,6 +139,7 @@ let make_prog_helper progname (funs, main) stdlib =
   let funs = funs_add @ funs in
   let prog = { prog with Prog.funs = funs } in
   let tyenv, prog = Typer.process prog in
+  let prog = Eval.EvalConstantes.apply tyenv prog in
   tyenv, prog
 
 let make_prog stdlib filename =

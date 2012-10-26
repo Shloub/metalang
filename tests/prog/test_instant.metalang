@@ -1,0 +1,8 @@
+
+def int foo(int a, int b)
+  return a + b;
+end
+
+main
+  print int instant(foo(5, 5));
+end

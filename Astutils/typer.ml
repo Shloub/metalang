@@ -402,6 +402,8 @@ let rec collect_contraintes_expr env e =
       let contrainte = (ref (PreTyped (Type.Array (ref (Unknown (loc e))), loc e))) in
       let env = add_contrainte env vcontrainte contrainte in
       env, ref (Typed (Type.integer, loc e))
+    | Expr.Call ("instant", [param]) ->
+      collect_contraintes_expr env param
     | Expr.Call (name, li) ->
       let (args_ty, out_ty) =
         try
