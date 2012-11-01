@@ -1,0 +1,18 @@
+def lexems loop_unroll(int i, int fin, lexems var, lexems content)
+  if i == fin
+  then
+    return {}
+  else
+    return
+    {
+      ${var} = ${i}
+      ${content}
+      ${loop_unroll(i+1, fin, var, content)}
+    }
+  end
+end
+
+main
+  def j = 0;
+  ${loop_unroll(0, 5, {j}, { print int j ; print string "\n"})}
+end

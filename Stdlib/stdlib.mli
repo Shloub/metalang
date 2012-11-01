@@ -89,6 +89,7 @@ end
 
 module List :
 sig
+  val collect : ('a -> 'b list) -> 'a list -> 'b list
   val indexof : 'a ->'a list -> int
   val length : 'a list -> int
   val hd : 'a list -> 'a

@@ -109,8 +109,9 @@ TMPFILES	:=\
 .SECONDARY: $(TMPFILES)
 
 .PHONY: metalang
-metalang : main.native
-	@mv _build/Main/main.native metalang
+metalang : main.byte
+	@mv _build/Main/main.byte metalang
+
 main.byte :
 	@ocamlbuild -tag debug Main/main.byte
 main.native:

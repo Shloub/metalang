@@ -40,12 +40,18 @@ rule token = parse
 }
 | "{"
     {
-      let rec f li =
+      let rec f (li : (token, token Ast.Expr.t) Ast.Lexems.t list) =
         match token lexbuf with
           | END_QUOTE -> List.rev li
-          | t -> f (t :: li)
-      in LEXEMS (f [])
+          | UNQUOTE_START ->
+            let li2 = Ast.Lexems.unquote (f []) in
+            f ( li2 :: li )
+          | t -> f ((Ast.Lexems.token t) :: li)
+      in let li = f []
+
+         in LEXEMS li
     }
+| "${" { UNQUOTE_START }
 | "}" { END_QUOTE }
 | '\n' { newline lexbuf ; token lexbuf }
 | ignore { token lexbuf }
@@ -75,6 +81,7 @@ rule token = parse
 | "enum"   { ENUM }
 | "record" { RECORD }
 | "enum" { ENUM }
+| "lexems"    { TYPE_LEXEMS }
 | "string"    { TYPE_STRING }
 | "int"    { TYPE_INT }
 | "auto"    { TYPE_AUTO }

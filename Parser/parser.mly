@@ -27,14 +27,15 @@
 %token NOT AND OR
 %token EQUAL NOT_EQUAL LOWER HIGHER LOWER_OR_EQUAL HIGHER_OR_EQUAL
 %token ADD NEG MUL DIV MODULO
-%token TYPE_INT TYPE_AUTO TYPE_STRING TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID
+%token TYPE_INT TYPE_AUTO TYPE_STRING TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID TYPE_LEXEMS
 %token TRUE FALSE
 %token<int> INT
 %token<char> CHAR
 %token<string> STRING
 %token<string> ENUM_FIELD
 %token<string> IDENT
-%token<token list> LEXEMS
+%token<(token, token Ast.Expr.t) Ast.Lexems.t list> LEXEMS
+%token UNQUOTE_START
 %token EOF
 %token END_QUOTE
 
@@ -48,10 +49,11 @@
 
 %left NOT
 
-%start prog toplvls toplvl_expr
+%start prog toplvls toplvl_expr toplvl_instrs
 %type<token Ast.Prog.t_fun list * token Ast.Expr.t Ast.Instr.t list option> prog
 %type<token Ast.Prog.t_fun list> toplvls
 %type<token Ast.Expr.t> toplvl_expr
+%type<token Ast.Expr.t Ast.Instr.t list> toplvl_instrs
 %%
 
 prog :
@@ -59,6 +61,7 @@ prog :
 ;
 
 toplvls : define* EOF { $1 } ;
+toplvl_instrs : instrs EOF { $1 } ;
 toplvl_expr : expr EOF { $1 } ;
 
 main :
@@ -78,6 +81,7 @@ value :
 typ :
 | TYPE_STRING { T.string }
 | TYPE_INT { T.integer }
+| TYPE_LEXEMS   { T.lexems }
 | TYPE_AUTO { T.auto () }
 | TYPE_FLOAT { T.float }
 | TYPE_CHAR { T.char }
@@ -101,7 +105,9 @@ expr :
   E.call $1 $3
     |> locate ( Ast.location ($startpos($1), $endpos($4)))
 }
-| LEXEMS { E.lexems $1 }
+| LEXEMS {
+  E.lexems $1
+}
 ;
 
 mutabl :
@@ -190,6 +196,7 @@ control_flow :
 ;
 
 instr :
+| UNQUOTE_START expr END_QUOTE { I.unquote $2 }
 | COMMENT { I.comment $1 }
 | define_var { $1
         |> locati ( Ast.location ($startpos($1), $endpos($1)))}

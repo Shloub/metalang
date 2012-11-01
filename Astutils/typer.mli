@@ -32,7 +32,11 @@
 
 type env
 
+val empty : env
+val process_tfun : env -> 'lex Ast.Prog.t_fun -> env
 val process : 'lex Ast.Prog.t -> env * 'lex Ast.Prog.t
+
+
 val is_int : env -> 'lex Ast.Expr.t -> bool
 val is_float : env -> 'lex Ast.Expr.t -> bool
 val type_of_field : env -> string -> Ast.Type.t

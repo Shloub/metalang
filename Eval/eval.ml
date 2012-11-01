@@ -36,6 +36,7 @@ type result =
   | String of string
   | Record of result array
   | Array of result array
+  | Lexems of Parser.token list
   | Nil
 
 exception Return of result
@@ -80,6 +81,14 @@ let get_bool = function
   | x ->
     Printf.printf "Got %s expected bool" (typeof x); assert false
 
+let get_tokens = function
+  | Lexems a -> a
+  | Bool false -> [ Parser.FALSE ]
+  | Bool true -> [ Parser.TRUE ]
+  | Integer i -> [ Parser.INT i ]
+  | x ->
+    Printf.printf "Got %s expected token list" (typeof x); assert false
+
 type execenv = result array
 
 type  env = {
@@ -94,6 +103,29 @@ type  env = {
 and precompiledExpr =
   | Result of result
   | WithEnv of (execenv -> result)
+
+let flatten_lexems li =
+  List.fold_left (fun acc li ->
+    match (acc, li) with
+      | Result (Lexems li1), Result (Lexems li2) ->
+        Result (Lexems (List.append li1 li2) )
+      | WithEnv f, Result (Lexems li2) ->
+        WithEnv (fun execenv ->
+          let li1 = f execenv |> get_tokens in
+          Lexems (List.append li1 li2)
+        )
+      | Result  (Lexems li1), WithEnv f ->
+        WithEnv (fun execenv ->
+          let li2 = f execenv |> get_tokens in
+          Lexems (List.append li1 li2)
+        )
+      | WithEnv f1, WithEnv f2 ->
+        WithEnv (fun execenv ->
+          let li1 = f1 execenv |> get_tokens in
+          let li2 = f2 execenv |> get_tokens in
+          Lexems (List.append li1 li2)
+        )
+  ) (Result (Lexems []))  li
 
 let empty_env te =
   {
@@ -280,6 +312,26 @@ let index_for_field env field =
       Format.fprintf f "type error : waiting for field %s" field
     ))
 
+let of_lexems_list rule_ f (li:Parser.token list) =
+  let lexbuf = ref li in
+  try
+    f (fun _ ->
+      match !lexbuf with
+        | [] -> Parser.EOF
+        | hd::tl ->
+          let () = lexbuf := tl in
+          hd
+    ) (Lexing.from_string "")
+  with Parser.Error ->
+    raise (Error (fun f ->
+      Format.fprintf f "parser error (%s) : %a@\n" rule_ Utils.string_of_lexems li
+    ))
+
+let expr_of_lexems_list (li:Parser.token list) : Parser.token Expr.t =
+  of_lexems_list "expr" Parser.toplvl_expr li
+
+let instrs_of_lexems_list (li:Parser.token list) : Parser.token Expr.t Instr.t list =
+  of_lexems_list "instrs" Parser.toplvl_instrs li
 
 module EvalF (IO : EvalIO) = struct
 
@@ -326,7 +378,7 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
       | Expr.UnOp (_, _) -> assert false
       | Expr.Enum e ->
         let t = Typer.type_for_enum e env.tyenv in
-        match Type.unfix t with
+        begin match Type.unfix t with
           | Type.Enum li ->
             let rec f n = function
               | [] -> assert false
@@ -334,6 +386,30 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
                   f (n + 1) tl in
             Integer (f 0 li) |> res
           | _ -> assert false
+        end
+      | Expr.Lexems l -> precompiledExpr_of_lexems_list l env
+and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
+  let li = List.map (fun l -> match l with
+    | Lexems.Expr e -> e
+    | Lexems.Token t -> Result (Lexems [t])
+    | Lexems.UnQuote e ->
+      let li = precompiledExpr_of_lexems_list e env in
+      match li with
+        | Result (Lexems li) ->
+          let e = expr_of_lexems_list li
+          in precompile_expr e env
+        | WithEnv f ->
+          WithEnv (fun execenv ->
+            match f execenv with
+              | Lexems li ->
+                let e = expr_of_lexems_list li in
+                let r = precompile_expr e env in
+                eval_expr execenv r
+          )
+  ) li
+  in flatten_lexems li
+
+
 
 and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
     : execenv -> result -> unit =
@@ -541,6 +617,7 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
   | Instr.StdinSep _ ->
     let f execenv = IO.skip () in
     env, f
+  | Instr.Unquote li -> assert false
 and print ty e =
   let () = match Type.unfix ty with
     | Type.Array(ty) ->
@@ -602,6 +679,7 @@ and precompile_instr i =
     | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
     | Instr.DeclRead (t, v) -> Instr.DeclRead (t, v)
     | Instr.StdinSep -> Instr.StdinSep
+    | Instr.Unquote li -> assert false
   in Instr.Fixed.fix i
 
 let compile_fun env var t li instrs =
@@ -691,23 +769,59 @@ module EvalConstantes = struct
       | _ -> acc, e
     in Expr.Writer.Deep.foldmap f acc e
 
-  let collect_instr acc i =
-    Instr.foldmap_expr process_expr acc i
+  let collect_instr acc (i:Parser.token Expr.t Instr.t) =
+    let f (i:Parser.token Expr.t Instr.t) :
+        (Parser.token Expr.t Instr.t list) =
+      match Instr.unfix i with
+      | Instr.Unquote e ->
+        begin match Expr.unfix e with
+          | Expr.Lexems li ->
+            let li = List.map
+              (Lexems.map_expr (fun x -> EVAL.precompile_expr x acc)
+              ) li in
+            let execenv = init_eenv 0 in
+            begin match EVAL.precompiledExpr_of_lexems_list li acc
+                |> eval_expr execenv with
+                  | Lexems li -> instrs_of_lexems_list li
+            end
+          | _ ->
+            let execenv = init_eenv 0 in
+            begin match EVAL.precompile_expr e acc
+                |> eval_expr execenv with
+                    | Lexems li -> instrs_of_lexems_list li
+            end
+        end
+      | _ -> [i]
+    in
+    let g li = List.collect f li in
+    let i = Instr.deep_map_bloc g (Instr.unfix i) |> Instr.fixa
+        (Instr.Fixed.annot i) in
+    let li = f i in
+    List.fold_left_map (Instr.foldmap_expr process_expr) acc li
 
-  let process_main acc m = List.fold_left_map collect_instr acc m
+  let process_main acc m =
+    let acc, m = List.fold_left_map collect_instr acc m
+    in acc, List.flatten m
 
   let process acc p =
-    match p with
-      | Prog.DeclarFun (funname, t, params, instrs) ->
-        let acc, li = List.fold_left_map collect_instr acc instrs in
-        let acc = EVAL.compile_fun acc funname t params instrs in
-        acc, Prog.DeclarFun (funname, t, params, li)
-      | _ -> acc, p
+    let acc, p =
+      match p with
+        | Prog.DeclarFun (funname, t, params, instrs) ->
+          let acc, instrs = List.fold_left_map collect_instr acc instrs in
+          let instrs = List.flatten instrs in
+          let acc = EVAL.compile_fun acc funname t params instrs in
+          acc, Prog.DeclarFun (funname, t, params, instrs)
+        | _ -> acc, p
+    in
+    let tyenv = Typer.process_tfun acc.tyenv p in
+    let acc = { acc with tyenv = tyenv }
+    in acc, p
 
   let apply_prog acc p =
     List.fold_left_map process acc p
 
-  let apply typerEnv ( prog : Parser.token Prog.t ) : Parser.token Prog.t  =
+  let apply ( prog : Parser.token Prog.t ) : Parser.token Prog.t  =
+    let typerEnv = Typer.empty in
     let acc =  empty_env typerEnv in
     let acc, p = apply_prog acc prog.Prog.funs in
     let acc, m = match prog.Prog.main with

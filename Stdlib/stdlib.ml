@@ -104,6 +104,8 @@ end
 
 module List = struct
   include List
+  (* TODO faire plus efficace*)
+  let collect f li = map f li |> flatten
 
   let indexof item li =
     fold_left

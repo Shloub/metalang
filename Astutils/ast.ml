@@ -71,6 +71,24 @@ end = struct
     with Not_found -> (-1, -1), (-1, -1)
 end
 
+module Lexems = struct
+
+  type ('token, 'expr) t =
+    | Expr of 'expr
+    | Token of 'token
+    | UnQuote of ('token, 'expr) t list
+
+  let token t = Token t
+  let unquote li = UnQuote li
+
+  let rec map_expr f = function
+    | Expr e -> Expr (f e)
+    | Token t -> Token t
+    | UnQuote li ->
+      UnQuote (List.map (map_expr f) li)
+
+end
+
 module Mutable = struct
   type ('mutable_, 'expr) tofix =
       Var of varname
@@ -119,6 +137,7 @@ module Type = struct
     | Array of 'a
     | Void
     | Bool
+    | Lexems
     | Struct of
         (fieldname * 'a) list * structparams
     | Enum of fieldname list
@@ -138,6 +157,7 @@ module Type = struct
       | Array t -> Array (f t)
       | Void -> Void
       | Bool -> Bool
+      | Lexems -> Lexems
       | Struct (li, p) ->
         Struct (List.map (fun (name, t) -> (name, f t)) li, p)
       | Named t -> Named t
@@ -154,28 +174,31 @@ module Type = struct
     match (unfix ta), (unfix tb) with
       | Auto, Auto -> 0
       | Auto, _ -> -1
+      | Lexems, Lexems -> 0
+      | Lexems, Auto -> 1
+      | Lexems, _ -> -1
       | Integer, Integer -> 0
-      | Integer, Auto -> 1
+      | Integer, (Lexems | Auto) -> 1
       | Integer, _ -> -1
       | Float, Float -> 0
-      | Float, (Auto | Integer) -> 1
+      | Float, (Auto | Integer | Lexems) -> 1
       | Float, _ -> -1
       | String, String -> 0
-      | String, (Auto | Integer | Float ) -> 1
+      | String, (Auto | Lexems | Integer | Float ) -> 1
       | String, _ -> -1
       | Char, Char -> 0
-      | Char, (Auto | Integer | Float | String) -> 1
+      | Char, (Auto | Lexems | Integer | Float | String) -> 1
       | Char, _ -> -1
       | Array ca, Array cb -> compare ca cb
-      | Array _, (Char | Auto | Integer | Float | String) -> 1
+      | Array _, (Char | Auto | Lexems | Integer | Float | String) -> 1
       | Array _, _ -> -1
       | Void, Void -> 0
-      | Void, (Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Void, (Array _ | Char | Auto | Lexems | Integer | Float | String) -> 1
       | Void, _ -> -1
       | Bool, Bool -> 0
-      | Bool, (Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Bool, (Void | Array _ | Char | Auto | Lexems | Integer | Float | String) -> 1
       | Bool, _ -> -1
-      | Enum _, (Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Enum _, (Bool | Void | Array _ | Char | Auto | Lexems | Integer | Float | String) -> 1
       | Enum e1, Enum e2 ->
         List.fold_left (fun result (n1, n2) ->
           if result <> 0 then result else
@@ -190,10 +213,12 @@ module Type = struct
             if result <> 0 then result else
               compare t1 t2
         ) 0 (List.combine s1 s2)
-      | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto |
+          Lexems | Integer | Float | String) -> 1
       | Struct _, _ -> -1
       | Named n1, Named n2 -> String.compare n1 n2
-      | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char | Auto | Integer | Float | String) -> 1
+      | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
+          Auto | Lexems | Integer | Float | String) -> 1
       | Named _, _ -> -1
 
   module Writer = AstWriter.F (struct
@@ -202,8 +227,9 @@ module Type = struct
     let foldmap f acc t =
       let annot = Fixed.annot t in
       match unfix t with
-        | Auto | Integer | Float | String | Char | Void | Bool | Named _
-        | Enum _ ->
+        | Auto | Integer | Float | String | Char | Void
+        | Bool | Named _
+        | Enum _ | Lexems ->
           acc, t
         | Array t ->
           let acc, t = f acc t in
@@ -227,6 +253,7 @@ module Type = struct
       | Array t -> "Array("^t^")"
       | Void -> "Void"
       | Bool -> "Bool"
+      | Lexems -> "Lexems"
       | Enum e -> let str = List.fold_left
           (fun acc name ->
             acc ^ name ^ ", "
@@ -254,6 +281,7 @@ module Type = struct
   let struct_ s p = Struct (s, p) |> fix
   let named n = Named n |> fix
   let auto () = Auto |> fix
+  let lexems:t = Lexems |> fix
 
 end
 
@@ -282,7 +310,7 @@ module Expr = struct
     | Access of 'a Mutable.t
     | Length of 'a Mutable.t
     | Call of funname * 'a list
-    | Lexems of 'lex list
+    | Lexems of ('lex, 'a) Lexems.t list
     | Enum of string
 
   module Fixed = Fix(struct
@@ -304,7 +332,7 @@ module Expr = struct
         let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
         Length m2
       | Call (n, li) -> Call (n, List.map f li)
-      | Lexems x -> Lexems x
+      | Lexems x -> Lexems (List.map (Lexems.map_expr f) x)
       | Enum e -> Enum e
 
     let next () = next ()
@@ -340,6 +368,7 @@ module Expr = struct
     | Type.String -> string ""
     | Type.Char -> char '_'
     | Type.Array _ -> failwith ("new array is not an expression")
+    | Type.Lexems -> failwith ("lexems is not an expression")
     | Type.Void -> failwith ("no dummy expression for void")
     | Type.Bool -> boolean false
     | Type.Named _ -> failwith ("new named is not an expression")
@@ -399,6 +428,7 @@ module Instr = struct
     | Read of Type.t * 'expr Mutable.t
     | DeclRead of Type.t * varname
     | StdinSep
+    | Unquote of 'expr
 
   let map_bloc f t = match t with
     | Declare (a, b, c) -> Declare (a, b, c)
@@ -421,6 +451,7 @@ module Instr = struct
     | DeclRead (a, b) -> DeclRead (a, b)
     | Call (a, b) -> Call (a, b)
     | StdinSep -> StdinSep
+    | Unquote e -> Unquote e
 
   let map f t =
     map_bloc (List.map f) t
@@ -432,6 +463,7 @@ module Instr = struct
     let next () = next ()
   end)
   type 'a t = 'a Fixed.t
+  let fixa = Fixed.fixa
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
@@ -450,6 +482,7 @@ module Instr = struct
   let call v p = Call (v, p) |> fix
   let declare v t e =  Declare (v, t, e) |> fix
   let affect v e = Affect (v, e) |> fix
+  let unquote e = Unquote e |> fix
   let loop v e1 e2 li = Loop (v, e1, e2, li) |> fix
   let while_ e li = While (e, li) |> fix
   let comment s = Comment s |> fix
@@ -494,6 +527,7 @@ module Instr = struct
         | Read _ -> acc, t
         | DeclRead _ -> acc, t
         | Call _ -> acc, t
+        | Unquote li -> acc, t
   end)
 
   let foldmap_expr
@@ -541,6 +575,7 @@ module Instr = struct
             | Read (t, m) -> acc, Read (t, m)
             | DeclRead (t, m) -> acc, DeclRead (t, m)
             | StdinSep -> acc, StdinSep
+            | Unquote e -> acc, Unquote e
         in out, fix i
       ) acc instruction
 

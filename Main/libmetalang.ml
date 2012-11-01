@@ -124,22 +124,12 @@ let parse_string parse str =
 let make_prog_helper progname (funs, main) stdlib =
   let prog = {
     Prog.progname = progname ;
-    Prog.funs = funs ;
+    Prog.funs = stdlib @ funs ;
     Prog.main = main ;
   } in
-  let used_functions = Passes.WalkCollectCalls.fold prog in
-  let go f (li, used_functions) = match f with
-    | Prog.DeclarFun (v, _,_, _)
-    | Prog.Macro (v, _, _, _) ->
-      if BindingSet.mem v used_functions
-      then (f::li, (Passes.WalkCollectCalls.fold_fun used_functions f) )
-      else (li, used_functions)
-    | _ -> failwith ("bad stdlib") in
-  let funs_add, _ = List.fold_right go stdlib ([], used_functions) in
-  let funs = funs_add @ funs in
-  let prog = { prog with Prog.funs = funs } in
+  let prog = Eval.EvalConstantes.apply prog in
+  let prog = Passes.RemoveUselessFunctions.apply prog in
   let tyenv, prog = Typer.process prog in
-  let prog = Eval.EvalConstantes.apply tyenv prog in
   tyenv, prog
 
 let make_prog stdlib filename =

@@ -199,6 +199,7 @@ let expand env ty loc =
 let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
   match (Type.Fixed.unfix t1), (Type.Fixed.unfix t2) with
     | Type.Integer, Type.Integer -> ()
+    | Type.Lexems, Type.Lexems -> ()
     | Type.Integer, _ -> error_ty t1 t2 loc1 loc2
     | Type.Bool, Type.Bool -> ()
     | Type.Bool, _ -> error_ty t1 t2 loc1 loc2
@@ -393,6 +394,8 @@ let rec collect_contraintes_expr env e =
       env, ref (Typed (Type.float, loc e))
     | Expr.Integer _ ->
       env, ref (Typed (Type.integer, loc e))
+    | Expr.Lexems li -> (* TODO typer les insertions *)
+      env, ref (Typed (Type.lexems, loc e))
     | Expr.Bool _ ->
       env, ref (Typed (Type.bool, loc e))
     | Expr.Access mut ->
@@ -621,6 +624,7 @@ let rec collect_contraintes_instructions env instructions
                 StringMap.add var ty env.locales }
           in env
         | Instr.StdinSep -> env
+        | Instr.Unquote li -> assert false
     ) env instructions
 
 let collect_contraintes e
@@ -645,6 +649,16 @@ let collect_contraintes e
   let e = collect_contraintes_instructions e instructions ty in
   e
 
+let empty = {
+  automap = IntMap.empty;
+  gamma = StringMap.empty;
+  contrainteMap = IntMap.empty;
+  fields = StringMap.empty;
+  enum = StringMap.empty;
+  functions = StringMap.empty;
+  locales = StringMap.empty;
+  contraintes = [];
+}
 
 let map_ty env prog =
   let map_ty ty =
@@ -656,7 +670,6 @@ let map_ty env prog =
           with Not_found ->
             error_no_auto_type env.automap annot t
         in extract_typed contrainte
-
       | Type.Struct ( ( (name, _ ):: _), _) ->
         let (_, _, name) =StringMap.find name env.fields in
         Type.named name
@@ -699,101 +712,79 @@ let map_ty env prog =
     Prog.main = Option.map map_instrs prog.Prog.main;
   }
 
+
+let not_done
+    (env:env)
+    ((t1 : typeContrainte ref), (t2 : typeContrainte ref)) : bool=
+  match !t1, !t2 with
+    | Typed (t1, loc1), Typed (t2, loc2) ->
+      check_types env t1 t2 loc1 loc2;
+      false
+    | _ -> true
+
+let unify_once env =
+  let modified = List.fold_left (fun acc (a, b) ->
+    unify env a b || acc) false env.contraintes in
+  (modified ,
+   {env with
+     contraintes = List.filter (not_done env) env.contraintes
+   }
+  )
+
+let rec unify_contraintes env =
+  let modified, env = unify_once env in
+  if modified
+  then unify_contraintes env
+  else
+    match env.contraintes with
+      | [] -> env
+      | li ->
+        begin
+          error_no_contraintes li
+        end
+
+let process_fundecl e ((funname, ty, params, instructions) as tuple) =
+  let e = collect_contraintes e tuple in
+  unify_contraintes e
+
+let process_tfun env p = match p with
+  | Prog.DeclarFun (varname, ty, li, instrs) ->
+    process_fundecl env (varname, ty, li, instrs)
+  | Prog.DeclareType (name, ty) ->
+    { env with
+      gamma = StringMap.add name ty env.gamma;
+      fields = (match (Type.Fixed.unfix ty) with
+        | Type.Struct (li, _) ->
+          List.fold_left
+            (fun acc (fieldname, ty_field) ->
+              StringMap.add fieldname (ty_field, ty, name) acc
+            ) env.fields li
+        | _ -> env.fields);
+      enum = (match (Type.Fixed.unfix ty) with
+        | Type.Enum li ->
+          List.fold_left
+            (fun acc fname ->
+              StringMap.add fname (ty, name) acc
+            ) env.enum li
+        | _ -> env.enum
+      )
+    }
+  | Prog.Macro (name, ty, params, _) ->
+    let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
+    let ty = expand env ty tyloc in
+    let env, ty = ty2typeContrainte env ty tyloc in
+    let function_type = (List.map ((fun x ->
+      let tyloc = Ast.PosMap.get (Type.Fixed.annot x) in
+      expand env x tyloc) @* snd) params), ty in
+    { env with functions = StringMap.add name function_type env.functions}
+  | Prog.Comment _ -> env
+
 (** {2 Main function} *)
 let process (prog: 'lex Prog.t) =
-  let not_done
-      (env:env)
-      ((t1 : typeContrainte ref), (t2 : typeContrainte ref)) : bool=
-    match !t1, !t2 with
-      | Typed (t1, loc1), Typed (t2, loc2) ->
-        check_types env t1 t2 loc1 loc2;
-        false
-      | _ -> true
-  in
-  let unify_once env =
-    let modified = List.fold_left (fun acc (a, b) ->
-      unify env a b || acc) false env.contraintes in
-    (modified ,
-     {env with
-       contraintes = List.filter (not_done env) env.contraintes
-     }
-    )
-  in
-  let rec unify_contraintes env =
-    let modified, env = unify_once env in
-    if modified
-    then unify_contraintes env
-    else
-      match env.contraintes with
-        | [] -> env
-        | li ->
-          begin
-            error_no_contraintes li
-          end
-  in
-  let process e ((funname, ty, params, instructions) as tuple) =
-    let e = collect_contraintes e tuple in
-(*    raise (Error (fun f ->
-      Format.fprintf f "Funname : %s@\n" funname;
-          (*IntMap.iter (fun k v ->
-            Format.fprintf f "annot %d : %s@\n" k
-              (contr2str !v)) e.contrainteMap*)
-
-          IntMap.iter (fun k v ->
-            Format.fprintf f "annot %d : %s@\n" k
-              (contr2str !v)) e.automap
-
-
-      )); *)
-    unify_contraintes e
-  in
-  let empty = {
-    automap = IntMap.empty;
-    gamma = StringMap.empty;
-    contrainteMap = IntMap.empty;
-    fields = StringMap.empty;
-    enum = StringMap.empty;
-    functions = StringMap.empty;
-    locales = StringMap.empty;
-    contraintes = [];
-  }
-  in
-  let env = List.fold_left
-    (fun env p -> match p with
-      | Prog.DeclarFun (varname, ty, li, instrs) ->
-        process env (varname, ty, li, instrs)
-      | Prog.DeclareType (name, ty) ->
-        { env with
-          gamma = StringMap.add name ty env.gamma;
-          fields = (match (Type.Fixed.unfix ty) with
-            | Type.Struct (li, _) ->
-              List.fold_left
-                (fun acc (fieldname, ty_field) ->
-                  StringMap.add fieldname (ty_field, ty, name) acc
-                ) env.fields li
-            | _ -> env.fields);
-          enum = (match (Type.Fixed.unfix ty) with
-            | Type.Enum li ->
-              List.fold_left
-                (fun acc fname ->
-                  StringMap.add fname (ty, name) acc
-                ) env.enum li
-            | _ -> env.enum
-          )
-        }
-      | Prog.Macro (name, ty, params, _) ->
-        let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
-        let ty = expand env ty tyloc in
-        let env, ty = ty2typeContrainte env ty tyloc in
-        let function_type = (List.map ((fun x ->
-          let tyloc = Ast.PosMap.get (Type.Fixed.annot x) in
-          expand env x tyloc) @* snd) params), ty in
-        { env with functions = StringMap.add name function_type env.functions}
-      | Prog.Comment _ -> env
-    ) empty prog.Prog.funs
+  let env = List.fold_left process_tfun empty prog.Prog.funs
   in
   let env = match prog.Prog.main with
-    | Some main -> process env ("main", Type.void, [], main)
+    | Some main -> process_fundecl env ("main", Type.void, [], main)
     | None -> env
   in
   let prog = map_ty env prog

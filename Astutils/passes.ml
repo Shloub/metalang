@@ -186,7 +186,7 @@ module CollectCalls = struct
     in acc, p
 end
 
-
+module WalkCollectCalls = WalkTop(CollectCalls);;
 module WalkNopend = Walk(NoPend);;
 module WalkExpandPrint = Walk(ExpandPrint);;
 module WalkIfMerge = Walk(IfMerge);;
@@ -194,4 +194,20 @@ module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
 module WalkExpandReadDecl = Walk(ExpandReadDecl);;
 module WalkCheckNaming = WalkTop(CheckingPasses.CheckNaming);;
 module WalkRename = WalkTop(Rename);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
+
+module RemoveUselessFunctions = struct
+  let apply prog =
+    let used_functions = WalkCollectCalls.fold prog in
+    let go f (li, used_functions) = match f with
+      | Prog.DeclarFun (v, _,_, _)
+      | Prog.Macro (v, _, _, _) ->
+        if BindingSet.mem v used_functions
+        then (f::li, (WalkCollectCalls.fold_fun used_functions f) )
+        else (li, used_functions)
+      | Prog.Comment _ -> (f::li, used_functions)
+      | Prog.DeclareType _ -> (f::li, used_functions)
+    in
+    let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
+    let prog = { prog with Prog.funs = funs } in
+    prog
+end
