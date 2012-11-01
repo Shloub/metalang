@@ -237,6 +237,7 @@ args :
 ;
 
 define :
+| UNQUOTE_START expr END_QUOTE { P.unquote $2 }
 | COMMENT { P.comment $1 }
 | DEF typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
 	{ P.declarefun $3 $2 $5 $7 }

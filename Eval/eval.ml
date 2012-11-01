@@ -330,6 +330,9 @@ let of_lexems_list rule_ f (li:Parser.token list) =
 let expr_of_lexems_list (li:Parser.token list) : Parser.token Expr.t =
   of_lexems_list "expr" Parser.toplvl_expr li
 
+let prog_list_of_lexems_list (li:Parser.token list) : Parser.token Prog.t_fun list =
+  of_lexems_list "prog" Parser.toplvls li
+
 let instrs_of_lexems_list (li:Parser.token list) : Parser.token Expr.t Instr.t list =
   of_lexems_list "instrs" Parser.toplvl_instrs li
 
@@ -803,22 +806,47 @@ module EvalConstantes = struct
     let acc, m = List.fold_left_map collect_instr acc m
     in acc, List.flatten m
 
+  let rec process acc p =
+    match p with
+      | Prog.DeclarFun (funname, t, params, instrs) ->
+        let acc, instrs = List.fold_left_map collect_instr acc instrs in
+        let instrs = List.flatten instrs in
+        let acc = EVAL.compile_fun acc funname t params instrs in
+        acc, [Prog.DeclarFun (funname, t, params, instrs)]
+      | Prog.Unquote e ->
+        let w li =
+          let li = prog_list_of_lexems_list li in
+          let p, li = List.fold_left_map process acc li
+          in p, List.flatten li
+        in
+        begin match Expr.unfix e with
+          | Expr.Lexems li ->
+            let li = List.map
+              (Lexems.map_expr (fun x -> EVAL.precompile_expr x acc)
+              ) li in
+            let execenv = init_eenv 0 in
+            begin match EVAL.precompiledExpr_of_lexems_list li acc
+                |> eval_expr execenv with
+                    | Lexems li -> w li
+            end
+          | _ ->
+            let execenv = init_eenv 0 in
+            begin match EVAL.precompile_expr e acc
+                |> eval_expr execenv with
+                    | Lexems li -> w li
+            end
+        end
+      | _ -> acc, [p]
+
   let process acc p =
-    let acc, p =
-      match p with
-        | Prog.DeclarFun (funname, t, params, instrs) ->
-          let acc, instrs = List.fold_left_map collect_instr acc instrs in
-          let instrs = List.flatten instrs in
-          let acc = EVAL.compile_fun acc funname t params instrs in
-          acc, Prog.DeclarFun (funname, t, params, instrs)
-        | _ -> acc, p
-    in
-    let tyenv = Typer.process_tfun acc.tyenv p in
+    let acc, p = process acc p in
+    let tyenv = List.fold_left Typer.process_tfun acc.tyenv p in
     let acc = { acc with tyenv = tyenv }
     in acc, p
 
   let apply_prog acc p =
-    List.fold_left_map process acc p
+    let acc, p = List.fold_left_map process acc p
+    in acc, List.flatten p
 
   let apply ( prog : Parser.token Prog.t ) : Parser.token Prog.t  =
     let typerEnv = Typer.empty in
