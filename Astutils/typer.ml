@@ -322,7 +322,13 @@ let is_float env expr =
     | Typed (Type.Fixed.F (_, Type.Float), _) -> true
     | _ -> false
 
+let exprloc e = Ast.PosMap.get (Expr.Fixed.annot e) (* TODO plus
+                                                       l'utiliser *)
 
+let add_contrainte env c1 c2 =
+  { env with
+    contraintes = (c1, c2) :: env.contraintes
+  }
 
 (** {2 Collect contraintes functions} *)
 let rec collect_contraintes_expr env e =
@@ -333,10 +339,6 @@ let rec collect_contraintes_expr env e =
       "collecting contraintes in %a@\n"
       Printer.printer#expr  e
       in*)
-  let add_contrainte env c1 c2 =
-    { env with
-      contraintes = (c1, c2) :: env.contraintes
-    } in
   let loc e = Ast.PosMap.get (Expr.Fixed.annot e) in
   let env, contrainte = match Expr.Fixed.unfix e with
     | Expr.BinOp (a, (Expr.Mod
@@ -451,6 +453,11 @@ and collect_contraintes_mutable env mut =
       in
       env, ty
     | Mutable.Array (mut, eli) ->
+      let env = List.fold_left (fun env e ->
+        let integer_contrainte = ref (Typed (Type.integer, exprloc e)) in
+        let env, contrainte_expr = collect_contraintes_expr env e in
+        add_contrainte env integer_contrainte contrainte_expr
+      ) env eli in
       let contrainte = ref (Unknown tloc) in
       let env, contrainte_mut = collect_contraintes_mutable env mut in
       let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, loc mut) ) in
