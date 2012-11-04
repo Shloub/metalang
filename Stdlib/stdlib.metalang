@@ -1,3 +1,13 @@
+
+macro char char_of_int(int c)
+  ml do "char_of_int ($c)"
+  pas do "chr($c)"
+  java do "(char)($c)"
+  js do "String.fromCharCode($c)"
+  csharp do "(char)($c)"
+  *  do "$c"
+end
+
 macro int int_of_char(char c)
   ml do "int_of_char ($c)"
   py do "ord($c)"

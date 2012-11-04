@@ -484,7 +484,6 @@ and eval_call env name params : execenv -> result =
     (fun ex_execenv ->
       let (nvars, instrs) = !r in
       let eenv:execenv = init_eenv nvars in
-      (*    let () = Printf.printf "calling %s with %d vars\n" name nvars in *)
       let () = for i = 0 to nparams do
           eenv.(i) <- eval_expr ex_execenv params.(i)
         done
@@ -497,6 +496,8 @@ and eval_call env name params : execenv -> result =
       match name, (List.map (eval_expr execenv) params) with
         | "int_of_char", [param] ->
           Integer (int_of_char (get_char param))
+        | "char_of_int", [param] ->
+          Char (char_of_int (get_integer param))
         | "float_of_int", [param] ->
           Float (float_of_int (get_integer param))
         | _ -> failwith ("The Macro "^name^" cannot be evaluated with
