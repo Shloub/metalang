@@ -128,7 +128,11 @@ out :
 out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.rb out/%.metalang \
 out/%.sch out/%.java out/%.js out/%.cs out/%.pas : tests/prog/%.metalang \
 metalang out
-	@./metalang -quiet -o out $< || exit 1
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -quiet -o out $< <  "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out $< || exit 1; \
+	fi
 
 out/%.metalang.test : out/%.startTest out/%.metalang
 	@mkdir -p out/foo/out
@@ -153,8 +157,8 @@ out/%.cc.bin : out/%.cc
 
 out/%.pas.bin : out/%.pas
 	@fpc $< || exit 1
-	mv out/$(basename $*) $@
-	rm out/$(basename $*).o
+	@mv out/$(basename $*) $@
+	@rm out/$(basename $*).o
 
 out/%.class : out/%.java
 	@javac $< || exit 1
@@ -171,73 +175,77 @@ out/%.ml.byte : out/%.ml
 	@mv _build/out/$(basename $*).byte $@
 
 out/%.bin.out : out/%.bin
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.eval.out : metalang
-	DATE=` date +%s.%N`; \
-	./metalang -eval tests/prog/$(basename $*).metalang < tests/prog/$(basename $*).in > $@ || exit 1; \
+	@DATE=` date +%s.%N`; \
+	if [ -e "tests/prog/$(basename $*).compiler_input" ]; then \
+		cat "tests/prog/$(basename $*).compiler_input" tests/prog/$(basename $*).in | ./metalang -eval tests/prog/$(basename $*).metalang  > $@ || exit 1; \
+	else \
+		./metalang -eval tests/prog/$(basename $*).metalang < tests/prog/$(basename $*).in > $@ || exit 1; \
+	fi; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.native.out : out/%.ml.native
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.byte.out : out/%.ml.byte
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.class.out : out/%.class
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.js.out : out/%.js
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	node $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.out : out/%.ml
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.php.out : out/%.php
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	php $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.py.out : out/%.py
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.sch.out : out/%.sch
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.rb.out : out/%.rb
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	ruby $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.exe.out : out/%.exe
-	DATE=` date +%s.%N`; \
+	@DATE=` date +%s.%N`; \
 	mono $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
