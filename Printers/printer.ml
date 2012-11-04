@@ -132,6 +132,7 @@ class ['lex] printer = object(self)
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Lexems -> Format.fprintf f "lexems"
       | Type.Struct (li, p) ->
 	Format.fprintf f "struct{%a}%a"
 	  (print_list
@@ -402,7 +403,7 @@ class ['lex] printer = object(self)
     let t = Expr.unfix t in
     match t with
     | Expr.Enum e -> self#enum f e
-    | Expr.Lexems _ -> assert false
+    | Expr.Lexems _ -> Format.fprintf f "{...}"
     | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> self#binop f op a b
