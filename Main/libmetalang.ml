@@ -10,14 +10,15 @@ let default_passes (prog : Typer.env * Parser.token Prog.t) :
     (Typer.env * Parser.token Prog.t ) =
   prog
   |> typed Passes.WalkCheckNaming.apply
-  |> typed  Passes.WalkRename.apply
-  |> typed  Passes.WalkNopend.apply
-  |> typed  Passes.WalkExpandPrint.apply
+  |> typed Passes.WalkRename.apply
+  |> typed Passes.WalkNopend.apply
+  |> typed Passes.WalkExpandPrint.apply
 
 let clike_passes prog =
   prog |> default_passes
   |> typed Passes.WalkAllocArrayExpend.apply
   |> typed Passes.WalkExpandReadDecl.apply
+  |> snd |> Typer.process
 
 let ocaml_passes prog =
   prog |> default_passes
