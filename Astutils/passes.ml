@@ -197,7 +197,6 @@ module WalkRename = WalkTop(Rename);;
 
 module RemoveUselessFunctions = struct
   let apply prog =
-    let used_functions = WalkCollectCalls.fold prog in
     let go f (li, used_functions) = match f with
       | Prog.DeclarFun (v, _,_, _)
       | Prog.Macro (v, _, _, _) ->
@@ -207,6 +206,9 @@ module RemoveUselessFunctions = struct
       | Prog.Comment _ -> (f::li, used_functions)
       | Prog.DeclareType _ -> (f::li, used_functions)
     in
+
+    let used_functions = WalkCollectCalls.fold
+      {prog with Prog.funs = [] } in (* fonctions utilisées dans main *)
     let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
     let prog = { prog with Prog.funs = funs } in
     prog
