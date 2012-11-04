@@ -40,6 +40,14 @@ class ['lex] jsPrinter = object(self)
 
   method decl_type f name t = ()
 
+  method binop f op a b =
+    match op with
+      | Expr.Div ->
+        if Typer.is_int (super#getTyperEnv ()) a
+        then Format.fprintf f "Math.floor(%a)"
+          (fun f () -> super#binop f op a b) ()
+        else super#binop f op a b
+      | _ -> super#binop f op a b
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ (var %a@ =@ %a@ ;@ %a@ <=@ %a;@ %a++)@\n@]%a"
@@ -49,7 +57,6 @@ class ['lex] jsPrinter = object(self)
       self#expr expr2
       self#binding varname
       self#bloc li
-
 
   method declaration f var t e =
     Format.fprintf f "@[<h>var %a@ =@ %a;@]"
