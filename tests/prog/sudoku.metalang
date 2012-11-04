@@ -1,0 +1,128 @@
+def array<int> read_sudoku()
+  def array<int> out[9 * 9] with i do
+    def read int k skip
+    return k
+  end
+  return out
+end
+
+def void print_sudoku(array<int> sudoku)
+  for y = 0 to 8 do
+    for x = 0 to 8 do
+      print int sudoku[x + y * 9]
+      print string " "
+      if x % 3 == 2 then
+        print string " "
+      end
+    end
+    print string "\n"
+    if y % 3 == 2 then
+      print string "\n"
+    end
+  end
+  print string "\n"
+end
+
+def lexems differents(array<lexems> tab, int len)
+  if len < 2 then
+    return {}
+  elsif len == 2 then
+    return { ( ${tab[0]} != 0 && ${tab[0]} == ${tab[1]} ) }
+  end
+  def lexems out = differents(tab, len - 1)
+  for j = 0 to len - 2 do
+    out = { ${out} || ( ${tab[j]} != 0 && ${tab[j]} == ${tab[len - 1]} )}
+  end
+  return out;
+end
+
+def lexems differents9(
+  lexems a, lexems b, lexems c,
+  lexems d, lexems e, lexems f, lexems g, lexems h, lexems i___)
+  def array<lexems> tab[9] with i do
+    return {}
+  end
+  tab[0] = { ${ a } };
+  tab[1] = { ${ b } };
+  tab[2] = { ${ c } };
+  tab[3] = { ${ d } };
+  tab[4] = { ${ e } };
+  tab[5] = { ${ f } };
+  tab[6] = { ${ g } };
+  tab[7] = { ${ h } };
+  tab[8] = { ${ i___ } };
+  return differents(tab, 9)
+end
+
+
+def bool sudoku_done(array<int> s)
+  for i = 0 to 80 do
+    if s[i] == 0 then return false end
+  end
+  return true
+end
+
+def bool sudoku_error(array<int> s)
+  for x = 0 to 8 do
+   ${{if (${differents9(
+      {s[x]},
+      {s[x + 9]},
+      {s[x + 9 * 2]},
+      {s[x + 9 * 3]},
+      {s[x + 9 * 4]},
+      {s[x + 9 * 5]},
+      {s[x + 9 * 6]},
+      {s[x + 9 * 7]},
+      {s[x + 9 * 8]},
+    )}) then return true end
+    if  (${differents9(
+      {s[x * 9]},
+      {s[x * 9 + 1]},
+      {s[x * 9 + 2]},
+      {s[x * 9 + 3]},
+      {s[x * 9 + 4]},
+      {s[x * 9 + 5]},
+      {s[x * 9 + 6]},
+      {s[x * 9 + 7]},
+      {s[x * 9 + 8]},
+    )})  then return true end
+    if (${differents9(
+      {s[(x % 3) * 3 * 9 + (x / 3) * 3 ]},
+      {s[(x % 3) * 3 * 9 + (x / 3) * 3 + 1 ]},
+      {s[(x % 3) * 3 * 9 + (x / 3) * 3 + 2 ]},
+      {s[((x % 3) * 3 + 1) * 9 + (x / 3) * 3 ]},
+      {s[((x % 3) * 3 + 1) * 9 + (x / 3) * 3 + 1 ]},
+      {s[((x % 3) * 3 + 1) * 9 + (x / 3) * 3 + 2 ]},
+      {s[((x % 3) * 3 + 2) * 9 + (x / 3) * 3 ]},
+      {s[((x % 3) * 3 + 2) * 9 + (x / 3) * 3 + 1 ]},
+      {s[((x % 3) * 3 + 2) * 9 + (x / 3) * 3 + 2 ]},
+    )}) then return true end
+      }}
+  end
+  return false
+end
+
+def bool solve(array<int> sudoku)
+  if sudoku_error(sudoku) then return false end
+  if sudoku_done(sudoku) then return true end
+  for i = 0 to 80 do
+    if sudoku[i] == 0 then
+      for p = 1 to 9 do
+        sudoku[i] = p
+        if solve(sudoku) then return true end
+      end
+      sudoku[i] = 0
+      return false
+    end
+  end
+  return false
+end
+main
+  def sudoku = read_sudoku();
+  print_sudoku(sudoku);
+  if solve(sudoku) then
+    print_sudoku(sudoku)
+  else
+    print string "no solution\n"
+  end
+end
