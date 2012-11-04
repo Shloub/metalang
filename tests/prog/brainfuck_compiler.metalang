@@ -1,0 +1,67 @@
+
+def lexems read_current()
+  return {
+    read char input
+    mem[current_pos] = int_of_char(input)
+  }
+end
+
+def lexems print_current()
+  return {
+    print char char_of_int(mem[current_pos])
+  }
+end
+
+def lexems incr()
+  return {
+    mem[current_pos] = mem[current_pos] + 1
+  }
+end
+
+def lexems decr()
+  return {
+    mem[current_pos] = mem[current_pos] - 1
+  }
+end
+
+def lexems prev()
+  return { current_pos = current_pos - 1}
+end
+
+def lexems next()
+  return { current_pos = current_pos + 1}
+end
+
+def lexems eval()
+  def read char c
+  if c == '.' then
+    return { ${print_current()} ${eval()} }
+  elsif c == ',' then
+    return { ${read_current()} ${eval()} }
+  elsif c == '>' then
+    return { ${next()} ${eval()} }
+  elsif c == '<' then
+    return { ${prev()} ${eval()} }
+  elsif c == '+' then
+    return { ${incr()} ${eval()} }
+  elsif c == '-' then
+    return { ${decr()} ${eval()} }
+  elsif c == '[' then
+    return { while (mem[current_pos] != 0) do ${eval()} }
+  elsif c == ']' then
+    return { end ${eval()} }
+  elsif c == ' ' || c == '\n' || c == '\r' then
+    return eval()
+  else
+    return {}
+  end
+end
+
+main
+  def char input = ' '
+  def current_pos = 500
+  def array<int> mem[1000] with i do
+    return 0
+  end
+  ${ eval() }
+end
