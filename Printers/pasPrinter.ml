@@ -176,6 +176,7 @@ class ['lex] pasPrinter = object(self)
 
   method print_fun f funname t li instrs =
     let () = current_function <- funname in
+    self#declare_type f t;
     self#declare_types f instrs;
     List.iter (fun (_, t) -> self#declare_type f t) li;
     Format.fprintf f "%a%a;@\n"
