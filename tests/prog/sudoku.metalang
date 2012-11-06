@@ -62,48 +62,58 @@ def bool sudoku_done(array<int> s)
   return true
 end
 
-def bool sudoku_error(array<int> s)
+def lexems sudoku_error(lexems s)
+  def out1 = { false }
   for x = 0 to 8 do
-   ${{if (${differents9(
-      {s[x]},
-      {s[x + 9]},
-      {s[x + 9 * 2]},
-      {s[x + 9 * 3]},
-      {s[x + 9 * 4]},
-      {s[x + 9 * 5]},
-      {s[x + 9 * 6]},
-      {s[x + 9 * 7]},
-      {s[x + 9 * 8]},
-    )}) then return true end
-    if  (${differents9(
-      {s[x * 9]},
-      {s[x * 9 + 1]},
-      {s[x * 9 + 2]},
-      {s[x * 9 + 3]},
-      {s[x * 9 + 4]},
-      {s[x * 9 + 5]},
-      {s[x * 9 + 6]},
-      {s[x * 9 + 7]},
-      {s[x * 9 + 8]},
-    )})  then return true end
-    if (${differents9(
-      {s[(x % 3) * 3 * 9 + (x / 3) * 3 ]},
-      {s[(x % 3) * 3 * 9 + (x / 3) * 3 + 1 ]},
-      {s[(x % 3) * 3 * 9 + (x / 3) * 3 + 2 ]},
-      {s[((x % 3) * 3 + 1) * 9 + (x / 3) * 3 ]},
-      {s[((x % 3) * 3 + 1) * 9 + (x / 3) * 3 + 1 ]},
-      {s[((x % 3) * 3 + 1) * 9 + (x / 3) * 3 + 2 ]},
-      {s[((x % 3) * 3 + 2) * 9 + (x / 3) * 3 ]},
-      {s[((x % 3) * 3 + 2) * 9 + (x / 3) * 3 + 1 ]},
-      {s[((x % 3) * 3 + 2) * 9 + (x / 3) * 3 + 2 ]},
-    )}) then return true end
-      }}
+    def d = differents9(
+      {${s}[${x}]},
+      {${s}[${x + 9}]},
+      {${s}[${x + 9 * 2}]},
+      {${s}[${x + 9 * 3}]},
+      {${s}[${x + 9 * 4}]},
+      {${s}[${x + 9 * 5}]},
+      {${s}[${x + 9 * 6}]},
+      {${s}[${x + 9 * 7}]},
+      {${s}[${x + 9 * 8}]},
+    )
+   out1 = { ${out1} || (${ d }) }
   end
-  return false
+
+  def out2 = { }
+  for x = 0 to 8 do
+    def d = differents9(
+      {${s}[${x * 9}]},
+      {${s}[${x * 9 + 1}]},
+      {${s}[${x * 9 + 2}]},
+      {${s}[${x * 9 + 3}]},
+      {${s}[${x * 9 + 4}]},
+      {${s}[${x * 9 + 5}]},
+      {${s}[${x * 9 + 6}]},
+      {${s}[${x * 9 + 7}]},
+      {${s}[${x * 9 + 8}]}
+    )
+    out2 = { ${out2} || (${ d }) }
+  end
+  def out3 = { }
+  for x = 0 to 8 do
+    def d = differents9(
+      {${s}[${(x % 3) * 3 * 9 + (x / 3) * 3 }]},
+      {${s}[${(x % 3) * 3 * 9 + (x / 3) * 3 + 1 }]},
+      {${s}[${(x % 3) * 3 * 9 + (x / 3) * 3 + 2 }]},
+      {${s}[${((x % 3) * 3 + 1) * 9 + (x / 3) * 3 }]},
+      {${s}[${((x % 3) * 3 + 1) * 9 + (x / 3) * 3 + 1 }]},
+      {${s}[${((x % 3) * 3 + 1) * 9 + (x / 3) * 3 + 2 }]},
+      {${s}[${((x % 3) * 3 + 2) * 9 + (x / 3) * 3 }]},
+      {${s}[${((x % 3) * 3 + 2) * 9 + (x / 3) * 3 + 1 }]},
+      {${s}[${((x % 3) * 3 + 2) * 9 + (x / 3) * 3 + 2 }]},
+    )
+    out3 = { ${out3} || (${ d }) }
+  end
+  return { ${out1} ${out2} ${out3}}
 end
 
 def bool solve(array<int> sudoku)
-  if sudoku_error(sudoku) then return false end
+  ${{if ${sudoku_error({sudoku})} then return false end}}
   if sudoku_done(sudoku) then return true end
   for i = 0 to 80 do
     if sudoku[i] == 0 then
