@@ -194,6 +194,7 @@ end
         <select id="language">
           <option value="c">C</option>
           <option value="cc">C++</option>
+          <option value="js">Javascript</option>
           <option value="pas">Pascal</option>
           <option value="cs">C#</option>
           <option value="java">Java</option>
@@ -309,6 +310,9 @@ __####_#_#
         switch (document.getElementById("language")){
           case 'ml':
             lng = 'text/x-ocaml';
+          break;
+          case 'js':
+            lng = 'text/x-javascript';
           break;
           case 'pas':
             lng = 'text/x-pascal';
