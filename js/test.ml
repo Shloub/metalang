@@ -51,6 +51,11 @@ let click_replicate _ =
   let () = copy##value <- (Js.string output) in
   Js._true
 
+let colore str =
+  let mlstr = Js.to_string str in
+  let mlstr = Libmetalang.colore mlstr in
+  Js.string mlstr
+
 let click_eval _ =
   let stdin = match Html.tagged (element "stdin") with
     | Html.Textarea t -> t
@@ -66,6 +71,10 @@ let click_eval _ =
   in
   Libmetalang.eval_string prog (stdlib ()) process_error stdin_b stdout_f;
   Js._true
+
+let () =
+  let metalang = Js.Unsafe.variable "metalang" in
+  metalang##colore <- colore
 
 let run _ =
   let eval_btn = element "eval_btn" in

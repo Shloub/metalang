@@ -1,0 +1,13 @@
+.metalang_bloc_content {
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+  border-left: 1px solid #777;
+}
+.instruction {
+  margin-bottom: 5px;
+}
+.binding { color: #007; }
+.funname { color: #700; }
+.constant { color: #A70; }
+.keyword { color: #070; }
+.type { color: #AA0; }

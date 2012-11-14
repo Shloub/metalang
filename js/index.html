@@ -1,13 +1,18 @@
 <html>
 <head>
   <title>métalang</title>
+<script type="text/javascript">
+var metalang = {};
+</script>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="CodeMirror-2.33/theme/elegant.css">
     <link rel="stylesheet" href="global.css" />
+    <link rel="stylesheet" href="metalang_html.css" />
     <script src="CodeMirror-2.33/lib/codemirror.js"></script>
     <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css" />
     <script src="syntax-metalang.js"></script>
     <script src="CodeMirror-2.33/mode/ocaml/ocaml.js"></script>
+    <script src="meta.js"></script>
 </head>
 <body>
 
@@ -107,9 +112,6 @@ Et voici la version ocaml correspondante générée grace à Métalang
 </div>
 </td></tr></table>
 
-
-
-
 <h2>Backends</h2>
 <p>Métalang peut s'exporter vers les langages suivants :</p>
 <ul>
@@ -122,11 +124,26 @@ Et voici la version ocaml correspondante générée grace à Métalang
 <li>python</li>
 <li>ruby</li>
 <li>pascal</li>
+<li>javascript</li>
 </ul>
+
 <h2>Changelog</h2>
 <p>Metalang est un langage de programmation en développement a partir de février 2012, premiere version stable en aout 2012.</p>
 <ul>
-  <li>V0.1 aout 2012</li>
+
+  <li>V1.0.2 novembre 2012</li>
+  <ul>
+    <li>Ajout des macros</li>
+    <li>Fixes sur les printers javascript et pascal</li>
+    <li>Fixes sur le typer</li>
+  </ul>
+  <li>V1.0.1 octobre 2012</li>
+  <ul>
+    <li>Fixes sur les rapports d'erreurs</li>
+    <li>Ajout des enumerateurs</li>
+    <li>Ajout d'un printer javascript</li>
+  </ul>
+  <li>V1.0 aout 2012</li>
   <ul>
     <li>Premiere version comprennant un compilateur et un interpréteur</li>
   </ul>
@@ -134,22 +151,14 @@ Et voici la version ocaml correspondante générée grace à Métalang
 </div>
 <div style="clear:both"></div>
     <script language="javascript">
+      window.onload = function(){
       for (var i = 0; ; i++){
         var item = document.getElementById('exemple'+i);
         if (item == null) break;
-        var ed = CodeMirror.fromTextArea(item, {
-          mode: 'metalang',
-        });
-        ed.setOption("theme", "elegant");
-      }
-      for (var i = 0; ; i++){
-        var item = document.getElementById('exemple_ml_'+i);
-        if (item == null) break;
-        var ed = CodeMirror.fromTextArea(item, {
-          mode: 'text/x-ocaml',
-        });
-        ed.setOption("theme", "elegant");
-      }
+        var d = document.createElement("div");
+        d.innerHTML = caml_call_gen(metalang.colore, [item.value]);
+        item.parentNode.replaceChild(d, item);
+      }};
     </script>
 </body>
 </html>
