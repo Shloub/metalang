@@ -3,9 +3,11 @@ TexPrinter
 SchemePrinter
 PhpPrinter
 JavaPrinter
+JsPrinter
 OcamlPrinter
 CsharpPrinter
 CPrinter
 CppPrinter
 BashPrinter
 PyPrinter
+HtmlPrinter

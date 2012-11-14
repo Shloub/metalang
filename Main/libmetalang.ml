@@ -133,6 +133,23 @@ let make_prog_helper progname (funs, main) stdlib =
   let tyenv, prog = Typer.process prog in
   tyenv, prog
 
+
+
+let colore string =
+  let lexbuf = Lexing.from_string string in
+  try
+    let code, main = Parser.prog Lexer.token lexbuf in
+    let prog = {
+      Prog.progname = "";
+      Prog.funs = code;
+      Prog.main = main;
+    } in
+    let p = new HtmlPrinter.htmlPrinter in
+    let out = Format.str_formatter in
+    let () = p#prog out prog in
+    Format.flush_str_formatter ()
+  with Parser.Error -> ""
+
 let make_prog stdlib filename =
   let progname = Filename.chop_extension $ Filename.basename filename in
   let funs, main = parse_file Parser.prog filename in

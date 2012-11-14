@@ -399,6 +399,9 @@ class ['lex] printer = object(self)
   method enum f e =
     Format.fprintf f "%s" e
 
+  method integer f i =
+    Format.fprintf f "%i" i
+
   method expr f t =
     let t = Expr.unfix t in
     match t with
@@ -407,7 +410,7 @@ class ['lex] printer = object(self)
     | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> self#binop f op a b
-    | Expr.Integer i -> Format.fprintf f "%i" i
+    | Expr.Integer i -> self#integer f i
     | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
     | Expr.Access m ->
