@@ -282,6 +282,7 @@ class ['lex] printer = object(self)
 
   method instr f t =
     match Instr.unfix t with
+      | Instr.Unquote li -> Format.fprintf f "{...}"
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
 

@@ -77,13 +77,21 @@ let () =
   metalang##colore <- colore
 
 let run _ =
-  let eval_btn = element "eval_btn" in
-  eval_btn##onclick <- Html.handler click_eval ;
-  let replicate = element "replicate" in
-  replicate##onclick <- Html.handler click_replicate ;
+  try
+    let eval_btn = element "eval_btn" in
+    eval_btn##onclick <- Html.handler click_eval ;
+    let replicate = element "replicate" in
+    replicate##onclick <- Html.handler click_replicate ;
   (* begin match Html.tagged (element "language") with
-    | Html.Select e -> e##onchange <- Html.handler click_replicate
+     | Html.Select e -> e##onchange <- Html.handler click_replicate
      | _ -> () end ; *)
-  Js._false
+    Js._false
+  with _ -> Js._false
 
-let _ = Html.window##onload <- Html.handler run
+let _ =
+  let f = Html.window##onload in
+  Html.window##onload <-
+    Html.handler (fun e ->
+      let _ = run e in
+      Html.invoke_handler f Html.window e
+    )

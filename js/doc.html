@@ -1,13 +1,16 @@
 <html>
 <head>
   <title>Metalang documentation page</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="CodeMirror-2.33/theme/elegant.css">
-    <link rel="stylesheet" href="global.css" />
-    <script src="CodeMirror-2.33/lib/codemirror.js"></script>
-    <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css" />
-    <script src="syntax-metalang.js"></script>
-
+  <script language="javascript" src="global.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="CodeMirror-2.33/theme/elegant.css">
+  <link rel="stylesheet" href="global.css" />
+  <link rel="stylesheet" href="metalang_html.css" />
+  <script src="CodeMirror-2.33/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css" />
+  <script src="syntax-metalang.js"></script>
+  <script src="CodeMirror-2.33/mode/ocaml/ocaml.js"></script>
+  <script src="meta.js"></script>
 </head>
 <body>
 <h1>Metalang -- Documentation page</h1>
@@ -110,9 +113,9 @@ end</textarea>
 <p>Il existe une façon de créer des types construits</p>
 <div class="editor"><textarea id="exemple1">
 record @record_name
-  field1 : type1
-  field2 : type2
-  field3 : type3
+  field1 : @type1
+  field2 : @type2
+  field3 : @type3
 end
 </textarea></div>
 <p>Attention, un record peut-être récursif, mais il devient alors difficile
@@ -196,7 +199,7 @@ Comme en C
 <h3>Print</h3>
 La syntaxe pour afficher sur la sortie standard est :
 <div class="editor"><textarea id="exemple3">
-print type value
+print @type value
 </textarea></div>
 Le type est optionnel.
 Actuellement, il est possible d'afficher des chaines, des entiers, et des tableaux
@@ -205,11 +208,11 @@ Actuellement, il est possible d'afficher des chaines, des entiers, et des tablea
 <p>La lecture sur l'entrée standard peut se faire de deux façons : en écrivant le résultat dans une variable, ou en en déclarant une nouvelle.</p>
 En écrivant dans une variable :
 <div class="editor"><textarea id="exemple4">
-read type variable
+read @type variable
 </textarea></div>
 En déclarant une nouvelle variable :
 <div class="editor"><textarea id="exemple5">
-def read type variable
+def read @type variable
 </textarea></div>
 Dans ces deux exemples, il n'est pas obligatoire d'écrire le type.
 On ne peut pas lire un tableau, une chaine ou un record
@@ -218,8 +221,8 @@ On ne peut pas lire un tableau, une chaine ou un record
 <h2>Functions</h2>
 Les declarations de fonctions se font sous cette forme
 <div class="editor"><textarea id="exemple6">
-def ret_type function_name( type param1, type param2)
-  // Contenu de la fonction
+def @ret_type function_name( @type param1, @type param2)
+  /* Contenu de la fonction */
 end
 </textarea></div>
 Ces fonctions peuvent être récursives
@@ -228,7 +231,7 @@ Ces fonctions peuvent être récursives
 <h2>Variables & Scope</h2>
 <p>Les variables ont pour portée le bloc, mais on ne peut pas definir deux variables de même nom dans la même fonction même si elles sont dans deux blocs différents.</p>
 <div class="editor"><textarea id="exemple7">
-def type variablename = value
+def @type variablename = value
 </textarea></div>
 <p>Toute definition de variable doit avoir une valeur.</p>
 <p>Ecrire le type est optionnel</p>
@@ -242,7 +245,7 @@ end
 </textarea></div>
 <p>Pour definir un array :</p>
 <div class="editor"><textarea id="exemple9">
-def array&lt;type&gt; variablename[taille] with index do
+def array<@type> variablename[taille] with index do
   return value(index)
 end
 </textarea></div>
@@ -260,28 +263,28 @@ et une valeur par case du tableau..</p>
 <h3>If</h3>
 
 <div class="editor"><textarea id="exemple10">
-if confition then
-  // instructions si vrai
+if condition then
+  /* instructions si vrai */
 end
 </textarea></div>
 
 
 <div class="editor"><textarea id="exemple11">
-if confition then
-// instructions si vrai
+if condition then
+/* instructions si vrai */
 else
-// instructions si faux
+/* instructions si faux */
 end
 </textarea></div>
 
 
 <div class="editor"><textarea id="exemple12">
-if confition1 then
-// instructions si condition1 vrai
+if condition1 then
+/* instructions si condition1 vrai */
 elsif condition2 then
-// instructions si condition2 vrai
+/* instructions si condition2 vrai */
 else
-// instructions si faux
+/* instructions si faux */
 end
 </textarea></div>
 <a name="for"></a>
@@ -289,7 +292,7 @@ end
 
 <div class="editor"><textarea id="exemple13">
 for variable = valeur_initiale to valeur_finale do
-  // instructions
+  /* instructions */
 end
 </textarea></div>
 
@@ -300,7 +303,7 @@ end
 
 <div class="editor"><textarea id="exemple14">
 while condition do
-// instructions
+/* instructions */
 end
 </textarea></div>
 
@@ -312,15 +315,6 @@ end
 
 </div>
 <div style="clear:both"></div>
-    <script language="javascript">
-      for (var i = 0; ; i++){
-        var item = document.getElementById('exemple'+i);
-        if (item == null) break;
-        var ed = CodeMirror.fromTextArea(item, {
-          mode: 'metalang',
-        });
-        ed.setOption("theme", "elegant");
-      }
-    </script>
+<script language="javascript" src="global.js" />
 </body>
 </html>

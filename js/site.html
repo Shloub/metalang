@@ -1,12 +1,16 @@
 <html>
 <head>
   <title>métalang</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="CodeMirror-2.33/theme/elegant.css">
-    <link rel="stylesheet" href="global.css" />
-    <script src="CodeMirror-2.33/lib/codemirror.js"></script>
-    <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css" />
-    <script src="syntax-metalang.js"></script>
+  <script language="javascript" src="global.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="CodeMirror-2.33/theme/elegant.css">
+  <link rel="stylesheet" href="global.css" />
+  <link rel="stylesheet" href="metalang_html.css" />
+  <script src="CodeMirror-2.33/lib/codemirror.js"></script>
+  <link rel="stylesheet" href="CodeMirror-2.33/lib/codemirror.css" />
+  <script src="syntax-metalang.js"></script>
+  <script src="CodeMirror-2.33/mode/ocaml/ocaml.js"></script>
+  <script src="meta.js"></script>
 </head>
 <body>
 
@@ -180,16 +184,5 @@ Cet exemple-ci est un cas classique de programmation dynamique de recherche de p
 
 </div>
 <div style="clear:both"></div>
-    <script language="javascript">
-      for (var i = 0; ; i++){
-        var item = document.getElementById('exemple'+i);
-        if (item == null) break;
-        var ed = CodeMirror.fromTextArea(item, {
-          lineNumbers: true,
-          mode: 'metalang',
-        });
-        ed.setOption("theme", "elegant");
-      }
-    </script>
 </body>
 </html>

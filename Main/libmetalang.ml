@@ -136,8 +136,8 @@ let make_prog_helper progname (funs, main) stdlib =
 
 
 let colore string =
-  let lexbuf = Lexing.from_string string in
   try
+    let lexbuf = Lexing.from_string string in
     let code, main = Parser.prog Lexer.token lexbuf in
     let prog = {
       Prog.progname = "";
@@ -148,7 +148,23 @@ let colore string =
     let out = Format.str_formatter in
     let () = p#prog out prog in
     Format.flush_str_formatter ()
-  with Parser.Error -> ""
+  with Parser.Error ->
+    try
+      let lexbuf = Lexing.from_string string in
+      let instructions = Parser.toplvl_instrs Lexer.token lexbuf in
+      let p = new HtmlPrinter.htmlPrinter in
+      let out = Format.str_formatter in
+      let () = p#instructions out instructions in
+      Format.flush_str_formatter ()
+    with Parser.Error ->
+    try
+      let lexbuf = Lexing.from_string string in
+      let instructions = Parser.toplvls Lexer.token lexbuf in
+      let p = new HtmlPrinter.htmlPrinter in
+      let out = Format.str_formatter in
+      let () = p#proglist out instructions in
+      Format.flush_str_formatter ()
+    with Parser.Error -> string
 
 let make_prog stdlib filename =
   let progname = Filename.chop_extension $ Filename.basename filename in
