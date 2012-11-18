@@ -33,8 +33,8 @@ open Ast
 open Printer
 open CPrinter
 
-class ['lex] jsPrinter = object(self)
-  inherit ['lex] cPrinter as super
+class jsPrinter = object(self)
+  inherit cPrinter as super
 
   method lang () = "js"
 

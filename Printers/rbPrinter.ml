@@ -41,8 +41,8 @@ require \"scanf.rb\"
 
 "
 
-class ['lex] rbPrinter = object(self)
-  inherit ['lex] pyPrinter as super
+class rbPrinter = object(self)
+  inherit pyPrinter as super
 
   method lang () = "ruby"
 

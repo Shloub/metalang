@@ -35,8 +35,8 @@ open Ast
 open Printer
 open CppPrinter
 
-class ['lex] javaPrinter = object(self) (* TODO scanf et printf*)
-  inherit ['lex] cppPrinter as super
+class javaPrinter = object(self) (* TODO scanf et printf*)
+  inherit cppPrinter as super
 
   method lang () = "java"
 

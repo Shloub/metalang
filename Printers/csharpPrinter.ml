@@ -35,8 +35,8 @@ open Printer
 open JavaPrinter
 
 
-class ['lex] csharpPrinter = object(self)
-  inherit ['lex] javaPrinter as super
+class csharpPrinter = object(self)
+  inherit javaPrinter as super
 
   method lang () = "csharp"
 

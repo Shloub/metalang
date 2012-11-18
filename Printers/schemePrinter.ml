@@ -42,8 +42,8 @@ open Stdlib
 open Ast
 open Printer
 
-class ['lex] schemePrinter = object(self)
-  inherit ['lex] printer as super
+class schemePrinter = object(self)
+  inherit printer as super
 
   method lang () = "scheme"
 
@@ -161,7 +161,7 @@ class ['lex] schemePrinter = object(self)
     | Expr.Char (c) -> self#char f c
 
 
-  method apply (f:Format.formatter) (var:funname) (li:'lex Expr.t list) : unit =
+  method apply (f:Format.formatter) (var:funname) (li:Parser.token Expr.t list) : unit =
     match BindingMap.find_opt var macros with
       | Some ( (t, params, code) ) ->
   self#expand_macro_apply f var t params code li
@@ -177,7 +177,7 @@ class ['lex] schemePrinter = object(self)
        )
     ) li
 
-  method call (f:Format.formatter) (var:funname) (li:'lex Expr.t list) : unit =
+  method call (f:Format.formatter) (var:funname) (li:Parser.token Expr.t list) : unit =
     self#apply f var li
 
   method print f t expr =
@@ -230,7 +230,7 @@ class ['lex] schemePrinter = object(self)
       nlet <- exnlet;
     end
 
-  method prog f (prog:'lex Prog.t) =
+  method prog f (prog:Parser.token Prog.t) =
     Format.fprintf f
       "
 

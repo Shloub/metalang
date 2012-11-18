@@ -141,7 +141,7 @@ class bashPrinter = object(self)
   method print f t expr =
     Format.fprintf f "@[echo@ %a;@]" self#expr expr
 
-  method call (f:Format.formatter) (var:funname) (li:'lex Expr.t list) : unit =
+  method call (f:Format.formatter) (var:funname) (li:Parser.token Expr.t list) : unit =
     match BindingMap.find_opt var macros with
       | Some ( (t, params, code) ) ->
 	self#expand_macro_call f var t params code li
@@ -158,7 +158,7 @@ class bashPrinter = object(self)
 	  ) li
 
 
-  method apply (f:Format.formatter) (var:funname) (li:'lex Expr.t list) : unit =
+  method apply (f:Format.formatter) (var:funname) (li:Parser.token Expr.t list) : unit =
     match BindingMap.find_opt var macros with
       | Some ( (t, params, code) ) ->
 	self#expand_macro_apply f var t params code li

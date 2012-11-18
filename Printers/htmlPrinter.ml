@@ -34,8 +34,8 @@ open Ast
 open Stdlib
 open Printer
 
-class ['lex] htmlPrinter = object(self)
-  inherit ['lex] printer as super
+class htmlPrinter = object(self)
+  inherit printer as super
 
   method lang () = "html"
 

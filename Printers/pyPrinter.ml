@@ -81,8 +81,8 @@ def readint():
       return out * sign;
 "
 
-class ['lex] pyPrinter = object(self)
-  inherit ['lex] cPrinter as super
+class pyPrinter = object(self)
+  inherit cPrinter as super
 
   method lang () = "py"
 

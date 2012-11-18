@@ -54,8 +54,8 @@ TODO ajouter des conversions de types pour les entiers / float
 virer plus de refs
 virer plus de nopending : inliner un peu
 *)
-class ['lex] camlPrinter = object(self)
-  inherit ['lex] printer as super
+class camlPrinter = object(self)
+  inherit printer as super
 
   val mutable refbindings = BindingSet.empty
   val mutable sad_returns = false
