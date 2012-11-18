@@ -12,6 +12,7 @@ window.onload = function(){
             var d = document.createElement("div");
             d.innerHTML = caml_call_gen(metalang.colore, [item.value]);
             item.parentNode.replaceChild(d, item);
+            d.setAttribute("class", "editor_content");
         }
       }
       for (var i = 0; ; i++){

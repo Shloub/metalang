@@ -1,3 +1,8 @@
+.editor_content
+{
+    font-family: monospace;
+}
+
 .metalang_bloc_content {
   margin-left: 0.5em;
   padding-left: 0.5em;
@@ -11,3 +16,8 @@
 .constant { color: #A70; }
 .keyword { color: #020; }
 .type { color: #AA0; }
+.comment {
+  color:#777;
+  font-size: smaller;
+  font-style:italic;
+}

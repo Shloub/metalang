@@ -131,22 +131,16 @@ class printer = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Named n -> Format.fprintf f "@@%s" n
       | Type.Lexems -> Format.fprintf f "lexems"
       | Type.Struct (li, p) ->
-	Format.fprintf f "struct{%a}%a"
+	Format.fprintf f "record %a end"
 	  (print_list
 	     (fun t (name, type_) ->
 	       Format.fprintf t "%a : %a;" self#binding name self#ptype type_
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
 	  ) li
-	  (fun t p ->
-	    match p with
-	      | {Type.tuple=t} ->
-		if t then
-		  Format.fprintf f " as tuple"
-	  ) p
       | Type.Enum li ->
 	      Format.fprintf f "enum{%a}"
 	        (print_list
@@ -402,15 +396,7 @@ class printer = object(self)
     Format.fprintf f "%i" i
 
   method lexems f (li : (Parser.token, Parser.token Expr.t) Lexems.t list )  =
-    let rec h f = function
-      | [] -> ()
-      | hd::tl ->
-        Format.fprintf f "%a %a" g hd h tl
-    and g f = function
-      | Lexems.Expr e -> () (* TODO *)
-      | Lexems.Token t -> Utils.string_of_lexem f t
-      | Lexems.UnQuote li -> Format.fprintf f "${%a}" h li
-    in Format.fprintf f "{%a}" h li
+    Utils.lexems f li
 
   method expr f t =
     let t = Expr.unfix t in
@@ -471,7 +457,27 @@ class printer = object(self)
       | Prog.DeclareType (name, t) -> self#decl_type f name t
 
   method decl_type f name t =
-    Format.fprintf f "type %a = %a;" self#binding name self#ptype t
+        match (Type.unfix t) with
+	        | Type.Struct (li, _) ->
+	          Format.fprintf f "record %a %a@\nend@\n"
+	            self#binding name
+	            (print_list
+	               (fun t (name, type_) ->
+	                 Format.fprintf t "%a %a;@\n" self#ptype type_ self#binding name
+	               )
+	               (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	            ) li
+          | Type.Enum li ->
+            Format.fprintf f "enum %a @\n@[<v2>  %a@]@\nend@\n"
+              self#binding name
+              (print_list
+	               (fun t name ->
+                   self#binding t name
+	               )
+	               (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
+	            ) li
+          | _ ->
+            Format.fprintf f "type %a = %a;" self#binding name self#ptype t
 
   method prog f (prog: 'a Prog.t) =
     Format.fprintf f "%a%a@\n"

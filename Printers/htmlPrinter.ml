@@ -67,8 +67,8 @@ class htmlPrinter = object(self)
       self#expr expr
       self#bloc li
 
-  method comment f str = (* TODO *)
-    Format.fprintf f "/*%s*/" str
+  method comment f str =
+    Format.fprintf f "<pre class=\"comment\">/*%s*/</pre>" str
 
   method return f e =
     Format.fprintf f "<span class=\"keyword\">return</span>@ %a" self#expr e
@@ -88,6 +88,19 @@ class htmlPrinter = object(self)
 
   method stdin_sep f =
     Format.fprintf f "<span class=\"keyword\">skip</span>"
+
+  method def_fields name f li =
+    print_list
+      (fun f (fieldname, expr) ->
+	Format.fprintf f "%a = %a"
+	  self#field fieldname
+	  self#expr expr
+      )
+      (fun t f1 e1 f2 e2 ->
+	Format.fprintf t
+	  "%a<br/>@\n%a" f1 e1 f2 e2)
+      f
+      li
 
   method allocrecord f name t el =
     Format.fprintf f "<span class=\"keyword\">def</span> %a %a = <span class=\"keyword\">with</span><div class=\"metalang_bloc_content\">%a</div><span class=\"keyword\">end</span>"
@@ -147,7 +160,27 @@ class htmlPrinter = object(self)
       self#instructions instrs
 
   method decl_type f name t =
-    Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#binding name self#ptype t
+    match (Type.unfix t) with
+	    | Type.Struct (li, _) ->
+	      Format.fprintf f "<span class=\"keyword\">record</span> <span class=\"type\">@@%s</span> <div class=\"metalang_bloc_content\">%a</div><span class=\"keyword\">end</span>"
+	        name
+	        (print_list
+	           (fun t (name, type_) ->
+	             Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#binding name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	        ) li
+      | Type.Enum li ->
+        Format.fprintf f "<span class=\"keyword\">enum</span> <span class=\"type\">@@%s</span> @\n<div class=\"metalang_bloc_content\">@[<v2>  %a@]</div>@\n<span class=\"keyword\">end</span>@\n"
+          name
+          (print_list
+	           (fun t name ->
+               self#binding t name
+	           )
+	           (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
+	        ) li
+      | _ ->
+        Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#binding name self#ptype t
 
   method main f main = Format.fprintf f "<span class=\"keyword\">main</span><div class=\"metalang_bloc_content\">%a</div>@\n<span class=\"keyword\">end</span>@\n</div>" super#instructions main
 
