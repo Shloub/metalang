@@ -35,8 +35,8 @@ open Stdlib
 open Ast
 open Printer
 
-class ['lex] texPrinter = object(self)
-  inherit ['lex] printer as super
+class texPrinter = object(self)
+  inherit printer as super
   method lang () = "tex"
 
   val mutable lvl_expr = 0

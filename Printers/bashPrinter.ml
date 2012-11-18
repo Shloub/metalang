@@ -44,8 +44,8 @@ open Stdlib
 open Ast
 open Printer
 
-class ['lex] bashPrinter = object(self)
-  inherit ['lex] printer as super
+class bashPrinter = object(self)
+  inherit printer as super
 
   method lang () = "bash"
 

@@ -35,8 +35,8 @@ open Ast
 open Printer
 open CPrinter
 
-class ['lex] cppPrinter = object(self)
-  inherit ['lex] cPrinter as super
+class cppPrinter = object(self)
+  inherit cPrinter as super
 
   method lang () = "cpp"
 

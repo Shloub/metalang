@@ -73,7 +73,7 @@ let print_list_indexed print sep f li =
 	    li
      ))
 
-class ['lex] printer = object(self)
+class printer = object(self)
 
   val mutable typerEnv : Typer.env = Obj.magic(0)
 
@@ -191,8 +191,6 @@ class ['lex] printer = object(self)
 	     ))
 	  indexes
 
-
-
   method expand_macro_apply f name t params code li =
     self#expand_macro_call f name t params code li
 
@@ -282,7 +280,7 @@ class ['lex] printer = object(self)
 
   method instr f t =
     match Instr.unfix t with
-      | Instr.Unquote li -> Format.fprintf f "{...}"
+      | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
 
@@ -403,11 +401,22 @@ class ['lex] printer = object(self)
   method integer f i =
     Format.fprintf f "%i" i
 
+  method lexems f (li : (Parser.token, Parser.token Expr.t) Lexems.t list )  =
+    let rec h f = function
+      | [] -> ()
+      | hd::tl ->
+        Format.fprintf f "%a %a" g hd h tl
+    and g f = function
+      | Lexems.Expr e -> () (* TODO *)
+      | Lexems.Token t -> Utils.string_of_lexem f t
+      | Lexems.UnQuote li -> Format.fprintf f "${%a}" h li
+    in Format.fprintf f "{%a}" h li
+
   method expr f t =
     let t = Expr.unfix t in
     match t with
     | Expr.Enum e -> self#enum f e
-    | Expr.Lexems _ -> Format.fprintf f "{...}"
+    | Expr.Lexems li -> self#lexems f li
     | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> self#binop f op a b

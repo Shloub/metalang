@@ -33,8 +33,8 @@ open Ast
 open Stdlib
 open Printer
 
-class ['lex] cPrinter = object(self)
-  inherit ['lex] printer as super
+class cPrinter = object(self)
+  inherit printer as super
 
   method lang () = "c"
 
