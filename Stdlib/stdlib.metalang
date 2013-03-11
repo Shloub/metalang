@@ -1,4 +1,11 @@
 
+macro int random(int c)
+  ml do "(Random.int ($c))"
+  js do "(Math.floor(Math.random() * ($c)))"
+  php do "mt_rand(0, $c - 1)"
+  *  do "$c"
+end
+
 macro char char_of_int(int c)
   ml do "char_of_int ($c)"
   pas do "chr($c)"

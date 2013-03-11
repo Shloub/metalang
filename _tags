@@ -11,6 +11,7 @@
 
 <Eval/*.cmx>: inline(9)
 
+true: use_str
 
 true : use_menhir
 
