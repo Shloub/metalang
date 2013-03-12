@@ -156,8 +156,6 @@ class schemePrinter = object(self)
     | Expr.String i -> self#string f i
     | Expr.Access a -> self#access f a
     | Expr.Call (funname, li) -> self#apply f funname li
-    | Expr.Length (tab) ->
-      self#length f tab
     | Expr.Char (c) -> self#char f c
 
 

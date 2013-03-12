@@ -131,9 +131,6 @@ class camlPrinter = object(self)
       else
         Format.fprintf f "%a(%a)" pop () self#expr a
 
-  method length f tab =
-    Format.fprintf f "(Array.length %a)" self#mutable_ tab
-
   method main f main =
     let () = sad_returns <- contains_sad_return main in
     let () = self#calc_refs main in

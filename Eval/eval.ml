@@ -365,11 +365,6 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
       | Expr.Access mut ->
         let mut = mut_val env mut in
         WithEnv (fun execenv ->  mut execenv)
-      | Expr.Length arr ->
-        let mut = mut_val env arr in
-        WithEnv (fun execenv ->
-          let a = (mut execenv) |> get_array in
-          Integer (Array.length a) )
       | Expr.Call (name, params) ->
         let call = eval_call env name params  in
         WithEnv (fun execenv ->

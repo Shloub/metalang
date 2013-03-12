@@ -165,9 +165,6 @@ match Type.unfix t with
       Format.fprintf f "@[<h>%a@ =@ [];@]"
 	      self#binding binding
 
-  method length f tab =
-    Format.fprintf f "%a.length" self#mutable_ tab
-
   method return f e =
     Format.fprintf f "@[<h>return@ (%a);@]" self#expr e
 

@@ -402,11 +402,6 @@ let rec collect_contraintes_expr env e =
       env, ref (Typed (Type.bool, loc e))
     | Expr.Access mut ->
       collect_contraintes_mutable env mut
-    | Expr.Length var ->
-      let env, vcontrainte = collect_contraintes_mutable env var in
-      let contrainte = (ref (PreTyped (Type.Array (ref (Unknown (loc e))), loc e))) in
-      let env = add_contrainte env vcontrainte contrainte in
-      env, ref (Typed (Type.integer, loc e))
     | Expr.Call ("instant", [param]) ->
       collect_contraintes_expr env param
     | Expr.Call (name, li) ->

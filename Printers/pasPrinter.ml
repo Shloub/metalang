@@ -45,9 +45,6 @@ class pasPrinter = object(self)
   method comment f str =
     Format.fprintf f "{%s}" str
 
-  method length f tab =
-    Format.fprintf f "length(%a)" self#mutable_ tab
-
   method binop f op a b =
     match op with
       | Expr.Div ->

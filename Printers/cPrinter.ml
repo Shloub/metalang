@@ -95,16 +95,11 @@ class cPrinter = object(self)
 
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ (%a)@ *@ sizeof(%a) + sizeof(int));@]@\n((int*)%a)[0]=%a;@\n%a=(%a*)( ((int*)%a)+1);"
+      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ (%a)@ *@ sizeof(%a));@]@\n"
 	self#ptype type_
 	self#binding binding
 	self#expr len
 	self#ptype type_
-	self#binding binding
-	self#expr len
-	self#binding binding
-	self#ptype type_
-	self#binding binding
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "{@\n@[<v 2>  int %a;@\n%a@]@\n}"
@@ -177,7 +172,7 @@ class cPrinter = object(self)
     Format.fprintf f "@[printf(\"%a\", %a);@]" self#format_type t self#expr expr
 
   method prog f prog =
-    Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n@[<h>int@ count(void*@ a){@ return@ ((int*)a)[-1];@ }@]@\n@\n%a%a@\n@\n"
+    Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n%a%a@\n@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

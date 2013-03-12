@@ -412,16 +412,11 @@ class printer = object(self)
     | Expr.Access m ->
 	self#access f m
     | Expr.Call (funname, li) -> self#apply f funname li
-    | Expr.Length (tab) ->
-      self#length f tab
     | Expr.Char (c) -> self#char f c
 
   method char f c = Format.fprintf f "%C" c
 
   method expr_binding f e = self#binding f e
-
-  method length f tab =
-    Format.fprintf f "count(%a)" self#mutable_ tab
 
   method access f m =
     self#mutable_ f m

@@ -179,34 +179,8 @@ module ExpandPrint : SigPass = struct
       [ Instr.print Type.string (Expr.string "True") ]
       [ Instr.print Type.string (Expr.string "False") ]
 
-  let rec write t b =
-    let i = fresh () in
-    let b2 = fresh () in
-    let b2e = Expr.access (Mutable.array (Mutable.var b) [Expr.access
-                                                             (Mutable.var i)]) in
-    let b2i = Instr.declare b2 t b2e
-    in
-    [
-      (* Instr.declare i Type.integer (Expr.integer 0); *)
-      Instr.loop i (Expr.integer 0)
-        (Expr.binop
-           Expr.Sub
-           (Expr.length b)
-           (Expr.integer 1))
-        (
-          match t with
-            | Type.Fixed.F ( _, (Type.Array t2)) -> (b2i) :: (write t2 b2)
-            | Type.Fixed.F (_, Type.Bool) -> [b2i ; write_bool b2]
-            | _ -> [ Instr.print t b2e]
-        )
-    ]
-
-  let rec rewrite (i : 'lex Instr.t) : 'lex Instr.t list = match Instr.unfix i with
-    | Instr.Print(Type.Fixed.F (_, (Type.Array t)), Expr.Fixed.F (annot,
-                                                      Expr.Access ( Mutable.Fixed.F
-                                                                      (_, Mutable.Var b))
-    ) ) ->
-      write t b
+  let rec rewrite (i : 'lex Instr.t) : 'lex Instr.t list = match
+  Instr.unfix i with
     | Instr.Print(Type.Fixed.F (_, Type.Bool), Expr.Fixed.F (annot,
                                                  Expr.Access ( Mutable.Fixed.F
                                                                  (_, Mutable.Var b))

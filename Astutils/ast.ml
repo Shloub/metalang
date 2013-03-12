@@ -308,7 +308,6 @@ module Expr = struct
     | Integer of int
     | Bool of bool
     | Access of 'a Mutable.t
-    | Length of 'a Mutable.t
     | Call of funname * 'a list
     | Lexems of ('lex, 'a) Lexems.t list
     | Enum of string
@@ -328,9 +327,6 @@ module Expr = struct
       | Access m ->
         let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
         Access m2
-      | Length m ->
-        let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
-        Length m2
       | Call (n, li) -> Call (n, List.map f li)
       | Lexems x -> Lexems (List.map (Lexems.map_expr f) x)
       | Enum e -> Enum e
@@ -360,7 +356,6 @@ module Expr = struct
   let access m = fix (Access m )
 
   let call name li = fix ( Call(name, li))
-  let length m = fix ( Length (Mutable.var m) )
 
   let default_value t = match Type.unfix t with
     | Type.Integer -> integer 0
@@ -397,9 +392,6 @@ module Expr = struct
         | Access m ->
           let acc, m = Mutable.foldmap_expr f acc m in
           acc, Fixed.fixa annot (Access m)
-        | Length m ->
-          let acc, m = Mutable.foldmap_expr f acc m in
-          acc, Fixed.fixa annot (Length m)
         | Call (name, li) ->
           let acc, li = List.fold_left_map f acc li in
           (acc, Fixed.fixa annot (Call(name, li)) )

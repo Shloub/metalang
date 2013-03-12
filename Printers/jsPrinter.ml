@@ -129,9 +129,6 @@ var read_int = function(){
       self#binding name
       (self#def_fields name) el
 
-  method length f tab =
-    Format.fprintf f "%a.length" self#mutable_ tab
-
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>var %a@ =@ new Array(%a);@]"
         self#binding binding

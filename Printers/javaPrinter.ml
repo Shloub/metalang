@@ -125,9 +125,6 @@ Format.fprintf f "@[<v>scanner.useDelimiter(\"\\\\r*\\\\n*\\\\s*\");scanner.next
     Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#instructions main
 
-  method length f tab =
-    Format.fprintf f "%a.length" self#mutable_ tab
-
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#print_proto (funname, t, li)
