@@ -108,13 +108,25 @@ class cPrinter = object(self)
       self#binding varname
       self#forloop_content (varname, expr1, expr2, li)
   method forloop_content f (varname, expr1, expr2, li) =
-    Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <=@ %a;@ %a++)@\n@]%a"
-      self#binding varname
-      self#expr expr1
-      self#binding varname
-      self#expr expr2
-      self#binding varname
-      self#bloc li
+    let default () =
+      Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <=@ %a;@ %a++)@\n@]%a"
+        self#binding varname
+        self#expr expr1
+        self#binding varname
+        self#expr expr2
+        self#binding varname
+        self#bloc li
+    in match Expr.unfix expr2 with
+      | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1))
+    ->
+        Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <@ %a;@ %a++)@\n@]%a"
+          self#binding varname
+          self#expr expr1
+          self#binding varname
+          self#expr expr3
+          self#binding varname
+          self#bloc li
+      | _ -> default ()
 
   method main f main =
     Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}"

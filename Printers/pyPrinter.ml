@@ -207,9 +207,13 @@ match Type.unfix t with
       self#bloc li
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ [None] * (%a);@]"
+      Format.fprintf f "@[<h>%a@ =@ [None] * %a;@]"
 	self#binding binding
-	self#expr len
+	      (fun f a ->
+          if self#nop (Expr.unfix a) then
+            self#expr f a
+          else self#printp f a
+        ) len
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\n"
@@ -222,11 +226,21 @@ match Type.unfix t with
       self#forloop_content f (varname, expr1, expr2, li)
 
  method forloop_content f (varname, expr1, expr2, li) =
+   let default () =
     Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
       self#binding varname
       self#expr expr1
       self#expr expr2
       self#bloc li
+   in match Expr.unfix expr2 with
+      | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1))
+    ->
+        Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ %a):@\n@]%a"
+          self#binding varname
+          self#expr expr1
+          self#expr expr3
+          self#bloc li
+      | _ -> default ()
 
    method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a ):"
@@ -258,7 +272,7 @@ match Type.unfix t with
       li
 
   method allocrecord f name t el =
-    Format.fprintf f "%a = {%a};@\n"
+    Format.fprintf f "%a = {%a};"
       self#binding name
       (self#def_fields name) el
 
