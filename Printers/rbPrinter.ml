@@ -55,10 +55,14 @@ class rbPrinter = object(self)
 
 
   method unop f op a =
-    match op with
-      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+    let pop g f a = match op with
+      | Expr.Neg -> Format.fprintf f "-%a" g a
       | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
-      | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
+      | Expr.BNot -> Format.fprintf f "~%a" g a
+    in if self#nop (Expr.unfix a) then
+        pop self#expr f a
+      else
+        pop self#printp f a
 
    method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a )"

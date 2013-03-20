@@ -378,8 +378,10 @@ class printer = object(self)
     | Expr.Float _ -> true
     | Expr.String _ -> true
     | Expr.Char _ -> true
+    | Expr.Bool _ -> true
     | Expr.Access _ -> true
     | Expr.Call (_, _) -> true
+    | Expr.Enum _ -> true
     | _ -> false
 
   method printp f e =
