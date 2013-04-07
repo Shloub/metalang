@@ -117,6 +117,16 @@ class phpPrinter = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
+  method print f t expr =
+    match Type.unfix t with
+      | Type.Integer
+      | Type.Float
+      | Type.String
+      | Type.Bool ->
+        Format.fprintf f "@[echo %a;@]" self#expr expr
+      | Type.Char ->
+        Format.fprintf f "@[echo chr(%a);@]" self#expr expr
+
    method print_proto f (funname, t, li) =
     Format.fprintf f "function %a(%a)"
       self#funname funname
