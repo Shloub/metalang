@@ -1,13 +1,12 @@
 h1 {
-  font-size: 1.5em;
-  color: #7AF;
+  font-size: 2.5em;
+  color: #07A;
   text-align: center;
+  border-bottom: 1px solid #07A;
 }
 h2 {
-  font-size: 1.1em;
-}
-h2 {
-  font-size: 1.3em;
+  color: #07A;
+  font-size: 1.8em;
 }
 h1, h2, h3 {
   padding: 0px;
@@ -15,22 +14,22 @@ h1, h2, h3 {
   font-variant: small-caps;
   font-weight: normal;
 }
-h2, h3 {
-  color: black ;
-}
 #left {
 float:left;
-width: 20%;
+width: 15%;
+height:auto;
 padding-bottom: 2em;
 padding-right: 1em;
 margin-right: 1em;
 }
 
 #right{
+  border-left: 1px solid #07A;
+  border-right: 1px solid #07A;
   padding-left: 1em;
   padding-right: 1em;
   width: 60%;
-  margin-left: 20%;
+  margin-left: 16%;
 }
 
 #anchors {
@@ -50,14 +49,24 @@ a:visited {
 .editor {
 margin-left:10px;
 margin-bottom:10px;
-border: 1px solid #7AF;
+border-left: 5px solid #07A;
+border-right: 1px solid #07A;
+border-bottom: 1px solid #07A;
+border-top: 1px solid #07A;
+padding-left: 10px;
+padding-bottom:1em;
 }
 
 .editor h3 {
-  color: #7AF;
-  margin:0px;
-  text-align: right;
-  margin-bottom: -1.1em;
+  background: #07A;
+  color: #FFF;
+  margin-bottom:0.5em;
+  margin-top:0px;
+  margin-right:0px;
+  margin-left:0px;
+
+  text-align: left;
+  margin-left:-10px;
 }
 
 .CodeMirror-scroll {

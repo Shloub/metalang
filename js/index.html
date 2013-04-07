@@ -30,7 +30,7 @@
 <h2>Le langage Métalang</h2>
 <p>Le langage Métalang a pour but de pouvoir écrire un algorithme dans un seul langage et de pouvoir ensuite l'utiliser dans une dizaine d'autres.</p>
 <p>Ce projet a vu le jour pour pouvoir écrire les références et les codes a compléter pour le concours prologin : on écrit une solution a un exercice d'algo, et on obtient ensuite les références dans les différents langages du concours. Ces références servent ensuite a déterminer le temps et la mémoire que prendra l'algorithme a s'executer.</p>
-
+<p>Une des contrainte du compilateur est de générer une sortie lisible par un humain : les organisateurs du concours prologin se servent de metalang pour générer des codes à compléter qui sont livrés aux candidats, il est donc évident que la clareté du code est un paramètre important.</p>
 <div class="editor">
 <h3>Un hello world</h3>
 <textarea id="exemple0">
@@ -124,6 +124,22 @@ Et voici la version ocaml correspondante générée grace à Métalang
 <li>pascal</li>
 <li>javascript</li>
 </ul>
+
+<p>Metalang à été testé avec les compilateurs suivants</p>
+<pre>
+gcc version 4.6.1
+fpc version 2.4.4
+mono version 2.10.5
+java 1.5 : GIJ version 4.6.1
+javascript : node v0.4.9
+ocaml version 3.12
+php version 5.3.6
+ruby version 1.9.2
+python 3.2.2
+</pre>
+<p>
+Il devrait fonctionner avec beaucoup d'autres versions, mais cependant, des problèmes sont connus avec python 2.</p>
+
 
 <h2>Changelog</h2>
 <p>Metalang est un langage de programmation en développement a partir de février 2012, premiere version stable en aout 2012.</p>

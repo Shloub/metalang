@@ -84,8 +84,7 @@ make metalang
 <blockquote>
 ./metalang fichier.metalang
 </blockquote>
-<p>Metalang ne permet pas de compiler deux fichiers ensemble.
-Tout le code doit-être dans un seul fichier.</p>
+<p>Metalang ne permet pas de compiler deux fichiers ensemble : tout le code doit-être dans un seul fichier. Ce compilateur est destiné à traduire des codes d'exemples, de petits algorithmes ou des codes à compléter, il n'était donc pas nécéssaire d'intégrer un système de dépendences, de signatures, de headers, de namespaces, de librairies ou de modules.</p>
 <a name="helloworld"></a>
 <h3>Hello world</h3>
 <p>Voici le contenu d'un hello world en metalang</p>
@@ -95,7 +94,13 @@ main
   print "Hello world\n"
 end</textarea>
 </div>
-
+<h3>tools</h3>
+Il existe quelques outils pour vous faciliter la vie avec metalang : un mode emacs et un makefile. Le makefile permet de lancer les tests, vous pourrez l'adapter facilement pour vérifier que vos programmes metalang donnent les mêmes résultats peu importe le langage de backend. Le mode emacs se trouve dans le dossier tools, il vous suffit d'ajouter les lignes suivantes dans votre .emacs pour en profiter :
+<pre>
+(setq auto-mode-alist (cons '("\\.metalang$" . metalang-mode) auto-mode-alist))
+(autoload 'metalang-mode "... PATH vers votre dossier tools/metalang-mode.el"
+  "Mode majeur pour éditer du code Metalang" t)
+</pre>
 <a name="types"></a>
 <h2>Types</h2>
 <p>Voici la liste des types definis en metalang</p>
@@ -188,8 +193,7 @@ Les appels de fonctions se font de la façon suivante :
 <div class="editor"><textarea id="exemple2">
 function_name(param1, param2)
 </textarea></div>
-
-Comme en C
+La convention d'appels est celle de java : les tableaux et structures ne sont pas passés par copie, les entiers si.
 <hr/>
 
 <a name="io"></a>
@@ -202,7 +206,7 @@ La syntaxe pour afficher sur la sortie standard est :
 print @type value
 </textarea></div>
 Le type est optionnel.
-Actuellement, il est possible d'afficher des chaines, des entiers, et des tableaux
+Actuellement, il est possible d'afficher des chaines et des entiers
 <a name="read"></a>
 <h3>Read</h3>
 <p>La lecture sur l'entrée standard peut se faire de deux façons : en écrivant le résultat dans une variable, ou en en déclarant une nouvelle.</p>
@@ -307,9 +311,10 @@ while condition do
 end
 </textarea></div>
 
-<p>Il n'existe pas d'instruction break ou continue.</p>
+<p>Pour des raisons de compatibilité avec certains langages (ocaml par exemple), il n'existe pas d'instruction break ou continue.</p>
 <hr />
 
+<p>vous trouverez <a href="site.html">ici quelques Exemples</a> de codes metalang simples. Ils pourront vous permettre de mieux vous familiariser avec le langage.</p>
 
 
 
