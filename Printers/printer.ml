@@ -33,6 +33,9 @@
 open Ast
 open Stdlib
 
+type oppart =
+  | Left | Right
+
 let print_option (f : Format.formatter -> 'a -> unit) t obj =
   match obj with
     | None -> ()
@@ -388,8 +391,31 @@ class printer = object(self)
     Format.fprintf f "@[<h 2>(%a)@]" self#expr e
 
   method binop f op a b =
-    let chf x = if self#nop (Expr.unfix x) then self#expr else self#printp
-    in Format.fprintf f "%a@ %a@ %a" (chf a) a self#print_op op (chf b) b
+    let chf op side f x = match (Expr.unfix x) with
+      | Expr.BinOp (_, op2, _) ->
+        begin match (op, side, op2) with
+          | ((Expr.Add | Expr.Sub), _, (Expr.Mul | Expr.Div | Expr.Mod))
+            ->
+            self#expr f x
+          | (Expr.Sub, Left, (Expr.Sub | Expr.Add))
+            ->
+            self#expr f x
+          | (Expr.Add, _, Expr.Add)
+            ->
+            self#expr f x
+          | (Expr.Mul, _, Expr.Mul)
+            ->
+            self#expr f x
+          | _ ->
+            self#printp f x
+        end
+      | _ -> self#expr f x
+    in Format.fprintf f "%a@ %a@ %a"
+    (chf op Left) a
+    self#print_op op
+    (chf op Right) b
+
+
 
   method enum f e =
     Format.fprintf f "%s" e
