@@ -1,14 +1,59 @@
+(*
+* Copyright (c) 2012, Prologin
+* All rights reserved.
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above copyright
+*       notice, this list of conditions and the following disclaimer in the
+*       documentation and/or other materials provided with the distribution.
+*
+* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*)
+
+
+(** Evaluation module
+    This module is used for :
+    - macro evaluation / inlining (code generation)
+    - standalone programm evaluation
+@see <http://prologin.org> Prologin
+@author Prologin (info\@prologin.org)
+@author Maxime Audouin (coucou747\@gmail.com)
+*)
+
 open Ast
 open Stdlib
 open Warner
 
+(** The environment functions used by evaluator.
+    it's a parameter for evaluator. There is now two kind of
+    parameters : a console environement and a javascript environment.
+*)
 module type EvalIO = sig
+  (** show an integer*)
   val print_int : int -> unit
+  (** show a char *)
   val print_char : char -> unit
+  (** show a string *)
   val print_string : string -> unit
+  (** show a boolean *)
   val print_bool : bool -> unit
+  (** read an integer from stdin *)
   val read_int : unit -> int
+  (** skip spaces in stdin *)
   val skip : unit -> unit
+  (** read a char from stdin *)
   val read_char : unit -> char
 end
 
@@ -28,6 +73,7 @@ module StringMap = struct
 end
 *)
 
+(** the kind of values manipulated by the evaluator *)
 type result =
   | Integer of int
   | Float of float
@@ -39,8 +85,10 @@ type result =
   | Lexems of Parser.token list
   | Nil
 
+(** we return a value *)
 exception Return of result
 
+(** show the type of a value *)
 let typeof = function
   | Integer _ -> "int"
   | Float _ -> "float"
@@ -51,36 +99,43 @@ let typeof = function
   | Array _ -> "array"
   | Nil _ -> "Nil"
 
+(** extract an ocaml array from a value *)
 let get_array = function
   | Array a -> a
   | x ->
     Printf.printf "Got %s expected array" (typeof x); assert false
 
+(** extract an ocaml integer from a value *)
 let get_integer = function
   | Integer a -> a
   | x ->
     Printf.printf "Got %s expected int" (typeof x); assert false
 
+(** extract an ocaml float from a value *)
 let get_float = function
   | Float a -> a
   | x ->
     Printf.printf "Got %s expected float" (typeof x); assert false
 
+(** extract an ocaml char from a value *)
 let get_char = function
   | Char a -> a
   | x ->
     Printf.printf "Got %s expected char" (typeof x); assert false
 
+(** extract an ocaml string from a value *)
 let get_string = function
   | String a -> a
   | x ->
     Printf.printf "Got %s expected string" (typeof x); assert false
 
+(** extract an ocaml boolean from a vlaue *)
 let get_bool = function
   | Bool a -> a
   | x ->
     Printf.printf "Got %s expected bool" (typeof x); assert false
 
+(** extract an ocaml token list from a value *)
 let get_tokens = function
   | Lexems a -> a
   | Bool false -> [ Parser.FALSE ]
@@ -89,8 +144,10 @@ let get_tokens = function
   | x ->
     Printf.printf "Got %s expected token list" (typeof x); assert false
 
+(** execution environment *)
 type execenv = result array
 
+(** compilation environment *)
 type  env = {
   nvars : int;
   vars : int StringMap.t;
@@ -100,10 +157,12 @@ type  env = {
   tyenv : Typer.env;
 }
 
+(** precompiled expression *)
 and precompiledExpr =
   | Result of result
   | WithEnv of (execenv -> result)
 
+(** get a list of lexems *)
 let flatten_lexems li =
   List.fold_left (fun acc li ->
     match (acc, li) with
@@ -127,6 +186,9 @@ let flatten_lexems li =
         )
   ) (Result (Lexems []))  li
 
+(** returns an empty environment
+    @param te : the typer environment
+*)
 let empty_env te =
   {
     tyenv = te;
@@ -135,14 +197,17 @@ let empty_env te =
     functions = StringMap.empty;
   }
 
+(** eval an expression *)
 let eval_expr execenv (e : precompiledExpr) :  result = match e with
   | Result r -> r
   | WithEnv f -> f execenv
 
+(** throw a type error*)
 let tyerr loc =
   raise (Error (fun f -> Format.fprintf f "Type error %a\n%!"
     ploc loc))
 
+(** numeric operator process *)
 let num_op loc ( + ) ( +. ) a b =
   match a, b with
     | Result a, Result b ->
@@ -174,10 +239,13 @@ let num_op loc ( + ) ( +. ) a b =
             | Integer i, Integer j -> Integer (i + j)
             | _ -> tyerr loc
         )
+(** integer operator *)
 let int_op loc f a b = num_op loc f (fun _ _ -> tyerr loc) a b
 
+(** comparaison type : powerfull for forall *)
 type compare = { cmp : 'a . 'a -> 'a -> bool }
 
+(** value comparaison *)
 let num_cmp f =
   let (<) = f.cmp in
   fun loc a b ->
@@ -248,6 +316,8 @@ let num_cmp f =
         )
         | _ -> tyerr loc
       end
+
+(** binary operations *)
 let binop =
   let leq = num_cmp { cmp = ( <= ) }  in
   let le = num_cmp { cmp = ( < ) } in
@@ -290,11 +360,14 @@ let binop =
         else r)
     end
 
+(** environment factory *)
 let init_eenv nvars = Array.make nvars Nil
 
+(** find a variable position in the environment *)
 let find_in_env (env:env) v : int =
   StringMap.find v env.vars
 
+(** add a variable in the environment *)
 let add_in_env (env:env) v : env * int =
   let out = env.nvars in
   {
@@ -303,6 +376,7 @@ let add_in_env (env:env) v : env * int =
       vars = StringMap.add v out env.vars
   }, out
 
+(** find the index of a field in a record value *)
 let index_for_field env field =
   match Type.unfix (Typer.type_of_field env.tyenv field) with
     | Type.Struct (li, _) ->
@@ -312,6 +386,7 @@ let index_for_field env field =
       Format.fprintf f "type error : waiting for field %s" field
     ))
 
+(** return a constructed structure from a token list *)
 let of_lexems_list rule_ f (li:Parser.token list) =
   let lexbuf = ref li in
   try
@@ -327,17 +402,22 @@ let of_lexems_list rule_ f (li:Parser.token list) =
       Format.fprintf f "parser error (%s) : %a@\n" rule_ Utils.string_of_lexems li
     ))
 
+(** returns an expression from a token list *)
 let expr_of_lexems_list (li:Parser.token list) : Parser.token Expr.t =
   of_lexems_list "expr" Parser.toplvl_expr li
 
+(** returns a toplvl expression from a token list *)
 let prog_list_of_lexems_list (li:Parser.token list) : Parser.token Prog.t_fun list =
   of_lexems_list "prog" Parser.toplvls li
 
+(** returns an instruction from a token list *)
 let instrs_of_lexems_list (li:Parser.token list) : Parser.token Expr.t Instr.t list =
   of_lexems_list "instrs" Parser.toplvl_instrs li
 
+(** Evaluation factor *)
 module EvalF (IO : EvalIO) = struct
 
+(** precompile an expression *)
 let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
   let loc = PosMap.get (Expr.Fixed.annot t) in
   let res x = Result x in
@@ -386,6 +466,7 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
           | _ -> assert false
         end
       | Expr.Lexems l -> precompiledExpr_of_lexems_list l env
+(** precompile an expression from a token list *)
 and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
   let li = List.map (fun l -> match l with
     | Lexems.Expr e -> e
@@ -406,8 +487,6 @@ and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
           )
   ) li
   in flatten_lexems li
-
-
 
 and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
     : execenv -> result -> unit =
@@ -471,6 +550,7 @@ and mut_val (env:env) (mut : precompiledExpr Mutable.t)
           | x ->
             raise (Error (fun f -> Format.fprintf f "Got %s expected Record\n" (typeof x)))
       )
+(** execute a call *)
 and eval_call env name params : execenv -> result =
   try
     let r = StringMap.find name env.functions in
@@ -498,6 +578,9 @@ and eval_call env name params : execenv -> result =
         | _ -> failwith ("The Macro "^name^" cannot be evaluated with
     "^(string_of_int (List.length params))^" arguments")
       )
+(** instruction evaluator : returns a tuple (environment * execution
+    lambda )
+*)
 and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     (env * (execenv -> unit))
     = match Instr.unfix instr with
@@ -618,6 +701,7 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     env, f
   | Instr.Unquote li -> assert false
 and print ty e =
+  (** show the value e. it has the type ty*)
   let () = match Type.unfix ty with
     | Type.Array(ty) ->
       begin
@@ -631,10 +715,12 @@ and print ty e =
     | _ -> failwith ("cannot print type "^(Type.type_t_to_string ty))
   in ()
 and read ty k = match Type.unfix ty with
+  (* read a value from the type ty and call the continuation k *)
   | Type.Integer -> k ( Integer (IO.read_int ()))
   | Type.Char -> k (Char (IO.read_char ()))
   | _ -> failwith ("cannot read type "^(Type.type_t_to_string ty))
 and eval_instrs env
+    (** compute the instructions *)
     (instrs : (env -> precompiledExpr) Ast.Instr.t list)
   : env * (execenv -> unit) =
   let env, precompiled = List.fold_left_map
@@ -646,8 +732,10 @@ and eval_instrs env
   in env, fun execenv ->
     Array.iter (fun f -> f execenv) arr
 
+(** precompile a list of instructions*)
 let rec precompile_instrs li =
   List.map precompile_instr li
+(** precompile an instruction *)
 and precompile_instr i =
   let i = match Instr.unfix i with
     | Instr.Declare (v, t, e) -> Instr.Declare (v, t, precompile_expr e)
@@ -681,6 +769,7 @@ and precompile_instr i =
     | Instr.Unquote li -> assert false
   in Instr.Fixed.fix i
 
+(** compile a function into a lambda *)
 let compile_fun env var t li instrs =
   let nvars = List.length li in
   let thisfunc = ref (0, fun _ -> ()) in
@@ -704,11 +793,13 @@ let compile_fun env var t li instrs =
   let () = thisfunc := (env.nvars, instrs)
   in env
 
+(** precompile and eval an expression *)
 let precompile_eval_expr (env:env) (e:Parser.token Expr.t) : result =
   let precompiled = precompile_expr e env in
   let execenv = init_eenv 0 in
   eval_expr execenv precompiled
 
+(** main function of this module : it evalue a full programm *)
 let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
   let f env p = match p with
     | Prog.DeclarFun (var, t, li, instrs) ->
@@ -727,8 +818,8 @@ let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
 
 end
 
-
-
+(** module for evaluation in console environment (stdin and stdout
+    reading) *)
 module E = struct
   let print_int i =
     Printf.printf "%d%!" i
@@ -751,7 +842,9 @@ module EVAL = EvalF(E)
 
 let eval_prog t p = EVAL.eval_prog t p
 
-
+(** this is a compilation pass : it evalue constant expressions.
+    it process expressions like instant(foo)
+*)
 module EvalConstantes = struct
 
   let process_expr acc e =

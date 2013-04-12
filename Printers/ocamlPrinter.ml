@@ -32,11 +32,14 @@ open Stdlib
 open Ast
 open Printer
 
+(** returns true if a list of instructions contains a return *)
 let contains_return li =
   List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
     | Instr.Return _ -> true
     | _ -> acc) false) li
 
+(** returns true if a list of instructions contains a return that
+    ocaml cannot execute (it's compiled into an exception) *)
 let rec contains_sad_return instrs =
   let rec f tra acc i = match Instr.unfix i with
     | Instr.Loop(_, _, _, li) -> acc || ( contains_return li)
@@ -49,22 +52,26 @@ let rec contains_sad_return instrs =
     | _ -> tra acc i
   in List.fold_left (f (Instr.Writer.Traverse.fold f)) false instrs
 
-(*
-TODO ajouter des conversions de types pour les entiers / float
+(* TODO
 virer plus de refs
 virer plus de nopending : inliner un peu
 *)
+
+(** the main class : the ocaml printer *)
 class camlPrinter = object(self)
   inherit printer as super
 
+  (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
+  (** sad return in the current function *)
   val mutable sad_returns = false
   val mutable printed_exn = 0
+  (** true if we are processing an expression *)
   val mutable in_expr = false
 
   method lang () = "ml"
 
-
+  (** show a type *)
   method ptype f t =
       match Type.Fixed.unfix t with
       | Type.Integer -> Format.fprintf f "int"
@@ -93,10 +100,12 @@ class camlPrinter = object(self)
 	  ) li
       | Type.Auto -> assert false
 
+  (** read spaces from stdin *)
   method stdin_sep f =
     Format.fprintf f
     "@[<h>Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ())@]"
 
+  (** show a binary operator *)
   method print_op f op =
     Format.fprintf f
       "%s"
@@ -120,7 +129,7 @@ class camlPrinter = object(self)
 	| Expr.LShift -> "lsr"
       )
 
-
+  (** show unary operators *)
   method unop f op a =
     let pop f () = match op with
       | Expr.Neg -> Format.fprintf f "-"
@@ -131,23 +140,31 @@ class camlPrinter = object(self)
       else
         Format.fprintf f "%a(%a)" pop () self#expr a
 
+  (** show the main *)
   method main f main =
     let () = sad_returns <- contains_sad_return main in
     let () = self#calc_refs main in
     Format.fprintf f "@[<v 2>@[<h>let () =@\nbegin@\n@[<v 2>  %a@]@\nend@\n"
       self#instructions main
 
+  (** show all the programm *)
   method prog f prog =
     Format.fprintf f "%a%a"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
+  (** print recursive prefix *)
   method rec_ f b =
     if b then Format.fprintf f "rec@ "
 
-  method print_rec_proto f triplet = self#print_proto_aux f true triplet
+  (** show the prototype of a recursive function *)
+  method print_rec_proto f triplet = self#print_proto_aux f true
+  triplet
+
+  (** show the prototype of a function*)
   method print_proto f triplet = self#print_proto_aux f false triplet
 
+  (** util method to print a function prototype*)
   method print_proto_aux f rec_ (funname, t, li) =
     match li with
       | [] -> Format.fprintf f "let@ %a%a@ () ="
@@ -162,6 +179,7 @@ class camlPrinter = object(self)
 	     (fun t f1 e1 f2 e2 -> Format.fprintf t
 	       "%a@ %a" f1 e1 f2 e2)) li
 
+  (** show an if then else *)
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] ->
@@ -179,6 +197,7 @@ class camlPrinter = object(self)
 	self#bloc ifcase
 	self#bloc elsecase
 
+  (** show an instruction *)
   method instructions f instrs =
     Format.fprintf f "%a%s"
       (print_list
@@ -212,6 +231,7 @@ class camlPrinter = object(self)
       ) instrs
       (self#need_unit instrs)
 
+  (** returns true if the function need to returns unit *)
   method need_unit instrs =
     match List.rev
       (List.filter
@@ -228,6 +248,7 @@ class camlPrinter = object(self)
       | [] -> " ()"
       | _ -> ""
 
+  (** show a bloc of instructions *)
   method bloc f b =
     if List.forall
       (function
@@ -245,8 +266,10 @@ class camlPrinter = object(self)
 	| _ ->
 	  Format.fprintf f "begin@\n@[<v 2>  %a@]@\nend" self#instructions b
 
+  (** show a binding *)
   method binding f i = Format.fprintf f "%s" i
 
+  (** show an affectation *)
   method affect f m expr =
     Format.fprintf f "@[<h>%a@ %s@ %a@]"
       self#mutable_ m
@@ -257,6 +280,7 @@ class camlPrinter = object(self)
       )
       self#expr expr
 
+  (** show a declaration *)
   method declaration f var t e =
     if BindingSet.mem var refbindings then
       Format.fprintf f "@[<h>let %a@ =@ ref(@ %a )@ in@]"
@@ -267,6 +291,7 @@ class camlPrinter = object(self)
 	self#binding var
 	self#expr e
 
+  (** read a value from stdin into a mutable *)
   method read f t m =
     Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value)@]"
       self#format_type t
@@ -277,13 +302,13 @@ class camlPrinter = object(self)
 	| Mutable.Dot _ -> "<-"
       )
 
-
+  (** declare a variable and read his value from stdin *)
   method read_decl f t v =
     Format.fprintf f "@[let %a = Scanf.scanf \"%a\" (fun x -> x) in@]"
       self#binding v
       self#format_type t
 
-
+  (** find references variables from a list of instructions *)
   method calc_refs instrs =
     refbindings <-
       List.fold_left
@@ -297,6 +322,7 @@ class camlPrinter = object(self)
       BindingSet.empty
       instrs
 
+  (** print an expression *)
   method expr f e =
     begin
       in_expr <- true;
@@ -304,6 +330,7 @@ class camlPrinter = object(self)
       in_expr <- false;
     end
 
+  (** print mutable values *)
   method mutable_ f m =
     match m |> Mutable.Fixed.unfix with
       | Mutable.Var binding ->
@@ -337,6 +364,7 @@ class camlPrinter = object(self)
 		 f2 e2
 	     )) indexes
 
+  (** returns true if the function is recursive *)
   method is_rec funname instrs =
     true (* TODO *)
 
