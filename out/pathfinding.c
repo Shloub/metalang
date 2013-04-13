@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int min2(int a, int b){
   if (a < b)
   {
@@ -26,19 +24,19 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
   }
   else if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
   {
-    return (x * y) * 10;
+    return x * y * 10;
   }
   else if (tab[posY][posX] == '#')
   {
-    return (x * y) * 10;
+    return x * y * 10;
   }
-  else if (cache[posY][posX] != (-1))
+  else if (cache[posY][posX] != -1)
   {
     return cache[posY][posX];
   }
   else
   {
-    cache[posY][posX] = (x * y) * 10;
+    cache[posY][posX] = x * y * 10;
     int val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY);
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
@@ -50,19 +48,17 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
 }
 
 int pathfind(char** tab, int x, int y){
-  int* *cache = malloc( (y) * sizeof(int*) + sizeof(int));
-  ((int*)cache)[0]=y;
-  cache=(int**)( ((int*)cache)+1);
+  int* *cache = malloc( y * sizeof(int*));
+  
   {
     int i;
-    for (i = 0 ; i <= y - 1; i++)
+    for (i = 0 ; i < y; i++)
     {
-      int *tmp = malloc( (x) * sizeof(int) + sizeof(int));
-      ((int*)tmp)[0]=x;
-      tmp=(int*)( ((int*)tmp)+1);
+      int *tmp = malloc( x * sizeof(int));
+      
       {
         int j;
-        for (j = 0 ; j <= x - 1; j++)
+        for (j = 0 ; j < x; j++)
         {
           tmp[j] = -1;
         }
@@ -80,19 +76,17 @@ int main(void){
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c", 0);
-  char* *tab = malloc( (y) * sizeof(char*) + sizeof(int));
-  ((int*)tab)[0]=y;
-  tab=(char**)( ((int*)tab)+1);
+  char* *tab = malloc( y * sizeof(char*));
+  
   {
     int i;
-    for (i = 0 ; i <= y - 1; i++)
+    for (i = 0 ; i < y; i++)
     {
-      char *tab2 = malloc( (x) * sizeof(char) + sizeof(int));
-      ((int*)tab2)[0]=x;
-      tab2=(char*)( ((int*)tab2)+1);
+      char *tab2 = malloc( x * sizeof(char));
+      
       {
         int j;
-        for (j = 0 ; j <= x - 1; j++)
+        for (j = 0 ; j < x; j++)
         {
           char tmp = '\000';
           scanf("%c", &tmp);

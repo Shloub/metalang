@@ -9,7 +9,7 @@ public class pathfindList
     {
       return 0;
     }
-    else if (cache[pos] != (-1))
+    else if (cache[pos] != -1)
     {
       return cache[pos];
     }
@@ -35,7 +35,7 @@ public class pathfindList
   public static int pathfind(int[] tab, int len)
   {
     int[] cache = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       cache[i] = -1;
     }
@@ -50,7 +50,7 @@ public class pathfindList
     len = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanner.useDelimiter("\\s");

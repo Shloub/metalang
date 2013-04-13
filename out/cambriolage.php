@@ -10,9 +10,9 @@ function max2($a, $b){
 function nbPassePartout($n, &$passepartout, $m, &$serrures){
   $max_ancient = 0;
   $max_recent = 0;
-  for ($i = 0 ; $i <= $m - 1; $i++)
+  for ($i = 0 ; $i < $m; $i++)
   {
-    if (($serrures[$i][0] == (-1)) && ($serrures[$i][1] > $max_ancient))
+    if (($serrures[$i][0] == -1) && ($serrures[$i][1] > $max_ancient))
     {
       $max_ancient = $serrures[$i][1];
     }
@@ -23,7 +23,7 @@ function nbPassePartout($n, &$passepartout, $m, &$serrures){
   }
   $max_ancient_pp = 0;
   $max_recent_pp = 0;
-  for ($i = 0 ; $i <= $n - 1; $i++)
+  for ($i = 0 ; $i < $n; $i++)
   {
     $pp = $passepartout[$i];
     if (($pp[0] >= $max_ancient) && ($pp[1] >= $max_recent))
@@ -67,11 +67,11 @@ $n = 0;
 list($n) = scan("%d");
 scantrim();
 $passepartout = array();
-for ($i = 0 ; $i <= $n - 1; $i++)
+for ($i = 0 ; $i < $n; $i++)
 {
   $bd = 2;
   $out0 = array();
-  for ($j = 0 ; $j <= $bd - 1; $j++)
+  for ($j = 0 ; $j < $bd; $j++)
   {
     $out_ = 0;
     list($out_) = scan("%d");
@@ -84,11 +84,11 @@ $m = 0;
 list($m) = scan("%d");
 scantrim();
 $serrures = array();
-for ($i = 0 ; $i <= $m - 1; $i++)
+for ($i = 0 ; $i < $m; $i++)
 {
   $be = 2;
   $out0 = array();
-  for ($j = 0 ; $j <= $be - 1; $j++)
+  for ($j = 0 ; $j < $be; $j++)
   {
     $out_ = 0;
     list($out_) = scan("%d");
@@ -98,5 +98,5 @@ for ($i = 0 ; $i <= $m - 1; $i++)
   $serrures[$i] = $out0;
 }
 $bf = nbPassePartout($n, $passepartout, $m, $serrures);
-printf("%d", $bf);
+echo $bf;
 ?>

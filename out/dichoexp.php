@@ -41,5 +41,5 @@ list($a) = scan("%d");
 scantrim();
 list($b) = scan("%d");
 $j = exp_($a, $b);
-printf("%d", $j);
+echo $j;
 ?>

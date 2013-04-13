@@ -36,11 +36,11 @@ function find0($len, &$tab, &$cache, $x, $y){
 
 function find($len, &$tab){
   $tab2 = array();
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
-    $cd = $i + 1;
+    $bi = $i + 1;
     $tab3 = array();
-    for ($j = 0 ; $j <= $cd - 1; $j++)
+    for ($j = 0 ; $j < $bi; $j++)
     {
       $tab3[$j] = 0;
     }
@@ -73,11 +73,11 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
-  $ce = $i + 1;
+  $bj = $i + 1;
   $tab2 = array();
-  for ($j = 0 ; $j <= $ce - 1; $j++)
+  for ($j = 0 ; $j < $bj; $j++)
   {
     $tmp = 0;
     list($tmp) = scan("%d");
@@ -86,14 +86,15 @@ for ($i = 0 ; $i <= $len - 1; $i++)
   }
   $tab[$i] = $tab2;
 }
-$cf = find($len, $tab);
-printf("%d", $cf);
-for ($cg = 0 ; $cg <= (count($tab)) - 1; $cg++)
+$bk = find($len, $tab);
+echo $bk;
+for ($i = 0 ; $i < $len; $i++)
 {
-  $ch = $tab[$cg];
-  for ($ci = 0 ; $ci <= (count($ch)) - 1; $ci++)
+  for ($j = 0 ; $j <= $i; $j++)
   {
-    printf("%d", $ch[$ci]);
+    $bl = $tab[$i][$j];
+    echo $bl;
   }
+  echo "\n";
 }
 ?>

@@ -11,7 +11,7 @@ public class brainfuck_compiler
     int current_pos = 500;
     int j = 1000;
     int[] mem = new int[j];
-    for (int i = 0 ; i <= j - 1; i ++)
+    for (int i = 0 ; i < j; i++)
     {
       mem[i] = 0;
     }

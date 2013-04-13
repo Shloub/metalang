@@ -45,7 +45,7 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
   $x = 0;
   list($x) = scan("%d");
@@ -53,5 +53,5 @@ for ($i = 0 ; $i <= $len - 1; $i++)
   $tab[$i] = $x;
 }
 $k = montagnes_($tab, $len);
-printf("%d", $k);
+echo $k;
 ?>

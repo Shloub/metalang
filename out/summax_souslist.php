@@ -2,7 +2,7 @@
 function summax(&$lst, $len){
   $current = 0;
   $max_ = 0;
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
     $current = $current + $lst[$i];
     if ($current < 0)
@@ -41,7 +41,7 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
   $tmp = 0;
   list($tmp) = scan("%d");
@@ -49,5 +49,5 @@ for ($i = 0 ; $i <= $len - 1; $i++)
   $tab[$i] = $tmp;
 }
 $result = summax($tab, $len);
-printf("%d", $result);
+echo $result;
 ?>

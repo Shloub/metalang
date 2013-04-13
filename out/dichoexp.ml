@@ -7,7 +7,7 @@ let rec exp_ a b =
       o * o
     end
   else
-    a * (exp_ a (b - 1))
+    a * exp_ a (b - 1)
 
 let () =
 begin

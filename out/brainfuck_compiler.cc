@@ -9,7 +9,7 @@ int main(void){
   int current_pos = 500;
   int e = 1000;
   std::vector<int > mem( e );
-  for (int i = 0 ; i <= e - 1; i ++)
+  for (int i = 0 ; i < e; i++)
   {
     mem.at(i) = 0;
   }

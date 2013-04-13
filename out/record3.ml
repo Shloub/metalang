@@ -16,7 +16,7 @@ let rec result t len =
   let out_ = ref( 0 ) in
   for j = 0 to len - 1 do
     t.(j).blah <- t.(j).blah + 1;
-    out_ := (((!out_) + t.(j).foo) + (t.(j).blah * t.(j).bar)) + (t.(j).bar * t.(j).foo)
+    out_ := (!out_) + t.(j).foo + t.(j).blah * t.(j).bar + t.(j).bar * t.(j).foo
   done;
   (!out_)
 

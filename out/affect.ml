@@ -33,7 +33,7 @@ let rec result t_ t2_ =
   let cache2 = ref( (!cache0) ) in
   cache0 := cache1;
   cache2 := (!cache0);
-  ((!t).foo + ((!t).blah * (!t).bar)) + ((!t).bar * (!t).foo)
+  (!t).foo + (!t).blah * (!t).bar + (!t).bar * (!t).foo
 
 let () =
 begin

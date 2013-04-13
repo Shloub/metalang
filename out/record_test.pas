@@ -95,7 +95,7 @@ begin
   param^.bar := read_int();
   skip();
   param^.foo := read_int();
-  b := param^.bar + (param^.foo * param^.bar);
+  b := param^.bar + param^.foo * param^.bar;
   write(b);
 end.
 

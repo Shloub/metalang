@@ -160,7 +160,7 @@ begin
         end;
       colv := g^.cases[x][y];
       linv := g^.cases[y][x];
-      if (col = (-1)) and (colv <> 0) then
+      if (col = -1) and (colv <> 0) then
         begin
           col := colv;
         end
@@ -169,7 +169,7 @@ begin
         begin
           col := -2;
         end;;
-      if (lin = (-1)) and (linv <> 0) then
+      if (lin = -1) and (linv <> 0) then
         begin
           lin := linv;
         end

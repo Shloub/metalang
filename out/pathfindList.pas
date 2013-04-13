@@ -88,7 +88,7 @@ begin
     begin
       exit(0);
     end
-  else if cache[pos] <> (-1)
+  else if cache[pos] <> -1
   then
     begin
       exit(cache[pos]);

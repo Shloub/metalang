@@ -14,7 +14,7 @@ let rec mktoto v1 =
 
 let rec result t =
   t.blah <- t.blah + 1;
-  (t.foo + (t.blah * t.bar)) + (t.bar * t.foo)
+  t.foo + t.blah * t.bar + t.bar * t.foo
 
 let () =
 begin

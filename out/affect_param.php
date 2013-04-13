@@ -25,6 +25,6 @@ function nextChar(){
 
 $a = 0;
 foo($a);
-printf("%d", $a);
-printf("%s", "\n");
+echo $a;
+echo "\n";
 ?>

@@ -71,7 +71,7 @@ public static int readInt(){
     param.bar = readInt();
     stdin_sep();
     param.foo = readInt();
-    int d = param.bar + (param.foo * param.bar);
+    int d = param.bar + param.foo * param.bar;
     Console.Write(d);
   }
   

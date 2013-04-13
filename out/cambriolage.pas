@@ -102,7 +102,7 @@ begin
   max_recent := 0;
   for i := 0 to  m - 1 do
   begin
-    if (serrures[i][0] = (-1)) and (serrures[i][1] > max_ancient)
+    if (serrures[i][0] = -1) and (serrures[i][1] > max_ancient)
     then
       begin
         max_ancient := serrures[i][1];

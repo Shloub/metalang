@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 
 int is_number(char c){
   return (c <= '9') && (c >= '0');
@@ -12,12 +10,11 @@ int is_number(char c){
 Notation polonaise inversée
 */
 int npi_(char* str, int len){
-  int *stack = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)stack)[0]=len;
-  stack=(int*)( ((int*)stack)+1);
+  int *stack = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       stack[i] = 0;
     }
@@ -35,7 +32,7 @@ int npi_(char* str, int len){
       int num = 0;
       while (str[ptrStr] != ' ')
       {
-        num = ((num * 10) + str[ptrStr]) - '0';
+        num = num * 10 + str[ptrStr] - '0';
         ptrStr = ptrStr + 1;
       }
       stack[ptrStack] = num;
@@ -55,12 +52,11 @@ int main(void){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
-  char *tab = malloc( (len) * sizeof(char) + sizeof(int));
-  ((int*)tab)[0]=len;
-  tab=(char*)( ((int*)tab)+1);
+  char *tab = malloc( len * sizeof(char));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       char tmp = '\000';
       scanf("%c", &tmp);

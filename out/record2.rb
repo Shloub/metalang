@@ -11,7 +11,7 @@ end
 
 def result( t )
     t["blah"] = t["blah"] + 1;
-    return ((t["foo"] + (t["blah"] * t["bar"])) + (t["bar"] * t["foo"]));
+    return (t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"]);
 end
 
 t = mktoto(4)

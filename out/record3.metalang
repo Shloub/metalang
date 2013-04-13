@@ -16,7 +16,7 @@ def int result(array<@toto> t, int len)
   for j=0 to len - 1
   do
     t[j].blah = t[j].blah + 1;
-    out = ((out + t[j].foo) + (t[j].blah * t[j].bar)) + (t[j].bar * t[j].foo);
+    out = out + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
   end
   return out
 end

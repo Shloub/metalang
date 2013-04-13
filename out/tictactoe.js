@@ -87,7 +87,7 @@ function eval_(g){
       }
       var colv = g.cases[x][y];
       var linv = g.cases[y][x];
-      if ((col == (-1)) && (colv != 0))
+      if ((col == -1) && (colv != 0))
       {
         col = colv;
       }
@@ -95,7 +95,7 @@ function eval_(g){
       {
         col = -2;
       }
-      if ((lin == (-1)) && (linv != 0))
+      if ((lin == -1) && (linv != 0))
       {
         lin = linv;
       }

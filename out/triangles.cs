@@ -100,11 +100,11 @@ public static int readInt(){
   public static int find(int len, int[][] tab)
   {
     int[][] tab2 = new int[len][];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
-      int bb = i + 1;
-      int[] tab3 = new int[bb];
-      for (int j = 0 ; j <= bb - 1; j ++)
+      int q = i + 1;
+      int[] tab3 = new int[q];
+      for (int j = 0 ; j < q; j++)
       {
         tab3[j] = 0;
       }
@@ -120,11 +120,11 @@ public static int readInt(){
     len = readInt();
     stdin_sep();
     int[][] tab = new int[len][];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
-      int bc = i + 1;
-      int[] tab2 = new int[bc];
-      for (int j = 0 ; j <= bc - 1; j ++)
+      int r = i + 1;
+      int[] tab2 = new int[r];
+      for (int j = 0 ; j < r; j++)
       {
         int tmp = 0;
         tmp = readInt();
@@ -133,15 +133,16 @@ public static int readInt(){
       }
       tab[i] = tab2;
     }
-    int bd = find(len, tab);
-    Console.Write(bd);
-    for (int be = 0 ; be <= (tab.Length) - 1; be ++)
+    int s = find(len, tab);
+    Console.Write(s);
+    for (int i = 0 ; i < len; i++)
     {
-      int[] bf = tab[be];
-      for (int bg = 0 ; bg <= (bf.Length) - 1; bg ++)
+      for (int j = 0 ; j <= i; j ++)
       {
-        Console.Write(bf[bg]);
+        int t = tab[i][j];
+        Console.Write(t);
       }
+      Console.Write("\n");
     }
   }
   

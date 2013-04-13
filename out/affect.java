@@ -27,19 +27,19 @@ public class affect
     t.blah = t.blah + 1;
     int len = 1;
     int[] cache0 = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       cache0[i] = -i;
     }
     int[] cache1 = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       cache1[i] = i;
     }
     int[] cache2 = cache0;
     cache0 = cache1;
     cache2 = cache0;
-    return (t.foo + (t.blah * t.bar)) + (t.bar * t.foo);
+    return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   
   

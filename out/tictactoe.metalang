@@ -56,13 +56,13 @@ def void eval(@gamestate g)
       end
       def int colv = g.cases[x][y]
       def int linv = g.cases[y][x]
-      if (col == (-1)) && (colv != 0) then
+      if (col == -1) && (colv != 0) then
         col = colv;
       elsif colv != col
       then
         col = -2;
       end
-      if (lin == (-1)) && (linv != 0) then
+      if (lin == -1) && (linv != 0) then
         lin = linv;
       elsif linv != lin
       then

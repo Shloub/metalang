@@ -24,6 +24,9 @@ main
     return tmp
   end
   sort_(tab, len);
-  print array<int> tab
+  for i=0 to len - 1
+  do
+    print int tab[i]
+  end
 end
 

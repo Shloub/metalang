@@ -51,6 +51,13 @@ main
     return tab2
   end
   print int find(len, tab)
-  print array<array<int>> tab
+  for i=0 to len - 1
+  do
+    for j=0 to i
+    do
+      print int tab[i][j]
+    end
+    print string "\n"
+  end
 end
 

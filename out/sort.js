@@ -62,9 +62,10 @@ for (var i = 0 ; i <= len - 1; i++)
   tab[i] = tmp;
 }
 sort_(tab, len);
-for (var n = 0 ; n <= (tab.length) - 1; n++)
+for (var i = 0 ; i <= len - 1; i++)
 {
-  util.print(tab[n]);
+  var g = tab[i];
+  util.print(g);
 }
 
 

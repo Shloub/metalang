@@ -46,7 +46,7 @@ def readint():
 def summax( lst, len ):
     current = 0;
     max_ = 0;
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
       current = current + lst[i];
       if current < 0:
         current = 0;
@@ -57,8 +57,8 @@ def summax( lst, len ):
 len = 0;
 len=readint();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
+tab = [None] * len;
+for i in range(0, len):
   tmp = 0;
   tmp=readint();
   stdinsep();

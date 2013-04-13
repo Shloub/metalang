@@ -31,7 +31,7 @@ def int result(@toto t_, @toto t2_)
   def array<int> cache2 = cache0
   cache0 = cache1;
   cache2 = cache0;
-  return (t.foo + (t.blah * t.bar)) + (t.bar * t.foo)
+  return t.foo + t.blah * t.bar + t.bar * t.foo
 end
 
 main

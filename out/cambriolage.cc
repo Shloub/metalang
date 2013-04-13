@@ -13,9 +13,9 @@ int max2(int a, int b){
 int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, std::vector<std::vector<int > >& serrures){
   int max_ancient = 0;
   int max_recent = 0;
-  for (int i = 0 ; i <= m - 1; i ++)
+  for (int i = 0 ; i < m; i++)
   {
-    if ((serrures.at(i).at(0) == (-1)) && (serrures.at(i).at(1) > max_ancient))
+    if ((serrures.at(i).at(0) == -1) && (serrures.at(i).at(1) > max_ancient))
     {
       max_ancient = serrures.at(i).at(1);
     }
@@ -26,7 +26,7 @@ int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, 
   }
   int max_ancient_pp = 0;
   int max_recent_pp = 0;
-  for (int i = 0 ; i <= n - 1; i ++)
+  for (int i = 0 ; i < n; i++)
   {
     std::vector<int > pp = passepartout.at(i);
     if ((pp.at(0) >= max_ancient) && (pp.at(1) >= max_recent))
@@ -52,11 +52,11 @@ int main(void){
   scanf("%d", &n);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<std::vector<int > > passepartout( n );
-  for (int i = 0 ; i <= n - 1; i ++)
+  for (int i = 0 ; i < n; i++)
   {
     int o = 2;
     std::vector<int > out0( o );
-    for (int j = 0 ; j <= o - 1; j ++)
+    for (int j = 0 ; j < o; j++)
     {
       int out_ = 0;
       scanf("%d", &out_);
@@ -69,11 +69,11 @@ int main(void){
   scanf("%d", &m);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<std::vector<int > > serrures( m );
-  for (int i = 0 ; i <= m - 1; i ++)
+  for (int i = 0 ; i < m; i++)
   {
     int p = 2;
     std::vector<int > out0( p );
-    for (int j = 0 ; j <= p - 1; j ++)
+    for (int j = 0 ; j < p; j++)
     {
       int out_ = 0;
       scanf("%d", &out_);

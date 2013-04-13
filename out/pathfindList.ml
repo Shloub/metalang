@@ -1,7 +1,7 @@
 let rec pathfind_aux cache tab len pos =
   if pos >= (len - 1) then
     0
-  else if cache.(pos) <> (-1) then
+  else if cache.(pos) <> -1 then
     cache.(pos)
   else
     begin

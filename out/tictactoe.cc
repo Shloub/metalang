@@ -66,7 +66,7 @@ void eval_(struct gamestate * g){
       }
       int colv = g->cases.at(x).at(y);
       int linv = g->cases.at(y).at(x);
-      if ((col == (-1)) && (colv != 0))
+      if ((col == -1) && (colv != 0))
       {
         col = colv;
       }
@@ -74,7 +74,7 @@ void eval_(struct gamestate * g){
       {
         col = -2;
       }
-      if ((lin == (-1)) && (linv != 0))
+      if ((lin == -1) && (linv != 0))
       {
         lin = linv;
       }
@@ -213,11 +213,11 @@ struct move * play(struct gamestate * g){
 struct gamestate * init(){
   int s = 3;
   std::vector<std::vector<int > > cases( s );
-  for (int i = 0 ; i <= s - 1; i ++)
+  for (int i = 0 ; i < s; i++)
   {
     int r = 3;
     std::vector<int > tab( r );
-    for (int j = 0 ; j <= r - 1; j ++)
+    for (int j = 0 ; j < r; j++)
     {
       tab.at(j) = 0;
     }

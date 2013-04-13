@@ -115,7 +115,7 @@ Tictactoe : un tictactoe avec une IA
         }
         int colv = g.cases[x][y];
         int linv = g.cases[y][x];
-        if ((col == (-1)) && (colv != 0))
+        if ((col == -1) && (colv != 0))
         {
           col = colv;
         }
@@ -123,7 +123,7 @@ Tictactoe : un tictactoe avec une IA
         {
           col = -2;
         }
-        if ((lin == (-1)) && (linv != 0))
+        if ((lin == -1) && (linv != 0))
         {
           lin = linv;
         }
@@ -269,11 +269,11 @@ Tictactoe : un tictactoe avec une IA
   {
     int z = 3;
     int[][] cases = new int[z][];
-    for (int i = 0 ; i <= z - 1; i ++)
+    for (int i = 0 ; i < z; i++)
     {
       int w = 3;
       int[] tab = new int[w];
-      for (int j = 0 ; j <= w - 1; j ++)
+      for (int j = 0 ; j < w; j++)
       {
         tab[j] = 0;
       }

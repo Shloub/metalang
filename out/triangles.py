@@ -67,11 +67,11 @@ def find0( len, tab, cache, x, y ):
     return result;
 
 def find( len, tab ):
-    tab2 = [None] * (len);
-    for i in range(0, 1 + len - 1):
-      cr = i + 1;
-      tab3 = [None] * (cr);
-      for j in range(0, 1 + cr - 1):
+    tab2 = [None] * len;
+    for i in range(0, len):
+      bq = i + 1;
+      tab3 = [None] * bq;
+      for j in range(0, bq):
         tab3[j] = 0;
       tab2[i] = tab3;
     return find0(len, tab, tab2, 0, 0);
@@ -79,20 +79,21 @@ def find( len, tab ):
 len = 0;
 len=readint();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
-  cs = i + 1;
-  tab2 = [None] * (cs);
-  for j in range(0, 1 + cs - 1):
+tab = [None] * len;
+for i in range(0, len):
+  br = i + 1;
+  tab2 = [None] * br;
+  for j in range(0, br):
     tmp = 0;
     tmp=readint();
     stdinsep();
     tab2[j] = tmp;
   tab[i] = tab2;
-ct = find(len, tab);
-print("%d" % ct, end='');
-for cu in range(0, 1 + (tab.__len__()) - 1):
-  cv = tab[cu];
-  for cw in range(0, 1 + (cv.__len__()) - 1):
-    print("%d" % cv[cw], end='');
+bs = find(len, tab);
+print("%d" % bs, end='');
+for i in range(0, len):
+  for j in range(0, 1 + i):
+    bt = tab[i][j];
+    print("%d" % bt, end='');
+  print("%s" % "\n", end='');
 

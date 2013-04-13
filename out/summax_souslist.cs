@@ -65,7 +65,7 @@ public static int readInt(){
   {
     int current = 0;
     int max_ = 0;
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       current = current + lst[i];
       if (current < 0)
@@ -87,7 +87,7 @@ public static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
       tmp = readInt();

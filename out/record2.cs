@@ -74,7 +74,7 @@ public static int readInt(){
   public static int result(toto t)
   {
     t.blah = t.blah + 1;
-    return (t.foo + (t.blah * t.bar)) + (t.bar * t.foo);
+    return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   
   

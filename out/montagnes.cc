@@ -30,7 +30,7 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<int > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     int x = 0;
     scanf("%d", &x);

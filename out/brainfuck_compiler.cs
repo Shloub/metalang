@@ -69,7 +69,7 @@ public static int readInt(){
     int current_pos = 500;
     int g = 1000;
     int[] mem = new int[g];
-    for (int i = 0 ; i <= g - 1; i ++)
+    for (int i = 0 ; i < g; i++)
     {
       mem[i] = 0;
     }

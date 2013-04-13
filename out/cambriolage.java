@@ -16,9 +16,9 @@ public class cambriolage
   {
     int max_ancient = 0;
     int max_recent = 0;
-    for (int i = 0 ; i <= m - 1; i ++)
+    for (int i = 0 ; i < m; i++)
     {
-      if ((serrures[i][0] == (-1)) && (serrures[i][1] > max_ancient))
+      if ((serrures[i][0] == -1) && (serrures[i][1] > max_ancient))
       {
         max_ancient = serrures[i][1];
       }
@@ -29,7 +29,7 @@ public class cambriolage
     }
     int max_ancient_pp = 0;
     int max_recent_pp = 0;
-    for (int i = 0 ; i <= n - 1; i ++)
+    for (int i = 0 ; i < n; i++)
     {
       int[] pp = passepartout[i];
       if ((pp[0] >= max_ancient) && (pp[1] >= max_recent))
@@ -57,11 +57,11 @@ public class cambriolage
     n = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[][] passepartout = new int[n][];
-    for (int i = 0 ; i <= n - 1; i ++)
+    for (int i = 0 ; i < n; i++)
     {
       int u = 2;
       int[] out0 = new int[u];
-      for (int j = 0 ; j <= u - 1; j ++)
+      for (int j = 0 ; j < u; j++)
       {
         int out_ = 0;
         scanner.useDelimiter("\\s");
@@ -76,11 +76,11 @@ public class cambriolage
     m = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[][] serrures = new int[m][];
-    for (int i = 0 ; i <= m - 1; i ++)
+    for (int i = 0 ; i < m; i++)
     {
       int v = 2;
       int[] out0 = new int[v];
-      for (int j = 0 ; j <= v - 1; j ++)
+      for (int j = 0 ; j < v; j++)
       {
         int out_ = 0;
         scanner.useDelimiter("\\s");

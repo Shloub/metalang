@@ -21,8 +21,9 @@ begin
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     (!tmp)) in
   sort_ tab (!len);
-  for p = 0 to ((Array.length tab)) - 1 do
-    Printf.printf "%d" (tab.(p))
+  for i = 0 to (!len) - 1 do
+    let h = tab.(i) in
+    Printf.printf "%d" (h)
   done
 end
  

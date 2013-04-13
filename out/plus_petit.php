@@ -66,7 +66,7 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
   $tmp = 0;
   list($tmp) = scan("%d");
@@ -74,5 +74,5 @@ for ($i = 0 ; $i <= $len - 1; $i++)
   $tab[$i] = $tmp;
 }
 $o = plus_petit_($tab, $len);
-printf("%d", $o);
+echo $o;
 ?>

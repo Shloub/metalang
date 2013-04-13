@@ -63,9 +63,9 @@ public static int readInt(){
 
   public static void sort_(int[] tab, int len)
   {
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
-      for (int j = i + 1 ; j <= len - 1; j ++)
+      for (int j = i + 1 ; j < len; j++)
       {
         if (tab[i] > tab[j])
         {
@@ -84,7 +84,7 @@ public static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
       tmp = readInt();
@@ -92,9 +92,10 @@ public static int readInt(){
       tab[i] = tmp;
     }
     sort_(tab, len);
-    for (int h = 0 ; h <= (tab.Length) - 1; h ++)
+    for (int i = 0 ; i < len; i++)
     {
-      Console.Write(tab[h]);
+      int e = tab[i];
+      Console.Write(e);
     }
   }
   

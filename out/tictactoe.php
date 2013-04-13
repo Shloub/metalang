@@ -8,31 +8,31 @@ Tictactoe : un tictactoe avec une IA
 
 /* On affiche l'état */
 function print_state(&$g){
-  printf("%s", "\n|");
+  echo "\n|";
   for ($y = 0 ; $y <= 2; $y++)
   {
     for ($x = 0 ; $x <= 2; $x++)
     {
       if ($g["cases"][$x][$y] == 0)
       {
-        printf("%s", " ");
+        echo " ";
       }
       else if ($g["cases"][$x][$y] == 1)
       {
-        printf("%s", "O");
+        echo "O";
       }
       else
       {
-        printf("%s", "X");
+        echo "X";
       }
-      printf("%s", "|");
+      echo "|";
     }
     if ($y != 2)
     {
-      printf("%s", "\n|-|-|-|\n|");
+      echo "\n|-|-|-|\n|";
     }
   }
-  printf("%s", "\n");
+  echo "\n";
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
@@ -51,7 +51,7 @@ function eval_(&$g){
       }
       $colv = $g["cases"][$x][$y];
       $linv = $g["cases"][$y][$x];
-      if (($col == (-1)) && ($colv != 0))
+      if (($col == -1) && ($colv != 0))
       {
         $col = $colv;
       }
@@ -59,7 +59,7 @@ function eval_(&$g){
       {
         $col = -2;
       }
-      if (($lin == (-1)) && ($linv != 0))
+      if (($lin == -1) && ($linv != 0))
       {
         $lin = $linv;
       }
@@ -173,12 +173,12 @@ function play(&$g){
       {
         apply_move_xy($x, $y, $g);
         $currentNote = minmax($g);
-        printf("%d", $x);
-        printf("%s", ", ");
-        printf("%d", $y);
-        printf("%s", ", ");
-        printf("%d", $currentNote);
-        printf("%s", "\n");
+        echo $x;
+        echo ", ";
+        echo $y;
+        echo ", ";
+        echo $currentNote;
+        echo "\n";
         cancel_move_xy($x, $y, $g);
         if ($currentNote < $minNote)
         {
@@ -190,21 +190,21 @@ function play(&$g){
     }
   }
   $bq = $minMove["x"];
-  printf("%d", $bq);
+  echo $bq;
   $br = $minMove["y"];
-  printf("%d", $br);
-  printf("%s", "\n");
+  echo $br;
+  echo "\n";
   return $minMove;
 }
 
 function init(){
   $bt = 3;
   $cases = array();
-  for ($i = 0 ; $i <= $bt - 1; $i++)
+  for ($i = 0 ; $i < $bt; $i++)
   {
     $bs = 3;
     $tab = array();
-    for ($j = 0 ; $j <= $bs - 1; $j++)
+    for ($j = 0 ; $j < $bs; $j++)
     {
       $tab[$j] = 0;
     }
@@ -257,7 +257,7 @@ for ($i = 0 ; $i <= 1; $i++)
   }
   print_state($state);
   $bu = $state["note"];
-  printf("%d", $bu);
-  printf("%s", "\n");
+  echo $bu;
+  echo "\n";
 }
 ?>

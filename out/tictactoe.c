@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 /*
 Tictactoe : un tictactoe avec une IA
 */
@@ -77,7 +75,7 @@ void eval_(struct gamestate * g){
           }
           int colv = g->cases[x][y];
           int linv = g->cases[y][x];
-          if ((col == (-1)) && (colv != 0))
+          if ((col == -1) && (colv != 0))
           {
             col = colv;
           }
@@ -85,7 +83,7 @@ void eval_(struct gamestate * g){
           {
             col = -2;
           }
-          if ((lin == (-1)) && (linv != 0))
+          if ((lin == -1) && (linv != 0))
           {
             lin = linv;
           }
@@ -240,20 +238,18 @@ struct move * play(struct gamestate * g){
 
 struct gamestate * init(){
   int d = 3;
-  int* *cases = malloc( (d) * sizeof(int*) + sizeof(int));
-  ((int*)cases)[0]=d;
-  cases=(int**)( ((int*)cases)+1);
+  int* *cases = malloc( d * sizeof(int*));
+  
   {
     int i;
-    for (i = 0 ; i <= d - 1; i++)
+    for (i = 0 ; i < d; i++)
     {
       int c = 3;
-      int *tab = malloc( (c) * sizeof(int) + sizeof(int));
-      ((int*)tab)[0]=c;
-      tab=(int*)( ((int*)tab)+1);
+      int *tab = malloc( c * sizeof(int));
+      
       {
         int j;
-        for (j = 0 ; j <= c - 1; j++)
+        for (j = 0 ; j < c; j++)
         {
           tab[j] = 0;
         }

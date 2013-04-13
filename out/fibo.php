@@ -42,5 +42,5 @@ list($b) = scan("%d");
 scantrim();
 list($i) = scan("%d");
 $l = fibo_($a, $b, $i);
-printf("%d", $l);
+echo $l;
 ?>

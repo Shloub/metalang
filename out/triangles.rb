@@ -39,9 +39,9 @@ end
 def find( len, tab )
     tab2 = [];
     for i in (0 ..  len - 1) do
-      ck = i + 1
+      bm = i + 1
       tab3 = [];
-      for j in (0 ..  ck - 1) do
+      for j in (0 ..  bm - 1) do
         tab3[j] = 0;
       end
       tab2[i] = tab3;
@@ -54,9 +54,9 @@ len=scanf("%d")[0];
 scanf("%*\n");
 tab = [];
 for i in (0 ..  len - 1) do
-  cl = i + 1
+  bn = i + 1
   tab2 = [];
-  for j in (0 ..  cl - 1) do
+  for j in (0 ..  bn - 1) do
     tmp = 0
     tmp=scanf("%d")[0];
     scanf("%*\n");
@@ -64,12 +64,13 @@ for i in (0 ..  len - 1) do
   end
   tab[i] = tab2;
 end
-cm = find(len, tab)
-printf "%d", cm
-for cn in (0 ..  (tab.length) - 1) do
-  co = tab[cn]
-  for cp in (0 ..  (co.length) - 1) do
-    printf "%d", co[cp]
+bo = find(len, tab)
+printf "%d", bo
+for i in (0 ..  len - 1) do
+  for j in (0 ..  i) do
+    bp = tab[i][j]
+    printf "%d", bp
   end
+  printf "%s", "\n"
 end
 

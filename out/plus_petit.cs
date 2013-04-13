@@ -113,7 +113,7 @@ public static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
       tmp = readInt();

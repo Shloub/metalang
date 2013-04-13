@@ -77,11 +77,11 @@ def eval_( g ):
           freecase = freecase + 1;
         colv = g["cases"][x][y];
         linv = g["cases"][y][x];
-        if (col == (-(1))) and (colv != 0):
+        if (col == -(1)) and (colv != 0):
           col = colv;
         elif colv != col:
           col = -(2);
-        if (lin == (-(1))) and (linv != 0):
+        if (lin == -(1)) and (linv != 0):
           lin = linv;
         elif linv != lin:
           lin = -(2);
@@ -140,7 +140,6 @@ def minmax( g ):
 
 def play( g ):
     minMove = {"x":0, "y":0};
-    
     minNote = 10000;
     for x in range(0, 1 + 2):
       for y in range(0, 1 + 2):
@@ -167,15 +166,14 @@ def play( g ):
 
 def init(  ):
     cd = 3;
-    cases = [None] * (cd);
-    for i in range(0, 1 + cd - 1):
+    cases = [None] * cd;
+    for i in range(0, cd):
       cc = 3;
-      tab = [None] * (cc);
-      for j in range(0, 1 + cc - 1):
+      tab = [None] * cc;
+      for j in range(0, cc):
         tab[j] = 0;
       cases[i] = tab;
     out_ = {"cases":cases, "firstToPlay":True, "note":0, "ended":False};
-    
     return out_;
 
 for i in range(0, 1 + 1):

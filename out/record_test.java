@@ -15,7 +15,7 @@ public class record_test
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     scanner.useDelimiter("\\s");
     param.foo = scanner.nextInt();
-    int e = param.bar + (param.foo * param.bar);
+    int e = param.bar + param.foo * param.bar;
     System.out.printf("%d", e);
   }
   

@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int sumdiv(int n){
   /* On désire renvoyer la somme des diviseurs */
   int out_ = 0;

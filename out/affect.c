@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 struct toto;
 typedef struct toto {
   int foo;
@@ -30,22 +28,20 @@ int result(struct toto * t_, struct toto * t2_){
   t2 = t3;
   t->blah = t->blah + 1;
   int len = 1;
-  int *cache0 = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)cache0)[0]=len;
-  cache0=(int*)( ((int*)cache0)+1);
+  int *cache0 = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       cache0[i] = -i;
     }
   }
-  int *cache1 = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)cache1)[0]=len;
-  cache1=(int*)( ((int*)cache1)+1);
+  int *cache1 = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       cache1[i] = i;
     }
@@ -53,7 +49,7 @@ int result(struct toto * t_, struct toto * t2_){
   int* cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;
-  return (t->foo + (t->blah * t->bar)) + (t->bar * t->foo);
+  return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
 
 int main(void){

@@ -7,7 +7,7 @@ int pathfind_aux(std::vector<int >& cache, std::vector<int >& tab, int len, int 
   {
     return 0;
   }
-  else if (cache.at(pos) != (-1))
+  else if (cache.at(pos) != -1)
   {
     return cache.at(pos);
   }
@@ -32,7 +32,7 @@ int pathfind_aux(std::vector<int >& cache, std::vector<int >& tab, int len, int 
 
 int pathfind(std::vector<int >& tab, int len){
   std::vector<int > cache( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     cache.at(i) = -1;
   }
@@ -45,7 +45,7 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<int > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;
     scanf("%d", &tmp);

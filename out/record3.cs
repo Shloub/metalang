@@ -74,10 +74,10 @@ public static int readInt(){
   public static int result(toto[] t, int len)
   {
     int out_ = 0;
-    for (int j = 0 ; j <= len - 1; j ++)
+    for (int j = 0 ; j < len; j++)
     {
       t[j].blah = t[j].blah + 1;
-      out_ = ((out_ + t[j].foo) + (t[j].blah * t[j].bar)) + (t[j].bar * t[j].foo);
+      out_ = out_ + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
     }
     return out_;
   }
@@ -87,7 +87,7 @@ public static int readInt(){
   {
     int m = 4;
     toto[] t = new toto[m];
-    for (int i = 0 ; i <= m - 1; i ++)
+    for (int i = 0 ; i < m; i++)
     {
       t[i] = mktoto(i);
     }

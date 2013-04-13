@@ -51,14 +51,14 @@ def max2( a, b ):
 def nbPassePartout( n, passepartout, m, serrures ):
     max_ancient = 0;
     max_recent = 0;
-    for i in range(0, 1 + m - 1):
-      if (serrures[i][0] == (-(1))) and (serrures[i][1] > max_ancient):
+    for i in range(0, m):
+      if (serrures[i][0] == -(1)) and (serrures[i][1] > max_ancient):
         max_ancient = serrures[i][1];
       if (serrures[i][0] == 1) and (serrures[i][1] > max_recent):
         max_recent = serrures[i][1];
     max_ancient_pp = 0;
     max_recent_pp = 0;
-    for i in range(0, 1 + n - 1):
+    for i in range(0, n):
       pp = passepartout[i];
       if (pp[0] >= max_ancient) and (pp[1] >= max_recent):
         return 1;
@@ -72,11 +72,11 @@ def nbPassePartout( n, passepartout, m, serrures ):
 n = 0;
 n=readint();
 stdinsep();
-passepartout = [None] * (n);
-for i in range(0, 1 + n - 1):
+passepartout = [None] * n;
+for i in range(0, n):
   bj = 2;
-  out0 = [None] * (bj);
-  for j in range(0, 1 + bj - 1):
+  out0 = [None] * bj;
+  for j in range(0, bj):
     out_ = 0;
     out_=readint();
     stdinsep();
@@ -85,11 +85,11 @@ for i in range(0, 1 + n - 1):
 m = 0;
 m=readint();
 stdinsep();
-serrures = [None] * (m);
-for i in range(0, 1 + m - 1):
+serrures = [None] * m;
+for i in range(0, m):
   bk = 2;
-  out0 = [None] * (bk);
-  for j in range(0, 1 + bk - 1):
+  out0 = [None] * bk;
+  for j in range(0, bk):
     out_ = 0;
     out_=readint();
     stdinsep();

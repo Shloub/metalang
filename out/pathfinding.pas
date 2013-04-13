@@ -113,20 +113,20 @@ begin
     end
   else if (((posX < 0) or (posY < 0)) or (posX >= x)) or (posY >= y) then
     begin
-      exit((x * y) * 10);
+      exit(x * y * 10);
     end
   else if tab[posY][posX] = #35 then
     begin
-      exit((x * y) * 10);
+      exit(x * y * 10);
     end
-  else if cache[posY][posX] <> (-1)
+  else if cache[posY][posX] <> -1
   then
     begin
       exit(cache[posY][posX]);
     end
   else
     begin
-      cache[posY][posX] := (x * y) * 10;
+      cache[posY][posX] := x * y * 10;
       val1 := pathfind_aux(cache, tab, x, y, posX + 1, posY);
       val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY);
       val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1);

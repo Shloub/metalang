@@ -12,7 +12,7 @@ def nbPassePartout( n, passepartout, m, serrures )
     max_ancient = 0
     max_recent = 0
     for i in (0 ..  m - 1) do
-      if (serrures[i][0] == (-(1))) && (serrures[i][1] > max_ancient) then
+      if (serrures[i][0] == -1) && (serrures[i][1] > max_ancient) then
         max_ancient = serrures[i][1];
       end
       if (serrures[i][0] == 1) && (serrures[i][1] > max_recent) then

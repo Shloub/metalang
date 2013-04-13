@@ -39,11 +39,11 @@ int find0(int len, std::vector<std::vector<int > >& tab, std::vector<std::vector
 
 int find(int len, std::vector<std::vector<int > >& tab){
   std::vector<std::vector<int > > tab2( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
-    int s = i + 1;
-    std::vector<int > tab3( s );
-    for (int j = 0 ; j <= s - 1; j ++)
+    int m = i + 1;
+    std::vector<int > tab3( m );
+    for (int j = 0 ; j < m; j++)
     {
       tab3.at(j) = 0;
     }
@@ -58,11 +58,11 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<std::vector<int > > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
-    int t = i + 1;
-    std::vector<int > tab2( t );
-    for (int j = 0 ; j <= t - 1; j ++)
+    int n = i + 1;
+    std::vector<int > tab2( n );
+    for (int j = 0 ; j < n; j++)
     {
       int tmp = 0;
       scanf("%d", &tmp);
@@ -71,15 +71,16 @@ int main(void){
     }
     tab.at(i) = tab2;
   }
-  int u = find(len, tab);
-  printf("%d", u);
-  for (int v = 0 ; v <= (tab.size()) - 1; v ++)
+  int o = find(len, tab);
+  printf("%d", o);
+  for (int i = 0 ; i < len; i++)
   {
-    std::vector<int > w = tab.at(v);
-    for (int z = 0 ; z <= (w.size()) - 1; z ++)
+    for (int j = 0 ; j <= i; j ++)
     {
-      printf("%d", w.at(z));
+      int p = tab.at(i).at(j);
+      printf("%d", p);
     }
+    std::cout << "\n";
   }
   return 0;
 }

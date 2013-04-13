@@ -1,14 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int devine_(int nombre, int* tab, int len){
   int min_ = tab[0];
   int max_ = tab[1];
   {
     int i;
-    for (i = 2 ; i <= len - 1; i++)
+    for (i = 2 ; i < len; i++)
     {
       if ((tab[i] > max_) || (tab[i] < min_))
       {
@@ -38,12 +36,11 @@ int main(void){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
-  int *tab = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)tab)[0]=len;
-  tab=(int*)( ((int*)tab)+1);
+  int *tab = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanf("%d", &tmp);

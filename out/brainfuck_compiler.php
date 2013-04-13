@@ -24,7 +24,7 @@ $input = ' ';
 $current_pos = 500;
 $p = 1000;
 $mem = array();
-for ($i = 0 ; $i <= $p - 1; $i++)
+for ($i = 0 ; $i < $p; $i++)
 {
   $mem[$i] = 0;
 }
@@ -92,7 +92,7 @@ while ($mem[$current_pos] != 0)
   $current_pos = $current_pos - 1;
   $mem[$current_pos] = $mem[$current_pos] + 1;
   $q = $mem[$current_pos];
-  printf("%c", $q);
+  echo chr($q);
   $current_pos = $current_pos + 1;
 }
 ?>

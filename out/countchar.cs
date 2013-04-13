@@ -64,7 +64,7 @@ public static int readInt(){
   public static int nth(char[] tab, char tofind, int len)
   {
     int out_ = 0;
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       if (tab[i] == tofind)
       {
@@ -84,7 +84,7 @@ public static int readInt(){
     tofind = readChar();
     stdin_sep();
     char[] tab = new char[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       char tmp = (char)0;
       tmp = readChar();

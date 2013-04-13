@@ -7,7 +7,7 @@ public class devine
   {
     int min_ = tab[0];
     int max_ = tab[1];
-    for (int i = 2 ; i <= len - 1; i ++)
+    for (int i = 2 ; i < len; i++)
     {
       if ((tab[i] > max_) || (tab[i] < min_))
       {
@@ -41,7 +41,7 @@ public class devine
     len = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanner.useDelimiter("\\s");

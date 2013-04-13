@@ -1,8 +1,8 @@
 <?php
 function sort_(&$tab, $len){
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
-    for ($j = $i + 1 ; $j <= $len - 1; $j++)
+    for ($j = $i + 1 ; $j < $len; $j++)
     {
       if ($tab[$i] > $tab[$j])
       {
@@ -38,7 +38,7 @@ $len = 2;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
   $tmp = 0;
   list($tmp) = scan("%d");
@@ -46,8 +46,9 @@ for ($i = 0 ; $i <= $len - 1; $i++)
   $tab[$i] = $tmp;
 }
 sort_($tab, $len);
-for ($r = 0 ; $r <= (count($tab)) - 1; $r++)
+for ($i = 0 ; $i < $len; $i++)
 {
-  printf("%d", $tab[$r]);
+  $k = $tab[$i];
+  echo $k;
 }
 ?>

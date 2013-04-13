@@ -22,7 +22,7 @@ def result( t_, t2_ )
     len = 1
     cache0 = [];
     for i in (0 ..  len - 1) do
-      cache0[i] = -(i);
+      cache0[i] = -i;
     end
     cache1 = [];
     for i in (0 ..  len - 1) do
@@ -31,7 +31,7 @@ def result( t_, t2_ )
     cache2 = cache0
     cache0 = cache1;
     cache2 = cache0;
-    return ((t["foo"] + (t["blah"] * t["bar"])) + (t["bar"] * t["foo"]));
+    return (t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"]);
 end
 
 t = mktoto(4)

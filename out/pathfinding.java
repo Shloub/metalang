@@ -30,19 +30,19 @@ public class pathfinding
     }
     else if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
     {
-      return (x * y) * 10;
+      return x * y * 10;
     }
     else if (tab[posY][posX] == '#')
     {
-      return (x * y) * 10;
+      return x * y * 10;
     }
-    else if (cache[posY][posX] != (-1))
+    else if (cache[posY][posX] != -1)
     {
       return cache[posY][posX];
     }
     else
     {
-      cache[posY][posX] = (x * y) * 10;
+      cache[posY][posX] = x * y * 10;
       int val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY);
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
@@ -56,10 +56,10 @@ public class pathfinding
   public static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
-    for (int i = 0 ; i <= y - 1; i ++)
+    for (int i = 0 ; i < y; i++)
     {
       int[] tmp = new int[x];
-      for (int j = 0 ; j <= x - 1; j ++)
+      for (int j = 0 ; j < x; j++)
       {
         tmp[j] = -1;
       }
@@ -80,10 +80,10 @@ public class pathfinding
     y = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     char[][] tab = new char[y][];
-    for (int i = 0 ; i <= y - 1; i ++)
+    for (int i = 0 ; i < y; i++)
     {
       char[] tab2 = new char[x];
-      for (int j = 0 ; j <= x - 1; j ++)
+      for (int j = 0 ; j < x; j++)
       {
         char tmp = '\000';
         tmp = scanner.findWithinHorizon(".", 1).charAt(0);

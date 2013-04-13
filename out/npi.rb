@@ -26,7 +26,7 @@ def npi_( str, len )
       elsif is_number(str[ptrStr]) then
         num = 0
         while str[ptrStr] != ' ' do
-          num = ((num * 10) + str[ptrStr].ord) - '0'.ord;
+          num = num * 10 + str[ptrStr].ord - '0'.ord;
           ptrStr = ptrStr + 1;
         end
         stack[ptrStack] = num;

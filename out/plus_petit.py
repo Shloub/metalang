@@ -71,8 +71,8 @@ def plus_petit_( tab, len ):
 len = 0;
 len=readint();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
+tab = [None] * len;
+for i in range(0, len):
   tmp = 0;
   tmp=readint();
   stdinsep();

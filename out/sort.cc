@@ -3,9 +3,9 @@
 #include <iostream>
 #include <vector>
 void sort_(std::vector<int >& tab, int len){
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
-    for (int j = i + 1 ; j <= len - 1; j ++)
+    for (int j = i + 1 ; j < len; j++)
     {
       if (tab.at(i) > tab.at(j))
       {
@@ -23,7 +23,7 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<int > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;
     scanf("%d", &tmp);
@@ -31,9 +31,10 @@ int main(void){
     tab.at(i) = tmp;
   }
   sort_(tab, len);
-  for (int f = 0 ; f <= (tab.size()) - 1; f ++)
+  for (int i = 0 ; i < len; i++)
   {
-    printf("%d", tab.at(f));
+    int d = tab.at(i);
+    printf("%d", d);
   }
   return 0;
 }

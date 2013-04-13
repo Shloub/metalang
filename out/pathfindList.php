@@ -4,7 +4,7 @@ function pathfind_aux(&$cache, &$tab, $len, $pos){
   {
     return 0;
   }
-  else if ($cache[$pos] != (-1))
+  else if ($cache[$pos] != -1)
   {
     return $cache[$pos];
   }
@@ -29,7 +29,7 @@ function pathfind_aux(&$cache, &$tab, $len, $pos){
 
 function pathfind(&$tab, $len){
   $cache = array();
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
     $cache[$i] = -1;
   }
@@ -60,7 +60,7 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
   $tmp = 0;
   list($tmp) = scan("%d");
@@ -68,5 +68,5 @@ for ($i = 0 ; $i <= $len - 1; $i++)
   $tab[$i] = $tmp;
 }
 $result = pathfind($tab, $len);
-printf("%d", $result);
+echo $result;
 ?>

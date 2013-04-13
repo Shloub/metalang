@@ -45,7 +45,7 @@ def readint():
 
 def nth( tab, tofind, len ):
     out_ = 0;
-    for i in range(0, 1 + len - 1):
+    for i in range(0, len):
       if tab[i] == tofind:
         out_ = out_ + 1;
     return out_;
@@ -56,8 +56,8 @@ stdinsep();
 tofind = '\000';
 tofind=readchar();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
+tab = [None] * len;
+for i in range(0, len):
   tmp = '\000';
   tmp=readchar();
   tab[i] = tmp;

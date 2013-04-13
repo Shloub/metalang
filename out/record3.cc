@@ -19,10 +19,10 @@ struct toto * mktoto(int v1){
 
 int result(std::vector<struct toto * >& t, int len){
   int out_ = 0;
-  for (int j = 0 ; j <= len - 1; j ++)
+  for (int j = 0 ; j < len; j++)
   {
     t.at(j)->blah = t.at(j)->blah + 1;
-    out_ = ((out_ + t.at(j)->foo) + (t.at(j)->blah * t.at(j)->bar)) + (t.at(j)->bar * t.at(j)->foo);
+    out_ = out_ + t.at(j)->foo + t.at(j)->blah * t.at(j)->bar + t.at(j)->bar * t.at(j)->foo;
   }
   return out_;
 }
@@ -31,7 +31,7 @@ int result(std::vector<struct toto * >& t, int len){
 int main(void){
   int h = 4;
   std::vector<struct toto * > t( h );
-  for (int i = 0 ; i <= h - 1; i ++)
+  for (int i = 0 ; i < h; i++)
   {
     t.at(i) = mktoto(i);
   }

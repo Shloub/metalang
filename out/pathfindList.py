@@ -46,7 +46,7 @@ def readint():
 def pathfind_aux( cache, tab, len, pos ):
     if pos >= (len - 1):
       return 0;
-    elif cache[pos] != (-(1)):
+    elif cache[pos] != -(1):
       return cache[pos];
     else:
       cache[pos] = len * 2;
@@ -61,16 +61,16 @@ def pathfind_aux( cache, tab, len, pos ):
       return out_;
 
 def pathfind( tab, len ):
-    cache = [None] * (len);
-    for i in range(0, 1 + len - 1):
+    cache = [None] * len;
+    for i in range(0, len):
       cache[i] = -(1);
     return pathfind_aux(cache, tab, len, 0);
 
 len = 0;
 len=readint();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
+tab = [None] * len;
+for i in range(0, len):
   tmp = 0;
   tmp=readint();
   stdinsep();

@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 struct toto;
 typedef struct toto {
   int foo;
@@ -16,7 +14,7 @@ int main(void){
   scanf("%d", &param->bar);
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &param->foo);
-  int a = param->bar + (param->foo * param->bar);
+  int a = param->bar + param->foo * param->bar;
   printf("%d", a);
   return 0;
 }

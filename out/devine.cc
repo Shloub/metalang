@@ -5,7 +5,7 @@
 bool devine_(int nombre, std::vector<int >& tab, int len){
   int min_ = tab.at(0);
   int max_ = tab.at(1);
-  for (int i = 2 ; i <= len - 1; i ++)
+  for (int i = 2 ; i < len; i++)
   {
     if ((tab.at(i) > max_) || (tab.at(i) < min_))
     {
@@ -36,7 +36,7 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<int > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;
     scanf("%d", &tmp);

@@ -5,7 +5,7 @@
 int summax(std::vector<int >& lst, int len){
   int current = 0;
   int max_ = 0;
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     current = current + lst.at(i);
     if (current < 0)
@@ -26,7 +26,7 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<int > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;
     scanf("%d", &tmp);

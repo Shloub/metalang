@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int fibo(int a, int b, int i){
   int out_ = 0;
   int a2 = a;

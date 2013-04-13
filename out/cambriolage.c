@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int max2(int a, int b){
   if (a > b)
   {
@@ -16,9 +14,9 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
   int max_recent = 0;
   {
     int i;
-    for (i = 0 ; i <= m - 1; i++)
+    for (i = 0 ; i < m; i++)
     {
-      if ((serrures[i][0] == (-1)) && (serrures[i][1] > max_ancient))
+      if ((serrures[i][0] == -1) && (serrures[i][1] > max_ancient))
       {
         max_ancient = serrures[i][1];
       }
@@ -32,7 +30,7 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
   int max_recent_pp = 0;
   {
     int i;
-    for (i = 0 ; i <= n - 1; i++)
+    for (i = 0 ; i < n; i++)
     {
       int* pp = passepartout[i];
       if ((pp[0] >= max_ancient) && (pp[1] >= max_recent))
@@ -57,20 +55,18 @@ int main(void){
   int n = 0;
   scanf("%d", &n);
   scanf("%*[ \t\r\n]c", 0);
-  int* *passepartout = malloc( (n) * sizeof(int*) + sizeof(int));
-  ((int*)passepartout)[0]=n;
-  passepartout=(int**)( ((int*)passepartout)+1);
+  int* *passepartout = malloc( n * sizeof(int*));
+  
   {
     int i;
-    for (i = 0 ; i <= n - 1; i++)
+    for (i = 0 ; i < n; i++)
     {
       int c = 2;
-      int *out0 = malloc( (c) * sizeof(int) + sizeof(int));
-      ((int*)out0)[0]=c;
-      out0=(int*)( ((int*)out0)+1);
+      int *out0 = malloc( c * sizeof(int));
+      
       {
         int j;
-        for (j = 0 ; j <= c - 1; j++)
+        for (j = 0 ; j < c; j++)
         {
           int out_ = 0;
           scanf("%d", &out_);
@@ -84,20 +80,18 @@ int main(void){
   int m = 0;
   scanf("%d", &m);
   scanf("%*[ \t\r\n]c", 0);
-  int* *serrures = malloc( (m) * sizeof(int*) + sizeof(int));
-  ((int*)serrures)[0]=m;
-  serrures=(int**)( ((int*)serrures)+1);
+  int* *serrures = malloc( m * sizeof(int*));
+  
   {
     int i;
-    for (i = 0 ; i <= m - 1; i++)
+    for (i = 0 ; i < m; i++)
     {
       int d = 2;
-      int *out0 = malloc( (d) * sizeof(int) + sizeof(int));
-      ((int*)out0)[0]=d;
-      out0=(int*)( ((int*)out0)+1);
+      int *out0 = malloc( d * sizeof(int));
+      
       {
         int j;
-        for (j = 0 ; j <= d - 1; j++)
+        for (j = 0 ; j < d; j++)
         {
           int out_ = 0;
           scanf("%d", &out_);

@@ -25,19 +25,19 @@ int pathfind_aux(std::vector<std::vector<int > >& cache, std::vector<std::vector
   }
   else if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
   {
-    return (x * y) * 10;
+    return x * y * 10;
   }
   else if (tab.at(posY).at(posX) == '#')
   {
-    return (x * y) * 10;
+    return x * y * 10;
   }
-  else if (cache.at(posY).at(posX) != (-1))
+  else if (cache.at(posY).at(posX) != -1)
   {
     return cache.at(posY).at(posX);
   }
   else
   {
-    cache.at(posY).at(posX) = (x * y) * 10;
+    cache.at(posY).at(posX) = x * y * 10;
     int val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY);
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
@@ -50,10 +50,10 @@ int pathfind_aux(std::vector<std::vector<int > >& cache, std::vector<std::vector
 
 int pathfind(std::vector<std::vector<char > >& tab, int x, int y){
   std::vector<std::vector<int > > cache( y );
-  for (int i = 0 ; i <= y - 1; i ++)
+  for (int i = 0 ; i < y; i++)
   {
     std::vector<int > tmp( x );
-    for (int j = 0 ; j <= x - 1; j ++)
+    for (int j = 0 ; j < x; j++)
     {
       tmp.at(j) = -1;
     }
@@ -71,10 +71,10 @@ int main(void){
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<std::vector<char > > tab( y );
-  for (int i = 0 ; i <= y - 1; i ++)
+  for (int i = 0 ; i < y; i++)
   {
     std::vector<char > tab2( x );
-    for (int j = 0 ; j <= x - 1; j ++)
+    for (int j = 0 ; j < x; j++)
     {
       char tmp = '\000';
       scanf("%c", &tmp);

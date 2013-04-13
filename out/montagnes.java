@@ -34,7 +34,7 @@ public class montagnes
     len = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int x = 0;
       scanner.useDelimiter("\\s");

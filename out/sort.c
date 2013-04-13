@@ -1,16 +1,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 void sort_(int* tab, int len){
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       {
         int j;
-        for (j = i + 1 ; j <= len - 1; j++)
+        for (j = i + 1 ; j < len; j++)
         {
           if (tab[i] > tab[j])
           {
@@ -28,12 +26,11 @@ int main(void){
   int len = 2;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
-  int *tab = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)tab)[0]=len;
-  tab=(int*)( ((int*)tab)+1);
+  int *tab = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanf("%d", &tmp);
@@ -43,10 +40,11 @@ int main(void){
   }
   sort_(tab, len);
   {
-    int a;
-    for (a = 0 ; a <= (count(tab)) - 1; a++)
+    int i;
+    for (i = 0 ; i < len; i++)
     {
-      printf("%d", tab[a]);
+      int a = tab[i];
+      printf("%d", a);
     }
   }
   return 0;

@@ -73,7 +73,7 @@ Notation polonaise inversée
   public static int npi_(char[] str, int len)
   {
     int[] stack = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       stack[i] = 0;
     }
@@ -90,7 +90,7 @@ Notation polonaise inversée
         int num = 0;
         while (str[ptrStr] != (char)32)
         {
-          num = ((num * 10) + str[ptrStr]) - '0';
+          num = num * 10 + str[ptrStr] - '0';
           ptrStr = ptrStr + 1;
         }
         stack[ptrStack] = num;
@@ -113,7 +113,7 @@ Notation polonaise inversée
     len = readInt();
     stdin_sep();
     char[] tab = new char[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       char tmp = (char)0;
       tmp = readChar();

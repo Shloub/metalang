@@ -1,19 +1,16 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 
 int main(void){
   char input = ' ';
   int current_pos = 500;
   int a = 1000;
-  int *mem = malloc( (a) * sizeof(int) + sizeof(int));
-  ((int*)mem)[0]=a;
-  mem=(int*)( ((int*)mem)+1);
+  int *mem = malloc( a * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= a - 1; i++)
+    for (i = 0 ; i < a; i++)
     {
       mem[i] = 0;
     }

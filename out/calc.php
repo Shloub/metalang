@@ -5,7 +5,7 @@ function fibo($a, $b, $i){
   $b2 = $b;
   for ($j = 0 ; $j <= $i + 1; $j++)
   {
-    printf("%d", $j);
+    echo $j;
     $out_ = $out_ + $a2;
     $tmp = $b2;
     $b2 = $b2 + $a2;
@@ -35,5 +35,5 @@ function nextChar(){
 }
 
 $l = fibo(1, 2, 4);
-printf("%d", $l);
+echo $l;
 ?>

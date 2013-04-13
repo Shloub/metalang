@@ -22,18 +22,18 @@ function nextChar(){
 
 $j = 0;
 $j = 0;
-printf("%d", $j);
-printf("%s", "\n");
+echo $j;
+echo "\n";
 $j = 1;
-printf("%d", $j);
-printf("%s", "\n");
+echo $j;
+echo "\n";
 $j = 2;
-printf("%d", $j);
-printf("%s", "\n");
+echo $j;
+echo "\n";
 $j = 3;
-printf("%d", $j);
-printf("%s", "\n");
+echo $j;
+echo "\n";
 $j = 4;
-printf("%d", $j);
-printf("%s", "\n");
+echo $j;
+echo "\n";
 ?>

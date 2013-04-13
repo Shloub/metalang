@@ -40,7 +40,7 @@ function pathfind_aux(cache, tab, len, pos){
   {
     return 0;
   }
-  else if (cache[pos] != (-1))
+  else if (cache[pos] != -1)
   {
     return cache[pos];
   }

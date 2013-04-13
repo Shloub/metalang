@@ -1,14 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int pathfind_aux(int* cache, int* tab, int len, int pos){
   if (pos >= (len - 1))
   {
     return 0;
   }
-  else if (cache[pos] != (-1))
+  else if (cache[pos] != -1)
   {
     return cache[pos];
   }
@@ -32,12 +30,11 @@ int pathfind_aux(int* cache, int* tab, int len, int pos){
 }
 
 int pathfind(int* tab, int len){
-  int *cache = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)cache)[0]=len;
-  cache=(int*)( ((int*)cache)+1);
+  int *cache = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       cache[i] = -1;
     }
@@ -49,12 +46,11 @@ int main(void){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
-  int *tab = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)tab)[0]=len;
-  tab=(int*)( ((int*)tab)+1);
+  int *tab = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanf("%d", &tmp);

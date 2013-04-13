@@ -20,13 +20,13 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
     if (posX == (x - 1)) && (posY == (y - 1)) then
       return (0);
     elsif (((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y) then
-      return ((x * y) * 10);
+      return (x * y * 10);
     elsif tab[posY][posX] == '#' then
-      return ((x * y) * 10);
-    elsif cache[posY][posX] != (-(1)) then
+      return (x * y * 10);
+    elsif cache[posY][posX] != -1 then
       return (cache[posY][posX]);
     else
-      cache[posY][posX] = (x * y) * 10;
+      cache[posY][posX] = x * y * 10;
       val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY)
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
@@ -42,7 +42,7 @@ def pathfind( tab, x, y )
     for i in (0 ..  y - 1) do
       tmp = [];
       for j in (0 ..  x - 1) do
-        tmp[j] = -(1);
+        tmp[j] = -1;
       end
       cache[i] = tmp;
     end

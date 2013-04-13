@@ -20,7 +20,7 @@ def int npi(array<char> str, int len)
       def int num = 0
       while str[ptrStr] != ' '
       do
-        num = ((num * 10) + str[ptrStr]) - '0';
+        num = num * 10 + str[ptrStr] - '0';
         ptrStr = ptrStr + 1;
       end
       stack[ptrStack] = num;

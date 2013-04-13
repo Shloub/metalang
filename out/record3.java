@@ -16,10 +16,10 @@ public class record3
   public static int result(toto[] t, int len)
   {
     int out_ = 0;
-    for (int j = 0 ; j <= len - 1; j ++)
+    for (int j = 0 ; j < len; j++)
     {
       t[j].blah = t[j].blah + 1;
-      out_ = ((out_ + t[j].foo) + (t[j].blah * t[j].bar)) + (t[j].bar * t[j].foo);
+      out_ = out_ + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
     }
     return out_;
   }
@@ -29,7 +29,7 @@ public class record3
   {
     int p = 4;
     toto[] t = new toto[p];
-    for (int i = 0 ; i <= p - 1; i ++)
+    for (int i = 0 ; i < p; i++)
     {
       t[i] = mktoto(i);
     }

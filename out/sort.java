@@ -5,9 +5,9 @@ public class sort
   static Scanner scanner = new Scanner(System.in);
   public static void sort_(int[] tab, int len)
   {
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
-      for (int j = i + 1 ; j <= len - 1; j ++)
+      for (int j = i + 1 ; j < len; j++)
       {
         if (tab[i] > tab[j])
         {
@@ -27,7 +27,7 @@ public class sort
     len = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanner.useDelimiter("\\s");
@@ -36,9 +36,10 @@ public class sort
       tab[i] = tmp;
     }
     sort_(tab, len);
-    for (int l = 0 ; l <= (tab.length) - 1; l ++)
+    for (int i = 0 ; i < len; i++)
     {
-      System.out.printf("%d", tab[l]);
+      int f = tab[i];
+      System.out.printf("%d", f);
     }
   }
   

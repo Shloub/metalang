@@ -132,7 +132,7 @@ begin
   cache2 := cache0;
   cache0 := cache1;
   cache2 := cache0;
-  exit((t^.foo + (t^.blah * t^.bar)) + (t^.bar * t^.foo));
+  exit(t^.foo + t^.blah * t^.bar + t^.bar * t^.foo);
 end;
 
 

@@ -46,7 +46,7 @@ def readint():
 def devine_( nombre, tab, len ):
     min_ = tab[0];
     max_ = tab[1];
-    for i in range(2, 1 + len - 1):
+    for i in range(2, len):
       if (tab[i] > max_) or (tab[i] < min_):
         return False;
       if tab[i] < nombre:
@@ -63,8 +63,8 @@ stdinsep();
 len = 0;
 len=readint();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
+tab = [None] * len;
+for i in range(0, len):
   tmp = 0;
   tmp=readint();
   stdinsep();

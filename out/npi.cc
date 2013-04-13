@@ -12,7 +12,7 @@ Notation polonaise inversée
 */
 int npi_(std::vector<char >& str, int len){
   std::vector<int > stack( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     stack.at(i) = 0;
   }
@@ -29,7 +29,7 @@ int npi_(std::vector<char >& str, int len){
       int num = 0;
       while (str.at(ptrStr) != ' ')
       {
-        num = ((num * 10) + str.at(ptrStr)) - '0';
+        num = num * 10 + str.at(ptrStr) - '0';
         ptrStr = ptrStr + 1;
       }
       stack.at(ptrStack) = num;
@@ -51,7 +51,7 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<char > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     char tmp = '\000';
     scanf("%c", &tmp);

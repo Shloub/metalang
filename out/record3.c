@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 struct toto;
 typedef struct toto {
   int foo;
@@ -22,10 +20,10 @@ int result(struct toto ** t, int len){
   int out_ = 0;
   {
     int j;
-    for (j = 0 ; j <= len - 1; j++)
+    for (j = 0 ; j < len; j++)
     {
       t[j]->blah = t[j]->blah + 1;
-      out_ = ((out_ + t[j]->foo) + (t[j]->blah * t[j]->bar)) + (t[j]->bar * t[j]->foo);
+      out_ = out_ + t[j]->foo + t[j]->blah * t[j]->bar + t[j]->bar * t[j]->foo;
     }
   }
   return out_;
@@ -33,12 +31,11 @@ int result(struct toto ** t, int len){
 
 int main(void){
   int a = 4;
-  struct toto * *t = malloc( (a) * sizeof(struct toto *) + sizeof(int));
-  ((int*)t)[0]=a;
-  t=(struct toto **)( ((int*)t)+1);
+  struct toto * *t = malloc( a * sizeof(struct toto *));
+  
   {
     int i;
-    for (i = 0 ; i <= a - 1; i++)
+    for (i = 0 ; i < a; i++)
     {
       t[i] = mktoto(i);
     }

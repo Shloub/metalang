@@ -20,5 +20,5 @@ function nextChar(){
   return $out;
 }
 
-printf("%d", 10);
+echo 10;
 ?>

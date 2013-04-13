@@ -1,7 +1,7 @@
 <?php
 function nth(&$tab, $tofind, $len){
   $out_ = 0;
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
     if ($tab[$i] == $tofind)
     {
@@ -38,12 +38,12 @@ $tofind = '\000';
 $tofind = nextChar();
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
   $tmp = '\000';
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }
 $result = nth($tab, $tofind, $len);
-printf("%d", $result);
+echo $result;
 ?>

@@ -13,7 +13,7 @@ def result( t, len )
     out_ = 0
     for j in (0 ..  len - 1) do
       t[j]["blah"] = t[j]["blah"] + 1;
-      out_ = ((out_ + t[j]["foo"]) + (t[j]["blah"] * t[j]["bar"])) + (t[j]["bar"] * t[j]["foo"]);
+      out_ = out_ + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"];
     end
     return (out_);
 end

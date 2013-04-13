@@ -50,8 +50,8 @@ def is_number( c ):
 Notation polonaise inversée
 """
 def npi_( str, len ):
-    stack = [None] * (len);
-    for i in range(0, 1 + len - 1):
+    stack = [None] * len;
+    for i in range(0, len):
       stack[i] = 0;
     ptrStack = 0;
     ptrStr = 0;
@@ -61,7 +61,7 @@ def npi_( str, len ):
       elif is_number(str[ptrStr]):
         num = 0;
         while (str[ptrStr] != ' '):
-          num = ((num * 10) + ord(str[ptrStr])) - ord('0');
+          num = num * 10 + ord(str[ptrStr]) - ord('0');
           ptrStr = ptrStr + 1;
         stack[ptrStack] = num;
         ptrStack = ptrStack + 1;
@@ -74,8 +74,8 @@ def npi_( str, len ):
 len = 0;
 len=readint();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
+tab = [None] * len;
+for i in range(0, len):
   tmp = '\000';
   tmp=readchar();
   tab[i] = tmp;

@@ -62,7 +62,7 @@ function npi_(str, len){
       var num = 0;
       while (str[ptrStr] != ' ')
       {
-        num = ((num * 10) + str[ptrStr].charCodeAt(0)) - '0'.charCodeAt(0);
+        num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
         ptrStr = ptrStr + 1;
       }
       stack[ptrStack] = num;

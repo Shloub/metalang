@@ -99,7 +99,7 @@ end;
 function result(t : toto) : integer;
 begin
   t^.blah := t^.blah + 1;
-  exit((t^.foo + (t^.blah * t^.bar)) + (t^.bar * t^.foo));
+  exit(t^.foo + t^.blah * t^.bar + t^.bar * t^.foo);
 end;
 
 

@@ -46,8 +46,8 @@ def readint():
 input = ' ';
 current_pos = 500;
 t = 1000;
-mem = [None] * (t);
-for i in range(0, 1 + t - 1):
+mem = [None] * t;
+for i in range(0, t):
   mem[i] = 0;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;

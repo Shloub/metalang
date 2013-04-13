@@ -1,14 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int summax(int* lst, int len){
   int current = 0;
   int max_ = 0;
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       current = current + lst[i];
       if (current < 0)
@@ -28,12 +26,11 @@ int main(void){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
-  int *tab = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)tab)[0]=len;
-  tab=(int*)( ((int*)tab)+1);
+  int *tab = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanf("%d", &tmp);

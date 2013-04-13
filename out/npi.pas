@@ -113,7 +113,7 @@ begin
         num := 0;
         while str[ptrStr] <> #32 do
         begin
-          num := ((num * 10) + ord(str[ptrStr])) - ord(#48);
+          num := num * 10 + ord(str[ptrStr]) - ord(#48);
           ptrStr := ptrStr + 1;
         end;
         stack[ptrStack] := num;

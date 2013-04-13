@@ -45,5 +45,5 @@ $n = 0;
 list($n) = scan("%d");
 /* Lecture de l'entier */
 $h = sumdiv($n);
-printf("%d", $h);
+echo $h;
 ?>

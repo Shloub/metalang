@@ -6,7 +6,7 @@ public class countchar
   public static int nth(char[] tab, char tofind, int len)
   {
     int out_ = 0;
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       if (tab[i] == tofind)
       {
@@ -27,7 +27,7 @@ public class countchar
     tofind = scanner.findWithinHorizon(".", 1).charAt(0);
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     char[] tab = new char[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       char tmp = '\000';
       tmp = scanner.findWithinHorizon(".", 1).charAt(0);

@@ -54,23 +54,23 @@ def eval_( g )
     win = 0
     freecase = 0
     for y in (0 ..  2) do
-      col = -(1)
-      lin = -(1)
+      col = -1
+      lin = -1
       for x in (0 ..  2) do
         if g["cases"][x][y] == 0 then
           freecase = freecase + 1;
         end
         colv = g["cases"][x][y]
         linv = g["cases"][y][x]
-        if (col == (-(1))) && (colv != 0) then
+        if (col == -1) && (colv != 0) then
           col = colv;
         elsif colv != col then
-          col = -(2);
+          col = -2;
         end
-        if (lin == (-(1))) && (linv != 0) then
+        if (lin == -1) && (linv != 0) then
           lin = linv;
         elsif linv != lin then
-          lin = -(2);
+          lin = -2;
         end
       end
       if col >= 0 then
@@ -91,7 +91,7 @@ def eval_( g )
     if win == 1 then
       g["note"] = 1000;
     elsif win == 2 then
-      g["note"] = -(1000);
+      g["note"] = -1000;
     else
       g["note"] = 0;
     end
@@ -130,7 +130,7 @@ def minmax( g )
     if g["ended"] then
       return (g["note"]);
     end
-    maxNote = -(10000)
+    maxNote = -10000
     if not(g["firstToPlay"]) then
       maxNote = 10000;
     end

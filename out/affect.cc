@@ -30,19 +30,19 @@ int result(struct toto * t_, struct toto * t2_){
   t->blah = t->blah + 1;
   int len = 1;
   std::vector<int > cache0( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     cache0.at(i) = -i;
   }
   std::vector<int > cache1( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     cache1.at(i) = i;
   }
   std::vector<int > cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;
-  return (t->foo + (t->blah * t->bar)) + (t->bar * t->foo);
+  return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
 
 

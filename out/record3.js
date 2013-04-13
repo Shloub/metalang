@@ -50,7 +50,7 @@ function result(t, len){
   for (var j = 0 ; j <= len - 1; j++)
   {
     t[j].blah = t[j].blah + 1;
-    out_ = ((out_ + t[j].foo) + (t[j].blah * t[j].bar)) + (t[j].bar * t[j].foo);
+    out_ = out_ + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
   }
   return out_;
 }

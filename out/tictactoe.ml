@@ -45,11 +45,11 @@ let rec eval_ g =
         freecase := (!freecase) + 1;
       let colv = g.cases.(x).(y) in
       let linv = g.cases.(y).(x) in
-      if ((!col) = (-1)) && (colv <> 0) then
+      if ((!col) = -1) && (colv <> 0) then
         col := colv
       else if colv <> (!col) then
         col := -2;
-      if ((!lin) = (-1)) && (linv <> 0) then
+      if ((!lin) = -1) && (linv <> 0) then
         lin := linv
       else if linv <> (!lin) then
         lin := -2

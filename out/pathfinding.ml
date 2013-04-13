@@ -14,19 +14,19 @@ let rec pathfind_aux cache tab x y posX posY =
   if (posX = (x - 1)) && (posY = (y - 1)) then
     0
   else if (((posX < 0) or (posY < 0)) or (posX >= x)) or (posY >= y) then
-    (x * y) * 10
-  else if tab.(posY).(posX) = ('#') then
-    (x * y) * 10
-  else if cache.(posY).(posX) <> (-1) then
+    x * y * 10
+  else if tab.(posY).(posX) = '#' then
+    x * y * 10
+  else if cache.(posY).(posX) <> -1 then
     cache.(posY).(posX)
   else
     begin
-      cache.(posY).(posX) <- (x * y) * 10;
+      cache.(posY).(posX) <- x * y * 10;
       let val1 = pathfind_aux cache tab x y (posX + 1) posY in
       let val2 = pathfind_aux cache tab x y (posX - 1) posY in
       let val3 = pathfind_aux cache tab x y posX (posY - 1) in
       let val4 = pathfind_aux cache tab x y posX (posY + 1) in
-      let out_ = 1 + (min4 val1 val2 val3 val4) in
+      let out_ = 1 + min4 val1 val2 val3 val4 in
       cache.(posY).(posX) <- out_;
       out_
     end

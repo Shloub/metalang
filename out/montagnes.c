@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 int montagnes_(int* tab, int len){
   int max_ = 1;
   int j = 1;
@@ -29,12 +27,11 @@ int main(void){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
-  int *tab = malloc( (len) * sizeof(int) + sizeof(int));
-  ((int*)tab)[0]=len;
-  tab=(int*)( ((int*)tab)+1);
+  int *tab = malloc( len * sizeof(int));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       int x = 0;
       scanf("%d", &x);

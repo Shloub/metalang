@@ -71,7 +71,7 @@ function result(t_, t2_){
   var cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;
-  return (t.foo + (t.blah * t.bar)) + (t.bar * t.foo);
+  return t.foo + t.blah * t.bar + t.bar * t.foo;
 }
 
 var t = mktoto(4);

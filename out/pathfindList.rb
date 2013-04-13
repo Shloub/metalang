@@ -4,7 +4,7 @@ require "scanf.rb"
 def pathfind_aux( cache, tab, len, pos )
     if pos >= (len - 1) then
       return (0);
-    elsif cache[pos] != (-(1)) then
+    elsif cache[pos] != -1 then
       return (cache[pos]);
     else
       cache[pos] = len * 2;
@@ -24,7 +24,7 @@ end
 def pathfind( tab, len )
     cache = [];
     for i in (0 ..  len - 1) do
-      cache[i] = -(1);
+      cache[i] = -1;
     end
     return (pathfind_aux(cache, tab, len, 0));
 end

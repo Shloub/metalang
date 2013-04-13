@@ -45,19 +45,18 @@ def readint():
 
 def mktoto( v1 ):
     t = {"foo":v1, "bar":0, "blah":0};
-    
     return t;
 
 def result( t, len ):
     out_ = 0;
-    for j in range(0, 1 + len - 1):
+    for j in range(0, len):
       t[j]["blah"] = t[j]["blah"] + 1;
-      out_ = ((out_ + t[j]["foo"]) + (t[j]["blah"] * t[j]["bar"])) + (t[j]["bar"] * t[j]["foo"]);
+      out_ = out_ + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"];
     return out_;
 
 bf = 4;
-t = [None] * (bf);
-for i in range(0, 1 + bf - 1):
+t = [None] * bf;
+for i in range(0, bf):
   t[i] = mktoto(i);
 t[0]["bar"]=readint();
 stdinsep();

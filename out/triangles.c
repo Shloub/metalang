@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int count(void* a){ return ((int*)a)[-1]; }
-
 /* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
@@ -39,20 +37,18 @@ int find0(int len, int** tab, int** cache, int x, int y){
 }
 
 int find(int len, int** tab){
-  int* *tab2 = malloc( (len) * sizeof(int*) + sizeof(int));
-  ((int*)tab2)[0]=len;
-  tab2=(int**)( ((int*)tab2)+1);
+  int* *tab2 = malloc( len * sizeof(int*));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       int a = i + 1;
-      int *tab3 = malloc( (a) * sizeof(int) + sizeof(int));
-      ((int*)tab3)[0]=a;
-      tab3=(int*)( ((int*)tab3)+1);
+      int *tab3 = malloc( a * sizeof(int));
+      
       {
         int j;
-        for (j = 0 ; j <= a - 1; j++)
+        for (j = 0 ; j < a; j++)
         {
           tab3[j] = 0;
         }
@@ -67,20 +63,18 @@ int main(void){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
-  int* *tab = malloc( (len) * sizeof(int*) + sizeof(int));
-  ((int*)tab)[0]=len;
-  tab=(int**)( ((int*)tab)+1);
+  int* *tab = malloc( len * sizeof(int*));
+  
   {
     int i;
-    for (i = 0 ; i <= len - 1; i++)
+    for (i = 0 ; i < len; i++)
     {
       int b = i + 1;
-      int *tab2 = malloc( (b) * sizeof(int) + sizeof(int));
-      ((int*)tab2)[0]=b;
-      tab2=(int*)( ((int*)tab2)+1);
+      int *tab2 = malloc( b * sizeof(int));
+      
       {
         int j;
-        for (j = 0 ; j <= b - 1; j++)
+        for (j = 0 ; j < b; j++)
         {
           int tmp = 0;
           scanf("%d", &tmp);
@@ -94,17 +88,18 @@ int main(void){
   int c = find(len, tab);
   printf("%d", c);
   {
-    int d;
-    for (d = 0 ; d <= (count(tab)) - 1; d++)
+    int i;
+    for (i = 0 ; i < len; i++)
     {
-      int* e = tab[d];
       {
-        int f;
-        for (f = 0 ; f <= (count(e)) - 1; f++)
+        int j;
+        for (j = 0 ; j <= i; j++)
         {
-          printf("%d", e[f]);
+          int d = tab[i][j];
+          printf("%d", d);
         }
       }
+      printf("%s", "\n");
     }
   }
   return 0;

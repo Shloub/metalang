@@ -67,7 +67,7 @@ public static int readInt(){
     {
       return 0;
     }
-    else if (cache[pos] != (-1))
+    else if (cache[pos] != -1)
     {
       return cache[pos];
     }
@@ -93,7 +93,7 @@ public static int readInt(){
   public static int pathfind(int[] tab, int len)
   {
     int[] cache = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       cache[i] = -1;
     }
@@ -107,7 +107,7 @@ public static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
       tmp = readInt();

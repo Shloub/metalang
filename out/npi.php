@@ -9,7 +9,7 @@ Notation polonaise inversée
 */
 function npi_(&$str, $len){
   $stack = array();
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
     $stack[$i] = 0;
   }
@@ -26,7 +26,7 @@ function npi_(&$str, $len){
       $num = 0;
       while ($str[$ptrStr] != ' ')
       {
-        $num = (($num * 10) + $str[$ptrStr]) - '0';
+        $num = $num * 10 + $str[$ptrStr] - '0';
         $ptrStr = $ptrStr + 1;
       }
       $stack[$ptrStack] = $num;
@@ -66,12 +66,12 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $len - 1; $i++)
+for ($i = 0 ; $i < $len; $i++)
 {
   $tmp = '\000';
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }
 $result = npi_($tab, $len);
-printf("%d", $result);
+echo $result;
 ?>

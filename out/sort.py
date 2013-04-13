@@ -44,8 +44,8 @@ def readint():
       return out * sign;
 
 def sort_( tab, len ):
-    for i in range(0, 1 + len - 1):
-      for j in range(i + 1, 1 + len - 1):
+    for i in range(0, len):
+      for j in range(i + 1, len):
         if tab[i] > tab[j]:
           tmp = tab[i];
           tab[i] = tab[j];
@@ -54,13 +54,14 @@ def sort_( tab, len ):
 len = 2;
 len=readint();
 stdinsep();
-tab = [None] * (len);
-for i in range(0, 1 + len - 1):
+tab = [None] * len;
+for i in range(0, len):
   tmp = 0;
   tmp=readint();
   stdinsep();
   tab[i] = tmp;
 sort_(tab, len);
-for v in range(0, 1 + (tab.__len__()) - 1):
-  print("%d" % tab[v], end='');
+for i in range(0, len):
+  m = tab[i];
+  print("%d" % m, end='');
 

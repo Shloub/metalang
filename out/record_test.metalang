@@ -9,6 +9,6 @@ main
   read int param.bar
   skip
   read int param.foo
-  print int param.bar + (param.foo * param.bar)
+  print int param.bar + param.foo * param.bar
 end
 

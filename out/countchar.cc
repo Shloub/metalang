@@ -4,7 +4,7 @@
 #include <vector>
 int nth(std::vector<char >& tab, char tofind, int len){
   int out_ = 0;
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     if (tab.at(i) == tofind)
     {
@@ -23,7 +23,7 @@ int main(void){
   scanf("%c", &tofind);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<char > tab( len );
-  for (int i = 0 ; i <= len - 1; i ++)
+  for (int i = 0 ; i < len; i++)
   {
     char tmp = '\000';
     scanf("%c", &tmp);

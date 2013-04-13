@@ -25,19 +25,19 @@ function result(&$t_, &$t2_){
   $t["blah"] = $t["blah"] + 1;
   $len = 1;
   $cache0 = array();
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
     $cache0[$i] = -$i;
   }
   $cache1 = array();
-  for ($i = 0 ; $i <= $len - 1; $i++)
+  for ($i = 0 ; $i < $len; $i++)
   {
     $cache1[$i] = $i;
   }
   $cache2 = $cache0;
   $cache0 = $cache1;
   $cache2 = $cache0;
-  return ($t["foo"] + ($t["blah"] * $t["bar"])) + ($t["bar"] * $t["foo"]);
+  return $t["foo"] + $t["blah"] * $t["bar"] + $t["bar"] * $t["foo"];
 }
 
 
@@ -70,7 +70,7 @@ list($t2["bar"]) = scan("%d");
 scantrim();
 list($t["blah"]) = scan("%d");
 $q = result($t, $t2);
-printf("%d", $q);
+echo $q;
 $r = $t["blah"];
-printf("%d", $r);
+echo $r;
 ?>

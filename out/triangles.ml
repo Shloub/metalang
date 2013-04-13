@@ -27,8 +27,8 @@ let rec find0 len tab cache x y =
 
 let rec find len tab =
   let tab2 = Array.init (len) (fun i ->
-    let bw = i + 1 in
-    let tab3 = Array.init (bw) (fun j ->
+    let be = i + 1 in
+    let tab3 = Array.init (be) (fun j ->
       0) in
     tab3) in
   find0 len tab tab2 0 0
@@ -39,20 +39,21 @@ begin
   Scanf.scanf "%d" (fun value -> len := value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let tab = Array.init ((!len)) (fun i ->
-    let bx = i + 1 in
-    let tab2 = Array.init (bx) (fun j ->
+    let bf = i + 1 in
+    let tab2 = Array.init (bf) (fun j ->
       let tmp = ref( 0 ) in
       Scanf.scanf "%d" (fun value -> tmp := value);
       Scanf.scanf "%[\n \010]" (fun _ -> ());
       (!tmp)) in
     tab2) in
-  let by = find (!len) tab in
-  Printf.printf "%d" (by);
-  for bz = 0 to ((Array.length tab)) - 1 do
-    let ca = tab.(bz) in
-    for cb = 0 to ((Array.length ca)) - 1 do
-      Printf.printf "%d" (ca.(cb))
-    done
+  let bg = find (!len) tab in
+  Printf.printf "%d" (bg);
+  for i = 0 to (!len) - 1 do
+    for j = 0 to i do
+      let bh = tab.(i).(j) in
+      Printf.printf "%d" (bh)
+    done;
+    Printf.printf "%s" ("\n")
   done
 end
  

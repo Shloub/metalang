@@ -42,11 +42,11 @@ public class triangles
   public static int find(int len, int[][] tab)
   {
     int[][] tab2 = new int[len][];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
-      int bi = i + 1;
-      int[] tab3 = new int[bi];
-      for (int j = 0 ; j <= bi - 1; j ++)
+      int u = i + 1;
+      int[] tab3 = new int[u];
+      for (int j = 0 ; j < u; j++)
       {
         tab3[j] = 0;
       }
@@ -63,11 +63,11 @@ public class triangles
     len = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[][] tab = new int[len][];
-    for (int i = 0 ; i <= len - 1; i ++)
+    for (int i = 0 ; i < len; i++)
     {
-      int bj = i + 1;
-      int[] tab2 = new int[bj];
-      for (int j = 0 ; j <= bj - 1; j ++)
+      int v = i + 1;
+      int[] tab2 = new int[v];
+      for (int j = 0 ; j < v; j++)
       {
         int tmp = 0;
         scanner.useDelimiter("\\s");
@@ -77,15 +77,16 @@ public class triangles
       }
       tab[i] = tab2;
     }
-    int bk = find(len, tab);
-    System.out.printf("%d", bk);
-    for (int bl = 0 ; bl <= (tab.length) - 1; bl ++)
+    int w = find(len, tab);
+    System.out.printf("%d", w);
+    for (int i = 0 ; i < len; i++)
     {
-      int[] bm = tab[bl];
-      for (int bn = 0 ; bn <= (bm.length) - 1; bn ++)
+      for (int j = 0 ; j <= i; j ++)
       {
-        System.out.printf("%d", bm[bn]);
+        int z = tab[i][j];
+        System.out.printf("%d", z);
       }
+      System.out.printf("%s", "\n");
     }
   }
   

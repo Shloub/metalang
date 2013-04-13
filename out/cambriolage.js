@@ -48,7 +48,7 @@ function nbPassePartout(n, passepartout, m, serrures){
   var max_recent = 0;
   for (var i = 0 ; i <= m - 1; i++)
   {
-    if ((serrures[i][0] == (-1)) && (serrures[i][1] > max_ancient))
+    if ((serrures[i][0] == -1) && (serrures[i][1] > max_ancient))
     {
       max_ancient = serrures[i][1];
     }

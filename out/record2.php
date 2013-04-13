@@ -12,7 +12,7 @@ function mktoto($v1){
 
 function result(&$t){
   $t["blah"] = $t["blah"] + 1;
-  return ($t["foo"] + ($t["blah"] * $t["bar"])) + ($t["bar"] * $t["foo"]);
+  return $t["foo"] + $t["blah"] * $t["bar"] + $t["bar"] * $t["foo"];
 }
 
 
@@ -40,7 +40,7 @@ list($t["bar"]) = scan("%d");
 scantrim();
 list($t["blah"]) = scan("%d");
 $o = result($t);
-printf("%d", $o);
+echo $o;
 $p = $t["blah"];
-printf("%d", $p);
+echo $p;
 ?>

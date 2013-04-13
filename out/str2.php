@@ -20,6 +20,6 @@ function nextChar(){
   return $out;
 }
 
-printf("%s", "ma petite chaine");
-printf("%s", " en or");
+echo "ma petite chaine";
+echo " en or";
 ?>

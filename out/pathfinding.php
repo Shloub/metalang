@@ -22,19 +22,19 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
   }
   else if (((($posX < 0) || ($posY < 0)) || ($posX >= $x)) || ($posY >= $y))
   {
-    return ($x * $y) * 10;
+    return $x * $y * 10;
   }
   else if ($tab[$posY][$posX] == '#')
   {
-    return ($x * $y) * 10;
+    return $x * $y * 10;
   }
-  else if ($cache[$posY][$posX] != (-1))
+  else if ($cache[$posY][$posX] != -1)
   {
     return $cache[$posY][$posX];
   }
   else
   {
-    $cache[$posY][$posX] = ($x * $y) * 10;
+    $cache[$posY][$posX] = $x * $y * 10;
     $val1 = pathfind_aux($cache, $tab, $x, $y, $posX + 1, $posY);
     $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
@@ -47,10 +47,10 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
 
 function pathfind(&$tab, $x, $y){
   $cache = array();
-  for ($i = 0 ; $i <= $y - 1; $i++)
+  for ($i = 0 ; $i < $y; $i++)
   {
     $tmp = array();
-    for ($j = 0 ; $j <= $x - 1; $j++)
+    for ($j = 0 ; $j < $x; $j++)
     {
       $tmp[$j] = -1;
     }
@@ -86,10 +86,10 @@ scantrim();
 list($y) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i <= $y - 1; $i++)
+for ($i = 0 ; $i < $y; $i++)
 {
   $tab2 = array();
-  for ($j = 0 ; $j <= $x - 1; $j++)
+  for ($j = 0 ; $j < $x; $j++)
   {
     $tmp = '\000';
     $tmp = nextChar();
@@ -99,5 +99,5 @@ for ($i = 0 ; $i <= $y - 1; $i++)
   $tab[$i] = $tab2;
 }
 $result = pathfind($tab, $x, $y);
-printf("%d", $result);
+echo $result;
 ?>
