@@ -2,7 +2,6 @@
 import sys
 
 char=None
-
 def readchar_():
   global char;
   if char == None:
@@ -13,11 +12,6 @@ def skipchar():
   global char;
   char = None;
   return;
-
-def readchar():
-  out = readchar_();
-  skipchar();
-  return out;
 
 def stdinsep():
   while True:
@@ -42,6 +36,7 @@ def readint():
       skipchar();
     else:
       return out * sign;
+
 """ Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin

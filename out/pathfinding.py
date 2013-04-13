@@ -2,7 +2,6 @@
 import sys
 
 char=None
-
 def readchar_():
   global char;
   if char == None:
@@ -13,7 +12,6 @@ def skipchar():
   global char;
   char = None;
   return;
-
 def readchar():
   out = readchar_();
   skipchar();
@@ -42,6 +40,7 @@ def readint():
       skipchar();
     else:
       return out * sign;
+
 
 def min2( a, b ):
     if a < b:

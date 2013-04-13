@@ -34,53 +34,6 @@ open Ast
 open Printer
 open CPrinter
 
-let header =
-"
-import sys
-
-char=None
-
-def readchar_():
-  global char;
-  if char == None:
-    char = sys.stdin.read(1);
-  return char;
-
-def skipchar():
-  global char;
-  char = None;
-  return;
-
-def readchar():
-  out = readchar_();
-  skipchar();
-  return out;
-
-def stdinsep():
-  while True:
-    c = readchar_();
-    if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
-      skipchar();
-    else:
-      return;
-
-def readint():
-  c = readchar_();
-  if c == '-':
-    sign = -1;
-    skipchar();
-  else:
-    sign = 1;
-  out = 0;
-  while True:
-    c = readchar_();
-    if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
-    else:
-      return out * sign;
-"
-
 class pyPrinter = object(self)
   inherit cPrinter as super
 
@@ -156,12 +109,64 @@ match Type.unfix t with
   method main f main =
    self#instructions f main
 
-  method header f () =
-    Format.fprintf f "%s" header
+  method header f prog =
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    Format.fprintf f "
+import sys
+%s%s%s%s
+"
+      (if need then "
+char=None
+def readchar_():
+  global char;
+  if char == None:
+    char = sys.stdin.read(1);
+  return char;
+
+def skipchar():
+  global char;
+  char = None;
+  return;
+" else "" )
+      (if need_readchar then
+"def readchar():
+  out = readchar_();
+  skipchar();
+  return out;
+" else "")
+      (if need_stdinsep then "
+def stdinsep():
+  while True:
+    c = readchar_();
+    if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
+      skipchar();
+    else:
+      return;
+" else "")
+      (if need_readint then "
+def readint():
+  c = readchar_();
+  if c == '-':
+    sign = -1;
+    skipchar();
+  else:
+    sign = 1;
+  out = 0;
+  while True:
+    c = readchar_();
+    if c <= '9' and c >= '0' :
+      out = out * 10 + int(c);
+      skipchar();
+    else:
+      return out * sign;
+" else "")
 
   method prog f prog =
     Format.fprintf f "%a%a%a@\n"
-      self#header ()
+      self#header prog
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

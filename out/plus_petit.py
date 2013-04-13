@@ -2,7 +2,6 @@
 import sys
 
 char=None
-
 def readchar_():
   global char;
   if char == None:
@@ -13,11 +12,6 @@ def skipchar():
   global char;
   char = None;
   return;
-
-def readchar():
-  out = readchar_();
-  skipchar();
-  return out;
 
 def stdinsep():
   while True:
@@ -42,6 +36,7 @@ def readint():
       skipchar();
     else:
       return out * sign;
+
 
 def go( tab, a, b ):
     m = a + b // 2;

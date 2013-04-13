@@ -46,7 +46,7 @@ class rbPrinter = object(self)
 
   method lang () = "ruby"
 
-  method header f () =
+  method header f prog =
     Format.fprintf f "%s" header
 
 

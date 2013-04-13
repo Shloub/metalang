@@ -2,7 +2,6 @@
 import sys
 
 char=None
-
 def readchar_():
   global char;
   if char == None:
@@ -13,19 +12,6 @@ def skipchar():
   global char;
   char = None;
   return;
-
-def readchar():
-  out = readchar_();
-  skipchar();
-  return out;
-
-def stdinsep():
-  while True:
-    c = readchar_();
-    if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
-    else:
-      return;
 
 def readint():
   c = readchar_();
@@ -42,6 +28,7 @@ def readint():
       skipchar();
     else:
       return out * sign;
+
 
 def sumdiv( n ):
     """ On désire renvoyer la somme des diviseurs """
