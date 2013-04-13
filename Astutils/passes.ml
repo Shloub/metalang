@@ -213,3 +213,49 @@ module RemoveUselessFunctions = struct
     let prog = { prog with Prog.funs = funs } in
     prog
 end
+
+module ReadAnalysis = struct
+  let hasSkip li =
+    List.fold_left
+      (fun acc i ->
+        Instr.Writer.Deep.fold
+          (fun acc i ->
+            match Instr.unfix i with
+              | Instr.StdinSep -> true
+              | _ -> acc)
+          acc i)
+      false li
+
+  let hasSkip_progitem li =
+    List.fold_right
+      (fun f b -> match f with
+        | Prog.DeclarFun (_, _, _, li) ->
+          b && (hasSkip li)
+        | _ -> b
+      ) li false
+
+  let collectReads acc li =
+    List.fold_left
+      (fun acc i ->
+        Instr.Writer.Deep.fold
+          (fun acc i ->
+            match Instr.unfix i with
+              | Instr.Read(ty, _) ->
+                TypeSet.add ty acc
+              | _ -> acc)
+          acc i)
+      acc li
+
+  let collectReads_progitem li =
+    List.fold_right
+      (fun f acc -> match f with
+        | Prog.DeclarFun (_, _, _, li) -> collectReads acc li
+        | _ -> acc
+      ) li TypeSet.empty
+
+  let apply prog =
+    { prog with
+      Prog.hasSkip = hasSkip_progitem prog.Prog.funs;
+      Prog.reads = collectReads_progitem prog.Prog.funs;
+    }
+end

@@ -25,6 +25,7 @@
 
 
 (**
+   Ce module contient les différents AST de notre compilateur
 @see <http://prologin.org> Prologin
 @author Prologin (info\@prologin.org)
 @author Maxime Audouin (coucou747\@gmail.com)
@@ -286,6 +287,8 @@ module Type = struct
 end
 
 module TypeMap = MakeMap (Type)
+
+module TypeSet = MakeSet (Type)
 
 module Expr = struct
   type unop = Neg | Not | BNot
@@ -603,6 +606,8 @@ type 'lex t =
       progname : string;
       funs : 'lex t_fun list;
       main : 'lex Expr.t Instr.t list option;
+      reads : TypeSet.t;
+      hasSkip : bool;
     }
 
 end

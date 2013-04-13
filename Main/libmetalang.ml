@@ -9,6 +9,7 @@ let typed f (a, b) = (a, f b)
 let default_passes (prog : Typer.env * Parser.token Prog.t) :
     (Typer.env * Parser.token Prog.t ) =
   prog
+  |> typed Passes.ReadAnalysis.apply
   |> typed Passes.WalkCheckNaming.apply
   |> typed Passes.WalkRename.apply
   |> typed Passes.WalkNopend.apply
@@ -124,6 +125,8 @@ let parse_string parse str =
 
 let make_prog_helper progname (funs, main) stdlib =
   let prog = {
+    Prog.hasSkip = false;
+    Prog.reads = TypeSet.empty;
     Prog.progname = progname ;
     Prog.funs = stdlib @ funs ;
     Prog.main = main ;
@@ -143,6 +146,8 @@ let colore string =
       Prog.progname = "";
       Prog.funs = code;
       Prog.main = main;
+      Prog.hasSkip = false;
+      Prog.reads = TypeSet.empty;
     } in
     let p = new HtmlPrinter.htmlPrinter in
     let out = Format.str_formatter in
