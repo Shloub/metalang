@@ -1,0 +1,9 @@
+record intlist int head;
+@intlist tail;
+
+end
+
+main
+  
+end
+

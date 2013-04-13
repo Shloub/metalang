@@ -1,0 +1,26 @@
+def int fibo(int a, int b, int i)
+  def int out = 0
+  def int a2 = a
+  def int b2 = b
+  for j=0 to i + 1
+  do
+    out = out + a2;
+    def int tmp = b2
+    b2 = b2 + a2;
+    a2 = tmp;
+  end
+  return out
+end
+
+main
+  def int a = 0
+  def int b = 0
+  def int i = 0
+  read int a
+  skip
+  read int b
+  skip
+  read int i
+  print int fibo(a, b, i)
+end
+

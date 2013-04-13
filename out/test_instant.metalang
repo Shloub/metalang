@@ -1,0 +1,5 @@
+
+main
+  print int 10
+end
+

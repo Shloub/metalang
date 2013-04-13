@@ -1,0 +1,50 @@
+
+def bool is_number(char c)
+  return (c <= '9') && (c >= '0')
+end
+
+/*
+Notation polonaise inversée
+*/
+def int npi(array<char> str, int len)
+  def array<int>stack[len] with i do
+    return 0
+  end
+  def int ptrStack = 0
+  def int ptrStr = 0
+  while ptrStr < len
+  do
+    if str[ptrStr] == ' ' then
+      ptrStr = ptrStr + 1;
+    elsif is_number(str[ptrStr]) then
+      def int num = 0
+      while str[ptrStr] != ' '
+      do
+        num = ((num * 10) + str[ptrStr]) - '0';
+        ptrStr = ptrStr + 1;
+      end
+      stack[ptrStack] = num;
+      ptrStack = ptrStack + 1;
+    elsif str[ptrStr] == '+'
+    then
+      stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+      ptrStack = ptrStack - 1;
+      ptrStr = ptrStr + 1;
+    end
+  end
+  return stack[0]
+end
+
+main
+  def int len = 0
+  read int len
+  skip
+  def array<char>tab[len] with i do
+    def char tmp = '\000'
+    read char tmp
+    return tmp
+  end
+  def int result = npi(tab, len)
+  print int result
+end
+

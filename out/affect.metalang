@@ -1,0 +1,50 @@
+record toto int foo;
+int bar;
+int blah;
+
+end
+
+def @toto mktoto(int v1)
+  def @toto t = with foo = v1
+  bar = v1
+  blah = v1 end
+  return t
+end
+
+def int result(@toto t_, @toto t2_)
+  def @toto t = t_
+  def @toto t2 = t2_
+  def @toto t3 = with foo = 0
+  bar = 0
+  blah = 0 end
+  t3 = t2;
+  t = t2;
+  t2 = t3;
+  t.blah = t.blah + 1;
+  def int len = 1
+  def array<int>cache0[len] with i do
+    return -i
+  end
+  def array<int>cache1[len] with i do
+    return i
+  end
+  def array<int> cache2 = cache0
+  cache0 = cache1;
+  cache2 = cache0;
+  return (t.foo + (t.blah * t.bar)) + (t.bar * t.foo)
+end
+
+main
+  def @toto t = mktoto(4)
+  def @toto t2 = mktoto(5)
+  read int t.bar
+  skip
+  read int t.blah
+  skip
+  read int t2.bar
+  skip
+  read int t.blah
+  print int result(t, t2)
+  print int t.blah
+end
+

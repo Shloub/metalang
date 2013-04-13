@@ -1,0 +1,29 @@
+def void sort_(array<int> tab, int len)
+  for i=0 to len - 1
+  do
+    for j=i + 1 to len - 1
+    do
+      if tab[i] > tab[j]
+      then
+        def int tmp = tab[i]
+        tab[i] = tab[j];
+        tab[j] = tmp;
+      end
+    end
+  end
+end
+
+main
+  def int len = 2
+  read int len
+  skip
+  def array<int>tab[len] with i do
+    def int tmp = 0
+    read int tmp
+    skip
+    return tmp
+  end
+  sort_(tab, len);
+  print array<int> tab
+end
+

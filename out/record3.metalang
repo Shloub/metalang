@@ -1,0 +1,34 @@
+record toto int foo;
+int bar;
+int blah;
+
+end
+
+def @toto mktoto(int v1)
+  def @toto t = with foo = v1
+  bar = 0
+  blah = 0 end
+  return t
+end
+
+def int result(array<@toto> t, int len)
+  def int out = 0
+  for j=0 to len - 1
+  do
+    t[j].blah = t[j].blah + 1;
+    out = ((out + t[j].foo) + (t[j].blah * t[j].bar)) + (t[j].bar * t[j].foo);
+  end
+  return out
+end
+
+main
+  def array<@toto>t[4] with i do
+    return mktoto(i)
+  end
+  read int t[0].bar
+  skip
+  read int t[1].blah
+  print int result(t, 4)
+  print int t[2].blah
+end
+
