@@ -9,7 +9,6 @@ let typed f (a, b) = (a, f b)
 let default_passes (prog : Typer.env * Parser.token Prog.t) :
     (Typer.env * Parser.token Prog.t ) =
   prog
-  |> typed Passes.ReadAnalysis.apply
   |> typed Passes.WalkCheckNaming.apply
   |> typed Passes.WalkRename.apply
   |> typed Passes.WalkNopend.apply
@@ -20,11 +19,14 @@ let clike_passes prog =
   |> typed Passes.WalkAllocArrayExpend.apply
   |> typed Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
+  |> typed Passes.ReadAnalysis.apply
+
 
 let ocaml_passes prog =
   prog |> default_passes
   |> typed Passes.WalkIfMerge.apply
   |> snd |> Typer.process
+  |> typed Passes.ReadAnalysis.apply
 
 let no_passes prog =
   prog

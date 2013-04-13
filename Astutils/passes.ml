@@ -216,34 +216,36 @@ end
 
 module ReadAnalysis = struct
   let hasSkip li =
+    let f acc i =
+      match Instr.unfix i with
+        | Instr.StdinSep -> true
+        | _ -> acc
+    in
     List.fold_left
       (fun acc i ->
         Instr.Writer.Deep.fold
-          (fun acc i ->
-            match Instr.unfix i with
-              | Instr.StdinSep -> true
-              | _ -> acc)
-          acc i)
+          f
+          (f acc i) i)
       false li
 
   let hasSkip_progitem li =
     List.fold_right
       (fun f b -> match f with
         | Prog.DeclarFun (_, _, _, li) ->
-          b && (hasSkip li)
+          b || (hasSkip li)
         | _ -> b
       ) li false
 
   let collectReads acc li =
+    let f acc i =
+      match Instr.unfix i with
+        | Instr.Read(ty, _) ->
+          TypeSet.add ty acc
+        | _ -> acc in
     List.fold_left
       (fun acc i ->
-        Instr.Writer.Deep.fold
-          (fun acc i ->
-            match Instr.unfix i with
-              | Instr.Read(ty, _) ->
-                TypeSet.add ty acc
-              | _ -> acc)
-          acc i)
+        Instr.Writer.Deep.fold f
+          (f acc i) i)
       acc li
 
   let collectReads_progitem li =
@@ -255,7 +257,15 @@ module ReadAnalysis = struct
 
   let apply prog =
     { prog with
-      Prog.hasSkip = hasSkip_progitem prog.Prog.funs;
-      Prog.reads = collectReads_progitem prog.Prog.funs;
+      Prog.hasSkip =
+        begin
+          let acc = hasSkip_progitem prog.Prog.funs
+          in acc || (Option.map_default false hasSkip prog.Prog.main )
+        end;
+      Prog.reads =
+        begin
+          let acc = collectReads_progitem prog.Prog.funs
+          in Option.map_default acc (collectReads acc) prog.Prog.main
+        end
     }
 end
