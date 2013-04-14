@@ -63,10 +63,14 @@ class csharpPrinter = object(self)
       | Type.Auto -> assert false
 
   method prog f prog =
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f
-      "using System;@\n@\npublic class %s@\n@[<v 2>{
-
-
+      "using System;@\n@\npublic class %s@\n@[<v 2>{%s%s%s%s@\n%a@\n%a@]@\n}@\n"
+      prog.Prog.progname
+      (if need then "
 static bool eof;
 static String buffer;
 public static char readChar_(){
@@ -84,13 +88,16 @@ public static char readChar_(){
 public static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
-}
+}" else "")
+
+      (if need_readchar then "
 public static char readChar(){
   char out_ = readChar_();
   consommeChar();
   return out_;
-}
+}" else "")
 
+      (if need_stdinsep then "
 public static void stdin_sep(){
   do{
     if (eof) return;
@@ -101,8 +108,8 @@ public static void stdin_sep(){
       return;
     }
   } while(true);
-}
-
+}" else "")
+      (if need_readint then "
 public static int readInt(){
   int i = 0;
   char s = readChar_();
@@ -120,11 +127,7 @@ public static int readInt(){
       return i * sign;
     }
   } while(true);
-}
-
-
-@\n%a@\n%a@]@\n}@\n"
-      prog.Prog.progname
+} " else "")
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

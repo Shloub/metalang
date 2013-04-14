@@ -339,7 +339,7 @@ begin
    global_has_char := true;
    read(global_char);
 end; " else "")
-      ( if need_stdin_sep then "
+      ( if need_stdinsep then "
 procedure skip();
 var
    n : char;
@@ -356,7 +356,7 @@ begin
       skip_char();
    end;
 end;" else "")
-      if need_readint || need readchar then "
+      (if need_readint || need_readchar then "
 function read_char_aux() : char;
 begin
    if global_has_char then
@@ -367,7 +367,7 @@ begin
       read_char_aux := global_char;
    end
 end;" else "")
-(if need_readchar then "
+      (if need_readchar then "
 function read_char() : char;
 var
    c : char;
@@ -376,7 +376,7 @@ begin
    skip_char();
    read_char := c;
 end;" else "")
-(if need_readint then "
+      (if need_readint then "
 function read_int() : integer;
 var
    c    : char;
@@ -404,7 +404,6 @@ begin
    until false;
 end;
 " else "")
-
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
