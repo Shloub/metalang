@@ -2,8 +2,6 @@ using System;
 
 public class countchar
 {
-
-
 static bool eof;
 static String buffer;
 public static char readChar_(){
@@ -27,7 +25,6 @@ public static char readChar(){
   consommeChar();
   return out_;
 }
-
 public static void stdin_sep(){
   do{
     if (eof) return;
@@ -39,7 +36,6 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-
 public static int readInt(){
   int i = 0;
   char s = readChar_();
@@ -57,10 +53,7 @@ public static int readInt(){
       return i * sign;
     }
   } while(true);
-}
-
-
-
+} 
   public static int nth(char[] tab, char tofind, int len)
   {
     int out_ = 0;

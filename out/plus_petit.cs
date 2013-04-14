@@ -2,8 +2,6 @@ using System;
 
 public class plus_petit
 {
-
-
 static bool eof;
 static String buffer;
 public static char readChar_(){
@@ -22,12 +20,6 @@ public static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static char readChar(){
-  char out_ = readChar_();
-  consommeChar();
-  return out_;
-}
-
 public static void stdin_sep(){
   do{
     if (eof) return;
@@ -39,7 +31,6 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-
 public static int readInt(){
   int i = 0;
   char s = readChar_();
@@ -57,10 +48,7 @@ public static int readInt(){
       return i * sign;
     }
   } while(true);
-}
-
-
-
+} 
   public static int go(int[] tab, int a, int b)
   {
     int m = (a + b) / 2;

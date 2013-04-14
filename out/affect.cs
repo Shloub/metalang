@@ -2,8 +2,6 @@ using System;
 
 public class affect
 {
-
-
 static bool eof;
 static String buffer;
 public static char readChar_(){
@@ -22,12 +20,6 @@ public static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static char readChar(){
-  char out_ = readChar_();
-  consommeChar();
-  return out_;
-}
-
 public static void stdin_sep(){
   do{
     if (eof) return;
@@ -39,7 +31,6 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-
 public static int readInt(){
   int i = 0;
   char s = readChar_();
@@ -57,10 +48,7 @@ public static int readInt(){
       return i * sign;
     }
   } while(true);
-}
-
-
-
+} 
   public class toto {public int foo;public int bar;public int blah;}
   public static toto mktoto(int v1)
   {

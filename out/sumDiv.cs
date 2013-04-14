@@ -2,8 +2,6 @@ using System;
 
 public class sumDiv
 {
-
-
 static bool eof;
 static String buffer;
 public static char readChar_(){
@@ -22,24 +20,6 @@ public static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static char readChar(){
-  char out_ = readChar_();
-  consommeChar();
-  return out_;
-}
-
-public static void stdin_sep(){
-  do{
-    if (eof) return;
-    char c = readChar_();
-    if (c == ' ' || c == '\n' || c == '\t' || c == '\r'){
-      consommeChar();
-    }else{
-      return;
-    }
-  } while(true);
-}
-
 public static int readInt(){
   int i = 0;
   char s = readChar_();
@@ -57,10 +37,7 @@ public static int readInt(){
       return i * sign;
     }
   } while(true);
-}
-
-
-
+} 
   public static int sumdiv(int n)
   {
     /* On désire renvoyer la somme des diviseurs */
