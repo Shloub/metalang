@@ -1,4 +1,23 @@
 <?php
+
+$stdin='';
+while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function scan($format){
+  global $stdin;
+  $out = sscanf($stdin, $format);
+  $stdin = substr($stdin, strlen($out[0]));
+  return $out;
+}
+function scantrim(){
+  global $stdin;
+  $stdin = trim($stdin);
+}
+function nextChar(){
+  global $stdin;
+  $out = $stdin[0];
+  $stdin = substr($stdin, 1);
+  return $out;
+}
 function min2($a, $b){
   if ($a < $b)
   {
@@ -57,26 +76,6 @@ function pathfind(&$tab, $x, $y){
     $cache[$i] = $tmp;
   }
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
-}
-
-
-$stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
-function scan($format){
-  global $stdin;
-  $out = sscanf($stdin, $format);
-  $stdin = substr($stdin, strlen($out[0]));
-  return $out;
-}
-function scantrim(){
-  global $stdin;
-  $stdin = trim($stdin);
-}
-function nextChar(){
-  global $stdin;
-  $out = $stdin[0];
-  $stdin = substr($stdin, 1);
-  return $out;
 }
 
 $x = 0;

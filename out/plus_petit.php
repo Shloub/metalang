@@ -1,4 +1,17 @@
 <?php
+
+$stdin='';
+while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function scan($format){
+  global $stdin;
+  $out = sscanf($stdin, $format);
+  $stdin = substr($stdin, strlen($out[0]));
+  return $out;
+}
+function scantrim(){
+  global $stdin;
+  $stdin = trim($stdin);
+}
 function go(&$tab, $a, $b){
   $m = intval(($a + $b) / 2);
   if ($a == $m)
@@ -40,26 +53,6 @@ function go(&$tab, $a, $b){
 
 function plus_petit_(&$tab, $len){
   return go($tab, 0, $len);
-}
-
-
-$stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
-function scan($format){
-  global $stdin;
-  $out = sscanf($stdin, $format);
-  $stdin = substr($stdin, strlen($out[0]));
-  return $out;
-}
-function scantrim(){
-  global $stdin;
-  $stdin = trim($stdin);
-}
-function nextChar(){
-  global $stdin;
-  $out = $stdin[0];
-  $stdin = substr($stdin, 1);
-  return $out;
 }
 
 $len = 0;

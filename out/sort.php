@@ -1,19 +1,4 @@
 <?php
-function sort_(&$tab, $len){
-  for ($i = 0 ; $i < $len; $i++)
-  {
-    for ($j = $i + 1 ; $j < $len; $j++)
-    {
-      if ($tab[$i] > $tab[$j])
-      {
-        $tmp = $tab[$i];
-        $tab[$i] = $tab[$j];
-        $tab[$j] = $tmp;
-      }
-    }
-  }
-}
-
 
 $stdin='';
 while (!feof(STDIN)) $stdin.=fgets(STDIN);
@@ -27,11 +12,19 @@ function scantrim(){
   global $stdin;
   $stdin = trim($stdin);
 }
-function nextChar(){
-  global $stdin;
-  $out = $stdin[0];
-  $stdin = substr($stdin, 1);
-  return $out;
+function sort_(&$tab, $len){
+  for ($i = 0 ; $i < $len; $i++)
+  {
+    for ($j = $i + 1 ; $j < $len; $j++)
+    {
+      if ($tab[$i] > $tab[$j])
+      {
+        $tmp = $tab[$i];
+        $tab[$i] = $tab[$j];
+        $tab[$j] = $tmp;
+      }
+    }
+  }
 }
 
 $len = 2;

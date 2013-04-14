@@ -324,8 +324,13 @@ class pasPrinter = object(self)
         self#expr len
 
   method prog f prog =
-    let header = "
-
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    Format.fprintf f "program %s;@\n%s%s%s%s%s@\n%a%a.@\n@\n"
+     prog.Prog.progname
+      (if need then "
 var global_char : char;
 var global_has_char : boolean;
 
@@ -333,8 +338,8 @@ procedure skip_char();
 begin
    global_has_char := true;
    read(global_char);
-end;
-
+end; " else "")
+      ( if need_stdin_sep then "
 procedure skip();
 var
    n : char;
@@ -350,8 +355,8 @@ begin
    begin
       skip_char();
    end;
-end;
-
+end;" else "")
+      if need_readint || need readchar then "
 function read_char_aux() : char;
 begin
    if global_has_char then
@@ -361,8 +366,8 @@ begin
       skip_char();
       read_char_aux := global_char;
    end
-end;
-
+end;" else "")
+(if need_readchar then "
 function read_char() : char;
 var
    c : char;
@@ -370,10 +375,8 @@ begin
    c := read_char_aux();
    skip_char();
    read_char := c;
-end;
-
-
-
+end;" else "")
+(if need_readint then "
 function read_int() : integer;
 var
    c    : char;
@@ -400,11 +403,8 @@ begin
          exit(i * sign);
    until false;
 end;
+" else "")
 
-" in
-    Format.fprintf f "program %s;@\n%s@\n%a%a.@\n@\n"
-      prog.Prog.progname
-      header
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

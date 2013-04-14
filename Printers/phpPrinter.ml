@@ -36,24 +36,6 @@ open Printer
 open CPrinter
 
 let header = "
-$stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
-function scan($format){
-  global $stdin;
-  $out = sscanf($stdin, $format);
-  $stdin = substr($stdin, strlen($out[0]));
-  return $out;
-}
-function scantrim(){
-  global $stdin;
-  $stdin = trim($stdin);
-}
-function nextChar(){
-  global $stdin;
-  $out = $stdin[0];
-  $stdin = substr($stdin, 1);
-  return $out;
-}
 ";
 
 class phpPrinter = object(self)
@@ -107,13 +89,37 @@ class phpPrinter = object(self)
 
 
   method main f main =
-      Format.fprintf
-	f "%s%a"
-	header
-	self#instructions main
+	  self#instructions f main
 
   method prog f prog =
-    Format.fprintf f "<?php@\n%a%a@\n?>"
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+
+    Format.fprintf f "<?php@\n%s%s%s%a%a@\n?>"
+      (if need then "
+$stdin='';
+while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function scan($format){
+  global $stdin;
+  $out = sscanf($stdin, $format);
+  $stdin = substr($stdin, strlen($out[0]));
+  return $out;
+}" else "")
+      (if need_stdinsep then "
+function scantrim(){
+  global $stdin;
+  $stdin = trim($stdin);
+}" else "")
+      (if need_readchar then "
+function nextChar(){
+  global $stdin;
+  $out = $stdin[0];
+  $stdin = substr($stdin, 1);
+  return $out;
+}" else "")
+
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

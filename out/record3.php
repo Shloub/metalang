@@ -1,5 +1,17 @@
 <?php
 
+$stdin='';
+while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function scan($format){
+  global $stdin;
+  $out = sscanf($stdin, $format);
+  $stdin = substr($stdin, strlen($out[0]));
+  return $out;
+}
+function scantrim(){
+  global $stdin;
+  $stdin = trim($stdin);
+}
 function mktoto($v1){
   $t = array(
     "foo"=>$v1,
@@ -18,26 +30,6 @@ function result(&$t, $len){
     $out_ = $out_ + $t[$j]["foo"] + $t[$j]["blah"] * $t[$j]["bar"] + $t[$j]["bar"] * $t[$j]["foo"];
   }
   return $out_;
-}
-
-
-$stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
-function scan($format){
-  global $stdin;
-  $out = sscanf($stdin, $format);
-  $stdin = substr($stdin, strlen($out[0]));
-  return $out;
-}
-function scantrim(){
-  global $stdin;
-  $stdin = trim($stdin);
-}
-function nextChar(){
-  global $stdin;
-  $out = $stdin[0];
-  $stdin = substr($stdin, 1);
-  return $out;
 }
 
 $z = 4;

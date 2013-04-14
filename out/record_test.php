@@ -1,6 +1,5 @@
 <?php
 
-
 $stdin='';
 while (!feof(STDIN)) $stdin.=fgets(STDIN);
 function scan($format){
@@ -12,12 +11,6 @@ function scan($format){
 function scantrim(){
   global $stdin;
   $stdin = trim($stdin);
-}
-function nextChar(){
-  global $stdin;
-  $out = $stdin[0];
-  $stdin = substr($stdin, 1);
-  return $out;
 }
 $param = array(
   "foo"=>0,

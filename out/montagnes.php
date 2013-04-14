@@ -1,4 +1,17 @@
 <?php
+
+$stdin='';
+while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function scan($format){
+  global $stdin;
+  $out = sscanf($stdin, $format);
+  $stdin = substr($stdin, strlen($out[0]));
+  return $out;
+}
+function scantrim(){
+  global $stdin;
+  $stdin = trim($stdin);
+}
 function montagnes_(&$tab, $len){
   $max_ = 1;
   $j = 1;
@@ -19,26 +32,6 @@ function montagnes_(&$tab, $len){
     $i = $i - 1;
   }
   return $max_;
-}
-
-
-$stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
-function scan($format){
-  global $stdin;
-  $out = sscanf($stdin, $format);
-  $stdin = substr($stdin, strlen($out[0]));
-  return $out;
-}
-function scantrim(){
-  global $stdin;
-  $stdin = trim($stdin);
-}
-function nextChar(){
-  global $stdin;
-  $out = $stdin[0];
-  $stdin = substr($stdin, 1);
-  return $out;
 }
 
 $len = 0;

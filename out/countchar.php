@@ -1,16 +1,4 @@
 <?php
-function nth(&$tab, $tofind, $len){
-  $out_ = 0;
-  for ($i = 0 ; $i < $len; $i++)
-  {
-    if ($tab[$i] == $tofind)
-    {
-      $out_ = $out_ + 1;
-    }
-  }
-  return $out_;
-}
-
 
 $stdin='';
 while (!feof(STDIN)) $stdin.=fgets(STDIN);
@@ -29,6 +17,17 @@ function nextChar(){
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
   return $out;
+}
+function nth(&$tab, $tofind, $len){
+  $out_ = 0;
+  for ($i = 0 ; $i < $len; $i++)
+  {
+    if ($tab[$i] == $tofind)
+    {
+      $out_ = $out_ + 1;
+    }
+  }
+  return $out_;
 }
 
 $len = 0;
