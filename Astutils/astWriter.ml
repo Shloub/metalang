@@ -35,12 +35,27 @@
 
 open Stdlib
 
+(**
+   Cette signature décrit le minimum pour pouvoir parcourrir un ast.
+   Quand un ast est paramétré par le type 'a et qu'il a la fonction
+   foldmap du type ci dessous, on peut écrire plusieurs méthodes
+   utiles pour l'annalyse et la réécriture de cet AST.
+*)
 module type SigAst = sig
   type 'a t
+
+  (** foldmap effectue un foldmap sur les enfants directs du noeud
+      que l'on parcours. il ne descend pas récursivement. *)
   val foldmap : ('acc -> 'a t -> 'acc * 'a t) -> 'acc -> 'a t -> 'acc * 'a t
 end
 
+(**
+   Functor de parcours d'AST
+*)
 module F (T : SigAst) = struct
+  (**
+     Module de parcours en surface des enfants, dans descendre récursivement
+  *)
   module Surface = struct
     let fold f0 acc t =
       let f acc t =
@@ -51,6 +66,9 @@ module F (T : SigAst) = struct
       in acc
   end
 
+  (**
+     Module de parcours récursif des enfants
+  *)
   module Deep = struct
 
     let rec foldmap f acc t =
@@ -76,9 +94,14 @@ module F (T : SigAst) = struct
 	T.foldmap f () m in
       let (_, m) = f () m
       in m
-
-
   end
+
+  (**
+     Module de parcours récursif paramétré des enfants : une
+     continuation est passée a la fonction de parcours qui décide elle
+     même si elle parcours ou non et quand elle parcours (avant ou
+     après avoir modifié l'accumulateur)
+  *)
   module Traverse = struct
     let rec foldmap f acc t =
       T.foldmap (f (foldmap f)) acc t
@@ -102,4 +125,5 @@ module F (T : SigAst) = struct
 	 acc
 
   end
+
 end

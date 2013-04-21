@@ -37,6 +37,7 @@ open Ast
 open Arg
 open Libmetalang
 
+(** argument parsing *)
 let config () =
   let c = default_config () in
   let all = String.concat "," languages in

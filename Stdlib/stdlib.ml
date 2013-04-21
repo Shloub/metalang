@@ -30,15 +30,19 @@
 @author Arthur Wendling (art.wendling\@gmail.com)
 *)
 
-let id x = x
+
+(** {2 Standard Operators } *)
 let ( $ ) f x = f x
 let ( <| ) f x = f x
 let ( |> ) x f = f x
 let ( @* ) f g x = f (g x)
 let ( @** ) f g x y = f (g x y)
 
+(** {2 Utils functions } *)
+let id x = x
 let curry f a b = f (a, b)
 let uncurry f (a, b) = f a b
+
 let map_fst f (a, b) = f a, b
 let map_snd f (a, b) = a, f b
 
@@ -48,14 +52,12 @@ let flip f x y = f y x
 let cons x xs = x::xs
 let snoc xs x = x::xs
 
+(** {2 type conversion functions } *)
 let int = int_of_float
 let float = float_of_int
-
 let int_of_bool b = if b then 1 else 0
-
 let float_of_char = float_of_int @* int_of_char
 let float_of_bool = float_of_int @* int_of_bool
-
 
 (** {2 Standard modules } *)
 
@@ -75,21 +77,40 @@ module Int = struct
 		in go 1
 end
 
+(**
+   Option module
+*)
 module Option = struct
 
+    (**
+       Renvoie une exception quand on lui passe None en argument
+       Renvoie la valeur x contenue dans Some x
+    *)
   let extract = function
     | None -> invalid_arg "Option.get"
     | Some value -> value
 
+  (**
+     Si None, renvoie default
+     Si Some x, renvoie f x
+  *)
   let map_default default f = function
     | None -> default
     | Some value -> f value
 
+  (** renvoie true si la valeur passée en argument est none *)
   let is_none x = map_default true (const false) x
+  (** renvoie true si la valeur passée en argument est Some _ *)
   let is_some x = not (is_none x)
+  (** renvoie d si None, x si Some x *)
   let default d = map_default d id
+  (** crée Some x a partir de x *)
 	let return x = Some x
+  (** renvoie None si le second argument est None, renvoie f x si le
+      second argument est Some x *)
   let bind f = map_default None f
+  (** renvoie None si le second argument est None, renvoie Some (f
+      x) si le second argument est Some x*)
   let map f = bind (return @* f)
 
 	let catch f x = try Some (f x) with _ -> None
@@ -280,12 +301,14 @@ module MakeMap (K : Map.OrderedType) = struct
   let find_opt key = Option.catch (find key)
 end
 
-
+(** {3 Collections prédéfinies} *)
 module IntSet = MakeSet (Int)
 module IntMap = MakeMap (Int)
 module StringMap = MakeMap (String)
 module StringSet = MakeSet (String)
 
+(** {2 Fix module} *)
+(** les modules dérécursivés *)
 module type Fixable = sig
   type ('a, 'b) tofix
   val map : ('a -> 'b) -> ('a, 'c) tofix -> ('b, 'c) tofix

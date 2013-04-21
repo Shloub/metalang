@@ -30,8 +30,6 @@
 @author Arthur Wendling (art.wendling\@gmail.com)
 *)
 
-val id : 'a -> 'a
-
 (** {2 Standard operators } *)
 
 val ( $ ) : ('a -> 'b) -> 'a -> 'b
@@ -40,6 +38,8 @@ val ( |> ) : 'a -> ('a -> 'b) -> 'b
 val ( @* ) : ('a -> 'b) -> ('c -> 'a) -> 'c -> 'b
 val ( @** ) : ('a -> 'b) -> ('c -> 'd -> 'a) -> 'c -> 'd -> 'b
 
+(** {2 Utils functions } *)
+val id : 'a -> 'a
 val curry : ('a * 'b -> 'c) -> 'a -> 'b -> 'c
 val uncurry : ('a -> 'b -> 'c) -> 'a * 'b -> 'c
 val map_fst : ('a -> 'b) -> 'a * 'c -> 'b * 'c
@@ -50,6 +50,8 @@ val flip : ('a -> 'b -> 'c) -> 'b -> 'a -> 'c
 
 val cons : 'a -> 'a list -> 'a list
 val snoc : 'a list -> 'a -> 'a list
+
+(** {2 type conversion functions } *)
 
 val int : float -> int
 val float : int -> float
@@ -272,6 +274,8 @@ sig
   val find_opt : key -> 'a t -> 'a option
 end
 
+(** {3 Collections prédéfinies} *)
+
 module IntSet :
 sig
   type elt = Int.t
@@ -399,6 +403,9 @@ sig
   val split : elt -> t -> t * bool * t
   val of_list : elt list -> t
 end
+
+(** {2 Fix module} *)
+(** les modules dérécursivés *)
 
 module type Fixable = sig
   type ('a, 'b) tofix

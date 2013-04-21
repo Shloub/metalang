@@ -22,7 +22,7 @@
 <li><a href="doc.html">Documentation</a></li>
 <li><a href="demo.html">Démonstration</a></li>
 <li><a href="http://www.prologin.org">Prologin</a></li>
-<li><a href="../">main author</a></li>
+<li><a href="../">Blog du projet</a></li>
 </ul>
 </div>
 <div id="anchors">
@@ -48,6 +48,9 @@
 <li><a href="#for"><h3>For</h3></a></li>
 <li><a href="#while"><h3>While</h3></a></li>
 </ul>
+
+<a href="#stdlib"><h2>Stdlib</h2></a>
+
 </div>
 <div id="right">
 <a name="intro"></a>
@@ -312,6 +315,34 @@ end
 </textarea></div>
 
 <p>Pour des raisons de compatibilité avec certains langages (ocaml par exemple), il n'existe pas d'instruction break ou continue.</p>
+<hr />
+
+
+
+<a name="stdlib"></a>
+<h2>Stdlib</h2>
+<p>La librairie standard de métalang est actuellement assez pauvre, cependant nous avons quand même plusieurs fonctions utiles :</p>
+<ul>
+<span class="type">int</span> <span class="funname">random</span>(<span class="type">int</span>)
+</li><li>
+<span class="type">char</span> <span class="funname">char_of_int</span>(<span class="type">int</span>)
+</li><li>
+<span class="type">int</span> <span class="funname">int_of_char</span>(<span class="type">char</span>)
+</li><li>
+<span class="type">float</span> <span class="funname">float_of_int</span>(<span class="type">int</span>)
+</li><li>
+<span class="type">bool</span> <span class="funname">is_number</span>(<span class="type">char</span>)
+</li><li>
+<span class="type">int</span> <span class="funname">max2</span>(<span class="type">int</span>, <span class="type">int</span>)
+</li><li>
+<span class="type">int</span> <span class="funname">min2</span>(<span class="type">int</span>, <span class="type">int</span>)
+</li><li>
+<span class="type">int</span> <span class="funname">min3</span>(<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>)
+</li><li>
+<span class="type">int</span> <span class="funname">min4</span>(<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>)
+</li>
+</ul>
+<p>Pour le moment, nous n'avons aucune structure de donnée codée en metalang, vous devrez tout faire avec des tableaux et des structures (sachant que NULL n'existe pas en metalang, c'est une limitation assez dure du langage)</p>
 <hr />
 
 <p>vous trouverez <a href="site.html">ici quelques Exemples</a> de codes metalang simples. Ils pourront vous permettre de mieux vous familiariser avec le langage.</p>

@@ -41,6 +41,7 @@ type fieldname = string
 module BindingSet = StringSet
 module BindingMap = StringMap
 
+(** returns the next value *)
 let next =
   let r = ref 0 in
   fun () ->
@@ -50,15 +51,25 @@ let next =
       out
     end
 
+(** {2 Positions} *)
+(** the position in a file :
+    ((a, b), (c, d)) means from line a char b to line c char d
+*)
 type location = ( (int * int ) * ( int * int ) )
+
 let default_location = (-1, -1), (-1, -1)
+
+(** get a position from lexer (line, char) *)
 let position p =
   let line = p.Lexing.pos_lnum in
   let cnum = p.Lexing.pos_cnum - p.Lexing.pos_bol - 1 in
   (line, cnum)
+
+(** get a location from lexer *)
 let location (p1, p2) =
   (position p1, position p2)
 
+(** position map *)
 module PosMap : sig
   val add : int -> location -> unit
   val get : int -> location
@@ -72,6 +83,11 @@ end = struct
     with Not_found -> (-1, -1), (-1, -1)
 end
 
+(** {2 Modules d'AST} *)
+
+(** lexems modules
+    this module contains macro definitions
+*)
 module Lexems = struct
 
   type ('token, 'expr) t =
@@ -87,14 +103,23 @@ module Lexems = struct
     | Token t -> Token t
     | UnQuote li ->
       UnQuote (List.map (map_expr f) li)
-
 end
 
+(**
+   mutable module
+   this module contains mutable values like array, records and variables
+*)
 module Mutable = struct
+
+  (** {2 type} *)
+
   type ('mutable_, 'expr) tofix =
       Var of varname
     | Array of 'mutable_ * 'expr list
     | Dot of 'mutable_ * fieldname
+
+  (** {2 Parcours} *)
+
   module Fixed = Fix(struct
     type ('a, 'b) alias = ('a, 'b) tofix
     type ('a, 'b) tofix = ('a, 'b) alias
@@ -107,8 +132,6 @@ module Mutable = struct
   type 'a t = 'a Fixed.t
   let fix = Fixed.fix
   let unfix = Fixed.unfix
-  let array a el = Array (a, el) |> Fixed.fix
-  let var a = Var a |> Fixed.fix
   let rec foldmap_expr f acc mut =
     let annot = Fixed.annot mut in
     match Fixed.unfix mut with
@@ -122,8 +145,18 @@ module Mutable = struct
         acc, Fixed.fixa annot (Array (mut, li) )
 
   let map_expr f m = foldmap_expr (fun () e -> (), f e) () m |> snd
+
+  (** {2 utils} *)
+
+  let array a el = Array (a, el) |> Fixed.fix
+  let var a = Var a |> Fixed.fix
+
 end
 
+(**
+   type module
+   this module contains ast for metalang types
+*)
 module Type = struct
   type structparams =
       {
@@ -287,11 +320,25 @@ module Type = struct
 end
 
 module TypeMap = MakeMap (Type)
-
 module TypeSet = MakeSet (Type)
 
+
+(**
+   expr module
+this module contains ast for metalang expressions
+*)
 module Expr = struct
-  type unop = Neg | Not | BNot
+
+
+  (** {2 types} *)
+
+  (** unary operators *)
+  type unop =
+      Neg (** integer or float*)
+    | Not (** boolean *)
+    | BNot (** bitwise integer operator *)
+
+  (** binary operators *)
   type binop =
     | Add | Sub | Mul | Div (* int or float *)
     | Mod (* int *)
@@ -301,19 +348,20 @@ module Expr = struct
     | BinOr | BinAnd | RShift | LShift (* int *)
 
   type ('a, 'lex) tofix =
-    (*operations numeriques*)
-      BinOp of 'a * binop * 'a
-    | UnOp of 'a * unop
-    (* liefs *)
+      BinOp of 'a * binop * 'a (** operations binaires *)
+    | UnOp of 'a * unop (** operations unaires *)
     | Char of char
     | String of string
     | Float of float
     | Integer of int
     | Bool of bool
-    | Access of 'a Mutable.t
-    | Call of funname * 'a list
-    | Lexems of ('lex, 'a) Lexems.t list
-    | Enum of string
+    | Access of 'a Mutable.t (** vaut la valeur du mutable *)
+    | Call of funname * 'a list (** appelle la fonction *)
+    | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
+    | Enum of string (** enumerateur *)
+
+
+  (** {2 parcours} *)
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = ('a, 'b) tofix
@@ -340,6 +388,37 @@ module Expr = struct
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
+
+
+  module Writer = AstWriter.F (struct
+    type 'a alias = 'a t;;
+    type 'a t = 'a alias;;
+    let foldmap f acc t =
+      let annot = Fixed.annot t in
+      match unfix t with
+        | UnOp (a, op) ->
+          let acc, a = f acc a in
+          (acc, Fixed.fixa annot (UnOp(a, op)))
+        | BinOp (a, op, b) ->
+          let acc, a = f acc a in
+          let acc, b = f acc b in
+          (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
+        | Char _ -> acc, t
+        | String _ -> acc, t
+        | Float _ -> acc, t
+        | Integer _ -> acc, t
+        | Bool _ -> acc, t
+        | Access m ->
+          let acc, m = Mutable.foldmap_expr f acc m in
+          acc, Fixed.fixa annot (Access m)
+        | Call (name, li) ->
+          let acc, li = List.fold_left_map f acc li in
+          (acc, Fixed.fixa annot (Call(name, li)) )
+        | Lexems x -> acc, Fixed.fixa annot (Lexems x)
+        | Enum x -> acc, Fixed.fixa annot (Enum x)
+  end)
+
+  (** {2 utils} *)
 
   let bool b = fix (Bool b)
 
@@ -374,35 +453,11 @@ module Expr = struct
     | Type.Struct _ -> failwith ("new struct is not an expression")
     | Type.Enum _ -> failwith ("new enum is not an expression")
 
-  module Writer = AstWriter.F (struct
-    type 'a alias = 'a t;;
-    type 'a t = 'a alias;;
-    let foldmap f acc t =
-      let annot = Fixed.annot t in
-      match unfix t with
-        | UnOp (a, op) ->
-          let acc, a = f acc a in
-          (acc, Fixed.fixa annot (UnOp(a, op)))
-        | BinOp (a, op, b) ->
-          let acc, a = f acc a in
-          let acc, b = f acc b in
-          (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
-        | Char _ -> acc, t
-        | String _ -> acc, t
-        | Float _ -> acc, t
-        | Integer _ -> acc, t
-        | Bool _ -> acc, t
-        | Access m ->
-          let acc, m = Mutable.foldmap_expr f acc m in
-          acc, Fixed.fixa annot (Access m)
-        | Call (name, li) ->
-          let acc, li = List.fold_left_map f acc li in
-          (acc, Fixed.fixa annot (Call(name, li)) )
-        | Lexems x -> acc, Fixed.fixa annot (Lexems x)
-        | Enum x -> acc, Fixed.fixa annot (Enum x)
-  end)
 end
 
+(**
+   instructions metalang
+*)
 module Instr = struct
   let mutable_var varname = Mutable.Var varname |> Mutable.Fixed.fix
   let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.Fixed.fix
@@ -491,6 +546,7 @@ module Instr = struct
   let if_ e cif celse =
     If (e, cif, celse) |> fix
 
+  (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
     type 'a alias = 'a t;;
     type 'a t = 'a alias;;
@@ -595,12 +651,13 @@ type 'lex t_fun =
   | Comment of string
   | Unquote of 'lex Expr.t
 
-
 let unquote u = Unquote u
 let comment s = Comment s
 let declarefun var t li1 li2 = DeclarFun (var, t, li1, li2)
 let macro var t params li = Macro (var, t, params, li)
 
+(** global programm type :
+    values of this type contains a full metalang programm *)
 type 'lex t =
     {
       progname : string;
