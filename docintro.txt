@@ -1,0 +1,6 @@
+{{:http://eelte.megami.fr/metalang} Métalang project.}
+Cette documentation est la doc interne du projet Métalang.
+{{:http://eelte.megami.fr/} Le blog du projet}
+Ce projet a été créé pour un concours d'informatique.
+{{:http://www.prologin.org} Le site du concours}
+{!indexlist}
