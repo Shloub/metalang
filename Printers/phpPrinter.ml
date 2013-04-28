@@ -43,6 +43,9 @@ class phpPrinter = object(self)
 
   method lang () = "php"
 
+  method char f c =
+    Format.fprintf f "ord(%C)" c
+
   method prototype f t =
     match Type.unfix t with
       | Type.Array _
@@ -100,8 +103,9 @@ class phpPrinter = object(self)
     Format.fprintf f "<?php@\n%s%s%s%a%a@\n?>"
       (if need then "
 $stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN).\"\\n\";}
 function scan($format){
+ stdin_();
   global $stdin;
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
@@ -110,14 +114,19 @@ function scan($format){
       (if need_stdinsep then "
 function scantrim(){
   global $stdin;
-  $stdin = trim($stdin);
+while(true){
+ $stdin = ltrim($stdin);
+if ($stdin != '' || feof(STDIN)) break;
+  stdin_();
+}
 }" else "")
       (if need_readchar then "
 function nextChar(){
+ stdin_();
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return $out;
+  return ord($out);
 }" else "")
 
       self#proglist prog.Prog.funs

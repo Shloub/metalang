@@ -1,6 +1,6 @@
 <?php
 
-$input = ' ';
+$input = ord(' ');
 $current_pos = 500;
 $p = 1000;
 $mem = array();

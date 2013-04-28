@@ -1,8 +1,9 @@
 <?php
 
 $stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN)."\n";}
 function scan($format){
+ stdin_();
   global $stdin;
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
@@ -10,16 +11,21 @@ function scan($format){
 }
 function scantrim(){
   global $stdin;
-  $stdin = trim($stdin);
+while(true){
+ $stdin = ltrim($stdin);
+if ($stdin != '' || feof(STDIN)) break;
+  stdin_();
+}
 }
 function nextChar(){
+ stdin_();
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return $out;
+  return ord($out);
 }
 function is_number($c){
-  return ($c <= '9') && ($c >= '0');
+  return ($c <= ord('9')) && ($c >= ord('0'));
 }
 
 /*
@@ -35,22 +41,22 @@ function npi_(&$str, $len){
   $ptrStr = 0;
   while ($ptrStr < $len)
   {
-    if ($str[$ptrStr] == ' ')
+    if ($str[$ptrStr] == ord(' '))
     {
       $ptrStr = $ptrStr + 1;
     }
     else if (is_number($str[$ptrStr]))
     {
       $num = 0;
-      while ($str[$ptrStr] != ' ')
+      while ($str[$ptrStr] != ord(' '))
       {
-        $num = $num * 10 + $str[$ptrStr] - '0';
+        $num = $num * 10 + $str[$ptrStr] - ord('0');
         $ptrStr = $ptrStr + 1;
       }
       $stack[$ptrStack] = $num;
       $ptrStack = $ptrStack + 1;
     }
-    else if ($str[$ptrStr] == '+')
+    else if ($str[$ptrStr] == ord('+'))
     {
       $stack[$ptrStack - 2] = $stack[$ptrStack - 2] + $stack[$ptrStack - 1];
       $ptrStack = $ptrStack - 1;
@@ -66,7 +72,7 @@ scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = '\000';
+  $tmp = ord('\000');
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }

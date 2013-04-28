@@ -1,8 +1,9 @@
 <?php
 
 $stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN)."\n";}
 function scan($format){
+ stdin_();
   global $stdin;
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
@@ -10,13 +11,18 @@ function scan($format){
 }
 function scantrim(){
   global $stdin;
-  $stdin = trim($stdin);
+while(true){
+ $stdin = ltrim($stdin);
+if ($stdin != '' || feof(STDIN)) break;
+  stdin_();
+}
 }
 function nextChar(){
+ stdin_();
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return $out;
+  return ord($out);
 }
 function min2($a, $b){
   if ($a < $b)
@@ -43,7 +49,7 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
   {
     return $x * $y * 10;
   }
-  else if ($tab[$posY][$posX] == '#')
+  else if ($tab[$posY][$posX] == ord('#'))
   {
     return $x * $y * 10;
   }
@@ -90,7 +96,7 @@ for ($i = 0 ; $i < $y; $i++)
   $tab2 = array();
   for ($j = 0 ; $j < $x; $j++)
   {
-    $tmp = '\000';
+    $tmp = ord('\000');
     $tmp = nextChar();
     $tab2[$j] = $tmp;
   }

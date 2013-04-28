@@ -1,8 +1,9 @@
 <?php
 
 $stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN)."\n";}
 function scan($format){
+ stdin_();
   global $stdin;
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
@@ -10,13 +11,18 @@ function scan($format){
 }
 function scantrim(){
   global $stdin;
-  $stdin = trim($stdin);
+while(true){
+ $stdin = ltrim($stdin);
+if ($stdin != '' || feof(STDIN)) break;
+  stdin_();
+}
 }
 function nextChar(){
+ stdin_();
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return $out;
+  return ord($out);
 }
 function nth(&$tab, $tofind, $len){
   $out_ = 0;
@@ -33,13 +39,13 @@ function nth(&$tab, $tofind, $len){
 $len = 0;
 list($len) = scan("%d");
 scantrim();
-$tofind = '\000';
+$tofind = ord('\000');
 $tofind = nextChar();
 scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = '\000';
+  $tmp = ord('\000');
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }

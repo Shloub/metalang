@@ -1,8 +1,9 @@
 <?php
 
 $stdin='';
-while (!feof(STDIN)) $stdin.=fgets(STDIN);
+function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN)."\n";}
 function scan($format){
+ stdin_();
   global $stdin;
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
@@ -10,7 +11,11 @@ function scan($format){
 }
 function scantrim(){
   global $stdin;
-  $stdin = trim($stdin);
+while(true){
+ $stdin = ltrim($stdin);
+if ($stdin != '' || feof(STDIN)) break;
+  stdin_();
+}
 }
 function mktoto($v1){
   $t = array(
