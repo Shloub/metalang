@@ -59,6 +59,10 @@ let config () =
 
     "-eval", Unit (fun () -> c.eval <- true),
     "Eval this file";
+
+    "-version", Unit (fun () ->
+      Printf.printf "Metalang compiler, Version %s\nDate %s\n" Version.version Version.compile_time
+    ), "show the version"
  ] in
   Arg.parse spec (fun f -> c.filenames <- f :: c.filenames) descr ;
   c
