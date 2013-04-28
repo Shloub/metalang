@@ -54,6 +54,6 @@ begin
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     tab2) in
   let result = pathfind tab (!x) (!y) in
-  Printf.printf "%d" (result)
+  Printf.printf "%d" result
 end
  

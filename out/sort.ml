@@ -23,7 +23,7 @@ begin
   sort_ tab (!len);
   for i = 0 to (!len) - 1 do
     let h = tab.(i) in
-    Printf.printf "%d" (h)
+    Printf.printf "%d" h
   done
 end
  

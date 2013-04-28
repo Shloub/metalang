@@ -17,6 +17,6 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> b := value);
   let i = exp_ (!a) (!b) in
-  Printf.printf "%d" (i)
+  Printf.printf "%d" i
 end
  

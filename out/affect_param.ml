@@ -6,7 +6,7 @@ let () =
 begin
   let a = 0 in
   foo a;
-  Printf.printf "%d" (a);
-  Printf.printf "%s" ("\n")
+  Printf.printf "%d" a;
+  Printf.printf "%s" "\n"
 end
  

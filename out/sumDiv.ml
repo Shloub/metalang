@@ -25,6 +25,6 @@ begin
   Scanf.scanf "%d" (fun value -> n := value);
   (* Lecture de l'entier *)
   let g = sumdiv (!n) in
-  Printf.printf "%d" (g)
+  Printf.printf "%d" g
 end
  

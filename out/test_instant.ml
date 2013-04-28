@@ -1,6 +1,6 @@
 
 let () =
 begin
-  Printf.printf "%d" (10)
+  Printf.printf "%d" 10
 end
  

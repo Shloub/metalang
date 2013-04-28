@@ -13,6 +13,6 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> param.foo <- value);
   let g = param.bar + param.foo * param.bar in
-  Printf.printf "%d" (g)
+  Printf.printf "%d" g
 end
  

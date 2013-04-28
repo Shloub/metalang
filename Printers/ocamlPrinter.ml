@@ -419,10 +419,12 @@ class camlPrinter = object(self)
     else
       Format.fprintf f "%a" self#binding e
 
-  method print f t expr = (* TODO virer les parentheses quand on peut *)
-    Format.fprintf f "@[Printf.printf \"%a\" (%a)@]"
+  method print f t expr =
+    Format.fprintf f "@[Printf.printf \"%a\" %a@]"
       self#format_type t
-      self#expr expr
+      (if self#nop (Expr.unfix expr) then
+          self#expr
+       else self#printp) expr
 
   method comment f str =
     Format.fprintf f "(*%s*)" str
@@ -475,6 +477,9 @@ class camlPrinter = object(self)
 
 
   method nop = function
+    | Expr.Enum _ -> true
+    | Expr.Char _ -> true
+    | Expr.Bool _ -> true
     | Expr.Integer _ -> true
     | Expr.Float _ -> true
     | Expr.String _ -> true

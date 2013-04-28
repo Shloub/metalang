@@ -47,8 +47,8 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> t.blah <- value);
   let o = result t t2 in
-  Printf.printf "%d" (o);
+  Printf.printf "%d" o;
   let p = t.blah in
-  Printf.printf "%d" (p)
+  Printf.printf "%d" p
 end
  

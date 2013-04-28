@@ -10,16 +10,16 @@ let rec print_sudoku sudoku_ =
   for y = 0 to 8 do
     for x = 0 to 8 do
       let r = sudoku_.(x + y * 9) in
-      Printf.printf "%d" (r);
-      Printf.printf "%s" (" ");
+      Printf.printf "%d" r;
+      Printf.printf "%s" " ";
       if (x mod 3) = 2 then
-        Printf.printf "%s" (" ")
+        Printf.printf "%s" " "
     done;
-    Printf.printf "%s" ("\n");
+    Printf.printf "%s" "\n";
     if (y mod 3) = 2 then
-      Printf.printf "%s" ("\n")
+      Printf.printf "%s" "\n"
   done;
-  Printf.printf "%s" ("\n")
+  Printf.printf "%s" "\n"
 
 exception Found_1 of bool;;
 let rec sudoku_done s =
@@ -63,6 +63,6 @@ begin
   if solve sudoku_ then
     print_sudoku sudoku_
   else
-    Printf.printf "%s" ("no solution\n")
+    Printf.printf "%s" "no solution\n"
 end
  

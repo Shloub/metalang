@@ -44,6 +44,6 @@ begin
     Scanf.scanf "%c" (fun value -> tmp := value);
     (!tmp)) in
   let result = npi_ tab (!len) in
-  Printf.printf "%d" (result)
+  Printf.printf "%d" result
 end
  

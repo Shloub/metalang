@@ -17,21 +17,21 @@ type move = {
 
 (* On affiche l'état *)
 let rec print_state g =
-  Printf.printf "%s" ("\n|");
+  Printf.printf "%s" "\n|";
   for y = 0 to 2 do
     for x = 0 to 2 do
       if g.cases.(x).(y) = 0 then
-        Printf.printf "%s" (" ")
+        Printf.printf "%s" " "
       else if g.cases.(x).(y) = 1 then
-        Printf.printf "%s" ("O")
+        Printf.printf "%s" "O"
       else
-        Printf.printf "%s" ("X");
-      Printf.printf "%s" ("|")
+        Printf.printf "%s" "X";
+      Printf.printf "%s" "|"
     done;
     if y <> 2 then
-      Printf.printf "%s" ("\n|-|-|-|\n|")
+      Printf.printf "%s" "\n|-|-|-|\n|"
   done;
-  Printf.printf "%s" ("\n")
+  Printf.printf "%s" "\n"
 
 (* On dit qui gagne (info stoquées dans g.ended et g.note ) *)
 let rec eval_ g =
@@ -128,12 +128,12 @@ let rec play g =
         begin
           apply_move_xy x y g;
           let currentNote = minmax g in
-          Printf.printf "%d" (x);
-          Printf.printf "%s" (", ");
-          Printf.printf "%d" (y);
-          Printf.printf "%s" (", ");
-          Printf.printf "%d" (currentNote);
-          Printf.printf "%s" ("\n");
+          Printf.printf "%d" x;
+          Printf.printf "%s" ", ";
+          Printf.printf "%d" y;
+          Printf.printf "%s" ", ";
+          Printf.printf "%d" currentNote;
+          Printf.printf "%s" "\n";
           cancel_move_xy x y g;
           if currentNote < (!minNote) then
             begin
@@ -145,10 +145,10 @@ let rec play g =
     done
   done;
   let bl = minMove.x in
-  Printf.printf "%d" (bl);
+  Printf.printf "%d" bl;
   let bm = minMove.y in
-  Printf.printf "%d" (bm);
-  Printf.printf "%s" ("\n");
+  Printf.printf "%d" bm;
+  Printf.printf "%s" "\n";
   minMove
 
 let rec init () =
@@ -184,8 +184,8 @@ begin
     done;
     print_state state;
     let bp = state.note in
-    Printf.printf "%d" (bp);
-    Printf.printf "%s" ("\n")
+    Printf.printf "%d" bp;
+    Printf.printf "%s" "\n"
   done
 end
  

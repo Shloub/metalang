@@ -41,6 +41,6 @@ begin
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     (!tmp)) in
   let n = plus_petit_ tab (!len) in
-  Printf.printf "%d" (n)
+  Printf.printf "%d" n
 end
  

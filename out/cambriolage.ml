@@ -51,6 +51,6 @@ begin
       out_) in
     out0) in
   let bc = nbPassePartout n passepartout m serrures in
-  Printf.printf "%d" (bc)
+  Printf.printf "%d" bc
 end
  

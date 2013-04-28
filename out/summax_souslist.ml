@@ -21,6 +21,6 @@ begin
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     (!tmp)) in
   let result = summax tab (!len) in
-  Printf.printf "%d" (result)
+  Printf.printf "%d" result
 end
  

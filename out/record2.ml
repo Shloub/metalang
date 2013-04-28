@@ -23,8 +23,8 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> t.blah <- value);
   let m = result t in
-  Printf.printf "%d" (m);
+  Printf.printf "%d" m;
   let n = t.blah in
-  Printf.printf "%d" (n)
+  Printf.printf "%d" n
 end
  

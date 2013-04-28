@@ -28,8 +28,8 @@ begin
     tmp) in
   let h = devine_ nombre tab len in
   if h then
-    Printf.printf "%s" ("True")
+    Printf.printf "%s" "True"
   else
-    Printf.printf "%s" ("False")
+    Printf.printf "%s" "False"
 end
  

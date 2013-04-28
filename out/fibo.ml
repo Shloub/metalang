@@ -21,6 +21,6 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> i := value);
   let k = fibo_ (!a) (!b) (!i) in
-  Printf.printf "%d" (k)
+  Printf.printf "%d" k
 end
  

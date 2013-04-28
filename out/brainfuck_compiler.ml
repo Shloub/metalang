@@ -70,7 +70,7 @@ begin
       current_pos := (!current_pos) - 1;
       mem.((!current_pos)) <- mem.((!current_pos)) + 1;
       let o = char_of_int (mem.((!current_pos))) in
-      Printf.printf "%c" (o);
+      Printf.printf "%c" o;
       current_pos := (!current_pos) + 1
   done
 end

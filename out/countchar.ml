@@ -19,6 +19,6 @@ begin
     Scanf.scanf "%c" (fun value -> tmp := value);
     (!tmp)) in
   let result = nth tab (!tofind) (!len) in
-  Printf.printf "%d" (result)
+  Printf.printf "%d" result
 end
  
