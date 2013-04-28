@@ -1,0 +1,35 @@
+main
+  def read int len skip
+  print int len
+  print string "=len\n"
+  def array<int> tab[len] with i do
+    def read int tmp skip
+    print int i
+    print string "=>"
+    print int tmp
+    print string "\n"
+    return tmp
+  end
+  def array<int> tab2[len] with i do
+    def read int tmp skip
+    print int i
+    print string "==>"
+    print int tmp
+    print string "\n"
+    return tmp
+  end
+  def read int strlen skip
+  print int strlen
+  print string "=strlen\n"
+  def array<char> tab4[strlen] with toto do
+    def read char tmp
+    def int i = int_of_char(tmp);
+    if tmp != ' ' then
+      i = (i - int_of_char('a') + 13) % 26 + int_of_char('a')
+    end
+    return char_of_int(i)
+  end
+  for j = 0 to strlen - 1 do
+    print char tab4[j];
+  end
+end
