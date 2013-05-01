@@ -8,7 +8,7 @@ int devine_(int nombre, int* tab, int len){
     int i;
     for (i = 2 ; i < len; i++)
     {
-      if ((tab[i] > max_) || (tab[i] < min_))
+      if (tab[i] > max_ || tab[i] < min_)
       {
         return 0;
       }
@@ -20,7 +20,7 @@ int devine_(int nombre, int* tab, int len){
       {
         max_ = tab[i];
       }
-      if ((tab[i] == nombre) && (len != (i + 1)))
+      if (tab[i] == nombre && len != i + 1)
       {
         return 0;
       }

@@ -17,7 +17,7 @@ def find0( len, tab, cache, x, y )
 	
 =end
 
-    if y == (len - 1) then
+    if y == len - 1 then
       return (tab[y][x]);
     elsif x > y then
       return (100000);

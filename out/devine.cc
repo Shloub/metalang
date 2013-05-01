@@ -7,7 +7,7 @@ bool devine_(int nombre, std::vector<int >& tab, int len){
   int max_ = tab.at(1);
   for (int i = 2 ; i < len; i++)
   {
-    if ((tab.at(i) > max_) || (tab.at(i) < min_))
+    if (tab.at(i) > max_ || tab.at(i) < min_)
     {
       return false;
     }
@@ -19,7 +19,7 @@ bool devine_(int nombre, std::vector<int >& tab, int len){
     {
       max_ = tab.at(i);
     }
-    if ((tab.at(i) == nombre) && (len != (i + 1)))
+    if (tab.at(i) == nombre && len != i + 1)
     {
       return false;
     }

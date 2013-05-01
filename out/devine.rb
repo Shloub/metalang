@@ -5,7 +5,7 @@ def devine_( nombre, tab, len )
     min_ = tab[0]
     max_ = tab[1]
     for i in (2 ..  len - 1) do
-      if (tab[i] > max_) || (tab[i] < min_) then
+      if tab[i] > max_ || tab[i] < min_ then
         return (false);
       end
       if tab[i] < nombre then
@@ -14,7 +14,7 @@ def devine_( nombre, tab, len )
       if tab[i] > nombre then
         max_ = tab[i];
       end
-      if (tab[i] == nombre) && (len != (i + 1)) then
+      if tab[i] == nombre && len != i + 1 then
         return (false);
       end
     end

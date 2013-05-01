@@ -4,13 +4,13 @@ let rec devine_ nombre tab len =
   let min_ = ref( tab.(0) ) in
   let max_ = ref( tab.(1) ) in
   for i = 2 to len - 1 do
-    if (tab.(i) > (!max_)) or (tab.(i) < (!min_)) then
+    if tab.(i) > (!max_) or tab.(i) < (!min_) then
       raise (Found_1(false));
     if tab.(i) < nombre then
       min_ := tab.(i);
     if tab.(i) > nombre then
       max_ := tab.(i);
-    if (tab.(i) = nombre) && (len <> (i + 1)) then
+    if tab.(i) = nombre && len <> i + 1 then
       raise (Found_1(false))
   done;
   raise (Found_1(true))

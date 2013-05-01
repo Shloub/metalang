@@ -54,9 +54,9 @@ def min4( a, b, c, d ):
     return min3(min2(a, b), c, d);
 
 def pathfind_aux( cache, tab, x, y, posX, posY ):
-    if (posX == (x - 1)) and (posY == (y - 1)):
+    if posX == x - 1 and posY == y - 1:
       return 0;
-    elif (((posX < 0) or (posY < 0)) or (posX >= x)) or (posY >= y):
+    elif posX < 0 or posY < 0 or posX >= x or posY >= y:
       return x * y * 10;
     elif tab[posY][posX] == '#':
       return x * y * 10;

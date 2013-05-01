@@ -51,7 +51,7 @@ function eval_(&$g){
       }
       $colv = $g["cases"][$x][$y];
       $linv = $g["cases"][$y][$x];
-      if (($col == -1) && ($colv != 0))
+      if ($col == -1 && $colv != 0)
       {
         $col = $colv;
       }
@@ -59,7 +59,7 @@ function eval_(&$g){
       {
         $col = -2;
       }
-      if (($lin == -1) && ($linv != 0))
+      if ($lin == -1 && $linv != 0)
       {
         $lin = $linv;
       }
@@ -79,16 +79,16 @@ function eval_(&$g){
   }
   for ($x = 1 ; $x <= 2; $x++)
   {
-    if ((($g["cases"][0][0] == $x) && ($g["cases"][1][1] == $x)) && ($g["cases"][2][2] == $x))
+    if ($g["cases"][0][0] == $x && $g["cases"][1][1] == $x && $g["cases"][2][2] == $x)
     {
       $win = $x;
     }
-    if ((($g["cases"][0][2] == $x) && ($g["cases"][1][1] == $x)) && ($g["cases"][2][0] == $x))
+    if ($g["cases"][0][2] == $x && $g["cases"][1][1] == $x && $g["cases"][2][0] == $x)
     {
       $win = $x;
     }
   }
-  $g["ended"] = ($win != 0) || ($freecase == 0);
+  $g["ended"] = $win != 0 || $freecase == 0;
   if ($win == 1)
   {
     $g["note"] = 1000;

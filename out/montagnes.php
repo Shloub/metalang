@@ -24,7 +24,7 @@ function montagnes_(&$tab, $len){
   while ($i >= 0)
   {
     $x = $tab[$i];
-    while (($j >= 0) && ($x > $tab[$len - $j]))
+    while ($j >= 0 && $x > $tab[$len - $j])
     {
       $j = $j - 1;
     }

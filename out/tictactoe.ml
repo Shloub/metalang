@@ -45,11 +45,11 @@ let rec eval_ g =
         freecase := (!freecase) + 1;
       let colv = g.cases.(x).(y) in
       let linv = g.cases.(y).(x) in
-      if ((!col) = -1) && (colv <> 0) then
+      if (!col) = -1 && colv <> 0 then
         col := colv
       else if colv <> (!col) then
         col := -2;
-      if ((!lin) = -1) && (linv <> 0) then
+      if (!lin) = -1 && linv <> 0 then
         lin := linv
       else if linv <> (!lin) then
         lin := -2
@@ -60,12 +60,12 @@ let rec eval_ g =
       win := (!lin)
   done;
   for x = 1 to 2 do
-    if ((g.cases.(0).(0) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(2) = x) then
+    if g.cases.(0).(0) = x && g.cases.(1).(1) = x && g.cases.(2).(2) = x then
       win := x;
-    if ((g.cases.(0).(2) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(0) = x) then
+    if g.cases.(0).(2) = x && g.cases.(1).(1) = x && g.cases.(2).(0) = x then
       win := x
   done;
-  g.ended <- ((!win) <> 0) or ((!freecase) = 0);
+  g.ended <- (!win) <> 0 or (!freecase) = 0;
   if (!win) = 1 then
     g.note <- 1000
   else if (!win) = 2 then

@@ -36,11 +36,11 @@ def eval_( g ):
           freecase = freecase + 1;
         colv = g["cases"][x][y];
         linv = g["cases"][y][x];
-        if (col == -(1)) and (colv != 0):
+        if col == -(1) and colv != 0:
           col = colv;
         elif colv != col:
           col = -(2);
-        if (lin == -(1)) and (linv != 0):
+        if lin == -(1) and linv != 0:
           lin = linv;
         elif linv != lin:
           lin = -(2);
@@ -49,11 +49,11 @@ def eval_( g ):
       elif lin >= 0:
         win = lin;
     for x in range(1, 1 + 2):
-      if ((g["cases"][0][0] == x) and (g["cases"][1][1] == x)) and (g["cases"][2][2] == x):
+      if g["cases"][0][0] == x and g["cases"][1][1] == x and g["cases"][2][2] == x:
         win = x;
-      if ((g["cases"][0][2] == x) and (g["cases"][1][1] == x)) and (g["cases"][2][0] == x):
+      if g["cases"][0][2] == x and g["cases"][1][1] == x and g["cases"][2][0] == x:
         win = x;
-    g["ended"] = (win != 0) or (freecase == 0);
+    g["ended"] = win != 0 or freecase == 0;
     if win == 1:
       g["note"] = 1000;
     elif win == 2:

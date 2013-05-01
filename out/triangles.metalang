@@ -6,7 +6,7 @@ def int find0(int len, array<array<int>> tab, array<array<int>> cache, int x, in
   /*
 	Cette fonction est récursive
 	*/
-  if y == (len - 1) then
+  if y == len - 1 then
     return tab[y][x]
   elsif x > y then
     return 100000

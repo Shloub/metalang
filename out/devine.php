@@ -22,7 +22,7 @@ function devine_($nombre, &$tab, $len){
   $max_ = $tab[1];
   for ($i = 2 ; $i < $len; $i++)
   {
-    if (($tab[$i] > $max_) || ($tab[$i] < $min_))
+    if ($tab[$i] > $max_ || $tab[$i] < $min_)
     {
       return false;
     }
@@ -34,7 +34,7 @@ function devine_($nombre, &$tab, $len){
     {
       $max_ = $tab[$i];
     }
-    if (($tab[$i] == $nombre) && ($len != ($i + 1)))
+    if ($tab[$i] == $nombre && $len != $i + 1)
     {
       return false;
     }

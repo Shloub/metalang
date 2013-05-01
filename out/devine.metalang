@@ -3,7 +3,7 @@ def bool devine(int nombre, array<int> tab, int len)
   def int max = tab[1]
   for i=2 to len - 1
   do
-    if (tab[i] > max) || (tab[i] < min)
+    if tab[i] > max || tab[i] < min
     then
       return false
     end
@@ -15,7 +15,7 @@ def bool devine(int nombre, array<int> tab, int len)
     then
       max = tab[i];
     end
-    if (tab[i] == nombre) && (len != (i + 1))
+    if tab[i] == nombre && len != i + 1
     then
       return false
     end

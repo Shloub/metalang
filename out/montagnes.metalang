@@ -5,7 +5,7 @@ def int montagnes(array<int> tab, int len)
   while i >= 0
   do
     def int x = tab[i]
-    while (j >= 0) && (x > tab[len - j])
+    while j >= 0 && x > tab[len - j]
     do
       j = j - 1;
     end

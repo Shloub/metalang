@@ -44,7 +44,7 @@ def montagnes_( tab, len ):
     i = len - 2;
     while (i >= 0):
       x = tab[i];
-      while ((j >= 0) and (x > tab[len - j])):
+      while (j >= 0 and x > tab[len - j]):
         j = j - 1;
       j = j + 1;
       tab[len - j] = x;

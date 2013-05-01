@@ -15,9 +15,9 @@ def int min4(int a, int b, int c, int d)
 end
 
 def int pathfind_aux(array<array<int>> cache, array<array<char>> tab, int x, int y, int posX, int posY)
-  if (posX == (x - 1)) && (posY == (y - 1)) then
+  if posX == x - 1 && posY == y - 1 then
     return 0
-  elsif (((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y) then
+  elsif posX < 0 || posY < 0 || posX >= x || posY >= y then
     return x * y * 10
   elsif tab[posY][posX] == '#' then
     return x * y * 10

@@ -69,7 +69,7 @@ var
   j : integer;
   m : integer;
 begin
-  m := a + b Div 2;
+  m := (a + b) Div 2;
   if a = m
   then
     begin

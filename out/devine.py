@@ -42,13 +42,13 @@ def devine_( nombre, tab, len ):
     min_ = tab[0];
     max_ = tab[1];
     for i in range(2, len):
-      if (tab[i] > max_) or (tab[i] < min_):
+      if tab[i] > max_ or tab[i] < min_:
         return False;
       if tab[i] < nombre:
         min_ = tab[i];
       if tab[i] > nombre:
         max_ = tab[i];
-      if (tab[i] == nombre) and (len != (i + 1)):
+      if tab[i] == nombre and len != i + 1:
         return False;
     return True;
 

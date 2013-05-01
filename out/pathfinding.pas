@@ -103,7 +103,7 @@ begin
     begin
       exit(0);
     end
-  else if (((posX < 0) or (posY < 0)) or (posX >= x)) or (posY >= y) then
+  else if (posX < 0) or (posY < 0) or (posX >= x) or (posY >= y) then
     begin
       exit(x * y * 10);
     end

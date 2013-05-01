@@ -12,10 +12,10 @@ def nbPassePartout( n, passepartout, m, serrures )
     max_ancient = 0
     max_recent = 0
     for i in (0 ..  m - 1) do
-      if (serrures[i][0] == -1) && (serrures[i][1] > max_ancient) then
+      if serrures[i][0] == -1 && serrures[i][1] > max_ancient then
         max_ancient = serrures[i][1];
       end
-      if (serrures[i][0] == 1) && (serrures[i][1] > max_recent) then
+      if serrures[i][0] == 1 && serrures[i][1] > max_recent then
         max_recent = serrures[i][1];
       end
     end
@@ -23,13 +23,13 @@ def nbPassePartout( n, passepartout, m, serrures )
     max_recent_pp = 0
     for i in (0 ..  n - 1) do
       pp = passepartout[i]
-      if (pp[0] >= max_ancient) && (pp[1] >= max_recent) then
+      if pp[0] >= max_ancient && pp[1] >= max_recent then
         return (1);
       end
       max_ancient_pp = max2(max_ancient_pp, pp[0]);
       max_recent_pp = max2(max_recent_pp, pp[1]);
     end
-    if (max_ancient_pp >= max_ancient) && (max_recent_pp >= max_recent) then
+    if max_ancient_pp >= max_ancient && max_recent_pp >= max_recent then
       return (2);
     else
       return (0);

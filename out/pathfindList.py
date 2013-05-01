@@ -39,7 +39,7 @@ def readint():
 
 
 def pathfind_aux( cache, tab, len, pos ):
-    if pos >= (len - 1):
+    if pos >= len - 1:
       return 0;
     elif cache[pos] != -(1):
       return cache[pos];

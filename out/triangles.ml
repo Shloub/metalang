@@ -6,7 +6,7 @@ let rec find0 len tab cache x y =
   (*
 	Cette fonction est récursive
 	*)
-  if y = (len - 1) then
+  if y = len - 1 then
     tab.(y).(x)
   else if x > y then
     100000

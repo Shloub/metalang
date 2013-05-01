@@ -2,7 +2,7 @@
 require "scanf.rb"
 
 def pathfind_aux( cache, tab, len, pos )
-    if pos >= (len - 1) then
+    if pos >= len - 1 then
       return (0);
     elsif cache[pos] != -1 then
       return (cache[pos]);

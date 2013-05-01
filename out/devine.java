@@ -9,7 +9,7 @@ public class devine
     int max_ = tab[1];
     for (int i = 2 ; i < len; i++)
     {
-      if ((tab[i] > max_) || (tab[i] < min_))
+      if (tab[i] > max_ || tab[i] < min_)
       {
         return false;
       }
@@ -21,7 +21,7 @@ public class devine
       {
         max_ = tab[i];
       }
-      if ((tab[i] == nombre) && (len != (i + 1)))
+      if (tab[i] == nombre && len != i + 1)
       {
         return false;
       }

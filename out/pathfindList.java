@@ -5,7 +5,7 @@ public class pathfindList
   static Scanner scanner = new Scanner(System.in);
   public static int pathfind_aux(int[] cache, int[] tab, int len, int pos)
   {
-    if (pos >= (len - 1))
+    if (pos >= len - 1)
     {
       return 0;
     }

@@ -46,14 +46,47 @@ class pasPrinter = object(self)
     Format.fprintf f "{%s}" str
 
   method binop f op a b =
-    match op with
-      | Expr.Div ->
-        if Typer.is_int (super#getTyperEnv ()) a
-        then Format.fprintf f "%a Div %a"
-          self#expr a
-          self#expr b
-        else super#binop f op a b
-      | _ -> super#binop f op a b
+    let print_op op f a =
+      match op with
+        | Expr.Div ->
+          if Typer.is_int (super#getTyperEnv ()) a
+          then Format.fprintf f "Div"
+          else self#print_op f op
+        | _ -> self#print_op f op
+    in
+    let chf op side f x = match (Expr.unfix x) with
+      | Expr.BinOp (_, op2, _) ->
+        begin match (op, side, op2) with
+          | ((Expr.Eq | Expr.Diff | Expr.Lower |
+              Expr.LowerEq | Expr.Higher | Expr.HigherEq
+          ), _, (Expr.And | Expr.Or)) ->
+            self#expr f x
+          | ((Expr.Add | Expr.Sub), _, (Expr.Mul | Expr.Div | Expr.Mod))
+            ->
+            self#expr f x
+          | (Expr.Sub, Left, (Expr.Sub | Expr.Add))
+            ->
+            self#expr f x
+          | (Expr.Add, _, Expr.Add)
+            ->
+            self#expr f x
+          | (Expr.Mul, _, Expr.Mul)
+            ->
+            self#expr f x
+          | (Expr.And, _, Expr.And)
+            ->
+            self#expr f x
+          | (Expr.Or, _, Expr.Or)
+            ->
+            self#expr f x
+          | _ ->
+            self#printp f x
+        end
+      | _ -> self#expr f x
+    in Format.fprintf f "%a@ %a@ %a"
+    (chf op Left) a
+    (print_op op) a
+    (chf op Right) b
 
   method print_op f op =
     Format.fprintf f

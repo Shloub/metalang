@@ -37,7 +37,7 @@ var read_int = function(){
 
 
 function is_number(c){
-  return (c.charCodeAt(0) <= '9'.charCodeAt(0)) && (c.charCodeAt(0) >= '0'.charCodeAt(0));
+  return c.charCodeAt(0) <= '9'.charCodeAt(0) && c.charCodeAt(0) >= '0'.charCodeAt(0);
 }
 
 /*

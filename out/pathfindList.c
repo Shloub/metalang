@@ -2,7 +2,7 @@
 #include<stdlib.h>
 
 int pathfind_aux(int* cache, int* tab, int len, int pos){
-  if (pos >= (len - 1))
+  if (pos >= len - 1)
   {
     return 0;
   }

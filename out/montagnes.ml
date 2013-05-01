@@ -5,7 +5,7 @@ let rec montagnes_ tab len =
   while (!i) >= 0
   do
       let x = tab.((!i)) in
-      while ((!j) >= 0) && (x > tab.(len - (!j)))
+      while (!j) >= 0 && x > tab.(len - (!j))
       do
           j := (!j) - 1
       done;

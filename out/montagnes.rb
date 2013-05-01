@@ -7,7 +7,7 @@ def montagnes_( tab, len )
     i = len - 2
     while i >= 0 do
       x = tab[i]
-      while (j >= 0) && (x > tab[len - j]) do
+      while j >= 0 && x > tab[len - j] do
         j = j - 1;
       end
       j = j + 1;

@@ -9,7 +9,7 @@ int find0(int len, int** tab, int** cache, int x, int y){
   /*
 	Cette fonction est récursive
 	*/
-  if (y == (len - 1))
+  if (y == len - 1)
   {
     return tab[y][x];
   }

@@ -47,19 +47,19 @@ def nbPassePartout( n, passepartout, m, serrures ):
     max_ancient = 0;
     max_recent = 0;
     for i in range(0, m):
-      if (serrures[i][0] == -(1)) and (serrures[i][1] > max_ancient):
+      if serrures[i][0] == -(1) and serrures[i][1] > max_ancient:
         max_ancient = serrures[i][1];
-      if (serrures[i][0] == 1) and (serrures[i][1] > max_recent):
+      if serrures[i][0] == 1 and serrures[i][1] > max_recent:
         max_recent = serrures[i][1];
     max_ancient_pp = 0;
     max_recent_pp = 0;
     for i in range(0, n):
       pp = passepartout[i];
-      if (pp[0] >= max_ancient) and (pp[1] >= max_recent):
+      if pp[0] >= max_ancient and pp[1] >= max_recent:
         return 1;
       max_ancient_pp = max2(max_ancient_pp, pp[0]);
       max_recent_pp = max2(max_recent_pp, pp[1]);
-    if (max_ancient_pp >= max_ancient) and (max_recent_pp >= max_recent):
+    if max_ancient_pp >= max_ancient and max_recent_pp >= max_recent:
       return 2;
     else:
       return 0;

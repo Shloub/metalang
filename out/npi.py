@@ -43,7 +43,7 @@ def readint():
 
 
 def is_number( c ):
-    return (ord(c) <= ord('9')) and (ord(c) >= ord('0'));
+    return ord(c) <= ord('9') and ord(c) >= ord('0');
 
 """
 Notation polonaise inversée

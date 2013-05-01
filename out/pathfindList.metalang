@@ -1,5 +1,5 @@
 def int pathfind_aux(array<int> cache, array<int> tab, int len, int pos)
-  if pos >= (len - 1) then
+  if pos >= len - 1 then
     return 0
   elsif cache[pos] != -1
   then

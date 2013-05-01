@@ -10,21 +10,21 @@ let rec nbPassePartout n passepartout m serrures =
   let max_ancient = ref( 0 ) in
   let max_recent = ref( 0 ) in
   for i = 0 to m - 1 do
-    if (serrures.(i).(0) = -1) && (serrures.(i).(1) > (!max_ancient)) then
+    if serrures.(i).(0) = -1 && serrures.(i).(1) > (!max_ancient) then
       max_ancient := serrures.(i).(1);
-    if (serrures.(i).(0) = 1) && (serrures.(i).(1) > (!max_recent)) then
+    if serrures.(i).(0) = 1 && serrures.(i).(1) > (!max_recent) then
       max_recent := serrures.(i).(1)
   done;
   let max_ancient_pp = ref( 0 ) in
   let max_recent_pp = ref( 0 ) in
   for i = 0 to n - 1 do
     let pp = passepartout.(i) in
-    if (pp.(0) >= (!max_ancient)) && (pp.(1) >= (!max_recent)) then
+    if pp.(0) >= (!max_ancient) && pp.(1) >= (!max_recent) then
       raise (Found_1(1));
     max_ancient_pp := max2 (!max_ancient_pp) pp.(0);
     max_recent_pp := max2 (!max_recent_pp) pp.(1)
   done;
-  if ((!max_ancient_pp) >= (!max_ancient)) && ((!max_recent_pp) >= (!max_recent)) then
+  if (!max_ancient_pp) >= (!max_ancient) && (!max_recent_pp) >= (!max_recent) then
     raise (Found_1(2))
   else
     raise (Found_1(0))

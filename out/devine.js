@@ -40,7 +40,7 @@ function devine_(nombre, tab, len){
   var max_ = tab[1];
   for (var i = 2 ; i <= len - 1; i++)
   {
-    if ((tab[i] > max_) || (tab[i] < min_))
+    if (tab[i] > max_ || tab[i] < min_)
     {
       return 0;
     }
@@ -52,7 +52,7 @@ function devine_(nombre, tab, len){
     {
       max_ = tab[i];
     }
-    if ((tab[i] == nombre) && (len != (i + 1)))
+    if (tab[i] == nombre && len != i + 1)
     {
       return 0;
     }

@@ -11,7 +11,7 @@ public class montagnes
     while (i >= 0)
     {
       int x = tab[i];
-      while ((j >= 0) && (x > tab[len - j]))
+      while (j >= 0 && x > tab[len - j])
       {
         j = j - 1;
       }

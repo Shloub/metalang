@@ -45,7 +45,7 @@ def find0( len, tab, cache, x, y ):
     """
 	Cette fonction est récursive
 	"""
-    if y == (len - 1):
+    if y == len - 1:
       return tab[y][x];
     elif x > y:
       return 100000;

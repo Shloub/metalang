@@ -41,11 +41,11 @@ function min4($a, $b, $c, $d){
 }
 
 function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
-  if (($posX == ($x - 1)) && ($posY == ($y - 1)))
+  if ($posX == $x - 1 && $posY == $y - 1)
   {
     return 0;
   }
-  else if (((($posX < 0) || ($posY < 0)) || ($posX >= $x)) || ($posY >= $y))
+  else if ($posX < 0 || $posY < 0 || $posX >= $x || $posY >= $y)
   {
     return $x * $y * 10;
   }

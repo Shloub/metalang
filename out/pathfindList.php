@@ -18,7 +18,7 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 }
 function pathfind_aux(&$cache, &$tab, $len, $pos){
-  if ($pos >= ($len - 1))
+  if ($pos >= $len - 1)
   {
     return 0;
   }

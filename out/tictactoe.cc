@@ -66,7 +66,7 @@ void eval_(struct gamestate * g){
       }
       int colv = g->cases.at(x).at(y);
       int linv = g->cases.at(y).at(x);
-      if ((col == -1) && (colv != 0))
+      if (col == -1 && colv != 0)
       {
         col = colv;
       }
@@ -74,7 +74,7 @@ void eval_(struct gamestate * g){
       {
         col = -2;
       }
-      if ((lin == -1) && (linv != 0))
+      if (lin == -1 && linv != 0)
       {
         lin = linv;
       }
@@ -94,16 +94,16 @@ void eval_(struct gamestate * g){
   }
   for (int x = 1 ; x <= 2; x ++)
   {
-    if (((g->cases.at(0).at(0) == x) && (g->cases.at(1).at(1) == x)) && (g->cases.at(2).at(2) == x))
+    if (g->cases.at(0).at(0) == x && g->cases.at(1).at(1) == x && g->cases.at(2).at(2) == x)
     {
       win = x;
     }
-    if (((g->cases.at(0).at(2) == x) && (g->cases.at(1).at(1) == x)) && (g->cases.at(2).at(0) == x))
+    if (g->cases.at(0).at(2) == x && g->cases.at(1).at(1) == x && g->cases.at(2).at(0) == x)
     {
       win = x;
     }
   }
-  g->ended = (win != 0) || (freecase == 0);
+  g->ended = win != 0 || freecase == 0;
   if (win == 1)
   {
     g->note = 1000;

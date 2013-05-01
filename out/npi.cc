@@ -4,7 +4,7 @@
 #include <vector>
 
 bool is_number(char c){
-  return (c <= '9') && (c >= '0');
+  return c <= '9' && c >= '0';
 }
 
 /*

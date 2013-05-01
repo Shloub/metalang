@@ -12,7 +12,7 @@ public class triangles
     /*
 	Cette fonction est récursive
 	*/
-    if (y == (len - 1))
+    if (y == len - 1)
     {
       return tab[y][x];
     }

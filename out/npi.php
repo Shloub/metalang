@@ -25,7 +25,7 @@ function nextChar(){
   return ord($out);
 }
 function is_number($c){
-  return ($c <= ord('9')) && ($c >= ord('0'));
+  return $c <= ord('9') && $c >= ord('0');
 }
 
 /*

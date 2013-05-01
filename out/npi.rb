@@ -3,7 +3,7 @@ require "scanf.rb"
 
 
 def is_number( c )
-    return ((c.ord <= '9'.ord) && (c.ord >= '0'.ord));
+    return (c.ord <= '9'.ord && c.ord >= '0'.ord);
 end
 
 

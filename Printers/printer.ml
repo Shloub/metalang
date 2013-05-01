@@ -394,6 +394,15 @@ class printer = object(self)
     let chf op side f x = match (Expr.unfix x) with
       | Expr.BinOp (_, op2, _) ->
         begin match (op, side, op2) with
+          | ((Expr.Eq | Expr.Diff | Expr.Lower |
+              Expr.LowerEq | Expr.Higher | Expr.HigherEq
+          ), _, (Expr.Add | Expr.Mul | Expr.Sub | Expr.Div)) ->
+            self#expr f x
+
+          | ((Expr.And | Expr.Or), _, (Expr.Eq | Expr.Diff | Expr.Lower |
+              Expr.LowerEq | Expr.Higher | Expr.HigherEq
+          )) ->
+            self#expr f x
           | ((Expr.Add | Expr.Sub), _, (Expr.Mul | Expr.Div | Expr.Mod))
             ->
             self#expr f x
@@ -404,6 +413,12 @@ class printer = object(self)
             ->
             self#expr f x
           | (Expr.Mul, _, Expr.Mul)
+            ->
+            self#expr f x
+          | (Expr.And, _, Expr.And)
+            ->
+            self#expr f x
+          | (Expr.Or, _, Expr.Or)
             ->
             self#expr f x
           | _ ->

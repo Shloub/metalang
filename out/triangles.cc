@@ -10,7 +10,7 @@ int find0(int len, std::vector<std::vector<int > >& tab, std::vector<std::vector
   /*
 	Cette fonction est récursive
 	*/
-  if (y == (len - 1))
+  if (y == len - 1)
   {
     return tab.at(y).at(x);
   }

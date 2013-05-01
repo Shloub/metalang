@@ -114,12 +114,12 @@ begin
   end;
   for x := 1 to  2 do
   begin
-    if ((g^.cases[0][0] = x) and (g^.cases[1][1] = x)) and (g^.cases[2][2] = x)
+    if (g^.cases[0][0] = x) and (g^.cases[1][1] = x) and (g^.cases[2][2] = x)
     then
       begin
         win := x;
       end;
-    if ((g^.cases[0][2] = x) and (g^.cases[1][1] = x)) and (g^.cases[2][0] = x)
+    if (g^.cases[0][2] = x) and (g^.cases[1][1] = x) and (g^.cases[2][0] = x)
     then
       begin
         win := x;

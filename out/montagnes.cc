@@ -9,7 +9,7 @@ int montagnes_(std::vector<int >& tab, int len){
   while (i >= 0)
   {
     int x = tab.at(i);
-    while ((j >= 0) && (x > tab.at(len - j)))
+    while (j >= 0 && x > tab.at(len - j))
     {
       j = j - 1;
     }
