@@ -32,9 +32,7 @@ int main(void){
   int h = 4;
   std::vector<struct toto * > t( h );
   for (int i = 0 ; i < h; i++)
-  {
     t.at(i) = mktoto(i);
-  }
   scanf("%d", &t.at(0)->bar);
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &t.at(1)->blah);

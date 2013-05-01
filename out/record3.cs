@@ -76,9 +76,7 @@ public static int readInt(){
     int m = 4;
     toto[] t = new toto[m];
     for (int i = 0 ; i < m; i++)
-    {
       t[i] = mktoto(i);
-    }
     t[0].bar = readInt();
     stdin_sep();
     t[1].blah = readInt();

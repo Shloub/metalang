@@ -4,16 +4,12 @@
 #include <vector>
 void sort_(std::vector<int >& tab, int len){
   for (int i = 0 ; i < len; i++)
-  {
     for (int j = i + 1 ; j < len; j++)
-    {
       if (tab.at(i) > tab.at(j))
-      {
-        int tmp = tab.at(i);
-        tab.at(i) = tab.at(j);
-        tab.at(j) = tmp;
-      }
-    }
+  {
+    int tmp = tab.at(i);
+    tab.at(i) = tab.at(j);
+    tab.at(j) = tmp;
   }
 }
 

@@ -56,21 +56,13 @@ public static int readInt(){
     for (int i = 2 ; i < len; i++)
     {
       if (tab[i] > max_ || tab[i] < min_)
-      {
         return false;
-      }
       if (tab[i] < nombre)
-      {
         min_ = tab[i];
-      }
       if (tab[i] > nombre)
-      {
         max_ = tab[i];
-      }
       if (tab[i] == nombre && len != i + 1)
-      {
         return false;
-      }
     }
     return true;
   }
@@ -94,13 +86,9 @@ public static int readInt(){
     }
     bool e = devine_(nombre, tab, len);
     if (e)
-    {
       Console.Write("True");
-    }
     else
-    {
       Console.Write("False");
-    }
   }
   
 }

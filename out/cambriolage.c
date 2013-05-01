@@ -3,9 +3,7 @@
 
 int max2(int a, int b){
   if (a > b)
-  {
     return a;
-  }
   return b;
 }
 
@@ -17,13 +15,9 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
     for (i = 0 ; i < m; i++)
     {
       if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
-      {
         max_ancient = serrures[i][1];
-      }
       if (serrures[i][0] == 1 && serrures[i][1] > max_recent)
-      {
         max_recent = serrures[i][1];
-      }
     }
   }
   int max_ancient_pp = 0;
@@ -34,21 +28,15 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
     {
       int* pp = passepartout[i];
       if (pp[0] >= max_ancient && pp[1] >= max_recent)
-      {
         return 1;
-      }
       max_ancient_pp = max2(max_ancient_pp, pp[0]);
       max_recent_pp = max2(max_recent_pp, pp[1]);
     }
   }
   if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
-  {
     return 2;
-  }
   else
-  {
     return 0;
-  }
 }
 
 int main(void){

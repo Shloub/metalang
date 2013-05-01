@@ -37,13 +37,9 @@ var read_int = function(){
 
 function pathfind_aux(cache, tab, len, pos){
   if (pos >= len - 1)
-  {
     return 0;
-  }
   else if (cache[pos] != -1)
-  {
     return cache[pos];
-  }
   else
   {
     cache[pos] = len * 2;
@@ -51,13 +47,9 @@ function pathfind_aux(cache, tab, len, pos){
     var oneval = pathfind_aux(cache, tab, len, pos + 1);
     var out_ = 0;
     if (posval < oneval)
-    {
       out_ = 1 + posval;
-    }
     else
-    {
       out_ = 1 + oneval;
-    }
     cache[pos] = out_;
     return out_;
   }
@@ -66,9 +58,7 @@ function pathfind_aux(cache, tab, len, pos){
 function pathfind(tab, len){
   var cache = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
-  {
     cache[i] = -1;
-  }
   return pathfind_aux(cache, tab, len, 0);
 }
 

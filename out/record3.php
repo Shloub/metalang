@@ -40,9 +40,7 @@ function result(&$t, $len){
 $z = 4;
 $t = array();
 for ($i = 0 ; $i < $z; $i++)
-{
   $t[$i] = mktoto($i);
-}
 list($t[0]["bar"]) = scan("%d");
 scantrim();
 list($t[1]["blah"]) = scan("%d");

@@ -16,34 +16,28 @@ Notation polonaise inversée
   {
     int[] stack = new int[len];
     for (int i = 0 ; i < len; i++)
-    {
       stack[i] = 0;
-    }
     int ptrStack = 0;
     int ptrStr = 0;
     while (ptrStr < len)
-    {
       if (str[ptrStr] == ' ')
+      ptrStr = ptrStr + 1;
+    else if (is_number(str[ptrStr]))
+    {
+      int num = 0;
+      while (str[ptrStr] != ' ')
       {
+        num = num * 10 + str[ptrStr] - '0';
         ptrStr = ptrStr + 1;
       }
-      else if (is_number(str[ptrStr]))
-      {
-        int num = 0;
-        while (str[ptrStr] != ' ')
-        {
-          num = num * 10 + str[ptrStr] - '0';
-          ptrStr = ptrStr + 1;
-        }
-        stack[ptrStack] = num;
-        ptrStack = ptrStack + 1;
-      }
-      else if (str[ptrStr] == '+')
-      {
-        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-        ptrStack = ptrStack - 1;
-        ptrStr = ptrStr + 1;
-      }
+      stack[ptrStack] = num;
+      ptrStack = ptrStack + 1;
+    }
+    else if (str[ptrStr] == '+')
+    {
+      stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+      ptrStack = ptrStack - 1;
+      ptrStr = ptrStr + 1;
     }
     return stack[0];
   }

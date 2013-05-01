@@ -12,9 +12,7 @@ public class brainfuck_compiler
     int j = 1000;
     int[] mem = new int[j];
     for (int i = 0 ; i < j; i++)
-    {
       mem[i] = 0;
-    }
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;

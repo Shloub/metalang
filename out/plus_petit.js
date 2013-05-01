@@ -38,25 +38,17 @@ var read_int = function(){
 function go(tab, a, b){
   var m = Math.floor((a + b) / 2);
   if (a == m)
-  {
     if (tab[a] == m)
-    {
-      return b;
-    }
-    else
-    {
-      return a;
-    }
-  }
+    return b;
+  else
+    return a;
   var i = a;
   var j = b;
   while (i < j)
   {
     var e = tab[i];
     if (e < m)
-    {
       i = i + 1;
-    }
     else
     {
       j = j - 1;
@@ -65,13 +57,9 @@ function go(tab, a, b){
     }
   }
   if (i < m)
-  {
     return go(tab, a, m);
-  }
   else
-  {
     return go(tab, m, b);
-  }
 }
 
 function plus_petit_(tab, len){

@@ -8,21 +8,13 @@ bool devine_(int nombre, std::vector<int >& tab, int len){
   for (int i = 2 ; i < len; i++)
   {
     if (tab.at(i) > max_ || tab.at(i) < min_)
-    {
       return false;
-    }
     if (tab.at(i) < nombre)
-    {
       min_ = tab.at(i);
-    }
     if (tab.at(i) > nombre)
-    {
       max_ = tab.at(i);
-    }
     if (tab.at(i) == nombre && len != i + 1)
-    {
       return false;
-    }
   }
   return true;
 }
@@ -45,13 +37,9 @@ int main(void){
   }
   bool d = devine_(nombre, tab, len);
   if (d)
-  {
     std::cout << "True";
-  }
   else
-  {
     std::cout << "False";
-  }
   return 0;
 }
 

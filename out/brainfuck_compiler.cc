@@ -10,9 +10,7 @@ int main(void){
   int e = 1000;
   std::vector<int > mem( e );
   for (int i = 0 ; i < e; i++)
-  {
     mem.at(i) = 0;
-  }
   mem.at(current_pos) = mem.at(current_pos) + 1;
   mem.at(current_pos) = mem.at(current_pos) + 1;
   mem.at(current_pos) = mem.at(current_pos) + 1;

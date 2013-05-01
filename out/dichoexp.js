@@ -37,18 +37,14 @@ var read_int = function(){
 
 function exp_(a, b){
   if (b == 0)
-  {
     return 1;
-  }
   if ((b % 2) == 0)
   {
     var o = exp_(a, Math.floor(b / 2));
     return o * o;
   }
   else
-  {
     return a * exp_(a, b - 1);
-  }
 }
 
 var a = 0;

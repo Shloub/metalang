@@ -41,9 +41,7 @@ var current_pos = 500;
 var l = 1000;
 var mem = new Array(l);
 for (var i = 0 ; i <= l - 1; i++)
-{
   mem[i] = 0;
-}
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;

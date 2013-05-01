@@ -7,25 +7,17 @@ public class plus_petit
   {
     int m = (a + b) / 2;
     if (a == m)
-    {
       if (tab[a] == m)
-      {
-        return b;
-      }
-      else
-      {
-        return a;
-      }
-    }
+      return b;
+    else
+      return a;
     int i = a;
     int j = b;
     while (i < j)
     {
       int e = tab[i];
       if (e < m)
-      {
         i = i + 1;
-      }
       else
       {
         j = j - 1;
@@ -34,13 +26,9 @@ public class plus_petit
       }
     }
     if (i < m)
-    {
       return go(tab, a, m);
-    }
     else
-    {
       return go(tab, m, b);
-    }
   }
   
   public static int plus_petit_(int[] tab, int len)

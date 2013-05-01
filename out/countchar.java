@@ -7,12 +7,8 @@ public class countchar
   {
     int out_ = 0;
     for (int i = 0 ; i < len; i++)
-    {
       if (tab[i] == tofind)
-      {
-        out_ = out_ + 1;
-      }
-    }
+      out_ = out_ + 1;
     return out_;
   }
   

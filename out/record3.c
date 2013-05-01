@@ -36,9 +36,7 @@ int main(void){
   {
     int i;
     for (i = 0 ; i < a; i++)
-    {
       t[i] = mktoto(i);
-    }
   }
   scanf("%d", &t[0]->bar);
   scanf("%*[ \t\r\n]c", 0);

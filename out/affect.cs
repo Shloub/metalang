@@ -74,14 +74,10 @@ public static int readInt(){
     int len = 1;
     int[] cache0 = new int[len];
     for (int i = 0 ; i < len; i++)
-    {
       cache0[i] = -i;
-    }
     int[] cache1 = new int[len];
     for (int i = 0 ; i < len; i++)
-    {
       cache1[i] = i;
-    }
     int[] cache2 = cache0;
     cache0 = cache1;
     cache2 = cache0;

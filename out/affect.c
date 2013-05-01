@@ -33,18 +33,14 @@ int result(struct toto * t_, struct toto * t2_){
   {
     int i;
     for (i = 0 ; i < len; i++)
-    {
       cache0[i] = -i;
-    }
   }
   int *cache1 = malloc( len * sizeof(int));
   
   {
     int i;
     for (i = 0 ; i < len; i++)
-    {
       cache1[i] = i;
-    }
   }
   int* cache2 = cache0;
   cache0 = cache1;

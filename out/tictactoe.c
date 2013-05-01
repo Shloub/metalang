@@ -32,24 +32,16 @@ void print_state(struct gamestate * g){
         for (x = 0 ; x <= 2; x++)
         {
           if (g->cases[x][y] == 0)
-          {
             printf("%s", " ");
-          }
           else if (g->cases[x][y] == 1)
-          {
             printf("%s", "O");
-          }
           else
-          {
             printf("%s", "X");
-          }
           printf("%s", "|");
         }
       }
       if (y != 2)
-      {
         printf("%s", "\n|-|-|-|\n|");
-      }
     }
   }
   printf("%s", "\n");
@@ -70,37 +62,23 @@ void eval_(struct gamestate * g){
         for (x = 0 ; x <= 2; x++)
         {
           if (g->cases[x][y] == 0)
-          {
             freecase = freecase + 1;
-          }
           int colv = g->cases[x][y];
           int linv = g->cases[y][x];
           if (col == -1 && colv != 0)
-          {
             col = colv;
-          }
           else if (colv != col)
-          {
             col = -2;
-          }
           if (lin == -1 && linv != 0)
-          {
             lin = linv;
-          }
           else if (linv != lin)
-          {
             lin = -2;
-          }
         }
       }
       if (col >= 0)
-      {
         win = col;
-      }
       else if (lin >= 0)
-      {
         win = lin;
-      }
     }
   }
   {
@@ -108,37 +86,25 @@ void eval_(struct gamestate * g){
     for (x = 1 ; x <= 2; x++)
     {
       if (g->cases[0][0] == x && g->cases[1][1] == x && g->cases[2][2] == x)
-      {
         win = x;
-      }
       if (g->cases[0][2] == x && g->cases[1][1] == x && g->cases[2][0] == x)
-      {
         win = x;
-      }
     }
   }
   g->ended = win != 0 || freecase == 0;
   if (win == 1)
-  {
     g->note = 1000;
-  }
   else if (win == 2)
-  {
     g->note = -1000;
-  }
   else
-  {
     g->note = 0;
-  }
 }
 
 /* On applique un mouvement */
 void apply_move_xy(int x, int y, struct gamestate * g){
   int player = 2;
   if (g->firstToPlay)
-  {
     player = 1;
-  }
   g->cases[x][y] = player;
   g->firstToPlay = !g->firstToPlay;
 }
@@ -160,33 +126,23 @@ int can_move_xy(int x, int y, struct gamestate * g){
 int minmax(struct gamestate * g){
   eval_(g);
   if (g->ended)
-  {
     return g->note;
-  }
   int maxNote = -10000;
   if (!g->firstToPlay)
-  {
     maxNote = 10000;
-  }
   {
     int x;
     for (x = 0 ; x <= 2; x++)
-    {
       {
-        int y;
-        for (y = 0 ; y <= 2; y++)
-        {
-          if (can_move_xy(x, y, g))
-          {
-            apply_move_xy(x, y, g);
-            int currentNote = minmax(g);
-            cancel_move_xy(x, y, g);
-            if ((currentNote > maxNote) == g->firstToPlay)
-            {
-              maxNote = currentNote;
-            }
-          }
-        }
+      int y;
+      for (y = 0 ; y <= 2; y++)
+        if (can_move_xy(x, y, g))
+      {
+        apply_move_xy(x, y, g);
+        int currentNote = minmax(g);
+        cancel_move_xy(x, y, g);
+        if ((currentNote > maxNote) == g->firstToPlay)
+          maxNote = currentNote;
       }
     }
   }
@@ -201,29 +157,25 @@ struct move * play(struct gamestate * g){
   {
     int x;
     for (x = 0 ; x <= 2; x++)
-    {
       {
-        int y;
-        for (y = 0 ; y <= 2; y++)
+      int y;
+      for (y = 0 ; y <= 2; y++)
+        if (can_move_xy(x, y, g))
+      {
+        apply_move_xy(x, y, g);
+        int currentNote = minmax(g);
+        printf("%d", x);
+        printf("%s", ", ");
+        printf("%d", y);
+        printf("%s", ", ");
+        printf("%d", currentNote);
+        printf("%s", "\n");
+        cancel_move_xy(x, y, g);
+        if (currentNote < minNote)
         {
-          if (can_move_xy(x, y, g))
-          {
-            apply_move_xy(x, y, g);
-            int currentNote = minmax(g);
-            printf("%d", x);
-            printf("%s", ", ");
-            printf("%d", y);
-            printf("%s", ", ");
-            printf("%d", currentNote);
-            printf("%s", "\n");
-            cancel_move_xy(x, y, g);
-            if (currentNote < minNote)
-            {
-              minNote = currentNote;
-              minMove->x = x;
-              minMove->y = y;
-            }
-          }
+          minNote = currentNote;
+          minMove->x = x;
+          minMove->y = y;
         }
       }
     }
@@ -250,9 +202,7 @@ struct gamestate * init(){
       {
         int j;
         for (j = 0 ; j < c; j++)
-        {
           tab[j] = 0;
-        }
       }
       cases[i] = tab;
     }

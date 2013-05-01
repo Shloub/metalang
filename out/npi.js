@@ -46,34 +46,28 @@ Notation polonaise inversée
 function npi_(str, len){
   var stack = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
-  {
     stack[i] = 0;
-  }
   var ptrStack = 0;
   var ptrStr = 0;
   while (ptrStr < len)
-  {
     if (str[ptrStr] == ' ')
+    ptrStr = ptrStr + 1;
+  else if (is_number(str[ptrStr]))
+  {
+    var num = 0;
+    while (str[ptrStr] != ' ')
     {
+      num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
       ptrStr = ptrStr + 1;
     }
-    else if (is_number(str[ptrStr]))
-    {
-      var num = 0;
-      while (str[ptrStr] != ' ')
-      {
-        num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
-        ptrStr = ptrStr + 1;
-      }
-      stack[ptrStack] = num;
-      ptrStack = ptrStack + 1;
-    }
-    else if (str[ptrStr] == '+')
-    {
-      stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-      ptrStack = ptrStack - 1;
-      ptrStr = ptrStr + 1;
-    }
+    stack[ptrStack] = num;
+    ptrStack = ptrStack + 1;
+  }
+  else if (str[ptrStr] == '+')
+  {
+    stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+    ptrStack = ptrStack - 1;
+    ptrStr = ptrStr + 1;
   }
   return stack[0];
 }

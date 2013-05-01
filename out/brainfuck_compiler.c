@@ -11,9 +11,7 @@ int main(void){
   {
     int i;
     for (i = 0 ; i < a; i++)
-    {
       mem[i] = 0;
-    }
   }
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;

@@ -58,9 +58,7 @@ function result(t, len){
 var s = 4;
 var t = new Array(s);
 for (var i = 0 ; i <= s - 1; i++)
-{
   t[i] = mktoto(i);
-}
 t[0].bar=read_int();
 stdinsep();
 t[1].blah=read_int();

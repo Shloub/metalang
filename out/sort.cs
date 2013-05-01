@@ -52,16 +52,12 @@ public static int readInt(){
   public static void sort_(int[] tab, int len)
   {
     for (int i = 0 ; i < len; i++)
-    {
       for (int j = i + 1 ; j < len; j++)
-      {
         if (tab[i] > tab[j])
-        {
-          int tmp = tab[i];
-          tab[i] = tab[j];
-          tab[j] = tmp;
-        }
-      }
+    {
+      int tmp = tab[i];
+      tab[i] = tab[j];
+      tab[j] = tmp;
     }
   }
   

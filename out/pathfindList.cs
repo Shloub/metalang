@@ -52,13 +52,9 @@ public static int readInt(){
   public static int pathfind_aux(int[] cache, int[] tab, int len, int pos)
   {
     if (pos >= len - 1)
-    {
       return 0;
-    }
     else if (cache[pos] != -1)
-    {
       return cache[pos];
-    }
     else
     {
       cache[pos] = len * 2;
@@ -66,13 +62,9 @@ public static int readInt(){
       int oneval = pathfind_aux(cache, tab, len, pos + 1);
       int out_ = 0;
       if (posval < oneval)
-      {
         out_ = 1 + posval;
-      }
       else
-      {
         out_ = 1 + oneval;
-      }
       cache[pos] = out_;
       return out_;
     }
@@ -82,9 +74,7 @@ public static int readInt(){
   {
     int[] cache = new int[len];
     for (int i = 0 ; i < len; i++)
-    {
       cache[i] = -1;
-    }
     return pathfind_aux(cache, tab, len, 0);
   }
   

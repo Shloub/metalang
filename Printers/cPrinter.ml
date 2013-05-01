@@ -132,12 +132,18 @@ class cPrinter = object(self)
     Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}"
       self#instructions main
 
-(* on ne peut pas faire ça a cause des boucles for qu'on étend*)
-  method bloc f li = (*match li with
+  method bloc f li = match li with
+    | [ Instr.Fixed.F ( _, ((Instr.AllocRecord (_, _, _))
+                               | (Instr.AllocArray _)
+                               | (Instr.DeclRead _)
+                               | (Instr.Comment _)))
+      ] ->
+      Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
+        self#instructions li
     | [i] ->
       Format.fprintf f "  %a"
-	self#instr i
-    | _ -> *) Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
+	      self#instr i
+    | _ ->  Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
      self#instructions li
 
   method prototype f t = self#ptype f t

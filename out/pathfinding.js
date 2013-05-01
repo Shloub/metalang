@@ -37,9 +37,7 @@ var read_int = function(){
 
 function min2(a, b){
   if (a < b)
-  {
     return a;
-  }
   return b;
 }
 
@@ -53,21 +51,13 @@ function min4(a, b, c, d){
 
 function pathfind_aux(cache, tab, x, y, posX, posY){
   if (posX == x - 1 && posY == y - 1)
-  {
     return 0;
-  }
   else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
-  {
     return x * y * 10;
-  }
   else if (tab[posY][posX] == '#')
-  {
     return x * y * 10;
-  }
   else if (cache[posY][posX] != -1)
-  {
     return cache[posY][posX];
-  }
   else
   {
     cache[posY][posX] = x * y * 10;
@@ -87,9 +77,7 @@ function pathfind(tab, x, y){
   {
     var tmp = new Array(x);
     for (var j = 0 ; j <= x - 1; j++)
-    {
       tmp[j] = -1;
-    }
     cache[i] = tmp;
   }
   return pathfind_aux(cache, tab, x, y, 0, 0);

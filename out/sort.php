@@ -19,16 +19,12 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 function sort_(&$tab, $len){
   for ($i = 0 ; $i < $len; $i++)
-  {
     for ($j = $i + 1 ; $j < $len; $j++)
-    {
       if ($tab[$i] > $tab[$j])
-      {
-        $tmp = $tab[$i];
-        $tab[$i] = $tab[$j];
-        $tab[$j] = $tmp;
-      }
-    }
+  {
+    $tmp = $tab[$i];
+    $tab[$i] = $tab[$j];
+    $tab[$j] = $tmp;
   }
 }
 

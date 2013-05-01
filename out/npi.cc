@@ -13,34 +13,28 @@ Notation polonaise inversée
 int npi_(std::vector<char >& str, int len){
   std::vector<int > stack( len );
   for (int i = 0 ; i < len; i++)
-  {
     stack.at(i) = 0;
-  }
   int ptrStack = 0;
   int ptrStr = 0;
   while (ptrStr < len)
-  {
     if (str.at(ptrStr) == ' ')
+    ptrStr = ptrStr + 1;
+  else if (is_number(str.at(ptrStr)))
+  {
+    int num = 0;
+    while (str.at(ptrStr) != ' ')
     {
+      num = num * 10 + str.at(ptrStr) - '0';
       ptrStr = ptrStr + 1;
     }
-    else if (is_number(str.at(ptrStr)))
-    {
-      int num = 0;
-      while (str.at(ptrStr) != ' ')
-      {
-        num = num * 10 + str.at(ptrStr) - '0';
-        ptrStr = ptrStr + 1;
-      }
-      stack.at(ptrStack) = num;
-      ptrStack = ptrStack + 1;
-    }
-    else if (str.at(ptrStr) == '+')
-    {
-      stack.at(ptrStack - 2) = stack.at(ptrStack - 2) + stack.at(ptrStack - 1);
-      ptrStack = ptrStack - 1;
-      ptrStr = ptrStr + 1;
-    }
+    stack.at(ptrStack) = num;
+    ptrStack = ptrStack + 1;
+  }
+  else if (str.at(ptrStr) == '+')
+  {
+    stack.at(ptrStack - 2) = stack.at(ptrStack - 2) + stack.at(ptrStack - 1);
+    ptrStack = ptrStack - 1;
+    ptrStr = ptrStr + 1;
   }
   return stack.at(0);
 }

@@ -37,16 +37,12 @@ var read_int = function(){
 
 function sort_(tab, len){
   for (var i = 0 ; i <= len - 1; i++)
-  {
     for (var j = i + 1 ; j <= len - 1; j++)
-    {
       if (tab[i] > tab[j])
-      {
-        var tmp = tab[i];
-        tab[i] = tab[j];
-        tab[j] = tmp;
-      }
-    }
+  {
+    var tmp = tab[i];
+    tab[i] = tab[j];
+    tab[j] = tmp;
   }
 }
 

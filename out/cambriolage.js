@@ -37,9 +37,7 @@ var read_int = function(){
 
 function max2(a, b){
   if (a > b)
-  {
     return a;
-  }
   return b;
 }
 
@@ -49,13 +47,9 @@ function nbPassePartout(n, passepartout, m, serrures){
   for (var i = 0 ; i <= m - 1; i++)
   {
     if (serrures[i][0] == -1 && serrures[i][1] > max_ancient)
-    {
       max_ancient = serrures[i][1];
-    }
     if (serrures[i][0] == 1 && serrures[i][1] > max_recent)
-    {
       max_recent = serrures[i][1];
-    }
   }
   var max_ancient_pp = 0;
   var max_recent_pp = 0;
@@ -63,20 +57,14 @@ function nbPassePartout(n, passepartout, m, serrures){
   {
     var pp = passepartout[i];
     if (pp[0] >= max_ancient && pp[1] >= max_recent)
-    {
       return 1;
-    }
     max_ancient_pp = max2(max_ancient_pp, pp[0]);
     max_recent_pp = max2(max_recent_pp, pp[1]);
   }
   if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
-  {
     return 2;
-  }
   else
-  {
     return 0;
-  }
 }
 
 var n = 0;

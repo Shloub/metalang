@@ -18,23 +18,15 @@ Tictactoe : un tictactoe avec une IA
       for (int x = 0 ; x <= 2; x ++)
       {
         if (g.cases[x][y] == 0)
-        {
           Console.Write(" ");
-        }
         else if (g.cases[x][y] == 1)
-        {
           Console.Write("O");
-        }
         else
-        {
           Console.Write("X");
-        }
         Console.Write("|");
       }
       if (y != 2)
-      {
         Console.Write("\n|-|-|-|\n|");
-      }
     }
     Console.Write("\n");
   }
@@ -51,61 +43,37 @@ Tictactoe : un tictactoe avec une IA
       for (int x = 0 ; x <= 2; x ++)
       {
         if (g.cases[x][y] == 0)
-        {
           freecase = freecase + 1;
-        }
         int colv = g.cases[x][y];
         int linv = g.cases[y][x];
         if (col == -1 && colv != 0)
-        {
           col = colv;
-        }
         else if (colv != col)
-        {
           col = -2;
-        }
         if (lin == -1 && linv != 0)
-        {
           lin = linv;
-        }
         else if (linv != lin)
-        {
           lin = -2;
-        }
       }
       if (col >= 0)
-      {
         win = col;
-      }
       else if (lin >= 0)
-      {
         win = lin;
-      }
     }
     for (int x = 1 ; x <= 2; x ++)
     {
       if (g.cases[0][0] == x && g.cases[1][1] == x && g.cases[2][2] == x)
-      {
         win = x;
-      }
       if (g.cases[0][2] == x && g.cases[1][1] == x && g.cases[2][0] == x)
-      {
         win = x;
-      }
     }
     g.ended = win != 0 || freecase == 0;
     if (win == 1)
-    {
       g.note = 1000;
-    }
     else if (win == 2)
-    {
       g.note = -1000;
-    }
     else
-    {
       g.note = 0;
-    }
   }
   
   /* On applique un mouvement */
@@ -113,9 +81,7 @@ Tictactoe : un tictactoe avec une IA
   {
     int player = 2;
     if (g.firstToPlay)
-    {
       player = 1;
-    }
     g.cases[x][y] = player;
     g.firstToPlay = !g.firstToPlay;
   }
@@ -141,29 +107,19 @@ Tictactoe : un tictactoe avec une IA
   {
     eval_(g);
     if (g.ended)
-    {
       return g.note;
-    }
     int maxNote = -10000;
     if (!g.firstToPlay)
-    {
       maxNote = 10000;
-    }
     for (int x = 0 ; x <= 2; x ++)
-    {
       for (int y = 0 ; y <= 2; y ++)
-      {
         if (can_move_xy(x, y, g))
-        {
-          apply_move_xy(x, y, g);
-          int currentNote = minmax(g);
-          cancel_move_xy(x, y, g);
-          if ((currentNote > maxNote) == g.firstToPlay)
-          {
-            maxNote = currentNote;
-          }
-        }
-      }
+    {
+      apply_move_xy(x, y, g);
+      int currentNote = minmax(g);
+      cancel_move_xy(x, y, g);
+      if ((currentNote > maxNote) == g.firstToPlay)
+        maxNote = currentNote;
     }
     return maxNote;
   }
@@ -175,27 +131,23 @@ Tictactoe : un tictactoe avec une IA
     minMove.y = 0;
     int minNote = 10000;
     for (int x = 0 ; x <= 2; x ++)
-    {
       for (int y = 0 ; y <= 2; y ++)
-      {
         if (can_move_xy(x, y, g))
-        {
-          apply_move_xy(x, y, g);
-          int currentNote = minmax(g);
-          Console.Write(x);
-          Console.Write(", ");
-          Console.Write(y);
-          Console.Write(", ");
-          Console.Write(currentNote);
-          Console.Write("\n");
-          cancel_move_xy(x, y, g);
-          if (currentNote < minNote)
-          {
-            minNote = currentNote;
-            minMove.x = x;
-            minMove.y = y;
-          }
-        }
+    {
+      apply_move_xy(x, y, g);
+      int currentNote = minmax(g);
+      Console.Write(x);
+      Console.Write(", ");
+      Console.Write(y);
+      Console.Write(", ");
+      Console.Write(currentNote);
+      Console.Write("\n");
+      cancel_move_xy(x, y, g);
+      if (currentNote < minNote)
+      {
+        minNote = currentNote;
+        minMove.x = x;
+        minMove.y = y;
       }
     }
     int u = minMove.x;
@@ -215,9 +167,7 @@ Tictactoe : un tictactoe avec une IA
       int w = 3;
       int[] tab = new int[w];
       for (int j = 0 ; j < w; j++)
-      {
         tab[j] = 0;
-      }
       cases[i] = tab;
     }
     gamestate out_ = new gamestate();

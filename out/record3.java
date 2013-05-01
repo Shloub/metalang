@@ -30,9 +30,7 @@ public class record3
     int p = 4;
     toto[] t = new toto[p];
     for (int i = 0 ; i < p; i++)
-    {
       t[i] = mktoto(i);
-    }
     scanner.useDelimiter("\\s");
     t[0].bar = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();

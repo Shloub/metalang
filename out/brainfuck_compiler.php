@@ -5,9 +5,7 @@ $current_pos = 500;
 $p = 1000;
 $mem = array();
 for ($i = 0 ; $i < $p; $i++)
-{
   $mem[$i] = 0;
-}
 $mem[$current_pos] = $mem[$current_pos] + 1;
 $mem[$current_pos] = $mem[$current_pos] + 1;
 $mem[$current_pos] = $mem[$current_pos] + 1;

@@ -29,23 +29,15 @@ void print_state(struct gamestate * g){
     for (int x = 0 ; x <= 2; x ++)
     {
       if (g->cases.at(x).at(y) == 0)
-      {
         std::cout << " ";
-      }
       else if (g->cases.at(x).at(y) == 1)
-      {
         std::cout << "O";
-      }
       else
-      {
         std::cout << "X";
-      }
       std::cout << "|";
     }
     if (y != 2)
-    {
       std::cout << "\n|-|-|-|\n|";
-    }
   }
   std::cout << "\n";
 }
@@ -61,70 +53,44 @@ void eval_(struct gamestate * g){
     for (int x = 0 ; x <= 2; x ++)
     {
       if (g->cases.at(x).at(y) == 0)
-      {
         freecase = freecase + 1;
-      }
       int colv = g->cases.at(x).at(y);
       int linv = g->cases.at(y).at(x);
       if (col == -1 && colv != 0)
-      {
         col = colv;
-      }
       else if (colv != col)
-      {
         col = -2;
-      }
       if (lin == -1 && linv != 0)
-      {
         lin = linv;
-      }
       else if (linv != lin)
-      {
         lin = -2;
-      }
     }
     if (col >= 0)
-    {
       win = col;
-    }
     else if (lin >= 0)
-    {
       win = lin;
-    }
   }
   for (int x = 1 ; x <= 2; x ++)
   {
     if (g->cases.at(0).at(0) == x && g->cases.at(1).at(1) == x && g->cases.at(2).at(2) == x)
-    {
       win = x;
-    }
     if (g->cases.at(0).at(2) == x && g->cases.at(1).at(1) == x && g->cases.at(2).at(0) == x)
-    {
       win = x;
-    }
   }
   g->ended = win != 0 || freecase == 0;
   if (win == 1)
-  {
     g->note = 1000;
-  }
   else if (win == 2)
-  {
     g->note = -1000;
-  }
   else
-  {
     g->note = 0;
-  }
 }
 
 /* On applique un mouvement */
 void apply_move_xy(int x, int y, struct gamestate * g){
   int player = 2;
   if (g->firstToPlay)
-  {
     player = 1;
-  }
   g->cases.at(x).at(y) = player;
   g->firstToPlay = !g->firstToPlay;
 }
@@ -146,29 +112,19 @@ bool can_move_xy(int x, int y, struct gamestate * g){
 int minmax(struct gamestate * g){
   eval_(g);
   if (g->ended)
-  {
     return g->note;
-  }
   int maxNote = -10000;
   if (!g->firstToPlay)
-  {
     maxNote = 10000;
-  }
   for (int x = 0 ; x <= 2; x ++)
-  {
     for (int y = 0 ; y <= 2; y ++)
-    {
       if (can_move_xy(x, y, g))
-      {
-        apply_move_xy(x, y, g);
-        int currentNote = minmax(g);
-        cancel_move_xy(x, y, g);
-        if ((currentNote > maxNote) == g->firstToPlay)
-        {
-          maxNote = currentNote;
-        }
-      }
-    }
+  {
+    apply_move_xy(x, y, g);
+    int currentNote = minmax(g);
+    cancel_move_xy(x, y, g);
+    if ((currentNote > maxNote) == g->firstToPlay)
+      maxNote = currentNote;
   }
   return maxNote;
 }
@@ -179,27 +135,23 @@ struct move * play(struct gamestate * g){
   minMove->y=0;
   int minNote = 10000;
   for (int x = 0 ; x <= 2; x ++)
-  {
     for (int y = 0 ; y <= 2; y ++)
-    {
       if (can_move_xy(x, y, g))
-      {
-        apply_move_xy(x, y, g);
-        int currentNote = minmax(g);
-        printf("%d", x);
-        std::cout << ", ";
-        printf("%d", y);
-        std::cout << ", ";
-        printf("%d", currentNote);
-        std::cout << "\n";
-        cancel_move_xy(x, y, g);
-        if (currentNote < minNote)
-        {
-          minNote = currentNote;
-          minMove->x = x;
-          minMove->y = y;
-        }
-      }
+  {
+    apply_move_xy(x, y, g);
+    int currentNote = minmax(g);
+    printf("%d", x);
+    std::cout << ", ";
+    printf("%d", y);
+    std::cout << ", ";
+    printf("%d", currentNote);
+    std::cout << "\n";
+    cancel_move_xy(x, y, g);
+    if (currentNote < minNote)
+    {
+      minNote = currentNote;
+      minMove->x = x;
+      minMove->y = y;
     }
   }
   int p = minMove->x;
@@ -218,9 +170,7 @@ struct gamestate * init(){
     int r = 3;
     std::vector<int > tab( r );
     for (int j = 0 ; j < r; j++)
-    {
       tab.at(j) = 0;
-    }
     cases.at(i) = tab;
   }
   struct gamestate * out_ = new gamestate();

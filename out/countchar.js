@@ -38,12 +38,8 @@ var read_int = function(){
 function nth(tab, tofind, len){
   var out_ = 0;
   for (var i = 0 ; i <= len - 1; i++)
-  {
     if (tab[i] == tofind)
-    {
-      out_ = out_ + 1;
-    }
-  }
+    out_ = out_ + 1;
   return out_;
 }
 

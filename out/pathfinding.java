@@ -6,9 +6,7 @@ public class pathfinding
   public static int min2(int a, int b)
   {
     if (a < b)
-    {
       return a;
-    }
     return b;
   }
   
@@ -25,21 +23,13 @@ public class pathfinding
   public static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
-    {
       return 0;
-    }
     else if (posX < 0 || posY < 0 || posX >= x || posY >= y)
-    {
       return x * y * 10;
-    }
     else if (tab[posY][posX] == '#')
-    {
       return x * y * 10;
-    }
     else if (cache[posY][posX] != -1)
-    {
       return cache[posY][posX];
-    }
     else
     {
       cache[posY][posX] = x * y * 10;
@@ -60,9 +50,7 @@ public class pathfinding
     {
       int[] tmp = new int[x];
       for (int j = 0 ; j < x; j++)
-      {
         tmp[j] = -1;
-      }
       cache[i] = tmp;
     }
     return pathfind_aux(cache, tab, x, y, 0, 0);

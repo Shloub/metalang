@@ -4,13 +4,9 @@
 #include <vector>
 int pathfind_aux(std::vector<int >& cache, std::vector<int >& tab, int len, int pos){
   if (pos >= len - 1)
-  {
     return 0;
-  }
   else if (cache.at(pos) != -1)
-  {
     return cache.at(pos);
-  }
   else
   {
     cache.at(pos) = len * 2;
@@ -18,13 +14,9 @@ int pathfind_aux(std::vector<int >& cache, std::vector<int >& tab, int len, int 
     int oneval = pathfind_aux(cache, tab, len, pos + 1);
     int out_ = 0;
     if (posval < oneval)
-    {
       out_ = 1 + posval;
-    }
     else
-    {
       out_ = 1 + oneval;
-    }
     cache.at(pos) = out_;
     return out_;
   }
@@ -33,9 +25,7 @@ int pathfind_aux(std::vector<int >& cache, std::vector<int >& tab, int len, int 
 int pathfind(std::vector<int >& tab, int len){
   std::vector<int > cache( len );
   for (int i = 0 ; i < len; i++)
-  {
     cache.at(i) = -1;
-  }
   return pathfind_aux(cache, tab, len, 0);
 }
 

@@ -5,12 +5,8 @@
 int nth(std::vector<char >& tab, char tofind, int len){
   int out_ = 0;
   for (int i = 0 ; i < len; i++)
-  {
     if (tab.at(i) == tofind)
-    {
-      out_ = out_ + 1;
-    }
-  }
+    out_ = out_ + 1;
   return out_;
 }
 

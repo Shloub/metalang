@@ -19,13 +19,9 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 function pathfind_aux(&$cache, &$tab, $len, $pos){
   if ($pos >= $len - 1)
-  {
     return 0;
-  }
   else if ($cache[$pos] != -1)
-  {
     return $cache[$pos];
-  }
   else
   {
     $cache[$pos] = $len * 2;
@@ -33,13 +29,9 @@ function pathfind_aux(&$cache, &$tab, $len, $pos){
     $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
     $out_ = 0;
     if ($posval < $oneval)
-    {
       $out_ = 1 + $posval;
-    }
     else
-    {
       $out_ = 1 + $oneval;
-    }
     $cache[$pos] = $out_;
     return $out_;
   }
@@ -48,9 +40,7 @@ function pathfind_aux(&$cache, &$tab, $len, $pos){
 function pathfind(&$tab, $len){
   $cache = array();
   for ($i = 0 ; $i < $len; $i++)
-  {
     $cache[$i] = -1;
-  }
   return pathfind_aux($cache, $tab, $len, 0);
 }
 

@@ -5,18 +5,14 @@ void sort_(int* tab, int len){
   {
     int i;
     for (i = 0 ; i < len; i++)
-    {
       {
-        int j;
-        for (j = i + 1 ; j < len; j++)
-        {
-          if (tab[i] > tab[j])
-          {
-            int tmp = tab[i];
-            tab[i] = tab[j];
-            tab[j] = tmp;
-          }
-        }
+      int j;
+      for (j = i + 1 ; j < len; j++)
+        if (tab[i] > tab[j])
+      {
+        int tmp = tab[i];
+        tab[i] = tab[j];
+        tab[j] = tmp;
       }
     }
   }

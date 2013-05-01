@@ -42,13 +42,9 @@ function summax(lst, len){
   {
     current = current + lst[i];
     if (current < 0)
-    {
       current = 0;
-    }
     if (max_ < current)
-    {
       max_ = current;
-    }
   }
   return max_;
 }

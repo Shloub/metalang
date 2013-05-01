@@ -60,14 +60,10 @@ function result(t_, t2_){
   var len = 1;
   var cache0 = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
-  {
     cache0[i] = -i;
-  }
   var cache1 = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
-  {
     cache1[i] = i;
-  }
   var cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;

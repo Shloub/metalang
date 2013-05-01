@@ -23,21 +23,13 @@ function devine_($nombre, &$tab, $len){
   for ($i = 2 ; $i < $len; $i++)
   {
     if ($tab[$i] > $max_ || $tab[$i] < $min_)
-    {
       return false;
-    }
     if ($tab[$i] < $nombre)
-    {
       $min_ = $tab[$i];
-    }
     if ($tab[$i] > $nombre)
-    {
       $max_ = $tab[$i];
-    }
     if ($tab[$i] == $nombre && $len != $i + 1)
-    {
       return false;
-    }
   }
   return true;
 }
@@ -58,11 +50,7 @@ for ($i = 0 ; $i < $len; $i++)
 }
 $j = devine_($nombre, $tab, $len);
 if ($j)
-{
   echo "True";
-}
 else
-{
   echo "False";
-}
 ?>

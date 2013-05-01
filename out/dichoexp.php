@@ -19,18 +19,14 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 function exp_($a, $b){
   if ($b == 0)
-  {
     return 1;
-  }
   if (($b % 2) == 0)
   {
     $o = exp_($a, intval($b / 2));
     return $o * $o;
   }
   else
-  {
     return $a * exp_($a, $b - 1);
-  }
 }
 
 $a = 0;

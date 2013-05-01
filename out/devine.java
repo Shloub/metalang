@@ -10,21 +10,13 @@ public class devine
     for (int i = 2 ; i < len; i++)
     {
       if (tab[i] > max_ || tab[i] < min_)
-      {
         return false;
-      }
       if (tab[i] < nombre)
-      {
         min_ = tab[i];
-      }
       if (tab[i] > nombre)
-      {
         max_ = tab[i];
-      }
       if (tab[i] == nombre && len != i + 1)
-      {
         return false;
-      }
     }
     return true;
   }
@@ -51,13 +43,9 @@ public class devine
     }
     boolean f = devine_(nombre, tab, len);
     if (f)
-    {
       System.out.printf("%s", "True");
-    }
     else
-    {
       System.out.printf("%s", "False");
-    }
   }
   
 }

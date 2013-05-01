@@ -43,14 +43,10 @@ function result(&$t_, &$t2_){
   $len = 1;
   $cache0 = array();
   for ($i = 0 ; $i < $len; $i++)
-  {
     $cache0[$i] = -$i;
-  }
   $cache1 = array();
   for ($i = 0 ; $i < $len; $i++)
-  {
     $cache1[$i] = $i;
-  }
   $cache2 = $cache0;
   $cache0 = $cache1;
   $cache2 = $cache0;

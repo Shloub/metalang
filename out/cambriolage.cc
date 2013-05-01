@@ -4,9 +4,7 @@
 #include <vector>
 int max2(int a, int b){
   if (a > b)
-  {
     return a;
-  }
   return b;
 }
 
@@ -16,13 +14,9 @@ int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, 
   for (int i = 0 ; i < m; i++)
   {
     if (serrures.at(i).at(0) == -1 && serrures.at(i).at(1) > max_ancient)
-    {
       max_ancient = serrures.at(i).at(1);
-    }
     if (serrures.at(i).at(0) == 1 && serrures.at(i).at(1) > max_recent)
-    {
       max_recent = serrures.at(i).at(1);
-    }
   }
   int max_ancient_pp = 0;
   int max_recent_pp = 0;
@@ -30,20 +24,14 @@ int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, 
   {
     std::vector<int > pp = passepartout.at(i);
     if (pp.at(0) >= max_ancient && pp.at(1) >= max_recent)
-    {
       return 1;
-    }
     max_ancient_pp = max2(max_ancient_pp, pp.at(0));
     max_recent_pp = max2(max_recent_pp, pp.at(1));
   }
   if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
-  {
     return 2;
-  }
   else
-  {
     return 0;
-  }
 }
 
 
