@@ -61,7 +61,7 @@ public static int readInt(){
   }
   
   /*
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
   public static int npi_(char[] str, int len)
   {

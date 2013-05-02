@@ -1,3 +1,6 @@
+(*
+Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
+*)
 type toto = {
   mutable foo : int;
   mutable bar : int;

@@ -2,6 +2,13 @@
 require "scanf.rb"
 
 
+=begin
+
+Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
+
+=end
+
+
 def mktoto( v1 )
     t = {"foo" => v1,
          "bar" => v1,

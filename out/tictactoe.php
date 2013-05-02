@@ -94,6 +94,9 @@ function can_move_xy($x, $y, &$g){
   return $g["cases"][$x][$y] == 0;
 }
 
+/*
+Un minimax classique, renvoie la note du plateau
+*/
 function minmax(&$g){
   eval_($g);
   if ($g["ended"])
@@ -108,12 +111,16 @@ function minmax(&$g){
     apply_move_xy($x, $y, $g);
     $currentNote = minmax($g);
     cancel_move_xy($x, $y, $g);
+    /* Minimum ou Maximum selon le coté ou l'on joue*/
     if (($currentNote > $maxNote) == $g["firstToPlay"])
       $maxNote = $currentNote;
   }
   return $maxNote;
 }
 
+/*
+Renvoie le coup de l'IA
+*/
 function play(&$g){
   $minMove = array(
     "x"=>0,

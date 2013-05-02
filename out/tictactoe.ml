@@ -92,6 +92,9 @@ let rec cancel_move_xy x y g =
 let rec can_move_xy x y g =
   g.cases.(x).(y) = 0
 
+(*
+Un minimax classique, renvoie la note du plateau
+*)
 let rec minmax g =
   eval_ g;
   if g.ended then
@@ -108,6 +111,7 @@ let rec minmax g =
               apply_move_xy x y g;
               let currentNote = minmax g in
               cancel_move_xy x y g;
+              (* Minimum ou Maximum selon le coté ou l'on joue*)
               if (currentNote > (!maxNote)) = g.firstToPlay then
                 maxNote := currentNote
             end
@@ -116,6 +120,9 @@ let rec minmax g =
       (!maxNote)
     end
 
+(*
+Renvoie le coup de l'IA
+*)
 let rec play g =
   let minMove = {
     x=0;

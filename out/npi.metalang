@@ -4,7 +4,7 @@ def bool is_number(char c)
 end
 
 /*
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
 def int npi(array<char> str, int len)
   def array<int>stack[len] with i do

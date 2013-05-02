@@ -1,6 +1,9 @@
 
 import sys
 
+"""
+La suite de fibonaci
+"""
 def fibo( a, b, i ):
     out_ = 0;
     a2 = a;

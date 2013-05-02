@@ -5,14 +5,14 @@ def int montagnes(array<int> tab, int len)
 	while i >= 0 do
 		def int x = tab[i]
 		while j >= 0 && x > tab[len - j] do
-			j = j - 1
+			j--
 		end
-		j = j + 1
+		j++
 		tab[len - j] = x
 		if j > max then
 			max = j
 		end
-		i = i - 1
+		i--
 	end
 	return max
 end

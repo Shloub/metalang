@@ -35,7 +35,10 @@ var read_int = function(){
 }
 
 
-
+/*
+Ce test permet de vérifier le comportement des macros
+Il effectue du loop unrolling
+*/
 var j = 0;
 j = 0;
 util.print(j);

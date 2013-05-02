@@ -1,3 +1,4 @@
+(* lit un sudoku sur l'entrée standard *)
 let rec read_sudoku () =
   let q = 9 * 9 in
   let out_ = Array.init (q) (fun i ->
@@ -6,6 +7,7 @@ let rec read_sudoku () =
     k) in
   out_
 
+(* affiche un sudoku *)
 let rec print_sudoku sudoku_ =
   for y = 0 to 8 do
     for x = 0 to 8 do
@@ -21,6 +23,9 @@ let rec print_sudoku sudoku_ =
   done;
   Printf.printf "%s" "\n"
 
+(* dit si les variables sont toutes différentes *)
+(* dit si les variables sont toutes différentes *)
+(* dit si le sudoku est terminé de remplir *)
 exception Found_1 of bool;;
 let rec sudoku_done s =
   try
@@ -31,6 +36,8 @@ let rec sudoku_done s =
   raise (Found_1(true))
   with Found_1(out) -> out
 
+(* dit si il y a une erreur dans le sudoku *)
+(* résout le sudoku*)
 exception Found_2 of bool;;
 let rec solve sudoku_ =
   try

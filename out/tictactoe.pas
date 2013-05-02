@@ -173,6 +173,9 @@ begin
   exit(g^.cases[x][y] = 0);
 end;
 
+{
+Un minimax classique, renvoie la note du plateau
+}
 function minmax(g : gamestate) : integer;
 var
   currentNote : integer;
@@ -202,6 +205,7 @@ begin
           apply_move_xy(x, y, g);
           currentNote := minmax(g);
           cancel_move_xy(x, y, g);
+          { Minimum ou Maximum selon le coté ou l'on joue}
           if (currentNote > maxNote) = g^.firstToPlay
           then
             begin
@@ -213,6 +217,9 @@ begin
   exit(maxNote);
 end;
 
+{
+Renvoie le coup de l'IA
+}
 function play(g : gamestate) : move;
 var
   currentNote : integer;

@@ -61,6 +61,7 @@ begin
    until false;
 end;
 
+{ lit un sudoku sur l'entrée standard }
 type e = array of integer;
 function read_sudoku() : e;
 var
@@ -81,6 +82,7 @@ begin
   exit(out_);
 end;
 
+{ affiche un sudoku }
 procedure print_sudoku(sudoku_ : e);
 var
   d : integer;
@@ -110,6 +112,9 @@ begin
   write(''#10'');
 end;
 
+{ dit si les variables sont toutes différentes }
+{ dit si les variables sont toutes différentes }
+{ dit si le sudoku est terminé de remplir }
 function sudoku_done(s : e) : boolean;
 var
   i : integer;
@@ -125,6 +130,8 @@ begin
   exit(true);
 end;
 
+{ dit si il y a une erreur dans le sudoku }
+{ résout le sudoku}
 function solve(sudoku_ : e) : boolean;
 var
   i : integer;

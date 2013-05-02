@@ -41,7 +41,7 @@ function is_number(c){
 }
 
 /*
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
 function npi_(str, len){
   var stack = new Array(len);

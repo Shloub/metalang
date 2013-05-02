@@ -35,6 +35,9 @@ var read_int = function(){
 }
 
 
+/*
+La suite de fibonaci
+*/
 function fibo(a, b, i){
   var out_ = 0;
   var a2 = a;

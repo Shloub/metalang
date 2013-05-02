@@ -49,6 +49,9 @@ public static int readInt(){
     }
   } while(true);
 } 
+  /*
+La suite de fibonaci
+*/
   public static int fibo_(int a, int b, int i)
   {
     int out_ = 0;

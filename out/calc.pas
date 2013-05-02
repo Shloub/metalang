@@ -1,5 +1,8 @@
 program calc;
 
+{
+La suite de fibonaci
+}
 function fibo(a : integer; b : integer; i : integer) : integer;
 var
   a2 : integer;

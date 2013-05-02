@@ -3,6 +3,9 @@ import java.util.*;
 public class fibo
 {
   static Scanner scanner = new Scanner(System.in);
+  /*
+La suite de fibonaci
+*/
   public static int fibo_(int a, int b, int i)
   {
     int out_ = 0;

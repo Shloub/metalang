@@ -35,6 +35,9 @@ var read_int = function(){
 }
 
 
+/*
+Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
+*/
 
 function mktoto(v1){
   var t = {

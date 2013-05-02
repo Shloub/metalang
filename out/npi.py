@@ -46,7 +46,7 @@ def is_number( c ):
     return ord(c) <= ord('9') and ord(c) >= ord('0');
 
 """
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 """
 def npi_( str, len ):
     stack = [None] * len;

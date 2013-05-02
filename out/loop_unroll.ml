@@ -1,4 +1,7 @@
-
+(*
+Ce test permet de vérifier le comportement des macros
+Il effectue du loop unrolling
+*)
 let () =
 begin
   let j = ref( 0 ) in

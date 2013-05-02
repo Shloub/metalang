@@ -9,7 +9,7 @@ end
 
 =begin
 
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 
 =end
 

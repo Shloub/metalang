@@ -3,7 +3,7 @@ let rec is_number c =
   int_of_char (c) <= int_of_char ('9') && int_of_char (c) >= int_of_char ('0')
 
 (*
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 *)
 let rec npi_ str len =
   let stack = Array.init (len) (fun i ->

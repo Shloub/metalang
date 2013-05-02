@@ -437,6 +437,11 @@ module Expr = struct
 
   let access m = fix (Access m )
 
+  let add e1 e2 = binop Add e1 e2
+  let sub e1 e2 = binop Sub e1 e2
+  let mul e1 e2 = binop Mul e1 e2
+  let div e1 e2 = binop Div e1 e2
+
   let call name li = fix ( Call(name, li))
 
   let default_value t = match Type.unfix t with

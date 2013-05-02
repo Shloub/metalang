@@ -3,6 +3,9 @@ import java.util.*;
 public class affect
 {
   static Scanner scanner = new Scanner(System.in);
+  /*
+Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
+*/
   static class toto {public int foo;public int bar;public int blah;}
   public static toto mktoto(int v1)
   {

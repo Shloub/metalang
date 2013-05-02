@@ -1,3 +1,6 @@
+/*
+La suite de fibonaci
+*/
 def int fibo(int a, int b, int i)
   def int out = 0
   def int a2 = a

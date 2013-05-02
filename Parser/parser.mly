@@ -26,6 +26,7 @@
 %token LEFT_PARENS RIGHT_PARENS LEFT_BRACKET RIGHT_BRACKET
 %token NOT AND OR
 %token EQUAL NOT_EQUAL LOWER HIGHER LOWER_OR_EQUAL HIGHER_OR_EQUAL
+%token ADDON SUBON MULON DIVON INCR DECR
 %token ADD NEG MUL DIV MODULO
 %token TYPE_INT TYPE_AUTO TYPE_STRING TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID TYPE_LEXEMS
 %token TRUE FALSE
@@ -204,6 +205,48 @@ instr :
 | mutabl SET expr { I.affect $1 $3
                       |> locati ( Ast.location ($startpos($1), $endpos($3)))
                   }
+| mutabl ADDON expr { I.affect $1
+                      (E.add (E.access $1
+                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
+                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+                      )
+                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+}
+| mutabl SUBON expr { I.affect $1
+                      (E.sub (E.access $1
+                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
+                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+                      )
+                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+}
+| mutabl DIVON expr { I.affect $1
+                      (E.div (E.access $1
+                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
+                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+                      )
+                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+}
+| mutabl MULON expr { I.affect $1
+                      (E.mul (E.access $1
+                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
+                       ) $3 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+                      )
+                      |> locati ( Ast.location ($startpos($1), $endpos($3)))
+}
+| mutabl INCR { I.affect $1
+                      (E.add (E.access $1
+                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
+                       ) (E.integer 1 |> locate ( Ast.location ($startpos($2), $endpos($2))))
+                      )
+                      |> locati ( Ast.location ($startpos($1), $endpos($2)))
+}
+| mutabl DECR { I.affect $1
+                      (E.sub (E.access $1
+                                 |> locate ( Ast.location ($startpos($1), $endpos($1)))
+                       ) (E.integer 1 |> locate ( Ast.location ($startpos($2), $endpos($2))))
+                      )
+                      |> locati ( Ast.location ($startpos($1), $endpos($2)))
+}
 | READ typ mutabl { I.read $2 $3
                       |> locati ( Ast.location ($startpos($1), $endpos($3)))
                   }

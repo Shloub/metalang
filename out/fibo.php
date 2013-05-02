@@ -16,7 +16,9 @@ while(true){
 if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
-}
+}/*
+La suite de fibonaci
+*/
 function fibo_($a, $b, $i){
   $out_ = 0;
   $a2 = $a;

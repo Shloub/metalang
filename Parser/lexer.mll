@@ -114,6 +114,14 @@ rule token = parse
 | "<=" | "=<" { LOWER_OR_EQUAL }
 | ">=" | "=>" { HIGHER_OR_EQUAL }
 
+| "+=" { ADDON }
+| "-=" { SUBON }
+| "++" { INCR }
+| "--" { DECR }
+| "/=" { DIVON }
+| "*=" { MULON }
+
+
 | "+" { ADD }
 | "-" { NEG }
 | "*" { MUL }

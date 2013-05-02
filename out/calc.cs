@@ -2,6 +2,9 @@ using System;
 
 public class calc
 {
+  /*
+La suite de fibonaci
+*/
   public static int fibo(int a, int b, int i)
   {
     int out_ = 0;

@@ -1,6 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+/*
+Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
+*/
 struct toto;
 typedef struct toto {
   int foo;

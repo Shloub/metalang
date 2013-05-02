@@ -2,6 +2,11 @@
 #include<stdlib.h>
 
 
+/*
+Ce test permet de tester les macros
+C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
+et qui produit les macros metalang correspondante
+*/
 int main(void){
   char input = ' ';
   int current_pos = 500;

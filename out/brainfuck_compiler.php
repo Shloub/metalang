@@ -1,5 +1,10 @@
 <?php
 
+/*
+Ce test permet de tester les macros
+C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
+et qui produit les macros metalang correspondante
+*/
 $input = ord(' ');
 $current_pos = 500;
 $p = 1000;

@@ -80,6 +80,9 @@ def cancel_move_xy( x, y, g ):
 def can_move_xy( x, y, g ):
     return g["cases"][x][y] == 0;
 
+"""
+Un minimax classique, renvoie la note du plateau
+"""
 def minmax( g ):
     eval_(g);
     if g["ended"]:
@@ -93,10 +96,14 @@ def minmax( g ):
           apply_move_xy(x, y, g);
           currentNote = minmax(g);
           cancel_move_xy(x, y, g);
+          """ Minimum ou Maximum selon le coté ou l'on joue"""
           if (currentNote > maxNote) == g["firstToPlay"]:
             maxNote = currentNote;
     return maxNote;
 
+"""
+Renvoie le coup de l'IA
+"""
 def play( g ):
     minMove = {"x":0, "y":0};
     minNote = 10000;

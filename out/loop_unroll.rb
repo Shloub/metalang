@@ -2,6 +2,13 @@
 require "scanf.rb"
 
 
+=begin
+
+Ce test permet de vérifier le comportement des macros
+Il effectue du loop unrolling
+
+=end
+
 j = 0
 j = 0;
 printf "%d", j

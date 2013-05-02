@@ -1,6 +1,9 @@
 program loop_unroll;
 
-
+{
+Ce test permet de vérifier le comportement des macros
+Il effectue du loop unrolling
+}
 
 var
   j : integer;

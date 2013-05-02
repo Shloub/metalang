@@ -109,6 +109,9 @@ bool can_move_xy(int x, int y, struct gamestate * g){
   return g->cases.at(x).at(y) == 0;
 }
 
+/*
+Un minimax classique, renvoie la note du plateau
+*/
 int minmax(struct gamestate * g){
   eval_(g);
   if (g->ended)
@@ -123,12 +126,16 @@ int minmax(struct gamestate * g){
     apply_move_xy(x, y, g);
     int currentNote = minmax(g);
     cancel_move_xy(x, y, g);
+    /* Minimum ou Maximum selon le coté ou l'on joue*/
     if ((currentNote > maxNote) == g->firstToPlay)
       maxNote = currentNote;
   }
   return maxNote;
 }
 
+/*
+Renvoie le coup de l'IA
+*/
 struct move * play(struct gamestate * g){
   struct move * minMove = new move();
   minMove->x=0;

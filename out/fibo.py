@@ -37,7 +37,9 @@ def readint():
     else:
       return out * sign;
 
-
+"""
+La suite de fibonaci
+"""
 def fibo_( a, b, i ):
     out_ = 0;
     a2 = a;

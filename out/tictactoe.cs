@@ -103,6 +103,9 @@ Tictactoe : un tictactoe avec une IA
     return g.cases[x][y] == 0;
   }
   
+  /*
+Un minimax classique, renvoie la note du plateau
+*/
   public static int minmax(gamestate g)
   {
     eval_(g);
@@ -118,12 +121,16 @@ Tictactoe : un tictactoe avec une IA
       apply_move_xy(x, y, g);
       int currentNote = minmax(g);
       cancel_move_xy(x, y, g);
+      /* Minimum ou Maximum selon le coté ou l'on joue*/
       if ((currentNote > maxNote) == g.firstToPlay)
         maxNote = currentNote;
     }
     return maxNote;
   }
   
+  /*
+Renvoie le coup de l'IA
+*/
   public static move play(gamestate g)
   {
     move minMove = new move();

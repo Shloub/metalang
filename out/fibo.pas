@@ -61,6 +61,9 @@ begin
    until false;
 end;
 
+{
+La suite de fibonaci
+}
 function fibo_(a : integer; b : integer; i : integer) : integer;
 var
   a2 : integer;

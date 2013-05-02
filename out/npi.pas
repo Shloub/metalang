@@ -76,7 +76,7 @@ begin
 end;
 
 {
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 }
 type a = array of char;
 function npi_(str : a; len : integer) : integer;
