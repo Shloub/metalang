@@ -1,4 +1,6 @@
-
+/*
+Ce test effectue un rot13 sur une chaine lue en entrée
+*/
 main
   def read int strlen skip
   def array<char> tab4[strlen] with toto do

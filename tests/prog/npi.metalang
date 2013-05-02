@@ -1,5 +1,5 @@
 /*
-Notation polonaise inversée
+Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
 
 def int npi(array<char> str, int len)
@@ -31,7 +31,7 @@ def int npi(array<char> str, int len)
   end
   return stack[0]
 end
-	 
+
 main
 	def int len = 0
 	read int len skip

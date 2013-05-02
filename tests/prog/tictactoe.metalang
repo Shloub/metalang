@@ -115,6 +115,9 @@ def bool can_move(@move m, @gamestate g)
   return can_move_xy(m.x, m.y, g)
 end
 
+/*
+Un minimax classique, renvoie la note du plateau
+*/
 def int minmax(@gamestate g)
   eval(g)
   if g.ended then
@@ -130,6 +133,7 @@ def int minmax(@gamestate g)
         apply_move_xy(x, y, g)
         def currentNote = minmax(g)
         cancel_move_xy(x, y, g)
+        /* Minimum ou Maximum selon le coté ou l'on joue*/
         if currentNote > maxNote == g.firstToPlay
         then
           maxNote = currentNote
@@ -140,6 +144,9 @@ def int minmax(@gamestate g)
   return maxNote
 end
 
+/*
+Renvoie le coup de l'IA
+*/
 def @move play(@gamestate g)
   def minMove = record
     x = 0

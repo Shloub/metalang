@@ -1,3 +1,7 @@
+/*
+Ce test permet de vérifier le comportement des macros
+Il effectue du loop unrolling
+*/
 def lexems loop_unroll(int i, int fin, lexems var, lexems content)
   if i == fin
   then

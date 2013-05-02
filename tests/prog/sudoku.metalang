@@ -1,3 +1,4 @@
+/* lit un sudoku sur l'entrée standard */
 def array<int> read_sudoku()
   def array<int> out[9 * 9] with i do
     def read int k skip
@@ -6,6 +7,7 @@ def array<int> read_sudoku()
   return out
 end
 
+/* affiche un sudoku */
 def void print_sudoku(array<int> sudoku)
   for y = 0 to 8 do
     for x = 0 to 8 do
@@ -23,6 +25,7 @@ def void print_sudoku(array<int> sudoku)
   print string "\n"
 end
 
+/* dit si les variables sont toutes différentes */
 def lexems differents(array<lexems> tab, int len)
   if len < 2 then
     return {}
@@ -36,6 +39,7 @@ def lexems differents(array<lexems> tab, int len)
   return out;
 end
 
+/* dit si les variables sont toutes différentes */
 def lexems differents9(
   lexems a, lexems b, lexems c,
   lexems d, lexems e, lexems f, lexems g, lexems h, lexems i___)
@@ -54,7 +58,7 @@ def lexems differents9(
   return differents(tab, 9)
 end
 
-
+/* dit si le sudoku est terminé de remplir */
 def bool sudoku_done(array<int> s)
   for i = 0 to 80 do
     if s[i] == 0 then return false end
@@ -62,6 +66,7 @@ def bool sudoku_done(array<int> s)
   return true
 end
 
+/* dit si il y a une erreur dans le sudoku */
 def lexems sudoku_error(lexems s)
   def out1 = { false }
   for x = 0 to 8 do
@@ -112,6 +117,7 @@ def lexems sudoku_error(lexems s)
   return { ${out1} ${out2} ${out3}}
 end
 
+/* résout le sudoku*/
 def bool solve(array<int> sudoku)
   ${{if ${sudoku_error({sudoku})} then return false end}}
   if sudoku_done(sudoku) then return true end
@@ -127,6 +133,7 @@ def bool solve(array<int> sudoku)
   end
   return false
 end
+
 main
   def sudoku = read_sudoku();
   print_sudoku(sudoku);
