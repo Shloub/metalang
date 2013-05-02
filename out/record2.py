@@ -43,7 +43,7 @@ def mktoto( v1 ):
     return t;
 
 def result( t ):
-    t["blah"] = t["blah"] + 1;
+    t["blah"] += 1;
     return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
 
 t = mktoto(4);

@@ -38,7 +38,7 @@ function eval_(&$g){
     for ($x = 0 ; $x <= 2; $x++)
     {
       if ($g["cases"][$x][$y] == 0)
-        $freecase = $freecase + 1;
+        $freecase ++;
       $colv = $g["cases"][$x][$y];
       $linv = $g["cases"][$y][$x];
       if ($col == -1 && $colv != 0)

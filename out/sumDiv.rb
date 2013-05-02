@@ -25,7 +25,7 @@ def sumdiv( n )
  Si i divise 
 =end
 
-        out_ = out_ + i;
+        out_ += i;
         
 =begin
  On incrémente 

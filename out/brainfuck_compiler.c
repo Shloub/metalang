@@ -65,7 +65,7 @@ int main(void){
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
-  current_pos = current_pos + 1;
+  current_pos ++;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
@@ -79,11 +79,11 @@ int main(void){
   while (mem[current_pos] != 0)
   {
     mem[current_pos] = mem[current_pos] - 1;
-    current_pos = current_pos - 1;
+    current_pos --;
     mem[current_pos] = mem[current_pos] + 1;
     char b = mem[current_pos];
     printf("%c", b);
-    current_pos = current_pos + 1;
+    current_pos ++;
   }
   return 0;
 }

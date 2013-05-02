@@ -17,10 +17,10 @@ public class plus_petit
     {
       int e = tab[i];
       if (e < m)
-        i = i + 1;
+        i ++;
       else
       {
-        j = j - 1;
+        j --;
         tab[i] = tab[j];
         tab[j] = e;
       }

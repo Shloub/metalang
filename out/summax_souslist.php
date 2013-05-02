@@ -22,7 +22,7 @@ function summax(&$lst, $len){
   $max_ = 0;
   for ($i = 0 ; $i < $len; $i++)
   {
-    $current = $current + $lst[$i];
+    $current += $lst[$i];
     if ($current < 0)
       $current = 0;
     if ($max_ < $current)

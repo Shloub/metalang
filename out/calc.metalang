@@ -8,9 +8,9 @@ def int fibo(int a, int b, int i)
   for j=0 to i + 1
   do
     print int j
-    out_ = out_ + a2;
+    out_ += a2;
     def int tmp = b2
-    b2 = b2 + a2;
+    b2 += a2;
     a2 = tmp;
   end
   return out_

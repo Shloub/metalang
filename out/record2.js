@@ -46,7 +46,7 @@ function mktoto(v1){
 }
 
 function result(t){
-  t.blah = t.blah + 1;
+  t.blah ++;
   return t.foo + t.blah * t.bar + t.bar * t.foo;
 }
 

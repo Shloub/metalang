@@ -30,7 +30,7 @@ int result(struct toto * t_, struct toto * t2_){
   t3 = t2;
   t = t2;
   t2 = t3;
-  t->blah = t->blah + 1;
+  t->blah ++;
   int len = 1;
   std::vector<int > cache0( len );
   for (int i = 0 ; i < len; i++)

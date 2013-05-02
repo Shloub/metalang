@@ -37,6 +37,9 @@ class pasPrinter = object(self)
 
   method lang () = "pas"
 
+
+  method hasSelfAffect op = false
+
   method decl_type f name t = ()
 
   val mutable current_function = ""

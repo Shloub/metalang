@@ -42,7 +42,7 @@ def summax( lst, len ):
     current = 0;
     max_ = 0;
     for i in range(0, len):
-      current = current + lst[i];
+      current += lst[i];
       if current < 0:
         current = 0;
       if max_ < current:

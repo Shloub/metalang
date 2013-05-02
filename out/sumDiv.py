@@ -38,7 +38,7 @@ def sumdiv( n ):
       """ La boucle : i est le diviseur potentiel"""
       if (n % i) == 0:
         """ Si i divise """
-        out_ = out_ + i;
+        out_ += i;
         """ On incrémente """
       else:
         """ nop """

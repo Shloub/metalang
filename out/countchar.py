@@ -46,7 +46,7 @@ def nth( tab, tofind, len ):
     out_ = 0;
     for i in range(0, len):
       if tab[i] == tofind:
-        out_ = out_ + 1;
+        out_ += 1;
     return out_;
 
 len = 0;

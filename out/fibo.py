@@ -45,9 +45,9 @@ def fibo_( a, b, i ):
     a2 = a;
     b2 = b;
     for j in range(0, 1 + i + 1):
-      out_ = out_ + a2;
+      out_ += a2;
       tmp = b2;
-      b2 = b2 + a2;
+      b2 += a2;
       a2 = tmp;
     return out_;
 

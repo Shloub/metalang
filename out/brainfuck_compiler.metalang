@@ -57,7 +57,7 @@ main
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
-  current_pos = current_pos + 1;
+  current_pos ++;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
@@ -71,10 +71,10 @@ main
   while mem[current_pos] != 0
   do
     mem[current_pos] = mem[current_pos] - 1;
-    current_pos = current_pos - 1;
+    current_pos --;
     mem[current_pos] = mem[current_pos] + 1;
     print char mem[current_pos]
-    current_pos = current_pos + 1;
+    current_pos ++;
   end
 end
 

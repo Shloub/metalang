@@ -65,7 +65,7 @@ et qui produit les macros metalang correspondante
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;
-    current_pos = current_pos + 1;
+    current_pos ++;
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;
@@ -79,11 +79,11 @@ et qui produit les macros metalang correspondante
     while (mem[current_pos] != 0)
     {
       mem[current_pos] = mem[current_pos] - 1;
-      current_pos = current_pos - 1;
+      current_pos --;
       mem[current_pos] = mem[current_pos] + 1;
       char k = (char)(mem[current_pos]);
       System.out.printf("%c", k);
-      current_pos = current_pos + 1;
+      current_pos ++;
     }
   }
   

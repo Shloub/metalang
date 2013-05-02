@@ -9,9 +9,9 @@ function fibo($a, $b, $i){
   for ($j = 0 ; $j <= $i + 1; $j++)
   {
     echo $j;
-    $out_ = $out_ + $a2;
+    $out_ += $a2;
     $tmp = $b2;
-    $b2 = $b2 + $a2;
+    $b2 += $a2;
     $a2 = $tmp;
   }
   return $out_;

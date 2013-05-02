@@ -13,9 +13,9 @@ int fibo(int a, int b, int i){
     for (j = 0 ; j <= i + 1; j++)
     {
       printf("%d", j);
-      out_ = out_ + a2;
+      out_ += a2;
       int tmp = b2;
-      b2 = b2 + a2;
+      b2 += a2;
       a2 = tmp;
     }
   }

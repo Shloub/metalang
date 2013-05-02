@@ -27,7 +27,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t3 = t2;
     t = t2;
     t2 = t3;
-    t.blah = t.blah + 1;
+    t.blah ++;
     int len = 1;
     int[] cache0 = new int[len];
     for (int i = 0 ; i < len; i++)

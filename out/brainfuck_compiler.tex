@@ -1,0 +1,86 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{brainfuck\_compiler}
+\begin{document}
+\maketitle
+
+
+Ce test permet de tester les macros
+C'est un compilateur brainfuck qui lit sur l'entr\'ee standard pendant la compilation
+et qui produit les macros metalang correspondante
+
+
+\begin{algorithm}[H]
+$char\:input := " "$\;
+$int\:current\_pos := 500$\;
+$array<int>\:mem=\:new\:int[1000]$\;
+\ForEach{ $i\;indice\;of\;mem$ }{$mem[i]:=0$}
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+current\_pos ++;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+$mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+\While{$ mem[current\_pos] \neq 0 $}{
+  $mem[current\_pos] \leftarrow mem[current\_pos] - 1 $\;
+  current\_pos --;
+  $mem[current\_pos] \leftarrow mem[current\_pos] + 1 $\;
+  $print_{char}$($ mem[current\_pos] $)\;
+  current\_pos ++;
+}
+\caption{Main}
+\end{algorithm}
+\end{document}
+

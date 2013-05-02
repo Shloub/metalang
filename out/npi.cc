@@ -18,23 +18,23 @@ int npi_(std::vector<char >& str, int len){
   int ptrStr = 0;
   while (ptrStr < len)
     if (str.at(ptrStr) == ' ')
-    ptrStr = ptrStr + 1;
+    ptrStr ++;
   else if (is_number(str.at(ptrStr)))
   {
     int num = 0;
     while (str.at(ptrStr) != ' ')
     {
       num = num * 10 + str.at(ptrStr) - '0';
-      ptrStr = ptrStr + 1;
+      ptrStr ++;
     }
     stack.at(ptrStack) = num;
-    ptrStack = ptrStack + 1;
+    ptrStack ++;
   }
   else if (str.at(ptrStr) == '+')
   {
     stack.at(ptrStack - 2) = stack.at(ptrStack - 2) + stack.at(ptrStack - 1);
-    ptrStack = ptrStack - 1;
-    ptrStr = ptrStr + 1;
+    ptrStack --;
+    ptrStr ++;
   }
   return stack.at(0);
 }

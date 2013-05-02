@@ -1,0 +1,22 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{record\_test}
+\begin{document}
+\maketitle
+record toto int foo;
+int bar;
+
+end
+
+
+\begin{algorithm}[H]
+def @toto param = with foo = $ 0 $
+bar = $ 0 $ end
+$read_{int}$(param.bar)\;
+read\_blank(STDIN)\;
+$read_{int}$(param.foo)\;
+$print_{int}$($ param.bar + param.foo * param.bar $)\;
+\caption{Main}
+\end{algorithm}
+\end{document}
+

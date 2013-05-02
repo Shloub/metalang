@@ -269,6 +269,8 @@ class camlPrinter = object(self)
   (** show a binding *)
   method binding f i = Format.fprintf f "%s" i
 
+  method hasSelfAffect op = false
+
   (** show an affectation *)
   method affect f m expr =
     Format.fprintf f "@[<h>%a@ %s@ %a@]"

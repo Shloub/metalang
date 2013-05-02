@@ -63,7 +63,7 @@ int main(void){
   mem.at(current_pos) = mem.at(current_pos) + 1;
   mem.at(current_pos) = mem.at(current_pos) + 1;
   mem.at(current_pos) = mem.at(current_pos) + 1;
-  current_pos = current_pos + 1;
+  current_pos ++;
   mem.at(current_pos) = mem.at(current_pos) + 1;
   mem.at(current_pos) = mem.at(current_pos) + 1;
   mem.at(current_pos) = mem.at(current_pos) + 1;
@@ -77,11 +77,11 @@ int main(void){
   while (mem.at(current_pos) != 0)
   {
     mem.at(current_pos) = mem.at(current_pos) - 1;
-    current_pos = current_pos - 1;
+    current_pos --;
     mem.at(current_pos) = mem.at(current_pos) + 1;
     char f = mem.at(current_pos);
     printf("%c", f);
-    current_pos = current_pos + 1;
+    current_pos ++;
   }
   return 0;
 }

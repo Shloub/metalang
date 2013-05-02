@@ -25,9 +25,9 @@ function fibo_($a, $b, $i){
   $b2 = $b;
   for ($j = 0 ; $j <= $i + 1; $j++)
   {
-    $out_ = $out_ + $a2;
+    $out_ += $a2;
     $tmp = $b2;
-    $b2 = $b2 + $a2;
+    $b2 += $a2;
     $a2 = $tmp;
   }
   return $out_;

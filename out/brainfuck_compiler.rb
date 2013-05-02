@@ -65,7 +65,7 @@ mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
-current_pos = current_pos + 1;
+current_pos += 1;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
@@ -78,10 +78,10 @@ mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
 while mem[current_pos] != 0 do
   mem[current_pos] = mem[current_pos] - 1;
-  current_pos = current_pos - 1;
+  current_pos -= 1;
   mem[current_pos] = mem[current_pos] + 1;
   s = mem[current_pos]
   printf "%c", s
-  current_pos = current_pos + 1;
+  current_pos += 1;
 end
 

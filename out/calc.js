@@ -45,9 +45,9 @@ function fibo(a, b, i){
   for (var j = 0 ; j <= i + 1; j++)
   {
     util.print(j);
-    out_ = out_ + a2;
+    out_ += a2;
     var tmp = b2;
-    b2 = b2 + a2;
+    b2 += a2;
     a2 = tmp;
   }
   return out_;

@@ -44,7 +44,7 @@ Tictactoe : un tictactoe avec une IA
       for (int x = 0 ; x <= 2; x ++)
       {
         if (g.cases[x][y] == 0)
-          freecase = freecase + 1;
+          freecase ++;
         int colv = g.cases[x][y];
         int linv = g.cases[y][x];
         if (col == -1 && colv != 0)

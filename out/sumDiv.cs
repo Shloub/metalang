@@ -49,7 +49,7 @@ public static int readInt(){
       if ((n % i) == 0)
       {
         /* Si i divise */
-        out_ = out_ + i;
+        out_ += i;
         /* On incrémente */
       }
       else

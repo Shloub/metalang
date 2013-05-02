@@ -58,12 +58,12 @@ public static int readInt(){
     {
       int x = tab[i];
       while (j >= 0 && x > tab[len - j])
-        j = j - 1;
-      j = j + 1;
+        j --;
+      j ++;
       tab[len - j] = x;
       if (j > max_)
         max_ = j;
-      i = i - 1;
+      i --;
     }
     return max_;
   }

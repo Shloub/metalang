@@ -15,9 +15,9 @@ def go( tab, a, b )
     while i < j do
       e = tab[i]
       if e < m then
-        i = i + 1;
+        i += 1;
       else
-        j = j - 1;
+        j -= 1;
         tab[i] = tab[j];
         tab[j] = e;
       end

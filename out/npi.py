@@ -56,18 +56,18 @@ def npi_( str, len ):
     ptrStr = 0;
     while (ptrStr < len):
       if str[ptrStr] == ' ':
-        ptrStr = ptrStr + 1;
+        ptrStr += 1;
       elif is_number(str[ptrStr]):
         num = 0;
         while (str[ptrStr] != ' '):
           num = num * 10 + ord(str[ptrStr]) - ord('0');
-          ptrStr = ptrStr + 1;
+          ptrStr += 1;
         stack[ptrStack] = num;
-        ptrStack = ptrStack + 1;
+        ptrStack += 1;
       elif str[ptrStr] == '+':
         stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-        ptrStack = ptrStack - 1;
-        ptrStr = ptrStr + 1;
+        ptrStack -= 1;
+        ptrStr += 1;
     return stack[0];
 
 len = 0;

@@ -1,0 +1,43 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{summax\_souslist}
+\begin{document}
+\maketitle
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{lst:array<int>,
+len:int}
+\Output{int}
+$int\:current := 0$\;
+$int\:max := 0$\;
+\For{ $i\;:=\;0\; to\;len - 1$}{
+                                  current += $ lst[i] $;
+                                  \If{ $ current < 0 $ }{
+                                    $current \leftarrow 0 $\;
+                                  }
+                                  
+                                  \If{ $ max < current $ }{
+                                    $max \leftarrow current $\;
+                                  }
+                                  }
+
+\Return $ max $\;
+\caption{summax}
+\end{algorithm}
+
+\begin{algorithm}[H]
+$int\:len := 0$\;
+$read_{int}$(len)\;
+read\_blank(STDIN)\;
+$array<int>\:tab=\:new\:int[len]$\;
+\ForEach{ $i\;indice\;of\;tab$ }{$int\:tmp := 0$\;
+$read_{int}$(tmp)\;
+read\_blank(STDIN)\;
+$tab[i]:=tmp$}
+$int\:result := summax(tab, len)$\;
+$print_{int}$($ result $)\;
+\caption{Main}
+\end{algorithm}
+\end{document}
+

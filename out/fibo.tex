@@ -1,0 +1,42 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{fibo}
+\begin{document}
+\maketitle
+
+La suite de fibonaci
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{a:int,
+b:int,
+i:int}
+\Output{int}
+$int\:out := 0$\;
+$int\:a2 := a$\;
+$int\:b2 := b$\;
+\For{ $j\;:=\;0\; to\;i + 1$}{
+                                out += $ a2 $;
+                                $int\:tmp := b2$\;
+                                b2 += $ a2 $;
+                                $a2 \leftarrow tmp $\;}
+
+\Return $ out $\;
+\caption{fibo}
+\end{algorithm}
+
+\begin{algorithm}[H]
+$int\:a := 0$\;
+$int\:b := 0$\;
+$int\:i := 0$\;
+$read_{int}$(a)\;
+read\_blank(STDIN)\;
+$read_{int}$(b)\;
+read\_blank(STDIN)\;
+$read_{int}$(i)\;
+$print_{int}$($ fibo(a, b, i) $)\;
+\caption{Main}
+\end{algorithm}
+\end{document}
+

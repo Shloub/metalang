@@ -1,0 +1,44 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{record2}
+\begin{document}
+\maketitle
+record toto int foo;
+int bar;
+int blah;
+
+end
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{v1:int}
+\Output{@toto}
+def @toto t = with foo = $ v1 $
+bar = $ 0 $
+blah = $ 0 $ end
+\Return $ t $\;
+\caption{mktoto}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{t:@toto}
+\Output{int}
+
+t.blah ++;
+\Return $ t.foo + t.blah * t.bar + t.bar * t.foo $\;
+\caption{result}
+\end{algorithm}
+
+\begin{algorithm}[H]
+$@toto\:t := mktoto(4)$\;
+$read_{int}$(t.bar)\;
+read\_blank(STDIN)\;
+$read_{int}$(t.blah)\;
+$print_{int}$($ result(t) $)\;
+$print_{int}$($ t.blah $)\;
+\caption{Main}
+\end{algorithm}
+\end{document}
+

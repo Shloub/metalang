@@ -40,6 +40,10 @@ class jsPrinter = object(self)
 
   method decl_type f name t = ()
 
+  method hasSelfAffect = function
+    | Expr.Div -> false
+    | _ -> true
+
   method binop f op a b =
     match op with
       | Expr.Div ->
@@ -74,7 +78,6 @@ class jsPrinter = object(self)
          (fun t f1 e1 f2 e2 -> Format.fprintf t
            "%a,@ %a" f1 e1 f2 e2)
       ) li
-
 
   method prog f prog =
     Format.fprintf f "

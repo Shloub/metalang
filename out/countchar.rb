@@ -5,7 +5,7 @@ def nth( tab, tofind, len )
     out_ = 0
     for i in (0 ..  len - 1) do
       if tab[i] == tofind then
-        out_ = out_ + 1;
+        out_ += 1;
       end
     end
     return (out_);

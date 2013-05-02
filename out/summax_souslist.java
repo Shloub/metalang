@@ -9,7 +9,7 @@ public class summax_souslist
     int max_ = 0;
     for (int i = 0 ; i < len; i++)
     {
-      current = current + lst[i];
+      current += lst[i];
       if (current < 0)
         current = 0;
       if (max_ < current)

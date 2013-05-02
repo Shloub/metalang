@@ -52,7 +52,7 @@ def result( t_, t2_ ):
     t3 = t2;
     t = t2;
     t2 = t3;
-    t["blah"] = t["blah"] + 1;
+    t["blah"] += 1;
     len = 1;
     cache0 = [None] * len;
     for i in range(0, len):

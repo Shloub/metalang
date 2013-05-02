@@ -1,0 +1,110 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{pathfinding}
+\begin{document}
+\maketitle
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{a:int,
+b:int}
+\Output{int}
+\If{ $ a < b $ }{
+  \Return $ a $\;
+}
+
+\Return $ b $\;
+\caption{min2}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{a:int,
+b:int,
+c:int}
+\Output{int}
+\Return $ min2(min2(a, b), c) $\;
+\caption{min3}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{a:int,
+b:int, c:int,
+d:int}
+\Output{int}
+\Return $ min3(min2(a, b), c, d) $\;
+\caption{min4}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{cache:array<array<int>>,
+tab:array<array<char>>, x:int, y:int, posX:int,
+posY:int}
+\Output{int}
+\If{ $ posX = x - 1 and posY = y - 1 $ }{
+  \Return $ 0 $\;
+}
+\Else{
+  \If{ $ posX < 0 or posY < 0 or posX \geq x or posY \geq y $ }{
+    \Return $ x * y * 10 $\;
+  }
+  \Else{
+    \If{ $ tab[posY][posX] = "\#" $ }{
+      \Return $ x * y * 10 $\;
+    }
+    \Else{
+      \If{ $ cache[posY][posX] \neq -1 $ }{
+        \Return $ cache[posY][posX] $\;
+      }
+      \Else{
+        $cache[posY][posX] \leftarrow x * y * 10 $\;
+        $int\:val1 := pathfind_aux(cache, tab, x, y, posX + 1, posY)$\;
+        $int\:val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY)$\;
+        $int\:val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1)$\;
+        $int\:val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1)$\;
+        $int\:out := 1 + min4(val1, val2, val3, val4)$\;
+        $cache[posY][posX] \leftarrow out $\;
+        \Return $ out $\;
+      }
+    }
+  }
+}
+\caption{pathfind\_aux}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{tab:array<array<char>>,
+x:int,
+y:int}
+\Output{int}
+$array<array<int>>\:cache=\:new\:array<int>[y]$\;
+\ForEach{ $i\;indice\;of\;cache$ }{$array<int>\:tmp=\:new\:int[x]$\;
+\ForEach{ $j\;indice\;of\;tmp$ }{$tmp[j]:=-1$}
+$cache[i]:=tmp$}
+\Return $ pathfind_aux(cache, tab, x, y, 0, 0) $\;
+\caption{pathfind}
+\end{algorithm}
+
+\begin{algorithm}[H]
+$int\:x := 0$\;
+$int\:y := 0$\;
+$read_{int}$(x)\;
+read\_blank(STDIN)\;
+$read_{int}$(y)\;
+read\_blank(STDIN)\;
+$array<array<char>>\:tab=\:new\:array<char>[y]$\;
+\ForEach{ $i\;indice\;of\;tab$ }{$array<char>\:tab2=\:new\:char[x]$\;
+\ForEach{ $j\;indice\;of\;tab2$ }{$char\:tmp := "\backslash000"$\;
+$read_{char}$(tmp)\;
+$tab2[j]:=tmp$}
+read\_blank(STDIN)\;
+$tab[i]:=tab2$}
+$int\:result := pathfind(tab, x, y)$\;
+$print_{int}$($ result $)\;
+\caption{Main}
+\end{algorithm}
+\end{document}
+

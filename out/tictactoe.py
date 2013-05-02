@@ -33,7 +33,7 @@ def eval_( g ):
       lin = -(1);
       for x in range(0, 1 + 2):
         if g["cases"][x][y] == 0:
-          freecase = freecase + 1;
+          freecase += 1;
         colv = g["cases"][x][y];
         linv = g["cases"][y][x];
         if col == -(1) and colv != 0:

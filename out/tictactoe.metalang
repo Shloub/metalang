@@ -52,7 +52,7 @@ def void eval(@gamestate g)
     do
       if g.cases[x][y] == 0
       then
-        freecase = freecase + 1;
+        freecase ++;
       end
       def int colv = g.cases[x][y]
       def int linv = g.cases[y][x]

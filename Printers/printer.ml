@@ -275,14 +275,60 @@ class printer = object(self)
       self#binding name
       (self#def_fields name) el
 
+  method selfAssoc f m e2 = function
+    | Expr.Add -> begin match Expr.unfix e2 with
+        | Expr.Integer 1 ->
+          Format.fprintf f "@[<h>%a ++;@]" self#mutable_ m
+        | _ ->
+          Format.fprintf f "@[<h>%a += %a;@]" self#mutable_ m
+            self#expr e2
+    end
+    | Expr.Sub ->
+      begin match Expr.unfix e2 with
+        | Expr.Integer 1 ->
+          Format.fprintf f "@[<h>%a --;@]" self#mutable_ m
+        | _ ->
+          Format.fprintf f "@[<h>%a -= %a;@]" self#mutable_ m
+            self#expr e2
+    end
+    | Expr.Mul ->
+      Format.fprintf f "@[<h>%a *= %a;@]" self#mutable_ m self#expr e2
+    | Expr.Div ->
+      Format.fprintf f "@[<h>%a /= %a;@]" self#mutable_ m self#expr e2
+
+  method hasSelfAffect op = true
+
   method instr f t =
     match Instr.unfix t with
       | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
 
-    | Instr.Affect (mutable_, expr) -> self#affect f mutable_ expr
-
+    | Instr.Affect (mutable_, expr) ->
+      begin match Expr.unfix expr with
+        | Expr.BinOp (e1, op, e2) ->
+          let fallback () =
+            if op = Expr.Add || op = Expr.Mul then
+              begin match Expr.unfix e2 with
+                | Expr.Access m ->
+                  if Mutable.equals (=) m mutable_ then
+                    self#selfAssoc f m e1 op
+                  else self#affect f mutable_ expr
+                | _ -> self#affect f mutable_ expr
+              end
+            else self#affect f mutable_ expr
+          in
+          if self#hasSelfAffect op then
+            begin match Expr.unfix e1 with
+              | Expr.Access m ->
+                if Mutable.equals (=) m mutable_ then
+                  self#selfAssoc f m e2 op
+                else fallback ()
+              | _ -> fallback ()
+            end
+          else self#affect f mutable_ expr
+        | _ -> self#affect f mutable_ expr
+      end
     | Instr.Loop (varname, expr1, expr2, li) ->
 	self#forloop f varname expr1 expr2 li
     | Instr.While (expr, li) ->

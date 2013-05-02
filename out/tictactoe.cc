@@ -53,7 +53,7 @@ void eval_(struct gamestate * g){
     for (int x = 0 ; x <= 2; x ++)
     {
       if (g->cases.at(x).at(y) == 0)
-        freecase = freecase + 1;
+        freecase ++;
       int colv = g->cases.at(x).at(y);
       int linv = g->cases.at(y).at(x);
       if (col == -1 && colv != 0)

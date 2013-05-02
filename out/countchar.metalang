@@ -4,7 +4,7 @@ def int nth(array<char> tab, char tofind, int len)
   do
     if tab[i] == tofind
     then
-      out = out + 1;
+      out ++;
     end
   end
   return out

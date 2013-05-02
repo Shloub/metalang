@@ -42,7 +42,7 @@ function result(&$t_, &$t2_){
   $t3 = $t2;
   $t = $t2;
   $t2 = $t3;
-  $t["blah"] = $t["blah"] + 1;
+  $t["blah"] ++;
   $len = 1;
   $cache0 = array();
   for ($i = 0 ; $i < $len; $i++)

@@ -1,0 +1,42 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{sort}
+\begin{document}
+\maketitle
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{tab:array<int>,
+len:int}
+\Output{void}
+\For{ $i\;:=\;0\; to\;len - 1$}{
+                                                         \For{ $j\;:=\;i + 1\; to\;len - 1$}{
+                                                         
+                                                           \If{ $ tab[i] > tab[j] $ }{
+                                                             $int\:tmp := tab[i]$\;
+                                                             $tab[i] \leftarrow tab[j] $\;
+                                                             $tab[j] \leftarrow tmp $\;
+                                                           }
+                                                           }
+                                                         }
+
+\caption{sort\_}
+\end{algorithm}
+
+\begin{algorithm}[H]
+$int\:len := 2$\;
+$read_{int}$(len)\;
+read\_blank(STDIN)\;
+$array<int>\:tab=\:new\:int[len]$\;
+\ForEach{ $i\;indice\;of\;tab$ }{$int\:tmp := 0$\;
+$read_{int}$(tmp)\;
+read\_blank(STDIN)\;
+$tab[i]:=tmp$}
+$sort_(tab, len)$\;
+\For{ $i\;:=\;0\; to\;len - 1$}{
+                                  $print_{int}$($ tab[i] $)\;}
+
+\caption{Main}
+\end{algorithm}
+\end{document}
+

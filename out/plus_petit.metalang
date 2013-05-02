@@ -16,9 +16,9 @@ def int go(array<int> tab, int a, int b)
     def int e = tab[i]
     if e < m
     then
-      i = i + 1;
+      i ++;
     else
-      j = j - 1;
+      j --;
       tab[i] = tab[j];
       tab[j] = e;
     end

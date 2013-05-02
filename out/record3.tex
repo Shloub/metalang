@@ -1,0 +1,49 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{record3}
+\begin{document}
+\maketitle
+record toto int foo;
+int bar;
+int blah;
+
+end
+
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{v1:int}
+\Output{@toto}
+def @toto t = with foo = $ v1 $
+bar = $ 0 $
+blah = $ 0 $ end
+\Return $ t $\;
+\caption{mktoto}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{t:array<@toto>,
+len:int}
+\Output{int}
+$int\:out := 0$\;
+\For{ $j\;:=\;0\; to\;len - 1$}{
+                                  $t[j].blah \leftarrow t[j].blah + 1 $\;
+                                  $out \leftarrow out + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo $\;}
+
+\Return $ out $\;
+\caption{result}
+\end{algorithm}
+
+\begin{algorithm}[H]
+$array<@toto>\:t=\:new\:@toto[4]$\;
+\ForEach{ $i\;indice\;of\;t$ }{$t[i]:=mktoto(i)$}
+$read_{int}$(t[$ 0 $].bar)\;
+read\_blank(STDIN)\;
+$read_{int}$(t[$ 1 $].blah)\;
+$print_{int}$($ result(t, 4) $)\;
+$print_{int}$($ t[2].blah $)\;
+\caption{Main}
+\end{algorithm}
+\end{document}
+

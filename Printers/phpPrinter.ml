@@ -190,6 +190,10 @@ function nextChar(){
       self#binding name
       (self#def_fields name) el
 
+  method hasSelfAffect = function
+    | Expr.Div -> false
+    | _ -> true
+
   method binop f op a b =
     match op with
       | Expr.Div ->

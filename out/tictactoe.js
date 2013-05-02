@@ -74,7 +74,7 @@ function eval_(g){
     for (var x = 0 ; x <= 2; x++)
     {
       if (g.cases[x][y] == 0)
-        freecase = freecase + 1;
+        freecase ++;
       var colv = g.cases[x][y];
       var linv = g.cases[y][x];
       if (col == -1 && colv != 0)

@@ -15,10 +15,10 @@ int go(std::vector<int >& tab, int a, int b){
   {
     int e = tab.at(i);
     if (e < m)
-      i = i + 1;
+      i ++;
     else
     {
-      j = j - 1;
+      j --;
       tab.at(i) = tab.at(j);
       tab.at(j) = e;
     }

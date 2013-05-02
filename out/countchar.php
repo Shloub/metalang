@@ -28,7 +28,7 @@ function nth(&$tab, $tofind, $len){
   $out_ = 0;
   for ($i = 0 ; $i < $len; $i++)
     if ($tab[$i] == $tofind)
-    $out_ = $out_ + 1;
+    $out_ ++;
   return $out_;
 }
 

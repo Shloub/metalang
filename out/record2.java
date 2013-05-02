@@ -15,7 +15,7 @@ public class record2
   
   public static int result(toto t)
   {
-    t.blah = t.blah + 1;
+    t.blah ++;
     return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   

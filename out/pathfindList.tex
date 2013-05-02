@@ -1,0 +1,63 @@
+\documentclass[8pt]{article}
+\usepackage[ruled,vlined]{algorithm2e}
+\title{pathfindList}
+\begin{document}
+\maketitle
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{cache:array<int>,
+tab:array<int>, len:int,
+pos:int}
+\Output{int}
+\If{ $ pos \geq len - 1 $ }{
+  \Return $ 0 $\;
+}
+\Else{
+  \If{ $ cache[pos] \neq -1 $ }{
+    \Return $ cache[pos] $\;
+  }
+  \Else{
+    $cache[pos] \leftarrow len * 2 $\;
+    $int\:posval := pathfind_aux(cache, tab, len, tab[pos])$\;
+    $int\:oneval := pathfind_aux(cache, tab, len, pos + 1)$\;
+    $int\:out := 0$\;
+    \If{ $ posval < oneval $ }{
+      $out \leftarrow 1 + posval $\;
+    }
+    \Else{
+      $out \leftarrow 1 + oneval $\;
+    }
+    $cache[pos] \leftarrow out $\;
+    \Return $ out $\;
+  }
+}
+\caption{pathfind\_aux}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{tab:array<int>,
+len:int}
+\Output{int}
+$array<int>\:cache=\:new\:int[len]$\;
+\ForEach{ $i\;indice\;of\;cache$ }{$cache[i]:=-1$}
+\Return $ pathfind_aux(cache, tab, len, 0) $\;
+\caption{pathfind}
+\end{algorithm}
+
+\begin{algorithm}[H]
+$int\:len := 0$\;
+$read_{int}$(len)\;
+read\_blank(STDIN)\;
+$array<int>\:tab=\:new\:int[len]$\;
+\ForEach{ $i\;indice\;of\;tab$ }{$int\:tmp := 0$\;
+$read_{int}$(tmp)\;
+read\_blank(STDIN)\;
+$tab[i]:=tmp$}
+$int\:result := pathfind(tab, len)$\;
+$print_{int}$($ result $)\;
+\caption{Main}
+\end{algorithm}
+\end{document}
+

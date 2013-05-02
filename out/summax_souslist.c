@@ -8,7 +8,7 @@ int summax(int* lst, int len){
     int i;
     for (i = 0 ; i < len; i++)
     {
-      current = current + lst[i];
+      current += lst[i];
       if (current < 0)
         current = 0;
       if (max_ < current)

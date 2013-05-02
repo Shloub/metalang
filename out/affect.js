@@ -59,7 +59,7 @@ function result(t_, t2_){
   t3 = t2;
   t = t2;
   t2 = t3;
-  t.blah = t.blah + 1;
+  t.blah ++;
   var len = 1;
   var cache0 = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)

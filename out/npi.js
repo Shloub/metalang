@@ -51,23 +51,23 @@ function npi_(str, len){
   var ptrStr = 0;
   while (ptrStr < len)
     if (str[ptrStr] == ' ')
-    ptrStr = ptrStr + 1;
+    ptrStr ++;
   else if (is_number(str[ptrStr]))
   {
     var num = 0;
     while (str[ptrStr] != ' ')
     {
       num = num * 10 + str[ptrStr].charCodeAt(0) - '0'.charCodeAt(0);
-      ptrStr = ptrStr + 1;
+      ptrStr ++;
     }
     stack[ptrStack] = num;
-    ptrStack = ptrStack + 1;
+    ptrStack ++;
   }
   else if (str[ptrStr] == '+')
   {
     stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-    ptrStack = ptrStack - 1;
-    ptrStr = ptrStr + 1;
+    ptrStack --;
+    ptrStr ++;
   }
   return stack[0];
 }

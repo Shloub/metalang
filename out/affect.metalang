@@ -23,7 +23,7 @@ def int result(@toto t_, @toto t2_)
   t3 = t2;
   t = t2;
   t2 = t3;
-  t.blah = t.blah + 1;
+  t.blah ++;
   def int len = 1
   def array<int>cache0[len] with i do
     return -i

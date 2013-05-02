@@ -3,7 +3,7 @@ def int summax(array<int> lst, int len)
   def int max = 0
   for i=0 to len - 1
   do
-    current = current + lst[i];
+    current += lst[i];
     if current < 0
     then
       current = 0;

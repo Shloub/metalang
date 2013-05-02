@@ -8,14 +8,14 @@ def montagnes_( tab, len )
     while i >= 0 do
       x = tab[i]
       while j >= 0 && x > tab[len - j] do
-        j = j - 1;
+        j -= 1;
       end
-      j = j + 1;
+      j += 1;
       tab[len - j] = x;
       if j > max_ then
         max_ = j;
       end
-      i = i - 1;
+      i -= 1;
     end
     return (max_);
 end

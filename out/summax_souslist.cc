@@ -7,7 +7,7 @@ int summax(std::vector<int >& lst, int len){
   int max_ = 0;
   for (int i = 0 ; i < len; i++)
   {
-    current = current + lst.at(i);
+    current += lst.at(i);
     if (current < 0)
       current = 0;
     if (max_ < current)

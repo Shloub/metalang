@@ -58,7 +58,7 @@ def eval_( g )
       lin = -1
       for x in (0 ..  2) do
         if g["cases"][x][y] == 0 then
-          freecase = freecase + 1;
+          freecase += 1;
         end
         colv = g["cases"][x][y]
         linv = g["cases"][y][x]

@@ -1,0 +1,19 @@
+
+main
+  def int i = 0
+  i ++;
+  print int i
+  i += 55;
+  print int i
+  i *= 13;
+  print int i
+  i /= 2;
+  print int i
+  i ++;
+  print int i
+  i /= 3;
+  print int i
+  i --;
+  print int i
+end
+

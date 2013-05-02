@@ -132,6 +132,20 @@ module Mutable = struct
   type 'a t = 'a Fixed.t
   let fix = Fixed.fix
   let unfix = Fixed.unfix
+
+
+  let rec equals cmpe a b = match (unfix a, unfix b) with
+    | Var v1, Var v2 ->
+      String.equals v1 v2
+    | Array (m1, li1), Array (m2, li2) ->
+      if equals cmpe m1 m2 then List.zip li1 li2 |> List.forall
+          (uncurry cmpe)
+      else false
+    | Dot (m1, field1), Dot (m2, field2) ->
+      if equals cmpe m1 m2 then String.equals field1 field2
+      else false
+    | _ -> false
+
   let rec foldmap_expr f acc mut =
     let annot = Fixed.annot mut in
     match Fixed.unfix mut with

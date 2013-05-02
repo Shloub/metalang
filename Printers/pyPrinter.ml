@@ -37,6 +37,17 @@ open CPrinter
 class pyPrinter = object(self)
   inherit cPrinter as super
 
+
+  method selfAssoc f m e2 = function
+    | Expr.Add ->
+      Format.fprintf f "@[<h>%a += %a;@]" self#mutable_ m self#expr e2
+    | Expr.Sub ->
+      Format.fprintf f "@[<h>%a -= %a;@]" self#mutable_ m self#expr e2
+    | Expr.Mul ->
+      Format.fprintf f "@[<h>%a *= %a;@]" self#mutable_ m self#expr e2
+    | Expr.Div ->
+      Format.fprintf f "@[<h>%a /= %a;@]" self#mutable_ m self#expr e2
+
   method lang () = "py"
 
   method enum f e =

@@ -8,7 +8,7 @@ def int sumdiv(int n)
     if (n % i) == 0
     then
       /* Si i divise */
-      out = out + i;
+      out += i;
       /* On incrémente */
     else
       /* nop */
