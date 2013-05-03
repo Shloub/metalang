@@ -37,7 +37,6 @@ open CPrinter
 class pyPrinter = object(self)
   inherit cPrinter as super
 
-
   method selfAssoc f m e2 = function
     | Expr.Add ->
       Format.fprintf f "@[<h>%a += %a;@]" self#mutable_ m self#expr e2
@@ -57,7 +56,6 @@ class pyPrinter = object(self)
     match op with
       | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
       | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
-      | Expr.BNot -> Format.fprintf f "~(%a)" self#expr a
 
   method binop f op a b =
     match op with
@@ -90,10 +88,6 @@ class pyPrinter = object(self)
 	| Expr.HigherEq -> ">="
 	| Expr.Eq -> "=="
 	| Expr.Diff -> "!="
-	| Expr.BinOr -> "lor"
-	| Expr.BinAnd -> "land"
-	| Expr.RShift -> "lsl"
-	| Expr.LShift -> "lsr"
       )
 
   method bool f = function

@@ -353,10 +353,6 @@ class schemePrinter = object(self)
 	| Expr.HigherEq -> ">="
 	| Expr.Eq -> "=="
 	| Expr.Diff -> "!="
-	| Expr.BinOr -> "lor"
-	| Expr.BinAnd -> "land"
-	| Expr.RShift -> "lsl"
-	| Expr.LShift -> "lsr"
       )
 
 

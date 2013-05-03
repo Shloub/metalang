@@ -108,17 +108,12 @@ class pasPrinter = object(self)
        | Expr.HigherEq -> ">="
        | Expr.Eq -> "="
        | Expr.Diff -> "<>"
-       | Expr.BinOr -> "or"
-       | Expr.BinAnd -> "and"
-       | Expr.RShift -> "shl"
-       | Expr.LShift -> "shr"
       )
 
   method unop f op a =
     let pop f () = match op with
       | Expr.Neg -> Format.fprintf f "-"
       | Expr.Not -> Format.fprintf f "not "
-      | Expr.BNot -> Format.fprintf f "~"
     in if self#nop (Expr.unfix a) then
         Format.fprintf f "%a%a" pop () self#expr a
       else

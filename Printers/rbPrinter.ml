@@ -58,7 +58,6 @@ class rbPrinter = object(self)
     let pop g f a = match op with
       | Expr.Neg -> Format.fprintf f "-%a" g a
       | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
-      | Expr.BNot -> Format.fprintf f "~%a" g a
     in if self#nop (Expr.unfix a) then
         pop self#expr f a
       else
@@ -123,10 +122,6 @@ match Type.unfix t with
 	| Expr.HigherEq -> ">="
 	| Expr.Eq -> "=="
 	| Expr.Diff -> "!="
-	| Expr.BinOr -> "lor"
-	| Expr.BinAnd -> "land"
-	| Expr.RShift -> "lsl"
-	| Expr.LShift -> "lsr"
       )
 
   method bool f = function

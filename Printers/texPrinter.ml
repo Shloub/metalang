@@ -244,10 +244,6 @@ class texPrinter = object(self)
 	| Expr.HigherEq -> "\\geq"
 	| Expr.Eq -> "="
 	| Expr.Diff -> "\\neq"
-	| Expr.BinOr -> "lor"
-	| Expr.BinAnd -> "land"
-	| Expr.RShift -> "lsl"
-	| Expr.LShift -> "lsr"
       )
 
   method forloop f varname expr1 expr2 li =

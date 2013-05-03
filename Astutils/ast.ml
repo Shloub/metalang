@@ -350,7 +350,6 @@ module Expr = struct
   type unop =
       Neg (** integer or float*)
     | Not (** boolean *)
-    | BNot (** bitwise integer operator *)
 
   (** binary operators *)
   type binop =
@@ -359,7 +358,6 @@ module Expr = struct
     | Or | And (* bool *)
     | Lower | LowerEq | Higher | HigherEq (* 'a *)
     | Eq | Diff (* 'a *)
-    | BinOr | BinAnd | RShift | LShift (* int *)
 
   type ('a, 'lex) tofix =
       BinOp of 'a * binop * 'a (** operations binaires *)

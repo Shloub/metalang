@@ -406,17 +406,12 @@ class printer = object(self)
        | Expr.HigherEq -> ">="
        | Expr.Eq -> "=="
        | Expr.Diff -> "!="
-       | Expr.BinOr -> "|"
-       | Expr.BinAnd -> "&"
-       | Expr.RShift -> ">>"
-       | Expr.LShift -> "<<"
       )
 
   method unop f op a =
     let pop f () = match op with
       | Expr.Neg -> Format.fprintf f "-"
       | Expr.Not -> Format.fprintf f "!"
-      | Expr.BNot -> Format.fprintf f "~"
     in if self#nop (Expr.unfix a) then
         Format.fprintf f "%a%a" pop () self#expr a
       else

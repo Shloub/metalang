@@ -123,10 +123,6 @@ class camlPrinter = object(self)
 	| Expr.HigherEq -> ">="
 	| Expr.Eq -> "="
 	| Expr.Diff -> "<>"
-	| Expr.BinOr -> "lor"
-	| Expr.BinAnd -> "land"
-	| Expr.RShift -> "lsl"
-	| Expr.LShift -> "lsr"
       )
 
   (** show unary operators *)
@@ -134,7 +130,6 @@ class camlPrinter = object(self)
     let pop f () = match op with
       | Expr.Neg -> Format.fprintf f "-"
       | Expr.Not -> Format.fprintf f "not "
-      | Expr.BNot -> Format.fprintf f "lnot "
     in if self#nop (Expr.unfix a) then
         Format.fprintf f "%a%a" pop () self#expr a
       else

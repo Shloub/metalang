@@ -341,11 +341,7 @@ let rec collect_contraintes_expr env e =
       in*)
   let loc e = Ast.PosMap.get (Expr.Fixed.annot e) in
   let env, contrainte = match Expr.Fixed.unfix e with
-    | Expr.BinOp (a, (Expr.Mod
-                         | Expr.BinOr
-                         | Expr.BinAnd
-                         | Expr.RShift
-                         | Expr.LShift), b) ->
+    | Expr.BinOp (a, Expr.Mod, b) ->
       let env, acontrainte = collect_contraintes_expr env a in
       let env, bcontrainte = collect_contraintes_expr env b in
       let env = add_contrainte env acontrainte
@@ -378,7 +374,7 @@ let rec collect_contraintes_expr env e =
       let env = add_contrainte env bcontrainte contrainte in
       env, contrainte
 
-    | Expr.UnOp (a, (Expr.Neg | Expr.BNot)) ->
+    | Expr.UnOp (a, Expr.Neg) ->
       let contrainte = (ref (Typed (Type.integer, loc e))) in
       let env, acontrainte = collect_contraintes_expr env a in
       let env = add_contrainte env acontrainte contrainte in

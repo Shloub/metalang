@@ -337,10 +337,6 @@ let binop =
   | Expr.Higher -> he loc a b
   | Expr.Eq -> eq loc a b
   | Expr.Diff -> diff loc a b
-  | Expr.BinOr -> int_op loc ( lor ) a b
-  | Expr.BinAnd -> int_op loc ( land ) a b
-  | Expr.RShift -> int_op loc ( lsr ) a b
-  | Expr.LShift -> int_op loc ( lsl ) a b
   | Expr.Or ->
     begin match a with
       | Result r -> if get_bool r then a else b
@@ -448,11 +444,8 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
       | Expr.Call (name, params) ->
         let call = eval_call env name params  in
         WithEnv (fun execenv ->
-  (* Printf.printf "Call %s\n" name; *)
           call execenv
         )
-      (*| Expr.UnOp (Integer i, Expr.BNot) -> Integer (lnot )
-        | Expr.UnOp (Float i, Expr.Neg) -> Float (-. i) *)
       | Expr.UnOp (_, _) -> assert false
       | Expr.Enum e ->
         let t = Typer.type_for_enum e env.tyenv in
