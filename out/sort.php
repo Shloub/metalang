@@ -32,12 +32,12 @@ $len = 2;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
-for ($i = 0 ; $i < $len; $i++)
+for ($i_ = 0 ; $i_ < $len; $i_++)
 {
   $tmp = 0;
   list($tmp) = scan("%d");
   scantrim();
-  $tab[$i] = $tmp;
+  $tab[$i_] = $tmp;
 }
 sort_($tab, $len);
 for ($i = 0 ; $i < $len; $i++)

@@ -68,12 +68,12 @@ public static int readInt(){
     len = readInt();
     stdin_sep();
     int[] tab = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i_ = 0 ; i_ < len; i_++)
     {
       int tmp = 0;
       tmp = readInt();
       stdin_sep();
-      tab[i] = tmp;
+      tab[i_] = tmp;
     }
     sort_(tab, len);
     for (int i = 0 ; i < len; i++)

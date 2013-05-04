@@ -76,14 +76,14 @@ int main(void){
   int c = find(len, tab);
   printf("%d", c);
   {
-    int i;
-    for (i = 0 ; i < len; i++)
+    int k;
+    for (k = 0 ; k < len; k++)
     {
       {
-        int j;
-        for (j = 0 ; j <= i; j++)
+        int l;
+        for (l = 0 ; l <= k; l++)
         {
-          int d = tab[i][j];
+          int d = tab[k][l];
           printf("%d", d);
         }
       }

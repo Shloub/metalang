@@ -71,16 +71,16 @@ begin
   exit(b);
 end;
 
-type k = array of integer;
-type l = array of k;
-function nbPassePartout(n : integer; passepartout : l; m : integer; serrures : l) : integer;
+type o = array of integer;
+type p = array of o;
+function nbPassePartout(n : integer; passepartout : p; m : integer; serrures : p) : integer;
 var
   i : integer;
   max_ancient : integer;
   max_ancient_pp : integer;
   max_recent : integer;
   max_recent_pp : integer;
-  pp : k;
+  pp : o;
 begin
   max_ancient := 0;
   max_recent := 0;
@@ -128,12 +128,15 @@ var
   h : integer;
   i : integer;
   j : integer;
+  k : integer;
+  l : integer;
   m : integer;
   n : integer;
-  out0 : k;
+  out0 : o;
+  out1 : o;
   out_ : integer;
-  passepartout : l;
-  serrures : l;
+  passepartout : p;
+  serrures : p;
 begin
   n := 0;
   n := read_int();
@@ -156,18 +159,18 @@ begin
   m := read_int();
   skip();
   SetLength(serrures, m);
-  for i := 0 to  m - 1 do
+  for k := 0 to  m - 1 do
   begin
     g := 2;
-    SetLength(out0, g);
-    for j := 0 to  g - 1 do
+    SetLength(out1, g);
+    for l := 0 to  g - 1 do
     begin
       out_ := 0;
       out_ := read_int();
       skip();
-      out0[j] := out_;
+      out1[l] := out_;
     end;
-    serrures[i] := out0;
+    serrures[k] := out1;
   end;
   h := nbPassePartout(n, passepartout, m, serrures);
   write(h);

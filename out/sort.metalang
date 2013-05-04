@@ -17,7 +17,7 @@ main
   def int len = 2
   read int len
   skip
-  def array<int>tab[len] with i do
+  def array<int>tab[len] with i_ do
     def int tmp = 0
     read int tmp
     skip

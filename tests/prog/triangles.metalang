@@ -48,9 +48,9 @@ main
 		return tab2
 	end
 	print int find(len, tab)
-  for i = 0 to len - 1 do
-    for j = 0 to i do
-	    print int tab[i][j]
+  for k = 0 to len - 1 do
+    for l = 0 to k do
+	    print int tab[k][l]
     end
     print string "\n"
   end

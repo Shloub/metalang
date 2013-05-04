@@ -53,13 +53,13 @@ main
   end
   def read int m
   skip
-  def array<array<int>>serrures[m] with i do
-    def array<int>out0[2] with j do
-      def read int out
+  def array<array<int>>serrures[m] with k do
+    def array<int>out1[2] with l do
+      def read int out_
       skip
-      return out
+      return out_
     end
-    return out0
+    return out1
   end
   print int nbPassePartout(n, passepartout, m, serrures)
 end

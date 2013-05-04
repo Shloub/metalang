@@ -69,9 +69,9 @@ n=readint();
 stdinsep();
 passepartout = [None] * n;
 for i in range(0, n):
-  bj = 2;
-  out0 = [None] * bj;
-  for j in range(0, bj):
+  bl = 2;
+  out0 = [None] * bl;
+  for j in range(0, bl):
     out_ = 0;
     out_=readint();
     stdinsep();
@@ -81,15 +81,15 @@ m = 0;
 m=readint();
 stdinsep();
 serrures = [None] * m;
-for i in range(0, m):
-  bk = 2;
-  out0 = [None] * bk;
-  for j in range(0, bk):
+for k in range(0, m):
+  bm = 2;
+  out1 = [None] * bm;
+  for l in range(0, bm):
     out_ = 0;
     out_=readint();
     stdinsep();
-    out0[j] = out_;
-  serrures[i] = out0;
-bl = nbPassePartout(n, passepartout, m, serrures);
-print("%d" % bl, end='');
+    out1[l] = out_;
+  serrures[k] = out1;
+bn = nbPassePartout(n, passepartout, m, serrures);
+print("%d" % bn, end='');
 

@@ -17,11 +17,11 @@ len = 2
 len=scanf("%d")[0];
 scanf("%*\n");
 tab = [];
-for i in (0 ..  len - 1) do
+for i_ in (0 ..  len - 1) do
   tmp = 0
   tmp=scanf("%d")[0];
   scanf("%*\n");
-  tab[i] = tmp;
+  tab[i_] = tmp;
 end
 sort_(tab, len);
 for i in (0 ..  len - 1) do

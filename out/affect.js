@@ -65,8 +65,8 @@ function result(t_, t2_){
   for (var i = 0 ; i <= len - 1; i++)
     cache0[i] = -i;
   var cache1 = new Array(len);
-  for (var i = 0 ; i <= len - 1; i++)
-    cache1[i] = i;
+  for (var j = 0 ; j <= len - 1; j++)
+    cache1[j] = j;
   var cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;
@@ -82,9 +82,9 @@ stdinsep();
 t2.bar=read_int();
 stdinsep();
 t.blah=read_int();
-var m = result(t, t2);
-util.print(m);
-var n = t.blah;
+var n = result(t, t2);
 util.print(n);
+var o = t.blah;
+util.print(o);
 
 

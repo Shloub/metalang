@@ -50,12 +50,12 @@ var len = 2;
 len=read_int();
 stdinsep();
 var tab = new Array(len);
-for (var i = 0 ; i <= len - 1; i++)
+for (var i_ = 0 ; i_ <= len - 1; i_++)
 {
   var tmp = 0;
   tmp=read_int();
   stdinsep();
-  tab[i] = tmp;
+  tab[i_] = tmp;
 }
 sort_(tab, len);
 for (var i = 0 ; i <= len - 1; i++)

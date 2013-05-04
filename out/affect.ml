@@ -31,8 +31,8 @@ let rec result t_ t2_ =
   let len = 1 in
   let cache0 = ref( Array.init (len) (fun i ->
     -i)) in
-  let cache1 = Array.init (len) (fun i ->
-    i) in
+  let cache1 = Array.init (len) (fun j ->
+    j) in
   let cache2 = ref( (!cache0) ) in
   cache0 := cache1;
   cache2 := (!cache0);
@@ -49,9 +49,9 @@ begin
   Scanf.scanf "%d" (fun value -> t2.bar <- value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> t.blah <- value);
-  let o = result t t2 in
-  Printf.printf "%d" o;
-  let p = t.blah in
-  Printf.printf "%d" p
+  let p = result t t2 in
+  Printf.printf "%d" p;
+  let q = t.blah in
+  Printf.printf "%d" q
 end
  

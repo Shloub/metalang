@@ -65,8 +65,8 @@ end;
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
 }
-type k = array of array of integer;
-function find0(len : integer; tab : k; cache : k; x : integer; y : integer) : integer;
+type m = array of array of integer;
+function find0(len : integer; tab : m; cache : m; x : integer; y : integer) : integer;
 var
   out0 : integer;
   out1 : integer;
@@ -104,14 +104,14 @@ begin
   exit(result);
 end;
 
-type l = array of integer;
-function find(len : integer; tab : k) : integer;
+type n = array of integer;
+function find(len : integer; tab : m) : integer;
 var
   e : integer;
   i : integer;
   j : integer;
-  tab2 : k;
-  tab3 : l;
+  tab2 : m;
+  tab3 : n;
 begin
   SetLength(tab2, len);
   for i := 0 to  len - 1 do
@@ -134,9 +134,11 @@ var
   h : integer;
   i : integer;
   j : integer;
+  k : integer;
+  l : integer;
   len : integer;
-  tab : k;
-  tab2 : l;
+  tab : m;
+  tab2 : n;
   tmp : integer;
 begin
   len := 0;
@@ -158,11 +160,11 @@ begin
   end;
   g := find(len, tab);
   write(g);
-  for i := 0 to  len - 1 do
+  for k := 0 to  len - 1 do
   begin
-    for j := 0 to  i do
+    for l := 0 to  k do
     begin
-      h := tab[i][j];
+      h := tab[k][l];
       write(h);
     end;
     write(''#10'');

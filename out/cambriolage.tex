@@ -67,11 +67,11 @@ $passepartout[i]:=out0$}
 def read int m
 read\_blank(STDIN)\;
 $array<array<int>>\:serrures=\:new\:array<int>[m]$\;
-\ForEach{ $i\;indice\;of\;serrures$ }{$array<int>\:out0=\:new\:int[2]$\;
-\ForEach{ $j\;indice\;of\;out0$ }{def read int out
+\ForEach{ $k\;indice\;of\;serrures$ }{$array<int>\:out1=\:new\:int[2]$\;
+\ForEach{ $l\;indice\;of\;out1$ }{def read int out\_
 read\_blank(STDIN)\;
-$out0[j]:=out$}
-$serrures[i]:=out0$}
+$out1[l]:=out\_$}
+$serrures[k]:=out1$}
 $print_{int}$($ nbPassePartout(n, passepartout, m, serrures) $)\;
 \caption{Main}
 \end{algorithm}

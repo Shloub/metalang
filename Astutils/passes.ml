@@ -181,7 +181,7 @@ module CollectCalls = struct
   let process acc p =
     let acc = match p with
       | Prog.DeclarFun (_funname, _t, _params, instrs) ->
-        List.fold_left collect_instr acc instrs
+        List.fold_left collect_instr (BindingSet.add _funname acc) instrs
       | _ -> acc
     in acc, p
 end
@@ -196,7 +196,7 @@ module WalkCheckNaming = WalkTop(CheckingPasses.CheckNaming);;
 module WalkRename = WalkTop(Rename);;
 
 module RemoveUselessFunctions = struct
-  let apply prog =
+  let apply prog funs =
     let go f (li, used_functions) = match f with
       | Prog.DeclarFun (v, _,_, _)
       | Prog.Macro (v, _, _, _) ->
@@ -208,9 +208,10 @@ module RemoveUselessFunctions = struct
     in
 
     let used_functions = WalkCollectCalls.fold
-      {prog with Prog.funs = [] } in (* fonctions utilisées dans main *)
+      {prog with Prog.funs = [] } in (* fonctions utilisées dans le
+                                          programme (stdlib non comprise) *)
     let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
-    let prog = { prog with Prog.funs = funs } in
+    let prog = { prog with Prog.funs = funs} in
     prog
 end
 

@@ -25,13 +25,13 @@ int main(void){
   int *tab = malloc( len * sizeof(int));
   
   {
-    int i;
-    for (i = 0 ; i < len; i++)
+    int i_;
+    for (i_ = 0 ; i_ < len; i_++)
     {
       int tmp = 0;
       scanf("%d", &tmp);
       scanf("%*[ \t\r\n]c", 0);
-      tab[i] = tmp;
+      tab[i_] = tmp;
     }
   }
   sort_(tab, len);

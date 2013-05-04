@@ -168,7 +168,7 @@ module CheckNaming : SigPassTop = struct
         let () = check_expr funname acc e in acc
       | Instr.AllocArray (v, t, e, liopt) ->
         let () = check_expr funname acc e in
-        let _ = match liopt with
+        let acc = match liopt with
           | None -> acc
           | Some (varname, li) ->
             let () = check_name funname acc varname in

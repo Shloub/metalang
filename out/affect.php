@@ -48,8 +48,8 @@ function result(&$t_, &$t2_){
   for ($i = 0 ; $i < $len; $i++)
     $cache0[$i] = -$i;
   $cache1 = array();
-  for ($i = 0 ; $i < $len; $i++)
-    $cache1[$i] = $i;
+  for ($j = 0 ; $j < $len; $j++)
+    $cache1[$j] = $j;
   $cache2 = $cache0;
   $cache0 = $cache1;
   $cache2 = $cache0;
@@ -65,8 +65,8 @@ scantrim();
 list($t2["bar"]) = scan("%d");
 scantrim();
 list($t["blah"]) = scan("%d");
-$q = result($t, $t2);
-echo $q;
-$r = $t["blah"];
+$r = result($t, $t2);
 echo $r;
+$s = $t["blah"];
+echo $s;
 ?>

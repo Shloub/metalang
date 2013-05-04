@@ -28,8 +28,8 @@ def int result(@toto t_, @toto t2_)
   def array<int>cache0[len] with i do
     return -i
   end
-  def array<int>cache1[len] with i do
-    return i
+  def array<int>cache1[len] with j do
+    return j
   end
   def array<int> cache2 = cache0
   cache0 = cache1;

@@ -23,13 +23,13 @@ public class sort
     len = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[] tab = new int[len];
-    for (int i = 0 ; i < len; i++)
+    for (int i_ = 0 ; i_ < len; i_++)
     {
       int tmp = 0;
       scanner.useDelimiter("\\s");
       tmp = scanner.nextInt();
       scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-      tab[i] = tmp;
+      tab[i_] = tmp;
     }
     sort_(tab, len);
     for (int i = 0 ; i < len; i++)

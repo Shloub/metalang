@@ -71,23 +71,23 @@ int main(void){
   int* *serrures = malloc( m * sizeof(int*));
   
   {
-    int i;
-    for (i = 0 ; i < m; i++)
+    int k;
+    for (k = 0 ; k < m; k++)
     {
       int d = 2;
-      int *out0 = malloc( d * sizeof(int));
+      int *out1 = malloc( d * sizeof(int));
       
       {
-        int j;
-        for (j = 0 ; j < d; j++)
+        int l;
+        for (l = 0 ; l < d; l++)
         {
           int out_ = 0;
           scanf("%d", &out_);
           scanf("%*[ \t\r\n]c", 0);
-          out0[j] = out_;
+          out1[l] = out_;
         }
       }
-      serrures[i] = out0;
+      serrures[k] = out1;
     }
   }
   int e = nbPassePartout(n, passepartout, m, serrures);

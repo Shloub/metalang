@@ -58,8 +58,8 @@ def result( t_, t2_ ):
     for i in range(0, len):
       cache0[i] = -(i);
     cache1 = [None] * len;
-    for i in range(0, len):
-      cache1[i] = i;
+    for j in range(0, len):
+      cache1[j] = j;
     cache2 = cache0;
     cache0 = cache1;
     cache2 = cache0;
@@ -74,8 +74,8 @@ stdinsep();
 t2["bar"]=readint();
 stdinsep();
 t["blah"]=readint();
-v = result(t, t2);
-print("%d" % v, end='');
-w = t["blah"];
+w = result(t, t2);
 print("%d" % w, end='');
+x = t["blah"];
+print("%d" % x, end='');
 

@@ -64,9 +64,9 @@ function find(len, tab){
   var tab2 = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
   {
-    var ba = i + 1;
-    var tab3 = new Array(ba);
-    for (var j = 0 ; j <= ba - 1; j++)
+    var bc = i + 1;
+    var tab3 = new Array(bc);
+    for (var j = 0 ; j <= bc - 1; j++)
       tab3[j] = 0;
     tab2[i] = tab3;
   }
@@ -79,9 +79,9 @@ stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  var bb = i + 1;
-  var tab2 = new Array(bb);
-  for (var j = 0 ; j <= bb - 1; j++)
+  var bd = i + 1;
+  var tab2 = new Array(bd);
+  for (var j = 0 ; j <= bd - 1; j++)
   {
     var tmp = 0;
     tmp=read_int();
@@ -90,14 +90,14 @@ for (var i = 0 ; i <= len - 1; i++)
   }
   tab[i] = tab2;
 }
-var bc = find(len, tab);
-util.print(bc);
-for (var i = 0 ; i <= len - 1; i++)
+var be = find(len, tab);
+util.print(be);
+for (var k = 0 ; k <= len - 1; k++)
 {
-  for (var j = 0 ; j <= i; j++)
+  for (var l = 0 ; l <= k; l++)
   {
-    var bd = tab[i][j];
-    util.print(bd);
+    var bf = tab[k][l];
+    util.print(bf);
   }
   util.print("\n");
 }

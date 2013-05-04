@@ -32,8 +32,8 @@ def result( t_, t2_ )
       cache0[i] = -i;
     end
     cache1 = [];
-    for i in (0 ..  len - 1) do
-      cache1[i] = i;
+    for j in (0 ..  len - 1) do
+      cache1[j] = j;
     end
     cache2 = cache0
     cache0 = cache1;
@@ -50,8 +50,8 @@ scanf("%*\n");
 t2["bar"]=scanf("%d")[0];
 scanf("%*\n");
 t["blah"]=scanf("%d")[0];
-s = result(t, t2)
-printf "%d", s
-u = t["blah"]
+u = result(t, t2)
 printf "%d", u
+v = t["blah"]
+printf "%d", v
 

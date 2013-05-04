@@ -47,9 +47,9 @@ public class cambriolage
     int[][] passepartout = new int[n][];
     for (int i = 0 ; i < n; i++)
     {
-      int u = 2;
-      int[] out0 = new int[u];
-      for (int j = 0 ; j < u; j++)
+      int w = 2;
+      int[] out0 = new int[w];
+      for (int j = 0 ; j < w; j++)
       {
         int out_ = 0;
         scanner.useDelimiter("\\s");
@@ -64,22 +64,22 @@ public class cambriolage
     m = scanner.nextInt();
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     int[][] serrures = new int[m][];
-    for (int i = 0 ; i < m; i++)
+    for (int k = 0 ; k < m; k++)
     {
-      int v = 2;
-      int[] out0 = new int[v];
-      for (int j = 0 ; j < v; j++)
+      int x = 2;
+      int[] out1 = new int[x];
+      for (int l = 0 ; l < x; l++)
       {
         int out_ = 0;
         scanner.useDelimiter("\\s");
         out_ = scanner.nextInt();
         scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-        out0[j] = out_;
+        out1[l] = out_;
       }
-      serrures[i] = out0;
+      serrures[k] = out1;
     }
-    int w = nbPassePartout(n, passepartout, m, serrures);
-    System.out.printf("%d", w);
+    int y = nbPassePartout(n, passepartout, m, serrures);
+    System.out.printf("%d", y);
   }
   
 }

@@ -33,8 +33,8 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     for (int i = 0 ; i < len; i++)
       cache0[i] = -i;
     int[] cache1 = new int[len];
-    for (int i = 0 ; i < len; i++)
-      cache1[i] = i;
+    for (int j = 0 ; j < len; j++)
+      cache1[j] = j;
     int[] cache2 = cache0;
     cache0 = cache1;
     cache2 = cache0;
@@ -57,10 +57,10 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
     scanner.useDelimiter("\\s");
     t.blah = scanner.nextInt();
-    int k = result(t, t2);
-    System.out.printf("%d", k);
-    int l = t.blah;
+    int l = result(t, t2);
     System.out.printf("%d", l);
+    int m = t.blah;
+    System.out.printf("%d", m);
   }
   
 }

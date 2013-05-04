@@ -87,6 +87,7 @@ end;
 var
   b : integer;
   i : integer;
+  i_ : integer;
   len : integer;
   tab : c;
   tmp : integer;
@@ -95,12 +96,12 @@ begin
   len := read_int();
   skip();
   SetLength(tab, len);
-  for i := 0 to  len - 1 do
+  for i_ := 0 to  len - 1 do
   begin
     tmp := 0;
     tmp := read_int();
     skip();
-    tab[i] := tmp;
+    tab[i_] := tmp;
   end;
   sort_(tab, len);
   for i := 0 to  len - 1 do

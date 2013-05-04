@@ -50,11 +50,11 @@ len = 2;
 len=readint();
 stdinsep();
 tab = [None] * len;
-for i in range(0, len):
+for i_ in range(0, len):
   tmp = 0;
   tmp=readint();
   stdinsep();
-  tab[i] = tmp;
+  tab[i_] = tmp;
 sort_(tab, len);
 for i in range(0, len):
   m = tab[i];

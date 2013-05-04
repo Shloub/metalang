@@ -45,9 +45,9 @@ function find($len, &$tab){
   $tab2 = array();
   for ($i = 0 ; $i < $len; $i++)
   {
-    $bi = $i + 1;
+    $bk = $i + 1;
     $tab3 = array();
-    for ($j = 0 ; $j < $bi; $j++)
+    for ($j = 0 ; $j < $bk; $j++)
       $tab3[$j] = 0;
     $tab2[$i] = $tab3;
   }
@@ -60,9 +60,9 @@ scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $bj = $i + 1;
+  $bl = $i + 1;
   $tab2 = array();
-  for ($j = 0 ; $j < $bj; $j++)
+  for ($j = 0 ; $j < $bl; $j++)
   {
     $tmp = 0;
     list($tmp) = scan("%d");
@@ -71,14 +71,14 @@ for ($i = 0 ; $i < $len; $i++)
   }
   $tab[$i] = $tab2;
 }
-$bk = find($len, $tab);
-echo $bk;
-for ($i = 0 ; $i < $len; $i++)
+$bm = find($len, $tab);
+echo $bm;
+for ($k = 0 ; $k < $len; $k++)
 {
-  for ($j = 0 ; $j <= $i; $j++)
+  for ($l = 0 ; $l <= $k; $l++)
   {
-    $bl = $tab[$i][$j];
-    echo $bl;
+    $bn = $tab[$k][$l];
+    echo $bn;
   }
   echo "\n";
 }

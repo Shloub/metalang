@@ -130,11 +130,11 @@ let make_prog_helper progname (funs, main) stdlib =
     Prog.hasSkip = false;
     Prog.reads = TypeSet.empty;
     Prog.progname = progname ;
-    Prog.funs = stdlib @ funs ;
+    Prog.funs = stdlib @ funs;
     Prog.main = main ;
   } in
   let prog = Eval.EvalConstantes.apply prog in
-  let prog = Passes.RemoveUselessFunctions.apply prog in
+  let prog = Passes.RemoveUselessFunctions.apply prog funs in
   let tyenv, prog = Typer.process prog in
   tyenv, prog
 

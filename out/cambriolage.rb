@@ -41,9 +41,9 @@ n=scanf("%d")[0];
 scanf("%*\n");
 passepartout = [];
 for i in (0 ..  n - 1) do
-  bg = 2
+  bi = 2
   out0 = [];
-  for j in (0 ..  bg - 1) do
+  for j in (0 ..  bi - 1) do
     out_ = 0
     out_=scanf("%d")[0];
     scanf("%*\n");
@@ -55,17 +55,17 @@ m = 0
 m=scanf("%d")[0];
 scanf("%*\n");
 serrures = [];
-for i in (0 ..  m - 1) do
-  bh = 2
-  out0 = [];
-  for j in (0 ..  bh - 1) do
+for k in (0 ..  m - 1) do
+  bj = 2
+  out1 = [];
+  for l in (0 ..  bj - 1) do
     out_ = 0
     out_=scanf("%d")[0];
     scanf("%*\n");
-    out0[j] = out_;
+    out1[l] = out_;
   end
-  serrures[i] = out0;
+  serrures[k] = out1;
 end
-bi = nbPassePartout(n, passepartout, m, serrures)
-printf "%d", bi
+bk = nbPassePartout(n, passepartout, m, serrures)
+printf "%d", bk
 

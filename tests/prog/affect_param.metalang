@@ -2,7 +2,6 @@ def void foo(int a)
   a = 4
 end
 
-
 main
   def a = 0
   foo(a)

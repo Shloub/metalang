@@ -90,6 +90,7 @@ var
   cache1 : e;
   cache2 : e;
   i : integer;
+  j : integer;
   len : integer;
   t : toto;
   t2 : toto;
@@ -112,9 +113,9 @@ begin
     cache0[i] := -i;
   end;
   SetLength(cache1, len);
-  for i := 0 to  len - 1 do
+  for j := 0 to  len - 1 do
   begin
-    cache1[i] := i;
+    cache1[j] := j;
   end;
   cache2 := cache0;
   cache0 := cache1;

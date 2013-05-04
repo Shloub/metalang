@@ -19,12 +19,12 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   std::vector<int > tab( len );
-  for (int i = 0 ; i < len; i++)
+  for (int i_ = 0 ; i_ < len; i_++)
   {
     int tmp = 0;
     scanf("%d", &tmp);
     scanf("%*[ \t\r\n]c", 0);
-    tab.at(i) = tmp;
+    tab.at(i_) = tmp;
   }
   sort_(tab, len);
   for (int i = 0 ; i < len; i++)
