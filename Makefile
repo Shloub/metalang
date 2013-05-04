@@ -315,10 +315,10 @@ fastTestCmp : out $(FASTTESTSDEPS)
 	@echo "$(green)FAST TESTS OK$(reset)"
 
 %.not_compile : %.startTest metalang
-	./metalang tests/not_compile/$(notdir $(basename $<)).metalang || exit 0
-	if [ -e $(basename $<).ml ]; then exit 1; fi
-	echo "$(green)OK $(basename $<)$(reset)"
-	touch $@
+	@./metalang tests/not_compile/$(notdir $(basename $<)).metalang -o out || exit 0
+	@if [ -e out/$(notdir $(basename $<)).ml ]; then exit 1; fi
+	@echo "$(green)OK $(basename $<)$(reset)"
+	@touch $@
 
 TESTSNOTCOMPILE	:= $(addprefix out/, \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)))
