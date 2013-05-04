@@ -1,3 +1,6 @@
+def int foo(int a, int b)
+  return a + b
+end
 
 main
   print int 10

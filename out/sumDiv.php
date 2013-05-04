@@ -9,6 +9,24 @@ function scan($format){
   $stdin = substr($stdin, strlen($out[0]));
   return $out;
 }
+function foo(){
+  $a = 0;
+  /* test */
+  $a ++;
+  /* test 2 */
+}
+
+function foo2(){
+  
+}
+
+function foo3(){
+  if (1 == 1)
+  {
+    
+  }
+}
+
 function sumdiv($n){
   /* On désire renvoyer la somme des diviseurs */
   $out_ = 0;
@@ -35,6 +53,6 @@ function sumdiv($n){
 $n = 0;
 list($n) = scan("%d");
 /* Lecture de l'entier */
-$h = sumdiv($n);
-echo $h;
+$j = sumdiv($n);
+echo $j;
 ?>

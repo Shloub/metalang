@@ -2,6 +2,24 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+void foo(){
+  int a = 0;
+  /* test */
+  a ++;
+  /* test 2 */
+}
+
+void foo2(){
+  
+}
+
+void foo3(){
+  if (1 == 1)
+  {
+    
+  }
+}
+
 int sumdiv(int n){
   /* On désire renvoyer la somme des diviseurs */
   int out_ = 0;
@@ -30,8 +48,8 @@ int main(void){
   int n = 0;
   scanf("%d", &n);
   /* Lecture de l'entier */
-  int c = sumdiv(n);
-  printf("%d", c);
+  int d = sumdiv(n);
+  printf("%d", d);
   return 0;
 }
 

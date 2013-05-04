@@ -208,7 +208,7 @@ module RemoveUselessFunctions = struct
     in
 
     let used_functions = WalkCollectCalls.fold
-      {prog with Prog.funs = [] } in (* fonctions utilisées dans le
+      {prog with Prog.funs = funs } in (* fonctions utilisées dans le
                                           programme (stdlib non comprise) *)
     let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
     let prog = { prog with Prog.funs = funs} in
@@ -270,3 +270,11 @@ module ReadAnalysis = struct
         end
     }
 end
+
+let no_macro = function
+  | Prog.DeclarFun (_, ty, li, instrs) ->
+    begin match Type.unfix ty with
+      | Type.Lexems -> false
+      | _ -> true
+    end
+  | _ -> true

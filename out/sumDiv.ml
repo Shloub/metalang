@@ -1,3 +1,18 @@
+let rec foo () =
+  let a = ref( 0 ) in
+  (* test *)
+  a := (!a) + 1
+  (* test 2 *)
+
+let rec foo2 () =
+   ()
+
+let rec foo3 () =
+  if 1 = 1 then
+    begin
+       ()
+    end
+
 let rec sumdiv n =
   (* On désire renvoyer la somme des diviseurs *)
   let out_ = ref( 0 ) in
@@ -24,7 +39,7 @@ begin
   let n = ref( 0 ) in
   Scanf.scanf "%d" (fun value -> n := value);
   (* Lecture de l'entier *)
-  let g = sumdiv (!n) in
-  Printf.printf "%d" g
+  let h = sumdiv (!n) in
+  Printf.printf "%d" h
 end
  

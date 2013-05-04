@@ -89,8 +89,14 @@ let rec cancel_move_xy x y g =
   g.firstToPlay <- not g.firstToPlay;
   g.ended <- false
 
+let rec cancel_move m g =
+  cancel_move_xy m.x m.y g
+
 let rec can_move_xy x y g =
   g.cases.(x).(y) = 0
+
+let rec can_move m g =
+  can_move_xy m.x m.y g
 
 (*
 Un minimax classique, renvoie la note du plateau
@@ -170,6 +176,17 @@ let rec init () =
     firstToPlay=true;
     note=0;
     ended=false;
+  } in
+  out_
+
+let rec read_move () =
+  let x = Scanf.scanf "%d" (fun x -> x) in
+  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let y = Scanf.scanf "%d" (fun x -> x) in
+  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let out_ = {
+    x=x;
+    y=y;
   } in
   out_
 

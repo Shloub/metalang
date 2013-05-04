@@ -8,6 +8,60 @@ record intlist int head;
 
 end
 
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{list:@intlist,
+i:int}
+\Output{@intlist}
+def @intlist out = with head = $ i $
+tail = $ list $ end
+\Return $ out $\;
+\caption{cons}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{empty:@intlist,
+acc:@intlist,
+torev:@intlist}
+\Output{@intlist}
+\If{ $ torev = empty $ }{
+  \Return $ acc $\;
+}
+\Else{
+  def @intlist acc2 = with head = $ torev.head $
+  tail = $ acc $ end
+  \Return $ rev2(empty, acc, torev.tail) $\;
+}
+\caption{rev2}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{empty:@intlist,
+torev:@intlist}
+\Output{@intlist}
+\Return $ rev2(empty, empty, torev) $\;
+\caption{rev}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{empty:@intlist}
+\Output{void}
+
+$@intlist\:list := empty$\;
+$int\:i := -1$\;
+\While{$ i \neq 0 $}{
+  $read_{int}$(i)\;
+  \If{ $ i \neq 0 $ }{
+    $list \leftarrow cons(list, i) $\;
+  }
+  
+}
+\caption{test}
+\end{algorithm}
 
 \begin{algorithm}[H]
 

@@ -35,6 +35,24 @@ var read_int = function(){
 }
 
 
+function foo(){
+  var a = 0;
+  /* test */
+  a ++;
+  /* test 2 */
+}
+
+function foo2(){
+  
+}
+
+function foo3(){
+  if (1 == 1)
+  {
+    
+  }
+}
+
 function sumdiv(n){
   /* On désire renvoyer la somme des diviseurs */
   var out_ = 0;
@@ -61,7 +79,7 @@ function sumdiv(n){
 var n = 0;
 n=read_int();
 /* Lecture de l'entier */
-var f = sumdiv(n);
-util.print(f);
+var g = sumdiv(n);
+util.print(g);
 
 

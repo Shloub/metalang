@@ -1,6 +1,24 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+void foo(){
+  int a = 0;
+  /* test */
+  a ++;
+  /* test 2 */
+}
+
+void foo2(){
+  
+}
+
+void foo3(){
+  if (1 == 1)
+  {
+    
+  }
+}
+
 int sumdiv(int n){
   /* On désire renvoyer la somme des diviseurs */
   int out_ = 0;
@@ -31,8 +49,8 @@ int main(void){
   int n = 0;
   scanf("%d", &n);
   /* Lecture de l'entier */
-  int a = sumdiv(n);
-  printf("%d", a);
+  int b = sumdiv(n);
+  printf("%d", b);
   return 0;
 }
 

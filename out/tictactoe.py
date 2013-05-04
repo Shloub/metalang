@@ -1,6 +1,42 @@
 
 import sys
 
+char=None
+def readchar_():
+  global char;
+  if char == None:
+    char = sys.stdin.read(1);
+  return char;
+
+def skipchar():
+  global char;
+  char = None;
+  return;
+
+def stdinsep():
+  while True:
+    c = readchar_();
+    if c == '\n' or c == '\t' or c == '\r' or c == ' ':
+      skipchar();
+    else:
+      return;
+
+def readint():
+  c = readchar_();
+  if c == '-':
+    sign = -1;
+    skipchar();
+  else:
+    sign = 1;
+  out = 0;
+  while True:
+    c = readchar_();
+    if c <= '9' and c >= '0' :
+      out = out * 10 + int(c);
+      skipchar();
+    else:
+      return out * sign;
+
 """
 Tictactoe : un tictactoe avec une IA
 """
@@ -77,8 +113,14 @@ def cancel_move_xy( x, y, g ):
     g["firstToPlay"] = not (g["firstToPlay"]);
     g["ended"] = False;
 
+def cancel_move( m, g ):
+    cancel_move_xy(m["x"], m["y"], g);
+
 def can_move_xy( x, y, g ):
     return g["cases"][x][y] == 0;
+
+def can_move( m, g ):
+    return can_move_xy(m["x"], m["y"], g);
 
 """
 Un minimax classique, renvoie la note du plateau
@@ -140,6 +182,16 @@ def init(  ):
         tab[j] = 0;
       cases[i] = tab;
     out_ = {"cases":cases, "firstToPlay":True, "note":0, "ended":False};
+    return out_;
+
+def read_move(  ):
+    x = 0;
+    x=readint();
+    stdinsep();
+    y = 0;
+    y=readint();
+    stdinsep();
+    out_ = {"x":x, "y":y};
     return out_;
 
 for i in range(0, 1 + 1):

@@ -41,7 +41,6 @@ let languages, printers =
       (((Format.formatter -> unit) ->  unit)) -> unit
     =
     (fun (err : ((Format.formatter -> unit) -> unit)) ->
-      try
         let typerEnv, processed  =
           pa prog
         in
@@ -49,8 +48,7 @@ let languages, printers =
           pr#setTyperEnv typerEnv;
           pr#prog out processed
         end
-      with Warner.Error e ->
-        err e
+
     )
   in
   let ls = [
@@ -134,7 +132,8 @@ let make_prog_helper progname (funs, main) stdlib =
     Prog.main = main ;
   } in
   let prog = Eval.EvalConstantes.apply prog in
-  let prog = Passes.RemoveUselessFunctions.apply prog funs in
+  let prog = Passes.RemoveUselessFunctions.apply prog (List.filter
+                                                         Passes.no_macro funs) in
   let tyenv, prog = Typer.process prog in
   tyenv, prog
 
@@ -192,13 +191,19 @@ let process err c filename =
     else
       let go lang =
         let printer = L.find lang printers in
-        let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^ lang in
-        if not c.quiet then Printf.printf "Generating %s\n%!" output ;
-        Fresh.fresh_init prog ;
-        let chan = open_out output in
-        let buf = Format.formatter_of_out_channel chan in
-        Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
-        close_out chan in
+        let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^
+          lang in
+        try
+          if not c.quiet then Printf.printf "Generating %s\n%!" output ;
+          Fresh.fresh_init prog ;
+          let chan = open_out output in
+          let buf = Format.formatter_of_out_channel chan in
+          Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
+          close_out chan
+        with Warner.Error e ->
+          Unix.unlink output;
+          err e
+      in
       begin  (* noms à renommer automatiquement *)
         Passes.Rename.clear ();
         Passes.Rename.add prog.Prog.progname ;

@@ -121,8 +121,16 @@ def cancel_move_xy( x, y, g )
     g["ended"] = false;
 end
 
+def cancel_move( m, g )
+    cancel_move_xy(m["x"], m["y"], g);
+end
+
 def can_move_xy( x, y, g )
     return (g["cases"][x][y] == 0);
+end
+
+def can_move( m, g )
+    return (can_move_xy(m["x"], m["y"], g));
 end
 
 
@@ -215,6 +223,18 @@ def init(  )
             "firstToPlay" => true,
             "note" => 0,
             "ended" => false};
+    return (out_);
+end
+
+def read_move(  )
+    x = 0
+    x=scanf("%d")[0];
+    scanf("%*\n");
+    y = 0
+    y=scanf("%d")[0];
+    scanf("%*\n");
+    out_ = {"x" => x,
+            "y" => y};
     return (out_);
 end
 

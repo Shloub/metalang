@@ -119,8 +119,16 @@ void cancel_move_xy(int x, int y, struct gamestate * g){
   g->ended = 0;
 }
 
+void cancel_move(struct move * m, struct gamestate * g){
+  cancel_move_xy(m->x, m->y, g);
+}
+
 int can_move_xy(int x, int y, struct gamestate * g){
   return g->cases[x][y] == 0;
+}
+
+int can_move(struct move * m, struct gamestate * g){
+  return can_move_xy(m->x, m->y, g);
 }
 
 /*
@@ -219,6 +227,19 @@ struct gamestate * init(){
   out_->firstToPlay=1;
   out_->note=0;
   out_->ended=0;
+  return out_;
+}
+
+struct move * read_move(){
+  int x = 0;
+  scanf("%d", &x);
+  scanf("%*[ \t\r\n]c", 0);
+  int y = 0;
+  scanf("%d", &y);
+  scanf("%*[ \t\r\n]c", 0);
+  struct move * out_ = malloc (sizeof(out_) );
+  out_->x=x;
+  out_->y=y;
   return out_;
 }
 

@@ -133,9 +133,10 @@ class cPrinter = object(self)
       self#instructions main
 
   method bloc f li = match li with
-    | [ Instr.Fixed.F ( _, ((Instr.AllocRecord (_, _, _))
+    | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
                                | (Instr.AllocArray _)
                                | (Instr.DeclRead _)
+                               | (Instr.Declare _)
                                | (Instr.Comment _)))
       ] ->
       Format.fprintf f "@[<v 2>{@\n%a@]@\n}"

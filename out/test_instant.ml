@@ -1,3 +1,5 @@
+let rec foo a b =
+  a + b
 
 let () =
 begin

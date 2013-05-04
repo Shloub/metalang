@@ -168,12 +168,30 @@ $g.ended \leftarrow false $\;
 \begin{algorithm}[H]
 \SetKwInOut{Input}{input}
 \SetKwInOut{Output}{output}
+\Input{m:@move,
+g:@gamestate}
+\Output{void}
+$cancel_move_xy(m.x, m.y, g)$\;
+\caption{cancel\_move}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
 \Input{x:int,
 y:int,
 g:@gamestate}
 \Output{bool}
 \Return $ g.cases[x][y] = 0 $\;
 \caption{can\_move\_xy}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{m:@move,
+g:@gamestate}
+\Output{bool}
+\Return $ can_move_xy(m.x, m.y, g) $\;
+\caption{can\_move}
 \end{algorithm}
 
 Un minimax classique, renvoie la note du plateau
@@ -269,6 +287,21 @@ note = $ 0 $
 ended = $ false $ end
 \Return $ out $\;
 \caption{init}
+\end{algorithm}
+\begin{algorithm}[H]
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{}
+\Output{@move}
+
+def read int x
+read\_blank(STDIN)\;
+def read int y
+read\_blank(STDIN)\;
+def @move out = with x = $ x $
+y = $ y $ end
+\Return $ out $\;
+\caption{read\_move}
 \end{algorithm}
 
 \begin{algorithm}[H]

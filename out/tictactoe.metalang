@@ -119,8 +119,16 @@ def void cancel_move_xy(int x, int y, @gamestate g)
   g.ended = false;
 end
 
+def void cancel_move(@move m, @gamestate g)
+  cancel_move_xy(m.x, m.y, g);
+end
+
 def bool can_move_xy(int x, int y, @gamestate g)
   return g.cases[x][y] == 0
+end
+
+def bool can_move(@move m, @gamestate g)
+  return can_move_xy(m.x, m.y, g)
 end
 
 /*
@@ -205,6 +213,16 @@ def @gamestate init()
   firstToPlay = true
   note = 0
   ended = false end
+  return out
+end
+
+def @move read_move()
+  def read int x
+  skip
+  def read int y
+  skip
+  def @move out = with x = x
+  y = y end
   return out
 end
 

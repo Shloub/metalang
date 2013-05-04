@@ -1,5 +1,22 @@
 <?php
-/*
+
+$stdin='';
+function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN)."\n";}
+function scan($format){
+ stdin_();
+  global $stdin;
+  $out = sscanf($stdin, $format);
+  $stdin = substr($stdin, strlen($out[0]));
+  return $out;
+}
+function scantrim(){
+  global $stdin;
+while(true){
+ $stdin = ltrim($stdin);
+if ($stdin != '' || feof(STDIN)) break;
+  stdin_();
+}
+}/*
 Tictactoe : un tictactoe avec une IA
 */
 /* La structure de donnée */
@@ -90,8 +107,16 @@ function cancel_move_xy($x, $y, &$g){
   $g["ended"] = false;
 }
 
+function cancel_move(&$m, &$g){
+  cancel_move_xy($m["x"], $m["y"], $g);
+}
+
 function can_move_xy($x, $y, &$g){
   return $g["cases"][$x][$y] == 0;
+}
+
+function can_move(&$m, &$g){
+  return can_move_xy($m["x"], $m["y"], $g);
 }
 
 /*
@@ -172,6 +197,21 @@ function init(){
     "firstToPlay"=>true,
     "note"=>0,
     "ended"=>false
+  );
+  
+  return $out_;
+}
+
+function read_move(){
+  $x = 0;
+  list($x) = scan("%d");
+  scantrim();
+  $y = 0;
+  list($y) = scan("%d");
+  scantrim();
+  $out_ = array(
+    "x"=>$x,
+    "y"=>$y
   );
   
   return $out_;

@@ -126,8 +126,16 @@ function cancel_move_xy(x, y, g){
   g.ended = 0;
 }
 
+function cancel_move(m, g){
+  cancel_move_xy(m.x, m.y, g);
+}
+
 function can_move_xy(x, y, g){
   return g.cases[x][y] == 0;
+}
+
+function can_move(m, g){
+  return can_move_xy(m.x, m.y, g);
 }
 
 /*
@@ -207,6 +215,20 @@ function init(){
                 firstToPlay : 1,
                 note : 0,
                 ended : 0
+  };
+  return out_;
+}
+
+function read_move(){
+  var x = 0;
+  x=read_int();
+  stdinsep();
+  var y = 0;
+  y=read_int();
+  stdinsep();
+  var out_ = {
+                x : x,
+                y : y
   };
   return out_;
 }

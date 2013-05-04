@@ -3,6 +3,27 @@ import java.util.*;
 public class sumDiv
 {
   static Scanner scanner = new Scanner(System.in);
+  public static void foo()
+  {
+    int a = 0;
+    /* test */
+    a ++;
+    /* test 2 */
+  }
+  
+  public static void foo2()
+  {
+    
+  }
+  
+  public static void foo3()
+  {
+    if (1 == 1)
+    {
+      
+    }
+  }
+  
   public static int sumdiv(int n)
   {
     /* On désire renvoyer la somme des diviseurs */
@@ -34,8 +55,8 @@ public class sumDiv
     scanner.useDelimiter("\\s");
     n = scanner.nextInt();
     /* Lecture de l'entier */
-    int e = sumdiv(n);
-    System.out.printf("%d", e);
+    int f = sumdiv(n);
+    System.out.printf("%d", f);
   }
   
 }

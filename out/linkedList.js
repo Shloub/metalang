@@ -36,6 +36,42 @@ var read_int = function(){
 
 
 
+function cons(list, i){
+  var out_ = {
+                head : i,
+                tail : list
+  };
+  return out_;
+}
+
+function rev2(empty, acc, torev){
+  if (torev == empty)
+    return acc;
+  else
+  {
+    var acc2 = {
+                  head : torev.head,
+                  tail : acc
+    };
+    return rev2(empty, acc, torev.tail);
+  }
+}
+
+function rev(empty, torev){
+  return rev2(empty, empty, torev);
+}
+
+function test(empty){
+  var list = empty;
+  var i = -1;
+  while (i != 0)
+  {
+    i=read_int();
+    if (i != 0)
+      list = cons(list, i);
+  }
+}
+
 
 
 

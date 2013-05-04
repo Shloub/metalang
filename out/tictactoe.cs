@@ -2,6 +2,53 @@ using System;
 
 public class tictactoe
 {
+static bool eof;
+static String buffer;
+public static char readChar_(){
+  if (buffer == null){
+    buffer = Console.ReadLine();
+  }
+  if (buffer.Length == 0){
+    String tmp = Console.ReadLine();
+    eof = tmp == null;
+    buffer = "\n"+tmp;
+  }
+  char c = buffer[0];
+  return c;
+}
+public static void consommeChar(){
+       readChar_();
+  buffer = buffer.Substring(1);
+}
+public static void stdin_sep(){
+  do{
+    if (eof) return;
+    char c = readChar_();
+    if (c == ' ' || c == '\n' || c == '\t' || c == '\r'){
+      consommeChar();
+    }else{
+      return;
+    }
+  } while(true);
+}
+public static int readInt(){
+  int i = 0;
+  char s = readChar_();
+  int sign = 1;
+  if (s == '-'){
+    sign = -1;
+    consommeChar();
+  }
+  do{
+    char c = readChar_();
+    if (c <= '9' && c >= '0'){
+      i = i * 10 + c - '0';
+      consommeChar();
+    }else{
+      return i * sign;
+    }
+  } while(true);
+} 
   /*
 Tictactoe : un tictactoe avec une IA
 */
@@ -98,9 +145,19 @@ Tictactoe : un tictactoe avec une IA
     g.ended = false;
   }
   
+  public static void cancel_move(move m, gamestate g)
+  {
+    cancel_move_xy(m.x, m.y, g);
+  }
+  
   public static bool can_move_xy(int x, int y, gamestate g)
   {
     return g.cases[x][y] == 0;
+  }
+  
+  public static bool can_move(move m, gamestate g)
+  {
+    return can_move_xy(m.x, m.y, g);
   }
   
   /*
@@ -182,6 +239,20 @@ Renvoie le coup de l'IA
     out_.firstToPlay = true;
     out_.note = 0;
     out_.ended = false;
+    return out_;
+  }
+  
+  public static move read_move()
+  {
+    int x = 0;
+    x = readInt();
+    stdin_sep();
+    int y = 0;
+    y = readInt();
+    stdin_sep();
+    move out_ = new move();
+    out_.x = x;
+    out_.y = y;
     return out_;
   }
   

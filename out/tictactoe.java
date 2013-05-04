@@ -99,9 +99,19 @@ Tictactoe : un tictactoe avec une IA
     g.ended = false;
   }
   
+  public static void cancel_move(move m, gamestate g)
+  {
+    cancel_move_xy(m.x, m.y, g);
+  }
+  
   public static boolean can_move_xy(int x, int y, gamestate g)
   {
     return g.cases[x][y] == 0;
+  }
+  
+  public static boolean can_move(move m, gamestate g)
+  {
+    return can_move_xy(m.x, m.y, g);
   }
   
   /*
@@ -183,6 +193,22 @@ Renvoie le coup de l'IA
     out_.firstToPlay = true;
     out_.note = 0;
     out_.ended = false;
+    return out_;
+  }
+  
+  public static move read_move()
+  {
+    int x = 0;
+    scanner.useDelimiter("\\s");
+    x = scanner.nextInt();
+    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    int y = 0;
+    scanner.useDelimiter("\\s");
+    y = scanner.nextInt();
+    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    move out_ = new move();
+    out_.x = x;
+    out_.y = y;
     return out_;
   }
   

@@ -30,6 +30,19 @@ def readint():
       return out * sign;
 
 
+def foo(  ):
+    a = 0;
+    """ test """
+    a += 1;
+    """ test 2 """
+
+def foo2(  ):
+    pass;
+
+def foo3(  ):
+    if 1 == 1:
+      pass;
+
 def sumdiv( n ):
     """ On désire renvoyer la somme des diviseurs """
     out_ = 0;
@@ -49,6 +62,6 @@ def sumdiv( n ):
 n = 0;
 n=readint();
 """ Lecture de l'entier """
-k = sumdiv(n);
-print("%d" % k, end='');
+l = sumdiv(n);
+print("%d" % l, end='');
 

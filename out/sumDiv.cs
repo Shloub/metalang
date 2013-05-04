@@ -38,6 +38,27 @@ public static int readInt(){
     }
   } while(true);
 } 
+  public static void foo()
+  {
+    int a = 0;
+    /* test */
+    a ++;
+    /* test 2 */
+  }
+  
+  public static void foo2()
+  {
+    
+  }
+  
+  public static void foo3()
+  {
+    if (1 == 1)
+    {
+      
+    }
+  }
+  
   public static int sumdiv(int n)
   {
     /* On désire renvoyer la somme des diviseurs */
@@ -68,8 +89,8 @@ public static int readInt(){
     int n = 0;
     n = readInt();
     /* Lecture de l'entier */
-    int d = sumdiv(n);
-    Console.Write(d);
+    int e = sumdiv(n);
+    Console.Write(e);
   }
   
 }

@@ -1,6 +1,31 @@
 
 require "scanf.rb"
 
+def foo(  )
+    a = 0
+    
+=begin
+ test 
+=end
+
+    a += 1;
+    
+=begin
+ test 2 
+=end
+
+end
+
+def foo2(  )
+    
+end
+
+def foo3(  )
+    if 1 == 1 then
+      
+    end
+end
+
 def sumdiv( n )
     
 =begin
@@ -59,6 +84,6 @@ n=scanf("%d")[0];
  Lecture de l'entier 
 =end
 
-j = sumdiv(n)
-printf "%d", j
+k = sumdiv(n)
+printf "%d", k
 

@@ -45,6 +45,30 @@ begin
    until false;
 end;
 
+procedure foo();
+var
+  a : integer;
+begin
+  a := 0;
+  { test }
+  a := a + 1;
+  { test 2 }
+end;
+
+procedure foo2();
+begin
+  
+end;
+
+procedure foo3();
+begin
+  if 1 = 1
+  then
+    begin
+      
+    end;
+end;
+
 function sumdiv(n : integer) : integer;
 var
   i : integer;
@@ -74,15 +98,15 @@ end;
 
 
 var
-  b : integer;
+  c : integer;
   n : integer;
 begin
   { Programme principal }
   n := 0;
   n := read_int();
   { Lecture de l'entier }
-  b := sumdiv(n);
-  write(b);
+  c := sumdiv(n);
+  write(c);
 end.
 
 
