@@ -52,8 +52,10 @@ public class sumDiv
   {
     /* Programme principal */
     int n = 0;
-    scanner.useDelimiter("\\s");
-    n = scanner.nextInt();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); n = -scanner.nextInt();
+    }else{
+    n = scanner.nextInt();}
     /* Lecture de l'entier */
     int f = sumdiv(n);
     System.out.printf("%d", f);

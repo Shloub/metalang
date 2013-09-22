@@ -27,14 +27,20 @@ La suite de fibonaci
     int a = 0;
     int b = 0;
     int i = 0;
-    scanner.useDelimiter("\\s");
-    a = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    b = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    i = scanner.nextInt();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); a = -scanner.nextInt();
+    }else{
+    a = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); i = -scanner.nextInt();
+    }else{
+    i = scanner.nextInt();}
     int g = fibo_(a, b, i);
     System.out.printf("%d", g);
   }

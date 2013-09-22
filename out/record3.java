@@ -31,11 +31,15 @@ public class record3
     toto[] t = new toto[p];
     for (int i = 0 ; i < p; i++)
       t[i] = mktoto(i);
-    scanner.useDelimiter("\\s");
-    t[0].bar = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    t[1].blah = scanner.nextInt();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t[0].bar = -scanner.nextInt();
+    }else{
+    t[0].bar = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t[1].blah = -scanner.nextInt();
+    }else{
+    t[1].blah = scanner.nextInt();}
     int q = result(t, 4);
     System.out.printf("%d", q);
     int r = t[2].blah;

@@ -36,8 +36,10 @@ public class linkedList
     int i = -1;
     while (i != 0)
     {
-      scanner.useDelimiter("\\s");
-      i = scanner.nextInt();
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); i = -scanner.nextInt();
+      }else{
+      i = scanner.nextInt();}
       if (i != 0)
         list = cons(list, i);
     }

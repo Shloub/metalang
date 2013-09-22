@@ -41,9 +41,11 @@ public class cambriolage
   public static void main(String args[])
   {
     int n = 0;
-    scanner.useDelimiter("\\s");
-    n = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); n = -scanner.nextInt();
+    }else{
+    n = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     int[][] passepartout = new int[n][];
     for (int i = 0 ; i < n; i++)
     {
@@ -52,17 +54,21 @@ public class cambriolage
       for (int j = 0 ; j < w; j++)
       {
         int out_ = 0;
-        scanner.useDelimiter("\\s");
-        out_ = scanner.nextInt();
-        scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+        if (scanner.hasNext("^-")){
+        scanner.next("^-"); out_ = -scanner.nextInt();
+        }else{
+        out_ = scanner.nextInt();}
+        scanner.findWithinHorizon("[\n\r ]*", 1);
         out0[j] = out_;
       }
       passepartout[i] = out0;
     }
     int m = 0;
-    scanner.useDelimiter("\\s");
-    m = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); m = -scanner.nextInt();
+    }else{
+    m = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     int[][] serrures = new int[m][];
     for (int k = 0 ; k < m; k++)
     {
@@ -71,9 +77,11 @@ public class cambriolage
       for (int l = 0 ; l < x; l++)
       {
         int out_ = 0;
-        scanner.useDelimiter("\\s");
-        out_ = scanner.nextInt();
-        scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+        if (scanner.hasNext("^-")){
+        scanner.next("^-"); out_ = -scanner.nextInt();
+        }else{
+        out_ = scanner.nextInt();}
+        scanner.findWithinHorizon("[\n\r ]*", 1);
         out1[l] = out_;
       }
       serrures[k] = out1;

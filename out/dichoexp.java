@@ -21,11 +21,15 @@ public class dichoexp
   {
     int a = 0;
     int b = 0;
-    scanner.useDelimiter("\\s");
-    a = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    b = scanner.nextInt();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); a = -scanner.nextInt();
+    }else{
+    a = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
     int g = exp_(a, b);
     System.out.printf("%d", g);
   }

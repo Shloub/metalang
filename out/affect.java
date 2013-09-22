@@ -46,17 +46,25 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
   {
     toto t = mktoto(4);
     toto t2 = mktoto(5);
-    scanner.useDelimiter("\\s");
-    t.bar = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    t.blah = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    t2.bar = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    t.blah = scanner.nextInt();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t.bar = -scanner.nextInt();
+    }else{
+    t.bar = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t.blah = -scanner.nextInt();
+    }else{
+    t.blah = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t2.bar = -scanner.nextInt();
+    }else{
+    t2.bar = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t.blah = -scanner.nextInt();
+    }else{
+    t.blah = scanner.nextInt();}
     int l = result(t, t2);
     System.out.printf("%d", l);
     int m = t.blah;

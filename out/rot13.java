@@ -12,14 +12,16 @@ Ce test effectue un rot13 sur une chaine lue en entrée
   public static void main(String args[])
   {
     int strlen = 0;
-    scanner.useDelimiter("\\s");
-    strlen = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); strlen = -scanner.nextInt();
+    }else{
+    strlen = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab4 = new char[strlen];
     for (int toto = 0 ; toto < strlen; toto++)
     {
       char tmpc = '_';
-      tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
+      scanner.useDelimiter("\\n");tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
       int c = tmpc;
       if (tmpc != ' ')
         c = ((c - 'a') + 13) % 26 + 'a';

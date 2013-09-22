@@ -16,17 +16,19 @@ public class countchar
   public static void main(String args[])
   {
     int len = 0;
-    scanner.useDelimiter("\\s");
-    len = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); len = -scanner.nextInt();
+    }else{
+    len = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     char tofind = '\000';
-    tofind = scanner.findWithinHorizon(".", 1).charAt(0);
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    scanner.useDelimiter("\\n");tofind = scanner.findWithinHorizon(".", 1).charAt(0);
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab = new char[len];
     for (int i = 0 ; i < len; i++)
     {
       char tmp = '\000';
-      tmp = scanner.findWithinHorizon(".", 1).charAt(0);
+      scanner.useDelimiter("\\n");tmp = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = tmp;
     }
     int result = nth(tab, tofind, len);

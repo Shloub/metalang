@@ -199,13 +199,17 @@ Renvoie le coup de l'IA
   public static move read_move()
   {
     int x = 0;
-    scanner.useDelimiter("\\s");
-    x = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); x = -scanner.nextInt();
+    }else{
+    x = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     int y = 0;
-    scanner.useDelimiter("\\s");
-    y = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); y = -scanner.nextInt();
+    }else{
+    y = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     move out_ = new move();
     out_.x = x;
     out_.y = y;

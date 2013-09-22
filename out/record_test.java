@@ -10,11 +10,15 @@ public class record_test
     toto param = new toto();
     param.foo = 0;
     param.bar = 0;
-    scanner.useDelimiter("\\s");
-    param.bar = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    param.foo = scanner.nextInt();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); param.bar = -scanner.nextInt();
+    }else{
+    param.bar = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); param.foo = -scanner.nextInt();
+    }else{
+    param.foo = scanner.nextInt();}
     int e = param.bar + param.foo * param.bar;
     System.out.printf("%d", e);
   }

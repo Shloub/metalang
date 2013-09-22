@@ -26,16 +26,20 @@ public class montagnes
   public static void main(String args[])
   {
     int len = 0;
-    scanner.useDelimiter("\\s");
-    len = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); len = -scanner.nextInt();
+    }else{
+    len = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
       int x = 0;
-      scanner.useDelimiter("\\s");
-      x = scanner.nextInt();
-      scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); x = -scanner.nextInt();
+      }else{
+      x = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = x;
     }
     int f = montagnes_(tab, len);

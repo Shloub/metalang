@@ -36,16 +36,20 @@ public class pathfindList
   public static void main(String args[])
   {
     int len = 0;
-    scanner.useDelimiter("\\s");
-    len = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); len = -scanner.nextInt();
+    }else{
+    len = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
       int tmp = 0;
-      scanner.useDelimiter("\\s");
-      tmp = scanner.nextInt();
-      scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); tmp = -scanner.nextInt();
+      }else{
+      tmp = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tmp;
     }
     int result = pathfind(tab, len);

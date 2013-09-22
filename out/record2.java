@@ -23,11 +23,15 @@ public class record2
   public static void main(String args[])
   {
     toto t = mktoto(4);
-    scanner.useDelimiter("\\s");
-    t.bar = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    t.blah = scanner.nextInt();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t.bar = -scanner.nextInt();
+    }else{
+    t.bar = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); t.blah = -scanner.nextInt();
+    }else{
+    t.blah = scanner.nextInt();}
     int i = result(t);
     System.out.printf("%d", i);
     int j = t.blah;

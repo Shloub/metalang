@@ -13,18 +13,22 @@ read int, read char et skip
   public static void main(String args[])
   {
     int len = 0;
-    scanner.useDelimiter("\\s");
-    len = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); len = -scanner.nextInt();
+    }else{
+    len = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     System.out.printf("%d", len);
     System.out.printf("%s", "=len\n");
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
       int tmpi1 = 0;
-      scanner.useDelimiter("\\s");
-      tmpi1 = scanner.nextInt();
-      scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); tmpi1 = -scanner.nextInt();
+      }else{
+      tmpi1 = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
       System.out.printf("%d", i);
       System.out.printf("%s", "=>");
       System.out.printf("%d", tmpi1);
@@ -36,9 +40,11 @@ read int, read char et skip
     for (int i_ = 0 ; i_ < len; i_++)
     {
       int tmpi2 = 0;
-      scanner.useDelimiter("\\s");
-      tmpi2 = scanner.nextInt();
-      scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); tmpi2 = -scanner.nextInt();
+      }else{
+      tmpi2 = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
       System.out.printf("%d", i_);
       System.out.printf("%s", "==>");
       System.out.printf("%d", tmpi2);
@@ -46,16 +52,18 @@ read int, read char et skip
       tab2[i_] = tmpi2;
     }
     int strlen = 0;
-    scanner.useDelimiter("\\s");
-    strlen = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); strlen = -scanner.nextInt();
+    }else{
+    strlen = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     System.out.printf("%d", strlen);
     System.out.printf("%s", "=strlen\n");
     char[] tab4 = new char[strlen];
     for (int toto = 0 ; toto < strlen; toto++)
     {
       char tmpc = '_';
-      tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
+      scanner.useDelimiter("\\n");tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
       int c = tmpc;
       System.out.printf("%c", tmpc);
       System.out.printf("%s", ":");

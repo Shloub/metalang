@@ -11,9 +11,11 @@ public class sudoku
     for (int i = 0 ; i < l; i++)
     {
       int k = 0;
-      scanner.useDelimiter("\\s");
-      k = scanner.nextInt();
-      scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); k = -scanner.nextInt();
+      }else{
+      k = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
       out_[i] = k;
     }
     return out_;

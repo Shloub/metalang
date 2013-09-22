@@ -61,12 +61,16 @@ public class pathfinding
   {
     int x = 0;
     int y = 0;
-    scanner.useDelimiter("\\s");
-    x = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
-    scanner.useDelimiter("\\s");
-    y = scanner.nextInt();
-    scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); x = -scanner.nextInt();
+    }else{
+    x = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); y = -scanner.nextInt();
+    }else{
+    y = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
     char[][] tab = new char[y][];
     for (int i = 0 ; i < y; i++)
     {
@@ -74,10 +78,10 @@ public class pathfinding
       for (int j = 0 ; j < x; j++)
       {
         char tmp = '\000';
-        tmp = scanner.findWithinHorizon(".", 1).charAt(0);
+        scanner.useDelimiter("\\n");tmp = scanner.findWithinHorizon(".", 1).charAt(0);
         tab2[j] = tmp;
       }
-      scanner.useDelimiter("\\r*\\n*\\s*");scanner.next();
+      scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tab2;
     }
     int result = pathfind(tab, x, y);
