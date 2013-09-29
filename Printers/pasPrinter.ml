@@ -167,6 +167,7 @@ class pasPrinter = object(self)
           | Type.Char -> Format.fprintf f "char"
           | Type.Named n -> Format.fprintf f "%s" n
           | Type.Struct (li, p) -> Format.fprintf f "a struct"
+	  | Type.Enum _ -> Format.fprintf f "an enum"
           | Type.Auto -> assert false
 
   method print_proto f (funname, t, li) =

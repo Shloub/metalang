@@ -42,6 +42,7 @@ let contains_return li =
     ocaml cannot execute (it's compiled into an exception) *)
 let rec contains_sad_return instrs =
   let rec f tra acc i = match Instr.unfix i with
+    | Instr.AllocArray _ -> acc
     | Instr.Loop(_, _, _, li) -> acc || ( contains_return li)
     | Instr.While (_, li) -> acc || (contains_return li)
     | Instr.If (_, li1, li2) ->

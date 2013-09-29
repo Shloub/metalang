@@ -55,6 +55,7 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
       | Type.Bool -> Format.fprintf f "boolean"
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s" n
+      | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
       | Type.Auto -> assert false
 

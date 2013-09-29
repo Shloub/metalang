@@ -56,12 +56,10 @@ let rec is_typed (t : typeContrainte ref) : bool =
 
 let rec extract_typed (t : typeContrainte ref) : Type.t =
   match !t with
-    | Unknown loc -> assert false
-    | PreTyped (t, _) ->
-      Type.Fixed.map extract_typed t |> Type.Fixed.fix
-    | Typed (t, _) -> t
-
-
+  | Unknown loc -> assert false
+  | PreTyped (t, _) ->
+    Type.Fixed.map extract_typed t |> Type.Fixed.fix
+  | Typed (t, _) -> t
 
 type env =
     {
@@ -92,8 +90,7 @@ let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
   let env = Type.Writer.Deep.fold fold (fold env t) t
   in
   let rec f t = match Type.Fixed.unfix t with
-    | Type.Auto ->
-      IntMap.find (Type.Fixed.annot t) env.automap
+    | Type.Auto -> IntMap.find (Type.Fixed.annot t) env.automap
     | t -> ref ( PreTyped ( (Type.Fixed.map f t ), loc) )
   in let t = f t in env, t
 
@@ -660,14 +657,17 @@ let empty = {
 
 let map_ty env prog =
   let map_ty ty =
-    let f t = match Type.Fixed.unfix t with
+    let rec f t = match Type.Fixed.unfix t with
       | Type.Auto ->
         let annot = Type.Fixed.annot t in
         let contrainte =
           try IntMap.find annot env.automap
           with Not_found ->
             error_no_auto_type env.automap annot t
-        in extract_typed contrainte
+        in let ty = extract_typed contrainte in f ty
+      | Type.Enum ( name:: _) ->
+        let (_, name) = StringMap.find name env.enum in
+        Type.named name
       | Type.Struct ( ( (name, _ ):: _), _) ->
         let (_, _, name) =StringMap.find name env.fields in
         Type.named name
