@@ -50,8 +50,11 @@ module IfMerge : SigPass = struct
   let process () i =
     let rec f acc = function
       | [] -> List.rev acc
-      | [i] -> List.rev (i :: acc)
+      | [i] ->
+	let i = g i in
+	List.rev (i :: acc)
       | hd::tl ->
+	let hd = g hd in
         match Instr.unfix hd with
           | Instr.If (e, l1, l2) ->
             let l1 = f [] l1 in
@@ -66,6 +69,16 @@ module IfMerge : SigPass = struct
               (Instr.if_ e l1 l2 ) :: acc |> List.rev
             else f (hd :: acc) tl
           | _ -> f (hd :: acc) tl
+    and g instr =
+      let annot = Instr.Fixed.annot instr in
+      let instr = Instr.map g (Instr.unfix instr) |> Instr.fixa annot
+      in
+      match Instr.unfix instr with
+      | Instr.AllocArray (var, ty, e, Some (var2, li)) ->
+	let li = f [] li in
+	let unfixed = Instr.alloc_array_lambda var ty e var2 li |> Instr.unfix
+	in Instr.fixa annot unfixed
+      | i -> instr
     in
     (), f [] i;;
 end
