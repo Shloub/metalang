@@ -40,8 +40,6 @@ class pasPrinter = object(self)
 
   method hasSelfAffect op = false
 
-  method decl_type f name t = ()
-
   val mutable current_function = ""
   val mutable bindings = BindingSet.empty
 
@@ -458,10 +456,6 @@ end;
 *)
     Format.fprintf f "@[<h>exit(%a);@]"
       self#expr e
-
-  method print f t expr =
-    Format.fprintf f "@[<h>write(%a);@]" self#expr expr
-
 
   method decl_type f name t =
     match (Type.unfix t) with
