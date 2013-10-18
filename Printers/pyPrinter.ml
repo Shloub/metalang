@@ -39,13 +39,13 @@ class pyPrinter = object(self)
 
   method selfAssoc f m e2 = function
     | Expr.Add ->
-      Format.fprintf f "@[<h>%a += %a;@]" self#mutable_ m self#expr e2
+      Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
     | Expr.Sub ->
-      Format.fprintf f "@[<h>%a -= %a;@]" self#mutable_ m self#expr e2
+      Format.fprintf f "@[<h>%a -= %a@]" self#mutable_ m self#expr e2
     | Expr.Mul ->
-      Format.fprintf f "@[<h>%a *= %a;@]" self#mutable_ m self#expr e2
+      Format.fprintf f "@[<h>%a *= %a@]" self#mutable_ m self#expr e2
     | Expr.Div ->
-      Format.fprintf f "@[<h>%a /= %a;@]" self#mutable_ m self#expr e2
+      Format.fprintf f "@[<h>%a /= %a@]" self#mutable_ m self#expr e2
 
   method lang () = "py"
 
@@ -54,7 +54,7 @@ class pyPrinter = object(self)
 
   method unop f op a =
     match op with
-      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+      | Expr.Neg -> Format.fprintf f "- %a" self#expr a
       | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
 
   method binop f op a b =
@@ -97,17 +97,17 @@ class pyPrinter = object(self)
   method read f t mutable_ =
 match Type.unfix t with
   | Type.Integer ->
-    Format.fprintf f "@[%a=readint();@]"
+    Format.fprintf f "@[%a@ =@ readint()@]"
       self#mutable_ mutable_
   | Type.Char ->
-    Format.fprintf f "@[%a=readchar();@]"
+    Format.fprintf f "@[%a@ =@ readchar()@]"
       self#mutable_ mutable_
   | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
     (Type.type_t_to_string t)
   ))
 
   method stdin_sep f =
-    Format.fprintf f "@[stdinsep();@]"
+    Format.fprintf f "@[stdinsep()@]"
 
 
 
@@ -126,47 +126,47 @@ import sys
       (if need then "
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 " else "" )
       (if need_readchar then
 "def readchar():
-  out = readchar_();
-  skipchar();
-  return out;
+  out = readchar_()
+  skipchar()
+  return out
 " else "")
       (if need_stdinsep then "
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 " else "")
       (if need_readint then "
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 " else "")
 
   method prog f prog =
@@ -177,13 +177,13 @@ def readint():
 
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ =@ %a;@]"
+    Format.fprintf f "@[<h>%a@ =@ %a@]"
       self#binding var
       self#expr e
 
   method bloc f li =
     match li with
-      | [] -> Format.fprintf f "@[<h>  pass;@]"
+      | [] -> Format.fprintf f "@[<h>  pass@]"
       | _ ->
 	Format.fprintf f "@[<v 2>  %a@]" self#instructions li
 
@@ -217,7 +217,7 @@ def readint():
       self#bloc li
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ [None] * %a;@]"
+      Format.fprintf f "@[<h>%a@ =@ [None] * %a@]"
 	self#binding binding
 	      (fun f a ->
           if self#nop (Expr.unfix a) then
@@ -253,7 +253,7 @@ def readint():
       | _ -> default ()
 
    method print_proto f (funname, t, li) =
-    Format.fprintf f "def %a( %a ):"
+    Format.fprintf f "def %a(%a):"
       self#funname funname
       (print_list
 	 (fun t (a, type_) ->
@@ -263,7 +263,7 @@ def readint():
 
 
   method print f t expr =
-    Format.fprintf f "@[print(\"%a\" %% %a, end='');@]" self#format_type t self#expr expr
+    Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t self#expr expr
 
   method field f field =
     Format.fprintf f "%S" field
@@ -282,7 +282,7 @@ def readint():
       li
 
   method allocrecord f name t el =
-    Format.fprintf f "%a = {%a};"
+    Format.fprintf f "%a = {%a}"
       self#binding name
       (self#def_fields name) el
 
