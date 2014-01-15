@@ -172,30 +172,58 @@ let colore string =
       Format.flush_str_formatter ()
     with Parser.Error -> string
 
-let make_prog stdlib filename =
+let stdlib_string lang = Printf.sprintf "
+enum @lng
+  LANG_C
+  LANG_Pas
+  LANG_Cc
+  LANG_Cs
+  LANG_Java
+  LANG_Js
+  LANG_Ml
+  LANG_Php
+  LANG_Rb
+  LANG_Py
+  LANG_Tex
+  LANG_Metalang
+end
+def @lng lang () return LANG_%s end\n" (String.capitalize lang)
+
+let make_prog stdlib filename lang =
   let progname = Filename.chop_extension $ Filename.basename filename in
   let funs, main = parse_file Parser.prog filename in
   let stdlib = if stdlib then parse_file Parser.toplvls stdlib_file else [] in
+  let stdlib_addon = parse_string Parser.toplvls (stdlib_string lang) in
+  let stdlib = List.append stdlib stdlib_addon in
   make_prog_helper progname (funs, main) stdlib
 
-let make_prog_helper (funs, main) stdlib =
+let make_prog_helper lang (funs, main) stdlib =
   let progname = "js_magic" in
+  let stdlib = stdlib ^ (stdlib_string lang) in
   let stdlib = parse_string Parser.toplvls stdlib in
   make_prog_helper progname (funs, main) stdlib
 
 let process err c filename =
   try
-    let env, prog = make_prog c.stdlib filename in
     if c.eval then
+      let env, prog = make_prog c.stdlib filename "metalang" in
       let _ = Eval.eval_prog env prog in ()
     else
       let go lang =
+	let env, prog = make_prog c.stdlib filename lang in
         let printer = L.find lang printers in
         let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^
           lang in
         try
           if not c.quiet then Printf.printf "Generating %s\n%!" output ;
           Fresh.fresh_init prog ;
+          Passes.Rename.clear ();
+          Passes.Rename.add prog.Prog.progname ;
+          Passes.Rename.add "out" ;
+          Passes.Rename.add "exp" ;
+          Passes.Rename.add "min" ;
+          Passes.Rename.add "max" ;
+          Passes.Rename.add "eval" ;
           let chan = open_out output in
           let buf = Format.formatter_of_out_channel chan in
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
@@ -203,17 +231,7 @@ let process err c filename =
         with Warner.Error e ->
           Unix.unlink output;
           err e
-      in
-      begin  (* noms à renommer automatiquement *)
-        Passes.Rename.clear ();
-        Passes.Rename.add prog.Prog.progname ;
-        Passes.Rename.add "out" ;
-        Passes.Rename.add "exp" ;
-        Passes.Rename.add "min" ;
-        Passes.Rename.add "max" ;
-        Passes.Rename.add "eval" ;
-        List.iter go c.languages
-      end
+      in List.iter go c.languages
   with Warner.Error e ->
     err e
 
@@ -233,7 +251,7 @@ let test_process err (lang:string) txt stdlib =
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
     log "prog'" ;
-    let tyenv, prog = make_prog_helper prog' stdlib in
+    let tyenv, prog = make_prog_helper lang prog' stdlib in
     log "prog" ;
     let printer = L.find lang printers in
     log "printer" ;
@@ -285,7 +303,7 @@ let eval_string code stdlib err stdin stdout =
         Parser.prog Lexer.token lexbuf
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
-    let env, prog = make_prog_helper prog' stdlib in
+    let env, prog = make_prog_helper "metalang" prog' stdlib in
     EVString.eval_prog env prog
   with Warner.Error e ->
     err e
