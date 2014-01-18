@@ -16,7 +16,8 @@ while(true){
 if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
-}/*
+}
+/*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
 

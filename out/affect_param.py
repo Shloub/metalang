@@ -1,6 +1,7 @@
 
 import sys
 
+
 def foo( a ):
     a = 4;
 

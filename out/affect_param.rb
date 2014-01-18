@@ -1,6 +1,7 @@
 
 require "scanf.rb"
 
+
 def foo( a )
     a = 4;
 end

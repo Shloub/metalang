@@ -187,7 +187,7 @@ enum @lng
   LANG_Tex
   LANG_Metalang
 end
-def @lng lang () return LANG_%s end\n" (String.capitalize lang)
+def @lng current_language () return LANG_%s end\n" (String.capitalize lang)
 
 let make_prog stdlib filename lang =
   let progname = Filename.chop_extension $ Filename.basename filename in

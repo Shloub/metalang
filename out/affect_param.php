@@ -1,4 +1,5 @@
 <?php
+
 function foo($a){
   $a = 4;
 }

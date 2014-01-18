@@ -39,6 +39,7 @@ end
 
 def lexems eval()
   def read char c
+  print char c
   if c == '.' then
     return { ${print_current()} ${eval()} }
   elsif c == ',' then

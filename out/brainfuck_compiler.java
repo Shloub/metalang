@@ -3,6 +3,19 @@ import java.util.*;
 public class brainfuck_compiler
 {
   static Scanner scanner = new Scanner(System.in);
+  enum lng { 
+    LANG_C,
+     LANG_Pas,
+     LANG_Cc,
+     LANG_Cs,
+     LANG_Java,
+     LANG_Js,
+     LANG_Ml,
+     LANG_Php,
+     LANG_Rb,
+     LANG_Py,
+     LANG_Tex,
+     LANG_Metalang}
   
   /*
 Ce test permet de tester les macros
@@ -14,77 +27,10 @@ et qui produit les macros metalang correspondante
   {
     char input = ' ';
     int current_pos = 500;
-    int j = 1000;
-    int[] mem = new int[j];
-    for (int i = 0 ; i < j; i++)
+    int f = 1000;
+    int[] mem = new int[f];
+    for (int i = 0 ; i < f; i++)
       mem[i] = 0;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    current_pos ++;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    while (mem[current_pos] != 0)
-    {
-      mem[current_pos] = mem[current_pos] - 1;
-      current_pos --;
-      mem[current_pos] = mem[current_pos] + 1;
-      char k = (char)(mem[current_pos]);
-      System.out.printf("%c", k);
-      current_pos ++;
-    }
   }
   
 }

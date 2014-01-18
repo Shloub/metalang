@@ -1,5 +1,18 @@
 program brainfuck_compiler;
 
+Type lng = (
+  LANG_C,
+   LANG_Pas,
+   LANG_Cc,
+   LANG_Cs,
+   LANG_Java,
+   LANG_Js,
+   LANG_Ml,
+   LANG_Php,
+   LANG_Rb,
+   LANG_Py,
+   LANG_Tex,
+   LANG_Metalang);
 
 {
 Ce test permet de tester les macros
@@ -10,7 +23,6 @@ et qui produit les macros metalang correspondante
 var
   c : integer;
   current_pos : integer;
-  d : char;
   i : integer;
   input : char;
   mem : array of integer;
@@ -22,73 +34,6 @@ begin
   for i := 0 to  c - 1 do
   begin
     mem[i] := 0;
-  end;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  current_pos := current_pos + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  mem[current_pos] := mem[current_pos] + 1;
-  while mem[current_pos] <> 0 do
-  begin
-    mem[current_pos] := mem[current_pos] - 1;
-    current_pos := current_pos - 1;
-    mem[current_pos] := mem[current_pos] + 1;
-    d := chr(mem[current_pos]);
-    write(d);
-    current_pos := current_pos + 1;
   end;
 end.
 

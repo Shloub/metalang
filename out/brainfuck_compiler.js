@@ -43,76 +43,9 @@ et qui produit les macros metalang correspondante
 */
 var input = ' ';
 var current_pos = 500;
-var l = 1000;
-var mem = new Array(l);
-for (var i = 0 ; i <= l - 1; i++)
+var g = 1000;
+var mem = new Array(g);
+for (var i = 0 ; i <= g - 1; i++)
   mem[i] = 0;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-current_pos ++;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-mem[current_pos] = mem[current_pos] + 1;
-while (mem[current_pos] != 0)
-{
-  mem[current_pos] = mem[current_pos] - 1;
-  current_pos --;
-  mem[current_pos] = mem[current_pos] + 1;
-  var m = String.fromCharCode(mem[current_pos]);
-  util.print(m);
-  current_pos ++;
-}
 
 

@@ -5,6 +5,20 @@ public class aaa_read
   static Scanner scanner = new Scanner(System.in);
   
   
+  enum lng { 
+    LANG_C,
+     LANG_Pas,
+     LANG_Cc,
+     LANG_Cs,
+     LANG_Java,
+     LANG_Js,
+     LANG_Ml,
+     LANG_Php,
+     LANG_Rb,
+     LANG_Py,
+     LANG_Tex,
+     LANG_Metalang}
+  
   /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip

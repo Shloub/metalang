@@ -789,9 +789,17 @@ let process (prog: 'lex Prog.t) =
   in env, prog
 
 let type_for_enum en env =
-  let (t, _) = StringMap.find en env.enum in
-      t
+  try
+    let (t, _) = StringMap.find en env.enum in
+    t
+  with Not_found _ ->
+    raise ( Error (fun f ->
+      Format.fprintf f "Cannot find type for enum field %s\n" en))
 
 let typename_for_enum en env =
-  let (_, name) = StringMap.find en env.enum in
-      name
+  try
+    let (_, name) = StringMap.find en env.enum in
+    name
+  with Not_found _ ->
+    raise ( Error (fun f ->
+      Format.fprintf f "Cannot find typename for enum field %s\n" en))

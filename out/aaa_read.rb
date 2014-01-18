@@ -4,6 +4,7 @@ require "scanf.rb"
 
 
 
+
 =begin
 
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien

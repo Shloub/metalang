@@ -37,6 +37,7 @@ var read_int = function(){
 
 
 
+
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip

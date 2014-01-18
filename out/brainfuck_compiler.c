@@ -2,6 +2,20 @@
 #include<stdlib.h>
 
 
+typedef enum lng {
+  LANG_C,
+  LANG_Pas,
+  LANG_Cc,
+  LANG_Cs,
+  LANG_Java,
+  LANG_Js,
+  LANG_Ml,
+  LANG_Php,
+  LANG_Rb,
+  LANG_Py,
+  LANG_Tex,
+  LANG_Metalang
+} lng;
 /*
 Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation

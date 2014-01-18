@@ -2,6 +2,19 @@ using System;
 
 public class brainfuck_compiler
 {
+  enum lng { 
+    LANG_C,
+     LANG_Pas,
+     LANG_Cc,
+     LANG_Cs,
+     LANG_Java,
+     LANG_Js,
+     LANG_Ml,
+     LANG_Php,
+     LANG_Rb,
+     LANG_Py,
+     LANG_Tex,
+     LANG_Metalang}
   
   /*
 Ce test permet de tester les macros
@@ -13,77 +26,10 @@ et qui produit les macros metalang correspondante
   {
     char input = (char)32;
     int current_pos = 500;
-    int g = 1000;
-    int[] mem = new int[g];
-    for (int i = 0 ; i < g; i++)
+    int e = 1000;
+    int[] mem = new int[e];
+    for (int i = 0 ; i < e; i++)
       mem[i] = 0;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    current_pos ++;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    mem[current_pos] = mem[current_pos] + 1;
-    while (mem[current_pos] != 0)
-    {
-      mem[current_pos] = mem[current_pos] - 1;
-      current_pos --;
-      mem[current_pos] = mem[current_pos] + 1;
-      char h = (char)(mem[current_pos]);
-      Console.Write(h);
-      current_pos ++;
-    }
   }
   
 }

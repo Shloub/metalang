@@ -2,6 +2,7 @@
 require "scanf.rb"
 
 
+
 =begin
 
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement

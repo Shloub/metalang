@@ -35,6 +35,7 @@ var read_int = function(){
 }
 
 
+
 function foo(a){
   a = 4;
 }
