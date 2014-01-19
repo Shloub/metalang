@@ -197,7 +197,9 @@ control_flow :
 ;
 
 instr :
-| UNQUOTE_START expr END_QUOTE { I.unquote $2 }
+| UNQUOTE_START expr END_QUOTE {
+  I.unquote $2 |> locati ( Ast.location ($startpos($1), $endpos($3)))
+}
 | COMMENT { I.comment $1 }
 | define_var { $1
         |> locati ( Ast.location ($startpos($1), $endpos($1)))}
