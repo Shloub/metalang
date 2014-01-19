@@ -44,7 +44,8 @@ and returns_i acc i = match Instr.unfix i with
     acc or ( (returns li1) && returns li2 )
   | _ -> acc
 
-module IfMerge : SigPass = struct
+module IfMerge : SigPass with type acc0 = unit = struct
+  type acc0 = unit
   type 'a acc = unit;;
   let init_acc () = ();;
   let process () i =
@@ -84,6 +85,7 @@ module IfMerge : SigPass = struct
 end
 
 module Rename = struct
+  type acc0 = unit
   type 'a acc = varname BindingMap.t
 
   let map = ref BindingMap.empty;;
@@ -169,6 +171,7 @@ module Rename = struct
 end
 
 module CollectCalls = struct
+  type acc0 = unit
   type 'a acc = BindingSet.t
 
   let init_acc () = BindingSet.empty
@@ -220,7 +223,7 @@ module RemoveUselessFunctions = struct
       | Prog.DeclareType _ -> (f::li, used_functions)
     in
 
-    let used_functions = WalkCollectCalls.fold
+    let used_functions = WalkCollectCalls.fold ()
       {prog with Prog.funs = funs } in (* fonctions utilisées dans le
                                           programme (stdlib non comprise) *)
     let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in

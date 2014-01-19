@@ -36,7 +36,8 @@ open Ast
 open Fresh
 open PassesUtils
 
-module CheckNaming : SigPassTop = struct
+module CheckNaming : SigPassTop with type acc0 = unit = struct
+  type acc0 = unit
   type 'a acc = {
     functions : BindingSet.t;
     parameters : BindingSet.t;

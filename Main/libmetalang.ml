@@ -4,7 +4,9 @@ open Ast
 (** {2 Languages definition } *)
 
 
-let typed f (a, b) = (a, f b)
+let typed f (a, b) = (a, f () b)
+
+let typed_ f (a, b) = (a, f b)
 
 let default_passes (prog : Typer.env * Parser.token Prog.t) :
     (Typer.env * Parser.token Prog.t ) =
@@ -19,14 +21,14 @@ let clike_passes prog =
   |> typed Passes.WalkAllocArrayExpend.apply
   |> typed Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
-  |> typed Passes.ReadAnalysis.apply
+  |> typed_ Passes.ReadAnalysis.apply
 
 
 let ocaml_passes prog =
   prog |> default_passes
   |> typed Passes.WalkIfMerge.apply
   |> snd |> Typer.process
-  |> typed Passes.ReadAnalysis.apply
+  |> typed_ Passes.ReadAnalysis.apply
 
 let no_passes prog =
   prog
