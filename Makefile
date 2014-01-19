@@ -125,13 +125,100 @@ repl.byte :
 out :
 	@mkdir out
 
-out/%.c out/%.cc out/%.php out/%.py out/%.ml out/%.rb out/%.metalang \
-out/%.sch out/%.java out/%.js out/%.cs out/%.pas : tests/prog/%.metalang \
-metalang out
+out/%.sch : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
-	./metalang -quiet -o out $< <  "$(basename $<).compiler_input" || exit 1; \
+	./metalang -o out -lang sch $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
-	 ./metalang -quiet -o out $< || exit 1; \
+	 ./metalang -quiet -o out -lang sch $< || exit 1; \
+	fi
+
+out/%.java : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang java $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang java $< || exit 1; \
+	fi
+
+out/%.js : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang js $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang js $< || exit 1; \
+	fi
+
+out/%.cs : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang cs $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang cs $< || exit 1; \
+	fi
+
+out/%.pas : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang pas $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang pas $< || exit 1; \
+	fi
+
+out/%.metalang : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang metalang $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang metalang $< || exit 1; \
+	fi
+
+out/%.ml : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang ml $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang ml $< || exit 1; \
+	fi
+
+out/%.rb : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang rb $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang rb $< || exit 1; \
+	fi
+
+out/%.py : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang py $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang py $< || exit 1; \
+	fi
+
+out/%.c : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang c $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang c $< || exit 1; \
+	fi
+
+out/%.cc : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang cc $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang cc $< || exit 1; \
+	fi
+
+out/%.php : tests/prog/%.metalang metalang out
+	@echo "generation of $< with entry $(basename $<).compiler_input "
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang php $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang php $< || exit 1; \
 	fi
 
 out/%.metalang.test : out/%.startTest out/%.metalang
@@ -150,37 +237,46 @@ out/%.metalang.test : out/%.startTest out/%.metalang
 	done;
 
 out/%.c.bin : out/%.c
+	@echo "compiling C"
 	@gcc $(CFLAGS) $< -o $@ || exit 1
 
 out/%.cc.bin : out/%.cc
+	@echo "compiling C++"
 	@g++ $(CCFLAGS) $< -o $@ || exit 1
 
 out/%.pas.bin : out/%.pas
+	@echo "compiling pascal"
 	@fpc $< || exit 1
 	@mv out/$(basename $*) $@
 	@rm out/$(basename $*).o
 
 out/%.class : out/%.java
+	@echo "compiling java"
 	@javac $< || exit 1
 
 out/%.exe : out/%.cs
+	@echo "compiling C#"
 	@gmcs $< || exit 1
 
 out/%.ml.native : out/%.ml
+	@echo "compiling ocaml native"
 	@ocamlbuild -tag debug out/$(basename $*).native || exit 1
 	@mv _build/out/$(basename $*).native $@
 
 out/%.ml.byte : out/%.ml
+	@echo "compiling ocaml bytecode"
 	@ocamlbuild -tag debug out/$(basename $*).byte || exit 1
 	@mv _build/out/$(basename $*).byte $@
 
 out/%.bin.out : out/%.bin
+	@echo "testing binary execution"
 	@DATE=` date +%s.%N`; \
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.eval.out : metalang
+	@echo "testing metalang execution"
 	@DATE=` date +%s.%N`; \
 	if [ -e "tests/prog/$(basename $*).compiler_input" ]; then \
 		cat "tests/prog/$(basename $*).compiler_input" tests/prog/$(basename $*).in | ./metalang -eval tests/prog/$(basename $*).metalang  > $@ || exit 1; \
@@ -191,60 +287,70 @@ out/%.eval.out : metalang
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.native.out : out/%.ml.native
+	@echo "testing ocaml native execution"
 	@DATE=` date +%s.%N`; \
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.byte.out : out/%.ml.byte
+	@echo "testing ocaml bytecode execution"
 	@DATE=` date +%s.%N`; \
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.class.out : out/%.class
+	@echo "testing java execution"
 	@DATE=` date +%s.%N`; \
 	$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.js.out : out/%.js
+	@echo "testing javascript execution"
 	@DATE=` date +%s.%N`; \
 	node $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.ml.out : out/%.ml
+	@echo "testing ocaml execution"
 	@DATE=` date +%s.%N`; \
 	ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.php.out : out/%.php
+	@echo "testing php execution"
 	@DATE=` date +%s.%N`; \
 	php $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.py.out : out/%.py
+	@echo "testing python execution"
 	@DATE=` date +%s.%N`; \
 	$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.sch.out : out/%.sch
+	@echo "testing scheme execution"
 	@DATE=` date +%s.%N`; \
 	gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.rb.out : out/%.rb
+	@echo "testing ruby execution"
 	@DATE=` date +%s.%N`; \
 	ruby $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
 	echo "$$DATE2 - $$DATE" | bc > $@.time
 
 out/%.exe.out : out/%.exe
+	@echo "testing mono execution"
 	@DATE=` date +%s.%N`; \
 	mono $< < tests/prog/$(basename $*).in > $@ || exit 1; \
 	DATE2=` date +%s.%N`; \
@@ -260,6 +366,7 @@ TESTPROGS	=\
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
 	else \
+	echo "-------------------- $$i != $< "; \
 	echo "FAIL $^" > $@; \
 	echo "$(red)FAIL $^$(reset)"; \
 	return 1; \
