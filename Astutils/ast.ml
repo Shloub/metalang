@@ -133,6 +133,21 @@ module Mutable = struct
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
+  (** module de réécriture et de parcours d'AST *)
+  module Writer = AstWriter.F (struct
+    type 'a alias = 'a t;;
+    type 'a t = 'a alias;;
+    let foldmap f acc t =
+      let annot = Fixed.annot t in
+      match unfix t with
+      | Var v -> acc, Var v |> Fixed.fixa annot
+      | Array (v, el) ->
+	let acc, v = f acc v in
+	acc, Array (v, el) |> Fixed.fixa annot
+      | Dot (v, field) ->
+	let acc, v = f acc v in
+	acc, Dot (v, field) |> Fixed.fixa annot
+  end)
 
   let rec equals cmpe a b = match (unfix a, unfix b) with
     | Var v1, Var v2 ->
@@ -269,6 +284,7 @@ module Type = struct
           Auto | Lexems | Integer | Float | String) -> 1
       | Named _, _ -> -1
 
+  (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
     type alias = t
     type 'a t = alias
@@ -400,8 +416,7 @@ module Expr = struct
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
-
-
+  (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
     type 'a alias = 'a t;;
     type 'a t = 'a alias;;
