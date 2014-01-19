@@ -37,7 +37,8 @@ open Ast
 open Fresh
 open PassesUtils
 
-module NoPend : SigPass = struct
+module NoPend : SigPass with type acc0 = unit = struct
+  type acc0 = unit
   type 'lex acc = unit
 
   let locate loc instr =
@@ -98,7 +99,8 @@ module NoPend : SigPass = struct
 end
 
 
-module AllocArrayExpend : SigPass = struct
+module AllocArrayExpend : SigPass with type acc0 = unit = struct
+  type acc0 = unit
   type 'lex acc = unit;;
   let init_acc () = ();;
 
@@ -152,7 +154,8 @@ module AllocArrayExpend : SigPass = struct
 end
 
 (*TODO propager les positions*)
-module ExpandReadDecl : SigPass = struct
+module ExpandReadDecl : SigPass with type acc0 = unit = struct
+  type acc0 = unit
   type 'lex acc = unit;;
   let init_acc () = ();;
 
@@ -172,7 +175,8 @@ module ExpandReadDecl : SigPass = struct
 
 end
 
-module ExpandPrint : SigPass = struct
+module ExpandPrint : SigPass with type acc0 = unit = struct
+  type acc0 = unit
 
   let rec write_bool e =
     Instr.if_ (Expr.access (Mutable.var e))
