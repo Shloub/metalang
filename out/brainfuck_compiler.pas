@@ -8,18 +8,18 @@ et qui produit les macros metalang correspondante
 }
 
 var
-  c : integer;
+  a : integer;
+  b : char;
   current_pos : integer;
-  d : char;
   i : integer;
   input : char;
   mem : array of integer;
 begin
   input := #32;
   current_pos := 500;
-  c := 1000;
-  SetLength(mem, c);
-  for i := 0 to  c - 1 do
+  a := 1000;
+  SetLength(mem, a);
+  for i := 0 to  a - 1 do
   begin
     mem[i] := 0;
   end;
@@ -86,8 +86,8 @@ begin
     mem[current_pos] := mem[current_pos] - 1;
     current_pos := current_pos - 1;
     mem[current_pos] := mem[current_pos] + 1;
-    d := chr(mem[current_pos]);
-    write(d);
+    b := chr(mem[current_pos]);
+    write(b);
     current_pos := current_pos + 1;
   end;
 end.

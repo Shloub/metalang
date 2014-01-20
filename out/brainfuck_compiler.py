@@ -9,9 +9,9 @@ et qui produit les macros metalang correspondante
 """
 input = ' ';
 current_pos = 500;
-t = 1000;
-mem = [None] * t;
-for i in range(0, t):
+a = 1000;
+mem = [None] * a;
+for i in range(0, a):
   mem[i] = 0;
 mem[current_pos] = mem[current_pos] + 1;
 mem[current_pos] = mem[current_pos] + 1;
@@ -75,7 +75,7 @@ while (mem[current_pos] != 0):
   mem[current_pos] = mem[current_pos] - 1;
   current_pos -= 1;
   mem[current_pos] = mem[current_pos] + 1;
-  u = mem[current_pos];
-  print("%c" % u, end='');
+  b = mem[current_pos];
+  print("%c" % b, end='');
   current_pos += 1;
 

@@ -43,7 +43,7 @@ for ($toto = 0 ; $toto < $strlen; $toto++)
 }
 for ($j = 0 ; $j < $strlen; $j++)
 {
-  $i = $tab4[$j];
-  echo chr($i);
+  $a = $tab4[$j];
+  echo chr($a);
 }
 ?>

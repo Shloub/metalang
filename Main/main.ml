@@ -41,7 +41,8 @@ open Libmetalang
 let config () =
   let c = default_config () in
   let all = String.concat "," languages in
-  let split ls = remove_unknown_languages $ Str.split (Str.regexp ",") ls in
+  let split ls = remove_unknown_languages
+    $ Str.split (Str.regexp ",") ls in
   let descr = "metalang [-lang " ^ all ^ "] [-o directory] A.metalang B.metalang ..." in
   let spec = [
     "-lang", String (fun ls -> c.languages <- split ls),

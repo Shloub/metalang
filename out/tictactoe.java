@@ -168,23 +168,23 @@ Renvoie le coup de l'IA
         minMove.y = y;
       }
     }
-    int bb = minMove.x;
-    System.out.printf("%d", bb);
-    int bc = minMove.y;
-    System.out.printf("%d", bc);
+    int a = minMove.x;
+    System.out.printf("%d", a);
+    int b = minMove.y;
+    System.out.printf("%d", b);
     System.out.printf("%s", "\n");
     return minMove;
   }
   
   public static gamestate init()
   {
-    int be = 3;
-    int[][] cases = new int[be][];
-    for (int i = 0 ; i < be; i++)
+    int d = 3;
+    int[][] cases = new int[d][];
+    for (int i = 0 ; i < d; i++)
     {
-      int bd = 3;
-      int[] tab = new int[bd];
-      for (int j = 0 ; j < bd; j++)
+      int c = 3;
+      int[] tab = new int[c];
+      for (int j = 0 ; j < c; j++)
         tab[j] = 0;
       cases[i] = tab;
     }
@@ -235,8 +235,8 @@ Renvoie le coup de l'IA
         }
       }
       print_state(state);
-      int bf = state.note;
-      System.out.printf("%d", bf);
+      int e = state.note;
+      System.out.printf("%d", e);
       System.out.printf("%s", "\n");
     }
   }

@@ -42,8 +42,8 @@ public class montagnes
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = x;
     }
-    int f = montagnes_(tab, len);
-    System.out.printf("%d", f);
+    int a = montagnes_(tab, len);
+    System.out.printf("%d", a);
   }
   
 }

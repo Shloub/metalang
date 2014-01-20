@@ -49,9 +49,9 @@ public class cambriolage
     int[][] passepartout = new int[n][];
     for (int i = 0 ; i < n; i++)
     {
-      int w = 2;
-      int[] out0 = new int[w];
-      for (int j = 0 ; j < w; j++)
+      int c = 2;
+      int[] out0 = new int[c];
+      for (int j = 0 ; j < c; j++)
       {
         int out_ = 0;
         if (scanner.hasNext("^-")){
@@ -72,9 +72,9 @@ public class cambriolage
     int[][] serrures = new int[m][];
     for (int k = 0 ; k < m; k++)
     {
-      int x = 2;
-      int[] out1 = new int[x];
-      for (int l = 0 ; l < x; l++)
+      int d = 2;
+      int[] out1 = new int[d];
+      for (int l = 0 ; l < d; l++)
       {
         int out_ = 0;
         if (scanner.hasNext("^-")){
@@ -86,8 +86,8 @@ public class cambriolage
       }
       serrures[k] = out1;
     }
-    int y = nbPassePartout(n, passepartout, m, serrures);
-    System.out.printf("%d", y);
+    int e = nbPassePartout(n, passepartout, m, serrures);
+    System.out.printf("%d", e);
   }
   
 }

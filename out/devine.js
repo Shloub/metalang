@@ -66,8 +66,8 @@ for (var i = 0 ; i <= len - 1; i++)
   stdinsep();
   tab[i] = tmp;
 }
-var g = devine_(nombre, tab, len);
-if (g)
+var a = devine_(nombre, tab, len);
+if (a)
   util.print("True");
 else
   util.print("False");

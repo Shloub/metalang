@@ -62,17 +62,17 @@ begin
 end;
 
 { lit un sudoku sur l'entrée standard }
-type e = array of integer;
-function read_sudoku() : e;
+type c = array of integer;
+function read_sudoku() : c;
 var
-  c : integer;
+  a : integer;
   i : integer;
   k : integer;
-  out_ : e;
+  out_ : c;
 begin
-  c := 9 * 9;
-  SetLength(out_, c);
-  for i := 0 to  c - 1 do
+  a := 9 * 9;
+  SetLength(out_, a);
+  for i := 0 to  a - 1 do
   begin
     k := 0;
     k := read_int();
@@ -83,9 +83,9 @@ begin
 end;
 
 { affiche un sudoku }
-procedure print_sudoku(sudoku_ : e);
+procedure print_sudoku(sudoku_ : c);
 var
-  d : integer;
+  b : integer;
   x : integer;
   y : integer;
 begin
@@ -93,8 +93,8 @@ begin
   begin
     for x := 0 to  8 do
     begin
-      d := sudoku_[x + y * 9];
-      write(d);
+      b := sudoku_[x + y * 9];
+      write(b);
       write(' ');
       if (x Mod 3) = 2
       then
@@ -115,7 +115,7 @@ end;
 { dit si les variables sont toutes différentes }
 { dit si les variables sont toutes différentes }
 { dit si le sudoku est terminé de remplir }
-function sudoku_done(s : e) : boolean;
+function sudoku_done(s : c) : boolean;
 var
   i : integer;
 begin
@@ -132,7 +132,7 @@ end;
 
 { dit si il y a une erreur dans le sudoku }
 { résout le sudoku}
-function solve(sudoku_ : e) : boolean;
+function solve(sudoku_ : c) : boolean;
 var
   i : integer;
   p : integer;
@@ -170,7 +170,7 @@ end;
 
 
 var
-  sudoku_ : e;
+  sudoku_ : c;
 begin
   sudoku_ := read_sudoku();
   print_sudoku(sudoku_);

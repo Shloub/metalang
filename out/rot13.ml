@@ -14,8 +14,8 @@ begin
       c := (((!c) - int_of_char ('a')) + 13) mod 26 + int_of_char ('a');
     char_of_int ((!c))) in
   for j = 0 to strlen - 1 do
-    let h = tab4.(j) in
-    Printf.printf "%c" h
+    let a = tab4.(j) in
+    Printf.printf "%c" a
   done
 end
  

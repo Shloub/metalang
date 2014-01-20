@@ -35,8 +35,8 @@ int main(void){
     scanf("%*[ \t\r\n]c", 0);
     tab.at(i) = tmp;
   }
-  bool d = devine_(nombre, tab, len);
-  if (d)
+  bool a = devine_(nombre, tab, len);
+  if (a)
     std::cout << "True";
   else
     std::cout << "False";

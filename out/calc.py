@@ -16,6 +16,6 @@ def fibo( a, b, i ):
       a2 = tmp;
     return out_;
 
-n = fibo(1, 2, 4);
-print("%d" % n, end='');
+c = fibo(1, 2, 4);
+print("%d" % c, end='');
 

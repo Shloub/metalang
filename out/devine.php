@@ -48,8 +48,8 @@ for ($i = 0 ; $i < $len; $i++)
   scantrim();
   $tab[$i] = $tmp;
 }
-$j = devine_($nombre, $tab, $len);
-if ($j)
+$a = devine_($nombre, $tab, $len);
+if ($a)
   echo "True";
 else
   echo "False";

@@ -23,7 +23,7 @@ begin
   Scanf.scanf "%d" (fun value -> b := value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> i := value);
-  let k = fibo_ (!a) (!b) (!i) in
-  Printf.printf "%d" k
+  let c = fibo_ (!a) (!b) (!i) in
+  Printf.printf "%d" c
 end
  

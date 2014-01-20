@@ -49,15 +49,15 @@ def result( t, len ):
       out_ = out_ + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"];
     return out_;
 
-bf = 4;
-t = [None] * bf;
-for i in range(0, bf):
+a = 4;
+t = [None] * a;
+for i in range(0, a):
   t[i] = mktoto(i);
 t[0]["bar"]=readint();
 stdinsep();
 t[1]["blah"]=readint();
-bg = result(t, 4);
-print("%d" % bg, end='');
-bh = t[2]["blah"];
-print("%d" % bh, end='');
+b = result(t, 4);
+print("%d" % b, end='');
+c = t[2]["blah"];
+print("%d" % c, end='');
 

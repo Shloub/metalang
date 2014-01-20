@@ -55,8 +55,8 @@ for (var toto = 0 ; toto <= strlen - 1; toto++)
 }
 for (var j = 0 ; j <= strlen - 1; j++)
 {
-  var g = tab4[j];
-  util.print(g);
+  var a = tab4[j];
+  util.print(a);
 }
 
 

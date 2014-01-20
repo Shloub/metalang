@@ -47,8 +47,8 @@ public class devine
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tmp;
     }
-    boolean f = devine_(nombre, tab, len);
-    if (f)
+    boolean a = devine_(nombre, tab, len);
+    if (a)
       System.out.printf("%s", "True");
     else
       System.out.printf("%s", "False");

@@ -59,6 +59,6 @@ stdinsep();
 b=readint();
 stdinsep();
 i=readint();
-n = fibo_(a, b, i);
-print("%d" % n, end='');
+c = fibo_(a, b, i);
+print("%d" % c, end='');
 

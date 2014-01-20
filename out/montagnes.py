@@ -62,6 +62,6 @@ for i in range(0, len):
   x=readint();
   stdinsep();
   tab[i] = x;
-m = montagnes_(tab, len);
-print("%d" % m, end='');
+a = montagnes_(tab, len);
+print("%d" % a, end='');
 

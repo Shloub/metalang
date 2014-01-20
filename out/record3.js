@@ -55,16 +55,16 @@ function result(t, len){
   return out_;
 }
 
-var s = 4;
-var t = new Array(s);
-for (var i = 0 ; i <= s - 1; i++)
+var a = 4;
+var t = new Array(a);
+for (var i = 0 ; i <= a - 1; i++)
   t[i] = mktoto(i);
 t[0].bar=read_int();
 stdinsep();
 t[1].blah=read_int();
-var u = result(t, 4);
-util.print(u);
-var v = t[2].blah;
-util.print(v);
+var b = result(t, 4);
+util.print(b);
+var c = t[2].blah;
+util.print(c);
 
 

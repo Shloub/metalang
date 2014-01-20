@@ -98,15 +98,15 @@ end;
 
 
 var
-  c : integer;
+  b : integer;
   n : integer;
 begin
   { Programme principal }
   n := 0;
   n := read_int();
   { Lecture de l'entier }
-  c := sumdiv(n);
-  write(c);
+  b := sumdiv(n);
+  write(b);
 end.
 
 

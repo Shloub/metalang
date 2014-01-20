@@ -29,17 +29,17 @@ int result(std::vector<struct toto * >& t, int len){
 
 
 int main(void){
-  int h = 4;
-  std::vector<struct toto * > t( h );
-  for (int i = 0 ; i < h; i++)
+  int a = 4;
+  std::vector<struct toto * > t( a );
+  for (int i = 0 ; i < a; i++)
     t.at(i) = mktoto(i);
   scanf("%d", &t.at(0)->bar);
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &t.at(1)->blah);
-  int k = result(t, 4);
-  printf("%d", k);
-  int l = t.at(2)->blah;
-  printf("%d", l);
+  int b = result(t, 4);
+  printf("%d", b);
+  int c = t.at(2)->blah;
+  printf("%d", c);
   return 0;
 }
 

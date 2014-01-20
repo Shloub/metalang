@@ -50,8 +50,8 @@ scanf("%*\n");
 t2["bar"]=scanf("%d")[0];
 scanf("%*\n");
 t["blah"]=scanf("%d")[0];
-u = result(t, t2)
-printf "%d", u
-v = t["blah"]
-printf "%d", v
+a = result(t, t2)
+printf "%d", a
+b = t["blah"]
+printf "%d", b
 

@@ -89,7 +89,7 @@ end;
 var
   a : integer;
   b : integer;
-  d : integer;
+  c : integer;
   i : integer;
 begin
   a := 0;
@@ -100,8 +100,8 @@ begin
   b := read_int();
   skip();
   i := read_int();
-  d := fibo_(a, b, i);
-  write(d);
+  c := fibo_(a, b, i);
+  write(c);
 end.
 
 

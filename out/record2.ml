@@ -22,9 +22,9 @@ begin
   Scanf.scanf "%d" (fun value -> t.bar <- value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> t.blah <- value);
-  let m = result t in
-  Printf.printf "%d" m;
-  let n = t.blah in
-  Printf.printf "%d" n
+  let a = result t in
+  Printf.printf "%d" a;
+  let b = t.blah in
+  Printf.printf "%d" b
 end
  

@@ -77,7 +77,7 @@ for (var i = 0 ; i <= len - 1; i++)
   stdinsep();
   tab[i] = tmp;
 }
-var l = plus_petit_(tab, len);
-util.print(l);
+var c = plus_petit_(tab, len);
+util.print(c);
 
 

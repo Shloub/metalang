@@ -200,21 +200,21 @@ def play( g )
         end
       end
     end
-    bv = minMove["x"]
-    printf "%d", bv
-    bw = minMove["y"]
-    printf "%d", bw
+    a = minMove["x"]
+    printf "%d", a
+    b = minMove["y"]
+    printf "%d", b
     printf "%s", "\n"
     return (minMove);
 end
 
 def init(  )
-    by = 3
+    d = 3
     cases = [];
-    for i in (0 ..  by - 1) do
-      bx = 3
+    for i in (0 ..  d - 1) do
+      c = 3
       tab = [];
-      for j in (0 ..  bx - 1) do
+      for j in (0 ..  c - 1) do
         tab[j] = 0;
       end
       cases[i] = tab;
@@ -251,8 +251,8 @@ for i in (0 ..  1) do
     end
   end
   print_state(state);
-  bz = state["note"]
-  printf "%d", bz
+  e = state["note"]
+  printf "%d", e
   printf "%s", "\n"
 end
 

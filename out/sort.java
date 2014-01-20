@@ -38,8 +38,8 @@ public class sort
     sort_(tab, len);
     for (int i = 0 ; i < len; i++)
     {
-      int f = tab[i];
-      System.out.printf("%d", f);
+      int a = tab[i];
+      System.out.printf("%d", a);
     }
   }
   

@@ -91,6 +91,6 @@ for toto in range(0, strlen):
     c = ((c - ord('a')) + 13) % 26 + ord('a');
   tab4[toto] = c;
 for j in range(0, strlen):
-  m = tab4[j];
-  print("%c" % m, end='');
+  a = tab4[j];
+  print("%c" % a, end='');
 

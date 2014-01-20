@@ -191,22 +191,22 @@ function play(g){
       minMove.y = y;
     }
   }
-  var bg = minMove.x;
-  util.print(bg);
-  var bh = minMove.y;
-  util.print(bh);
+  var a = minMove.x;
+  util.print(a);
+  var b = minMove.y;
+  util.print(b);
   util.print("\n");
   return minMove;
 }
 
 function init(){
-  var bj = 3;
-  var cases = new Array(bj);
-  for (var i = 0 ; i <= bj - 1; i++)
+  var d = 3;
+  var cases = new Array(d);
+  for (var i = 0 ; i <= d - 1; i++)
   {
-    var bi = 3;
-    var tab = new Array(bi);
-    for (var j = 0 ; j <= bi - 1; j++)
+    var c = 3;
+    var tab = new Array(c);
+    for (var j = 0 ; j <= c - 1; j++)
       tab[j] = 0;
     cases[i] = tab;
   }
@@ -249,8 +249,8 @@ for (var i = 0 ; i <= 1; i++)
     }
   }
   print_state(state);
-  var bk = state.note;
-  util.print(bk);
+  var e = state.note;
+  util.print(e);
   util.print("\n");
 }
 

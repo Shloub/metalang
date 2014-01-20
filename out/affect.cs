@@ -99,10 +99,10 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t2.bar = readInt();
     stdin_sep();
     t.blah = readInt();
-    int h = result(t, t2);
-    Console.Write(h);
-    int k = t.blah;
-    Console.Write(k);
+    int a = result(t, t2);
+    Console.Write(a);
+    int b = t.blah;
+    Console.Write(b);
   }
   
 }

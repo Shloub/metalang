@@ -34,8 +34,8 @@ for i in (0 ..  len - 1) do
   scanf("%*\n");
   tab[i] = tmp;
 end
-k = devine_(nombre, tab, len)
-if k then
+a = devine_(nombre, tab, len)
+if a then
   printf "%s", "True"
 else
   printf "%s", "False"

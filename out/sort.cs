@@ -78,8 +78,8 @@ public static int readInt(){
     sort_(tab, len);
     for (int i = 0 ; i < len; i++)
     {
-      int e = tab[i];
-      Console.Write(e);
+      int a = tab[i];
+      Console.Write(a);
     }
   }
   

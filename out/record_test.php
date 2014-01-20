@@ -25,6 +25,6 @@ $param = array(
 list($param["bar"]) = scan("%d");
 scantrim();
 list($param["foo"]) = scan("%d");
-$h = $param["bar"] + $param["foo"] * $param["bar"];
-echo $h;
+$a = $param["bar"] + $param["foo"] * $param["bar"];
+echo $a;
 ?>

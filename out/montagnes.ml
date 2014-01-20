@@ -27,7 +27,7 @@ begin
     Scanf.scanf "%d" (fun value -> x := value);
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     (!x)) in
-  let h = montagnes_ tab (!len) in
-  Printf.printf "%d" h
+  let a = montagnes_ tab (!len) in
+  Printf.printf "%d" a
 end
  

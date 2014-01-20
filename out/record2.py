@@ -50,8 +50,8 @@ t = mktoto(4);
 t["bar"]=readint();
 stdinsep();
 t["blah"]=readint();
-s = result(t);
-print("%d" % s, end='');
-u = t["blah"];
-print("%d" % u, end='');
+a = result(t);
+print("%d" % a, end='');
+b = t["blah"];
+print("%d" % b, end='');
 

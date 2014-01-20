@@ -60,8 +60,8 @@ for (var i_ = 0 ; i_ <= len - 1; i_++)
 sort_(tab, len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  var g = tab[i];
-  util.print(g);
+  var a = tab[i];
+  util.print(a);
 }
 
 

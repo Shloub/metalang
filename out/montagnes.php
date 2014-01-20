@@ -46,6 +46,6 @@ for ($i = 0 ; $i < $len; $i++)
   scantrim();
   $tab[$i] = $x;
 }
-$k = montagnes_($tab, $len);
-echo $k;
+$a = montagnes_($tab, $len);
+echo $a;
 ?>

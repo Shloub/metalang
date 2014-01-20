@@ -21,8 +21,8 @@ int main(void){
   scanf("%d", &a);
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &b);
-  int e = exp_(a, b);
-  printf("%d", e);
+  int c = exp_(a, b);
+  printf("%d", c);
   return 0;
 }
 

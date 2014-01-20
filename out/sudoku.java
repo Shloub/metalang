@@ -6,9 +6,9 @@ public class sudoku
   /* lit un sudoku sur l'entrée standard */
   public static int[] read_sudoku()
   {
-    int l = 9 * 9;
-    int[] out_ = new int[l];
-    for (int i = 0 ; i < l; i++)
+    int a = 9 * 9;
+    int[] out_ = new int[a];
+    for (int i = 0 ; i < a; i++)
     {
       int k = 0;
       if (scanner.hasNext("^-")){
@@ -28,8 +28,8 @@ public class sudoku
     {
       for (int x = 0 ; x <= 8; x ++)
       {
-        int m = sudoku_[x + y * 9];
-        System.out.printf("%d", m);
+        int b = sudoku_[x + y * 9];
+        System.out.printf("%d", b);
         System.out.printf("%s", " ");
         if ((x % 3) == 2)
           System.out.printf("%s", " ");

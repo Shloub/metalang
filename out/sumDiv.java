@@ -57,8 +57,8 @@ public class sumDiv
     }else{
     n = scanner.nextInt();}
     /* Lecture de l'entier */
-    int f = sumdiv(n);
-    System.out.printf("%d", f);
+    int b = sumdiv(n);
+    System.out.printf("%d", b);
   }
   
 }

@@ -75,8 +75,8 @@ read int, read char et skip
     }
     for (int j = 0 ; j < strlen; j++)
     {
-      char f = tab4[j];
-      System.out.printf("%c", f);
+      char a = tab4[j];
+      System.out.printf("%c", a);
     }
   }
   

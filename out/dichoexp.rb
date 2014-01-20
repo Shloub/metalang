@@ -18,6 +18,6 @@ b = 0
 a=scanf("%d")[0];
 scanf("%*\n");
 b=scanf("%d")[0];
-k = exp_(a, b)
-printf "%d", k
+c = exp_(a, b)
+printf "%d", c
 

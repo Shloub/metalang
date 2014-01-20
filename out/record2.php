@@ -36,8 +36,8 @@ $t = mktoto(4);
 list($t["bar"]) = scan("%d");
 scantrim();
 list($t["blah"]) = scan("%d");
-$o = result($t);
-echo $o;
-$p = $t["blah"];
-echo $p;
+$a = result($t);
+echo $a;
+$b = $t["blah"];
+echo $b;
 ?>

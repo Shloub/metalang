@@ -29,8 +29,8 @@ int main(void){
   scanf("%d", &b);
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &i);
-  int e = fibo_(a, b, i);
-  printf("%d", e);
+  int c = fibo_(a, b, i);
+  printf("%d", c);
   return 0;
 }
 

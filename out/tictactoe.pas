@@ -293,9 +293,9 @@ Renvoie le coup de l'IA
 }
 function play(g : gamestate) : move;
 var
+  a : integer;
+  b : integer;
   currentNote : integer;
-  f : integer;
-  h : integer;
   minMove : move;
   minNote : integer;
   x : integer;
@@ -331,32 +331,32 @@ begin
         end;
     end;
   end;
-  f := minMove^.x;
-  write(f);
-  h := minMove^.y;
-  write(h);
+  a := minMove^.x;
+  write(a);
+  b := minMove^.y;
+  write(b);
   write(''#10'');
   exit(minMove);
 end;
 
-type o = array of integer;
+type f = array of integer;
 function init() : gamestate;
 var
-  cases : array of o;
+  c : integer;
+  cases : array of f;
+  d : integer;
   i : integer;
   j : integer;
-  k : integer;
-  l : integer;
   out_ : gamestate;
-  tab : o;
+  tab : f;
 begin
-  l := 3;
-  SetLength(cases, l);
-  for i := 0 to  l - 1 do
+  d := 3;
+  SetLength(cases, d);
+  for i := 0 to  d - 1 do
   begin
-    k := 3;
-    SetLength(tab, k);
-    for j := 0 to  k - 1 do
+    c := 3;
+    SetLength(tab, c);
+    for j := 0 to  c - 1 do
     begin
       tab[j] := 0;
     end;
@@ -390,8 +390,8 @@ end;
 
 
 var
+  e : integer;
   i : integer;
-  n : integer;
   state : gamestate;
 begin
   for i := 0 to  1 do
@@ -411,8 +411,8 @@ begin
         end;
     end;
     print_state(state);
-    n := state^.note;
-    write(n);
+    e := state^.note;
+    write(e);
     write(''#10'');
   end;
 end.

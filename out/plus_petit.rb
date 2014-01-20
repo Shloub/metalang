@@ -43,6 +43,6 @@ for i in (0 ..  len - 1) do
   scanf("%*\n");
   tab[i] = tmp;
 end
-p = plus_petit_(tab, len)
-printf "%d", p
+c = plus_petit_(tab, len)
+printf "%d", c
 

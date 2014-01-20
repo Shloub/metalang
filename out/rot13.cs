@@ -77,8 +77,8 @@ Ce test effectue un rot13 sur une chaine lue en entrée
     }
     for (int j = 0 ; j < strlen; j++)
     {
-      char e = tab4[j];
-      Console.Write(e);
+      char a = tab4[j];
+      Console.Write(a);
     }
   }
   

@@ -61,8 +61,8 @@ int main(void){
   }
   for (int j = 0 ; j < strlen; j++)
   {
-    char d = tab4.at(j);
-    printf("%c", d);
+    char a = tab4.at(j);
+    printf("%c", a);
   }
   return 0;
 }

@@ -12,9 +12,9 @@ et qui produit les macros metalang correspondante
 int main(void){
   char input = ' ';
   int current_pos = 500;
-  int e = 1000;
-  std::vector<int > mem( e );
-  for (int i = 0 ; i < e; i++)
+  int a = 1000;
+  std::vector<int > mem( a );
+  for (int i = 0 ; i < a; i++)
     mem.at(i) = 0;
   mem.at(current_pos) = mem.at(current_pos) + 1;
   mem.at(current_pos) = mem.at(current_pos) + 1;
@@ -79,8 +79,8 @@ int main(void){
     mem.at(current_pos) = mem.at(current_pos) - 1;
     current_pos --;
     mem.at(current_pos) = mem.at(current_pos) + 1;
-    char f = mem.at(current_pos);
-    printf("%c", f);
+    char b = mem.at(current_pos);
+    printf("%c", b);
     current_pos ++;
   }
   return 0;

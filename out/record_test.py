@@ -42,6 +42,6 @@ param = {"foo":0, "bar":0};
 param["bar"]=readint();
 stdinsep();
 param["foo"]=readint();
-j = param["bar"] + param["foo"] * param["bar"];
-print("%d" % j, end='');
+a = param["bar"] + param["foo"] * param["bar"];
+print("%d" % a, end='');
 
