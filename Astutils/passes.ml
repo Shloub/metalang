@@ -291,6 +291,22 @@ module RemoveUselessFunctions = struct
     prog
 end
 
+module RemoveUselessTypes = struct
+  let apply prog funs tyenv =
+    let go f (li, used) = match f with
+      | Prog.DeclarFun (_, _,_, _)
+      | Prog.Macro (_, _, _, _)
+      | Prog.Comment _ -> (f::li, used)
+      | Prog.DeclareType (name, ty) ->
+	if TypeSet.mem ty used
+	then (f::li, used)
+	else (li, used)
+    in let _, used = WalkCollectTypes.fold tyenv {prog with Prog.funs = funs } in
+    let funs, _ = List.fold_right go prog.Prog.funs ([], used) in
+    let prog = { prog with Prog.funs = funs} in
+    prog
+end
+
 module ReadAnalysis = struct
   let hasSkip li =
     let f acc i =
