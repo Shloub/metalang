@@ -73,9 +73,9 @@ stdinsep();
 var passepartout = new Array(n);
 for (var i = 0 ; i <= n - 1; i++)
 {
-  var z = 2;
-  var out0 = new Array(z);
-  for (var j = 0 ; j <= z - 1; j++)
+  var c = 2;
+  var out0 = new Array(c);
+  for (var j = 0 ; j <= c - 1; j++)
   {
     var out_ = 0;
     out_=read_int();
@@ -90,9 +90,9 @@ stdinsep();
 var serrures = new Array(m);
 for (var k = 0 ; k <= m - 1; k++)
 {
-  var ba = 2;
-  var out1 = new Array(ba);
-  for (var l = 0 ; l <= ba - 1; l++)
+  var d = 2;
+  var out1 = new Array(d);
+  for (var l = 0 ; l <= d - 1; l++)
   {
     var out_ = 0;
     out_=read_int();
@@ -101,7 +101,7 @@ for (var k = 0 ; k <= m - 1; k++)
   }
   serrures[k] = out1;
 }
-var bb = nbPassePartout(n, passepartout, m, serrures);
-util.print(bb);
+var e = nbPassePartout(n, passepartout, m, serrures);
+util.print(e);
 
 

@@ -8,8 +8,8 @@ let () =
 begin
   let input = ' ' in
   let current_pos = ref( 500 ) in
-  let n = 1000 in
-  let mem = Array.init (n) (fun i ->
+  let a = 1000 in
+  let mem = Array.init (a) (fun i ->
     0) in
   mem.((!current_pos)) <- mem.((!current_pos)) + 1;
   mem.((!current_pos)) <- mem.((!current_pos)) + 1;
@@ -74,8 +74,8 @@ begin
       mem.((!current_pos)) <- mem.((!current_pos)) - 1;
       current_pos := (!current_pos) - 1;
       mem.((!current_pos)) <- mem.((!current_pos)) + 1;
-      let o = char_of_int (mem.((!current_pos))) in
-      Printf.printf "%c" o;
+      let b = char_of_int (mem.((!current_pos))) in
+      Printf.printf "%c" b;
       current_pos := (!current_pos) + 1
   done
 end

@@ -42,7 +42,7 @@ for ($i_ = 0 ; $i_ < $len; $i_++)
 sort_($tab, $len);
 for ($i = 0 ; $i < $len; $i++)
 {
-  $k = $tab[$i];
-  echo $k;
+  $a = $tab[$i];
+  echo $a;
 }
 ?>

@@ -61,8 +61,8 @@ begin
    until false;
 end;
 
-type c = array of integer;
-function montagnes_(tab : c; len : integer) : integer;
+type b = array of integer;
+function montagnes_(tab : b; len : integer) : integer;
 var
   i : integer;
   j : integer;
@@ -93,10 +93,10 @@ end;
 
 
 var
-  b : integer;
+  a : integer;
   i : integer;
   len : integer;
-  tab : c;
+  tab : b;
   x : integer;
 begin
   len := 0;
@@ -110,8 +110,8 @@ begin
     skip();
     tab[i] := x;
   end;
-  b := montagnes_(tab, len);
-  write(b);
+  a := montagnes_(tab, len);
+  write(a);
 end.
 
 

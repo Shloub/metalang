@@ -80,9 +80,9 @@ public static int readInt(){
     int[][] tab2 = new int[len][];
     for (int i = 0 ; i < len; i++)
     {
-      int s = i + 1;
-      int[] tab3 = new int[s];
-      for (int j = 0 ; j < s; j++)
+      int a = i + 1;
+      int[] tab3 = new int[a];
+      for (int j = 0 ; j < a; j++)
         tab3[j] = 0;
       tab2[i] = tab3;
     }
@@ -98,9 +98,9 @@ public static int readInt(){
     int[][] tab = new int[len][];
     for (int i = 0 ; i < len; i++)
     {
-      int t = i + 1;
-      int[] tab2 = new int[t];
-      for (int j = 0 ; j < t; j++)
+      int b = i + 1;
+      int[] tab2 = new int[b];
+      for (int j = 0 ; j < b; j++)
       {
         int tmp = 0;
         tmp = readInt();
@@ -109,14 +109,14 @@ public static int readInt(){
       }
       tab[i] = tab2;
     }
-    int u = find(len, tab);
-    Console.Write(u);
+    int c = find(len, tab);
+    Console.Write(c);
     for (int k = 0 ; k < len; k++)
     {
       for (int l = 0 ; l <= k; l ++)
       {
-        int v = tab[k][l];
-        Console.Write(v);
+        int d = tab[k][l];
+        Console.Write(d);
       }
       Console.Write("\n");
     }

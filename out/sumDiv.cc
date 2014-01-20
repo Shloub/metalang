@@ -48,8 +48,8 @@ int main(void){
   int n = 0;
   scanf("%d", &n);
   /* Lecture de l'entier */
-  int d = sumdiv(n);
-  printf("%d", d);
+  int b = sumdiv(n);
+  printf("%d", b);
   return 0;
 }
 

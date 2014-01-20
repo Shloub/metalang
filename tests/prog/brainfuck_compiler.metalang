@@ -58,7 +58,7 @@ def lexems eval()
   elsif c == ' ' || c == '\n' || c == '\r' then
     return eval()
   else
-    return {}
+    return { }
   end
 end
 

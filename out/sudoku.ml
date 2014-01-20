@@ -1,7 +1,7 @@
 (* lit un sudoku sur l'entrée standard *)
 let rec read_sudoku () =
-  let q = 9 * 9 in
-  let out_ = Array.init (q) (fun i ->
+  let a = 9 * 9 in
+  let out_ = Array.init (a) (fun i ->
     let k = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     k) in
@@ -11,8 +11,8 @@ let rec read_sudoku () =
 let rec print_sudoku sudoku_ =
   for y = 0 to 8 do
     for x = 0 to 8 do
-      let r = sudoku_.(x + y * 9) in
-      Printf.printf "%d" r;
+      let b = sudoku_.(x + y * 9) in
+      Printf.printf "%d" b;
       Printf.printf "%s" " ";
       if (x mod 3) = 2 then
         Printf.printf "%s" " "

@@ -214,23 +214,23 @@ Renvoie le coup de l'IA
         minMove.y = y;
       }
     }
-    int u = minMove.x;
-    Console.Write(u);
-    int v = minMove.y;
-    Console.Write(v);
+    int a = minMove.x;
+    Console.Write(a);
+    int b = minMove.y;
+    Console.Write(b);
     Console.Write("\n");
     return minMove;
   }
   
   public static gamestate init()
   {
-    int z = 3;
-    int[][] cases = new int[z][];
-    for (int i = 0 ; i < z; i++)
+    int d = 3;
+    int[][] cases = new int[d][];
+    for (int i = 0 ; i < d; i++)
     {
-      int w = 3;
-      int[] tab = new int[w];
-      for (int j = 0 ; j < w; j++)
+      int c = 3;
+      int[] tab = new int[c];
+      for (int j = 0 ; j < c; j++)
         tab[j] = 0;
       cases[i] = tab;
     }
@@ -275,8 +275,8 @@ Renvoie le coup de l'IA
         }
       }
       print_state(state);
-      int ba = state.note;
-      Console.Write(ba);
+      int e = state.note;
+      Console.Write(e);
       Console.Write("\n");
     }
   }

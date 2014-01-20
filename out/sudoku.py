@@ -39,9 +39,9 @@ def readint():
 
 """ lit un sudoku sur l'entrée standard """
 def read_sudoku(  ):
-    z = 9 * 9;
-    out_ = [None] * z;
-    for i in range(0, z):
+    a = 9 * 9;
+    out_ = [None] * a;
+    for i in range(0, a):
       k = 0;
       k=readint();
       stdinsep();
@@ -52,8 +52,8 @@ def read_sudoku(  ):
 def print_sudoku( sudoku_ ):
     for y in range(0, 1 + 8):
       for x in range(0, 1 + 8):
-        ba = sudoku_[x + y * 9];
-        print("%d" % ba, end='');
+        b = sudoku_[x + y * 9];
+        print("%d" % b, end='');
         print("%s" % " ", end='');
         if (x % 3) == 2:
           print("%s" % " ", end='');

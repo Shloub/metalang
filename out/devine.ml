@@ -26,8 +26,8 @@ begin
     let tmp = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     tmp) in
-  let h = devine_ nombre tab len in
-  if h then
+  let a = devine_ nombre tab len in
+  if a then
     Printf.printf "%s" "True"
   else
     Printf.printf "%s" "False"

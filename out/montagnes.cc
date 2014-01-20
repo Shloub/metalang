@@ -33,8 +33,8 @@ int main(void){
     scanf("%*[ \t\r\n]c", 0);
     tab.at(i) = x;
   }
-  int d = montagnes_(tab, len);
-  printf("%d", d);
+  int a = montagnes_(tab, len);
+  printf("%d", a);
   return 0;
 }
 

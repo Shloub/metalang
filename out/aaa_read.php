@@ -80,7 +80,7 @@ for ($toto = 0 ; $toto < $strlen; $toto++)
 }
 for ($j = 0 ; $j < $strlen; $j++)
 {
-  $k = $tab4[$j];
-  echo chr($k);
+  $a = $tab4[$j];
+  echo chr($a);
 }
 ?>

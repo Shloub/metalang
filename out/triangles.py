@@ -64,9 +64,9 @@ def find0( len, tab, cache, x, y ):
 def find( len, tab ):
     tab2 = [None] * len;
     for i in range(0, len):
-      bs = i + 1;
-      tab3 = [None] * bs;
-      for j in range(0, bs):
+      a = i + 1;
+      tab3 = [None] * a;
+      for j in range(0, a):
         tab3[j] = 0;
       tab2[i] = tab3;
     return find0(len, tab, tab2, 0, 0);
@@ -76,19 +76,19 @@ len=readint();
 stdinsep();
 tab = [None] * len;
 for i in range(0, len):
-  bt = i + 1;
-  tab2 = [None] * bt;
-  for j in range(0, bt):
+  b = i + 1;
+  tab2 = [None] * b;
+  for j in range(0, b):
     tmp = 0;
     tmp=readint();
     stdinsep();
     tab2[j] = tmp;
   tab[i] = tab2;
-bu = find(len, tab);
-print("%d" % bu, end='');
+c = find(len, tab);
+print("%d" % c, end='');
 for k in range(0, len):
   for l in range(0, 1 + k):
-    bv = tab[k][l];
-    print("%d" % bv, end='');
+    d = tab[k][l];
+    print("%d" % d, end='');
   print("%s" % "\n", end='');
 

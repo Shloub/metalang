@@ -52,9 +52,9 @@ public static int readInt(){
   /* lit un sudoku sur l'entrée standard */
   public static int[] read_sudoku()
   {
-    int h = 9 * 9;
-    int[] out_ = new int[h];
-    for (int i = 0 ; i < h; i++)
+    int a = 9 * 9;
+    int[] out_ = new int[a];
+    for (int i = 0 ; i < a; i++)
     {
       int k = 0;
       k = readInt();
@@ -71,8 +71,8 @@ public static int readInt(){
     {
       for (int x = 0 ; x <= 8; x ++)
       {
-        int j = sudoku_[x + y * 9];
-        Console.Write(j);
+        int b = sudoku_[x + y * 9];
+        Console.Write(b);
         Console.Write(" ");
         if ((x % 3) == 2)
           Console.Write(" ");

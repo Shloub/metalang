@@ -37,15 +37,15 @@ function result(&$t, $len){
   return $out_;
 }
 
-$z = 4;
+$a = 4;
 $t = array();
-for ($i = 0 ; $i < $z; $i++)
+for ($i = 0 ; $i < $a; $i++)
   $t[$i] = mktoto($i);
 list($t[0]["bar"]) = scan("%d");
 scantrim();
 list($t[1]["blah"]) = scan("%d");
-$ba = result($t, 4);
-echo $ba;
-$bb = $t[2]["blah"];
-echo $bb;
+$b = result($t, 4);
+echo $b;
+$c = $t[2]["blah"];
+echo $c;
 ?>

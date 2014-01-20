@@ -27,10 +27,10 @@ end;
 
 
 var
-  d : integer;
+  c : integer;
 begin
-  d := fibo(1, 2, 4);
-  write(d);
+  c := fibo(1, 2, 4);
+  write(c);
 end.
 
 

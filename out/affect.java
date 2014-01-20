@@ -65,10 +65,10 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     scanner.next("^-"); t.blah = -scanner.nextInt();
     }else{
     t.blah = scanner.nextInt();}
-    int l = result(t, t2);
-    System.out.printf("%d", l);
-    int m = t.blah;
-    System.out.printf("%d", m);
+    int a = result(t, t2);
+    System.out.printf("%d", a);
+    int b = t.blah;
+    System.out.printf("%d", b);
   }
   
 }

@@ -7,9 +7,9 @@ require "scanf.rb"
 =end
 
 def read_sudoku(  )
-    v = 9 * 9
+    a = 9 * 9
     out_ = [];
-    for i in (0 ..  v - 1) do
+    for i in (0 ..  a - 1) do
       k = 0
       k=scanf("%d")[0];
       scanf("%*\n");
@@ -26,8 +26,8 @@ end
 def print_sudoku( sudoku_ )
     for y in (0 ..  8) do
       for x in (0 ..  8) do
-        w = sudoku_[x + y * 9]
-        printf "%d", w
+        b = sudoku_[x + y * 9]
+        printf "%d", b
         printf "%s", " "
         if (x % 3) == 2 then
           printf "%s", " "

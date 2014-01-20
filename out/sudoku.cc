@@ -4,9 +4,9 @@
 #include <vector>
 /* lit un sudoku sur l'entrée standard */
 std::vector<int > read_sudoku(){
-  int f = 9 * 9;
-  std::vector<int > out_( f );
-  for (int i = 0 ; i < f; i++)
+  int a = 9 * 9;
+  std::vector<int > out_( a );
+  for (int i = 0 ; i < a; i++)
   {
     int k = 0;
     scanf("%d", &k);
@@ -22,8 +22,8 @@ void print_sudoku(std::vector<int >& sudoku_){
   {
     for (int x = 0 ; x <= 8; x ++)
     {
-      int g = sudoku_.at(x + y * 9);
-      printf("%d", g);
+      int b = sudoku_.at(x + y * 9);
+      printf("%d", b);
       std::cout << " ";
       if ((x % 3) == 2)
         std::cout << " ";

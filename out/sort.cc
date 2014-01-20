@@ -29,8 +29,8 @@ int main(void){
   sort_(tab, len);
   for (int i = 0 ; i < len; i++)
   {
-    int d = tab.at(i);
-    printf("%d", d);
+    int a = tab.at(i);
+    printf("%d", a);
   }
   return 0;
 }

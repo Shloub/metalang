@@ -165,20 +165,20 @@ def play( g ):
             minNote = currentNote;
             minMove["x"] = x;
             minMove["y"] = y;
-    ca = minMove["x"];
-    print("%d" % ca, end='');
-    cb = minMove["y"];
-    print("%d" % cb, end='');
+    a = minMove["x"];
+    print("%d" % a, end='');
+    b = minMove["y"];
+    print("%d" % b, end='');
     print("%s" % "\n", end='');
     return minMove;
 
 def init(  ):
-    cd = 3;
-    cases = [None] * cd;
-    for i in range(0, cd):
-      cc = 3;
-      tab = [None] * cc;
-      for j in range(0, cc):
+    d = 3;
+    cases = [None] * d;
+    for i in range(0, d):
+      c = 3;
+      tab = [None] * c;
+      for j in range(0, c):
         tab[j] = 0;
       cases[i] = tab;
     out_ = {"cases":cases, "firstToPlay":True, "note":0, "ended":False};
@@ -205,7 +205,7 @@ for i in range(0, 1 + 1):
       apply_move(play(state), state);
       eval_(state);
   print_state(state);
-  ce = state["note"];
-  print("%d" % ce, end='');
+  e = state["note"];
+  print("%d" % e, end='');
   print("%s" % "\n", end='');
 

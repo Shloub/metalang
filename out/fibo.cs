@@ -78,8 +78,8 @@ La suite de fibonaci
     b = readInt();
     stdin_sep();
     i = readInt();
-    int f = fibo_(a, b, i);
-    Console.Write(f);
+    int c = fibo_(a, b, i);
+    Console.Write(c);
   }
   
 }

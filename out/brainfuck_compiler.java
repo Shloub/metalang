@@ -14,9 +14,9 @@ et qui produit les macros metalang correspondante
   {
     char input = ' ';
     int current_pos = 500;
-    int j = 1000;
-    int[] mem = new int[j];
-    for (int i = 0 ; i < j; i++)
+    int a = 1000;
+    int[] mem = new int[a];
+    for (int i = 0 ; i < a; i++)
       mem[i] = 0;
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;
@@ -81,8 +81,8 @@ et qui produit les macros metalang correspondante
       mem[current_pos] = mem[current_pos] - 1;
       current_pos --;
       mem[current_pos] = mem[current_pos] + 1;
-      char k = (char)(mem[current_pos]);
-      System.out.printf("%c", k);
+      char b = (char)(mem[current_pos]);
+      System.out.printf("%c", b);
       current_pos ++;
     }
   }

@@ -18,9 +18,9 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 }/* lit un sudoku sur l'entrée standard */
 function read_sudoku(){
-  $t = 9 * 9;
+  $a = 9 * 9;
   $out_ = array();
-  for ($i = 0 ; $i < $t; $i++)
+  for ($i = 0 ; $i < $a; $i++)
   {
     $k = 0;
     list($k) = scan("%d");
@@ -36,8 +36,8 @@ function print_sudoku(&$sudoku_){
   {
     for ($x = 0 ; $x <= 8; $x++)
     {
-      $u = $sudoku_[$x + $y * 9];
-      echo $u;
+      $b = $sudoku_[$x + $y * 9];
+      echo $b;
       echo " ";
       if (($x % 3) == 2)
         echo " ";

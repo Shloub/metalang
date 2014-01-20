@@ -70,8 +70,8 @@ public static int readInt(){
     a = readInt();
     stdin_sep();
     b = readInt();
-    int f = exp_(a, b);
-    Console.Write(f);
+    int c = exp_(a, b);
+    Console.Write(c);
   }
   
 }

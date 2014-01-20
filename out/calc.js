@@ -53,7 +53,7 @@ function fibo(a, b, i){
   return out_;
 }
 
-var h = fibo(1, 2, 4);
-util.print(h);
+var c = fibo(1, 2, 4);
+util.print(c);
 
 

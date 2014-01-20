@@ -37,9 +37,9 @@ var read_int = function(){
 
 /* lit un sudoku sur l'entrée standard */
 function read_sudoku(){
-  var n = 9 * 9;
-  var out_ = new Array(n);
-  for (var i = 0 ; i <= n - 1; i++)
+  var a = 9 * 9;
+  var out_ = new Array(a);
+  for (var i = 0 ; i <= a - 1; i++)
   {
     var k = 0;
     k=read_int();
@@ -55,8 +55,8 @@ function print_sudoku(sudoku_){
   {
     for (var x = 0 ; x <= 8; x++)
     {
-      var o = sudoku_[x + y * 9];
-      util.print(o);
+      var b = sudoku_[x + y * 9];
+      util.print(b);
       util.print(" ");
       if ((x % 3) == 2)
         util.print(" ");

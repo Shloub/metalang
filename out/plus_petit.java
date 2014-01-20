@@ -56,8 +56,8 @@ public class plus_petit
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tmp;
     }
-    int k = plus_petit_(tab, len);
-    System.out.printf("%d", k);
+    int c = plus_petit_(tab, len);
+    System.out.printf("%d", c);
   }
   
 }

@@ -157,18 +157,18 @@ let rec play g =
         end
     done
   done;
-  let bl = minMove.x in
-  Printf.printf "%d" bl;
-  let bm = minMove.y in
-  Printf.printf "%d" bm;
+  let a = minMove.x in
+  Printf.printf "%d" a;
+  let b = minMove.y in
+  Printf.printf "%d" b;
   Printf.printf "%s" "\n";
   minMove
 
 let rec init () =
-  let bo = 3 in
-  let cases = Array.init (bo) (fun i ->
-    let bn = 3 in
-    let tab = Array.init (bn) (fun j ->
+  let d = 3 in
+  let cases = Array.init (d) (fun i ->
+    let c = 3 in
+    let tab = Array.init (c) (fun j ->
       0) in
     tab) in
   let out_ = {
@@ -207,8 +207,8 @@ begin
           end
     done;
     print_state state;
-    let bp = state.note in
-    Printf.printf "%d" bp;
+    let e = state.note in
+    Printf.printf "%d" e;
     Printf.printf "%s" "\n"
   done
 end

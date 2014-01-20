@@ -73,17 +73,17 @@ public static int readInt(){
   
   public static void Main(String[] args)
   {
-    int m = 4;
-    toto[] t = new toto[m];
-    for (int i = 0 ; i < m; i++)
+    int a = 4;
+    toto[] t = new toto[a];
+    for (int i = 0 ; i < a; i++)
       t[i] = mktoto(i);
     t[0].bar = readInt();
     stdin_sep();
     t[1].blah = readInt();
-    int n = result(t, 4);
-    Console.Write(n);
-    int o = t[2].blah;
-    Console.Write(o);
+    int b = result(t, 4);
+    Console.Write(b);
+    int c = t[2].blah;
+    Console.Write(c);
   }
   
 }

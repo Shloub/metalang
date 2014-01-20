@@ -59,6 +59,6 @@ for ($i = 0 ; $i < $len; $i++)
   scantrim();
   $tab[$i] = $tmp;
 }
-$o = plus_petit_($tab, $len);
-echo $o;
+$c = plus_petit_($tab, $len);
+echo $c;
 ?>

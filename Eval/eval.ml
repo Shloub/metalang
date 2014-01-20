@@ -455,7 +455,8 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
               | [] -> assert false
               | hd::tl -> if String.equals hd e then n else
                   f (n + 1) tl in
-            Integer (f 0 li) |> res
+	    let v = f 0 li in
+            Integer v |> res
           | _ -> assert false
         end
       | Expr.Lexems l -> precompiledExpr_of_lexems_list l env

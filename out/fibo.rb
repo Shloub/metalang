@@ -29,6 +29,6 @@ scanf("%*\n");
 b=scanf("%d")[0];
 scanf("%*\n");
 i=scanf("%d")[0];
-m = fibo_(a, b, i)
-printf "%d", m
+c = fibo_(a, b, i)
+printf "%d", c
 

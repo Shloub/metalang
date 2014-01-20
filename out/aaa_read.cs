@@ -114,8 +114,8 @@ read int, read char et skip
     }
     for (int j = 0 ; j < strlen; j++)
     {
-      char e = tab4[j];
-      Console.Write(e);
+      char a = tab4[j];
+      Console.Write(a);
     }
   }
   

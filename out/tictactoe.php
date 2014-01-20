@@ -173,22 +173,22 @@ function play(&$g){
       $minMove["y"] = $y;
     }
   }
-  $bq = $minMove["x"];
-  echo $bq;
-  $br = $minMove["y"];
-  echo $br;
+  $a = $minMove["x"];
+  echo $a;
+  $b = $minMove["y"];
+  echo $b;
   echo "\n";
   return $minMove;
 }
 
 function init(){
-  $bt = 3;
+  $d = 3;
   $cases = array();
-  for ($i = 0 ; $i < $bt; $i++)
+  for ($i = 0 ; $i < $d; $i++)
   {
-    $bs = 3;
+    $c = 3;
     $tab = array();
-    for ($j = 0 ; $j < $bs; $j++)
+    for ($j = 0 ; $j < $c; $j++)
       $tab[$j] = 0;
     $cases[$i] = $tab;
   }
@@ -233,8 +233,8 @@ for ($i = 0 ; $i <= 1; $i++)
     }
   }
   print_state($state);
-  $bu = $state["note"];
-  echo $bu;
+  $e = $state["note"];
+  echo $e;
   echo "\n";
 }
 ?>

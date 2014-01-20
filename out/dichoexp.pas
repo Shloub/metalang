@@ -86,15 +86,15 @@ end;
 var
   a : integer;
   b : integer;
-  d : integer;
+  c : integer;
 begin
   a := 0;
   b := 0;
   a := read_int();
   skip();
   b := read_int();
-  d := exp_(a, b);
-  write(d);
+  c := exp_(a, b);
+  write(c);
 end.
 
 

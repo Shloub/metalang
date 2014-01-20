@@ -25,7 +25,7 @@ for i_ in (0 ..  len - 1) do
 end
 sort_(tab, len);
 for i in (0 ..  len - 1) do
-  l = tab[i]
-  printf "%d", l
+  a = tab[i]
+  printf "%d", a
 end
 

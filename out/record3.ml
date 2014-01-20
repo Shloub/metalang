@@ -22,15 +22,15 @@ let rec result t len =
 
 let () =
 begin
-  let w = 4 in
-  let t = Array.init (w) (fun i ->
+  let a = 4 in
+  let t = Array.init (a) (fun i ->
     mktoto i) in
   Scanf.scanf "%d" (fun value -> t.(0).bar <- value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> t.(1).blah <- value);
-  let x = result t 4 in
-  Printf.printf "%d" x;
-  let y = t.(2).blah in
-  Printf.printf "%d" y
+  let b = result t 4 in
+  Printf.printf "%d" b;
+  let c = t.(2).blah in
+  Printf.printf "%d" c
 end
  

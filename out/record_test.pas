@@ -70,7 +70,7 @@ type
 
 
 var
-  b : integer;
+  a : integer;
   param : toto;
 begin
   new(param);
@@ -79,8 +79,8 @@ begin
   param^.bar := read_int();
   skip();
   param^.foo := read_int();
-  b := param^.bar + param^.foo * param^.bar;
-  write(b);
+  a := param^.bar + param^.foo * param^.bar;
+  write(a);
 end.
 
 

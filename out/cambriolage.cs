@@ -92,9 +92,9 @@ public static int readInt(){
     int[][] passepartout = new int[n][];
     for (int i = 0 ; i < n; i++)
     {
-      int t = 2;
-      int[] out0 = new int[t];
-      for (int j = 0 ; j < t; j++)
+      int c = 2;
+      int[] out0 = new int[c];
+      for (int j = 0 ; j < c; j++)
       {
         int out_ = 0;
         out_ = readInt();
@@ -109,9 +109,9 @@ public static int readInt(){
     int[][] serrures = new int[m][];
     for (int k = 0 ; k < m; k++)
     {
-      int u = 2;
-      int[] out1 = new int[u];
-      for (int l = 0 ; l < u; l++)
+      int d = 2;
+      int[] out1 = new int[d];
+      for (int l = 0 ; l < d; l++)
       {
         int out_ = 0;
         out_ = readInt();
@@ -120,8 +120,8 @@ public static int readInt(){
       }
       serrures[k] = out1;
     }
-    int v = nbPassePartout(n, passepartout, m, serrures);
-    Console.Write(v);
+    int e = nbPassePartout(n, passepartout, m, serrures);
+    Console.Write(e);
   }
   
 }

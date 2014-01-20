@@ -35,8 +35,8 @@ begin
   let n = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let passepartout = Array.init (n) (fun i ->
-    let bc = 2 in
-    let out0 = Array.init (bc) (fun j ->
+    let c = 2 in
+    let out0 = Array.init (c) (fun j ->
       let out_ = Scanf.scanf "%d" (fun x -> x) in
       Scanf.scanf "%[\n \010]" (fun _ -> ());
       out_) in
@@ -44,13 +44,13 @@ begin
   let m = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let serrures = Array.init (m) (fun k ->
-    let bd = 2 in
-    let out1 = Array.init (bd) (fun l ->
+    let d = 2 in
+    let out1 = Array.init (d) (fun l ->
       let out_ = Scanf.scanf "%d" (fun x -> x) in
       Scanf.scanf "%[\n \010]" (fun _ -> ());
       out_) in
     out1) in
-  let be = nbPassePartout n passepartout m serrures in
-  Printf.printf "%d" be
+  let e = nbPassePartout n passepartout m serrures in
+  Printf.printf "%d" e
 end
  

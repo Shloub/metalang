@@ -13,9 +13,9 @@ et qui produit les macros metalang correspondante
   {
     char input = (char)32;
     int current_pos = 500;
-    int g = 1000;
-    int[] mem = new int[g];
-    for (int i = 0 ; i < g; i++)
+    int a = 1000;
+    int[] mem = new int[a];
+    for (int i = 0 ; i < a; i++)
       mem[i] = 0;
     mem[current_pos] = mem[current_pos] + 1;
     mem[current_pos] = mem[current_pos] + 1;
@@ -80,8 +80,8 @@ et qui produit les macros metalang correspondante
       mem[current_pos] = mem[current_pos] - 1;
       current_pos --;
       mem[current_pos] = mem[current_pos] + 1;
-      char h = (char)(mem[current_pos]);
-      Console.Write(h);
+      char b = (char)(mem[current_pos]);
+      Console.Write(b);
       current_pos ++;
     }
   }

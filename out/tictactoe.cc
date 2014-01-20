@@ -169,22 +169,22 @@ struct move * play(struct gamestate * g){
       minMove->y = y;
     }
   }
-  int p = minMove->x;
-  printf("%d", p);
-  int q = minMove->y;
-  printf("%d", q);
+  int a = minMove->x;
+  printf("%d", a);
+  int b = minMove->y;
+  printf("%d", b);
   std::cout << "\n";
   return minMove;
 }
 
 struct gamestate * init(){
-  int s = 3;
-  std::vector<std::vector<int > > cases( s );
-  for (int i = 0 ; i < s; i++)
+  int d = 3;
+  std::vector<std::vector<int > > cases( d );
+  for (int i = 0 ; i < d; i++)
   {
-    int r = 3;
-    std::vector<int > tab( r );
-    for (int j = 0 ; j < r; j++)
+    int c = 3;
+    std::vector<int > tab( c );
+    for (int j = 0 ; j < c; j++)
       tab.at(j) = 0;
     cases.at(i) = tab;
   }
@@ -227,8 +227,8 @@ int main(void){
       }
     }
     print_state(state);
-    int t = state->note;
-    printf("%d", t);
+    int e = state->note;
+    printf("%d", e);
     std::cout << "\n";
   }
   return 0;

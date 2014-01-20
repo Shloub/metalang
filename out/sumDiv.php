@@ -53,6 +53,6 @@ function sumdiv($n){
 $n = 0;
 list($n) = scan("%d");
 /* Lecture de l'entier */
-$j = sumdiv($n);
-echo $j;
+$b = sumdiv($n);
+echo $b;
 ?>

@@ -52,6 +52,6 @@ b = 0;
 a=readint();
 stdinsep();
 b=readint();
-l = exp_(a, b);
-print("%d" % l, end='');
+c = exp_(a, b);
+print("%d" % c, end='');
 

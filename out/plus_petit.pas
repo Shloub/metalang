@@ -61,8 +61,8 @@ begin
    until false;
 end;
 
-type f = array of integer;
-function go(tab : f; a : integer; b : integer) : integer;
+type d = array of integer;
+function go(tab : d; a : integer; b : integer) : integer;
 var
   e : integer;
   i : integer;
@@ -111,17 +111,17 @@ begin
     end;
 end;
 
-function plus_petit_(tab : f; len : integer) : integer;
+function plus_petit_(tab : d; len : integer) : integer;
 begin
   exit(go(tab, 0, len));
 end;
 
 
 var
-  d : integer;
+  c : integer;
   i : integer;
   len : integer;
-  tab : f;
+  tab : d;
   tmp : integer;
 begin
   len := 0;
@@ -135,8 +135,8 @@ begin
     skip();
     tab[i] := tmp;
   end;
-  d := plus_petit_(tab, len);
-  write(d);
+  c := plus_petit_(tab, len);
+  write(c);
 end.
 
 

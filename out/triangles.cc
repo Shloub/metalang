@@ -31,9 +31,9 @@ int find(int len, std::vector<std::vector<int > >& tab){
   std::vector<std::vector<int > > tab2( len );
   for (int i = 0 ; i < len; i++)
   {
-    int o = i + 1;
-    std::vector<int > tab3( o );
-    for (int j = 0 ; j < o; j++)
+    int a = i + 1;
+    std::vector<int > tab3( a );
+    for (int j = 0 ; j < a; j++)
       tab3.at(j) = 0;
     tab2.at(i) = tab3;
   }
@@ -48,9 +48,9 @@ int main(void){
   std::vector<std::vector<int > > tab( len );
   for (int i = 0 ; i < len; i++)
   {
-    int p = i + 1;
-    std::vector<int > tab2( p );
-    for (int j = 0 ; j < p; j++)
+    int b = i + 1;
+    std::vector<int > tab2( b );
+    for (int j = 0 ; j < b; j++)
     {
       int tmp = 0;
       scanf("%d", &tmp);
@@ -59,14 +59,14 @@ int main(void){
     }
     tab.at(i) = tab2;
   }
-  int q = find(len, tab);
-  printf("%d", q);
+  int c = find(len, tab);
+  printf("%d", c);
   for (int k = 0 ; k < len; k++)
   {
     for (int l = 0 ; l <= k; l ++)
     {
-      int r = tab.at(k).at(l);
-      printf("%d", r);
+      int d = tab.at(k).at(l);
+      printf("%d", d);
     }
     std::cout << "\n";
   }

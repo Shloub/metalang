@@ -65,8 +65,8 @@ scantrim();
 list($t2["bar"]) = scan("%d");
 scantrim();
 list($t["blah"]) = scan("%d");
-$r = result($t, $t2);
-echo $r;
-$s = $t["blah"];
-echo $s;
+$a = result($t, $t2);
+echo $a;
+$b = $t["blah"];
+echo $b;
 ?>

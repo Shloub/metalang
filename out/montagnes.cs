@@ -82,8 +82,8 @@ public static int readInt(){
       stdin_sep();
       tab[i] = x;
     }
-    int e = montagnes_(tab, len);
-    Console.Write(e);
+    int a = montagnes_(tab, len);
+    Console.Write(a);
   }
   
 }

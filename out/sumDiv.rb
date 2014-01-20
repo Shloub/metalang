@@ -84,6 +84,6 @@ n=scanf("%d")[0];
  Lecture de l'entier 
 =end
 
-k = sumdiv(n)
-printf "%d", k
+b = sumdiv(n)
+printf "%d", b
 

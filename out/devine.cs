@@ -84,8 +84,8 @@ public static int readInt(){
       stdin_sep();
       tab[i] = tmp;
     }
-    bool e = devine_(nombre, tab, len);
-    if (e)
+    bool a = devine_(nombre, tab, len);
+    if (a)
       Console.Write("True");
     else
       Console.Write("False");

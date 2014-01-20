@@ -61,8 +61,8 @@ begin
    until false;
 end;
 
-type c = array of integer;
-procedure sort_(tab : c; len : integer);
+type b = array of integer;
+procedure sort_(tab : b; len : integer);
 var
   i : integer;
   j : integer;
@@ -85,11 +85,11 @@ end;
 
 
 var
-  b : integer;
+  a : integer;
   i : integer;
   i_ : integer;
   len : integer;
-  tab : c;
+  tab : b;
   tmp : integer;
 begin
   len := 2;
@@ -106,8 +106,8 @@ begin
   sort_(tab, len);
   for i := 0 to  len - 1 do
   begin
-    b := tab[i];
-    write(b);
+    a := tab[i];
+    write(a);
   end;
 end.
 

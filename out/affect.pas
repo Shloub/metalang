@@ -83,12 +83,12 @@ begin
   exit(t);
 end;
 
-type e = array of integer;
+type c = array of integer;
 function result(t_ : toto; t2_ : toto) : integer;
 var
-  cache0 : e;
-  cache1 : e;
-  cache2 : e;
+  cache0 : c;
+  cache1 : c;
+  cache2 : c;
   i : integer;
   j : integer;
   len : integer;
@@ -125,8 +125,8 @@ end;
 
 
 var
-  c : integer;
-  d : integer;
+  a : integer;
+  b : integer;
   t : toto;
   t2 : toto;
 begin
@@ -139,10 +139,10 @@ begin
   t2^.bar := read_int();
   skip();
   t^.blah := read_int();
-  c := result(t, t2);
-  write(c);
-  d := t^.blah;
-  write(d);
+  a := result(t, t2);
+  write(a);
+  b := t^.blah;
+  write(b);
 end.
 
 

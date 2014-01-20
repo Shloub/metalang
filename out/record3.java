@@ -27,9 +27,9 @@ public class record3
   
   public static void main(String args[])
   {
-    int p = 4;
-    toto[] t = new toto[p];
-    for (int i = 0 ; i < p; i++)
+    int a = 4;
+    toto[] t = new toto[a];
+    for (int i = 0 ; i < a; i++)
       t[i] = mktoto(i);
     if (scanner.hasNext("^-")){
     scanner.next("^-"); t[0].bar = -scanner.nextInt();
@@ -40,10 +40,10 @@ public class record3
     scanner.next("^-"); t[1].blah = -scanner.nextInt();
     }else{
     t[1].blah = scanner.nextInt();}
-    int q = result(t, 4);
-    System.out.printf("%d", q);
-    int r = t[2].blah;
-    System.out.printf("%d", r);
+    int b = result(t, 4);
+    System.out.printf("%d", b);
+    int c = t[2].blah;
+    System.out.printf("%d", c);
   }
   
 }

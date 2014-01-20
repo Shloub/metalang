@@ -28,10 +28,10 @@ int main(void){
   scanf("%d", &t->bar);
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &t->blah);
-  int e = result(t);
-  printf("%d", e);
-  int f = t->blah;
-  printf("%d", f);
+  int a = result(t);
+  printf("%d", a);
+  int b = t->blah;
+  printf("%d", b);
   return 0;
 }
 

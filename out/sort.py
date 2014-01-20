@@ -57,6 +57,6 @@ for i_ in range(0, len):
   tab[i_] = tmp;
 sort_(tab, len);
 for i in range(0, len):
-  m = tab[i];
-  print("%d" % m, end='');
+  a = tab[i];
+  print("%d" % a, end='');
 

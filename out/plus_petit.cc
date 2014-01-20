@@ -46,8 +46,8 @@ int main(void){
     scanf("%*[ \t\r\n]c", 0);
     tab.at(i) = tmp;
   }
-  int g = plus_petit_(tab, len);
-  printf("%d", g);
+  int c = plus_petit_(tab, len);
+  printf("%d", c);
   return 0;
 }
 

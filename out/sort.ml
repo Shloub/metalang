@@ -22,8 +22,8 @@ begin
     (!tmp)) in
   sort_ tab (!len);
   for i = 0 to (!len) - 1 do
-    let h = tab.(i) in
-    Printf.printf "%d" h
+    let a = tab.(i) in
+    Printf.printf "%d" a
   done
 end
  

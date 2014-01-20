@@ -42,9 +42,9 @@ int main(void){
   std::vector<std::vector<int > > passepartout( n );
   for (int i = 0 ; i < n; i++)
   {
-    int q = 2;
-    std::vector<int > out0( q );
-    for (int j = 0 ; j < q; j++)
+    int c = 2;
+    std::vector<int > out0( c );
+    for (int j = 0 ; j < c; j++)
     {
       int out_ = 0;
       scanf("%d", &out_);
@@ -59,9 +59,9 @@ int main(void){
   std::vector<std::vector<int > > serrures( m );
   for (int k = 0 ; k < m; k++)
   {
-    int r = 2;
-    std::vector<int > out1( r );
-    for (int l = 0 ; l < r; l++)
+    int d = 2;
+    std::vector<int > out1( d );
+    for (int l = 0 ; l < d; l++)
     {
       int out_ = 0;
       scanf("%d", &out_);
@@ -70,8 +70,8 @@ int main(void){
     }
     serrures.at(k) = out1;
   }
-  int s = nbPassePartout(n, passepartout, m, serrures);
-  printf("%d", s);
+  int e = nbPassePartout(n, passepartout, m, serrures);
+  printf("%d", e);
   return 0;
 }
 

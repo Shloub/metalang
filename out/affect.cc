@@ -55,10 +55,10 @@ int main(void){
   scanf("%d", &t2->bar);
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &t->blah);
-  int f = result(t, t2);
-  printf("%d", f);
-  int g = t->blah;
-  printf("%d", g);
+  int a = result(t, t2);
+  printf("%d", a);
+  int b = t->blah;
+  printf("%d", b);
   return 0;
 }
 

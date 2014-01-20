@@ -55,9 +55,9 @@ scantrim();
 $passepartout = array();
 for ($i = 0 ; $i < $n; $i++)
 {
-  $bf = 2;
+  $c = 2;
   $out0 = array();
-  for ($j = 0 ; $j < $bf; $j++)
+  for ($j = 0 ; $j < $c; $j++)
   {
     $out_ = 0;
     list($out_) = scan("%d");
@@ -72,9 +72,9 @@ scantrim();
 $serrures = array();
 for ($k = 0 ; $k < $m; $k++)
 {
-  $bg = 2;
+  $d = 2;
   $out1 = array();
-  for ($l = 0 ; $l < $bg; $l++)
+  for ($l = 0 ; $l < $d; $l++)
   {
     $out_ = 0;
     list($out_) = scan("%d");
@@ -83,6 +83,6 @@ for ($k = 0 ; $k < $m; $k++)
   }
   $serrures[$k] = $out1;
 }
-$bh = nbPassePartout($n, $passepartout, $m, $serrures);
-echo $bh;
+$e = nbPassePartout($n, $passepartout, $m, $serrures);
+echo $e;
 ?>

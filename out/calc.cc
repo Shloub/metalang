@@ -22,8 +22,8 @@ int fibo(int a, int b, int i){
 
 
 int main(void){
-  int e = fibo(1, 2, 4);
-  printf("%d", e);
+  int c = fibo(1, 2, 4);
+  printf("%d", c);
   return 0;
 }
 

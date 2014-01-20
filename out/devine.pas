@@ -61,8 +61,8 @@ begin
    until false;
 end;
 
-type c = array of integer;
-function devine_(nombre : integer; tab : c; len : integer) : boolean;
+type b = array of integer;
+function devine_(nombre : integer; tab : b; len : integer) : boolean;
 var
   i : integer;
   max_ : integer;
@@ -98,11 +98,11 @@ end;
 
 
 var
-  b : boolean;
+  a : boolean;
   i : integer;
   len : integer;
   nombre : integer;
-  tab : c;
+  tab : b;
   tmp : integer;
 begin
   nombre := 0;
@@ -119,8 +119,8 @@ begin
     skip();
     tab[i] := tmp;
   end;
-  b := devine_(nombre, tab, len);
-  if b
+  a := devine_(nombre, tab, len);
+  if a
   then
     begin
       write('True');

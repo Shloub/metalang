@@ -74,8 +74,8 @@ stdinsep();
 t2["bar"]=readint();
 stdinsep();
 t["blah"]=readint();
-w = result(t, t2);
-print("%d" % w, end='');
-x = t["blah"];
-print("%d" % x, end='');
+a = result(t, t2);
+print("%d" % a, end='');
+b = t["blah"];
+print("%d" % b, end='');
 

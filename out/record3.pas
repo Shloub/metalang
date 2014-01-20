@@ -80,8 +80,8 @@ begin
   exit(t);
 end;
 
-type g = array of toto;
-function result(t : g; len : integer) : integer;
+type d = array of toto;
+function result(t : d; len : integer) : integer;
 var
   j : integer;
   out_ : integer;
@@ -97,25 +97,25 @@ end;
 
 
 var
-  d : integer;
-  e : integer;
-  f : integer;
+  a : integer;
+  b : integer;
+  c : integer;
   i : integer;
-  t : g;
+  t : d;
 begin
-  d := 4;
-  SetLength(t, d);
-  for i := 0 to  d - 1 do
+  a := 4;
+  SetLength(t, a);
+  for i := 0 to  a - 1 do
   begin
     t[i] := mktoto(i);
   end;
   t[0]^.bar := read_int();
   skip();
   t[1]^.blah := read_int();
-  e := result(t, 4);
-  write(e);
-  f := t[2]^.blah;
-  write(f);
+  b := result(t, 4);
+  write(b);
+  c := t[2]^.blah;
+  write(c);
 end.
 
 
