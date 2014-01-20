@@ -202,7 +202,10 @@ module CollectCalls = struct
     in acc, p
 end
 
-module CollectTypes : SigPassTop = struct
+module CollectTypes : SigPassTop
+  with type acc0 = Typer.env
+  and type 'a acc = Typer.env * TypeSet.t
+  = struct
   type acc0 = Typer.env
   type 'a acc = Typer.env * TypeSet.t
 
@@ -210,7 +213,9 @@ module CollectTypes : SigPassTop = struct
 
   let rec collect_type acc t =
     let loc = Ast.PosMap.get (Type.Fixed.annot t) in
-    let f (tyenv, acc) t = match Type.Fixed.unfix t with
+    let f (tyenv, acc) t =
+      if TypeSet.mem t acc then (tyenv, acc) else
+      match Type.Fixed.unfix t with
       | Type.Named n ->
 	let acc = TypeSet.add t acc in
 	collect_type (tyenv, acc) (Typer.expand tyenv t loc)
@@ -247,7 +252,10 @@ module CollectTypes : SigPassTop = struct
 
   let process acc p =
     let acc = match p with
-      | Prog.DeclarFun (_funname, _t, _params, instrs) ->
+      | Prog.DeclarFun (_funname, t, params, instrs) ->
+	let acc = collect_type acc t in
+	let acc = List.fold_left (fun acc (_, t) -> collect_type acc t)
+	  acc params in
         List.fold_left collect_instr acc instrs
       | _ -> acc
     in acc, p
