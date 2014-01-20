@@ -263,19 +263,27 @@ module Type = struct
       | Bool, _ -> -1
       | Enum _, (Bool | Void | Array _ | Char | Auto | Lexems | Integer | Float | String) -> 1
       | Enum e1, Enum e2 ->
-        List.fold_left (fun result (n1, n2) ->
-          if result <> 0 then result else
-            String.compare n1 n2
-        ) 0 (List.combine e1 e2)
+	let l1 = List.length e1
+	and l2 = List.length e2 in
+	if l1 = l2 then
+          List.fold_left (fun result (n1, n2) ->
+            if result <> 0 then result else
+              String.compare n1 n2
+          ) 0 (List.combine e1 e2)
+	else l1 - l2
       | Enum _, _ -> -1
 
       | Struct (s1, _), Struct (s2, _) ->
+	let l1 = List.length s1
+	and l2 = List.length s2 in
+	if l1 = l2 then
         List.fold_left (fun result ((n1, t1), (n2, t2)) ->
           if result <> 0 then result else
             let result = String.compare n1 n2 in
             if result <> 0 then result else
               compare t1 t2
         ) 0 (List.combine s1 s2)
+	else l1 - l2
       | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto |
           Lexems | Integer | Float | String) -> 1
       | Struct _, _ -> -1
