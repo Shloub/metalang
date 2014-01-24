@@ -3,7 +3,7 @@ import sys
 
 
 def read_int_line( n ):
-    a = [list(map(int, input().split())) for i in range(n)];
+    a = list(map(int, input().split()));
     return a;
 
 l0 = read_int_line(1);
