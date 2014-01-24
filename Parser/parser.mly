@@ -10,6 +10,11 @@
   let locate pos e =
     let () = Ast.PosMap.add (E.Fixed.annot e) pos
     in e
+
+  let locatt pos e =
+    let () = Ast.PosMap.add (T.Fixed.annot e) pos
+    in e
+
   let locati pos e =
     let () = Ast.PosMap.add (I.Fixed.annot e) pos
     in e
@@ -80,16 +85,16 @@ value :
 ;
 
 typ :
-| TYPE_STRING { T.string }
-| TYPE_INT { T.integer }
-| TYPE_LEXEMS   { T.lexems }
-| TYPE_AUTO { T.auto () }
-| TYPE_FLOAT { T.float }
-| TYPE_CHAR { T.char }
-| TYPE_BOOL { T.bool }
-| TYPE_ARRAY LOWER typ HIGHER { T.array $3 }
-| TYPE_VOID { T.void }
-| AT IDENT { T.named $2 }
+| TYPE_STRING { T.string  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| TYPE_INT { T.integer  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| TYPE_LEXEMS   { T.lexems  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| TYPE_AUTO { T.auto ()  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| TYPE_FLOAT { T.float  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| TYPE_CHAR { T.char  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| TYPE_BOOL { T.bool  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| TYPE_ARRAY LOWER typ HIGHER { T.array $3  |> locatt  ( Ast.location ($startpos($1), $endpos($3))) }
+| TYPE_VOID { T.void |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| AT IDENT { T.named $2  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 ;
 
 expr :
