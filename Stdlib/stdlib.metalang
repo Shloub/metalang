@@ -54,3 +54,8 @@ end
 def int min4(int a, int b, int c, int d)
 	return min3(min2(a, b), c, d)
 end
+
+macro array<int> py_expand_read_int_line(int m)
+  py do "list(map(int, input().split()))"
+  *  do "E R R O R"
+end
