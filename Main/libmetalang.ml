@@ -138,7 +138,7 @@ let make_prog_helper progname (funs, main) stdlib =
   let prog = Passes.RemoveUselessFunctions.apply prog
     (List.filter Passes.no_macro funs) in
   let prog = Passes.RemoveUselessTypes.apply prog
-    (List.filter Passes.no_macro funs) tyenv in
+    prog.Prog.funs tyenv in
   tyenv, prog
 
 
