@@ -1,0 +1,43 @@
+
+def lexems expand_read_int_line(lexems a)
+    if current_language() == LANG_Py then
+      return {
+      def a = py_expand_read_int_line( ${ a } )
+      return a;
+
+      }
+    else
+    return {
+      def array<int> tab[${a}] with i do
+      	def read int t skip;
+	return t;
+      end
+      return tab
+    }
+   end
+end
+
+def array<int> read_int_line(int n)
+    ${expand_read_int_line( {n} )}
+end
+
+main
+  def array<int> l0 = read_int_line(1);
+  def len = l0[0];
+  print int len
+  print string "=len\n"
+  def array<int> tab1 = read_int_line(len);
+  for i = 0 to len - 1 do
+    print i
+    print string "=>"
+    print tab1[i]
+    print string "\n"
+  end
+  def array<int> tab2 = read_int_line(len);
+  for i = 0 to len - 1 do
+    print i
+    print string "=>"
+    print tab2[i]
+    print string "\n"
+  end
+end
