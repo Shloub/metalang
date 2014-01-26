@@ -79,15 +79,33 @@ begin
   exit(tab);
 end;
 
+type d = array of c;
+function read_int_matrix(x : integer; y : integer) : d;
+var
+  out_ : c;
+  tab : d;
+  z : integer;
+begin
+  SetLength(tab, y);
+  for z := 0 to  y - 1 do
+  begin
+    out_ := read_int_line(x);
+    skip();
+    tab[z] := out_;
+  end;
+  exit(tab);
+end;
+
 
 var
   a : integer;
   b : integer;
   i : integer;
+  j : integer;
   l0 : c;
   len : integer;
   tab1 : c;
-  tab2 : c;
+  tab2 : d;
 begin
   l0 := read_int_line(1);
   len := l0[0];
@@ -102,13 +120,17 @@ begin
     write(a);
     write(''#10'');
   end;
-  tab2 := read_int_line(len);
-  for i := 0 to  len - 1 do
+  l0 := read_int_line(1);
+  len := l0[0];
+  tab2 := read_int_matrix(len, len - 1);
+  for i := 0 to  len - 2 do
   begin
-    write(i);
-    write('=>');
-    b := tab2[i];
-    write(b);
+    for j := 0 to  len - 1 do
+    begin
+      b := tab2[i][j];
+      write(b);
+      write(' ');
+    end;
     write(''#10'');
   end;
 end.

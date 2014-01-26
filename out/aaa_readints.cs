@@ -62,6 +62,18 @@ public static int readInt(){
     return tab;
   }
   
+  public static int[][] read_int_matrix(int x, int y)
+  {
+    int[][] tab = new int[y][];
+    for (int z = 0 ; z < y; z++)
+    {
+      int[] out_ = read_int_line(x);
+      stdin_sep();
+      tab[z] = out_;
+    }
+    return tab;
+  }
+  
   
   public static void Main(String[] args)
   {
@@ -78,13 +90,17 @@ public static int readInt(){
       Console.Write(a);
       Console.Write("\n");
     }
-    int[] tab2 = read_int_line(len);
-    for (int i = 0 ; i < len; i++)
+    l0 = read_int_line(1);
+    len = l0[0];
+    int[][] tab2 = read_int_matrix(len, len - 1);
+    for (int i = 0 ; i <= len - 2; i ++)
     {
-      Console.Write(i);
-      Console.Write("=>");
-      int b = tab2[i];
-      Console.Write(b);
+      for (int j = 0 ; j < len; j++)
+      {
+        int b = tab2[i][j];
+        Console.Write(b);
+        Console.Write(" ");
+      }
       Console.Write("\n");
     }
   }
