@@ -1,4 +1,4 @@
-Readme
+README
 
 Quick start:
   ouvrir une console
@@ -9,7 +9,18 @@ Quick start:
   en notation polonaise inversée
   dans les langages C# ocaml python c++ java php ruby C
 
-Le dossier tools contient des outils comme le mode emacs
+Le dossier tools contient des outils comme le mode emacs, pour l'installer,
+il faut ajouter ces lignes dans son .emacs
+(setq auto-mode-alist (cons '("\\.metalang$" . metalang-mode)
+  auto-mode-alist))
+(autoload 'metalang-mode "CHEMIN_ABSOLU/tools/metalang-mode.el"
+  "Mode majeur pour éditer du code Metalang" t)
+
+Vous trouverez de nombreux exemples de programmes dans le dossier
+tests/progs le plus notable est probablement le tictactoe avec IA.
+
+La documentation se trouve sur le site http://eelte.megami.fr/metalang
+
 
 But du projet:
     Ce projet à été fait pour le concours prologin (http://www.prologin.org)
@@ -29,6 +40,10 @@ But du projet:
     (break et continue n'existent pas)
     de cette manière, on a plus de facilités à générer du code lisible
     dans tout les langages cibles.
+    On a aussi un typer pour ne pas être obligé de déclarer les types
+    (ça reste évidement typé statiquement)
+    Un evaluateur, qui sert, soit pour évaluer directement du code metalang,
+    soit pour évaluer des macros.
 
 Langages cibles :
   C
@@ -37,4 +52,6 @@ Langages cibles :
   C#
   ocaml
   python
+  ruby
 	php
+  javascript
