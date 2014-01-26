@@ -1,12 +1,10 @@
 Langage & Compilateur :
+Meilleur façon de printer print "foo =" print int foo
 gestion des positions sur les commentaires
-reporter les commentaires
-améliorer les erreurs du typer (DONE : 50%)
-gérer les entrées d'entiers négatifs (en C#, php, python)
 php stdin : ne pas forcer à faire ctrl+d
 flush sur stdout
-Une gestion des macros
 types abstract (pour ouvrir un fichier par exemple)
+meilleur stdlib pour le parsing
 
 return checker
 gérer les floats (parser, +., *., /., + printers)
@@ -17,8 +15,6 @@ commentaires indentation
 chercher a faire un sort correct
 
 autres printers :
-  javascript
-  pascal
   f#
   vb.net
   lisp
@@ -27,4 +23,3 @@ autres printers :
   ada
   sql
   objective C
-  html (code printer)
