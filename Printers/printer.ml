@@ -578,18 +578,37 @@ class printer = object(self)
 	 (fun f (t, e) -> self#print f t e)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
 
+  method combine_formats () = false
   method instructions0 f instrs =
     if (match instrs with [_] -> false | _ -> true)
       && List.for_all is_print instrs then
-      let formats, exprs = List.map (fun i -> match Instr.unfix i with
+      let li = List.map (fun i -> match Instr.unfix i with
 	| Instr.Print (t, i) -> format_type t, (t, i)
 	| _ -> assert false
-      ) instrs |> List.unzip in
+      ) instrs in
+      let li =
+	if self#combine_formats () then
+	  List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
+	  | Expr.String s ->
+	    let s = self#noformat s in
+	    (String.sub s 1 ((String.length s) - 2)  , (ty, e))
+	  | _ -> (format, (ty, e))
+	  ) li else li in
+      let formats, exprs = List.unzip li in
       let rec g acc = function
 	| [] -> acc
 	| hd::tl -> g (acc ^ hd) tl
-      in let format = g "" formats in
-	 self#multi_print f format exprs
+      in
+      let format = g "" formats in
+      let exprs = 
+	if self#combine_formats () then
+	  List.filter (fun (ty, e) -> match Expr.unfix e with
+	  | Expr.String _ -> false
+	  | _ -> true
+	  ) exprs
+	else exprs
+      in
+      self#multi_print f format exprs
     else
       (print_list
 	 self#instr

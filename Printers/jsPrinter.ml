@@ -124,6 +124,9 @@ var read_int = function(){
   method main f main =
     self#instructions f main
 
+
+  method combine_formats () = false
+
   method multi_print f format exprs =
     Format.fprintf f "@[<h>util.print(%a);@]"
       (print_list

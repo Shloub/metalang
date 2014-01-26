@@ -136,6 +136,9 @@ match Type.unfix t with
       self#bloc li
 
   method multi_print f format exprs =
+    if exprs = [] then
+      Format.fprintf f "@[<h>printf \"%s\";@]" format
+    else
     Format.fprintf f "@[<h>printf \"%s\", %a@]" format
       (print_list
 	 (fun f (t, e) -> self#expr f e)

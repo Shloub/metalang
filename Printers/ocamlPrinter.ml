@@ -417,6 +417,8 @@ class camlPrinter = object(self)
     else
       Format.fprintf f "%a" self#binding e
 
+  method combine_formats () = true
+
   method multi_print f format exprs =
     Format.fprintf f "@[<h>Printf.printf \"%s\" %a@]" format
       (print_list

@@ -142,6 +142,7 @@ function nextChar(){
       | Type.Char ->
         Format.fprintf f "chr(%a)" self#expr e
 
+  method combine_formats () = false
   method multi_print f format exprs =
     Format.fprintf f "@[<h>echo %a;@]"
       (print_list

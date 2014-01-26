@@ -127,6 +127,7 @@ class cppPrinter = object(self)
       | _ -> default ()
 
 
+  method combine_formats () = false
   method multi_print f format exprs =
     Format.fprintf f "@[<h>std::cout << %a;@]"
       (print_list

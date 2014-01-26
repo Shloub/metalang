@@ -263,6 +263,9 @@ def readint():
 
 
   method multi_print f format exprs =
+    if exprs = [] then
+      Format.fprintf f "@[<h>print(\"%s\", end='');@]" format
+    else
     Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='');@]" format
       (print_list
 	 (fun f (t, e) -> self#expr f e)
