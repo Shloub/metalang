@@ -150,7 +150,9 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
 	self#mutable_ m
       | _ -> failwith("unsuported read")
 
-  method print f t expr =
+  method print f t expr = match Expr.unfix expr with
+  | Expr.String s -> Format.fprintf f "@[System.out.print(%S);@]" s
+  | _ ->
     Format.fprintf f "@[System.out.printf(\"%a\", %a);@]" self#format_type t self#expr expr
 
   method def_fields name f li =

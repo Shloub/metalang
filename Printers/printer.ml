@@ -349,6 +349,9 @@ class printer = object(self)
     | Instr.DeclRead (t, var) -> self#read_decl f t var
     | Instr.Print (t, expr) -> self#print f t expr
 
+  method noformat s = let s = Format.sprintf "%S" s
+		      in String.replace "%" "%%" s
+
   method format_type f (t:Type.t) = match Type.unfix t with
     | Type.Integer -> Format.fprintf f "%%d"
     | Type.Float -> Format.fprintf f "%%.2f"

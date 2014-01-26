@@ -418,6 +418,9 @@ class camlPrinter = object(self)
       Format.fprintf f "%a" self#binding e
 
   method print f t expr =
+    match Expr.unfix expr with
+    | Expr.String s -> Format.fprintf f "@[Printf.printf %s@]" ( self#noformat s)
+    | _ ->
     Format.fprintf f "@[Printf.printf \"%a\" %a@]"
       self#format_type t
       (if self#nop (Expr.unfix expr) then

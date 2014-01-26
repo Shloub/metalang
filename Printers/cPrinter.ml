@@ -189,7 +189,9 @@ class cPrinter = object(self)
       self#format_type t
       self#mutable_ m
 
-  method print f t expr =
+  method print f t expr = match Expr.unfix expr with
+  | Expr.String s -> Format.fprintf f "@[printf(%s);@]" ( self#noformat s )
+  | _ ->
     Format.fprintf f "@[printf(\"%a\", %a);@]" self#format_type t self#expr expr
 
   method prog f prog =

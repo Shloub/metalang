@@ -127,11 +127,8 @@ class cppPrinter = object(self)
       | _ -> default ()
 
   method print f t expr =
-    match Type.unfix t with
-      | Type.String ->
-        Format.fprintf f "@[std::cout << %a;@]"
-          self#expr expr
-      | _ -> super#print f t expr
+      Format.fprintf f "@[std::cout << %a;@]"
+        self#expr expr
 
   method prototype f t =
     match Type.unfix t with
