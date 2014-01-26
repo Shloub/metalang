@@ -80,7 +80,7 @@ begin
   skip();
   param^.foo := read_int();
   a := param^.bar + param^.foo * param^.bar;
-  write(a);
+  Write(a);
 end.
 
 

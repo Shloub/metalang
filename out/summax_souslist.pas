@@ -107,7 +107,7 @@ begin
     tab[i] := tmp;
   end;
   result := summax(tab, len);
-  write(result);
+  Write(result);
 end.
 
 

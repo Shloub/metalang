@@ -159,15 +159,15 @@ begin
     tab[i] := tab2;
   end;
   c := find(len, tab);
-  write(c);
+  Write(c);
   for k := 0 to  len - 1 do
   begin
     for l := 0 to  k do
     begin
       d := tab[k][l];
-      write(d);
+      Write(d);
     end;
-    write(''#10'');
+    Write(''#10'');
   end;
 end.
 

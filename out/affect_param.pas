@@ -11,8 +11,8 @@ var
 begin
   a := 0;
   foo(a);
-  write(a);
-  write(''#10'');
+  Write(a);
+  Write(''#10'');
 end.
 
 

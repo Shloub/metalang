@@ -173,7 +173,7 @@ begin
     serrures[k] := out1;
   end;
   e := nbPassePartout(n, passepartout, m, serrures);
-  write(e);
+  Write(e);
 end.
 
 

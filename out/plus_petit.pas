@@ -136,7 +136,7 @@ begin
     tab[i] := tmp;
   end;
   c := plus_petit_(tab, len);
-  write(c);
+  Write(c);
 end.
 
 

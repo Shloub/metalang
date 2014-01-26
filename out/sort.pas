@@ -107,7 +107,7 @@ begin
   for i := 0 to  len - 1 do
   begin
     a := tab[i];
-    write(a);
+    Write(a);
   end;
 end.
 

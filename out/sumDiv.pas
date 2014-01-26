@@ -106,7 +106,7 @@ begin
   n := read_int();
   { Lecture de l'entier }
   b := sumdiv(n);
-  write(b);
+  Write(b);
 end.
 
 

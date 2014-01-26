@@ -95,48 +95,48 @@ begin
   len := 0;
   len := read_int();
   skip();
-  write(len);
-  write('=len'#10'');
+  Write(len);
+  Write('=len'#10'');
   SetLength(tab, len);
   for i := 0 to  len - 1 do
   begin
     tmpi1 := 0;
     tmpi1 := read_int();
     skip();
-    write(i);
-    write('=>');
-    write(tmpi1);
-    write(' ');
+    Write(i);
+    Write('=>');
+    Write(tmpi1);
+    Write(' ');
     tab[i] := tmpi1;
   end;
-  write(''#10'');
+  Write(''#10'');
   SetLength(tab2, len);
   for i_ := 0 to  len - 1 do
   begin
     tmpi2 := 0;
     tmpi2 := read_int();
     skip();
-    write(i_);
-    write('==>');
-    write(tmpi2);
-    write(' ');
+    Write(i_);
+    Write('==>');
+    Write(tmpi2);
+    Write(' ');
     tab2[i_] := tmpi2;
   end;
   strlen := 0;
   strlen := read_int();
   skip();
-  write(strlen);
-  write('=strlen'#10'');
+  Write(strlen);
+  Write('=strlen'#10'');
   SetLength(tab4, strlen);
   for toto := 0 to  strlen - 1 do
   begin
     tmpc := #95;
     tmpc := read_char();
     c := ord(tmpc);
-    write(tmpc);
-    write(':');
-    write(c);
-    write(' ');
+    Write(tmpc);
+    Write(':');
+    Write(c);
+    Write(' ');
     if tmpc <> #32
     then
       begin
@@ -147,7 +147,7 @@ begin
   for j := 0 to  strlen - 1 do
   begin
     a := tab4[j];
-    write(a);
+    Write(a);
   end;
 end.
 

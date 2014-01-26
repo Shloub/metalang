@@ -7,7 +7,7 @@ end;
 
 
 begin
-  write(10);
+  Write(10);
 end.
 
 

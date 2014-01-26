@@ -140,9 +140,9 @@ begin
   skip();
   t^.blah := read_int();
   a := result(t, t2);
-  write(a);
+  Write(a);
   b := t^.blah;
-  write(b);
+  Write(b);
 end.
 
 

@@ -110,7 +110,7 @@ begin
     tab[i] := tmp;
   end;
   result := nth(tab, tofind, len);
-  write(result);
+  Write(result);
 end.
 
 

@@ -123,11 +123,11 @@ begin
   if a
   then
     begin
-      write('True');
+      Write('True');
     end
   else
     begin
-      write('False');
+      Write('False');
     end;
 end.
 

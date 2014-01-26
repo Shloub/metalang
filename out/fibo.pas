@@ -101,7 +101,7 @@ begin
   skip();
   i := read_int();
   c := fibo_(a, b, i);
-  write(c);
+  Write(c);
 end.
 
 

@@ -94,22 +94,22 @@ begin
     for x := 0 to  8 do
     begin
       b := sudoku_[x + y * 9];
-      write(b);
-      write(' ');
+      Write(b);
+      Write(' ');
       if (x Mod 3) = 2
       then
         begin
-          write(' ');
+          Write(' ');
         end;
     end;
-    write(''#10'');
+    Write(''#10'');
     if (y Mod 3) = 2
     then
       begin
-        write(''#10'');
+        Write(''#10'');
       end;
   end;
-  write(''#10'');
+  Write(''#10'');
 end;
 
 { dit si les variables sont toutes différentes }
@@ -181,7 +181,7 @@ begin
     end
   else
     begin
-      write('no solution'#10'');
+      Write('no solution'#10'');
     end;
 end.
 

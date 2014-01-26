@@ -141,7 +141,7 @@ begin
     tab[i] := tmp;
   end;
   result := npi_(tab, len);
-  write(result);
+  Write(result);
 end.
 
 

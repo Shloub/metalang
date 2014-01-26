@@ -130,7 +130,7 @@ begin
     tab[i] := tmp;
   end;
   result := pathfind(tab, len);
-  write(result);
+  Write(result);
 end.
 
 

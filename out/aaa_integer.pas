@@ -7,19 +7,19 @@ var
 begin
   i := 0;
   i := i + 1;
-  write(i);
+  Write(i);
   i := i + 55;
-  write(i);
+  Write(i);
   i := i * 13;
-  write(i);
+  Write(i);
   i := i Div 2;
-  write(i);
+  Write(i);
   i := i + 1;
-  write(i);
+  Write(i);
   i := i Div 3;
-  write(i);
+  Write(i);
   i := i - 1;
-  write(i);
+  Write(i);
 end.
 
 

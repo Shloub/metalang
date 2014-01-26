@@ -111,7 +111,7 @@ begin
     tab[i] := x;
   end;
   a := montagnes_(tab, len);
-  write(a);
+  Write(a);
 end.
 
 

@@ -94,7 +94,7 @@ begin
   skip();
   b := read_int();
   c := exp_(a, b);
-  write(c);
+  Write(c);
 end.
 
 

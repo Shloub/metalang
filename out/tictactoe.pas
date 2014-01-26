@@ -88,33 +88,33 @@ var
   x : integer;
   y : integer;
 begin
-  write(''#10'|');
+  Write(''#10'|');
   for y := 0 to  2 do
   begin
     for x := 0 to  2 do
     begin
       if g^.cases[x][y] = 0 then
         begin
-          write(' ');
+          Write(' ');
         end
       else if g^.cases[x][y] = 1
       then
         begin
-          write('O');
+          Write('O');
         end
       else
         begin
-          write('X');
+          Write('X');
         end;;
-      write('|');
+      Write('|');
     end;
     if y <> 2
     then
       begin
-        write(''#10'|-|-|-|'#10'|');
+        Write(''#10'|-|-|-|'#10'|');
       end;
   end;
-  write(''#10'');
+  Write(''#10'');
 end;
 
 { On dit qui gagne (info stoquées dans g.ended et g.note ) }
@@ -314,12 +314,12 @@ begin
         begin
           apply_move_xy(x, y, g);
           currentNote := minmax(g);
-          write(x);
-          write(', ');
-          write(y);
-          write(', ');
-          write(currentNote);
-          write(''#10'');
+          Write(x);
+          Write(', ');
+          Write(y);
+          Write(', ');
+          Write(currentNote);
+          Write(''#10'');
           cancel_move_xy(x, y, g);
           if currentNote < minNote
           then
@@ -332,10 +332,10 @@ begin
     end;
   end;
   a := minMove^.x;
-  write(a);
+  Write(a);
   b := minMove^.y;
-  write(b);
-  write(''#10'');
+  Write(b);
+  Write(''#10'');
   exit(minMove);
 end;
 
@@ -412,8 +412,8 @@ begin
     end;
     print_state(state);
     e := state^.note;
-    write(e);
-    write(''#10'');
+    Write(e);
+    Write(''#10'');
   end;
 end.
 

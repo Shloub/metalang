@@ -113,9 +113,9 @@ begin
   skip();
   t[1]^.blah := read_int();
   b := result(t, 4);
-  write(b);
+  Write(b);
   c := t[2]^.blah;
-  write(c);
+  Write(c);
 end.
 
 

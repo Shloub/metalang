@@ -181,7 +181,7 @@ begin
     tab[i] := tab2;
   end;
   result := pathfind(tab, x, y);
-  write(result);
+  Write(result);
 end.
 
 

@@ -16,7 +16,7 @@ begin
   b2 := b;
   for j := 0 to  i + 1 do
   begin
-    write(j);
+    Write(j);
     out_ := out_ + a2;
     tmp := b2;
     b2 := b2 + a2;
@@ -30,7 +30,7 @@ var
   c : integer;
 begin
   c := fibo(1, 2, 4);
-  write(c);
+  Write(c);
 end.
 
 

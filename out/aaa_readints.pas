@@ -109,16 +109,16 @@ var
 begin
   l0 := read_int_line(1);
   len := l0[0];
-  write(len);
-  write('=len'#10'');
+  Write(len);
+  Write('=len'#10'');
   tab1 := read_int_line(len);
   for i := 0 to  len - 1 do
   begin
-    write(i);
-    write('=>');
+    Write(i);
+    Write('=>');
     a := tab1[i];
-    write(a);
-    write(''#10'');
+    Write(a);
+    Write(''#10'');
   end;
   l0 := read_int_line(1);
   len := l0[0];
@@ -128,10 +128,10 @@ begin
     for j := 0 to  len - 1 do
     begin
       b := tab2[i][j];
-      write(b);
-      write(' ');
+      Write(b);
+      Write(' ');
     end;
-    write(''#10'');
+    Write(''#10'');
   end;
 end.
 

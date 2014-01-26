@@ -103,7 +103,7 @@ begin
   for j := 0 to  strlen - 1 do
   begin
     a := tab4[j];
-    write(a);
+    Write(a);
   end;
 end.
 
