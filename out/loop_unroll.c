@@ -8,15 +8,15 @@ Il effectue du loop unrolling
 int main(void){
   int j = 0;
   j = 0;
-  printf("%d%s", j, "\n");
+  printf("%d\n", j);
   j = 1;
-  printf("%d%s", j, "\n");
+  printf("%d\n", j);
   j = 2;
-  printf("%d%s", j, "\n");
+  printf("%d\n", j);
   j = 3;
-  printf("%d%s", j, "\n");
+  printf("%d\n", j);
   j = 4;
-  printf("%d%s", j, "\n");
+  printf("%d\n", j);
   return 0;
 }
 

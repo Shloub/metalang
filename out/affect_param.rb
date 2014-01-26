@@ -7,5 +7,5 @@ end
 
 a = 0
 foo(a);
-printf "%d%s", a, "\n"
+printf "%d\n", a
 

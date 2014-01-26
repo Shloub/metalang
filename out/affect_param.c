@@ -8,7 +8,7 @@ void foo(int a){
 int main(void){
   int a = 0;
   foo(a);
-  printf("%d%s", a, "\n");
+  printf("%d\n", a);
   return 0;
 }
 

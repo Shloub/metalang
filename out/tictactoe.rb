@@ -185,7 +185,7 @@ def play( g )
         if can_move_xy(x, y, g) then
           apply_move_xy(x, y, g);
           currentNote = minmax(g)
-          printf "%d%s%d%s%d%s", x, ", ", y, ", ", currentNote, "\n"
+          printf "%d, %d, %d\n", x, y, currentNote
           cancel_move_xy(x, y, g);
           if currentNote < minNote then
             minNote = currentNote;
@@ -198,7 +198,7 @@ def play( g )
     a = minMove["x"]
     printf "%d", a
     b = minMove["y"]
-    printf "%d%s", b, "\n"
+    printf "%d\n", b
     return (minMove);
 end
 
@@ -246,6 +246,6 @@ for i in (0 ..  1) do
   end
   print_state(state);
   e = state["note"]
-  printf "%d%s", e, "\n"
+  printf "%d\n", e
 end
 

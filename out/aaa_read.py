@@ -50,13 +50,13 @@ read int, read char et skip
 len = 0;
 len=readint();
 stdinsep();
-print("%d%s" % ( len, "=len\n" ), end='');
+print("%d=len\n" % ( len ), end='');
 tab = [None] * len;
 for i in range(0, len):
   tmpi1 = 0;
   tmpi1=readint();
   stdinsep();
-  print("%d%s%d%s" % ( i, "=>", tmpi1, " " ), end='');
+  print("%d=>%d " % ( i, tmpi1 ), end='');
   tab[i] = tmpi1;
 print( "\n", end='');
 tab2 = [None] * len;
@@ -64,18 +64,18 @@ for i_ in range(0, len):
   tmpi2 = 0;
   tmpi2=readint();
   stdinsep();
-  print("%d%s%d%s" % ( i_, "==>", tmpi2, " " ), end='');
+  print("%d==>%d " % ( i_, tmpi2 ), end='');
   tab2[i_] = tmpi2;
 strlen = 0;
 strlen=readint();
 stdinsep();
-print("%d%s" % ( strlen, "=strlen\n" ), end='');
+print("%d=strlen\n" % ( strlen ), end='');
 tab4 = [None] * strlen;
 for toto in range(0, strlen):
   tmpc = '_';
   tmpc=readchar();
   c = ord(tmpc);
-  print("%c%s%d%s" % ( tmpc, ":", c, " " ), end='');
+  print("%c:%d " % ( tmpc, c ), end='');
   if tmpc != ' ':
     c = ((c - ord('a')) + 13) % 26 + ord('a');
   tab4[toto] = c;

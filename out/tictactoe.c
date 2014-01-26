@@ -179,7 +179,7 @@ struct move * play(struct gamestate * g){
       {
         apply_move_xy(x, y, g);
         int currentNote = minmax(g);
-        printf("%d%s%d%s%d%s", x, ", ", y, ", ", currentNote, "\n");
+        printf("%d, %d, %d\n", x, y, currentNote);
         cancel_move_xy(x, y, g);
         if (currentNote < minNote)
         {
@@ -193,7 +193,7 @@ struct move * play(struct gamestate * g){
   int a = minMove->x;
   printf("%d", a);
   int b = minMove->y;
-  printf("%d%s", b, "\n");
+  printf("%d\n", b);
   return minMove;
 }
 
@@ -257,7 +257,7 @@ int main(void){
       }
       print_state(state);
       int e = state->note;
-      printf("%d%s", e, "\n");
+      printf("%d\n", e);
     }
   }
   return 0;

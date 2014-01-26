@@ -14,13 +14,13 @@ read int, read char et skip
 len = 0
 len=scanf("%d")[0];
 scanf("%*\n");
-printf "%d%s", len, "=len\n"
+printf "%d=len\n", len
 tab = [];
 for i in (0 ..  len - 1) do
   tmpi1 = 0
   tmpi1=scanf("%d")[0];
   scanf("%*\n");
-  printf "%d%s%d%s", i, "=>", tmpi1, " "
+  printf "%d=>%d ", i, tmpi1
   tab[i] = tmpi1;
 end
 print "\n";
@@ -29,19 +29,19 @@ for i_ in (0 ..  len - 1) do
   tmpi2 = 0
   tmpi2=scanf("%d")[0];
   scanf("%*\n");
-  printf "%d%s%d%s", i_, "==>", tmpi2, " "
+  printf "%d==>%d ", i_, tmpi2
   tab2[i_] = tmpi2;
 end
 strlen = 0
 strlen=scanf("%d")[0];
 scanf("%*\n");
-printf "%d%s", strlen, "=strlen\n"
+printf "%d=strlen\n", strlen
 tab4 = [];
 for toto in (0 ..  strlen - 1) do
   tmpc = '_'
   tmpc=scanf("%c")[0];
   c = tmpc.ord
-  printf "%c%s%d%s", tmpc, ":", c, " "
+  printf "%c:%d ", tmpc, c
   if tmpc != ' ' then
     c = ((c - 'a'.ord) + 13) % 26 + 'a'.ord;
   end

@@ -6,5 +6,5 @@ def foo( a ):
 
 a = 0;
 foo(a);
-print("%d%s" % ( a, "\n" ), end='');
+print("%d\n" % ( a ), end='');
 

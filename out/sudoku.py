@@ -53,7 +53,7 @@ def print_sudoku( sudoku_ ):
     for y in range(0, 1 + 8):
       for x in range(0, 1 + 8):
         b = sudoku_[x + y * 9];
-        print("%d%s" % ( b, " " ), end='');
+        print("%d " % ( b ), end='');
         if (x % 3) == 2:
           print( " ", end='');
       print( "\n", end='');
