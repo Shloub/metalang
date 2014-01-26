@@ -55,7 +55,59 @@ def int min4(int a, int b, int c, int d)
 	return min3(min2(a, b), c, d)
 end
 
-macro array<int> py_expand_read_int_line(int m)
+macro array<int> py_expand_read_int_line()
   py do "list(map(int, input().split()))"
   *  do "E R R O R"
+end
+
+macro array<array<int>> py_expand_read_int_matrix(int y)
+  py do "[list(map(int, input().split())) for i in range(y)]"
+  *  do "E R R O R"
+end
+
+macro int py_expand_read_int()
+  py do "int(input())"
+  *  do "E R R O R"
+end
+
+def lexems expand_read_int_line(lexems a)
+    if current_language() == LANG_Py then
+      return {
+        def a = py_expand_read_int_line()
+        return a;
+      }
+    else
+    return {
+      def array<int> tab[${a}] with i do
+      	def read int t skip;
+	return t;
+      end
+      return tab
+    }
+   end
+end
+
+def array<int> read_int_line(int n)
+    ${expand_read_int_line( {n} )}
+end
+
+def lexems expand_read_int_matrix(lexems x, lexems y)
+    if current_language() == LANG_Py then
+      return {
+        def a = py_expand_read_int_matrix( ${ y } )
+        return a;
+      }
+    else
+    return {
+      def array<array<int>> tab[${y}] with z do
+	def out = read_int_line(x)
+	skip return out
+      end
+      return tab
+    }
+   end
+end
+
+def array<array<int>> read_int_matrix(int x, int y)
+    ${expand_read_int_matrix( {x}, {y} )}
 end

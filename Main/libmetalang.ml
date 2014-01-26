@@ -207,7 +207,7 @@ let make_prog stdlib filename lang =
   let funs, main = parse_file Parser.prog filename in
   let stdlib = if stdlib then parse_file Parser.toplvls stdlib_file else [] in
   let stdlib_addon = parse_string Parser.toplvls (stdlib_string lang) in
-  let stdlib = List.append stdlib stdlib_addon in
+  let stdlib = List.append stdlib_addon stdlib in
   make_prog_helper progname (funs, main) stdlib
 
 let make_prog_helper lang (funs, main) stdlib =
