@@ -23,8 +23,7 @@ void print_sudoku(std::vector<int >& sudoku_){
     for (int x = 0 ; x <= 8; x ++)
     {
       int b = sudoku_.at(x + y * 9);
-      std::cout << b;
-      std::cout << " ";
+      std::cout << b << " ";
       if ((x % 3) == 2)
         std::cout << " ";
     }

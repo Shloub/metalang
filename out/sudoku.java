@@ -29,8 +29,7 @@ public class sudoku
       for (int x = 0 ; x <= 8; x ++)
       {
         int b = sudoku_[x + y * 9];
-        System.out.printf("%d", b);
-        System.out.print(" ");
+        System.out.printf("%d%s", b, " ");
         if ((x % 3) == 2)
           System.out.print(" ");
       }

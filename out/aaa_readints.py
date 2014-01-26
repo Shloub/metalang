@@ -13,22 +13,18 @@ def read_int_matrix( x, y ):
 
 l0 = read_int_line(1);
 len = l0[0];
-print("%d" % len, end='');
-print( "=len\n", end='');
+print("%d%s" % ( len, "=len\n" ), end='');
 tab1 = read_int_line(len);
 for i in range(0, len):
-  print("%d" % i, end='');
-  print( "=>", end='');
+  print("%d%s" % ( i, "=>" ), end='');
   b = tab1[i];
-  print("%d" % b, end='');
-  print( "\n", end='');
+  print("%d%s" % ( b, "\n" ), end='');
 l0 = read_int_line(1);
 len = l0[0];
 tab2 = read_int_matrix(len, len - 1);
 for i in range(0, 1 + len - 2):
   for j in range(0, len):
     c = tab2[i][j];
-    print("%d" % c, end='');
-    print( " ", end='');
+    print("%d%s" % ( c, " " ), end='');
   print( "\n", end='');
 

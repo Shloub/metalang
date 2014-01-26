@@ -177,12 +177,7 @@ function play(g){
   {
     apply_move_xy(x, y, g);
     var currentNote = minmax(g);
-    util.print(x);
-    util.print(", ");
-    util.print(y);
-    util.print(", ");
-    util.print(currentNote);
-    util.print("\n");
+    util.print(x, ", ", y, ", ", currentNote, "\n");
     cancel_move_xy(x, y, g);
     if (currentNote < minNote)
     {
@@ -194,8 +189,7 @@ function play(g){
   var a = minMove.x;
   util.print(a);
   var b = minMove.y;
-  util.print(b);
-  util.print("\n");
+  util.print(b, "\n");
   return minMove;
 }
 
@@ -250,8 +244,7 @@ for (var i = 0 ; i <= 1; i++)
   }
   print_state(state);
   var e = state.note;
-  util.print(e);
-  util.print("\n");
+  util.print(e, "\n");
 }
 
 

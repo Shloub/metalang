@@ -26,23 +26,23 @@ Tictactoe : un tictactoe avec une IA
 =end
 
 def print_state( g )
-    printf "%s", "\n|"
+    print "\n|";
     for y in (0 ..  2) do
       for x in (0 ..  2) do
         if g["cases"][x][y] == 0 then
-          printf "%s", " "
+          print " ";
         elsif g["cases"][x][y] == 1 then
-          printf "%s", "O"
+          print "O";
         else
-          printf "%s", "X"
+          print "X";
         end
-        printf "%s", "|"
+        print "|";
       end
       if y != 2 then
-        printf "%s", "\n|-|-|-|\n|"
+        print "\n|-|-|-|\n|";
       end
     end
-    printf "%s", "\n"
+    print "\n";
 end
 
 
@@ -185,12 +185,7 @@ def play( g )
         if can_move_xy(x, y, g) then
           apply_move_xy(x, y, g);
           currentNote = minmax(g)
-          printf "%d", x
-          printf "%s", ", "
-          printf "%d", y
-          printf "%s", ", "
-          printf "%d", currentNote
-          printf "%s", "\n"
+          printf "%d%s%d%s%d%s", x, ", ", y, ", ", currentNote, "\n"
           cancel_move_xy(x, y, g);
           if currentNote < minNote then
             minNote = currentNote;
@@ -203,8 +198,7 @@ def play( g )
     a = minMove["x"]
     printf "%d", a
     b = minMove["y"]
-    printf "%d", b
-    printf "%s", "\n"
+    printf "%d%s", b, "\n"
     return (minMove);
 end
 
@@ -252,7 +246,6 @@ for i in (0 ..  1) do
   end
   print_state(state);
   e = state["note"]
-  printf "%d", e
-  printf "%s", "\n"
+  printf "%d%s", e, "\n"
 end
 

@@ -5,8 +5,7 @@
 
 
 int main(void){
-  std::cout << "ma petite chaine";
-  std::cout << " en or";
+  std::cout << "ma petite chaine" << " en or";
   return 0;
 }
 

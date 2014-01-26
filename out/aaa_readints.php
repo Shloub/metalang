@@ -42,16 +42,13 @@ function read_int_matrix($x, $y){
 
 $l0 = read_int_line(1);
 $len = $l0[0];
-echo $len;
-echo "=len\n";
+echo $len, "=len\n";
 $tab1 = read_int_line($len);
 for ($i = 0 ; $i < $len; $i++)
 {
-  echo $i;
-  echo "=>";
+  echo $i, "=>";
   $a = $tab1[$i];
-  echo $a;
-  echo "\n";
+  echo $a, "\n";
 }
 $l0 = read_int_line(1);
 $len = $l0[0];
@@ -61,8 +58,7 @@ for ($i = 0 ; $i <= $len - 2; $i++)
   for ($j = 0 ; $j < $len; $j++)
   {
     $b = $tab2[$i][$j];
-    echo $b;
-    echo " ";
+    echo $b, " ";
   }
   echo "\n";
 }

@@ -24,15 +24,12 @@ end
 
 l0 = read_int_line(1)
 len = l0[0]
-printf "%d", len
-printf "%s", "=len\n"
+printf "%d%s", len, "=len\n"
 tab1 = read_int_line(len)
 for i in (0 ..  len - 1) do
-  printf "%d", i
-  printf "%s", "=>"
+  printf "%d%s", i, "=>"
   a = tab1[i]
-  printf "%d", a
-  printf "%s", "\n"
+  printf "%d%s", a, "\n"
 end
 l0 = read_int_line(1);
 len = l0[0];
@@ -40,9 +37,8 @@ tab2 = read_int_matrix(len, len - 1)
 for i in (0 ..  len - 2) do
   for j in (0 ..  len - 1) do
     b = tab2[i][j]
-    printf "%d", b
-    printf "%s", " "
+    printf "%d%s", b, " "
   end
-  printf "%s", "\n"
+  print "\n";
 end
 

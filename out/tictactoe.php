@@ -159,12 +159,7 @@ function play(&$g){
   {
     apply_move_xy($x, $y, $g);
     $currentNote = minmax($g);
-    echo $x;
-    echo ", ";
-    echo $y;
-    echo ", ";
-    echo $currentNote;
-    echo "\n";
+    echo $x, ", ", $y, ", ", $currentNote, "\n";
     cancel_move_xy($x, $y, $g);
     if ($currentNote < $minNote)
     {
@@ -176,8 +171,7 @@ function play(&$g){
   $a = $minMove["x"];
   echo $a;
   $b = $minMove["y"];
-  echo $b;
-  echo "\n";
+  echo $b, "\n";
   return $minMove;
 }
 
@@ -234,7 +228,6 @@ for ($i = 0 ; $i <= 1; $i++)
   }
   print_state($state);
   $e = $state["note"];
-  echo $e;
-  echo "\n";
+  echo $e, "\n";
 }
 ?>

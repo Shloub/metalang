@@ -2,6 +2,5 @@
 import sys
 
 
-print( "ma petite chaine", end='');
-print( " en or", end='');
+print("%s%s" % ( "ma petite chaine", " en or" ), end='');
 

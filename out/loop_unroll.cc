@@ -10,20 +10,15 @@ Il effectue du loop unrolling
 int main(void){
   int j = 0;
   j = 0;
-  std::cout << j;
-  std::cout << "\n";
+  std::cout << j << "\n";
   j = 1;
-  std::cout << j;
-  std::cout << "\n";
+  std::cout << j << "\n";
   j = 2;
-  std::cout << j;
-  std::cout << "\n";
+  std::cout << j << "\n";
   j = 3;
-  std::cout << j;
-  std::cout << "\n";
+  std::cout << j << "\n";
   j = 4;
-  std::cout << j;
-  std::cout << "\n";
+  std::cout << j << "\n";
   return 0;
 }
 

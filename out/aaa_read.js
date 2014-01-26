@@ -44,18 +44,14 @@ read int, read char et skip
 var len = 0;
 len=read_int();
 stdinsep();
-util.print(len);
-util.print("=len\n");
+util.print(len, "=len\n");
 var tab = new Array(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
   var tmpi1 = 0;
   tmpi1=read_int();
   stdinsep();
-  util.print(i);
-  util.print("=>");
-  util.print(tmpi1);
-  util.print(" ");
+  util.print(i, "=>", tmpi1, " ");
   tab[i] = tmpi1;
 }
 util.print("\n");
@@ -65,27 +61,20 @@ for (var i_ = 0 ; i_ <= len - 1; i_++)
   var tmpi2 = 0;
   tmpi2=read_int();
   stdinsep();
-  util.print(i_);
-  util.print("==>");
-  util.print(tmpi2);
-  util.print(" ");
+  util.print(i_, "==>", tmpi2, " ");
   tab2[i_] = tmpi2;
 }
 var strlen = 0;
 strlen=read_int();
 stdinsep();
-util.print(strlen);
-util.print("=strlen\n");
+util.print(strlen, "=strlen\n");
 var tab4 = new Array(strlen);
 for (var toto = 0 ; toto <= strlen - 1; toto++)
 {
   var tmpc = '_';
   tmpc=read_char();
   var c = tmpc.charCodeAt(0);
-  util.print(tmpc);
-  util.print(":");
-  util.print(c);
-  util.print(" ");
+  util.print(tmpc, ":", c, " ");
   if (tmpc != ' ')
     c = ((c - 'a'.charCodeAt(0)) + 13) % 26 + 'a'.charCodeAt(0);
   tab4[toto] = String.fromCharCode(c);

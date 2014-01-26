@@ -155,12 +155,7 @@ struct move * play(struct gamestate * g){
   {
     apply_move_xy(x, y, g);
     int currentNote = minmax(g);
-    std::cout << x;
-    std::cout << ", ";
-    std::cout << y;
-    std::cout << ", ";
-    std::cout << currentNote;
-    std::cout << "\n";
+    std::cout << x << ", " << y << ", " << currentNote << "\n";
     cancel_move_xy(x, y, g);
     if (currentNote < minNote)
     {
@@ -172,8 +167,7 @@ struct move * play(struct gamestate * g){
   int a = minMove->x;
   std::cout << a;
   int b = minMove->y;
-  std::cout << b;
-  std::cout << "\n";
+  std::cout << b << "\n";
   return minMove;
 }
 
@@ -228,8 +222,7 @@ int main(void){
     }
     print_state(state);
     int e = state->note;
-    std::cout << e;
-    std::cout << "\n";
+    std::cout << e << "\n";
   }
   return 0;
 }

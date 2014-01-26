@@ -2,6 +2,5 @@
 require "scanf.rb"
 
 
-printf "%s", "ma petite chaine"
-printf "%s", " en or"
+printf "%s%s", "ma petite chaine", " en or"
 

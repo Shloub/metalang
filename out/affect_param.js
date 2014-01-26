@@ -41,7 +41,6 @@ function foo(a){
 
 var a = 0;
 foo(a);
-util.print(a);
-util.print("\n");
+util.print(a, "\n");
 
 

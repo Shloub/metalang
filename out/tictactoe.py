@@ -154,12 +154,7 @@ def play( g ):
         if can_move_xy(x, y, g):
           apply_move_xy(x, y, g);
           currentNote = minmax(g);
-          print("%d" % x, end='');
-          print( ", ", end='');
-          print("%d" % y, end='');
-          print( ", ", end='');
-          print("%d" % currentNote, end='');
-          print( "\n", end='');
+          print("%d%s%d%s%d%s" % ( x, ", ", y, ", ", currentNote, "\n" ), end='');
           cancel_move_xy(x, y, g);
           if currentNote < minNote:
             minNote = currentNote;
@@ -168,8 +163,7 @@ def play( g ):
     a = minMove["x"];
     print("%d" % a, end='');
     b = minMove["y"];
-    print("%d" % b, end='');
-    print( "\n", end='');
+    print("%d%s" % ( b, "\n" ), end='');
     return minMove;
 
 def init(  ):
@@ -206,6 +200,5 @@ for i in range(0, 1 + 1):
       eval_(state);
   print_state(state);
   e = state["note"];
-  print("%d" % e, end='');
-  print( "\n", end='');
+  print("%d%s" % ( e, "\n" ), end='');
 

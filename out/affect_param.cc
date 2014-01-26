@@ -10,8 +10,7 @@ void foo(int a){
 int main(void){
   int a = 0;
   foo(a);
-  std::cout << a;
-  std::cout << "\n";
+  std::cout << a << "\n";
   return 0;
 }
 

@@ -5,6 +5,5 @@ function foo($a){
 
 $a = 0;
 foo($a);
-echo $a;
-echo "\n";
+echo $a, "\n";
 ?>

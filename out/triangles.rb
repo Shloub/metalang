@@ -71,6 +71,6 @@ for k in (0 ..  len - 1) do
     d = tab[k][l]
     printf "%d", d
   end
-  printf "%s", "\n"
+  print "\n";
 end
 

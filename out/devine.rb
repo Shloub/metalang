@@ -36,8 +36,8 @@ for i in (0 ..  len - 1) do
 end
 a = devine_(nombre, tab, len)
 if a then
-  printf "%s", "True"
+  print "True";
 else
-  printf "%s", "False"
+  print "False";
 end
 

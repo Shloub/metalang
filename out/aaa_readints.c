@@ -35,18 +35,15 @@ int** read_int_matrix(int x, int y){
 int main(void){
   int* l0 = read_int_line(1);
   int len = l0[0];
-  printf("%d", len);
-  printf("=len\n");
+  printf("%d%s", len, "=len\n");
   int* tab1 = read_int_line(len);
   {
     int i;
     for (i = 0 ; i < len; i++)
     {
-      printf("%d", i);
-      printf("=>");
+      printf("%d%s", i, "=>");
       int a = tab1[i];
-      printf("%d", a);
-      printf("\n");
+      printf("%d%s", a, "\n");
     }
   }
   l0 = read_int_line(1);
@@ -61,8 +58,7 @@ int main(void){
         for (j = 0 ; j < len; j++)
         {
           int b = tab2[i][j];
-          printf("%d", b);
-          printf(" ");
+          printf("%d%s", b, " ");
         }
       }
       printf("\n");

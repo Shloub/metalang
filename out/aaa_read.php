@@ -32,18 +32,14 @@ read int, read char et skip
 $len = 0;
 list($len) = scan("%d");
 scantrim();
-echo $len;
-echo "=len\n";
+echo $len, "=len\n";
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
   $tmpi1 = 0;
   list($tmpi1) = scan("%d");
   scantrim();
-  echo $i;
-  echo "=>";
-  echo $tmpi1;
-  echo " ";
+  echo $i, "=>", $tmpi1, " ";
   $tab[$i] = $tmpi1;
 }
 echo "\n";
@@ -53,27 +49,20 @@ for ($i_ = 0 ; $i_ < $len; $i_++)
   $tmpi2 = 0;
   list($tmpi2) = scan("%d");
   scantrim();
-  echo $i_;
-  echo "==>";
-  echo $tmpi2;
-  echo " ";
+  echo $i_, "==>", $tmpi2, " ";
   $tab2[$i_] = $tmpi2;
 }
 $strlen = 0;
 list($strlen) = scan("%d");
 scantrim();
-echo $strlen;
-echo "=strlen\n";
+echo $strlen, "=strlen\n";
 $tab4 = array();
 for ($toto = 0 ; $toto < $strlen; $toto++)
 {
   $tmpc = ord('_');
   $tmpc = nextChar();
   $c = $tmpc;
-  echo chr($tmpc);
-  echo ":";
-  echo $c;
-  echo " ";
+  echo chr($tmpc), ":", $c, " ";
   if ($tmpc != ord(' '))
     $c = (($c - ord('a')) + 13) % 26 + ord('a');
   $tab4[$toto] = $c;
