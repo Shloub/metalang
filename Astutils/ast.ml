@@ -80,7 +80,7 @@ end = struct
   let get i =
     try
       IntMap.find i !map
-    with Not_found -> (-1, -1), (-1, -1)
+    with Not_found -> default_location
 end
 
 (** {2 Modules d'AST} *)
@@ -290,7 +290,6 @@ module Type = struct
       | Named n1, Named n2 -> String.compare n1 n2
       | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
           Auto | Lexems | Integer | Float | String) -> 1
-      | Named _, _ -> -1
 
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct

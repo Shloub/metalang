@@ -180,6 +180,10 @@ let colore string =
       Format.flush_str_formatter ()
     with Parser.Error -> string
 
+(**
+  this string is added at the beginning of the stdlib
+  It should be used (eg in macros) to know what's the target language
+*)
 let stdlib_string lang = Printf.sprintf "
 
 enum @target_language
@@ -282,8 +286,6 @@ let test_process err (lang:string) txt stdlib =
     txt
   with Warner.Error e ->
     let () = err e in ""
-
-
 
 module E = struct
   let add_str = ref (fun s -> ())
