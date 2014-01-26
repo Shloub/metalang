@@ -41,6 +41,10 @@ let print_option (f : Format.formatter -> 'a -> unit) t obj =
     | None -> ()
     | Some s -> f t s
 
+let is_print i = match Instr.unfix i with
+  | Instr.Print _ -> true
+  | _ -> false
+
 let print_list
     (func : Format.formatter -> 'a -> unit)
     (sep :
@@ -75,6 +79,14 @@ let print_list_indexed print sep f li =
 	    0
 	    li
      ))
+
+let format_type t = match Type.unfix t with
+    | Type.Integer -> "%d"
+    | Type.Float -> "%.2f"
+    | Type.Char -> "%c"
+    | Type.String ->  "%s"
+    | Type.Bool -> "%b"
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
 class printer = object(self)
 
@@ -352,13 +364,7 @@ class printer = object(self)
   method noformat s = let s = Format.sprintf "%S" s
 		      in String.replace "%" "%%" s
 
-  method format_type f (t:Type.t) = match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "%%d"
-    | Type.Float -> Format.fprintf f "%%.2f"
-    | Type.Char -> Format.fprintf f "%%c"
-    | Type.String -> Format.fprintf f "%%s"
-    | Type.Bool -> Format.fprintf f "%%b"
-    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
+  method format_type f (t:Type.t) = Format.fprintf f "%s" (format_type t)
 
   method read f t mutable_ =
     Format.fprintf f "@[read %a %a@]" self#ptype t self#mutable_ mutable_
@@ -566,13 +572,48 @@ class printer = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method instructions f instrs =
-    (print_list
-       self#instr
-       (fun t print1 item1 print2 item2 ->
-	 Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-       )
+  method multi_print f format exprs =
+    Format.fprintf f "@[<v>%a@]"
+      (print_list
+	 (fun f (t, e) -> self#print f t e)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
+
+  method instructions0 f instrs =
+    if (match instrs with [_] -> false | _ -> true)
+      && List.for_all is_print instrs then
+      let formats, exprs = List.map (fun i -> match Instr.unfix i with
+	| Instr.Print (t, i) -> format_type t, (t, i)
+	| _ -> assert false
+      ) instrs |> List.unzip in
+      let rec g acc = function
+	| [] -> acc
+	| hd::tl -> g (acc ^ hd) tl
+      in let format = g "" formats in
+	 self#multi_print f format exprs
+    else
+      (print_list
+	 self#instr
+	 (fun t print1 item1 print2 item2 ->
+	   Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+	 )
       ) f instrs
+
+  method instructions f instrs =
+    let rec g b acc1 acc2 = function
+      | hd::tl ->
+	if is_print hd = b
+	then g b acc1 (hd::acc2) tl
+	else g (not b) ((List.rev acc2)::acc1) [hd] tl
+      | [] -> List.rev ( (List.rev acc2) :: acc1 )
+    in
+    let lili = g false [] [] instrs in
+    let lili = List.filter ( (<>) [] ) lili in
+    (print_list
+       self#instructions0
+       (fun t print1 item1 print2 item2 ->
+	   Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+       )
+      ) f lili
 
   method proglist f funs =
     Format.fprintf f "%a@\n"

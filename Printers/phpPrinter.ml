@@ -132,15 +132,25 @@ function nextChar(){
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method print f t expr =
+  method eprint t f e =
     match Type.unfix t with
       | Type.Integer
       | Type.Float
       | Type.String
       | Type.Bool ->
-        Format.fprintf f "@[echo %a;@]" self#expr expr
+        Format.fprintf f "%a" self#expr e
       | Type.Char ->
-        Format.fprintf f "@[echo chr(%a);@]" self#expr expr
+        Format.fprintf f "chr(%a)" self#expr e
+
+  method multi_print f format exprs =
+    Format.fprintf f "@[<h>echo %a;@]"
+      (print_list
+	 (fun f (t, e) -> (self#eprint t) f e)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t
+	  "%a,@ %a" f1 e1 f2 e2)) exprs
+
+  method print f t expr =
+    Format.fprintf f "@[echo@ %a;@]" (self#eprint t) expr
 
    method print_proto f (funname, t, li) =
     Format.fprintf f "function %a(%a)"

@@ -34,7 +34,9 @@ open Stdlib
 open Printer
 
 class cPrinter = object(self)
-  inherit printer as super
+  inherit printer as baseprinter
+
+  method base_multi_print = baseprinter#multi_print
 
   method lang () = "c"
 
@@ -54,7 +56,7 @@ class cPrinter = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "int"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> begin match Typer.expand (super#getTyperEnv ()) t
+      | Type.Named n -> begin match Typer.expand (baseprinter#getTyperEnv ()) t
           default_location |> Type.unfix with
             | Type.Struct _ ->
               Format.fprintf f "struct %s *" n
@@ -189,6 +191,12 @@ class cPrinter = object(self)
       self#format_type t
       self#mutable_ m
 
+  method multi_print f format exprs =
+    Format.fprintf f "@[<h>printf(\"%s\", %a);@]" format
+      (print_list
+	 (fun f (t, e) -> self#expr f e)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
+
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[printf(%s);@]" ( self#noformat s )
   | _ ->
@@ -225,9 +233,8 @@ class cPrinter = object(self)
           self#binding name
       | _ ->
 	Format.fprintf f "typedef %a %a;"
-	super#ptype t
-	  super#binding name
-
+	baseprinter#ptype t
+	  baseprinter#binding name
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"

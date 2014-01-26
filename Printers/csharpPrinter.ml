@@ -145,6 +145,8 @@ public static int readInt(){
   method length f tab =
     Format.fprintf f "%a.Length" self#mutable_ tab
 
+  method multi_print f format exprs = super#base_multi_print f format exprs
+
   method read f t m =
     match Type.unfix t with
       | Type.Integer ->

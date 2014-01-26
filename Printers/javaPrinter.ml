@@ -36,7 +36,7 @@ open Printer
 open CppPrinter
 
 class javaPrinter = object(self) (* TODO scanf et printf*)
-  inherit cppPrinter as super
+  inherit cppPrinter as cppprinter
 
   method lang () = "java"
 
@@ -79,10 +79,10 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
 	           )
 	           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
 	        ) li
-      | _ -> super#decl_type f name t
+      | _ -> cppprinter#decl_type f name t
 
   method enum f e =
-    let t = Typer.typename_for_enum e (super#getTyperEnv ()) in
+    let t = Typer.typename_for_enum e (cppprinter#getTyperEnv ()) in
     Format.fprintf f "%s.%s" t e
 
   method prog f prog =
@@ -133,7 +133,7 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
 
   method print_proto f triplet =
     Format.fprintf f "public static %a"
-      super#print_proto triplet
+      cppprinter#print_proto triplet
 
   method print_scanner f () =
     Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
@@ -149,6 +149,13 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
       | Type.Char -> Format.fprintf f "@[<h>scanner.useDelimiter(\"\\\\n\");%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
 	self#mutable_ m
       | _ -> failwith("unsuported read")
+
+  method multi_print f format exprs =
+    Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
+      (print_list
+	 (fun f (t, e) -> self#expr f e)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t
+	  "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[System.out.print(%S);@]" s

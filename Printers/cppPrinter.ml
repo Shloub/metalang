@@ -36,7 +36,7 @@ open Printer
 open CPrinter
 
 class cppPrinter = object(self)
-  inherit cPrinter as super
+  inherit cPrinter as cprinter
 
   method lang () = "cpp"
 
@@ -49,7 +49,7 @@ class cppPrinter = object(self)
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> begin match Typer.expand (super#getTyperEnv ()) t
+      | Type.Named n -> begin match Typer.expand (cprinter#getTyperEnv ()) t
           default_location |> Type.unfix with
             | Type.Struct _ ->
               Format.fprintf f "struct %s *" n
@@ -125,6 +125,14 @@ class cppPrinter = object(self)
           self#binding varname
           self#bloc li
       | _ -> default ()
+
+
+  method multi_print f format exprs =
+    Format.fprintf f "@[<h>std::cout << %a;@]"
+      (print_list
+	 (fun f (t, e) -> self#expr f e)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t
+	  "%a@ <<@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr =
       Format.fprintf f "@[std::cout << %a;@]"

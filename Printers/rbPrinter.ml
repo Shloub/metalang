@@ -135,7 +135,16 @@ match Type.unfix t with
       self#expr expr2
       self#bloc li
 
-  method print f t expr =
+  method multi_print f format exprs =
+    Format.fprintf f "@[<h>printf \"%s\", %a@]" format
+      (print_list
+	 (fun f (t, e) -> self#expr f e)
+	 (fun t f1 e1 f2 e2 -> Format.fprintf t
+	  "%a,@ %a" f1 e1 f2 e2)) exprs
+
+  method print f t expr = match Expr.unfix expr with
+  | Expr.String s -> Format.fprintf f "@[print %s;@]" ( self#noformat s )
+  | _ ->
     Format.fprintf f "@[printf \"%a\", %a@]"
       self#format_type t
       self#expr expr
