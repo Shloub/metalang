@@ -72,7 +72,7 @@ int main(void){
     tab.at(i) = tab2;
   }
   int result = pathfind(tab, x, y);
-  printf("%d", result);
+  std::cout << result;
   return 0;
 }
 

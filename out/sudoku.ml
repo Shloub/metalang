@@ -13,15 +13,15 @@ let rec print_sudoku sudoku_ =
     for x = 0 to 8 do
       let b = sudoku_.(x + y * 9) in
       Printf.printf "%d" b;
-      Printf.printf "%s" " ";
+      Printf.printf " ";
       if (x mod 3) = 2 then
-        Printf.printf "%s" " "
+        Printf.printf " "
     done;
-    Printf.printf "%s" "\n";
+    Printf.printf "\n";
     if (y mod 3) = 2 then
-      Printf.printf "%s" "\n"
+      Printf.printf "\n"
   done;
-  Printf.printf "%s" "\n"
+  Printf.printf "\n"
 
 (* dit si les variables sont toutes différentes *)
 (* dit si les variables sont toutes différentes *)
@@ -70,6 +70,6 @@ begin
   if solve sudoku_ then
     print_sudoku sudoku_
   else
-    Printf.printf "%s" "no solution\n"
+    Printf.printf "no solution\n"
 end
  

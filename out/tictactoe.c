@@ -22,7 +22,7 @@ typedef struct move {
 
 /* On affiche l'état */
 void print_state(struct gamestate * g){
-  printf("%s", "\n|");
+  printf("\n|");
   {
     int y;
     for (y = 0 ; y <= 2; y++)
@@ -32,19 +32,19 @@ void print_state(struct gamestate * g){
         for (x = 0 ; x <= 2; x++)
         {
           if (g->cases[x][y] == 0)
-            printf("%s", " ");
+            printf(" ");
           else if (g->cases[x][y] == 1)
-            printf("%s", "O");
+            printf("O");
           else
-            printf("%s", "X");
-          printf("%s", "|");
+            printf("X");
+          printf("|");
         }
       }
       if (y != 2)
-        printf("%s", "\n|-|-|-|\n|");
+        printf("\n|-|-|-|\n|");
     }
   }
-  printf("%s", "\n");
+  printf("\n");
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
@@ -180,11 +180,11 @@ struct move * play(struct gamestate * g){
         apply_move_xy(x, y, g);
         int currentNote = minmax(g);
         printf("%d", x);
-        printf("%s", ", ");
+        printf(", ");
         printf("%d", y);
-        printf("%s", ", ");
+        printf(", ");
         printf("%d", currentNote);
-        printf("%s", "\n");
+        printf("\n");
         cancel_move_xy(x, y, g);
         if (currentNote < minNote)
         {
@@ -199,7 +199,7 @@ struct move * play(struct gamestate * g){
   printf("%d", a);
   int b = minMove->y;
   printf("%d", b);
-  printf("%s", "\n");
+  printf("\n");
   return minMove;
 }
 
@@ -264,7 +264,7 @@ int main(void){
       print_state(state);
       int e = state->note;
       printf("%d", e);
-      printf("%s", "\n");
+      printf("\n");
     }
   }
   return 0;

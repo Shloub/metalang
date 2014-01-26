@@ -11,7 +11,7 @@ int fibo(int a, int b, int i){
   int b2 = b;
   for (int j = 0 ; j <= i + 1; j ++)
   {
-    printf("%d", j);
+    std::cout << j;
     out_ += a2;
     int tmp = b2;
     b2 += a2;
@@ -23,7 +23,7 @@ int fibo(int a, int b, int i){
 
 int main(void){
   int c = fibo(1, 2, 4);
-  printf("%d", c);
+  std::cout << c;
   return 0;
 }
 

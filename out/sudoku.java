@@ -30,15 +30,15 @@ public class sudoku
       {
         int b = sudoku_[x + y * 9];
         System.out.printf("%d", b);
-        System.out.printf("%s", " ");
+        System.out.print(" ");
         if ((x % 3) == 2)
-          System.out.printf("%s", " ");
+          System.out.print(" ");
       }
-      System.out.printf("%s", "\n");
+      System.out.print("\n");
       if ((y % 3) == 2)
-        System.out.printf("%s", "\n");
+        System.out.print("\n");
     }
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
   }
   
   /* dit si les variables sont toutes différentes */
@@ -83,7 +83,7 @@ public class sudoku
     if (solve(sudoku_))
       print_sudoku(sudoku_);
     else
-      System.out.printf("%s", "no solution\n");
+      System.out.print("no solution\n");
   }
   
 }

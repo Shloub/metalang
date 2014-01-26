@@ -9,7 +9,7 @@ int main(void){
   int a = 0;
   foo(a);
   printf("%d", a);
-  printf("%s", "\n");
+  printf("\n");
   return 0;
 }
 

@@ -46,19 +46,19 @@ Tictactoe : un tictactoe avec une IA
 
 """ On affiche l'état """
 def print_state( g ):
-    print("%s" % "\n|", end='');
+    print( "\n|", end='');
     for y in range(0, 1 + 2):
       for x in range(0, 1 + 2):
         if g["cases"][x][y] == 0:
-          print("%s" % " ", end='');
+          print( " ", end='');
         elif g["cases"][x][y] == 1:
-          print("%s" % "O", end='');
+          print( "O", end='');
         else:
-          print("%s" % "X", end='');
-        print("%s" % "|", end='');
+          print( "X", end='');
+        print( "|", end='');
       if y != 2:
-        print("%s" % "\n|-|-|-|\n|", end='');
-    print("%s" % "\n", end='');
+        print( "\n|-|-|-|\n|", end='');
+    print( "\n", end='');
 
 """ On dit qui gagne (info stoquées dans g.ended et g.note ) """
 def eval_( g ):
@@ -155,11 +155,11 @@ def play( g ):
           apply_move_xy(x, y, g);
           currentNote = minmax(g);
           print("%d" % x, end='');
-          print("%s" % ", ", end='');
+          print( ", ", end='');
           print("%d" % y, end='');
-          print("%s" % ", ", end='');
+          print( ", ", end='');
           print("%d" % currentNote, end='');
-          print("%s" % "\n", end='');
+          print( "\n", end='');
           cancel_move_xy(x, y, g);
           if currentNote < minNote:
             minNote = currentNote;
@@ -169,7 +169,7 @@ def play( g ):
     print("%d" % a, end='');
     b = minMove["y"];
     print("%d" % b, end='');
-    print("%s" % "\n", end='');
+    print( "\n", end='');
     return minMove;
 
 def init(  ):
@@ -207,5 +207,5 @@ for i in range(0, 1 + 1):
   print_state(state);
   e = state["note"];
   print("%d" % e, end='');
-  print("%s" % "\n", end='');
+  print( "\n", end='');
 

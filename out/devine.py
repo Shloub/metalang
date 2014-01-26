@@ -66,7 +66,7 @@ for i in range(0, len):
   tab[i] = tmp;
 a = devine_(nombre, tab, len);
 if a:
-  print("%s" % "True", end='');
+  print( "True", end='');
 else:
-  print("%s" % "False", end='');
+  print( "False", end='');
 

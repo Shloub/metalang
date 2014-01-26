@@ -17,7 +17,7 @@ int main(void){
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &param->foo);
   int a = param->bar + param->foo * param->bar;
-  printf("%d", a);
+  std::cout << a;
   return 0;
 }
 

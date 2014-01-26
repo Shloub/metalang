@@ -13,23 +13,23 @@ Tictactoe : un tictactoe avec une IA
   /* On affiche l'état */
   public static void print_state(gamestate g)
   {
-    System.out.printf("%s", "\n|");
+    System.out.print("\n|");
     for (int y = 0 ; y <= 2; y ++)
     {
       for (int x = 0 ; x <= 2; x ++)
       {
         if (g.cases[x][y] == 0)
-          System.out.printf("%s", " ");
+          System.out.print(" ");
         else if (g.cases[x][y] == 1)
-          System.out.printf("%s", "O");
+          System.out.print("O");
         else
-          System.out.printf("%s", "X");
-        System.out.printf("%s", "|");
+          System.out.print("X");
+        System.out.print("|");
       }
       if (y != 2)
-        System.out.printf("%s", "\n|-|-|-|\n|");
+        System.out.print("\n|-|-|-|\n|");
     }
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
   }
   
   /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
@@ -155,11 +155,11 @@ Renvoie le coup de l'IA
       apply_move_xy(x, y, g);
       int currentNote = minmax(g);
       System.out.printf("%d", x);
-      System.out.printf("%s", ", ");
+      System.out.print(", ");
       System.out.printf("%d", y);
-      System.out.printf("%s", ", ");
+      System.out.print(", ");
       System.out.printf("%d", currentNote);
-      System.out.printf("%s", "\n");
+      System.out.print("\n");
       cancel_move_xy(x, y, g);
       if (currentNote < minNote)
       {
@@ -172,7 +172,7 @@ Renvoie le coup de l'IA
     System.out.printf("%d", a);
     int b = minMove.y;
     System.out.printf("%d", b);
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
     return minMove;
   }
   
@@ -237,7 +237,7 @@ Renvoie le coup de l'IA
       print_state(state);
       int e = state.note;
       System.out.printf("%d", e);
-      System.out.printf("%s", "\n");
+      System.out.print("\n");
     }
   }
   

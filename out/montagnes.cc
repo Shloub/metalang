@@ -34,7 +34,7 @@ int main(void){
     tab.at(i) = x;
   }
   int a = montagnes_(tab, len);
-  printf("%d", a);
+  std::cout << a;
   return 0;
 }
 

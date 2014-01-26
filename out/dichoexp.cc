@@ -22,7 +22,7 @@ int main(void){
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &b);
   int c = exp_(a, b);
-  printf("%d", c);
+  std::cout << c;
   return 0;
 }
 

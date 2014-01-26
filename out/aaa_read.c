@@ -12,7 +12,7 @@ int main(void){
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c", 0);
   printf("%d", len);
-  printf("%s", "=len\n");
+  printf("=len\n");
   int *tab = malloc( len * sizeof(int));
   
   {
@@ -23,13 +23,13 @@ int main(void){
       scanf("%d", &tmpi1);
       scanf("%*[ \t\r\n]c", 0);
       printf("%d", i);
-      printf("%s", "=>");
+      printf("=>");
       printf("%d", tmpi1);
-      printf("%s", " ");
+      printf(" ");
       tab[i] = tmpi1;
     }
   }
-  printf("%s", "\n");
+  printf("\n");
   int *tab2 = malloc( len * sizeof(int));
   
   {
@@ -40,9 +40,9 @@ int main(void){
       scanf("%d", &tmpi2);
       scanf("%*[ \t\r\n]c", 0);
       printf("%d", i_);
-      printf("%s", "==>");
+      printf("==>");
       printf("%d", tmpi2);
-      printf("%s", " ");
+      printf(" ");
       tab2[i_] = tmpi2;
     }
   }
@@ -50,7 +50,7 @@ int main(void){
   scanf("%d", &strlen);
   scanf("%*[ \t\r\n]c", 0);
   printf("%d", strlen);
-  printf("%s", "=strlen\n");
+  printf("=strlen\n");
   char *tab4 = malloc( strlen * sizeof(char));
   
   {
@@ -61,9 +61,9 @@ int main(void){
       scanf("%c", &tmpc);
       int c = tmpc;
       printf("%c", tmpc);
-      printf("%s", ":");
+      printf(":");
       printf("%d", c);
-      printf("%s", " ");
+      printf(" ");
       if (tmpc != ' ')
         c = ((c - 'a') + 13) % 26 + 'a';
       tab4[toto] = c;

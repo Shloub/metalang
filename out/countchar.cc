@@ -26,7 +26,7 @@ int main(void){
     tab.at(i) = tmp;
   }
   int result = nth(tab, tofind, len);
-  printf("%d", result);
+  std::cout << result;
   return 0;
 }
 

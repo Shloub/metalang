@@ -37,9 +37,9 @@ int main(void){
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &t.at(1)->blah);
   int b = result(t, 4);
-  printf("%d", b);
+  std::cout << b;
   int c = t.at(2)->blah;
-  printf("%d", c);
+  std::cout << c;
   return 0;
 }
 

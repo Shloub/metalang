@@ -25,7 +25,7 @@ int main(void){
   for (int j = 0 ; j < strlen; j++)
   {
     char a = tab4.at(j);
-    printf("%c", a);
+    std::cout << a;
   }
   return 0;
 }

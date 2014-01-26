@@ -31,17 +31,17 @@ void print_sudoku(int* sudoku_){
         {
           int b = sudoku_[x + y * 9];
           printf("%d", b);
-          printf("%s", " ");
+          printf(" ");
           if ((x % 3) == 2)
-            printf("%s", " ");
+            printf(" ");
         }
       }
-      printf("%s", "\n");
+      printf("\n");
       if ((y % 3) == 2)
-        printf("%s", "\n");
+        printf("\n");
     }
   }
-  printf("%s", "\n");
+  printf("\n");
 }
 
 /* dit si les variables sont toutes différentes */
@@ -91,7 +91,7 @@ int main(void){
   if (solve(sudoku_))
     print_sudoku(sudoku_);
   else
-    printf("%s", "no solution\n");
+    printf("no solution\n");
   return 0;
 }
 

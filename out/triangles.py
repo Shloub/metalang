@@ -90,5 +90,5 @@ for k in range(0, len):
   for l in range(0, 1 + k):
     d = tab[k][l];
     print("%d" % d, end='');
-  print("%s" % "\n", end='');
+  print( "\n", end='');
 

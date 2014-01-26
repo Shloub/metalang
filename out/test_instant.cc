@@ -8,7 +8,7 @@ int foo(int a, int b){
 
 
 int main(void){
-  printf("%d", 10);
+  std::cout << 10;
   return 0;
 }
 

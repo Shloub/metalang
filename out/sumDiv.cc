@@ -49,7 +49,7 @@ int main(void){
   scanf("%d", &n);
   /* Lecture de l'entier */
   int b = sumdiv(n);
-  printf("%d", b);
+  std::cout << b;
   return 0;
 }
 

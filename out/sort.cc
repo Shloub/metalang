@@ -30,7 +30,7 @@ int main(void){
   for (int i = 0 ; i < len; i++)
   {
     int a = tab.at(i);
-    printf("%d", a);
+    std::cout << a;
   }
   return 0;
 }

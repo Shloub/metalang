@@ -43,7 +43,7 @@ int main(void){
     tab.at(i) = tmp;
   }
   int result = pathfind(tab, len);
-  printf("%d", result);
+  std::cout << result;
   return 0;
 }
 

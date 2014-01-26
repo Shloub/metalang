@@ -42,9 +42,9 @@ int main(void){
   }
   int a = devine_(nombre, tab, len);
   if (a)
-    printf("%s", "True");
+    printf("True");
   else
-    printf("%s", "False");
+    printf("False");
   return 0;
 }
 

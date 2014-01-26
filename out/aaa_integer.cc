@@ -7,19 +7,19 @@
 int main(void){
   int i = 0;
   i ++;
-  printf("%d", i);
+  std::cout << i;
   i += 55;
-  printf("%d", i);
+  std::cout << i;
   i *= 13;
-  printf("%d", i);
+  std::cout << i;
   i /= 2;
-  printf("%d", i);
+  std::cout << i;
   i ++;
-  printf("%d", i);
+  std::cout << i;
   i /= 3;
-  printf("%d", i);
+  std::cout << i;
   i --;
-  printf("%d", i);
+  std::cout << i;
   return 0;
 }
 

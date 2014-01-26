@@ -47,7 +47,7 @@ int main(void){
     tab.at(i) = tmp;
   }
   int c = plus_petit_(tab, len);
-  printf("%d", c);
+  std::cout << c;
   return 0;
 }
 

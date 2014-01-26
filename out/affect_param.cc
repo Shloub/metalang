@@ -10,7 +10,7 @@ void foo(int a){
 int main(void){
   int a = 0;
   foo(a);
-  printf("%d", a);
+  std::cout << a;
   std::cout << "\n";
   return 0;
 }

@@ -60,13 +60,13 @@ int main(void){
     tab.at(i) = tab2;
   }
   int c = find(len, tab);
-  printf("%d", c);
+  std::cout << c;
   for (int k = 0 ; k < len; k++)
   {
     for (int l = 0 ; l <= k; l ++)
     {
       int d = tab.at(k).at(l);
-      printf("%d", d);
+      std::cout << d;
     }
     std::cout << "\n";
   }

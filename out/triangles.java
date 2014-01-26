@@ -78,7 +78,7 @@ public class triangles
         int d = tab[k][l];
         System.out.printf("%d", d);
       }
-      System.out.printf("%s", "\n");
+      System.out.print("\n");
     }
   }
   

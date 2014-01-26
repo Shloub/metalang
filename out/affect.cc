@@ -56,9 +56,9 @@ int main(void){
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &t->blah);
   int a = result(t, t2);
-  printf("%d", a);
+  std::cout << a;
   int b = t->blah;
-  printf("%d", b);
+  std::cout << b;
   return 0;
 }
 

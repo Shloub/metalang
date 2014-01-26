@@ -1,7 +1,7 @@
 
 let () =
 begin
-  Printf.printf "%s" "ma petite chaine";
-  Printf.printf "%s" " en or"
+  Printf.printf "ma petite chaine";
+  Printf.printf " en or"
 end
  

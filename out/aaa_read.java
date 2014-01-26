@@ -19,7 +19,7 @@ read int, read char et skip
     len = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
     System.out.printf("%d", len);
-    System.out.printf("%s", "=len\n");
+    System.out.print("=len\n");
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
@@ -30,12 +30,12 @@ read int, read char et skip
       tmpi1 = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
       System.out.printf("%d", i);
-      System.out.printf("%s", "=>");
+      System.out.print("=>");
       System.out.printf("%d", tmpi1);
-      System.out.printf("%s", " ");
+      System.out.print(" ");
       tab[i] = tmpi1;
     }
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
     int[] tab2 = new int[len];
     for (int i_ = 0 ; i_ < len; i_++)
     {
@@ -46,9 +46,9 @@ read int, read char et skip
       tmpi2 = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
       System.out.printf("%d", i_);
-      System.out.printf("%s", "==>");
+      System.out.print("==>");
       System.out.printf("%d", tmpi2);
-      System.out.printf("%s", " ");
+      System.out.print(" ");
       tab2[i_] = tmpi2;
     }
     int strlen = 0;
@@ -58,7 +58,7 @@ read int, read char et skip
     strlen = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
     System.out.printf("%d", strlen);
-    System.out.printf("%s", "=strlen\n");
+    System.out.print("=strlen\n");
     char[] tab4 = new char[strlen];
     for (int toto = 0 ; toto < strlen; toto++)
     {
@@ -66,9 +66,9 @@ read int, read char et skip
       scanner.useDelimiter("\\n");tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
       int c = tmpc;
       System.out.printf("%c", tmpc);
-      System.out.printf("%s", ":");
+      System.out.print(":");
       System.out.printf("%d", c);
-      System.out.printf("%s", " ");
+      System.out.print(" ");
       if (tmpc != ' ')
         c = ((c - 'a') + 13) % 26 + 'a';
       tab4[toto] = (char)(c);

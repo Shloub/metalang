@@ -13,19 +13,19 @@ Il effectue du loop unrolling
     int j = 0;
     j = 0;
     System.out.printf("%d", j);
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
     j = 1;
     System.out.printf("%d", j);
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
     j = 2;
     System.out.printf("%d", j);
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
     j = 3;
     System.out.printf("%d", j);
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
     j = 4;
     System.out.printf("%d", j);
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
   }
   
 }

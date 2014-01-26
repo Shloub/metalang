@@ -30,7 +30,7 @@ int main(void){
   scanf("%*[ \t\r\n]c", 0);
   scanf("%d", &i);
   int c = fibo_(a, b, i);
-  printf("%d", c);
+  std::cout << c;
   return 0;
 }
 

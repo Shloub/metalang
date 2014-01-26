@@ -80,7 +80,7 @@ int main(void){
     current_pos --;
     mem.at(current_pos) = mem.at(current_pos) + 1;
     char b = mem.at(current_pos);
-    printf("%c", b);
+    std::cout << b;
     current_pos ++;
   }
   return 0;

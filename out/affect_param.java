@@ -14,7 +14,7 @@ public class affect_param
     int a = 0;
     foo(a);
     System.out.printf("%d", a);
-    System.out.printf("%s", "\n");
+    System.out.print("\n");
   }
   
 }

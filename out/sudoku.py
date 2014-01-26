@@ -54,13 +54,13 @@ def print_sudoku( sudoku_ ):
       for x in range(0, 1 + 8):
         b = sudoku_[x + y * 9];
         print("%d" % b, end='');
-        print("%s" % " ", end='');
+        print( " ", end='');
         if (x % 3) == 2:
-          print("%s" % " ", end='');
-      print("%s" % "\n", end='');
+          print( " ", end='');
+      print( "\n", end='');
       if (y % 3) == 2:
-        print("%s" % "\n", end='');
-    print("%s" % "\n", end='');
+        print( "\n", end='');
+    print( "\n", end='');
 
 """ dit si les variables sont toutes différentes """
 """ dit si les variables sont toutes différentes """
@@ -93,5 +93,5 @@ print_sudoku(sudoku_);
 if solve(sudoku_):
   print_sudoku(sudoku_);
 else:
-  print("%s" % "no solution\n", end='');
+  print( "no solution\n", end='');
 

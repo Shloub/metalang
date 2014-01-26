@@ -30,7 +30,7 @@ int main(void){
     tab.at(i) = tmp;
   }
   int result = summax(tab, len);
-  printf("%d", result);
+  std::cout << result;
   return 0;
 }
 

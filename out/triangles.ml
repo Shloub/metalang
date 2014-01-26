@@ -53,7 +53,7 @@ begin
       let d = tab.(k).(l) in
       Printf.printf "%d" d
     done;
-    Printf.printf "%s" "\n"
+    Printf.printf "\n"
   done
 end
  

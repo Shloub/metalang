@@ -3,8 +3,8 @@
 
 
 int main(void){
-  printf("%s", "ma petite chaine");
-  printf("%s", " en or");
+  printf("ma petite chaine");
+  printf(" en or");
   return 0;
 }
 

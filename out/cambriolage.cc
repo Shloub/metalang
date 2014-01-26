@@ -71,7 +71,7 @@ int main(void){
     serrures.at(k) = out1;
   }
   int e = nbPassePartout(n, passepartout, m, serrures);
-  printf("%d", e);
+  std::cout << e;
   return 0;
 }
 

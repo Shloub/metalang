@@ -49,9 +49,9 @@ public class devine
     }
     boolean a = devine_(nombre, tab, len);
     if (a)
-      System.out.printf("%s", "True");
+      System.out.print("True");
     else
-      System.out.printf("%s", "False");
+      System.out.print("False");
   }
   
 }
