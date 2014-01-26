@@ -118,12 +118,16 @@ let warn_error_of_parse_error filename lexbuf =
 let parse_file parse filename =
   let lexbuf = Lexing.from_channel (open_in filename) in
   try parse Lexer.token lexbuf
-  with Parser.Error -> warn_error_of_parse_error filename lexbuf
+  with
+  | Parser.Error -> warn_error_of_parse_error filename lexbuf
+  | Failure s -> warn_error_of_parse_error filename lexbuf
 
 let parse_string parse str =
   let lexbuf = Lexing.from_string str in
   try parse Lexer.token lexbuf
-  with Parser.Error -> warn_error_of_parse_error "string" lexbuf
+  with
+  | Parser.Error -> warn_error_of_parse_error "string" lexbuf
+  | Failure s -> warn_error_of_parse_error "string" lexbuf
 
 let make_prog_helper progname (funs, main) stdlib =
   let prog = {

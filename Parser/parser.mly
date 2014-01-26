@@ -112,7 +112,7 @@ expr :
     |> locate ( Ast.location ($startpos($1), $endpos($4)))
 }
 | LEXEMS {
-  E.lexems $1
+  E.lexems $1 |> locate ( Ast.location ($startpos($1), $endpos($1)))
 }
 ;
 
