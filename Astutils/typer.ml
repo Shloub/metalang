@@ -314,6 +314,11 @@ let is_int env expr =
     | Typed (Type.Fixed.F (_, Type.Integer), _) -> true
     | _ -> false
 
+let get_type env expr =
+  match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
+    | Typed (t, _) -> t
+    | _ -> assert false
+
 let is_float env expr =
   match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
     | Typed (Type.Fixed.F (_, Type.Float), _) -> true
