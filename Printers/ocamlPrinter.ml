@@ -36,6 +36,7 @@ open Printer
 let contains_return li =
   List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
     | Instr.Return _ -> true
+    | Instr.AllocArray _ -> acc
     | _ -> acc) false) li
 
 (** returns true if a list of instructions contains a return that
@@ -53,6 +54,20 @@ let rec contains_sad_return instrs =
     | _ -> tra acc i
   in List.fold_left (f (Instr.Writer.Traverse.fold f)) false instrs
 
+let collect_sad_returns ty instrs =
+	let add acc l type_ =
+		if contains_sad_return l then TypeSet.add type_ acc
+		else acc
+	in
+	let rec f tra acc i = match Instr.unfix i with
+    | Instr.AllocArray (_binding, type_, _len, Some (_b, l)) ->
+			add (tra acc i) l type_
+    | _ -> tra acc i
+  in List.fold_left (f (Instr.Writer.Traverse.fold f))
+	(add TypeSet.empty instrs ty)
+	instrs
+
+
 (* TODO
 virer plus de refs
 virer plus de nopending : inliner un peu
@@ -66,14 +81,15 @@ class camlPrinter = object(self)
   val mutable refbindings = BindingSet.empty
   (** sad return in the current function *)
   val mutable sad_returns = false
-  val mutable printed_exn = 0
+  val mutable printed_exn = TypeMap.empty
   (** true if we are processing an expression *)
   val mutable in_expr = false
+  val mutable exn_count = 0
 
   method lang () = "ml"
 
   (** show a type *)
-  method ptype f t =
+  method ptype f (t : Ast.Type.t ) =
       match Type.Fixed.unfix t with
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
@@ -161,7 +177,7 @@ class camlPrinter = object(self)
   method print_proto f triplet = self#print_proto_aux f false triplet
 
   (** util method to print a function prototype*)
-  method print_proto_aux f rec_ (funname, t, li) =
+  method print_proto_aux f rec_ ((funname:string), (t:Ast.Type.t), li) =
     match li with
       | [] -> Format.fprintf f "let@ %a%a@ () ="
 	self#rec_ rec_
@@ -366,10 +382,24 @@ class camlPrinter = object(self)
   method is_rec funname instrs =
     true (* TODO *)
 
-  method print_fun f funname t li instrs =
+	method print_exnName f (t : unit Type.Fixed.t) =
+		try
+			Format.fprintf f "%s" (TypeMap.find t printed_exn)
+		with Not_found ->
+			Format.fprintf f "NOT_FOUND_%a" self#ptype t
+
+	method print_exns f exns =
+		TypeMap.iter (fun ty str ->
+			Format.fprintf f "exception %s of %a@\n"
+				str
+				self#ptype ty
+		) exns
+
+  method print_fun f funname (t : unit Type.Fixed.t) li instrs =
     let () = self#calc_refs instrs in
     let is_rec = self#is_rec funname instrs in
     let proto = if is_rec then self#print_rec_proto else self#print_proto in
+		let sad_types = collect_sad_returns t instrs in
     let () = sad_returns <- contains_sad_return instrs in
     match t with
       | Type.Fixed.F (_, Type.Void) ->
@@ -388,15 +418,20 @@ class camlPrinter = object(self)
 	else
 	  let () =
 	    Warner.warn funname (fun t () -> Format.fprintf t "The returns will make a dirty ocaml code")
-	  in
-	  let () = printed_exn <- printed_exn + 1 in
-	  Format.fprintf f "exception Found_%d of %a;;@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith Found_%d(out) -> out@]@\n"
-	    printed_exn
-	    self#ptype t
+	  in (* TODO faire un diff pour ne déclarer que les nouvelles *)
+	  let () = printed_exn <-
+			TypeSet.fold (fun t (acc: string TypeMap.t) ->
+				exn_count <- exn_count + 1;
+				TypeMap.add t ("Found_"^(string_of_int exn_count)) acc 
+			) sad_types
+			TypeMap.empty
+		in
+	  Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
+			self#print_exns printed_exn
 	    proto (funname, t, li)
 	    self#ref_alias li
       self#instructions instrs
-	    printed_exn
+	    self#print_exnName t
 
   method ref_alias f li = match li with
     | [] -> ()
@@ -440,13 +475,17 @@ class camlPrinter = object(self)
 
   method return f e =
     if sad_returns then
-      Format.fprintf f "@[<h>raise (Found_%d(%a))@]" printed_exn self#expr e
+      Format.fprintf f "@[<h>raise (%a(%a))@]"
+				self#print_exnName (Typer.get_type (self#getTyperEnv ())  e)
+				self#expr e
     else
       Format.fprintf f "@[<h>%a@]" self#expr e
 
   method allocarray_lambda f binding type_ len binding2 lambda =
+    let next_sad_return =sad_returns in
+    sad_returns <- contains_sad_return lambda;
     let b = BindingSet.mem binding refbindings in
-      Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ (%a)@ (fun@ %a@ ->@\n@[<v 2>  %a@])%a@ in@]"
+      Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ (%a)@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@ in@]"
 	self#binding binding
 	(fun t () ->
 	  if b then
@@ -454,11 +493,20 @@ class camlPrinter = object(self)
 	) ()
 	self#expr len
 	self#binding binding2
-	self#instructions lambda
+				(fun f () ->
+					if sad_returns then Format.fprintf f "@ try@\n"
+				) ()
+				self#instructions lambda
+				(fun f () ->
+					if sad_returns then Format.fprintf f "@\nwith %a@ out -> out@\n"
+						self#print_exnName type_
+				) ()
       (fun t () ->
 	if b then
 	  Format.fprintf t ")"
-      ) ()
+      ) ();
+    sad_returns <- next_sad_return;
+    ()
 
   method allocarray f binding type_ len =
     let b = BindingSet.mem binding refbindings in
