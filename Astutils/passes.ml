@@ -382,3 +382,81 @@ let no_macro = function
       | _ -> true
     end
   | _ -> true
+
+module CheckUseVoid = struct
+	let rec check ty =
+		if Type.unfix ty = Type.Void then
+			raise (Warner.Error (fun f ->
+				Format.fprintf f "Forbiden use of void type in" (* TODO location *)
+			) )
+		else Type.Writer.Surface.iter check ty
+
+  let collectDefReturn env li =
+    let f () i =
+      match Instr.unfix i with
+				| Instr.AllocArray (_, ty, _, _)
+        | Instr.Declare (_, ty, _) ->
+					check ty
+        | Instr.Return e ->
+					check (Typer.get_type env e)
+        | _ -> () in
+    List.iter
+      (fun i ->
+        Instr.Writer.Deep.fold f
+          (f () i) i)
+       li
+
+	let collectDefReturn_fun env = function
+		| Prog.DeclarFun (_, _, params, li) ->
+			collectDefReturn env li;
+			List.iter (fun (_, ty) ->
+				check ty
+			) params
+    | _ -> ()
+
+	let apply (env, prog) =
+		List.iter (fun t -> collectDefReturn_fun env t) prog.Prog.funs;
+		Option.map_default () (collectDefReturn env) prog.Prog.main;
+		env, prog
+end
+
+module CheckReturn = struct
+  let find_return li =
+		let f tra acc i = match Instr.unfix i with
+			| Instr.Return _ ->
+				let loc = Ast.PosMap.get (Instr.Fixed.annot i) in
+				Some loc
+			| Instr.AllocArray _ -> acc
+			| _ -> tra acc i 
+		in
+    let li = List.map
+			(fun i ->
+				f (Instr.Writer.Traverse.fold f) None i)
+			li
+    in try
+	 List.find (function | Some _ -> true | _ -> false) li
+      with Not_found -> None
+
+  let check_noreturn li =
+    match find_return li with
+    | None -> ()
+    | Some loc ->
+      raise ( Warner.Error (fun f ->
+	Format.fprintf f "return not expected at %a" Warner.ploc loc
+      ))
+
+  let check_fun = function
+    | Prog.DeclarFun (varname, ty, li, instrs) -> begin match Type.unfix ty with
+      | Type.Void -> check_noreturn instrs
+      | _ -> ()
+    end
+    | _ -> ()
+
+  let apply () prog =
+    begin match prog.Prog.main with
+    | Some li -> check_noreturn li
+    | None -> ()
+    end;
+    List.iter check_fun prog.Prog.funs;
+    prog
+end
