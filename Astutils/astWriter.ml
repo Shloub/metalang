@@ -64,6 +64,9 @@ module F (T : SigAst) = struct
       let (acc, t) =
 	T.foldmap f acc t
       in acc
+
+		let iter f0 t = fold (fun acc t -> f0 t) () t
+
   end
 
   (**
