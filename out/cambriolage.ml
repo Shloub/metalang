@@ -4,7 +4,8 @@ let rec max2 a b =
   else
     b
 
-exception Found_1 of int;;
+exception Found_1 of int
+
 let rec nbPassePartout n passepartout m serrures =
   try
   let max_ancient = ref( 0 ) in
@@ -28,7 +29,7 @@ let rec nbPassePartout n passepartout m serrures =
     raise (Found_1(2))
   else
     raise (Found_1(0))
-  with Found_1(out) -> out
+  with Found_1 (out) -> out
 
 let () =
 begin

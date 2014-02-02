@@ -1,4 +1,5 @@
-exception Found_1 of bool;;
+exception Found_1 of bool
+
 let rec devine_ nombre tab len =
   try
   let min_ = ref( tab.(0) ) in
@@ -14,7 +15,7 @@ let rec devine_ nombre tab len =
       raise (Found_1(false))
   done;
   raise (Found_1(true))
-  with Found_1(out) -> out
+  with Found_1 (out) -> out
 
 let () =
 begin

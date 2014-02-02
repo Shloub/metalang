@@ -1,4 +1,5 @@
-exception Found_1 of bool;;
+exception Found_1 of bool
+
 let rec is_pair i =
   try
   let j = ref( 1 ) in
@@ -26,7 +27,7 @@ let rec is_pair i =
       j := 8
     end;
   raise (Found_1((i mod 2) = 0))
-  with Found_1(out) -> out
+  with Found_1 (out) -> out
 
 let () =
 begin
