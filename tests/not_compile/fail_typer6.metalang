@@ -1,0 +1,5 @@
+
+def string foobar()
+  def read string foo
+	return foo
+end

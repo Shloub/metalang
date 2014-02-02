@@ -1,0 +1,22 @@
+/*
+  Ce test a été généré par Metalang.
+*/
+def int result(int len, array<int> tab)
+  def array<bool> tab2[len] with i do return false end
+  for i1 = 0 to len - 1 do
+    tab2[tab[i1]] = true
+  end
+  for i2 = 0 to len - 1 do
+    if ! tab2[i2] then
+      return i2
+    end
+  end
+  return -1
+end
+
+main
+  def array<int> l0 = read_int_line(1);
+  def len = l0[0];
+  def array<int> tab = read_int_line(len);
+	print int result(len, tab)
+end

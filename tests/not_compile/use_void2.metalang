@@ -1,0 +1,7 @@
+
+def void a()
+end
+
+main
+  def array<void>b[1] with i do return  a() end
+end

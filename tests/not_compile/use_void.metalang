@@ -1,0 +1,7 @@
+
+def void a()
+end
+
+main
+  def b = a()
+end

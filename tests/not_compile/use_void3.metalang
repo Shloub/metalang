@@ -1,0 +1,6 @@
+
+def void a(array<void> b)
+end
+
+main
+end

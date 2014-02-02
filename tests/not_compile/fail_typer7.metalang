@@ -1,0 +1,4 @@
+
+main
+  def read string foo
+end
