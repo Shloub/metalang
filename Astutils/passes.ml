@@ -332,6 +332,7 @@ module ReadAnalysis = struct
   let collectReads acc li =
     let f acc i =
       match Instr.unfix i with
+        | Instr.DeclRead (ty, _)
         | Instr.Read(ty, _) ->
           TypeSet.add ty acc
         | _ -> acc in
@@ -349,17 +350,28 @@ module ReadAnalysis = struct
       ) li TypeSet.empty
 
   let apply prog =
+		let reads_types =
+      let acc = collectReads_progitem prog.Prog.funs
+      in Option.map_default acc (collectReads acc) prog.Prog.main
+		in
+		TypeSet.iter
+			(fun ty ->
+				match Type.unfix ty with
+				| Type.Char | Type.Integer -> ()
+				| _ -> raise (Warner.Error (fun f ->
+					(* TODO position *)
+					Format.fprintf f "Cannot read %s@\n"
+						(Type.type_t_to_string ty)
+				))
+			)
+			reads_types;
     { prog with
       Prog.hasSkip =
         begin
           let acc = hasSkip_progitem prog.Prog.funs
           in acc || (Option.map_default false hasSkip prog.Prog.main )
         end;
-      Prog.reads =
-        begin
-          let acc = collectReads_progitem prog.Prog.funs
-          in Option.map_default acc (collectReads acc) prog.Prog.main
-        end
+      Prog.reads = reads_types
     }
 end
 
