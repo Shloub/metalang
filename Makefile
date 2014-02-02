@@ -430,6 +430,7 @@ fastTestCmp : out $(FASTTESTSDEPS)
 
 TESTSNOTCOMPILE	:= $(addprefix out/, \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)))
+.PHONY: testNotCompile
 testNotCompile : out $(TESTSNOTCOMPILE)
 	@echo "$(green)NOT COMPILE TESTS OK$(reset)"
 
