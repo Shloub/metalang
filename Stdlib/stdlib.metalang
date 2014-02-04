@@ -55,8 +55,9 @@ def int min4(int a, int b, int c, int d)
 	return min3(min2(a, b), c, d)
 end
 
-macro array<int> py_expand_read_int_line()
+macro array<int> native_expand_read_int_line()
   py do "list(map(int, input().split()))"
+  php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
   *  do "E R R O R"
 end
 
@@ -65,15 +66,18 @@ macro array<array<int>> py_expand_read_int_matrix(int y)
   *  do "E R R O R"
 end
 
-macro int py_expand_read_int()
+macro int native_expand_read_int()
   py do "int(input())"
+  php do "intval(trim(fgets(STDIN)))"
   *  do "E R R O R"
 end
 
 def lexems expand_read_int_line(lexems a)
-    if current_language() == LANG_Py then
+    if current_language() == LANG_Py ||
+	current_language() == LANG_Php
+	  then
       return {
-        def a = py_expand_read_int_line()
+        def a = native_expand_read_int_line()
         return a;
       }
     else
@@ -98,10 +102,15 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
         return a;
       }
     else
+			def s = {skip}
+			if current_language() == LANG_Php then
+				s = {}
+			end
     return {
       def array<array<int>> tab[${y}] with z do
-	def out = read_int_line(x)
-	skip return out
+				def out = read_int_line(x)
+				${ s }
+				return out
       end
       return tab
     }
