@@ -509,8 +509,6 @@ class printer = object(self)
 
   method char f c = Format.fprintf f "%C" c
 
-  method expr_binding f e = self#binding f e
-
   method access f m =
     self#mutable_ f m
 

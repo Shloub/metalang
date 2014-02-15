@@ -445,13 +445,6 @@ class camlPrinter = object(self)
       else
         self#ref_alias f tl
 
-  method expr_binding f e =
-    if BindingSet.mem e refbindings
-    then
-      Format.fprintf f "!%a" self#binding e
-    else
-      Format.fprintf f "%a" self#binding e
-
   method combine_formats () = true
 
   method multi_print f format exprs =
