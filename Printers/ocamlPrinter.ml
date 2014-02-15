@@ -79,6 +79,8 @@ class camlPrinter = object(self)
 
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
+  (** used variables *)
+  val mutable used_variables = BindingSet.empty
   (** sad return in the current function *)
   val mutable sad_returns = false
   val mutable printed_exn = TypeMap.empty
@@ -103,7 +105,7 @@ class camlPrinter = object(self)
 	Format.fprintf f "record{%a}"
 	  (print_list
 	     (fun t (name, type_) ->
-	       Format.fprintf t "%a : %a;" self#binding name self#ptype type_
+	       Format.fprintf t "%s : %a;" name self#ptype type_
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
 	  ) li
@@ -111,7 +113,7 @@ class camlPrinter = object(self)
 	      Format.fprintf f "%a"
 	        (print_list
 	           (fun t name ->
-	             Format.fprintf t "%a" self#binding name
+	             Format.fprintf t "%s" name
 	           )
 	           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
 	  ) li
@@ -154,8 +156,9 @@ class camlPrinter = object(self)
 
   (** show the main *)
   method main f main =
-    let () = sad_returns <- contains_sad_return main in
-    let () = self#calc_refs main in
+    sad_returns <- contains_sad_return main;
+    self#calc_refs main;
+    self#calc_used_variables main;
     Format.fprintf f "@[<v 2>@[<h>let () =@\nbegin@\n@[<v 2>  %a@]@\nend@\n"
       self#instructions main
 
@@ -279,7 +282,11 @@ class camlPrinter = object(self)
 	  Format.fprintf f "begin@\n@[<v 2>  %a@]@\nend" self#instructions b
 
   (** show a binding *)
-  method binding f i = Format.fprintf f "%s" i
+  method binding f i =
+    if BindingSet.mem i used_variables then
+      Format.fprintf f "%s" i
+    else 
+      Format.fprintf f "_%s" i
 
   method hasSelfAffect op = false
 
@@ -322,6 +329,31 @@ class camlPrinter = object(self)
       self#binding v
       self#format_type t
 
+  method calc_used_variables instrs =
+    let rec fold_expr acc e =
+      match Expr.unfix e with
+      | Expr.Access m -> Mutable.Writer.Deep.fold fold_mut acc m
+      | _ -> acc
+    and fold_mut acc m = match Mutable.unfix m with
+      | Mutable.Var varname -> BindingSet.add varname acc
+      | Mutable.Array (_, lie) -> List.fold_left
+	dfold_expr acc lie
+      | _ -> acc
+    and dfold_expr acc e =
+      Expr.Writer.Deep.fold fold_expr
+	(fold_expr acc e) e
+    in
+    let fold_instr acc i =
+      let acc = Instr.fold_expr dfold_expr acc i in
+      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
+      | Instr.Affect (m, e) -> fold_mut acc m
+      | _ -> acc) acc i
+    in
+    used_variables <-
+      List.fold_left fold_instr BindingSet.empty
+      instrs
+
+
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
     refbindings <-
@@ -348,11 +380,11 @@ class camlPrinter = object(self)
   method mutable_ f m =
     match m |> Mutable.Fixed.unfix with
       | Mutable.Var binding ->
-	  if in_expr && BindingSet.mem binding refbindings
+	if in_expr && BindingSet.mem binding refbindings
 	then
 	  Format.fprintf f "(!%a)" self#binding binding
 	else
-	self#binding f binding
+	  self#binding f binding
       | _ -> self#mutable_rec f m
 
   method mutable_rec f m =
@@ -362,7 +394,7 @@ class camlPrinter = object(self)
 	then
 	  Format.fprintf f "(!%a)" self#binding binding
 	else
-	self#binding f binding
+	  self#binding f binding
       | Mutable.Dot (mutable_, field) ->
 	Format.fprintf f "@[<h>%a.%a@]"
 	  self#mutable_rec mutable_
@@ -396,7 +428,8 @@ class camlPrinter = object(self)
 		) exns
 
   method print_fun f funname (t : unit Type.Fixed.t) li instrs =
-    let () = self#calc_refs instrs in
+    self#calc_refs instrs;
+    self#calc_used_variables instrs;
     let is_rec = self#is_rec funname instrs in
     let proto = if is_rec then self#print_rec_proto else self#print_proto in
 		let sad_types = collect_sad_returns t instrs in
@@ -609,22 +642,22 @@ class camlPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
 	Type.Struct (li, _) ->
-	Format.fprintf f "type %a = {@\n@[<v 2>  %a@]@\n};;@\n"
-	  self#binding name
+	Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
+	  name
 	  (print_list
 	     (fun t (name, type_) ->
-	       Format.fprintf t "@[<h>mutable %a : %a;@]"
-		 self#binding name
+	       Format.fprintf t "@[<h>mutable %s : %a;@]"
+		 name
 		 self#ptype type_
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	  ) li
       | Type.Enum li ->
-        Format.fprintf f "type %a = @\n@[<v2>    %a@]@\n"
-          self#binding name
+        Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
+	  name
           (print_list
 	           (fun t name ->
-               self#binding t name
+		     Format.fprintf t "%s" name
 	           )
 	           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
 	        ) li
