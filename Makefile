@@ -7,8 +7,6 @@
 #  usages :
 #    make clean
 #    make metalang
-#    make fastTestCmp
-#        lance un test rapide
 #    make testCompare
 #        lance un teste approfondi
 #    make testNotCompile
@@ -17,6 +15,10 @@
 #        compile la documentation
 #
 
+reset	= \033[0m
+red	= \033[0;31m
+green	= \033[0;32m
+yellow	= \033[0;33m
 
 tar :
 	rm -rf tarball
@@ -95,16 +97,10 @@ TMPFILES	:=\
 	$(addsuffix .pas, $(TESTS)) \
 	$(addsuffix .pas.bin, $(TESTS)) \
 	$(addsuffix .pas.bin.out, $(TESTS)) \
-	$(addsuffix .bin.outs, $(TESTS)) \
-	$(addsuffix .int.outs, $(TESTS)) \
-	$(addsuffix .managed.outs, $(TESTS)) \
-	$(addsuffix .startTest, $(TESTS)) \
-	$(addsuffix .fastouts, $(TESTS)) \
-	$(addsuffix .fasttest, $(TESTS)) \
 	$(addsuffix .test, $(TESTS)) \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)) \
 	$(addsuffix .outs, $(TESTS)) \
-	$(addsuffix .metalang, $(TESTS))
+	$(addsuffix .metalang_parsed, $(TESTS))
 
 .SECONDARY: $(TMPFILES)
 
@@ -117,16 +113,10 @@ main.byte :
 main.native:
 	@ocamlbuild Main/main.native
 
-.PHONY: repl.byte
-repl.byte :
-	@ocamlbuild -tag debug Main/repl.byte
-
-
 out :
 	@mkdir out
 
-out/%.sch : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
+out/%.sch : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang sch $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -134,7 +124,6 @@ out/%.sch : tests/prog/%.metalang metalang out
 	fi
 
 out/%.java : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang java $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -142,7 +131,6 @@ out/%.java : tests/prog/%.metalang metalang out
 	fi
 
 out/%.js : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang js $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -150,31 +138,27 @@ out/%.js : tests/prog/%.metalang metalang out
 	fi
 
 out/%.cs : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cs $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang cs $< || exit 1; \
 	fi
 
-out/%.pas : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
+out/%.pas : tests/prog/%.metalang metalang out Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang pas $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang pas $< || exit 1; \
 	fi
 
-out/%.metalang : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
+out/%.metalang_parsed : tests/prog/%.metalang metalang out
 	@if [ -e "$(basename $<).compiler_input" ]; then \
-	./metalang -o out -lang metalang $< < "$(basename $<).compiler_input" || exit 1; \
+	./metalang -o out -lang metalang_parsed $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang metalang $< || exit 1; \
 	fi
 
 out/%.ml : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang ml $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -182,15 +166,13 @@ out/%.ml : tests/prog/%.metalang metalang out
 	fi
 
 out/%.rb : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang rb $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang rb $< || exit 1; \
 	fi
 
-out/%.py : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
+out/%.py : tests/prog/%.metalang metalang out Stdlib/stdlib.metalang 
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang py $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -198,7 +180,6 @@ out/%.py : tests/prog/%.metalang metalang out
 	fi
 
 out/%.c : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang c $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -206,22 +187,20 @@ out/%.c : tests/prog/%.metalang metalang out
 	fi
 
 out/%.cc : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cc $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang cc $< || exit 1; \
 	fi
 
-out/%.php : tests/prog/%.metalang metalang out
-	@echo "generation of $< with entry $(basename $<).compiler_input "
+out/%.php : tests/prog/%.metalang metalang out Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang php $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang php $< || exit 1; \
 	fi
 
-out/%.metalang.test : out/%.startTest out/%.metalang
+out/%.metalang.test : out/%.metalang Stdlib/stdlib.metalang metalang
 	@mkdir -p out/foo/out
 	@./metalang -nostdlib -quiet -o out/foo/out $(basename $<).metalang
 	@for i in `ls $(basename $<).*`; do \
@@ -237,131 +216,74 @@ out/%.metalang.test : out/%.startTest out/%.metalang
 	done;
 
 out/%.c.bin : out/%.c
-	@echo "compiling C"
 	@gcc $(CFLAGS) $< -o $@ || exit 1
 
 out/%.cc.bin : out/%.cc
-	@echo "compiling C++"
 	@g++ $(CCFLAGS) $< -o $@ || exit 1
 
 out/%.pas.bin : out/%.pas
-	@echo "compiling pascal"
-	@fpc $< || exit 1
+	@fpc $< > /dev/null || exit 1
 	@mv out/$(basename $*) $@
 	@rm out/$(basename $*).o
 
 out/%.class : out/%.java
-	@echo "compiling java"
 	@javac $< || exit 1
 
 out/%.exe : out/%.cs
-	@echo "compiling C#"
 	@gmcs $< || exit 1
 
 out/%.ml.native : out/%.ml
-	@echo "compiling ocaml native"
-	@ocamlbuild -tag debug out/$(basename $*).native || exit 1
-	@mv _build/out/$(basename $*).native $@
+	@ocamlopt -w +A -g out/$(basename $*).ml -o out/$(basename $*).ml.native || exit 1
+	@rm out/$(basename $*).cmx || exit 0
+	@rm out/$(basename $*).cmi || exit 0
+	@rm out/$(basename $*).o || exit 0
 
 out/%.ml.byte : out/%.ml
-	@echo "compiling ocaml bytecode"
-	@ocamlbuild -tag debug out/$(basename $*).byte || exit 1
-	@mv _build/out/$(basename $*).byte $@
+	@ocamlc -w +A -g out/$(basename $*).ml -o -g out/$(basename $*).ml.byte || exit 1
+	@rm out/$(basename $*).cmo || exit 0
+	@rm out/$(basename $*).cmi || exit 0
 
 out/%.bin.out : out/%.bin
-	@echo "testing binary execution"
-	@DATE=` date +%s.%N`; \
-	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.eval.out : metalang
-	@echo "testing metalang execution"
-	@DATE=` date +%s.%N`; \
-	if [ -e "tests/prog/$(basename $*).compiler_input" ]; then \
+	@if [ -e "tests/prog/$(basename $*).compiler_input" ]; then \
 		cat "tests/prog/$(basename $*).compiler_input" tests/prog/$(basename $*).in | ./metalang -eval tests/prog/$(basename $*).metalang  > $@ || exit 1; \
 	else \
 		./metalang -eval tests/prog/$(basename $*).metalang < tests/prog/$(basename $*).in > $@ || exit 1; \
-	fi; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	fi;
 
 out/%.ml.native.out : out/%.ml.native
-	@echo "testing ocaml native execution"
-	@DATE=` date +%s.%N`; \
-	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.ml.byte.out : out/%.ml.byte
-	@echo "testing ocaml bytecode execution"
-	@DATE=` date +%s.%N`; \
-	./$< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.class.out : out/%.class
-	@echo "testing java execution"
-	@DATE=` date +%s.%N`; \
-	$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.js.out : out/%.js
-	@echo "testing javascript execution"
-	@DATE=` date +%s.%N`; \
-	node $< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@node $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.ml.out : out/%.ml
-	@echo "testing ocaml execution"
-	@DATE=` date +%s.%N`; \
-	ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.php.out : out/%.php
-	@echo "testing php execution"
-	@DATE=` date +%s.%N`; \
-	php $< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@php $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.py.out : out/%.py
-	@echo "testing python execution"
-	@DATE=` date +%s.%N`; \
-	$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.sch.out : out/%.sch
-	@echo "testing scheme execution"
-	@DATE=` date +%s.%N`; \
-	gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.rb.out : out/%.rb
-	@echo "testing ruby execution"
-	@DATE=` date +%s.%N`; \
-	ruby $< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@ruby $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.exe.out : out/%.exe
-	@echo "testing mono execution"
-	@DATE=` date +%s.%N`; \
-	mono $< < tests/prog/$(basename $*).in > $@ || exit 1; \
-	DATE2=` date +%s.%N`; \
-	echo "$$DATE2 - $$DATE" | bc > $@.time
+	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-reset	= \033[0m
-red	= \033[0;31m
-green	= \033[0;32m
-yellow	= \033[0;33m
-
-TESTPROGS	=\
+out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out # out/%.byte.out out/%.sch.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -373,43 +295,7 @@ TESTPROGS	=\
 	fi; \
 	done; \
 	cp $< $@ ;\
-
-out/%.int.outs : out/%.ml.out out/%.py.out out/%.php.out \
-	out/%.rb.out out/%.eval.out out/%.js.out #out/%.sch.out
-	$(TESTPROGS)
-
-out/%.bin.outs : out/%.cc.bin.out \
-	out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out
-	$(TESTPROGS)
-
-out/%.managed.outs : out/%.class.out out/%.exe.out # out/%.byte.out
-	$(TESTPROGS)
-
-out/%.startTest :
-	@echo "$(yellow)TESTING $(basename $@)$(reset)"
-	@touch $@
-
-out/%.outs : out/%.bin.outs out/%.int.outs out/%.managed.outs
-	$(TESTPROGS)
-
-out/%.time.html : out/%.bin.outs out/%.int.outs out/%.managed.outs
-	echo "<h3>Bench de : $(basename $@)</h3><table>" > $@
-	for i in `ls $(basename $(basename $@))*.time`; do \
-	echo "<tr><td>$$i</td><td>`cat $$i`</td></tr>" >> $@; \
-	done;
-	echo "</table>" >> $@
-
-out/%.test : out/%.startTest out/%.outs
-	@echo "$(green)OK $(basename $*)$(reset)";
-	@touch $@
-
-%.fastouts : %.int.outs
-	$(TESTPROGS)
-
-%.fasttest : %.startTest %.fastouts
-	@echo "$(green)OK $(basename $*)$(reset)";
-	@touch $@
-
+	echo "$(green)OK $(basename $*)$(reset)";
 
 #never remove tmp files : powerfull for debug
 CMPTESTSDEPS	:= $(addsuffix .test, $(TESTS))
@@ -417,11 +303,7 @@ CMPTESTSDEPS	:= $(addsuffix .test, $(TESTS))
 testCompare : out $(CMPTESTSDEPS)
 	@echo "$(green)ALL TESTS OK$(reset)"
 
-FASTTESTSDEPS	:= $(addsuffix .fasttest, $(TESTS))
-fastTestCmp : out $(FASTTESTSDEPS)
-	@echo "$(green)FAST TESTS OK$(reset)"
-
-%.not_compile : %.startTest metalang
+%.not_compile : metalang
 	@rm out/$(notdir $(basename $<)).ml || exit 0
 	@./metalang tests/not_compile/$(notdir $(basename $<)).metalang -o out -lang ml || exit 0
 	@if [ -e out/$(notdir $(basename $<)).ml ]; then exit 1; fi

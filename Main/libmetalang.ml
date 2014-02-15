@@ -69,7 +69,7 @@ let languages, printers =
     "tex",  no_passes   =>  new TexPrinter.texPrinter ;
 (*    "sch",  ocaml_passes   =>  SchemePrinter.printer ;*)
 
-    "metalang", no_passes => new Printer.printer ;
+    "metalang_parsed", no_passes => new Printer.printer ;
   (* Si on met cette passe en premier,
      on se retrouve avec les erreurs de typages avant les erreurs de naming
   *)

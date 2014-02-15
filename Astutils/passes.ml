@@ -420,6 +420,7 @@ module CheckUseVoid = struct
 		env, prog
 end
 
+(* TODO checker les mauvais returns *)
 module CheckReturn = struct
   let find_return li =
 		let f tra acc i = match Instr.unfix i with
