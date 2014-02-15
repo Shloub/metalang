@@ -23,7 +23,7 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let len = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let tab = Array.init (len) (fun _i ->
+  let tab = Array.init len (fun _i ->
     let tmp = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     tmp) in

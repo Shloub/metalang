@@ -166,9 +166,9 @@ let rec play g =
 
 let rec init () =
   let d = 3 in
-  let cases = Array.init (d) (fun _i ->
+  let cases = Array.init d (fun _i ->
     let c = 3 in
-    let tab = Array.init (c) (fun _j ->
+    let tab = Array.init c (fun _j ->
       0) in
     tab) in
   let out_ = {

@@ -35,18 +35,18 @@ let () =
 begin
   let n = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let passepartout = Array.init (n) (fun _i ->
+  let passepartout = Array.init n (fun _i ->
     let c = 2 in
-    let out0 = Array.init (c) (fun _j ->
+    let out0 = Array.init c (fun _j ->
       let out_ = Scanf.scanf "%d" (fun x -> x) in
       Scanf.scanf "%[\n \010]" (fun _ -> ());
       out_) in
     out0) in
   let m = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let serrures = Array.init (m) (fun _k ->
+  let serrures = Array.init m (fun _k ->
     let d = 2 in
-    let out1 = Array.init (d) (fun _l ->
+    let out1 = Array.init d (fun _l ->
       let out_ = Scanf.scanf "%d" (fun x -> x) in
       Scanf.scanf "%[\n \010]" (fun _ -> ());
       out_) in

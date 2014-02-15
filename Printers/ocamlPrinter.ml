@@ -511,13 +511,16 @@ class camlPrinter = object(self)
     let next_sad_return =sad_returns in
     sad_returns <- contains_sad_return lambda;
     let b = BindingSet.mem binding refbindings in
-      Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ (%a)@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@ in@]"
+      Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@ in@]"
 	self#binding binding
 	(fun t () ->
 	  if b then
 	    Format.fprintf t "ref(@ "
 	) ()
-	self#expr len
+	(fun f e ->
+	  if self#nop (Expr.unfix e) then self#expr f e
+	  else Format.fprintf f "(%a)" self#expr e
+	) len
 	self#binding binding2
 				(fun f () ->
 					if sad_returns then Format.fprintf f "@ try@\n"

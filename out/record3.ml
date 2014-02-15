@@ -23,7 +23,7 @@ let rec result t len =
 let () =
 begin
   let a = 4 in
-  let t = Array.init (a) (fun i ->
+  let t = Array.init a (fun i ->
     mktoto i) in
   Scanf.scanf "%d" (fun value -> t.(0).bar <- value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());

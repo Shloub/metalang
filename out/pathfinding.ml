@@ -32,8 +32,8 @@ let rec pathfind_aux cache tab x y posX posY =
     end
 
 let rec pathfind tab x y =
-  let cache = Array.init (y) (fun _i ->
-    let tmp = Array.init (x) (fun _j ->
+  let cache = Array.init y (fun _i ->
+    let tmp = Array.init x (fun _j ->
       -1) in
     tmp) in
   pathfind_aux cache tab x y 0 0
@@ -46,8 +46,8 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> y := value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let tab = Array.init ((!y)) (fun _i ->
-    let tab2 = Array.init ((!x)) (fun _j ->
+  let tab = Array.init (!y) (fun _i ->
+    let tab2 = Array.init (!x) (fun _j ->
       let tmp = ref( '\000' ) in
       Scanf.scanf "%c" (fun value -> tmp := value);
       (!tmp)) in

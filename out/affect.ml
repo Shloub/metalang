@@ -29,9 +29,9 @@ let rec result t_ t2_ =
   t2 := (!t3);
   (!t).blah <- (!t).blah + 1;
   let len = 1 in
-  let cache0 = ref( Array.init (len) (fun i ->
+  let cache0 = ref( Array.init len (fun i ->
     -i)) in
-  let cache1 = Array.init (len) (fun j ->
+  let cache1 = Array.init len (fun j ->
     j) in
   let cache2 = ref( (!cache0) ) in
   cache0 := cache1;
