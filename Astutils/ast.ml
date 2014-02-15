@@ -630,6 +630,7 @@ module Instr = struct
               let acc, e = f acc e in
               acc, Declare (v, t, e)
             | Affect (m, e) ->
+	      let acc, m = Mutable.foldmap_expr f acc m in
               let acc, e = f acc e in
               acc, Affect (m, e)
             | Loop (v, e1, e2, li) ->
@@ -662,8 +663,11 @@ module Instr = struct
             | Print (t, e) ->
               let acc, e = f acc e in
               acc, Print (t, e)
-            | Read (t, m) -> acc, Read (t, m)
-            | DeclRead (t, m) -> acc, DeclRead (t, m)
+            | Read (t, m) ->
+	      let acc, m = Mutable.foldmap_expr f acc m in
+	      acc, Read (t, m)
+            | DeclRead (t, m) ->
+	      acc, DeclRead (t, m)
             | StdinSep -> acc, StdinSep
             | Unquote e -> acc, Unquote e
         in out, fix i
