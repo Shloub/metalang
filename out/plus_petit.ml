@@ -35,7 +35,7 @@ begin
   let len = ref( 0 ) in
   Scanf.scanf "%d" (fun value -> len := value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let tab = Array.init ((!len)) (fun i ->
+  let tab = Array.init ((!len)) (fun _i ->
     let tmp = ref( 0 ) in
     Scanf.scanf "%d" (fun value -> tmp := value);
     Scanf.scanf "%[\n \010]" (fun _ -> ());

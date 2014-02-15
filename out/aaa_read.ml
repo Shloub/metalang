@@ -10,7 +10,7 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Printf.printf "%d" len;
   Printf.printf "=len\n";
-  let tab = Array.init (len) (fun i ->
+  let _tab = Array.init (len) (fun i ->
     let tmpi1 = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     Printf.printf "%d" i;
@@ -19,7 +19,7 @@ begin
     Printf.printf " ";
     tmpi1) in
   Printf.printf "\n";
-  let tab2 = Array.init (len) (fun i_ ->
+  let _tab2 = Array.init (len) (fun i_ ->
     let tmpi2 = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     Printf.printf "%d" i_;
@@ -31,7 +31,7 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Printf.printf "%d" strlen;
   Printf.printf "=strlen\n";
-  let tab4 = Array.init (strlen) (fun toto ->
+  let tab4 = Array.init (strlen) (fun _toto ->
     let tmpc = Scanf.scanf "%c" (fun x -> x) in
     let c = ref( int_of_char (tmpc) ) in
     Printf.printf "%c" tmpc;

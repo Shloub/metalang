@@ -166,9 +166,9 @@ let rec play g =
 
 let rec init () =
   let d = 3 in
-  let cases = Array.init (d) (fun i ->
+  let cases = Array.init (d) (fun _i ->
     let c = 3 in
-    let tab = Array.init (c) (fun j ->
+    let tab = Array.init (c) (fun _j ->
       0) in
     tab) in
   let out_ = {
@@ -192,7 +192,7 @@ let rec read_move () =
 
 let () =
 begin
-  for i = 0 to 1 do
+  for _i = 0 to 1 do
     let state = (init ()) in
     while not state.ended
     do

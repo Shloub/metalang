@@ -15,7 +15,7 @@ let rec rev2 empty acc torev =
     acc
   else
     begin
-      let acc2 = {
+      let _acc2 = {
         head=torev.head;
         tail=acc;
       } in

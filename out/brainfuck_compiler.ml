@@ -6,10 +6,10 @@ et qui produit les macros metalang correspondante
 *)
 let () =
 begin
-  let input = ' ' in
+  let _input = ' ' in
   let current_pos = ref( 500 ) in
   let a = 1000 in
-  let mem = Array.init (a) (fun i ->
+  let mem = Array.init (a) (fun _i ->
     0) in
   mem.((!current_pos)) <- mem.((!current_pos)) + 1;
   mem.((!current_pos)) <- mem.((!current_pos)) + 1;

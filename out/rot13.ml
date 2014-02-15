@@ -7,7 +7,7 @@ let () =
 begin
   let strlen = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let tab4 = Array.init (strlen) (fun toto ->
+  let tab4 = Array.init (strlen) (fun _toto ->
     let tmpc = Scanf.scanf "%c" (fun x -> x) in
     let c = ref( int_of_char (tmpc) ) in
     if tmpc <> ' ' then

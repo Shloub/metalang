@@ -5,6 +5,6 @@ type foo_t =
 
 let () =
 begin
-  let foo_val = Foo in ()
+  let _foo_val = Foo in ()
 end
  
