@@ -3,39 +3,39 @@ import sys
 
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 
 
 def exp_( a, b ):
@@ -49,9 +49,9 @@ def exp_( a, b ):
 
 a = 0;
 b = 0;
-a=readint();
-stdinsep();
-b=readint();
+a=readint()
+stdinsep()
+b=readint()
 c = exp_(a, b);
-print("%d" % c, end='');
+print("%d" % c, end='')
 

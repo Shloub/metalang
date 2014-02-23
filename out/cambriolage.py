@@ -3,39 +3,39 @@ import sys
 
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 
 
 def max2( a, b ):
@@ -65,31 +65,31 @@ def nbPassePartout( n, passepartout, m, serrures ):
       return 0;
 
 n = 0;
-n=readint();
-stdinsep();
-passepartout = [None] * n;
+n=readint()
+stdinsep()
+passepartout = [None] * n
 for i in range(0, n):
   c = 2;
-  out0 = [None] * c;
+  out0 = [None] * c
   for j in range(0, c):
     out_ = 0;
-    out_=readint();
-    stdinsep();
+    out_=readint()
+    stdinsep()
     out0[j] = out_;
   passepartout[i] = out0;
 m = 0;
-m=readint();
-stdinsep();
-serrures = [None] * m;
+m=readint()
+stdinsep()
+serrures = [None] * m
 for k in range(0, m):
   d = 2;
-  out1 = [None] * d;
+  out1 = [None] * d
   for l in range(0, d):
     out_ = 0;
-    out_=readint();
-    stdinsep();
+    out_=readint()
+    stdinsep()
     out1[l] = out_;
   serrures[k] = out1;
 e = nbPassePartout(n, passepartout, m, serrures);
-print("%d" % e, end='');
+print("%d" % e, end='')
 

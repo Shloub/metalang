@@ -3,43 +3,43 @@ import sys
 
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 def readchar():
-  out = readchar_();
-  skipchar();
-  return out;
+  out = readchar_()
+  skipchar()
+  return out
 
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 
 
 def min2( a, b ):
@@ -73,9 +73,9 @@ def pathfind_aux( cache, tab, x, y, posX, posY ):
       return out_;
 
 def pathfind( tab, x, y ):
-    cache = [None] * y;
+    cache = [None] * y
     for i in range(0, y):
-      tmp = [None] * x;
+      tmp = [None] * x
       for j in range(0, x):
         tmp[j] = -(1);
       cache[i] = tmp;
@@ -83,19 +83,19 @@ def pathfind( tab, x, y ):
 
 x = 0;
 y = 0;
-x=readint();
-stdinsep();
-y=readint();
-stdinsep();
-tab = [None] * y;
+x=readint()
+stdinsep()
+y=readint()
+stdinsep()
+tab = [None] * y
 for i in range(0, y):
-  tab2 = [None] * x;
+  tab2 = [None] * x
   for j in range(0, x):
     tmp = '\000';
-    tmp=readchar();
+    tmp=readchar()
     tab2[j] = tmp;
-  stdinsep();
+  stdinsep()
   tab[i] = tab2;
 result = pathfind(tab, x, y);
-print("%d" % result, end='');
+print("%d" % result, end='')
 

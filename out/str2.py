@@ -2,5 +2,5 @@
 import sys
 
 
-print("ma petite chaine en or", end='');
+print("ma petite chaine en or", end='')
 

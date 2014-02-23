@@ -8,7 +8,7 @@ def foo(  )
  test 
 =end
 
-    a += 1;
+    a += 1
     
 =begin
  test 2 
@@ -50,7 +50,7 @@ def sumdiv( n )
  Si i divise 
 =end
 
-        out_ += i;
+        out_ += i
         
 =begin
  On incrémente 

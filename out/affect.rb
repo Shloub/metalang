@@ -25,7 +25,7 @@ def result( t_, t2_ )
     t3 = t2;
     t = t2;
     t2 = t3;
-    t["blah"] += 1;
+    t["blah"] += 1
     len = 1
     cache0 = [];
     for i in (0 ..  len - 1) do

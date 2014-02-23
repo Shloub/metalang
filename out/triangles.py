@@ -3,39 +3,39 @@ import sys
 
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 
 """ Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
@@ -62,33 +62,33 @@ def find0( len, tab, cache, x, y ):
     return result;
 
 def find( len, tab ):
-    tab2 = [None] * len;
+    tab2 = [None] * len
     for i in range(0, len):
       a = i + 1;
-      tab3 = [None] * a;
+      tab3 = [None] * a
       for j in range(0, a):
         tab3[j] = 0;
       tab2[i] = tab3;
     return find0(len, tab, tab2, 0, 0);
 
 len = 0;
-len=readint();
-stdinsep();
-tab = [None] * len;
+len=readint()
+stdinsep()
+tab = [None] * len
 for i in range(0, len):
   b = i + 1;
-  tab2 = [None] * b;
+  tab2 = [None] * b
   for j in range(0, b):
     tmp = 0;
-    tmp=readint();
-    stdinsep();
+    tmp=readint()
+    stdinsep()
     tab2[j] = tmp;
   tab[i] = tab2;
 c = find(len, tab);
-print("%d" % c, end='');
+print("%d" % c, end='')
 for k in range(0, len):
   for l in range(0, 1 + k):
     d = tab[k][l];
-    print("%d" % d, end='');
-  print( "\n", end='');
+    print("%d" % d, end='')
+  print( "\n", end='')
 

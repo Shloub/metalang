@@ -22,19 +22,19 @@ def npi_( str, len )
     ptrStr = 0
     while ptrStr < len do
       if str[ptrStr] == ' ' then
-        ptrStr += 1;
+        ptrStr += 1
       elsif is_number(str[ptrStr]) then
         num = 0
         while str[ptrStr] != ' ' do
           num = num * 10 + str[ptrStr].ord - '0'.ord;
-          ptrStr += 1;
+          ptrStr += 1
         end
         stack[ptrStack] = num;
-        ptrStack += 1;
+        ptrStack += 1
       elsif str[ptrStr] == '+' then
         stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-        ptrStack -= 1;
-        ptrStr += 1;
+        ptrStack -= 1
+        ptrStr += 1
       end
     end
     return (stack[0]);

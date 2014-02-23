@@ -3,39 +3,39 @@ import sys
 
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 
 """
 Tictactoe : un tictactoe avec une IA
@@ -46,19 +46,19 @@ Tictactoe : un tictactoe avec une IA
 
 """ On affiche l'état """
 def print_state( g ):
-    print( "\n|", end='');
+    print( "\n|", end='')
     for y in range(0, 1 + 2):
       for x in range(0, 1 + 2):
         if g["cases"][x][y] == 0:
-          print( " ", end='');
+          print( " ", end='')
         elif g["cases"][x][y] == 1:
-          print( "O", end='');
+          print( "O", end='')
         else:
-          print( "X", end='');
-        print( "|", end='');
+          print( "X", end='')
+        print( "|", end='')
       if y != 2:
-        print( "\n|-|-|-|\n|", end='');
-    print( "\n", end='');
+        print( "\n|-|-|-|\n|", end='')
+    print( "\n", end='')
 
 """ On dit qui gagne (info stoquées dans g.ended et g.note ) """
 def eval_( g ):
@@ -69,7 +69,7 @@ def eval_( g ):
       lin = -(1);
       for x in range(0, 1 + 2):
         if g["cases"][x][y] == 0:
-          freecase += 1;
+          freecase += 1
         colv = g["cases"][x][y];
         linv = g["cases"][y][x];
         if col == -(1) and colv != 0:
@@ -147,45 +147,45 @@ def minmax( g ):
 Renvoie le coup de l'IA
 """
 def play( g ):
-    minMove = {"x":0, "y":0};
+    minMove = {"x":0, "y":0}
     minNote = 10000;
     for x in range(0, 1 + 2):
       for y in range(0, 1 + 2):
         if can_move_xy(x, y, g):
           apply_move_xy(x, y, g);
           currentNote = minmax(g);
-          print("%d, %d, %d\n" % ( x, y, currentNote ), end='');
+          print("%d, %d, %d\n" % ( x, y, currentNote ), end='')
           cancel_move_xy(x, y, g);
           if currentNote < minNote:
             minNote = currentNote;
             minMove["x"] = x;
             minMove["y"] = y;
     a = minMove["x"];
-    print("%d" % a, end='');
+    print("%d" % a, end='')
     b = minMove["y"];
-    print("%d\n" % ( b ), end='');
+    print("%d\n" % ( b ), end='')
     return minMove;
 
 def init(  ):
     d = 3;
-    cases = [None] * d;
+    cases = [None] * d
     for i in range(0, d):
       c = 3;
-      tab = [None] * c;
+      tab = [None] * c
       for j in range(0, c):
         tab[j] = 0;
       cases[i] = tab;
-    out_ = {"cases":cases, "firstToPlay":True, "note":0, "ended":False};
+    out_ = {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
     return out_;
 
 def read_move(  ):
     x = 0;
-    x=readint();
-    stdinsep();
+    x=readint()
+    stdinsep()
     y = 0;
-    y=readint();
-    stdinsep();
-    out_ = {"x":x, "y":y};
+    y=readint()
+    stdinsep()
+    out_ = {"x":x, "y":y}
     return out_;
 
 for i in range(0, 1 + 1):
@@ -200,5 +200,5 @@ for i in range(0, 1 + 1):
       eval_(state);
   print_state(state);
   e = state["note"];
-  print("%d\n" % ( e ), end='');
+  print("%d\n" % ( e ), end='')
 

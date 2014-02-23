@@ -3,48 +3,48 @@ import sys
 
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 
 """ lit un sudoku sur l'entrée standard """
 def read_sudoku(  ):
     a = 9 * 9;
-    out_ = [None] * a;
+    out_ = [None] * a
     for i in range(0, a):
       k = 0;
-      k=readint();
-      stdinsep();
+      k=readint()
+      stdinsep()
       out_[i] = k;
     return out_;
 
@@ -53,13 +53,13 @@ def print_sudoku( sudoku_ ):
     for y in range(0, 1 + 8):
       for x in range(0, 1 + 8):
         b = sudoku_[x + y * 9];
-        print("%d " % ( b ), end='');
+        print("%d " % ( b ), end='')
         if (x % 3) == 2:
-          print( " ", end='');
-      print( "\n", end='');
+          print( " ", end='')
+      print( "\n", end='')
       if (y % 3) == 2:
-        print( "\n", end='');
-    print( "\n", end='');
+        print( "\n", end='')
+    print( "\n", end='')
 
 """ dit si les variables sont toutes différentes """
 """ dit si les variables sont toutes différentes """
@@ -92,5 +92,5 @@ print_sudoku(sudoku_);
 if solve(sudoku_):
   print_sudoku(sudoku_);
 else:
-  print( "no solution\n", end='');
+  print( "no solution\n", end='')
 

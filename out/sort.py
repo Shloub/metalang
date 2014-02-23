@@ -3,39 +3,39 @@ import sys
 
 char=None
 def readchar_():
-  global char;
+  global char
   if char == None:
-    char = sys.stdin.read(1);
-  return char;
+    char = sys.stdin.read(1)
+  return char
 
 def skipchar():
-  global char;
-  char = None;
-  return;
+  global char
+  char = None
+  return
 
 def stdinsep():
   while True:
-    c = readchar_();
+    c = readchar_()
     if c == '\n' or c == '\t' or c == '\r' or c == ' ':
-      skipchar();
+      skipchar()
     else:
-      return;
+      return
 
 def readint():
-  c = readchar_();
+  c = readchar_()
   if c == '-':
-    sign = -1;
-    skipchar();
+    sign = -1
+    skipchar()
   else:
-    sign = 1;
-  out = 0;
+    sign = 1
+  out = 0
   while True:
-    c = readchar_();
+    c = readchar_()
     if c <= '9' and c >= '0' :
-      out = out * 10 + int(c);
-      skipchar();
+      out = out * 10 + int(c)
+      skipchar()
     else:
-      return out * sign;
+      return out * sign
 
 
 def sort_( tab, len ):
@@ -47,16 +47,16 @@ def sort_( tab, len ):
           tab[j] = tmp;
 
 len = 2;
-len=readint();
-stdinsep();
-tab = [None] * len;
+len=readint()
+stdinsep()
+tab = [None] * len
 for i_ in range(0, len):
   tmp = 0;
-  tmp=readint();
-  stdinsep();
+  tmp=readint()
+  stdinsep()
   tab[i_] = tmp;
 sort_(tab, len);
 for i in range(0, len):
   a = tab[i];
-  print("%d" % a, end='');
+  print("%d" % a, end='')
 

@@ -5,7 +5,7 @@ def summax( lst, len )
     current = 0
     max_ = 0
     for i in (0 ..  len - 1) do
-      current += lst[i];
+      current += lst[i]
       if current < 0 then
         current = 0;
       end
