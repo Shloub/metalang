@@ -240,6 +240,8 @@ let process err c filename =
           Passes.Rename.add prog.Prog.progname ;
           Passes.Rename.add "out" ;
           Passes.Rename.add "exp" ;
+          Passes.Rename.add "from" ;
+          Passes.Rename.add "to" ;
           Passes.Rename.add "min" ;
           Passes.Rename.add "max" ;
           Passes.Rename.add "eval" ;

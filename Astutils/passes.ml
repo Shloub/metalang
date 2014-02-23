@@ -136,7 +136,7 @@ module Rename = struct
         Instr.AllocArray ((mapname map name), t, (process_expr map e), None)
       | Instr.AllocArray (name, t, e, Some ((var, li))) ->
         let li2 = List.map (process_instr map) li in
-        Instr.AllocArray ((mapname map name), t, (process_expr map e), Some ((var, li2)))
+        Instr.AllocArray ((mapname map name), t, (process_expr map e), Some (( (mapname map var), li2)))
       | Instr.AllocRecord (name, t, el) ->
         Instr.AllocRecord ((mapname map name), t,
                            (List.map
