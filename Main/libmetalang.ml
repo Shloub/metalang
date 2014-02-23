@@ -84,7 +84,10 @@ let remove_unknown_languages =
     || (Printf.fprintf stderr "unknown language %s\n" lang ; false)
   in List.filter go
 
-let stdlib_file = "Stdlib/stdlib.metalang"
+let stdlib_file =
+  try
+    Sys.getenv "METALANG_STDLIB"
+  with Not_found -> "Stdlib/stdlib.metalang"
 
 (** {2 Command Line Arguments} *)
 
