@@ -115,9 +115,16 @@ let warn_error_of_parse_error filename lexbuf =
     let curr = lexbuf.Lexing.lex_curr_p in
     let line = curr.Lexing.pos_lnum in
     let cnum = curr.Lexing.pos_cnum - curr.Lexing.pos_bol - 1 in
+		let filecontent =
+			let i = open_in filename in
+			let l = ref "" in
+			for j = 1 to line do
+				l := input_line i
+			done; !l
+		in
     let tok = Lexing.lexeme lexbuf in
-    Format.fprintf f "%s: error line %d char %d on token %s\n"
-      filename line cnum tok ;
+    Format.fprintf f "file:%s@\nerror line %d char %d on token %s@\n%s@\n%s^@\n"
+      filename line cnum tok filecontent (String.make cnum ' ') ;
   ))
 
 let parse_file parse filename =
