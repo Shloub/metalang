@@ -72,6 +72,23 @@ macro int native_expand_read_int()
   *  do "E R R O R"
 end
 
+def lexems expand_read_int()
+	if current_language() == LANG_Py ||
+	current_language() == LANG_Php
+	then
+    return {
+    def a = native_expand_read_int()
+    return a;
+    }
+  else
+    return { def read int out skip; return out }
+	end
+end
+
+def int read_int()
+    ${ expand_read_int() }
+end
+
 def lexems expand_read_int_line(lexems a)
     if current_language() == LANG_Py ||
 	current_language() == LANG_Php
