@@ -58,6 +58,7 @@ end
 macro array<int> native_expand_read_int_line()
   py do "list(map(int, input().split()))"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
+	csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll<int>(int.Parse).ToArray()"
   *  do "E R R O R"
 end
 
@@ -69,12 +70,14 @@ end
 macro int native_expand_read_int()
   py do "int(input())"
   php do "intval(trim(fgets(STDIN)))"
+	csharp do "int.Parse(Console.ReadLine())"
   *  do "E R R O R"
 end
 
 def lexems expand_read_int()
 	if current_language() == LANG_Py ||
-	current_language() == LANG_Php
+	current_language() == LANG_Php ||
+	current_language() == LANG_Cs
 	then
     return {
     def a = native_expand_read_int()
@@ -91,7 +94,8 @@ end
 
 def lexems expand_read_int_line(lexems a)
     if current_language() == LANG_Py ||
-	current_language() == LANG_Php
+	current_language() == LANG_Php ||
+	current_language() == LANG_Cs
 	  then
       return {
         def a = native_expand_read_int_line()
@@ -120,7 +124,9 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
       }
     else
 			def s = {skip}
-			if current_language() == LANG_Php then
+			if current_language() == LANG_Php ||
+			current_language() == LANG_Cs
+			then
 				s = {}
 			end
     return {

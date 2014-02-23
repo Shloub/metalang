@@ -69,7 +69,7 @@ class csharpPrinter = object(self)
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f
-      "using System;@\n@\npublic class %s@\n@[<v 2>{%s%s%s%s@\n%a@\n%a@]@\n}@\n"
+      "using System;@\nusing System.Collections.Generic;@\n@\npublic class %s@\n@[<v 2>{%s%s%s%s@\n%a@\n%a@]@\n}@\n"
       prog.Prog.progname
       (if need then "
 static bool eof;
