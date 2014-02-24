@@ -21,9 +21,9 @@ tests/progs le plus notable est probablement le tictactoe avec IA.
 
 La documentation se trouve sur le site http://eelte.megami.fr/metalang
 
-
 But du projet:
-    Ce projet à été fait pour le concours prologin (http://www.prologin.org)
+    Ce projet à été fait pour le concours prologin
+		http://www.prologin.org
     L'idée est de générer des lecteurs printers pour beaucoup de langages
     Ce projet devrait servir pour les demies finales de prologin,
     pour générer les codes à compléter pour les candidats.
@@ -53,5 +53,50 @@ Langages cibles :
   ocaml
   python
   ruby
-	php
+  php
   javascript
+
+HOWTO Metalang
+Dans le cadre du concours prologin, on a besoin d'écrire des codes à
+compléter. Ces codes lisent des entrées, et appellent une fonction "vide"
+que le candidat devra remplir.
+
+Dans un premier temps, la structure d'un code metlang pour prologin est la
+suivante :
+
+def ...1 la_fonction_a_completer( ...2 )
+end
+
+main
+ ...3
+end
+
+dans ...1 on écrit le type de retour de la fonction. Souvent void ou int.
+dans ...2 on écrit les paramètres
+dans ...3 on écrit le code de parsing, et de quoi appeller la fonction,
+et afficher son résultat.
+
+En métalang, on a trois primitives de parsing : une qui lit un entier,
+une qui lit un char, et une qui saute les espaces :
+Respectivement :
+  read int variable
+  read char variable
+  skip
+
+Ces trois méthodes peuvent générer du code dégueu dans certains langages
+(ceux qui n'ont pas scanf, donc python, C#, php, etc...)
+
+Pour éviter ce problème, on a deux fonctions alternatives dans la lib
+standard : read_int et read_int_line. Il ne FAUT PAS melanger ces deux
+façons de parser, sinon ça risque de faire tout planter.
+
+En metalang, on ne peut pas savoir quelle est la taille d'une ligne, donc
+on ne peut pas parser une ligne et récupérer un tableau d'entier de taille
+variable. On ne peut pas non plus le faire pour une chaine de caractères.
+
+L'exemple tests/progs/aaa_read_ints.metalang montre comment parser des
+entiers correctement.
+L'exemple tests/progs/npi.metalang montre comment parser des chars
+
+Normalement, avec cet outil, vous avez les moyens de faire des codes à
+compléter. N'oubliez pas de tester vos codes générés.
