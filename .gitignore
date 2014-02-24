@@ -1,2 +1,13 @@
 _build
 metalang
+*.bin
+*.class
+*.exe
+*.not_compile
+*.test
+*.native
+*.byte
+*~
+*#
+*.out
+*.tar.gz
