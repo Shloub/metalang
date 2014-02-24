@@ -1,7 +1,6 @@
 
 main
-  def array<int> l0 = read_int_line(1);
-  def len = l0[0];
+  def int len = read_int()
   print int len
   print string "=len\n"
   def array<int> tab1 = read_int_line(len);
@@ -11,8 +10,7 @@ main
     print tab1[i]
     print string "\n"
   end
-  l0 = read_int_line(1);
-  len = l0[0];
+  len = read_int()
   def array<array<int>> tab2 = read_int_matrix(len, len - 1);
   for i = 0 to len - 2 do
     for j = 0 to len - 1 do
