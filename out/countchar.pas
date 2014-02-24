@@ -34,15 +34,15 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_char() : char;
+function read_char_() : char;
 var
    c : char;
 begin
    c := read_char_aux();
    skip_char();
-   read_char := c;
+   read_char_ := c;
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -97,16 +97,16 @@ var
   tofind : char;
 begin
   len := 0;
-  len := read_int();
+  len := read_int_();
   skip();
   tofind := #0;
-  tofind := read_char();
+  tofind := read_char_();
   skip();
   SetLength(tab, len);
   for i := 0 to  len - 1 do
   begin
     tmp := #0;
-    tmp := read_char();
+    tmp := read_char_();
     tab[i] := tmp;
   end;
   result := nth(tab, tofind, len);

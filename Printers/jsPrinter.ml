@@ -87,7 +87,7 @@ var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
 }
-var read_char = function(){
+var read_char_ = function(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();
@@ -98,7 +98,7 @@ var stdinsep = function(){
     while (current_char == '\\n' || current_char == ' ' || current_char == '\\t')
         current_char = read_char0();
 }
-var read_int = function(){
+var read_int_ = function(){
     if (current_char == null) current_char = read_char0();
     var sign = 1;
     if (current_char == '-'){
@@ -182,10 +182,10 @@ var read_int = function(){
   method read f t mutable_ =
 match Type.unfix t with
   | Type.Integer ->
-    Format.fprintf f "@[%a=read_int();@]"
+    Format.fprintf f "@[%a=read_int_();@]"
       self#mutable_ mutable_
   | Type.Char ->
-    Format.fprintf f "@[%a=read_char();@]"
+    Format.fprintf f "@[%a=read_char_();@]"
       self#mutable_ mutable_
   | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
     (Type.type_t_to_string t)

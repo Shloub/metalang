@@ -3,6 +3,17 @@ import java.util.*;
 public class aaa_readints
 {
   static Scanner scanner = new Scanner(System.in);
+  public static int read_int()
+  {
+    int out_ = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); out_ = -scanner.nextInt();
+    }else{
+    out_ = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    return out_;
+  }
+  
   public static int[] read_int_line(int n)
   {
     int[] tab = new int[n];
@@ -34,8 +45,7 @@ public class aaa_readints
   
   public static void main(String args[])
   {
-    int[] l0 = read_int_line(1);
-    int len = l0[0];
+    int len = read_int();
     System.out.printf("%d%s", len, "=len\n");
     int[] tab1 = read_int_line(len);
     for (int i = 0 ; i < len; i++)
@@ -44,8 +54,7 @@ public class aaa_readints
       int a = tab1[i];
       System.out.printf("%d%s", a, "\n");
     }
-    l0 = read_int_line(1);
-    len = l0[0];
+    len = read_int();
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)
     {

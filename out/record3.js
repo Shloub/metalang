@@ -5,7 +5,7 @@ var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
 }
-var read_char = function(){
+var read_char_ = function(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();
@@ -16,7 +16,7 @@ var stdinsep = function(){
     while (current_char == '\n' || current_char == ' ' || current_char == '\t')
         current_char = read_char0();
 }
-var read_int = function(){
+var read_int_ = function(){
     if (current_char == null) current_char = read_char0();
     var sign = 1;
     if (current_char == '-'){
@@ -59,9 +59,9 @@ var a = 4;
 var t = new Array(a);
 for (var i = 0 ; i <= a - 1; i++)
   t[i] = mktoto(i);
-t[0].bar=read_int();
+t[0].bar=read_int_();
 stdinsep();
-t[1].blah=read_int();
+t[1].blah=read_int_();
 var b = result(t, 4);
 util.print(b);
 var c = t[2].blah;

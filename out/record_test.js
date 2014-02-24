@@ -5,7 +5,7 @@ var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
 }
-var read_char = function(){
+var read_char_ = function(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();
@@ -16,7 +16,7 @@ var stdinsep = function(){
     while (current_char == '\n' || current_char == ' ' || current_char == '\t')
         current_char = read_char0();
 }
-var read_int = function(){
+var read_int_ = function(){
     if (current_char == null) current_char = read_char0();
     var sign = 1;
     if (current_char == '-'){
@@ -40,9 +40,9 @@ var param = {
                foo : 0,
                bar : 0
 };
-param.bar=read_int();
+param.bar=read_int_();
 stdinsep();
-param.foo=read_int();
+param.foo=read_int_();
 var a = param.bar + param.foo * param.bar;
 util.print(a);
 

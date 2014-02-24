@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -142,7 +142,7 @@ var
   tmp : integer;
 begin
   len := 0;
-  len := read_int();
+  len := read_int_();
   skip();
   SetLength(tab, len);
   for i := 0 to  len - 1 do
@@ -152,7 +152,7 @@ begin
     for j := 0 to  b - 1 do
     begin
       tmp := 0;
-      tmp := read_int();
+      tmp := read_int_();
       skip();
       tab2[j] := tmp;
     end;

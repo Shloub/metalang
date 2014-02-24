@@ -18,7 +18,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -103,7 +103,7 @@ var
 begin
   { Programme principal }
   n := 0;
-  n := read_int();
+  n := read_int_();
   { Lecture de l'entier }
   b := sumdiv(n);
   Write(b);

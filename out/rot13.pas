@@ -34,15 +34,15 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_char() : char;
+function read_char_() : char;
 var
    c : char;
 begin
    c := read_char_aux();
    skip_char();
-   read_char := c;
+   read_char_ := c;
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -85,13 +85,13 @@ var
   toto : integer;
 begin
   strlen := 0;
-  strlen := read_int();
+  strlen := read_int_();
   skip();
   SetLength(tab4, strlen);
   for toto := 0 to  strlen - 1 do
   begin
     tmpc := #95;
-    tmpc := read_char();
+    tmpc := read_char_();
     c := ord(tmpc);
     if tmpc <> #32
     then

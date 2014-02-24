@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -139,7 +139,7 @@ var
   serrures : g;
 begin
   n := 0;
-  n := read_int();
+  n := read_int_();
   skip();
   SetLength(passepartout, n);
   for i := 0 to  n - 1 do
@@ -149,14 +149,14 @@ begin
     for j := 0 to  c - 1 do
     begin
       out_ := 0;
-      out_ := read_int();
+      out_ := read_int_();
       skip();
       out0[j] := out_;
     end;
     passepartout[i] := out0;
   end;
   m := 0;
-  m := read_int();
+  m := read_int_();
   skip();
   SetLength(serrures, m);
   for k := 0 to  m - 1 do
@@ -166,7 +166,7 @@ begin
     for l := 0 to  d - 1 do
     begin
       out_ := 0;
-      out_ := read_int();
+      out_ := read_int_();
       skip();
       out1[l] := out_;
     end;

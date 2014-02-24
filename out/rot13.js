@@ -5,7 +5,7 @@ var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
 }
-var read_char = function(){
+var read_char_ = function(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();
@@ -16,7 +16,7 @@ var stdinsep = function(){
     while (current_char == '\n' || current_char == ' ' || current_char == '\t')
         current_char = read_char0();
 }
-var read_int = function(){
+var read_int_ = function(){
     if (current_char == null) current_char = read_char0();
     var sign = 1;
     if (current_char == '-'){
@@ -41,13 +41,13 @@ var read_int = function(){
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
 var strlen = 0;
-strlen=read_int();
+strlen=read_int_();
 stdinsep();
 var tab4 = new Array(strlen);
 for (var toto = 0 ; toto <= strlen - 1; toto++)
 {
   var tmpc = '_';
-  tmpc=read_char();
+  tmpc=read_char_();
   var c = tmpc.charCodeAt(0);
   if (tmpc != ' ')
     c = ((c - 'a'.charCodeAt(0)) + 13) % 26 + 'a'.charCodeAt(0);

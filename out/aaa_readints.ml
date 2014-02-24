@@ -1,3 +1,8 @@
+let rec read_int () =
+  let out_ = Scanf.scanf "%d" (fun x -> x) in
+  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  out_
+
 let rec read_int_line n =
   let tab = Array.init n (fun _i ->
     let t = Scanf.scanf "%d" (fun x -> x) in
@@ -14,8 +19,7 @@ let rec read_int_matrix x y =
 
 let () =
 begin
-  let l0 = ref( read_int_line 1 ) in
-  let len = ref( (!l0).(0) ) in
+  let len = ref( (read_int ()) ) in
   Printf.printf "%d" (!len);
   Printf.printf "=len\n";
   let tab1 = read_int_line (!len) in
@@ -26,8 +30,7 @@ begin
     Printf.printf "%d" a;
     Printf.printf "\n"
   done;
-  l0 := read_int_line 1;
-  len := (!l0).(0);
+  len := (read_int ());
   let tab2 = read_int_matrix (!len) ((!len) - 1) in
   for i = 0 to (!len) - 2 do
     for j = 0 to (!len) - 1 do

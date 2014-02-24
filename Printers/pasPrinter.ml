@@ -339,10 +339,10 @@ class pasPrinter = object(self)
 
   method read f t m = match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[<h>%a := read_int();@]"
+      Format.fprintf f "@[<h>%a := read_int_();@]"
         self#mutable_ m
     | Type.Char ->
-      Format.fprintf f "@[<h>%a := read_char();@]"
+      Format.fprintf f "@[<h>%a := read_char_();@]"
         self#mutable_ m
 
   method print f t expr =
@@ -398,16 +398,16 @@ begin
    end
 end;" else "")
       (if need_readchar then "
-function read_char() : char;
+function read_char_() : char;
 var
    c : char;
 begin
    c := read_char_aux();
    skip_char();
-   read_char := c;
+   read_char_ := c;
 end;" else "")
       (if need_readint then "
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;

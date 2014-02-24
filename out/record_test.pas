@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -76,9 +76,9 @@ begin
   new(param);
   param^.foo := 0;
   param^.bar := 0;
-  param^.bar := read_int();
+  param^.bar := read_int_();
   skip();
-  param^.foo := read_int();
+  param^.foo := read_int_();
   a := param^.bar + param^.foo * param^.bar;
   Write(a);
 end.

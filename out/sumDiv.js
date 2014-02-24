@@ -5,7 +5,7 @@ var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
 }
-var read_char = function(){
+var read_char_ = function(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();
@@ -16,7 +16,7 @@ var stdinsep = function(){
     while (current_char == '\n' || current_char == ' ' || current_char == '\t')
         current_char = read_char0();
 }
-var read_int = function(){
+var read_int_ = function(){
     if (current_char == null) current_char = read_char0();
     var sign = 1;
     if (current_char == '-'){
@@ -77,7 +77,7 @@ function sumdiv(n){
 
 /* Programme principal */
 var n = 0;
-n=read_int();
+n=read_int_();
 /* Lecture de l'entier */
 var b = sumdiv(n);
 util.print(b);

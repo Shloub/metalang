@@ -4,6 +4,13 @@ using System.Collections.Generic;
 public class aaa_readints
 {
   
+  
+  public static int read_int()
+  {
+    int a = int.Parse(Console.ReadLine());
+    return a;
+  }
+  
   public static int[] read_int_line(int n)
   {
     int[] a = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
@@ -24,8 +31,7 @@ public class aaa_readints
   
   public static void Main(String[] args)
   {
-    int[] l0 = read_int_line(1);
-    int len = l0[0];
+    int len = read_int();
     Console.Write(len);
     Console.Write("=len\n");
     int[] tab1 = read_int_line(len);
@@ -37,8 +43,7 @@ public class aaa_readints
       Console.Write(b);
       Console.Write("\n");
     }
-    l0 = read_int_line(1);
-    len = l0[0];
+    len = read_int();
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)
     {

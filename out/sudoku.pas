@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -75,7 +75,7 @@ begin
   for i := 0 to  a - 1 do
   begin
     k := 0;
-    k := read_int();
+    k := read_int_();
     skip();
     out_[i] := k;
   end;

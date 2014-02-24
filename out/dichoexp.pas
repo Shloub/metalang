@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -90,9 +90,9 @@ var
 begin
   a := 0;
   b := 0;
-  a := read_int();
+  a := read_int_();
   skip();
-  b := read_int();
+  b := read_int_();
   c := exp_(a, b);
   Write(c);
 end.

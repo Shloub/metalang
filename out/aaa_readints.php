@@ -1,5 +1,11 @@
 <?php
 
+
+function read_int(){
+  $a = intval(trim(fgets(STDIN)));
+  return $a;
+}
+
 function read_int_line($n){
   $a = array_map("intval", explode(" ", fgets(STDIN)));
   return $a;
@@ -15,8 +21,7 @@ function read_int_matrix($x, $y){
   return $tab;
 }
 
-$l0 = read_int_line(1);
-$len = $l0[0];
+$len = read_int();
 echo $len, "=len\n";
 $tab1 = read_int_line($len);
 for ($i = 0 ; $i < $len; $i++)
@@ -25,8 +30,7 @@ for ($i = 0 ; $i < $len; $i++)
   $b = $tab1[$i];
   echo $b, "\n";
 }
-$l0 = read_int_line(1);
-$len = $l0[0];
+$len = read_int();
 $tab2 = read_int_matrix($len, $len - 1);
 for ($i = 0 ; $i <= $len - 2; $i++)
 {

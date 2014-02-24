@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -61,6 +61,16 @@ begin
    until false;
 end;
 
+function read_int() : integer;
+var
+  out_ : integer;
+begin
+  out_ := 0;
+  out_ := read_int_();
+  skip();
+  exit(out_);
+end;
+
 type c = array of integer;
 function read_int_line(n : integer) : c;
 var
@@ -72,7 +82,7 @@ begin
   for i := 0 to  n - 1 do
   begin
     t := 0;
-    t := read_int();
+    t := read_int_();
     skip();
     tab[i] := t;
   end;
@@ -102,13 +112,11 @@ var
   b : integer;
   i : integer;
   j : integer;
-  l0 : c;
   len : integer;
   tab1 : c;
   tab2 : d;
 begin
-  l0 := read_int_line(1);
-  len := l0[0];
+  len := read_int();
   Write(len);
   Write('=len'#10'');
   tab1 := read_int_line(len);
@@ -120,8 +128,7 @@ begin
     Write(a);
     Write(''#10'');
   end;
-  l0 := read_int_line(1);
-  len := l0[0];
+  len := read_int();
   tab2 := read_int_matrix(len, len - 1);
   for i := 0 to  len - 2 do
   begin

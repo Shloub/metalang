@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -377,10 +377,10 @@ var
   y : integer;
 begin
   x := 0;
-  x := read_int();
+  x := read_int_();
   skip();
   y := 0;
-  y := read_int();
+  y := read_int_();
   skip();
   new(out_);
   out_^.x := x;

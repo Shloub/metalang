@@ -34,7 +34,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -109,9 +109,9 @@ begin
   begin
     t[i] := mktoto(i);
   end;
-  t[0]^.bar := read_int();
+  t[0]^.bar := read_int_();
   skip();
-  t[1]^.blah := read_int();
+  t[1]^.blah := read_int_();
   b := result(t, 4);
   Write(b);
   c := t[2]^.blah;

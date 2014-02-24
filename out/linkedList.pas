@@ -18,7 +18,7 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int() : integer;
+function read_int_() : integer;
 var
    c    : char;
    i    : integer;
@@ -94,7 +94,7 @@ begin
   i := -1;
   while i <> 0 do
   begin
-    i := read_int();
+    i := read_int_();
     if i <> 0
     then
       begin
