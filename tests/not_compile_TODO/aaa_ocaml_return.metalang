@@ -1,5 +1,6 @@
 /*
   Ce test a été généré par Metalang.
+  ça produit du caca dans les langages ou le def array est compilé en boucle for (donc tout sauf ocaml)
 */
 def int result(int len, array<int> tab)
   def array<bool> tab2[len] with i do

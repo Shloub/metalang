@@ -304,10 +304,10 @@ testCompare : out $(CMPTESTSDEPS)
 	@echo "$(green)ALL TESTS OK$(reset)"
 
 %.not_compile : metalang
-	@rm out/$(notdir $(basename $<)).ml || exit 0
-	@./metalang tests/not_compile/$(notdir $(basename $<)).metalang -o out -lang ml || exit 0
-	@if [ -e out/$(notdir $(basename $<)).ml ]; then exit 1; fi
-	@echo "$(green)OK $(basename $<)$(reset)"
+	@rm out/$(notdir $(basename $@)).ml -f || exit 0
+	@./metalang tests/not_compile/$(notdir $(basename $@)).metalang -o out -lang ml || exit 0
+	@if [ -e out/$(notdir $(basename $@)).ml ]; then exit 1; fi
+	@echo "$(green)OK $(notdir $(basename $@))$(reset)"
 	@touch $@
 
 TESTSNOTCOMPILE	:= $(addprefix out/, \
