@@ -222,7 +222,7 @@ out/%.cc.bin : out/%.cc
 	@g++ $(CCFLAGS) $< -o $@ || exit 1
 
 out/%.pas.bin : out/%.pas
-	@fpc $< > /dev/null || exit 1
+	@fpc $< || exit 1
 	@mv out/$(basename $*) $@
 	@rm out/$(basename $*).o
 
