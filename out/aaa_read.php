@@ -22,7 +22,7 @@ function nextChar(){
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return ord($out);
+  return $out;
 }
 
 /*
@@ -59,17 +59,17 @@ echo $strlen, "=strlen\n";
 $tab4 = array();
 for ($toto = 0 ; $toto < $strlen; $toto++)
 {
-  $tmpc = ord('_');
+  $tmpc = '_';
   $tmpc = nextChar();
-  $c = $tmpc;
-  echo chr($tmpc), ":", $c, " ";
-  if ($tmpc != ord(' '))
+  $c = ord($tmpc);
+  echo $tmpc, ":", $c, " ";
+  if ($tmpc != ' ')
     $c = (($c - ord('a')) + 13) % 26 + ord('a');
-  $tab4[$toto] = $c;
+  $tab4[$toto] = chr($c);
 }
 for ($j = 0 ; $j < $strlen; $j++)
 {
   $a = $tab4[$j];
-  echo chr($a);
+  echo $a;
 }
 ?>

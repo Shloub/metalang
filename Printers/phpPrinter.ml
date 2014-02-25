@@ -35,16 +35,13 @@ open Ast
 open Printer
 open CPrinter
 
-let header = "
-";
-
 class phpPrinter = object(self)
   inherit cPrinter as super
 
   method lang () = "php"
 
   method char f c =
-    Format.fprintf f "ord(%C)" c
+    Format.fprintf f "%C" c
 
   method prototype f t =
     match Type.unfix t with
@@ -126,7 +123,7 @@ function nextChar(){
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return ord($out);
+  return $out;
 }" else "")
 
       self#proglist prog.Prog.funs
@@ -140,7 +137,7 @@ function nextChar(){
       | Type.Bool ->
         Format.fprintf f "%a" self#expr e
       | Type.Char ->
-        Format.fprintf f "chr(%a)" self#expr e
+        Format.fprintf f "%a" self#expr e
 
   method combine_formats () = false
   method multi_print f format exprs =

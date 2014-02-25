@@ -22,7 +22,7 @@ function nextChar(){
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return ord($out);
+  return $out;
 }
 function min2($a, $b){
   if ($a < $b)
@@ -43,7 +43,7 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
     return 0;
   else if ($posX < 0 || $posY < 0 || $posX >= $x || $posY >= $y)
     return $x * $y * 10;
-  else if ($tab[$posY][$posX] == ord('#'))
+  else if ($tab[$posY][$posX] == '#')
     return $x * $y * 10;
   else if ($cache[$posY][$posX] != -1)
     return $cache[$posY][$posX];
@@ -84,7 +84,7 @@ for ($i = 0 ; $i < $y; $i++)
   $tab2 = array();
   for ($j = 0 ; $j < $x; $j++)
   {
-    $tmp = ord('\000');
+    $tmp = '\000';
     $tmp = nextChar();
     $tab2[$j] = $tmp;
   }

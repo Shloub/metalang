@@ -22,7 +22,7 @@ function nextChar(){
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return ord($out);
+  return $out;
 }
 function nth(&$tab, $tofind, $len){
   $out_ = 0;
@@ -35,13 +35,13 @@ function nth(&$tab, $tofind, $len){
 $len = 0;
 list($len) = scan("%d");
 scantrim();
-$tofind = ord('\000');
+$tofind = '\000';
 $tofind = nextChar();
 scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = ord('\000');
+  $tmp = '\000';
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }

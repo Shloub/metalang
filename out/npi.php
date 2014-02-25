@@ -22,10 +22,10 @@ function nextChar(){
   global $stdin;
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
-  return ord($out);
+  return $out;
 }
 function is_number($c){
-  return $c <= ord('9') && $c >= ord('0');
+  return ord($c) <= ord('9') && ord($c) >= ord('0');
 }
 
 /*
@@ -38,20 +38,20 @@ function npi_(&$str, $len){
   $ptrStack = 0;
   $ptrStr = 0;
   while ($ptrStr < $len)
-    if ($str[$ptrStr] == ord(' '))
+    if ($str[$ptrStr] == ' ')
     $ptrStr ++;
   else if (is_number($str[$ptrStr]))
   {
     $num = 0;
-    while ($str[$ptrStr] != ord(' '))
+    while ($str[$ptrStr] != ' ')
     {
-      $num = $num * 10 + $str[$ptrStr] - ord('0');
+      $num = $num * 10 + ord($str[$ptrStr]) - ord('0');
       $ptrStr ++;
     }
     $stack[$ptrStack] = $num;
     $ptrStack ++;
   }
-  else if ($str[$ptrStr] == ord('+'))
+  else if ($str[$ptrStr] == '+')
   {
     $stack[$ptrStack - 2] = $stack[$ptrStack - 2] + $stack[$ptrStack - 1];
     $ptrStack --;
@@ -66,7 +66,7 @@ scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = ord('\000');
+  $tmp = '\000';
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }

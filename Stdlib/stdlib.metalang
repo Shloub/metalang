@@ -12,6 +12,7 @@ macro char char_of_int(int c)
   java do "(char)($c)"
   js do "String.fromCharCode($c)"
   csharp do "(char)($c)"
+  php do "chr($c)"
   *  do "$c"
 end
 
@@ -21,6 +22,7 @@ macro int int_of_char(char c)
   scheme do "(char->integer $c)"
   ruby do "$c.ord"
   pas do "ord($c)"
+  php do "ord($c)"
   js do "$c.charCodeAt(0)"
   *  do "$c"
 end

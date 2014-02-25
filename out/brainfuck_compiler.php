@@ -5,7 +5,7 @@ Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 et qui produit les macros metalang correspondante
 */
-$input = ord(' ');
+$input = ' ';
 $current_pos = 500;
 $a = 1000;
 $mem = array();
@@ -74,8 +74,8 @@ while ($mem[$current_pos] != 0)
   $mem[$current_pos] = $mem[$current_pos] - 1;
   $current_pos --;
   $mem[$current_pos] = $mem[$current_pos] + 1;
-  $b = $mem[$current_pos];
-  echo chr($b);
+  $b = chr($mem[$current_pos]);
+  echo $b;
   $current_pos ++;
 }
 ?>
