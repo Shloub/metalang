@@ -1,0 +1,51 @@
+
+import sys
+
+
+
+
+
+
+def read_int(  ):
+    a = int(input());
+    return a;
+
+def read_int_line( n ):
+    a = list(map(int, input().split()));
+    return a;
+
+def read_char_line( n ):
+    a = list(input());
+    return a;
+
+"""
+Ce test permet de vérifier si les différents backends pour les langages implémentent bien
+read int, read char et skip
+"""
+len = read_int();
+print("%d=len\n" % ( len ), end='')
+tab = read_int_line(len);
+for i in range(0, len):
+  print("%d=>" % ( i ), end='')
+  b = tab[i];
+  print("%d " % ( b ), end='')
+print( "\n", end='')
+tab2 = read_int_line(len);
+for i_ in range(0, len):
+  print("%d==>" % ( i_ ), end='')
+  d = tab2[i_];
+  print("%d " % ( d ), end='')
+strlen = read_int();
+print("%d=strlen\n" % ( strlen ), end='')
+tab4 = read_char_line(strlen);
+for i3 in range(0, strlen):
+  tmpc = tab4[i3];
+  c = ord(tmpc);
+  print("%c:%d " % ( tmpc, c ), end='')
+  if tmpc != ' ':
+    c = ((c - ord('a')) + 13) % 26 + ord('a');
+  tab4[i3] = c;
+for j in range(0, strlen):
+  e = tab4[j];
+  print("%c" % e, end='')
+
