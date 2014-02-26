@@ -14,6 +14,7 @@ let default_passes (prog : Typer.env * Parser.token Prog.t) :
   |> typed Passes.WalkCheckNaming.apply
   |> Passes.CheckUseVoid.apply
   |> typed Passes.CheckReturn.apply
+  |> typed Passes.WalkRemoveTags.apply
   |> typed Passes.WalkRename.apply
   |> typed Passes.WalkNopend.apply
   |> typed Passes.WalkExpandPrint.apply

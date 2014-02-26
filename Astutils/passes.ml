@@ -170,6 +170,32 @@ module Rename = struct
     in acc, p
 end
 
+module RemoveTags = struct
+  type acc0 = unit
+  type 'a acc = unit
+
+  let init_acc () = ()
+
+  let rec map li =
+    List.filter_map (fun i ->
+      match Instr.unfix i with
+      | Instr.Tag s -> let () = Tags.tag s in None
+      | Instr.Loop (v, e1, e2, li) ->
+	let li = map li in
+	Some ( Instr.fixa (Instr.Fixed.annot i) (Instr.Loop (v, e1, e2, li)))
+      | _ -> Some i
+    ) li
+
+  let process acc p =
+    match p with
+    | Prog.DeclarFun (funname, t, params, instrs) ->
+      acc, Prog.DeclarFun (funname, t, params, map instrs)
+    | _ -> acc, p
+
+  let process_main acc m = acc, map m
+
+end
+
 module CollectCalls = struct
   type acc0 = unit
   type 'a acc = BindingSet.t
@@ -261,6 +287,7 @@ module CollectTypes : SigPassTop
     in acc, p
 end
 
+module WalkRemoveTags = WalkTop(RemoveTags);;
 module WalkCollectCalls = WalkTop(CollectCalls);;
 module WalkCollectTypes = WalkTop(CollectTypes);;
 module WalkNopend = Walk(NoPend);;

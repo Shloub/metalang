@@ -51,6 +51,7 @@ rule token = parse
 
          in LEXEMS li
     }
+| "tag" { TAG }
 | "${" { UNQUOTE_START }
 | "}" { END_QUOTE }
 | '\n' { newline lexbuf ; token lexbuf }

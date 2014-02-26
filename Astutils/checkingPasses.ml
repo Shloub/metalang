@@ -147,6 +147,7 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
 
   let rec check_instr funname acc instr =
     match Instr.unfix instr with
+    | Instr.Tag _ -> acc
       | Instr.Declare (var, t, e) ->
         let () = check_expr funname acc e in
         add_local_in_acc funname var acc

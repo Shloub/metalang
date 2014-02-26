@@ -89,6 +89,7 @@ def lexems expand_read_int()
 	current_language() == LANG_Cs
 	then
     return {
+    tag use_readline
     def a = native_expand_read_int()
     return a;
     }
@@ -107,6 +108,7 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Cs
 	  then
       return {
+        tag use_readline
         def a = native_expand_read_int_line()
         return a;
       }
@@ -131,6 +133,7 @@ def lexems expand_read_char_line(lexems a)
 	current_language() == LANG_Cs
 	  then
       return {
+        tag use_readline
         def a = native_expand_read_char_line()
         return a;
       }

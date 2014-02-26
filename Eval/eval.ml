@@ -693,6 +693,7 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
   | Instr.StdinSep _ ->
     let f execenv = IO.skip () in
     env, f
+  | Instr.Tag _ -> env, (fun _ -> ())
   | Instr.Unquote li -> assert false
 and print ty e =
   (** show the value e. it has the type ty*)
@@ -761,6 +762,7 @@ and precompile_instr i =
     | Instr.DeclRead (t, v) -> Instr.DeclRead (t, v)
     | Instr.StdinSep -> Instr.StdinSep
     | Instr.Unquote li -> assert false
+    | Instr.Tag s -> Instr.Tag s
   in Instr.Fixed.fix i
 
 (** compile a function into a lambda *)

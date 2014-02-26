@@ -508,6 +508,7 @@ module Instr = struct
     | Loop of varname * 'expr * 'expr * 'a list
     | While of 'expr * 'a list
     | Comment of string
+    | Tag of string
     | Return of 'expr
     | AllocArray of varname * Type.t * 'expr * (varname * 'a list) option
     | AllocRecord of varname * Type.t * (fieldname * 'expr) list
@@ -541,6 +542,7 @@ module Instr = struct
     | Call (a, b) -> Call (a, b)
     | StdinSep -> StdinSep
     | Unquote e -> Unquote e
+    | Tag e -> Tag e
 
   let map f t =
     map_bloc (List.map f) t
@@ -575,6 +577,7 @@ module Instr = struct
   let loop v e1 e2 li = Loop (v, e1, e2, li) |> fix
   let while_ e li = While (e, li) |> fix
   let comment s = Comment s |> fix
+  let tag s = Tag s |> fix
   let return e = Return e |> fix
   let alloc_array binding t len =
     AllocArray(binding, t, len, None) |> fix
@@ -617,7 +620,8 @@ module Instr = struct
         | Read _ -> acc, t
         | DeclRead _ -> acc, t
         | Call _ -> acc, t
-        | Unquote li -> acc, t
+        | Unquote _ -> acc, t
+        | Tag _ -> acc, t
   end)
 
   let foldmap_expr
@@ -670,6 +674,7 @@ module Instr = struct
 	      acc, DeclRead (t, m)
             | StdinSep -> acc, StdinSep
             | Unquote e -> acc, Unquote e
+            | Tag e -> acc, Tag e
         in out, fix i
       ) acc instruction
 

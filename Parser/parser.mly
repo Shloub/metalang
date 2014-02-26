@@ -23,7 +23,7 @@
     in e
 %}
 %token<string> COMMENT
-%token MAIN IF THEN ELSE ELSIF END DO FOR TO WHILE RETURN
+%token MAIN IF THEN ELSE ELSIF END DO FOR TO WHILE RETURN TAG
 %token DEF MACRO WITH
 %token READ PRINT SKIP
 %token ENUM RECORD
@@ -202,6 +202,7 @@ control_flow :
 ;
 
 instr :
+| TAG IDENT { I.tag $2 |> locati ( Ast.location ($startpos($1), $endpos($2))) }
 | UNQUOTE_START expr END_QUOTE {
   I.unquote $2 |> locati ( Ast.location ($startpos($1), $endpos($3)))
 }

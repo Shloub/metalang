@@ -474,6 +474,7 @@ let rec collect_contraintes_instructions env instructions
     (fun env instruction ->
       let loc = Ast.PosMap.get (Instr.Fixed.annot instruction) in
       match Instr.unfix instruction with
+      | Instr.Tag _ -> env
         | Instr.Declare (var, ty, e) ->
           let ty = expand env ty loc in
           let env, contrainte_expr = collect_contraintes_expr env e in
