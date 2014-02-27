@@ -261,20 +261,36 @@ def readint():
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a,@ %a" f1 e1 f2 e2)) li
 
+	 method print_args =
+		 print_list
+			 (fun f (t, e) -> self#expr f e)
+			 (fun t f1 e1 f2 e2 -> Format.fprintf t
+				 "%a,@ %a" f1 e1 f2 e2)
 
   method multi_print f format exprs =
     if exprs = [] then
-      Format.fprintf f "@[<h>print(\"%s\", end='')@]" format
+			if String.ends_with format "\n" then
+				let l = String.length format in
+				Format.fprintf f "@[<h>print(\"%s\")@]"  (String.sub format 0 (l - 1) )
+			else
+				Format.fprintf f "@[<h>print(\"%s\", end='')@]" format
     else
-    Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='')@]" format
-      (print_list
-	 (fun f (t, e) -> self#expr f e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)) exprs
+			if String.ends_with format "\n" then
+				let l = String.length format in
+				Format.fprintf f "@[<h>print(\"%s\" %% ( %a ))@]" (String.sub format 0 (l - 1) )
+					self#print_args exprs
+			else
+				Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='')@]" format
+					self#print_args exprs
 
   method print f t expr =
     match Expr.unfix expr with
-    | Expr.String s -> Format.fprintf f "@[print( %S, end='')@]" s
+    | Expr.String s ->
+			if String.ends_with s "\n" then
+				let l = String.length s in
+				Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
+			else
+				Format.fprintf f "@[print( %S, end='')@]" s
     | _ ->
     Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t self#expr expr
 

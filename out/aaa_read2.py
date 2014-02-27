@@ -26,7 +26,7 @@ for i in range(0, len):
   print("%d=>" % ( i ), end='')
   a = tab[i];
   print("%d " % ( a ), end='')
-print( "\n", end='')
+print("")
 tab2 = read_int_line(len);
 for i_ in range(0, len):
   print("%d==>" % ( i_ ), end='')

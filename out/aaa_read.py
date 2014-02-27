@@ -58,7 +58,7 @@ for i in range(0, len):
   stdinsep()
   print("%d=>%d " % ( i, tmpi1 ), end='')
   tab[i] = tmpi1;
-print( "\n", end='')
+print("")
 tab2 = [None] * len
 for i_ in range(0, len):
   tmpi2 = 0;

@@ -56,10 +56,10 @@ def print_sudoku( sudoku_ ):
         print("%d " % ( b ), end='')
         if (x % 3) == 2:
           print( " ", end='')
-      print( "\n", end='')
+      print("")
       if (y % 3) == 2:
-        print( "\n", end='')
-    print( "\n", end='')
+        print("")
+    print("")
 
 """ dit si les variables sont toutes différentes """
 """ dit si les variables sont toutes différentes """
@@ -92,5 +92,5 @@ print_sudoku(sudoku_);
 if solve(sudoku_):
   print_sudoku(sudoku_);
 else:
-  print( "no solution\n", end='')
+  print("no solution")
 

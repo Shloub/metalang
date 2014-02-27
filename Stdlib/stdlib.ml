@@ -241,6 +241,12 @@ module String = struct
 
   let is_sub s s' = try ignore (index s s' 0) ; true with Not_found -> false
 
+	let ends_with s s' =
+		let l = String.length s in
+		let l' = String.length s' in
+		let s = String.sub s (l - l') l' in
+		s = s'
+
   let is_prefix s s' = match_from s s' 0
 
   let is_capitalised s = let c = s.[0] in c >= 'A' && c <= 'Z'

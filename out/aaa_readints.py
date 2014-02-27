@@ -26,5 +26,5 @@ for i in range(0, 1 + len - 2):
   for j in range(0, len):
     b = tab2[i][j];
     print("%d " % ( b ), end='')
-  print( "\n", end='')
+  print("")
 

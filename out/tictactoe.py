@@ -58,7 +58,7 @@ def print_state( g ):
         print( "|", end='')
       if y != 2:
         print( "\n|-|-|-|\n|", end='')
-    print( "\n", end='')
+    print("")
 
 """ On dit qui gagne (info stoquées dans g.ended et g.note ) """
 def eval_( g ):
