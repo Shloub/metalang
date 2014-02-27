@@ -44,6 +44,12 @@ module NoPend : SigPass with type acc0 = unit = struct
   let locate loc instr =
     PosMap.add (Instr.Fixed.annot instr) loc; instr
 
+  let locatee loc e =
+    PosMap.add (Expr.Fixed.annot e) loc; e
+
+  let locatem loc m =
+    PosMap.add (Mutable.Fixed.annot m) loc; m
+
   let rec process (acc:'lex acc) i =
     let rec inner_map t0 : 'lex Instr.t list =
       match Instr.unfix t0 with
@@ -70,7 +76,7 @@ module NoPend : SigPass with type acc0 = unit = struct
           let b = fresh () in
           [
             Instr.Declare (b, t, e) |> Instr.fixa annot |> locate loc;
-            Instr.Print(t, Expr.access (Mutable.var b))
+            Instr.Print(t, locatee loc (Expr.access (locatem loc (Mutable.var b))))
           |> Instr.fixa annot |> locate loc;
           ]
         | Instr.AllocArray(b0, t, e, lambdaopt) ->
@@ -172,7 +178,7 @@ module ExpandReadDecl : SigPass with type acc0 = unit = struct
   let mapi i =
     Instr.deep_map_bloc
       (List.flatten @* (List.map expand) )
-      (Instr.unfix i) |> Instr.fix
+      (Instr.unfix i) |> Instr.fixa (Instr.Fixed.annot i)
 
   let process () is = (), List.map mapi (List.flatten (List.map expand is))
 
@@ -193,7 +199,7 @@ module ExpandPrint : SigPass with type acc0 = unit = struct
                                                                  (_, Mutable.Var b))
     ) ) ->
       [write_bool b]
-    | j -> [ Instr.deep_map_bloc (List.flatten @* List.map rewrite) j |> Instr.fix ]
+    | j -> [ Instr.deep_map_bloc (List.flatten @* List.map rewrite) j |> Instr.fixa (Instr.Fixed.annot i) ]
 
   type 'lex acc = unit
   let init_acc _ = ()

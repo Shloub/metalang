@@ -229,6 +229,9 @@ module CountNoPosition = struct
   and count_expr e = fexpr (Expr.Writer.Deep.fold fexpr 0 e) e
   and count_exprs e = List.fold_left (fun acc e -> acc + count_expr e) 0 e
 
+	let count_tys e = List.fold_left (fun acc e -> acc + count_type e) 0 e
+
+
   let finstr acc (i: 'a Ast.Instr.t) =
     let acc = if Ast.PosMap.mem (Instr.Fixed.annot i) then acc
       else acc + 1
@@ -257,7 +260,10 @@ module CountNoPosition = struct
   let process acc p =
     match p with
     | Prog.DeclarFun (funname, t, params, instrs) ->
-      (acc + (count instrs)), Prog.DeclarFun (funname, t, params, instrs)
+      (acc + count instrs +
+				 count_type t +
+				 count_tys (List.map snd params)
+			), Prog.DeclarFun (funname, t, params, instrs)
     | _ -> acc, p
 
   let process_main acc m = acc + count m, m
@@ -511,7 +517,7 @@ Warner.ploc loc
 		| Prog.DeclarFun (_, _, params, li) ->
 			collectDefReturn env li;
 			List.iter (fun (_, ty) ->
-				check ty (Warner.loc_of li)
+				check ty (Ast.PosMap.get (Type.Fixed.annot ty))
 			) params
     | _ -> ()
 
