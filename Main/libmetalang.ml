@@ -3,35 +3,44 @@ open Ast
 
 (** {2 Languages definition } *)
 
+let debug_printer = new PosPrinter.posPrinter
+let debug_print prog = debug_printer#prog Format.std_formatter prog
 
-let typed f (a, b) = (a, f () b)
 
-let typed_ f (a, b) = (a, f b)
+let typed name f (a, b) =
+  (* debug_print b;
+  let before = Passes.WalkCountNoPosition.fold () b in *)
+  let b = f () b in
+(* let after = Passes.WalkCountNoPosition.fold () b in
+  Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
+  (a, b)
+
+let typed_ name f (a, b) = (a, f b)
 
 let default_passes (prog : Typer.env * Parser.token Prog.t) :
     (Typer.env * Parser.token Prog.t ) =
   prog
-  |> typed Passes.WalkCheckNaming.apply
+  |> typed "check naming" Passes.WalkCheckNaming.apply
   |> Passes.CheckUseVoid.apply
-  |> typed Passes.CheckReturn.apply
-  |> typed Passes.WalkRemoveTags.apply
-  |> typed Passes.WalkRename.apply
-  |> typed Passes.WalkNopend.apply
-  |> typed Passes.WalkExpandPrint.apply
+  |> typed "check return" Passes.CheckReturn.apply
+  |> typed "remove tags" Passes.WalkRemoveTags.apply
+  |> typed "rename" Passes.WalkRename.apply
+  |> typed "expend" Passes.WalkNopend.apply
+  |> typed "expendPrint" Passes.WalkExpandPrint.apply
 
 let clike_passes prog =
   prog |> default_passes
-  |> typed Passes.WalkAllocArrayExpend.apply
-  |> typed Passes.WalkExpandReadDecl.apply
+  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
-  |> typed_ Passes.ReadAnalysis.apply
+  |> typed_ "read analysis" Passes.ReadAnalysis.apply
 
 
 let ocaml_passes prog =
   prog |> default_passes
-  |> typed Passes.WalkIfMerge.apply
+  |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
-  |> typed_ Passes.ReadAnalysis.apply
+  |> typed_ "read analysis" Passes.ReadAnalysis.apply
 
 let no_passes prog =
   prog
@@ -150,8 +159,19 @@ let make_prog_helper progname (funs, main) stdlib =
     Prog.funs = stdlib @ funs;
     Prog.main = main ;
   } in
+(*
+  let before = Passes.WalkCountNoPosition.fold () prog in
+  Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before; *)
   let prog = Eval.EvalConstantes.apply prog in
+(*  debug_print prog;
+  let before = Passes.WalkCountNoPosition.fold () prog in
+  Format.fprintf Format.std_formatter "After eval constantes, %d positions missing@\n" before;
+*)
   let tyenv, prog = Typer.process prog in
+(*
+  let before = Passes.WalkCountNoPosition.fold () prog in
+  Format.fprintf Format.std_formatter "After typer, %d positions missing@\n" before;
+*)
   let prog = Passes.RemoveUselessFunctions.apply prog
     (List.filter Passes.no_macro funs) in
   let prog = Passes.RemoveUselessTypes.apply prog

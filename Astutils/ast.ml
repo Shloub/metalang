@@ -65,6 +65,8 @@ let position p =
   let cnum = p.Lexing.pos_cnum - p.Lexing.pos_bol - 1 in
   (line, cnum)
 
+let merge_positions (a, _) (_, b) = (a, b)
+
 (** get a location from lexer *)
 let location (p1, p2) =
   (position p1, position p2)
@@ -73,8 +75,10 @@ let location (p1, p2) =
 module PosMap : sig
   val add : int -> location -> unit
   val get : int -> location
+  val mem : int -> bool
 end = struct
   let map = ref IntMap.empty
+  let mem i = IntMap.mem i !map
   let add i l =
     map := IntMap.add i l !map
   let get i =
@@ -628,6 +632,7 @@ module Instr = struct
       f acc instruction =
     Writer.Deep.foldmap
       (fun acc i ->
+	let a = Fixed.annot i in
         let out, i =
           match unfix i with
             | Declare (v, t, e) ->
@@ -675,7 +680,7 @@ module Instr = struct
             | StdinSep -> acc, StdinSep
             | Unquote e -> acc, Unquote e
             | Tag e -> acc, Tag e
-        in out, fix i
+        in out, fixa a i
       ) acc instruction
 
   let map_expr f i =

@@ -37,6 +37,17 @@ let ploc f ((l1, c1), (l2, c2)) =
     Format.fprintf f "(on %d:%d to %d:%d)"
     l1 c1 l2 c2
 
+
+let loc_of li =
+match li with
+| hd::tl ->
+  let a = List.hd li in
+  let b = List.hd (List.rev li) in
+  let a = Ast.PosMap.get (Ast.Instr.Fixed.annot a) in
+  let b = Ast.PosMap.get (Ast.Instr.Fixed.annot b) in
+  Ast.merge_positions a b
+| [] ->  Ast.default_location
+
 let warn funname msg =
   Format.fprintf Format.std_formatter
     "Warning : in function %s,@\n@[<h>  %a@]@\n" funname msg ()

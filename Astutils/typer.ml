@@ -57,8 +57,10 @@ let rec is_typed (t : typeContrainte ref) : bool =
 let rec extract_typed (t : typeContrainte ref) : Type.t =
   match !t with
   | Unknown loc -> assert false
-  | PreTyped (t, _) ->
-    Type.Fixed.map extract_typed t |> Type.Fixed.fix
+  | PreTyped (t, loc) ->
+    let t = Type.Fixed.map extract_typed t |> Type.Fixed.fix in
+    PosMap.add ( Type.Fixed.annot t ) loc;
+    t
   | Typed (t, _) -> t
 
 type env =
@@ -682,19 +684,20 @@ let map_ty env prog =
     in Type.Writer.Deep.map f (f ty)
   in
   let f instr =
+    let a = Instr.Fixed.annot instr in
     match Instr.unfix instr with
       | Instr.Declare (p1, ty, p2) ->
-        let ty = map_ty ty in Instr.fix (Instr.Declare (p1, ty, p2) )
+        let ty = map_ty ty in Instr.fixa a (Instr.Declare (p1, ty, p2) )
       | Instr.AllocArray (p1, ty, p2, p3) ->
-        let ty = map_ty ty in Instr.fix (Instr.AllocArray (p1, ty, p2, p3) )
+        let ty = map_ty ty in Instr.fixa a (Instr.AllocArray (p1, ty, p2, p3) )
       | Instr.AllocRecord (p1, ty, p2) ->
-        let ty = map_ty ty in Instr.fix (Instr.AllocRecord (p1, ty, p2) )
+        let ty = map_ty ty in Instr.fixa a (Instr.AllocRecord (p1, ty, p2) )
       | Instr.Print (ty, p1) ->
-        let ty = map_ty ty in Instr.fix (Instr.Print (ty, p1) )
+        let ty = map_ty ty in Instr.fixa a (Instr.Print (ty, p1) )
       | Instr.Read (ty, p1) ->
-        let ty = map_ty ty in Instr.fix (Instr.Read (ty, p1) )
+        let ty = map_ty ty in Instr.fixa a (Instr.Read (ty, p1) )
       | Instr.DeclRead (ty, p1) ->
-        let ty = map_ty ty in Instr.fix (Instr.DeclRead (ty, p1) )
+        let ty = map_ty ty in Instr.fixa a (Instr.DeclRead (ty, p1) )
       | _ -> instr
   in
   let map_instrs instrs =

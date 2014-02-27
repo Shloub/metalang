@@ -94,7 +94,7 @@ typ :
 | TYPE_BOOL { T.bool  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 | TYPE_ARRAY LOWER typ HIGHER { T.array $3  |> locatt  ( Ast.location ($startpos($1), $endpos($3))) }
 | TYPE_VOID { T.void |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| AT IDENT { T.named $2  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
+| AT IDENT { T.named $2  |> locatt  ( Ast.location ($startpos($1), $endpos($2))) }
 ;
 
 expr :
@@ -167,23 +167,24 @@ affect_field :
 
 alloc_record :
 | DEF IDENT SET RECORD affect_field* END
-    { I.alloc_record $2 (T.auto ()) $5 }
+    { I.alloc_record $2 (T.auto ()  |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $5 }
 | DEF typ IDENT SET RECORD affect_field* END
     { I.alloc_record $3 $2 $6 }
 ;
 
 define_var :
-| DEF IDENT SET expr { I.declare $2 (T.auto ()) $4 }
+| DEF IDENT SET expr { I.declare $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $4 }
 | DEF typ IDENT SET expr { I.declare $3 $2 $5 }
 | DEF IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-    { I.alloc_array_lambda $2 (T.auto ()) $4 $7 $9 }
+    { I.alloc_array_lambda $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $4 $7 $9 }
 | DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
 	{ match T.unfix $2 with
 	  | T.Array x -> I.alloc_array_lambda $3 x $5 $8 $10
     | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10
 		| _ -> failwith "expected array"
 	}
-| DEF READ IDENT { I.readdecl (T.auto ()) $3 }
+| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))
+) $3 }
 | DEF READ typ IDENT { I.readdecl $3 $4 }
 ;
 
@@ -258,7 +259,8 @@ instr :
 | READ typ mutabl { I.read $2 $3
                       |> locati ( Ast.location ($startpos($1), $endpos($3)))
                   }
-| PRINT expr { I.print (T.auto ()) $2
+| PRINT expr { I.print (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))
+) $2
                  |> locati ( Ast.location ($startpos($1), $endpos($2)))
              }
 | PRINT typ expr { I.print $2 $3

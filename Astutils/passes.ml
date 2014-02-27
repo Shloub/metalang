@@ -121,7 +121,7 @@ module Rename = struct
     in Expr.Writer.Deep.map f e
 
   let rec process_instr map i =
-    let i2 = match Instr.Fixed.unfix i with
+    let i2 = match Instr.unfix i with
       | Instr.Declare (v, t, e) ->
         Instr.Declare ( (mapname map v), t, process_expr map e)
       | Instr.Affect (m, e) ->
@@ -193,6 +193,74 @@ module RemoveTags = struct
     | _ -> acc, p
 
   let process_main acc m = acc, map m
+
+end
+
+module CountNoPosition = struct
+
+  type acc0 = unit
+  type 'a acc = int
+
+  let init_acc () = 0
+
+  let ftype acc e =
+    let acc = if Ast.PosMap.mem (Type.Fixed.annot e) then acc
+      else acc + 1
+    in acc
+
+  let count_type e = ftype (Type.Writer.Deep.fold ftype 0 e) e
+
+  let rec fmut acc e =
+    let acc = if Ast.PosMap.mem (Mutable.Fixed.annot e) then acc
+      else acc + 1
+    in match Mutable.unfix e with
+    | Mutable.Array (_, li) -> acc + count_exprs li
+    | _ -> acc
+
+  and count_mut e = fmut (Mutable.Writer.Deep.fold fmut 0 e) e
+
+  and fexpr acc e =
+    let acc = if Ast.PosMap.mem (Expr.Fixed.annot e) then acc
+      else acc + 1
+    in match Expr.unfix e with
+    | Expr.Access mut -> acc + count_mut mut
+    | _ -> acc
+
+  and count_expr e = fexpr (Expr.Writer.Deep.fold fexpr 0 e) e
+  and count_exprs e = List.fold_left (fun acc e -> acc + count_expr e) 0 e
+
+  let finstr acc (i: 'a Ast.Instr.t) =
+    let acc = if Ast.PosMap.mem (Instr.Fixed.annot i) then acc
+      else acc + 1
+    in match Instr.unfix i with
+    | Instr.Declare (_, t, e) -> acc + count_type t + count_expr e
+    | Instr.Affect (m, e) -> acc + count_expr e + count_mut m
+    | Instr.Loop (_, e1, e2, _) -> acc + count_expr e1 + count_expr e2
+    | Instr.While (e, _) -> acc + count_expr e
+    | Instr.Return e -> acc + count_expr e
+    | Instr.AllocArray (_, t, e, _) -> acc + count_type t + count_expr e
+    | Instr.AllocRecord (_, t, li) -> acc + count_type t + count_exprs (List.map snd li)
+    | Instr.If (e, _, _) -> acc + count_expr e
+    | Instr.Call (_, li) ->acc + count_exprs li
+    | Instr.Print (t, e) -> acc + count_type t + count_expr e
+    | Instr.Read (t, e) -> acc + count_type t + count_mut e
+    | Instr.DeclRead (t, _) -> acc + count_type t
+    | Instr.StdinSep -> acc
+    | Instr.Unquote e -> acc + count_expr e
+
+  let count (li: 'a Ast.Expr.t Ast.Instr.t list) =
+    List.fold_left
+      (fun acc i ->
+	finstr (Instr.Writer.Deep.fold finstr acc i) i
+      ) 0 li
+
+  let process acc p =
+    match p with
+    | Prog.DeclarFun (funname, t, params, instrs) ->
+      (acc + (count instrs)), Prog.DeclarFun (funname, t, params, instrs)
+    | _ -> acc, p
+
+  let process_main acc m = acc + count m, m
 
 end
 
@@ -287,6 +355,8 @@ module CollectTypes : SigPassTop
     in acc, p
 end
 
+module WalkCountNoPosition = WalkTop(CountNoPosition);;
+
 module WalkRemoveTags = WalkTop(RemoveTags);;
 module WalkCollectCalls = WalkTop(CollectCalls);;
 module WalkCollectTypes = WalkTop(CollectTypes);;
@@ -361,7 +431,9 @@ module ReadAnalysis = struct
       match Instr.unfix i with
         | Instr.DeclRead (ty, _)
         | Instr.Read(ty, _) ->
-          TypeSet.add ty acc
+          TypeMap.add ty
+	    (Ast.PosMap.get (Instr.Fixed.annot i))
+	    acc
         | _ -> acc in
     List.fold_left
       (fun acc i ->
@@ -374,24 +446,25 @@ module ReadAnalysis = struct
       (fun f acc -> match f with
         | Prog.DeclarFun (_, _, _, li) -> collectReads acc li
         | _ -> acc
-      ) li TypeSet.empty
+      ) li TypeMap.empty
 
   let apply prog =
-		let reads_types =
+    let reads_types_map =
       let acc = collectReads_progitem prog.Prog.funs
       in Option.map_default acc (collectReads acc) prog.Prog.main
-		in
-		TypeSet.iter
-			(fun ty ->
-				match Type.unfix ty with
-				| Type.Char | Type.Integer -> ()
-				| _ -> raise (Warner.Error (fun f ->
-					(* TODO position *)
-					Format.fprintf f "Cannot read %s@\n"
-						(Type.type_t_to_string ty)
-				))
-			)
-			reads_types;
+    in
+    let () = TypeMap.iter
+      (fun ty loc ->
+	match Type.unfix ty with
+	| Type.Char | Type.Integer -> ()
+	| _ -> raise (Warner.Error (fun f ->
+	  Format.fprintf f "Cannot read %s %a@\n"
+	    (Type.type_t_to_string ty) Warner.ploc loc
+	))
+      )
+      reads_types_map in
+    let reads_types = TypeMap.fold (fun a b c -> TypeSet.add a c)
+      reads_types_map TypeSet.empty in
     { prog with
       Prog.hasSkip =
         begin
@@ -411,21 +484,22 @@ let no_macro = function
   | _ -> true
 
 module CheckUseVoid = struct
-	let rec check ty =
+	let rec check ty loc =
 		if Type.unfix ty = Type.Void then
 			raise (Warner.Error (fun f ->
-				Format.fprintf f "Forbiden use of void type in" (* TODO location *)
+				Format.fprintf f "Forbiden use of void type in %a@\n"
+Warner.ploc loc
 			) )
-		else Type.Writer.Surface.iter check ty
+		else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
 
   let collectDefReturn env li =
     let f () i =
       match Instr.unfix i with
 				| Instr.AllocArray (_, ty, _, _)
         | Instr.Declare (_, ty, _) ->
-					check ty
+					check ty (Ast.PosMap.get (Instr.Fixed.annot i))
         | Instr.Return e ->
-					check (Typer.get_type env e)
+					check (Typer.get_type env e) (Ast.PosMap.get (Instr.Fixed.annot i))
         | _ -> () in
     List.iter
       (fun i ->
@@ -437,7 +511,7 @@ module CheckUseVoid = struct
 		| Prog.DeclarFun (_, _, params, li) ->
 			collectDefReturn env li;
 			List.iter (fun (_, ty) ->
-				check ty
+				check ty (Warner.loc_of li)
 			) params
     | _ -> ()
 

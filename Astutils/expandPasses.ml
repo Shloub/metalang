@@ -46,7 +46,7 @@ module NoPend : SigPass with type acc0 = unit = struct
 
   let rec process (acc:'lex acc) i =
     let rec inner_map t0 : 'lex Instr.t list =
-      match Instr.Fixed.unfix t0 with
+      match Instr.unfix t0 with
         | Instr.AllocArray(
           _, _,
           Expr.Fixed.F (_, Expr.Access (
@@ -65,14 +65,16 @@ module NoPend : SigPass with type acc0 = unit = struct
           )) ->
           [fixed_map t0]
         | Instr.Print(t, e) ->
+	  let annot = Instr.Fixed.annot t0 in
           let loc = PosMap.get (Instr.Fixed.annot t0) in
           let b = fresh () in
           [
-            Instr.Declare (b, t, e) |> Instr.fix |> locate loc;
+            Instr.Declare (b, t, e) |> Instr.fixa annot |> locate loc;
             Instr.Print(t, Expr.access (Mutable.var b))
-          |> Instr.fix |> locate loc;
+          |> Instr.fixa annot |> locate loc;
           ]
         | Instr.AllocArray(b0, t, e, lambdaopt) ->
+	  let annot = Instr.Fixed.annot t0 in
           let lambdaopt = match lambdaopt with
             | None -> None
             | Some (name, li) ->
@@ -83,17 +85,17 @@ module NoPend : SigPass with type acc0 = unit = struct
           let loc = PosMap.get (Instr.Fixed.annot t0) in
           let b = fresh () in
           [
-            Instr.Declare (b, Type.integer, e) |> Instr.fix;
+            Instr.Declare (b, Type.integer, e) |> Instr.fixa annot;
             Instr.AllocArray(b0, t,
                              Expr.access (Mutable.var b),
-                             lambdaopt) |> Instr.fix  |> locate loc;
+                             lambdaopt) |> Instr.fixa annot  |> locate loc;
           ]
         | _ -> [fixed_map t0]
     and fixed_map (t:'lex Instr.t) =
       Instr.deep_map_bloc
         (List.flatten @* (List.map inner_map))
         (Instr.unfix t)
-        |> Instr.fix
+        |> Instr.fixa (Instr.Fixed.annot t)
     in acc, List.flatten (List.map inner_map i);;
   let init_acc _ = ();;
 end
@@ -133,7 +135,8 @@ module AllocArrayExpend : SigPass with type acc0 = unit = struct
 
   let expand i = match Instr.unfix i with
     | Instr.AllocArray (b,t, len, Some (b2, instrs)) ->
-      [ Instr.fix (Instr.AllocArray (b, t, len, None) )
+      let annot = Instr.Fixed.annot i in
+      [ Instr.fixa annot (Instr.AllocArray (b, t, len, None) )
           |> locati (PosMap.get (Instr.Fixed.annot i))
       ;
         Instr.loop b2 (Expr.integer 0)
@@ -148,7 +151,7 @@ module AllocArrayExpend : SigPass with type acc0 = unit = struct
   let mapi i =
     Instr.deep_map_bloc
       (List.flatten @* (List.map expand) )
-      (Instr.unfix i) |> Instr.fix
+      (Instr.unfix i) |> Instr.fixa (Instr.Fixed.annot i)
 
   let process () is = (), List.map mapi (List.flatten (List.map expand is))
 end
@@ -161,8 +164,8 @@ module ExpandReadDecl : SigPass with type acc0 = unit = struct
 
   let expand i = match Instr.unfix i with
     | Instr.DeclRead (t, binding) ->
-      [ Instr.fix (Instr.Declare (binding, t, Expr.default_value t) );
-        Instr.read t (Instr.mutable_var binding);
+      [ Instr.fixa (Instr.Fixed.annot i) (Instr.Declare (binding, t, Expr.default_value t) );
+        Instr.fixa (Instr.Fixed.annot i) (Instr.Read (t, (Instr.mutable_var binding)));
       ]
     | _ -> [i]
 

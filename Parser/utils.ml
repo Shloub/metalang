@@ -64,6 +64,7 @@ let rec string_of_lexem f = function
   | UNQUOTE_START -> Format.fprintf f "${ "
   | EOF -> Format.fprintf f "ENF_OF_FILE"
   | END_QUOTE -> Format.fprintf f "} "
+  | TAG ->  Format.fprintf f "tag "
 and lexems f (li : (Parser.token, Parser.token Ast.Expr.t) Ast.Lexems.t list )  =
   let rec h f = function
     | [] -> ()

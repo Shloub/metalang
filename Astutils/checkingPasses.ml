@@ -54,75 +54,76 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
       types = BindingSet.empty;
     }
 
-  let check_name0 funname acc name =
+  let check_name0 funname acc name loc =
     if BindingSet.mem name acc then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is re-declared" name)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is re-declared at %a" name Warner.ploc loc)
 
-  let check_name funname acc name =
+  let check_name funname acc name loc =
     begin
-      check_name0 funname acc.functions name;
-      check_name0 funname acc.parameters name;
-      check_name0 funname acc.variables name;
-      check_name0 funname acc.types name;
-      check_name0 funname acc.array name
+      check_name0 funname acc.functions name loc;
+      check_name0 funname acc.parameters name loc;
+      check_name0 funname acc.variables name loc;
+      check_name0 funname acc.types name loc;
+      check_name0 funname acc.array name loc
     end
 
-  let add_type_in_acc funname name acc out =
-    let () = check_name funname acc name in
+  let add_type_in_acc funname name acc out loc =
+    let () = check_name funname acc name loc in
     let acc = { acc with types = BindingSet.add name acc.types }
     in acc, out
 
-  let add_fun_in_acc funname name acc out =
-    let () = check_name funname acc name in
+  let add_fun_in_acc funname name acc out loc =
+    let () = check_name funname acc name loc in
     let acc = { acc with functions = BindingSet.add name acc.functions }
     in acc, out
 
-  let add_param_in_acc funname name acc  =
-    let () = check_name funname acc name in
+  let add_param_in_acc funname name acc loc =
+    let () = check_name funname acc name loc in
     let acc = { acc with parameters = BindingSet.add name acc.parameters }
     in acc
 
-  let add_array_in_acc funname name acc  =
-    let () = check_name funname acc name in
+  let add_array_in_acc funname name acc loc =
+    let () = check_name funname acc name loc in
     let acc = { acc with array = BindingSet.add name acc.array }
     in acc
 
-  let add_local_in_acc funname name acc  =
-    let () = check_name funname acc name in
+  let add_local_in_acc funname name acc loc =
+    let () = check_name funname acc name loc in
     let acc = { acc with variables = BindingSet.add name acc.variables }
     in acc
 
 
-  let is_value funname acc name =
+  let is_value funname acc name loc =
     (* TODO if is parameter, change message *)
     if not(BindingSet.mem name acc.variables) &&
       not(BindingSet.mem name acc.parameters) &&
       not(BindingSet.mem name acc.array)
     then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable" name)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable at %a" name Warner.ploc loc)
 
 
-  let is_local funname acc name =
+  let is_local funname acc name loc =
     (* TODO if is parameter, change message *)
     if not(BindingSet.mem name acc.variables) then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable" name)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable at %a" name Warner.ploc loc)
 
 
-  let is_array funname acc name =
+  let is_array funname acc name loc =
     if not(BindingSet.mem name acc.array)
       && not( BindingSet.mem name acc.parameters)
     then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not an array" name)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not an array at %a" name Warner.ploc loc)
 
-  let is_fun funname acc name =
+  let is_fun funname acc name loc =
     if not(BindingSet.mem name acc.functions)
     then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not a function" name)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a function at %a" name Warner.ploc loc)
 
   let rec check_mutable funname acc mut =
+    let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
     match Mutable.unfix mut with
       | Mutable.Var varname ->
-        is_value funname acc varname
+        is_value funname acc varname loc
       | Mutable.Array (mut, li) ->
         begin
           check_mutable funname acc mut;
@@ -133,11 +134,12 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
 
   and check_expr funname acc e =
     let f () e =
+    let loc = Ast.PosMap.get (Expr.Fixed.annot e) in
       match Expr.unfix e with
         | Expr.Access m ->
           check_mutable funname acc m
         | Expr.Call (function_, _) ->
-          is_fun funname acc function_
+          is_fun funname acc function_ loc
         | _ -> ()
     in
     Expr.Writer.Deep.fold
@@ -146,11 +148,12 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
       e
 
   let rec check_instr funname acc instr =
+    let loc = Ast.PosMap.get (Instr.Fixed.annot instr) in
     match Instr.unfix instr with
     | Instr.Tag _ -> acc
       | Instr.Declare (var, t, e) ->
         let () = check_expr funname acc e in
-        add_local_in_acc funname var acc
+        add_local_in_acc funname var acc loc
       | Instr.Affect (mut, e) ->
         let () = check_mutable funname acc mut in
         let () = check_expr funname acc e in
@@ -158,7 +161,7 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
       | Instr.Loop (v, e1, e2, li) ->
         let () = check_expr funname acc e1 in
         let () = check_expr funname acc e2 in
-        let acc2 = add_param_in_acc funname v acc in
+        let acc2 = add_param_in_acc funname v acc loc in
         let _acc2 = List.fold_left (check_instr funname) acc2 li
         in acc
       | Instr.While (e, li) ->
@@ -173,16 +176,16 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
         let acc = match liopt with
           | None -> acc
           | Some (varname, li) ->
-            let () = check_name funname acc varname in
-            let acc = add_param_in_acc funname varname acc in
+            let () = check_name funname acc varname loc in
+            let acc = add_param_in_acc funname varname acc loc in
             List.fold_left (check_instr funname) acc li
-        in add_array_in_acc funname v acc
+        in add_array_in_acc funname v acc loc
       | Instr.AllocRecord (varname, t, li) ->
-        let () = check_name funname acc varname in
+        let () = check_name funname acc varname loc in
         let () = List.iter (fun (_field, expr) ->
           check_expr funname acc expr) li
         in
-        let acc = add_local_in_acc funname varname acc in
+        let acc = add_local_in_acc funname varname acc loc in
         acc
       | Instr.If (e, li1, li2) ->
         let () = check_expr funname acc e in
@@ -190,13 +193,13 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
         let _ = List.fold_left (check_instr funname) acc li2
         in acc
       | Instr.Call (name, li) ->
-        let () = is_fun funname acc name in
+        let () = is_fun funname acc name loc in
         let () = List.iter (check_expr funname acc) li
         in acc
       | Instr.Print (t, e) ->
         let () = check_expr funname acc e in acc
       | Instr.DeclRead (t, v) ->
-        add_local_in_acc funname v acc
+        add_local_in_acc funname v acc loc
       | Instr.Read (t, mut) ->
         let () = check_mutable funname acc mut in
         acc
@@ -205,14 +208,15 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
   let process acc f =
     match f with
       | Prog.Macro (name, _, _, _) ->
-        add_fun_in_acc name name acc f
+        add_fun_in_acc name name acc f  (* TODO *) Ast.default_location
       | Prog.Comment _ -> acc, f
-      | Prog.DeclareType (name, _) ->
-        add_type_in_acc name name acc f
+      | Prog.DeclareType (name, ty) ->
+        add_type_in_acc name name acc f (Ast.PosMap.get (Type.Fixed.annot ty))
       | Prog.DeclarFun (funname, t, params, instrs) ->
-        let acc, f = add_fun_in_acc funname funname acc f in
+	let loc = Warner.loc_of instrs in
+        let acc, f = add_fun_in_acc funname funname acc f loc in
         let acc0 = List.fold_left (fun acc (name, t) ->
-          add_param_in_acc funname name acc
+          add_param_in_acc funname name acc loc
         ) acc params in
         let _ = List.fold_left (check_instr funname) acc0 instrs
         in acc, f

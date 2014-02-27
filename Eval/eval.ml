@@ -491,7 +491,8 @@ and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
                 execenv.(out) <- v
         with Not_found ->
           raise (Error (fun f ->
-            Format.fprintf f "Cannot find var %s\n" v))
+	    let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
+            Format.fprintf f "Cannot find var %s %a\n" v ploc loc ))
       end
     | Mutable.Array (m, li) ->
       let m, index = match List.rev li with
@@ -524,7 +525,8 @@ and mut_val (env:env) (mut : precompiledExpr Mutable.t)
               let out = StringMap.find v env.vars in fun execenv ->
                 execenv.(out)
         with Not_found ->
-          raise (Error (fun f -> Format.fprintf f "Cannot find var %s\n" v))
+	  let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
+          raise (Error (fun f -> Format.fprintf f "Cannot find var %s %a\n" v ploc loc))
       end
     | Mutable.Array (m, li) ->
       let m = mut_val env m in
@@ -732,7 +734,7 @@ let rec precompile_instrs li =
   List.map precompile_instr li
 (** precompile an instruction *)
 and precompile_instr i =
-  let i = match Instr.unfix i with
+  let i' = match Instr.unfix i with
     | Instr.Declare (v, t, e) -> Instr.Declare (v, t, precompile_expr e)
     | Instr.Affect (mut, e) -> Instr.Affect (Mutable.map_expr precompile_expr
                                                mut, precompile_expr e)
@@ -763,7 +765,7 @@ and precompile_instr i =
     | Instr.StdinSep -> Instr.StdinSep
     | Instr.Unquote li -> assert false
     | Instr.Tag s -> Instr.Tag s
-  in Instr.Fixed.fix i
+  in Instr.fixa (Instr.Fixed.annot i) i'
 
 (** compile a function into a lambda *)
 let compile_fun env var t li instrs =
@@ -853,7 +855,7 @@ module EvalConstantes = struct
           | Char x -> Expr.char x
           | String x -> Expr.string x
           | _ -> raise (Error (fun f -> Format.fprintf f "type error...")) (* TODO *)
-        in acc, new_expr
+        in acc, Expr.Fixed.fixa (Expr.Fixed.annot param) (Expr.unfix new_expr)
       | _ -> acc, e
     in Expr.Writer.Deep.foldmap f acc e
 
