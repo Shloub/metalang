@@ -31,9 +31,8 @@ int** read_int_matrix(int x, int y){
     int z;
     for (z = 0 ; z < y; z++)
     {
-      int* out_ = read_int_line(x);
       scanf("%*[ \t\r\n]c", 0);
-      tab[z] = out_;
+      tab[z] = read_int_line(x);
     }
   }
   return tab;

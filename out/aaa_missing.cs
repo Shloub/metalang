@@ -6,8 +6,7 @@ public class aaa_missing
   
   public static int[] read_int_line(int n)
   {
-    int[] a = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    return a;
+    return new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
   }
   
   /*
@@ -32,8 +31,8 @@ public class aaa_missing
     int[] l0 = read_int_line(1);
     int len = l0[0];
     int[] tab = read_int_line(len);
-    int b = result(len, tab);
-    Console.Write(b);
+    int a = result(len, tab);
+    Console.Write(a);
   }
   
 }

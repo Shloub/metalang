@@ -25,9 +25,8 @@ std::vector<std::vector<int > > read_int_matrix(int x, int y){
   std::vector<std::vector<int > > tab( y );
   for (int z = 0 ; z < y; z++)
   {
-    std::vector<int > out_ = read_int_line(x);
     scanf("%*[ \t\r\n]c", 0);
-    tab.at(z) = out_;
+    tab.at(z) = read_int_line(x);
   }
   return tab;
 }

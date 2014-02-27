@@ -3,8 +3,7 @@ import sys
 
 
 def read_int_line( n ):
-    a = list(map(int, input().split()));
-    return a;
+    return list(map(int, input().split()));
 
 """
   Ce test a été généré par Metalang.
@@ -23,6 +22,6 @@ def result( len, tab ):
 l0 = read_int_line(1);
 len = l0[0];
 tab = read_int_line(len);
-b = result(len, tab);
-print("%d" % b, end='')
+a = result(len, tab);
+print("%d" % a, end='')
 

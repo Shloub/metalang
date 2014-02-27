@@ -5,18 +5,15 @@
 
 
 function read_int(){
-  $a = intval(trim(fgets(STDIN)));
-  return $a;
+  return intval(trim(fgets(STDIN)));
 }
 
 function read_int_line($n){
-  $a = array_map("intval", explode(" ", fgets(STDIN)));
-  return $a;
+  return array_map("intval", explode(" ", fgets(STDIN)));
 }
 
 function read_char_line($n){
-  $a = fgets(STDIN);
-  return $a;
+  return fgets(STDIN);
 }
 
 /*
@@ -29,16 +26,16 @@ $tab = read_int_line($len);
 for ($i = 0 ; $i < $len; $i++)
 {
   echo $i, "=>";
-  $b = $tab[$i];
-  echo $b, " ";
+  $a = $tab[$i];
+  echo $a, " ";
 }
 echo "\n";
 $tab2 = read_int_line($len);
 for ($i_ = 0 ; $i_ < $len; $i_++)
 {
   echo $i_, "==>";
-  $d = $tab2[$i_];
-  echo $d, " ";
+  $b = $tab2[$i_];
+  echo $b, " ";
 }
 $strlen = read_int();
 echo $strlen, "=strlen\n";
@@ -54,7 +51,7 @@ for ($i3 = 0 ; $i3 < $strlen; $i3++)
 }
 for ($j = 0 ; $j < $strlen; $j++)
 {
-  $e = $tab4[$j];
-  echo $e;
+  $d = $tab4[$j];
+  echo $d;
 }
 ?>

@@ -10,20 +10,17 @@ public class aaa_read2
   
   public static int read_int()
   {
-    int a = int.Parse(Console.ReadLine());
-    return a;
+    return int.Parse(Console.ReadLine());
   }
   
   public static int[] read_int_line(int n)
   {
-    int[] a = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    return a;
+    return new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
   }
   
   public static char[] read_char_line(int n)
   {
-    char[] a = Console.ReadLine().ToCharArray();
-    return a;
+    return Console.ReadLine().ToCharArray();
   }
   
   /*
@@ -41,8 +38,8 @@ read int, read char et skip
     {
       Console.Write(i);
       Console.Write("=>");
-      int b = tab[i];
-      Console.Write(b);
+      int a = tab[i];
+      Console.Write(a);
       Console.Write(" ");
     }
     Console.Write("\n");
@@ -51,8 +48,8 @@ read int, read char et skip
     {
       Console.Write(i_);
       Console.Write("==>");
-      int d = tab2[i_];
-      Console.Write(d);
+      int b = tab2[i_];
+      Console.Write(b);
       Console.Write(" ");
     }
     int strlen = read_int();
@@ -73,8 +70,8 @@ read int, read char et skip
     }
     for (int j = 0 ; j < strlen; j++)
     {
-      char e = tab4[j];
-      Console.Write(e);
+      char d = tab4[j];
+      Console.Write(d);
     }
   }
   

@@ -1,8 +1,7 @@
 <?php
 
 function read_int_line($n){
-  $a = array_map("intval", explode(" ", fgets(STDIN)));
-  return $a;
+  return array_map("intval", explode(" ", fgets(STDIN)));
 }
 
 /*
@@ -23,6 +22,6 @@ function result($len, &$tab){
 $l0 = read_int_line(1);
 $len = $l0[0];
 $tab = read_int_line($len);
-$b = result($len, $tab);
-echo $b;
+$a = result($len, $tab);
+echo $a;
 ?>

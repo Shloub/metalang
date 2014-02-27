@@ -35,9 +35,8 @@ public class aaa_readints
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
     {
-      int[] out_ = read_int_line(x);
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      tab[z] = out_;
+      tab[z] = read_int_line(x);
     }
     return tab;
   }

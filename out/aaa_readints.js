@@ -58,9 +58,8 @@ function read_int_matrix(x, y){
   var tab = new Array(y);
   for (var z = 0 ; z <= y - 1; z++)
   {
-    var out_ = read_int_line(x);
     stdinsep();
-    tab[z] = out_;
+    tab[z] = read_int_line(x);
   }
   return tab;
 }

@@ -90,8 +90,7 @@ def lexems expand_read_int()
 	then
     return {
     tag use_readline
-    def a = native_expand_read_int()
-    return a;
+    return native_expand_read_int()
     }
   else
     return { def read int out skip; return out }
@@ -109,14 +108,13 @@ def lexems expand_read_int_line(lexems a)
 	  then
       return {
         tag use_readline
-        def a = native_expand_read_int_line()
-        return a;
+        return native_expand_read_int_line()
       }
     else
     return {
       def array<int> tab[${a}] with i do
       	def read int t skip;
-	return t;
+				return t;
       end
       return tab
     }
@@ -134,8 +132,7 @@ def lexems expand_read_char_line(lexems a)
 	  then
       return {
         tag use_readline
-        def a = native_expand_read_char_line()
-        return a;
+        return native_expand_read_char_line()
       }
     else
     return {
@@ -156,8 +153,7 @@ end
 def lexems expand_read_int_matrix(lexems x, lexems y)
     if current_language() == LANG_Py then
       return {
-        def a = py_expand_read_int_matrix( ${ y } )
-        return a;
+        return py_expand_read_int_matrix( ${ y } )
       }
     else
 			def s = {skip}
@@ -168,9 +164,8 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
 			end
     return {
       def array<array<int>> tab[${y}] with z do
-				def out = read_int_line(x)
 				${ s }
-				return out
+				return read_int_line(x)
       end
       return tab
     }

@@ -7,24 +7,19 @@ public class aaa_readints
   
   public static int read_int()
   {
-    int a = int.Parse(Console.ReadLine());
-    return a;
+    return int.Parse(Console.ReadLine());
   }
   
   public static int[] read_int_line(int n)
   {
-    int[] a = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    return a;
+    return new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
   }
   
   public static int[][] read_int_matrix(int x, int y)
   {
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
-    {
-      int[] out_ = read_int_line(x);
-      tab[z] = out_;
-    }
+      tab[z] = read_int_line(x);
     return tab;
   }
   
@@ -39,8 +34,8 @@ public class aaa_readints
     {
       Console.Write(i);
       Console.Write("=>");
-      int b = tab1[i];
-      Console.Write(b);
+      int a = tab1[i];
+      Console.Write(a);
       Console.Write("\n");
     }
     len = read_int();
@@ -49,8 +44,8 @@ public class aaa_readints
     {
       for (int j = 0 ; j < len; j++)
       {
-        int c = tab2[i][j];
-        Console.Write(c);
+        int b = tab2[i][j];
+        Console.Write(b);
         Console.Write(" ");
       }
       Console.Write("\n");

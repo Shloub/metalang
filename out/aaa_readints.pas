@@ -92,16 +92,14 @@ end;
 type d = array of c;
 function read_int_matrix(x : integer; y : integer) : d;
 var
-  out_ : c;
   tab : d;
   z : integer;
 begin
   SetLength(tab, y);
   for z := 0 to  y - 1 do
   begin
-    out_ := read_int_line(x);
     skip();
-    tab[z] := out_;
+    tab[z] := read_int_line(x);
   end;
   exit(tab);
 end;
