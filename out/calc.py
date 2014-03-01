@@ -1,6 +1,3 @@
-
-import sys
-
 """
 La suite de fibonaci
 """

@@ -1,7 +1,4 @@
 
-import sys
-
-
 def read_int_line( n ):
     return list(map(int, input().split()));
 

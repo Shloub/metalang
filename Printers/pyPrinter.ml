@@ -119,11 +119,8 @@ match Type.unfix t with
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "
-import sys
-%s%s%s%s
-"
-      (if need then "
+    Format.fprintf f "%s%s%s%s"
+      (if need then "import sys
 char=None
 def readchar_():
   global char
@@ -142,8 +139,8 @@ def skipchar():
   skipchar()
   return out
 " else "")
-      (if need_stdinsep then "
-def stdinsep():
+      (if need_stdinsep then
+"def stdinsep():
   while True:
     c = readchar_()
     if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
@@ -151,8 +148,8 @@ def stdinsep():
     else:
       return
 " else "")
-      (if need_readint then "
-def readint():
+      (if need_readint then
+"def readint():
   c = readchar_()
   if c == '-':
     sign = -1

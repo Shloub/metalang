@@ -1,7 +1,4 @@
 
-import sys
-
-
 i = 0;
 i += 1
 print("%d" % i, end='')

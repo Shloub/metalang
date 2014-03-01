@@ -1,6 +1,3 @@
-
-import sys
-
 def foo( a, b ):
     return a + b;
 

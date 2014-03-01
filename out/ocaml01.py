@@ -1,6 +1,3 @@
-
-import sys
-
 def foo(  ):
     for i in range(0, 1 + 10):
       pass

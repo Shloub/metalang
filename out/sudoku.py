@@ -1,6 +1,4 @@
-
 import sys
-
 char=None
 def readchar_():
   global char
@@ -12,7 +10,6 @@ def skipchar():
   global char
   char = None
   return
-
 def stdinsep():
   while True:
     c = readchar_()
@@ -20,7 +17,6 @@ def stdinsep():
       skipchar()
     else:
       return
-
 def readint():
   c = readchar_()
   if c == '-':
@@ -36,7 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 """ lit un sudoku sur l'entrée standard """
 def read_sudoku(  ):
     a = 9 * 9;

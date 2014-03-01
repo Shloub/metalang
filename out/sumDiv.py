@@ -1,6 +1,4 @@
-
 import sys
-
 char=None
 def readchar_():
   global char
@@ -12,7 +10,6 @@ def skipchar():
   global char
   char = None
   return
-
 def readint():
   c = readchar_()
   if c == '-':
@@ -28,7 +25,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 
 def foo(  ):
     a = 0;

@@ -1,6 +1,3 @@
-
-import sys
-
 def is_pair( i ):
     j = 1;
     if i < 10:

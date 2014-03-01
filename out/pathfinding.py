@@ -1,6 +1,4 @@
-
 import sys
-
 char=None
 def readchar_():
   global char
@@ -16,7 +14,6 @@ def readchar():
   out = readchar_()
   skipchar()
   return out
-
 def stdinsep():
   while True:
     c = readchar_()
@@ -24,7 +21,6 @@ def stdinsep():
       skipchar()
     else:
       return
-
 def readint():
   c = readchar_()
   if c == '-':
@@ -40,7 +36,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 
 def min2( a, b ):
     if a < b:
