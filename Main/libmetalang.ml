@@ -17,6 +17,19 @@ let typed name f (a, b) =
 
 let typed_ name f (a, b) = (a, f b)
 
+let check_reads = (fun (tyenv, prog) -> 
+    (if Tags.is_taged "use_readmacros" then
+			let need_stdinsep = prog.Prog.hasSkip in
+			let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+			let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+			let need = need_stdinsep || need_readint || need_readchar in
+			if need then
+				begin
+					debug_print prog;
+						raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
+				end );
+			(tyenv, prog))
+
 let default_passes (prog : Typer.env * Parser.token Prog.t) :
     (Typer.env * Parser.token Prog.t ) =
   prog
@@ -34,13 +47,14 @@ let clike_passes prog =
   |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" Passes.ReadAnalysis.apply
-
+	|> check_reads
 
 let ocaml_passes prog =
   prog |> default_passes
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" Passes.ReadAnalysis.apply
+	|> check_reads
 
 let no_passes prog =
   prog

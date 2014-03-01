@@ -90,6 +90,7 @@ def lexems expand_read_int()
 	then
     return {
     tag use_readline
+		tag use_readmacros
     return native_expand_read_int()
     }
   else
@@ -98,7 +99,7 @@ def lexems expand_read_int()
 end
 
 def int read_int()
-    ${ expand_read_int() }
+  ${ expand_read_int() }
 end
 
 def lexems expand_read_int_line(lexems a)
@@ -107,6 +108,7 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Cs
 	  then
       return {
+			  tag use_readmacros
         tag use_readline
         return native_expand_read_int_line()
       }
@@ -122,7 +124,7 @@ def lexems expand_read_int_line(lexems a)
 end
 
 def array<int> read_int_line(int n)
-    ${expand_read_int_line( {n} )}
+  ${expand_read_int_line( {n} )}
 end
 
 def lexems expand_read_char_line(lexems a)
@@ -131,8 +133,9 @@ def lexems expand_read_char_line(lexems a)
 	current_language() == LANG_Cs
 	  then
       return {
-        tag use_readline
-        return native_expand_read_char_line()
+      tag use_readline
+			tag use_readmacros
+      return native_expand_read_char_line()
       }
     else
     return {
