@@ -266,8 +266,9 @@ let make_prog stdlib filename lang =
   make_prog_helper progname (funs, main) stdlib
 
 let make_prog_helper lang (funs, main) stdlib =
+  Tags.reset ();
   let progname = "js_magic" in
-  let stdlib = stdlib ^ (stdlib_string lang) in
+  let stdlib = (stdlib_string lang) ^ stdlib in
   let stdlib = parse_string Parser.toplvls stdlib in
   make_prog_helper progname (funs, main) stdlib
 
@@ -299,7 +300,7 @@ let process err c filename =
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
           close_out chan
         with Warner.Error e ->
-          Unix.unlink output;
+(*          Unix.unlink output; *)
           err e
       in List.iter go c.languages
   with Warner.Error e ->

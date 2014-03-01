@@ -98,12 +98,31 @@ list-style-type : none;
   </head>
   <body>
 <textarea id="stdlib" style="display:none">
+macro int random(int c)
+  ml do "(Random.int ($c))"
+  js do "(Math.floor(Math.random() * ($c)))"
+  php do "mt_rand(0, $c - 1)"
+  *  do "$c"
+end
+
+macro char char_of_int(int c)
+  ml do "char_of_int ($c)"
+  pas do "chr($c)"
+  java do "(char)($c)"
+  js do "String.fromCharCode($c)"
+  csharp do "(char)($c)"
+  php do "chr($c)"
+  *  do "$c"
+end
+
 macro int int_of_char(char c)
   ml do "int_of_char ($c)"
   py do "ord($c)"
   scheme do "(char->integer $c)"
   ruby do "$c.ord"
   pas do "ord($c)"
+  php do "ord($c)"
+  js do "$c.charCodeAt(0)"
   *  do "$c"
 end
 
@@ -135,6 +154,128 @@ end
 
 def int min4(int a, int b, int c, int d)
 	return min3(min2(a, b), c, d)
+end
+
+macro array<int> native_expand_read_int_line()
+  py do "list(map(int, input().split()))"
+  php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
+	csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll<int>(int.Parse).ToArray()"
+  *  do "E R R O R"
+end
+
+macro array<char> native_expand_read_char_line()
+  py do "list(input())"
+  php do "fgets(STDIN)"
+  csharp do "Console.ReadLine().ToCharArray()"
+  *  do "E R R O R"
+end
+
+macro array<array<int>> py_expand_read_int_matrix(int y)
+  py do "[list(map(int, input().split())) for i in range(y)]"
+  *  do "E R R O R"
+end
+
+macro int native_expand_read_int()
+  py do "int(input())"
+  php do "intval(trim(fgets(STDIN)))"
+	csharp do "int.Parse(Console.ReadLine())"
+  *  do "E R R O R"
+end
+
+def lexems expand_read_int()
+	if current_language() == LANG_Py ||
+	current_language() == LANG_Php ||
+	current_language() == LANG_Cs
+	then
+    return {
+    tag use_readline
+		tag use_readmacros
+    return native_expand_read_int()
+    }
+  else
+    return { def read int out skip; return out }
+	end
+end
+
+def int read_int()
+  ${ expand_read_int() }
+end
+
+def lexems expand_read_int_line(lexems a)
+    if current_language() == LANG_Py ||
+	current_language() == LANG_Php ||
+	current_language() == LANG_Cs
+	  then
+      return {
+			  tag use_readmacros
+        tag use_readline
+        return native_expand_read_int_line()
+      }
+    else
+    return {
+      def array<int> tab[${a}] with i do
+      	def read int t skip;
+				return t;
+      end
+      return tab
+    }
+   end
+end
+
+def array<int> read_int_line(int n)
+  ${expand_read_int_line( {n} )}
+end
+
+def lexems expand_read_char_line(lexems a)
+    if current_language() == LANG_Py ||
+	current_language() == LANG_Php ||
+	current_language() == LANG_Cs
+	  then
+      return {
+      tag use_readline
+			tag use_readmacros
+      return native_expand_read_char_line()
+      }
+    else
+    return {
+      def array<char> tab[${a}] with i do
+      	def read char t;
+				return t;
+      end
+			skip
+      return tab
+    }
+   end
+end
+
+def array<char> read_char_line(int n)
+    ${expand_read_char_line( {n} )}
+end
+
+def lexems expand_read_int_matrix(lexems x, lexems y)
+    if current_language() == LANG_Py then
+      return {
+        return py_expand_read_int_matrix( ${ y } )
+      }
+    else
+			def s = {skip}
+			if current_language() == LANG_Php ||
+			current_language() == LANG_Cs
+			then
+				s = {}
+			end
+    return {
+      def array<array<int>> tab[${y}] with z do
+				${ s }
+				return read_int_line(x)
+      end
+      return tab
+    }
+   end
+end
+
+def array<array<int>> read_int_matrix(int x, int y)
+    ${expand_read_int_matrix( {x}, {y} )}
 end
 
 </textarea>
@@ -176,18 +317,10 @@ def int pathfind(array<array<char>> tab, int x, int y)
 end
 
 main
-	def int x = 0
-	def int y = 0
-	read int x skip
-	read int y skip
-	def array<array<char>> tab[y] with i do
-		def array<char> tab2[x] with j do
-		  def char tmp = '\000'
-		  read char tmp
-		  return tmp
-		end
-		skip
-		return tab2
+	def x = read_int()
+	def y = read_int()
+	def array<array<char>> tab[y] with i do		
+		return read_char_line(x)
 	end
 	def int result = pathfind(tab, x, y)
 	print int result
