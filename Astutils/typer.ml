@@ -326,8 +326,7 @@ let is_float env expr =
     | Typed (Type.Fixed.F (_, Type.Float), _) -> true
     | _ -> false
 
-let exprloc e = Ast.PosMap.get (Expr.Fixed.annot e) (* TODO plus
-                                                       l'utiliser *)
+let exprloc e = Ast.PosMap.get (Expr.Fixed.annot e)
 
 let add_contrainte env c1 c2 =
   { env with
@@ -343,7 +342,7 @@ let rec collect_contraintes_expr env e =
       "collecting contraintes in %a@\n"
       Printer.printer#expr  e
       in*)
-  let loc e = Ast.PosMap.get (Expr.Fixed.annot e) in
+  let loc e = exprloc e in
   let env, contrainte = match Expr.Fixed.unfix e with
     | Expr.BinOp (a, Expr.Mod, b) ->
       let env, acontrainte = collect_contraintes_expr env a in

@@ -34,7 +34,7 @@ let ploc f ((l1, c1), (l2, c2)) =
     Format.fprintf f "(on %d:%d-%d)"
       l1 c1 c2
   else
-    Format.fprintf f "(on %d:%d to %d:%d)"
+    Format.fprintf f "(from %d:%d to %d:%d)"
     l1 c1 l2 c2
 
 
@@ -46,7 +46,7 @@ match li with
   let a = Ast.PosMap.get (Ast.Instr.Fixed.annot a) in
   let b = Ast.PosMap.get (Ast.Instr.Fixed.annot b) in
   Ast.merge_positions a b
-| [] ->  Ast.default_location
+| [] -> Ast.default_location
 
 let warn funname msg =
   Format.fprintf Format.std_formatter
