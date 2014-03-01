@@ -1,0 +1,5 @@
+main
+	/* Ce test passe en ocaml mais pas en C#. C'est assez logique mais c'est chiant */
+	def i = read_int()
+	skip
+end
