@@ -159,17 +159,17 @@ let make_prog_helper progname (funs, main) stdlib =
     Prog.funs = stdlib @ funs;
     Prog.main = main ;
   } in
-
+(*
   debug_print prog;
 
   let before = Passes.WalkCountNoPosition.fold () prog in
-  Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before;
+  Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before; *)
   let prog = Eval.EvalConstantes.apply prog in
-  debug_print prog;
+(*  debug_print prog;
 
   let before = Passes.WalkCountNoPosition.fold () prog in
   Format.fprintf Format.std_formatter "After eval constantes, %d positions missing@\n" before;
-
+*)
   let tyenv, prog = Typer.process prog in
 (*
   let before = Passes.WalkCountNoPosition.fold () prog in

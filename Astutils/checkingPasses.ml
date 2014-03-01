@@ -56,7 +56,7 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
 
   let check_name0 funname acc name loc =
     if BindingSet.mem name acc then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is re-declared at %a" name Warner.ploc loc)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is re-declared %a" name Warner.ploc loc)
 
   let check_name funname acc name loc =
     begin
@@ -99,25 +99,25 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
       not(BindingSet.mem name acc.parameters) &&
       not(BindingSet.mem name acc.array)
     then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable at %a" name Warner.ploc loc)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable %a" name Warner.ploc loc)
 
 
   let is_local funname acc name loc =
     (* TODO if is parameter, change message *)
     if not(BindingSet.mem name acc.variables) then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable at %a" name Warner.ploc loc)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable %a" name Warner.ploc loc)
 
 
   let is_array funname acc name loc =
     if not(BindingSet.mem name acc.array)
       && not( BindingSet.mem name acc.parameters)
     then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not an array at %a" name Warner.ploc loc)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not an array %a" name Warner.ploc loc)
 
   let is_fun funname acc name loc =
     if not(BindingSet.mem name acc.functions)
     then
-      Warner.err funname (fun t () -> Format.fprintf t "%s is not a function at %a" name Warner.ploc loc)
+      Warner.err funname (fun t () -> Format.fprintf t "%s is not a function %a" name Warner.ploc loc)
 
   let rec check_mutable funname acc mut =
     let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in

@@ -493,7 +493,7 @@ module CheckUseVoid = struct
 	let rec check ty loc =
 		if Type.unfix ty = Type.Void then
 			raise (Warner.Error (fun f ->
-				Format.fprintf f "Forbiden use of void type in %a@\n"
+				Format.fprintf f "Forbiden use of void type %a@\n"
 Warner.ploc loc
 			) )
 		else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
@@ -550,7 +550,7 @@ module CheckReturn = struct
     | None -> ()
     | Some loc ->
       raise ( Warner.Error (fun f ->
-	Format.fprintf f "return not expected at %a" Warner.ploc loc
+	Format.fprintf f "return not expected %a" Warner.ploc loc
       ))
 
   let check_fun = function
