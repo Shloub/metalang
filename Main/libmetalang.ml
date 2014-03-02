@@ -330,7 +330,7 @@ let test_process err (lang:string) txt stdlib =
     log "fresh_init" ;
     let buf = Format.stdbuf in
     log "buf" ;
-    Format.flush_str_formatter () ;
+    let _ = Format.flush_str_formatter () in
     log "flush" ;
     Format.fprintf Format.str_formatter "%a@;%!"
       (fun f () -> printer f (tyenv, prog) err) ();

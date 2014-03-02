@@ -157,7 +157,8 @@ class schemePrinter = object(self)
     | Expr.Access a -> self#access f a
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Char (c) -> self#char f c
-
+		| Expr.Enum e -> assert false (* TODO *)
+		| Expr.Lexems e -> assert false
 
   method apply (f:Format.formatter) (var:funname) (li:Parser.token Expr.t list) : unit =
     match BindingMap.find_opt var macros with
@@ -195,6 +196,7 @@ class schemePrinter = object(self)
 
   method affect f mutable_ expr =
     match Mutable.unfix mutable_ with
+		| Mutable.Dot (e, field) -> assert false (* TODO *)
       | Mutable.Var binding ->
         Format.fprintf f "@[<h>(set!@ %a@ %a)@]"
           self#binding binding self#expr expr

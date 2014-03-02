@@ -126,6 +126,7 @@ class bashPrinter = object(self)
   method mutable_ f m =
     match Mutable.unfix m with
       | Mutable.Var binding -> self#binding_decl f binding
+			| Mutable.Dot (m, field) -> assert false (* TODO *)
       | Mutable.Array (m, indexes) ->
 	Format.fprintf f "%a[%a]"
 	  self#mutable_ m

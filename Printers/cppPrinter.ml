@@ -55,10 +55,12 @@ class cppPrinter = object(self)
               Format.fprintf f "struct %s *" n
             | Type.Enum _ ->
               Format.fprintf f "%s" n
+						| _ -> assert false
       end
       | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
       | Type.Auto -> Format.fprintf f "auto"
+			| Type.Lexems -> assert false
 
   method bool f = function
     | true -> Format.fprintf f "true"

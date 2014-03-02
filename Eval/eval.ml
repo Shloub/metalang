@@ -98,6 +98,7 @@ let typeof = function
   | Record _ -> "record"
   | Array _ -> "array"
   | Nil _ -> "Nil"
+	| Lexems _ -> "Lexems"
 
 (** extract an ocaml array from a value *)
 let get_array = function
@@ -135,14 +136,16 @@ let get_bool = function
   | x ->
     Printf.printf "Got %s expected bool" (typeof x); assert false
 
+let err_token_expected x = Printf.printf "Got %s expected token list" (typeof x); assert false
+
+
 (** extract an ocaml token list from a value *)
 let get_tokens = function
   | Lexems a -> a
   | Bool false -> [ Parser.FALSE ]
   | Bool true -> [ Parser.TRUE ]
   | Integer i -> [ Parser.INT i ]
-  | x ->
-    Printf.printf "Got %s expected token list" (typeof x); assert false
+  | x -> err_token_expected x
 
 (** execution environment *)
 type execenv = result array
@@ -184,6 +187,8 @@ let flatten_lexems li =
           let li2 = f2 execenv |> get_tokens in
           Lexems (List.append li1 li2)
         )
+			| Result r, _ -> err_token_expected r
+			| _, Result r -> err_token_expected r
   ) (Result (Lexems []))  li
 
 (** returns an empty environment
@@ -446,7 +451,6 @@ let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
         WithEnv (fun execenv ->
           call execenv
         )
-      | Expr.UnOp (_, _) -> assert false
       | Expr.Enum e ->
         let t = Typer.type_for_enum e env.tyenv in
         begin match Type.unfix t with
@@ -471,6 +475,7 @@ and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
         | Result (Lexems li) ->
           let e = expr_of_lexems_list li
           in precompile_expr e env
+				| Result x -> err_token_expected x
         | WithEnv f ->
           WithEnv (fun execenv ->
             match f execenv with
@@ -478,6 +483,7 @@ and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
                 let e = expr_of_lexems_list li in
                 let r = precompile_expr e env in
                 eval_expr execenv r
+							| x -> err_token_expected x
           )
   ) li
   in flatten_lexems li
@@ -701,10 +707,7 @@ and print ty e =
   (** show the value e. it has the type ty*)
   let () = match Type.unfix ty with
     | Type.Array(ty) ->
-      begin
-        Array.map (fun e -> print ty e) (get_array e);
-        ()
-      end
+        let _ = Array.map (fun e -> print ty e) (get_array e) in ()
     | Type.Integer -> IO.print_int (get_integer e)
     | Type.Char -> IO.print_char (get_char e)
     | Type.Bool -> IO.print_bool (get_bool e)
@@ -800,6 +803,7 @@ let precompile_eval_expr (env:env) (e:Parser.token Expr.t) : result =
 (** main function of this module : it evalue a full programm *)
 let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
   let f env p = match p with
+		| Prog.Unquote _ -> assert false
     | Prog.DeclarFun (var, t, li, instrs) ->
       compile_fun env var t li instrs
     | Prog.DeclareType _ -> env
@@ -873,12 +877,14 @@ module EvalConstantes = struct
             begin match EVAL.precompiledExpr_of_lexems_list li acc
                 |> eval_expr execenv with
                   | Lexems li -> instrs_of_lexems_list li
+									| x -> err_token_expected x
             end
           | _ ->
             let execenv = init_eenv 0 in
             begin match EVAL.precompile_expr e acc
                 |> eval_expr execenv with
                     | Lexems li -> instrs_of_lexems_list li
+										| x -> err_token_expected x
             end
         end
       | _ -> [i]
@@ -915,12 +921,14 @@ module EvalConstantes = struct
             begin match EVAL.precompiledExpr_of_lexems_list li acc
                 |> eval_expr execenv with
                     | Lexems li -> w li
+										| x -> err_token_expected x
             end
           | _ ->
             let execenv = init_eenv 0 in
             begin match EVAL.precompile_expr e acc
                 |> eval_expr execenv with
                     | Lexems li -> w li
+										| x -> err_token_expected x
             end
         end
       | _ -> acc, [p]

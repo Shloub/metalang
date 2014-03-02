@@ -122,6 +122,8 @@ module Rename = struct
 
   let rec process_instr map i =
     let i2 = match Instr.unfix i with
+			| Instr.Unquote (e) -> Instr.Unquote (process_expr map e)
+			| Instr.Tag s -> Instr.Tag s
       | Instr.Declare (v, t, e) ->
         Instr.Declare ( (mapname map v), t, process_expr map e)
       | Instr.Affect (m, e) ->
@@ -236,6 +238,7 @@ module CountNoPosition = struct
     let acc = if Ast.PosMap.mem (Instr.Fixed.annot i) then acc
       else acc + 1
     in match Instr.unfix i with
+		| Instr.Tag _ | Instr.Comment _ -> acc
     | Instr.Declare (_, t, e) -> acc + count_type t + count_expr e
     | Instr.Affect (m, e) -> acc + count_expr e + count_mut m
     | Instr.Loop (_, e1, e2, _) -> acc + count_expr e1 + count_expr e2
@@ -377,6 +380,7 @@ module WalkRename = WalkTop(Rename);;
 module RemoveUselessFunctions = struct
   let apply prog funs =
     let go f (li, used_functions) = match f with
+			| Prog.Unquote e -> f::li, CollectCalls.process_expr used_functions e
       | Prog.DeclarFun (v, _,_, _)
       | Prog.Macro (v, _, _, _) ->
         if BindingSet.mem v used_functions
@@ -397,6 +401,7 @@ end
 module RemoveUselessTypes = struct
   let apply prog funs tyenv =
     let go f (li, used) = match f with
+			| Prog.Unquote _
       | Prog.DeclarFun (_, _,_, _)
       | Prog.Macro (_, _, _, _)
       | Prog.Comment _ -> (f::li, used)

@@ -117,6 +117,7 @@ class camlPrinter = object(self)
 	           )
 	           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
 	  ) li
+			| Type.Lexems -> assert false
       | Type.Auto -> assert false
 
   (** read spaces from stdin *)

@@ -62,6 +62,7 @@ class csharpPrinter = object(self)
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
       | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Auto -> assert false
+			| Type.Lexems -> assert false
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in

@@ -204,9 +204,13 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
         let () = check_mutable funname acc mut in
         acc
       | Instr.StdinSep -> acc
+			| Instr.Unquote e ->
+				let () = check_expr funname acc e in acc
 
   let process acc f =
     match f with
+		| Prog.Unquote e ->
+			let () = check_expr "toplvl" acc e in acc, f
       | Prog.Macro (name, ty, _, _) ->
         add_fun_in_acc name name acc f (Ast.PosMap.get (Type.Fixed.annot ty))
       | Prog.Comment _ -> acc, f

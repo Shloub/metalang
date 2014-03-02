@@ -166,7 +166,7 @@ class pasPrinter = object(self)
           | Type.Named n -> Format.fprintf f "%s" n
           | Type.Struct (li, p) -> Format.fprintf f "a struct"
 	  | Type.Enum _ -> Format.fprintf f "an enum"
-          | Type.Auto -> assert false
+			| Type.Lexems | Type.Auto -> assert false
 
   method print_proto f (funname, t, li) =
     match Type.unfix t with
@@ -344,6 +344,7 @@ class pasPrinter = object(self)
     | Type.Char ->
       Format.fprintf f "@[<h>%a := read_char_();@]"
         self#mutable_ m
+		| _ -> assert false (* type non géré*)
 
   method print f t expr =
     Format.fprintf f "@[<h>Write(%a);@]" self#expr expr

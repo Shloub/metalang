@@ -48,9 +48,8 @@ let rec is_typed (t : typeContrainte ref) : bool =
   match !t with
     | Unknown _ -> false
     | PreTyped (t, _) ->
-      let out = ref true in
-      Type.Fixed.map (fun t -> if not (is_typed t) then out := false) t;
-      !out
+			let out = ref true in
+			let _ = Type.Fixed.map (fun t -> if not (is_typed t) then out := false) t in !out
     | Typed (t, _) -> true
 
 
@@ -233,7 +232,7 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
       List.iter
         (fun name ->
           (try
-            List.find (String.equals name) li2
+             let _ = List.find (String.equals name) li2 in ()
           with Not_found ->
             error_field_not_found loc1 name t2
           ); ()
@@ -307,7 +306,7 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         ) false li
     |  PreTyped (Type.Struct _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2
       loc1 loc2
-
+		| _ -> assert false (* ces cas ne sont pas des cas pretyped*)
 
 
 (** {2 Accessors}*)
@@ -755,6 +754,7 @@ let process_fundecl e ((funname, ty, params, instructions) as tuple) =
   unify_contraintes e
 
 let process_tfun env p = match p with
+	| Prog.Unquote _ -> assert false
   | Prog.DeclarFun (varname, ty, li, instrs) ->
     process_fundecl env (varname, ty, li, instrs)
   | Prog.DeclareType (name, ty) ->

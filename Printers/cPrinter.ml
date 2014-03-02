@@ -62,10 +62,12 @@ class cPrinter = object(self)
               Format.fprintf f "struct %s *" n
             | Type.Enum _ ->
               Format.fprintf f "%s" n
+						| _ -> assert false
       end
       | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Struct _ -> Format.fprintf f "a struct"
       | Type.Auto -> assert false
+			| Type.Lexems -> assert false
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ %a@ =@ %a;@]"

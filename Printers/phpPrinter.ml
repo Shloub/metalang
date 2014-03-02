@@ -138,6 +138,7 @@ function nextChar(){
         Format.fprintf f "%a" self#expr e
       | Type.Char ->
         Format.fprintf f "%a" self#expr e
+			| _ -> assert false
 
   method combine_formats () = false
   method multi_print f format exprs =

@@ -307,11 +307,14 @@ class printer = object(self)
       Format.fprintf f "@[<h>%a *= %a;@]" self#mutable_ m self#expr e2
     | Expr.Div ->
       Format.fprintf f "@[<h>%a /= %a;@]" self#mutable_ m self#expr e2
+		| _ -> assert false
 
   method hasSelfAffect op = true
 
   method instr f t =
     match Instr.unfix t with
+
+			| Instr.Tag s ->  Format.fprintf f "tag %s@\n" s
       | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
       | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
@@ -540,6 +543,7 @@ class printer = object(self)
 	  name (t, params, code)
 	  macros;
 	()
+			| Prog.Unquote _ -> assert false
       | Prog.DeclareType (name, t) -> self#decl_type f name t
 
   method decl_type f name t =

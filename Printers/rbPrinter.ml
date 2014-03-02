@@ -92,6 +92,7 @@ match Type.unfix t with
   | Type.Char ->
     Format.fprintf f "@[%a=scanf(\"%%c\")[0];@]"
       self#mutable_ mutable_
+	| _ -> assert false (* types non gérés *)
 
   method stdin_sep f =
     Format.fprintf f "@[scanf(\"%%*\\n\");@]"

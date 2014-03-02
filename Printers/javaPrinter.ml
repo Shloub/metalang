@@ -58,6 +58,7 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
       | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Struct (li, p) -> Format.fprintf f "a struct"
       | Type.Auto -> assert false
+			| Type.Lexems -> assert false
 
   method decl_type f name t =
     match (Type.unfix t) with
