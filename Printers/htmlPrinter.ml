@@ -122,16 +122,16 @@ class htmlPrinter = object(self)
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] ->
-	      Format.fprintf f "@[<h><span class=\"keyword\">if</span>@ %a@]@\n<span class=\"keyword\">then</span>@\n@[<v2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
+	      Format.fprintf f "<span class=\"keyword\">if</span>@ %a@\n<span class=\"keyword\">then</span>@\n@[<v2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
 	        self#expr e
 	        self#instructions ifcase
       | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h><span class=\"keyword\">if</span>@ %a@] <span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">els</span>%a"
+      Format.fprintf f "<span class=\"keyword\">if</span>@ %a <span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">els</span>%a"
 	      self#expr e
 	      self#instructions ifcase
 	      self#instr instr
       | _ ->
-	Format.fprintf f "@[<h><span class=\"keyword\">if</span>@ %a@]@\n<span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">else</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
+	Format.fprintf f "<span class=\"keyword\">if</span>@ %a\n<span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">else</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
 	  self#expr e
 	  self#instructions ifcase
 	  self#instructions elsecase
