@@ -1,5 +1,4 @@
 Printer
-TexPrinter
 SchemePrinter
 PhpPrinter
 JavaPrinter
@@ -8,6 +7,5 @@ OcamlPrinter
 CsharpPrinter
 CPrinter
 CppPrinter
-BashPrinter
 PyPrinter
 HtmlPrinter

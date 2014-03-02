@@ -98,7 +98,7 @@ let languages, printers =
     "php",  clike_passes => new PhpPrinter.phpPrinter ;
     "rb",   clike_passes => new RbPrinter.rbPrinter ;
     "py",   clike_passes => new PyPrinter.pyPrinter ;
-(*    "tex",  no_passes   =>  new TexPrinter.texPrinter ;
+(*
     "sch",  ocaml_passes   =>  SchemePrinter.printer ;*)
 
     "metalang_parsed", no_passes => new Printer.printer ;
@@ -257,7 +257,6 @@ enum @target_language
   LANG_Php
   LANG_Rb
   LANG_Py
-  LANG_Tex
   LANG_Metalang_parsed
 end
 def @target_language current_language ()
