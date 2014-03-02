@@ -68,9 +68,8 @@ let fresh_init prog =
       let acc:BindingSet.t = List.fold_left
 	(fun acc ((v:string), _ ) -> BindingSet.add v acc)
 	acc params in
-
       let acc:BindingSet.t = List.fold_left addset acc instrs in
-      acc (* TODO *)
+      acc
     | _ -> acc
   in
   let set = BindingSet.empty in
@@ -78,10 +77,6 @@ let fresh_init prog =
     | None -> set
     | Some instrs -> List.fold_left addset set instrs in
   let set = List.fold_left addtop set prog.Prog.funs in
- (* let () = BindingSet.iter
-    (fun s -> Printf.printf "%s\n" s) set in
-  let () = Printf.printf "len = %d\n" (BindingSet.cardinal set) in
- *)
   let () = bindings := set
   in ();;
 

@@ -1,6 +1,15 @@
 open Stdlib
 open Ast
 
+(** Liste des mots clés à ne pas utiliser en metalang *)
+let keywords = [ "out"; "exp"; "from"; "to"; "min"; "max"; "eval"; ]
+
+let conf_rename prog =
+  Fresh.fresh_init prog ;
+  Passes.Rename.clear ();
+  Passes.Rename.add prog.Prog.progname ;
+  List.iter Passes.Rename.add keywords
+
 (** {2 Languages definition } *)
 
 let debug_printer = new PosPrinter.posPrinter
@@ -196,8 +205,7 @@ let make_prog_helper progname (funs, main) stdlib =
     prog.Prog.funs tyenv in
   tyenv, prog
 
-
-
+(* coloration syntaxique *)
 let colore string =
   try
     let lexbuf = Lexing.from_string string in
@@ -265,13 +273,6 @@ let make_prog stdlib filename lang =
   let stdlib = List.append stdlib_addon stdlib in
   make_prog_helper progname (funs, main) stdlib
 
-let make_prog_helper lang (funs, main) stdlib =
-  Tags.reset ();
-  let progname = "js_magic" in
-  let stdlib = (stdlib_string lang) ^ stdlib in
-  let stdlib = parse_string Parser.toplvls stdlib in
-  make_prog_helper progname (funs, main) stdlib
-
 let process err c filename =
   try
     if c.eval then
@@ -285,16 +286,7 @@ let process err c filename =
           lang in
         try
           if not c.quiet then Printf.printf "Generating %s\n%!" output ;
-          Fresh.fresh_init prog ;
-          Passes.Rename.clear ();
-          Passes.Rename.add prog.Prog.progname ;
-          Passes.Rename.add "out" ;
-          Passes.Rename.add "exp" ;
-          Passes.Rename.add "from" ;
-          Passes.Rename.add "to" ;
-          Passes.Rename.add "min" ;
-          Passes.Rename.add "max" ;
-          Passes.Rename.add "eval" ;
+					conf_rename prog ;
           let chan = open_out output in
           let buf = Format.formatter_of_out_channel chan in
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
@@ -309,38 +301,35 @@ let process err c filename =
 let process_config err c =
   List.iter (process err c) c.filenames
 
-let test_process err (lang:string) txt stdlib =
-  let progress = ref "" in
-  let log txt = progress := !progress ^ "\n  " ^ txt in
+let js_make_prog_helper lang (funs, main) stdlib =
+  Tags.reset ();
+  let progname = "js_magic" in
+  let stdlib = (stdlib_string lang) ^ stdlib in
+  let stdlib = parse_string Parser.toplvls stdlib in
+  make_prog_helper progname (funs, main) stdlib
+
+let js_process err (lang:string) txt stdlib =
   try
-    log "starting" ;
     let lexbuf = Lexing.from_string txt in
-    log "lexbuf" ;
     let prog' =
       try
         Parser.prog Lexer.token lexbuf
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
-    log "prog'" ;
-    let tyenv, prog = make_prog_helper lang prog' stdlib in
-    log "prog" ;
+    let tyenv, prog = js_make_prog_helper lang prog' stdlib in
+		conf_rename prog ;
     let printer = L.find lang printers in
-    log "printer" ;
     Fresh.fresh_init prog ;
-    log "fresh_init" ;
     let buf = Format.stdbuf in
-    log "buf" ;
     let _ = Format.flush_str_formatter () in
-    log "flush" ;
     Format.fprintf Format.str_formatter "%a@;%!"
       (fun f () -> printer f (tyenv, prog) err) ();
-    log "fprintf" ;
     let txt = Buffer.contents buf in
-    log "txt" ;
     txt
   with Warner.Error e ->
     let () = err e in ""
 
+(* utilisé pour faire du javascript *)
 module E = struct
   let add_str = ref (fun s -> ())
   let b = ref (Scanf.Scanning.from_string "")
@@ -372,7 +361,7 @@ let eval_string code stdlib err stdin stdout =
         Parser.prog Lexer.token lexbuf
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
-    let env, prog = make_prog_helper "metalang" prog' stdlib in
+    let env, prog = js_make_prog_helper "metalang" prog' stdlib in
     EVString.eval_prog env prog
   with Warner.Error e ->
     err e

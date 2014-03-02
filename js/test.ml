@@ -45,7 +45,7 @@ let click_replicate _ =
     | _ -> assert false in
   let lang : Libmetalang.L.key = Obj.magic (Js.to_string select_lang##value) in
 
-  let output = Libmetalang.test_process
+  let output = Libmetalang.js_process
     process_error
     lang txt (stdlib ()) in
   let () = copy##value <- (Js.string output) in

@@ -162,7 +162,6 @@ module AllocArrayExpend : SigPass with type acc0 = unit = struct
   let process () is = (), List.map mapi (List.flatten (List.map expand is))
 end
 
-(*TODO propager les positions*)
 module ExpandReadDecl : SigPass with type acc0 = unit = struct
   type acc0 = unit
   type 'lex acc = unit;;
