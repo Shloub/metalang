@@ -20,13 +20,13 @@ int summax(std::vector<int >& lst, int len){
 int main(void){
   int len = 0;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   std::vector<int > tab( len );
   for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;
     scanf("%d", &tmp);
-    scanf("%*[ \t\r\n]c", 0);
+    scanf("%*[ \t\r\n]c");
     tab.at(i) = tmp;
   }
   int result = summax(tab, len);

@@ -12,7 +12,6 @@ int main(void){
   int current_pos = 500;
   int a = 1000;
   int *mem = malloc( a * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < a; i++)

@@ -26,7 +26,7 @@ int result(struct toto * t){
 int main(void){
   struct toto * t = mktoto(4);
   scanf("%d", &t->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t->blah);
   int a = result(t);
   std::cout << a;

@@ -193,10 +193,10 @@ struct gamestate * init(){
 struct move * read_move(){
   int x = 0;
   scanf("%d", &x);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   int y = 0;
   scanf("%d", &y);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   struct move * out_ = new move();
   out_->x=x;
   out_->y=y;

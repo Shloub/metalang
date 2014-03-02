@@ -4,20 +4,19 @@
 int read_int(){
   int out_ = 0;
   scanf("%d", &out_);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   return out_;
 }
 
 int* read_int_line(int n){
   int *tab = malloc( n * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < n; i++)
     {
       int t = 0;
       scanf("%d", &t);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       tab[i] = t;
     }
   }
@@ -26,12 +25,11 @@ int* read_int_line(int n){
 
 int** read_int_matrix(int x, int y){
   int* *tab = malloc( y * sizeof(int*));
-  
   {
     int z;
     for (z = 0 ; z < y; z++)
     {
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       tab[z] = read_int_line(x);
     }
   }

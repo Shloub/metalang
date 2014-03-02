@@ -42,23 +42,21 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
 int main(void){
   int n = 0;
   scanf("%d", &n);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   int* *passepartout = malloc( n * sizeof(int*));
-  
   {
     int i;
     for (i = 0 ; i < n; i++)
     {
       int c = 2;
       int *out0 = malloc( c * sizeof(int));
-      
       {
         int j;
         for (j = 0 ; j < c; j++)
         {
           int out_ = 0;
           scanf("%d", &out_);
-          scanf("%*[ \t\r\n]c", 0);
+          scanf("%*[ \t\r\n]c");
           out0[j] = out_;
         }
       }
@@ -67,23 +65,21 @@ int main(void){
   }
   int m = 0;
   scanf("%d", &m);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   int* *serrures = malloc( m * sizeof(int*));
-  
   {
     int k;
     for (k = 0 ; k < m; k++)
     {
       int d = 2;
       int *out1 = malloc( d * sizeof(int));
-      
       {
         int l;
         for (l = 0 ; l < d; l++)
         {
           int out_ = 0;
           scanf("%d", &out_);
-          scanf("%*[ \t\r\n]c", 0);
+          scanf("%*[ \t\r\n]c");
           out1[l] = out_;
         }
       }

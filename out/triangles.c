@@ -28,14 +28,12 @@ int find0(int len, int** tab, int** cache, int x, int y){
 
 int find(int len, int** tab){
   int* *tab2 = malloc( len * sizeof(int*));
-  
   {
     int i;
     for (i = 0 ; i < len; i++)
     {
       int a = i + 1;
       int *tab3 = malloc( a * sizeof(int));
-      
       {
         int j;
         for (j = 0 ; j < a; j++)
@@ -50,23 +48,21 @@ int find(int len, int** tab){
 int main(void){
   int len = 0;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   int* *tab = malloc( len * sizeof(int*));
-  
   {
     int i;
     for (i = 0 ; i < len; i++)
     {
       int b = i + 1;
       int *tab2 = malloc( b * sizeof(int));
-      
       {
         int j;
         for (j = 0 ; j < b; j++)
         {
           int tmp = 0;
           scanf("%d", &tmp);
-          scanf("%*[ \t\r\n]c", 0);
+          scanf("%*[ \t\r\n]c");
           tab2[j] = tmp;
         }
       }

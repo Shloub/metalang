@@ -32,14 +32,13 @@ int result(struct toto ** t, int len){
 int main(void){
   int a = 4;
   struct toto * *t = malloc( a * sizeof(struct toto *));
-  
   {
     int i;
     for (i = 0 ; i < a; i++)
       t[i] = mktoto(i);
   }
   scanf("%d", &t[0]->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t[1]->blah);
   int b = result(t, 4);
   printf("%d", b);

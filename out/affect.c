@@ -32,14 +32,12 @@ int result(struct toto * t_, struct toto * t2_){
   t->blah ++;
   int len = 1;
   int *cache0 = malloc( len * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < len; i++)
       cache0[i] = -i;
   }
   int *cache1 = malloc( len * sizeof(int));
-  
   {
     int j;
     for (j = 0 ; j < len; j++)
@@ -55,11 +53,11 @@ int main(void){
   struct toto * t = mktoto(4);
   struct toto * t2 = mktoto(5);
   scanf("%d", &t->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t->blah);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t2->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t->blah);
   int a = result(t, t2);
   printf("%d", a);

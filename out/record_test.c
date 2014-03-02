@@ -12,7 +12,7 @@ int main(void){
   param->foo=0;
   param->bar=0;
   scanf("%d", &param->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &param->foo);
   int a = param->bar + param->foo * param->bar;
   printf("%d", a);

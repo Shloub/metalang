@@ -34,7 +34,7 @@ int main(void){
   for (int i = 0 ; i < a; i++)
     t.at(i) = mktoto(i);
   scanf("%d", &t.at(0)->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t.at(1)->blah);
   int b = result(t, 4);
   std::cout << b;

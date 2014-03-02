@@ -10,41 +10,38 @@ read int, read char et skip
 int main(void){
   int len = 0;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   printf("%d=len\n", len);
   int *tab = malloc( len * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < len; i++)
     {
       int tmpi1 = 0;
       scanf("%d", &tmpi1);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       printf("%d=>%d ", i, tmpi1);
       tab[i] = tmpi1;
     }
   }
   printf("\n");
   int *tab2 = malloc( len * sizeof(int));
-  
   {
     int i_;
     for (i_ = 0 ; i_ < len; i_++)
     {
       int tmpi2 = 0;
       scanf("%d", &tmpi2);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       printf("%d==>%d ", i_, tmpi2);
       tab2[i_] = tmpi2;
     }
   }
   int strlen = 0;
   scanf("%d", &strlen);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   printf("%d=strlen\n", strlen);
   char *tab4 = malloc( strlen * sizeof(char));
-  
   {
     int toto;
     for (toto = 0 ; toto < strlen; toto++)

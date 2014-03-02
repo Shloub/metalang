@@ -7,7 +7,7 @@
 int read_int(){
   int out_ = 0;
   scanf("%d", &out_);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   return out_;
 }
 
@@ -17,7 +17,7 @@ std::vector<int > read_int_line(int n){
   {
     int t = 0;
     scanf("%d", &t);
-    scanf("%*[ \t\r\n]c", 0);
+    scanf("%*[ \t\r\n]c");
     tab.at(i) = t;
   }
   return tab;
@@ -31,7 +31,7 @@ std::vector<char > read_char_line(int n){
     scanf("%c", &t);
     tab.at(i) = t;
   }
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   return tab;
 }
 

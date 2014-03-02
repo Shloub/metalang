@@ -38,7 +38,7 @@ int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, 
 int main(void){
   int n = 0;
   scanf("%d", &n);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   std::vector<std::vector<int > > passepartout( n );
   for (int i = 0 ; i < n; i++)
   {
@@ -48,14 +48,14 @@ int main(void){
     {
       int out_ = 0;
       scanf("%d", &out_);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       out0.at(j) = out_;
     }
     passepartout.at(i) = out0;
   }
   int m = 0;
   scanf("%d", &m);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   std::vector<std::vector<int > > serrures( m );
   for (int k = 0 ; k < m; k++)
   {
@@ -65,7 +65,7 @@ int main(void){
     {
       int out_ = 0;
       scanf("%d", &out_);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       out1.at(l) = out_;
     }
     serrures.at(k) = out1;

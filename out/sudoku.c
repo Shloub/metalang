@@ -5,14 +5,13 @@
 int* read_sudoku(){
   int a = 9 * 9;
   int *out_ = malloc( a * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < a; i++)
     {
       int k = 0;
       scanf("%d", &k);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       out_[i] = k;
     }
   }

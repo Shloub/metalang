@@ -5,7 +5,7 @@
 int read_int(){
   int out_ = 0;
   scanf("%d", &out_);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   return out_;
 }
 
@@ -15,7 +15,7 @@ std::vector<int > read_int_line(int n){
   {
     int t = 0;
     scanf("%d", &t);
-    scanf("%*[ \t\r\n]c", 0);
+    scanf("%*[ \t\r\n]c");
     tab.at(i) = t;
   }
   return tab;
@@ -25,7 +25,7 @@ std::vector<std::vector<int > > read_int_matrix(int x, int y){
   std::vector<std::vector<int > > tab( y );
   for (int z = 0 ; z < y; z++)
   {
-    scanf("%*[ \t\r\n]c", 0);
+    scanf("%*[ \t\r\n]c");
     tab.at(z) = read_int_line(x);
   }
   return tab;

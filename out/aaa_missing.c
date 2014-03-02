@@ -3,14 +3,13 @@
 
 int* read_int_line(int n){
   int *tab = malloc( n * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < n; i++)
     {
       int t = 0;
       scanf("%d", &t);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       tab[i] = t;
     }
   }
@@ -22,7 +21,6 @@ int* read_int_line(int n){
 */
 int result(int len, int* tab){
   int *tab2 = malloc( len * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < len; i++)

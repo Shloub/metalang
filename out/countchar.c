@@ -15,12 +15,11 @@ int nth(char* tab, char tofind, int len){
 int main(void){
   int len = 0;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   char tofind = '\000';
   scanf("%c", &tofind);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   char *tab = malloc( len * sizeof(char));
-  
   {
     int i;
     for (i = 0 ; i < len; i++)

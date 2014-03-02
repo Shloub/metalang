@@ -200,14 +200,12 @@ struct move * play(struct gamestate * g){
 struct gamestate * init(){
   int d = 3;
   int* *cases = malloc( d * sizeof(int*));
-  
   {
     int i;
     for (i = 0 ; i < d; i++)
     {
       int c = 3;
       int *tab = malloc( c * sizeof(int));
-      
       {
         int j;
         for (j = 0 ; j < c; j++)
@@ -227,10 +225,10 @@ struct gamestate * init(){
 struct move * read_move(){
   int x = 0;
   scanf("%d", &x);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   int y = 0;
   scanf("%d", &y);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   struct move * out_ = malloc (sizeof(out_) );
   out_->x=x;
   out_->y=y;

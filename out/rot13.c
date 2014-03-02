@@ -9,9 +9,8 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 int main(void){
   int strlen = 0;
   scanf("%d", &strlen);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   char *tab4 = malloc( strlen * sizeof(char));
-  
   {
     int toto;
     for (toto = 0 ; toto < strlen; toto++)

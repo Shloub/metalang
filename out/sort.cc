@@ -17,13 +17,13 @@ void sort_(std::vector<int >& tab, int len){
 int main(void){
   int len = 2;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   std::vector<int > tab( len );
   for (int i_ = 0 ; i_ < len; i_++)
   {
     int tmp = 0;
     scanf("%d", &tmp);
-    scanf("%*[ \t\r\n]c", 0);
+    scanf("%*[ \t\r\n]c");
     tab.at(i_) = tmp;
   }
   sort_(tab, len);

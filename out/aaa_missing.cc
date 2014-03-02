@@ -8,7 +8,7 @@ std::vector<int > read_int_line(int n){
   {
     int t = 0;
     scanf("%d", &t);
-    scanf("%*[ \t\r\n]c", 0);
+    scanf("%*[ \t\r\n]c");
     tab.at(i) = t;
   }
   return tab;

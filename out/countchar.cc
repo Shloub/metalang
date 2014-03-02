@@ -14,10 +14,10 @@ int nth(std::vector<char >& tab, char tofind, int len){
 int main(void){
   int len = 0;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   char tofind = '\000';
   scanf("%c", &tofind);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   std::vector<char > tab( len );
   for (int i = 0 ; i < len; i++)
   {

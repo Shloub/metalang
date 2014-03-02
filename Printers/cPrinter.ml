@@ -97,7 +97,7 @@ class cPrinter = object(self)
 
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ %a@ *@ sizeof(%a));@]@\n"
+      Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ %a@ *@ sizeof(%a));@]"
 	self#ptype type_
 	self#binding binding
 	      (fun f a ->
@@ -166,7 +166,7 @@ class cPrinter = object(self)
       ) li
 
   method stdin_sep f =
-    Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\", 0);@]"
+    Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\");@]"
 
 
   method mutable_ f m =

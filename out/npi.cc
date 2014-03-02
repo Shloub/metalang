@@ -43,7 +43,7 @@ int npi_(std::vector<char >& str, int len){
 int main(void){
   int len = 0;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   std::vector<char > tab( len );
   for (int i = 0 ; i < len; i++)
   {

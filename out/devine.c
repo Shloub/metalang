@@ -24,19 +24,18 @@ int devine_(int nombre, int* tab, int len){
 int main(void){
   int nombre = 0;
   scanf("%d", &nombre);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   int len = 0;
   scanf("%d", &len);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   int *tab = malloc( len * sizeof(int));
-  
   {
     int i;
     for (i = 0 ; i < len; i++)
     {
       int tmp = 0;
       scanf("%d", &tmp);
-      scanf("%*[ \t\r\n]c", 0);
+      scanf("%*[ \t\r\n]c");
       tab[i] = tmp;
     }
   }

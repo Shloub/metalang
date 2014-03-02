@@ -49,11 +49,11 @@ int main(void){
   struct toto * t = mktoto(4);
   struct toto * t2 = mktoto(5);
   scanf("%d", &t->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t->blah);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t2->bar);
-  scanf("%*[ \t\r\n]c", 0);
+  scanf("%*[ \t\r\n]c");
   scanf("%d", &t->blah);
   int a = result(t, t2);
   std::cout << a;
