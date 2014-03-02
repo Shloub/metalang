@@ -29,12 +29,12 @@
 @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-let ploc f ((l1, c1), (l2, c2)) =
+let ploc f (file, (l1, c1), (l2, c2)) =
   if l1 = l2 then
-    Format.fprintf f "(on %d:%d-%d)"
+    Format.fprintf f "(on %s:%d:%d-%d)" file
       l1 c1 c2
   else
-    Format.fprintf f "(from %d:%d to %d:%d)"
+    Format.fprintf f "(file %s from %d:%d to %d:%d)" file
     l1 c1 l2 c2
 
 

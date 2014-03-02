@@ -55,9 +55,11 @@ let next =
 (** the position in a file :
     ((a, b), (c, d)) means from line a char b to line c char d
 *)
-type location = ( (int * int ) * ( int * int ) )
+type location = ( string * (int * int ) * ( int * int ) )
 
-let default_location = (-1, -1), (-1, -1)
+let default_location = "No File", (-1, -1), (-1, -1)
+
+let parsed_file = ref ""
 
 (** get a position from lexer (line, char) *)
 let position p =
@@ -65,11 +67,11 @@ let position p =
   let cnum = p.Lexing.pos_cnum - p.Lexing.pos_bol - 1 in
   (line, cnum)
 
-let merge_positions (a, _) (_, b) = (a, b)
+let merge_positions (f, a, _) (f2, _, b) = (f, a, b)
 
 (** get a location from lexer *)
 let location (p1, p2) =
-  (position p1, position p2)
+  (!parsed_file, position p1, position p2)
 
 (** position map *)
 module PosMap : sig
