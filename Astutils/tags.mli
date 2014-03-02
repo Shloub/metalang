@@ -31,12 +31,6 @@
 @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-open Stdlib
-
-let set = ref StringSet.empty
-
-let reset () = set := StringSet.empty
-
-let tag s = set := StringSet.add s !set
-let is_taged s = StringSet.mem s !set
-
+val reset : unit -> unit
+val tag : string -> unit
+val is_taged : string -> bool
