@@ -37,7 +37,7 @@ var read_int_ = function(){
 
 
 var i = 0;
-i ++;
+i --;
 util.print(i);
 i += 55;
 util.print(i);

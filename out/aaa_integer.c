@@ -4,7 +4,7 @@
 
 int main(void){
   int i = 0;
-  i ++;
+  i --;
   printf("%d", i);
   i += 55;
   printf("%d", i);

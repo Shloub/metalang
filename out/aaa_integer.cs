@@ -7,7 +7,7 @@ public class aaa_integer
   public static void Main(String[] args)
   {
     int i = 0;
-    i ++;
+    i --;
     Console.Write(i);
     i += 55;
     Console.Write(i);

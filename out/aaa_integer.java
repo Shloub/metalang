@@ -8,7 +8,7 @@ public class aaa_integer
   public static void main(String args[])
   {
     int i = 0;
-    i ++;
+    i --;
     System.out.printf("%d", i);
     i += 55;
     System.out.printf("%d", i);

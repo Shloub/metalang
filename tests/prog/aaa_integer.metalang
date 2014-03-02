@@ -1,6 +1,6 @@
 main
   def i = 0
-  i ++
+  i --
   print int i
   i += 55
   print int i

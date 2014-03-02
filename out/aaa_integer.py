@@ -1,6 +1,6 @@
 
 i = 0;
-i += 1
+i -= 1
 print("%d" % i, end='')
 i += 55
 print("%d" % i, end='')

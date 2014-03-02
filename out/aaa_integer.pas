@@ -6,7 +6,7 @@ var
   i : integer;
 begin
   i := 0;
-  i := i + 1;
+  i := i - 1;
   Write(i);
   i := i + 55;
   Write(i);

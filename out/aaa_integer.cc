@@ -6,7 +6,7 @@
 
 int main(void){
   int i = 0;
-  i ++;
+  i --;
   std::cout << i;
   i += 55;
   std::cout << i;

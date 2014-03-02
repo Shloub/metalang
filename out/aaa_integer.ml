@@ -2,7 +2,7 @@
 let () =
 begin
   let i = ref( 0 ) in
-  i := (!i) + 1;
+  i := (!i) - 1;
   Printf.printf "%d" (!i);
   i := (!i) + 55;
   Printf.printf "%d" (!i);

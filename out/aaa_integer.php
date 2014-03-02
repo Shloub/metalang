@@ -1,7 +1,7 @@
 <?php
 
 $i = 0;
-$i ++;
+$i --;
 echo $i;
 $i += 55;
 echo $i;
