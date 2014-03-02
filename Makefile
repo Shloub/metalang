@@ -51,8 +51,8 @@ tar :
 java	?=	java
 python	?=	python3
 
-CFLAGS ?= -O3
-CCFLAGS ?= -O3
+CFLAGS ?= -O3 -Wall
+CCFLAGS ?= -O3 -Wall
 
 TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, \
 	$(shell ls tests/not_compile/)))
