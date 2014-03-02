@@ -15,7 +15,6 @@ let conf_rename prog =
 let debug_printer = new PosPrinter.posPrinter
 let debug_print prog = debug_printer#prog Format.std_formatter prog
 
-
 let typed name f (a, b) =
 (*  debug_print b;
   let before = Passes.WalkCountNoPosition.fold () b in *)
@@ -294,7 +293,7 @@ let process err c filename =
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
           close_out chan
         with Warner.Error e ->
-(*          Unix.unlink output; *)
+          Unix.unlink output;
           err e
       in List.iter go c.languages
   with Warner.Error e ->
