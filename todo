@@ -1,18 +1,18 @@
 Langage & Compilateur :
-Meilleur façon de printer print "foo =" print int foo
-gestion des positions sur les commentaires
-php stdin : ne pas forcer à faire ctrl+d
-flush sur stdout
-types abstract (pour ouvrir un fichier par exemple)
-meilleur stdlib pour le parsing
+  types abstract (pour ouvrir un fichier par exemple)
+  return checker
+  gérer les floats (parser, +., *., /., + printers)
+  warnings pour les choses laides dans les différents langages
+  virer les warnings
+  commentaires indentation
+  chercher a faire un sort correct
+  null
+  une lib standard avec des listes et des arbres
 
-return checker
-gérer les floats (parser, +., *., /., + printers)
-warnings pour les choses laides dans les différents langages
-virer les warnings
-break et continue (attention au caml)
-commentaires indentation
-chercher a faire un sort correct
+outils :
+  un meilleur mode vim
+  un truc de completion pour bash
+  une man page
 
 autres printers :
   f#
