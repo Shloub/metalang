@@ -193,20 +193,21 @@ class cPrinter = object(self)
       self#format_type t
       self#mutable_ m
 
+	method printf f () = Format.fprintf f "printf"
   method combine_formats () = true
   method multi_print f format exprs =
     if exprs = [] then
-      Format.fprintf f "@[<h>printf(\"%s\");@]" format
+      Format.fprintf f "@[<h>%a(\"%s\");@]" self#printf () format
     else
-      Format.fprintf f "@[<h>printf(\"%s\", %a);@]" format
+      Format.fprintf f "@[<h>%a(\"%s\", %a);@]" self#printf ()  format
 	(print_list
 	   (fun f (t, e) -> self#expr f e)
 	   (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
-  | Expr.String s -> Format.fprintf f "@[printf(%s);@]" ( self#noformat s )
+  | Expr.String s -> Format.fprintf f "@[%a(%s);@]" self#printf () ( self#noformat s )
   | _ ->
-    Format.fprintf f "@[printf(\"%a\", %a);@]" self#format_type t self#expr expr
+    Format.fprintf f "@[%a(\"%a\", %a);@]" self#printf () self#format_type t self#expr expr
 
   method prog f prog =
     Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n%a%a@\n@\n"

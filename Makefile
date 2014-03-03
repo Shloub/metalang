@@ -63,6 +63,7 @@ TESTSDEPS	:= $(addsuffix .test, $(TESTS))
 
 TMPFILES	:=\
 	$(addsuffix .eval.out, $(TESTS)) \
+	$(addsuffix .go, $(TESTS)) \
 	$(addsuffix .c, $(TESTS)) \
 	$(addsuffix .c.bin, $(TESTS)) \
 	$(addsuffix .c.bin.out, $(TESTS)) \
@@ -94,6 +95,8 @@ TMPFILES	:=\
 	$(addsuffix .cc, $(TESTS)) \
 	$(addsuffix .cc.bin, $(TESTS)) \
 	$(addsuffix .cc.bin.out, $(TESTS)) \
+	$(addsuffix .go, $(TESTS)) \
+	$(addsuffix .go.out, $(TESTS)) \
 	$(addsuffix .pas, $(TESTS)) \
 	$(addsuffix .pas.bin, $(TESTS)) \
 	$(addsuffix .pas.bin.out, $(TESTS)) \
@@ -121,6 +124,13 @@ out/%.sch : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
 	./metalang -o out -lang sch $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang sch $< || exit 1; \
+	fi
+
+out/%.go : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang go $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang go $< || exit 1; \
 	fi
 
 out/%.java : tests/prog/%.metalang metalang out
@@ -256,6 +266,9 @@ out/%.eval.out : metalang
 out/%.ml.native.out : out/%.ml.native
 	@./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
+out/%.go.out : out/%.go
+	@go run $< < tests/prog/$(basename $*).in > $@ || exit 1;
+
 out/%.ml.byte.out : out/%.ml.byte
 	@./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
@@ -283,7 +296,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out # out/%.byte.out out/%.sch.out
+out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out # out/%.byte.out out/%.sch.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
