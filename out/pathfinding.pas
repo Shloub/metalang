@@ -167,6 +167,11 @@ begin
   skip();
   y := read_int_();
   skip();
+  Write('x=');
+  Write(x);
+  Write(' y=');
+  Write(y);
+  Write(''#10'');
   SetLength(tab, y);
   for i := 0 to  y - 1 do
   begin
@@ -175,8 +180,10 @@ begin
     begin
       tmp := #0;
       tmp := read_char_();
+      Write(tmp);
       tab2[j] := tmp;
     end;
+    Write(''#10'');
     skip();
     tab[i] := tab2;
   end;

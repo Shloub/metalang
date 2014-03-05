@@ -164,7 +164,7 @@ let rec play g =
   Printf.printf "\n";
   minMove
 
-let rec init () =
+let rec init_ () =
   let d = 3 in
   let cases = Array.init d (fun _i ->
     let c = 3 in
@@ -193,7 +193,7 @@ let rec read_move () =
 let () =
 begin
   for _i = 0 to 1 do
-    let state = (init ()) in
+    let state = (init_ ()) in
     while not state.ended
     do
         print_state state;

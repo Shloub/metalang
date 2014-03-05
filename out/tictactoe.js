@@ -193,7 +193,7 @@ function play(g){
   return minMove;
 }
 
-function init(){
+function init_(){
   var d = 3;
   var cases = new Array(d);
   for (var i = 0 ; i <= d - 1; i++)
@@ -229,7 +229,7 @@ function read_move(){
 
 for (var i = 0 ; i <= 1; i++)
 {
-  var state = init();
+  var state = init_();
   while (!state.ended)
   {
     print_state(state);

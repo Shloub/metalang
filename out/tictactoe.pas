@@ -340,7 +340,7 @@ begin
 end;
 
 type f = array of integer;
-function init() : gamestate;
+function init_() : gamestate;
 var
   c : integer;
   cases : array of f;
@@ -396,7 +396,7 @@ var
 begin
   for i := 0 to  1 do
   begin
-    state := init();
+    state := init_();
     while not state^.ended do
     begin
       print_state(state);

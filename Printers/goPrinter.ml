@@ -9,69 +9,71 @@ class goPrinter = object(self)
 
   method lang () = "go"
 
-	val mutable unused = StringSet.empty
-	val mutable in_expr = false
-
-	method binding f s =
-		if in_expr then unused <- StringSet.remove s unused;
-		Format.fprintf f "%s" s
-
-	method expr f e =
-		let exe = in_expr in
-		in_expr <- true;
-		super#expr f e;
-		in_expr <- exe
-
-	method print_unused f () =
-		StringSet.iter
-			(fun s ->
-				Format.fprintf f "_ = %s@\n" s
-			)
-			unused;
-		unused <- StringSet.empty
-
-	method instructions_unused f li =
-		let unused = ref true in
-		Format.fprintf f "%a%a"
-			(fun f li ->
-				List.iter (fun i ->
-					begin match Instr.unfix i with
-					| Instr.Return _ ->
-						unused := false;
-						self#print_unused f ()
-					| _ -> ()
-					end;
-					Format.fprintf f "%a@\n" self#instr i
-				) li
-			) li
-			(fun f () ->
-				if !unused then self#print_unused f ()
-			) ()
+	method binding f s = Format.fprintf f "%s" s
 
   method print_fun f funname t li instrs =
-		let unused = ref true in
-    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]}@\n"
+    self#calc_used_variables instrs;
+    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"
       self#print_proto (funname, t, li)
-			self#instructions_unused instrs
+      self#instructions instrs
 			
-
+  val mutable reader = false
   method prog f prog =
+    let need li = List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
+      | Instr.Read _ -> true
+      | Instr.Print _ -> true
+      | Instr.DeclRead _ -> true
+      | _ -> acc) false) li in
+    let need_prog_item = function
+      | Prog.DeclarFun (var, t, li, instrs) ->
+	need instrs
+      | _ -> false
+    in
+    let need = (match prog.Prog.main with
+      | Some s -> need s
+      | None -> false) || List.exists need_prog_item prog.Prog.funs
+    in
+    reader <- need;
     Format.fprintf f
-      "package main@\nimport \"fmt\"@\n%a%a"
+      "package main@\n%a%a%a"
+      (fun f () -> if need then Format.fprintf f "import \"fmt\"@\nimport \"os\"@\nimport \"bufio\"@\nvar reader *bufio.Reader@\n
+func skip() {
+  var c byte
+  fmt.Fscanf(reader, \"%%c\", &c);
+  if c == '\\n' || c == ' ' {
+    skip()
+  } else {
+    reader.UnreadByte()
+  }
+}
+
+
+") ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
+  method return f e =
+    Format.fprintf f "@[<h>return@ %a@]" self#expr e
+
   method main f main =
-    Format.fprintf f "func main() {@\n  @[<v>%a@]@\n}@\n"
-      self#instructions_unused main
+    self#calc_used_variables main;
+    (if reader then
+    Format.fprintf f "func main() {@\n  reader = bufio.NewReader(os.Stdin)@\n  @[<v>%a@]@\n}@\n"
+    else
+    Format.fprintf f "func main() {@\n@[<v>%a@]@\n}@\n")
+      self#instructions main
 
   method declaration f var t e =
-		unused <- StringSet.add var unused;
-		Format.fprintf f "@[<h>var %a %a = %a@]"
-			self#binding var self#ptype t self#expr e
+    Format.fprintf f "@[<h>var %a %a = %a@]%a"
+      self#binding var self#ptype t self#expr e
+      self#test_unused var
 
 	method printf f () = Format.fprintf f "fmt.Printf"
 
+	method test_unused f var =
+	  if not (BindingSet.mem var used_variables) then
+	    Format.fprintf f "@\n@[<h>_ = %a@]"
+	      self#binding var
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "func %a(%a) %a"
@@ -88,7 +90,6 @@ class goPrinter = object(self)
       self#ptype t
 
   method allocrecord f name t el =
-		unused <- StringSet.add name unused;
     Format.fprintf f "var %a %a = new (%a)@\n%a"
       self#binding name
       self#ptype t
@@ -129,11 +130,17 @@ class goPrinter = object(self)
 
   method ptype f t = match Type.unfix t with
 	| Type.Array a -> Format.fprintf f "[]%a" self#ptype a
-  | Type.String -> Format.fprintf f "string"
-  | Type.Char -> Format.fprintf f "byte"
+	| Type.String -> Format.fprintf f "string"
+	| Type.Char -> Format.fprintf f "byte"
 	| Type.Bool -> Format.fprintf f "bool"
 	| Type.Void -> Format.fprintf f ""
-	| Type.Named n -> Format.fprintf f "* %s" n
+	| Type.Named n ->
+	  begin match Typer.expand (super#getTyperEnv ()) t
+	      default_location |> Type.unfix with
+	      | Type.Struct _ -> Format.fprintf f "* %s" n
+              | Type.Enum _ -> Format.fprintf f "%s" n
+	      | _ -> assert false
+	  end
 	| _ -> super#ptype f t
 
   method ptypename f t = match Type.unfix t with
@@ -145,19 +152,18 @@ class goPrinter = object(self)
     | false -> Format.fprintf f "false"
 
   method forloop f varname expr1 expr2 li =
-      Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@]%a"
+      Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"
         self#binding varname
         self#expr expr1
         self#binding varname
         self#expr expr2
         self#binding varname
-        self#bloc li
+        self#instructions li
 
   method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
         self#instructions li
 
   method allocarray f binding type_ len =
-    unused <- StringSet.add binding unused;
     Format.fprintf f "@[<h>var %a@ []%a@ = make([]%a, %a)@]"
 			self#binding binding
 			self#ptype type_
@@ -167,26 +173,26 @@ class goPrinter = object(self)
         else self#printp f a) len
 
   method stdin_sep f =
-    Format.fprintf f "@[fmt.Scanf(\"%%*[ \\t\\r\\n]c\");@]"
+    Format.fprintf f "@[skip()@]"
 
   method read f t m =
-    Format.fprintf f "@[fmt.Scanf(\"%a\", &%a);@]"
+    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a);@]"
       self#format_type t
       self#mutable_ m
 
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] ->
-	Format.fprintf f "@[<h>if@ %a@ @]{@[<v 2>  %a@]}"
+	Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n}"
 	  self#expr e
 	  self#instructions ifcase
       | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a@ @]{@\n@[<v 2>  %a@]@\n} else %a "
+      Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n} else %a "
 	self#expr e
 	self#instructions ifcase
 	self#instr instr
       | _ ->
-      Format.fprintf f "@[<h>if@ %a@ @]{@\n@[<v 2>  %a@]@\n} else {@\n@[<v 2>  %a@]}"
+      Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n} else {@\n@[<v 2>  %a@]@\n}"
 	self#expr e
 	self#instructions ifcase
 	self#instructions elsecase
@@ -210,15 +216,16 @@ class goPrinter = object(self)
 	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	  ) li
       | Type.Enum li ->
-        Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
+        Format.fprintf f "type %a int@\nconst (@\n@[<v2>  %a@]@\n);"
           self#binding name
           (print_list
-	           (fun t name ->
-               self#binding t name
+	           (fun t fname ->
+		     Format.fprintf t "%a %a = iota"
+		     self#binding fname
+		     self#binding name
 	           )
-	           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+	           (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	        ) li
-          self#binding name
       | _ -> Format.fprintf f "typedef %a %a;"
 				self#ptype t
 				self#binding name

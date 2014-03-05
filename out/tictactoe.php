@@ -175,7 +175,7 @@ function play(&$g){
   return $minMove;
 }
 
-function init(){
+function init_(){
   $d = 3;
   $cases = array();
   for ($i = 0 ; $i < $d; $i++)
@@ -213,7 +213,7 @@ function read_move(){
 
 for ($i = 0 ; $i <= 1; $i++)
 {
-  $state = init();
+  $state = init_();
   while (!$state["ended"])
   {
     print_state($state);

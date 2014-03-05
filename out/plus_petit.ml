@@ -1,4 +1,4 @@
-let rec go tab a b =
+let rec go_ tab a b =
   let m = (a + b) / 2 in
   if a = m then
     if tab.(a) = m then
@@ -22,13 +22,13 @@ let rec go tab a b =
             end
       done;
       if (!i) < m then
-        go tab a m
+        go_ tab a m
       else
-        go tab m b
+        go_ tab m b
     end
 
 let rec plus_petit_ tab len =
-  go tab 0 len
+  go_ tab 0 len
 
 let () =
 begin

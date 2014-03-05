@@ -78,6 +78,7 @@ list($x) = scan("%d");
 scantrim();
 list($y) = scan("%d");
 scantrim();
+echo "x=", $x, " y=", $y, "\n";
 $tab = array();
 for ($i = 0 ; $i < $y; $i++)
 {
@@ -86,8 +87,10 @@ for ($i = 0 ; $i < $y; $i++)
   {
     $tmp = '\000';
     $tmp = nextChar();
+    echo $tmp;
     $tab2[$j] = $tmp;
   }
+  echo "\n";
   scantrim();
   $tab[$i] = $tab2;
 }

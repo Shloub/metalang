@@ -62,6 +62,7 @@ int main(void){
   scanf("%*[ \t\r\n]c");
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c");
+  printf("x=%d y=%d\n", x, y);
   char* *tab = malloc( y * sizeof(char*));
   {
     int i;
@@ -74,9 +75,11 @@ int main(void){
         {
           char tmp = '\000';
           scanf("%c", &tmp);
+          printf("%c", tmp);
           tab2[j] = tmp;
         }
       }
+      printf("\n");
       scanf("%*[ \t\r\n]c");
       tab[i] = tab2;
     }

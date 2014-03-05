@@ -62,7 +62,7 @@ begin
 end;
 
 type d = array of integer;
-function go(tab : d; a : integer; b : integer) : integer;
+function go_(tab : d; a : integer; b : integer) : integer;
 var
   e : integer;
   i : integer;
@@ -103,17 +103,17 @@ begin
   if i < m
   then
     begin
-      exit(go(tab, a, m));
+      exit(go_(tab, a, m));
     end
   else
     begin
-      exit(go(tab, m, b));
+      exit(go_(tab, m, b));
     end;
 end;
 
 function plus_petit_(tab : d; len : integer) : integer;
 begin
-  exit(go(tab, 0, len));
+  exit(go_(tab, 0, len));
 end;
 
 

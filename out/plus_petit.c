@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int go(int* tab, int a, int b){
+int go_(int* tab, int a, int b){
   int m = (a + b) / 2;
   if (a == m)
     if (tab[a] == m)
@@ -23,13 +23,13 @@ int go(int* tab, int a, int b){
     }
   }
   if (i < m)
-    return go(tab, a, m);
+    return go_(tab, a, m);
   else
-    return go(tab, m, b);
+    return go_(tab, m, b);
 }
 
 int plus_petit_(int* tab, int len){
-  return go(tab, 0, len);
+  return go_(tab, 0, len);
 }
 
 int main(void){

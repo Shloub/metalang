@@ -197,7 +197,7 @@ struct move * play(struct gamestate * g){
   return minMove;
 }
 
-struct gamestate * init(){
+struct gamestate * init_(){
   int d = 3;
   int* *cases = malloc( d * sizeof(int*));
   {
@@ -240,7 +240,7 @@ int main(void){
     int i;
     for (i = 0 ; i <= 1; i++)
     {
-      struct gamestate * state = init();
+      struct gamestate * state = init_();
       while (!state->ended)
       {
         print_state(state);

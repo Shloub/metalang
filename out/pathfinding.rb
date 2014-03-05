@@ -55,14 +55,17 @@ x=scanf("%d")[0];
 scanf("%*\n");
 y=scanf("%d")[0];
 scanf("%*\n");
+printf "x=%d y=%d\n", x, y
 tab = [];
 for i in (0 ..  y - 1) do
   tab2 = [];
   for j in (0 ..  x - 1) do
     tmp = '\000'
     tmp=scanf("%c")[0];
+    printf "%c", tmp
     tab2[j] = tmp;
   end
+  print "\n";
   scanf("%*\n");
   tab[i] = tab2;
 end

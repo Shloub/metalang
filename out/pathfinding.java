@@ -71,6 +71,7 @@ public class pathfinding
     }else{
     y = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
+    System.out.printf("%s%d%s%d%s", "x=", x, " y=", y, "\n");
     char[][] tab = new char[y][];
     for (int i = 0 ; i < y; i++)
     {
@@ -79,8 +80,10 @@ public class pathfinding
       {
         char tmp = '\000';
         scanner.useDelimiter("\\n");tmp = scanner.findWithinHorizon(".", 1).charAt(0);
+        System.out.printf("%c", tmp);
         tab2[j] = tmp;
       }
+      System.out.print("\n");
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tab2;
     }

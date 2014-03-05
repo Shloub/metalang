@@ -36,12 +36,15 @@ main
 	def int y = 0
 	read int x skip
 	read int y skip
+	print "x=" print x print " y=" print y print "\n"
 	def array<array<char>> tab[y] with i do
 		def array<char> tab2[x] with j do
 		  def char tmp = '\000'
 		  read char tmp
+			print tmp
 		  return tmp
 		end
+		print "\n"
 		skip
 		return tab2
 	end

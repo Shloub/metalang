@@ -40,6 +40,9 @@ function devine_(nombre, tab, len){
   var max_ = tab[1];
   for (var i = 2 ; i <= len - 1; i++)
   {
+    util.print(i, " => ");
+    var a = tab[i];
+    util.print(a, "\n");
     if (tab[i] > max_ || tab[i] < min_)
       return 0;
     if (tab[i] < nombre)
@@ -58,16 +61,19 @@ stdinsep();
 var len = 0;
 len=read_int_();
 stdinsep();
+util.print(nombre, " ", len, "\n");
 var tab = new Array(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
   var tmp = 0;
   tmp=read_int_();
   stdinsep();
+  util.print(tmp, " ");
   tab[i] = tmp;
 }
-var a = devine_(nombre, tab, len);
-if (a)
+util.print("\n");
+var b = devine_(nombre, tab, len);
+if (b)
   util.print("True");
 else
   util.print("False");

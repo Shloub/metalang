@@ -2,7 +2,7 @@ open Stdlib
 open Ast
 
 (** Liste des mots clés à ne pas utiliser en metalang *)
-let keywords = [ "out"; "exp"; "from"; "to"; "min"; "max"; "eval"; ]
+let keywords = [ "out"; "exp"; "from"; "to"; "min"; "max"; "eval"; "go" ; "init"]
 
 let conf_rename prog =
   Fresh.fresh_init prog ;

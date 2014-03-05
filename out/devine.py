@@ -37,6 +37,9 @@ def devine_( nombre, tab, len ):
     min_ = tab[0];
     max_ = tab[1];
     for i in range(2, len):
+      print("%d => " % ( i ), end='')
+      a = tab[i];
+      print("%d\n" % ( a ), end='')
       if tab[i] > max_ or tab[i] < min_:
         return False;
       if tab[i] < nombre:
@@ -53,14 +56,17 @@ stdinsep()
 len = 0;
 len=readint()
 stdinsep()
+print("%d %d\n" % ( nombre, len ), end='')
 tab = [None] * len
 for i in range(0, len):
   tmp = 0;
   tmp=readint()
   stdinsep()
+  print("%d " % ( tmp ), end='')
   tab[i] = tmp;
-a = devine_(nombre, tab, len);
-if a:
+print("")
+b = devine_(nombre, tab, len);
+if b:
   print( "True", end='')
 else:
   print( "False", end='')

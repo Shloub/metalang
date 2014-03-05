@@ -8,6 +8,9 @@ int devine_(int nombre, int* tab, int len){
     int i;
     for (i = 2 ; i < len; i++)
     {
+      printf("%d => ", i);
+      int a = tab[i];
+      printf("%d\n", a);
       if (tab[i] > max_ || tab[i] < min_)
         return 0;
       if (tab[i] < nombre)
@@ -28,6 +31,7 @@ int main(void){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c");
+  printf("%d %d\n", nombre, len);
   int *tab = malloc( len * sizeof(int));
   {
     int i;
@@ -36,11 +40,13 @@ int main(void){
       int tmp = 0;
       scanf("%d", &tmp);
       scanf("%*[ \t\r\n]c");
+      printf("%d ", tmp);
       tab[i] = tmp;
     }
   }
-  int a = devine_(nombre, tab, len);
-  if (a)
+  printf("\n");
+  int b = devine_(nombre, tab, len);
+  if (b)
     printf("True");
   else
     printf("False");

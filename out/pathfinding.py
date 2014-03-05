@@ -82,13 +82,16 @@ x=readint()
 stdinsep()
 y=readint()
 stdinsep()
+print("x=%d y=%d\n" % ( x, y ), end='')
 tab = [None] * y
 for i in range(0, y):
   tab2 = [None] * x
   for j in range(0, x):
     tmp = '\000';
     tmp=readchar()
+    print("%c" % tmp, end='')
     tab2[j] = tmp;
+  print("")
   stdinsep()
   tab[i] = tab2;
 result = pathfind(tab, x, y);

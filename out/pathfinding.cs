@@ -116,6 +116,11 @@ public static int readInt(){
     stdin_sep();
     y = readInt();
     stdin_sep();
+    Console.Write("x=");
+    Console.Write(x);
+    Console.Write(" y=");
+    Console.Write(y);
+    Console.Write("\n");
     char[][] tab = new char[y][];
     for (int i = 0 ; i < y; i++)
     {
@@ -124,8 +129,10 @@ public static int readInt(){
       {
         char tmp = (char)0;
         tmp = readChar();
+        Console.Write(tmp);
         tab2[j] = tmp;
       }
+      Console.Write("\n");
       stdin_sep();
       tab[i] = tab2;
     }

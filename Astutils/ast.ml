@@ -723,4 +723,3 @@ type 'lex t =
     }
 
 end
-

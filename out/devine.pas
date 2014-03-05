@@ -61,9 +61,10 @@ begin
    until false;
 end;
 
-type b = array of integer;
-function devine_(nombre : integer; tab : b; len : integer) : boolean;
+type c = array of integer;
+function devine_(nombre : integer; tab : c; len : integer) : boolean;
 var
+  a : integer;
   i : integer;
   max_ : integer;
   min_ : integer;
@@ -72,6 +73,11 @@ begin
   max_ := tab[1];
   for i := 2 to  len - 1 do
   begin
+    Write(i);
+    Write(' => ');
+    a := tab[i];
+    Write(a);
+    Write(''#10'');
     if (tab[i] > max_) or (tab[i] < min_)
     then
       begin
@@ -98,11 +104,11 @@ end;
 
 
 var
-  a : boolean;
+  b : boolean;
   i : integer;
   len : integer;
   nombre : integer;
-  tab : b;
+  tab : c;
   tmp : integer;
 begin
   nombre := 0;
@@ -111,16 +117,23 @@ begin
   len := 0;
   len := read_int_();
   skip();
+  Write(nombre);
+  Write(' ');
+  Write(len);
+  Write(''#10'');
   SetLength(tab, len);
   for i := 0 to  len - 1 do
   begin
     tmp := 0;
     tmp := read_int_();
     skip();
+    Write(tmp);
+    Write(' ');
     tab[i] := tmp;
   end;
-  a := devine_(nombre, tab, len);
-  if a
+  Write(''#10'');
+  b := devine_(nombre, tab, len);
+  if b
   then
     begin
       Write('True');

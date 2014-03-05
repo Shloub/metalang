@@ -33,7 +33,7 @@ def readint():
     else:
       return out * sign
 
-def go( tab, a, b ):
+def go_( tab, a, b ):
     m = a + b // 2;
     if a == m:
       if tab[a] == m:
@@ -51,12 +51,12 @@ def go( tab, a, b ):
         tab[i] = tab[j];
         tab[j] = e;
     if i < m:
-      return go(tab, a, m);
+      return go_(tab, a, m);
     else:
-      return go(tab, m, b);
+      return go_(tab, m, b);
 
 def plus_petit_( tab, len ):
-    return go(tab, 0, len);
+    return go_(tab, 0, len);
 
 len = 0;
 len=readint()

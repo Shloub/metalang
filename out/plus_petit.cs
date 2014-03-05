@@ -49,7 +49,7 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static int go(int[] tab, int a, int b)
+  public static int go_(int[] tab, int a, int b)
   {
     int m = (a + b) / 2;
     if (a == m)
@@ -72,14 +72,14 @@ public static int readInt(){
       }
     }
     if (i < m)
-      return go(tab, a, m);
+      return go_(tab, a, m);
     else
-      return go(tab, m, b);
+      return go_(tab, m, b);
   }
   
   public static int plus_petit_(int[] tab, int len)
   {
-    return go(tab, 0, len);
+    return go_(tab, 0, len);
   }
   
   

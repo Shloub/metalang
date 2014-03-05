@@ -89,6 +89,7 @@ x=read_int_();
 stdinsep();
 y=read_int_();
 stdinsep();
+util.print("x=", x, " y=", y, "\n");
 var tab = new Array(y);
 for (var i = 0 ; i <= y - 1; i++)
 {
@@ -97,8 +98,10 @@ for (var i = 0 ; i <= y - 1; i++)
   {
     var tmp = '\000';
     tmp=read_char_();
+    util.print(tmp);
     tab2[j] = tmp;
   }
+  util.print("\n");
   stdinsep();
   tab[i] = tab2;
 }

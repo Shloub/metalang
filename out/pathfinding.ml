@@ -46,11 +46,18 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> y := value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
+  Printf.printf "x=";
+  Printf.printf "%d" (!x);
+  Printf.printf " y=";
+  Printf.printf "%d" (!y);
+  Printf.printf "\n";
   let tab = Array.init (!y) (fun _i ->
     let tab2 = Array.init (!x) (fun _j ->
       let tmp = ref( '\000' ) in
       Scanf.scanf "%c" (fun value -> tmp := value);
+      Printf.printf "%c" (!tmp);
       (!tmp)) in
+    Printf.printf "\n";
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     tab2) in
   let result = pathfind tab (!x) (!y) in

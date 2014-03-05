@@ -58,6 +58,7 @@ int main(void){
   scanf("%*[ \t\r\n]c");
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c");
+  std::cout << "x=" << x << " y=" << y << "\n";
   std::vector<std::vector<char > > tab( y );
   for (int i = 0 ; i < y; i++)
   {
@@ -66,8 +67,10 @@ int main(void){
     {
       char tmp = '\000';
       scanf("%c", &tmp);
+      std::cout << tmp;
       tab2.at(j) = tmp;
     }
+    std::cout << "\n";
     scanf("%*[ \t\r\n]c");
     tab.at(i) = tab2;
   }

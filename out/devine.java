@@ -9,6 +9,9 @@ public class devine
     int max_ = tab[1];
     for (int i = 2 ; i < len; i++)
     {
+      System.out.printf("%d%s", i, " => ");
+      int a = tab[i];
+      System.out.printf("%d%s", a, "\n");
       if (tab[i] > max_ || tab[i] < min_)
         return false;
       if (tab[i] < nombre)
@@ -36,6 +39,7 @@ public class devine
     }else{
     len = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
+    System.out.printf("%d%s%d%s", nombre, " ", len, "\n");
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
@@ -45,10 +49,12 @@ public class devine
       }else{
       tmp = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
+      System.out.printf("%d%s", tmp, " ");
       tab[i] = tmp;
     }
-    boolean a = devine_(nombre, tab, len);
-    if (a)
+    System.out.print("\n");
+    boolean b = devine_(nombre, tab, len);
+    if (b)
       System.out.print("True");
     else
       System.out.print("False");
