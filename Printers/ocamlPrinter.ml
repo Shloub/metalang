@@ -79,8 +79,6 @@ class camlPrinter = object(self)
 
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
-  (** used variables *)
-  val mutable used_variables = BindingSet.empty
   (** sad return in the current function *)
   val mutable sad_returns = false
   val mutable printed_exn = TypeMap.empty
@@ -330,31 +328,6 @@ class camlPrinter = object(self)
       self#binding v
       self#format_type t
 
-  method calc_used_variables instrs =
-    let rec fold_expr acc e =
-      match Expr.unfix e with
-      | Expr.Access m -> Mutable.Writer.Deep.fold fold_mut acc m
-      | _ -> acc
-    and fold_mut acc m = match Mutable.unfix m with
-      | Mutable.Var varname -> BindingSet.add varname acc
-      | Mutable.Array (_, lie) -> List.fold_left
-	dfold_expr acc lie
-      | _ -> acc
-    and dfold_expr acc e =
-      Expr.Writer.Deep.fold fold_expr
-	(fold_expr acc e) e
-    in
-    let fold_instr acc i =
-      let acc = Instr.fold_expr dfold_expr acc i in
-      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
-      | Instr.Affect (m, e) -> fold_mut acc m
-      | _ -> acc) acc i
-    in
-    used_variables <-
-      List.fold_left fold_instr BindingSet.empty
-      instrs
-
-
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
     refbindings <-
@@ -427,6 +400,8 @@ class camlPrinter = object(self)
 				str
 				self#ptype ty
 		) exns
+
+	method used_affect () = true
 
   method print_fun f funname (t : unit Type.Fixed.t) li instrs =
     self#calc_refs instrs;

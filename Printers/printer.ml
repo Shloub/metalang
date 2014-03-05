@@ -90,6 +90,41 @@ let format_type t = match Type.unfix t with
 
 class printer = object(self)
 
+  (** used variables *)
+  val mutable used_variables = BindingSet.empty
+
+  method used_affect () = false
+  method calc_used_variables (instrs : Utils.instr list ) =
+    let rec fold_expr acc e =
+      match Expr.unfix e with
+      | Expr.Access m -> Mutable.Writer.Deep.fold fold_mut acc m
+      | _ -> acc
+    and fold_mut acc m = match Mutable.unfix m with
+      | Mutable.Var varname -> BindingSet.add varname acc
+      | Mutable.Array (_, lie) -> List.fold_left
+	dfold_expr acc lie
+      | _ -> acc
+    and dfold_expr acc e =
+      Expr.Writer.Deep.fold fold_expr
+	(fold_expr acc e) e
+    in
+    let fold_instr acc i =
+      let acc = Instr.fold_expr dfold_expr acc i in
+      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
+      | Instr.Affect (m, e) ->
+	begin match Mutable.unfix m with
+	| Mutable.Var var ->
+	  if self#used_affect () then BindingSet.add var acc
+	  else acc
+	| _ -> Mutable.Writer.Deep.fold fold_mut acc m
+	end
+      | _ -> acc) acc i
+    in
+    used_variables <-
+      List.fold_left fold_instr BindingSet.empty
+      instrs
+
+
   val mutable typerEnv : Typer.env = Obj.magic(0)
 
 
