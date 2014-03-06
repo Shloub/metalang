@@ -59,9 +59,13 @@ But du projet:
 Ce projet à été fait pour le concours prologin http://www.prologin.org
 L'idée est de générer des lecteurs printers pour beaucoup de langages Ce projet devrait servir pour les demies finales de prologin, pour générer les codes à compléter pour les candidats.
 On peut imaginer pousser le concept beaucoup plus loin, mais le but principal reste la génération de codes lisibles par des humains, dans le but de présenter des squelettes de codes ou des codes lisibles, pour les candidats de prologin.
+
 Le choix s'est porté vers un langage impératif, ce qui facilite la génération de codes lisibles dans les langages les plus utilisés.
+
 Ce langage impératif est typé, pour pouvoir compiler vers des langages typés assez facilement, éviter les erreurs, et offrir un code lisible plus facilement en sortie.
+
 La syntaxe ne contient pas toutes les instructions de controles de flux, (break et continue n'existent pas) de cette manière, on a plus de facilités à générer du code lisible dans tout les langages cibles.
+
 On a aussi un typer pour ne pas être obligé de déclarer les types (ça reste évidement typé statiquement)
 Un evaluateur, qui sert, soit pour évaluer directement du code metalang, soit pour évaluer des macros.
 
@@ -172,6 +176,7 @@ Types
 ----------------
 
 Les différents types manipulables en metalang sont :
+
 * int
 * string
 * chars
