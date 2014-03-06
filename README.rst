@@ -114,16 +114,18 @@ Normalement, avec cet outil, vous avez les moyens de faire des codes à complét
 
 Declaration de variables
 ----------------
-Une variable doit toujours avoir une valeur. Pour définir un entier x de valeur 42, on fait::
+
+Une variable doit toujours avoir une valeur. Pour définir un entier x de valeur 42, on fait ::
   def int x = 42
 
-On est pas obligé de définir le type : une passe de typage s'arrangera pour l'inférer.::
+On est pas obligé de définir le type : une passe de typage s'arrangera pour l'inférer. ::
   def x = 42
 
 
 Declaration de tableaux
 ----------------
-Pour définir un tableau, rien de plus simple::
+
+Pour définir un tableau, rien de plus simple ::
   def array<type> tab[taille] with variable do /* instructions */ return valeur end
 
 Cette syntaxe correspond plus ou moins aux Array.init d'ocaml. Dans les autres langage, ce code est compilé vers une boucle for pour l'initialisation
@@ -131,6 +133,7 @@ Cette syntaxe correspond plus ou moins aux Array.init d'ocaml. Dans les autres l
 
 Declaration de struct
 ----------------
+
 Pour définir une struct ::
   record @nom_de_la_struct
     field1 : type1
@@ -144,12 +147,13 @@ Pour définir une variable de type @nom_de_la_struct ::
     field2 = valeur2
   end
 
-Pour récupérer ou affecter la valeur du champ 1, on utilise variable.x
+Pour récupérer ou affecter la valeur du champ 1, on utilise variable.field1
 
 Pour éviter tout code moche généré, deux structures doivent avoir des noms de champs distincts.
 
 Declaration d'enums
 ----------------
+
 Pour définir un enum ::
   enum @foo_t
     Foo Bar Blah
@@ -159,6 +163,7 @@ Ensuite, le type a pour nom @foo_t et on utilise Foo, Bar Blah comme des valeurs
 
 Types
 ----------------
+
 Les différents types manipulables en metalang sont :
 * int
 * string
@@ -171,6 +176,7 @@ Aucun de ces types n'est nullable. Il est donc difficile de faire des structures
 
 Fonctions
 ----------------
+
 Les fonctions ne peuvent pas être mutuellement récursives, mais les fonctions récursives ne posent aucun problème.
 Les arguments sont passés par valeur pour les entiers, enum et chars, et par référence pour les tableaux et structures.
 
@@ -181,6 +187,7 @@ Pour définir une fonction ::
 
 Boucles
 ----------------
+
 Les boucles for ont pour syntaxe ::
 
   for variable = debut to fin do
@@ -189,6 +196,7 @@ Les boucles for ont pour syntaxe ::
 
 If Then Else
 ----------------
+
 La syntaxe est ::
   if ... then
     ...
@@ -198,6 +206,7 @@ La syntaxe est ::
 
 Print
 ----------------
+
 L'instruction print vous permet d'écrire sur la sortie standard::
 
   print "foo"
