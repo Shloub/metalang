@@ -84,6 +84,7 @@ HOWTO Metalang
 Dans le cadre du concours prologin, on a besoin d'écrire des codes à compléter. Ces codes lisent des entrées, et appellent une fonction "vide" que le candidat devra remplir.
 
 Dans un premier temps, la structure d'un code metlang pour prologin est la suivante ::
+
   def ...1 la_fonction_a_completer( ...2 )
   end
   main
@@ -116,9 +117,11 @@ Declaration de variables
 ----------------
 
 Une variable doit toujours avoir une valeur. Pour définir un entier x de valeur 42, on fait ::
+
   def int x = 42
 
 On est pas obligé de définir le type : une passe de typage s'arrangera pour l'inférer. ::
+
   def x = 42
 
 
@@ -126,6 +129,7 @@ Declaration de tableaux
 ----------------
 
 Pour définir un tableau, rien de plus simple ::
+
   def array<type> tab[taille] with variable do /* instructions */ return valeur end
 
 Cette syntaxe correspond plus ou moins aux Array.init d'ocaml. Dans les autres langage, ce code est compilé vers une boucle for pour l'initialisation
@@ -135,6 +139,7 @@ Declaration de struct
 ----------------
 
 Pour définir une struct ::
+
   record @nom_de_la_struct
     field1 : type1
     field2 : type2
@@ -142,6 +147,7 @@ Pour définir une struct ::
 
 Ensuite, la structure a pour nom @nom_de_la_struct.
 Pour définir une variable de type @nom_de_la_struct ::
+
   def variable = record
     field1 = valeur1
     field2 = valeur2
@@ -155,6 +161,7 @@ Declaration d'enums
 ----------------
 
 Pour définir un enum ::
+
   enum @foo_t
     Foo Bar Blah
   end
@@ -181,6 +188,7 @@ Les fonctions ne peuvent pas être mutuellement récursives, mais les fonctions 
 Les arguments sont passés par valeur pour les entiers, enum et chars, et par référence pour les tableaux et structures.
 
 Pour définir une fonction ::
+
   def type_de_retour nom_fonction(type1 param1, type2 param2)
     ...
   end
@@ -198,6 +206,7 @@ If Then Else
 ----------------
 
 La syntaxe est ::
+
   if ... then
     ...
   elsif ... then
