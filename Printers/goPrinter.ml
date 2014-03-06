@@ -52,6 +52,9 @@ func skip() {
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
+  method return f e =
+    Format.fprintf f "@[<h>return@ %a@]" self#expr e
+
   method main f main =
     self#calc_used_variables main;
     (if reader then
@@ -143,13 +146,13 @@ func skip() {
     | false -> Format.fprintf f "false"
 
   method forloop f varname expr1 expr2 li =
-      Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@]%a"
+      Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"
         self#binding varname
         self#expr expr1
         self#binding varname
         self#expr expr2
         self#binding varname
-        self#bloc li
+        self#instructions li
 
   method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
         self#instructions li
@@ -174,16 +177,16 @@ func skip() {
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] ->
-	Format.fprintf f "@[<h>if@ %a@ @]{@[<v 2>  %a@]}"
+	Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n}"
 	  self#expr e
 	  self#instructions ifcase
       | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a@ @]{@\n@[<v 2>  %a@]@\n} else %a "
+      Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n} else %a "
 	self#expr e
 	self#instructions ifcase
 	self#instr instr
       | _ ->
-      Format.fprintf f "@[<h>if@ %a@ @]{@\n@[<v 2>  %a@]@\n} else {@\n@[<v 2>  %a@]}"
+      Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n} else {@\n@[<v 2>  %a@]@\n}"
 	self#expr e
 	self#instructions ifcase
 	self#instructions elsecase
