@@ -15,12 +15,25 @@ class goPrinter = object(self)
     self#calc_used_variables instrs;
     Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"
       self#print_proto (funname, t, li)
-			self#instructions_unused instrs
+      self#instructions instrs
 			
-
+  val mutable reader = false
   method prog f prog =
     Format.fprintf f
-      "package main@\nimport \"fmt\"@\n%a%a"
+      "package main@\n%a%a%a"
+      (fun f () -> if need then Format.fprintf f "import \"fmt\"@\nimport \"os\"@\nimport \"bufio\"@\nvar reader *bufio.Reader@\n
+func skip() {
+  var c byte
+  fmt.Fscanf(reader, \"%%c\", &c);
+  if c == '\\n' || c == ' ' {
+    skip()
+  } else {
+    reader.UnreadByte()
+  }
+}
+
+
+") ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
@@ -136,10 +149,10 @@ class goPrinter = object(self)
         else self#printp f a) len
 
   method stdin_sep f =
-    Format.fprintf f "@[fmt.Scanf(\"%%*[ \\t\\r\\n]c\");@]"
+    Format.fprintf f "@[skip()@]"
 
   method read f t m =
-    Format.fprintf f "@[fmt.Scanf(\"%a\", &%a);@]"
+    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a);@]"
       self#format_type t
       self#mutable_ m
 
