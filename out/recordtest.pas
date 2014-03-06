@@ -1,4 +1,4 @@
-program record_test;
+program recordtest;
 
 var global_char : char;
 var global_has_char : boolean;

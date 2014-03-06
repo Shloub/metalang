@@ -161,7 +161,7 @@ def play( g ):
     print("%d\n" % ( b ), end='')
     return minMove;
 
-def init(  ):
+def init_(  ):
     d = 3;
     cases = [None] * d
     for i in range(0, d):
@@ -184,7 +184,7 @@ def read_move(  ):
     return out_;
 
 for i in range(0, 1 + 1):
-  state = init();
+  state = init_();
   while (not (state["ended"])):
     print_state(state);
     apply_move(play(state), state);

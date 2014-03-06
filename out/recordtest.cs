@@ -1,6 +1,6 @@
 using System;
 
-public class record_test
+public class recordtest
 {
 static bool eof;
 static String buffer;

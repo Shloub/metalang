@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
-int go(std::vector<int >& tab, int a, int b){
+int go_(std::vector<int >& tab, int a, int b){
   int m = (a + b) / 2;
   if (a == m)
     if (tab.at(a) == m)
@@ -24,13 +24,13 @@ int go(std::vector<int >& tab, int a, int b){
     }
   }
   if (i < m)
-    return go(tab, a, m);
+    return go_(tab, a, m);
   else
-    return go(tab, m, b);
+    return go_(tab, m, b);
 }
 
 int plus_petit_(std::vector<int >& tab, int len){
-  return go(tab, 0, len);
+  return go_(tab, 0, len);
 }
 
 

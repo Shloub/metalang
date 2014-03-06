@@ -9,5 +9,4 @@ metalang
 *.byte
 *~
 *#
-*.out
 *.tar.gz

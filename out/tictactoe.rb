@@ -202,7 +202,7 @@ def play( g )
     return (minMove);
 end
 
-def init(  )
+def init_(  )
     d = 3
     cases = [];
     for i in (0 ..  d - 1) do
@@ -233,7 +233,7 @@ def read_move(  )
 end
 
 for i in (0 ..  1) do
-  state = init()
+  state = init_()
   while not(state["ended"]) do
     print_state(state);
     apply_move(play(state), state);

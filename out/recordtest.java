@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class record_test
+public class recordtest
 {
   static Scanner scanner = new Scanner(System.in);
   static class toto {public int foo;public int bar;}

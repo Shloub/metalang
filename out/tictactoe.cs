@@ -222,7 +222,7 @@ Renvoie le coup de l'IA
     return minMove;
   }
   
-  public static gamestate init()
+  public static gamestate init_()
   {
     int d = 3;
     int[][] cases = new int[d][];
@@ -261,7 +261,7 @@ Renvoie le coup de l'IA
   {
     for (int i = 0 ; i <= 1; i ++)
     {
-      gamestate state = init();
+      gamestate state = init_();
       while (!state.ended)
       {
         print_state(state);

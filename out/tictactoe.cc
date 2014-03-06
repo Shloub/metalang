@@ -171,7 +171,7 @@ struct move * play(struct gamestate * g){
   return minMove;
 }
 
-struct gamestate * init(){
+struct gamestate * init_(){
   int d = 3;
   std::vector<std::vector<int > > cases( d );
   for (int i = 0 ; i < d; i++)
@@ -207,7 +207,7 @@ struct move * read_move(){
 int main(void){
   for (int i = 0 ; i <= 1; i ++)
   {
-    struct gamestate * state = init();
+    struct gamestate * state = init_();
     while (!state->ended)
     {
       print_state(state);
