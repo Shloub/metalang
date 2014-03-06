@@ -19,6 +19,21 @@ class goPrinter = object(self)
 			
   val mutable reader = false
   method prog f prog =
+    let need li = List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
+      | Instr.Read _ -> true
+      | Instr.Print _ -> true
+      | Instr.DeclRead _ -> true
+      | _ -> acc) false) li in
+    let need_prog_item = function
+      | Prog.DeclarFun (var, t, li, instrs) ->
+	need instrs
+      | _ -> false
+    in
+    let need = (match prog.Prog.main with
+      | Some s -> need s
+      | None -> false) || List.exists need_prog_item prog.Prog.funs
+    in
+    reader <- need;
     Format.fprintf f
       "package main@\n%a%a%a"
       (fun f () -> if need then Format.fprintf f "import \"fmt\"@\nimport \"os\"@\nimport \"bufio\"@\nvar reader *bufio.Reader@\n
