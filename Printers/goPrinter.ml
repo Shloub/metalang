@@ -130,11 +130,17 @@ func skip() {
 
   method ptype f t = match Type.unfix t with
 	| Type.Array a -> Format.fprintf f "[]%a" self#ptype a
-  | Type.String -> Format.fprintf f "string"
-  | Type.Char -> Format.fprintf f "byte"
+	| Type.String -> Format.fprintf f "string"
+	| Type.Char -> Format.fprintf f "byte"
 	| Type.Bool -> Format.fprintf f "bool"
 	| Type.Void -> Format.fprintf f ""
-	| Type.Named n -> Format.fprintf f "* %s" n
+	| Type.Named n ->
+	  begin match Typer.expand (super#getTyperEnv ()) t
+	      default_location |> Type.unfix with
+	      | Type.Struct _ -> Format.fprintf f "* %s" n
+              | Type.Enum _ -> Format.fprintf f "%s" n
+	      | _ -> assert false
+	  end
 	| _ -> super#ptype f t
 
   method ptypename f t = match Type.unfix t with
@@ -210,15 +216,16 @@ func skip() {
 	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	  ) li
       | Type.Enum li ->
-        Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
+        Format.fprintf f "type %a int@\nconst (@\n@[<v2>  %a@]@\n);"
           self#binding name
           (print_list
-	           (fun t name ->
-               self#binding t name
+	           (fun t fname ->
+		     Format.fprintf t "%a %a = iota"
+		     self#binding fname
+		     self#binding name
 	           )
-	           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+	           (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	        ) li
-          self#binding name
       | _ -> Format.fprintf f "typedef %a %a;"
 				self#ptype t
 				self#binding name
