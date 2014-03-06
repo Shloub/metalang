@@ -475,7 +475,7 @@ and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
         | Result (Lexems li) ->
           let e = expr_of_lexems_list li
           in precompile_expr e env
-				| Result x -> err_token_expected x
+	| Result x -> err_token_expected x
         | WithEnv f ->
           WithEnv (fun execenv ->
             match f execenv with
@@ -483,7 +483,7 @@ and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
                 let e = expr_of_lexems_list li in
                 let r = precompile_expr e env in
                 eval_expr execenv r
-							| x -> err_token_expected x
+	      | x -> err_token_expected x
           )
   ) li
   in flatten_lexems li
@@ -577,8 +577,8 @@ and eval_call env name params : execenv -> result =
           Char (char_of_int (get_integer param))
         | "float_of_int", [param] ->
           Float (float_of_int (get_integer param))
-        | _ -> failwith ("The Macro "^name^" cannot be evaluated with
-    "^(string_of_int (List.length params))^" arguments")
+        | _ -> failwith ("The Macro "^name^" cannot be evaluated with"
+			 ^(string_of_int (List.length params))^" arguments")
       )
 (** instruction evaluator : returns a tuple (environment * execution
     lambda )
@@ -590,7 +590,6 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     let e = e env in
     let env, r = add_in_env env varname in
     let f execenv =
-  (* Printf.printf "Declare %s\n" varname; *)
       execenv.(r) <- eval_expr execenv e
     in env, f
   | Instr.Affect (mutable_, e) ->
@@ -787,10 +786,7 @@ let compile_fun env var t li instrs =
         env.functions
   }
   in
-      (*      let () = Printf.printf "Precompiling %s\n" var in *)
   let env, instrs = eval_instrs env (precompile_instrs instrs) in
-      (*      let () = Printf.printf "the function %s need %d vars" var env.nvars
-              in *)
   let () = thisfunc := (env.nvars, instrs)
   in env
 
@@ -877,14 +873,14 @@ module EvalConstantes = struct
             begin match EVAL.precompiledExpr_of_lexems_list li acc
                 |> eval_expr execenv with
                   | Lexems li -> instrs_of_lexems_list li
-									| x -> err_token_expected x
+		  | x -> err_token_expected x
             end
           | _ ->
             let execenv = init_eenv 0 in
             begin match EVAL.precompile_expr e acc
                 |> eval_expr execenv with
                     | Lexems li -> instrs_of_lexems_list li
-										| x -> err_token_expected x
+		    | x -> err_token_expected x
             end
         end
       | _ -> [i]
@@ -921,14 +917,14 @@ module EvalConstantes = struct
             begin match EVAL.precompiledExpr_of_lexems_list li acc
                 |> eval_expr execenv with
                     | Lexems li -> w li
-										| x -> err_token_expected x
+		    | x -> err_token_expected x
             end
           | _ ->
             let execenv = init_eenv 0 in
             begin match EVAL.precompile_expr e acc
                 |> eval_expr execenv with
                     | Lexems li -> w li
-										| x -> err_token_expected x
+		    | x -> err_token_expected x
             end
         end
       | _ -> acc, [p]

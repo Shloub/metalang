@@ -46,22 +46,16 @@ class rbPrinter = object(self)
 
   method lang () = "ruby"
 
-  method header f prog =
-    Format.fprintf f "%s" header
+  method header f prog = Format.fprintf f "%s" header
 
-
-  method comment f str =
-    Format.fprintf f "\n=begin\n%s\n=end\n" str
-
+  method comment f str = Format.fprintf f "\n=begin\n%s\n=end\n" str
 
   method unop f op a =
     let pop g f a = match op with
       | Expr.Neg -> Format.fprintf f "-%a" g a
       | Expr.Not -> Format.fprintf f "not(%a)" self#expr a
-    in if self#nop (Expr.unfix a) then
-        pop self#expr f a
-      else
-        pop self#printp f a
+    in if self#nop (Expr.unfix a) then pop self#expr f a
+      else pop self#printp f a
 
    method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a )"
@@ -77,12 +71,10 @@ class rbPrinter = object(self)
       self#print_proto (funname, t, li)
       self#bloc instrs
 
-
   method whileloop f expr li =
     Format.fprintf f "@[<h>while %a do@]@\n%a@\nend"
       self#expr expr
       self#bloc li
-
 
   method read f t mutable_ =
 match Type.unfix t with
@@ -94,35 +86,30 @@ match Type.unfix t with
       self#mutable_ mutable_
 	| _ -> assert false (* types non gérés *)
 
-  method stdin_sep f =
-    Format.fprintf f "@[scanf(\"%%*\\n\");@]"
+  method stdin_sep f = Format.fprintf f "@[scanf(\"%%*\\n\");@]"
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ =@ %a@]"
-      self#binding var
-      self#expr e
+    Format.fprintf f "@[<h>%a@ =@ %a@]" self#binding var self#expr e
 
-
-  method divi f () =
-    Format.fprintf f "/"
+  method divi f () = Format.fprintf f "/"
 
   method print_op f op =
     Format.fprintf f
       "%s"
       (match op with
-	| Expr.Add -> "+"
-	| Expr.Sub -> "-"
-	| Expr.Mul -> "*"
-	| Expr.Div -> "/"
-	| Expr.Mod -> "%"
-	| Expr.Or -> "||"
-	| Expr.And -> "&&"
-	| Expr.Lower -> "<"
-	| Expr.LowerEq -> "<="
-	| Expr.Higher -> ">"
-	| Expr.HigherEq -> ">="
-	| Expr.Eq -> "=="
-	| Expr.Diff -> "!="
+      | Expr.Add -> "+"
+      | Expr.Sub -> "-"
+      | Expr.Mul -> "*"
+      | Expr.Div -> "/"
+      | Expr.Mod -> "%"
+      | Expr.Or -> "||"
+      | Expr.And -> "&&"
+      | Expr.Lower -> "<"
+      | Expr.LowerEq -> "<="
+      | Expr.Higher -> ">"
+      | Expr.HigherEq -> ">="
+      | Expr.Eq -> "=="
+      | Expr.Diff -> "!="
       )
 
   method bool f = function
@@ -148,13 +135,11 @@ match Type.unfix t with
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[print %s;@]" ( self#noformat s )
-  | _ ->
-    Format.fprintf f "@[printf \"%a\", %a@]"
+  | _ -> Format.fprintf f "@[printf \"%a\", %a@]"
       self#format_type t
       self#expr expr
 
-  method bloc f li =
-	  Format.fprintf f "@[<v 2>  %a@]" self#instructions li
+  method bloc f li = Format.fprintf f "@[<v 2>  %a@]" self#instructions li
 
   method if_ f e ifcase elsecase =
     match elsecase with
@@ -174,14 +159,11 @@ match Type.unfix t with
 	  self#bloc elsecase
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ [];@]"
-	      self#binding binding
+    Format.fprintf f "@[<h>%a@ =@ [];@]" self#binding binding
 
-  method return f e =
-    Format.fprintf f "@[<h>return@ (%a);@]" self#expr e
+  method return f e = Format.fprintf f "@[<h>return@ (%a);@]" self#expr e
 
-  method field f field =
-    Format.fprintf f "%S" field
+  method field f field = Format.fprintf f "%S" field
 
   method allocrecord f name t el =
     Format.fprintf f "%a = {@[<v>%a@]};"
@@ -200,6 +182,5 @@ match Type.unfix t with
 	  "%a,@\n%a" f1 e1 f2 e2)
       f
       li
-
 
 end

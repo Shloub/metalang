@@ -51,9 +51,7 @@ class phpPrinter = object(self)
 	Format.fprintf f "&"
       | _ -> ()
 
-  method stdin_sep f =
-    Format.fprintf f "@[scantrim();@]"
-
+  method stdin_sep f = Format.fprintf f "@[scantrim();@]"
 
   method bool f = function
     | true -> Format.fprintf f "true"
@@ -87,16 +85,13 @@ class phpPrinter = object(self)
 	     ))
 	  indexes
 
-
-  method main f main =
-	  self#instructions f main
+  method main f main = self#instructions f main
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-
     Format.fprintf f "<?php@\n%s%s%s%a%a@\n?>"
       (if need then "
 $stdin='';
@@ -125,33 +120,30 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }" else "")
-
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
   method eprint t f e =
     match Type.unfix t with
-      | Type.Integer
-      | Type.Float
-      | Type.String
-      | Type.Bool ->
-        Format.fprintf f "%a" self#expr e
-      | Type.Char ->
-        Format.fprintf f "%a" self#expr e
-			| _ -> assert false
+    | Type.Integer
+    | Type.Float
+    | Type.String
+    | Type.Bool -> Format.fprintf f "%a" self#expr e
+    | Type.Char -> Format.fprintf f "%a" self#expr e
+    | _ -> assert false
 
   method combine_formats () = false
+  
   method multi_print f format exprs =
     Format.fprintf f "@[<h>echo %a;@]"
       (print_list
 	 (fun f (t, e) -> (self#eprint t) f e)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)) exprs
+	   "%a,@ %a" f1 e1 f2 e2)) exprs
 
-  method print f t expr =
-    Format.fprintf f "@[echo@ %a;@]" (self#eprint t) expr
+  method print f t expr = Format.fprintf f "@[echo@ %a;@]" (self#eprint t) expr
 
-   method print_proto f (funname, t, li) =
+  method print_proto f (funname, t, li) =
     Format.fprintf f "function %a(%a)"
       self#funname funname
       (print_list
@@ -167,19 +159,15 @@ function nextChar(){
   method binding f i = Format.fprintf f "$%s" i
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ =@ %a;@]"
-      self#binding var
-      self#expr e
+    Format.fprintf f "@[<h>%a@ =@ %a;@]" self#binding var self#expr e
 
   method allocarray f binding type_ len =
-    Format.fprintf f "@[<h>%a@ =@ array();@]"
-      self#binding binding
+    Format.fprintf f "@[<h>%a@ =@ array();@]" self#binding binding
 
   method forloop f varname expr1 expr2 li =
       self#forloop_content f (varname, expr1, expr2, li)
 
   method decl_type f name t = ()
-
 
   method def_fields name f li =
     print_list
@@ -200,15 +188,15 @@ function nextChar(){
       (self#def_fields name) el
 
   method hasSelfAffect = function
-    | Expr.Div -> false
-    | _ -> true
+  | Expr.Div -> false
+  | _ -> true
 
   method binop f op a b =
     match op with
-      | Expr.Div ->
-        if Typer.is_int (super#getTyperEnv ()) a
-        then Format.fprintf f "intval(%a)"
-          (fun f () -> super#binop f op a b) ()
-        else super#binop f op a b
-      | _ -> super#binop f op a b
+    | Expr.Div ->
+      if Typer.is_int (super#getTyperEnv ()) a
+      then Format.fprintf f "intval(%a)"
+        (fun f () -> super#binop f op a b) ()
+      else super#binop f op a b
+    | _ -> super#binop f op a b
 end

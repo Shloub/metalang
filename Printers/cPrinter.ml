@@ -40,7 +40,6 @@ class cPrinter = object(self)
 
   method lang () = "c"
 
-
   method binding f i = Format.fprintf f "%s" i
 
   method bool f = function
@@ -62,12 +61,12 @@ class cPrinter = object(self)
               Format.fprintf f "struct %s *" n
             | Type.Enum _ ->
               Format.fprintf f "%s" n
-						| _ -> assert false
+	    | _ -> assert false
       end
       | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Struct _ -> Format.fprintf f "a struct"
       | Type.Auto -> assert false
-			| Type.Lexems -> assert false
+      | Type.Lexems -> assert false
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ %a@ =@ %a;@]"
@@ -97,7 +96,6 @@ class cPrinter = object(self)
       f
       li
 
-
   method allocarray f binding type_ len =
       Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ %a@ *@ sizeof(%a));@]"
 	self#ptype type_
@@ -111,6 +109,7 @@ class cPrinter = object(self)
     Format.fprintf f "{@\n@[<v 2>  int %a;@\n%a@]@\n}"
       self#binding varname
       self#forloop_content (varname, expr1, expr2, li)
+
   method forloop_content f (varname, expr1, expr2, li) =
     let default () =
       Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <=@ %a;@ %a++)@\n@]%a"
@@ -121,8 +120,7 @@ class cPrinter = object(self)
         self#binding varname
         self#bloc li
     in match Expr.unfix expr2 with
-      | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1))
-    ->
+      | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1)) ->
         Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <@ %a;@ %a++)@\n@]%a"
           self#binding varname
           self#expr expr1
@@ -133,23 +131,18 @@ class cPrinter = object(self)
       | _ -> default ()
 
   method main f main =
-    Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}"
-      self#instructions main
+    Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}" self#instructions main
 
   method bloc f li = match li with
-    | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
-                               | (Instr.AllocArray _)
-                               | (Instr.DeclRead _)
-                               | (Instr.Declare _)
-                               | (Instr.Comment _)))
-      ] ->
-      Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
-        self#instructions li
-    | [i] ->
-      Format.fprintf f "  %a"
-	      self#instr i
-    | _ ->  Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
-     self#instructions li
+  | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
+                             | (Instr.AllocArray _)
+                             | (Instr.DeclRead _)
+                             | (Instr.Declare _)
+                             | (Instr.Comment _)))
+    ] ->
+    Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
+  | [i] -> Format.fprintf f "  %a" self#instr i
+  | _ ->  Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
   method prototype f t = self#ptype f t
 
@@ -167,9 +160,7 @@ class cPrinter = object(self)
 	     "%a,@ %a" f1 e1 f2 e2)
       ) li
 
-  method stdin_sep f =
-    Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\");@]"
-
+  method stdin_sep f = Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\");@]"
 
   method mutable_ f m =
     match Mutable.unfix m with
@@ -189,11 +180,9 @@ class cPrinter = object(self)
 	  indexes
 
   method read f t m =
-    Format.fprintf f "@[scanf(\"%a\", &%a);@]"
-      self#format_type t
-      self#mutable_ m
+    Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#mutable_ m
 
-	method printf f () = Format.fprintf f "printf"
+  method printf f () = Format.fprintf f "printf"
   method combine_formats () = true
   method multi_print f format exprs =
     if exprs = [] then
@@ -206,14 +195,12 @@ class cPrinter = object(self)
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[%a(%s);@]" self#printf () ( self#noformat s )
-  | _ ->
-    Format.fprintf f "@[%a(\"%a\", %a);@]" self#printf () self#format_type t self#expr expr
+  | _ -> Format.fprintf f "@[%a(\"%a\", %a);@]" self#printf () self#format_type t self#expr expr
 
   method prog f prog =
     Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n%a%a@\n@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
-
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -258,18 +245,16 @@ class cPrinter = object(self)
 
   method if_ f e ifcase elsecase =
     match elsecase with
-      | [] ->
-	      Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
- 	      self#expr e
-	        self#bloc ifcase
+      | [] -> Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
+ 	self#expr e
+	self#bloc ifcase
       | [Instr.Fixed.F ( _, Instr.If (condition, instrs1, instrs2) ) as instr] ->
         Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse %a"
- 	      self#expr e
-        	self#bloc ifcase
- 	      self#instr instr
-      | _ ->
-        Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
- 	      self#expr e
-        	self#bloc ifcase
-        	self#bloc elsecase
+ 	  self#expr e
+          self#bloc ifcase
+ 	  self#instr instr
+      | _ -> Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
+ 	self#expr e
+        self#bloc ifcase
+        self#bloc elsecase
 end

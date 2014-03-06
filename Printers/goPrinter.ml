@@ -47,7 +47,6 @@ func skip() {
   }
 }
 
-
 ") ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -96,7 +95,6 @@ func skip() {
       self#ptypename t
       (self#def_fields name) el
 
-
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
@@ -129,84 +127,76 @@ func skip() {
 	  indexes
 
   method ptype f t = match Type.unfix t with
-	| Type.Array a -> Format.fprintf f "[]%a" self#ptype a
-	| Type.String -> Format.fprintf f "string"
-	| Type.Char -> Format.fprintf f "byte"
-	| Type.Bool -> Format.fprintf f "bool"
-	| Type.Void -> Format.fprintf f ""
-	| Type.Named n ->
-	  begin match Typer.expand (super#getTyperEnv ()) t
-	      default_location |> Type.unfix with
-	      | Type.Struct _ -> Format.fprintf f "* %s" n
-              | Type.Enum _ -> Format.fprintf f "%s" n
-	      | _ -> assert false
-	  end
-	| _ -> super#ptype f t
+  | Type.Array a -> Format.fprintf f "[]%a" self#ptype a
+  | Type.String -> Format.fprintf f "string"
+  | Type.Char -> Format.fprintf f "byte"
+  | Type.Bool -> Format.fprintf f "bool"
+  | Type.Void -> Format.fprintf f ""
+  | Type.Named n ->
+    begin match Typer.expand (super#getTyperEnv ()) t
+	default_location |> Type.unfix with
+	| Type.Struct _ -> Format.fprintf f "* %s" n
+        | Type.Enum _ -> Format.fprintf f "%s" n
+	| _ -> assert false
+    end
+  | _ -> super#ptype f t
 
   method ptypename f t = match Type.unfix t with
-	| Type.Named n -> Format.fprintf f "%s" n
-	| _ -> assert false
-
+  | Type.Named n -> Format.fprintf f "%s" n
+  | _ -> assert false
+    
   method bool f = function
-    | true -> Format.fprintf f "true"
-    | false -> Format.fprintf f "false"
+  | true -> Format.fprintf f "true"
+  | false -> Format.fprintf f "false"
 
   method forloop f varname expr1 expr2 li =
-      Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"
-        self#binding varname
-        self#expr expr1
-        self#binding varname
-        self#expr expr2
-        self#binding varname
-        self#instructions li
+    Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"
+      self#binding varname
+      self#expr expr1
+      self#binding varname
+      self#expr expr2
+      self#binding varname
+      self#instructions li
 
-  method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}"
-        self#instructions li
+  method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
   method allocarray f binding type_ len =
     Format.fprintf f "@[<h>var %a@ []%a@ = make([]%a, %a)@]"
-			self#binding binding
-			self#ptype type_
-			self#ptype type_
-	    (fun f a ->
+      self#binding binding
+      self#ptype type_
+      self#ptype type_
+      (fun f a ->
         if self#nop (Expr.unfix a) then self#expr f a
         else self#printp f a) len
 
-  method stdin_sep f =
-    Format.fprintf f "@[skip()@]"
+  method stdin_sep f = Format.fprintf f "@[skip()@]"
 
   method read f t m =
-    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a);@]"
-      self#format_type t
-      self#mutable_ m
+    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a);@]" self#format_type t self#mutable_ m
 
   method if_ f e ifcase elsecase =
     match elsecase with
-      | [] ->
-	Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n}"
-	  self#expr e
-	  self#instructions ifcase
-      | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
+    | [] ->
+      Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n}"
+	self#expr e
+	self#instructions ifcase
+    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n} else %a "
 	self#expr e
 	self#instructions ifcase
 	self#instr instr
-      | _ ->
+    | _ ->
       Format.fprintf f "@[<h>if@ %a@ @]{@\n  @[<v 2>%a@]@\n} else {@\n@[<v 2>  %a@]@\n}"
 	self#expr e
 	self#instructions ifcase
 	self#instructions elsecase
-
-
+	
   method whileloop f expr li =
-    Format.fprintf f "@[<h>for %a@]%a"
-      self#expr expr
-      self#bloc li
-
+    Format.fprintf f "@[<h>for %a@]%a" self#expr expr self#bloc li
 
   method decl_type f name t =
     match (Type.unfix t) with
-	Type.Struct (li, _) ->
+    | Type.Struct (li, _) ->
 	Format.fprintf f "@\ntype %a struct {@\n@[<v 2>  %a@]@\n}@\n"
 	  self#binding name
 	  (print_list
@@ -215,20 +205,18 @@ func skip() {
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
 	  ) li
-      | Type.Enum li ->
-        Format.fprintf f "type %a int@\nconst (@\n@[<v2>  %a@]@\n);"
-          self#binding name
-          (print_list
-	           (fun t fname ->
-		     Format.fprintf t "%a %a = iota"
-		     self#binding fname
-		     self#binding name
-	           )
-	           (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
-	        ) li
-      | _ -> Format.fprintf f "typedef %a %a;"
-				self#ptype t
-				self#binding name
+    | Type.Enum li ->
+      Format.fprintf f "type %a int@\nconst (@\n@[<v2>  %a@]@\n);"
+        self#binding name
+        (print_list
+	   (fun t fname ->
+	     Format.fprintf t "%a %a = iota"
+	       self#binding fname
+	       self#binding name
+	   )
+	   (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+	) li
+    | _ -> Format.fprintf f "type %a %a;" self#binding name self#ptype t
 
 
 end 

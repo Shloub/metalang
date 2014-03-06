@@ -38,82 +38,69 @@ class pyPrinter = object(self)
   inherit cPrinter as super
 
   method selfAssoc f m e2 = function
-    | Expr.Add ->
-      Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
-    | Expr.Sub ->
-      Format.fprintf f "@[<h>%a -= %a@]" self#mutable_ m self#expr e2
-    | Expr.Mul ->
-      Format.fprintf f "@[<h>%a *= %a@]" self#mutable_ m self#expr e2
-    | Expr.Div ->
-      Format.fprintf f "@[<h>%a /= %a@]" self#mutable_ m self#expr e2
-		| _ -> assert false
+  | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
+  | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_ m self#expr e2
+  | Expr.Mul -> Format.fprintf f "@[<h>%a *= %a@]" self#mutable_ m self#expr e2
+  | Expr.Div -> Format.fprintf f "@[<h>%a /= %a@]" self#mutable_ m self#expr e2
+  | _ -> assert false
 
   method lang () = "py"
 
-  method enum f e =
-    Format.fprintf f "\"%s\"" e
+  method enum f e = Format.fprintf f "\"%s\"" e
 
-  method unop f op a =
-    match op with
-      | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
-      | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
+  method unop f op a = match op with
+    | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+    | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
 
   method binop f op a b =
     match op with
-      | Expr.Div ->
-        if Typer.is_int (super#getTyperEnv ()) a
-        then Format.fprintf f "%a %a %a"
-          self#expr a
-          self#divi ()
-          self#expr b
-        else super#binop f op a b
-      | _ -> super#binop f op a b
+    | Expr.Div ->
+      if Typer.is_int (super#getTyperEnv ()) a
+      then Format.fprintf f "%a %a %a"
+        self#expr a
+        self#divi ()
+        self#expr b
+      else super#binop f op a b
+    | _ -> super#binop f op a b
+      
+  method divi f () = Format.fprintf f "//"
 
-  method divi f () =
-    Format.fprintf f "//"
-
-  method print_op f op =
-    Format.fprintf f
-      "%s"
-      (match op with
-	| Expr.Add -> "+"
-	| Expr.Sub -> "-"
-	| Expr.Mul -> "*"
-	| Expr.Div -> "/"
-	| Expr.Mod -> "%"
-	| Expr.Or -> "or"
-	| Expr.And -> "and"
-	| Expr.Lower -> "<"
-	| Expr.LowerEq -> "<="
-	| Expr.Higher -> ">"
-	| Expr.HigherEq -> ">="
-	| Expr.Eq -> "=="
-	| Expr.Diff -> "!="
-      )
+  method print_op f op = Format.fprintf f "%s"
+    (match op with
+    | Expr.Add -> "+"
+    | Expr.Sub -> "-"
+    | Expr.Mul -> "*"
+    | Expr.Div -> "/"
+    | Expr.Mod -> "%"
+    | Expr.Or -> "or"
+    | Expr.And -> "and"
+    | Expr.Lower -> "<"
+    | Expr.LowerEq -> "<="
+    | Expr.Higher -> ">"
+    | Expr.HigherEq -> ">="
+    | Expr.Eq -> "=="
+    | Expr.Diff -> "!="
+    )
 
   method bool f = function
-    | true -> Format.fprintf f "True"
-    | false -> Format.fprintf f "False"
+  | true -> Format.fprintf f "True"
+  | false -> Format.fprintf f "False"
 
   method read f t mutable_ =
-match Type.unfix t with
-  | Type.Integer ->
-    Format.fprintf f "@[%a=readint()@]"
-      self#mutable_ mutable_
-  | Type.Char ->
-    Format.fprintf f "@[%a=readchar()@]"
-      self#mutable_ mutable_
-  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
-    (Type.type_t_to_string t)
-  ))
+    match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[%a=readint()@]"
+	self#mutable_ mutable_
+    | Type.Char ->
+      Format.fprintf f "@[%a=readchar()@]"
+	self#mutable_ mutable_
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
+      (Type.type_t_to_string t)
+    ))
 
-  method stdin_sep f =
-    Format.fprintf f "@[stdinsep()@]"
+  method stdin_sep f = Format.fprintf f "@[stdinsep()@]"
 
-
-
-  method main f main =
-   self#instructions f main
+  method main f main = self#instructions f main
 
   method header f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -175,53 +162,43 @@ def skipchar():
 
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ =@ %a;@]"
-      self#binding var
-      self#expr e
+    Format.fprintf f "@[<h>%a@ =@ %a;@]" self#binding var self#expr e
 
   method bloc f li =
     match li with
-      | [] -> Format.fprintf f "@[<h>  pass@]"
-      | _ ->
-	Format.fprintf f "@[<v 2>  %a@]" self#instructions li
-
+    | [] -> Format.fprintf f "@[<h>  pass@]"
+    | _ -> Format.fprintf f "@[<v 2>  %a@]" self#instructions li
 
   method if_ f e ifcase elsecase =
     match elsecase with
-      | [] ->
-	Format.fprintf f "@[<h>if@ %a:@]@\n%a"
-	  self#expr e
-	  self#bloc ifcase
-
-      | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
+    | [] ->
+      Format.fprintf f "@[<h>if@ %a:@]@\n%a"
+	self#expr e
+	self#bloc ifcase	
+    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nel%a"
 	self#expr e
 	self#bloc ifcase
 	self#instr instr
-      | _ ->
-	Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse:@\n%a"
-	  self#expr e
-	  self#bloc ifcase
-	  self#bloc elsecase
+    | _ ->
+      Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse:@\n%a"
+	self#expr e
+	self#bloc ifcase
+	self#bloc elsecase
 
-
-  method comment f str =
-    Format.fprintf f "\"\"\"%s\"\"\"" str
-
+  method comment f str = Format.fprintf f "\"\"\"%s\"\"\"" str
 
   method whileloop f expr li =
-    Format.fprintf f "@[<h>while (%a):@]@\n%a"
-      self#expr expr
-      self#bloc li
+    Format.fprintf f "@[<h>while (%a):@]@\n%a" self#expr expr self#bloc li
 
   method allocarray f binding type_ len =
-      Format.fprintf f "@[<h>%a@ =@ [None] * %a@]"
-	self#binding binding
-	      (fun f a ->
-          if self#nop (Expr.unfix a) then
-            self#expr f a
-          else self#printp f a
-        ) len
+    Format.fprintf f "@[<h>%a@ =@ [None] * %a@]"
+      self#binding binding
+      (fun f a ->
+        if self#nop (Expr.unfix a) then
+          self#expr f a
+        else self#printp f a
+      ) len
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\n"
@@ -230,25 +207,23 @@ def skipchar():
 
   method decl_type f name t = ()
 
-  method forloop f varname expr1 expr2 li =
-      self#forloop_content f (varname, expr1, expr2, li)
+  method forloop f varname expr1 expr2 li = self#forloop_content f (varname, expr1, expr2, li)
 
  method forloop_content f (varname, expr1, expr2, li) =
    let default () =
-    Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
-      self#binding varname
-      self#expr expr1
-      self#expr expr2
-      self#bloc li
+     Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
+       self#binding varname
+       self#expr expr1
+       self#expr expr2
+       self#bloc li
    in match Expr.unfix expr2 with
-      | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1))
-    ->
-        Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ %a):@\n@]%a"
-          self#binding varname
-          self#expr expr1
-          self#expr expr3
-          self#bloc li
-      | _ -> default ()
+   | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1)) ->
+     Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ %a):@\n@]%a"
+       self#binding varname
+       self#expr expr1
+       self#expr expr3
+       self#bloc li
+   | _ -> default ()
 
    method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a ):"
@@ -259,41 +234,37 @@ def skipchar():
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
 	  "%a,@ %a" f1 e1 f2 e2)) li
 
-	 method print_args =
-		 print_list
-			 (fun f (t, e) -> self#expr f e)
-			 (fun t f1 e1 f2 e2 -> Format.fprintf t
-				 "%a,@ %a" f1 e1 f2 e2)
+   method print_args =
+     print_list
+       (fun f (t, e) -> self#expr f e)
+       (fun t f1 e1 f2 e2 -> Format.fprintf t
+	 "%a,@ %a" f1 e1 f2 e2)
 
   method multi_print f format exprs =
     if exprs = [] then
-			if String.ends_with format "\n" then
-				let l = String.length format in
-				Format.fprintf f "@[<h>print(\"%s\")@]"  (String.sub format 0 (l - 1) )
-			else
-				Format.fprintf f "@[<h>print(\"%s\", end='')@]" format
+      if String.ends_with format "\n" then
+	let l = String.length format in
+	Format.fprintf f "@[<h>print(\"%s\")@]"  (String.sub format 0 (l - 1) )
+      else Format.fprintf f "@[<h>print(\"%s\", end='')@]" format
     else
-			if String.ends_with format "\n" then
-				let l = String.length format in
-				Format.fprintf f "@[<h>print(\"%s\" %% ( %a ))@]" (String.sub format 0 (l - 1) )
-					self#print_args exprs
-			else
-				Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='')@]" format
-					self#print_args exprs
+      if String.ends_with format "\n" then
+	let l = String.length format in
+	Format.fprintf f "@[<h>print(\"%s\" %% ( %a ))@]" (String.sub format 0 (l - 1) )
+	  self#print_args exprs
+      else
+	Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='')@]" format self#print_args exprs
 
   method print f t expr =
     match Expr.unfix expr with
     | Expr.String s ->
-			if String.ends_with s "\n" then
-				let l = String.length s in
-				Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
-			else
-				Format.fprintf f "@[print( %S, end='')@]" s
+      if String.ends_with s "\n" then
+	let l = String.length s in
+	Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
+      else Format.fprintf f "@[print( %S, end='')@]" s
     | _ ->
     Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t self#expr expr
 
-  method field f field =
-    Format.fprintf f "%S" field
+  method field f field = Format.fprintf f "%S" field
 
   method def_fields name f li =
     print_list
@@ -309,10 +280,7 @@ def skipchar():
       li
 
   method allocrecord f name t el =
-    Format.fprintf f "%a = {%a}"
-      self#binding name
-      (self#def_fields name) el
-
+    Format.fprintf f "%a = {%a}" self#binding name (self#def_fields name) el
 
   method mutable_ f m =
     match Mutable.unfix m with
@@ -330,6 +298,5 @@ def skipchar():
 	       Format.fprintf f "%a][%a" f1 e1 f2 e2
 	     ))
 	  indexes
-
 
 end

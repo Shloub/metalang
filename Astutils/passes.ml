@@ -122,8 +122,8 @@ module Rename = struct
 
   let rec process_instr map i =
     let i2 = match Instr.unfix i with
-			| Instr.Unquote (e) -> Instr.Unquote (process_expr map e)
-			| Instr.Tag s -> Instr.Tag s
+      | Instr.Unquote (e) -> Instr.Unquote (process_expr map e)
+      | Instr.Tag s -> Instr.Tag s
       | Instr.Declare (v, t, e) ->
         Instr.Declare ( (mapname map v), t, process_expr map e)
       | Instr.Affect (m, e) ->
@@ -264,9 +264,9 @@ module CountNoPosition = struct
     match p with
     | Prog.DeclarFun (funname, t, params, instrs) ->
       (acc + count instrs +
-				 count_type t +
-				 count_tys (List.map snd params)
-			), Prog.DeclarFun (funname, t, params, instrs)
+	 count_type t +
+	 count_tys (List.map snd params)
+      ), Prog.DeclarFun (funname, t, params, instrs)
     | _ -> acc, p
 
   let process_main acc m = acc + count m, m
@@ -288,8 +288,7 @@ module CollectCalls = struct
   let collect_instr acc i =
     let f acc i =
       match Instr.unfix i with
-        | Instr.Call (name, li) ->
-          BindingSet.add name acc
+        | Instr.Call (name, li) -> BindingSet.add name acc
         | _ -> acc
     in
     let acc = Instr.Writer.Deep.fold f acc i
@@ -334,7 +333,6 @@ module CollectTypes : SigPassTop
     in Mutable.Writer.Deep.fold f acc m
   and process_expr acc e =
     let f acc e = match Expr.Fixed.unfix e with
-(*      | Expr.Access m -> TODO *)
 (*      | Expr.Enum s -> TODO *)
       | Expr.Access m -> process_mutable acc m
       | e -> acc
@@ -495,57 +493,57 @@ let no_macro = function
   | _ -> true
 
 module CheckUseVoid = struct
-	let rec check ty loc =
-		if Type.unfix ty = Type.Void then
-			raise (Warner.Error (fun f ->
-				Format.fprintf f "Forbiden use of void type %a@\n"
-Warner.ploc loc
-			) )
-		else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
+  let rec check ty loc =
+    if Type.unfix ty = Type.Void then
+      raise (Warner.Error (fun f ->
+	Format.fprintf f "Forbiden use of void type %a@\n"
+	  Warner.ploc loc
+      ) )
+    else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
 
   let collectDefReturn env li =
     let f () i =
       match Instr.unfix i with
-				| Instr.AllocArray (_, ty, _, _)
-        | Instr.Declare (_, ty, _) ->
-					check ty (Ast.PosMap.get (Instr.Fixed.annot i))
-        | Instr.Return e ->
-					check (Typer.get_type env e) (Ast.PosMap.get (Instr.Fixed.annot i))
-        | _ -> () in
+      | Instr.AllocArray (_, ty, _, _)
+      | Instr.Declare (_, ty, _) ->
+	check ty (Ast.PosMap.get (Instr.Fixed.annot i))
+      | Instr.Return e ->
+	check (Typer.get_type env e) (Ast.PosMap.get (Instr.Fixed.annot i))
+      | _ -> () in
     List.iter
       (fun i ->
         Instr.Writer.Deep.fold f
           (f () i) i)
-       li
+      li
 
-	let collectDefReturn_fun env = function
-		| Prog.DeclarFun (_, _, params, li) ->
-			collectDefReturn env li;
-			List.iter (fun (_, ty) ->
-				check ty (Ast.PosMap.get (Type.Fixed.annot ty))
-			) params
+  let collectDefReturn_fun env = function
+    | Prog.DeclarFun (_, _, params, li) ->
+      collectDefReturn env li;
+      List.iter (fun (_, ty) ->
+	check ty (Ast.PosMap.get (Type.Fixed.annot ty))
+      ) params
     | _ -> ()
-
-	let apply (env, prog) =
-		List.iter (fun t -> collectDefReturn_fun env t) prog.Prog.funs;
-		Option.map_default () (collectDefReturn env) prog.Prog.main;
-		env, prog
+      
+  let apply (env, prog) =
+    List.iter (fun t -> collectDefReturn_fun env t) prog.Prog.funs;
+    Option.map_default () (collectDefReturn env) prog.Prog.main;
+    env, prog
 end
 
 (* TODO checker les mauvais returns *)
 module CheckReturn = struct
   let find_return li =
-		let f tra acc i = match Instr.unfix i with
-			| Instr.Return _ ->
-				let loc = Ast.PosMap.get (Instr.Fixed.annot i) in
-				Some loc
-			| Instr.AllocArray _ -> acc
-			| _ -> tra acc i 
+    let f tra acc i = match Instr.unfix i with
+      | Instr.Return _ ->
+	let loc = Ast.PosMap.get (Instr.Fixed.annot i) in
+	Some loc
+      | Instr.AllocArray _ -> acc
+      | _ -> tra acc i 
 		in
     let li = List.map
-			(fun i ->
-				f (Instr.Writer.Traverse.fold f) None i)
-			li
+      (fun i ->
+	f (Instr.Writer.Traverse.fold f) None i)
+      li
     in try
 	 List.find (function | Some _ -> true | _ -> false) li
       with Not_found -> None
