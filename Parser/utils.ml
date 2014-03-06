@@ -88,4 +88,7 @@ let rec string_of_lexems f = function
   | hd::tl -> Format.fprintf f "%a%a" string_of_lexem hd
     string_of_lexems tl
 
-type instr = Parser.token Ast.Expr.t Ast.Instr.t
+type expr = Parser.token Ast.expr
+type instr = Parser.token Ast.instr
+type t_fun = Parser.token Ast.Prog.t_fun
+type prog = Parser.token Ast.Prog.t

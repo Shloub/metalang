@@ -442,7 +442,7 @@ end;
   method main f main =
     self#print_body f main
 
-  method affect f mutable_ (expr : Parser.token Expr.t) =
+  method affect f mutable_ (expr : Utils.expr) =
     Format.fprintf f "@[<h>%a@ :=@ %a;@]" self#mutable_ mutable_ self#expr expr
 
 

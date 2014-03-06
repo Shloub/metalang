@@ -160,7 +160,7 @@ class schemePrinter = object(self)
 		| Expr.Enum e -> assert false (* TODO *)
 		| Expr.Lexems e -> assert false
 
-  method apply (f:Format.formatter) (var:funname) (li:Parser.token Expr.t list) : unit =
+  method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     match BindingMap.find_opt var macros with
       | Some ( (t, params, code) ) ->
   self#expand_macro_apply f var t params code li
@@ -176,7 +176,7 @@ class schemePrinter = object(self)
        )
     ) li
 
-  method call (f:Format.formatter) (var:funname) (li:Parser.token Expr.t list) : unit =
+  method call (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     self#apply f var li
 
   method print f t expr =
@@ -230,7 +230,7 @@ class schemePrinter = object(self)
       nlet <- exnlet;
     end
 
-  method prog f (prog:Parser.token Prog.t) =
+  method prog f (prog:Utils.prog) =
     Format.fprintf f
       "
 

@@ -38,8 +38,8 @@ let check_reads = (fun (tyenv, prog) ->
 				end );
 			(tyenv, prog))
 
-let default_passes (prog : Typer.env * Parser.token Prog.t) :
-    (Typer.env * Parser.token Prog.t ) =
+let default_passes (prog : Typer.env * Utils.prog) :
+    (Typer.env * Utils.prog ) =
   prog
   |> typed "check naming" Passes.WalkCheckNaming.apply
   |> Passes.CheckUseVoid.apply
@@ -70,10 +70,10 @@ let no_passes prog =
 module L = StringMap
 let languages, printers =
   let ( => )
-      (pa : (Typer.env * Parser.token Prog.t) -> Typer.env * Parser.token Prog.t )
+      (pa : (Typer.env * Utils.prog) -> Typer.env * Utils.prog )
       pr
       (out: Format.formatter)
-      (prog : Typer.env * Parser.token Prog.t) :
+      (prog : Typer.env * Utils.prog) :
       (((Format.formatter -> unit) ->  unit)) -> unit
     =
     (fun (err : ((Format.formatter -> unit) -> unit)) ->

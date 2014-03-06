@@ -526,7 +526,7 @@ class printer = object(self)
   method integer f i =
     Format.fprintf f "%i" i
 
-  method lexems f (li : (Parser.token, Parser.token Expr.t) Lexems.t list )  =
+  method lexems f (li : (Parser.token, Utils.expr) Lexems.t list )  =
     Utils.lexems f li
 
   method expr f t =
@@ -604,7 +604,7 @@ class printer = object(self)
           | _ ->
             Format.fprintf f "type %a = %a;" self#binding name self#ptype t
 
-  method prog f (prog: 'a Prog.t) =
+  method prog f (prog: Utils.prog) =
     Format.fprintf f "%a%a@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -680,7 +680,7 @@ class printer = object(self)
        )
     ) funs
 
-  method main f (main : 'a Expr.t Instr.t list) =
+  method main f (main : Utils.instr list) =
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"
      self#instructions main
 end

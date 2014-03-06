@@ -404,22 +404,22 @@ let of_lexems_list rule_ f (li:Parser.token list) =
     ))
 
 (** returns an expression from a token list *)
-let expr_of_lexems_list (li:Parser.token list) : Parser.token Expr.t =
+let expr_of_lexems_list (li:Parser.token list) : Utils.expr =
   of_lexems_list "expr" Parser.toplvl_expr li
 
 (** returns a toplvl expression from a token list *)
-let prog_list_of_lexems_list (li:Parser.token list) : Parser.token Prog.t_fun list =
+let prog_list_of_lexems_list (li:Parser.token list) : Utils.t_fun list =
   of_lexems_list "prog" Parser.toplvls li
 
 (** returns an instruction from a token list *)
-let instrs_of_lexems_list (li:Parser.token list) : Parser.token Expr.t Instr.t list =
+let instrs_of_lexems_list (li:Parser.token list) : Utils.instr list =
   of_lexems_list "instrs" Parser.toplvl_instrs li
 
 (** Evaluation factor *)
 module EvalF (IO : EvalIO) = struct
 
 (** precompile an expression *)
-let rec precompile_expr (t:Parser.token Expr.t) (env:env): precompiledExpr =
+let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
   let loc = PosMap.get (Expr.Fixed.annot t) in
   let res x = Result x in
   match Expr.Fixed.map (fun e -> precompile_expr e env)
@@ -795,13 +795,13 @@ let compile_fun env var t li instrs =
   in env
 
 (** precompile and eval an expression *)
-let precompile_eval_expr (env:env) (e:Parser.token Expr.t) : result =
+let precompile_eval_expr (env:env) (e:Utils.expr) : result =
   let precompiled = precompile_expr e env in
   let execenv = init_eenv 0 in
   eval_expr execenv precompiled
 
 (** main function of this module : it evalue a full programm *)
-let eval_prog (te : Typer.env) (p:Parser.token Prog.t) =
+let eval_prog (te : Typer.env) (p:Utils.prog) =
   let f env p = match p with
 		| Prog.Unquote _ -> assert false
     | Prog.DeclarFun (var, t, li, instrs) ->
@@ -863,9 +863,9 @@ module EvalConstantes = struct
       | _ -> acc, e
     in Expr.Writer.Deep.foldmap f acc e
 
-  let collect_instr acc (i:Parser.token Expr.t Instr.t) =
-    let f (i:Parser.token Expr.t Instr.t) :
-        (Parser.token Expr.t Instr.t list) =
+  let collect_instr acc (i:Utils.instr) =
+    let f (i:Utils.instr) :
+        (Utils.instr list) =
       match Instr.unfix i with
       | Instr.Unquote e ->
         begin match Expr.unfix e with
@@ -943,7 +943,7 @@ module EvalConstantes = struct
     let acc, p = List.fold_left_map process acc p
     in acc, List.flatten p
 
-  let apply ( prog : Parser.token Prog.t ) : Parser.token Prog.t  =
+  let apply ( prog : Utils.prog ) : Utils.prog  =
     let typerEnv = Typer.empty in
     let acc =  empty_env typerEnv in
     let acc, p = apply_prog acc prog.Prog.funs in

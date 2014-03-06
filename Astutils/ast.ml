@@ -724,3 +724,5 @@ type 'lex t =
 
 end
 
+type 'a expr = 'a Expr.t
+type 'a instr = 'a Expr.t Instr.t
