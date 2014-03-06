@@ -68,8 +68,9 @@ Dans un premier temps, la structure d'un code metlang pour prologin est la suiva
 * dans ...2 on écrit les paramètres
 * dans ...3 on écrit le code de parsing, et de quoi appeller la fonction, et afficher son résultat.
 
-En métalang, on a trois primitives de parsing : une qui lit un entier, une qui lit un char, et une qui saute les espaces :
+En métalang, on a trois primitives de parsing : une qui lit un entier, une qui lit un char, et une qui saute les espaces
 Respectivement :
+
 * read int variable
 * read char variable
 * skip
