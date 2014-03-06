@@ -1,6 +1,10 @@
 Metalang
 ========
 
+C'est quoi ?
+----------------
+Metalang est un langage de programmation. Il permet d'écrire une fois un code et d'obtenir le même programme dans plusieurs autres langages (C, C++, python, javascript, ocaml, php, go, java, C#)
+
 Quick start
 ----------------
 * ouvrir une console
@@ -11,6 +15,27 @@ Quick start
   ./metalang tests/prog/npi.metalang
 
 * on voit alors apparaitre des implémentations d'une calculette en notation polonaise inversée dans les langages C# ocaml python c++ java php ruby C go
+
+Il me manque un compilateur
+----------------
+Pour installer go 1.1 ::
+
+  hg clone -u release https://code.google.com/p/go
+  hg update default
+  cd go/src
+  ./all.bash
+
+Pour installer nodejs ::
+
+  wget http://nodejs.org/dist/v0.10.10/node-v0.10.10.tar.gz
+  tar -xvf node-v0.10.10.tar.gz
+  cd node-v0.10.10
+  ./configure --prefix $PREFIX
+  make install
+
+Les autres compilateurs devraient être packagé sur votre distribution de linux.
+
+Note : La version de python utilisée est python3
 
 Modes
 ----------------
@@ -54,10 +79,11 @@ Langages cibles :
 
 HOWTO Metalang
 ----------------
+
+
 Dans le cadre du concours prologin, on a besoin d'écrire des codes à compléter. Ces codes lisent des entrées, et appellent une fonction "vide" que le candidat devra remplir.
 
 Dans un premier temps, la structure d'un code metlang pour prologin est la suivante ::
-
   def ...1 la_fonction_a_completer( ...2 )
   end
   main
@@ -85,3 +111,95 @@ L'exemple tests/progs/aaa_read_ints.metalang montre comment parser des entiers c
 L'exemple tests/progs/npi.metalang montre comment parser des chars
 
 Normalement, avec cet outil, vous avez les moyens de faire des codes à compléter. N'oubliez pas de tester vos codes générés.
+
+Declaration de variables
+----------------
+Une variable doit toujours avoir une valeur. Pour définir un entier x de valeur 42, on fait::
+  def int x = 42
+
+On est pas obligé de définir le type : une passe de typage s'arrangera pour l'inférer.::
+  def x = 42
+
+
+Declaration de tableaux
+----------------
+Pour définir un tableau, rien de plus simple::
+  def array<type> tab[taille] with variable do /* instructions */ return valeur end
+
+Cette syntaxe correspond plus ou moins aux Array.init d'ocaml. Dans les autres langage, ce code est compilé vers une boucle for pour l'initialisation
+
+
+Declaration de struct
+----------------
+Pour définir une struct ::
+  record @nom_de_la_struct
+    field1 : type1
+    field2 : type2
+  end
+
+Ensuite, la structure a pour nom @nom_de_la_struct.
+Pour définir une variable de type @nom_de_la_struct ::
+  def variable = record
+    field1 = valeur1
+    field2 = valeur2
+  end
+
+Pour récupérer ou affecter la valeur du champ 1, on utilise variable.x
+
+Pour éviter tout code moche généré, deux structures doivent avoir des noms de champs distincts.
+
+Declaration d'enums
+----------------
+Pour définir un enum ::
+  enum @foo_t
+    Foo Bar Blah
+  end
+
+Ensuite, le type a pour nom @foo_t et on utilise Foo, Bar Blah comme des valeurs
+
+Types
+----------------
+Les différents types manipulables en metalang sont :
+* int
+* string
+* chars
+* tableaux
+* struct
+* enums
+
+Aucun de ces types n'est nullable. Il est donc difficile de faire des structures de données complexes 
+
+Fonctions
+----------------
+Les fonctions ne peuvent pas être mutuellement récursives, mais les fonctions récursives ne posent aucun problème.
+Les arguments sont passés par valeur pour les entiers, enum et chars, et par référence pour les tableaux et structures.
+
+Pour définir une fonction ::
+  def type_de_retour nom_fonction(type1 param1, type2 param2)
+    ...
+  end
+
+Boucles
+----------------
+Les boucles for ont pour syntaxe ::
+
+  for variable = debut to fin do
+    ...
+  end
+
+If Then Else
+----------------
+La syntaxe est ::
+  if ... then
+    ...
+  elsif ... then
+    ...
+  end
+
+Print
+----------------
+L'instruction print vous permet d'écrire sur la sortie standard::
+
+  print "foo"
+  def x = 42
+  print x
