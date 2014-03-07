@@ -34,23 +34,21 @@ open Ast
 open Fresh
 open PassesUtils
 
-module WalkCountNoPosition = WalkTop(CountNoPosition);;
-module WalkRemoveTags = WalkTop(RemoveTags);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
-module WalkCollectTypes = WalkTop(CollectTypes);;
-module WalkNopend = Walk(NoPend);;
-module WalkExpandPrint = Walk(ExpandPrint);;
-module WalkIfMerge = Walk(IfMerge);;
-module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
-module WalkExpandReadDecl = Walk(ExpandReadDecl);;
-module WalkCheckNaming = WalkTop(CheckNaming);;
-module WalkRename = WalkTop(Rename);;
+ let apply prog funs =
+    let go f (li, used_functions) = match f with
+			| Prog.Unquote e -> f::li, CollectCalls.process_expr used_functions e
+      | Prog.DeclarFun (v, _,_, _)
+      | Prog.Macro (v, _, _, _) ->
+        if BindingSet.mem v used_functions
+        then (f::li, (Passes.WalkCollectCalls.fold_fun used_functions f) )
+        else (li, used_functions)
+      | Prog.Comment _ -> (f::li, used_functions)
+      | Prog.DeclareType _ -> (f::li, used_functions)
+    in
 
-(* TODO rentrer dans la structure du type *)
-let no_macro = function
-  | Prog.DeclarFun (_, ty, li, instrs) ->
-    begin match Type.unfix ty with
-      | Type.Lexems -> false
-      | _ -> true
-    end
-  | _ -> true
+    let used_functions = Passes.WalkCollectCalls.fold ()
+      {prog with Prog.funs = funs } in (* fonctions utilisées dans le
+                                          programme (stdlib non comprise) *)
+    let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
+    let prog = { prog with Prog.funs = funs} in
+    prog

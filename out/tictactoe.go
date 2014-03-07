@@ -14,7 +14,6 @@ func skip() {
   }
 }
 
-
 /*
 Tictactoe : un tictactoe avec une IA
 */

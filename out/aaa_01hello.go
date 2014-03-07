@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   fmt.Printf("Hello World");

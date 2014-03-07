@@ -6,9 +6,9 @@ let keywords = [ "out"; "exp"; "from"; "to"; "min"; "max"; "eval"; "go" ; "init"
 
 let conf_rename prog =
   Fresh.fresh_init prog ;
-  Passes.Rename.clear ();
-  Passes.Rename.add prog.Prog.progname ;
-  List.iter Passes.Rename.add keywords
+  Rename.clear ();
+  Rename.add prog.Prog.progname ;
+  List.iter Rename.add keywords
 
 (** {2 Languages definition } *)
 
@@ -42,8 +42,8 @@ let default_passes (prog : Typer.env * Utils.prog) :
     (Typer.env * Utils.prog ) =
   prog
   |> typed "check naming" Passes.WalkCheckNaming.apply
-  |> Passes.CheckUseVoid.apply
-  |> typed "check return" Passes.CheckReturn.apply
+  |> CheckUseVoid.apply
+  |> typed "check return" CheckReturn.apply
   |> typed "remove tags" Passes.WalkRemoveTags.apply
   |> typed "rename" Passes.WalkRename.apply
   |> typed "expend" Passes.WalkNopend.apply
@@ -54,14 +54,14 @@ let clike_passes prog =
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
   |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
-  |> typed_ "read analysis" Passes.ReadAnalysis.apply
+  |> typed_ "read analysis" ReadAnalysis.apply
 	|> check_reads
 
 let ocaml_passes prog =
   prog |> default_passes
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
-  |> typed_ "read analysis" Passes.ReadAnalysis.apply
+  |> typed_ "read analysis" ReadAnalysis.apply
 	|> check_reads
 
 let no_passes prog =
@@ -201,9 +201,9 @@ let make_prog_helper progname (funs, main) stdlib =
   let before = Passes.WalkCountNoPosition.fold () prog in
   Format.fprintf Format.std_formatter "After typer, %d positions missing@\n" before;
 *)
-  let prog = Passes.RemoveUselessFunctions.apply prog
+  let prog = RemoveUselessFunctions.apply prog
     (List.filter Passes.no_macro funs) in
-  let prog = Passes.RemoveUselessTypes.apply prog
+  let prog = RemoveUselessTypes.apply prog
     prog.Prog.funs tyenv in
   tyenv, prog
 

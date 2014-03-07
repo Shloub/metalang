@@ -34,23 +34,25 @@ open Ast
 open Fresh
 open PassesUtils
 
-module WalkCountNoPosition = WalkTop(CountNoPosition);;
-module WalkRemoveTags = WalkTop(RemoveTags);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
-module WalkCollectTypes = WalkTop(CollectTypes);;
-module WalkNopend = Walk(NoPend);;
-module WalkExpandPrint = Walk(ExpandPrint);;
-module WalkIfMerge = Walk(IfMerge);;
-module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
-module WalkExpandReadDecl = Walk(ExpandReadDecl);;
-module WalkCheckNaming = WalkTop(CheckNaming);;
-module WalkRename = WalkTop(Rename);;
+  type acc0 = unit
+  type 'a acc = unit
 
-(* TODO rentrer dans la structure du type *)
-let no_macro = function
-  | Prog.DeclarFun (_, ty, li, instrs) ->
-    begin match Type.unfix ty with
-      | Type.Lexems -> false
-      | _ -> true
-    end
-  | _ -> true
+  let init_acc () = ()
+
+  let rec map li =
+    List.filter_map (fun i ->
+      match Instr.unfix i with
+      | Instr.Tag s -> let () = Tags.tag s in None
+      | Instr.Loop (v, e1, e2, li) ->
+	let li = map li in
+	Some ( Instr.fixa (Instr.Fixed.annot i) (Instr.Loop (v, e1, e2, li)))
+      | _ -> Some i
+    ) li
+
+  let process acc p =
+    match p with
+    | Prog.DeclarFun (funname, t, params, instrs) ->
+      acc, Prog.DeclarFun (funname, t, params, map instrs)
+    | _ -> acc, p
+
+  let process_main acc m = acc, map m

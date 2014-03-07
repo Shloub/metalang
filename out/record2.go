@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 type toto struct {
   foo int;
   bar int;

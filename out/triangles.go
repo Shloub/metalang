@@ -14,7 +14,6 @@ func skip() {
   }
 }
 
-
 /* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin

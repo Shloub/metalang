@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func foo(a int, b int) int{
   return a + b
 }

@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func go_(tab []int, a int, b int) int{
   var m int = (a + b) / 2
   if a == m {

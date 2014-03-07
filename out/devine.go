@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func devine_(nombre int, tab []int, len int) bool{
   var min_ int = tab[0]
   var max_ int = tab[1]

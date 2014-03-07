@@ -36,7 +36,6 @@ open Ast
 open Fresh
 open PassesUtils
 
-module CheckNaming : SigPassTop with type acc0 = unit = struct
   type acc0 = unit
   type 'a acc = {
     functions : BindingSet.t;
@@ -227,4 +226,3 @@ module CheckNaming : SigPassTop with type acc0 = unit = struct
   let process_main acc f =
     let _ = List.fold_left (check_instr "main") acc f in
     (acc, f)
-end

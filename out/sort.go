@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func sort_(tab []int, len int) {
   for i := 0 ; i <= len - 1; i++ {
     for j := i + 1 ; j <= len - 1; j++ {

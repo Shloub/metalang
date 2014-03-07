@@ -14,7 +14,6 @@ func skip() {
   }
 }
 
-
 /* lit un sudoku sur l'entrée standard */
 func read_sudoku() []int{
   var a int = 9 * 9

@@ -34,23 +34,17 @@ open Ast
 open Fresh
 open PassesUtils
 
-module WalkCountNoPosition = WalkTop(CountNoPosition);;
-module WalkRemoveTags = WalkTop(RemoveTags);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
-module WalkCollectTypes = WalkTop(CollectTypes);;
-module WalkNopend = Walk(NoPend);;
-module WalkExpandPrint = Walk(ExpandPrint);;
-module WalkIfMerge = Walk(IfMerge);;
-module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
-module WalkExpandReadDecl = Walk(ExpandReadDecl);;
-module WalkCheckNaming = WalkTop(CheckNaming);;
-module WalkRename = WalkTop(Rename);;
-
-(* TODO rentrer dans la structure du type *)
-let no_macro = function
-  | Prog.DeclarFun (_, ty, li, instrs) ->
-    begin match Type.unfix ty with
-      | Type.Lexems -> false
-      | _ -> true
-    end
-  | _ -> true
+ let apply prog funs tyenv =
+    let go f (li, used) = match f with
+			| Prog.Unquote _
+      | Prog.DeclarFun (_, _,_, _)
+      | Prog.Macro (_, _, _, _)
+      | Prog.Comment _ -> (f::li, used)
+      | Prog.DeclareType (name, ty) ->
+	if TypeSet.mem ty used
+	then (f::li, used)
+	else (li, used)
+    in let _, used = Passes.WalkCollectTypes.fold tyenv {prog with Prog.funs = funs } in
+    let funs, _ = List.fold_right go prog.Prog.funs ([], used) in
+    let prog = { prog with Prog.funs = funs} in
+    prog

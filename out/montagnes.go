@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func montagnes_(tab []int, len int) int{
   var max_ int = 1
   var j int = 1

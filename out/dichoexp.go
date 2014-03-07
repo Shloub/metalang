@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func exp_(a int, b int) int{
   if b == 0 {
     return 1

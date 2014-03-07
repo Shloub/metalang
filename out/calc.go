@@ -14,7 +14,6 @@ func skip() {
   }
 }
 
-
 /*
 La suite de fibonaci
 */

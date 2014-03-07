@@ -33,24 +33,51 @@ open Stdlib
 open Ast
 open Fresh
 open PassesUtils
+open ExpandPasses
 
-module WalkCountNoPosition = WalkTop(CountNoPosition);;
-module WalkRemoveTags = WalkTop(RemoveTags);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
-module WalkCollectTypes = WalkTop(CollectTypes);;
-module WalkNopend = Walk(NoPend);;
-module WalkExpandPrint = Walk(ExpandPrint);;
-module WalkIfMerge = Walk(IfMerge);;
-module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
-module WalkExpandReadDecl = Walk(ExpandReadDecl);;
-module WalkCheckNaming = WalkTop(CheckNaming);;
-module WalkRename = WalkTop(Rename);;
+let rec returns instrs =
+  List.fold_left
+    returns_i false instrs
+and returns_i acc i = match Instr.unfix i with
+  | Instr.Return _ -> true
+  | Instr.If (_, li1, li2) ->
+    acc or ( (returns li1) && returns li2 )
+  | _ -> acc
 
-(* TODO rentrer dans la structure du type *)
-let no_macro = function
-  | Prog.DeclarFun (_, ty, li, instrs) ->
-    begin match Type.unfix ty with
-      | Type.Lexems -> false
-      | _ -> true
-    end
-  | _ -> true
+ type acc0 = unit
+  type 'a acc = unit;;
+  let init_acc () = ();;
+  let process () i =
+    let rec f acc = function
+      | [] -> List.rev acc
+      | [i] ->
+	let i = g i in
+	List.rev (i :: acc)
+      | hd::tl ->
+	let hd = g hd in
+        match Instr.unfix hd with
+          | Instr.If (e, l1, l2) ->
+            let l1 = f [] l1 in
+            let l2 = f [] l2 in
+            if returns l1 then
+              let l2 = l2 @ tl in
+              let l2 = f [] l2 in
+              (Instr.if_ e l1 l2 ) :: acc |> List.rev
+            else if returns l2 then
+              let l1 = l1 @ tl in
+              let l1 = f [] l1 in
+              (Instr.if_ e l1 l2 ) :: acc |> List.rev
+            else f (hd :: acc) tl
+          | _ -> f (hd :: acc) tl
+    and g instr =
+      let annot = Instr.Fixed.annot instr in
+      let instr = Instr.map g (Instr.unfix instr) |> Instr.fixa annot
+      in
+      match Instr.unfix instr with
+      | Instr.AllocArray (var, ty, e, Some (var2, li)) ->
+	let li = f [] li in
+	let unfixed = Instr.alloc_array_lambda var ty e var2 li |> Instr.unfix
+	in Instr.fixa annot unfixed
+      | i -> instr
+    in
+    (), f [] i

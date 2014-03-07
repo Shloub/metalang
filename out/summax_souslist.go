@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func summax(lst []int, len int) int{
   var current int = 0
   var max_ int = 0

@@ -16,7 +16,6 @@ func skip() {
 
 
 
-
 func read_int() int{
   var out_ int = 0
   fmt.Fscanf(reader, "%d", &out_);

@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 type intlist struct {
   head int;
   tail * intlist;

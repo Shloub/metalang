@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func foo() {
   var a int = 0
   /* test */

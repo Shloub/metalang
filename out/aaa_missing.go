@@ -15,7 +15,6 @@ func skip() {
 }
 
 
-
 func read_int_line(n int) []int{
   var tab []int = make([]int, n)
   for i := 0 ; i <= n - 1; i++ {

@@ -34,23 +34,41 @@ open Ast
 open Fresh
 open PassesUtils
 
-module WalkCountNoPosition = WalkTop(CountNoPosition);;
-module WalkRemoveTags = WalkTop(RemoveTags);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
-module WalkCollectTypes = WalkTop(CollectTypes);;
-module WalkNopend = Walk(NoPend);;
-module WalkExpandPrint = Walk(ExpandPrint);;
-module WalkIfMerge = Walk(IfMerge);;
-module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
-module WalkExpandReadDecl = Walk(ExpandReadDecl);;
-module WalkCheckNaming = WalkTop(CheckNaming);;
-module WalkRename = WalkTop(Rename);;
+let find_return li =
+    let f tra acc i = match Instr.unfix i with
+      | Instr.Return _ ->
+	let loc = Ast.PosMap.get (Instr.Fixed.annot i) in
+	Some loc
+      | Instr.AllocArray _ -> acc
+      | _ -> tra acc i 
+		in
+    let li = List.map
+      (fun i ->
+	f (Instr.Writer.Traverse.fold f) None i)
+      li
+    in try
+	 List.find (function | Some _ -> true | _ -> false) li
+      with Not_found -> None
 
-(* TODO rentrer dans la structure du type *)
-let no_macro = function
-  | Prog.DeclarFun (_, ty, li, instrs) ->
-    begin match Type.unfix ty with
-      | Type.Lexems -> false
-      | _ -> true
+  let check_noreturn li =
+    match find_return li with
+    | None -> ()
+    | Some loc ->
+      raise ( Warner.Error (fun f ->
+	Format.fprintf f "return not expected %a" Warner.ploc loc
+      ))
+
+  let check_fun = function
+    | Prog.DeclarFun (varname, ty, li, instrs) -> begin match Type.unfix ty with
+      | Type.Void -> check_noreturn instrs
+      | _ -> ()
     end
-  | _ -> true
+    | _ -> ()
+
+  let apply () prog =
+    begin match prog.Prog.main with
+    | Some li -> check_noreturn li
+    | None -> ()
+    end;
+    List.iter check_fun prog.Prog.funs;
+    prog
