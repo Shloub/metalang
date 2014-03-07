@@ -27,6 +27,7 @@ dispatch begin function
     ocaml_lib "Stdlib/stdlib";
     ocaml_lib "Parser/parser";
     ocaml_lib "Astutils/astutils";
+    ocaml_lib "Passes/passes";
     ocaml_lib "Eval/eval";
     ocaml_lib "Printers/printers";
     dep ["ocaml"; "doc"] & ["docintro.txt"];

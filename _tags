@@ -1,18 +1,19 @@
-<Main/*.byte>: use_str, use_stdlib, use_astutils, use_printers, use_parser, use_eval, use_unix, use_sys
+<Main/*.byte>: use_str, use_stdlib, use_astutils, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes
 <Main/*.native>: use_str, use_stdlib, use_astutils, use_printers, use_parser, use_eval, use_unix, use_sys
 <Parser/*.ml>: use_str, use_stdlib, use_astutils
 <Parser/*.cmx>: use_str, use_stdlib, use_astutils
 <Parser/*.native>: use_str, use_stdlib, use_astutils
 <Astutils/*.ml>: use_str, use_stdlib
 <Astutils/*.cmx>: use_str, use_stdlib, inline(9)
+<Passes/*.ml>: use_str, use_stdlib, use_astutils
+<Passes/*.cmx>: use_str, use_stdlib, use_astutils
 <Stdlib/*.ml>: use_str
 <Stdlib/*.cmx>: use_str, inline(9)
 <Printers/*.ml>: use_stdlib, use_astutils
-
-<Eval/*.cmx>: inline(9)
+<Eval/*.cmx>: use_passes, use_astutils, inline(9)
 
 true: use_str
 
 true : use_menhir
 
-"Stdlib" or "Astutils" or "Parser" or "Printers" or "Eval": include
+"Stdlib" or "Astutils" or "Parser" or "Printers" or "Eval" or "Passes" : include
