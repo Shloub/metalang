@@ -26,7 +26,7 @@ dispatch begin function
     rule "version.ml" ~prod: "version.ml" make_version;
     ocaml_lib "Stdlib/stdlib";
     ocaml_lib "Parser/parser";
-    ocaml_lib "Astutils/astutils";
+    ocaml_lib "Ast/ast";
     ocaml_lib "Passes/passes";
     ocaml_lib "Eval/eval";
     ocaml_lib "Printers/printers";

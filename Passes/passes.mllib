@@ -1,4 +1,5 @@
 Passes
+PassesUtils
 RemoveUselessFunctions
 RemoveUselessTypes
 IfMerge
