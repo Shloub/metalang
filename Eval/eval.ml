@@ -103,40 +103,38 @@ let typeof = function
 (** extract an ocaml array from a value *)
 let get_array = function
   | Array a -> a
-  | x ->
-    Printf.printf "Got %s expected array" (typeof x); assert false
+  | x -> raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected array" (typeof x)))
 
 (** extract an ocaml integer from a value *)
 let get_integer = function
   | Integer a -> a
   | x ->
-    Printf.printf "Got %s expected int" (typeof x); assert false
+    raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected int" (typeof x)))
 
 (** extract an ocaml float from a value *)
 let get_float = function
   | Float a -> a
   | x ->
-    Printf.printf "Got %s expected float" (typeof x); assert false
+    raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected float" (typeof x)))
 
 (** extract an ocaml char from a value *)
 let get_char = function
   | Char a -> a
   | x ->
-    Printf.printf "Got %s expected char" (typeof x); assert false
+    raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected char" (typeof x)))
 
 (** extract an ocaml string from a value *)
 let get_string = function
   | String a -> a
   | x ->
-    Printf.printf "Got %s expected string" (typeof x); assert false
+    raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected string" (typeof x)))
 
 (** extract an ocaml boolean from a vlaue *)
 let get_bool = function
   | Bool a -> a
-  | x ->
-    Printf.printf "Got %s expected bool" (typeof x); assert false
+  | x -> raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected bool" (typeof x)))
 
-let err_token_expected x = Printf.printf "Got %s expected token list" (typeof x); assert false
+let err_token_expected x = raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected token list" (typeof x)))
 
 
 (** extract an ocaml token list from a value *)
@@ -799,7 +797,7 @@ let precompile_eval_expr (env:env) (e:Utils.expr) : result =
 (** main function of this module : it evalue a full programm *)
 let eval_prog (te : Typer.env) (p:Utils.prog) =
   let f env p = match p with
-		| Prog.Unquote _ -> assert false
+    | Prog.Unquote _ -> assert false
     | Prog.DeclarFun (var, t, li, instrs) ->
       compile_fun env var t li instrs
     | Prog.DeclareType _ -> env
