@@ -257,8 +257,10 @@ class printer = object(self)
       | Some s ->
 	let listr = List.map
 	  (fun e ->
-	    self#expr Format.str_formatter e;
-	    Format.flush_str_formatter ()
+			let b = Buffer.create 1 in
+			let fb = Format.formatter_of_buffer b in
+	    Format.fprintf fb "@[<h>%a@]%!" self#expr e;
+	    Buffer.contents b
 	  ) li in
 	let expanded = List.fold_left
 	  (fun s ((param, _type), string) ->
