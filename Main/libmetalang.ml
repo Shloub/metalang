@@ -2,7 +2,28 @@ open Stdlib
 open Ast
 
 (** Liste des mots clés à ne pas utiliser en metalang *)
-let keywords = [ "out"; "exp"; "from"; "to"; "min"; "max"; "eval"; "go" ; "init"]
+let keywords = [
+"abstract";"add";"alias";"as";"asm";"auto";"and";"assert";
+"base";"bool";"boolean";"break";"byte";"begin";
+"case";"catch";"char";"checked";"class";"const";"continue";"constraint";
+"decimal";"default";"delegate";"do";"double";"delete";"done";"downto";"def";"del";
+"else";"elif";"elsif";"enum";"event";"explicit";"extern";"explicit";"exp";"eval";"end";"exception";"external";"extends";"except";"ensure";
+"False";"false";"finally";"final";"fixed";"float";"for";"foreach";"friend";"from";"fun";"function";"functor";
+"get";"global";"goto";"go";
+"if";"implicit";"in";"int";"interface";"internal";"is";"inline";"init";"include";"inherit";"initializer";"implements";"import";"instanceof";
+"lock";"long";"lazy";"let";"lambda";
+"mutable";"min"; "max";"match";"method";"module";
+"namespace";"new";"null";"native";"None";"nonlocal";"not";"next";
+"object";"operator";"out";"override";"or";"of";"open";
+"params";"partial";"private";"protected";"public";"package";"pass";
+"readonly";"ref";"remove";"return";"register";"rec";"raise";"redo";"rescue";"retry";
+"sig";"sbyte";"sealed";"set";"short";"sizeof";"stackalloc";"static";"string";"struct";"switch";"signed";"sizeof";"strictfp";"super";"synchronized";
+"this";"throw";"throws";"transient";"True";"true";"try";"typeof";"template";"typedef";"to";"then";"type";
+"uint";"ulong";"unchecked";"unsafe";"ushort";"using";"unsigned";"unless";"undef";"until";
+"value";"virtual";"void"; "volatile";"val";
+"where";"while";"when";"with";
+"yield";
+]
 
 let conf_rename prog =
   Fresh.fresh_init prog ;
