@@ -29,15 +29,6 @@
 @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-
-
-(*
-TODO
-les inputs et outputs
-les boucles for
-les returns
-les tableaux
-*)
 open Stdlib
 open Ast
 open Printer
