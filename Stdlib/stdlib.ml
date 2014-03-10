@@ -288,7 +288,10 @@ module String = struct
 			else add (escape c)) false s ;
 		Buffer.contents buf
 
-	let replace = Str.global_replace @* Str.regexp @* Str.quote
+	let replace a b c =
+		let b = Str.global_replace (Str.regexp_string "\\") "\\\\\\\\" b in
+(*		Format.printf "replace %S %S %S\n%!" a b c; *)
+		Str.global_replace (Str.regexp_string a) b c
 end
 
 (** {2 Collections} *)
