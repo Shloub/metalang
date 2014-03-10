@@ -42,10 +42,10 @@ open Stdlib
 open Ast
 open Printer
 
-class schemePrinter = object(self)
+class commonLispPrinter = object(self)
   inherit printer as super
 
-  method lang () = "scheme"
+  method lang () = "clisp"
 
   method char f c = match c with
 	| ' ' -> Format.fprintf f "#\\Space"

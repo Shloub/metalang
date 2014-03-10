@@ -155,8 +155,8 @@ TMPFILES	:=\
 	$(addsuffix .class, $(TESTS)) \
 	$(addsuffix .class.out, $(TESTS)) \
 	$(addsuffix .cs, $(TESTS)) \
-	$(addsuffix .sch, $(TESTS)) \
-	$(addsuffix .sch.out, $(TESTS)) \
+	$(addsuffix .cl, $(TESTS)) \
+	$(addsuffix .cl.out, $(TESTS)) \
 	$(addsuffix .rb, $(TESTS)) \
 	$(addsuffix .rb.out, $(TESTS)) \
 	$(addsuffix .cc, $(TESTS)) \
@@ -186,11 +186,11 @@ main.native:
 out :
 	@mkdir out
 
-out/%.sch : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
+out/%.cl : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
 	@if [ -e "$(basename $<).compiler_input" ]; then \
-	./metalang -o out -lang sch $< < "$(basename $<).compiler_input" || exit 1; \
+	./metalang -o out -lang cl $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
-	 ./metalang -quiet -o out -lang sch $< || exit 1; \
+	 ./metalang -quiet -o out -lang cl $< || exit 1; \
 	fi
 
 out/%.go : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
@@ -354,7 +354,7 @@ out/%.php.out : out/%.php
 out/%.py.out : out/%.py
 	@$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.sch.out : out/%.sch
+out/%.cl.out : out/%.cl
 	@gcl -f $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.rb.out : out/%.rb
@@ -363,7 +363,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.sch.out
+out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \

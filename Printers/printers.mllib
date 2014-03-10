@@ -1,5 +1,5 @@
 Printer
-SchemePrinter
+CommonLispPrinter
 PhpPrinter
 JavaPrinter
 JsPrinter
