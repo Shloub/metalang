@@ -39,8 +39,14 @@ type acc0 = unit
 
   let map = ref BindingMap.empty;;
 
+	let rec new_name n =
+		let n2 = (n ^ "_") in
+		if BindingSet.mem n2 !Fresh.bindings then
+			new_name n2
+		else n2
+
   let add name =
-    map := BindingMap.add name (name ^ "_") !map
+    map := BindingMap.add name (new_name name) !map
 
   let clear () =
     map := BindingMap.empty
