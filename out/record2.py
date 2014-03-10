@@ -34,19 +34,19 @@ def readint():
       return out * sign
 
 def mktoto( v1 ):
-    t = {"foo":v1, "bar":0, "blah":0}
-    return t;
+    t_ = {"foo":v1, "bar":0, "blah":0}
+    return t_;
 
-def result( t ):
-    t["blah"] += 1
-    return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
+def result( t_ ):
+    t_["blah"] += 1
+    return t_["foo"] + t_["blah"] * t_["bar"] + t_["bar"] * t_["foo"];
 
-t = mktoto(4);
-t["bar"]=readint()
+t_ = mktoto(4);
+t_["bar"]=readint()
 stdinsep()
-t["blah"]=readint()
-a = result(t);
+t_["blah"]=readint()
+a = result(t_);
 print("%d" % a, end='')
-b = t["blah"];
+b = t_["blah"];
 print("%d" % b, end='')
 

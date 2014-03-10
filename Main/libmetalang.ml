@@ -13,7 +13,7 @@ let keywords = [
 "if";"implicit";"in";"int";"interface";"internal";"is";"inline";"init";"include";"inherit";"initializer";"implements";"import";"instanceof";
 "lock";"long";"lazy";"let";"lambda";
 "mutable";"min"; "max";"match";"method";"module";
-"namespace";"new";"null";"native";"None";"nonlocal";"not";"next";
+"namespace";"new";"null";"native";"None";"nonlocal";"not";"next"; "nil";
 "object";"operator";"out";"override";"or";"of";"open";
 "params";"partial";"private";"protected";"public";"package";"pass";
 "readonly";"ref";"remove";"return";"register";"rec";"raise";"redo";"rescue";"retry";
@@ -23,6 +23,8 @@ let keywords = [
 "value";"virtual";"void"; "volatile";"val";
 "where";"while";"when";"with";
 "yield";
+(* common lisp ?*)
+"t"; "mem"; "nth"; "cons"; "find"
 ]
 
 let conf_rename prog =
@@ -120,8 +122,7 @@ let languages, printers =
     "rb",   clike_passes => new RbPrinter.rbPrinter ;
     "py",   clike_passes => new PyPrinter.pyPrinter ;
     "go",   clike_passes => new GoPrinter.goPrinter ;
-(*
-    "sch",  ocaml_passes   =>  SchemePrinter.printer ;*)
+    "sch",  ocaml_passes   =>  new SchemePrinter.schemePrinter ;
 
     "metalang_parsed", no_passes => new Printer.printer ;
   (* Si on met cette passe en premier,
@@ -280,6 +281,7 @@ enum @target_language
   LANG_Rb
   LANG_Py
   LANG_Go
+  LANG_Sch
   LANG_Metalang_parsed
 end
 def @target_language current_language ()

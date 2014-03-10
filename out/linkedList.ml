@@ -3,7 +3,7 @@ type intlist = {
   mutable tail : intlist;
 };;
 
-let rec cons list i =
+let rec cons_ list i =
   let out_ = {
     head=i;
     tail=list;
@@ -32,7 +32,7 @@ let rec test empty =
   do
       Scanf.scanf "%d" (fun value -> i := value);
       if (!i) <> 0 then
-        list := cons (!list) (!i)
+        list := cons_ (!list) (!i)
   done
 
 let () =

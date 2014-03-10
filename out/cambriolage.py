@@ -67,10 +67,10 @@ for i in range(0, n):
   c = 2;
   out0 = [None] * c
   for j in range(0, c):
-    out_ = 0;
-    out_=readint()
+    out__ = 0;
+    out__=readint()
     stdinsep()
-    out0[j] = out_;
+    out0[j] = out__;
   passepartout[i] = out0;
 m = 0;
 m=readint()

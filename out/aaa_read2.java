@@ -21,13 +21,13 @@ public class aaa_read2
     int[] tab = new int[n];
     for (int i = 0 ; i < n; i++)
     {
-      int t = 0;
+      int t_ = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); t = -scanner.nextInt();
+      scanner.next("^-"); t_ = -scanner.nextInt();
       }else{
-      t = scanner.nextInt();}
+      t_ = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      tab[i] = t;
+      tab[i] = t_;
     }
     return tab;
   }
@@ -37,9 +37,9 @@ public class aaa_read2
     char[] tab = new char[n];
     for (int i = 0 ; i < n; i++)
     {
-      char t = '_';
-      scanner.useDelimiter("\\n");t = scanner.findWithinHorizon(".", 1).charAt(0);
-      tab[i] = t;
+      char t_ = '_';
+      scanner.useDelimiter("\\n");t_ = scanner.findWithinHorizon(".", 1).charAt(0);
+      tab[i] = t_;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     return tab;

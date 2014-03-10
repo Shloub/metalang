@@ -54,10 +54,10 @@ int main(void){
         int j;
         for (j = 0 ; j < c; j++)
         {
-          int out_ = 0;
-          scanf("%d", &out_);
+          int out__ = 0;
+          scanf("%d", &out__);
           scanf("%*[ \t\r\n]c");
-          out0[j] = out_;
+          out0[j] = out__;
         }
       }
       passepartout[i] = out0;

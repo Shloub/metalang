@@ -24,7 +24,7 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-function nth(&$tab, $tofind, $len){
+function nth_(&$tab, $tofind, $len){
   $out_ = 0;
   for ($i = 0 ; $i < $len; $i++)
     if ($tab[$i] == $tofind)
@@ -45,6 +45,6 @@ for ($i = 0 ; $i < $len; $i++)
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }
-$result = nth($tab, $tofind, $len);
+$result = nth_($tab, $tofind, $len);
 echo $result;
 ?>

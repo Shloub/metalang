@@ -150,8 +150,6 @@ TMPFILES	:=\
 	$(addsuffix .py.out, $(TESTS)) \
 	$(addsuffix .php, $(TESTS)) \
 	$(addsuffix .php.out, $(TESTS)) \
-	$(addsuffix .tex, $(TESTS)) \
-	$(addsuffix .tex.out, $(TESTS)) \
 	$(addsuffix .exe, $(TESTS)) \
 	$(addsuffix .exe.out, $(TESTS)) \
 	$(addsuffix .class, $(TESTS)) \
@@ -357,7 +355,7 @@ out/%.py.out : out/%.py
 	@$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.sch.out : out/%.sch
-	@gsc-script $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	@gcl -f $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.rb.out : out/%.rb
 	@ruby $< < tests/prog/$(basename $*).in > $@ || exit 1;
@@ -365,7 +363,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out # out/%.byte.out out/%.sch.out
+out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.sch.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \

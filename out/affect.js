@@ -40,16 +40,16 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 */
 
 function mktoto(v1){
-  var t = {
-             foo : v1,
-             bar : v1,
-             blah : v1
+  var t__ = {
+               foo : v1,
+               bar : v1,
+               blah : v1
   };
-  return t;
+  return t__;
 }
 
 function result(t_, t2_){
-  var t = t_;
+  var t__ = t_;
   var t2 = t2_;
   var t3 = {
               foo : 0,
@@ -57,9 +57,9 @@ function result(t_, t2_){
               blah : 0
   };
   t3 = t2;
-  t = t2;
+  t__ = t2;
   t2 = t3;
-  t.blah ++;
+  t__.blah ++;
   var len = 1;
   var cache0 = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
@@ -70,21 +70,21 @@ function result(t_, t2_){
   var cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;
-  return t.foo + t.blah * t.bar + t.bar * t.foo;
+  return t__.foo + t__.blah * t__.bar + t__.bar * t__.foo;
 }
 
-var t = mktoto(4);
+var t__ = mktoto(4);
 var t2 = mktoto(5);
-t.bar=read_int_();
+t__.bar=read_int_();
 stdinsep();
-t.blah=read_int_();
+t__.blah=read_int_();
 stdinsep();
 t2.bar=read_int_();
 stdinsep();
-t.blah=read_int_();
-var a = result(t, t2);
+t__.blah=read_int_();
+var a = result(t__, t2);
 util.print(a);
-var b = t.blah;
+var b = t__.blah;
 util.print(b);
 
 

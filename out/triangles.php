@@ -41,7 +41,7 @@ function find0($len, &$tab, &$cache, $x, $y){
   return $result;
 }
 
-function find($len, &$tab){
+function find_($len, &$tab){
   $tab2 = array();
   for ($i = 0 ; $i < $len; $i++)
   {
@@ -71,7 +71,7 @@ for ($i = 0 ; $i < $len; $i++)
   }
   $tab[$i] = $tab2;
 }
-$c = find($len, $tab);
+$c = find_($len, $tab);
 echo $c;
 for ($k = 0 ; $k < $len; $k++)
 {

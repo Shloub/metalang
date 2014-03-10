@@ -10,19 +10,19 @@ typedef struct toto {
 } toto;
 
 struct toto * mktoto(int v1){
-  struct toto * t = new toto();
-  t->foo=v1;
-  t->bar=0;
-  t->blah=0;
-  return t;
+  struct toto * t_ = new toto();
+  t_->foo=v1;
+  t_->bar=0;
+  t_->blah=0;
+  return t_;
 }
 
-int result(std::vector<struct toto * >& t, int len){
+int result(std::vector<struct toto * >& t_, int len){
   int out_ = 0;
   for (int j = 0 ; j < len; j++)
   {
-    t.at(j)->blah = t.at(j)->blah + 1;
-    out_ = out_ + t.at(j)->foo + t.at(j)->blah * t.at(j)->bar + t.at(j)->bar * t.at(j)->foo;
+    t_.at(j)->blah = t_.at(j)->blah + 1;
+    out_ = out_ + t_.at(j)->foo + t_.at(j)->blah * t_.at(j)->bar + t_.at(j)->bar * t_.at(j)->foo;
   }
   return out_;
 }
@@ -30,15 +30,15 @@ int result(std::vector<struct toto * >& t, int len){
 
 int main(void){
   int a = 4;
-  std::vector<struct toto * > t( a );
+  std::vector<struct toto * > t_( a );
   for (int i = 0 ; i < a; i++)
-    t.at(i) = mktoto(i);
-  scanf("%d", &t.at(0)->bar);
+    t_.at(i) = mktoto(i);
+  scanf("%d", &t_.at(0)->bar);
   scanf("%*[ \t\r\n]c");
-  scanf("%d", &t.at(1)->blah);
-  int b = result(t, 4);
+  scanf("%d", &t_.at(1)->blah);
+  int b = result(t_, 4);
   std::cout << b;
-  int c = t.at(2)->blah;
+  int c = t_.at(2)->blah;
   std::cout << c;
   return 0;
 }

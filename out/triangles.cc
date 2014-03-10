@@ -27,7 +27,7 @@ int find0(int len, std::vector<std::vector<int > >& tab, std::vector<std::vector
   return result;
 }
 
-int find(int len, std::vector<std::vector<int > >& tab){
+int find_(int len, std::vector<std::vector<int > >& tab){
   std::vector<std::vector<int > > tab2( len );
   for (int i = 0 ; i < len; i++)
   {
@@ -59,7 +59,7 @@ int main(void){
     }
     tab.at(i) = tab2;
   }
-  int c = find(len, tab);
+  int c = find_(len, tab);
   std::cout << c;
   for (int k = 0 ; k < len; k++)
   {

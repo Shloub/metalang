@@ -53,13 +53,13 @@ public class cambriolage
       int[] out0 = new int[c];
       for (int j = 0 ; j < c; j++)
       {
-        int out_ = 0;
+        int out__ = 0;
         if (scanner.hasNext("^-")){
-        scanner.next("^-"); out_ = -scanner.nextInt();
+        scanner.next("^-"); out__ = -scanner.nextInt();
         }else{
-        out_ = scanner.nextInt();}
+        out__ = scanner.nextInt();}
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        out0[j] = out_;
+        out0[j] = out__;
       }
       passepartout[i] = out0;
     }

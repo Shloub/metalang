@@ -20,7 +20,7 @@ type intlist struct {
   tail * intlist;
 }
 
-func cons(list * intlist, i int) * intlist{
+func cons_(list * intlist, i int) * intlist{
   var out_ * intlist = new (intlist)
   (*out_).head=i;
   (*out_).tail=list;
@@ -48,7 +48,7 @@ func test(empty * intlist) {
   for i != 0{
               fmt.Fscanf(reader, "%d", &i);
               if i != 0 {
-                list = cons(list, i);
+                list = cons_(list, i);
               }
   }
 }

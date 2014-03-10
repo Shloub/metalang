@@ -77,10 +77,10 @@ for (var i = 0 ; i <= n - 1; i++)
   var out0 = new Array(c);
   for (var j = 0 ; j <= c - 1; j++)
   {
-    var out_ = 0;
-    out_=read_int_();
+    var out__ = 0;
+    out__=read_int_();
     stdinsep();
-    out0[j] = out_;
+    out0[j] = out__;
   }
   passepartout[i] = out0;
 }

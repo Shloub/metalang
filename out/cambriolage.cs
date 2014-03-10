@@ -96,10 +96,10 @@ public static int readInt(){
       int[] out0 = new int[c];
       for (int j = 0 ; j < c; j++)
       {
-        int out_ = 0;
-        out_ = readInt();
+        int out__ = 0;
+        out__ = readInt();
         stdin_sep();
-        out0[j] = out_;
+        out0[j] = out__;
       }
       passepartout[i] = out0;
     }

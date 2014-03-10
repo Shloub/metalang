@@ -18,26 +18,26 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 }
 function mktoto($v1){
-  $t = array(
+  $t_ = array(
     "foo"=>$v1,
     "bar"=>0,
     "blah"=>0
   );
   
-  return $t;
+  return $t_;
 }
 
-function result(&$t){
-  $t["blah"] ++;
-  return $t["foo"] + $t["blah"] * $t["bar"] + $t["bar"] * $t["foo"];
+function result(&$t_){
+  $t_["blah"] ++;
+  return $t_["foo"] + $t_["blah"] * $t_["bar"] + $t_["bar"] * $t_["foo"];
 }
 
-$t = mktoto(4);
-list($t["bar"]) = scan("%d");
+$t_ = mktoto(4);
+list($t_["bar"]) = scan("%d");
 scantrim();
-list($t["blah"]) = scan("%d");
-$a = result($t);
+list($t_["blah"]) = scan("%d");
+$a = result($t_);
 echo $a;
-$b = $t["blah"];
+$b = $t_["blah"];
 echo $b;
 ?>

@@ -13,24 +13,24 @@ typedef struct toto {
 } toto;
 
 struct toto * mktoto(int v1){
-  struct toto * t = new toto();
-  t->foo=v1;
-  t->bar=v1;
-  t->blah=v1;
-  return t;
+  struct toto * t__ = new toto();
+  t__->foo=v1;
+  t__->bar=v1;
+  t__->blah=v1;
+  return t__;
 }
 
 int result(struct toto * t_, struct toto * t2_){
-  struct toto * t = t_;
+  struct toto * t__ = t_;
   struct toto * t2 = t2_;
   struct toto * t3 = new toto();
   t3->foo=0;
   t3->bar=0;
   t3->blah=0;
   t3 = t2;
-  t = t2;
+  t__ = t2;
   t2 = t3;
-  t->blah ++;
+  t__->blah ++;
   int len = 1;
   std::vector<int > cache0( len );
   for (int i = 0 ; i < len; i++)
@@ -41,23 +41,23 @@ int result(struct toto * t_, struct toto * t2_){
   std::vector<int > cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;
-  return t->foo + t->blah * t->bar + t->bar * t->foo;
+  return t__->foo + t__->blah * t__->bar + t__->bar * t__->foo;
 }
 
 
 int main(void){
-  struct toto * t = mktoto(4);
+  struct toto * t__ = mktoto(4);
   struct toto * t2 = mktoto(5);
-  scanf("%d", &t->bar);
+  scanf("%d", &t__->bar);
   scanf("%*[ \t\r\n]c");
-  scanf("%d", &t->blah);
+  scanf("%d", &t__->blah);
   scanf("%*[ \t\r\n]c");
   scanf("%d", &t2->bar);
   scanf("%*[ \t\r\n]c");
-  scanf("%d", &t->blah);
-  int a = result(t, t2);
+  scanf("%d", &t__->blah);
+  int a = result(t__, t2);
   std::cout << a;
-  int b = t->blah;
+  int b = t__->blah;
   std::cout << b;
   return 0;
 }

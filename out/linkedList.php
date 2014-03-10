@@ -9,7 +9,7 @@ function scan($format){
   $stdin = substr($stdin, strlen($out[0]));
   return $out;
 }
-function cons(&$list, $i){
+function cons_(&$list, $i){
   $out_ = array(
     "head"=>$i,
     "tail"=>$list
@@ -43,7 +43,7 @@ function test(&$empty){
   {
     list($i) = scan("%d");
     if ($i != 0)
-      $list = cons($list, $i);
+      $list = cons_($list, $i);
   }
 }
 

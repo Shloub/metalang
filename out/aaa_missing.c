@@ -1,16 +1,23 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+int read_int(){
+  int out_ = 0;
+  scanf("%d", &out_);
+  scanf("%*[ \t\r\n]c");
+  return out_;
+}
+
 int* read_int_line(int n){
   int *tab = malloc( n * sizeof(int));
   {
     int i;
     for (i = 0 ; i < n; i++)
     {
-      int t = 0;
-      scanf("%d", &t);
+      int t_ = 0;
+      scanf("%d", &t_);
       scanf("%*[ \t\r\n]c");
-      tab[i] = t;
+      tab[i] = t_;
     }
   }
   return tab;
@@ -41,8 +48,8 @@ int result(int len, int* tab){
 }
 
 int main(void){
-  int* l0 = read_int_line(1);
-  int len = l0[0];
+  int len = read_int();
+  printf("%d\n", len);
   int* tab = read_int_line(len);
   int a = result(len, tab);
   printf("%d", a);

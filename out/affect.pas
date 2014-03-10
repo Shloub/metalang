@@ -74,13 +74,13 @@ type
 
 function mktoto(v1 : integer) : toto;
 var
-  t : toto;
+  t__ : toto;
 begin
-  new(t);
-  t^.foo := v1;
-  t^.bar := v1;
-  t^.blah := v1;
-  exit(t);
+  new(t__);
+  t__^.foo := v1;
+  t__^.bar := v1;
+  t__^.blah := v1;
+  exit(t__);
 end;
 
 type c = array of integer;
@@ -92,20 +92,20 @@ var
   i : integer;
   j : integer;
   len : integer;
-  t : toto;
   t2 : toto;
   t3 : toto;
+  t__ : toto;
 begin
-  t := t_;
+  t__ := t_;
   t2 := t2_;
   new(t3);
   t3^.foo := 0;
   t3^.bar := 0;
   t3^.blah := 0;
   t3 := t2;
-  t := t2;
+  t__ := t2;
   t2 := t3;
-  t^.blah := t^.blah + 1;
+  t__^.blah := t__^.blah + 1;
   len := 1;
   SetLength(cache0, len);
   for i := 0 to  len - 1 do
@@ -120,28 +120,28 @@ begin
   cache2 := cache0;
   cache0 := cache1;
   cache2 := cache0;
-  exit(t^.foo + t^.blah * t^.bar + t^.bar * t^.foo);
+  exit(t__^.foo + t__^.blah * t__^.bar + t__^.bar * t__^.foo);
 end;
 
 
 var
   a : integer;
   b : integer;
-  t : toto;
   t2 : toto;
+  t__ : toto;
 begin
-  t := mktoto(4);
+  t__ := mktoto(4);
   t2 := mktoto(5);
-  t^.bar := read_int_();
+  t__^.bar := read_int_();
   skip();
-  t^.blah := read_int_();
+  t__^.blah := read_int_();
   skip();
   t2^.bar := read_int_();
   skip();
-  t^.blah := read_int_();
-  a := result(t, t2);
+  t__^.blah := read_int_();
+  a := result(t__, t2);
   Write(a);
-  b := t^.blah;
+  b := t__^.blah;
   Write(b);
 end.
 

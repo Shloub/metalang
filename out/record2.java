@@ -6,35 +6,35 @@ public class record2
   static class toto {public int foo;public int bar;public int blah;}
   public static toto mktoto(int v1)
   {
-    toto t = new toto();
-    t.foo = v1;
-    t.bar = 0;
-    t.blah = 0;
-    return t;
+    toto t_ = new toto();
+    t_.foo = v1;
+    t_.bar = 0;
+    t_.blah = 0;
+    return t_;
   }
   
-  public static int result(toto t)
+  public static int result(toto t_)
   {
-    t.blah ++;
-    return t.foo + t.blah * t.bar + t.bar * t.foo;
+    t_.blah ++;
+    return t_.foo + t_.blah * t_.bar + t_.bar * t_.foo;
   }
   
   
   public static void main(String args[])
   {
-    toto t = mktoto(4);
+    toto t_ = mktoto(4);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t.bar = -scanner.nextInt();
+    scanner.next("^-"); t_.bar = -scanner.nextInt();
     }else{
-    t.bar = scanner.nextInt();}
+    t_.bar = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t.blah = -scanner.nextInt();
+    scanner.next("^-"); t_.blah = -scanner.nextInt();
     }else{
-    t.blah = scanner.nextInt();}
-    int a = result(t);
+    t_.blah = scanner.nextInt();}
+    int a = result(t_);
     System.out.printf("%d", a);
-    int b = t.blah;
+    int b = t_.blah;
     System.out.printf("%d", b);
   }
   

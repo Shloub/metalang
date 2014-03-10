@@ -39,7 +39,7 @@ public static int readInt(){
   } while(true);
 } 
   public class intlist {public int head;public intlist tail;}
-  public static intlist cons(intlist list, int i)
+  public static intlist cons_(intlist list, int i)
   {
     intlist out_ = new intlist();
     out_.head = i;
@@ -73,7 +73,7 @@ public static int readInt(){
     {
       i = readInt();
       if (i != 0)
-        list = cons(list, i);
+        list = cons_(list, i);
     }
   }
   

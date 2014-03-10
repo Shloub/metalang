@@ -59,10 +59,10 @@ for ($i = 0 ; $i < $n; $i++)
   $out0 = array();
   for ($j = 0 ; $j < $c; $j++)
   {
-    $out_ = 0;
-    list($out_) = scan("%d");
+    $out__ = 0;
+    list($out__) = scan("%d");
     scantrim();
-    $out0[$j] = $out_;
+    $out0[$j] = $out__;
   }
   $passepartout[$i] = $out0;
 }

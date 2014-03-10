@@ -1,8 +1,13 @@
+let rec read_int () =
+  let out_ = Scanf.scanf "%d" (fun x -> x) in
+  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  out_
+
 let rec read_int_line n =
   let tab = Array.init n (fun _i ->
-    let t = Scanf.scanf "%d" (fun x -> x) in
+    let t_ = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
-    t) in
+    t_) in
   tab
 
 (*
@@ -26,8 +31,9 @@ let rec result len tab =
 
 let () =
 begin
-  let l0 = read_int_line 1 in
-  let len = l0.(0) in
+  let len = (read_int ()) in
+  Printf.printf "%d" len;
+  Printf.printf "\n";
   let tab = read_int_line len in
   let a = result len tab in
   Printf.printf "%d" a

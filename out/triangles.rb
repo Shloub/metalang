@@ -36,7 +36,7 @@ def find0( len, tab, cache, x, y )
     return (result);
 end
 
-def find( len, tab )
+def find_( len, tab )
     tab2 = [];
     for i in (0 ..  len - 1) do
       a = i + 1
@@ -64,7 +64,7 @@ for i in (0 ..  len - 1) do
   end
   tab[i] = tab2;
 end
-c = find(len, tab)
+c = find_(len, tab)
 printf "%d", c
 for k in (0 ..  len - 1) do
   for l in (0 ..  k) do

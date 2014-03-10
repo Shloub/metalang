@@ -4,6 +4,12 @@ using System.Collections.Generic;
 public class aaa_missing
 {
   
+  
+  public static int read_int()
+  {
+    return int.Parse(Console.ReadLine());
+  }
+  
   public static int[] read_int_line(int n)
   {
     return new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
@@ -28,8 +34,9 @@ public class aaa_missing
   
   public static void Main(String[] args)
   {
-    int[] l0 = read_int_line(1);
-    int len = l0[0];
+    int len = read_int();
+    Console.Write(len);
+    Console.Write("\n");
     int[] tab = read_int_line(len);
     int a = result(len, tab);
     Console.Write(a);

@@ -52,7 +52,7 @@ type
       tail : intlist;
     end;
 
-function cons(list : intlist; i : integer) : intlist;
+function cons_(list : intlist; i : integer) : intlist;
 var
   out_ : intlist;
 begin
@@ -98,7 +98,7 @@ begin
     if i <> 0
     then
       begin
-        list := cons(list, i);
+        list := cons_(list, i);
       end;
   end;
 end;

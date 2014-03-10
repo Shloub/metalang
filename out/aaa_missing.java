@@ -3,18 +3,29 @@ import java.util.*;
 public class aaa_missing
 {
   static Scanner scanner = new Scanner(System.in);
+  public static int read_int()
+  {
+    int out_ = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); out_ = -scanner.nextInt();
+    }else{
+    out_ = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    return out_;
+  }
+  
   public static int[] read_int_line(int n)
   {
     int[] tab = new int[n];
     for (int i = 0 ; i < n; i++)
     {
-      int t = 0;
+      int t_ = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); t = -scanner.nextInt();
+      scanner.next("^-"); t_ = -scanner.nextInt();
       }else{
-      t = scanner.nextInt();}
+      t_ = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      tab[i] = t;
+      tab[i] = t_;
     }
     return tab;
   }
@@ -38,8 +49,8 @@ public class aaa_missing
   
   public static void main(String args[])
   {
-    int[] l0 = read_int_line(1);
-    int len = l0[0];
+    int len = read_int();
+    System.out.printf("%d%s", len, "\n");
     int[] tab = read_int_line(len);
     int a = result(len, tab);
     System.out.printf("%d", a);

@@ -5,9 +5,9 @@ let rec read_int () =
 
 let rec read_int_line n =
   let tab = Array.init n (fun _i ->
-    let t = Scanf.scanf "%d" (fun x -> x) in
+    let t_ = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
-    t) in
+    t_) in
   tab
 
 let rec read_int_matrix x y =

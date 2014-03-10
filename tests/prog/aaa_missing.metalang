@@ -15,8 +15,9 @@ def int result(int len, array<int> tab)
 end
 
 main
-  def array<int> l0 = read_int_line(1);
-  def len = l0[0];
+  def len = read_int();
+	print len
+	print "\n"
   def array<int> tab = read_int_line(len);
 	print int result(len, tab)
 end

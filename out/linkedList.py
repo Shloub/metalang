@@ -26,7 +26,7 @@ def readint():
     else:
       return out * sign
 
-def cons( list, i ):
+def cons_( list, i ):
     out_ = {"head":i, "tail":list}
     return out_;
 
@@ -46,7 +46,7 @@ def test( empty ):
     while (i != 0):
       i=readint()
       if i != 0:
-        list = cons(list, i);
+        list = cons_(list, i);
 
 
 

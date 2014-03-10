@@ -11,10 +11,10 @@ end
 def read_int_line( n )
     tab = [];
     for i in (0 ..  n - 1) do
-      t = 0
-      t=scanf("%d")[0];
+      t_ = 0
+      t_=scanf("%d")[0];
       scanf("%*\n");
-      tab[i] = t;
+      tab[i] = t_;
     end
     return (tab);
 end

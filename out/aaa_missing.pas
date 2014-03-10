@@ -61,20 +61,30 @@ begin
    until false;
 end;
 
+function read_int() : integer;
+var
+  out_ : integer;
+begin
+  out_ := 0;
+  out_ := read_int_();
+  skip();
+  exit(out_);
+end;
+
 type b = array of integer;
 function read_int_line(n : integer) : b;
 var
   i : integer;
-  t : integer;
+  t_ : integer;
   tab : b;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
   begin
-    t := 0;
-    t := read_int_();
+    t_ := 0;
+    t_ := read_int_();
     skip();
-    tab[i] := t;
+    tab[i] := t_;
   end;
   exit(tab);
 end;
@@ -112,12 +122,12 @@ end;
 
 var
   a : integer;
-  l0 : b;
   len : integer;
   tab : b;
 begin
-  l0 := read_int_line(1);
-  len := l0[0];
+  len := read_int();
+  Write(len);
+  Write(''#10'');
   tab := read_int_line(len);
   a := result(len, tab);
   Write(a);

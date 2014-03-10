@@ -15,13 +15,20 @@ func skip() {
 }
 
 
+func read_int() int{
+  var out_ int = 0
+  fmt.Fscanf(reader, "%d", &out_);
+  skip()
+  return out_
+}
+
 func read_int_line(n int) []int{
   var tab []int = make([]int, n)
   for i := 0 ; i <= n - 1; i++ {
-    var t int = 0
-      fmt.Fscanf(reader, "%d", &t);
+    var t_ int = 0
+      fmt.Fscanf(reader, "%d", &t_);
       skip()
-      tab[i] = t;
+      tab[i] = t_;
   }
   return tab
 }
@@ -47,8 +54,8 @@ func result(len int, tab []int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var l0 []int = read_int_line(1)
-  var len int = l0[0]
+  var len int = read_int()
+  fmt.Printf("%d\n", len);
   var tab []int = read_int_line(len)
   var a int = result(len, tab)
   fmt.Printf("%d", a);

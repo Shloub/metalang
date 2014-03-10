@@ -35,14 +35,21 @@ var read_int_ = function(){
 }
 
 
+function read_int(){
+  var out_ = 0;
+  out_=read_int_();
+  stdinsep();
+  return out_;
+}
+
 function read_int_line(n){
   var tab = new Array(n);
   for (var i = 0 ; i <= n - 1; i++)
   {
-    var t = 0;
-    t=read_int_();
+    var t_ = 0;
+    t_=read_int_();
     stdinsep();
-    tab[i] = t;
+    tab[i] = t_;
   }
   return tab;
 }
@@ -62,8 +69,8 @@ function result(len, tab){
   return -1;
 }
 
-var l0 = read_int_line(1);
-var len = l0[0];
+var len = read_int();
+util.print(len, "\n");
 var tab = read_int_line(len);
 var a = result(len, tab);
 util.print(a);

@@ -46,10 +46,10 @@ int main(void){
     std::vector<int > out0( c );
     for (int j = 0 ; j < c; j++)
     {
-      int out_ = 0;
-      scanf("%d", &out_);
+      int out__ = 0;
+      scanf("%d", &out__);
       scanf("%*[ \t\r\n]c");
-      out0.at(j) = out_;
+      out0.at(j) = out__;
     }
     passepartout.at(i) = out0;
   }

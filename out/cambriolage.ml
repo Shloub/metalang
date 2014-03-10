@@ -38,9 +38,9 @@ begin
   let passepartout = Array.init n (fun _i ->
     let c = 2 in
     let out0 = Array.init c (fun _j ->
-      let out_ = Scanf.scanf "%d" (fun x -> x) in
+      let out__ = Scanf.scanf "%d" (fun x -> x) in
       Scanf.scanf "%[\n \010]" (fun _ -> ());
-      out_) in
+      out__) in
     out0) in
   let m = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());

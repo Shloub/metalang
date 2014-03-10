@@ -19,13 +19,13 @@ public class aaa_readints
     int[] tab = new int[n];
     for (int i = 0 ; i < n; i++)
     {
-      int t = 0;
+      int t_ = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); t = -scanner.nextInt();
+      scanner.next("^-"); t_ = -scanner.nextInt();
       }else{
-      t = scanner.nextInt();}
+      t_ = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      tab[i] = t;
+      tab[i] = t_;
     }
     return tab;
   }

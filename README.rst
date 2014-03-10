@@ -37,6 +37,8 @@ Les autres compilateurs devraient être packagé sur votre distribution de linux
 
 Note : La version de python utilisée est python3
 
+Le lisp généré est du common lisp
+
 Modes
 ----------------
 Le dossier tools contient des outils comme le mode emacs et un mode vim, pour l'installer,

@@ -1,13 +1,20 @@
 
 require "scanf.rb"
 
+def read_int(  )
+    out_ = 0
+    out_=scanf("%d")[0];
+    scanf("%*\n");
+    return (out_);
+end
+
 def read_int_line( n )
     tab = [];
     for i in (0 ..  n - 1) do
-      t = 0
-      t=scanf("%d")[0];
+      t_ = 0
+      t_=scanf("%d")[0];
       scanf("%*\n");
-      tab[i] = t;
+      tab[i] = t_;
     end
     return (tab);
 end
@@ -35,8 +42,8 @@ def result( len, tab )
     return (-1);
 end
 
-l0 = read_int_line(1)
-len = l0[0]
+len = read_int()
+printf "%d\n", len
 tab = read_int_line(len)
 a = result(len, tab)
 printf "%d", a

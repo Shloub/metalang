@@ -105,7 +105,7 @@ begin
 end;
 
 type f = array of integer;
-function find(len : integer; tab : e) : integer;
+function find_(len : integer; tab : e) : integer;
 var
   a : integer;
   i : integer;
@@ -158,7 +158,7 @@ begin
     end;
     tab[i] := tab2;
   end;
-  c := find(len, tab);
+  c := find_(len, tab);
   Write(c);
   for k := 0 to  len - 1 do
   begin

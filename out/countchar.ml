@@ -1,4 +1,4 @@
-let rec nth tab tofind len =
+let rec nth_ tab tofind len =
   let out_ = ref( 0 ) in
   for i = 0 to len - 1 do
     if tab.(i) = tofind then
@@ -18,7 +18,7 @@ begin
     let tmp = ref( '\000' ) in
     Scanf.scanf "%c" (fun value -> tmp := value);
     (!tmp)) in
-  let result = nth tab (!tofind) (!len) in
+  let result = nth_ tab (!tofind) (!len) in
   Printf.printf "%d" result
 end
  

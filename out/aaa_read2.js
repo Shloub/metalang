@@ -48,10 +48,10 @@ function read_int_line(n){
   var tab = new Array(n);
   for (var i = 0 ; i <= n - 1; i++)
   {
-    var t = 0;
-    t=read_int_();
+    var t_ = 0;
+    t_=read_int_();
     stdinsep();
-    tab[i] = t;
+    tab[i] = t_;
   }
   return tab;
 }
@@ -60,9 +60,9 @@ function read_char_line(n){
   var tab = new Array(n);
   for (var i = 0 ; i <= n - 1; i++)
   {
-    var t = '_';
-    t=read_char_();
-    tab[i] = t;
+    var t_ = '_';
+    t_=read_char_();
+    tab[i] = t_;
   }
   stdinsep();
   return tab;

@@ -14,13 +14,14 @@ macro char char_of_int(int c)
   csharp do "(char)($c)"
   php do "chr($c)"
   go do "(byte)($c)"
+  scheme do "(int-char $c)"
   *  do "$c"
 end
 
 macro int int_of_char(char c)
   ml do "int_of_char ($c)"
   py do "ord($c)"
-  scheme do "(char->integer $c)"
+  scheme do "(char-int $c)"
   ruby do "$c.ord"
   pas do "ord($c)"
   php do "ord($c)"
@@ -117,8 +118,8 @@ def lexems expand_read_int_line(lexems a)
     else
     return {
       def array<int> tab[${a}] with i do
-      	def read int t skip;
-				return t;
+      	def read int t skip
+				return t
       end
       return tab
     }

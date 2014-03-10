@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
-int nth(std::vector<char >& tab, char tofind, int len){
+int nth_(std::vector<char >& tab, char tofind, int len){
   int out_ = 0;
   for (int i = 0 ; i < len; i++)
     if (tab.at(i) == tofind)
@@ -25,7 +25,7 @@ int main(void){
     scanf("%c", &tmp);
     tab.at(i) = tmp;
   }
-  int result = nth(tab, tofind, len);
+  int result = nth_(tab, tofind, len);
   std::cout << result;
   return 0;
 }

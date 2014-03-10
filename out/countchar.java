@@ -3,7 +3,7 @@ import java.util.*;
 public class countchar
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int nth(char[] tab, char tofind, int len)
+  public static int nth_(char[] tab, char tofind, int len)
   {
     int out_ = 0;
     for (int i = 0 ; i < len; i++)
@@ -31,7 +31,7 @@ public class countchar
       scanner.useDelimiter("\\n");tmp = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = tmp;
     }
-    int result = nth(tab, tofind, len);
+    int result = nth_(tab, tofind, len);
     System.out.printf("%d", result);
   }
   

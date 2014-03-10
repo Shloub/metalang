@@ -7,7 +7,7 @@ typedef struct intlist {
   struct intlist * tail;
 } intlist;
 
-struct intlist * cons(struct intlist * list, int i){
+struct intlist * cons_(struct intlist * list, int i){
   struct intlist * out_ = malloc (sizeof(out_) );
   out_->head=i;
   out_->tail=list;
@@ -37,7 +37,7 @@ void test(struct intlist * empty){
   {
     scanf("%d", &i);
     if (i != 0)
-      list = cons(list, i);
+      list = cons_(list, i);
   }
 }
 

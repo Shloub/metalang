@@ -1,5 +1,10 @@
 <?php
 
+
+function read_int(){
+  return intval(trim(fgets(STDIN)));
+}
+
 function read_int_line($n){
   return array_map("intval", explode(" ", fgets(STDIN)));
 }
@@ -19,8 +24,8 @@ function result($len, &$tab){
   return -1;
 }
 
-$l0 = read_int_line(1);
-$len = $l0[0];
+$len = read_int();
+echo $len, "\n";
 $tab = read_int_line($len);
 $a = result($len, $tab);
 echo $a;

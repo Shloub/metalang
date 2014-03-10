@@ -60,10 +60,10 @@ func main() {
     var c int = 2
       var out0 []int = make([]int, c)
       for j := 0 ; j <= c - 1; j++ {
-        var out_ int = 0
-          fmt.Fscanf(reader, "%d", &out_);
+        var out__ int = 0
+          fmt.Fscanf(reader, "%d", &out__);
           skip()
-          out0[j] = out_;
+          out0[j] = out__;
       }
       passepartout[i] = out0;
   }

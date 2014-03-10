@@ -1,4 +1,8 @@
 
+
+def read_int(  ):
+    return int(input());
+
 def read_int_line( n ):
     return list(map(int, input().split()));
 
@@ -16,8 +20,8 @@ def result( len, tab ):
         return i2;
     return -(1);
 
-l0 = read_int_line(1);
-len = l0[0];
+len = read_int();
+print("%d\n" % ( len ), end='')
 tab = read_int_line(len);
 a = result(len, tab);
 print("%d" % a, end='')

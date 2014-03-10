@@ -135,6 +135,7 @@ var
   out0 : f;
   out1 : f;
   out_ : integer;
+  out__ : integer;
   passepartout : g;
   serrures : g;
 begin
@@ -148,10 +149,10 @@ begin
     SetLength(out0, c);
     for j := 0 to  c - 1 do
     begin
-      out_ := 0;
-      out_ := read_int_();
+      out__ := 0;
+      out__ := read_int_();
       skip();
-      out0[j] := out_;
+      out0[j] := out__;
     end;
     passepartout[i] := out0;
   end;

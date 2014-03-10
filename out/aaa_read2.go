@@ -26,10 +26,10 @@ func read_int() int{
 func read_int_line(n int) []int{
   var tab []int = make([]int, n)
   for i := 0 ; i <= n - 1; i++ {
-    var t int = 0
-      fmt.Fscanf(reader, "%d", &t);
+    var t_ int = 0
+      fmt.Fscanf(reader, "%d", &t_);
       skip()
-      tab[i] = t;
+      tab[i] = t_;
   }
   return tab
 }
@@ -37,9 +37,9 @@ func read_int_line(n int) []int{
 func read_char_line(n int) []byte{
   var tab []byte = make([]byte, n)
   for i := 0 ; i <= n - 1; i++ {
-    var t byte = '_'
-      fmt.Fscanf(reader, "%c", &t);
-      tab[i] = t;
+    var t_ byte = '_'
+      fmt.Fscanf(reader, "%c", &t_);
+      tab[i] = t_;
   }
   skip()
   return tab

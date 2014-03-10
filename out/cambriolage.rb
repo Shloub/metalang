@@ -44,10 +44,10 @@ for i in (0 ..  n - 1) do
   c = 2
   out0 = [];
   for j in (0 ..  c - 1) do
-    out_ = 0
-    out_=scanf("%d")[0];
+    out__ = 0
+    out__=scanf("%d")[0];
     scanf("%*\n");
-    out0[j] = out_;
+    out0[j] = out__;
   end
   passepartout[i] = out0;
 end
