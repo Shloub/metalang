@@ -811,4 +811,12 @@ let typename_for_enum en env =
     name
   with Not_found _ ->
     raise ( Error (fun f ->
-      Format.fprintf f "Cannot find typename for enum field %s\n" en))
+      Format.fprintf f "Cannot find typename for enum %s\n" en))
+
+let typename_for_field en env =
+  try
+    let (_, _, name) = StringMap.find en env.fields in
+    name
+  with Not_found _ ->
+    raise ( Error (fun f ->
+      Format.fprintf f "Cannot find typename for field %s\n" en))

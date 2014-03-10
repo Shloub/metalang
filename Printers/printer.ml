@@ -127,6 +127,7 @@ class printer = object(self)
 
   val mutable typerEnv : Typer.env = Obj.magic(0)
 
+	method typename_of_field field = Typer.typename_for_field field typerEnv
 
   method getTyperEnv () = typerEnv
 
