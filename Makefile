@@ -20,6 +20,75 @@ red	= \033[0;31m
 green	= \033[0;32m
 yellow	= \033[0;33m
 
+unit:
+	ocamlbuild Stdlib/unit.byte
+	./unit.byte
+
+.PHONY: cversion
+cversion :
+	@gcc --version
+	@echo "$(green)GCC OK$(reset)";
+
+.PHONY: goversion
+goversion :
+	@go version
+	@echo "$(green)Go OK$(reset)";
+
+.PHONY: ccversion
+ccversion :
+	@g++ --version
+	@echo "$(green)g++ OK$(reset)";
+
+.PHONY: pyversion
+pyversion :
+	@$(python) --version
+	@echo "$(green)Python OK$(reset)";
+
+.PHONY: ocamlversion
+ocamlversion :
+	@ocaml -version
+	@echo "$(green)OCAML OK$(reset)";
+
+.PHONY: javaversion
+javaversion :
+	@java -version
+	@echo "$(green)Java OK$(reset)";
+
+.PHONY: monoversion
+monoversion :
+	@mono --version
+	@echo "$(green)Mono OK$(reset)";
+
+.PHONY: nodeversion
+nodeversion :
+	@node --version
+	@echo "$(green)Node OK$(reset)";
+
+.PHONY: phpversion
+phpversion :
+	@php --version
+	@echo "$(green)PHP OK$(reset)";
+
+.PHONY: commonlispversion
+commonlispversion :
+	@echo "" | gcl --version
+	@echo "$(green)Common Lisp OK$(reset)";
+
+.PHONY: rbversion
+rbversion :
+	@ruby --version
+	@echo "$(green)Ruby OK$(reset)";
+
+.PHONY: pascalversion
+pascalversion :
+	@fpc --version
+	@echo "$(green)Free pascal OK$(reset)";
+
+.PHONY: check-langages
+check-langages : cversion goversion ccversion pyversion ocamlversion javaversion monoversion nodeversion phpversion commonlispversion rbversion pascalversion
+
+
+
 tar :
 	rm -rf tarball
 	@mkdir tarball tarball/Astutils tarball/Eval tarball/Parser tarball/Main tarball/Printers tarball/tools tarball/Stdlib tarball/tests tarball/tests/prog tarball/tests/compile tarball/tests/not_compile || true
