@@ -24,7 +24,10 @@
 *)
 
 
-(** Some expantion passes
+(** Cette passe permet de supprimer la construction :
+def array<...> toto[len] with i do ... end
+Pour en faire une boucle for
+
 @see <http://prologin.org> Prologin
 @author Prologin (info\@prologin.org)
 @author Maxime Audouin (coucou747\@gmail.com)

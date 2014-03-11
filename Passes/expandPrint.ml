@@ -24,7 +24,7 @@
 *)
 
 
-(** Some expantion passes
+(** Cette passe effectue une normalisation du printing de booleans
 @see <http://prologin.org> Prologin
 @author Prologin (info\@prologin.org)
 @author Maxime Audouin (coucou747\@gmail.com)

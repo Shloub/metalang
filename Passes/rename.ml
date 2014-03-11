@@ -22,7 +22,9 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *)
 
-(** Some passes
+(**
+Cette passe effectue un renomage des variables.
+Le but est de renommer les variables qui ont des noms inutilisables (les mots clés par exemple)
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)

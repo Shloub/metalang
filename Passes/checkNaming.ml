@@ -24,7 +24,8 @@
  *)
 
 
-(** Some checking passes like name checking
+(** Name checking :
+cette passe vérifie que l'on utilise bien des noms de variable corrects
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)

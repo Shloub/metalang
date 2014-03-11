@@ -24,7 +24,14 @@
 *)
 
 
-(** Some expantion passes
+(** Cette passe convertit les expressions comme :
+def read int i;
+en
+def int i = 0;
+read int i;
+
+C'est utile pour les langages comme le C.
+
 @see <http://prologin.org> Prologin
 @author Prologin (info\@prologin.org)
 @author Maxime Audouin (coucou747\@gmail.com)

@@ -24,7 +24,10 @@
 *)
 
 
-(** Some expantion passes
+(**
+Cette passe permet de déclarer une variable pour quelques expressions.
+Elle est utilisée dans le but de réduire les ambiguités sur l'ordre d'execution
+
 @see <http://prologin.org> Prologin
 @author Prologin (info\@prologin.org)
 @author Maxime Audouin (coucou747\@gmail.com)
