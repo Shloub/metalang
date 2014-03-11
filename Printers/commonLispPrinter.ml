@@ -315,7 +315,7 @@ class commonLispPrinter = object(self)
     )))
 
 (defun mread-int ()
-  (if (eq #\- last-char)
+  (if (eq #\\- last-char)
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
