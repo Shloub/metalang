@@ -42,11 +42,12 @@ rule token = parse
     {
       let rec f (li : (token, token Ast.Expr.t) Ast.Lexems.t list) =
         match token lexbuf with
-          | END_QUOTE -> List.rev li
-          | UNQUOTE_START ->
-            let li2 = Ast.Lexems.unquote (f []) in
-            f ( li2 :: li )
-          | t -> f ((Ast.Lexems.token t) :: li)
+				| EOF -> error lexbuf
+        | END_QUOTE -> List.rev li
+        | UNQUOTE_START ->
+          let li2 = Ast.Lexems.unquote (f []) in
+          f ( li2 :: li )
+        | t -> f ((Ast.Lexems.token t) :: li)
       in let li = f []
 
          in LEXEMS li
