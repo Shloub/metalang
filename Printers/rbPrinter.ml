@@ -173,7 +173,7 @@ match Type.unfix t with
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "%a => %a"
+	Format.fprintf f "@[<h>%a => %a@]"
 	  self#field fieldname
 	  self#expr expr
       )
