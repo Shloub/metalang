@@ -193,7 +193,7 @@ class commonLispPrinter = object(self)
       | None ->
     Format.fprintf
       f
-      "(%a %a)"
+      "@[<h>(%a %a)@]"
     self#funname var
     (print_list
        self#expr

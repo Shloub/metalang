@@ -156,9 +156,7 @@ Tictactoe : un tictactoe avec une IA
   )))
 
 (defun apply_move (m g)
-(apply_move_xy (move-x m)
-  (move-y m)
-  g))
+(apply_move_xy (move-x m) (move-y m) g))
 
 (defun cancel_move_xy (x y g)
 (progn
@@ -168,9 +166,7 @@ Tictactoe : un tictactoe avec une IA
 ))
 
 (defun cancel_move (m g)
-(cancel_move_xy (move-x m)
-  (move-y m)
-  g))
+(cancel_move_xy (move-x m) (move-y m) g))
 
 (defun can_move_xy (x y g)
 (return-from can_move_xy (eq (aref (aref (gamestate-cases g) x) y) 0)))
@@ -199,17 +195,11 @@ Un minimax classique, renvoie la note du plateau
             ((y 0 (+ 1 y)))
             ((> y 2))
             (if
-              (can_move_xy x
-              y
-              g)
+              (can_move_xy x y g)
               (progn
-                (apply_move_xy x
-                y
-                g)
+                (apply_move_xy x y g)
                 (let ((currentNote (minmax g)))
-                  (cancel_move_xy x
-                  y
-                  g)
+                  (cancel_move_xy x y g)
                   #| Minimum ou Maximum selon le coté ou l'on joue|#
                   (if
                     (eq (> currentNote maxNote) (gamestate-firstToPlay g))
@@ -236,13 +226,9 @@ Renvoie le coup de l'IA
         ((y 0 (+ 1 y)))
         ((> y 2))
         (if
-          (can_move_xy x
-          y
-          g)
+          (can_move_xy x y g)
           (progn
-            (apply_move_xy x
-            y
-            g)
+            (apply_move_xy x y g)
             (let ((currentNote (minmax g)))
               (princ x)
               (princ ", ")
@@ -251,9 +237,7 @@ Renvoie le coup de l'IA
               (princ currentNote)
               (princ "
 ")
-              (cancel_move_xy x
-              y
-              g)
+              (cancel_move_xy x y g)
               (if
                 (< currentNote minNote)
                 (progn
@@ -319,15 +303,13 @@ Renvoie le coup de l'IA
       (loop while (not (gamestate-ended state))
       do (progn
            (print_state state)
-           (apply_move (play state)
-           state)
+           (apply_move (play state) state)
            (eval_ state)
            (print_state state)
            (if
              (not (gamestate-ended state))
              (progn
-               (apply_move (play state)
-               state)
+               (apply_move (play state) state)
                (eval_ state)
              ))
            )
