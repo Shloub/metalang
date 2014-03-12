@@ -39,7 +39,7 @@ val process : 'lex Ast.Prog.t -> env * 'lex Ast.Prog.t
 val get_type : env -> 'lex Ast.Expr.t -> Ast.Type.t
 val is_int : env -> 'lex Ast.Expr.t -> bool
 val is_float : env -> 'lex Ast.Expr.t -> bool
-val type_of_field : env -> string -> Ast.Type.t
+val type_of_field : env -> string -> Ast.location -> Ast.Type.t
 val expand : env -> Ast.Type.t -> Ast.location -> Ast.Type.t
 val type_for_enum : string -> env -> Ast.Type.t
 val typename_for_enum : string -> env -> string

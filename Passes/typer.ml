@@ -74,9 +74,13 @@ type env =
       contraintes : (typeContrainte ref * typeContrainte ref) list;
     }
 
-let type_of_field env field =
-  let (_, t, _) = StringMap.find field env.fields in t
-
+let type_of_field env field loc =
+	try
+		let (_, t, _) = StringMap.find field env.fields in t
+	with Not_found ->
+	raise ( Error (fun f ->
+ Format.fprintf f "Field %s is undefined %a\n%!" field ploc loc
+	))
 let ty2typeContrainte (env : env) (t : Type.t) (loc : Ast.location)
     : (env * typeContrainte ref) =
 

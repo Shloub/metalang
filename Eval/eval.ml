@@ -376,8 +376,8 @@ let add_in_env (env:env) v : env * int =
   }, out
 
 (** find the index of a field in a record value *)
-let index_for_field env field =
-  match Type.unfix (Typer.type_of_field env.tyenv field) with
+let index_for_field env field loc =
+  match Type.unfix (Typer.type_of_field env.tyenv field loc) with
     | Type.Struct (li, _) ->
       let li = List.map fst li |> List.sort String.compare in
       List.indexof field li
@@ -512,7 +512,7 @@ and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
         (get_array (m execenv)).
           (get_integer (eval_expr execenv index)) <- v)
     | Mutable.Dot (m, field) ->
-      let index = index_for_field env field in
+      let index = index_for_field env field Ast.default_location in
       let m = mut_val env m in
       (fun execenv v ->
         match m execenv with
@@ -541,7 +541,7 @@ and mut_val (env:env) (mut : precompiledExpr Mutable.t)
         m
         li
     | Mutable.Dot (m, field) ->
-      let index = index_for_field env field in
+      let index = index_for_field env field Ast.default_location in
       let m = mut_val env m in
       (fun execenv ->
         match m execenv with
@@ -650,7 +650,7 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     end
   | Instr.AllocRecord (var, t, fields) ->
     let fields = List.map (fun (name, e) ->
-      index_for_field env name, e env) fields in
+      index_for_field env name Ast.default_location, e env) fields in
     let index, fields = List.unzip fields in
     let index = Array.of_list index in
     let fields = Array.of_list fields in
