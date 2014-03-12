@@ -170,7 +170,7 @@ class commonLispPrinter = object(self)
     | Expr.Not -> Format.fprintf f "(not %a)" self#expr a
 
   method expr f t =
-    let binop op a b = Format.fprintf f "(%a@ %a@ %a)" self#print_op op self#expr a self#expr b
+    let binop op a b = Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#print_op op self#expr a self#expr b
     in
     let t = Expr.unfix t in
     match t with
@@ -283,38 +283,40 @@ class commonLispPrinter = object(self)
 			funname_ <- exname;
     end
 
+(* TODO n'afficher array_init que quand on en a besoin *)
   method prog f (prog:Utils.prog) =
-    Format.fprintf f
-      "
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    Format.fprintf f "
 (si::use-fast-links nil)
-
 (defun array_init (len fun)
   (let ((out (make-array len)) (i 0))
     (while (not (= i len))
-           (progn
-             (setf (aref out i) (funcall fun i))
-             (setq i (+ 1 i ))
-             )
-           )
-    out
+      (progn
+        (setf (aref out i) (funcall fun i))
+        (setq i (+ 1 i ))))
+        out
     ))
-
-(let ((last-char 0)))
-(defun next-char () (setq last-char (read-char *standard-input* nil)))
-(next-char)
-
-
 (defun quotient (a b) (truncate a b))
 (defun not-equal (a b) (not (eq a b)))
-
-(defun mread-char ()
+%s%s%s%s%a"
+      (if need then
+      "(let ((last-char 0)))
+(defun next-char () (setq last-char (read-char *standard-input* nil)))
+(next-char)
+" else "" )
+      (if need_readchar then
+"(defun mread-char ()
   (let (( out last-char))
     (progn
       (next-char)
       out
     )))
-
-(defun mread-int ()
+" else "")
+(if need_readint then
+"(defun mread-int ()
   (if (eq #\\- last-char)
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
@@ -327,13 +329,13 @@ class commonLispPrinter = object(self)
       )
       out
     ))))
-
-(defun mread-blank () (progn
+" else "")
+      (if need_stdinsep then
+"(defun mread-blank () (progn
   (while (or (eq last-char #\\NewLine) (eq last-char #\\Space) ) (next-char))
 ))
+" else "")
 
-
-%a"
 super#prog prog
 
   method main f main =
@@ -362,7 +364,7 @@ super#prog prog
   method decl_type f name t =
         match (Type.unfix t) with
 	        | Type.Struct (li, _) ->
-	          Format.fprintf f "(defstruct (%a (:type list) :named) %a@\n)@\n"
+	          Format.fprintf f "(defstruct (%a (:type list) :named)@\n  @[<v>%a@])@\n"
 	            self#binding name
 	            (print_list
 	               (fun t (name, type_) ->

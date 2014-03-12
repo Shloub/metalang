@@ -55,7 +55,7 @@ read int, read char et skip
     for (int toto = 0 ; toto < strlen; toto++)
     {
       char tmpc = '_';
-      scanner.useDelimiter("\\n");tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
+      tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
       int c = tmpc;
       System.out.printf("%c%s%d%s", tmpc, ":", c, " ");
       if (tmpc != ' ')

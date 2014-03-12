@@ -22,13 +22,13 @@ public class countchar
     len = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char tofind = '\000';
-    scanner.useDelimiter("\\n");tofind = scanner.findWithinHorizon(".", 1).charAt(0);
+    tofind = scanner.findWithinHorizon(".", 1).charAt(0);
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab = new char[len];
     for (int i = 0 ; i < len; i++)
     {
       char tmp = '\000';
-      scanner.useDelimiter("\\n");tmp = scanner.findWithinHorizon(".", 1).charAt(0);
+      tmp = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = tmp;
     }
     int result = nth_(tab, tofind, len);

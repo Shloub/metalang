@@ -142,12 +142,12 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
   method read f t m =
     match Type.unfix t with
       | Type.Integer ->
-	Format.fprintf f "@[<h>scanner.useDelimiter(\"[^0-9\\\\-]*\");if (scanner.hasNext(\"^-\")){@]@\n@[<h>scanner.next(\"^-\"); %a = -scanner.nextInt();@]@\n@[<h>}else{@]@\n@[<h>%a = scanner.nextInt();}@]"
+	Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")){@]@\n@[<h>scanner.next(\"^-\"); %a = -scanner.nextInt();@]@\n@[<h>}else{@]@\n@[<h>%a = scanner.nextInt();}@]"
 	  self#mutable_ m
 	  self#mutable_ m
       | Type.String -> (* TODO configure Scanner, read int and do it*)
 	Format.fprintf f "TODO" (* TODO *)
-      | Type.Char -> Format.fprintf f "@[<h>scanner.useDelimiter(\"\\\\n\");%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
+      | Type.Char -> Format.fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
 	self#mutable_ m
       | _ -> failwith("unsuported read")
 

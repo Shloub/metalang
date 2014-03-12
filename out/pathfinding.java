@@ -78,7 +78,7 @@ public class pathfinding
       for (int j = 0 ; j < x; j++)
       {
         char tmp = '\000';
-        scanner.useDelimiter("\\n");tmp = scanner.findWithinHorizon(".", 1).charAt(0);
+        tmp = scanner.findWithinHorizon(".", 1).charAt(0);
         tab2[j] = tmp;
       }
       scanner.findWithinHorizon("[\n\r ]*", 1);

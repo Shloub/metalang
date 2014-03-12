@@ -55,7 +55,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     for (int i = 0 ; i < len; i++)
     {
       char tmp = '\000';
-      scanner.useDelimiter("\\n");tmp = scanner.findWithinHorizon(".", 1).charAt(0);
+      tmp = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = tmp;
     }
     int result = npi_(tab, len);

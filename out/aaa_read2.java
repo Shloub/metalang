@@ -38,7 +38,7 @@ public class aaa_read2
     for (int i = 0 ; i < n; i++)
     {
       char t_ = '_';
-      scanner.useDelimiter("\\n");t_ = scanner.findWithinHorizon(".", 1).charAt(0);
+      t_ = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = t_;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);

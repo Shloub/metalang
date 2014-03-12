@@ -21,7 +21,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
     for (int toto = 0 ; toto < strlen; toto++)
     {
       char tmpc = '_';
-      scanner.useDelimiter("\\n");tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
+      tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
       int c = tmpc;
       if (tmpc != ' ')
         c = ((c - 'a') + 13) % 26 + 'a';

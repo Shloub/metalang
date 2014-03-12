@@ -48,7 +48,7 @@ public class vigenere
     for (int index = 0 ; index < taille_cle; index++)
     {
       char out_ = '_';
-      scanner.useDelimiter("\\n");out_ = scanner.findWithinHorizon(".", 1).charAt(0);
+      out_ = scanner.findWithinHorizon(".", 1).charAt(0);
       cle[index] = out_;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
@@ -62,7 +62,7 @@ public class vigenere
     for (int index2 = 0 ; index2 < taille; index2++)
     {
       char out2 = '_';
-      scanner.useDelimiter("\\n");out2 = scanner.findWithinHorizon(".", 1).charAt(0);
+      out2 = scanner.findWithinHorizon(".", 1).charAt(0);
       message[index2] = out2;
     }
     crypte(taille_cle, cle, taille, message);
