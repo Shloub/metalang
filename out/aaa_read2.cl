@@ -125,12 +125,8 @@ read int, read char et skip
                     (princ c)
                     (princ " ")
                     (if
-                      (not-equal
-                      tmpc
-                      #\Space)
-                      (progn
-                        (setq c (+ (mod (+ (- c (char-int #\a)) 13) 26) (char-int #\a)))
-                      ))
+                      (not-equal tmpc #\Space)
+                      (setq c (+ (mod (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
                     (setf (aref tab4 i3) (int-char c))
                   )))
             )

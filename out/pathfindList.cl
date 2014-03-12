@@ -31,44 +31,24 @@
 ))
 
 (defun pathfind_aux (cache tab len pos)
-(progn
+(if
+  (>= pos (- len 1))
+  (return-from pathfind_aux 0)
   (if
-    (>=
-    pos
-    (-
-    len
-    1))
+    (not-equal (aref cache pos) (- 0 1))
+    (return-from pathfind_aux (aref cache pos))
     (progn
-      (return-from pathfind_aux 0)
-    )
-    (progn
-      (if
-        (not-equal
-        (aref cache pos)
-        (- 0 1))
-        (progn
-          (return-from pathfind_aux (aref cache pos))
-        )
-        (progn
-          (setf (aref cache pos) (* len 2))
-          (let ((posval (pathfind_aux cache tab len (aref tab pos))))
-            (let ((oneval (pathfind_aux cache tab len (+ pos 1))))
-              (let ((out_ 0))
-                (if
-                  (<
-                  posval
-                  oneval)
-                  (progn
-                    (setq out_ (+ 1 posval))
-                  )
-                  (progn
-                    (setq out_ (+ 1 oneval))
-                  ))
-                (setf (aref cache pos) out_)
-                (return-from pathfind_aux out_)
-              )))))
-    ))
-))
+      (setf (aref cache pos) (* len 2))
+      (let ((posval (pathfind_aux cache tab len (aref tab pos))))
+        (let ((oneval (pathfind_aux cache tab len (+ pos 1))))
+          (let ((out_ 0))
+            (if
+              (< posval oneval)
+              (setq out_ (+ 1 posval))
+              (setq out_ (+ 1 oneval)))
+            (setf (aref cache pos) out_)
+            (return-from pathfind_aux out_)
+          )))))))
 
 (defun pathfind (tab len)
 (progn

@@ -31,29 +31,21 @@
 ))
 
 (defun sort_ (tab len)
-(progn
+(do
+  ((i 0 (+ 1 i)))
+  ((> i (- len 1)))
   (do
-    ((i 0 (+ 1 i)))
-    ((> i (- len 1)))
-    (progn
-      (do
-        ((j (+ i 1) (+ 1 j)))
-        ((> j (- len 1)))
-        (progn
-          (if
-            (>
-            (aref tab i)
-            (aref tab j))
-            (progn
-              (let ((tmp (aref tab i)))
-                (setf (aref tab i) (aref tab j))
-                (setf (aref tab j) tmp)
-              )))
-        )
-      )
+    ((j (+ i 1) (+ 1 j)))
+    ((> j (- len 1)))
+    (if
+      (> (aref tab i) (aref tab j))
+      (progn
+        (let ((tmp (aref tab i)))
+          (setf (aref tab i) (aref tab j))
+          (setf (aref tab j) tmp)
+        )))
     )
-  )
-))
+  ))
 
 (progn
   (let ((len 2))

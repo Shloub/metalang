@@ -41,15 +41,11 @@
 ))
 
 (defun foo3 ()
-(progn
-  (if
-    (eq
-    1
-    1)
-    (progn
-      
-    ))
-))
+(if
+  (eq 1 1)
+  (progn
+    
+  )))
 
 (defun sumdiv (n)
 (progn
@@ -62,19 +58,13 @@
       (progn
         #| La boucle : i est le diviseur potentiel|#
         (if
-          (eq
-          (mod
-          n
-          i)
-          0)
+          (eq (mod n i) 0)
           (progn
             #| Si i divise |#
             (setq out_ ( + out_ i))
             #| On incrémente |#
           )
-          (progn
-            #| nop |#
-          ))
+          #| nop |#)
       )
     )
     (return-from sumdiv out_)

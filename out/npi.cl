@@ -37,9 +37,7 @@
 ))
 
 (defun is_number (c)
-(progn
-  (return-from is_number (and (<= (char-int c) (char-int #\9)) (>= (char-int c) (char-int #\0))))
-))
+(return-from is_number (and (<= (char-int c) (char-int #\9)) (>= (char-int c) (char-int #\0)))))
 
 #|
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
@@ -57,41 +55,29 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
   (let ((ptrStack 0))
     (let ((ptrStr 0))
       (loop while (< ptrStr len)
-      do (progn
+      do (if
+           (eq (aref str ptrStr) #\Space)
+           (setq ptrStr ( + ptrStr 1))
            (if
-             (eq
-             (aref str ptrStr)
-             #\Space)
+             (is_number (aref str ptrStr))
              (progn
-               (setq ptrStr ( + ptrStr 1))
-             )
-             (progn
-               (if
-                 (is_number (aref str ptrStr))
-                 (progn
-                   (let ((num 0))
-                     (loop while (not-equal (aref str ptrStr) #\Space)
-                     do (progn
-                          (setq num (- (+ (* num 10) (char-int (aref str ptrStr))) (char-int #\0)))
-                          (setq ptrStr ( + ptrStr 1))
-                          )
-                     )
-                     (setf (aref stack ptrStack) num)
-                     (setq ptrStack ( + ptrStack 1))
-                   ))
-                 (progn
-                   (if
-                     (eq
-                     (aref str ptrStr)
-                     (int-char 43))
-                     (progn
-                       (setf (aref stack (- ptrStack 2)) (+ (aref stack (- ptrStack 2)) (aref stack (- ptrStack 1))))
-                       (setq ptrStack ( - ptrStack 1))
-                       (setq ptrStr ( + ptrStr 1))
-                     ))
-                 ))
-             ))
-           )
+               (let ((num 0))
+                 (loop while (not-equal (aref str ptrStr) #\Space)
+                 do (progn
+                      (setq num (- (+ (* num 10) (char-int (aref str ptrStr))) (char-int #\0)))
+                      (setq ptrStr ( + ptrStr 1))
+                      )
+                 )
+                 (setf (aref stack ptrStack) num)
+                 (setq ptrStack ( + ptrStack 1))
+               ))
+             (if
+               (eq (aref str ptrStr) (int-char 43))
+               (progn
+                 (setf (aref stack (- ptrStack 2)) (+ (aref stack (- ptrStack 2)) (aref stack (- ptrStack 1))))
+                 (setq ptrStack ( - ptrStack 1))
+                 (setq ptrStr ( + ptrStr 1))
+               ))))
       )
       (return-from npi_ (aref stack 0))
     )))))

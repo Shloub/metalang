@@ -41,58 +41,32 @@
 (progn
   (let ((i (char-int c)))
     (if
-      (and
-      (<=
-      i
-      (char-int #\Z))
-      (>=
-      i
-      (char-int #\A)))
-      (progn
-        (return-from position_alphabet (- i (char-int #\A)))
-      )
-      (progn
-        (if
-          (and
-          (<=
-          i
-          (char-int #\z))
-          (>=
-          i
-          (char-int #\a)))
-          (progn
-            (return-from position_alphabet (- i (char-int #\a)))
-          )
-          (progn
-            (return-from position_alphabet (- 0 1))
-          ))
-      ))
+      (and (<= i (char-int #\Z)) (>= i (char-int #\A)))
+      (return-from position_alphabet (- i (char-int #\A)))
+      (if
+        (and (<= i (char-int #\z)) (>= i (char-int #\a)))
+        (return-from position_alphabet (- i (char-int #\a)))
+        (return-from position_alphabet (- 0 1))))
   )))
 
 (defun of_position_alphabet (c)
-(progn
-  (return-from of_position_alphabet (int-char (+ c (char-int #\a))))
-))
+(return-from of_position_alphabet (int-char (+ c (char-int #\a)))))
 
 (defun crypte (taille_cle cle taille message)
-(progn
-  (do
-    ((i 0 (+ 1 i)))
-    ((> i (- taille 1)))
-    (progn
-      (let ((lettre (position_alphabet (aref message i))))
-        (if
-          (not-equal
-          lettre
-          (- 0 1))
-          (progn
-            (let ((addon (position_alphabet (aref cle (mod i taille_cle)))))
-              (let ((new_ (mod (+ addon lettre) 26)))
-                (setf (aref message i) (of_position_alphabet new_))
-              ))))
-      ))
-  )
-))
+(do
+  ((i 0 (+ 1 i)))
+  ((> i (- taille 1)))
+  (progn
+    (let ((lettre (position_alphabet (aref message i))))
+      (if
+        (not-equal lettre (- 0 1))
+        (progn
+          (let ((addon (position_alphabet (aref cle (mod i taille_cle)))))
+            (let ((new_ (mod (+ addon lettre) 26)))
+              (setf (aref message i) (of_position_alphabet new_))
+            ))))
+    ))
+  ))
 
 (progn
   (let ((taille_cle (mread-int )))

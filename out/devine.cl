@@ -39,43 +39,17 @@
         ((> i (- len 1)))
         (progn
           (if
-            (or
-            (>
-            (aref tab i)
-            max_)
-            (<
-            (aref tab i)
-            min_))
-            (progn
-              (return-from devine_ nil)
-            ))
+            (or (> (aref tab i) max_) (< (aref tab i) min_))
+            (return-from devine_ nil))
           (if
-            (<
-            (aref tab i)
-            nombre)
-            (progn
-              (setq min_ (aref tab i))
-            ))
+            (< (aref tab i) nombre)
+            (setq min_ (aref tab i)))
           (if
-            (>
-            (aref tab i)
-            nombre)
-            (progn
-              (setq max_ (aref tab i))
-            ))
+            (> (aref tab i) nombre)
+            (setq max_ (aref tab i)))
           (if
-            (and
-            (eq
-            (aref tab i)
-            nombre)
-            (not-equal
-            len
-            (+
-            i
-            1)))
-            (progn
-              (return-from devine_ nil)
-            ))
+            (and (eq (aref tab i) nombre) (not-equal len (+ i 1)))
+            (return-from devine_ nil))
         )
       )
       (return-from devine_ t)
@@ -99,11 +73,7 @@
       (let ((a (devine_ nombre tab len)))
         (if
           a
-          (progn
-            (princ "True")
-          )
-          (progn
-            (princ "False")
-          ))
+          (princ "True")
+          (princ "False"))
       )))))
 

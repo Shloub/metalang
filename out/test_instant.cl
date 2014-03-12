@@ -12,11 +12,7 @@
 (defun not-equal (a b) (not (eq a b)))
 
 (defun foo (a b)
-(progn
-  (return-from foo (+ a b))
-))
+(return-from foo (+ a b)))
 
-(progn
-  (princ 10)
-)
+(princ 10)
 

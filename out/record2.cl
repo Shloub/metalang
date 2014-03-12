@@ -29,17 +29,17 @@
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
-(defstruct (toto (:type list) :named) foo
-bar
-blah
-
-)
+(defstruct (toto (:type list) :named)
+  foo
+  bar
+  blah
+  )
 
 (defun mktoto (v1)
 (progn
   (let ((t_ (make-toto :foo v1
-  :bar 0
-  :blah 0)))
+                       :bar 0
+                       :blah 0)))
   (return-from mktoto t_)
 )))
 

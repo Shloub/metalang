@@ -34,21 +34,11 @@
 (progn
   (let ((m (quotient (+ a b) 2)))
     (if
-      (eq
-      a
-      m)
-      (progn
-        (if
-          (eq
-          (aref tab a)
-          m)
-          (progn
-            (return-from go_ b)
-          )
-          (progn
-            (return-from go_ a)
-          ))
-      )
+      (eq a m)
+      (if
+        (eq (aref tab a) m)
+        (return-from go_ b)
+        (return-from go_ a))
       (progn
         (let ((i a))
           (let ((j b))
@@ -56,12 +46,8 @@
             do (progn
                  (let ((e (aref tab i)))
                    (if
-                     (<
-                     e
-                     m)
-                     (progn
-                       (setq i ( + i 1))
-                     )
+                     (< e m)
+                     (setq i ( + i 1))
                      (progn
                        (setq j ( - j 1))
                        (setf (aref tab i) (aref tab j))
@@ -70,22 +56,14 @@
                  ))
             )
             (if
-              (<
-              i
-              m)
-              (progn
-                (return-from go_ (go_ tab a m))
-              )
-              (progn
-                (return-from go_ (go_ tab m b))
-              ))
+              (< i m)
+              (return-from go_ (go_ tab a m))
+              (return-from go_ (go_ tab m b)))
           ))))
   )))
 
 (defun plus_petit_ (tab len)
-(progn
-  (return-from plus_petit_ (go_ tab 0 len))
-))
+(return-from plus_petit_ (go_ tab 0 len)))
 
 (progn
   (let ((len 0))

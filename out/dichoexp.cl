@@ -31,30 +31,16 @@
 ))
 
 (defun exp_ (a b)
-(progn
+(if
+  (eq b 0)
+  (return-from exp_ 1)
   (if
-    (eq
-    b
-    0)
+    (eq (mod b 2) 0)
     (progn
-      (return-from exp_ 1)
-    )
-    (progn
-      (if
-        (eq
-        (mod
-        b
-        2)
-        0)
-        (progn
-          (let ((o (exp_ a (quotient b 2))))
-            (return-from exp_ (* o o))
-          ))
-        (progn
-          (return-from exp_ (* a (exp_ a (- b 1))))
-        ))
-    ))
-))
+      (let ((o (exp_ a (quotient b 2))))
+        (return-from exp_ (* o o))
+      ))
+    (return-from exp_ (* a (exp_ a (- b 1)))))))
 
 (progn
   (let ((a 0))

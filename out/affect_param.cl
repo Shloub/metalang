@@ -12,9 +12,7 @@
 (defun not-equal (a b) (not (eq a b)))
 
 (defun foo (a)
-(progn
-  (setq a 4)
-))
+(setq a 4))
 
 (progn
   (let ((a 0))

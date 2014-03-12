@@ -229,7 +229,7 @@ class commonLispPrinter = object(self)
 
   method allocrecord f name t el =
     let () = nlet <- nlet + 1 in
-    Format.fprintf f "(let ((%a (make-%s %a)))"
+    Format.fprintf f "(let ((%a (make-%s @[<v>%a@])))"
       self#binding name
 			(match Type.unfix t with
 			| Type.Named n -> n
@@ -253,6 +253,18 @@ class commonLispPrinter = object(self)
     | false -> Format.fprintf f "nil"
 
   method bloc f li =
+    match li with
+    | [instr] ->
+      let exnlet = nlet in
+      begin
+	nlet <- 0;
+	Format.fprintf f "@[<v 2>%a@]" self#instr instr;
+	for i = 1 to nlet do
+	  Format.fprintf f ")@]";
+	done;
+	nlet <- exnlet;
+      end
+    | _ ->
     let exnlet = nlet in
     begin
       nlet <- 0;

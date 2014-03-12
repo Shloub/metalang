@@ -42,15 +42,9 @@
     (do
       ((i 0 (+ 1 i)))
       ((> i (- len 1)))
-      (progn
-        (if
-          (eq
-          (aref tab i)
-          tofind)
-          (progn
-            (setq out_ ( + out_ 1))
-          ))
-      )
+      (if
+        (eq (aref tab i) tofind)
+        (setq out_ ( + out_ 1)))
     )
     (return-from nth_ out_)
   )))

@@ -33,18 +33,18 @@
 Tictactoe : un tictactoe avec une IA
 |#
 #| La structure de donnée |#
-(defstruct (gamestate (:type list) :named) cases
-firstToPlay
-note
-ended
-
-)
+(defstruct (gamestate (:type list) :named)
+  cases
+  firstToPlay
+  note
+  ended
+  )
 
 #| Un Mouvement |#
-(defstruct (move (:type list) :named) x
-y
-
-)
+(defstruct (move (:type list) :named)
+  x
+  y
+  )
 
 #| On affiche l'état |#
 (defun print_state (g)
@@ -60,36 +60,20 @@ y
         ((> x 2))
         (progn
           (if
-            (eq
-            (aref (aref (gamestate-cases g) x) y)
-            0)
-            (progn
-              (princ " ")
-            )
-            (progn
-              (if
-                (eq
-                (aref (aref (gamestate-cases g) x) y)
-                1)
-                (progn
-                  (princ "O")
-                )
-                (progn
-                  (princ "X")
-                ))
-            ))
+            (eq (aref (aref (gamestate-cases g) x) y) 0)
+            (princ " ")
+            (if
+              (eq (aref (aref (gamestate-cases g) x) y) 1)
+              (princ "O")
+              (princ "X")))
           (princ "|")
         )
       )
       (if
-        (not-equal
-        y
-        2)
-        (progn
-          (princ "
+        (not-equal y 2)
+        (princ "
 |-|-|-|
-|")
-        ))
+|"))
     )
   )
   (princ "
@@ -112,72 +96,30 @@ y
                 ((> x 2))
                 (progn
                   (if
-                    (eq
-                    (aref (aref (gamestate-cases g) x) y)
-                    0)
-                    (progn
-                      (setq freecase ( + freecase 1))
-                    ))
+                    (eq (aref (aref (gamestate-cases g) x) y) 0)
+                    (setq freecase ( + freecase 1)))
                   (let ((colv (aref (aref (gamestate-cases g) x) y)))
                     (let ((linv (aref (aref (gamestate-cases g) y) x)))
                       (if
-                        (and
-                        (eq
-                        col
-                        (- 0 1))
-                        (not-equal
-                        colv
-                        0))
-                        (progn
-                          (setq col colv)
-                        )
-                        (progn
-                          (if
-                            (not-equal
-                            colv
-                            col)
-                            (progn
-                              (setq col (- 0 2))
-                            ))
-                        ))
+                        (and (eq col (- 0 1)) (not-equal colv 0))
+                        (setq col colv)
+                        (if
+                          (not-equal colv col)
+                          (setq col (- 0 2))))
                       (if
-                        (and
-                        (eq
-                        lin
-                        (- 0 1))
-                        (not-equal
-                        linv
-                        0))
-                        (progn
-                          (setq lin linv)
-                        )
-                        (progn
-                          (if
-                            (not-equal
-                            linv
-                            lin)
-                            (progn
-                              (setq lin (- 0 2))
-                            ))
-                        ))
+                        (and (eq lin (- 0 1)) (not-equal linv 0))
+                        (setq lin linv)
+                        (if
+                          (not-equal linv lin)
+                          (setq lin (- 0 2))))
                     )))
               )
               (if
-                (>=
-                col
-                0)
-                (progn
-                  (setq win col)
-                )
-                (progn
-                  (if
-                    (>=
-                    lin
-                    0)
-                    (progn
-                      (setq win lin)
-                    ))
-                ))
+                (>= col 0)
+                (setq win col)
+                (if
+                  (>= lin 0)
+                  (setq win lin)))
             )))
       )
       (do
@@ -185,57 +127,21 @@ y
         ((> x 2))
         (progn
           (if
-            (and
-            (and
-            (eq
-            (aref (aref (gamestate-cases g) 0) 0)
-            x)
-            (eq
-            (aref (aref (gamestate-cases g) 1) 1)
-            x))
-            (eq
-            (aref (aref (gamestate-cases g) 2) 2)
-            x))
-            (progn
-              (setq win x)
-            ))
+            (and (and (eq (aref (aref (gamestate-cases g) 0) 0) x) (eq (aref (aref (gamestate-cases g) 1) 1) x)) (eq (aref (aref (gamestate-cases g) 2) 2) x))
+            (setq win x))
           (if
-            (and
-            (and
-            (eq
-            (aref (aref (gamestate-cases g) 0) 2)
-            x)
-            (eq
-            (aref (aref (gamestate-cases g) 1) 1)
-            x))
-            (eq
-            (aref (aref (gamestate-cases g) 2) 0)
-            x))
-            (progn
-              (setq win x)
-            ))
+            (and (and (eq (aref (aref (gamestate-cases g) 0) 2) x) (eq (aref (aref (gamestate-cases g) 1) 1) x)) (eq (aref (aref (gamestate-cases g) 2) 0) x))
+            (setq win x))
         )
       )
       (setf (gamestate-ended g) (or (not-equal win 0) (eq freecase 0)))
       (if
-        (eq
-        win
-        1)
-        (progn
-          (setf (gamestate-note g) 1000)
-        )
-        (progn
-          (if
-            (eq
-            win
-            2)
-            (progn
-              (setf (gamestate-note g) (- 0 1000))
-            )
-            (progn
-              (setf (gamestate-note g) 0)
-            ))
-        ))
+        (eq win 1)
+        (setf (gamestate-note g) 1000)
+        (if
+          (eq win 2)
+          (setf (gamestate-note g) (- 0 1000))
+          (setf (gamestate-note g) 0)))
     ))))
 
 #| On applique un mouvement |#
@@ -244,19 +150,15 @@ y
   (let ((player 2))
     (if
       (gamestate-firstToPlay g)
-      (progn
-        (setq player 1)
-      ))
+      (setq player 1))
     (setf (aref (aref (gamestate-cases g) x) y) player)
     (setf (gamestate-firstToPlay g) (not (gamestate-firstToPlay g)))
   )))
 
 (defun apply_move (m g)
-(progn
-  (apply_move_xy (move-x m)
+(apply_move_xy (move-x m)
   (move-y m)
-  g)
-))
+  g))
 
 (defun cancel_move_xy (x y g)
 (progn
@@ -266,21 +168,15 @@ y
 ))
 
 (defun cancel_move (m g)
-(progn
-  (cancel_move_xy (move-x m)
+(cancel_move_xy (move-x m)
   (move-y m)
-  g)
-))
+  g))
 
 (defun can_move_xy (x y g)
-(progn
-  (return-from can_move_xy (eq (aref (aref (gamestate-cases g) x) y) 0))
-))
+(return-from can_move_xy (eq (aref (aref (gamestate-cases g) x) y) 0)))
 
 (defun can_move (m g)
-(progn
-  (return-from can_move (can_move_xy (move-x m) (move-y m) g))
-))
+(return-from can_move (can_move_xy (move-x m) (move-y m) g)))
 
 #|
 Un minimax classique, renvoie la note du plateau
@@ -290,50 +186,36 @@ Un minimax classique, renvoie la note du plateau
   (eval_ g)
   (if
     (gamestate-ended g)
-    (progn
-      (return-from minmax (gamestate-note g))
-    )
+    (return-from minmax (gamestate-note g))
     (progn
       (let ((maxNote (- 0 10000)))
         (if
           (not (gamestate-firstToPlay g))
-          (progn
-            (setq maxNote 10000)
-          ))
+          (setq maxNote 10000))
         (do
           ((x 0 (+ 1 x)))
           ((> x 2))
-          (progn
-            (do
-              ((y 0 (+ 1 y)))
-              ((> y 2))
+          (do
+            ((y 0 (+ 1 y)))
+            ((> y 2))
+            (if
+              (can_move_xy x
+              y
+              g)
               (progn
-                (if
-                  (can_move_xy x
+                (apply_move_xy x
+                y
+                g)
+                (let ((currentNote (minmax g)))
+                  (cancel_move_xy x
                   y
                   g)
-                  (progn
-                    (apply_move_xy x
-                    y
-                    g)
-                    (let ((currentNote (minmax g)))
-                      (cancel_move_xy x
-                      y
-                      g)
-                      #| Minimum ou Maximum selon le coté ou l'on joue|#
-                      (if
-                        (eq
-                        (>
-                        currentNote
-                        maxNote)
-                        (gamestate-firstToPlay g))
-                        (progn
-                          (setq maxNote currentNote)
-                        ))
-                    )))
-              )
+                  #| Minimum ou Maximum selon le coté ou l'on joue|#
+                  (if
+                    (eq (> currentNote maxNote) (gamestate-firstToPlay g))
+                    (setq maxNote currentNote))
+                )))
             )
-          )
         )
         (return-from minmax maxNote)
       )))
@@ -345,48 +227,42 @@ Renvoie le coup de l'IA
 (defun play (g)
 (progn
   (let ((minMove (make-move :x 0
-  :y 0)))
+                            :y 0)))
   (let ((minNote 10000))
     (do
       ((x 0 (+ 1 x)))
       ((> x 2))
-      (progn
-        (do
-          ((y 0 (+ 1 y)))
-          ((> y 2))
+      (do
+        ((y 0 (+ 1 y)))
+        ((> y 2))
+        (if
+          (can_move_xy x
+          y
+          g)
           (progn
-            (if
-              (can_move_xy x
+            (apply_move_xy x
+            y
+            g)
+            (let ((currentNote (minmax g)))
+              (princ x)
+              (princ ", ")
+              (princ y)
+              (princ ", ")
+              (princ currentNote)
+              (princ "
+")
+              (cancel_move_xy x
               y
               g)
-              (progn
-                (apply_move_xy x
-                y
-                g)
-                (let ((currentNote (minmax g)))
-                  (princ x)
-                  (princ ", ")
-                  (princ y)
-                  (princ ", ")
-                  (princ currentNote)
-                  (princ "
-")
-                  (cancel_move_xy x
-                  y
-                  g)
-                  (if
-                    (<
-                    currentNote
-                    minNote)
-                    (progn
-                      (setq minNote currentNote)
-                      (setf (move-x minMove) x)
-                      (setf (move-y minMove) y)
-                    ))
-                )))
-          )
+              (if
+                (< currentNote minNote)
+                (progn
+                  (setq minNote currentNote)
+                  (setf (move-x minMove) x)
+                  (setf (move-y minMove) y)
+                ))
+            )))
         )
-      )
     )
     (let ((a (move-x minMove)))
       (princ a)
@@ -418,9 +294,9 @@ Renvoie le coup de l'IA
                     ))))
                 ))))
     (let ((out_ (make-gamestate :cases cases
-    :firstToPlay t
-    :note 0
-    :ended nil)))
+                                :firstToPlay t
+                                :note 0
+                                :ended nil)))
     (return-from init_ out_)
     )))))
 
@@ -431,38 +307,36 @@ Renvoie le coup de l'IA
     (let ((y (mread-int )))
       (mread-blank)
       (let ((out_ (make-move :x x
-      :y y)))
+                             :y y)))
       (return-from read_move out_)
     )))))
 
-(progn
-  (do
-    ((i 0 (+ 1 i)))
-    ((> i 1))
-    (progn
-      (let ((state (init_ )))
-        (loop while (not (gamestate-ended state))
-        do (progn
-             (print_state state)
-             (apply_move (play state)
-             state)
-             (eval_ state)
-             (print_state state)
-             (if
-               (not (gamestate-ended state))
-               (progn
-                 (apply_move (play state)
-                 state)
-                 (eval_ state)
-               ))
-             )
-        )
-        (print_state state)
-        (let ((e (gamestate-note state)))
-          (princ e)
-          (princ "
+(do
+  ((i 0 (+ 1 i)))
+  ((> i 1))
+  (progn
+    (let ((state (init_ )))
+      (loop while (not (gamestate-ended state))
+      do (progn
+           (print_state state)
+           (apply_move (play state)
+           state)
+           (eval_ state)
+           (print_state state)
+           (if
+             (not (gamestate-ended state))
+             (progn
+               (apply_move (play state)
+               state)
+               (eval_ state)
+             ))
+           )
+      )
+      (print_state state)
+      (let ((e (gamestate-note state)))
+        (princ e)
+        (princ "
 ")
-        )))
+      )))
   )
-)
 

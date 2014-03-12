@@ -39,49 +39,25 @@
 	Cette fonction est récursive
 	|#
   (if
-    (eq
-    y
-    (-
-    len
-    1))
-    (progn
-      (return-from find0 (aref (aref tab y) x))
-    )
-    (progn
+    (eq y (- len 1))
+    (return-from find0 (aref (aref tab y) x))
+    (if
+      (> x y)
+      (return-from find0 100000)
       (if
-        (>
-        x
-        y)
+        (not-equal (aref (aref cache y) x) 0)
+        (return-from find0 (aref (aref cache y) x))
         (progn
-          (return-from find0 100000)
-        )
-        (progn
-          (if
-            (not-equal
-            (aref (aref cache y) x)
-            0)
-            (progn
-              (return-from find0 (aref (aref cache y) x))
-            )
-            (progn
-              (let ((result 0))
-                (let ((out0 (find0 len tab cache x (+ y 1))))
-                  (let ((out1 (find0 len tab cache (+ x 1) (+ y 1))))
-                    (if
-                      (<
-                      out0
-                      out1)
-                      (progn
-                        (setq result (+ out0 (aref (aref tab y) x)))
-                      )
-                      (progn
-                        (setq result (+ out1 (aref (aref tab y) x)))
-                      ))
-                    (setf (aref (aref cache y) y) result)
-                    (return-from find0 result)
-                  )))))
-        ))
-    ))
+          (let ((result 0))
+            (let ((out0 (find0 len tab cache x (+ y 1))))
+              (let ((out1 (find0 len tab cache (+ x 1) (+ y 1))))
+                (if
+                  (< out0 out1)
+                  (setq result (+ out0 (aref (aref tab y) x)))
+                  (setq result (+ out1 (aref (aref tab y) x))))
+                (setf (aref (aref cache y) y) result)
+                (return-from find0 result)
+              )))))))
 ))
 
 (defun find_ (len tab)

@@ -31,18 +31,10 @@
 ))
 
 (defun max2 (a b)
-(progn
-  (if
-    (>
-    a
-    b)
-    (progn
-      (return-from max2 a)
-    )
-    (progn
-      (return-from max2 b)
-    ))
-))
+(if
+  (> a b)
+  (return-from max2 a)
+  (return-from max2 b)))
 
 (defun nbPassePartout (n passepartout m serrures)
 (progn
@@ -53,27 +45,11 @@
         ((> i (- m 1)))
         (progn
           (if
-            (and
-            (eq
-            (aref (aref serrures i) 0)
-            (- 0 1))
-            (>
-            (aref (aref serrures i) 1)
-            max_ancient))
-            (progn
-              (setq max_ancient (aref (aref serrures i) 1))
-            ))
+            (and (eq (aref (aref serrures i) 0) (- 0 1)) (> (aref (aref serrures i) 1) max_ancient))
+            (setq max_ancient (aref (aref serrures i) 1)))
           (if
-            (and
-            (eq
-            (aref (aref serrures i) 0)
-            1)
-            (>
-            (aref (aref serrures i) 1)
-            max_recent))
-            (progn
-              (setq max_recent (aref (aref serrures i) 1))
-            ))
+            (and (eq (aref (aref serrures i) 0) 1) (> (aref (aref serrures i) 1) max_recent))
+            (setq max_recent (aref (aref serrures i) 1)))
         )
       )
       (let ((max_ancient_pp 0))
@@ -84,34 +60,16 @@
             (progn
               (let ((pp (aref passepartout i)))
                 (if
-                  (and
-                  (>=
-                  (aref pp 0)
-                  max_ancient)
-                  (>=
-                  (aref pp 1)
-                  max_recent))
-                  (progn
-                    (return-from nbPassePartout 1)
-                  ))
+                  (and (>= (aref pp 0) max_ancient) (>= (aref pp 1) max_recent))
+                  (return-from nbPassePartout 1))
                 (setq max_ancient_pp (max2 max_ancient_pp (aref pp 0)))
                 (setq max_recent_pp (max2 max_recent_pp (aref pp 1)))
               ))
           )
           (if
-            (and
-            (>=
-            max_ancient_pp
-            max_ancient)
-            (>=
-            max_recent_pp
-            max_recent))
-            (progn
-              (return-from nbPassePartout 2)
-            )
-            (progn
-              (return-from nbPassePartout 0)
-            ))
+            (and (>= max_ancient_pp max_ancient) (>= max_recent_pp max_recent))
+            (return-from nbPassePartout 2)
+            (return-from nbPassePartout 0))
         ))))))
 
 (progn

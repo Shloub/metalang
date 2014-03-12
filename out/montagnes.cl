@@ -39,19 +39,13 @@
         do (progn
              (let ((x (aref tab i)))
                (loop while (and (>= j 0) (> x (aref tab (- len j))))
-               do (progn
-                    (setq j ( - j 1))
-                    )
+               do (setq j ( - j 1))
                )
                (setq j ( + j 1))
                (setf (aref tab (- len j)) x)
                (if
-                 (>
-                 j
-                 max_)
-                 (progn
-                   (setq max_ j)
-                 ))
+                 (> j max_)
+                 (setq max_ j))
                (setq i ( - i 1))
              ))
         )

@@ -28,9 +28,7 @@
   (do
     ((i 0 (+ 1 i)))
     ((> i 10))
-    (progn
-      (let ((a 0))
-      ))
+    (let ((a 0)))
   )
   (return-from bar 0)
 ))

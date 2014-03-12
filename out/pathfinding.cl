@@ -37,96 +37,40 @@
 ))
 
 (defun min2 (a b)
-(progn
-  (if
-    (<
-    a
-    b)
-    (progn
-      (return-from min2 a)
-    )
-    (progn
-      (return-from min2 b)
-    ))
-))
+(if
+  (< a b)
+  (return-from min2 a)
+  (return-from min2 b)))
 
 (defun min3 (a b c)
-(progn
-  (return-from min3 (min2 (min2 a b) c))
-))
+(return-from min3 (min2 (min2 a b) c)))
 
 (defun min4 (a b c d)
-(progn
-  (return-from min4 (min3 (min2 a b) c d))
-))
+(return-from min4 (min3 (min2 a b) c d)))
 
 (defun pathfind_aux (cache tab x y posX posY)
-(progn
+(if
+  (and (eq posX (- x 1)) (eq posY (- y 1)))
+  (return-from pathfind_aux 0)
   (if
-    (and
-    (eq
-    posX
-    (-
-    x
-    1))
-    (eq
-    posY
-    (-
-    y
-    1)))
-    (progn
-      (return-from pathfind_aux 0)
-    )
-    (progn
+    (or (or (or (< posX 0) (< posY 0)) (>= posX x)) (>= posY y))
+    (return-from pathfind_aux (* (* x y) 10))
+    (if
+      (eq (aref (aref tab posY) posX) (int-char 35))
+      (return-from pathfind_aux (* (* x y) 10))
       (if
-        (or
-        (or
-        (or
-        (<
-        posX
-        0)
-        (<
-        posY
-        0))
-        (>=
-        posX
-        x))
-        (>=
-        posY
-        y))
+        (not-equal (aref (aref cache posY) posX) (- 0 1))
+        (return-from pathfind_aux (aref (aref cache posY) posX))
         (progn
-          (return-from pathfind_aux (* (* x y) 10))
-        )
-        (progn
-          (if
-            (eq
-            (aref (aref tab posY) posX)
-            (int-char 35))
-            (progn
-              (return-from pathfind_aux (* (* x y) 10))
-            )
-            (progn
-              (if
-                (not-equal
-                (aref (aref cache posY) posX)
-                (- 0 1))
-                (progn
-                  (return-from pathfind_aux (aref (aref cache posY) posX))
-                )
-                (progn
-                  (setf (aref (aref cache posY) posX) (* (* x y) 10))
-                  (let ((val1 (pathfind_aux cache tab x y (+ posX 1) posY)))
-                    (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
-                      (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
-                        (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
-                          (let ((out_ (+ 1 (min4 val1 val2 val3 val4))))
-                            (setf (aref (aref cache posY) posX) out_)
-                            (return-from pathfind_aux out_)
-                          )))))))
-            ))
-        ))
-    ))
-))
+          (setf (aref (aref cache posY) posX) (* (* x y) 10))
+          (let ((val1 (pathfind_aux cache tab x y (+ posX 1) posY)))
+            (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
+              (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
+                (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
+                  (let ((out_ (+ 1 (min4 val1 val2 val3 val4))))
+                    (setf (aref (aref cache posY) posX) out_)
+                    (return-from pathfind_aux out_)
+                  )))))))))))
 
 (defun pathfind (tab x y)
 (progn

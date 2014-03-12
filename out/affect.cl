@@ -32,17 +32,17 @@
 #|
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 |#
-(defstruct (toto (:type list) :named) foo
-bar
-blah
-
-)
+(defstruct (toto (:type list) :named)
+  foo
+  bar
+  blah
+  )
 
 (defun mktoto (v1)
 (progn
   (let ((t__ (make-toto :foo v1
-  :bar v1
-  :blah v1)))
+                        :bar v1
+                        :blah v1)))
   (return-from mktoto t__)
 )))
 
@@ -51,8 +51,8 @@ blah
   (let ((t__ t_))
     (let ((t2 t2_))
       (let ((t3 (make-toto :foo 0
-      :bar 0
-      :blah 0)))
+                           :bar 0
+                           :blah 0)))
       (setq t3 t2)
       (setq t__ t2)
       (setq t2 t3)

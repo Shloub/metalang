@@ -29,14 +29,14 @@
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
-(defstruct (toto (:type list) :named) foo
-bar
-
-)
+(defstruct (toto (:type list) :named)
+  foo
+  bar
+  )
 
 (progn
   (let ((param (make-toto :foo 0
-  :bar 0)))
+                          :bar 0)))
   (setf (toto-bar param) (mread-int ))
   (mread-blank)
   (setf (toto-foo param) (mread-int ))

@@ -11,7 +11,5 @@
 (defun quotient (a b) (truncate a b))
 (defun not-equal (a b) (not (eq a b)))
 
-(progn
-  (princ "Hello World")
-)
+(princ "Hello World")
 

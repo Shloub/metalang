@@ -40,19 +40,11 @@
         (progn
           (setq current ( + current (aref lst i)))
           (if
-            (<
-            current
-            0)
-            (progn
-              (setq current 0)
-            ))
+            (< current 0)
+            (setq current 0))
           (if
-            (<
-            max_
-            current)
-            (progn
-              (setq max_ current)
-            ))
+            (< max_ current)
+            (setq max_ current))
         )
       )
       (return-from summax max_)

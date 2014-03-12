@@ -26,38 +26,30 @@
       )
       out
     ))))
-(defstruct (intlist (:type list) :named) head
-tail
-
-)
+(defstruct (intlist (:type list) :named)
+  head
+  tail
+  )
 
 (defun cons_ (list i)
 (progn
   (let ((out_ (make-intlist :head i
-  :tail list)))
+                            :tail list)))
   (return-from cons_ out_)
 )))
 
 (defun rev2 (empty acc torev)
-(progn
-  (if
-    (eq
-    torev
-    empty)
-    (progn
-      (return-from rev2 acc)
-    )
-    (progn
-      (let ((acc2 (make-intlist :head (intlist-head torev)
-      :tail acc)))
-      (return-from rev2 (rev2 empty acc (intlist-tail torev)))
-    )))
-))
+(if
+  (eq torev empty)
+  (return-from rev2 acc)
+  (progn
+    (let ((acc2 (make-intlist :head (intlist-head torev)
+                              :tail acc)))
+    (return-from rev2 (rev2 empty acc (intlist-tail torev)))
+  ))))
 
 (defun rev (empty torev)
-(progn
-  (return-from rev (rev2 empty empty torev))
-))
+(return-from rev (rev2 empty empty torev)))
 
 (defun test (empty)
 (progn
@@ -67,12 +59,8 @@ tail
       do (progn
            (setq i (mread-int ))
            (if
-             (not-equal
-             i
-             0)
-             (progn
-               (setq list (cons_ list i))
-             ))
+             (not-equal i 0)
+             (setq list (cons_ list i)))
            )
       )
     ))))

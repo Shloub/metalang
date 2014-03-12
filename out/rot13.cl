@@ -51,12 +51,8 @@ Ce test effectue un rot13 sur une chaine lue en entrée
                  (let ((tmpc (mread-char )))
                    (let ((c (char-int tmpc)))
                      (if
-                       (not-equal
-                       tmpc
-                       #\Space)
-                       (progn
-                         (setq c (+ (mod (+ (- c (char-int #\a)) 13) 26) (char-int #\a)))
-                       ))
+                       (not-equal tmpc #\Space)
+                       (setq c (+ (mod (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
                      (return-from lambda_1 (int-char c))
                    ))))
                ))))

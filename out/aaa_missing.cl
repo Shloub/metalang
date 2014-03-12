@@ -68,20 +68,14 @@
   (do
     ((i1 0 (+ 1 i1)))
     ((> i1 (- len 1)))
-    (progn
-      (setf (aref tab2 (aref tab i1)) t)
-    )
+    (setf (aref tab2 (aref tab i1)) t)
   )
   (do
     ((i2 0 (+ 1 i2)))
     ((> i2 (- len 1)))
-    (progn
-      (if
-        (not (aref tab2 i2))
-        (progn
-          (return-from result i2)
-        ))
-    )
+    (if
+      (not (aref tab2 i2))
+      (return-from result i2))
   )
   (return-from result (- 0 1))
   )))
