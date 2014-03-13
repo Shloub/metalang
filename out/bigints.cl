@@ -43,37 +43,29 @@
   (return-from max2 b)))
 
 (defstruct (bigint (:type list) :named)
-  sign
-  chiffres_len
-  chiffres
+  bigint_sign
+  bigint_len
+  bigint_chiffres
   )
 
-(defun read_big_int ()
+(defun read_bigint ()
 (progn
-  (princ "read_big_int")
   (let ((len (mread-int )))
     (mread-blank)
-    (princ len)
-    (princ "=len ")
     (let ((sign (mread-char )))
-      (princ sign)
-      (princ "=sign
-")
+      (mread-blank)
       (let
        ((chiffres (array_init
                      len
                      (function (lambda (d)
                      (block lambda_1
                        (let ((c (mread-char )))
-                         (princ c)
-                         (princ "=c
-")
                          (return-from lambda_1 (- (char-int c) (char-int #\0)))
                        )))
                      ))))
       (do
         ((i 0 (+ 1 i)))
-        ((> i (quotient len 2)))
+        ((> i (quotient (- len 1) 2)))
         (progn
           (let ((tmp (aref chiffres i)))
             (setf (aref chiffres i) (aref chiffres (- (- len 1) i)))
@@ -81,79 +73,338 @@
           ))
       )
       (mread-blank)
-      (let ((out_ (make-bigint :sign (eq sign (int-char 43))
-                               :chiffres_len len
-                               :chiffres chiffres)))
-      (return-from read_big_int out_)
+      (let ((out_ (make-bigint :bigint_sign (eq sign (int-char 43))
+                               :bigint_len len
+                               :bigint_chiffres chiffres)))
+      (return-from read_bigint out_)
       ))))))
 
-(defun print_big_int (a)
+(defun print_bigint (a)
 (progn
   (if
-    (bigint-sign a)
-    (princ "+")
-    (princ "-"))
+    (not (bigint-bigint_sign a))
+    (princ (int-char 45)))
   (do
     ((i 0 (+ 1 i)))
-    ((> i (- (bigint-chiffres_len a) 1)))
+    ((> i (- (bigint-bigint_len a) 1)))
     (progn
-      (let ((e (aref (bigint-chiffres a) i)))
+      (let ((e (aref (bigint-bigint_chiffres a) (- (- (bigint-bigint_len a) 1) i))))
         (princ e)
       ))
   )
 ))
 
-(defun neg_big_int (a)
+(defun bigint_eq (a b)
 (progn
-  (let ((out_ (make-bigint :sign (not (bigint-sign a))
-                           :chiffres_len (bigint-chiffres_len a)
-                           :chiffres (bigint-chiffres a))))
-  (return-from neg_big_int out_)
+  #| Renvoie vrai si a = b |#
+  (if
+    (not-equal (bigint-bigint_sign a) (bigint-bigint_sign b))
+    (return-from bigint_eq nil)
+    (if
+      (not-equal (bigint-bigint_len a) (bigint-bigint_len b))
+      (return-from bigint_eq nil)
+      (progn
+        (do
+          ((i 0 (+ 1 i)))
+          ((> i (- (bigint-bigint_len a) 1)))
+          (if
+            (not-equal (aref (bigint-bigint_chiffres a) i) (aref (bigint-bigint_chiffres b) i))
+            (return-from bigint_eq nil))
+        )
+        (return-from bigint_eq t)
+      )))
+))
+
+(defun bigint_gt (a b)
+(progn
+  #| Renvoie vrai si a > b |#
+  (if
+    (and (bigint-bigint_sign a) (not (bigint-bigint_sign b)))
+    (return-from bigint_gt t)
+    (if
+      (and (not (bigint-bigint_sign a)) (bigint-bigint_sign b))
+      (return-from bigint_gt nil)
+      (progn
+        (if
+          (> (bigint-bigint_len a) (bigint-bigint_len b))
+          (return-from bigint_gt (bigint-bigint_sign a))
+          (if
+            (< (bigint-bigint_len a) (bigint-bigint_len b))
+            (return-from bigint_gt (not (bigint-bigint_sign a)))
+            (do
+              ((i 0 (+ 1 i)))
+              ((> i (- (bigint-bigint_len a) 1)))
+              (progn
+                (let ((j (- (- (bigint-bigint_len a) 1) i)))
+                  (if
+                    (> (aref (bigint-bigint_chiffres a) j) (aref (bigint-bigint_chiffres b) j))
+                    (return-from bigint_gt (bigint-bigint_sign a))
+                    (if
+                      (< (aref (bigint-bigint_chiffres a) j) (aref (bigint-bigint_chiffres b) j))
+                      (return-from bigint_gt (bigint-bigint_sign a))))
+                ))
+              )))
+        (return-from bigint_gt t)
+      )))
+))
+
+(defun bigint_lt (a b)
+(return-from bigint_lt (not (bigint_gt a b))))
+
+(defun add_bigint_positif (a b)
+(progn
+  #| Une addition ou on en a rien a faire des signes |#
+  (let ((len (+ (max2 (bigint-bigint_len a) (bigint-bigint_len b)) 1)))
+    (let ((retenue 0))
+      (let
+       ((chiffres (array_init
+                     len
+                     (function (lambda (i)
+                     (block lambda_2
+                       (let ((tmp retenue))
+                         (if
+                           (< i (bigint-bigint_len a))
+                           (setq tmp ( + tmp (aref (bigint-bigint_chiffres a) i))))
+                         (if
+                           (< i (bigint-bigint_len b))
+                           (setq tmp ( + tmp (aref (bigint-bigint_chiffres b) i))))
+                         (setq retenue (quotient tmp 10))
+                         (return-from lambda_2 (mod tmp 10))
+                       )))
+                     ))))
+      (if
+        (eq (aref chiffres (- len 1)) 0)
+        (setq len ( - len 1)))
+      (let ((out_ (make-bigint :bigint_sign t
+                               :bigint_len len
+                               :bigint_chiffres chiffres)))
+      (return-from add_bigint_positif out_)
+      ))))))
+
+(defun sub_bigint_positif (a b)
+(progn
+  #| Une soustraction ou on en a rien a faire des signes
+Pré-requis : a > b
+|#
+  (let ((len (bigint-bigint_len a)))
+    (let ((retenue 0))
+      (let
+       ((chiffres (array_init
+                     len
+                     (function (lambda (i)
+                     (block lambda_3
+                       (let ((tmp (+ retenue (aref (bigint-bigint_chiffres a) i))))
+                         (if
+                           (< i (bigint-bigint_len b))
+                           (setq tmp ( - tmp (aref (bigint-bigint_chiffres b) i))))
+                         (if
+                           (< tmp 0)
+                           (progn
+                             (setq tmp ( + tmp 10))
+                             (setq retenue (- 0 1))
+                           )
+                           (setq retenue 0))
+                         (return-from lambda_3 tmp)
+                       )))
+                     ))))
+      (loop while (and (> len 0) (eq (aref chiffres (- len 1)) 0))
+      do (setq len ( - len 1))
+      )
+      (let ((out_ (make-bigint :bigint_sign t
+                               :bigint_len len
+                               :bigint_chiffres chiffres)))
+      (return-from sub_bigint_positif out_)
+      ))))))
+
+(defun neg_bigint (a)
+(progn
+  (let ((out_ (make-bigint :bigint_sign (not (bigint-bigint_sign a))
+                           :bigint_len (bigint-bigint_len a)
+                           :bigint_chiffres (bigint-bigint_chiffres a))))
+  (return-from neg_bigint out_)
 )))
 
-(defun add_big_int (a b)
+(defun add_bigint (a b)
+(if
+  (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
+  (if
+    (bigint-bigint_sign a)
+    (return-from add_bigint (add_bigint_positif a b))
+    (return-from add_bigint (neg_bigint (add_bigint_positif a b))))
+  (if
+    (bigint-bigint_sign a)
+    (progn
+      #| a positif, b negatif |#
+      (if
+        (bigint_gt a (neg_bigint b))
+        (return-from add_bigint (sub_bigint_positif a b))
+        (return-from add_bigint (neg_bigint (sub_bigint_positif b a))))
+    )
+    (progn
+      #| a negatif, b positif |#
+      (if
+        (bigint_gt (neg_bigint a) b)
+        (return-from add_bigint (neg_bigint (sub_bigint_positif a b)))
+        (return-from add_bigint (sub_bigint_positif b a)))
+    ))))
+
+(defun sub_bigint (a b)
+(return-from sub_bigint (add_bigint a (neg_bigint b))))
+
+(defun mul_bigint_cp (a b)
 (progn
-  (let ((len (+ (max2 (bigint-chiffres_len a) (bigint-chiffres_len b)) 1)))
-    (let ((retenue 0))
-      (let ((sign t))
-        (let
-         ((chiffres (array_init
-                       len
-                       (function (lambda (i)
-                       (block lambda_2
-                         (let ((tmp retenue))
-                           (if
-                             (< i (bigint-chiffres_len a))
-                             (setq tmp ( + tmp (aref (bigint-chiffres a) i))))
-                           (if
-                             (< i (bigint-chiffres_len b))
-                             (setq tmp ( + tmp (aref (bigint-chiffres b) i))))
-                           (setq retenue (quotient tmp 10))
-                           (return-from lambda_2 (mod tmp 10))
-                         )))
-                       ))))
-        (let ((out_ (make-bigint :sign sign
-                                 :chiffres_len len
-                                 :chiffres chiffres)))
-        (return-from add_big_int out_)
-        )))))))
+  #| Cet algorithm est quadratique.
+C'est le même que celui qu'on enseigne aux enfants en CP.
+D'ou le nom de la fonction. |#
+  (let ((len (+ (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)))
+    (let
+     ((chiffres (array_init
+                   len
+                   (function (lambda (k)
+                   (block lambda_4
+                     (return-from lambda_4 0)
+                   ))
+                   ))))
+    (do
+      ((i 0 (+ 1 i)))
+      ((> i (- (bigint-bigint_len a) 1)))
+      (progn
+        (let ((retenue 0))
+          (do
+            ((j 0 (+ 1 j)))
+            ((> j (- (bigint-bigint_len b) 1)))
+            (progn
+              (setf (aref chiffres (+ i j)) (+ (aref chiffres (+ i j)) (+ retenue (* (aref (bigint-bigint_chiffres b) j) (aref (bigint-bigint_chiffres a) i)))))
+              (setq retenue (quotient (aref chiffres (+ i j)) 10))
+              (setf (aref chiffres (+ i j)) (mod (aref chiffres (+ i j)) 10))
+            )
+          )
+          (setf (aref chiffres (+ i (bigint-bigint_len b))) (+ (aref chiffres (+ i (bigint-bigint_len b))) retenue))
+        ))
+    )
+    (setf (aref chiffres (+ (bigint-bigint_len a) (bigint-bigint_len b))) (quotient (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
+    (setf (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) (mod (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
+    (do
+      ((l 0 (+ 1 l)))
+      ((> l 2))
+      (if
+        (eq (aref chiffres (- len 1)) 0)
+        (setq len ( - len 1)))
+    )
+    (let ((out_ (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
+                             :bigint_len len
+                             :bigint_chiffres chiffres)))
+    (return-from mul_bigint_cp out_)
+    )))))
+
+(defun bigint_premiers_chiffres (a i)
+(progn
+  (let ((out_ (make-bigint :bigint_sign (bigint-bigint_sign a)
+                           :bigint_len i
+                           :bigint_chiffres (bigint-bigint_chiffres a))))
+  (return-from bigint_premiers_chiffres out_)
+)))
+
+(defun bigint_shift (a i)
+(progn
+  (let ((f (+ (bigint-bigint_len a) i)))
+    (let
+     ((chiffres (array_init
+                   f
+                   (function (lambda (k)
+                   (block lambda_5
+                     (if
+                       (>= k i)
+                       (return-from lambda_5 (aref (bigint-bigint_chiffres a) (- k i)))
+                       (return-from lambda_5 0))
+                   ))
+                   ))))
+    (let ((out_ (make-bigint :bigint_sign (bigint-bigint_sign a)
+                             :bigint_len (+ (bigint-bigint_len a) i)
+                             :bigint_chiffres chiffres)))
+    (return-from bigint_shift out_)
+    )))))
+
+(defun mul_bigint (aa bb)
+(if
+  (or (< (bigint-bigint_len aa) 3) (< (bigint-bigint_len bb) 3))
+  (return-from mul_bigint (mul_bigint_cp aa bb))
+  (progn
+    #| Algorithme de Karatsuba |#
+    (let ((split (quotient (max2 (bigint-bigint_len aa) (bigint-bigint_len bb)) 2)))
+      (let ((a (bigint_shift aa (- 0 split))))
+        (let ((b (bigint_premiers_chiffres aa split)))
+          (let ((c (bigint_shift bb (- 0 split))))
+            (let ((d (bigint_premiers_chiffres bb split)))
+              (let ((amoinsb (sub_bigint a b)))
+                (let ((cmoinsd (sub_bigint c d)))
+                  (let ((ac (mul_bigint a c)))
+                    (let ((bd (mul_bigint b d)))
+                      (let ((amoinsbcmoinsd (mul_bigint amoinsb cmoinsd)))
+                        (let ((acdec (bigint_shift ac (* 2 split))))
+                          (return-from mul_bigint (add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split)))
+                          #| ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd |#
+                        ))))))))))))))
 
 #|
-def @bigint mul_big_int(@bigint a, @bigint b)
-
-end
-
-def @bigint exp_big_int(@bigint a, @bigint b)
-
-end
-
-def @bigint print_big_int(@bigint b)
-
-end
+TODO multiplication plus rapide
+Division,
+Modulo
+Exp
 |#
 (progn
-  (let ((a (read_big_int )))
-    (let ((b (read_big_int )))
-      (print_big_int (add_big_int a b))
-    )))
+  (let ((a (read_bigint )))
+    (let ((b (read_bigint )))
+      (print_bigint a)
+      (princ ">>1=")
+      (print_bigint (bigint_shift a (- 0 1)))
+      (princ "
+")
+      (print_bigint a)
+      (princ "*")
+      (print_bigint b)
+      (princ "=")
+      (print_bigint (mul_bigint a b))
+      (princ "
+")
+      (print_bigint a)
+      (princ "*")
+      (print_bigint b)
+      (princ "=")
+      (print_bigint (mul_bigint_cp a b))
+      (princ "
+")
+      (print_bigint a)
+      (princ "+")
+      (print_bigint b)
+      (princ "=")
+      (print_bigint (add_bigint a b))
+      (princ "
+")
+      (print_bigint b)
+      (princ "-")
+      (print_bigint a)
+      (princ "=")
+      (print_bigint (sub_bigint b a))
+      (princ "
+")
+      (print_bigint a)
+      (princ "-")
+      (print_bigint b)
+      (princ "=")
+      (print_bigint (sub_bigint a b))
+      (princ "
+")
+      (print_bigint a)
+      (princ ">")
+      (print_bigint b)
+      (princ "=")
+      (let ((g (bigint_gt a b)))
+        (if
+          g
+          (princ "True")
+          (princ "False"))
+        (princ "
+")
+      ))))
 

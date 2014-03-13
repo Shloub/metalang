@@ -1,10 +1,12 @@
-record @bigint_nat
-	bigint_nat_len : int
-  bigint_nat_chiffres : array<int>
+record @bigint
+	bigint_sign : bool
+	bigint_len : int
+  bigint_chiffres : array<int>
 end
 
-def @bigint_nat read_bigint_nat()
+def @bigint read_bigint()
 	def read int len skip
+	def read char sign skip
 	def array<int> chiffres[len] with d do
 		def read char c
 		return int_of_char(c) - int_of_char('0')
@@ -15,29 +17,79 @@ def @bigint_nat read_bigint_nat()
 		chiffres[len - 1 - i] = tmp
 	end
 	skip
-	def @bigint_nat out = record
-		bigint_nat_len = len
-		bigint_nat_chiffres = chiffres
+	def @bigint out = record
+		bigint_sign = sign == '+'
+		bigint_len = len
+		bigint_chiffres = chiffres
 	end
 	return out
 end
 
-def void print_bigint_nat(@bigint_nat a)
-	for i = 0 to a.bigint_nat_len - 1 do
-		print a.bigint_nat_chiffres[a.bigint_nat_len - 1 - i]
+def void print_bigint(@bigint a)
+	if !a.bigint_sign then
+		print '-'
+	end
+	for i = 0 to a.bigint_len - 1 do
+		print a.bigint_chiffres[a.bigint_len - 1 - i]
 	end
 end
 
-def @bigint_nat add_bigint_nat(@bigint_nat a, @bigint_nat b)
-	def len = max2(a.bigint_nat_len, b.bigint_nat_len) + 1
+def bool bigint_eq(@bigint a, @bigint b)
+/* Renvoie vrai si a = b */
+	if a.bigint_sign != b.bigint_sign then
+		return false
+	elsif a.bigint_len != b.bigint_len then
+		return false
+	else
+		for i = 0 to a.bigint_len - 1 do
+			if a.bigint_chiffres[i] != b.bigint_chiffres[i] then
+				return false
+			end
+		end
+		return true
+	end
+end
+
+def bool bigint_gt(@bigint a, @bigint b)
+/* Renvoie vrai si a > b */
+	if a.bigint_sign && !b.bigint_sign then
+		return true
+	elsif !a.bigint_sign && b.bigint_sign then
+		return false
+	else
+		if a.bigint_len > b.bigint_len then
+			return a.bigint_sign
+		elsif a.bigint_len < b.bigint_len then
+			return !a.bigint_sign
+		else
+			for i = 0 to a.bigint_len - 1 do
+				def j = a.bigint_len - 1 - i
+				if a.bigint_chiffres[j] > b.bigint_chiffres[j] then
+					return a.bigint_sign
+				elsif a.bigint_chiffres[j] < b.bigint_chiffres[j] then
+					return a.bigint_sign
+				end
+			end
+		end
+		return true
+	end
+end
+
+def bool bigint_lt(@bigint a, @bigint b)
+	return !bigint_gt(a, b)
+end
+
+def @bigint add_bigint_positif(@bigint a, @bigint b)
+/* Une addition ou on en a rien a faire des signes */
+	def len = max2(a.bigint_len, b.bigint_len) + 1
 	def retenue = 0
 	def array<int> chiffres[len] with i do
 		def tmp = retenue
-		if i < a.bigint_nat_len then
-			tmp += a.bigint_nat_chiffres[i]
+		if i < a.bigint_len then
+			tmp += a.bigint_chiffres[i]
 		end
-		if i < b.bigint_nat_len then
-			tmp += b.bigint_nat_chiffres[i]
+		if i < b.bigint_len then
+			tmp += b.bigint_chiffres[i]
 		end
 		retenue = tmp / 10
 		return tmp % 10
@@ -45,52 +97,193 @@ def @bigint_nat add_bigint_nat(@bigint_nat a, @bigint_nat b)
 	if chiffres[len - 1] == 0 then
 		len --
 	end
-	def @bigint_nat out = record
-		bigint_nat_len = len
-		bigint_nat_chiffres = chiffres
+	def @bigint out = record
+		bigint_sign = true
+		bigint_len = len
+		bigint_chiffres = chiffres
 	end
 	return out
 end
 
-def @bigint_nat mul_bigint_nat(@bigint_nat a, @bigint_nat b)
-	def len = a.bigint_nat_len + b.bigint_nat_len + 1
+def @bigint sub_bigint_positif(@bigint a, @bigint b)
+/* Une soustraction ou on en a rien a faire des signes
+Pré-requis : a > b
+*/
+	def len = a.bigint_len
+	def retenue = 0
+	def array<int> chiffres[len] with i do
+		def tmp = retenue + a.bigint_chiffres[i]
+		if i < b.bigint_len then
+			tmp -= b.bigint_chiffres[i]
+		end
+		if tmp < 0 then
+			tmp += 10
+			retenue = -1
+		else
+			retenue = 0
+		end
+		return tmp
+  end
+	while len > 0 && chiffres[len - 1] == 0 do
+		len --
+	end
+	def @bigint out = record
+		bigint_sign = true
+		bigint_len = len
+		bigint_chiffres = chiffres
+	end
+	return out
+end
+
+def @bigint neg_bigint(@bigint a)
+	def @bigint out = record
+		bigint_sign = !a.bigint_sign
+		bigint_len = a.bigint_len
+		bigint_chiffres = a.bigint_chiffres
+	end
+	return out
+end
+
+def @bigint add_bigint(@bigint a, @bigint b)
+	if a.bigint_sign == b.bigint_sign then
+		if a.bigint_sign then
+			return add_bigint_positif(a, b)
+		else
+			return neg_bigint(add_bigint_positif(a, b))
+		end
+	elsif a.bigint_sign then /* a positif, b negatif */
+		if bigint_gt(a, neg_bigint(b)) then
+			return sub_bigint_positif(a, b)
+		else
+			return neg_bigint(sub_bigint_positif(b, a))
+		end
+	else /* a negatif, b positif */
+		if bigint_gt(neg_bigint(a), b) then
+			return neg_bigint(sub_bigint_positif(a, b))
+		else
+			return sub_bigint_positif(b, a)
+		end
+  end
+end
+
+def @bigint sub_bigint(@bigint a, @bigint b)
+	return add_bigint(a, neg_bigint(b))
+end
+
+def @bigint mul_bigint_cp(@bigint a, @bigint b)
+/* Cet algorithm est quadratique.
+C'est le même que celui qu'on enseigne aux enfants en CP.
+D'ou le nom de la fonction. */
+	def len = a.bigint_len + b.bigint_len + 1
 	def array<int> chiffres[len] with k do
 		return 0
 	end
-	for i = 0 to a.bigint_nat_len - 1 do
+	for i = 0 to a.bigint_len - 1 do
 		def retenue = 0
-		for j = 0 to b.bigint_nat_len - 1 do
-			chiffres[i + j] += retenue + b.bigint_nat_chiffres[j] * a.bigint_nat_chiffres[i];
+		for j = 0 to b.bigint_len - 1 do
+			chiffres[i + j] += retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i];
 			retenue = chiffres[i + j] / 10
 			chiffres[i + j] = chiffres[i + j] % 10
 		end
-		chiffres[i + b.bigint_nat_len] += retenue
+		chiffres[i + b.bigint_len] += retenue
 	end
-	chiffres[a.bigint_nat_len + b.bigint_nat_len] = chiffres[a.bigint_nat_len + b.bigint_nat_len - 1] / 10
-	chiffres[a.bigint_nat_len + b.bigint_nat_len - 1] = chiffres[a.bigint_nat_len + b.bigint_nat_len - 1] % 10
+	chiffres[a.bigint_len + b.bigint_len] = chiffres[a.bigint_len + b.bigint_len - 1] / 10
+	chiffres[a.bigint_len + b.bigint_len - 1] = chiffres[a.bigint_len + b.bigint_len - 1] % 10
 	for l = 0 to 2 do
 		if chiffres[len - 1] == 0 then
 			len --
 		end
 	end
-	def @bigint_nat out = record
-		bigint_nat_len = len
-		bigint_nat_chiffres = chiffres
+	def @bigint out = record
+		bigint_sign = a.bigint_sign == b.bigint_sign
+		bigint_len = len
+		bigint_chiffres = chiffres
 	end
 	return out
 end
 
-/*
-def @bigint exp_bigint(@bigint_nat a, @bigint_nat b)
-
+def @bigint bigint_premiers_chiffres(@bigint a, int i)
+	def @bigint out = record
+		bigint_sign = a.bigint_sign
+		bigint_len = i
+		bigint_chiffres = a.bigint_chiffres
+	end
+	return out
 end
+
+def @bigint bigint_shift(@bigint a, int i)
+	def array<int> chiffres[a.bigint_len + i] with k do
+		if k >= i then
+			return a.bigint_chiffres[k - i]
+		else
+			return 0
+		end
+	end
+	def @bigint out = record
+		bigint_sign = a.bigint_sign
+		bigint_len = a.bigint_len + i
+		bigint_chiffres = chiffres
+	end
+	return out
+end
+
+
+def @bigint mul_bigint(@bigint aa, @bigint bb)
+	if aa.bigint_len < 3 || bb.bigint_len < 3 then
+		return mul_bigint_cp(aa, bb)
+	end
+	/* Algorithme de Karatsuba */
+	def split = max2(aa.bigint_len, bb.bigint_len) / 2
+	def a = bigint_shift(aa, -split)
+	def b = bigint_premiers_chiffres(aa, split)
+	def c = bigint_shift(bb, -split)
+	def d = bigint_premiers_chiffres(bb, split)
+	def amoinsb = sub_bigint(a, b);
+	def cmoinsd = sub_bigint(c, d);
+	def ac = mul_bigint(a, c)
+	def bd = mul_bigint(b, d)
+	def amoinsbcmoinsd = mul_bigint(amoinsb, cmoinsd)
+	def acdec = bigint_shift(ac, 2 * split)
+	return add_bigint(add_bigint(acdec, bd),
+	bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
+/* ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd */
+end
+
+/*
+TODO multiplication plus rapide
+Division,
+Modulo
+Exp
 */
 
 main
-	def a = read_bigint_nat()
-	def b = read_bigint_nat()
-	print_bigint_nat(a) print "*"
-	print_bigint_nat(b)  print "="
-  print_bigint_nat( mul_bigint_nat(a, b) )
+	def a = read_bigint()
+	def b = read_bigint()
+	print_bigint(a) print ">>1="
+	print_bigint(bigint_shift(a, -1))
+	print "\n"
+	print_bigint(a) print "*"
+	print_bigint(b)  print "="
+  print_bigint( mul_bigint(a, b) )
+	print "\n"
+	print_bigint(a) print "*"
+	print_bigint(b)  print "="
+  print_bigint( mul_bigint_cp(a, b) )
+	print "\n"
+	print_bigint(a) print "+"
+	print_bigint(b)  print "="
+  print_bigint( add_bigint(a, b) )
+	print "\n"
+	print_bigint(b) print "-"
+	print_bigint(a)  print "="
+  print_bigint( sub_bigint(b, a) )
+	print "\n"
+	print_bigint(a) print "-"
+	print_bigint(b)  print "="
+  print_bigint( sub_bigint(a, b) )
+	print "\n"
+	print_bigint(a) print ">"
+	print_bigint(b)  print "="
+  print bigint_gt(a, b)
 	print "\n"
 end
