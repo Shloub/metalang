@@ -481,8 +481,7 @@ class printer = object(self)
   method printp f e =
     Format.fprintf f "@[<h 2>(%a)@]" self#expr e
 
-  method binop f op a b =
-    let chf op side f x = match (Expr.unfix x) with
+  method chf op side f x = match (Expr.unfix x) with
       | Expr.BinOp (_, op2, _) ->
         begin match (op, side, op2) with
           | ((Expr.Eq | Expr.Diff | Expr.Lower |
@@ -516,10 +515,12 @@ class printer = object(self)
             self#printp f x
         end
       | _ -> self#expr f x
-    in Format.fprintf f "%a@ %a@ %a"
-    (chf op Left) a
+
+  method binop f op a b =
+		Format.fprintf f "%a@ %a@ %a"
+    (self#chf op Left) a
     self#print_op op
-    (chf op Right) b
+    (self#chf op Right) b
 
 
 

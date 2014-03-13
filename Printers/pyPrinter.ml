@@ -57,9 +57,9 @@ class pyPrinter = object(self)
     | Expr.Div ->
       if Typer.is_int (super#getTyperEnv ()) a
       then Format.fprintf f "%a %a %a"
-        self#expr a
+        (self#chf op Left) a
         self#divi ()
-        self#expr b
+        (self#chf op Right) b
       else super#binop f op a b
     | _ -> super#binop f op a b
       
