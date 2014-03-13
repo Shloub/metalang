@@ -34,7 +34,7 @@ def readint():
       return out * sign
 
 def go_( tab, a, b ):
-    m = a + b // 2;
+    m = (a + b) // 2;
     if a == m:
       if tab[a] == m:
         return b;

@@ -2,7 +2,7 @@
 require "scanf.rb"
 
 def go_( tab, a, b )
-    m = a + b / 2
+    m = (a + b) / 2
     if a == m then
       if tab[a] == m then
         return (b);
