@@ -1,0 +1,96 @@
+record @bigint_nat
+	bigint_nat_len : int
+  bigint_nat_chiffres : array<int>
+end
+
+def @bigint_nat read_bigint_nat()
+	def read int len skip
+	def array<int> chiffres[len] with d do
+		def read char c
+		return int_of_char(c) - int_of_char('0')
+	end
+	for i = 0 to (len - 1) / 2 do
+		def tmp = chiffres[i]
+		chiffres[i] = chiffres[len - 1 - i]
+		chiffres[len - 1 - i] = tmp
+	end
+	skip
+	def @bigint_nat out = record
+		bigint_nat_len = len
+		bigint_nat_chiffres = chiffres
+	end
+	return out
+end
+
+def void print_bigint_nat(@bigint_nat a)
+	for i = 0 to a.bigint_nat_len - 1 do
+		print a.bigint_nat_chiffres[a.bigint_nat_len - 1 - i]
+	end
+end
+
+def @bigint_nat add_bigint_nat(@bigint_nat a, @bigint_nat b)
+	def len = max2(a.bigint_nat_len, b.bigint_nat_len) + 1
+	def retenue = 0
+	def array<int> chiffres[len] with i do
+		def tmp = retenue
+		if i < a.bigint_nat_len then
+			tmp += a.bigint_nat_chiffres[i]
+		end
+		if i < b.bigint_nat_len then
+			tmp += b.bigint_nat_chiffres[i]
+		end
+		retenue = tmp / 10
+		return tmp % 10
+  end
+	if chiffres[len - 1] == 0 then
+		len --
+	end
+	def @bigint_nat out = record
+		bigint_nat_len = len
+		bigint_nat_chiffres = chiffres
+	end
+	return out
+end
+
+def @bigint_nat mul_bigint_nat(@bigint_nat a, @bigint_nat b)
+	def len = a.bigint_nat_len + b.bigint_nat_len + 1
+	def array<int> chiffres[len] with k do
+		return 0
+	end
+	for i = 0 to a.bigint_nat_len - 1 do
+		def retenue = 0
+		for j = 0 to b.bigint_nat_len - 1 do
+			chiffres[i + j] += retenue + b.bigint_nat_chiffres[j] * a.bigint_nat_chiffres[i];
+			retenue = chiffres[i + j] / 10
+			chiffres[i + j] = chiffres[i + j] % 10
+		end
+		chiffres[i + b.bigint_nat_len] += retenue
+	end
+	chiffres[a.bigint_nat_len + b.bigint_nat_len] = chiffres[a.bigint_nat_len + b.bigint_nat_len - 1] / 10
+	chiffres[a.bigint_nat_len + b.bigint_nat_len - 1] = chiffres[a.bigint_nat_len + b.bigint_nat_len - 1] % 10
+	for l = 0 to 2 do
+		if chiffres[len - 1] == 0 then
+			len --
+		end
+	end
+	def @bigint_nat out = record
+		bigint_nat_len = len
+		bigint_nat_chiffres = chiffres
+	end
+	return out
+end
+
+/*
+def @bigint exp_bigint(@bigint_nat a, @bigint_nat b)
+
+end
+*/
+
+main
+	def a = read_bigint_nat()
+	def b = read_bigint_nat()
+	print_bigint_nat(a) print "*"
+	print_bigint_nat(b)  print "="
+  print_bigint_nat( mul_bigint_nat(a, b) )
+	print "\n"
+end
