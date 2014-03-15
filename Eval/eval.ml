@@ -488,6 +488,7 @@ and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
 
 and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
     : execenv -> result -> unit =
+	  let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
   match Mutable.unfix mut with
     | Mutable.Var v ->
       begin try
@@ -512,7 +513,7 @@ and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
         (get_array (m execenv)).
           (get_integer (eval_expr execenv index)) <- v)
     | Mutable.Dot (m, field) ->
-      let index = index_for_field env field Ast.default_location in
+      let index = index_for_field env field loc in
       let m = mut_val env m in
       (fun execenv v ->
         match m execenv with
@@ -523,6 +524,7 @@ and mut_setval (env:env) (mut : precompiledExpr Mutable.t)
       )
 and mut_val (env:env) (mut : precompiledExpr Mutable.t)
     : execenv -> result =
+	let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
   match Mutable.unfix mut with
     | Mutable.Var v ->
       begin try
@@ -541,7 +543,7 @@ and mut_val (env:env) (mut : precompiledExpr Mutable.t)
         m
         li
     | Mutable.Dot (m, field) ->
-      let index = index_for_field env field Ast.default_location in
+      let index = index_for_field env field loc in
       let m = mut_val env m in
       (fun execenv ->
         match m execenv with
@@ -583,7 +585,9 @@ and eval_call env name params : execenv -> result =
 *)
 and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     (env * (execenv -> unit))
-    = match Instr.unfix instr with
+    =
+	let loc = Ast.PosMap.get (Instr.Fixed.annot instr) in
+	match Instr.unfix instr with
   | Instr.Declare (varname, _, e) ->
     let e = e env in
     let env, r = add_in_env env varname in
@@ -650,7 +654,7 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     end
   | Instr.AllocRecord (var, t, fields) ->
     let fields = List.map (fun (name, e) ->
-      index_for_field env name Ast.default_location, e env) fields in
+      index_for_field env name loc, e env) fields in
     let index, fields = List.unzip fields in
     let index = Array.of_list index in
     let fields = Array.of_list fields in
