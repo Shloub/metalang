@@ -1,6 +1,3 @@
-import math
-def mod(x, y):
-  return x - y * math.trunc(x / y)
 def foo(  ):
     for i in range(0, 1 + 10):
       pass

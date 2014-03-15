@@ -1,4 +1,3 @@
-import math
 import sys
 char=None
 def readchar_():
@@ -33,8 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-def mod(x, y):
-  return x - y * math.trunc(x / y)
 
 def sort_( tab, len ):
     for i in range(0, len):

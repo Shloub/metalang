@@ -1,10 +1,4 @@
-
 require "scanf.rb"
-
-def mod(x, y)
-  return x - y * (x.to_f / y).to_i
-end
-
 def nth_( tab, tofind, len )
     out_ = 0
     for i in (0 ..  len - 1) do

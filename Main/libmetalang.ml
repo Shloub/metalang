@@ -70,7 +70,8 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "remove tags" Passes.WalkRemoveTags.apply
   |> typed "rename" Passes.WalkRename.apply
   |> typed "expend" Passes.WalkNopend.apply
-  |> typed "expendPrint" Passes.WalkExpandPrint.apply
+  |> typed "expend print" Passes.WalkExpandPrint.apply
+  |> typed "internal tags" Passes.WalkInternalTags.apply
 
 let clike_passes prog =
   prog |> default_passes

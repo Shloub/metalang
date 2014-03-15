@@ -1,10 +1,4 @@
-
 require "scanf.rb"
-
-def mod(x, y)
-  return x - y * (x.to_f / y).to_i
-end
-
 def go_( tab, a, b )
     m = ((a + b).to_f / 2).to_i
     if a == m then

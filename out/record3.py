@@ -1,4 +1,3 @@
-import math
 import sys
 char=None
 def readchar_():
@@ -33,8 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-def mod(x, y):
-  return x - y * math.trunc(x / y)
 
 def mktoto( v1 ):
     t_ = {"foo":v1, "bar":0, "blah":0}

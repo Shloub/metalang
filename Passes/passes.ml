@@ -45,6 +45,7 @@ module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
 module WalkExpandReadDecl = Walk(ExpandReadDecl);;
 module WalkCheckNaming = WalkTop(CheckNaming);;
 module WalkRename = WalkTop(Rename);;
+module WalkInternalTags = WalkTop(InternalTags);;
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function

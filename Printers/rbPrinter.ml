@@ -36,20 +36,18 @@ open Ast
 open Printer
 open PyPrinter
 
-let header = "
-require \"scanf.rb\"
-
-def mod(x, y)
-  return x - y * (x.to_f / y).to_i
-end
-"
-
 class rbPrinter = object(self)
   inherit pyPrinter as super
 
   method lang () = "ruby"
 
-  method header f prog = Format.fprintf f "%s" header
+  method header f prog = Format.fprintf f "require \"scanf.rb\"
+%s"
+(if Tags.is_taged "__internal__mod" then
+"def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
+" else "")
 
   method comment f str = Format.fprintf f "\n=begin\n%s\n=end\n" str
 

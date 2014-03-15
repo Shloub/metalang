@@ -33,8 +33,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-def mod(x, y):
-  return x - y * math.trunc(x / y)
 
 def go_( tab, a, b ):
     m = math.trunc((a + b) / 2);

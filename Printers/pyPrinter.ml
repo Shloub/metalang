@@ -110,7 +110,12 @@ class pyPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "import math@\n%s%s%s%s%s"
+    Format.fprintf f "%s%s%s%s%s%s"
+(if Tags.is_taged "__internal__div" ||
+		Tags.is_taged "__internal__mod"
+ then
+"import math
+" else "")
       (if need then "import sys
 char=None
 def readchar_():
@@ -156,9 +161,12 @@ def skipchar():
     else:
       return out * sign
 " else "")
+(if Tags.is_taged "__internal__mod" then
 "def mod(x, y):
   return x - y * math.trunc(x / y)
 "
+ else "")
+
   method prog f prog =
     Format.fprintf f "%a%a%a@\n"
       self#header prog
