@@ -9,6 +9,7 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
@@ -169,7 +170,7 @@
                            (< i (bigint-bigint_len b))
                            (setq tmp ( + tmp (aref (bigint-bigint_chiffres b) i))))
                          (setq retenue (quotient tmp 10))
-                         (return-from lambda_2 (mod tmp 10))
+                         (return-from lambda_2 (remainder tmp 10))
                        )))
                      ))))
       (if
@@ -276,14 +277,14 @@ D'ou le nom de la fonction. |#
             (progn
               (setf (aref chiffres (+ i j)) (+ (aref chiffres (+ i j)) (+ retenue (* (aref (bigint-bigint_chiffres b) j) (aref (bigint-bigint_chiffres a) i)))))
               (setq retenue (quotient (aref chiffres (+ i j)) 10))
-              (setf (aref chiffres (+ i j)) (mod (aref chiffres (+ i j)) 10))
+              (setf (aref chiffres (+ i j)) (remainder (aref chiffres (+ i j)) 10))
             )
           )
           (setf (aref chiffres (+ i (bigint-bigint_len b))) (+ (aref chiffres (+ i (bigint-bigint_len b))) retenue))
         ))
     )
     (setf (aref chiffres (+ (bigint-bigint_len a) (bigint-bigint_len b))) (quotient (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
-    (setf (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) (mod (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
+    (setf (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) (remainder (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
     (do
       ((l 0 (+ 1 l)))
       ((> l 2))
@@ -347,7 +348,6 @@ D'ou le nom de la fonction. |#
                         ))))))))))))))
 
 #|
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

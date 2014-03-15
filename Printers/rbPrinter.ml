@@ -39,6 +39,9 @@ open PyPrinter
 let header = "
 require \"scanf.rb\"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
 "
 
 class rbPrinter = object(self)
@@ -91,8 +94,6 @@ match Type.unfix t with
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ =@ %a@]" self#binding var self#expr e
 
-  method divi f () = Format.fprintf f "/"
-
   method print_op f op =
     Format.fprintf f
       "%s"
@@ -116,6 +117,20 @@ match Type.unfix t with
     | true -> Format.fprintf f "true"
     | false -> Format.fprintf f "false"
 
+  method binop f op a b =
+    match op with
+    | Expr.Div ->
+      if Typer.is_int (super#getTyperEnv ()) a
+      then Format.fprintf f "(%a.to_f / %a).to_i"
+        (self#chf op Left) a
+        (self#chf op Right) b
+      else super#sbinop f op a b
+		| Expr.Mod ->
+			Format.fprintf f "mod(%a, %a)"
+        self#expr a
+        self#expr b
+    | _ -> super#sbinop f op a b
+      
   method forloop_content f (varname, expr1, expr2, li) =
     Format.fprintf f "@[<h>for@ %a@ in@ (%a .. @ %a) do@\n@]%a@\nend"
       self#binding varname

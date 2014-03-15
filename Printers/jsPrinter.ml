@@ -46,9 +46,14 @@ class jsPrinter = object(self)
 
   method binop f op a b =
     match op with
+      | Expr.Mod ->
+        if Typer.is_int (super#getTyperEnv ()) a
+        then Format.fprintf f "~~(%a)"
+          (fun f () -> super#binop f op a b) ()
+        else super#binop f op a b
       | Expr.Div ->
         if Typer.is_int (super#getTyperEnv ()) a
-        then Format.fprintf f "Math.floor(%a)"
+        then Format.fprintf f "~~(%a)"
           (fun f () -> super#binop f op a b) ()
         else super#binop f op a b
       | _ -> super#binop f op a b

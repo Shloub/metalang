@@ -36,7 +36,7 @@ var read_int_ = function(){
 
 
 function go_(tab, a, b){
-  var m = Math.floor((a + b) / 2);
+  var m = ~~((a + b) / 2);
   if (a == m)
     if (tab[a] == m)
     return b;

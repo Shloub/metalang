@@ -56,14 +56,17 @@ class pyPrinter = object(self)
     match op with
     | Expr.Div ->
       if Typer.is_int (super#getTyperEnv ()) a
-      then Format.fprintf f "%a %a %a"
+      then Format.fprintf f "math.trunc(%a / %a)"
         (self#chf op Left) a
-        self#divi ()
         (self#chf op Right) b
       else super#binop f op a b
+		| Expr.Mod ->
+			Format.fprintf f "mod(%a, %a)"
+        self#expr a
+        self#expr b
     | _ -> super#binop f op a b
       
-  method divi f () = Format.fprintf f "//"
+  method sbinop f op a b = super#binop f op a b
 
   method print_op f op = Format.fprintf f "%s"
     (match op with
@@ -107,7 +110,7 @@ class pyPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "%s%s%s%s"
+    Format.fprintf f "import math@\n%s%s%s%s%s"
       (if need then "import sys
 char=None
 def readchar_():
@@ -153,7 +156,9 @@ def skipchar():
     else:
       return out * sign
 " else "")
-
+"def mod(x, y):
+  return x - y * math.trunc(x / y)
+"
   method prog f prog =
     Format.fprintf f "%a%a%a@\n"
       self#header prog

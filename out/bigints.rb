@@ -1,6 +1,9 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
 
 def max2( a, b )
     if a > b then
@@ -23,7 +26,7 @@ def read_bigint(  )
       c=scanf("%c")[0];
       chiffres[d] = c.ord - '0'.ord;
     end
-    for i in (0 ..  (len - 1) / 2) do
+    for i in (0 ..  ((len - 1).to_f / 2).to_i) do
       tmp = chiffres[i]
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
@@ -115,8 +118,8 @@ def add_bigint_positif( a, b )
       if i < b["bigint_len"] then
         tmp += b["bigint_chiffres"][i]
       end
-      retenue = tmp / 10;
-      chiffres[i] = tmp % 10;
+      retenue = (tmp.to_f / 10).to_i;
+      chiffres[i] = mod(tmp, 10);
     end
     if chiffres[len - 1] == 0 then
       len -= 1
@@ -220,13 +223,13 @@ D'ou le nom de la fonction.
       retenue = 0
       for j in (0 ..  b["bigint_len"] - 1) do
         chiffres[i + j] = chiffres[i + j] + retenue + b["bigint_chiffres"][j] * a["bigint_chiffres"][i];
-        retenue = chiffres[i + j] / 10;
-        chiffres[i + j] = chiffres[i + j] % 10;
+        retenue = (chiffres[i + j].to_f / 10).to_i;
+        chiffres[i + j] = mod(chiffres[i + j], 10);
       end
       chiffres[i + b["bigint_len"]] = chiffres[i + b["bigint_len"]] + retenue;
     end
-    chiffres[a["bigint_len"] + b["bigint_len"]] = chiffres[a["bigint_len"] + b["bigint_len"] - 1] / 10;
-    chiffres[a["bigint_len"] + b["bigint_len"] - 1] = chiffres[a["bigint_len"] + b["bigint_len"] - 1] % 10;
+    chiffres[a["bigint_len"] + b["bigint_len"]] = (chiffres[a["bigint_len"] + b["bigint_len"] - 1].to_f / 10).to_i;
+    chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10);
     for l in (0 ..  2) do
       if chiffres[len - 1] == 0 then
         len -= 1
@@ -270,7 +273,7 @@ def mul_bigint( aa, bb )
  Algorithme de Karatsuba 
 =end
 
-    split = max2(aa["bigint_len"], bb["bigint_len"]) / 2
+    split = (max2(aa["bigint_len"], bb["bigint_len"]).to_f / 2).to_i
     a = bigint_shift(aa, -split)
     b = bigint_premiers_chiffres(aa, split)
     c = bigint_shift(bb, -split)
@@ -292,7 +295,6 @@ end
 
 =begin
 
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -36,6 +37,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 def nth_( tab, tofind, len ):
     out_ = 0;

@@ -1,6 +1,10 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
+
 def foo(  )
     a = 0
     
@@ -44,7 +48,7 @@ def sumdiv( n )
  La boucle : i est le diviseur potentiel
 =end
 
-      if (n % i) == 0 then
+      if (mod(n, i)) == 0 then
         
 =begin
  Si i divise 

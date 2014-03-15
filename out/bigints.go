@@ -280,7 +280,6 @@ func mul_bigint(aa * bigint, bb * bigint) * bigint{
 }
 
 /*
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

@@ -1,6 +1,10 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
+
 def sort_( tab, len )
     for i in (0 ..  len - 1) do
       for j in (i + 1 ..  len - 1) do

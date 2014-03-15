@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -32,9 +33,11 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 def go_( tab, a, b ):
-    m = (a + b) // 2;
+    m = math.trunc((a + b) / 2);
     if a == m:
       if tab[a] == m:
         return b;

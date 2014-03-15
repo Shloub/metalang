@@ -1,6 +1,10 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
+
 def min2( a, b )
     if a < b then
       return (a);

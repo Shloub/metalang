@@ -9,6 +9,7 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
@@ -61,8 +62,8 @@
       (if
         (not-equal lettre (- 0 1))
         (progn
-          (let ((addon (position_alphabet (aref cle (mod i taille_cle)))))
-            (let ((new_ (mod (+ addon lettre) 26)))
+          (let ((addon (position_alphabet (aref cle (remainder i taille_cle)))))
+            (let ((new_ (remainder (+ addon lettre) 26)))
               (setf (aref message i) (of_position_alphabet new_))
             ))))
     ))

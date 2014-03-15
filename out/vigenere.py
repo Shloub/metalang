@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -36,6 +37,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 
 def position_alphabet( c ):
@@ -54,8 +57,8 @@ def crypte( taille_cle, cle, taille, message ):
     for i in range(0, taille):
       lettre = position_alphabet(message[i]);
       if lettre != -(1):
-        addon = position_alphabet(cle[i % taille_cle]);
-        new_ = (addon + lettre) % 26;
+        addon = position_alphabet(cle[mod(i, taille_cle)]);
+        new_ = mod(addon + lettre, 26);
         message[i] = of_position_alphabet(new_);
 
 taille_cle = 0;

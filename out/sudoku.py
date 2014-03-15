@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -32,6 +33,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 """ lit un sudoku sur l'entrée standard """
 def read_sudoku(  ):
     a = 9 * 9;
@@ -49,10 +52,10 @@ def print_sudoku( sudoku_ ):
       for x in range(0, 1 + 8):
         b = sudoku_[x + y * 9];
         print("%d " % ( b ), end='')
-        if (x % 3) == 2:
+        if (mod(x, 3)) == 2:
           print( " ", end='')
       print("")
-      if (y % 3) == 2:
+      if (mod(y, 3)) == 2:
         print("")
     print("")
 

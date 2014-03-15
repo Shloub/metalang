@@ -1,6 +1,9 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
 
 
 
@@ -19,7 +22,7 @@ for toto in (0 ..  strlen - 1) do
   tmpc=scanf("%c")[0];
   c = tmpc.ord
   if tmpc != ' ' then
-    c = ((c - 'a'.ord) + 13) % 26 + 'a'.ord;
+    c = mod((c - 'a'.ord) + 13, 26) + 'a'.ord;
   end
   tab4[toto] = c;
 end

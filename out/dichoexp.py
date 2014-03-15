@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -32,12 +33,14 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 def exp_( a, b ):
     if b == 0:
       return 1;
-    if (b % 2) == 0:
-      o = exp_(a, b // 2);
+    if (mod(b, 2)) == 0:
+      o = exp_(a, math.trunc(b / 2));
       return o * o;
     else:
       return a * exp_(a, b - 1);

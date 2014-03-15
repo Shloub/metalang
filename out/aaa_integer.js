@@ -38,18 +38,37 @@ var read_int_ = function(){
 
 var i = 0;
 i --;
-util.print(i);
+util.print(i, "\n");
 i += 55;
-util.print(i);
+util.print(i, "\n");
 i *= 13;
-util.print(i);
-i = Math.floor(i / 2);
-util.print(i);
+util.print(i, "\n");
+i = ~~(i / 2);
+util.print(i, "\n");
 i ++;
-util.print(i);
-i = Math.floor(i / 3);
-util.print(i);
+util.print(i, "\n");
+i = ~~(i / 3);
+util.print(i, "\n");
 i --;
-util.print(i);
+util.print(i, "\n");
+/*
+http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
+*/
+var a = ~~(117 / 17);
+util.print(a, "\n");
+var b = ~~(117 / -17);
+util.print(b, "\n");
+var c = ~~(-117 / 17);
+util.print(c, "\n");
+var d = ~~(-117 / -17);
+util.print(d, "\n");
+var e = ~~(117 % 17);
+util.print(e, "\n");
+var f = ~~(117 % -17);
+util.print(f, "\n");
+var g = ~~(-117 % 17);
+util.print(g, "\n");
+var h = ~~(-117 % -17);
+util.print(h, "\n");
 
 

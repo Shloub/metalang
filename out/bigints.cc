@@ -268,7 +268,6 @@ struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb){
 }
 
 /*
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

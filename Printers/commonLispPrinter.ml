@@ -312,6 +312,7 @@ class commonLispPrinter = object(self)
         out
     ))
 (defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun not-equal (a b) (not (eq a b)))
 %s%s%s%s%a"
       (if need then
@@ -362,7 +363,7 @@ super#prog prog
 	| Expr.Sub -> "-"
 	| Expr.Mul -> "*"
 	| Expr.Div -> "quotient"
-	| Expr.Mod -> "mod"
+	| Expr.Mod -> "remainder"
 	| Expr.Or -> "or"
 	| Expr.And -> "and"
 	| Expr.Lower -> "<"

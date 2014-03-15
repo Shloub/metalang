@@ -1,17 +1,31 @@
 main
   def i = 0
   i --
-  print int i
+  print int i print "\n"
   i += 55
-  print int i
+  print int i print "\n"
   i *= 13
-  print int i
+  print int i print "\n"
   i /= 2
-  print int i
+  print int i print "\n"
   i ++
-  print int i
+  print int i print "\n"
   i /= 3
-  print int i
+  print int i print "\n"
   i --
-  print int i
+  print int i print "\n"
+
+/*
+http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
+*/
+
+  print int (117 / 17) print "\n"
+  print int (117 / -17) print "\n"
+  print int (-117 / 17) print "\n"
+  print int (-117 / -17) print "\n"
+
+  print int (117 % 17) print "\n"
+  print int (117 % -17) print "\n"
+  print int (-117 % 17) print "\n"
+  print int (-117 % -17) print "\n"
 end

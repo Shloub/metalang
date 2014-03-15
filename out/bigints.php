@@ -291,7 +291,6 @@ function mul_bigint(&$aa, &$bb){
 }
 
 /*
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

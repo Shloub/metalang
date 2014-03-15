@@ -9,6 +9,7 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
@@ -58,7 +59,7 @@
       (progn
         #| La boucle : i est le diviseur potentiel|#
         (if
-          (eq (mod n i) 0)
+          (eq (remainder n i) 0)
           (progn
             #| Si i divise |#
             (setq out_ ( + out_ i))

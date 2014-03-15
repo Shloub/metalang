@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -32,6 +33,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 """ Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin

@@ -57,7 +57,7 @@ function read_bigint(){
     c=read_char_();
     chiffres[d] = c.charCodeAt(0) - '0'.charCodeAt(0);
   }
-  for (var i = 0 ; i <= Math.floor((len - 1) / 2); i++)
+  for (var i = 0 ; i <= ~~((len - 1) / 2); i++)
   {
     var tmp = chiffres[i];
     chiffres[i] = chiffres[len - 1 - i];
@@ -140,8 +140,8 @@ function add_bigint_positif(a, b){
       tmp += a.bigint_chiffres[i];
     if (i < b.bigint_len)
       tmp += b.bigint_chiffres[i];
-    retenue = Math.floor(tmp / 10);
-    chiffres[i] = tmp % 10;
+    retenue = ~~(tmp / 10);
+    chiffres[i] = ~~(tmp % 10);
   }
   if (chiffres[len - 1] == 0)
     len --;
@@ -235,13 +235,13 @@ D'ou le nom de la fonction. */
     for (var j = 0 ; j <= b.bigint_len - 1; j++)
     {
       chiffres[i + j] = chiffres[i + j] + retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i];
-      retenue = Math.floor(chiffres[i + j] / 10);
-      chiffres[i + j] = chiffres[i + j] % 10;
+      retenue = ~~(chiffres[i + j] / 10);
+      chiffres[i + j] = ~~(chiffres[i + j] % 10);
     }
     chiffres[i + b.bigint_len] = chiffres[i + b.bigint_len] + retenue;
   }
-  chiffres[a.bigint_len + b.bigint_len] = Math.floor(chiffres[a.bigint_len + b.bigint_len - 1] / 10);
-  chiffres[a.bigint_len + b.bigint_len - 1] = chiffres[a.bigint_len + b.bigint_len - 1] % 10;
+  chiffres[a.bigint_len + b.bigint_len] = ~~(chiffres[a.bigint_len + b.bigint_len - 1] / 10);
+  chiffres[a.bigint_len + b.bigint_len - 1] = ~~(chiffres[a.bigint_len + b.bigint_len - 1] % 10);
   for (var l = 0 ; l <= 2; l++)
     if (chiffres[len - 1] == 0)
     len --;
@@ -286,7 +286,7 @@ function mul_bigint(aa, bb){
   if (aa.bigint_len < 3 || bb.bigint_len < 3)
     return mul_bigint_cp(aa, bb);
   /* Algorithme de Karatsuba */
-  var split = Math.floor(max2(aa.bigint_len, bb.bigint_len) / 2);
+  var split = ~~(max2(aa.bigint_len, bb.bigint_len) / 2);
   var a = bigint_shift(aa, -split);
   var b = bigint_premiers_chiffres(aa, split);
   var c = bigint_shift(bb, -split);
@@ -302,7 +302,6 @@ function mul_bigint(aa, bb){
 }
 
 /*
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

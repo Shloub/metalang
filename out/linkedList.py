@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -25,6 +26,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 def cons_( list, i ):
     out_ = {"head":i, "tail":list}

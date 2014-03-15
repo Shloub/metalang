@@ -9,6 +9,7 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
@@ -95,7 +96,7 @@ read int, read char et skip
                        (princ " ")
                        (if
                          (not-equal tmpc #\Space)
-                         (setq c (+ (mod (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
+                         (setq c (+ (remainder (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
                        (return-from lambda_3 (int-char c))
                      ))))
                  ))))

@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -36,6 +37,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 def max2( a, b ):
     if a > b:
@@ -55,7 +58,7 @@ def read_bigint(  ):
       c = '_';
       c=readchar()
       chiffres[d] = ord(c) - ord('0');
-    for i in range(0, 1 + (len - 1) // 2):
+    for i in range(0, 1 + math.trunc((len - 1) / 2)):
       tmp = chiffres[i];
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
@@ -116,8 +119,8 @@ def add_bigint_positif( a, b ):
         tmp += a["bigint_chiffres"][i]
       if i < b["bigint_len"]:
         tmp += b["bigint_chiffres"][i]
-      retenue = tmp // 10;
-      chiffres[i] = tmp % 10;
+      retenue = math.trunc(tmp / 10);
+      chiffres[i] = mod(tmp, 10);
     if chiffres[len - 1] == 0:
       len -= 1
     out_ = {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
@@ -184,11 +187,11 @@ D'ou le nom de la fonction. """
       retenue = 0;
       for j in range(0, b["bigint_len"]):
         chiffres[i + j] = chiffres[i + j] + retenue + b["bigint_chiffres"][j] * a["bigint_chiffres"][i];
-        retenue = chiffres[i + j] // 10;
-        chiffres[i + j] = chiffres[i + j] % 10;
+        retenue = math.trunc(chiffres[i + j] / 10);
+        chiffres[i + j] = mod(chiffres[i + j], 10);
       chiffres[i + b["bigint_len"]] = chiffres[i + b["bigint_len"]] + retenue;
-    chiffres[a["bigint_len"] + b["bigint_len"]] = chiffres[a["bigint_len"] + b["bigint_len"] - 1] // 10;
-    chiffres[a["bigint_len"] + b["bigint_len"] - 1] = chiffres[a["bigint_len"] + b["bigint_len"] - 1] % 10;
+    chiffres[a["bigint_len"] + b["bigint_len"]] = math.trunc(chiffres[a["bigint_len"] + b["bigint_len"] - 1] / 10);
+    chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10);
     for l in range(0, 1 + 2):
       if chiffres[len - 1] == 0:
         len -= 1
@@ -216,7 +219,7 @@ def mul_bigint( aa, bb ):
     if aa["bigint_len"] < 3 or bb["bigint_len"] < 3:
       return mul_bigint_cp(aa, bb);
     """ Algorithme de Karatsuba """
-    split = max2(aa["bigint_len"], bb["bigint_len"]) // 2;
+    split = math.trunc(max2(aa["bigint_len"], bb["bigint_len"]) / 2);
     a = bigint_shift(aa, -(split));
     b = bigint_premiers_chiffres(aa, split);
     c = bigint_shift(bb, -(split));
@@ -231,7 +234,6 @@ def mul_bigint( aa, bb ):
     """ ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd """
 
 """
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

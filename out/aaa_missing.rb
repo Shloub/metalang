@@ -1,6 +1,10 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
+
 def read_int(  )
     out_ = 0
     out_=scanf("%d")[0];

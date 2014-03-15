@@ -1,6 +1,9 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
 
 =begin
  lit un sudoku sur l'entrée standard 
@@ -28,12 +31,12 @@ def print_sudoku( sudoku_ )
       for x in (0 ..  8) do
         b = sudoku_[x + y * 9]
         printf "%d ", b
-        if (x % 3) == 2 then
+        if (mod(x, 3)) == 2 then
           print " ";
         end
       end
       print "\n";
-      if (y % 3) == 2 then
+      if (mod(y, 3)) == 2 then
         print "\n";
       end
     end

@@ -57,11 +57,11 @@ function print_sudoku(sudoku_){
     {
       var b = sudoku_[x + y * 9];
       util.print(b, " ");
-      if ((x % 3) == 2)
+      if ((~~(x % 3)) == 2)
         util.print(" ");
     }
     util.print("\n");
-    if ((y % 3) == 2)
+    if ((~~(y % 3)) == 2)
       util.print("\n");
   }
   util.print("\n");

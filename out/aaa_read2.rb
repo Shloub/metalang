@@ -1,6 +1,9 @@
 
 require "scanf.rb"
 
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
 
 
 def read_int(  )
@@ -63,7 +66,7 @@ for i3 in (0 ..  strlen - 1) do
   c = tmpc.ord
   printf "%c:%d ", tmpc, c
   if tmpc != ' ' then
-    c = ((c - 'a'.ord) + 13) % 26 + 'a'.ord;
+    c = mod((c - 'a'.ord) + 13, 26) + 'a'.ord;
   end
   tab4[i3] = c;
 end

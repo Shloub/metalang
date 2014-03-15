@@ -1,3 +1,6 @@
+import math
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 """
 Ce test permet de vérifier le comportement des macros
 Il effectue du loop unrolling

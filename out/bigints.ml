@@ -246,7 +246,6 @@ let rec mul_bigint aa bb =
     end
 
 (*
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

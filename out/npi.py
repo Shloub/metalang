@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -36,6 +37,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 def is_number( c ):
     return ord(c) <= ord('9') and ord(c) >= ord('0');

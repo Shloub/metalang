@@ -9,6 +9,7 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
@@ -61,14 +62,14 @@
             (princ b)
             (princ " ")
             (if
-              (eq (mod x 3) 2)
+              (eq (remainder x 3) 2)
               (princ " "))
           ))
       )
       (princ "
 ")
       (if
-        (eq (mod y 3) 2)
+        (eq (remainder y 3) 2)
         (princ "
 "))
     )

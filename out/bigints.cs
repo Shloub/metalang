@@ -323,7 +323,6 @@ D'ou le nom de la fonction. */
   }
   
   /*
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp

@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -25,6 +26,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 def foo(  ):
     a = 0;
@@ -45,7 +48,7 @@ def sumdiv( n ):
     """ On déclare un entier qui contiendra la somme """
     for i in range(1, 1 + n):
       """ La boucle : i est le diviseur potentiel"""
-      if (n % i) == 0:
+      if (mod(n, i)) == 0:
         """ Si i divise """
         out_ += i
         """ On incrémente """

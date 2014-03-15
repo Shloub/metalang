@@ -60,7 +60,7 @@ function sumdiv(n){
   for (var i = 1 ; i <= n; i++)
   {
     /* La boucle : i est le diviseur potentiel*/
-    if ((n % i) == 0)
+    if ((~~(n % i)) == 0)
     {
       /* Si i divise */
       out_ += i;

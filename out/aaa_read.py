@@ -1,3 +1,4 @@
+import math
 import sys
 char=None
 def readchar_():
@@ -36,6 +37,8 @@ def readint():
       skipchar()
     else:
       return out * sign
+def mod(x, y):
+  return x - y * math.trunc(x / y)
 
 
 """
@@ -72,7 +75,7 @@ for toto in range(0, strlen):
   c = ord(tmpc);
   print("%c:%d " % ( tmpc, c ), end='')
   if tmpc != ' ':
-    c = ((c - ord('a')) + 13) % 26 + ord('a');
+    c = mod((c - ord('a')) + 13, 26) + ord('a');
   tab4[toto] = c;
 for j in range(0, strlen):
   a = tab4[j];

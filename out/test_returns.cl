@@ -9,6 +9,7 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun not-equal (a b) (not (eq a b)))
 
 (defun is_pair (i)
@@ -42,7 +43,7 @@
           (setq j 0))
         (setq j 8)
       ))
-    (return-from is_pair (eq (mod i 2) 0))
+    (return-from is_pair (eq (remainder i 2) 0))
   )))
 
 (progn

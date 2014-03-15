@@ -497,7 +497,6 @@ begin
 end;
 
 {
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp
