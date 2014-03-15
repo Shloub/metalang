@@ -250,7 +250,6 @@ def @bigint mul_bigint(@bigint aa, @bigint bb)
 end
 
 /*
-TODO multiplication plus rapide
 Division,
 Modulo
 Exp
