@@ -1,9 +1,11 @@
 Langage & Compilateur :
+  importer math et definir mod en python seulement quand c'est nécéssaire
+  définir mod et / en common lisp seulement quand c'est nécéssaire
+  définir mod en ruby seulement quand c'est nécéssaire
+  virer les floats du projet
+  cleaner un peu la lib standard
   types abstract (pour ouvrir un fichier par exemple)
   return checker
-  gérer les floats (parser, +., *., /., + printers)
-  warnings pour les choses laides dans les différents langages
-  virer les warnings
   commentaires indentation
   chercher a faire un sort correct
   null
@@ -11,15 +13,16 @@ Langage & Compilateur :
 
 outils :
   un meilleur mode vim
+  un mode eclipse ou code blocks
   un truc de completion pour bash
   une man page
 
 autres printers :
   f#
   vb.net
-  lisp
   perl
-  bash
   ada
   sql
   objective C
+
+portage windows
