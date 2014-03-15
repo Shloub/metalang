@@ -1,0 +1,14 @@
+record @foo
+	toto : int
+	tata : int
+end
+
+def @foo foo()
+	def foo = record
+		tata = 4
+	end
+return foo
+end
+
+main
+end
