@@ -7,15 +7,15 @@ let rec read_int () =
 
 let rec read_int_line n =
   let tab = Array.init n (fun _i ->
-    let t_ = Scanf.scanf "%d" (fun x -> x) in
+    let t = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
-    t_) in
+    t) in
   tab
 
 let rec read_char_line n =
   let tab = Array.init n (fun _i ->
-    let t_ = Scanf.scanf "%c" (fun x -> x) in
-    t_) in
+    let t = Scanf.scanf "%c" (fun x -> x) in
+    t) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   tab
 

@@ -1,23 +1,23 @@
 require "scanf.rb"
 
 def mktoto( v1 )
-    t_ = {"foo" => v1,
-          "bar" => 0,
-          "blah" => 0};
-    return (t_);
+    t = {"foo" => v1,
+         "bar" => 0,
+         "blah" => 0};
+    return (t);
 end
 
-def result( t_ )
-    t_["blah"] += 1
-    return (t_["foo"] + t_["blah"] * t_["bar"] + t_["bar"] * t_["foo"]);
+def result( t )
+    t["blah"] += 1
+    return (t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"]);
 end
 
-t_ = mktoto(4)
-t_["bar"]=scanf("%d")[0];
+t = mktoto(4)
+t["bar"]=scanf("%d")[0];
 scanf("%*\n");
-t_["blah"]=scanf("%d")[0];
-a = result(t_)
+t["blah"]=scanf("%d")[0];
+a = result(t)
 printf "%d", a
-b = t_["blah"]
+b = t["blah"]
 printf "%d", b
 

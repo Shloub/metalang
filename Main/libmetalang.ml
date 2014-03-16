@@ -2,7 +2,8 @@ open Stdlib
 open Ast
 
 (** Liste des mots clés à ne pas utiliser en metalang *)
-let keywords = [
+let keywords lang=
+	let li = [
 "abstract";"add";"alias";"as";"asm";"auto";"and";"assert";
 "base";"bool";"boolean";"break";"byte";"begin";
 "case";"catch";"char";"checked";"class";"const";"continue";"constraint";
@@ -23,15 +24,17 @@ let keywords = [
 "value";"virtual";"void"; "volatile";"val";
 "where";"while";"when";"with";
 "yield";
-(* common lisp ?*)
-"t"; "mem"; "nth"; "cons"; "find"
-]
+	]
+	in match lang with
+	| "cl" ->
+		"t" :: "mem" :: "nth" :: "cons" :: "find" :: li
+	| _ -> li
 
-let conf_rename prog =
+let conf_rename lang prog =
   Fresh.fresh_init prog ;
   Rename.clear ();
   Rename.add prog.Prog.progname ;
-  List.iter Rename.add keywords
+  List.iter Rename.add (keywords lang)
 
 (** {2 Languages definition } *)
 
@@ -312,7 +315,7 @@ let process err c filename =
           lang in
         try
           if not c.quiet then Printf.printf "Generating %s\n%!" output ;
-					conf_rename prog ;
+					conf_rename lang prog ;
           let chan = open_out output in
           let buf = Format.formatter_of_out_channel chan in
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
@@ -343,7 +346,7 @@ let js_process err (lang:string) txt stdlib =
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
     let tyenv, prog = js_make_prog_helper lang prog' stdlib in
-		conf_rename prog ;
+		conf_rename lang prog ;
     let printer = L.find lang printers in
     Fresh.fresh_init prog ;
     let buf = Format.stdbuf in

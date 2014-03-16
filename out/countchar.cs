@@ -54,7 +54,7 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static int nth_(char[] tab, char tofind, int len)
+  public static int nth(char[] tab, char tofind, int len)
   {
     int out_ = 0;
     for (int i = 0 ; i < len; i++)
@@ -79,7 +79,7 @@ public static int readInt(){
       tmp = readChar();
       tab[i] = tmp;
     }
-    int result = nth_(tab, tofind, len);
+    int result = nth(tab, tofind, len);
     Console.Write(result);
   }
   

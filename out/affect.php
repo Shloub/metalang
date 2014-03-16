@@ -21,17 +21,17 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 */
 
 function mktoto($v1){
-  $t__ = array(
+  $t = array(
     "foo"=>$v1,
     "bar"=>$v1,
     "blah"=>$v1
   );
   
-  return $t__;
+  return $t;
 }
 
 function result(&$t_, &$t2_){
-  $t__ = $t_;
+  $t = $t_;
   $t2 = $t2_;
   $t3 = array(
     "foo"=>0,
@@ -40,9 +40,9 @@ function result(&$t_, &$t2_){
   );
   
   $t3 = $t2;
-  $t__ = $t2;
+  $t = $t2;
   $t2 = $t3;
-  $t__["blah"] ++;
+  $t["blah"] ++;
   $len = 1;
   $cache0 = array();
   for ($i = 0 ; $i < $len; $i++)
@@ -53,20 +53,20 @@ function result(&$t_, &$t2_){
   $cache2 = $cache0;
   $cache0 = $cache1;
   $cache2 = $cache0;
-  return $t__["foo"] + $t__["blah"] * $t__["bar"] + $t__["bar"] * $t__["foo"];
+  return $t["foo"] + $t["blah"] * $t["bar"] + $t["bar"] * $t["foo"];
 }
 
-$t__ = mktoto(4);
+$t = mktoto(4);
 $t2 = mktoto(5);
-list($t__["bar"]) = scan("%d");
+list($t["bar"]) = scan("%d");
 scantrim();
-list($t__["blah"]) = scan("%d");
+list($t["blah"]) = scan("%d");
 scantrim();
 list($t2["bar"]) = scan("%d");
 scantrim();
-list($t__["blah"]) = scan("%d");
-$a = result($t__, $t2);
+list($t["blah"]) = scan("%d");
+$a = result($t, $t2);
 echo $a;
-$b = $t__["blah"];
+$b = $t["blah"];
 echo $b;
 ?>

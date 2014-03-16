@@ -75,16 +75,16 @@ type b = array of integer;
 function read_int_line(n : integer) : b;
 var
   i : integer;
-  t_ : integer;
+  t : integer;
   tab : b;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
   begin
-    t_ := 0;
-    t_ := read_int_();
+    t := 0;
+    t := read_int_();
     skip();
-    tab[i] := t_;
+    tab[i] := t;
   end;
   exit(tab);
 end;

@@ -41,7 +41,7 @@ func find0(len int, tab [][]int, cache [][]int, x int, y int) int{
   return result
 }
 
-func find_(len int, tab [][]int) int{
+func find(len int, tab [][]int) int{
   var tab2 [][]int = make([][]int, len)
   for i := 0 ; i <= len - 1; i++ {
     var a int = i + 1
@@ -71,7 +71,7 @@ func main() {
       }
       tab[i] = tab2;
   }
-  var c int = find_(len, tab)
+  var c int = find(len, tab)
   fmt.Printf("%d", c);
   for k := 0 ; k <= len - 1; k++ {
     for l := 0 ; l <= k; l++ {

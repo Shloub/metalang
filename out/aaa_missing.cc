@@ -13,10 +13,10 @@ std::vector<int > read_int_line(int n){
   std::vector<int > tab( n );
   for (int i = 0 ; i < n; i++)
   {
-    int t_ = 0;
-    scanf("%d", &t_);
+    int t = 0;
+    scanf("%d", &t);
     scanf("%*[ \t\r\n]c");
-    tab.at(i) = t_;
+    tab.at(i) = t;
   }
   return tab;
 }

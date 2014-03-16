@@ -16,10 +16,10 @@ int* read_int_line(int n){
     int i;
     for (i = 0 ; i < n; i++)
     {
-      int t_ = 0;
-      scanf("%d", &t_);
+      int t = 0;
+      scanf("%d", &t);
       scanf("%*[ \t\r\n]c");
-      tab[i] = t_;
+      tab[i] = t;
     }
   }
   return tab;
@@ -31,9 +31,9 @@ char* read_char_line(int n){
     int i;
     for (i = 0 ; i < n; i++)
     {
-      char t_ = '_';
-      scanf("%c", &t_);
-      tab[i] = t_;
+      char t = '_';
+      scanf("%c", &t);
+      tab[i] = t;
     }
   }
   scanf("%*[ \t\r\n]c");

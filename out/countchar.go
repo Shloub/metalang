@@ -15,7 +15,7 @@ func skip() {
 }
 
 
-func nth_(tab []byte, tofind byte, len int) int{
+func nth(tab []byte, tofind byte, len int) int{
   var out_ int = 0
   for i := 0 ; i <= len - 1; i++ {
     if tab[i] == tofind {
@@ -39,7 +39,7 @@ func main() {
       fmt.Fscanf(reader, "%c", &tmp);
       tab[i] = tmp;
   }
-  var result int = nth_(tab, tofind, len)
+  var result int = nth(tab, tofind, len)
   fmt.Printf("%d", result);
 }
 

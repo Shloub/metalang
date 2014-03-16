@@ -18,34 +18,34 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 }
 function mktoto($v1){
-  $t_ = array(
+  $t = array(
     "foo"=>$v1,
     "bar"=>0,
     "blah"=>0
   );
   
-  return $t_;
+  return $t;
 }
 
-function result(&$t_, $len){
+function result(&$t, $len){
   $out_ = 0;
   for ($j = 0 ; $j < $len; $j++)
   {
-    $t_[$j]["blah"] = $t_[$j]["blah"] + 1;
-    $out_ = $out_ + $t_[$j]["foo"] + $t_[$j]["blah"] * $t_[$j]["bar"] + $t_[$j]["bar"] * $t_[$j]["foo"];
+    $t[$j]["blah"] = $t[$j]["blah"] + 1;
+    $out_ = $out_ + $t[$j]["foo"] + $t[$j]["blah"] * $t[$j]["bar"] + $t[$j]["bar"] * $t[$j]["foo"];
   }
   return $out_;
 }
 
 $a = 4;
-$t_ = array();
+$t = array();
 for ($i = 0 ; $i < $a; $i++)
-  $t_[$i] = mktoto($i);
-list($t_[0]["bar"]) = scan("%d");
+  $t[$i] = mktoto($i);
+list($t[0]["bar"]) = scan("%d");
 scantrim();
-list($t_[1]["blah"]) = scan("%d");
-$b = result($t_, 4);
+list($t[1]["blah"]) = scan("%d");
+$b = result($t, 4);
 echo $b;
-$c = $t_[2]["blah"];
+$c = $t[2]["blah"];
 echo $c;
 ?>

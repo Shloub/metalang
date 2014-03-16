@@ -26,7 +26,7 @@ int find0(int len, int** tab, int** cache, int x, int y){
   return result;
 }
 
-int find_(int len, int** tab){
+int find(int len, int** tab){
   int* *tab2 = malloc( len * sizeof(int*));
   {
     int i;
@@ -69,7 +69,7 @@ int main(void){
       tab[i] = tab2;
     }
   }
-  int c = find_(len, tab);
+  int c = find(len, tab);
   printf("%d", c);
   {
     int k;

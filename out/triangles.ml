@@ -25,7 +25,7 @@ let rec find0 len tab cache x y =
       (!result)
     end
 
-let rec find_ len tab =
+let rec find len tab =
   let tab2 = Array.init len (fun i ->
     let a = i + 1 in
     let tab3 = Array.init a (fun _j ->
@@ -46,7 +46,7 @@ begin
       Scanf.scanf "%[\n \010]" (fun _ -> ());
       (!tmp)) in
     tab2) in
-  let c = find_ (!len) tab in
+  let c = find (!len) tab in
   Printf.printf "%d" c;
   for k = 0 to (!len) - 1 do
     for l = 0 to k do

@@ -60,7 +60,7 @@ function find0(len, tab, cache, x, y){
   return result;
 }
 
-function find_(len, tab){
+function find(len, tab){
   var tab2 = new Array(len);
   for (var i = 0 ; i <= len - 1; i++)
   {
@@ -90,7 +90,7 @@ for (var i = 0 ; i <= len - 1; i++)
   }
   tab[i] = tab2;
 }
-var c = find_(len, tab);
+var c = find(len, tab);
 util.print(c);
 for (var k = 0 ; k <= len - 1; k++)
 {

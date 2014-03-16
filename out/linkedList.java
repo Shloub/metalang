@@ -4,7 +4,7 @@ public class linkedList
 {
   static Scanner scanner = new Scanner(System.in);
   static class intlist {public int head;public intlist tail;}
-  public static intlist cons_(intlist list, int i)
+  public static intlist cons(intlist list, int i)
   {
     intlist out_ = new intlist();
     out_.head = i;
@@ -41,7 +41,7 @@ public class linkedList
       }else{
       i = scanner.nextInt();}
       if (i != 0)
-        list = cons_(list, i);
+        list = cons(list, i);
     }
   }
   

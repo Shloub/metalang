@@ -22,27 +22,27 @@ type toto struct {
 }
 
 func mktoto(v1 int) * toto{
-  var t_ * toto = new (toto)
-  (*t_).foo=v1;
-  (*t_).bar=0;
-  (*t_).blah=0;
-  return t_
+  var t * toto = new (toto)
+  (*t).foo=v1;
+  (*t).bar=0;
+  (*t).blah=0;
+  return t
 }
 
-func result(t_ * toto) int{
-  (*t_).blah ++;
-  return (*t_).foo + (*t_).blah * (*t_).bar + (*t_).bar * (*t_).foo
+func result(t * toto) int{
+  (*t).blah ++;
+  return (*t).foo + (*t).blah * (*t).bar + (*t).bar * (*t).foo
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var t_ * toto = mktoto(4)
-  fmt.Fscanf(reader, "%d", &(*t_).bar);
+  var t * toto = mktoto(4)
+  fmt.Fscanf(reader, "%d", &(*t).bar);
   skip()
-  fmt.Fscanf(reader, "%d", &(*t_).blah);
-  var a int = result(t_)
+  fmt.Fscanf(reader, "%d", &(*t).blah);
+  var a int = result(t)
   fmt.Printf("%d", a);
-  var b int = (*t_).blah
+  var b int = (*t).blah
   fmt.Printf("%d", b);
 }
 

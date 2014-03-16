@@ -10,27 +10,27 @@ typedef struct toto {
 } toto;
 
 struct toto * mktoto(int v1){
-  struct toto * t_ = new toto();
-  t_->foo=v1;
-  t_->bar=0;
-  t_->blah=0;
-  return t_;
+  struct toto * t = new toto();
+  t->foo=v1;
+  t->bar=0;
+  t->blah=0;
+  return t;
 }
 
-int result(struct toto * t_){
-  t_->blah ++;
-  return t_->foo + t_->blah * t_->bar + t_->bar * t_->foo;
+int result(struct toto * t){
+  t->blah ++;
+  return t->foo + t->blah * t->bar + t->bar * t->foo;
 }
 
 
 int main(void){
-  struct toto * t_ = mktoto(4);
-  scanf("%d", &t_->bar);
+  struct toto * t = mktoto(4);
+  scanf("%d", &t->bar);
   scanf("%*[ \t\r\n]c");
-  scanf("%d", &t_->blah);
-  int a = result(t_);
+  scanf("%d", &t->blah);
+  int a = result(t);
   std::cout << a;
-  int b = t_->blah;
+  int b = t->blah;
   std::cout << b;
   return 0;
 }

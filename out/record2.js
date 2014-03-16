@@ -37,26 +37,26 @@ var read_int_ = function(){
 
 
 function mktoto(v1){
-  var t_ = {
-              foo : v1,
-              bar : 0,
-              blah : 0
+  var t = {
+             foo : v1,
+             bar : 0,
+             blah : 0
   };
-  return t_;
+  return t;
 }
 
-function result(t_){
-  t_.blah ++;
-  return t_.foo + t_.blah * t_.bar + t_.bar * t_.foo;
+function result(t){
+  t.blah ++;
+  return t.foo + t.blah * t.bar + t.bar * t.foo;
 }
 
-var t_ = mktoto(4);
-t_.bar=read_int_();
+var t = mktoto(4);
+t.bar=read_int_();
 stdinsep();
-t_.blah=read_int_();
-var a = result(t_);
+t.blah=read_int_();
+var a = result(t);
 util.print(a);
-var b = t_.blah;
+var b = t.blah;
 util.print(b);
 
 

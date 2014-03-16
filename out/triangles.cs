@@ -75,7 +75,7 @@ public static int readInt(){
     return result;
   }
   
-  public static int find_(int len, int[][] tab)
+  public static int find(int len, int[][] tab)
   {
     int[][] tab2 = new int[len][];
     for (int i = 0 ; i < len; i++)
@@ -109,7 +109,7 @@ public static int readInt(){
       }
       tab[i] = tab2;
     }
-    int c = find_(len, tab);
+    int c = find(len, tab);
     Console.Write(c);
     for (int k = 0 ; k < len; k++)
     {

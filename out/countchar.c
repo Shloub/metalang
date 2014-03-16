@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int nth_(char* tab, char tofind, int len){
+int nth(char* tab, char tofind, int len){
   int out_ = 0;
   {
     int i;
@@ -29,7 +29,7 @@ int main(void){
       tab[i] = tmp;
     }
   }
-  int result = nth_(tab, tofind, len);
+  int result = nth(tab, tofind, len);
   printf("%d", result);
   return 0;
 }

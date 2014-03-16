@@ -71,34 +71,34 @@ type
 
 function mktoto(v1 : integer) : toto;
 var
-  t_ : toto;
+  t : toto;
 begin
-  new(t_);
-  t_^.foo := v1;
-  t_^.bar := 0;
-  t_^.blah := 0;
-  exit(t_);
+  new(t);
+  t^.foo := v1;
+  t^.bar := 0;
+  t^.blah := 0;
+  exit(t);
 end;
 
-function result(t_ : toto) : integer;
+function result(t : toto) : integer;
 begin
-  t_^.blah := t_^.blah + 1;
-  exit(t_^.foo + t_^.blah * t_^.bar + t_^.bar * t_^.foo);
+  t^.blah := t^.blah + 1;
+  exit(t^.foo + t^.blah * t^.bar + t^.bar * t^.foo);
 end;
 
 
 var
   a : integer;
   b : integer;
-  t_ : toto;
+  t : toto;
 begin
-  t_ := mktoto(4);
-  t_^.bar := read_int_();
+  t := mktoto(4);
+  t^.bar := read_int_();
   skip();
-  t_^.blah := read_int_();
-  a := result(t_);
+  t^.blah := read_int_();
+  a := result(t);
   Write(a);
-  b := t_^.blah;
+  b := t^.blah;
   Write(b);
 end.
 

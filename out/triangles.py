@@ -56,7 +56,7 @@ def find0( len, tab, cache, x, y ):
     cache[y][y] = result;
     return result;
 
-def find_( len, tab ):
+def find( len, tab ):
     tab2 = [None] * len
     for i in range(0, len):
       a = i + 1;
@@ -79,7 +79,7 @@ for i in range(0, len):
     stdinsep()
     tab2[j] = tmp;
   tab[i] = tab2;
-c = find_(len, tab);
+c = find(len, tab);
 print("%d" % c, end='')
 for k in range(0, len):
   for l in range(0, 1 + k):

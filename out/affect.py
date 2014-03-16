@@ -37,17 +37,17 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 """
 
 def mktoto( v1 ):
-    t__ = {"foo":v1, "bar":v1, "blah":v1}
-    return t__;
+    t = {"foo":v1, "bar":v1, "blah":v1}
+    return t;
 
 def result( t_, t2_ ):
-    t__ = t_;
+    t = t_;
     t2 = t2_;
     t3 = {"foo":0, "bar":0, "blah":0}
     t3 = t2;
-    t__ = t2;
+    t = t2;
     t2 = t3;
-    t__["blah"] += 1
+    t["blah"] += 1
     len = 1;
     cache0 = [None] * len
     for i in range(0, len):
@@ -58,19 +58,19 @@ def result( t_, t2_ ):
     cache2 = cache0;
     cache0 = cache1;
     cache2 = cache0;
-    return t__["foo"] + t__["blah"] * t__["bar"] + t__["bar"] * t__["foo"];
+    return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
 
-t__ = mktoto(4);
+t = mktoto(4);
 t2 = mktoto(5);
-t__["bar"]=readint()
+t["bar"]=readint()
 stdinsep()
-t__["blah"]=readint()
+t["blah"]=readint()
 stdinsep()
 t2["bar"]=readint()
 stdinsep()
-t__["blah"]=readint()
-a = result(t__, t2);
+t["blah"]=readint()
+a = result(t, t2);
 print("%d" % a, end='')
-b = t__["blah"];
+b = t["blah"];
 print("%d" % b, end='')
 

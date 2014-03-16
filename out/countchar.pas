@@ -70,7 +70,7 @@ begin
 end;
 
 type a = array of char;
-function nth_(tab : a; tofind : char; len : integer) : integer;
+function nth(tab : a; tofind : char; len : integer) : integer;
 var
   i : integer;
   out_ : integer;
@@ -109,7 +109,7 @@ begin
     tmp := read_char_();
     tab[i] := tmp;
   end;
-  result := nth_(tab, tofind, len);
+  result := nth(tab, tofind, len);
   Write(result);
 end.
 

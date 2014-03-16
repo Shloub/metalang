@@ -52,29 +52,29 @@ public static int readInt(){
   public class toto {public int foo;public int bar;public int blah;}
   public static toto mktoto(int v1)
   {
-    toto t_ = new toto();
-    t_.foo = v1;
-    t_.bar = 0;
-    t_.blah = 0;
-    return t_;
+    toto t = new toto();
+    t.foo = v1;
+    t.bar = 0;
+    t.blah = 0;
+    return t;
   }
   
-  public static int result(toto t_)
+  public static int result(toto t)
   {
-    t_.blah ++;
-    return t_.foo + t_.blah * t_.bar + t_.bar * t_.foo;
+    t.blah ++;
+    return t.foo + t.blah * t.bar + t.bar * t.foo;
   }
   
   
   public static void Main(String[] args)
   {
-    toto t_ = mktoto(4);
-    t_.bar = readInt();
+    toto t = mktoto(4);
+    t.bar = readInt();
     stdin_sep();
-    t_.blah = readInt();
-    int a = result(t_);
+    t.blah = readInt();
+    int a = result(t);
     Console.Write(a);
-    int b = t_.blah;
+    int b = t.blah;
     Console.Write(b);
   }
   

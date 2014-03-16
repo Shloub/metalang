@@ -85,16 +85,16 @@ type e = array of integer;
 function read_int_line(n : integer) : e;
 var
   i : integer;
-  t_ : integer;
+  t : integer;
   tab : e;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
   begin
-    t_ := 0;
-    t_ := read_int_();
+    t := 0;
+    t := read_int_();
     skip();
-    tab[i] := t_;
+    tab[i] := t;
   end;
   exit(tab);
 end;
@@ -103,15 +103,15 @@ type f = array of char;
 function read_char_line(n : integer) : f;
 var
   i : integer;
-  t_ : char;
+  t : char;
   tab : f;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
   begin
-    t_ := #95;
-    t_ := read_char_();
-    tab[i] := t_;
+    t := #95;
+    t := read_char_();
+    tab[i] := t;
   end;
   skip();
   exit(tab);

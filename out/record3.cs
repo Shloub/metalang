@@ -52,20 +52,20 @@ public static int readInt(){
   public class toto {public int foo;public int bar;public int blah;}
   public static toto mktoto(int v1)
   {
-    toto t_ = new toto();
-    t_.foo = v1;
-    t_.bar = 0;
-    t_.blah = 0;
-    return t_;
+    toto t = new toto();
+    t.foo = v1;
+    t.bar = 0;
+    t.blah = 0;
+    return t;
   }
   
-  public static int result(toto[] t_, int len)
+  public static int result(toto[] t, int len)
   {
     int out_ = 0;
     for (int j = 0 ; j < len; j++)
     {
-      t_[j].blah = t_[j].blah + 1;
-      out_ = out_ + t_[j].foo + t_[j].blah * t_[j].bar + t_[j].bar * t_[j].foo;
+      t[j].blah = t[j].blah + 1;
+      out_ = out_ + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
     }
     return out_;
   }
@@ -74,15 +74,15 @@ public static int readInt(){
   public static void Main(String[] args)
   {
     int a = 4;
-    toto[] t_ = new toto[a];
+    toto[] t = new toto[a];
     for (int i = 0 ; i < a; i++)
-      t_[i] = mktoto(i);
-    t_[0].bar = readInt();
+      t[i] = mktoto(i);
+    t[0].bar = readInt();
     stdin_sep();
-    t_[1].blah = readInt();
-    int b = result(t_, 4);
+    t[1].blah = readInt();
+    int b = result(t, 4);
     Console.Write(b);
-    int c = t_[2].blah;
+    int c = t[2].blah;
     Console.Write(c);
   }
   

@@ -1,6 +1,6 @@
 require "scanf.rb"
 
-def cons_( list, i )
+def cons( list, i )
     out_ = {"head" => i,
             "tail" => list};
     return (out_);
@@ -26,7 +26,7 @@ def test( empty )
     while i != 0 do
       i=scanf("%d")[0];
       if i != 0 then
-        list = cons_(list, i);
+        list = cons(list, i);
       end
     end
 end

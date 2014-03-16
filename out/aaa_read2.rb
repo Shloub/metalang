@@ -14,10 +14,10 @@ end
 def read_int_line( n )
     tab = [];
     for i in (0 ..  n - 1) do
-      t_ = 0
-      t_=scanf("%d")[0];
+      t = 0
+      t=scanf("%d")[0];
       scanf("%*\n");
-      tab[i] = t_;
+      tab[i] = t;
     end
     return (tab);
 end
@@ -25,9 +25,9 @@ end
 def read_char_line( n )
     tab = [];
     for i in (0 ..  n - 1) do
-      t_ = '_'
-      t_=scanf("%c")[0];
-      tab[i] = t_;
+      t = '_'
+      t=scanf("%c")[0];
+      tab[i] = t;
     end
     scanf("%*\n");
     return (tab);

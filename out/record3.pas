@@ -71,17 +71,17 @@ type
 
 function mktoto(v1 : integer) : toto;
 var
-  t_ : toto;
+  t : toto;
 begin
-  new(t_);
-  t_^.foo := v1;
-  t_^.bar := 0;
-  t_^.blah := 0;
-  exit(t_);
+  new(t);
+  t^.foo := v1;
+  t^.bar := 0;
+  t^.blah := 0;
+  exit(t);
 end;
 
 type d = array of toto;
-function result(t_ : d; len : integer) : integer;
+function result(t : d; len : integer) : integer;
 var
   j : integer;
   out_ : integer;
@@ -89,8 +89,8 @@ begin
   out_ := 0;
   for j := 0 to  len - 1 do
   begin
-    t_[j]^.blah := t_[j]^.blah + 1;
-    out_ := out_ + t_[j]^.foo + t_[j]^.blah * t_[j]^.bar + t_[j]^.bar * t_[j]^.foo;
+    t[j]^.blah := t[j]^.blah + 1;
+    out_ := out_ + t[j]^.foo + t[j]^.blah * t[j]^.bar + t[j]^.bar * t[j]^.foo;
   end;
   exit(out_);
 end;
@@ -101,20 +101,20 @@ var
   b : integer;
   c : integer;
   i : integer;
-  t_ : d;
+  t : d;
 begin
   a := 4;
-  SetLength(t_, a);
+  SetLength(t, a);
   for i := 0 to  a - 1 do
   begin
-    t_[i] := mktoto(i);
+    t[i] := mktoto(i);
   end;
-  t_[0]^.bar := read_int_();
+  t[0]^.bar := read_int_();
   skip();
-  t_[1]^.blah := read_int_();
-  b := result(t_, 4);
+  t[1]^.blah := read_int_();
+  b := result(t, 4);
   Write(b);
-  c := t_[2]^.blah;
+  c := t[2]^.blah;
   Write(c);
 end.
 

@@ -36,7 +36,7 @@ var read_int_ = function(){
 
 
 
-function cons_(list, i){
+function cons(list, i){
   var out_ = {
                 head : i,
                 tail : list
@@ -68,7 +68,7 @@ function test(empty){
   {
     i=read_int_();
     if (i != 0)
-      list = cons_(list, i);
+      list = cons(list, i);
   }
 }
 

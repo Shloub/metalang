@@ -35,7 +35,7 @@ var read_int_ = function(){
 }
 
 
-function nth_(tab, tofind, len){
+function nth(tab, tofind, len){
   var out_ = 0;
   for (var i = 0 ; i <= len - 1; i++)
     if (tab[i] == tofind)
@@ -56,7 +56,7 @@ for (var i = 0 ; i <= len - 1; i++)
   tmp=read_char_();
   tab[i] = tmp;
 }
-var result = nth_(tab, tofind, len);
+var result = nth(tab, tofind, len);
 util.print(result);
 
 

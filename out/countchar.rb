@@ -1,5 +1,5 @@
 require "scanf.rb"
-def nth_( tab, tofind, len )
+def nth( tab, tofind, len )
     out_ = 0
     for i in (0 ..  len - 1) do
       if tab[i] == tofind then
@@ -21,6 +21,6 @@ for i in (0 ..  len - 1) do
   tmp=scanf("%c")[0];
   tab[i] = tmp;
 end
-result = nth_(tab, tofind, len)
+result = nth(tab, tofind, len)
 printf "%d", result
 
