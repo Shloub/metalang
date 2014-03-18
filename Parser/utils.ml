@@ -53,7 +53,6 @@ let rec string_of_lexem f = function
   | TYPE_INT -> Format.fprintf f "int "
   | TYPE_AUTO -> Format.fprintf f "auto "
   | TYPE_STRING -> Format.fprintf f "string "
-  | TYPE_FLOAT -> Format.fprintf f "float "
   | TYPE_CHAR -> Format.fprintf f "char "
   | TYPE_BOOL -> Format.fprintf f "bool "
   | TYPE_ARRAY -> Format.fprintf f "array "

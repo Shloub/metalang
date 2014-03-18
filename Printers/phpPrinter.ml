@@ -126,7 +126,6 @@ function nextChar(){
   method eprint t f e =
     match Type.unfix t with
     | Type.Integer
-    | Type.Float
     | Type.String
     | Type.Bool -> Format.fprintf f "%a" self#expr e
     | Type.Char -> Format.fprintf f "%a" self#expr e

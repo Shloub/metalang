@@ -53,7 +53,6 @@ class csharpPrinter = object(self)
       match Type.unfix t with
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "String"
-      | Type.Float -> Format.fprintf f "float"
       | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"

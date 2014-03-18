@@ -33,7 +33,7 @@
 %token EQUAL NOT_EQUAL LOWER HIGHER LOWER_OR_EQUAL HIGHER_OR_EQUAL
 %token ADDON SUBON MULON DIVON INCR DECR
 %token ADD NEG MUL DIV MODULO
-%token TYPE_INT TYPE_AUTO TYPE_STRING TYPE_FLOAT TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID TYPE_LEXEMS
+%token TYPE_INT TYPE_AUTO TYPE_STRING TYPE_CHAR TYPE_BOOL TYPE_ARRAY TYPE_VOID TYPE_LEXEMS
 %token TRUE FALSE
 %token<int> INT
 %token<char> CHAR
@@ -89,7 +89,6 @@ typ :
 | TYPE_INT { T.integer  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 | TYPE_LEXEMS   { T.lexems  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 | TYPE_AUTO { T.auto ()  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
-| TYPE_FLOAT { T.float  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 | TYPE_CHAR { T.char  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 | TYPE_BOOL { T.bool  |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 | TYPE_ARRAY LOWER typ HIGHER { T.array $3  |> locatt  ( Ast.location ($startpos($1), $endpos($3))) }

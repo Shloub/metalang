@@ -93,7 +93,6 @@ class camlPrinter = object(self)
       match Type.Fixed.unfix t with
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
-      | Type.Float -> Format.fprintf f "float"
       | Type.Array a -> Format.fprintf f "%a array" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
@@ -542,7 +541,6 @@ class camlPrinter = object(self)
     | Expr.Char _ -> true
     | Expr.Bool _ -> true
     | Expr.Integer _ -> true
-    | Expr.Float _ -> true
     | Expr.String _ -> true
     | Expr.Access _ -> true
     | Expr.Call (_, _) -> false

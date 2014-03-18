@@ -201,7 +201,6 @@ module Type = struct
 
   type 'a tofix =
     | Integer
-    | Float
     | String
     | Char
     | Array of 'a
@@ -221,7 +220,6 @@ module Type = struct
     let map f = function
       | Auto -> Auto
       | Integer -> Integer
-      | Float -> Float
       | String -> String
       | Char -> Char
       | Array t -> Array (f t)
@@ -250,25 +248,22 @@ module Type = struct
       | Integer, Integer -> 0
       | Integer, (Lexems | Auto) -> 1
       | Integer, _ -> -1
-      | Float, Float -> 0
-      | Float, (Auto | Integer | Lexems) -> 1
-      | Float, _ -> -1
       | String, String -> 0
-      | String, (Auto | Lexems | Integer | Float ) -> 1
+      | String, (Auto | Lexems | Integer) -> 1
       | String, _ -> -1
       | Char, Char -> 0
-      | Char, (Auto | Lexems | Integer | Float | String) -> 1
+      | Char, (Auto | Lexems | Integer | String) -> 1
       | Char, _ -> -1
       | Array ca, Array cb -> compare ca cb
-      | Array _, (Char | Auto | Lexems | Integer | Float | String) -> 1
+      | Array _, (Char | Auto | Lexems | Integer | String) -> 1
       | Array _, _ -> -1
       | Void, Void -> 0
-      | Void, (Array _ | Char | Auto | Lexems | Integer | Float | String) -> 1
+      | Void, (Array _ | Char | Auto | Lexems | Integer | String) -> 1
       | Void, _ -> -1
       | Bool, Bool -> 0
-      | Bool, (Void | Array _ | Char | Auto | Lexems | Integer | Float | String) -> 1
+      | Bool, (Void | Array _ | Char | Auto | Lexems | Integer | String) -> 1
       | Bool, _ -> -1
-      | Enum _, (Bool | Void | Array _ | Char | Auto | Lexems | Integer | Float | String) -> 1
+      | Enum _, (Bool | Void | Array _ | Char | Auto | Lexems | Integer | String) -> 1
       | Enum e1, Enum e2 ->
 	let l1 = List.length e1
 	and l2 = List.length e2 in
@@ -292,11 +287,11 @@ module Type = struct
         ) 0 (List.combine s1 s2)
 	else l1 - l2
       | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto |
-          Lexems | Integer | Float | String) -> 1
+          Lexems | Integer | String) -> 1
       | Struct _, _ -> -1
       | Named n1, Named n2 -> String.compare n1 n2
       | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
-          Auto | Lexems | Integer | Float | String) -> 1
+          Auto | Lexems | Integer | String) -> 1
 
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
@@ -305,7 +300,7 @@ module Type = struct
     let foldmap f acc t =
       let annot = Fixed.annot t in
       match unfix t with
-        | Auto | Integer | Float | String | Char | Void
+        | Auto | Integer | String | Char | Void
         | Bool | Named _
         | Enum _ | Lexems ->
           acc, t
@@ -325,7 +320,6 @@ module Type = struct
     match t with
       | Auto -> "Auto"
       | Integer -> "Integer"
-      | Float -> "Float"
       | String -> "String"
       | Char -> "Char"
       | Array t -> "Array("^t^")"
@@ -351,7 +345,6 @@ module Type = struct
   let bool:t = Bool |> fix
   let integer:t = Integer |> fix
   let void:t = Void |> fix
-  let float:t = Float |> fix
   let string:t = String |> fix
   let char:t = Char |> fix
   let array t = Array t |> fix
@@ -378,12 +371,12 @@ module Expr = struct
 
   (** unary operators *)
   type unop =
-      Neg (** integer or float*)
+      Neg (** integer *)
     | Not (** boolean *)
 
   (** binary operators *)
   type binop =
-    | Add | Sub | Mul | Div (* int or float *)
+    | Add | Sub | Mul | Div (* int *)
     | Mod (* int *)
     | Or | And (* bool *)
     | Lower | LowerEq | Higher | HigherEq (* 'a *)
@@ -394,7 +387,6 @@ module Expr = struct
     | UnOp of 'a * unop (** operations unaires *)
     | Char of char
     | String of string
-    | Float of float
     | Integer of int
     | Bool of bool
     | Access of 'a Mutable.t (** vaut la valeur du mutable *)
@@ -413,7 +405,6 @@ module Expr = struct
       | UnOp (a, op) -> UnOp((f a), op)
       | (
         Integer _
-            | Float _
             | String _
             | Char _
             | Bool _) as lief -> lief
@@ -446,7 +437,6 @@ module Expr = struct
           (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
         | Char _ -> acc, t
         | String _ -> acc, t
-        | Float _ -> acc, t
         | Integer _ -> acc, t
         | Bool _ -> acc, t
         | Access m ->
@@ -470,7 +460,6 @@ module Expr = struct
 
   let integer i = fix (Integer i)
   let char i = fix (Char i)
-  let float f = fix (Float f)
   let string f = fix (String f)
   let boolean b = fix (Bool b)
 
@@ -487,7 +476,6 @@ module Expr = struct
 
   let default_value t = match Type.unfix t with
     | Type.Integer -> integer 0
-    | Type.Float -> float 0.
     | Type.String -> string ""
     | Type.Char -> char '_'
     | Type.Array _ -> failwith ("new array is not an expression")

@@ -178,7 +178,6 @@ class commonLispPrinter = object(self)
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> binop op a b
     | Expr.Integer i -> Format.fprintf f "%i" i
-    | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
     | Expr.Access a -> self#access f a
     | Expr.Call (funname, li) -> self#apply f funname li

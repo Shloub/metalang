@@ -207,8 +207,6 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
     | Type.Bool, _ -> error_ty t1 t2 loc1 loc2
     | Type.String, Type.String -> ()
     | Type.String, _ -> error_ty t1 t2 loc1 loc2
-    | Type.Float, Type.Float -> ()
-    | Type.Float, _ -> error_ty t1 t2 loc1 loc2
     | Type.Char, Type.Char -> ()
     | Type.Char, _ -> error_ty t1 t2 loc1 loc2
     | Type.Void, Type.Void -> ()
@@ -324,11 +322,6 @@ let get_type env expr =
     | Typed (t, _) -> t
     | _ -> assert false
 
-let is_float env expr =
-  match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
-    | Typed (Type.Fixed.F (_, Type.Float), _) -> true
-    | _ -> false
-
 let exprloc e = Ast.PosMap.get (Expr.Fixed.annot e)
 
 let add_contrainte env c1 c2 =
@@ -394,8 +387,6 @@ let rec collect_contraintes_expr env e =
       env, ref (Typed (Type.char, loc e))
     | Expr.String _ ->
       env, ref (Typed (Type.string, loc e))
-    | Expr.Float _ ->
-      env, ref (Typed (Type.float, loc e))
     | Expr.Integer _ ->
       env, ref (Typed (Type.integer, loc e))
     | Expr.Lexems li -> (* TODO typer les insertions *)

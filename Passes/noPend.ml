@@ -66,7 +66,6 @@ open PassesUtils
                             (_, Mutable.Var _))
                | Expr.Char _
                | Expr.String _
-               | Expr.Float _
                | Expr.Integer _
                | Expr.Bool _
            )

@@ -76,7 +76,6 @@ end
 (** the kind of values manipulated by the evaluator *)
 type result =
   | Integer of int
-  | Float of float
   | Bool of bool
   | Char of char
   | String of string
@@ -91,7 +90,6 @@ exception Return of result
 (** show the type of a value *)
 let typeof = function
   | Integer _ -> "int"
-  | Float _ -> "float"
   | Bool _ -> "bool"
   | Char _ -> "char"
   | String _ -> "string"
@@ -110,12 +108,6 @@ let get_integer = function
   | Integer a -> a
   | x ->
     raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected int" (typeof x)))
-
-(** extract an ocaml float from a value *)
-let get_float = function
-  | Float a -> a
-  | x ->
-    raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected float" (typeof x)))
 
 (** extract an ocaml char from a value *)
 let get_char = function
@@ -215,22 +207,17 @@ let num_op loc ( + ) ( +. ) a b =
   match a, b with
     | Result a, Result b ->
       Result begin match a, b with
-        | Float i, Float j -> Float (i +. j)
         | Integer i, Integer j -> Integer (i + j)
         | _ -> tyerr loc
       end
     | WithEnv a, Result b ->
       begin match b with
-        | Float j -> WithEnv (fun execenv ->
-          Float ((get_float (a execenv)) +. j))
         | Integer j -> WithEnv (fun execenv ->
           Integer ((get_integer (a execenv)) + j))
         | _ -> tyerr loc
       end
       | Result b, WithEnv a ->
         begin match b with
-          | Float i -> WithEnv (fun execenv ->
-            Float (i +. (get_float (a execenv))))
           | Integer i -> WithEnv (fun execenv ->
             Integer (i + (get_integer (a execenv))))
           | _ -> tyerr loc
@@ -238,7 +225,6 @@ let num_op loc ( + ) ( +. ) a b =
       | WithEnv a, WithEnv b ->
         WithEnv (fun execenv ->
           match a execenv, b execenv with
-            | Float i, Float j -> Float (i +. j)
             | Integer i, Integer j -> Integer (i + j)
             | _ -> tyerr loc
         )
@@ -256,7 +242,6 @@ let num_cmp f =
     | Result ra, Result rb ->
       Result
         (match ra, rb with
-          | Float i, Float j -> Bool (i < j)
           | Integer i, Integer j -> Bool (i < j)
           | Bool i, Bool j -> Bool ( i < j)
           | Char i, Char j -> Bool ( i < j)
@@ -266,18 +251,12 @@ let num_cmp f =
         let a = fa execenv in
         let b = fb execenv in
         match a, b with
-          | Float i, Float j -> Bool (i < j)
           | Integer i, Integer j -> Bool (i < j)
           | Bool i, Bool j -> Bool ( i < j)
           | Char i, Char j -> Bool ( i < j)
           | _ -> tyerr loc)
     | WithEnv fa, Result rb ->
       begin match rb with
-        | Float j -> WithEnv (fun execenv ->
-          match fa execenv with
-            | Float i -> Bool (i < j)
-            | _ -> tyerr loc
-        )
         | Integer j -> WithEnv (fun execenv ->
           match fa execenv with
             | Integer i -> Bool (i < j)
@@ -297,11 +276,6 @@ let num_cmp f =
       end
     | Result ra, WithEnv fb ->
       begin match ra with
-        | Float i -> WithEnv (fun execenv ->
-          match fb execenv with
-            | Float j -> Bool (i < j)
-            | _ -> tyerr loc
-        )
         | Integer i -> WithEnv (fun execenv ->
           match fb execenv with
             | Integer j -> Bool (i < j)
@@ -425,7 +399,6 @@ let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
       | Expr.Char c -> Char c |> res
       | Expr.String s -> String s |> res
       | Expr.Integer i -> Integer i |> res
-      | Expr.Float f -> Float f |> res
       | Expr.Bool b -> Bool b |> res
       | Expr.BinOp (a, op, b) ->
           binop loc op a b
@@ -575,8 +548,6 @@ and eval_call env name params : execenv -> result =
           Integer (int_of_char (get_char param))
         | "char_of_int", [param] ->
           Char (char_of_int (get_integer param))
-        | "float_of_int", [param] ->
-          Float (float_of_int (get_integer param))
         | _ -> failwith ("The Macro "^name^" cannot be evaluated with"
 			 ^(string_of_int (List.length params))^" arguments")
       )
@@ -852,7 +823,6 @@ module EvalConstantes = struct
       | Expr.Call ("instant", [param]) ->
         let new_expr = match EVAL.precompile_eval_expr acc param with
           | Integer x -> Expr.integer x
-          | Float x -> Expr.float x
           | Bool x -> Expr.bool x
           | Char x -> Expr.char x
           | String x -> Expr.string x

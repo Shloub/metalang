@@ -82,7 +82,6 @@ let print_list_indexed print sep f li =
 
 let format_type t = match Type.unfix t with
     | Type.Integer -> "%d"
-    | Type.Float -> "%.2f"
     | Type.Char -> "%c"
     | Type.String ->  "%s"
     | Type.Bool -> "%b"
@@ -138,7 +137,6 @@ class printer = object(self)
   method binding f i = Format.fprintf f "%s" i
   method funname f i = Format.fprintf f "%s" i
   method string f i = Format.fprintf f "%S" i (* TODO faire mieux *)
-  method float f i = Format.fprintf f "%f" i (* TODO faire mieux *)
 
   method declaration f var t e =
     Format.fprintf f "@[<h>def %a@ %a@ =@ %a@]"
@@ -177,7 +175,6 @@ class printer = object(self)
       | Type.Auto -> ()
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
-      | Type.Float -> Format.fprintf f "float"
       | Type.Array a -> Format.fprintf f "array<%a>" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "bool"
@@ -469,7 +466,6 @@ class printer = object(self)
 
   method nop = function
     | Expr.Integer _ -> true
-    | Expr.Float _ -> true
     | Expr.String _ -> true
     | Expr.Char _ -> true
     | Expr.Bool _ -> true
@@ -542,7 +538,6 @@ class printer = object(self)
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> self#binop f op a b
     | Expr.Integer i -> self#integer f i
-    | Expr.Float i -> self#float f i
     | Expr.String i -> self#string f i
     | Expr.Access m ->
 	self#access f m
