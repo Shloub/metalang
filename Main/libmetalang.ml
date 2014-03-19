@@ -75,6 +75,7 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "expend" Passes.WalkNopend.apply
   |> typed "expend print" Passes.WalkExpandPrint.apply
   |> typed "internal tags" Passes.WalkInternalTags.apply
+  |> typed "untuple" Passes.WalkUnTuple.apply
 
 let clike_passes prog =
   prog |> default_passes

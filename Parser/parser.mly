@@ -94,6 +94,14 @@ typ :
 | TYPE_ARRAY LOWER typ HIGHER { T.array $3  |> locatt  ( Ast.location ($startpos($1), $endpos($3))) }
 | TYPE_VOID { T.void |> locatt  ( Ast.location ($startpos($1), $endpos($1))) }
 | AT IDENT { T.named $2  |> locatt  ( Ast.location ($startpos($1), $endpos($2))) }
+| LEFT_PARENS li_typ {
+	T.tuple $2 |> locatt  ( Ast.location ($startpos($1), $endpos($2)))
+}
+;
+
+li_typ :
+| typ RIGHT_PARENS { [$1] }
+| typ COMMA li_typ { $1 :: $3 }
 ;
 
 expr :
@@ -105,6 +113,9 @@ expr :
     { $2 |> locate ( Ast.location ($startpos($1), $endpos($3))) }
 | unary_op  { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
 | binary_op { $1 |> locate ( Ast.location ($startpos($1), $endpos($1))) }
+| LEFT_PARENS exprs RIGHT_PARENS {
+  E.tuple $2 |> locate ( Ast.location ($startpos($1), $endpos($3)))
+}
 | IDENT LEFT_PARENS exprs RIGHT_PARENS
 {
   E.call $1 $3
@@ -171,6 +182,12 @@ alloc_record :
     { I.alloc_record $3 $2 $6 }
 ;
 
+typed_varnames :
+| IDENT RIGHT_PARENS { [(T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))), $1] }
+| IDENT COMMA typed_varnames { ((T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))), $1) :: $3 }
+;
+
+
 define_var :
 | DEF IDENT SET expr { I.declare $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $4 }
 | DEF typ IDENT SET expr { I.declare $3 $2 $5 }
@@ -182,9 +199,9 @@ define_var :
     | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10
 		| _ -> failwith "expected array"
 	}
-| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))
-) $3 }
+| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $3 }
 | DEF READ typ IDENT { I.readdecl $3 $4 }
+| DEF LEFT_PARENS typed_varnames SET expr { I.untuple $3 $5 }
 ;
 
 cond :
@@ -207,8 +224,7 @@ instr :
   I.unquote $2 |> locati ( Ast.location ($startpos($1), $endpos($3)))
 }
 | COMMENT { I.comment $1 }
-| define_var { $1
-        |> locati ( Ast.location ($startpos($1), $endpos($1)))}
+| define_var { $1 |> locati ( Ast.location ($startpos($1), $endpos($1)))}
 | control_flow { $1 |> locati ( Ast.location ($startpos($1), $endpos($1))) }
 | mutabl SET expr { I.affect $1 $3
                       |> locati ( Ast.location ($startpos($1), $endpos($3)))

@@ -195,6 +195,7 @@ module List = struct
 
   let iteri f = ignore @* List.fold_left (fun i x -> f i x ; i + 1) 0
 
+
   let filter_map f li =
     List.fold_right (fun x xs -> Option.snoc xs (f x)) li []
 
@@ -204,6 +205,8 @@ module List = struct
     in acc, List.rev li
 
   let fold_left_map f = fold_left_filter_map (map_snd Option.return @** f)
+
+  let mapi f li = snd (fold_left_map (fun i x -> i + 1, f i x) 0 li)
 
   let find_opt l = Option.catch (find l)
 

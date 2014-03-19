@@ -204,8 +204,13 @@ open PassesUtils
         let () = check_mutable funname acc mut in
         acc
       | Instr.StdinSep -> acc
-			| Instr.Unquote e ->
-				let () = check_expr funname acc e in acc
+      | Instr.Unquote e ->
+	let () = check_expr funname acc e in acc
+      | Instr.Untuple (li, e) ->
+	let () = check_expr funname acc e in
+	List.fold_left (fun acc (_, name) ->
+          add_local_in_acc funname name acc loc) acc li
+	    
 
   let process acc f =
     match f with

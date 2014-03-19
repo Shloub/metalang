@@ -115,6 +115,8 @@ type acc0 = unit
         Instr.Read (t, mapmutable map m)
       | Instr.DeclRead (t, v)->
         Instr.DeclRead (t, mapname map v)
+      | Instr.Untuple (li, e)->
+        Instr.Untuple (List.map (fun (t, n) -> t, mapname map n) li, process_expr map e)
       | Instr.StdinSep -> Instr.StdinSep
     in Instr.Fixed.fixa (Instr.Fixed.annot i) i2
 

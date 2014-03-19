@@ -104,6 +104,7 @@ sig
   val flatten : 'a list list -> 'a list
   val iter : ('a -> unit) -> 'a list -> unit
   val map : ('a -> 'b) -> 'a list -> 'b list
+  val mapi : (int -> 'a -> 'b) -> 'a list -> 'b list
   val rev_map : ('a -> 'b) -> 'a list -> 'b list
   val fold_left : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a
   val fold_right : ('a -> 'b -> 'b) -> 'a list -> 'b -> 'b

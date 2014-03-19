@@ -38,9 +38,8 @@ module type SigPassTop = sig
   type acc0;;
   type 'lex acc;;
   val init_acc : acc0 -> 'lex acc;;
-  val process : 'lex acc -> 'lex Prog.t_fun -> ('lex acc * 'lex Prog.t_fun)
-  val process_main : 'lex acc ->
-    'lex Expr.t Instr.t list -> ('lex acc * 'lex Expr.t Instr.t list)
+  val process : 'lex acc -> Utils.t_fun -> ('lex acc * Utils.t_fun)
+  val process_main : 'lex acc -> Utils.instr list -> ('lex acc * Utils.instr list)
 end
 
 module WalkTop (T:SigPassTop) = struct

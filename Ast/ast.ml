@@ -186,6 +186,7 @@ module Mutable = struct
 
   let array a el = Array (a, el) |> Fixed.fix
   let var a = Var a |> Fixed.fix
+  let dot a f = Dot (a, f) |> Fixed.fix
 
 end
 
@@ -211,6 +212,7 @@ module Type = struct
         (fieldname * 'a) list * structparams
     | Enum of fieldname list
     | Named of typename
+    | Tuple of 'a list
     | Auto
 
   module Fixed = Fix(struct
@@ -230,6 +232,7 @@ module Type = struct
         Struct (List.map (fun (name, t) -> (name, f t)) li, p)
       | Named t -> Named t
       | Enum x -> Enum x
+      | Tuple x -> Tuple (List.map f x)
 
     let next () = next ()
   end)
@@ -286,6 +289,16 @@ module Type = struct
               compare t1 t2
         ) 0 (List.combine s1 s2)
 	else l1 - l2
+      | Tuple li1, Tuple li2 ->
+	let len1 = List.length li1 and
+	    len2 = List.length li2 in
+	if len1 < len2 then -1
+	else if len2 < len1 then 1
+	else List.fold_left (fun acc (t1, t2) ->
+	  if acc = 0 then compare t1 t2
+	  else acc
+	) 0 (List.combine li1 li2)
+      | Tuple _, _ -> 1
       | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto |
           Lexems | Integer | String) -> 1
       | Struct _, _ -> -1
@@ -307,6 +320,9 @@ module Type = struct
         | Array t ->
           let acc, t = f acc t in
           acc, Fixed.fixa annot (Array t)
+				| Tuple li ->
+					let acc, li = List.fold_left_map f acc li in
+					acc, Fixed.fixa annot (Tuple (li))
         | Struct (li, p) ->
           let acc, li = List.fold_left_map
             (fun acc (name, t) ->
@@ -326,6 +342,12 @@ module Type = struct
       | Void -> "Void"
       | Bool -> "Bool"
       | Lexems -> "Lexems"
+			| Tuple li ->
+				let str = List.fold_left
+          (fun acc t ->
+            acc ^ ", " ^ t
+          ) "" li
+        in "("^str^")"
       | Enum e -> let str = List.fold_left
           (fun acc name ->
             acc ^ name ^ ", "
@@ -351,6 +373,7 @@ module Type = struct
   let enum s = Enum (s) |> fix
   let struct_ s p = Struct (s, p) |> fix
   let named n = Named n |> fix
+  let tuple n = Tuple n |> fix
   let auto () = Auto |> fix
   let lexems:t = Lexems |> fix
 
@@ -392,6 +415,7 @@ module Expr = struct
     | Access of 'a Mutable.t (** vaut la valeur du mutable *)
     | Call of funname * 'a list (** appelle la fonction *)
     | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
+		| Tuple of 'a list
     | Enum of string (** enumerateur *)
 
 
@@ -414,6 +438,7 @@ module Expr = struct
       | Call (n, li) -> Call (n, List.map f li)
       | Lexems x -> Lexems (List.map (Lexems.map_expr f) x)
       | Enum e -> Enum e
+      | Tuple e -> Tuple (List.map f e)
 
     let next () = next ()
   end)
@@ -447,6 +472,9 @@ module Expr = struct
           (acc, Fixed.fixa annot (Call(name, li)) )
         | Lexems x -> acc, Fixed.fixa annot (Lexems x)
         | Enum x -> acc, Fixed.fixa annot (Enum x)
+				| Tuple li ->
+					let acc, li = List.fold_left_map f acc li in
+					acc, Fixed.fixa annot (Tuple li)
   end)
 
   (** {2 utils} *)
@@ -466,6 +494,7 @@ module Expr = struct
   let lexems li = fix (Lexems li)
 
   let access m = fix (Access m )
+  let tuple li = fix (Tuple li )
 
   let add e1 e2 = binop Add e1 e2
   let sub e1 e2 = binop Sub e1 e2
@@ -512,6 +541,7 @@ module Instr = struct
     | Print of Type.t * 'expr
     | Read of Type.t * 'expr Mutable.t
     | DeclRead of Type.t * varname
+		| Untuple of (Type.t * varname) list * 'expr
     | StdinSep
     | Unquote of 'expr
 
@@ -537,6 +567,7 @@ module Instr = struct
     | Call (a, b) -> Call (a, b)
     | StdinSep -> StdinSep
     | Unquote e -> Unquote e
+    | Untuple (lis, e) -> Untuple (lis, e)
     | Tag e -> Tag e
 
   let map f t =
@@ -574,6 +605,7 @@ module Instr = struct
   let comment s = Comment s |> fix
   let tag s = Tag s |> fix
   let return e = Return e |> fix
+  let untuple li e = Untuple (li, e) |> fix
   let alloc_array binding t len =
     AllocArray(binding, t, len, None) |> fix
   let alloc_record binding t fields =
@@ -614,6 +646,7 @@ module Instr = struct
         | Print _ -> acc, t
         | Read _ -> acc, t
         | DeclRead _ -> acc, t
+        | Untuple _ -> acc, t
         | Call _ -> acc, t
         | Unquote _ -> acc, t
         | Tag _ -> acc, t
@@ -663,6 +696,9 @@ module Instr = struct
             | Print (t, e) ->
               let acc, e = f acc e in
               acc, Print (t, e)
+						| Untuple (li, e) ->
+							let acc, e = f acc e in
+							acc, Untuple (li, e)
             | Read (t, m) ->
 	      let acc, m = Mutable.foldmap_expr f acc m in
 	      acc, Read (t, m)

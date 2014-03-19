@@ -20,13 +20,19 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  *)
 
-(** Some passes
+
+(** Passe de suppression des tuples
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)
 *)
+
+open Stdlib
+open Ast
+open Warner
 
 open Stdlib
 
@@ -34,25 +40,29 @@ open Ast
 open Fresh
 open PassesUtils
 
-module WalkCountNoPosition = WalkTop(CountNoPosition);;
-module WalkRemoveTags = WalkTop(RemoveTags);;
-module WalkCollectCalls = WalkTop(CollectCalls);;
-module WalkCollectTypes = WalkTop(CollectTypes);;
-module WalkNopend = Walk(NoPend);;
-module WalkExpandPrint = Walk(ExpandPrint);;
-module WalkIfMerge = Walk(IfMerge);;
-module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
-module WalkExpandReadDecl = Walk(ExpandReadDecl);;
-module WalkCheckNaming = WalkTop(CheckNaming);;
-module WalkRename = WalkTop(Rename);;
-module WalkInternalTags = WalkTop(InternalTags);;
-module WalkUnTuple = WalkTop(UnTuple);;
+type acc0 = unit
 
-(* TODO rentrer dans la structure du type *)
-let no_macro = function
-  | Prog.DeclarFun (_, ty, li, instrs) ->
-    begin match Type.unfix ty with
-      | Type.Lexems -> false
-      | _ -> true
-    end
-  | _ -> true
+let locate loc instr =
+  PosMap.add (Instr.Fixed.annot instr) loc; instr
+
+let rec rewrite (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
+    | Instr.Untuple (li, e) ->
+      let loc = PosMap.get (Instr.Fixed.annot i) in
+      let t = Type.tuple (List.map fst li) in
+      let b = fresh () in
+      let vb = Mutable.var b in
+      let access = List.mapi (fun i (t, name) ->
+	Instr.Declare (name, t, Expr.access (Mutable.dot vb ("f"^(string_of_int i)))) |> Instr.fix |> locate loc
+      ) li in
+      (Instr.Declare (b, t, e) |> Instr.fix |> locate loc)::access
+    | j -> [ Instr.deep_map_bloc (List.flatten @* List.map rewrite) j |> Instr.fixa (Instr.Fixed.annot i) ]
+      
+type 'lex acc = unit
+let init_acc _ = ()
+let process acc p =
+  match p with
+  | Prog.DeclarFun (x, y, z, instrs)->
+    acc, Prog.DeclarFun (x, y, z, List.collect rewrite instrs)
+  | _ -> acc, p
+let process_main acc i = acc, List.collect rewrite i
+

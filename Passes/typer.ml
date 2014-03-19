@@ -219,6 +219,12 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
       check_types env (expand env t1 loc1) t2 loc1 loc2
     | Type.Array t, Type.Array t2 ->
       check_types env t t2 loc1 loc2
+    | Type.Tuple li1, Type.Tuple li2 ->
+      let len1 = List.length li1
+      and len2 = List.length li2 in
+      if len1 = len2 then
+	List.iter (fun (ty1, ty2) -> check_types env ty1 ty2 loc1 loc2) (List.zip li1 li2)
+      else error_ty t1 t2 loc1 loc2
     | Type.Struct (li, _), Type.Struct (li2, _) ->
       List.iter
         (fun (name, ty) ->
@@ -421,6 +427,11 @@ let rec collect_contraintes_expr env e =
       let (t, _) = StringMap.find en env.enum in (* TODO not found*)
       let contrainte = ref (Typed (t, loc e) ) in
       env, contrainte
+    | Expr.Tuple t ->
+      let env, contraintes = List.fold_left_map collect_contraintes_expr env t in
+      let tuple_contrainte = ref (PreTyped (Type.Tuple contraintes, loc e)) in
+      env, tuple_contrainte
+      
   in
   let env = { env with
     contrainteMap = IntMap.add (Expr.Fixed.annot e) contrainte env.contrainteMap }
@@ -605,6 +616,19 @@ let rec collect_contraintes_instructions env instructions
           {env with
             contraintes = (contrainte_ty, contrainte_expr) ::
               env.contraintes}
+
+	| Instr.Untuple (li, e) ->
+          let env, contrainte_expr = collect_contraintes_expr env e in
+	  let env, li_contraintes =
+	    List.fold_left_map (fun env (ty, variable) ->
+	      let ty = expand env ty loc in
+              let env, contrainte = ty2typeContrainte env ty loc in
+	      env, (contrainte, variable)) env li in
+          let env = List.fold_left (fun env (contrainte, variable) ->
+            { env with locales = StringMap.add variable contrainte env.locales })
+	    env li_contraintes in
+	  let tuple_contrainte = ref (PreTyped (Type.Tuple (List.map fst li_contraintes), loc)) in
+	  {env with contraintes = (tuple_contrainte, contrainte_expr) :: env.contraintes}
         | Instr.Read (ty, mut) ->
           let ty = expand env ty loc in
           let env, contrainte_mut = collect_contraintes_mutable env mut in

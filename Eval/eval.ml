@@ -82,6 +82,7 @@ type result =
   | Record of result array
   | Array of result array
   | Lexems of Parser.token list
+	| Tuple of result array
   | Nil
 
 (** we return a value *)
@@ -97,6 +98,11 @@ let typeof = function
   | Array _ -> "array"
   | Nil _ -> "Nil"
 	| Lexems _ -> "Lexems"
+
+(** extract an ocaml array from a value *)
+let get_tuple = function
+  | Tuple a -> a
+  | x -> raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected tuple" (typeof x)))
 
 (** extract an ocaml array from a value *)
 let get_array = function
@@ -417,6 +423,13 @@ let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
       | Expr.Access mut ->
         let mut = mut_val env mut in
         WithEnv (fun execenv ->  mut execenv)
+			| Expr.Tuple t ->
+				WithEnv (fun execenv ->
+					let t = List.map (function
+						| Result r -> r
+						| WithEnv f -> f execenv) t in
+					(Tuple ( Array.of_list t ))
+				)
       | Expr.Call (name, params) ->
         let call = eval_call env name params  in
         WithEnv (fun execenv ->
@@ -559,6 +572,16 @@ and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
     =
 	let loc = Ast.PosMap.get (Instr.Fixed.annot instr) in
 	match Instr.unfix instr with
+	| Instr.Untuple (li, e) ->
+		let li = List.map snd li in
+    let e = e env in
+    let env, li = List.fold_left_map add_in_env env li in
+    let f execenv =
+			let e = get_tuple ( eval_expr execenv e ) in
+			List.iteri (fun i r ->
+				execenv.(r) <- e.(i)
+			) li
+    in env, f
   | Instr.Declare (varname, _, e) ->
     let e = e env in
     let env, r = add_in_env env varname in
@@ -737,6 +760,7 @@ and precompile_instr i =
     | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
     | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
     | Instr.DeclRead (t, v) -> Instr.DeclRead (t, v)
+		| Instr.Untuple (li, e) -> Instr.Untuple (li, precompile_expr e)
     | Instr.StdinSep -> Instr.StdinSep
     | Instr.Unquote li -> assert false
     | Instr.Tag s -> Instr.Tag s

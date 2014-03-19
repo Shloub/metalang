@@ -1,0 +1,10 @@
+
+def (int, int) f( (int, int) tuple )
+  def (a, b) = tuple
+  return (a + 1, b + 1)
+end
+
+main
+	def t = f( (0, 1) )
+end
+
