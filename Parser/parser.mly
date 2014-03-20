@@ -124,6 +124,7 @@ expr :
 | LEXEMS {
   E.lexems $1 |> locate ( Ast.location ($startpos($1), $endpos($1)))
 }
+| RECORD affect_field* END {E.record $2 |> locate ( Ast.location ($startpos($1), $endpos($1)))}
 ;
 
 mutabl :
@@ -174,14 +175,14 @@ binary_op :
 affect_field :
 | IDENT SET expr PERIOD? { ($1, $3) }
 ;
-
+(*
 alloc_record :
 | DEF IDENT SET RECORD affect_field* END
     { I.alloc_record $2 (T.auto ()  |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $5 }
 | DEF typ IDENT SET RECORD affect_field* END
     { I.alloc_record $3 $2 $6 }
 ;
-
+*)
 typed_varnames :
 | IDENT RIGHT_PARENS { [(T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))), $1] }
 | IDENT COMMA typed_varnames { ((T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($1)))), $1) :: $3 }
@@ -284,10 +285,10 @@ instr :
 | SKIP { I.stdin_sep ()
        |> locati ( Ast.location ($startpos($1), $endpos($1)))
        }
-| alloc_record { $1
+(*| alloc_record { $1
                    |> locati ( Ast.location ($startpos($1), $endpos($1)))
                }
-;
+*);
 
 instrs :
 | { [] }

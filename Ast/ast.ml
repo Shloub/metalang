@@ -415,9 +415,9 @@ module Expr = struct
     | Access of 'a Mutable.t (** vaut la valeur du mutable *)
     | Call of funname * 'a list (** appelle la fonction *)
     | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
-		| Tuple of 'a list
+    | Tuple of 'a list
+    | Record of (varname * 'a) list
     | Enum of string (** enumerateur *)
-
 
   (** {2 parcours} *)
 
@@ -439,6 +439,7 @@ module Expr = struct
       | Lexems x -> Lexems (List.map (Lexems.map_expr f) x)
       | Enum e -> Enum e
       | Tuple e -> Tuple (List.map f e)
+      | Record li -> Record (List.map (fun (n, e) -> n, f e) li)
 
     let next () = next ()
   end)
@@ -472,9 +473,14 @@ module Expr = struct
           (acc, Fixed.fixa annot (Call(name, li)) )
         | Lexems x -> acc, Fixed.fixa annot (Lexems x)
         | Enum x -> acc, Fixed.fixa annot (Enum x)
-				| Tuple li ->
-					let acc, li = List.fold_left_map f acc li in
-					acc, Fixed.fixa annot (Tuple li)
+	| Tuple li ->
+	  let acc, li = List.fold_left_map f acc li in
+	  acc, Fixed.fixa annot (Tuple li)
+	| Record li ->
+	  let acc, li = List.fold_left_map (fun acc (n, e) ->
+	    let acc, e = f acc e in
+	    acc, (n, e)) acc li in
+	  acc, Fixed.fixa annot (Record li)
   end)
 
   (** {2 utils} *)
@@ -495,6 +501,7 @@ module Expr = struct
 
   let access m = fix (Access m )
   let tuple li = fix (Tuple li )
+  let record li = fix (Record li )
 
   let add e1 e2 = binop Add e1 e2
   let sub e1 e2 = binop Sub e1 e2
