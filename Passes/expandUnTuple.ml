@@ -44,7 +44,7 @@ type acc0 = unit
 
 let locate loc instr =
   PosMap.add (Instr.Fixed.annot instr) loc; instr
-
+(* TODO positions *)
 let rec rewrite (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
     | Instr.Untuple (li, e) ->
       let loc = PosMap.get (Instr.Fixed.annot i) in
