@@ -423,13 +423,31 @@ let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
       | Expr.Access mut ->
         let mut = mut_val env mut in
         WithEnv (fun execenv ->  mut execenv)
-			| Expr.Tuple t ->
-				WithEnv (fun execenv ->
-					let t = List.map (function
-						| Result r -> r
-						| WithEnv f -> f execenv) t in
-					(Tuple ( Array.of_list t ))
-				)
+      | Expr.Tuple t ->
+	WithEnv (fun execenv ->
+	  let t = List.map (function
+	    | Result r -> r
+	    | WithEnv f -> f execenv) t in
+	  (Tuple ( Array.of_list t ))
+	)
+      | Expr.Record fields ->
+	let fields = List.map (fun (name, e) ->
+	  index_for_field env name loc, e) fields in
+	let index, fields = List.unzip fields in
+	let index = Array.of_list index in
+	let fields = Array.of_list fields in
+	let len = Array.length fields in
+
+	let f execenv =
+	  let record = Array.make len Nil in
+	  let () = for i = 0 to len - 1 do
+	      let index = index.(i) in
+	      let e = fields.(i) in
+	      let e = eval_expr execenv e in
+	      record.(index) <- e
+	    done
+	  in Record record
+	in WithEnv f
       | Expr.Call (name, params) ->
         let call = eval_call env name params  in
         WithEnv (fun execenv ->

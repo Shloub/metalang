@@ -43,6 +43,7 @@ module WalkExpandPrint = Walk(ExpandPrint);;
 module WalkIfMerge = Walk(IfMerge);;
 module WalkAllocArrayExpend = Walk(AllocArrayExpend);;
 module WalkExpandReadDecl = Walk(ExpandReadDecl);;
+module WalkRecordExprToInstr = Walk(RecordExprToInstr);;
 module WalkCheckNaming = WalkTop(CheckNaming);;
 module WalkRename = WalkTop(Rename);;
 module WalkInternalTags = WalkTop(InternalTags);;
