@@ -58,7 +58,7 @@ class csharpPrinter = object(self)
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s" n
-      | Type.Struct (li, p) -> Format.fprintf f "a struct"
+      | Type.Struct li -> Format.fprintf f "a struct"
       | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Auto -> assert false
 			| Type.Lexems -> assert false
@@ -163,7 +163,7 @@ public static int readInt(){
 
   method decl_type f name t =
     match (Type.unfix t) with
-	Type.Struct (li, _) ->
+	Type.Struct li ->
 	Format.fprintf f "public class %a {%a}"
 	  self#binding name
 	  (print_list
