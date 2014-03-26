@@ -163,7 +163,7 @@ class pasPrinter = object(self)
           | Type.Bool -> Format.fprintf f "boolean"
           | Type.Char -> Format.fprintf f "char"
           | Type.Named n -> Format.fprintf f "%s" n
-          | Type.Struct (li, p) -> Format.fprintf f "a struct"
+          | Type.Struct li -> Format.fprintf f "a struct"
 	  | Type.Enum _ -> Format.fprintf f "an enum"
 			| Type.Lexems | Type.Auto -> assert false
 
@@ -459,7 +459,7 @@ end;
 
   method decl_type f name t =
     match (Type.unfix t) with
-        Type.Struct (li, _) ->
+        Type.Struct li ->
           Format.fprintf f "type@[<v>@\n%a=^%a_r;@\n%a_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
             self#binding name
             self#binding name

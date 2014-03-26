@@ -315,7 +315,7 @@ define :
 	{ P.macro $3 $2 $5 $7 }
 
 | RECORD AT IDENT decl_field* END
-    { P.DeclareType ($3, (T.struct_ $4 {T.tuple = false} )) }
+    { P.DeclareType ($3, (T.struct_ $4 )) }
 | ENUM AT IDENT ENUM_FIELD* END
     { P.DeclareType ($3, T.enum $4 ) }
 ;

@@ -358,7 +358,7 @@ let add_in_env (env:env) v : env * int =
 (** find the index of a field in a record value *)
 let index_for_field env field loc =
   match Type.unfix (Typer.type_of_field env.tyenv field loc) with
-    | Type.Struct (li, _) ->
+    | Type.Struct li ->
       let li = List.map fst li |> List.sort String.compare in
       List.indexof field li
     | _ -> raise (Error (fun f ->
