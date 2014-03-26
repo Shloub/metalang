@@ -225,7 +225,7 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
       if len1 = len2 then
 	List.iter (fun (ty1, ty2) -> check_types env ty1 ty2 loc1 loc2) (List.zip li1 li2)
       else error_ty t1 t2 loc1 loc2
-    | Type.Struct (li, _), Type.Struct (li2, _) ->
+    | Type.Struct li, Type.Struct li2 ->
       List.iter
         (fun (name, ty) ->
           let (_, ty2) =
@@ -292,8 +292,8 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
       end
     | PreTyped ((Type.Array r1), loc1), Typed (_, loc2) ->
       error_cty !t1 !t2 loc1 loc2
-    | PreTyped (Type.Struct (li, _), loc1),
-      Typed (Type.Fixed.F (_, Type.Struct (li2, _)), loc2) ->
+    | PreTyped (Type.Struct li, loc1),
+      Typed (Type.Fixed.F (_, Type.Struct li2), loc2) ->
       List.fold_left
         (fun acc (name, t) ->
           let (_, ty) = List.find
@@ -303,8 +303,8 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         ) false li
     | PreTyped (Type.Struct _, loc1), Typed (_, loc2) ->
       error_cty !t1 !t2 loc1 loc2
-    | PreTyped (Type.Struct (li, _), loc1),
-      PreTyped (Type.Struct (li2, _), loc2) ->
+    | PreTyped (Type.Struct li, loc1),
+      PreTyped (Type.Struct li2, loc2) ->
       List.fold_left
         (fun acc (name, t) ->
           let (_, t2) = List.find
@@ -549,7 +549,7 @@ let rec collect_contraintes_instructions env instructions
           let li_type = match li with
             | (name, _) :: _ ->
               begin try match StringMap.find name env.fields with
-                | (_, Type.Fixed.F (_, Type.Struct (li, _)), _) -> li
+                | (_, Type.Fixed.F (_, Type.Struct li), _) -> li
                 | _ -> assert false
                 with Not_found ->
                   error_field_not_found loc name ty
@@ -694,7 +694,7 @@ let map_ty env prog =
       | Type.Enum ( name:: _) ->
         let (_, name) = StringMap.find name env.enum in
         Type.named name
-      | Type.Struct ( ( (name, _ ):: _), _) ->
+      | Type.Struct ( (name, _ ):: _) ->
         let (_, _, name) =StringMap.find name env.fields in
         Type.named name
       | _ -> t
@@ -780,7 +780,7 @@ let process_tfun env p = match p with
     { env with
       gamma = StringMap.add name ty env.gamma;
       fields = (match (Type.Fixed.unfix ty) with
-        | Type.Struct (li, _) ->
+        | Type.Struct li ->
           List.fold_left
             (fun acc (fieldname, ty_field) ->
               StringMap.add fieldname (ty_field, ty, name) acc

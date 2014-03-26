@@ -161,7 +161,7 @@ class htmlPrinter = object(self)
 
   method decl_type f name t =
     match (Type.unfix t) with
-	    | Type.Struct (li, _) ->
+	    | Type.Struct li ->
 	      Format.fprintf f "<span class=\"keyword\">record</span> <span class=\"type\">@@%s</span> <div class=\"metalang_bloc_content\">%a</div><span class=\"keyword\">end</span>"
 	        name
 	        (print_list

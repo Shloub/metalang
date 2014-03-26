@@ -203,7 +203,7 @@ class cPrinter = object(self)
 
   method decl_type f name t =
     match (Type.unfix t) with
-	Type.Struct (li, _) ->
+	Type.Struct li ->
 	Format.fprintf f "struct %a;@\ntypedef struct %a {@\n@[<v 2>  %a@]@\n} %a;@\n"
 	  self#binding name
 	  self#binding name

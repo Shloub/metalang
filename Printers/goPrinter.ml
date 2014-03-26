@@ -196,7 +196,7 @@ func skip() {
 
   method decl_type f name t =
     match (Type.unfix t) with
-    | Type.Struct (li, _) ->
+    | Type.Struct li ->
 	Format.fprintf f "@\ntype %a struct {@\n@[<v 2>  %a@]@\n}@\n"
 	  self#binding name
 	  (print_list

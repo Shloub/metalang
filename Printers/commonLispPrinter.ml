@@ -375,7 +375,7 @@ super#prog prog
 
   method decl_type f name t =
         match (Type.unfix t) with
-	        | Type.Struct (li, _) ->
+	        | Type.Struct li ->
 	          Format.fprintf f "(defstruct (%a (:type list) :named)@\n  @[<v>%a@])@\n"
 	            self#binding name
 	            (print_list

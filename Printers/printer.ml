@@ -181,7 +181,7 @@ class printer = object(self)
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "@@%s" n
       | Type.Lexems -> Format.fprintf f "lexems"
-      | Type.Struct (li, p) ->
+      | Type.Struct li ->
 	Format.fprintf f "record %a end"
 	  (print_list
 	     (fun t (name, type_) ->
@@ -582,7 +582,7 @@ class printer = object(self)
 
   method decl_type f name t =
         match (Type.unfix t) with
-	        | Type.Struct (li, _) ->
+	        | Type.Struct li ->
 	          Format.fprintf f "record %a %a@\nend@\n"
 	            self#binding name
 	            (print_list

@@ -195,10 +195,6 @@ end
    this module contains ast for metalang types
 *)
 module Type = struct
-  type structparams =
-      {
-        tuple : bool
-      }
 
   type 'a tofix =
     | Integer
@@ -208,8 +204,7 @@ module Type = struct
     | Void
     | Bool
     | Lexems
-    | Struct of
-        (fieldname * 'a) list * structparams
+    | Struct of (fieldname * 'a) list
     | Enum of fieldname list
     | Named of typename
     | Tuple of 'a list
@@ -228,8 +223,8 @@ module Type = struct
       | Void -> Void
       | Bool -> Bool
       | Lexems -> Lexems
-      | Struct (li, p) ->
-        Struct (List.map (fun (name, t) -> (name, f t)) li, p)
+      | Struct li ->
+        Struct (List.map (fun (name, t) -> (name, f t)) li)
       | Named t -> Named t
       | Enum x -> Enum x
       | Tuple x -> Tuple (List.map f x)
@@ -278,7 +273,7 @@ module Type = struct
 	else l1 - l2
       | Enum _, _ -> -1
 
-      | Struct (s1, _), Struct (s2, _) ->
+      | Struct s1, Struct s2 ->
 	let l1 = List.length s1
 	and l2 = List.length s2 in
 	if l1 = l2 then
@@ -323,13 +318,13 @@ module Type = struct
 				| Tuple li ->
 					let acc, li = List.fold_left_map f acc li in
 					acc, Fixed.fixa annot (Tuple (li))
-        | Struct (li, p) ->
+        | Struct li ->
           let acc, li = List.fold_left_map
             (fun acc (name, t) ->
               let acc, t = f acc t in
               acc, (name, t)
             ) acc li
-          in acc, Fixed.fixa annot (Struct (li, p))
+          in acc, Fixed.fixa annot (Struct li)
   end)
 
   let type2String (t : string tofix) : string =
@@ -353,7 +348,7 @@ module Type = struct
             acc ^ name ^ ", "
           ) "" e
         in "Enum("^str^")"
-      | Struct (li, p) ->
+      | Struct li ->
         let str = List.fold_left
           (fun acc (name, t) ->
             acc ^ name ^ ":"^t^"; "
@@ -371,7 +366,7 @@ module Type = struct
   let char:t = Char |> fix
   let array t = Array t |> fix
   let enum s = Enum (s) |> fix
-  let struct_ s p = Struct (s, p) |> fix
+  let struct_ s = Struct s |> fix
   let named n = Named n |> fix
   let tuple n = Tuple n |> fix
   let auto () = Auto |> fix

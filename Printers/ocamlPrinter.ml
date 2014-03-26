@@ -98,7 +98,7 @@ class camlPrinter = object(self)
       | Type.Bool -> Format.fprintf f "bool"
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s" n
-      | Type.Struct (li, p) ->
+      | Type.Struct li ->
 	Format.fprintf f "record{%a}"
 	  (print_list
 	     (fun t (name, type_) ->
@@ -615,7 +615,7 @@ class camlPrinter = object(self)
 
   method decl_type f name t =
     match (Type.unfix t) with
-	Type.Struct (li, _) ->
+	Type.Struct li ->
 	Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
 	  name
 	  (print_list

@@ -55,13 +55,13 @@ Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
       | Type.Char -> Format.fprintf f "char"
       | Type.Named n -> Format.fprintf f "%s" n
       | Type.Enum _ -> Format.fprintf f "an enum"
-      | Type.Struct (li, p) -> Format.fprintf f "a struct"
+      | Type.Struct li -> Format.fprintf f "a struct"
       | Type.Auto -> assert false
 			| Type.Lexems -> assert false
 
   method decl_type f name t =
     match (Type.unfix t) with
-	Type.Struct (li, _) ->
+	Type.Struct li ->
 	Format.fprintf f "static class %a {%a}"
 	  self#binding name
 	  (print_list
