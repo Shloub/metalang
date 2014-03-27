@@ -41,21 +41,30 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 
 (defun mktoto (v1)
 (progn
-  (let ((c (make-toto :foo (+ v1 1)
+  (let ((c (make-toto :foo v1
                       :bar v1
                       :blah v1)))
   (let ((t__ c))
     (return-from mktoto t__)
   ))))
 
+(defun mktoto2 (v1)
+(progn
+  (let ((d (make-toto :foo (+ v1 3)
+                      :bar (+ v1 2)
+                      :blah (+ v1 1))))
+  (let ((t__ d))
+    (return-from mktoto2 t__)
+  ))))
+
 (defun result (t_ t2_)
 (progn
   (let ((t__ t_))
     (let ((t2 t2_))
-      (let ((d (make-toto :foo 0
+      (let ((e (make-toto :foo 0
                           :bar 0
                           :blah 0)))
-      (let ((t3 d))
+      (let ((t3 e))
         (setq t3 t2)
         (setq t__ t2)
         (setq t2 t3)

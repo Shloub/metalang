@@ -78,8 +78,6 @@ let check_reads = (fun (tyenv, prog) ->
 let default_passes (prog : Typer.env * Utils.prog) :
     (Typer.env * Utils.prog ) =
   prog
-  |> pass_base_print
-  |> pass_debug_print
   |> typed "check naming" Passes.WalkCheckNaming.apply
   |> CheckUseVoid.apply
   |> typed "check return" CheckReturn.apply

@@ -56,10 +56,20 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
   public static toto mktoto(int v1)
   {
     toto c = new toto();
-    c.foo = v1 + 1;
+    c.foo = v1;
     c.bar = v1;
     c.blah = v1;
     toto t = c;
+    return t;
+  }
+  
+  public static toto mktoto2(int v1)
+  {
+    toto d = new toto();
+    d.foo = v1 + 3;
+    d.bar = v1 + 2;
+    d.blah = v1 + 1;
+    toto t = d;
     return t;
   }
   
@@ -67,11 +77,11 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
   {
     toto t = t_;
     toto t2 = t2_;
-    toto d = new toto();
-    d.foo = 0;
-    d.bar = 0;
-    d.blah = 0;
-    toto t3 = d;
+    toto e = new toto();
+    e.foo = 0;
+    e.bar = 0;
+    e.blah = 0;
+    toto t3 = e;
     t3 = t2;
     t = t2;
     t2 = t3;
