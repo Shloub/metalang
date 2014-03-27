@@ -8,9 +8,10 @@ typedef struct intlist {
 } intlist;
 
 struct intlist * cons(struct intlist * list, int i){
-  struct intlist * out_ = malloc (sizeof(out_) );
-  out_->head=i;
-  out_->tail=list;
+  struct intlist * a = malloc (sizeof(a) );
+  a->head=i;
+  a->tail=list;
+  struct intlist * out_ = a;
   return out_;
 }
 
@@ -19,9 +20,10 @@ struct intlist * rev2(struct intlist * empty, struct intlist * acc, struct intli
     return acc;
   else
   {
-    struct intlist * acc2 = malloc (sizeof(acc2) );
-    acc2->head=torev->head;
-    acc2->tail=acc;
+    struct intlist * b = malloc (sizeof(b) );
+    b->head=torev->head;
+    b->tail=acc;
+    struct intlist * acc2 = b;
     return rev2(empty, acc, torev->tail);
   }
 }

@@ -53,9 +53,10 @@ public static int readInt(){
   
   public static void Main(String[] args)
   {
-    toto param = new toto();
-    param.foo = 0;
-    param.bar = 0;
+    toto b = new toto();
+    b.foo = 0;
+    b.bar = 0;
+    toto param = b;
     param.bar = readInt();
     stdin_sep();
     param.foo = readInt();

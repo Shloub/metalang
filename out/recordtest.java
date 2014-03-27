@@ -7,9 +7,10 @@ public class recordtest
   
   public static void main(String args[])
   {
-    toto param = new toto();
-    param.foo = 0;
-    param.bar = 0;
+    toto b = new toto();
+    b.foo = 0;
+    b.bar = 0;
+    toto param = b;
     if (scanner.hasNext("^-")){
     scanner.next("^-"); param.bar = -scanner.nextInt();
     }else{

@@ -124,7 +124,7 @@ class printer = object(self)
       instrs
 
 
-  val mutable typerEnv : Typer.env = Obj.magic(0)
+  val mutable typerEnv : Typer.env = Typer.empty
 
 	method typename_of_field field = Typer.typename_for_field field typerEnv
 
@@ -172,6 +172,11 @@ class printer = object(self)
 
   method ptype f (t:Type.t) =
       match Type.unfix t with
+      | Type.Tuple li ->
+	Format.fprintf f "(%a)"
+	  (print_list self#ptype
+	     (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+	  ) li
       | Type.Auto -> ()
       | Type.Integer -> Format.fprintf f "int"
       | Type.String -> Format.fprintf f "string"
@@ -543,6 +548,18 @@ class printer = object(self)
 	self#access f m
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Char (c) -> self#char f c
+    | Expr.Tuple li -> self#tuple f li
+    | Expr.Record li -> self#record f li
+
+  method tuple f li =
+    Format.fprintf f "(%a)"
+      (print_list self#expr
+	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) li
+
+  method record f li =
+    Format.fprintf f "record %a end"
+     (self#def_fields "") li
 
   method char f c = Format.fprintf f "%C" c
 

@@ -18,12 +18,13 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 }
 function mktoto($v1){
-  $t = array(
+  $c = array(
     "foo"=>$v1,
     "bar"=>0,
     "blah"=>0
   );
   
+  $t = $c;
   return $t;
 }
 

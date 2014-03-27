@@ -40,22 +40,26 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 */
 
 function mktoto(v1){
-  var t = {
-             foo : v1,
+  var c = {
+             foo : v1
+             +
+             1,
              bar : v1,
              blah : v1
   };
+  var t = c;
   return t;
 }
 
 function result(t_, t2_){
   var t = t_;
   var t2 = t2_;
-  var t3 = {
-              foo : 0,
-              bar : 0,
-              blah : 0
+  var d = {
+             foo : 0,
+             bar : 0,
+             blah : 0
   };
+  var t3 = d;
   t3 = t2;
   t = t2;
   t2 = t3;

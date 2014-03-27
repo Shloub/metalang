@@ -93,6 +93,7 @@ var
   c : char;
   chiffres : array of integer;
   d : integer;
+  h : bigint;
   i : integer;
   len : integer;
   out_ : bigint;
@@ -119,12 +120,13 @@ begin
     chiffres[len - 1 - i] := tmp;
   end;
   skip();
-  new(out_);
-  out_^.bigint_sign := sign
+  new(h);
+  h^.bigint_sign := sign
   =
   #43;
-  out_^.bigint_len := len;
-  out_^.bigint_chiffres := chiffres;
+  h^.bigint_len := len;
+  h^.bigint_chiffres := chiffres;
+  out_ := h;
   exit(out_);
 end;
 
@@ -229,6 +231,7 @@ var
   chiffres : array of integer;
   i : integer;
   len : integer;
+  m : bigint;
   out_ : bigint;
   retenue : integer;
   tmp : integer;
@@ -258,10 +261,11 @@ begin
     begin
       len := len - 1;
     end;
-  new(out_);
-  out_^.bigint_sign := true;
-  out_^.bigint_len := len;
-  out_^.bigint_chiffres := chiffres;
+  new(m);
+  m^.bigint_sign := true;
+  m^.bigint_len := len;
+  m^.bigint_chiffres := chiffres;
+  out_ := m;
   exit(out_);
 end;
 
@@ -270,6 +274,7 @@ var
   chiffres : array of integer;
   i : integer;
   len : integer;
+  n : bigint;
   out_ : bigint;
   retenue : integer;
   tmp : integer;
@@ -304,21 +309,24 @@ Pré-requis : a > b
   begin
     len := len - 1;
   end;
-  new(out_);
-  out_^.bigint_sign := true;
-  out_^.bigint_len := len;
-  out_^.bigint_chiffres := chiffres;
+  new(n);
+  n^.bigint_sign := true;
+  n^.bigint_len := len;
+  n^.bigint_chiffres := chiffres;
+  out_ := n;
   exit(out_);
 end;
 
 function neg_bigint(a : bigint) : bigint;
 var
+  o : bigint;
   out_ : bigint;
 begin
-  new(out_);
-  out_^.bigint_sign := not a^.bigint_sign;
-  out_^.bigint_len := a^.bigint_len;
-  out_^.bigint_chiffres := a^.bigint_chiffres;
+  new(o);
+  o^.bigint_sign := not a^.bigint_sign;
+  o^.bigint_len := a^.bigint_len;
+  o^.bigint_chiffres := a^.bigint_chiffres;
+  out_ := o;
   exit(out_);
 end;
 
@@ -379,6 +387,7 @@ var
   l : integer;
   len : integer;
   out_ : bigint;
+  p : bigint;
   retenue : integer;
 begin
   { Cet algorithm est quadratique.
@@ -411,23 +420,26 @@ D'ou le nom de la fonction. }
         len := len - 1;
       end;
   end;
-  new(out_);
-  out_^.bigint_sign := a^.bigint_sign
+  new(p);
+  p^.bigint_sign := a^.bigint_sign
   =
   b^.bigint_sign;
-  out_^.bigint_len := len;
-  out_^.bigint_chiffres := chiffres;
+  p^.bigint_len := len;
+  p^.bigint_chiffres := chiffres;
+  out_ := p;
   exit(out_);
 end;
 
 function bigint_premiers_chiffres(a : bigint; i : integer) : bigint;
 var
   out_ : bigint;
+  q : bigint;
 begin
-  new(out_);
-  out_^.bigint_sign := a^.bigint_sign;
-  out_^.bigint_len := i;
-  out_^.bigint_chiffres := a^.bigint_chiffres;
+  new(q);
+  q^.bigint_sign := a^.bigint_sign;
+  q^.bigint_len := i;
+  q^.bigint_chiffres := a^.bigint_chiffres;
+  out_ := q;
   exit(out_);
 end;
 
@@ -437,6 +449,7 @@ var
   f : integer;
   k : integer;
   out_ : bigint;
+  r : bigint;
 begin
   f := a^.bigint_len + i;
   SetLength(chiffres, f);
@@ -452,12 +465,13 @@ begin
         chiffres[k] := 0;
       end;
   end;
-  new(out_);
-  out_^.bigint_sign := a^.bigint_sign;
-  out_^.bigint_len := a^.bigint_len
+  new(r);
+  r^.bigint_sign := a^.bigint_sign;
+  r^.bigint_len := a^.bigint_len
   +
   i;
-  out_^.bigint_chiffres := chiffres;
+  r^.bigint_chiffres := chiffres;
+  out_ := r;
   exit(out_);
 end;
 

@@ -9,10 +9,11 @@ typedef struct toto {
 } toto;
 
 struct toto * mktoto(int v1){
-  struct toto * t = malloc (sizeof(t) );
-  t->foo=v1;
-  t->bar=0;
-  t->blah=0;
+  struct toto * d = malloc (sizeof(d) );
+  d->foo=v1;
+  d->bar=0;
+  d->blah=0;
+  struct toto * t = d;
   return t;
 }
 

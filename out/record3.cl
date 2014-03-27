@@ -38,11 +38,12 @@
 
 (defun mktoto (v1)
 (progn
-  (let ((t_ (make-toto :foo v1
-                       :bar 0
-                       :blah 0)))
-  (return-from mktoto t_)
-)))
+  (let ((d (make-toto :foo v1
+                      :bar 0
+                      :blah 0)))
+  (let ((t_ d))
+    (return-from mktoto t_)
+  ))))
 
 (defun result (t_ len)
 (progn

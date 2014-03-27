@@ -145,9 +145,10 @@ int minmax(struct gamestate * g){
 Renvoie le coup de l'IA
 */
 struct move * play(struct gamestate * g){
-  struct move * minMove = new move();
-  minMove->x=0;
-  minMove->y=0;
+  struct move * f = new move();
+  f->x=0;
+  f->y=0;
+  struct move * minMove = f;
   int minNote = 10000;
   for (int x = 0 ; x <= 2; x ++)
     for (int y = 0 ; y <= 2; y ++)
@@ -182,11 +183,12 @@ struct gamestate * init_(){
       tab.at(j) = 0;
     cases.at(i) = tab;
   }
-  struct gamestate * out_ = new gamestate();
-  out_->cases=cases;
-  out_->firstToPlay=true;
-  out_->note=0;
-  out_->ended=false;
+  struct gamestate * h = new gamestate();
+  h->cases=cases;
+  h->firstToPlay=true;
+  h->note=0;
+  h->ended=false;
+  struct gamestate * out_ = h;
   return out_;
 }
 
@@ -197,9 +199,10 @@ struct move * read_move(){
   int y = 0;
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c");
-  struct move * out_ = new move();
-  out_->x=x;
-  out_->y=y;
+  struct move * k = new move();
+  k->x=x;
+  k->y=y;
+  struct move * out_ = k;
   return out_;
 }
 

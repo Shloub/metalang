@@ -40,6 +40,17 @@ let conf_rename lang prog =
 
 let debug_printer = new PosPrinter.posPrinter
 let debug_print prog = debug_printer#prog Format.std_formatter prog
+let pass_debug_print (a, prog) =
+  debug_printer#setTyperEnv a;
+  debug_print prog;
+  (a, prog)
+
+let base_printer = new Printer.printer
+let base_print prog = base_printer#prog Format.std_formatter prog
+let pass_base_print (a, prog) =
+  base_printer#setTyperEnv a;
+  base_print prog;
+  (a, prog)
 
 let typed name f (a, b) =
 (*  debug_print b;
@@ -67,6 +78,8 @@ let check_reads = (fun (tyenv, prog) ->
 let default_passes (prog : Typer.env * Utils.prog) :
     (Typer.env * Utils.prog ) =
   prog
+  |> pass_base_print
+  |> pass_debug_print
   |> typed "check naming" Passes.WalkCheckNaming.apply
   |> CheckUseVoid.apply
   |> typed "check return" CheckReturn.apply
@@ -75,7 +88,15 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "expend" Passes.WalkNopend.apply
   |> typed "expend print" Passes.WalkExpandPrint.apply
   |> typed "internal tags" Passes.WalkInternalTags.apply
-  |> typed "expand untuple" Passes.WalkExpandUnTuple.apply
+  |> snd |> Typer.process
+  |> (fun (a, prog) ->
+    let tuples, prog = DeclareTuples.apply a prog in
+    let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog
+    in a, b)
+  |> snd |> Typer.process
+  |> (fun (a, b) ->
+    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
+  |> snd |> Typer.process
 
 let clike_passes prog =
   prog |> default_passes
