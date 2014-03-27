@@ -73,11 +73,12 @@ module type SigPass = sig
   type 'lex acc
   type acc0
   val init_acc : acc0 -> 'lex acc;;
-  val process : 'lex acc -> 'lex Expr.t Instr.t list -> ('lex acc * 'lex
-                                                           Expr.t Instr.t list)
+  val process : 'lex acc -> Utils.instr list -> ('lex acc * Utils.instr list)
 end
 
 module Walk (T:SigPass) = struct
+
+  let init_acc acc0 = T.init_acc acc0
 
   let apply_instr acc i = T.process acc i
   let apply_prog acc p =

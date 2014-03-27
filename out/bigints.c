@@ -42,12 +42,13 @@ struct bigint * read_bigint(){
     }
   }
   scanf("%*[ \t\r\n]c");
-  struct bigint * out_ = malloc (sizeof(out_) );
-  out_->bigint_sign=sign
+  struct bigint * h = malloc (sizeof(h) );
+  h->bigint_sign=sign
   ==
   '+';
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
+  h->bigint_len=len;
+  h->bigint_chiffres=chiffres;
+  struct bigint * out_ = h;
   return out_;
 }
 
@@ -134,10 +135,11 @@ struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b){
   }
   if (chiffres[len - 1] == 0)
     len --;
-  struct bigint * out_ = malloc (sizeof(out_) );
-  out_->bigint_sign=1;
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
+  struct bigint * m = malloc (sizeof(m) );
+  m->bigint_sign=1;
+  m->bigint_len=len;
+  m->bigint_chiffres=chiffres;
+  struct bigint * out_ = m;
   return out_;
 }
 
@@ -167,18 +169,20 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  struct bigint * out_ = malloc (sizeof(out_) );
-  out_->bigint_sign=1;
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
+  struct bigint * n = malloc (sizeof(n) );
+  n->bigint_sign=1;
+  n->bigint_len=len;
+  n->bigint_chiffres=chiffres;
+  struct bigint * out_ = n;
   return out_;
 }
 
 struct bigint * neg_bigint(struct bigint * a){
-  struct bigint * out_ = malloc (sizeof(out_) );
-  out_->bigint_sign=!a->bigint_sign;
-  out_->bigint_len=a->bigint_len;
-  out_->bigint_chiffres=a->bigint_chiffres;
+  struct bigint * o = malloc (sizeof(o) );
+  o->bigint_sign=!a->bigint_sign;
+  o->bigint_len=a->bigint_len;
+  o->bigint_chiffres=a->bigint_chiffres;
+  struct bigint * out_ = o;
   return out_;
 }
 
@@ -246,20 +250,22 @@ D'ou le nom de la fonction. */
       if (chiffres[len - 1] == 0)
       len --;
   }
-  struct bigint * out_ = malloc (sizeof(out_) );
-  out_->bigint_sign=a->bigint_sign
+  struct bigint * p = malloc (sizeof(p) );
+  p->bigint_sign=a->bigint_sign
   ==
   b->bigint_sign;
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
+  p->bigint_len=len;
+  p->bigint_chiffres=chiffres;
+  struct bigint * out_ = p;
   return out_;
 }
 
 struct bigint * bigint_premiers_chiffres(struct bigint * a, int i){
-  struct bigint * out_ = malloc (sizeof(out_) );
-  out_->bigint_sign=a->bigint_sign;
-  out_->bigint_len=i;
-  out_->bigint_chiffres=a->bigint_chiffres;
+  struct bigint * q = malloc (sizeof(q) );
+  q->bigint_sign=a->bigint_sign;
+  q->bigint_len=i;
+  q->bigint_chiffres=a->bigint_chiffres;
+  struct bigint * out_ = q;
   return out_;
 }
 
@@ -274,12 +280,13 @@ struct bigint * bigint_shift(struct bigint * a, int i){
     else
       chiffres[k] = 0;
   }
-  struct bigint * out_ = malloc (sizeof(out_) );
-  out_->bigint_sign=a->bigint_sign;
-  out_->bigint_len=a->bigint_len
+  struct bigint * r = malloc (sizeof(r) );
+  r->bigint_sign=a->bigint_sign;
+  r->bigint_len=a->bigint_len
   +
   i;
-  out_->bigint_chiffres=chiffres;
+  r->bigint_chiffres=chiffres;
+  struct bigint * out_ = r;
   return out_;
 }
 

@@ -25,20 +25,22 @@ type toto struct {
 }
 
 func mktoto(v1 int) * toto{
-  var t * toto = new (toto)
-  (*t).foo=v1;
-  (*t).bar=v1;
-  (*t).blah=v1;
+  var c * toto = new (toto)
+  (*c).foo=v1 + 1;
+  (*c).bar=v1;
+  (*c).blah=v1;
+  var t * toto = c
   return t
 }
 
 func result(t_ * toto, t2_ * toto) int{
   var t * toto = t_
   var t2 * toto = t2_
-  var t3 * toto = new (toto)
-  (*t3).foo=0;
-  (*t3).bar=0;
-  (*t3).blah=0;
+  var d * toto = new (toto)
+  (*d).foo=0;
+  (*d).bar=0;
+  (*d).blah=0;
+  var t3 * toto = d
   t3 = t2;
   t = t2;
   t2 = t3;

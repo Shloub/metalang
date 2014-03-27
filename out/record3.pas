@@ -71,17 +71,19 @@ type
 
 function mktoto(v1 : integer) : toto;
 var
+  d : toto;
   t : toto;
 begin
-  new(t);
-  t^.foo := v1;
-  t^.bar := 0;
-  t^.blah := 0;
+  new(d);
+  d^.foo := v1;
+  d^.bar := 0;
+  d^.blah := 0;
+  t := d;
   exit(t);
 end;
 
-type d = array of toto;
-function result(t : d; len : integer) : integer;
+type e = array of toto;
+function result(t : e; len : integer) : integer;
 var
   j : integer;
   out_ : integer;
@@ -101,7 +103,7 @@ var
   b : integer;
   c : integer;
   i : integer;
-  t : d;
+  t : e;
 begin
   a := 4;
   SetLength(t, a);

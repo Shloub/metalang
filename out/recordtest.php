@@ -17,11 +17,12 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-$param = array(
+$b = array(
   "foo"=>0,
   "bar"=>0
 );
 
+$param = $b;
 list($param["bar"]) = scan("%d");
 scantrim();
 list($param["foo"]) = scan("%d");

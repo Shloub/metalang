@@ -30,9 +30,10 @@ def read_bigint(  )
       chiffres[len - 1 - i] = tmp;
     end
     scanf("%*\n");
-    out_ = {"bigint_sign" => sign == '+',
-            "bigint_len" => len,
-            "bigint_chiffres" => chiffres};
+    h = {"bigint_sign" => sign == '+',
+         "bigint_len" => len,
+         "bigint_chiffres" => chiffres};
+    out_ = h
     return (out_);
 end
 
@@ -122,9 +123,10 @@ def add_bigint_positif( a, b )
     if chiffres[len - 1] == 0 then
       len -= 1
     end
-    out_ = {"bigint_sign" => true,
-            "bigint_len" => len,
-            "bigint_chiffres" => chiffres};
+    m = {"bigint_sign" => true,
+         "bigint_len" => len,
+         "bigint_chiffres" => chiffres};
+    out_ = m
     return (out_);
 end
 
@@ -155,16 +157,18 @@ Pré-requis : a > b
     while len > 0 && chiffres[len - 1] == 0 do
       len -= 1
     end
-    out_ = {"bigint_sign" => true,
-            "bigint_len" => len,
-            "bigint_chiffres" => chiffres};
+    n = {"bigint_sign" => true,
+         "bigint_len" => len,
+         "bigint_chiffres" => chiffres};
+    out_ = n
     return (out_);
 end
 
 def neg_bigint( a )
-    out_ = {"bigint_sign" => not(a["bigint_sign"]),
-            "bigint_len" => a["bigint_len"],
-            "bigint_chiffres" => a["bigint_chiffres"]};
+    o = {"bigint_sign" => not(a["bigint_sign"]),
+         "bigint_len" => a["bigint_len"],
+         "bigint_chiffres" => a["bigint_chiffres"]};
+    out_ = o
     return (out_);
 end
 
@@ -233,16 +237,18 @@ D'ou le nom de la fonction.
         len -= 1
       end
     end
-    out_ = {"bigint_sign" => a["bigint_sign"] == b["bigint_sign"],
-            "bigint_len" => len,
-            "bigint_chiffres" => chiffres};
+    p = {"bigint_sign" => a["bigint_sign"] == b["bigint_sign"],
+         "bigint_len" => len,
+         "bigint_chiffres" => chiffres};
+    out_ = p
     return (out_);
 end
 
 def bigint_premiers_chiffres( a, i )
-    out_ = {"bigint_sign" => a["bigint_sign"],
-            "bigint_len" => i,
-            "bigint_chiffres" => a["bigint_chiffres"]};
+    q = {"bigint_sign" => a["bigint_sign"],
+         "bigint_len" => i,
+         "bigint_chiffres" => a["bigint_chiffres"]};
+    out_ = q
     return (out_);
 end
 
@@ -256,9 +262,10 @@ def bigint_shift( a, i )
         chiffres[k] = 0;
       end
     end
-    out_ = {"bigint_sign" => a["bigint_sign"],
-            "bigint_len" => a["bigint_len"] + i,
-            "bigint_chiffres" => chiffres};
+    r = {"bigint_sign" => a["bigint_sign"],
+         "bigint_len" => a["bigint_len"] + i,
+         "bigint_chiffres" => chiffres};
+    out_ = r
     return (out_);
 end
 

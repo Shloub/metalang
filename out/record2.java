@@ -6,10 +6,11 @@ public class record2
   static class toto {public int foo;public int bar;public int blah;}
   public static toto mktoto(int v1)
   {
-    toto t = new toto();
-    t.foo = v1;
-    t.bar = 0;
-    t.blah = 0;
+    toto c = new toto();
+    c.foo = v1;
+    c.bar = 0;
+    c.blah = 0;
+    toto t = c;
     return t;
   }
   

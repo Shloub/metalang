@@ -1,7 +1,8 @@
 require "scanf.rb"
 
-param = {"foo" => 0,
-         "bar" => 0};
+b = {"foo" => 0,
+     "bar" => 0};
+param = b
 param["bar"]=scanf("%d")[0];
 scanf("%*\n");
 param["foo"]=scanf("%d")[0];

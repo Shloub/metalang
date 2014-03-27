@@ -52,10 +52,11 @@ public static int readInt(){
   public class toto {public int foo;public int bar;public int blah;}
   public static toto mktoto(int v1)
   {
-    toto t = new toto();
-    t.foo = v1;
-    t.bar = 0;
-    t.blah = 0;
+    toto d = new toto();
+    d.foo = v1;
+    d.bar = 0;
+    d.blah = 0;
+    toto t = d;
     return t;
   }
   

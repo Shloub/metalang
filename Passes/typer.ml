@@ -248,6 +248,7 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
     | _ -> error_ty t1 t2 loc1 loc2
 
 let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
+	(* let () = Format.printf "unify %s and %s@\n" (contr2str !t1) (contr2str !t2) in *)
   match !t1, !t2 with
     | Typed (((Type.Fixed.F (_, Type.Named _)) as t), loc), _ ->
       begin
@@ -275,12 +276,12 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         t2 := !t1;
         true
       end
-    | Typed _, PreTyped _ -> unify env t2 t1
-    | PreTyped (_, loc), _ when is_typed t1 ->
+		| PreTyped (_, loc), _ when is_typed t1 ->
       begin
         t1 := Typed ((extract_typed t1), loc);
         true
       end
+    | Typed _, PreTyped _ -> unify env t2 t1
     | PreTyped (Type.Array a1, loc1), PreTyped (Type.Array a2, loc2) ->
       unify env a1 a2
     | PreTyped (Type.Array _, loc1), PreTyped (_, loc2) ->
@@ -298,8 +299,9 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         (fun acc (name, t) ->
           let (_, ty) = List.find
             ((String.equals name) @* fst)
-            li2
-          in acc || unify env t (ref (Typed (ty, loc2)))
+            li2 in
+					let next = unify env t (ref (Typed (ty, loc2)))
+          in acc || next
         ) false li
     | PreTyped (Type.Struct _, loc1), Typed (_, loc2) ->
       error_cty !t1 !t2 loc1 loc2
@@ -309,8 +311,10 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
         (fun acc (name, t) ->
           let (_, t2) = List.find
             ((String.equals name) @* fst)
-            li2
-          in acc || unify env t t2
+            li2 in
+					let () = Format.printf "field %s\n" name in
+					let next = unify env t t2 in
+          acc || next
         ) false li
     |  PreTyped (Type.Struct _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2
       loc1 loc2
@@ -326,7 +330,16 @@ let is_int env expr =
 let get_type env expr =
   match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
     | Typed (t, _) -> t
-    | _ -> assert false
+    | c -> raise (Error (fun f -> Format.fprintf f "@\nNo type : %s@\n%!"
+    (contr2str c)))
+
+let typed env expr =
+  try
+    match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
+    | Typed (_, _) -> true
+    | _ -> false
+  with Not_found -> false
+
 
 let exprloc e = Ast.PosMap.get (Expr.Fixed.annot e)
 
@@ -334,16 +347,14 @@ let add_contrainte env c1 c2 =
   { env with
     contraintes = (c1, c2) :: env.contraintes
   }
-
 (** {2 Collect contraintes functions} *)
 let rec collect_contraintes_expr env e =
-  (*  let () = Format.printf "collecting expr contraintes@\n" in
-      let () =
+(*      let () =
       Format.fprintf
       Format.std_formatter
-      "collecting contraintes in %a@\n"
-      Printer.printer#expr  e
-      in*)
+      "collecting contraintes in %d@\n"
+				(Expr.Fixed.annot e)
+      in *)
   let loc e = exprloc e in
   let env, contrainte = match Expr.Fixed.unfix e with
     | Expr.BinOp (a, Expr.Mod, b) ->
@@ -431,7 +442,12 @@ let rec collect_contraintes_expr env e =
       let env, contraintes = List.fold_left_map collect_contraintes_expr env t in
       let tuple_contrainte = ref (PreTyped (Type.Tuple contraintes, loc e)) in
       env, tuple_contrainte
-      
+    | Expr.Record li ->
+      let env, contraintes = List.fold_left_map (fun env (field, e) ->
+				let env, e = collect_contraintes_expr env e in
+				env, (field, e)) env li in
+      let tuple_contrainte = ref (PreTyped (Type.Struct (contraintes), loc e)) in
+      env, tuple_contrainte
   in
   let env = { env with
     contrainteMap = IntMap.add (Expr.Fixed.annot e) contrainte env.contrainteMap }
@@ -465,7 +481,13 @@ and collect_contraintes_mutable env mut =
                 } in
       env, contrainte
     | Mutable.Dot (mut, name) ->
-      let (ty_dot, ty_mut, _) = StringMap.find name env.fields in
+      let (ty_dot, ty_mut, _) =
+	try StringMap.find name env.fields
+	with Not_found ->
+	  raise ( Error (fun f ->
+	    Format.fprintf f "Field %s is undefined %a\n%!" name ploc tloc
+	  ))
+      in
       let env, contrainte = collect_contraintes_mutable env mut in
       let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
       let env, ty_dot = ty2typeContrainte env ty_dot tloc in
@@ -475,9 +497,9 @@ and collect_contraintes_mutable env mut =
 
 let rec collect_contraintes_instructions env instructions
     (ty_ret : typeContrainte ref) =
-  (*  let () = Format.printf "collecting instructions contraintes\n" in *)
   List.fold_left
     (fun env instruction ->
+(* 			let () = Format.printf "collecting instructions contraintes %i\n" (Instr.Fixed.annot instruction) in *)
       let loc = Ast.PosMap.get (Instr.Fixed.annot instruction) in
       match Instr.unfix instruction with
       | Instr.Tag _ -> env
@@ -715,6 +737,9 @@ let map_ty env prog =
         let ty = map_ty ty in Instr.fixa a (Instr.Read (ty, p1) )
       | Instr.DeclRead (ty, p1) ->
         let ty = map_ty ty in Instr.fixa a (Instr.DeclRead (ty, p1) )
+      | Instr.Untuple (li, e) ->
+        let li = List.map (fun (t, name) -> map_ty t, name) li
+	in Instr.fixa a (Instr.Untuple (li, e) )
       | _ -> instr
   in
   let map_instrs instrs =

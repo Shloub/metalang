@@ -33,36 +33,71 @@
 open Stdlib
 open Ast
 open Warner
-
-open Stdlib
-
-open Ast
 open Fresh
 open PassesUtils
 
-type acc0 = unit
+(* TODO deep *)
+let mapt t (_, acc) = try TypeMap.find t acc with Not_found -> t
+let maptli li acc = List.map (fun (x, t) -> x, mapt t acc ) li
+
+let name_of_field (i: int) (t : Type.t) (acc, _) =
+  try
+    List.nth (TypeMap.find t acc) i
+  with Not_found ->
+    (raise (Error (fun f -> Format.fprintf f "cannot find field %i in type %s@\n" i
+      (Type.type_t_to_string t))))
 
 let locate loc instr =
   PosMap.add (Instr.Fixed.annot instr) loc; instr
 (* TODO positions *)
-let rec rewrite (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
+let rec rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
     | Instr.Untuple (li, e) ->
       let loc = PosMap.get (Instr.Fixed.annot i) in
-      let t = Type.tuple (List.map fst li) in
+      let t = Type.auto () in
       let b = fresh () in
       let vb = Mutable.var b in
+      let t_tuple = Type.tuple (List.map fst li) in
       let access = List.mapi (fun i (t, name) ->
-	Instr.Declare (name, t, Expr.access (Mutable.dot vb ("f"^(string_of_int i)))) |> Instr.fix |> locate loc
+	let fieldname = name_of_field i t_tuple acc in
+	Instr.Declare (name, t, Expr.access (Mutable.dot vb fieldname)) |> Instr.fix |> locate loc
       ) li in
       (Instr.Declare (b, t, e) |> Instr.fix |> locate loc)::access
-    | j -> [ Instr.deep_map_bloc (List.flatten @* List.map rewrite) j |> Instr.fixa (Instr.Fixed.annot i) ]
-      
-type 'lex acc = unit
-let init_acc _ = ()
-let process acc p =
+    | j -> [ Instr.deep_map_bloc (List.flatten @* List.map (rewrite acc)) j |> Instr.fixa (Instr.Fixed.annot i) ]
+
+type acc0 = Typer.env * DeclareTuples.acc
+type 'lex acc = Typer.env * DeclareTuples.acc
+let init_acc env = env
+
+let mape tyenv (mapfields, _) e =
+  match Expr.unfix e with
+  | Expr.Tuple li ->
+    let t = Typer.get_type tyenv e in
+    let fieldsnames = TypeMap.find t mapfields in
+    Expr.record (List.combine fieldsnames li)
+  | _ -> e
+
+let mapde tyenv acc e = Expr.Writer.Deep.map (mape tyenv acc) e
+
+let mapi acc i =
+  let i0 = match Instr.unfix i with
+    | Instr.Declare (v, t, e) -> Instr.Declare (v, mapt t acc, e)
+    | Instr.AllocArray (v, t, e, opt) -> Instr.AllocArray (v, mapt t acc, e, opt)
+    | Instr.AllocRecord (v, t, li) -> Instr.AllocRecord (v, mapt t acc, li)
+    | x -> x
+  in Instr.fixa (Instr.Fixed.annot i) i0
+
+let mapti i tyenv acc =
+  let i = Instr.map_expr (mapde tyenv acc) i in
+  Instr.Writer.Deep.map (mapi acc) i
+
+let process (tyenv, acc) p =
   match p with
   | Prog.DeclarFun (x, y, z, instrs)->
-    acc, Prog.DeclarFun (x, y, z, List.collect rewrite instrs)
-  | _ -> acc, p
-let process_main acc i = acc, List.collect rewrite i
+    let instrs = List.map (fun i -> mapti i tyenv acc) instrs in
+    (tyenv, acc), Prog.DeclarFun (x, mapt y acc, maptli z acc, List.collect (rewrite acc) instrs)
+  | _ -> (tyenv, acc), p
+
+let process_main (tyenv, acc) instrs =
+  let instrs = List.map (fun i -> mapti i tyenv acc) instrs in
+  (tyenv, acc), List.collect (rewrite acc) instrs
 

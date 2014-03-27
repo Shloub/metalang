@@ -36,10 +36,11 @@ var read_int_ = function(){
 
 
 
-var param = {
-               foo : 0,
-               bar : 0
+var b = {
+           foo : 0,
+           bar : 0
 };
+var param = b;
 param.bar=read_int_();
 stdinsep();
 param.foo=read_int_();

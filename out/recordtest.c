@@ -8,9 +8,10 @@ typedef struct toto {
 } toto;
 
 int main(void){
-  struct toto * param = malloc (sizeof(param) );
-  param->foo=0;
-  param->bar=0;
+  struct toto * b = malloc (sizeof(b) );
+  b->foo=0;
+  b->bar=0;
+  struct toto * param = b;
   scanf("%d", &param->bar);
   scanf("%*[ \t\r\n]c");
   scanf("%d", &param->foo);

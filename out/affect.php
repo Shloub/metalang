@@ -21,24 +21,26 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 */
 
 function mktoto($v1){
-  $t = array(
-    "foo"=>$v1,
+  $c = array(
+    "foo"=>$v1 + 1,
     "bar"=>$v1,
     "blah"=>$v1
   );
   
+  $t = $c;
   return $t;
 }
 
 function result(&$t_, &$t2_){
   $t = $t_;
   $t2 = $t2_;
-  $t3 = array(
+  $d = array(
     "foo"=>0,
     "bar"=>0,
     "blah"=>0
   );
   
+  $t3 = $d;
   $t3 = $t2;
   $t = $t2;
   $t2 = $t3;

@@ -37,10 +37,11 @@ var read_int_ = function(){
 
 
 function cons(list, i){
-  var out_ = {
-                head : i,
-                tail : list
+  var a = {
+             head : i,
+             tail : list
   };
+  var out_ = a;
   return out_;
 }
 
@@ -49,10 +50,11 @@ function rev2(empty, acc, torev){
     return acc;
   else
   {
-    var acc2 = {
-                  head : torev.head,
-                  tail : acc
+    var b = {
+               head : torev.head,
+               tail : acc
     };
+    var acc2 = b;
     return rev2(empty, acc, torev.tail);
   }
 }

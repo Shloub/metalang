@@ -22,9 +22,10 @@ type toto struct {
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var param * toto = new (toto)
-  (*param).foo=0;
-  (*param).bar=0;
+  var b * toto = new (toto)
+  (*b).foo=0;
+  (*b).bar=0;
+  var param * toto = b
   fmt.Fscanf(reader, "%d", &(*param).bar);
   skip()
   fmt.Fscanf(reader, "%d", &(*param).foo);

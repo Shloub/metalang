@@ -63,7 +63,8 @@ def read_bigint(  ):
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
     stdinsep()
-    out_ = {"bigint_sign":sign == '+', "bigint_len":len, "bigint_chiffres":chiffres}
+    h = {"bigint_sign":sign == '+', "bigint_len":len, "bigint_chiffres":chiffres}
+    out_ = h;
     return out_;
 
 def print_bigint( a ):
@@ -123,7 +124,8 @@ def add_bigint_positif( a, b ):
       chiffres[i] = mod(tmp, 10);
     if chiffres[len - 1] == 0:
       len -= 1
-    out_ = {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
+    m = {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
+    out_ = m;
     return out_;
 
 def sub_bigint_positif( a, b ):
@@ -145,12 +147,14 @@ Pré-requis : a > b
       chiffres[i] = tmp;
     while (len > 0 and chiffres[len - 1] == 0):
       len -= 1
-    out_ = {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
+    n = {"bigint_sign":True, "bigint_len":len, "bigint_chiffres":chiffres}
+    out_ = n;
     return out_;
 
 def neg_bigint( a ):
-    out_ = {"bigint_sign":not (a["bigint_sign"]), "bigint_len":a["bigint_len"], 
+    o = {"bigint_sign":not (a["bigint_sign"]), "bigint_len":a["bigint_len"], 
     "bigint_chiffres":a["bigint_chiffres"]}
+    out_ = o;
     return out_;
 
 def add_bigint( a, b ):
@@ -195,12 +199,14 @@ D'ou le nom de la fonction. """
     for l in range(0, 1 + 2):
       if chiffres[len - 1] == 0:
         len -= 1
-    out_ = {"bigint_sign":a["bigint_sign"] == b["bigint_sign"], "bigint_len":len, 
+    p = {"bigint_sign":a["bigint_sign"] == b["bigint_sign"], "bigint_len":len, 
     "bigint_chiffres":chiffres}
+    out_ = p;
     return out_;
 
 def bigint_premiers_chiffres( a, i ):
-    out_ = {"bigint_sign":a["bigint_sign"], "bigint_len":i, "bigint_chiffres":a["bigint_chiffres"]}
+    q = {"bigint_sign":a["bigint_sign"], "bigint_len":i, "bigint_chiffres":a["bigint_chiffres"]}
+    out_ = q;
     return out_;
 
 def bigint_shift( a, i ):
@@ -211,8 +217,9 @@ def bigint_shift( a, i ):
         chiffres[k] = a["bigint_chiffres"][k - i];
       else:
         chiffres[k] = 0;
-    out_ = {"bigint_sign":a["bigint_sign"], "bigint_len":a["bigint_len"] + i, 
+    r = {"bigint_sign":a["bigint_sign"], "bigint_len":a["bigint_len"] + i, 
     "bigint_chiffres":chiffres}
+    out_ = r;
     return out_;
 
 def mul_bigint( aa, bb ):

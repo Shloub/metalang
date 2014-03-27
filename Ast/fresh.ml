@@ -59,6 +59,8 @@ let fresh_init prog =
 	| Instr.AllocArray (b1, _, _, Some (b2, _))
 	    ->
 		BindingSet.add b1 (BindingSet.add b2 acc)
+	| Instr.Untuple (li, e) ->
+	  List.fold_left (fun acc (_, name) -> BindingSet.add name acc) acc li
 	| _ -> acc
     ) acc i
   in
