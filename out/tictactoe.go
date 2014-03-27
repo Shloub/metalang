@@ -166,10 +166,9 @@ func minmax(g * gamestate) int{
 Renvoie le coup de l'IA
 */
 func play(g * gamestate) * move{
-  var f * move = new (move)
-  (*f).x=0;
-  (*f).y=0;
-  var minMove * move = f
+  var minMove * move = new (move)
+  (*minMove).x=0;
+  (*minMove).y=0;
   var minNote int = 10000
   for x := 0 ; x <= 2; x++ {
     for y := 0 ; y <= 2; y++ {
@@ -204,12 +203,11 @@ func init_() * gamestate{
       }
       cases[i] = tab;
   }
-  var h * gamestate = new (gamestate)
-  (*h).cases=cases;
-  (*h).firstToPlay=true;
-  (*h).note=0;
-  (*h).ended=false;
-  var out_ * gamestate = h
+  var out_ * gamestate = new (gamestate)
+  (*out_).cases=cases;
+  (*out_).firstToPlay=true;
+  (*out_).note=0;
+  (*out_).ended=false;
   return out_
 }
 
@@ -220,10 +218,9 @@ func read_move() * move{
   var y int = 0
   fmt.Fscanf(reader, "%d", &y);
   skip()
-  var k * move = new (move)
-  (*k).x=x;
-  (*k).y=y;
-  var out_ * move = k
+  var out_ * move = new (move)
+  (*out_).x=x;
+  (*out_).y=y;
   return out_
 }
 

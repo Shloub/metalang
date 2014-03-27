@@ -10,11 +10,10 @@ typedef struct toto {
 } toto;
 
 struct toto * mktoto(int v1){
-  struct toto * c = new toto();
-  c->foo=v1;
-  c->bar=0;
-  c->blah=0;
-  struct toto * t = c;
+  struct toto * t = new toto();
+  t->foo=v1;
+  t->bar=0;
+  t->blah=0;
   return t;
 }
 

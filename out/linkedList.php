@@ -10,12 +10,11 @@ function scan($format){
   return $out;
 }
 function cons(&$list, $i){
-  $a = array(
+  $out_ = array(
     "head"=>$i,
     "tail"=>$list
   );
   
-  $out_ = $a;
   return $out_;
 }
 
@@ -24,12 +23,11 @@ function rev2(&$empty, &$acc, &$torev){
     return $acc;
   else
   {
-    $b = array(
+    $acc2 = array(
       "head"=>$torev["head"],
       "tail"=>$acc
     );
     
-    $acc2 = $b;
     return rev2($empty, $acc, $torev["tail"]);
   }
 }

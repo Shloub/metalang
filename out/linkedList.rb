@@ -1,9 +1,8 @@
 require "scanf.rb"
 
 def cons( list, i )
-    a = {"head" => i,
-         "tail" => list};
-    out_ = a
+    out_ = {"head" => i,
+            "tail" => list};
     return (out_);
 end
 
@@ -11,9 +10,8 @@ def rev2( empty, acc, torev )
     if torev == empty then
       return (acc);
     else
-      b = {"head" => torev["head"],
-           "tail" => acc};
-      acc2 = b
+      acc2 = {"head" => torev["head"],
+              "tail" => acc};
       return (rev2(empty, acc, torev["tail"]));
     end
 end

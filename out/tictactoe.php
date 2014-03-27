@@ -147,12 +147,11 @@ function minmax(&$g){
 Renvoie le coup de l'IA
 */
 function play(&$g){
-  $f = array(
+  $minMove = array(
     "x"=>0,
     "y"=>0
   );
   
-  $minMove = $f;
   $minNote = 10000;
   for ($x = 0 ; $x <= 2; $x++)
     for ($y = 0 ; $y <= 2; $y++)
@@ -187,14 +186,13 @@ function init_(){
       $tab[$j] = 0;
     $cases[$i] = $tab;
   }
-  $h = array(
+  $out_ = array(
     "cases"=>$cases,
     "firstToPlay"=>true,
     "note"=>0,
     "ended"=>false
   );
   
-  $out_ = $h;
   return $out_;
 }
 
@@ -205,12 +203,11 @@ function read_move(){
   $y = 0;
   list($y) = scan("%d");
   scantrim();
-  $k = array(
+  $out_ = array(
     "x"=>$x,
     "y"=>$y
   );
   
-  $out_ = $k;
   return $out_;
 }
 

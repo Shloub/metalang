@@ -25,12 +25,11 @@ let rec read_bigint () =
     chiffres.(len - 1 - i) <- tmp
   done;
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let h = {
+  let out_ = {
     bigint_sign=sign = '+';
     bigint_len=len;
     bigint_chiffres=chiffres;
   } in
-  let out_ = h in
   out_
 
 let rec print_bigint a =
@@ -104,12 +103,11 @@ let rec add_bigint_positif a b =
     (!tmp) mod 10) in
   if chiffres.((!len) - 1) = 0 then
     len := (!len) - 1;
-  let m = {
+  let out_ = {
     bigint_sign=true;
     bigint_len=(!len);
     bigint_chiffres=chiffres;
   } in
-  let out_ = m in
   out_
 
 let rec sub_bigint_positif a b =
@@ -134,21 +132,19 @@ Pré-requis : a > b
   do
       len := (!len) - 1
   done;
-  let n = {
+  let out_ = {
     bigint_sign=true;
     bigint_len=(!len);
     bigint_chiffres=chiffres;
   } in
-  let out_ = n in
   out_
 
 let rec neg_bigint a =
-  let o = {
+  let out_ = {
     bigint_sign=not a.bigint_sign;
     bigint_len=a.bigint_len;
     bigint_chiffres=a.bigint_chiffres;
   } in
-  let out_ = o in
   out_
 
 let rec add_bigint a b =
@@ -199,21 +195,19 @@ D'ou le nom de la fonction. *)
     if chiffres.((!len) - 1) = 0 then
       len := (!len) - 1
   done;
-  let p = {
+  let out_ = {
     bigint_sign=a.bigint_sign = b.bigint_sign;
     bigint_len=(!len);
     bigint_chiffres=chiffres;
   } in
-  let out_ = p in
   out_
 
 let rec bigint_premiers_chiffres a i =
-  let q = {
+  let out_ = {
     bigint_sign=a.bigint_sign;
     bigint_len=i;
     bigint_chiffres=a.bigint_chiffres;
   } in
-  let out_ = q in
   out_
 
 let rec bigint_shift a i =
@@ -223,12 +217,11 @@ let rec bigint_shift a i =
       a.bigint_chiffres.(k - i)
     else
       0) in
-  let r = {
+  let out_ = {
     bigint_sign=a.bigint_sign;
     bigint_len=a.bigint_len + i;
     bigint_chiffres=chiffres;
   } in
-  let out_ = r in
   out_
 
 let rec mul_bigint aa bb =

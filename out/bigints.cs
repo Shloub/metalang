@@ -85,11 +85,10 @@ public static int readInt(){
       chiffres[len - 1 - i] = tmp;
     }
     stdin_sep();
-    bigint h = new bigint();
-    h.bigint_sign = sign == (char)43;
-    h.bigint_len = len;
-    h.bigint_chiffres = chiffres;
-    bigint out_ = h;
+    bigint out_ = new bigint();
+    out_.bigint_sign = sign == (char)43;
+    out_.bigint_len = len;
+    out_.bigint_chiffres = chiffres;
     return out_;
   }
   
@@ -169,11 +168,10 @@ public static int readInt(){
     }
     if (chiffres[len - 1] == 0)
       len --;
-    bigint m = new bigint();
-    m.bigint_sign = true;
-    m.bigint_len = len;
-    m.bigint_chiffres = chiffres;
-    bigint out_ = m;
+    bigint out_ = new bigint();
+    out_.bigint_sign = true;
+    out_.bigint_len = len;
+    out_.bigint_chiffres = chiffres;
     return out_;
   }
   
@@ -201,21 +199,19 @@ Pré-requis : a > b
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint n = new bigint();
-    n.bigint_sign = true;
-    n.bigint_len = len;
-    n.bigint_chiffres = chiffres;
-    bigint out_ = n;
+    bigint out_ = new bigint();
+    out_.bigint_sign = true;
+    out_.bigint_len = len;
+    out_.bigint_chiffres = chiffres;
     return out_;
   }
   
   public static bigint neg_bigint(bigint a)
   {
-    bigint o = new bigint();
-    o.bigint_sign = !a.bigint_sign;
-    o.bigint_len = a.bigint_len;
-    o.bigint_chiffres = a.bigint_chiffres;
-    bigint out_ = o;
+    bigint out_ = new bigint();
+    out_.bigint_sign = !a.bigint_sign;
+    out_.bigint_len = a.bigint_len;
+    out_.bigint_chiffres = a.bigint_chiffres;
     return out_;
   }
   
@@ -274,21 +270,19 @@ D'ou le nom de la fonction. */
     for (int l = 0 ; l <= 2; l ++)
       if (chiffres[len - 1] == 0)
       len --;
-    bigint p = new bigint();
-    p.bigint_sign = a.bigint_sign == b.bigint_sign;
-    p.bigint_len = len;
-    p.bigint_chiffres = chiffres;
-    bigint out_ = p;
+    bigint out_ = new bigint();
+    out_.bigint_sign = a.bigint_sign == b.bigint_sign;
+    out_.bigint_len = len;
+    out_.bigint_chiffres = chiffres;
     return out_;
   }
   
   public static bigint bigint_premiers_chiffres(bigint a, int i)
   {
-    bigint q = new bigint();
-    q.bigint_sign = a.bigint_sign;
-    q.bigint_len = i;
-    q.bigint_chiffres = a.bigint_chiffres;
-    bigint out_ = q;
+    bigint out_ = new bigint();
+    out_.bigint_sign = a.bigint_sign;
+    out_.bigint_len = i;
+    out_.bigint_chiffres = a.bigint_chiffres;
     return out_;
   }
   
@@ -301,11 +295,10 @@ D'ou le nom de la fonction. */
       chiffres[k] = a.bigint_chiffres[k - i];
     else
       chiffres[k] = 0;
-    bigint r = new bigint();
-    r.bigint_sign = a.bigint_sign;
-    r.bigint_len = a.bigint_len + i;
-    r.bigint_chiffres = chiffres;
-    bigint out_ = r;
+    bigint out_ = new bigint();
+    out_.bigint_sign = a.bigint_sign;
+    out_.bigint_len = a.bigint_len + i;
+    out_.bigint_chiffres = chiffres;
     return out_;
   }
   

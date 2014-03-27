@@ -34,22 +34,20 @@
 
 (defun cons_ (list i)
 (progn
-  (let ((a (make-intlist :head i
-                         :tail list)))
-  (let ((out_ a))
-    (return-from cons_ out_)
-  ))))
+  (let ((out_ (make-intlist :head i
+                            :tail list)))
+  (return-from cons_ out_)
+)))
 
 (defun rev2 (empty acc torev)
 (if
   (eq torev empty)
   (return-from rev2 acc)
   (progn
-    (let ((b (make-intlist :head (intlist-head torev)
-                           :tail acc)))
-    (let ((acc2 b))
-      (return-from rev2 (rev2 empty acc (intlist-tail torev)))
-    )))))
+    (let ((acc2 (make-intlist :head (intlist-head torev)
+                              :tail acc)))
+    (return-from rev2 (rev2 empty acc (intlist-tail torev)))
+  ))))
 
 (defun rev (empty torev)
 (return-from rev (rev2 empty empty torev)))

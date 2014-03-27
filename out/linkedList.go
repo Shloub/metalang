@@ -21,10 +21,9 @@ type intlist struct {
 }
 
 func cons(list * intlist, i int) * intlist{
-  var a * intlist = new (intlist)
-  (*a).head=i;
-  (*a).tail=list;
-  var out_ * intlist = a
+  var out_ * intlist = new (intlist)
+  (*out_).head=i;
+  (*out_).tail=list;
   return out_
 }
 
@@ -32,11 +31,9 @@ func rev2(empty * intlist, acc * intlist, torev * intlist) * intlist{
   if torev == empty {
     return acc
   } else {
-    var b * intlist = new (intlist)
-    (*b).head=(*torev).head;
-    (*b).tail=acc;
-    var acc2 * intlist = b
-    _ = acc2
+    var acc2 * intlist = new (intlist)
+    (*acc2).head=(*torev).head;
+    (*acc2).tail=acc;
     return rev2(empty, acc, (*torev).tail)
   }
 }

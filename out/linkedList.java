@@ -6,10 +6,9 @@ public class linkedList
   static class intlist {public int head;public intlist tail;}
   public static intlist cons(intlist list, int i)
   {
-    intlist a = new intlist();
-    a.head = i;
-    a.tail = list;
-    intlist out_ = a;
+    intlist out_ = new intlist();
+    out_.head = i;
+    out_.tail = list;
     return out_;
   }
   
@@ -19,10 +18,9 @@ public class linkedList
       return acc;
     else
     {
-      intlist b = new intlist();
-      b.head = torev.head;
-      b.tail = acc;
-      intlist acc2 = b;
+      intlist acc2 = new intlist();
+      acc2.head = torev.head;
+      acc2.tail = acc;
       return rev2(empty, acc, torev.tail);
     }
   }

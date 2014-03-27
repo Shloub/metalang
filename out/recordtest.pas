@@ -71,13 +71,11 @@ type
 
 var
   a : integer;
-  b : toto;
   param : toto;
 begin
-  new(b);
-  b^.foo := 0;
-  b^.bar := 0;
-  param := b;
+  new(param);
+  param^.foo := 0;
+  param^.bar := 0;
   param^.bar := read_int_();
   skip();
   param^.foo := read_int_();

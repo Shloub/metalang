@@ -41,56 +41,53 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 
 (defun mktoto (v1)
 (progn
-  (let ((c (make-toto :foo v1
-                      :bar v1
-                      :blah v1)))
-  (let ((t__ c))
-    (return-from mktoto t__)
-  ))))
+  (let ((t__ (make-toto :foo v1
+                        :bar v1
+                        :blah v1)))
+  (return-from mktoto t__)
+)))
 
 (defun mktoto2 (v1)
 (progn
-  (let ((d (make-toto :foo (+ v1 3)
-                      :bar (+ v1 2)
-                      :blah (+ v1 1))))
-  (let ((t__ d))
-    (return-from mktoto2 t__)
-  ))))
+  (let ((t__ (make-toto :foo (+ v1 3)
+                        :bar (+ v1 2)
+                        :blah (+ v1 1))))
+  (return-from mktoto2 t__)
+)))
 
 (defun result (t_ t2_)
 (progn
   (let ((t__ t_))
     (let ((t2 t2_))
-      (let ((e (make-toto :foo 0
-                          :bar 0
-                          :blah 0)))
-      (let ((t3 e))
-        (setq t3 t2)
-        (setq t__ t2)
-        (setq t2 t3)
-        (setf (toto-blah t__) ( + (toto-blah t__) 1))
-        (let ((len 1))
-          (let
-           ((cache0 (array_init
-                       len
-                       (function (lambda (i)
-                       (block lambda_1
-                         (return-from lambda_1 (- 0 i))
-                       ))
-                       ))))
-          (let
-           ((cache1 (array_init
-                       len
-                       (function (lambda (j)
-                       (block lambda_2
-                         (return-from lambda_2 j)
-                       ))
-                       ))))
-          (let ((cache2 cache0))
-            (setq cache0 cache1)
-            (setq cache2 cache0)
-            (return-from result (+ (+ (toto-foo t__) (* (toto-blah t__) (toto-bar t__))) (* (toto-bar t__) (toto-foo t__))))
-          ))))))))))
+      (let ((t3 (make-toto :foo 0
+                           :bar 0
+                           :blah 0)))
+      (setq t3 t2)
+      (setq t__ t2)
+      (setq t2 t3)
+      (setf (toto-blah t__) ( + (toto-blah t__) 1))
+      (let ((len 1))
+        (let
+         ((cache0 (array_init
+                     len
+                     (function (lambda (i)
+                     (block lambda_1
+                       (return-from lambda_1 (- 0 i))
+                     ))
+                     ))))
+        (let
+         ((cache1 (array_init
+                     len
+                     (function (lambda (j)
+                     (block lambda_2
+                       (return-from lambda_2 j)
+                     ))
+                     ))))
+        (let ((cache2 cache0))
+          (setq cache0 cache1)
+          (setq cache2 cache0)
+          (return-from result (+ (+ (toto-foo t__) (* (toto-blah t__) (toto-bar t__))) (* (toto-bar t__) (toto-foo t__))))
+        )))))))))
 
 (progn
   (let ((t__ (mktoto 4)))

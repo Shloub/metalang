@@ -165,10 +165,9 @@ int minmax(struct gamestate * g){
 Renvoie le coup de l'IA
 */
 struct move * play(struct gamestate * g){
-  struct move * f = malloc (sizeof(f) );
-  f->x=0;
-  f->y=0;
-  struct move * minMove = f;
+  struct move * minMove = malloc (sizeof(minMove) );
+  minMove->x=0;
+  minMove->y=0;
   int minNote = 10000;
   {
     int x;
@@ -215,12 +214,11 @@ struct gamestate * init_(){
       cases[i] = tab;
     }
   }
-  struct gamestate * h = malloc (sizeof(h) );
-  h->cases=cases;
-  h->firstToPlay=1;
-  h->note=0;
-  h->ended=0;
-  struct gamestate * out_ = h;
+  struct gamestate * out_ = malloc (sizeof(out_) );
+  out_->cases=cases;
+  out_->firstToPlay=1;
+  out_->note=0;
+  out_->ended=0;
   return out_;
 }
 
@@ -231,10 +229,9 @@ struct move * read_move(){
   int y = 0;
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c");
-  struct move * k = malloc (sizeof(k) );
-  k->x=x;
-  k->y=y;
-  struct move * out_ = k;
+  struct move * out_ = malloc (sizeof(out_) );
+  out_->x=x;
+  out_->y=y;
   return out_;
 }
 

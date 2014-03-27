@@ -13,37 +13,28 @@ typedef struct toto {
 } toto;
 
 struct toto * mktoto(int v1){
-  struct toto * c = new toto();
-  c->foo=v1;
-  c->bar=v1;
-  c->blah=v1;
-  struct toto * t = c;
+  struct toto * t = new toto();
+  t->foo=v1;
+  t->bar=v1;
+  t->blah=v1;
   return t;
 }
 
 struct toto * mktoto2(int v1){
-  struct toto * d = new toto();
-  d->foo=v1
-  +
-  3;
-  d->bar=v1
-  +
-  2;
-  d->blah=v1
-  +
-  1;
-  struct toto * t = d;
+  struct toto * t = new toto();
+  t->foo=v1 + 3;
+  t->bar=v1 + 2;
+  t->blah=v1 + 1;
   return t;
 }
 
 int result(struct toto * t_, struct toto * t2_){
   struct toto * t = t_;
   struct toto * t2 = t2_;
-  struct toto * e = new toto();
-  e->foo=0;
-  e->bar=0;
-  e->blah=0;
-  struct toto * t3 = e;
+  struct toto * t3 = new toto();
+  t3->foo=0;
+  t3->bar=0;
+  t3->blah=0;
   t3 = t2;
   t = t2;
   t2 = t3;

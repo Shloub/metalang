@@ -217,47 +217,46 @@ Renvoie le coup de l'IA
 |#
 (defun play (g)
 (progn
-  (let ((f (make-move :x 0
-                      :y 0)))
-  (let ((minMove f))
-    (let ((minNote 10000))
+  (let ((minMove (make-move :x 0
+                            :y 0)))
+  (let ((minNote 10000))
+    (do
+      ((x 0 (+ 1 x)))
+      ((> x 2))
       (do
-        ((x 0 (+ 1 x)))
-        ((> x 2))
-        (do
-          ((y 0 (+ 1 y)))
-          ((> y 2))
-          (if
-            (can_move_xy x y g)
-            (progn
-              (apply_move_xy x y g)
-              (let ((currentNote (minmax g)))
-                (princ x)
-                (princ ", ")
-                (princ y)
-                (princ ", ")
-                (princ currentNote)
-                (princ "
+        ((y 0 (+ 1 y)))
+        ((> y 2))
+        (if
+          (can_move_xy x y g)
+          (progn
+            (apply_move_xy x y g)
+            (let ((currentNote (minmax g)))
+              (princ x)
+              (princ ", ")
+              (princ y)
+              (princ ", ")
+              (princ currentNote)
+              (princ "
 ")
-                (cancel_move_xy x y g)
-                (if
-                  (< currentNote minNote)
-                  (progn
-                    (setq minNote currentNote)
-                    (setf (move-x minMove) x)
-                    (setf (move-y minMove) y)
-                  ))
-              )))
-          )
-      )
-      (let ((a (move-x minMove)))
-        (princ a)
-        (let ((b (move-y minMove)))
-          (princ b)
-          (princ "
+              (cancel_move_xy x y g)
+              (if
+                (< currentNote minNote)
+                (progn
+                  (setq minNote currentNote)
+                  (setf (move-x minMove) x)
+                  (setf (move-y minMove) y)
+                ))
+            )))
+        )
+    )
+    (let ((a (move-x minMove)))
+      (princ a)
+      (let ((b (move-y minMove)))
+        (princ b)
+        (princ "
 ")
-          (return-from play minMove)
-        )))))))
+        (return-from play minMove)
+      ))))))
 
 (defun init_ ()
 (progn
@@ -279,13 +278,12 @@ Renvoie le coup de l'IA
                     (return-from lambda_1 tab)
                     ))))
                 ))))
-    (let ((h (make-gamestate :cases cases
-                             :firstToPlay t
-                             :note 0
-                             :ended nil)))
-    (let ((out_ h))
-      (return-from init_ out_)
-    ))))))
+    (let ((out_ (make-gamestate :cases cases
+                                :firstToPlay t
+                                :note 0
+                                :ended nil)))
+    (return-from init_ out_)
+    )))))
 
 (defun read_move ()
 (progn
@@ -293,11 +291,10 @@ Renvoie le coup de l'IA
     (mread-blank)
     (let ((y (mread-int )))
       (mread-blank)
-      (let ((k (make-move :x x
-                          :y y)))
-      (let ((out_ k))
-        (return-from read_move out_)
-      ))))))
+      (let ((out_ (make-move :x x
+                             :y y)))
+      (return-from read_move out_)
+    )))))
 
 (do
   ((i 0 (+ 1 i)))
