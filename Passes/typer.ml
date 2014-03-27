@@ -247,78 +247,114 @@ let rec check_types env (t1:Type.t) (t2:Type.t) loc1 loc2 =
         ) li
     | _ -> error_ty t1 t2 loc1 loc2
 
+let rec tyall t = match !t with
+	| PreTyped ( Type.Integer, loc ) -> t := Typed ((Type.Fixed.fix Type.Integer), loc); true
+	| PreTyped ( Type.String, loc ) -> t := Typed ((Type.Fixed.fix Type.String), loc); true
+	| PreTyped ( Type.Char, loc ) -> t := Typed ((Type.Fixed.fix Type.Char), loc); true
+	| PreTyped ( Type.Void, loc ) -> t := Typed ((Type.Fixed.fix Type.Void), loc); true
+	| PreTyped ( Type.Bool, loc ) -> t := Typed ((Type.Fixed.fix Type.Bool), loc); true
+	| PreTyped ( Type.Lexems, loc ) -> t := Typed ((Type.Fixed.fix Type.Lexems), loc); true
+	| PreTyped ( Type.Enum li, loc ) -> t := Typed ((Type.Fixed.fix (Type.Enum li)), loc); true
+	| PreTyped ( Type.Named n, loc ) -> t := Typed ((Type.named n), loc); true
+	| PreTyped ( Type.Array a1, loc ) -> if tyall a1 then begin t := Typed (extract_typed t, loc); true end else false
+	| PreTyped ( Type.Struct li, loc) ->
+		let all = List.fold_left (fun acc (_, t) -> (tyall t) && acc) true li in
+		if all then begin t := Typed (extract_typed t, loc); true end else false
+	| PreTyped ( Type.Tuple li, loc) ->
+		let all = List.fold_left (fun acc t -> (tyall t) && acc) true li in
+		if all then begin t := Typed (extract_typed t, loc); true end else false
+	| Typed _ -> true
+	| Unknown _ -> false
+
 let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
-	(* let () = Format.printf "unify %s and %s@\n" (contr2str !t1) (contr2str !t2) in *)
+	let _ = tyall t1 in
+	let _ = tyall t2 in
   match !t1, !t2 with
-    | Typed (((Type.Fixed.F (_, Type.Named _)) as t), loc), _ ->
-      begin
-        t1 := Typed ((expand env t loc), loc);
-        true
-      end
-    | _, Typed (((Type.Fixed.F (_, Type.Named _)) as t), loc) ->
-      begin
-        t2 := Typed ((expand env t loc), loc);
-        true
-      end
-    | Typed (tt1, loc1), Typed (tt2, loc2) ->
-      begin
-        check_types env tt1 tt2 loc1 loc2;
-        false
-      end
-    | Unknown _, Unknown _-> false
-    | Unknown _, _ ->
-      begin
-        t1 := !t2;
-        true
-      end
-    | _, Unknown _ ->
-      begin
-        t2 := !t1;
-        true
-      end
-		| PreTyped (_, loc), _ when is_typed t1 ->
-      begin
-        t1 := Typed ((extract_typed t1), loc);
-        true
-      end
-    | Typed _, PreTyped _ -> unify env t2 t1
-    | PreTyped (Type.Array a1, loc1), PreTyped (Type.Array a2, loc2) ->
-      unify env a1 a2
-    | PreTyped (Type.Array _, loc1), PreTyped (_, loc2) ->
-      error_cty !t1 !t2 loc1 loc2
-    | PreTyped (Type.Array r1, loc1), Typed (Type.Fixed.F (_, Type.Array ty), loc2) ->
-      begin
-        r1 := Typed (ty, loc1);
-        true
-      end
-    | PreTyped ((Type.Array r1), loc1), Typed (_, loc2) ->
-      error_cty !t1 !t2 loc1 loc2
-    | PreTyped (Type.Struct li, loc1),
-      Typed (Type.Fixed.F (_, Type.Struct li2), loc2) ->
-      List.fold_left
-        (fun acc (name, t) ->
-          let (_, ty) = List.find
-            ((String.equals name) @* fst)
-            li2 in
-					let next = unify env t (ref (Typed (ty, loc2)))
-          in acc || next
-        ) false li
-    | PreTyped (Type.Struct _, loc1), Typed (_, loc2) ->
-      error_cty !t1 !t2 loc1 loc2
-    | PreTyped (Type.Struct li, loc1),
-      PreTyped (Type.Struct li2, loc2) ->
-      List.fold_left
-        (fun acc (name, t) ->
-          let (_, t2) = List.find
-            ((String.equals name) @* fst)
-            li2 in
-					let () = Format.printf "field %s\n" name in
-					let next = unify env t t2 in
-          acc || next
-        ) false li
-    |  PreTyped (Type.Struct _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2
-      loc1 loc2
-		| _ -> assert false (* ces cas ne sont pas des cas pretyped*)
+  | PreTyped (Type.Integer, loc), _ -> begin t1 := Typed ((Type.Fixed.fix Type.Integer), loc); true end
+  | PreTyped (Type.String, loc), _ -> begin t1 := Typed ((Type.Fixed.fix Type.String) , loc); true end
+  | PreTyped (Type.Char, loc), _ -> begin t1 := Typed ((Type.Fixed.fix Type.Char) , loc); true end
+  | PreTyped (Type.Void, loc), _ -> begin t1 := Typed ((Type.Fixed.fix Type.Void) , loc); true end
+  | PreTyped (Type.Bool, loc), _ -> begin t1 := Typed ((Type.Fixed.fix Type.Bool) , loc); true end
+  | PreTyped (Type.Lexems, loc), _ -> begin t1 := Typed ((Type.Fixed.fix Type.Lexems) , loc); true end
+  | PreTyped (Type.Enum li, loc), _ -> begin t1 := Typed ((Type.Fixed.fix (Type.Enum li)) , loc); true end
+  | PreTyped (Type.Named n, loc), _ -> begin t1 := Typed ((Type.named n), loc); true end
+  | Typed (tt1, loc1), Typed (tt2, loc2) -> begin check_types env tt1 tt2 loc1 loc2; false end
+  | Unknown _, Unknown _-> false
+  | Unknown _, _ -> begin t1 := !t2; true end
+  | _, Unknown _ -> begin t2 := !t1; true end
+  | Typed _, PreTyped _ -> unify env t2 t1
+	| PreTyped (Type.Tuple li1, loc1), Typed ( Type.Fixed.F (_, Type.Tuple li2), loc2) ->
+		let len1 = List.length li1 in
+		let len2 = List.length li2 in
+		if len1 = len2 then
+			List.fold_left (fun acc (t1, t2_) ->
+				let t2 = ref (Typed (t2_, loc2)) in
+				unify env t1 t2 || acc
+			) false (List.combine li1 li2)
+		else  error_cty !t1 !t2 loc1 loc2
+	| PreTyped (Type.Tuple li1, loc1), PreTyped (Type.Tuple li2, loc2) ->
+		let len1 = List.length li1 in
+		let len2 = List.length li2 in
+		if len1 = len2 then
+			List.fold_left (fun acc (t1, t2) ->
+				unify env t1 t2 || acc
+			) false (List.combine li1 li2)
+		else  error_cty !t1 !t2 loc1 loc2
+  | PreTyped (Type.Array a1, loc1), PreTyped (Type.Array a2, loc2) ->
+    begin match !a1, !a2 with
+    | Typed (t, loc), _ -> begin t1 := Typed ((Type.Fixed.fix (Type.Array t)) , loc); true end
+    | _, Typed (t, loc) -> begin t2 := Typed ((Type.Fixed.fix (Type.Array t)) , loc); true end
+    | _ -> unify env a1 a2
+    end
+  | PreTyped (Type.Array _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2 loc1 loc2
+  | PreTyped (Type.Array r1, loc1), Typed (Type.Fixed.F (_, Type.Array ty), loc2) ->
+    begin
+      match !r1 with
+      | Typed _ -> t1 := !t2; true
+      | _ -> unify env r1 (ref (Typed (ty, loc1)))
+    end
+  | PreTyped ((Type.Array r1), loc1), Typed (_, loc2) -> error_cty !t1 !t2 loc1 loc2
+  | PreTyped (Type.Struct li, loc1), Typed (Type.Fixed.F (_, Type.Struct li2), loc2) ->
+      let all = List.fold_left
+      (fun all (name, t) ->
+        let (_, t2) = List.find ((String.equals name) @* fst) li2 in
+	let self_typed = match !t with
+	  | Typed _ -> true
+	  | _ -> false
+	in all && self_typed) true li
+      in if all then
+	  begin t1 := Typed (extract_typed t1, loc1); true end
+	else
+	  let one = List.fold_left
+	    (fun one (name, t) ->
+              let (_, t2) = List.find ((String.equals name) @* fst) li2 in
+	      let next = unify env t (ref (Typed (t2, loc2))) in one || next
+	    ) false li
+	  in one
+  | PreTyped (Type.Struct li, loc1),
+    PreTyped (Type.Struct li2, loc2) ->
+    let one, all = List.fold_left
+      (fun (one, all) (name, t) ->
+        let (_, t2) = List.find
+          ((String.equals name) @* fst)
+          li2 in
+	let next = unify env t t2 in
+	let self_typed = match !t with
+	  | Typed _ -> true
+	  | _ -> false
+	in
+        (one || next, all && self_typed)
+      ) (false, true) li
+    in if all then
+	begin
+	  t1 := Typed (extract_typed t1, loc1)
+	end; one
+
+  |  PreTyped (Type.Struct _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2 loc1 loc2
+  | _, Typed (((Type.Fixed.F (_, Type.Named _)) as t), loc) -> begin t2 := Typed ((expand env t loc), loc); true end
+  | PreTyped (Type.Struct _, loc1), Typed (_, loc2) -> error_cty !t1 !t2 loc1 loc2
+
+  | _ -> raise (Error (fun f -> Format.fprintf f "FAIL %S %S" (contr2str !t1) (contr2str !t2)))
 
 
 (** {2 Accessors}*)

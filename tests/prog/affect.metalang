@@ -14,6 +14,13 @@ def @toto mktoto(int v1)
   return t
 end
 
+def @toto mktoto2(int v1)
+  def @toto t = record
+    foo=v1 + 3 bar=v1 + 2 blah=v1 + 1
+  end
+  return t
+end
+
 def int result(@toto t_, @toto t2_)
 	def @toto t = t_
 	def @toto t2 = t2_
