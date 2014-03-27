@@ -82,7 +82,8 @@ class cPrinter = object(self)
 
 
   method def_fields name f li =
-    print_list
+    Format.fprintf f "@[<h>%a@]"
+			(print_list
       (fun f (fieldname, expr) ->
 	Format.fprintf f "%a->%a=%a;"
 	  self#binding name
@@ -92,7 +93,7 @@ class cPrinter = object(self)
       (fun t f1 e1 f2 e2 ->
 	Format.fprintf t
 	  "%a@\n%a" f1 e1 f2 e2)
-      f
+      )
       li
 
   method allocarray f binding type_ len =

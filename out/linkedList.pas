@@ -54,20 +54,17 @@ type
 
 function cons(list : intlist; i : integer) : intlist;
 var
-  a : intlist;
   out_ : intlist;
 begin
-  new(a);
-  a^.head := i;
-  a^.tail := list;
-  out_ := a;
+  new(out_);
+  out_^.head := i;
+  out_^.tail := list;
   exit(out_);
 end;
 
 function rev2(empty : intlist; acc : intlist; torev : intlist) : intlist;
 var
   acc2 : intlist;
-  b : intlist;
 begin
   if torev = empty
   then
@@ -76,10 +73,9 @@ begin
     end
   else
     begin
-      new(b);
-      b^.head := torev^.head;
-      b^.tail := acc;
-      acc2 := b;
+      new(acc2);
+      acc2^.head := torev^.head;
+      acc2^.tail := acc;
       exit(rev2(empty, acc, torev^.tail));
     end;
 end;

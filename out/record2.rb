@@ -1,10 +1,9 @@
 require "scanf.rb"
 
 def mktoto( v1 )
-    c = {"foo" => v1,
+    t = {"foo" => v1,
          "bar" => 0,
          "blah" => 0};
-    t = c
     return (t);
 end
 

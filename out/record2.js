@@ -37,12 +37,11 @@ var read_int_ = function(){
 
 
 function mktoto(v1){
-  var c = {
+  var t = {
              foo : v1,
              bar : 0,
              blah : 0
   };
-  var t = c;
   return t;
 }
 

@@ -173,7 +173,7 @@ class printer = object(self)
   method ptype f (t:Type.t) =
       match Type.unfix t with
       | Type.Tuple li ->
-	Format.fprintf f "(%a)"
+	Format.fprintf f "@[<h>(%a)@]"
 	  (print_list self#ptype
 	     (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
 	  ) li
@@ -309,7 +309,8 @@ class printer = object(self)
     Format.fprintf f "@[skip@]"
 
   method def_fields name f li =
-    print_list
+		Format.fprintf f "@[<h>%a@]"
+			(print_list
       (fun f (fieldname, expr) ->
 	Format.fprintf f "%a = %a"
 	  self#field fieldname
@@ -317,8 +318,7 @@ class printer = object(self)
       )
       (fun t f1 e1 f2 e2 ->
 	Format.fprintf t
-	  "%a@\n%a" f1 e1 f2 e2)
-      f
+	  "%a@\n%a" f1 e1 f2 e2))
       li
 
   method allocrecord f name t el =

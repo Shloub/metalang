@@ -175,9 +175,8 @@ Renvoie le coup de l'IA
 =end
 
 def play( g )
-    f = {"x" => 0,
-         "y" => 0};
-    minMove = f
+    minMove = {"x" => 0,
+               "y" => 0};
     minNote = 10000
     for x in (0 ..  2) do
       for y in (0 ..  2) do
@@ -212,11 +211,10 @@ def init_(  )
       end
       cases[i] = tab;
     end
-    h = {"cases" => cases,
-         "firstToPlay" => true,
-         "note" => 0,
-         "ended" => false};
-    out_ = h
+    out_ = {"cases" => cases,
+            "firstToPlay" => true,
+            "note" => 0,
+            "ended" => false};
     return (out_);
 end
 
@@ -227,9 +225,8 @@ def read_move(  )
     y = 0
     y=scanf("%d")[0];
     scanf("%*\n");
-    k = {"x" => x,
-         "y" => y};
-    out_ = k
+    out_ = {"x" => x,
+            "y" => y};
     return (out_);
 end
 

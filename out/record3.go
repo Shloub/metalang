@@ -22,11 +22,10 @@ type toto struct {
 }
 
 func mktoto(v1 int) * toto{
-  var d * toto = new (toto)
-  (*d).foo=v1;
-  (*d).bar=0;
-  (*d).blah=0;
-  var t * toto = d
+  var t * toto = new (toto)
+  (*t).foo=v1;
+  (*t).bar=0;
+  (*t).blah=0;
   return t
 }
 

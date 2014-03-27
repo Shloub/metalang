@@ -296,16 +296,14 @@ var
   a : integer;
   b : integer;
   currentNote : integer;
-  f : move;
   minMove : move;
   minNote : integer;
   x : integer;
   y : integer;
 begin
-  new(f);
-  f^.x := 0;
-  f^.y := 0;
-  minMove := f;
+  new(minMove);
+  minMove^.x := 0;
+  minMove^.y := 0;
   minNote := 10000;
   for x := 0 to  2 do
   begin
@@ -341,17 +339,16 @@ begin
   exit(minMove);
 end;
 
-type l = array of integer;
+type f = array of integer;
 function init_() : gamestate;
 var
   c : integer;
-  cases : array of l;
+  cases : array of f;
   d : integer;
-  h : gamestate;
   i : integer;
   j : integer;
   out_ : gamestate;
-  tab : l;
+  tab : f;
 begin
   d := 3;
   SetLength(cases, d);
@@ -365,18 +362,16 @@ begin
     end;
     cases[i] := tab;
   end;
-  new(h);
-  h^.cases := cases;
-  h^.firstToPlay := true;
-  h^.note := 0;
-  h^.ended := false;
-  out_ := h;
+  new(out_);
+  out_^.cases := cases;
+  out_^.firstToPlay := true;
+  out_^.note := 0;
+  out_^.ended := false;
   exit(out_);
 end;
 
 function read_move() : move;
 var
-  k : move;
   out_ : move;
   x : integer;
   y : integer;
@@ -387,10 +382,9 @@ begin
   y := 0;
   y := read_int_();
   skip();
-  new(k);
-  k^.x := x;
-  k^.y := y;
-  out_ := k;
+  new(out_);
+  out_^.x := x;
+  out_^.y := y;
   exit(out_);
 end;
 

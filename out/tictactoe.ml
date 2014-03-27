@@ -130,11 +130,10 @@ let rec minmax g =
 Renvoie le coup de l'IA
 *)
 let rec play g =
-  let f = {
+  let minMove = {
     x=0;
     y=0;
   } in
-  let minMove = f in
   let minNote = ref( 10000 ) in
   for x = 0 to 2 do
     for y = 0 to 2 do
@@ -172,13 +171,12 @@ let rec init_ () =
     let tab = Array.init c (fun _j ->
       0) in
     tab) in
-  let h = {
+  let out_ = {
     cases=cases;
     firstToPlay=true;
     note=0;
     ended=false;
   } in
-  let out_ = h in
   out_
 
 let rec read_move () =
@@ -186,11 +184,10 @@ let rec read_move () =
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let y = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let k = {
+  let out_ = {
     x=x;
     y=y;
   } in
-  let out_ = k in
   out_
 
 let () =

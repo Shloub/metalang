@@ -48,11 +48,10 @@ func read_bigint() * bigint{
       chiffres[len - 1 - i] = tmp;
   }
   skip()
-  var h * bigint = new (bigint)
-  (*h).bigint_sign=sign == '+';
-  (*h).bigint_len=len;
-  (*h).bigint_chiffres=chiffres;
-  var out_ * bigint = h
+  var out_ * bigint = new (bigint)
+  (*out_).bigint_sign=sign == '+';
+  (*out_).bigint_len=len;
+  (*out_).bigint_chiffres=chiffres;
   return out_
 }
 
@@ -130,11 +129,10 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
   if chiffres[len - 1] == 0 {
     len --;
   }
-  var m * bigint = new (bigint)
-  (*m).bigint_sign=true;
-  (*m).bigint_len=len;
-  (*m).bigint_chiffres=chiffres;
-  var out_ * bigint = m
+  var out_ * bigint = new (bigint)
+  (*out_).bigint_sign=true;
+  (*out_).bigint_len=len;
+  (*out_).bigint_chiffres=chiffres;
   return out_
 }
 
@@ -161,20 +159,18 @@ Pré-requis : a > b
   for len > 0 && chiffres[len - 1] == 0{
                                          len --;
   }
-  var n * bigint = new (bigint)
-  (*n).bigint_sign=true;
-  (*n).bigint_len=len;
-  (*n).bigint_chiffres=chiffres;
-  var out_ * bigint = n
+  var out_ * bigint = new (bigint)
+  (*out_).bigint_sign=true;
+  (*out_).bigint_len=len;
+  (*out_).bigint_chiffres=chiffres;
   return out_
 }
 
 func neg_bigint(a * bigint) * bigint{
-  var o * bigint = new (bigint)
-  (*o).bigint_sign=!(*a).bigint_sign;
-  (*o).bigint_len=(*a).bigint_len;
-  (*o).bigint_chiffres=(*a).bigint_chiffres;
-  var out_ * bigint = o
+  var out_ * bigint = new (bigint)
+  (*out_).bigint_sign=!(*a).bigint_sign;
+  (*out_).bigint_len=(*a).bigint_len;
+  (*out_).bigint_chiffres=(*a).bigint_chiffres;
   return out_
 }
 
@@ -231,20 +227,18 @@ D'ou le nom de la fonction. */
         len --;
       }
   }
-  var p * bigint = new (bigint)
-  (*p).bigint_sign=(*a).bigint_sign == (*b).bigint_sign;
-  (*p).bigint_len=len;
-  (*p).bigint_chiffres=chiffres;
-  var out_ * bigint = p
+  var out_ * bigint = new (bigint)
+  (*out_).bigint_sign=(*a).bigint_sign == (*b).bigint_sign;
+  (*out_).bigint_len=len;
+  (*out_).bigint_chiffres=chiffres;
   return out_
 }
 
 func bigint_premiers_chiffres(a * bigint, i int) * bigint{
-  var q * bigint = new (bigint)
-  (*q).bigint_sign=(*a).bigint_sign;
-  (*q).bigint_len=i;
-  (*q).bigint_chiffres=(*a).bigint_chiffres;
-  var out_ * bigint = q
+  var out_ * bigint = new (bigint)
+  (*out_).bigint_sign=(*a).bigint_sign;
+  (*out_).bigint_len=i;
+  (*out_).bigint_chiffres=(*a).bigint_chiffres;
   return out_
 }
 
@@ -258,11 +252,10 @@ func bigint_shift(a * bigint, i int) * bigint{
         chiffres[k] = 0;
       }
   }
-  var r * bigint = new (bigint)
-  (*r).bigint_sign=(*a).bigint_sign;
-  (*r).bigint_len=(*a).bigint_len + i;
-  (*r).bigint_chiffres=chiffres;
-  var out_ * bigint = r
+  var out_ * bigint = new (bigint)
+  (*out_).bigint_sign=(*a).bigint_sign;
+  (*out_).bigint_len=(*a).bigint_len + i;
+  (*out_).bigint_chiffres=chiffres;
   return out_
 }
 

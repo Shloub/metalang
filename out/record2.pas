@@ -71,14 +71,12 @@ type
 
 function mktoto(v1 : integer) : toto;
 var
-  c : toto;
   t : toto;
 begin
-  new(c);
-  c^.foo := v1;
-  c^.bar := 0;
-  c^.blah := 0;
-  t := c;
+  new(t);
+  t^.foo := v1;
+  t^.bar := 0;
+  t^.blah := 0;
   exit(t);
 end;
 

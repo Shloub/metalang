@@ -144,10 +144,9 @@ Renvoie le coup de l'IA
 */
   public static move play(gamestate g)
   {
-    move f = new move();
-    f.x = 0;
-    f.y = 0;
-    move minMove = f;
+    move minMove = new move();
+    minMove.x = 0;
+    minMove.y = 0;
     int minNote = 10000;
     for (int x = 0 ; x <= 2; x ++)
       for (int y = 0 ; y <= 2; y ++)
@@ -183,12 +182,11 @@ Renvoie le coup de l'IA
         tab[j] = 0;
       cases[i] = tab;
     }
-    gamestate h = new gamestate();
-    h.cases = cases;
-    h.firstToPlay = true;
-    h.note = 0;
-    h.ended = false;
-    gamestate out_ = h;
+    gamestate out_ = new gamestate();
+    out_.cases = cases;
+    out_.firstToPlay = true;
+    out_.note = 0;
+    out_.ended = false;
     return out_;
   }
   
@@ -206,10 +204,9 @@ Renvoie le coup de l'IA
     }else{
     y = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    move k = new move();
-    k.x = x;
-    k.y = y;
-    move out_ = k;
+    move out_ = new move();
+    out_.x = x;
+    out_.y = y;
     return out_;
   }
   

@@ -61,6 +61,9 @@ let process tyenv acc e =
 let process_mut tyenv acc m = Mutable.foldmap_expr (process tyenv) acc m
 
 let expand tyenv i = match Instr.unfix i with
+
+	| Instr.Declare (n, t, (Expr.Fixed.F (_, Expr.Record li) ) ) ->
+		[Instr.alloc_record n t li]
   | Instr.Declare (n, t, e) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Declare (n, t, e))  ) :: instrs)

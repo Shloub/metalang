@@ -166,11 +166,10 @@ function minmax(g){
 Renvoie le coup de l'IA
 */
 function play(g){
-  var f = {
-             x : 0,
-             y : 0
+  var minMove = {
+                   x : 0,
+                   y : 0
   };
-  var minMove = f;
   var minNote = 10000;
   for (var x = 0 ; x <= 2; x++)
     for (var y = 0 ; y <= 2; y++)
@@ -205,13 +204,12 @@ function init_(){
       tab[j] = 0;
     cases[i] = tab;
   }
-  var h = {
-             cases : cases,
-             firstToPlay : 1,
-             note : 0,
-             ended : 0
+  var out_ = {
+                cases : cases,
+                firstToPlay : 1,
+                note : 0,
+                ended : 0
   };
-  var out_ = h;
   return out_;
 }
 
@@ -222,11 +220,10 @@ function read_move(){
   var y = 0;
   y=read_int_();
   stdinsep();
-  var k = {
-             x : x,
-             y : y
+  var out_ = {
+                x : x,
+                y : y
   };
-  var out_ = k;
   return out_;
 }
 

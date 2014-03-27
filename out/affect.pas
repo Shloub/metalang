@@ -74,43 +74,38 @@ type
 
 function mktoto(v1 : integer) : toto;
 var
-  c : toto;
   t : toto;
 begin
-  new(c);
-  c^.foo := v1;
-  c^.bar := v1;
-  c^.blah := v1;
-  t := c;
+  new(t);
+  t^.foo := v1;
+  t^.bar := v1;
+  t^.blah := v1;
   exit(t);
 end;
 
 function mktoto2(v1 : integer) : toto;
 var
-  d : toto;
   t : toto;
 begin
-  new(d);
-  d^.foo := v1
+  new(t);
+  t^.foo := v1
   +
   3;
-  d^.bar := v1
+  t^.bar := v1
   +
   2;
-  d^.blah := v1
+  t^.blah := v1
   +
   1;
-  t := d;
   exit(t);
 end;
 
-type f = array of integer;
+type c = array of integer;
 function result(t_ : toto; t2_ : toto) : integer;
 var
-  cache0 : f;
-  cache1 : f;
-  cache2 : f;
-  e : toto;
+  cache0 : c;
+  cache1 : c;
+  cache2 : c;
   i : integer;
   j : integer;
   len : integer;
@@ -120,11 +115,10 @@ var
 begin
   t := t_;
   t2 := t2_;
-  new(e);
-  e^.foo := 0;
-  e^.bar := 0;
-  e^.blah := 0;
-  t3 := e;
+  new(t3);
+  t3^.foo := 0;
+  t3^.bar := 0;
+  t3^.blah := 0;
   t3 := t2;
   t := t2;
   t2 := t3;

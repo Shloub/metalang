@@ -142,8 +142,7 @@ def minmax( g ):
 Renvoie le coup de l'IA
 """
 def play( g ):
-    f = {"x":0, "y":0}
-    minMove = f;
+    minMove = {"x":0, "y":0}
     minNote = 10000;
     for x in range(0, 1 + 2):
       for y in range(0, 1 + 2):
@@ -171,8 +170,7 @@ def init_(  ):
       for j in range(0, c):
         tab[j] = 0;
       cases[i] = tab;
-    h = {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
-    out_ = h;
+    out_ = {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
     return out_;
 
 def read_move(  ):
@@ -182,8 +180,7 @@ def read_move(  ):
     y = 0;
     y=readint()
     stdinsep()
-    k = {"x":x, "y":y}
-    out_ = k;
+    out_ = {"x":x, "y":y}
     return out_;
 
 for i in range(0, 1 + 1):

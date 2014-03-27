@@ -9,10 +9,9 @@ typedef struct intlist {
 } intlist;
 
 struct intlist * cons(struct intlist * list, int i){
-  struct intlist * a = new intlist();
-  a->head=i;
-  a->tail=list;
-  struct intlist * out_ = a;
+  struct intlist * out_ = new intlist();
+  out_->head=i;
+  out_->tail=list;
   return out_;
 }
 
@@ -21,10 +20,9 @@ struct intlist * rev2(struct intlist * empty, struct intlist * acc, struct intli
     return acc;
   else
   {
-    struct intlist * b = new intlist();
-    b->head=torev->head;
-    b->tail=acc;
-    struct intlist * acc2 = b;
+    struct intlist * acc2 = new intlist();
+    acc2->head=torev->head;
+    acc2->tail=acc;
     return rev2(empty, acc, torev->tail);
   }
 }
