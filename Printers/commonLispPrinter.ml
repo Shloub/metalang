@@ -182,8 +182,9 @@ class commonLispPrinter = object(self)
     | Expr.Access a -> self#access f a
     | Expr.Call (funname, li) -> self#apply f funname li
     | Expr.Char (c) -> self#char f c
-		| Expr.Enum e -> Format.fprintf f "'%s" e
-		| Expr.Lexems e -> assert false
+    | Expr.Enum e -> Format.fprintf f "'%s" e
+    | Expr.Lexems e -> assert false
+    | Expr.Record e -> self#record f e
 
   method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     match BindingMap.find_opt var macros with
@@ -228,13 +229,15 @@ class commonLispPrinter = object(self)
 
   method allocrecord f name t el =
     let () = nlet <- nlet + 1 in
-    Format.fprintf f "(let ((%a (make-%s @[<v>%a@])))"
+    Format.fprintf f "(let ((%a %a))"
       self#binding name
-			(match Type.unfix t with
-			| Type.Named n -> n
-			| _ -> assert false)
-      (self#def_fields name) el
+      self#record el
 
+  method record f el =
+    let t = Typer.typename_for_field (fst (List.hd el) ) typerEnv in
+    Format.fprintf f "(make-%s @[<v>%a@])"
+      t
+      (self#def_fields "") el
 
   method whileloop f expr li =
     Format.fprintf f "@[<h>(loop while %a@]@\ndo @[<v 2>%a@]@\n)"

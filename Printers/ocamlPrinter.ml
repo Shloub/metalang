@@ -88,6 +88,18 @@ class camlPrinter = object(self)
 
   method lang () = "ml"
 
+  method untuple f li e =
+    Format.fprintf f "@[<h>let (%a) = %a in@]"
+      (print_list self#binding
+	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) (List.map snd li)
+      self#expr e
+      
+
+  method record f li =
+    Format.fprintf f "{ %a }"
+     (self#def_fields "") li
+
   (** show a type *)
   method ptype f (t : Ast.Type.t ) =
       match Type.Fixed.unfix t with
@@ -221,6 +233,7 @@ class camlPrinter = object(self)
 		 | Instr.AllocRecord _ -> self#instr f i (* letin -> pas de ; *)
 		 | Instr.AllocArray _ -> self#instr f i (* letin -> pas de ; *)
 		 | Instr.Declare _ -> self#instr f i (* letin -> pas de ; *)
+		 | Instr.Untuple _ -> self#instr f i (* letin -> pas de ; *)
 		 | Instr.DeclRead _ -> self#instr f i
 		 | Instr.Comment _ -> self#instr f i
 		 | Instr.Return _ -> self#instr f i

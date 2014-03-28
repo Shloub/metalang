@@ -4,10 +4,8 @@ type intlist = {
 };;
 
 let rec cons list i =
-  let out_ = {
-    head=i;
-    tail=list;
-  } in
+  let out_ = { head=i;
+  tail=list; } in
   out_
 
 let rec rev2 empty acc torev =
@@ -15,10 +13,8 @@ let rec rev2 empty acc torev =
     acc
   else
     begin
-      let _acc2 = {
-        head=torev.head;
-        tail=acc;
-      } in
+      let _acc2 = { head=torev.head;
+      tail=acc; } in
       rev2 empty acc torev.tail
     end
 
