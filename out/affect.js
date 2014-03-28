@@ -50,15 +50,9 @@ function mktoto(v1){
 
 function mktoto2(v1){
   var t = {
-             foo : v1
-             +
-             3,
-             bar : v1
-             +
-             2,
-             blah : v1
-             +
-             1
+             foo : v1 + 3,
+             bar : v1 + 2,
+             blah : v1 + 1
   };
   return t;
 }

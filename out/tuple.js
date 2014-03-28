@@ -41,12 +41,8 @@ function f(tuple_){
   var a = c.tuple_int_int_field_0;
   var b = c.tuple_int_int_field_1;
   var d = {
-             tuple_int_int_field_0 : a
-             +
-             1,
-             tuple_int_int_field_1 : b
-             +
-             1
+             tuple_int_int_field_0 : a + 1,
+             tuple_int_int_field_1 : b + 1
   };
   return d;
 }
