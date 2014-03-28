@@ -8,30 +8,23 @@ type toto = {
 };;
 
 let rec mktoto v1 =
-  let t = {
-    foo=v1;
-    bar=v1;
-    blah=v1;
-  } in
+  let t = { foo=v1;
+  bar=v1;
+  blah=v1; } in
   t
 
 let rec mktoto2 v1 =
-  let t = {
-    foo=v1 + 3;
-    bar=v1 + 2;
-    blah=v1 + 1;
-  } in
+  let t = { foo=v1 + 3;
+  bar=v1 + 2;
+  blah=v1 + 1; } in
   t
 
 let rec result t_ t2_ =
   let t = ref( t_ ) in
   let t2 = ref( t2_ ) in
-  let t3 = ref(
-  {
-    foo=0;
-    bar=0;
-    blah=0;
-  }) in
+  let t3 = ref( { foo=0;
+  bar=0;
+  blah=0; } ) in
   t3 := (!t2);
   t := (!t2);
   t2 := (!t3);

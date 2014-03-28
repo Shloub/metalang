@@ -87,6 +87,9 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "expend print" Passes.WalkExpandPrint.apply
   |> typed "internal tags" Passes.WalkInternalTags.apply
   |> snd |> Typer.process
+
+let clike_passes prog =
+  prog |> default_passes
   |> (fun (a, prog) ->
     let tuples, prog = DeclareTuples.apply a prog in
     let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog
@@ -95,11 +98,23 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> (fun (a, b) ->
     a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
   |> snd |> Typer.process
-
-let clike_passes prog =
-  prog |> default_passes
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
   |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
+  |> snd |> Typer.process
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
+
+let common_lisp_passes prog =
+  prog |> default_passes
+  |> (fun (a, prog) ->
+    let tuples, prog = DeclareTuples.apply a prog in
+    let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog
+    in a, b)
+  |> snd |> Typer.process
+  |> (fun (a, b) ->
+    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
+  |> snd |> Typer.process
+  |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
 	|> check_reads
@@ -146,7 +161,7 @@ let languages, printers =
     "rb",   clike_passes => new RbPrinter.rbPrinter ;
     "py",   clike_passes => new PyPrinter.pyPrinter ;
     "go",   clike_passes => new GoPrinter.goPrinter ;
-    "cl",  ocaml_passes   =>  new CommonLispPrinter.commonLispPrinter ;
+    "cl",   common_lisp_passes  => new CommonLispPrinter.commonLispPrinter ;
 
     "metalang_parsed", no_passes => new Printer.printer ;
   (* Si on met cette passe en premier,

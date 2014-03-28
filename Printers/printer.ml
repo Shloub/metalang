@@ -353,12 +353,10 @@ class printer = object(self)
 
   method instr f t =
     match Instr.unfix t with
-
-			| Instr.Tag s ->  Format.fprintf f "tag %s@\n" s
-      | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
-      | Instr.StdinSep -> self#stdin_sep f
+    | Instr.Tag s ->  Format.fprintf f "tag %s@\n" s
+    | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
+    | Instr.StdinSep -> self#stdin_sep f
     | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
-
     | Instr.Affect (mutable_, expr) ->
       begin match Expr.unfix expr with
         | Expr.BinOp (e1, op, e2) ->
@@ -403,6 +401,15 @@ class printer = object(self)
     | Instr.Read (t, mutable_) -> self#read f t mutable_
     | Instr.DeclRead (t, var) -> self#read_decl f t var
     | Instr.Print (t, expr) -> self#print f t expr
+    | Instr.Untuple (li, e) -> self#untuple f li e
+
+  method untuple f li e =
+    Format.fprintf f "(%a) = %a"
+      (print_list self#binding
+	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) (List.map snd li)
+      self#expr e
+      
 
   method noformat s = let s = Format.sprintf "%S" s
 		      in String.replace "%" "%%" s
