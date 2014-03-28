@@ -171,7 +171,8 @@ var read_int_ = function(){
 
 
   method def_fields name f li =
-    print_list
+    Format.fprintf f "@[<h>%a@]"
+      (print_list
       (fun f (fieldname, expr) ->
 	Format.fprintf f "%a : %a"
 	  self#field fieldname
@@ -180,7 +181,7 @@ var read_int_ = function(){
       (fun t f1 e1 f2 e2 ->
 	Format.fprintf t
 	  "%a,@\n%a" f1 e1 f2 e2)
-      f
+      )
       li
 
 

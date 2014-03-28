@@ -65,9 +65,7 @@ function read_bigint(){
   }
   stdinsep();
   var out_ = {
-                bigint_sign : sign
-                ==
-                '+',
+                bigint_sign : sign == '+',
                 bigint_len : len,
                 bigint_chiffres : chiffres
   };
@@ -246,9 +244,7 @@ D'ou le nom de la fonction. */
     if (chiffres[len - 1] == 0)
     len --;
   var out_ = {
-                bigint_sign : a.bigint_sign
-                ==
-                b.bigint_sign,
+                bigint_sign : a.bigint_sign == b.bigint_sign,
                 bigint_len : len,
                 bigint_chiffres : chiffres
   };
@@ -274,9 +270,7 @@ function bigint_shift(a, i){
     chiffres[k] = 0;
   var out_ = {
                 bigint_sign : a.bigint_sign,
-                bigint_len : a.bigint_len
-                +
-                i,
+                bigint_len : a.bigint_len + i,
                 bigint_chiffres : chiffres
   };
   return out_;
