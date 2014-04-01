@@ -170,8 +170,8 @@ def init_(  ):
       for j in range(0, c):
         tab[j] = 0;
       cases[i] = tab;
-    out_ = {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
-    return out_;
+    f = {"cases":cases, "firstToPlay":True, "note":0, "ended":False}
+    return f;
 
 def read_move(  ):
     x = 0;
@@ -180,11 +180,15 @@ def read_move(  ):
     y = 0;
     y=readint()
     stdinsep()
-    out_ = {"x":x, "y":y}
-    return out_;
+    h = {"x":x, "y":y}
+    return h;
 
 for i in range(0, 1 + 1):
   state = init_();
+  k = {"x":1, "y":1}
+  apply_move(k, state);
+  l = {"x":0, "y":0}
+  apply_move(l, state);
   while (not (state["ended"])):
     print_state(state);
     apply_move(play(state), state);

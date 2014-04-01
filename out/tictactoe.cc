@@ -182,12 +182,12 @@ struct gamestate * init_(){
       tab.at(j) = 0;
     cases.at(i) = tab;
   }
-  struct gamestate * out_ = new gamestate();
-  out_->cases=cases;
-  out_->firstToPlay=true;
-  out_->note=0;
-  out_->ended=false;
-  return out_;
+  struct gamestate * f = new gamestate();
+  f->cases=cases;
+  f->firstToPlay=true;
+  f->note=0;
+  f->ended=false;
+  return f;
 }
 
 struct move * read_move(){
@@ -197,10 +197,10 @@ struct move * read_move(){
   int y = 0;
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c");
-  struct move * out_ = new move();
-  out_->x=x;
-  out_->y=y;
-  return out_;
+  struct move * h = new move();
+  h->x=x;
+  h->y=y;
+  return h;
 }
 
 
@@ -208,6 +208,14 @@ int main(void){
   for (int i = 0 ; i <= 1; i ++)
   {
     struct gamestate * state = init_();
+    struct move * k = new move();
+    k->x=1;
+    k->y=1;
+    apply_move(k, state);
+    struct move * l = new move();
+    l->x=0;
+    l->y=0;
+    apply_move(l, state);
     while (!state->ended)
     {
       print_state(state);

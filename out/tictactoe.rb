@@ -211,11 +211,11 @@ def init_(  )
       end
       cases[i] = tab;
     end
-    out_ = {"cases" => cases,
-            "firstToPlay" => true,
-            "note" => 0,
-            "ended" => false};
-    return (out_);
+    f = {"cases" => cases,
+         "firstToPlay" => true,
+         "note" => 0,
+         "ended" => false};
+    return (f);
 end
 
 def read_move(  )
@@ -225,13 +225,19 @@ def read_move(  )
     y = 0
     y=scanf("%d")[0];
     scanf("%*\n");
-    out_ = {"x" => x,
-            "y" => y};
-    return (out_);
+    h = {"x" => x,
+         "y" => y};
+    return (h);
 end
 
 for i in (0 ..  1) do
   state = init_()
+  k = {"x" => 1,
+       "y" => 1};
+  apply_move(k, state);
+  l = {"x" => 0,
+       "y" => 0};
+  apply_move(l, state);
   while not(state["ended"]) do
     print_state(state);
     apply_move(play(state), state);

@@ -339,16 +339,16 @@ begin
   exit(minMove);
 end;
 
-type f = array of integer;
+type n = array of integer;
 function init_() : gamestate;
 var
   c : integer;
-  cases : array of f;
+  cases : array of n;
   d : integer;
+  f : gamestate;
   i : integer;
   j : integer;
-  out_ : gamestate;
-  tab : f;
+  tab : n;
 begin
   d := 3;
   SetLength(cases, d);
@@ -362,17 +362,17 @@ begin
     end;
     cases[i] := tab;
   end;
-  new(out_);
-  out_^.cases := cases;
-  out_^.firstToPlay := true;
-  out_^.note := 0;
-  out_^.ended := false;
-  exit(out_);
+  new(f);
+  f^.cases := cases;
+  f^.firstToPlay := true;
+  f^.note := 0;
+  f^.ended := false;
+  exit(f);
 end;
 
 function read_move() : move;
 var
-  out_ : move;
+  h : move;
   x : integer;
   y : integer;
 begin
@@ -382,21 +382,31 @@ begin
   y := 0;
   y := read_int_();
   skip();
-  new(out_);
-  out_^.x := x;
-  out_^.y := y;
-  exit(out_);
+  new(h);
+  h^.x := x;
+  h^.y := y;
+  exit(h);
 end;
 
 
 var
   e : integer;
   i : integer;
+  k : move;
+  l : move;
   state : gamestate;
 begin
   for i := 0 to  1 do
   begin
     state := init_();
+    new(k);
+    k^.x := 1;
+    k^.y := 1;
+    apply_move(k, state);
+    new(l);
+    l^.x := 0;
+    l^.y := 0;
+    apply_move(l, state);
     while not state^.ended do
     begin
       print_state(state);

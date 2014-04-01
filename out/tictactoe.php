@@ -186,14 +186,14 @@ function init_(){
       $tab[$j] = 0;
     $cases[$i] = $tab;
   }
-  $out_ = array(
+  $f = array(
     "cases"=>$cases,
     "firstToPlay"=>true,
     "note"=>0,
     "ended"=>false
   );
   
-  return $out_;
+  return $f;
 }
 
 function read_move(){
@@ -203,17 +203,29 @@ function read_move(){
   $y = 0;
   list($y) = scan("%d");
   scantrim();
-  $out_ = array(
+  $h = array(
     "x"=>$x,
     "y"=>$y
   );
   
-  return $out_;
+  return $h;
 }
 
 for ($i = 0 ; $i <= 1; $i++)
 {
   $state = init_();
+  $k = array(
+    "x"=>1,
+    "y"=>1
+  );
+  
+  apply_move($k, $state);
+  $l = array(
+    "x"=>0,
+    "y"=>0
+  );
+  
+  apply_move($l, $state);
   while (!$state["ended"])
   {
     print_state($state);

@@ -204,13 +204,13 @@ function init_(){
       tab[j] = 0;
     cases[i] = tab;
   }
-  var out_ = {
-                cases : cases,
-                firstToPlay : 1,
-                note : 0,
-                ended : 0
+  var f = {
+             cases : cases,
+             firstToPlay : 1,
+             note : 0,
+             ended : 0
   };
-  return out_;
+  return f;
 }
 
 function read_move(){
@@ -220,16 +220,26 @@ function read_move(){
   var y = 0;
   y=read_int_();
   stdinsep();
-  var out_ = {
-                x : x,
-                y : y
+  var h = {
+             x : x,
+             y : y
   };
-  return out_;
+  return h;
 }
 
 for (var i = 0 ; i <= 1; i++)
 {
   var state = init_();
+  var k = {
+             x : 1,
+             y : 1
+  };
+  apply_move(k, state);
+  var l = {
+             x : 0,
+             y : 0
+  };
+  apply_move(l, state);
   while (!state.ended)
   {
     print_state(state);
