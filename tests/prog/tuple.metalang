@@ -6,5 +6,7 @@ end
 
 main
 	def t = f( (0, 1) )
+	def (a, b) = t
+	print a print " -- " print b print "--\n"
 end
 

@@ -27,14 +27,18 @@ def readint():
       return out * sign
 
 def cons( list, i ):
-    out_ = {"head":i, "tail":list}
+    out_ = {
+      "head":i,
+      "tail":list};
     return out_;
 
 def rev2( empty, acc, torev ):
     if torev == empty:
       return acc;
     else:
-      acc2 = {"head":torev["head"], "tail":acc}
+      acc2 = {
+        "head":torev["head"],
+        "tail":acc};
       return rev2(empty, acc, torev["tail"]);
 
 def rev( empty, torev ):

@@ -4,6 +4,11 @@ let rec f tuple_ =
 
 let () =
 begin
-  let _t = f ((0, 1)) in ()
+  let t = f ((0, 1)) in
+  let (a, b) = t in
+  Printf.printf "%d" a;
+  Printf.printf " -- ";
+  Printf.printf "%d" b;
+  Printf.printf "--\n"
 end
  
