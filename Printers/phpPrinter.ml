@@ -38,6 +38,26 @@ open CPrinter
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+
+  method tuple f li =
+    Format.fprintf f "array(%a)"
+      (print_list self#expr
+	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) li
+
+  method record f li =
+    Format.fprintf f "array(@\n  @[<v>%a@])"
+     (self#def_fields "") li
+
+
+  method untuple f li e =
+    Format.fprintf f "@[<h>list(%a) = %a;@]"
+      (print_list self#binding
+	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) (List.map snd li)
+      self#expr e
+
+
   method lang () = "php"
 
   method char f c =

@@ -41,6 +41,14 @@ class rbPrinter = object(self)
 
   method lang () = "ruby"
 
+
+
+  method tuple f li =
+    Format.fprintf f "[%a]"
+      (print_list self#expr
+	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) li
+
   method header f prog = Format.fprintf f "require \"scanf.rb\"
 %s"
 (if Tags.is_taged "__internal__mod" then

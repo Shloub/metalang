@@ -37,6 +37,17 @@ open CPrinter
 class pyPrinter = object(self)
   inherit cPrinter as super
 
+
+  method tuple f li =
+    Format.fprintf f "@[<h>(%a)@]"
+      (print_list self#expr
+	 (fun t fa a fb b -> Format.fprintf t "%a,@ %a" fa a fb b)
+      ) li
+
+  method record f li =
+    Format.fprintf f "{@\n  @[<v>%a@]}"
+     (self#def_fields "") li
+
   method selfAssoc f m e2 = function
   | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
   | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_ m self#expr e2
@@ -288,7 +299,7 @@ def skipchar():
       )
       (fun t f1 e1 f2 e2 ->
 	Format.fprintf t
-	  "%a, %a" f1 e1 f2 e2)
+	  "%a,@ %a" f1 e1 f2 e2)
       f
       li
 
