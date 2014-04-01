@@ -97,7 +97,7 @@ class camlPrinter = object(self)
       
 
   method record f li =
-    Format.fprintf f "{ %a }"
+    Format.fprintf f "{@\n  @[<v>%a@]@\n}"
      (self#def_fields "") li
 
   (** show a type *)
