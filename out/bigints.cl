@@ -74,10 +74,10 @@
           ))
       )
       (mread-blank)
-      (let ((out_ (make-bigint :bigint_sign (eq sign (int-char 43))
-                               :bigint_len len
-                               :bigint_chiffres chiffres)))
-      (return-from read_bigint out_)
+      (let ((h (make-bigint :bigint_sign (eq sign (int-char 43))
+                            :bigint_len len
+                            :bigint_chiffres chiffres)))
+      (return-from read_bigint h)
       ))))))
 
 (defun print_bigint (a)
@@ -176,10 +176,10 @@
       (if
         (eq (aref chiffres (- len 1)) 0)
         (setq len ( - len 1)))
-      (let ((out_ (make-bigint :bigint_sign t
-                               :bigint_len len
-                               :bigint_chiffres chiffres)))
-      (return-from add_bigint_positif out_)
+      (let ((m (make-bigint :bigint_sign t
+                            :bigint_len len
+                            :bigint_chiffres chiffres)))
+      (return-from add_bigint_positif m)
       ))))))
 
 (defun sub_bigint_positif (a b)
@@ -211,18 +211,18 @@ Pré-requis : a > b
       (loop while (and (> len 0) (eq (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((out_ (make-bigint :bigint_sign t
-                               :bigint_len len
-                               :bigint_chiffres chiffres)))
-      (return-from sub_bigint_positif out_)
+      (let ((n (make-bigint :bigint_sign t
+                            :bigint_len len
+                            :bigint_chiffres chiffres)))
+      (return-from sub_bigint_positif n)
       ))))))
 
 (defun neg_bigint (a)
 (progn
-  (let ((out_ (make-bigint :bigint_sign (not (bigint-bigint_sign a))
-                           :bigint_len (bigint-bigint_len a)
-                           :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from neg_bigint out_)
+  (let ((o (make-bigint :bigint_sign (not (bigint-bigint_sign a))
+                        :bigint_len (bigint-bigint_len a)
+                        :bigint_chiffres (bigint-bigint_chiffres a))))
+  (return-from neg_bigint o)
 )))
 
 (defun add_bigint (a b)
@@ -292,18 +292,18 @@ D'ou le nom de la fonction. |#
         (eq (aref chiffres (- len 1)) 0)
         (setq len ( - len 1)))
     )
-    (let ((out_ (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
-                             :bigint_len len
-                             :bigint_chiffres chiffres)))
-    (return-from mul_bigint_cp out_)
+    (let ((p (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
+                          :bigint_len len
+                          :bigint_chiffres chiffres)))
+    (return-from mul_bigint_cp p)
     )))))
 
 (defun bigint_premiers_chiffres (a i)
 (progn
-  (let ((out_ (make-bigint :bigint_sign (bigint-bigint_sign a)
-                           :bigint_len i
-                           :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from bigint_premiers_chiffres out_)
+  (let ((q (make-bigint :bigint_sign (bigint-bigint_sign a)
+                        :bigint_len i
+                        :bigint_chiffres (bigint-bigint_chiffres a))))
+  (return-from bigint_premiers_chiffres q)
 )))
 
 (defun bigint_shift (a i)
@@ -320,10 +320,10 @@ D'ou le nom de la fonction. |#
                        (return-from lambda_5 0))
                    ))
                    ))))
-    (let ((out_ (make-bigint :bigint_sign (bigint-bigint_sign a)
-                             :bigint_len (+ (bigint-bigint_len a) i)
-                             :bigint_chiffres chiffres)))
-    (return-from bigint_shift out_)
+    (let ((r (make-bigint :bigint_sign (bigint-bigint_sign a)
+                          :bigint_len (+ (bigint-bigint_len a) i)
+                          :bigint_chiffres chiffres)))
+    (return-from bigint_shift r)
     )))))
 
 (defun mul_bigint (aa bb)

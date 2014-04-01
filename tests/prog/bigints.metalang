@@ -17,12 +17,11 @@ def @bigint read_bigint()
 		chiffres[len - 1 - i] = tmp
 	end
 	skip
-	def @bigint out = record
+	return record
 		bigint_sign = sign == '+'
 		bigint_len = len
 		bigint_chiffres = chiffres
 	end
-	return out
 end
 
 def void print_bigint(@bigint a)
@@ -97,12 +96,11 @@ def @bigint add_bigint_positif(@bigint a, @bigint b)
 	if chiffres[len - 1] == 0 then
 		len --
 	end
-	def @bigint out = record
+	return record
 		bigint_sign = true
 		bigint_len = len
 		bigint_chiffres = chiffres
 	end
-	return out
 end
 
 def @bigint sub_bigint_positif(@bigint a, @bigint b)
@@ -127,21 +125,19 @@ Pré-requis : a > b
 	while len > 0 && chiffres[len - 1] == 0 do
 		len --
 	end
-	def @bigint out = record
+	return record
 		bigint_sign = true
 		bigint_len = len
 		bigint_chiffres = chiffres
 	end
-	return out
 end
 
 def @bigint neg_bigint(@bigint a)
-	def @bigint out = record
+	return record
 		bigint_sign = !a.bigint_sign
 		bigint_len = a.bigint_len
 		bigint_chiffres = a.bigint_chiffres
 	end
-	return out
 end
 
 def @bigint add_bigint(@bigint a, @bigint b)
@@ -194,21 +190,19 @@ D'ou le nom de la fonction. */
 			len --
 		end
 	end
-	def @bigint out = record
+	return record
 		bigint_sign = a.bigint_sign == b.bigint_sign
 		bigint_len = len
 		bigint_chiffres = chiffres
 	end
-	return out
 end
 
 def @bigint bigint_premiers_chiffres(@bigint a, int i)
-	def @bigint out = record
+	return record
 		bigint_sign = a.bigint_sign
 		bigint_len = i
 		bigint_chiffres = a.bigint_chiffres
 	end
-	return out
 end
 
 def @bigint bigint_shift(@bigint a, int i)
@@ -219,12 +213,11 @@ def @bigint bigint_shift(@bigint a, int i)
 			return 0
 		end
 	end
-	def @bigint out = record
+	return record
 		bigint_sign = a.bigint_sign
 		bigint_len = a.bigint_len + i
 		bigint_chiffres = chiffres
 	end
-	return out
 end
 
 

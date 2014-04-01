@@ -52,13 +52,13 @@ function read_bigint(){
     $chiffres[$len - 1 - $i] = $tmp;
   }
   scantrim();
-  $out_ = array(
+  $h = array(
     "bigint_sign"=>$sign == '+',
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $out_;
+  return $h;
 }
 
 function print_bigint(&$a){
@@ -132,13 +132,13 @@ function add_bigint_positif(&$a, &$b){
   }
   if ($chiffres[$len - 1] == 0)
     $len --;
-  $out_ = array(
+  $m = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $out_;
+  return $m;
 }
 
 function sub_bigint_positif(&$a, &$b){
@@ -164,23 +164,23 @@ Pré-requis : a > b
   }
   while ($len > 0 && $chiffres[$len - 1] == 0)
     $len --;
-  $out_ = array(
+  $n = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $out_;
+  return $n;
 }
 
 function neg_bigint(&$a){
-  $out_ = array(
+  $o = array(
     "bigint_sign"=>!$a["bigint_sign"],
     "bigint_len"=>$a["bigint_len"],
     "bigint_chiffres"=>$a["bigint_chiffres"]
   );
   
-  return $out_;
+  return $o;
 }
 
 function add_bigint(&$a, &$b){
@@ -235,23 +235,23 @@ D'ou le nom de la fonction. */
   for ($l = 0 ; $l <= 2; $l++)
     if ($chiffres[$len - 1] == 0)
     $len --;
-  $out_ = array(
+  $p = array(
     "bigint_sign"=>$a["bigint_sign"] == $b["bigint_sign"],
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $out_;
+  return $p;
 }
 
 function bigint_premiers_chiffres(&$a, $i){
-  $out_ = array(
+  $q = array(
     "bigint_sign"=>$a["bigint_sign"],
     "bigint_len"=>$i,
     "bigint_chiffres"=>$a["bigint_chiffres"]
   );
   
-  return $out_;
+  return $q;
 }
 
 function bigint_shift(&$a, $i){
@@ -262,13 +262,13 @@ function bigint_shift(&$a, $i){
     $chiffres[$k] = $a["bigint_chiffres"][$k - $i];
   else
     $chiffres[$k] = 0;
-  $out_ = array(
+  $r = array(
     "bigint_sign"=>$a["bigint_sign"],
     "bigint_len"=>$a["bigint_len"] + $i,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $out_;
+  return $r;
 }
 
 function mul_bigint(&$aa, &$bb){

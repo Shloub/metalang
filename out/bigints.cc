@@ -37,11 +37,11 @@ struct bigint * read_bigint(){
     chiffres.at(len - 1 - i) = tmp;
   }
   scanf("%*[ \t\r\n]c");
-  struct bigint * out_ = new bigint();
-  out_->bigint_sign=sign == '+';
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
-  return out_;
+  struct bigint * h = new bigint();
+  h->bigint_sign=sign == '+';
+  h->bigint_len=len;
+  h->bigint_chiffres=chiffres;
+  return h;
 }
 
 void print_bigint(struct bigint * a){
@@ -115,11 +115,11 @@ struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b){
   }
   if (chiffres.at(len - 1) == 0)
     len --;
-  struct bigint * out_ = new bigint();
-  out_->bigint_sign=true;
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
-  return out_;
+  struct bigint * m = new bigint();
+  m->bigint_sign=true;
+  m->bigint_len=len;
+  m->bigint_chiffres=chiffres;
+  return m;
 }
 
 struct bigint * sub_bigint_positif(struct bigint * a, struct bigint * b){
@@ -145,19 +145,19 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres.at(len - 1) == 0)
     len --;
-  struct bigint * out_ = new bigint();
-  out_->bigint_sign=true;
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
-  return out_;
+  struct bigint * n = new bigint();
+  n->bigint_sign=true;
+  n->bigint_len=len;
+  n->bigint_chiffres=chiffres;
+  return n;
 }
 
 struct bigint * neg_bigint(struct bigint * a){
-  struct bigint * out_ = new bigint();
-  out_->bigint_sign=!a->bigint_sign;
-  out_->bigint_len=a->bigint_len;
-  out_->bigint_chiffres=a->bigint_chiffres;
-  return out_;
+  struct bigint * o = new bigint();
+  o->bigint_sign=!a->bigint_sign;
+  o->bigint_len=a->bigint_len;
+  o->bigint_chiffres=a->bigint_chiffres;
+  return o;
 }
 
 struct bigint * add_bigint(struct bigint * a, struct bigint * b){
@@ -212,19 +212,19 @@ D'ou le nom de la fonction. */
   for (int l = 0 ; l <= 2; l ++)
     if (chiffres.at(len - 1) == 0)
     len --;
-  struct bigint * out_ = new bigint();
-  out_->bigint_sign=a->bigint_sign == b->bigint_sign;
-  out_->bigint_len=len;
-  out_->bigint_chiffres=chiffres;
-  return out_;
+  struct bigint * p = new bigint();
+  p->bigint_sign=a->bigint_sign == b->bigint_sign;
+  p->bigint_len=len;
+  p->bigint_chiffres=chiffres;
+  return p;
 }
 
 struct bigint * bigint_premiers_chiffres(struct bigint * a, int i){
-  struct bigint * out_ = new bigint();
-  out_->bigint_sign=a->bigint_sign;
-  out_->bigint_len=i;
-  out_->bigint_chiffres=a->bigint_chiffres;
-  return out_;
+  struct bigint * q = new bigint();
+  q->bigint_sign=a->bigint_sign;
+  q->bigint_len=i;
+  q->bigint_chiffres=a->bigint_chiffres;
+  return q;
 }
 
 struct bigint * bigint_shift(struct bigint * a, int i){
@@ -235,11 +235,11 @@ struct bigint * bigint_shift(struct bigint * a, int i){
     chiffres.at(k) = a->bigint_chiffres.at(k - i);
   else
     chiffres.at(k) = 0;
-  struct bigint * out_ = new bigint();
-  out_->bigint_sign=a->bigint_sign;
-  out_->bigint_len=a->bigint_len + i;
-  out_->bigint_chiffres=chiffres;
-  return out_;
+  struct bigint * r = new bigint();
+  r->bigint_sign=a->bigint_sign;
+  r->bigint_len=a->bigint_len + i;
+  r->bigint_chiffres=chiffres;
+  return r;
 }
 
 struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb){
