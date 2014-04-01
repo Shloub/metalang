@@ -104,6 +104,25 @@ let clike_passes prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
 
+let php_passes prog =
+  prog |> default_passes
+  |> (fun (a, b) ->
+    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
+  |> snd |> Typer.process
+  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
+  |> snd |> Typer.process
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
+
+let python_passes prog =
+  prog |> default_passes
+  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
+  |> snd |> Typer.process
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
+
 let common_lisp_passes prog =
   prog |> default_passes
   |> (fun (a, prog) ->
@@ -157,9 +176,9 @@ let languages, printers =
     "java", clike_passes => new JavaPrinter.javaPrinter ;
     "js",   clike_passes => new JsPrinter.jsPrinter ;
     "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
-    "php",  clike_passes => new PhpPrinter.phpPrinter ;
-    "rb",   clike_passes => new RbPrinter.rbPrinter ;
-    "py",   clike_passes => new PyPrinter.pyPrinter ;
+    "php",  php_passes => new PhpPrinter.phpPrinter ;
+    "rb",   python_passes => new RbPrinter.rbPrinter ;
+    "py",   python_passes => new PyPrinter.pyPrinter ;
     "go",   clike_passes => new GoPrinter.goPrinter ;
     "cl",   common_lisp_passes  => new CommonLispPrinter.commonLispPrinter ;
 
