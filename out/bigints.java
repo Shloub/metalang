@@ -37,11 +37,11 @@ public class bigints
       chiffres[len - 1 - i] = tmp;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    bigint out_ = new bigint();
-    out_.bigint_sign = sign == '+';
-    out_.bigint_len = len;
-    out_.bigint_chiffres = chiffres;
-    return out_;
+    bigint h = new bigint();
+    h.bigint_sign = sign == '+';
+    h.bigint_len = len;
+    h.bigint_chiffres = chiffres;
+    return h;
   }
   
   public static void print_bigint(bigint a)
@@ -120,11 +120,11 @@ public class bigints
     }
     if (chiffres[len - 1] == 0)
       len --;
-    bigint out_ = new bigint();
-    out_.bigint_sign = true;
-    out_.bigint_len = len;
-    out_.bigint_chiffres = chiffres;
-    return out_;
+    bigint m = new bigint();
+    m.bigint_sign = true;
+    m.bigint_len = len;
+    m.bigint_chiffres = chiffres;
+    return m;
   }
   
   public static bigint sub_bigint_positif(bigint a, bigint b)
@@ -151,20 +151,20 @@ Pré-requis : a > b
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint out_ = new bigint();
-    out_.bigint_sign = true;
-    out_.bigint_len = len;
-    out_.bigint_chiffres = chiffres;
-    return out_;
+    bigint n = new bigint();
+    n.bigint_sign = true;
+    n.bigint_len = len;
+    n.bigint_chiffres = chiffres;
+    return n;
   }
   
   public static bigint neg_bigint(bigint a)
   {
-    bigint out_ = new bigint();
-    out_.bigint_sign = !a.bigint_sign;
-    out_.bigint_len = a.bigint_len;
-    out_.bigint_chiffres = a.bigint_chiffres;
-    return out_;
+    bigint o = new bigint();
+    o.bigint_sign = !a.bigint_sign;
+    o.bigint_len = a.bigint_len;
+    o.bigint_chiffres = a.bigint_chiffres;
+    return o;
   }
   
   public static bigint add_bigint(bigint a, bigint b)
@@ -222,20 +222,20 @@ D'ou le nom de la fonction. */
     for (int l = 0 ; l <= 2; l ++)
       if (chiffres[len - 1] == 0)
       len --;
-    bigint out_ = new bigint();
-    out_.bigint_sign = a.bigint_sign == b.bigint_sign;
-    out_.bigint_len = len;
-    out_.bigint_chiffres = chiffres;
-    return out_;
+    bigint p = new bigint();
+    p.bigint_sign = a.bigint_sign == b.bigint_sign;
+    p.bigint_len = len;
+    p.bigint_chiffres = chiffres;
+    return p;
   }
   
   public static bigint bigint_premiers_chiffres(bigint a, int i)
   {
-    bigint out_ = new bigint();
-    out_.bigint_sign = a.bigint_sign;
-    out_.bigint_len = i;
-    out_.bigint_chiffres = a.bigint_chiffres;
-    return out_;
+    bigint q = new bigint();
+    q.bigint_sign = a.bigint_sign;
+    q.bigint_len = i;
+    q.bigint_chiffres = a.bigint_chiffres;
+    return q;
   }
   
   public static bigint bigint_shift(bigint a, int i)
@@ -247,11 +247,11 @@ D'ou le nom de la fonction. */
       chiffres[k] = a.bigint_chiffres[k - i];
     else
       chiffres[k] = 0;
-    bigint out_ = new bigint();
-    out_.bigint_sign = a.bigint_sign;
-    out_.bigint_len = a.bigint_len + i;
-    out_.bigint_chiffres = chiffres;
-    return out_;
+    bigint r = new bigint();
+    r.bigint_sign = a.bigint_sign;
+    r.bigint_len = a.bigint_len + i;
+    r.bigint_chiffres = chiffres;
+    return r;
   }
   
   public static bigint mul_bigint(bigint aa, bigint bb)
