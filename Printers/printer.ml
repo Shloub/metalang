@@ -187,7 +187,7 @@ class printer = object(self)
       | Type.Named n -> Format.fprintf f "@@%s" n
       | Type.Lexems -> Format.fprintf f "lexems"
       | Type.Struct li ->
-	Format.fprintf f "record %a end"
+	Format.fprintf f "record@\n @[<v>%a@]@\nend"
 	  (print_list
 	     (fun t (name, type_) ->
 	       Format.fprintf t "%a : %a;" self#binding name self#ptype type_
