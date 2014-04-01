@@ -171,29 +171,35 @@ let rec init_ () =
     let tab = Array.init c (fun _j ->
       0) in
     tab) in
-  let out_ = {
+  {
     cases=cases;
     firstToPlay=true;
     note=0;
     ended=false;
-  } in
-  out_
+  }
 
 let rec read_move () =
   let x = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let y = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let out_ = {
+  {
     x=x;
     y=y;
-  } in
-  out_
+  }
 
 let () =
 begin
   for _i = 0 to 1 do
     let state = (init_ ()) in
+    apply_move ({
+      x=1;
+      y=1;
+    }) state;
+    apply_move ({
+      x=0;
+      y=0;
+    }) state;
     while not state.ended
     do
         print_state state;

@@ -278,11 +278,11 @@ Renvoie le coup de l'IA
                     (return-from lambda_1 tab)
                     ))))
                 ))))
-    (let ((out_ (make-gamestate :cases cases
-                                :firstToPlay t
-                                :note 0
-                                :ended nil)))
-    (return-from init_ out_)
+    (let ((f (make-gamestate :cases cases
+                             :firstToPlay t
+                             :note 0
+                             :ended nil)))
+    (return-from init_ f)
     )))))
 
 (defun read_move ()
@@ -291,9 +291,9 @@ Renvoie le coup de l'IA
     (mread-blank)
     (let ((y (mread-int )))
       (mread-blank)
-      (let ((out_ (make-move :x x
-                             :y y)))
-      (return-from read_move out_)
+      (let ((h (make-move :x x
+                          :y y)))
+      (return-from read_move h)
     )))))
 
 (do
@@ -301,6 +301,12 @@ Renvoie le coup de l'IA
   ((> i 1))
   (progn
     (let ((state (init_ )))
+      (let ((k (make-move :x 1
+                          :y 1)))
+      (apply_move k state)
+      (let ((l (make-move :x 0
+                          :y 0)))
+      (apply_move l state)
       (loop while (not (gamestate-ended state))
       do (progn
            (print_state state)
@@ -320,6 +326,6 @@ Renvoie le coup de l'IA
         (princ e)
         (princ "
 ")
-      )))
-  )
+      )))))
+)
 

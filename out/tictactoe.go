@@ -203,12 +203,12 @@ func init_() * gamestate{
       }
       cases[i] = tab;
   }
-  var out_ * gamestate = new (gamestate)
-  (*out_).cases=cases;
-  (*out_).firstToPlay=true;
-  (*out_).note=0;
-  (*out_).ended=false;
-  return out_
+  var f * gamestate = new (gamestate)
+  (*f).cases=cases;
+  (*f).firstToPlay=true;
+  (*f).note=0;
+  (*f).ended=false;
+  return f
 }
 
 func read_move() * move{
@@ -218,16 +218,24 @@ func read_move() * move{
   var y int = 0
   fmt.Fscanf(reader, "%d", &y);
   skip()
-  var out_ * move = new (move)
-  (*out_).x=x;
-  (*out_).y=y;
-  return out_
+  var h * move = new (move)
+  (*h).x=x;
+  (*h).y=y;
+  return h
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
   for i := 0 ; i <= 1; i++ {
     var state * gamestate = init_()
+      var k * move = new (move)
+      (*k).x=1;
+      (*k).y=1;
+      apply_move(k, state);
+      var l * move = new (move)
+      (*l).x=0;
+      (*l).y=0;
+      apply_move(l, state);
       for !(*state).ended{
                            print_state(state);
                            apply_move(play(state), state);
