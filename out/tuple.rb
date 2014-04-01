@@ -1,15 +1,10 @@
 require "scanf.rb"
-
 def f( tuple_ )
-    c = tuple_
-    a = c["tuple_int_int_field_0"]
-    b = c["tuple_int_int_field_1"]
-    d = {"tuple_int_int_field_0" => a + 1,
-         "tuple_int_int_field_1" => b + 1};
-    return (d);
+    (a, b) = tuple_
+    return ([a + 1, b + 1]);
 end
 
-e = {"tuple_int_int_field_0" => 0,
-     "tuple_int_int_field_1" => 1};
-t = f(e)
+t = f([0, 1])
+(a, b) = t
+printf "%d -- %d--\n", a, b
 

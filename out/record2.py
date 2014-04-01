@@ -34,7 +34,10 @@ def readint():
       return out * sign
 
 def mktoto( v1 ):
-    t = {"foo":v1, "bar":0, "blah":0}
+    t = {
+      "foo":v1,
+      "bar":0,
+      "blah":0};
     return t;
 
 def result( t ):
