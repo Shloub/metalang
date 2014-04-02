@@ -1,0 +1,14 @@
+main
+	def a = 1
+	def b = 2
+	def sum = 0
+	while a < 4000000 do
+		if a % 2 == 0 then
+			sum += a
+		end
+		def c = a
+		a = b
+		b += c
+	end
+	print sum print "\n"
+end
