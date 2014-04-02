@@ -156,7 +156,7 @@ class pasPrinter = object(self)
       | Some s -> Format.fprintf f "%s" s
       | None ->
         match Type.unfix t with
-          | Type.Integer -> Format.fprintf f "integer"
+          | Type.Integer -> Format.fprintf f "Longint"
           | Type.String -> Format.fprintf f "char*"
           | Type.Array a -> Format.fprintf f "array of %a" self#ptype a
           | Type.Void ->  Format.fprintf f "void"
@@ -407,11 +407,11 @@ begin
    read_char_ := c;
 end;" else "")
       (if need_readint then "
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
