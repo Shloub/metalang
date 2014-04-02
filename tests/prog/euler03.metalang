@@ -1,0 +1,22 @@
+main
+	def maximum = 1
+	def b0 = 2
+	def a = 408464633
+	while a != 1 do
+		def b = b0
+		def found = false
+		while b * b < a do
+			if a % b == 0 then
+				a /= b
+				b0 = b
+				b = a
+				found = true
+			end
+			b ++
+		end
+		if !found then
+			print a print "\n"
+			a = 1
+		end
+	end
+end
