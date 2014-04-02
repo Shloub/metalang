@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -78,19 +78,19 @@ read int, read char et skip
 
 var
   a : char;
-  c : integer;
-  i : integer;
-  i_ : integer;
-  j : integer;
-  len : integer;
-  strlen : integer;
-  tab : array of integer;
-  tab2 : array of integer;
+  c : Longint;
+  i : Longint;
+  i_ : Longint;
+  j : Longint;
+  len : Longint;
+  strlen : Longint;
+  tab : array of Longint;
+  tab2 : array of Longint;
   tab4 : array of char;
   tmpc : char;
-  tmpi1 : integer;
-  tmpi2 : integer;
-  toto : integer;
+  tmpi1 : Longint;
+  tmpi2 : Longint;
+  toto : Longint;
 begin
   len := 0;
   len := read_int_();

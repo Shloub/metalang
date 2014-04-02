@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,12 +61,12 @@ begin
    until false;
 end;
 
-type b = array of integer;
-function devine_(nombre : integer; tab : b; len : integer) : boolean;
+type b = array of Longint;
+function devine_(nombre : Longint; tab : b; len : Longint) : boolean;
 var
-  i : integer;
-  max_ : integer;
-  min_ : integer;
+  i : Longint;
+  max_ : Longint;
+  min_ : Longint;
 begin
   min_ := tab[0];
   max_ := tab[1];
@@ -99,11 +99,11 @@ end;
 
 var
   a : boolean;
-  i : integer;
-  len : integer;
-  nombre : integer;
+  i : Longint;
+  len : Longint;
+  nombre : Longint;
   tab : b;
-  tmp : integer;
+  tmp : Longint;
 begin
   nombre := 0;
   nombre := read_int_();

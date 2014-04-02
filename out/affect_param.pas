@@ -1,13 +1,13 @@
 program affect_param;
 
-procedure foo(a : integer);
+procedure foo(a : Longint);
 begin
   a := 4;
 end;
 
 
 var
-  a : integer;
+  a : Longint;
 begin
   a := 0;
   foo(a);

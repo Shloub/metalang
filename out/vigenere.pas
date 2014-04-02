@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -71,9 +71,9 @@ end;
 
 
 
-function position_alphabet(c : char) : integer;
+function position_alphabet(c : char) : Longint;
 var
-  i : integer;
+  i : Longint;
 begin
   i := ord(c);
   if (i <= ord(#90)) and (i >= ord(#65)) then
@@ -91,18 +91,18 @@ begin
     end;;
 end;
 
-function of_position_alphabet(c : integer) : char;
+function of_position_alphabet(c : Longint) : char;
 begin
   exit(chr(c + ord(#97)));
 end;
 
 type b = array of char;
-procedure crypte(taille_cle : integer; cle : b; taille : integer; message : b);
+procedure crypte(taille_cle : Longint; cle : b; taille : Longint; message : b);
 var
-  addon : integer;
-  i : integer;
-  lettre : integer;
-  new_ : integer;
+  addon : Longint;
+  i : Longint;
+  lettre : Longint;
+  new_ : Longint;
 begin
   for i := 0 to  taille - 1 do
   begin
@@ -121,14 +121,14 @@ end;
 var
   a : char;
   cle : b;
-  i : integer;
-  index : integer;
-  index2 : integer;
+  i : Longint;
+  index : Longint;
+  index2 : Longint;
   message : b;
   out2 : char;
   out_ : char;
-  taille : integer;
-  taille_cle : integer;
+  taille : Longint;
+  taille_cle : Longint;
 begin
   taille_cle := 0;
   taille_cle := read_int_();

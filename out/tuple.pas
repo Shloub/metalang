@@ -3,14 +3,14 @@ program tuple;
 type
     tuple_int_int=^tuple_int_int_r;
     tuple_int_int_r = record
-      tuple_int_int_field_0 : integer;
-      tuple_int_int_field_1 : integer;
+      tuple_int_int_field_0 : Longint;
+      tuple_int_int_field_1 : Longint;
     end;
 
 function f(tuple_ : tuple_int_int) : tuple_int_int;
 var
-  a : integer;
-  b : integer;
+  a : Longint;
+  b : Longint;
   c : tuple_int_int;
   e : tuple_int_int;
 begin
@@ -29,8 +29,8 @@ end;
 
 
 var
-  a : integer;
-  b : integer;
+  a : Longint;
+  b : Longint;
   d : tuple_int_int;
   g : tuple_int_int;
   t : tuple_int_int;

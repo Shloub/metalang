@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -69,7 +69,7 @@ begin
    until false;
 end;
 
-function min2(a : integer; b : integer) : integer;
+function min2(a : Longint; b : Longint) : Longint;
 begin
   if a < b
   then
@@ -79,25 +79,25 @@ begin
   exit(b);
 end;
 
-function min3(a : integer; b : integer; c : integer) : integer;
+function min3(a : Longint; b : Longint; c : Longint) : Longint;
 begin
   exit(min2(min2(a, b), c));
 end;
 
-function min4(a : integer; b : integer; c : integer; d : integer) : integer;
+function min4(a : Longint; b : Longint; c : Longint; d : Longint) : Longint;
 begin
   exit(min3(min2(a, b), c, d));
 end;
 
-type e = array of array of integer;
+type e = array of array of Longint;
 type f = array of array of char;
-function pathfind_aux(cache : e; tab : f; x : integer; y : integer; posX : integer; posY : integer) : integer;
+function pathfind_aux(cache : e; tab : f; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
-  out_ : integer;
-  val1 : integer;
-  val2 : integer;
-  val3 : integer;
-  val4 : integer;
+  out_ : Longint;
+  val1 : Longint;
+  val2 : Longint;
+  val3 : Longint;
+  val4 : Longint;
 begin
   if (posX = (x - 1)) and (posY = (y - 1)) then
     begin
@@ -129,12 +129,12 @@ begin
     end;;;;
 end;
 
-type g = array of integer;
-function pathfind(tab : f; x : integer; y : integer) : integer;
+type g = array of Longint;
+function pathfind(tab : f; x : Longint; y : Longint) : Longint;
 var
   cache : e;
-  i : integer;
-  j : integer;
+  i : Longint;
+  j : Longint;
   tmp : g;
 begin
   SetLength(cache, y);
@@ -152,14 +152,14 @@ end;
 
 
 var
-  i : integer;
-  j : integer;
-  result : integer;
+  i : Longint;
+  j : Longint;
+  result : Longint;
   tab : f;
   tab2 : array of char;
   tmp : char;
-  x : integer;
-  y : integer;
+  x : Longint;
+  y : Longint;
 begin
   x := 0;
   y := 0;

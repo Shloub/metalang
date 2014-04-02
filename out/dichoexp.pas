@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,9 +61,9 @@ begin
    until false;
 end;
 
-function exp_(a : integer; b : integer) : integer;
+function exp_(a : Longint; b : Longint) : Longint;
 var
-  o : integer;
+  o : Longint;
 begin
   if b = 0
   then
@@ -84,9 +84,9 @@ end;
 
 
 var
-  a : integer;
-  b : integer;
-  c : integer;
+  a : Longint;
+  b : Longint;
+  c : Longint;
 begin
   a := 0;
   b := 0;

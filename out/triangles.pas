@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -65,12 +65,12 @@ end;
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
 }
-type e = array of array of integer;
-function find0(len : integer; tab : e; cache : e; x : integer; y : integer) : integer;
+type e = array of array of Longint;
+function find0(len : Longint; tab : e; cache : e; x : Longint; y : Longint) : Longint;
 var
-  out0 : integer;
-  out1 : integer;
-  result : integer;
+  out0 : Longint;
+  out1 : Longint;
+  result : Longint;
 begin
   {
 	Cette fonction est récursive
@@ -104,12 +104,12 @@ begin
   exit(result);
 end;
 
-type f = array of integer;
-function find(len : integer; tab : e) : integer;
+type f = array of Longint;
+function find(len : Longint; tab : e) : Longint;
 var
-  a : integer;
-  i : integer;
-  j : integer;
+  a : Longint;
+  i : Longint;
+  j : Longint;
   tab2 : e;
   tab3 : f;
 begin
@@ -129,17 +129,17 @@ end;
 
 
 var
-  b : integer;
-  c : integer;
-  d : integer;
-  i : integer;
-  j : integer;
-  k : integer;
-  l : integer;
-  len : integer;
+  b : Longint;
+  c : Longint;
+  d : Longint;
+  i : Longint;
+  j : Longint;
+  k : Longint;
+  l : Longint;
+  len : Longint;
   tab : e;
   tab2 : f;
-  tmp : integer;
+  tmp : Longint;
 begin
   len := 0;
   len := read_int_();

@@ -1,8 +1,8 @@
 program test_returns;
 
-function is_pair(i : integer) : boolean;
+function is_pair(i : Longint) : boolean;
 var
-  j : integer;
+  j : Longint;
 begin
   j := 1;
   if i < 10

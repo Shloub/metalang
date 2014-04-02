@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,7 +61,7 @@ begin
    until false;
 end;
 
-function max2(a : integer; b : integer) : integer;
+function max2(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -71,15 +71,15 @@ begin
   exit(b);
 end;
 
-type f = array of integer;
+type f = array of Longint;
 type g = array of f;
-function nbPassePartout(n : integer; passepartout : g; m : integer; serrures : g) : integer;
+function nbPassePartout(n : Longint; passepartout : g; m : Longint; serrures : g) : Longint;
 var
-  i : integer;
-  max_ancient : integer;
-  max_ancient_pp : integer;
-  max_recent : integer;
-  max_recent_pp : integer;
+  i : Longint;
+  max_ancient : Longint;
+  max_ancient_pp : Longint;
+  max_recent : Longint;
+  max_recent_pp : Longint;
   pp : f;
 begin
   max_ancient := 0;
@@ -123,19 +123,19 @@ end;
 
 
 var
-  c : integer;
-  d : integer;
-  e : integer;
-  i : integer;
-  j : integer;
-  k : integer;
-  l : integer;
-  m : integer;
-  n : integer;
+  c : Longint;
+  d : Longint;
+  e : Longint;
+  i : Longint;
+  j : Longint;
+  k : Longint;
+  l : Longint;
+  m : Longint;
+  n : Longint;
   out0 : f;
   out1 : f;
-  out_ : integer;
-  out__ : integer;
+  out_ : Longint;
+  out__ : Longint;
   passepartout : g;
   serrures : g;
 begin

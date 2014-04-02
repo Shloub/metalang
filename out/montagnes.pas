@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,13 +61,13 @@ begin
    until false;
 end;
 
-type b = array of integer;
-function montagnes_(tab : b; len : integer) : integer;
+type b = array of Longint;
+function montagnes_(tab : b; len : Longint) : Longint;
 var
-  i : integer;
-  j : integer;
-  max_ : integer;
-  x : integer;
+  i : Longint;
+  j : Longint;
+  max_ : Longint;
+  x : Longint;
 begin
   max_ := 1;
   j := 1;
@@ -93,11 +93,11 @@ end;
 
 
 var
-  a : integer;
-  i : integer;
-  len : integer;
+  a : Longint;
+  i : Longint;
+  len : Longint;
   tab : b;
-  x : integer;
+  x : Longint;
 begin
   len := 0;
   len := read_int_();

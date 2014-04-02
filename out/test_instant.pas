@@ -1,6 +1,6 @@
 program test_instant;
 
-function foo(a : integer; b : integer) : integer;
+function foo(a : Longint; b : Longint) : Longint;
 begin
   exit(a + b);
 end;

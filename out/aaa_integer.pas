@@ -3,15 +3,15 @@ program aaa_integer;
 
 
 var
-  a : integer;
-  b : integer;
-  c : integer;
-  d : integer;
-  e : integer;
-  f : integer;
-  g : integer;
-  h : integer;
-  i : integer;
+  a : Longint;
+  b : Longint;
+  c : Longint;
+  d : Longint;
+  e : Longint;
+  f : Longint;
+  g : Longint;
+  h : Longint;
+  i : Longint;
 begin
   i := 0;
   i := i - 1;

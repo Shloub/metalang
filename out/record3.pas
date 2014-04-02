@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -64,12 +64,12 @@ end;
 type
     toto=^toto_r;
     toto_r = record
-      foo : integer;
-      bar : integer;
-      blah : integer;
+      foo : Longint;
+      bar : Longint;
+      blah : Longint;
     end;
 
-function mktoto(v1 : integer) : toto;
+function mktoto(v1 : Longint) : toto;
 var
   t : toto;
 begin
@@ -81,10 +81,10 @@ begin
 end;
 
 type d = array of toto;
-function result(t : d; len : integer) : integer;
+function result(t : d; len : Longint) : Longint;
 var
-  j : integer;
-  out_ : integer;
+  j : Longint;
+  out_ : Longint;
 begin
   out_ := 0;
   for j := 0 to  len - 1 do
@@ -97,10 +97,10 @@ end;
 
 
 var
-  a : integer;
-  b : integer;
-  c : integer;
-  i : integer;
+  a : Longint;
+  b : Longint;
+  c : Longint;
+  i : Longint;
   t : d;
 begin
   a := 4;

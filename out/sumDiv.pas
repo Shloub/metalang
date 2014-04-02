@@ -18,11 +18,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -47,7 +47,7 @@ end;
 
 procedure foo();
 var
-  a : integer;
+  a : Longint;
 begin
   a := 0;
   { test }
@@ -69,10 +69,10 @@ begin
     end;
 end;
 
-function sumdiv(n : integer) : integer;
+function sumdiv(n : Longint) : Longint;
 var
-  i : integer;
-  out_ : integer;
+  i : Longint;
+  out_ : Longint;
 begin
   { On désire renvoyer la somme des diviseurs }
   out_ := 0;
@@ -98,8 +98,8 @@ end;
 
 
 var
-  b : integer;
-  n : integer;
+  b : Longint;
+  n : Longint;
 begin
   { Programme principal }
   n := 0;

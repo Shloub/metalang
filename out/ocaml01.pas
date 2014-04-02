@@ -1,8 +1,8 @@
 program ocaml01;
 
-function foo() : integer;
+function foo() : Longint;
 var
-  i : integer;
+  i : Longint;
 begin
   for i := 0 to  10 do
   begin
@@ -11,10 +11,10 @@ begin
   exit(0);
 end;
 
-function bar() : integer;
+function bar() : Longint;
 var
-  a : integer;
-  i : integer;
+  a : Longint;
+  i : Longint;
 begin
   for i := 0 to  10 do
   begin

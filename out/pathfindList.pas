@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,12 +61,12 @@ begin
    until false;
 end;
 
-type a = array of integer;
-function pathfind_aux(cache : a; tab : a; len : integer; pos : integer) : integer;
+type a = array of Longint;
+function pathfind_aux(cache : a; tab : a; len : Longint; pos : Longint) : Longint;
 var
-  oneval : integer;
-  out_ : integer;
-  posval : integer;
+  oneval : Longint;
+  out_ : Longint;
+  posval : Longint;
 begin
   if pos >= (len - 1) then
     begin
@@ -97,10 +97,10 @@ begin
     end;;
 end;
 
-function pathfind(tab : a; len : integer) : integer;
+function pathfind(tab : a; len : Longint) : Longint;
 var
   cache : a;
-  i : integer;
+  i : Longint;
 begin
   SetLength(cache, len);
   for i := 0 to  len - 1 do
@@ -112,11 +112,11 @@ end;
 
 
 var
-  i : integer;
-  len : integer;
-  result : integer;
+  i : Longint;
+  len : Longint;
+  result : Longint;
   tab : a;
-  tmp : integer;
+  tmp : Longint;
 begin
   len := 0;
   len := read_int_();

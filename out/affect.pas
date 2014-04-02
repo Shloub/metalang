@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -67,12 +67,12 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 type
     toto=^toto_r;
     toto_r = record
-      foo : integer;
-      bar : integer;
-      blah : integer;
+      foo : Longint;
+      bar : Longint;
+      blah : Longint;
     end;
 
-function mktoto(v1 : integer) : toto;
+function mktoto(v1 : Longint) : toto;
 var
   t : toto;
 begin
@@ -83,7 +83,7 @@ begin
   exit(t);
 end;
 
-function mktoto2(v1 : integer) : toto;
+function mktoto2(v1 : Longint) : toto;
 var
   t : toto;
 begin
@@ -100,15 +100,15 @@ begin
   exit(t);
 end;
 
-type c = array of integer;
-function result(t_ : toto; t2_ : toto) : integer;
+type c = array of Longint;
+function result(t_ : toto; t2_ : toto) : Longint;
 var
   cache0 : c;
   cache1 : c;
   cache2 : c;
-  i : integer;
-  j : integer;
-  len : integer;
+  i : Longint;
+  j : Longint;
+  len : Longint;
   t : toto;
   t2 : toto;
   t3 : toto;
@@ -142,8 +142,8 @@ end;
 
 
 var
-  a : integer;
-  b : integer;
+  a : Longint;
+  b : Longint;
   t : toto;
   t2 : toto;
 begin
