@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,9 +61,9 @@ begin
    until false;
 end;
 
-function read_int() : integer;
+function read_int() : Longint;
 var
-  out_ : integer;
+  out_ : Longint;
 begin
   out_ := 0;
   out_ := read_int_();
@@ -71,11 +71,11 @@ begin
   exit(out_);
 end;
 
-type b = array of integer;
-function read_int_line(n : integer) : b;
+type b = array of Longint;
+function read_int_line(n : Longint) : b;
 var
-  i : integer;
-  t : integer;
+  i : Longint;
+  t : Longint;
   tab : b;
 begin
   SetLength(tab, n);
@@ -92,11 +92,11 @@ end;
 {
   Ce test a été généré par Metalang.
 }
-function result(len : integer; tab : b) : integer;
+function result(len : Longint; tab : b) : Longint;
 var
-  i : integer;
-  i1 : integer;
-  i2 : integer;
+  i : Longint;
+  i1 : Longint;
+  i2 : Longint;
   tab2 : array of boolean;
 begin
   SetLength(tab2, len);
@@ -121,8 +121,8 @@ end;
 
 
 var
-  a : integer;
-  len : integer;
+  a : Longint;
+  len : Longint;
   tab : b;
 begin
   len := read_int();

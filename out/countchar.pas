@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -70,10 +70,10 @@ begin
 end;
 
 type a = array of char;
-function nth(tab : a; tofind : char; len : integer) : integer;
+function nth(tab : a; tofind : char; len : Longint) : Longint;
 var
-  i : integer;
-  out_ : integer;
+  i : Longint;
+  out_ : Longint;
 begin
   out_ := 0;
   for i := 0 to  len - 1 do
@@ -89,9 +89,9 @@ end;
 
 
 var
-  i : integer;
-  len : integer;
-  result : integer;
+  i : Longint;
+  len : Longint;
+  result : Longint;
   tab : a;
   tmp : char;
   tofind : char;

@@ -8,12 +8,12 @@ et qui produit les macros metalang correspondante
 }
 
 var
-  a : integer;
+  a : Longint;
   b : char;
-  current_pos : integer;
-  i : integer;
+  current_pos : Longint;
+  i : Longint;
   input : char;
-  mem : array of integer;
+  mem : array of Longint;
 begin
   input := #32;
   current_pos := 500;

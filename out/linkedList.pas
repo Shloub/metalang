@@ -18,11 +18,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -48,11 +48,11 @@ end;
 type
     intlist=^intlist_r;
     intlist_r = record
-      head : integer;
+      head : Longint;
       tail : intlist;
     end;
 
-function cons(list : intlist; i : integer) : intlist;
+function cons(list : intlist; i : Longint) : intlist;
 var
   out_ : intlist;
 begin
@@ -87,7 +87,7 @@ end;
 
 procedure test(empty : intlist);
 var
-  i : integer;
+  i : Longint;
   list : intlist;
 begin
   list := empty;

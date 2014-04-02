@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -79,13 +79,13 @@ end;
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 }
 type a = array of char;
-function npi_(str : a; len : integer) : integer;
+function npi_(str : a; len : Longint) : Longint;
 var
-  i : integer;
-  num : integer;
-  ptrStack : integer;
-  ptrStr : integer;
-  stack : array of integer;
+  i : Longint;
+  num : Longint;
+  ptrStack : Longint;
+  ptrStr : Longint;
+  stack : array of Longint;
 begin
   SetLength(stack, len);
   for i := 0 to  len - 1 do
@@ -124,9 +124,9 @@ end;
 
 
 var
-  i : integer;
-  len : integer;
-  result : integer;
+  i : Longint;
+  len : Longint;
+  result : Longint;
   tab : a;
   tmp : char;
 begin

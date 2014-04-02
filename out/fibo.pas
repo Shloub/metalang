@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -64,13 +64,13 @@ end;
 {
 La suite de fibonaci
 }
-function fibo_(a : integer; b : integer; i : integer) : integer;
+function fibo_(a : Longint; b : Longint; i : Longint) : Longint;
 var
-  a2 : integer;
-  b2 : integer;
-  j : integer;
-  out_ : integer;
-  tmp : integer;
+  a2 : Longint;
+  b2 : Longint;
+  j : Longint;
+  out_ : Longint;
+  tmp : Longint;
 begin
   out_ := 0;
   a2 := a;
@@ -87,10 +87,10 @@ end;
 
 
 var
-  a : integer;
-  b : integer;
-  c : integer;
-  i : integer;
+  a : Longint;
+  b : Longint;
+  c : Longint;
+  i : Longint;
 begin
   a := 0;
   b := 0;

@@ -3,13 +3,13 @@ program calc;
 {
 La suite de fibonaci
 }
-function fibo(a : integer; b : integer; i : integer) : integer;
+function fibo(a : Longint; b : Longint; i : Longint) : Longint;
 var
-  a2 : integer;
-  b2 : integer;
-  j : integer;
-  out_ : integer;
-  tmp : integer;
+  a2 : Longint;
+  b2 : Longint;
+  j : Longint;
+  out_ : Longint;
+  tmp : Longint;
 begin
   out_ := 0;
   a2 := a;
@@ -27,7 +27,7 @@ end;
 
 
 var
-  c : integer;
+  c : Longint;
 begin
   c := fibo(1, 2, 4);
   Write(c);

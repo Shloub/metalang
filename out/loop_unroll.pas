@@ -6,7 +6,7 @@ Il effectue du loop unrolling
 }
 
 var
-  j : integer;
+  j : Longint;
 begin
   j := 0;
   j := 0;

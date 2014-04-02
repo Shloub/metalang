@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -77,12 +77,12 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 
 var
   a : char;
-  c : integer;
-  j : integer;
-  strlen : integer;
+  c : Longint;
+  j : Longint;
+  strlen : Longint;
   tab4 : array of char;
   tmpc : char;
-  toto : integer;
+  toto : Longint;
 begin
   strlen := 0;
   strlen := read_int_();

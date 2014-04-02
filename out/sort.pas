@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,12 +61,12 @@ begin
    until false;
 end;
 
-type b = array of integer;
-procedure sort_(tab : b; len : integer);
+type b = array of Longint;
+procedure sort_(tab : b; len : Longint);
 var
-  i : integer;
-  j : integer;
-  tmp : integer;
+  i : Longint;
+  j : Longint;
+  tmp : Longint;
 begin
   for i := 0 to  len - 1 do
   begin
@@ -85,12 +85,12 @@ end;
 
 
 var
-  a : integer;
-  i : integer;
-  i_ : integer;
-  len : integer;
+  a : Longint;
+  i : Longint;
+  i_ : Longint;
+  len : Longint;
   tab : b;
-  tmp : integer;
+  tmp : Longint;
 begin
   len := 2;
   len := read_int_();

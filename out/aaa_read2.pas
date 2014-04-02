@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -71,9 +71,9 @@ end;
 
 
 
-function read_int() : integer;
+function read_int() : Longint;
 var
-  out_ : integer;
+  out_ : Longint;
 begin
   out_ := 0;
   out_ := read_int_();
@@ -81,11 +81,11 @@ begin
   exit(out_);
 end;
 
-type e = array of integer;
-function read_int_line(n : integer) : e;
+type e = array of Longint;
+function read_int_line(n : Longint) : e;
 var
-  i : integer;
-  t : integer;
+  i : Longint;
+  t : Longint;
   tab : e;
 begin
   SetLength(tab, n);
@@ -100,9 +100,9 @@ begin
 end;
 
 type f = array of char;
-function read_char_line(n : integer) : f;
+function read_char_line(n : Longint) : f;
 var
-  i : integer;
+  i : Longint;
   t : char;
   tab : f;
 begin
@@ -123,16 +123,16 @@ read int, read char et skip
 }
 
 var
-  a : integer;
-  b : integer;
-  c : integer;
+  a : Longint;
+  b : Longint;
+  c : Longint;
   d : char;
-  i : integer;
-  i3 : integer;
-  i_ : integer;
-  j : integer;
-  len : integer;
-  strlen : integer;
+  i : Longint;
+  i3 : Longint;
+  i_ : Longint;
+  j : Longint;
+  len : Longint;
+  strlen : Longint;
   tab : e;
   tab2 : e;
   tab4 : f;

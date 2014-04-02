@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -64,13 +64,13 @@ end;
 type
     toto=^toto_r;
     toto_r = record
-      foo : integer;
-      bar : integer;
+      foo : Longint;
+      bar : Longint;
     end;
 
 
 var
-  a : integer;
+  a : Longint;
   param : toto;
 begin
   new(param);

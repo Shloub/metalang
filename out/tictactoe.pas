@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -68,9 +68,9 @@ Tictactoe : un tictactoe avec une IA
 type
     gamestate=^gamestate_r;
     gamestate_r = record
-      cases : array of array of integer;
+      cases : array of array of Longint;
       firstToPlay : boolean;
-      note : integer;
+      note : Longint;
       ended : boolean;
     end;
 
@@ -78,15 +78,15 @@ type
 type
     move=^move_r;
     move_r = record
-      x : integer;
-      y : integer;
+      x : Longint;
+      y : Longint;
     end;
 
 { On affiche l'état }
 procedure print_state(g : gamestate);
 var
-  x : integer;
-  y : integer;
+  x : Longint;
+  y : Longint;
 begin
   Write(''#10'|');
   for y := 0 to  2 do
@@ -120,14 +120,14 @@ end;
 { On dit qui gagne (info stoquées dans g.ended et g.note ) }
 procedure eval_(g : gamestate);
 var
-  col : integer;
-  colv : integer;
-  freecase : integer;
-  lin : integer;
-  linv : integer;
-  win : integer;
-  x : integer;
-  y : integer;
+  col : Longint;
+  colv : Longint;
+  freecase : Longint;
+  lin : Longint;
+  linv : Longint;
+  win : Longint;
+  x : Longint;
+  y : Longint;
 begin
   win := 0;
   freecase := 0;
@@ -203,9 +203,9 @@ begin
 end;
 
 { On applique un mouvement }
-procedure apply_move_xy(x : integer; y : integer; g : gamestate);
+procedure apply_move_xy(x : Longint; y : Longint; g : gamestate);
 var
-  player : integer;
+  player : Longint;
 begin
   player := 2;
   if g^.firstToPlay
@@ -222,7 +222,7 @@ begin
   apply_move_xy(m^.x, m^.y, g);
 end;
 
-procedure cancel_move_xy(x : integer; y : integer; g : gamestate);
+procedure cancel_move_xy(x : Longint; y : Longint; g : gamestate);
 begin
   g^.cases[x][y] := 0;
   g^.firstToPlay := not g^.firstToPlay;
@@ -234,7 +234,7 @@ begin
   cancel_move_xy(m^.x, m^.y, g);
 end;
 
-function can_move_xy(x : integer; y : integer; g : gamestate) : boolean;
+function can_move_xy(x : Longint; y : Longint; g : gamestate) : boolean;
 begin
   exit(g^.cases[x][y] = 0);
 end;
@@ -247,12 +247,12 @@ end;
 {
 Un minimax classique, renvoie la note du plateau
 }
-function minmax(g : gamestate) : integer;
+function minmax(g : gamestate) : Longint;
 var
-  currentNote : integer;
-  maxNote : integer;
-  x : integer;
-  y : integer;
+  currentNote : Longint;
+  maxNote : Longint;
+  x : Longint;
+  y : Longint;
 begin
   eval_(g);
   if g^.ended
@@ -293,13 +293,13 @@ Renvoie le coup de l'IA
 }
 function play(g : gamestate) : move;
 var
-  a : integer;
-  b : integer;
-  currentNote : integer;
+  a : Longint;
+  b : Longint;
+  currentNote : Longint;
   minMove : move;
-  minNote : integer;
-  x : integer;
-  y : integer;
+  minNote : Longint;
+  x : Longint;
+  y : Longint;
 begin
   new(minMove);
   minMove^.x := 0;
@@ -339,15 +339,15 @@ begin
   exit(minMove);
 end;
 
-type n = array of integer;
+type n = array of Longint;
 function init_() : gamestate;
 var
-  c : integer;
+  c : Longint;
   cases : array of n;
-  d : integer;
+  d : Longint;
   f : gamestate;
-  i : integer;
-  j : integer;
+  i : Longint;
+  j : Longint;
   tab : n;
 begin
   d := 3;
@@ -373,8 +373,8 @@ end;
 function read_move() : move;
 var
   h : move;
-  x : integer;
-  y : integer;
+  x : Longint;
+  y : Longint;
 begin
   x := 0;
   x := read_int_();
@@ -390,8 +390,8 @@ end;
 
 
 var
-  e : integer;
-  i : integer;
+  e : Longint;
+  i : Longint;
   k : move;
   l : move;
   state : gamestate;

@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,13 +61,13 @@ begin
    until false;
 end;
 
-type d = array of integer;
-function go_(tab : d; a : integer; b : integer) : integer;
+type d = array of Longint;
+function go_(tab : d; a : Longint; b : Longint) : Longint;
 var
-  e : integer;
-  i : integer;
-  j : integer;
-  m : integer;
+  e : Longint;
+  i : Longint;
+  j : Longint;
+  m : Longint;
 begin
   m := (a + b) Div 2;
   if a = m
@@ -111,18 +111,18 @@ begin
     end;
 end;
 
-function plus_petit_(tab : d; len : integer) : integer;
+function plus_petit_(tab : d; len : Longint) : Longint;
 begin
   exit(go_(tab, 0, len));
 end;
 
 
 var
-  c : integer;
-  i : integer;
-  len : integer;
+  c : Longint;
+  i : Longint;
+  len : Longint;
   tab : d;
-  tmp : integer;
+  tmp : Longint;
 begin
   len := 0;
   len := read_int_();

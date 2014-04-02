@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,9 +61,9 @@ begin
    until false;
 end;
 
-function read_int() : integer;
+function read_int() : Longint;
 var
-  out_ : integer;
+  out_ : Longint;
 begin
   out_ := 0;
   out_ := read_int_();
@@ -71,11 +71,11 @@ begin
   exit(out_);
 end;
 
-type c = array of integer;
-function read_int_line(n : integer) : c;
+type c = array of Longint;
+function read_int_line(n : Longint) : c;
 var
-  i : integer;
-  t : integer;
+  i : Longint;
+  t : Longint;
   tab : c;
 begin
   SetLength(tab, n);
@@ -90,10 +90,10 @@ begin
 end;
 
 type d = array of c;
-function read_int_matrix(x : integer; y : integer) : d;
+function read_int_matrix(x : Longint; y : Longint) : d;
 var
   tab : d;
-  z : integer;
+  z : Longint;
 begin
   SetLength(tab, y);
   for z := 0 to  y - 1 do
@@ -106,11 +106,11 @@ end;
 
 
 var
-  a : integer;
-  b : integer;
-  i : integer;
-  j : integer;
-  len : integer;
+  a : Longint;
+  b : Longint;
+  i : Longint;
+  j : Longint;
+  len : Longint;
   tab1 : c;
   tab2 : d;
 begin

@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -64,12 +64,12 @@ end;
 type
     toto=^toto_r;
     toto_r = record
-      foo : integer;
-      bar : integer;
-      blah : integer;
+      foo : Longint;
+      bar : Longint;
+      blah : Longint;
     end;
 
-function mktoto(v1 : integer) : toto;
+function mktoto(v1 : Longint) : toto;
 var
   t : toto;
 begin
@@ -80,7 +80,7 @@ begin
   exit(t);
 end;
 
-function result(t : toto) : integer;
+function result(t : toto) : Longint;
 begin
   t^.blah := t^.blah + 1;
   exit(t^.foo + t^.blah * t^.bar + t^.bar * t^.foo);
@@ -88,8 +88,8 @@ end;
 
 
 var
-  a : integer;
-  b : integer;
+  a : Longint;
+  b : Longint;
   t : toto;
 begin
   t := mktoto(4);

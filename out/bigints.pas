@@ -42,11 +42,11 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -70,7 +70,7 @@ begin
 end;
 
 
-function max2(a : integer; b : integer) : integer;
+function max2(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -84,20 +84,20 @@ type
     bigint=^bigint_r;
     bigint_r = record
       bigint_sign : boolean;
-      bigint_len : integer;
-      bigint_chiffres : array of integer;
+      bigint_len : Longint;
+      bigint_chiffres : array of Longint;
     end;
 
 function read_bigint() : bigint;
 var
   c : char;
-  chiffres : array of integer;
-  d : integer;
+  chiffres : array of Longint;
+  d : Longint;
   h : bigint;
-  i : integer;
-  len : integer;
+  i : Longint;
+  len : Longint;
   sign : char;
-  tmp : integer;
+  tmp : Longint;
 begin
   len := 0;
   len := read_int_();
@@ -130,8 +130,8 @@ end;
 
 procedure print_bigint(a : bigint);
 var
-  e : integer;
-  i : integer;
+  e : Longint;
+  i : Longint;
 begin
   if not a^.bigint_sign
   then
@@ -147,7 +147,7 @@ end;
 
 function bigint_eq(a : bigint; b : bigint) : boolean;
 var
-  i : integer;
+  i : Longint;
 begin
   { Renvoie vrai si a = b }
   if a^.bigint_sign <> b^.bigint_sign then
@@ -175,8 +175,8 @@ end;
 
 function bigint_gt(a : bigint; b : bigint) : boolean;
 var
-  i : integer;
-  j : integer;
+  i : Longint;
+  j : Longint;
 begin
   { Renvoie vrai si a > b }
   if a^.bigint_sign and not b^.bigint_sign then
@@ -226,12 +226,12 @@ end;
 
 function add_bigint_positif(a : bigint; b : bigint) : bigint;
 var
-  chiffres : array of integer;
-  i : integer;
-  len : integer;
+  chiffres : array of Longint;
+  i : Longint;
+  len : Longint;
   m : bigint;
-  retenue : integer;
-  tmp : integer;
+  retenue : Longint;
+  tmp : Longint;
 begin
   { Une addition ou on en a rien a faire des signes }
   len := max2(a^.bigint_len, b^.bigint_len) + 1;
@@ -267,12 +267,12 @@ end;
 
 function sub_bigint_positif(a : bigint; b : bigint) : bigint;
 var
-  chiffres : array of integer;
-  i : integer;
-  len : integer;
+  chiffres : array of Longint;
+  i : Longint;
+  len : Longint;
   n : bigint;
-  retenue : integer;
-  tmp : integer;
+  retenue : Longint;
+  tmp : Longint;
 begin
   { Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -372,14 +372,14 @@ end;
 
 function mul_bigint_cp(a : bigint; b : bigint) : bigint;
 var
-  chiffres : array of integer;
-  i : integer;
-  j : integer;
-  k : integer;
-  l : integer;
-  len : integer;
+  chiffres : array of Longint;
+  i : Longint;
+  j : Longint;
+  k : Longint;
+  l : Longint;
+  len : Longint;
   p : bigint;
-  retenue : integer;
+  retenue : Longint;
 begin
   { Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -420,7 +420,7 @@ D'ou le nom de la fonction. }
   exit(p);
 end;
 
-function bigint_premiers_chiffres(a : bigint; i : integer) : bigint;
+function bigint_premiers_chiffres(a : bigint; i : Longint) : bigint;
 var
   q : bigint;
 begin
@@ -431,11 +431,11 @@ begin
   exit(q);
 end;
 
-function bigint_shift(a : bigint; i : integer) : bigint;
+function bigint_shift(a : bigint; i : Longint) : bigint;
 var
-  chiffres : array of integer;
-  f : integer;
-  k : integer;
+  chiffres : array of Longint;
+  f : Longint;
+  k : Longint;
   r : bigint;
 begin
   f := a^.bigint_len + i;
@@ -473,7 +473,7 @@ var
   c : bigint;
   cmoinsd : bigint;
   d : bigint;
-  split : integer;
+  split : Longint;
 begin
   if (aa^.bigint_len < 3) or (bb^.bigint_len < 3)
   then

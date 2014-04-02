@@ -34,11 +34,11 @@ begin
       read_char_aux := global_char;
    end
 end;
-function read_int_() : integer;
+function read_int_() : Longint;
 var
    c    : char;
-   i    : integer;
-   sign :  integer;
+   i    : Longint;
+   sign :  Longint;
 begin
    i := 0;
    c := read_char_aux();
@@ -61,12 +61,12 @@ begin
    until false;
 end;
 
-type a = array of integer;
-function summax(lst : a; len : integer) : integer;
+type a = array of Longint;
+function summax(lst : a; len : Longint) : Longint;
 var
-  current : integer;
-  i : integer;
-  max_ : integer;
+  current : Longint;
+  i : Longint;
+  max_ : Longint;
 begin
   current := 0;
   max_ := 0;
@@ -89,11 +89,11 @@ end;
 
 
 var
-  i : integer;
-  len : integer;
-  result : integer;
+  i : Longint;
+  len : Longint;
+  result : Longint;
   tab : a;
-  tmp : integer;
+  tmp : Longint;
 begin
   len := 0;
   len := read_int_();
