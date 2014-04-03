@@ -10,11 +10,11 @@ i += 55
 printf "%d\n", i
 i *= 13
 printf "%d\n", i
-i /= 2
+i = (i.to_f / 2).to_i
 printf "%d\n", i
 i += 1
 printf "%d\n", i
-i /= 3
+i = (i.to_f / 3).to_i
 printf "%d\n", i
 i -= 1
 printf "%d\n", i
