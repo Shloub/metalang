@@ -10,7 +10,7 @@ while (a != 1):
   found = False;
   while (b * b < a):
     if (mod(a, b)) == 0:
-      a /= b
+      a = math.trunc(a / b)
       b0 = b;
       b = a;
       found = True;

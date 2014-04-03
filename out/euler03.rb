@@ -11,7 +11,7 @@ while a != 1 do
   found = false
   while b * b < a do
     if (mod(a, b)) == 0 then
-      a /= b
+      a = (a.to_f / b).to_i
       b0 = b;
       b = a;
       found = true;
