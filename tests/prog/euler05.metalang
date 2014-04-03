@@ -1,0 +1,37 @@
+
+def array<int> primesfactors(int n)
+	def array<int> tab[n + 1] with i do
+		return 0
+	end
+	def d = 2
+	while n != 1 && d * d <= n do
+		if n % d == 0 then
+			tab[d] ++
+			n = n / d
+		else
+			d ++
+		end
+	end
+	tab[n] ++
+	return tab
+end
+
+main
+	def lim = 20
+	def array<int> o[lim + 1] with m do
+		return 0
+	end
+	for i = 1 to lim do
+		def t = primesfactors(i)
+		for j = 1 to i do
+			o[j] = max2(o[j], t[j])
+		end
+	end
+	def product = 1
+	for k = 1 to lim do
+		for l = 1 to o[k] do
+			product *= k
+		end
+	end
+	print product print "\n"
+end

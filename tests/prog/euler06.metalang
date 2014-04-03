@@ -1,0 +1,9 @@
+
+main
+
+	def lim = 100
+	def sum = lim * (lim + 1) / 2
+	def carressum = sum * sum
+	def sumcarres = lim * (lim + 1) * (2 * lim + 1) / 6
+	print carressum - sumcarres
+end
