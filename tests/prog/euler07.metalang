@@ -1,0 +1,29 @@
+
+def bool divisible(int n, array<int> t, int size)
+	for i = 0 to size - 1 do
+		if n % t[i] == 0 then
+			return true
+		end
+	end
+	return false
+end
+
+def int find(int n, array<int> t, int used, int nth)
+	while used != nth do
+		if divisible(n, t, used) then
+			n ++
+		else
+			t[used] = n
+			n ++
+			used ++
+		end
+	end
+	return t[used - 1]
+end
+
+main
+  def array<int> t[10001] with i do
+		return 2
+  end
+	print find(3, t, 1, 10001) print "\n"
+end
