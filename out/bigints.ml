@@ -1,5 +1,5 @@
 
-let rec max2 a b =
+let max2 a b =
   if a > b then
     a
   else
@@ -11,7 +11,7 @@ type bigint = {
   mutable bigint_chiffres : int array;
 };;
 
-let rec read_bigint () =
+let read_bigint () =
   let len = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let sign = Scanf.scanf "%c" (fun x -> x) in
@@ -31,7 +31,7 @@ let rec read_bigint () =
     bigint_chiffres=chiffres;
   }
 
-let rec print_bigint a =
+let print_bigint a =
   if not a.bigint_sign then
     Printf.printf "%c" '-';
   for i = 0 to a.bigint_len - 1 do
@@ -41,7 +41,7 @@ let rec print_bigint a =
 
 exception Found_1 of bool
 
-let rec bigint_eq a b =
+let bigint_eq a b =
   try
   (* Renvoie vrai si a = b *)
   if a.bigint_sign <> b.bigint_sign then
@@ -60,7 +60,7 @@ let rec bigint_eq a b =
 
 exception Found_2 of bool
 
-let rec bigint_gt a b =
+let bigint_gt a b =
   try
   (* Renvoie vrai si a > b *)
   if a.bigint_sign && not b.bigint_sign then
@@ -85,10 +85,10 @@ let rec bigint_gt a b =
     end
   with Found_2 (out) -> out
 
-let rec bigint_lt a b =
+let bigint_lt a b =
   not (bigint_gt a b)
 
-let rec add_bigint_positif a b =
+let add_bigint_positif a b =
   (* Une addition ou on en a rien a faire des signes *)
   let len = ref( max2 a.bigint_len b.bigint_len + 1 ) in
   let retenue = ref( 0 ) in
@@ -108,7 +108,7 @@ let rec add_bigint_positif a b =
     bigint_chiffres=chiffres;
   }
 
-let rec sub_bigint_positif a b =
+let sub_bigint_positif a b =
   (* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
 *)
@@ -136,14 +136,14 @@ Pré-requis : a > b
     bigint_chiffres=chiffres;
   }
 
-let rec neg_bigint a =
+let neg_bigint a =
   {
     bigint_sign=not a.bigint_sign;
     bigint_len=a.bigint_len;
     bigint_chiffres=a.bigint_chiffres;
   }
 
-let rec add_bigint a b =
+let add_bigint a b =
   if a.bigint_sign = b.bigint_sign then
     if a.bigint_sign then
       add_bigint_positif a b
@@ -166,10 +166,10 @@ let rec add_bigint a b =
         sub_bigint_positif b a
     end
 
-let rec sub_bigint a b =
+let sub_bigint a b =
   add_bigint a (neg_bigint b)
 
-let rec mul_bigint_cp a b =
+let mul_bigint_cp a b =
   (* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. *)
@@ -197,14 +197,14 @@ D'ou le nom de la fonction. *)
     bigint_chiffres=chiffres;
   }
 
-let rec bigint_premiers_chiffres a i =
+let bigint_premiers_chiffres a i =
   {
     bigint_sign=a.bigint_sign;
     bigint_len=i;
     bigint_chiffres=a.bigint_chiffres;
   }
 
-let rec bigint_shift a i =
+let bigint_shift a i =
   let f = a.bigint_len + i in
   let chiffres = Array.init f (fun k ->
     if k >= i then

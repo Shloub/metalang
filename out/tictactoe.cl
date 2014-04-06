@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -61,17 +60,17 @@ Tictactoe : un tictactoe avec une IA
         ((> x 2))
         (progn
           (if
-            (eq (aref (aref (gamestate-cases g) x) y) 0)
+            (= (aref (aref (gamestate-cases g) x) y) 0)
             (princ " ")
             (if
-              (eq (aref (aref (gamestate-cases g) x) y) 1)
+              (= (aref (aref (gamestate-cases g) x) y) 1)
               (princ "O")
               (princ "X")))
           (princ "|")
         )
       )
       (if
-        (not-equal y 2)
+        (not (= y 2))
         (princ "
 |-|-|-|
 |"))
@@ -97,21 +96,21 @@ Tictactoe : un tictactoe avec une IA
                 ((> x 2))
                 (progn
                   (if
-                    (eq (aref (aref (gamestate-cases g) x) y) 0)
+                    (= (aref (aref (gamestate-cases g) x) y) 0)
                     (setq freecase ( + freecase 1)))
                   (let ((colv (aref (aref (gamestate-cases g) x) y)))
                     (let ((linv (aref (aref (gamestate-cases g) y) x)))
                       (if
-                        (and (eq col (- 0 1)) (not-equal colv 0))
+                        (and (= col (- 0 1)) (not (= colv 0)))
                         (setq col colv)
                         (if
-                          (not-equal colv col)
+                          (not (= colv col))
                           (setq col (- 0 2))))
                       (if
-                        (and (eq lin (- 0 1)) (not-equal linv 0))
+                        (and (= lin (- 0 1)) (not (= linv 0)))
                         (setq lin linv)
                         (if
-                          (not-equal linv lin)
+                          (not (= linv lin))
                           (setq lin (- 0 2))))
                     )))
               )
@@ -128,19 +127,19 @@ Tictactoe : un tictactoe avec une IA
         ((> x 2))
         (progn
           (if
-            (and (and (eq (aref (aref (gamestate-cases g) 0) 0) x) (eq (aref (aref (gamestate-cases g) 1) 1) x)) (eq (aref (aref (gamestate-cases g) 2) 2) x))
+            (and (and (= (aref (aref (gamestate-cases g) 0) 0) x) (= (aref (aref (gamestate-cases g) 1) 1) x)) (= (aref (aref (gamestate-cases g) 2) 2) x))
             (setq win x))
           (if
-            (and (and (eq (aref (aref (gamestate-cases g) 0) 2) x) (eq (aref (aref (gamestate-cases g) 1) 1) x)) (eq (aref (aref (gamestate-cases g) 2) 0) x))
+            (and (and (= (aref (aref (gamestate-cases g) 0) 2) x) (= (aref (aref (gamestate-cases g) 1) 1) x)) (= (aref (aref (gamestate-cases g) 2) 0) x))
             (setq win x))
         )
       )
-      (setf (gamestate-ended g) (or (not-equal win 0) (eq freecase 0)))
+      (setf (gamestate-ended g) (or (not (= win 0)) (= freecase 0)))
       (if
-        (eq win 1)
+        (= win 1)
         (setf (gamestate-note g) 1000)
         (if
-          (eq win 2)
+          (= win 2)
           (setf (gamestate-note g) (- 0 1000))
           (setf (gamestate-note g) 0)))
     ))))
@@ -170,7 +169,7 @@ Tictactoe : un tictactoe avec une IA
 (cancel_move_xy (move-x m) (move-y m) g))
 
 (defun can_move_xy (x y g)
-(return-from can_move_xy (eq (aref (aref (gamestate-cases g) x) y) 0)))
+(return-from can_move_xy (= (aref (aref (gamestate-cases g) x) y) 0)))
 
 (defun can_move (m g)
 (return-from can_move (can_move_xy (move-x m) (move-y m) g)))

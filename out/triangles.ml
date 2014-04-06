@@ -25,7 +25,7 @@ let rec find0 len tab cache x y =
       (!result)
     end
 
-let rec find len tab =
+let find len tab =
   let tab2 = Array.init len (fun i ->
     let a = i + 1 in
     let tab3 = Array.init a (fun _j ->

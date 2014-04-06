@@ -1,9 +1,9 @@
-let rec read_int () =
+let read_int () =
   let out_ = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   out_
 
-let rec read_int_line n =
+let read_int_line n =
   let tab = Array.init n (fun _i ->
     let t = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
@@ -15,7 +15,7 @@ let rec read_int_line n =
 *)
 exception Found_1 of int
 
-let rec result len tab =
+let result len tab =
   try
   let tab2 = Array.init len (fun _i ->
     false) in

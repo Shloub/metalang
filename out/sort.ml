@@ -1,4 +1,4 @@
-let rec sort_ tab len =
+let sort_ tab len =
   for i = 0 to len - 1 do
     for j = i + 1 to len - 1 do
       if tab.(i) > tab.(j) then

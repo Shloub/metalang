@@ -34,11 +34,11 @@ scantrim();
 $tab4 = array();
 for ($toto = 0 ; $toto < $strlen; $toto++)
 {
-  $tmpc = '_';
+  $tmpc = "_";
   $tmpc = nextChar();
   $c = ord($tmpc);
-  if ($tmpc != ' ')
-    $c = (($c - ord('a')) + 13) % 26 + ord('a');
+  if ($tmpc != " ")
+    $c = (($c - ord("a")) + 13) % 26 + ord("a");
   $tab4[$toto] = chr($c);
 }
 for ($j = 0 ; $j < $strlen; $j++)

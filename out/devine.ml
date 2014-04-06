@@ -1,6 +1,6 @@
 exception Found_1 of bool
 
-let rec devine_ nombre tab len =
+let devine_ nombre tab len =
   try
   let min_ = ref( tab.(0) ) in
   let max_ = ref( tab.(1) ) in

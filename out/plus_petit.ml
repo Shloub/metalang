@@ -27,7 +27,7 @@ let rec go_ tab a b =
         go_ tab m b
     end
 
-let rec plus_petit_ tab len =
+let plus_petit_ tab len =
   go_ tab 0 len
 
 let () =

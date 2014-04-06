@@ -1,7 +1,7 @@
 (*
 La suite de fibonaci
 *)
-let rec fibo_ a b i =
+let fibo_ a b i =
   let out_ = ref( 0 ) in
   let a2 = ref( a ) in
   let b2 = ref( b ) in

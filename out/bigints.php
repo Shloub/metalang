@@ -35,15 +35,15 @@ function read_bigint(){
   $len = 0;
   list($len) = scan("%d");
   scantrim();
-  $sign = '_';
+  $sign = "_";
   $sign = nextChar();
   scantrim();
   $chiffres = array();
   for ($d = 0 ; $d < $len; $d++)
   {
-    $c = '_';
+    $c = "_";
     $c = nextChar();
-    $chiffres[$d] = ord($c) - ord('0');
+    $chiffres[$d] = ord($c) - ord("0");
   }
   for ($i = 0 ; $i <= intval(($len - 1) / 2); $i++)
   {
@@ -53,7 +53,7 @@ function read_bigint(){
   }
   scantrim();
   $h = array(
-    "bigint_sign"=>$sign == '+',
+    "bigint_sign"=>$sign == "+",
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
@@ -63,7 +63,7 @@ function read_bigint(){
 
 function print_bigint(&$a){
   if (!$a["bigint_sign"])
-    echo '-';
+    echo "-";
   for ($i = 0 ; $i < $a["bigint_len"]; $i++)
   {
     $e = $a["bigint_chiffres"][$a["bigint_len"] - 1 - $i];

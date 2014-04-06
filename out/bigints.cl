@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -99,17 +98,17 @@
 (progn
   #| Renvoie vrai si a = b |#
   (if
-    (not-equal (bigint-bigint_sign a) (bigint-bigint_sign b))
+    (not (eq (bigint-bigint_sign a) (bigint-bigint_sign b)))
     (return-from bigint_eq nil)
     (if
-      (not-equal (bigint-bigint_len a) (bigint-bigint_len b))
+      (not (= (bigint-bigint_len a) (bigint-bigint_len b)))
       (return-from bigint_eq nil)
       (progn
         (do
           ((i 0 (+ 1 i)))
           ((> i (- (bigint-bigint_len a) 1)))
           (if
-            (not-equal (aref (bigint-bigint_chiffres a) i) (aref (bigint-bigint_chiffres b) i))
+            (not (= (aref (bigint-bigint_chiffres a) i) (aref (bigint-bigint_chiffres b) i)))
             (return-from bigint_eq nil))
         )
         (return-from bigint_eq t)
@@ -174,7 +173,7 @@
                        )))
                      ))))
       (if
-        (eq (aref chiffres (- len 1)) 0)
+        (= (aref chiffres (- len 1)) 0)
         (setq len ( - len 1)))
       (let ((m (make-bigint :bigint_sign t
                             :bigint_len len
@@ -208,7 +207,7 @@ Pré-requis : a > b
                          (return-from lambda_3 tmp)
                        )))
                      ))))
-      (loop while (and (> len 0) (eq (aref chiffres (- len 1)) 0))
+      (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
       (let ((n (make-bigint :bigint_sign t
@@ -289,7 +288,7 @@ D'ou le nom de la fonction. |#
       ((l 0 (+ 1 l)))
       ((> l 2))
       (if
-        (eq (aref chiffres (- len 1)) 0)
+        (= (aref chiffres (- len 1)) 0)
         (setq len ( - len 1)))
     )
     (let ((p (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))

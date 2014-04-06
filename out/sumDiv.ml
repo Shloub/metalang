@@ -1,19 +1,19 @@
-let rec foo () =
+let foo () =
   let a = ref( 0 ) in
   (* test *)
   a := (!a) + 1
   (* test 2 *)
 
-let rec foo2 () =
+let foo2 () =
    ()
 
-let rec foo3 () =
+let foo3 () =
   if 1 = 1 then
     begin
        ()
     end
 
-let rec sumdiv n =
+let sumdiv n =
   (* On désire renvoyer la somme des diviseurs *)
   let out_ = ref( 0 ) in
   (* On déclare un entier qui contiendra la somme *)

@@ -3,7 +3,7 @@ type intlist = {
   mutable tail : intlist;
 };;
 
-let rec cons list i =
+let cons list i =
   let out_ = {
     head=i;
     tail=list;
@@ -22,10 +22,10 @@ let rec rev2 empty acc torev =
       rev2 empty acc torev.tail
     end
 
-let rec rev empty torev =
+let rev empty torev =
   rev2 empty empty torev
 
-let rec test empty =
+let test empty =
   let list = ref( empty ) in
   let i = ref( -1 ) in
   while (!i) <> 0

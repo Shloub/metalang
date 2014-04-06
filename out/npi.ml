@@ -1,11 +1,11 @@
 
-let rec is_number c =
+let is_number c =
   int_of_char (c) <= int_of_char ('9') && int_of_char (c) >= int_of_char ('0')
 
 (*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 *)
-let rec npi_ str len =
+let npi_ str len =
   let stack = Array.init len (fun _i ->
     0) in
   let ptrStack = ref( 0 ) in

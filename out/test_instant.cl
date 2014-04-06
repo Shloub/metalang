@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 
 (defun foo (a b)
 (return-from foo (+ a b)))

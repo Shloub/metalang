@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (defstruct (tuple_int_int (:type list) :named)
   tuple_int_int_field_0
   tuple_int_int_field_1

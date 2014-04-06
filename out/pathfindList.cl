@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -36,7 +35,7 @@
   (>= pos (- len 1))
   (return-from pathfind_aux 0)
   (if
-    (not-equal (aref cache pos) (- 0 1))
+    (not (= (aref cache pos) (- 0 1)))
     (return-from pathfind_aux (aref cache pos))
     (progn
       (setf (aref cache pos) (* len 2))

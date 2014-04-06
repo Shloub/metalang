@@ -12,12 +12,12 @@ end
 len = 0
 len=scanf("%d")[0];
 scanf("%*\n");
-tofind = '\000'
+tofind = "\000"
 tofind=scanf("%c")[0];
 scanf("%*\n");
 tab = [];
 for i in (0 ..  len - 1) do
-  tmp = '\000'
+  tmp = "\000"
   tmp=scanf("%c")[0];
   tab[i] = tmp;
 end

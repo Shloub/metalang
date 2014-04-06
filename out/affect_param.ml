@@ -1,4 +1,4 @@
-let rec foo a =
+let foo a =
   let a = ref a in
   a := 4
 

@@ -35,13 +35,13 @@ function nth(&$tab, $tofind, $len){
 $len = 0;
 list($len) = scan("%d");
 scantrim();
-$tofind = '\000';
+$tofind = "\000";
 $tofind = nextChar();
 scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = '\000';
+  $tmp = "\000";
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }

@@ -1,6 +1,6 @@
 
 
-let rec position_alphabet c =
+let position_alphabet c =
   let i = int_of_char (c) in
   if i <= int_of_char ('Z') && i >= int_of_char ('A') then
     i - int_of_char ('A')
@@ -9,10 +9,10 @@ let rec position_alphabet c =
   else
     -1
 
-let rec of_position_alphabet c =
+let of_position_alphabet c =
   char_of_int (c + int_of_char ('a'))
 
-let rec crypte taille_cle cle taille message =
+let crypte taille_cle cle taille message =
   for i = 0 to taille - 1 do
     let lettre = position_alphabet message.(i) in
     if lettre <> -1 then

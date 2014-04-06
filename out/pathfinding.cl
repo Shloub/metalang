@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -51,7 +50,7 @@
 
 (defun pathfind_aux (cache tab x y posX posY)
 (if
-  (and (eq posX (- x 1)) (eq posY (- y 1)))
+  (and (= posX (- x 1)) (= posY (- y 1)))
   (return-from pathfind_aux 0)
   (if
     (or (or (or (< posX 0) (< posY 0)) (>= posX x)) (>= posY y))
@@ -60,7 +59,7 @@
       (eq (aref (aref tab posY) posX) (int-char 35))
       (return-from pathfind_aux (* (* x y) 10))
       (if
-        (not-equal (aref (aref cache posY) posX) (- 0 1))
+        (not (= (aref (aref cache posY) posX) (- 0 1)))
         (return-from pathfind_aux (aref (aref cache posY) posX))
         (progn
           (setf (aref (aref cache posY) posX) (* (* x y) 10))

@@ -1,4 +1,4 @@
-let rec max2 a b =
+let max2 a b =
   if a > b then
     a
   else
@@ -6,7 +6,7 @@ let rec max2 a b =
 
 exception Found_1 of int
 
-let rec nbPassePartout n passepartout m serrures =
+let nbPassePartout n passepartout m serrures =
   try
   let max_ancient = ref( 0 ) in
   let max_recent = ref( 0 ) in

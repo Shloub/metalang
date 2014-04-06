@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -63,7 +62,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
              (is_number (aref str ptrStr))
              (progn
                (let ((num 0))
-                 (loop while (not-equal (aref str ptrStr) #\Space)
+                 (loop while (not (eq (aref str ptrStr) #\Space))
                  do (progn
                       (setq num (- (+ (* num 10) (char-int (aref str ptrStr))) (char-int #\0)))
                       (setq ptrStr ( + ptrStr 1))

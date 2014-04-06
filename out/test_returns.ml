@@ -1,6 +1,6 @@
 exception Found_1 of bool
 
-let rec is_pair i =
+let is_pair i =
   try
   let j = ref( 1 ) in
   if i < 10 then

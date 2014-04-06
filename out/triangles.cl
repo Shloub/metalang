@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -40,13 +39,13 @@
 	Cette fonction est récursive
 	|#
   (if
-    (eq y (- len 1))
+    (= y (- len 1))
     (return-from find0 (aref (aref tab y) x))
     (if
       (> x y)
       (return-from find0 100000)
       (if
-        (not-equal (aref (aref cache y) x) 0)
+        (not (= (aref (aref cache y) x) 0))
         (return-from find0 (aref (aref cache y) x))
         (progn
           (let ((result 0))

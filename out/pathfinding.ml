@@ -1,13 +1,13 @@
-let rec min2 a b =
+let min2 a b =
   if a < b then
     a
   else
     b
 
-let rec min3 a b c =
+let min3 a b c =
   min2 (min2 a b) c
 
-let rec min4 a b c d =
+let min4 a b c d =
   min3 (min2 a b) c d
 
 let rec pathfind_aux cache tab x y posX posY =
@@ -31,7 +31,7 @@ let rec pathfind_aux cache tab x y posX posY =
       out_
     end
 
-let rec pathfind tab x y =
+let pathfind tab x y =
   let cache = Array.init y (fun _i ->
     let tmp = Array.init x (fun _j ->
       -1) in

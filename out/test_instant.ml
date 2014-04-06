@@ -1,4 +1,4 @@
-let rec foo a b =
+let foo a b =
   a + b
 
 let () =

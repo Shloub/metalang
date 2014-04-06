@@ -1,5 +1,5 @@
 (* lit un sudoku sur l'entrée standard *)
-let rec read_sudoku () =
+let read_sudoku () =
   let a = 9 * 9 in
   let out_ = Array.init a (fun _i ->
     let k = Scanf.scanf "%d" (fun x -> x) in
@@ -8,7 +8,7 @@ let rec read_sudoku () =
   out_
 
 (* affiche un sudoku *)
-let rec print_sudoku sudoku_ =
+let print_sudoku sudoku_ =
   for y = 0 to 8 do
     for x = 0 to 8 do
       let b = sudoku_.(x + y * 9) in
@@ -28,7 +28,7 @@ let rec print_sudoku sudoku_ =
 (* dit si le sudoku est terminé de remplir *)
 exception Found_1 of bool
 
-let rec sudoku_done s =
+let sudoku_done s =
   try
   for i = 0 to 80 do
     if s.(i) = 0 then

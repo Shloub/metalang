@@ -22,8 +22,9 @@ def int find(int n, array<int> t, int used, int nth)
 end
 
 main
-  def array<int> t[10001] with i do
+	def n = 10001
+  def array<int> t[n] with i do
 		return 2
   end
-	print find(3, t, 1, 10001) print "\n"
+	print find(3, t, 1, n) print "\n"
 end

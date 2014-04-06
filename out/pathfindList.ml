@@ -17,7 +17,7 @@ let rec pathfind_aux cache tab len pos =
       (!out_)
     end
 
-let rec pathfind tab len =
+let pathfind tab len =
   let cache = Array.init len (fun _i ->
     -1) in
   pathfind_aux cache tab len 0

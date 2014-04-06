@@ -9,7 +9,7 @@ et qui produit les macros metalang correspondante
 
 =end
 
-input = ' '
+input = " "
 current_pos = 500
 a = 1000
 mem = [];

@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -43,7 +42,7 @@
 
 (defun foo3 ()
 (if
-  (eq 1 1)
+  (= 1 1)
   (progn
     
   )))
@@ -59,7 +58,7 @@
       (progn
         #| La boucle : i est le diviseur potentiel|#
         (if
-          (eq (remainder n i) 0)
+          (= (remainder n i) 0)
           (progn
             #| Si i divise |#
             (setq out_ ( + out_ i))

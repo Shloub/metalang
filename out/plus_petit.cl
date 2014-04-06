@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -35,9 +34,9 @@
 (progn
   (let ((m (quotient (+ a b) 2)))
     (if
-      (eq a m)
+      (= a m)
       (if
-        (eq (aref tab a) m)
+        (= (aref tab a) m)
         (return-from go_ b)
         (return-from go_ a))
       (progn

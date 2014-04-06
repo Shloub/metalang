@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -46,10 +45,10 @@
         ((> i (- m 1)))
         (progn
           (if
-            (and (eq (aref (aref serrures i) 0) (- 0 1)) (> (aref (aref serrures i) 1) max_ancient))
+            (and (= (aref (aref serrures i) 0) (- 0 1)) (> (aref (aref serrures i) 1) max_ancient))
             (setq max_ancient (aref (aref serrures i) 1)))
           (if
-            (and (eq (aref (aref serrures i) 0) 1) (> (aref (aref serrures i) 1) max_recent))
+            (and (= (aref (aref serrures i) 0) 1) (> (aref (aref serrures i) 1) max_recent))
             (setq max_recent (aref (aref serrures i) 1)))
         )
       )

@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 
 #|
 Ce test permet de tester les macros
@@ -87,7 +86,7 @@ et qui produit les macros metalang correspondante
         (setf (aref mem_ current_pos) (+ (aref mem_ current_pos) 1))
         (setf (aref mem_ current_pos) (+ (aref mem_ current_pos) 1))
         (setf (aref mem_ current_pos) (+ (aref mem_ current_pos) 1))
-        (loop while (not-equal (aref mem_ current_pos) 0)
+        (loop while (not (= (aref mem_ current_pos) 0))
         do (progn
              (setf (aref mem_ current_pos) (- (aref mem_ current_pos) 1))
              (setq current_pos ( - current_pos 1))

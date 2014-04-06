@@ -4,7 +4,7 @@ type toto = {
   mutable blah : int;
 };;
 
-let rec mktoto v1 =
+let mktoto v1 =
   let t = {
     foo=v1;
     bar=0;
@@ -12,7 +12,7 @@ let rec mktoto v1 =
   } in
   t
 
-let rec result t len =
+let result t len =
   let out_ = ref( 0 ) in
   for j = 0 to len - 1 do
     t.(j).blah <- t.(j).blah + 1;

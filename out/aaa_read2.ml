@@ -1,18 +1,18 @@
 
 
-let rec read_int () =
+let read_int () =
   let out_ = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   out_
 
-let rec read_int_line n =
+let read_int_line n =
   let tab = Array.init n (fun _i ->
     let t = Scanf.scanf "%d" (fun x -> x) in
     Scanf.scanf "%[\n \010]" (fun _ -> ());
     t) in
   tab
 
-let rec read_char_line n =
+let read_char_line n =
   let tab = Array.init n (fun _i ->
     let t = Scanf.scanf "%c" (fun x -> x) in
     t) in

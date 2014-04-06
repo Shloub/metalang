@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -52,7 +51,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
                  (let ((tmpc (mread-char )))
                    (let ((c (char-int tmpc)))
                      (if
-                       (not-equal tmpc #\Space)
+                       (not (eq tmpc #\Space))
                        (setq c (+ (remainder (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
                      (return-from lambda_1 (int-char c))
                    ))))

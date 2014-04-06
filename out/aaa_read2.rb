@@ -25,7 +25,7 @@ end
 def read_char_line( n )
     tab = [];
     for i in (0 ..  n - 1) do
-      t = '_'
+      t = "_"
       t=scanf("%c")[0];
       tab[i] = t;
     end
@@ -63,8 +63,8 @@ for i3 in (0 ..  strlen - 1) do
   tmpc = tab4[i3]
   c = tmpc.ord
   printf "%c:%d ", tmpc, c
-  if tmpc != ' ' then
-    c = mod((c - 'a'.ord) + 13, 26) + 'a'.ord;
+  if tmpc != " " then
+    c = mod((c - "a".ord) + 13, 26) + "a".ord;
   end
   tab4[i3] = c;
 end

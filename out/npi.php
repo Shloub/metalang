@@ -25,7 +25,7 @@ function nextChar(){
   return $out;
 }
 function is_number($c){
-  return ord($c) <= ord('9') && ord($c) >= ord('0');
+  return ord($c) <= ord("9") && ord($c) >= ord("0");
 }
 
 /*
@@ -38,20 +38,20 @@ function npi_(&$str, $len){
   $ptrStack = 0;
   $ptrStr = 0;
   while ($ptrStr < $len)
-    if ($str[$ptrStr] == ' ')
+    if ($str[$ptrStr] == " ")
     $ptrStr ++;
   else if (is_number($str[$ptrStr]))
   {
     $num = 0;
-    while ($str[$ptrStr] != ' ')
+    while ($str[$ptrStr] != " ")
     {
-      $num = $num * 10 + ord($str[$ptrStr]) - ord('0');
+      $num = $num * 10 + ord($str[$ptrStr]) - ord("0");
       $ptrStr ++;
     }
     $stack[$ptrStack] = $num;
     $ptrStack ++;
   }
-  else if ($str[$ptrStr] == '+')
+  else if ($str[$ptrStr] == "+")
   {
     $stack[$ptrStack - 2] = $stack[$ptrStack - 2] + $stack[$ptrStack - 1];
     $ptrStack --;
@@ -66,7 +66,7 @@ scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = '\000';
+  $tmp = "\000";
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }

@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -49,7 +48,7 @@
             (> (aref tab i) nombre)
             (setq max_ (aref tab i)))
           (if
-            (and (eq (aref tab i) nombre) (not-equal len (+ i 1)))
+            (and (= (aref tab i) nombre) (not (= len (+ i 1))))
             (return-from devine_ nil))
         )
       )

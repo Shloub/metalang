@@ -19,7 +19,7 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
       return (0);
     elsif posX < 0 || posY < 0 || posX >= x || posY >= y then
       return (x * y * 10);
-    elsif tab[posY][posX] == '#' then
+    elsif tab[posY][posX] == "#" then
       return (x * y * 10);
     elsif cache[posY][posX] != -1 then
       return (cache[posY][posX]);
@@ -57,7 +57,7 @@ tab = [];
 for i in (0 ..  y - 1) do
   tab2 = [];
   for j in (0 ..  x - 1) do
-    tmp = '\000'
+    tmp = "\000"
     tmp=scanf("%c")[0];
     tab2[j] = tmp;
   end

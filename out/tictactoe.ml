@@ -16,7 +16,7 @@ type move = {
 };;
 
 (* On affiche l'état *)
-let rec print_state g =
+let print_state g =
   Printf.printf "\n|";
   for y = 0 to 2 do
     for x = 0 to 2 do
@@ -34,7 +34,7 @@ let rec print_state g =
   Printf.printf "\n"
 
 (* On dit qui gagne (info stoquées dans g.ended et g.note ) *)
-let rec eval_ g =
+let eval_ g =
   let win = ref( 0 ) in
   let freecase = ref( 0 ) in
   for y = 0 to 2 do
@@ -74,28 +74,28 @@ let rec eval_ g =
     g.note <- 0
 
 (* On applique un mouvement *)
-let rec apply_move_xy x y g =
+let apply_move_xy x y g =
   let player = ref( 2 ) in
   if g.firstToPlay then
     player := 1;
   g.cases.(x).(y) <- (!player);
   g.firstToPlay <- not g.firstToPlay
 
-let rec apply_move m g =
+let apply_move m g =
   apply_move_xy m.x m.y g
 
-let rec cancel_move_xy x y g =
+let cancel_move_xy x y g =
   g.cases.(x).(y) <- 0;
   g.firstToPlay <- not g.firstToPlay;
   g.ended <- false
 
-let rec cancel_move m g =
+let cancel_move m g =
   cancel_move_xy m.x m.y g
 
-let rec can_move_xy x y g =
+let can_move_xy x y g =
   g.cases.(x).(y) = 0
 
-let rec can_move m g =
+let can_move m g =
   can_move_xy m.x m.y g
 
 (*
@@ -129,7 +129,7 @@ let rec minmax g =
 (*
 Renvoie le coup de l'IA
 *)
-let rec play g =
+let play g =
   let minMove = {
     x=0;
     y=0;
@@ -164,7 +164,7 @@ let rec play g =
   Printf.printf "\n";
   minMove
 
-let rec init_ () =
+let init_ () =
   let d = 3 in
   let cases = Array.init d (fun _i ->
     let c = 3 in
@@ -178,7 +178,7 @@ let rec init_ () =
     ended=false;
   }
 
-let rec read_move () =
+let read_move () =
   let x = Scanf.scanf "%d" (fun x -> x) in
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   let y = Scanf.scanf "%d" (fun x -> x) in

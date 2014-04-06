@@ -7,7 +7,7 @@ type toto = {
   mutable blah : int;
 };;
 
-let rec mktoto v1 =
+let mktoto v1 =
   let t = {
     foo=v1;
     bar=v1;
@@ -15,7 +15,7 @@ let rec mktoto v1 =
   } in
   t
 
-let rec mktoto2 v1 =
+let mktoto2 v1 =
   let t = {
     foo=v1 + 3;
     bar=v1 + 2;
@@ -23,7 +23,7 @@ let rec mktoto2 v1 =
   } in
   t
 
-let rec result t_ t2_ =
+let result t_ t2_ =
   let t = ref( t_ ) in
   let t2 = ref( t2_ ) in
   let t3 = ref( {

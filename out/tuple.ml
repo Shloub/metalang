@@ -1,4 +1,4 @@
-let rec f tuple_ =
+let f tuple_ =
   let (a, b) = tuple_ in
   (a + 1, b + 1)
 

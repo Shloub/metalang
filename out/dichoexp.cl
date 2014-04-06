@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 (let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
@@ -33,10 +32,10 @@
 
 (defun exp_ (a b)
 (if
-  (eq b 0)
+  (= b 0)
   (return-from exp_ 1)
   (if
-    (eq (remainder b 2) 0)
+    (= (remainder b 2) 0)
     (progn
       (let ((o (exp_ a (quotient b 2))))
         (return-from exp_ (* o o))

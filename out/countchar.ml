@@ -1,4 +1,4 @@
-let rec nth tab tofind len =
+let nth tab tofind len =
   let out_ = ref( 0 ) in
   for i = 0 to len - 1 do
     if tab.(i) = tofind then

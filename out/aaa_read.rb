@@ -39,12 +39,12 @@ scanf("%*\n");
 printf "%d=strlen\n", strlen
 tab4 = [];
 for toto in (0 ..  strlen - 1) do
-  tmpc = '_'
+  tmpc = "_"
   tmpc=scanf("%c")[0];
   c = tmpc.ord
   printf "%c:%d ", tmpc, c
-  if tmpc != ' ' then
-    c = mod((c - 'a'.ord) + 13, 26) + 'a'.ord;
+  if tmpc != " " then
+    c = mod((c - "a".ord) + 13, 26) + "a".ord;
   end
   tab4[toto] = c;
 end

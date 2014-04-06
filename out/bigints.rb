@@ -15,14 +15,14 @@ def read_bigint(  )
     len = 0
     len=scanf("%d")[0];
     scanf("%*\n");
-    sign = '_'
+    sign = "_"
     sign=scanf("%c")[0];
     scanf("%*\n");
     chiffres = [];
     for d in (0 ..  len - 1) do
-      c = '_'
+      c = "_"
       c=scanf("%c")[0];
-      chiffres[d] = c.ord - '0'.ord;
+      chiffres[d] = c.ord - "0".ord;
     end
     for i in (0 ..  ((len - 1).to_f / 2).to_i) do
       tmp = chiffres[i]
@@ -31,14 +31,14 @@ def read_bigint(  )
     end
     scanf("%*\n");
     return ({
-      "bigint_sign" => sign == '+',
+      "bigint_sign" => sign == "+",
       "bigint_len" => len,
       "bigint_chiffres" => chiffres});
 end
 
 def print_bigint( a )
     if not(a["bigint_sign"]) then
-      printf "%c", '-'
+      printf "%c", "-"
     end
     for i in (0 ..  a["bigint_len"] - 1) do
       e = a["bigint_chiffres"][a["bigint_len"] - 1 - i]

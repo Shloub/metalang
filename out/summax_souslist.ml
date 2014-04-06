@@ -1,4 +1,4 @@
-let rec summax lst len =
+let summax lst len =
   let current = ref( 0 ) in
   let max_ = ref( 0 ) in
   for i = 0 to len - 1 do

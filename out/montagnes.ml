@@ -1,4 +1,4 @@
-let rec montagnes_ tab len =
+let montagnes_ tab len =
   let max_ = ref( 1 ) in
   let j = ref( 1 ) in
   let i = ref( len - 2 ) in
