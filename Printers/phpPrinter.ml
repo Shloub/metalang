@@ -61,7 +61,7 @@ class phpPrinter = object(self)
   method lang () = "php"
 
   method char f c =
-    Format.fprintf f "%C" c
+    Format.fprintf f "%S" (String.make 1 c)
 
   method prototype f t =
     match Type.unfix t with
