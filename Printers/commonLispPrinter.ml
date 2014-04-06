@@ -170,7 +170,19 @@ class commonLispPrinter = object(self)
     | Expr.Not -> Format.fprintf f "(not %a)" self#expr a
 
   method expr f t =
-    let binop op a b = Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#print_op op self#expr a self#expr b
+    let binop op a b = match op with
+      | Expr.Eq ->
+	if Typer.is_int (super#getTyperEnv ()) a then
+	  Format.fprintf f "@[<h>(= %a@ %a)@]" self#expr a self#expr b
+	else
+	  Format.fprintf f "@[<h>(eq %a@ %a)@]"self#expr a self#expr b
+      | Expr.Diff ->
+	if Typer.is_int (super#getTyperEnv ()) a then
+	  Format.fprintf f "@[<h>(not (= %a@ %a))@]" self#expr a self#expr b
+	else
+	  Format.fprintf f "@[<h>(not (eq %a@ %a))@]" self#expr a self#expr b
+      | _ ->
+	Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#print_op op self#expr a self#expr b
     in
     let t = Expr.unfix t in
     match t with
@@ -315,7 +327,6 @@ class commonLispPrinter = object(self)
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 %s%s%s%s%a"
       (if need then
       "(let ((last-char 0)))
@@ -372,9 +383,7 @@ super#prog prog
 	| Expr.LowerEq -> "<="
 	| Expr.Higher -> ">"
 	| Expr.HigherEq -> ">="
-	| Expr.Eq -> "eq"
-	| Expr.Diff -> "not-equal"
-      )
+	| _ -> assert false)
 
   method decl_type f name t =
         match (Type.unfix t) with
