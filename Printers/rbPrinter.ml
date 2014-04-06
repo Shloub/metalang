@@ -57,6 +57,9 @@ class rbPrinter = object(self)
 end
 " else "")
 
+  method char f c =
+    Format.fprintf f "%S" (String.make 1 c)
+
   method comment f str = Format.fprintf f "\n=begin\n%s\n=end\n" str
 
   method unop f op a =
