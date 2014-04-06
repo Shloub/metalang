@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 
 (defun max2 (a b)
 (if
@@ -30,9 +29,9 @@
               ))
               ))))
     (let ((d 2))
-      (loop while (and (not-equal n 1) (<= (* d d) n))
+      (loop while (and (not (= n 1)) (<= (* d d) n))
       do (if
-           (eq (remainder n d) 0)
+           (= (remainder n d) 0)
            (progn
              (setf (aref tab d) (+ (aref tab d) 1))
              (setq n ( quotient n d))

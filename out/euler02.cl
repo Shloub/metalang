@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 
 (progn
   (let ((a 1))
@@ -19,7 +18,7 @@
         (loop while (< a 4000000)
         do (progn
              (if
-               (eq (remainder a 2) 0)
+               (= (remainder a 2) 0)
                (setq sum ( + sum a)))
              (let ((c a))
                (setq a b)

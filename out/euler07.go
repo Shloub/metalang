@@ -39,12 +39,12 @@ func find(n int, t []int, used int, nth int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var a int = 10001
-  var t []int = make([]int, a)
-  for i := 0 ; i <= a - 1; i++ {
+  var n int = 10001
+  var t []int = make([]int, n)
+  for i := 0 ; i <= n - 1; i++ {
     t[i] = 2;
   }
-  var b int = find(3, t, 1, 10001)
-  fmt.Printf("%d\n", b);
+  var a int = find(3, t, 1, n)
+  fmt.Printf("%d\n", a);
 }
 

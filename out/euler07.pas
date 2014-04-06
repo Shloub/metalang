@@ -1,7 +1,7 @@
 program euler07;
 
-type c = array of Longint;
-function divisible(n : Longint; t : c; size : Longint) : boolean;
+type b = array of Longint;
+function divisible(n : Longint; t : b; size : Longint) : boolean;
 var
   i : Longint;
 begin
@@ -16,7 +16,7 @@ begin
   exit(false);
 end;
 
-function find(n : Longint; t : c; used : Longint; nth : Longint) : Longint;
+function find(n : Longint; t : b; used : Longint; nth : Longint) : Longint;
 begin
   while used <> nth do
   begin
@@ -38,18 +38,18 @@ end;
 
 var
   a : Longint;
-  b : Longint;
   i : Longint;
-  t : c;
+  n : Longint;
+  t : b;
 begin
-  a := 10001;
-  SetLength(t, a);
-  for i := 0 to  a - 1 do
+  n := 10001;
+  SetLength(t, n);
+  for i := 0 to  n - 1 do
   begin
     t[i] := 2;
   end;
-  b := find(3, t, 1, 10001);
-  Write(b);
+  a := find(3, t, 1, n);
+  Write(a);
   Write(''#10'');
 end.
 

@@ -25,15 +25,15 @@ int find(int n, int* t, int used, int nth){
 }
 
 int main(void){
-  int a = 10001;
-  int *t = malloc( a * sizeof(int));
+  int n = 10001;
+  int *t = malloc( n * sizeof(int));
   {
     int i;
-    for (i = 0 ; i < a; i++)
+    for (i = 0 ; i < n; i++)
       t[i] = 2;
   }
-  int b = find(3, t, 1, 10001);
-  printf("%d\n", b);
+  int a = find(3, t, 1, n);
+  printf("%d\n", a);
   return 0;
 }
 

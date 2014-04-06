@@ -25,11 +25,11 @@ def find( n, t, used, nth )
     return (t[used - 1]);
 end
 
-a = 10001
+n = 10001
 t = [];
-for i in (0 ..  a - 1) do
+for i in (0 ..  n - 1) do
   t[i] = 2;
 end
-b = find(3, t, 1, 10001)
-printf "%d\n", b
+a = find(3, t, 1, n)
+printf "%d\n", a
 

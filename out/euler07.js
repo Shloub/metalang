@@ -55,11 +55,11 @@ function find(n, t, used, nth){
   return t[used - 1];
 }
 
-var a = 10001;
-var t = new Array(a);
-for (var i = 0 ; i <= a - 1; i++)
+var n = 10001;
+var t = new Array(n);
+for (var i = 0 ; i <= n - 1; i++)
   t[i] = 2;
-var b = find(3, t, 1, 10001);
-util.print(b, "\n");
+var a = find(3, t, 1, n);
+util.print(a, "\n");
 
 

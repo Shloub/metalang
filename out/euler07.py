@@ -17,10 +17,10 @@ def find( n, t, used, nth ):
         used += 1
     return t[used - 1];
 
-a = 10001;
-t = [None] * a
-for i in range(0, a):
+n = 10001;
+t = [None] * n
+for i in range(0, n):
   t[i] = 2;
-b = find(3, t, 1, 10001);
-print("%d\n" % ( b ), end='')
+a = find(3, t, 1, n);
+print("%d\n" % ( a ), end='')
 

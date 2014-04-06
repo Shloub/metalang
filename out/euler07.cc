@@ -24,12 +24,12 @@ int find(int n, std::vector<int >& t, int used, int nth){
 
 
 int main(void){
-  int a = 10001;
-  std::vector<int > t( a );
-  for (int i = 0 ; i < a; i++)
+  int n = 10001;
+  std::vector<int > t( n );
+  for (int i = 0 ; i < n; i++)
     t.at(i) = 2;
-  int b = find(3, t, 1, 10001);
-  std::cout << b << "\n";
+  int a = find(3, t, 1, n);
+  std::cout << a << "\n";
   return 0;
 }
 

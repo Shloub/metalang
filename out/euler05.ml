@@ -1,10 +1,10 @@
-let rec max2 a b =
+let max2 a b =
   if a > b then
     a
   else
     b
 
-let rec primesfactors n =
+let primesfactors n =
   let n = ref n in
   let c = (!n) + 1 in
   let tab = Array.init c (fun _i ->

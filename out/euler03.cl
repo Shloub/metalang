@@ -10,20 +10,19 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 
 (progn
   (let ((maximum 1))
     (let ((b0 2))
       (let ((a 408464633))
-        (loop while (not-equal a 1)
+        (loop while (not (= a 1))
         do (progn
              (let ((b b0))
                (let ((found nil))
                  (loop while (< (* b b) a)
                  do (progn
                       (if
-                        (eq (remainder a b) 0)
+                        (= (remainder a b) 0)
                         (progn
                           (setq a ( quotient a b))
                           (setq b0 b)

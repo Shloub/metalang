@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 
 (defun divisible (n t_ size)
 (progn
@@ -18,7 +17,7 @@
     ((i 0 (+ 1 i)))
     ((> i (- size 1)))
     (if
-      (eq (remainder n (aref t_ i)) 0)
+      (= (remainder n (aref t_ i)) 0)
       (return-from divisible t))
   )
   (return-from divisible nil)
@@ -26,7 +25,7 @@
 
 (defun find_ (n t_ used nth_)
 (progn
-  (loop while (not-equal used nth_)
+  (loop while (not (= used nth_))
   do (if
        (divisible n t_ used)
        (setq n ( + n 1))
@@ -40,17 +39,17 @@
 ))
 
 (progn
-  (let ((a 10001))
+  (let ((n 10001))
     (let
      ((t_ (array_init
-             a
+             n
              (function (lambda (i)
              (block lambda_1
                (return-from lambda_1 2)
              ))
              ))))
-    (let ((b (find_ 3 t_ 1 10001)))
-      (princ b)
+    (let ((a (find_ 3 t_ 1 n)))
+      (princ a)
       (princ "
 ")
     ))))

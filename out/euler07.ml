@@ -1,6 +1,6 @@
 exception Found_1 of bool
 
-let rec divisible n t size =
+let divisible n t size =
   try
   for i = 0 to size - 1 do
     if (n mod t.(i)) = 0 then
@@ -9,7 +9,7 @@ let rec divisible n t size =
   raise (Found_1(false))
   with Found_1 (out) -> out
 
-let rec find n t used nth =
+let find n t used nth =
   let n = ref n in
   let used = ref used in
   while (!used) <> nth
@@ -27,11 +27,11 @@ let rec find n t used nth =
 
 let () =
 begin
-  let a = 10001 in
-  let t = Array.init a (fun _i ->
+  let n = 10001 in
+  let t = Array.init n (fun _i ->
     2) in
-  let b = find 3 t 1 10001 in
-  Printf.printf "%d" b;
+  let a = find 3 t 1 n in
+  Printf.printf "%d" a;
   Printf.printf "\n"
 end
  

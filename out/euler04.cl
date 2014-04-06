@@ -10,7 +10,6 @@
     ))
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
-(defun not-equal (a b) (not (eq a b)))
 
 (defun max2 (a b)
 (if
@@ -38,7 +37,7 @@ c * f * 10000
 |#
 (defun chiffre (c m)
 (if
-  (eq c 0)
+  (= c 0)
   (return-from chiffre (remainder m 10))
   (return-from chiffre (chiffre (- c 1) (quotient m 10)))))
 
@@ -65,7 +64,7 @@ c * f * 10000
                 (progn
                   (let ((mul (+ (+ (+ (+ (* a d) (* 10 (+ (* a e) (* b d)))) (* 100 (+ (+ (* a f) (* b e)) (* c d)))) (* 1000 (+ (* c e) (* b f)))) (* (* 10000 c) f))))
                     (if
-                      (and (and (eq (chiffre 0 mul) (chiffre 5 mul)) (eq (chiffre 1 mul) (chiffre 4 mul))) (eq (chiffre 2 mul) (chiffre 3 mul)))
+                      (and (and (= (chiffre 0 mul) (chiffre 5 mul)) (= (chiffre 1 mul) (chiffre 4 mul))) (= (chiffre 2 mul) (chiffre 3 mul)))
                       (setq m (max2 mul m)))
                   ))
                 )

@@ -27,12 +27,12 @@ public class euler07
   
   public static void Main(String[] args)
   {
-    int a = 10001;
-    int[] t = new int[a];
-    for (int i = 0 ; i < a; i++)
+    int n = 10001;
+    int[] t = new int[n];
+    for (int i = 0 ; i < n; i++)
       t[i] = 2;
-    int b = find(3, t, 1, 10001);
-    Console.Write(b);
+    int a = find(3, t, 1, n);
+    Console.Write(a);
     Console.Write("\n");
   }
   
