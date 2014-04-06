@@ -26,8 +26,8 @@ let keywords lang=
 "yield";
 	]
 	in match lang with
-	| "cl" ->
-		"t" :: "mem" :: "nth" :: "cons" :: "find" :: li
+	| "cl" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
+	| "php" -> "sqrt" :: li
 	| _ -> li
 
 let conf_rename lang prog =

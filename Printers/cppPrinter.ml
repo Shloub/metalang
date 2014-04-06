@@ -67,7 +67,11 @@ class cppPrinter = object(self)
 
   method prog f prog =
     Format.fprintf f
-      "#include <cstdlib>@\n#include <cstdio>@\n#include <iostream>@\n#include <vector>@\n%a@\n%a\n"
+      "#include <cstdlib>@\n#include <cstdio>@\n#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
+			(fun f () ->
+				if Tags.is_taged "use_math"
+				then Format.fprintf f "#include<cmath>@\n"
+				) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

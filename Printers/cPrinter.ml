@@ -198,7 +198,11 @@ class cPrinter = object(self)
   | _ -> Format.fprintf f "@[%a(\"%a\", %a);@]" self#printf () self#format_type t self#expr expr
 
   method prog f prog =
-    Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n@\n%a%a@\n@\n"
+    Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n%a@\n%a%a@\n@\n"
+			(fun f () ->
+				if Tags.is_taged "use_math"
+				then Format.fprintf f "#include<math.h>@\n"
+				) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

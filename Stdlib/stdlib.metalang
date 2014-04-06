@@ -6,6 +6,25 @@ macro int random(int c)
   *  do "$c"
 end
 
+macro int sqrt_(int c)
+  ml do "(int_of_float (sqrt (float_of_int ( $c))))"
+  js do "Math.floor(Math.sqrt($c))"
+  csharp do "(int)Math.Sqrt($c)"
+  py do "math.floor(math.sqrt($c))"
+  ruby do "Math.sqrt($c).to_i"
+	pas do "Floor(Sqrt($c))"
+  java do "(int)Math.sqrt($c)"
+  clisp do "(isqrt $c)"
+	go do "int(math.Sqrt(float64($c)))"
+  php do "intval(sqrt($c))"
+  * do "sqrt($c)"
+end
+
+def int isqrt(int c)
+  tag use_math
+  return sqrt_(c)
+end
+
 macro char char_of_int(int c)
   ml do "char_of_int ($c)"
   pas do "chr($c)"

@@ -579,6 +579,8 @@ and eval_call env name params : execenv -> result =
           Integer (int_of_char (get_char param))
         | "char_of_int", [param] ->
           Char (char_of_int (get_integer param))
+        | "sqrt_", [param] ->
+          Integer (int_of_float (sqrt (float_of_int (get_integer param))))
         | _ -> failwith ("The Macro "^name^" cannot be evaluated with"
 			 ^(string_of_int (List.length params))^" arguments")
       )

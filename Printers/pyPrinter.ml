@@ -123,7 +123,8 @@ class pyPrinter = object(self)
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "%s%s%s%s%s%s"
 (if Tags.is_taged "__internal__div" ||
-		Tags.is_taged "__internal__mod"
+		Tags.is_taged "__internal__mod" ||
+		Tags.is_taged "use_math"
  then
 "import math
 " else "")

@@ -358,8 +358,12 @@ class pasPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "program %s;@\n%s%s%s%s%s@\n%a%a.@\n@\n"
+    Format.fprintf f "program %s;@\n%a%s%s%s%s%s@\n%a%a.@\n@\n"
      prog.Prog.progname
+			(fun f () ->
+				if Tags.is_taged "use_math"
+				then Format.fprintf f "Uses math;@\n"
+				) ()
       (if need then "
 var global_char : char;
 var global_has_char : boolean;

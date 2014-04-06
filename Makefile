@@ -120,7 +120,7 @@ tar :
 java	?=	java
 python	?=	python3
 
-CFLAGS ?= -O3 -Wall
+CFLAGS ?= -O3 -Wall -lm
 CCFLAGS ?= -O3 -Wall
 
 TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, \

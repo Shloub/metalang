@@ -35,7 +35,11 @@ class goPrinter = object(self)
     in
     reader <- need;
     Format.fprintf f
-      "package main@\n%a%a%a"
+      "package main@\n%a%a%a%a"
+			(fun f () ->
+				if Tags.is_taged "use_math"
+				then Format.fprintf f "import \"math\";@\n"
+			) ()
       (fun f () -> if need then Format.fprintf f "import \"fmt\"@\nimport \"os\"@\nimport \"bufio\"@\nvar reader *bufio.Reader@\n
 func skip() {
   var c byte
