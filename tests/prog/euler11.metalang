@@ -1,0 +1,43 @@
+
+def int find(int n, array<array<int>> m, int x, int y, int dx, int dy)
+	if x < 0 || x == 20 || y < 0 || y == 20 then
+		return -1
+	elsif n == 0 then
+		return 1
+	else
+		return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy)
+	end
+end
+
+main
+	def array<(int, int)> directions[8] with i do
+		if i == 0 then
+			return (0, 1)
+		elsif i == 1 then
+			return (1, 0)
+		elsif i == 2 then
+			return (0, -1)
+		elsif i == 3 then
+			return (-1, 0)
+		elsif i == 4 then
+			return (1, 1)
+		elsif i == 5 then
+			return (1, -1)
+		elsif i == 6 then
+			return (-1, 1)
+		else
+			return (-1, -1)
+		end
+	end
+	def max = 0
+	def m = read_int_matrix(20, 20)
+	for j = 0 to 7 do
+		def (dx, dy) = directions[j]
+		for x = 0 to 19 do
+			for y = 0 to 19 do
+				max = max2(max, find(4, m, x, y, dx, dy))
+			end
+		end
+	end
+	print max print "\n"
+end
