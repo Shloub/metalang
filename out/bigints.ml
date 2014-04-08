@@ -188,7 +188,7 @@ D'ou le nom de la fonction. *)
   chiffres.(a.bigint_len + b.bigint_len) <- chiffres.(a.bigint_len + b.bigint_len - 1) / 10;
   chiffres.(a.bigint_len + b.bigint_len - 1) <- chiffres.(a.bigint_len + b.bigint_len - 1) mod 10;
   for _l = 0 to 2 do
-    if chiffres.((!len) - 1) = 0 then
+    if (!len) <> 0 && chiffres.((!len) - 1) = 0 then
       len := (!len) - 1
   done;
   {
@@ -243,8 +243,61 @@ Division,
 Modulo
 Exp
 *)
+let log10 a =
+  let a = ref a in
+  let out_ = ref( 1 ) in
+  while (!a) >= 10
+  do
+      a := (!a) / 10;
+      out_ := (!out_) + 1
+  done;
+  (!out_)
+
+let bigint_of_int i =
+  let i = ref i in
+  let size = log10 (!i) in
+  let t = Array.init size (fun _j ->
+    0) in
+  for k = 0 to size - 1 do
+    t.(k) <- (!i) mod 10;
+    i := (!i) / 10
+  done;
+  {
+    bigint_sign=true;
+    bigint_len=size;
+    bigint_chiffres=t;
+  }
+
+let fact_bigint a =
+  let a = ref a in
+  let one = bigint_of_int 1 in
+  let out_ = ref( one ) in
+  while not (bigint_eq (!a) one)
+  do
+      out_ := mul_bigint (!a) (!out_);
+      a := sub_bigint (!a) one
+  done;
+  (!out_)
+
+let sum_chiffres_bigint a =
+  let out_ = ref( 0 ) in
+  for i = 0 to a.bigint_len - 1 do
+    out_ := (!out_) + a.bigint_chiffres.(i)
+  done;
+  (!out_)
+
+(* http://projecteuler.net/problem=20 *)
+let euler20 () =
+  let a = ref( bigint_of_int 100 ) in
+  a := fact_bigint (!a);
+  sum_chiffres_bigint (!a)
+
 let () =
 begin
+  Printf.printf "euler20 = ";
+  let g = (euler20 ()) in
+  Printf.printf "%d" g;
+  Printf.printf "\n";
   let a = (read_bigint ()) in
   let b = (read_bigint ()) in
   print_bigint a;
@@ -285,8 +338,8 @@ begin
   Printf.printf ">";
   print_bigint b;
   Printf.printf "=";
-  let g = bigint_gt a b in
-  if g then
+  let h = bigint_gt a b in
+  if h then
     Printf.printf "True"
   else
     Printf.printf "False";

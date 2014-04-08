@@ -1,0 +1,31 @@
+def int periode(array<int> restes, int len, int a, int b)
+	while a != 0 do
+		def chiffre = a / b
+		def reste = a % b
+		for i = 0 to len - 1 do
+			if restes[i] == reste then
+				return len - i
+			end
+		end
+		restes[len] = reste
+		len ++
+		a = reste * 10
+	end
+	return 0
+end
+
+main
+	def array<int> t[1000] with j do
+		return 0
+	end
+	def m = 0
+def mi = 0
+	for i = 1 to 1000 do
+		def p = periode(t, 0, 1, i)
+		if p > m then
+			mi = i
+			m = p
+		end
+	end
+	print mi print "\n" print m print "\n"
+end

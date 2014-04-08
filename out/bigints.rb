@@ -229,7 +229,7 @@ D'ou le nom de la fonction.
     chiffres[a["bigint_len"] + b["bigint_len"]] = (chiffres[a["bigint_len"] + b["bigint_len"] - 1].to_f / 10).to_i;
     chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10);
     for l in (0 ..  2) do
-      if chiffres[len - 1] == 0 then
+      if len != 0 && chiffres[len - 1] == 0 then
         len -= 1
       end
     end
@@ -299,6 +299,63 @@ Exp
 
 =end
 
+def log10( a )
+    out_ = 1
+    while a >= 10 do
+      a = (a.to_f / 10).to_i
+      out_ += 1
+    end
+    return (out_);
+end
+
+def bigint_of_int( i )
+    size = log10(i)
+    t = [];
+    for j in (0 ..  size - 1) do
+      t[j] = 0;
+    end
+    for k in (0 ..  size - 1) do
+      t[k] = mod(i, 10);
+      i = (i.to_f / 10).to_i
+    end
+    return ({
+      "bigint_sign" => true,
+      "bigint_len" => size,
+      "bigint_chiffres" => t});
+end
+
+def fact_bigint( a )
+    one = bigint_of_int(1)
+    out_ = one
+    while not(bigint_eq(a, one)) do
+      out_ = mul_bigint(a, out_);
+      a = sub_bigint(a, one);
+    end
+    return (out_);
+end
+
+def sum_chiffres_bigint( a )
+    out_ = 0
+    for i in (0 ..  a["bigint_len"] - 1) do
+      out_ += a["bigint_chiffres"][i]
+    end
+    return (out_);
+end
+
+
+=begin
+ http://projecteuler.net/problem=20 
+=end
+
+def euler20(  )
+    a = bigint_of_int(100)
+    a = fact_bigint(a);
+    return (sum_chiffres_bigint(a));
+end
+
+print "euler20 = ";
+g = euler20()
+printf "%d\n", g
 a = read_bigint()
 b = read_bigint()
 print_bigint(a);
@@ -339,8 +396,8 @@ print_bigint(a);
 print ">";
 print_bigint(b);
 print "=";
-g = bigint_gt(a, b)
-if g then
+h = bigint_gt(a, b)
+if h then
   print "True";
 else
   print "False";

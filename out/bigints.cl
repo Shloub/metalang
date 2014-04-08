@@ -73,10 +73,10 @@
           ))
       )
       (mread-blank)
-      (let ((h (make-bigint :bigint_sign (eq sign (int-char 43))
+      (let ((m (make-bigint :bigint_sign (eq sign (int-char 43))
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from read_bigint h)
+      (return-from read_bigint m)
       ))))))
 
 (defun print_bigint (a)
@@ -175,10 +175,10 @@
       (if
         (= (aref chiffres (- len 1)) 0)
         (setq len ( - len 1)))
-      (let ((m (make-bigint :bigint_sign t
+      (let ((n (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from add_bigint_positif m)
+      (return-from add_bigint_positif n)
       ))))))
 
 (defun sub_bigint_positif (a b)
@@ -210,18 +210,18 @@ Pré-requis : a > b
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((n (make-bigint :bigint_sign t
+      (let ((o (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from sub_bigint_positif n)
+      (return-from sub_bigint_positif o)
       ))))))
 
 (defun neg_bigint (a)
 (progn
-  (let ((o (make-bigint :bigint_sign (not (bigint-bigint_sign a))
+  (let ((p (make-bigint :bigint_sign (not (bigint-bigint_sign a))
                         :bigint_len (bigint-bigint_len a)
                         :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from neg_bigint o)
+  (return-from neg_bigint p)
 )))
 
 (defun add_bigint (a b)
@@ -288,21 +288,21 @@ D'ou le nom de la fonction. |#
       ((l 0 (+ 1 l)))
       ((> l 2))
       (if
-        (= (aref chiffres (- len 1)) 0)
+        (and (not (= len 0)) (= (aref chiffres (- len 1)) 0))
         (setq len ( - len 1)))
     )
-    (let ((p (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
+    (let ((q (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
                           :bigint_len len
                           :bigint_chiffres chiffres)))
-    (return-from mul_bigint_cp p)
+    (return-from mul_bigint_cp q)
     )))))
 
 (defun bigint_premiers_chiffres (a i)
 (progn
-  (let ((q (make-bigint :bigint_sign (bigint-bigint_sign a)
+  (let ((r (make-bigint :bigint_sign (bigint-bigint_sign a)
                         :bigint_len i
                         :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from bigint_premiers_chiffres q)
+  (return-from bigint_premiers_chiffres r)
 )))
 
 (defun bigint_shift (a i)
@@ -319,10 +319,10 @@ D'ou le nom de la fonction. |#
                        (return-from lambda_5 0))
                    ))
                    ))))
-    (let ((r (make-bigint :bigint_sign (bigint-bigint_sign a)
+    (let ((s (make-bigint :bigint_sign (bigint-bigint_sign a)
                           :bigint_len (+ (bigint-bigint_len a) i)
                           :bigint_chiffres chiffres)))
-    (return-from bigint_shift r)
+    (return-from bigint_shift s)
     )))))
 
 (defun mul_bigint (aa bb)
@@ -351,59 +351,133 @@ Division,
 Modulo
 Exp
 |#
+(defun log10 (a)
 (progn
-  (let ((a (read_bigint )))
-    (let ((b (read_bigint )))
-      (print_bigint a)
-      (princ ">>1=")
-      (print_bigint (bigint_shift a (- 0 1)))
-      (princ "
+  (let ((out_ 1))
+    (loop while (>= a 10)
+    do (progn
+         (setq a ( quotient a 10))
+         (setq out_ ( + out_ 1))
+         )
+    )
+    (return-from log10 out_)
+  )))
+
+(defun bigint_of_int (i)
+(progn
+  (let ((size (log10 i)))
+    (let
+     ((t_ (array_init
+             size
+             (function (lambda (j)
+             (block lambda_6
+               (return-from lambda_6 0)
+             ))
+             ))))
+    (do
+      ((k 0 (+ 1 k)))
+      ((> k (- size 1)))
+      (progn
+        (setf (aref t_ k) (remainder i 10))
+        (setq i ( quotient i 10))
+      )
+    )
+    (let ((u (make-bigint :bigint_sign t
+                          :bigint_len size
+                          :bigint_chiffres t_)))
+    (return-from bigint_of_int u)
+    )))))
+
+(defun fact_bigint (a)
+(progn
+  (let ((one (bigint_of_int 1)))
+    (let ((out_ one))
+      (loop while (not (bigint_eq a one))
+      do (progn
+           (setq out_ (mul_bigint a out_))
+           (setq a (sub_bigint a one))
+           )
+      )
+      (return-from fact_bigint out_)
+    ))))
+
+(defun sum_chiffres_bigint (a)
+(progn
+  (let ((out_ 0))
+    (do
+      ((i 0 (+ 1 i)))
+      ((> i (- (bigint-bigint_len a) 1)))
+      (setq out_ ( + out_ (aref (bigint-bigint_chiffres a) i)))
+    )
+    (return-from sum_chiffres_bigint out_)
+  )))
+
+#| http://projecteuler.net/problem=20 |#
+(defun euler20 ()
+(progn
+  (let ((a (bigint_of_int 100)))
+    (setq a (fact_bigint a))
+    (return-from euler20 (sum_chiffres_bigint a))
+  )))
+
+(progn
+  (princ "euler20 = ")
+  (let ((g (euler20 )))
+    (princ g)
+    (princ "
 ")
-      (print_bigint a)
-      (princ "*")
-      (print_bigint b)
-      (princ "=")
-      (print_bigint (mul_bigint a b))
-      (princ "
-")
-      (print_bigint a)
-      (princ "*")
-      (print_bigint b)
-      (princ "=")
-      (print_bigint (mul_bigint_cp a b))
-      (princ "
-")
-      (print_bigint a)
-      (princ "+")
-      (print_bigint b)
-      (princ "=")
-      (print_bigint (add_bigint a b))
-      (princ "
-")
-      (print_bigint b)
-      (princ "-")
-      (print_bigint a)
-      (princ "=")
-      (print_bigint (sub_bigint b a))
-      (princ "
-")
-      (print_bigint a)
-      (princ "-")
-      (print_bigint b)
-      (princ "=")
-      (print_bigint (sub_bigint a b))
-      (princ "
-")
-      (print_bigint a)
-      (princ ">")
-      (print_bigint b)
-      (princ "=")
-      (let ((g (bigint_gt a b)))
-        (if
-          g
-          (princ "True")
-          (princ "False"))
+    (let ((a (read_bigint )))
+      (let ((b (read_bigint )))
+        (print_bigint a)
+        (princ ">>1=")
+        (print_bigint (bigint_shift a (- 0 1)))
         (princ "
 ")
-      ))))
+        (print_bigint a)
+        (princ "*")
+        (print_bigint b)
+        (princ "=")
+        (print_bigint (mul_bigint a b))
+        (princ "
+")
+        (print_bigint a)
+        (princ "*")
+        (print_bigint b)
+        (princ "=")
+        (print_bigint (mul_bigint_cp a b))
+        (princ "
+")
+        (print_bigint a)
+        (princ "+")
+        (print_bigint b)
+        (princ "=")
+        (print_bigint (add_bigint a b))
+        (princ "
+")
+        (print_bigint b)
+        (princ "-")
+        (print_bigint a)
+        (princ "=")
+        (print_bigint (sub_bigint b a))
+        (princ "
+")
+        (print_bigint a)
+        (princ "-")
+        (print_bigint b)
+        (princ "=")
+        (print_bigint (sub_bigint a b))
+        (princ "
+")
+        (print_bigint a)
+        (princ ">")
+        (print_bigint b)
+        (princ "=")
+        (let ((h (bigint_gt a b)))
+          (if
+            h
+            (princ "True")
+            (princ "False"))
+          (princ "
+")
+        )))))
 

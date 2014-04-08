@@ -37,11 +37,11 @@ struct bigint * read_bigint(){
     chiffres.at(len - 1 - i) = tmp;
   }
   scanf("%*[ \t\r\n]c");
-  struct bigint * h = new bigint();
-  h->bigint_sign=sign == '+';
-  h->bigint_len=len;
-  h->bigint_chiffres=chiffres;
-  return h;
+  struct bigint * m = new bigint();
+  m->bigint_sign=sign == '+';
+  m->bigint_len=len;
+  m->bigint_chiffres=chiffres;
+  return m;
 }
 
 void print_bigint(struct bigint * a){
@@ -115,11 +115,11 @@ struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b){
   }
   if (chiffres.at(len - 1) == 0)
     len --;
-  struct bigint * m = new bigint();
-  m->bigint_sign=true;
-  m->bigint_len=len;
-  m->bigint_chiffres=chiffres;
-  return m;
+  struct bigint * n = new bigint();
+  n->bigint_sign=true;
+  n->bigint_len=len;
+  n->bigint_chiffres=chiffres;
+  return n;
 }
 
 struct bigint * sub_bigint_positif(struct bigint * a, struct bigint * b){
@@ -145,19 +145,19 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres.at(len - 1) == 0)
     len --;
-  struct bigint * n = new bigint();
-  n->bigint_sign=true;
-  n->bigint_len=len;
-  n->bigint_chiffres=chiffres;
-  return n;
+  struct bigint * o = new bigint();
+  o->bigint_sign=true;
+  o->bigint_len=len;
+  o->bigint_chiffres=chiffres;
+  return o;
 }
 
 struct bigint * neg_bigint(struct bigint * a){
-  struct bigint * o = new bigint();
-  o->bigint_sign=!a->bigint_sign;
-  o->bigint_len=a->bigint_len;
-  o->bigint_chiffres=a->bigint_chiffres;
-  return o;
+  struct bigint * p = new bigint();
+  p->bigint_sign=!a->bigint_sign;
+  p->bigint_len=a->bigint_len;
+  p->bigint_chiffres=a->bigint_chiffres;
+  return p;
 }
 
 struct bigint * add_bigint(struct bigint * a, struct bigint * b){
@@ -210,21 +210,21 @@ D'ou le nom de la fonction. */
   chiffres.at(a->bigint_len + b->bigint_len) = chiffres.at(a->bigint_len + b->bigint_len - 1) / 10;
   chiffres.at(a->bigint_len + b->bigint_len - 1) = chiffres.at(a->bigint_len + b->bigint_len - 1) % 10;
   for (int l = 0 ; l <= 2; l ++)
-    if (chiffres.at(len - 1) == 0)
+    if (len != 0 && chiffres.at(len - 1) == 0)
     len --;
-  struct bigint * p = new bigint();
-  p->bigint_sign=a->bigint_sign == b->bigint_sign;
-  p->bigint_len=len;
-  p->bigint_chiffres=chiffres;
-  return p;
+  struct bigint * q = new bigint();
+  q->bigint_sign=a->bigint_sign == b->bigint_sign;
+  q->bigint_len=len;
+  q->bigint_chiffres=chiffres;
+  return q;
 }
 
 struct bigint * bigint_premiers_chiffres(struct bigint * a, int i){
-  struct bigint * q = new bigint();
-  q->bigint_sign=a->bigint_sign;
-  q->bigint_len=i;
-  q->bigint_chiffres=a->bigint_chiffres;
-  return q;
+  struct bigint * r = new bigint();
+  r->bigint_sign=a->bigint_sign;
+  r->bigint_len=i;
+  r->bigint_chiffres=a->bigint_chiffres;
+  return r;
 }
 
 struct bigint * bigint_shift(struct bigint * a, int i){
@@ -235,11 +235,11 @@ struct bigint * bigint_shift(struct bigint * a, int i){
     chiffres.at(k) = a->bigint_chiffres.at(k - i);
   else
     chiffres.at(k) = 0;
-  struct bigint * r = new bigint();
-  r->bigint_sign=a->bigint_sign;
-  r->bigint_len=a->bigint_len + i;
-  r->bigint_chiffres=chiffres;
-  return r;
+  struct bigint * s = new bigint();
+  s->bigint_sign=a->bigint_sign;
+  s->bigint_len=a->bigint_len + i;
+  s->bigint_chiffres=chiffres;
+  return s;
 }
 
 struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb){
@@ -266,8 +266,63 @@ Division,
 Modulo
 Exp
 */
+int log10(int a){
+  int out_ = 1;
+  while (a >= 10)
+  {
+    a /= 10;
+    out_ ++;
+  }
+  return out_;
+}
+
+struct bigint * bigint_of_int(int i){
+  int size = log10(i);
+  std::vector<int > t( size );
+  for (int j = 0 ; j < size; j++)
+    t.at(j) = 0;
+  for (int k = 0 ; k < size; k++)
+  {
+    t.at(k) = i % 10;
+    i /= 10;
+  }
+  struct bigint * u = new bigint();
+  u->bigint_sign=true;
+  u->bigint_len=size;
+  u->bigint_chiffres=t;
+  return u;
+}
+
+struct bigint * fact_bigint(struct bigint * a){
+  struct bigint * one = bigint_of_int(1);
+  struct bigint * out_ = one;
+  while (!bigint_eq(a, one))
+  {
+    out_ = mul_bigint(a, out_);
+    a = sub_bigint(a, one);
+  }
+  return out_;
+}
+
+int sum_chiffres_bigint(struct bigint * a){
+  int out_ = 0;
+  for (int i = 0 ; i < a->bigint_len; i++)
+    out_ += a->bigint_chiffres.at(i);
+  return out_;
+}
+
+/* http://projecteuler.net/problem=20 */
+int euler20(){
+  struct bigint * a = bigint_of_int(100);
+  a = fact_bigint(a);
+  return sum_chiffres_bigint(a);
+}
+
 
 int main(void){
+  std::cout << "euler20 = ";
+  int g = euler20();
+  std::cout << g << "\n";
   struct bigint * a = read_bigint();
   struct bigint * b = read_bigint();
   print_bigint(a);
@@ -308,8 +363,8 @@ int main(void){
   std::cout << ">";
   print_bigint(b);
   std::cout << "=";
-  bool g = bigint_gt(a, b);
-  if (g)
+  bool h = bigint_gt(a, b);
+  if (h)
     std::cout << "True";
   else
     std::cout << "False";

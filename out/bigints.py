@@ -200,7 +200,7 @@ D'ou le nom de la fonction. """
     chiffres[a["bigint_len"] + b["bigint_len"]] = math.trunc(chiffres[a["bigint_len"] + b["bigint_len"] - 1] / 10);
     chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10);
     for l in range(0, 1 + 2):
-      if chiffres[len - 1] == 0:
+      if len != 0 and chiffres[len - 1] == 0:
         len -= 1
     return {
       "bigint_sign":a["bigint_sign"] == b["bigint_sign"],
@@ -249,6 +249,49 @@ Division,
 Modulo
 Exp
 """
+def log10( a ):
+    out_ = 1;
+    while (a >= 10):
+      a = math.trunc(a / 10)
+      out_ += 1
+    return out_;
+
+def bigint_of_int( i ):
+    size = log10(i);
+    t = [None] * size
+    for j in range(0, size):
+      t[j] = 0;
+    for k in range(0, size):
+      t[k] = mod(i, 10);
+      i = math.trunc(i / 10)
+    return {
+      "bigint_sign":True,
+      "bigint_len":size,
+      "bigint_chiffres":t};
+
+def fact_bigint( a ):
+    one = bigint_of_int(1);
+    out_ = one;
+    while (not (bigint_eq(a, one))):
+      out_ = mul_bigint(a, out_);
+      a = sub_bigint(a, one);
+    return out_;
+
+def sum_chiffres_bigint( a ):
+    out_ = 0;
+    for i in range(0, a["bigint_len"]):
+      out_ += a["bigint_chiffres"][i]
+    return out_;
+
+""" http://projecteuler.net/problem=20 """
+def euler20(  ):
+    a = bigint_of_int(100);
+    a = fact_bigint(a);
+    return sum_chiffres_bigint(a);
+
+print( "euler20 = ", end='')
+g = euler20();
+print("%d\n" % ( g ), end='')
 a = read_bigint();
 b = read_bigint();
 print_bigint(a);
@@ -289,8 +332,8 @@ print_bigint(a);
 print( ">", end='')
 print_bigint(b);
 print( "=", end='')
-g = bigint_gt(a, b);
-if g:
+h = bigint_gt(a, b);
+if h:
   print( "True", end='')
 else:
   print( "False", end='')

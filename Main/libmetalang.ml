@@ -27,7 +27,7 @@ let keywords lang=
 	]
 	in match lang with
 	| "cl" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
-	| "php" -> "sqrt" :: li
+	| "php" -> "sqrt" :: "log10" :: li
 	| _ -> li
 
 let conf_rename lang prog =

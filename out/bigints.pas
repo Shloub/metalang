@@ -93,9 +93,9 @@ var
   c : char;
   chiffres : array of Longint;
   d : Longint;
-  h : bigint;
   i : Longint;
   len : Longint;
+  m : bigint;
   sign : char;
   tmp : Longint;
 begin
@@ -119,13 +119,13 @@ begin
     chiffres[len - 1 - i] := tmp;
   end;
   skip();
-  new(h);
-  h^.bigint_sign := sign
+  new(m);
+  m^.bigint_sign := sign
   =
   #43;
-  h^.bigint_len := len;
-  h^.bigint_chiffres := chiffres;
-  exit(h);
+  m^.bigint_len := len;
+  m^.bigint_chiffres := chiffres;
+  exit(m);
 end;
 
 procedure print_bigint(a : bigint);
@@ -229,7 +229,7 @@ var
   chiffres : array of Longint;
   i : Longint;
   len : Longint;
-  m : bigint;
+  n : bigint;
   retenue : Longint;
   tmp : Longint;
 begin
@@ -258,11 +258,11 @@ begin
     begin
       len := len - 1;
     end;
-  new(m);
-  m^.bigint_sign := true;
-  m^.bigint_len := len;
-  m^.bigint_chiffres := chiffres;
-  exit(m);
+  new(n);
+  n^.bigint_sign := true;
+  n^.bigint_len := len;
+  n^.bigint_chiffres := chiffres;
+  exit(n);
 end;
 
 function sub_bigint_positif(a : bigint; b : bigint) : bigint;
@@ -270,7 +270,7 @@ var
   chiffres : array of Longint;
   i : Longint;
   len : Longint;
-  n : bigint;
+  o : bigint;
   retenue : Longint;
   tmp : Longint;
 begin
@@ -304,22 +304,22 @@ Pré-requis : a > b
   begin
     len := len - 1;
   end;
-  new(n);
-  n^.bigint_sign := true;
-  n^.bigint_len := len;
-  n^.bigint_chiffres := chiffres;
-  exit(n);
+  new(o);
+  o^.bigint_sign := true;
+  o^.bigint_len := len;
+  o^.bigint_chiffres := chiffres;
+  exit(o);
 end;
 
 function neg_bigint(a : bigint) : bigint;
 var
-  o : bigint;
+  p : bigint;
 begin
-  new(o);
-  o^.bigint_sign := not a^.bigint_sign;
-  o^.bigint_len := a^.bigint_len;
-  o^.bigint_chiffres := a^.bigint_chiffres;
-  exit(o);
+  new(p);
+  p^.bigint_sign := not a^.bigint_sign;
+  p^.bigint_len := a^.bigint_len;
+  p^.bigint_chiffres := a^.bigint_chiffres;
+  exit(p);
 end;
 
 function add_bigint(a : bigint; b : bigint) : bigint;
@@ -378,7 +378,7 @@ var
   k : Longint;
   l : Longint;
   len : Longint;
-  p : bigint;
+  q : bigint;
   retenue : Longint;
 begin
   { Cet algorithm est quadratique.
@@ -405,30 +405,30 @@ D'ou le nom de la fonction. }
   chiffres[a^.bigint_len + b^.bigint_len - 1] := chiffres[a^.bigint_len + b^.bigint_len - 1] Mod 10;
   for l := 0 to  2 do
   begin
-    if chiffres[len - 1] = 0
+    if (len <> 0) and (chiffres[len - 1] = 0)
     then
       begin
         len := len - 1;
       end;
   end;
-  new(p);
-  p^.bigint_sign := a^.bigint_sign
+  new(q);
+  q^.bigint_sign := a^.bigint_sign
   =
   b^.bigint_sign;
-  p^.bigint_len := len;
-  p^.bigint_chiffres := chiffres;
-  exit(p);
+  q^.bigint_len := len;
+  q^.bigint_chiffres := chiffres;
+  exit(q);
 end;
 
 function bigint_premiers_chiffres(a : bigint; i : Longint) : bigint;
 var
-  q : bigint;
+  r : bigint;
 begin
-  new(q);
-  q^.bigint_sign := a^.bigint_sign;
-  q^.bigint_len := i;
-  q^.bigint_chiffres := a^.bigint_chiffres;
-  exit(q);
+  new(r);
+  r^.bigint_sign := a^.bigint_sign;
+  r^.bigint_len := i;
+  r^.bigint_chiffres := a^.bigint_chiffres;
+  exit(r);
 end;
 
 function bigint_shift(a : bigint; i : Longint) : bigint;
@@ -436,7 +436,7 @@ var
   chiffres : array of Longint;
   f : Longint;
   k : Longint;
-  r : bigint;
+  s : bigint;
 begin
   f := a^.bigint_len + i;
   SetLength(chiffres, f);
@@ -452,13 +452,13 @@ begin
         chiffres[k] := 0;
       end;
   end;
-  new(r);
-  r^.bigint_sign := a^.bigint_sign;
-  r^.bigint_len := a^.bigint_len
+  new(s);
+  s^.bigint_sign := a^.bigint_sign;
+  s^.bigint_len := a^.bigint_len
   +
   i;
-  r^.bigint_chiffres := chiffres;
-  exit(r);
+  s^.bigint_chiffres := chiffres;
+  exit(s);
 end;
 
 function mul_bigint(aa : bigint; bb : bigint) : bigint;
@@ -501,12 +501,94 @@ Division,
 Modulo
 Exp
 }
+function log10(a : Longint) : Longint;
+var
+  out_ : Longint;
+begin
+  out_ := 1;
+  while a >= 10 do
+  begin
+    a := a Div 10;
+    out_ := out_ + 1;
+  end;
+  exit(out_);
+end;
+
+function bigint_of_int(i : Longint) : bigint;
+var
+  j : Longint;
+  k : Longint;
+  size : Longint;
+  t : array of Longint;
+  u : bigint;
+begin
+  size := log10(i);
+  SetLength(t, size);
+  for j := 0 to  size - 1 do
+  begin
+    t[j] := 0;
+  end;
+  for k := 0 to  size - 1 do
+  begin
+    t[k] := i Mod 10;
+    i := i Div 10;
+  end;
+  new(u);
+  u^.bigint_sign := true;
+  u^.bigint_len := size;
+  u^.bigint_chiffres := t;
+  exit(u);
+end;
+
+function fact_bigint(a : bigint) : bigint;
+var
+  one : bigint;
+  out_ : bigint;
+begin
+  one := bigint_of_int(1);
+  out_ := one;
+  while not bigint_eq(a, one) do
+  begin
+    out_ := mul_bigint(a, out_);
+    a := sub_bigint(a, one);
+  end;
+  exit(out_);
+end;
+
+function sum_chiffres_bigint(a : bigint) : Longint;
+var
+  i : Longint;
+  out_ : Longint;
+begin
+  out_ := 0;
+  for i := 0 to  a^.bigint_len - 1 do
+  begin
+    out_ := out_ + a^.bigint_chiffres[i];
+  end;
+  exit(out_);
+end;
+
+{ http://projecteuler.net/problem=20 }
+function euler20() : Longint;
+var
+  a : bigint;
+begin
+  a := bigint_of_int(100);
+  a := fact_bigint(a);
+  exit(sum_chiffres_bigint(a));
+end;
+
 
 var
   a : bigint;
   b : bigint;
-  g : boolean;
+  g : Longint;
+  h : boolean;
 begin
+  Write('euler20 = ');
+  g := euler20();
+  Write(g);
+  Write(''#10'');
   a := read_bigint();
   b := read_bigint();
   print_bigint(a);
@@ -547,8 +629,8 @@ begin
   Write('>');
   print_bigint(b);
   Write('=');
-  g := bigint_gt(a, b);
-  if g
+  h := bigint_gt(a, b);
+  if h
   then
     begin
       Write('True');
