@@ -80,6 +80,16 @@ begin
   exit(b);
 end;
 
+function min2(a : Longint; b : Longint) : Longint;
+begin
+  if a < b
+  then
+    begin
+      exit(a);
+    end;
+  exit(b);
+end;
+
 type
     bigint=^bigint_r;
     bigint_r = record
@@ -211,7 +221,7 @@ begin
             else if a^.bigint_chiffres[j] < b^.bigint_chiffres[j]
             then
               begin
-                exit(a^.bigint_sign);
+                exit(not a^.bigint_sign);
               end;;
           end;
         end;;
@@ -253,11 +263,10 @@ begin
     retenue := tmp Div 10;
     chiffres[i] := tmp Mod 10;
   end;
-  if chiffres[len - 1] = 0
-  then
-    begin
-      len := len - 1;
-    end;
+  while (len > 0) and (chiffres[len - 1] = 0) do
+  begin
+    len := len - 1;
+  end;
   new(n);
   n^.bigint_sign := true;
   n^.bigint_len := len;
@@ -422,11 +431,17 @@ end;
 
 function bigint_premiers_chiffres(a : bigint; i : Longint) : bigint;
 var
+  len : Longint;
   r : bigint;
 begin
+  len := min2(i, a^.bigint_len);
+  while (len <> 0) and (a^.bigint_chiffres[len - 1] = 0) do
+  begin
+    len := len - 1;
+  end;
   new(r);
   r^.bigint_sign := a^.bigint_sign;
-  r^.bigint_len := i;
+  r^.bigint_len := len;
   r^.bigint_chiffres := a^.bigint_chiffres;
   exit(r);
 end;
@@ -475,13 +490,21 @@ var
   d : bigint;
   split : Longint;
 begin
-  if (aa^.bigint_len < 3) or (bb^.bigint_len < 3)
+  if aa^.bigint_len = 0 then
+    begin
+      exit(aa);
+    end
+  else if bb^.bigint_len = 0 then
+    begin
+      exit(bb);
+    end
+  else if (aa^.bigint_len < 3) or (bb^.bigint_len < 3)
   then
     begin
       exit(mul_bigint_cp(aa, bb));
-    end;
+    end;;;
   { Algorithme de Karatsuba }
-  split := max2(aa^.bigint_len, bb^.bigint_len) Div 2;
+  split := min2(aa^.bigint_len, bb^.bigint_len) Div 2;
   a := bigint_shift(aa, -split);
   b := bigint_premiers_chiffres(aa, split);
   c := bigint_shift(bb, -split);
@@ -499,7 +522,6 @@ end;
 {
 Division,
 Modulo
-Exp
 }
 function log10(a : Longint) : Longint;
 var
@@ -523,6 +545,11 @@ var
   u : bigint;
 begin
   size := log10(i);
+  if i = 0
+  then
+    begin
+      size := 0;
+    end;
   SetLength(t, size);
   for j := 0 to  size - 1 do
   begin
@@ -578,6 +605,44 @@ begin
   exit(sum_chiffres_bigint(a));
 end;
 
+function bigint_exp_10chiffres(a : bigint; b : Longint) : bigint;
+begin
+  a := bigint_premiers_chiffres(a, 10);
+  if b = 1 then
+    begin
+      exit(a);
+    end
+  else if (b Mod 2) = 0
+  then
+    begin
+      exit(bigint_exp_10chiffres(mul_bigint(a, a), b Div 2));
+    end
+  else
+    begin
+      exit(mul_bigint(a, bigint_exp_10chiffres(a, b - 1)));
+    end;;
+end;
+
+procedure euler48();
+var
+  i : Longint;
+  ib : bigint;
+  ibeib : bigint;
+  sum : bigint;
+begin
+  sum := bigint_of_int(0);
+  for i := 1 to  1000 do
+  begin
+    ib := bigint_of_int(i);
+    ibeib := bigint_exp_10chiffres(ib, i);
+    sum := add_bigint(sum, ibeib);
+    sum := bigint_premiers_chiffres(sum, 10);
+  end;
+  Write('euler 48 = ');
+  print_bigint(sum);
+  Write(''#10'');
+end;
+
 
 var
   a : bigint;
@@ -585,6 +650,7 @@ var
   g : Longint;
   h : boolean;
 begin
+  euler48();
   Write('euler20 = ');
   g := euler20();
   Write(g);

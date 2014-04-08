@@ -42,6 +42,12 @@ function max2(a, b){
   return b;
 }
 
+function min2(a, b){
+  if (a < b)
+    return a;
+  return b;
+}
+
 
 function read_bigint(){
   var len = 0;
@@ -116,7 +122,7 @@ function bigint_gt(a, b){
         if (a.bigint_chiffres[j] > b.bigint_chiffres[j])
           return a.bigint_sign;
         else if (a.bigint_chiffres[j] < b.bigint_chiffres[j])
-          return a.bigint_sign;
+          return !a.bigint_sign;
     }
     return 1;
   }
@@ -141,7 +147,7 @@ function add_bigint_positif(a, b){
     retenue = ~~(tmp / 10);
     chiffres[i] = ~~(tmp % 10);
   }
-  if (chiffres[len - 1] == 0)
+  while (len > 0 && chiffres[len - 1] == 0)
     len --;
   var n = {
              bigint_sign : 1,
@@ -252,9 +258,12 @@ D'ou le nom de la fonction. */
 }
 
 function bigint_premiers_chiffres(a, i){
+  var len = min2(i, a.bigint_len);
+  while (len != 0 && a.bigint_chiffres[len - 1] == 0)
+    len --;
   var r = {
              bigint_sign : a.bigint_sign,
-             bigint_len : i,
+             bigint_len : len,
              bigint_chiffres : a.bigint_chiffres
   };
   return r;
@@ -277,10 +286,14 @@ function bigint_shift(a, i){
 }
 
 function mul_bigint(aa, bb){
-  if (aa.bigint_len < 3 || bb.bigint_len < 3)
+  if (aa.bigint_len == 0)
+    return aa;
+  else if (bb.bigint_len == 0)
+    return bb;
+  else if (aa.bigint_len < 3 || bb.bigint_len < 3)
     return mul_bigint_cp(aa, bb);
   /* Algorithme de Karatsuba */
-  var split = ~~(max2(aa.bigint_len, bb.bigint_len) / 2);
+  var split = ~~(min2(aa.bigint_len, bb.bigint_len) / 2);
   var a = bigint_shift(aa, -split);
   var b = bigint_premiers_chiffres(aa, split);
   var c = bigint_shift(bb, -split);
@@ -298,7 +311,6 @@ function mul_bigint(aa, bb){
 /*
 Division,
 Modulo
-Exp
 */
 function log10(a){
   var out_ = 1;
@@ -312,6 +324,8 @@ function log10(a){
 
 function bigint_of_int(i){
   var size = log10(i);
+  if (i == 0)
+    size = 0;
   var t = new Array(size);
   for (var j = 0 ; j <= size - 1; j++)
     t[j] = 0;
@@ -353,6 +367,31 @@ function euler20(){
   return sum_chiffres_bigint(a);
 }
 
+function bigint_exp_10chiffres(a, b){
+  a = bigint_premiers_chiffres(a, 10);
+  if (b == 1)
+    return a;
+  else if ((~~(b % 2)) == 0)
+    return bigint_exp_10chiffres(mul_bigint(a, a), ~~(b / 2));
+  else
+    return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
+}
+
+function euler48(){
+  var sum = bigint_of_int(0);
+  for (var i = 1 ; i <= 1000; i++)
+  {
+    var ib = bigint_of_int(i);
+    var ibeib = bigint_exp_10chiffres(ib, i);
+    sum = add_bigint(sum, ibeib);
+    sum = bigint_premiers_chiffres(sum, 10);
+  }
+  util.print("euler 48 = ");
+  print_bigint(sum);
+  util.print("\n");
+}
+
+euler48();
 util.print("euler20 = ");
 var g = euler20();
 util.print(g, "\n");

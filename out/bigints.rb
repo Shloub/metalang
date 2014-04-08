@@ -10,6 +10,13 @@ def max2( a, b )
     return (b);
 end
 
+def min2( a, b )
+    if a < b then
+      return (a);
+    end
+    return (b);
+end
+
 
 def read_bigint(  )
     len = 0
@@ -87,7 +94,7 @@ def bigint_gt( a, b )
           if a["bigint_chiffres"][j] > b["bigint_chiffres"][j] then
             return (a["bigint_sign"]);
           elsif a["bigint_chiffres"][j] < b["bigint_chiffres"][j] then
-            return (a["bigint_sign"]);
+            return (not(a["bigint_sign"]));
           end
         end
       end
@@ -119,7 +126,7 @@ def add_bigint_positif( a, b )
       retenue = (tmp.to_f / 10).to_i;
       chiffres[i] = mod(tmp, 10);
     end
-    if chiffres[len - 1] == 0 then
+    while len > 0 && chiffres[len - 1] == 0 do
       len -= 1
     end
     return ({
@@ -240,9 +247,13 @@ D'ou le nom de la fonction.
 end
 
 def bigint_premiers_chiffres( a, i )
+    len = min2(i, a["bigint_len"])
+    while len != 0 && a["bigint_chiffres"][len - 1] == 0 do
+      len -= 1
+    end
     return ({
       "bigint_sign" => a["bigint_sign"],
-      "bigint_len" => i,
+      "bigint_len" => len,
       "bigint_chiffres" => a["bigint_chiffres"]});
 end
 
@@ -263,7 +274,11 @@ def bigint_shift( a, i )
 end
 
 def mul_bigint( aa, bb )
-    if aa["bigint_len"] < 3 || bb["bigint_len"] < 3 then
+    if aa["bigint_len"] == 0 then
+      return (aa);
+    elsif bb["bigint_len"] == 0 then
+      return (bb);
+    elsif aa["bigint_len"] < 3 || bb["bigint_len"] < 3 then
       return (mul_bigint_cp(aa, bb));
     end
     
@@ -271,7 +286,7 @@ def mul_bigint( aa, bb )
  Algorithme de Karatsuba 
 =end
 
-    split = (max2(aa["bigint_len"], bb["bigint_len"]).to_f / 2).to_i
+    split = (min2(aa["bigint_len"], bb["bigint_len"]).to_f / 2).to_i
     a = bigint_shift(aa, -split)
     b = bigint_premiers_chiffres(aa, split)
     c = bigint_shift(bb, -split)
@@ -295,7 +310,6 @@ end
 
 Division,
 Modulo
-Exp
 
 =end
 
@@ -310,6 +324,9 @@ end
 
 def bigint_of_int( i )
     size = log10(i)
+    if i == 0 then
+      size = 0;
+    end
     t = [];
     for j in (0 ..  size - 1) do
       t[j] = 0;
@@ -353,6 +370,31 @@ def euler20(  )
     return (sum_chiffres_bigint(a));
 end
 
+def bigint_exp_10chiffres( a, b )
+    a = bigint_premiers_chiffres(a, 10);
+    if b == 1 then
+      return (a);
+    elsif (mod(b, 2)) == 0 then
+      return (bigint_exp_10chiffres(mul_bigint(a, a), (b.to_f / 2).to_i));
+    else
+      return (mul_bigint(a, bigint_exp_10chiffres(a, b - 1)));
+    end
+end
+
+def euler48(  )
+    sum = bigint_of_int(0)
+    for i in (1 ..  1000) do
+      ib = bigint_of_int(i)
+      ibeib = bigint_exp_10chiffres(ib, i)
+      sum = add_bigint(sum, ibeib);
+      sum = bigint_premiers_chiffres(sum, 10);
+    end
+    print "euler 48 = ";
+    print_bigint(sum);
+    print "\n";
+end
+
+euler48();
 print "euler20 = ";
 g = euler20()
 printf "%d\n", g

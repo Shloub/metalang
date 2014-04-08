@@ -8,6 +8,12 @@ int max2(int a, int b){
   return b;
 }
 
+int min2(int a, int b){
+  if (a < b)
+    return a;
+  return b;
+}
+
 struct bigint;
 typedef struct bigint {
   int bigint_sign;
@@ -101,7 +107,7 @@ int bigint_gt(struct bigint * a, struct bigint * b){
         if (a->bigint_chiffres[j] > b->bigint_chiffres[j])
           return a->bigint_sign;
         else if (a->bigint_chiffres[j] < b->bigint_chiffres[j])
-          return a->bigint_sign;
+          return !a->bigint_sign;
       }
     }
     return 1;
@@ -130,7 +136,7 @@ struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b){
       chiffres[i] = tmp % 10;
     }
   }
-  if (chiffres[len - 1] == 0)
+  while (len > 0 && chiffres[len - 1] == 0)
     len --;
   struct bigint * n = malloc (sizeof(n) );
   n->bigint_sign=1;
@@ -252,9 +258,12 @@ D'ou le nom de la fonction. */
 }
 
 struct bigint * bigint_premiers_chiffres(struct bigint * a, int i){
+  int len = min2(i, a->bigint_len);
+  while (len != 0 && a->bigint_chiffres[len - 1] == 0)
+    len --;
   struct bigint * r = malloc (sizeof(r) );
   r->bigint_sign=a->bigint_sign;
-  r->bigint_len=i;
+  r->bigint_len=len;
   r->bigint_chiffres=a->bigint_chiffres;
   return r;
 }
@@ -278,10 +287,14 @@ struct bigint * bigint_shift(struct bigint * a, int i){
 }
 
 struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb){
-  if (aa->bigint_len < 3 || bb->bigint_len < 3)
+  if (aa->bigint_len == 0)
+    return aa;
+  else if (bb->bigint_len == 0)
+    return bb;
+  else if (aa->bigint_len < 3 || bb->bigint_len < 3)
     return mul_bigint_cp(aa, bb);
   /* Algorithme de Karatsuba */
-  int split = max2(aa->bigint_len, bb->bigint_len) / 2;
+  int split = min2(aa->bigint_len, bb->bigint_len) / 2;
   struct bigint * a = bigint_shift(aa, -split);
   struct bigint * b = bigint_premiers_chiffres(aa, split);
   struct bigint * c = bigint_shift(bb, -split);
@@ -299,7 +312,6 @@ struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb){
 /*
 Division,
 Modulo
-Exp
 */
 int log10(int a){
   int out_ = 1;
@@ -313,6 +325,8 @@ int log10(int a){
 
 struct bigint * bigint_of_int(int i){
   int size = log10(i);
+  if (i == 0)
+    size = 0;
   int *t = malloc( size * sizeof(int));
   {
     int j;
@@ -362,7 +376,35 @@ int euler20(){
   return sum_chiffres_bigint(a);
 }
 
+struct bigint * bigint_exp_10chiffres(struct bigint * a, int b){
+  a = bigint_premiers_chiffres(a, 10);
+  if (b == 1)
+    return a;
+  else if ((b % 2) == 0)
+    return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
+  else
+    return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
+}
+
+void euler48(){
+  struct bigint * sum = bigint_of_int(0);
+  {
+    int i;
+    for (i = 1 ; i <= 1000; i++)
+    {
+      struct bigint * ib = bigint_of_int(i);
+      struct bigint * ibeib = bigint_exp_10chiffres(ib, i);
+      sum = add_bigint(sum, ibeib);
+      sum = bigint_premiers_chiffres(sum, 10);
+    }
+  }
+  printf("euler 48 = ");
+  print_bigint(sum);
+  printf("\n");
+}
+
 int main(void){
+  euler48();
   printf("euler20 = ");
   int g = euler20();
   printf("%d\n", g);

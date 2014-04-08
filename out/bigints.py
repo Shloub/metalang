@@ -45,6 +45,11 @@ def max2( a, b ):
       return a;
     return b;
 
+def min2( a, b ):
+    if a < b:
+      return a;
+    return b;
+
 
 def read_bigint(  ):
     len = 0;
@@ -104,7 +109,7 @@ def bigint_gt( a, b ):
           if a["bigint_chiffres"][j] > b["bigint_chiffres"][j]:
             return a["bigint_sign"];
           elif a["bigint_chiffres"][j] < b["bigint_chiffres"][j]:
-            return a["bigint_sign"];
+            return not (a["bigint_sign"]);
       return True;
 
 def bigint_lt( a, b ):
@@ -123,7 +128,7 @@ def add_bigint_positif( a, b ):
         tmp += b["bigint_chiffres"][i]
       retenue = math.trunc(tmp / 10);
       chiffres[i] = mod(tmp, 10);
-    if chiffres[len - 1] == 0:
+    while (len > 0 and chiffres[len - 1] == 0):
       len -= 1
     return {
       "bigint_sign":True,
@@ -208,9 +213,12 @@ D'ou le nom de la fonction. """
       "bigint_chiffres":chiffres};
 
 def bigint_premiers_chiffres( a, i ):
+    len = min2(i, a["bigint_len"]);
+    while (len != 0 and a["bigint_chiffres"][len - 1] == 0):
+      len -= 1
     return {
       "bigint_sign":a["bigint_sign"],
-      "bigint_len":i,
+      "bigint_len":len,
       "bigint_chiffres":a["bigint_chiffres"]};
 
 def bigint_shift( a, i ):
@@ -227,10 +235,14 @@ def bigint_shift( a, i ):
       "bigint_chiffres":chiffres};
 
 def mul_bigint( aa, bb ):
-    if aa["bigint_len"] < 3 or bb["bigint_len"] < 3:
+    if aa["bigint_len"] == 0:
+      return aa;
+    elif bb["bigint_len"] == 0:
+      return bb;
+    elif aa["bigint_len"] < 3 or bb["bigint_len"] < 3:
       return mul_bigint_cp(aa, bb);
     """ Algorithme de Karatsuba """
-    split = math.trunc(max2(aa["bigint_len"], bb["bigint_len"]) / 2);
+    split = math.trunc(min2(aa["bigint_len"], bb["bigint_len"]) / 2);
     a = bigint_shift(aa, -(split));
     b = bigint_premiers_chiffres(aa, split);
     c = bigint_shift(bb, -(split));
@@ -247,7 +259,6 @@ def mul_bigint( aa, bb ):
 """
 Division,
 Modulo
-Exp
 """
 def log10( a ):
     out_ = 1;
@@ -258,6 +269,8 @@ def log10( a ):
 
 def bigint_of_int( i ):
     size = log10(i);
+    if i == 0:
+      size = 0;
     t = [None] * size
     for j in range(0, size):
       t[j] = 0;
@@ -289,6 +302,27 @@ def euler20(  ):
     a = fact_bigint(a);
     return sum_chiffres_bigint(a);
 
+def bigint_exp_10chiffres( a, b ):
+    a = bigint_premiers_chiffres(a, 10);
+    if b == 1:
+      return a;
+    elif (mod(b, 2)) == 0:
+      return bigint_exp_10chiffres(mul_bigint(a, a), math.trunc(b / 2));
+    else:
+      return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
+
+def euler48(  ):
+    sum = bigint_of_int(0);
+    for i in range(1, 1 + 1000):
+      ib = bigint_of_int(i);
+      ibeib = bigint_exp_10chiffres(ib, i);
+      sum = add_bigint(sum, ibeib);
+      sum = bigint_premiers_chiffres(sum, 10);
+    print( "euler 48 = ", end='')
+    print_bigint(sum);
+    print("")
+
+euler48();
 print( "euler20 = ", end='')
 g = euler20();
 print("%d\n" % ( g ), end='')

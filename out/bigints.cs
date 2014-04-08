@@ -62,6 +62,13 @@ public static int readInt(){
     return b;
   }
   
+  public static int min2(int a, int b)
+  {
+    if (a < b)
+      return a;
+    return b;
+  }
+  
   public class bigint {public bool bigint_sign;public int bigint_len;public int[] bigint_chiffres;}
   public static bigint read_bigint()
   {
@@ -139,7 +146,7 @@ public static int readInt(){
           if (a.bigint_chiffres[j] > b.bigint_chiffres[j])
             return a.bigint_sign;
           else if (a.bigint_chiffres[j] < b.bigint_chiffres[j])
-            return a.bigint_sign;
+            return !a.bigint_sign;
       }
       return true;
     }
@@ -166,7 +173,7 @@ public static int readInt(){
       retenue = tmp / 10;
       chiffres[i] = tmp % 10;
     }
-    if (chiffres[len - 1] == 0)
+    while (len > 0 && chiffres[len - 1] == 0)
       len --;
     bigint n = new bigint();
     n.bigint_sign = true;
@@ -279,9 +286,12 @@ D'ou le nom de la fonction. */
   
   public static bigint bigint_premiers_chiffres(bigint a, int i)
   {
+    int len = min2(i, a.bigint_len);
+    while (len != 0 && a.bigint_chiffres[len - 1] == 0)
+      len --;
     bigint r = new bigint();
     r.bigint_sign = a.bigint_sign;
-    r.bigint_len = i;
+    r.bigint_len = len;
     r.bigint_chiffres = a.bigint_chiffres;
     return r;
   }
@@ -304,10 +314,14 @@ D'ou le nom de la fonction. */
   
   public static bigint mul_bigint(bigint aa, bigint bb)
   {
-    if (aa.bigint_len < 3 || bb.bigint_len < 3)
+    if (aa.bigint_len == 0)
+      return aa;
+    else if (bb.bigint_len == 0)
+      return bb;
+    else if (aa.bigint_len < 3 || bb.bigint_len < 3)
       return mul_bigint_cp(aa, bb);
     /* Algorithme de Karatsuba */
-    int split = max2(aa.bigint_len, bb.bigint_len) / 2;
+    int split = min2(aa.bigint_len, bb.bigint_len) / 2;
     bigint a = bigint_shift(aa, -split);
     bigint b = bigint_premiers_chiffres(aa, split);
     bigint c = bigint_shift(bb, -split);
@@ -325,7 +339,6 @@ D'ou le nom de la fonction. */
   /*
 Division,
 Modulo
-Exp
 */
   public static int log10(int a)
   {
@@ -341,6 +354,8 @@ Exp
   public static bigint bigint_of_int(int i)
   {
     int size = log10(i);
+    if (i == 0)
+      size = 0;
     int[] t = new int[size];
     for (int j = 0 ; j < size; j++)
       t[j] = 0;
@@ -384,9 +399,36 @@ Exp
     return sum_chiffres_bigint(a);
   }
   
+  public static bigint bigint_exp_10chiffres(bigint a, int b)
+  {
+    a = bigint_premiers_chiffres(a, 10);
+    if (b == 1)
+      return a;
+    else if ((b % 2) == 0)
+      return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
+    else
+      return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
+  }
+  
+  public static void euler48()
+  {
+    bigint sum = bigint_of_int(0);
+    for (int i = 1 ; i <= 1000; i ++)
+    {
+      bigint ib = bigint_of_int(i);
+      bigint ibeib = bigint_exp_10chiffres(ib, i);
+      sum = add_bigint(sum, ibeib);
+      sum = bigint_premiers_chiffres(sum, 10);
+    }
+    Console.Write("euler 48 = ");
+    print_bigint(sum);
+    Console.Write("\n");
+  }
+  
   
   public static void Main(String[] args)
   {
+    euler48();
     Console.Write("euler20 = ");
     int g = euler20();
     Console.Write(g);

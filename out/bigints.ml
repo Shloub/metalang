@@ -5,6 +5,12 @@ let max2 a b =
   else
     b
 
+let min2 a b =
+  if a < b then
+    a
+  else
+    b
+
 type bigint = {
   mutable bigint_sign : bool;
   mutable bigint_len : int;
@@ -79,7 +85,7 @@ let bigint_gt a b =
           if a.bigint_chiffres.(j) > b.bigint_chiffres.(j) then
             raise (Found_2(a.bigint_sign))
           else if a.bigint_chiffres.(j) < b.bigint_chiffres.(j) then
-            raise (Found_2(a.bigint_sign))
+            raise (Found_2(not a.bigint_sign))
         done;
       raise (Found_2(true))
     end
@@ -100,8 +106,10 @@ let add_bigint_positif a b =
       tmp := (!tmp) + b.bigint_chiffres.(i);
     retenue := (!tmp) / 10;
     (!tmp) mod 10) in
-  if chiffres.((!len) - 1) = 0 then
-    len := (!len) - 1;
+  while (!len) > 0 && chiffres.((!len) - 1) = 0
+  do
+      len := (!len) - 1
+  done;
   {
     bigint_sign=true;
     bigint_len=(!len);
@@ -198,9 +206,14 @@ D'ou le nom de la fonction. *)
   }
 
 let bigint_premiers_chiffres a i =
+  let len = ref( min2 i a.bigint_len ) in
+  while (!len) <> 0 && a.bigint_chiffres.((!len) - 1) = 0
+  do
+      len := (!len) - 1
+  done;
   {
     bigint_sign=a.bigint_sign;
-    bigint_len=i;
+    bigint_len=(!len);
     bigint_chiffres=a.bigint_chiffres;
   }
 
@@ -218,12 +231,16 @@ let bigint_shift a i =
   }
 
 let rec mul_bigint aa bb =
-  if aa.bigint_len < 3 or bb.bigint_len < 3 then
+  if aa.bigint_len = 0 then
+    aa
+  else if bb.bigint_len = 0 then
+    bb
+  else if aa.bigint_len < 3 or bb.bigint_len < 3 then
     mul_bigint_cp aa bb
   else
     begin
       (* Algorithme de Karatsuba *)
-      let split = max2 aa.bigint_len bb.bigint_len / 2 in
+      let split = min2 aa.bigint_len bb.bigint_len / 2 in
       let a = bigint_shift aa (-split) in
       let b = bigint_premiers_chiffres aa split in
       let c = bigint_shift bb (-split) in
@@ -241,7 +258,6 @@ let rec mul_bigint aa bb =
 (*
 Division,
 Modulo
-Exp
 *)
 let log10 a =
   let a = ref a in
@@ -255,16 +271,18 @@ let log10 a =
 
 let bigint_of_int i =
   let i = ref i in
-  let size = log10 (!i) in
-  let t = Array.init size (fun _j ->
+  let size = ref( log10 (!i) ) in
+  if (!i) = 0 then
+    size := 0;
+  let t = Array.init (!size) (fun _j ->
     0) in
-  for k = 0 to size - 1 do
+  for k = 0 to (!size) - 1 do
     t.(k) <- (!i) mod 10;
     i := (!i) / 10
   done;
   {
     bigint_sign=true;
-    bigint_len=size;
+    bigint_len=(!size);
     bigint_chiffres=t;
   }
 
@@ -292,8 +310,31 @@ let euler20 () =
   a := fact_bigint (!a);
   sum_chiffres_bigint (!a)
 
+let rec bigint_exp_10chiffres a b =
+  let a = ref a in
+  a := bigint_premiers_chiffres (!a) 10;
+  if b = 1 then
+    (!a)
+  else if (b mod 2) = 0 then
+    bigint_exp_10chiffres (mul_bigint (!a) (!a)) (b / 2)
+  else
+    mul_bigint (!a) (bigint_exp_10chiffres (!a) (b - 1))
+
+let euler48 () =
+  let sum = ref( bigint_of_int 0 ) in
+  for i = 1 to 1000 do
+    let ib = bigint_of_int i in
+    let ibeib = bigint_exp_10chiffres ib i in
+    sum := add_bigint (!sum) ibeib;
+    sum := bigint_premiers_chiffres (!sum) 10
+  done;
+  Printf.printf "euler 48 = ";
+  print_bigint (!sum);
+  Printf.printf "\n"
+
 let () =
 begin
+  (euler48 ());
   Printf.printf "euler20 = ";
   let g = (euler20 ()) in
   Printf.printf "%d" g;

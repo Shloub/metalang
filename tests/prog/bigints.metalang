@@ -66,7 +66,7 @@ def bool bigint_gt(@bigint a, @bigint b)
 				if a.bigint_chiffres[j] > b.bigint_chiffres[j] then
 					return a.bigint_sign
 				elsif a.bigint_chiffres[j] < b.bigint_chiffres[j] then
-					return a.bigint_sign
+					return ! a.bigint_sign
 				end
 			end
 		end
@@ -93,7 +93,7 @@ def @bigint add_bigint_positif(@bigint a, @bigint b)
 		retenue = tmp / 10
 		return tmp % 10
   end
-	if chiffres[len - 1] == 0 then
+	while len > 0 && chiffres[len - 1] == 0 do
 		len --
 	end
 	return record
@@ -198,9 +198,13 @@ D'ou le nom de la fonction. */
 end
 
 def @bigint bigint_premiers_chiffres(@bigint a, int i)
+	def len = min2(i, a.bigint_len)
+	while len != 0 && a.bigint_chiffres[len - 1] == 0 do
+		len --
+	end
 	return record
 		bigint_sign = a.bigint_sign
-		bigint_len = i
+		bigint_len = len
 		bigint_chiffres = a.bigint_chiffres
 	end
 end
@@ -222,11 +226,15 @@ end
 
 
 def @bigint mul_bigint(@bigint aa, @bigint bb)
-	if aa.bigint_len < 3 || bb.bigint_len < 3 then
+	if aa.bigint_len == 0 then
+		return aa
+	elsif bb.bigint_len == 0 then
+		return bb
+	elsif aa.bigint_len < 3 || bb.bigint_len < 3 then
 		return mul_bigint_cp(aa, bb)
 	end
 	/* Algorithme de Karatsuba */
-	def split = max2(aa.bigint_len, bb.bigint_len) / 2
+	def split = min2(aa.bigint_len, bb.bigint_len) / 2
 	def a = bigint_shift(aa, -split)
 	def b = bigint_premiers_chiffres(aa, split)
 	def c = bigint_shift(bb, -split)
@@ -245,7 +253,6 @@ end
 /*
 Division,
 Modulo
-Exp
 */
 
 
@@ -260,6 +267,9 @@ end
 
 def @bigint bigint_of_int(int i)
 	def size = log10(i)
+	if i == 0 then
+		size = 0
+	end
 	def array<int> t[size] with j do
 		return 0
 	end
@@ -299,8 +309,30 @@ def int euler20()
 	return sum_chiffres_bigint(a)
 end
 
-main
+def @bigint bigint_exp_10chiffres(@bigint a, int b)
+	a = bigint_premiers_chiffres(a, 10)
+	if b == 1 then
+		return a
+	elsif b % 2 == 0 then
+		return bigint_exp_10chiffres(mul_bigint(a, a), b / 2)
+	else
+		return mul_bigint(a, bigint_exp_10chiffres(a, b - 1))
+	end
+end
 
+def void euler48()
+	def sum = bigint_of_int(0)
+	for i = 1 to 1000 do
+		def ib = bigint_of_int(i)
+		def ibeib = bigint_exp_10chiffres(ib, i)
+		sum = add_bigint(sum, ibeib)
+		sum = bigint_premiers_chiffres(sum, 10)
+  end
+	print "euler 48 = " print_bigint(sum) print "\n"
+end
+
+main
+	euler48()
 	print "euler20 = " print euler20() print "\n"
 
 	def a = read_bigint()
@@ -332,4 +364,5 @@ main
 	print_bigint(b)  print "="
   print bigint_gt(a, b)
 	print "\n"
+
 end

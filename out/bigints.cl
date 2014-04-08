@@ -42,6 +42,12 @@
   (return-from max2 a)
   (return-from max2 b)))
 
+(defun min2 (a b)
+(if
+  (< a b)
+  (return-from min2 a)
+  (return-from min2 b)))
+
 (defstruct (bigint (:type list) :named)
   bigint_sign
   bigint_len
@@ -141,7 +147,7 @@
                     (return-from bigint_gt (bigint-bigint_sign a))
                     (if
                       (< (aref (bigint-bigint_chiffres a) j) (aref (bigint-bigint_chiffres b) j))
-                      (return-from bigint_gt (bigint-bigint_sign a))))
+                      (return-from bigint_gt (not (bigint-bigint_sign a)))))
                 ))
               )))
         (return-from bigint_gt t)
@@ -172,9 +178,9 @@
                          (return-from lambda_2 (remainder tmp 10))
                        )))
                      ))))
-      (if
-        (= (aref chiffres (- len 1)) 0)
-        (setq len ( - len 1)))
+      (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
+      do (setq len ( - len 1))
+      )
       (let ((n (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
@@ -299,11 +305,15 @@ D'ou le nom de la fonction. |#
 
 (defun bigint_premiers_chiffres (a i)
 (progn
-  (let ((r (make-bigint :bigint_sign (bigint-bigint_sign a)
-                        :bigint_len i
-                        :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from bigint_premiers_chiffres r)
-)))
+  (let ((len (min2 i (bigint-bigint_len a))))
+    (loop while (and (not (= len 0)) (= (aref (bigint-bigint_chiffres a) (- len 1)) 0))
+    do (setq len ( - len 1))
+    )
+    (let ((r (make-bigint :bigint_sign (bigint-bigint_sign a)
+                          :bigint_len len
+                          :bigint_chiffres (bigint-bigint_chiffres a))))
+    (return-from bigint_premiers_chiffres r)
+  ))))
 
 (defun bigint_shift (a i)
 (progn
@@ -327,29 +337,34 @@ D'ou le nom de la fonction. |#
 
 (defun mul_bigint (aa bb)
 (if
-  (or (< (bigint-bigint_len aa) 3) (< (bigint-bigint_len bb) 3))
-  (return-from mul_bigint (mul_bigint_cp aa bb))
-  (progn
-    #| Algorithme de Karatsuba |#
-    (let ((split (quotient (max2 (bigint-bigint_len aa) (bigint-bigint_len bb)) 2)))
-      (let ((a (bigint_shift aa (- 0 split))))
-        (let ((b (bigint_premiers_chiffres aa split)))
-          (let ((c (bigint_shift bb (- 0 split))))
-            (let ((d (bigint_premiers_chiffres bb split)))
-              (let ((amoinsb (sub_bigint a b)))
-                (let ((cmoinsd (sub_bigint c d)))
-                  (let ((ac (mul_bigint a c)))
-                    (let ((bd (mul_bigint b d)))
-                      (let ((amoinsbcmoinsd (mul_bigint amoinsb cmoinsd)))
-                        (let ((acdec (bigint_shift ac (* 2 split))))
-                          (return-from mul_bigint (add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split)))
-                          #| ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd |#
-                        ))))))))))))))
+  (= (bigint-bigint_len aa) 0)
+  (return-from mul_bigint aa)
+  (if
+    (= (bigint-bigint_len bb) 0)
+    (return-from mul_bigint bb)
+    (if
+      (or (< (bigint-bigint_len aa) 3) (< (bigint-bigint_len bb) 3))
+      (return-from mul_bigint (mul_bigint_cp aa bb))
+      (progn
+        #| Algorithme de Karatsuba |#
+        (let ((split (quotient (min2 (bigint-bigint_len aa) (bigint-bigint_len bb)) 2)))
+          (let ((a (bigint_shift aa (- 0 split))))
+            (let ((b (bigint_premiers_chiffres aa split)))
+              (let ((c (bigint_shift bb (- 0 split))))
+                (let ((d (bigint_premiers_chiffres bb split)))
+                  (let ((amoinsb (sub_bigint a b)))
+                    (let ((cmoinsd (sub_bigint c d)))
+                      (let ((ac (mul_bigint a c)))
+                        (let ((bd (mul_bigint b d)))
+                          (let ((amoinsbcmoinsd (mul_bigint amoinsb cmoinsd)))
+                            (let ((acdec (bigint_shift ac (* 2 split))))
+                              (return-from mul_bigint (add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split)))
+                              #| ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd |#
+                            ))))))))))))))))
 
 #|
 Division,
 Modulo
-Exp
 |#
 (defun log10 (a)
 (progn
@@ -366,6 +381,9 @@ Exp
 (defun bigint_of_int (i)
 (progn
   (let ((size (log10 i)))
+    (if
+      (= i 0)
+      (setq size 0))
     (let
      ((t_ (array_init
              size
@@ -420,7 +438,39 @@ Exp
     (return-from euler20 (sum_chiffres_bigint a))
   )))
 
+(defun bigint_exp_10chiffres (a b)
 (progn
+  (setq a (bigint_premiers_chiffres a 10))
+  (if
+    (= b 1)
+    (return-from bigint_exp_10chiffres a)
+    (if
+      (= (remainder b 2) 0)
+      (return-from bigint_exp_10chiffres (bigint_exp_10chiffres (mul_bigint a a) (quotient b 2)))
+      (return-from bigint_exp_10chiffres (mul_bigint a (bigint_exp_10chiffres a (- b 1))))))
+))
+
+(defun euler48 ()
+(progn
+  (let ((sum (bigint_of_int 0)))
+    (do
+      ((i 1 (+ 1 i)))
+      ((> i 1000))
+      (progn
+        (let ((ib (bigint_of_int i)))
+          (let ((ibeib (bigint_exp_10chiffres ib i)))
+            (setq sum (add_bigint sum ibeib))
+            (setq sum (bigint_premiers_chiffres sum 10))
+          )))
+    )
+    (princ "euler 48 = ")
+    (print_bigint sum)
+    (princ "
+")
+  )))
+
+(progn
+  (euler48 )
   (princ "euler20 = ")
   (let ((g (euler20 )))
     (princ g)
