@@ -1,0 +1,71 @@
+
+def int eratostene(array<int> t, int max)
+	def n = 0
+	for i = 2 to max - 1 do
+		if t[i] == i then
+			def j = i * i
+			n ++
+			while j < max && j > 0 do
+				t[j] = 0
+				j += i
+			end
+    end
+  end
+	return n
+end
+
+def int fillPrimesFactors(array<int> t, int n, array<int> primes, int nprimes)
+	for i = 0 to nprimes - 1 do
+		def d = primes[i]
+		while n % d == 0 do
+			t[d] ++
+			n /= d
+		end
+		if n == 1 then
+			return primes[i]
+		end
+	end
+	return n
+end
+
+
+def int find(int ndiv2)
+	def maximumprimes = 10000
+	def array<int> era[maximumprimes] with j do
+		return j
+	end
+	def nprimes = eratostene(era, maximumprimes)
+	def array<int> primes[nprimes] with o do
+		return 0
+	end
+	def l = 0
+	for k = 2 to maximumprimes - 1 do
+		if era[k] == k then
+			primes[l] = k
+			l++
+		end
+	end
+
+	for n = 1 to 1000000 do
+		def array<int> primesFactors[n + 2] with m do
+			return 0
+		end
+		def max = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
+		primesFactors[2] --
+		def ndivs = 1
+		for i = 0 to max do
+			if primesFactors[i] != 0 then
+				ndivs *= (1 + primesFactors[i])
+			end
+		end
+		if ndivs > ndiv2 then
+			return n * (n + 1) / 2
+		end
+		/* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" */
+	end
+	return 0
+end
+main
+	print find(500) print "\n"
+end
+
