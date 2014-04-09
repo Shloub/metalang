@@ -310,6 +310,14 @@ let euler20 () =
   a := fact_bigint (!a);
   sum_chiffres_bigint (!a)
 
+let rec bigint_exp a b =
+  if b = 1 then
+    a
+  else if (b mod 2) = 0 then
+    bigint_exp (mul_bigint a a) (b / 2)
+  else
+    mul_bigint a (bigint_exp a (b - 1))
+
 let rec bigint_exp_10chiffres a b =
   let a = ref a in
   a := bigint_premiers_chiffres (!a) 10;
@@ -332,12 +340,21 @@ let euler48 () =
   print_bigint (!sum);
   Printf.printf "\n"
 
+let euler16 () =
+  let a = ref( bigint_of_int 2 ) in
+  a := bigint_exp (!a) 1000;
+  sum_chiffres_bigint (!a)
+
 let () =
 begin
+  Printf.printf "euler16 = ";
+  let g = (euler16 ()) in
+  Printf.printf "%d" g;
+  Printf.printf "\n";
   (euler48 ());
   Printf.printf "euler20 = ";
-  let g = (euler20 ()) in
-  Printf.printf "%d" g;
+  let h = (euler20 ()) in
+  Printf.printf "%d" h;
   Printf.printf "\n";
   let a = (read_bigint ()) in
   let b = (read_bigint ()) in
@@ -379,8 +396,8 @@ begin
   Printf.printf ">";
   print_bigint b;
   Printf.printf "=";
-  let h = bigint_gt a b in
-  if h then
+  let m = bigint_gt a b in
+  if m then
     Printf.printf "True"
   else
     Printf.printf "False";

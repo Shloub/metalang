@@ -92,11 +92,11 @@ public static int readInt(){
       chiffres[len - 1 - i] = tmp;
     }
     stdin_sep();
-    bigint m = new bigint();
-    m.bigint_sign = sign == (char)43;
-    m.bigint_len = len;
-    m.bigint_chiffres = chiffres;
-    return m;
+    bigint n = new bigint();
+    n.bigint_sign = sign == (char)43;
+    n.bigint_len = len;
+    n.bigint_chiffres = chiffres;
+    return n;
   }
   
   public static void print_bigint(bigint a)
@@ -175,11 +175,11 @@ public static int readInt(){
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint n = new bigint();
-    n.bigint_sign = true;
-    n.bigint_len = len;
-    n.bigint_chiffres = chiffres;
-    return n;
+    bigint o = new bigint();
+    o.bigint_sign = true;
+    o.bigint_len = len;
+    o.bigint_chiffres = chiffres;
+    return o;
   }
   
   public static bigint sub_bigint_positif(bigint a, bigint b)
@@ -206,20 +206,20 @@ Pré-requis : a > b
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint o = new bigint();
-    o.bigint_sign = true;
-    o.bigint_len = len;
-    o.bigint_chiffres = chiffres;
-    return o;
+    bigint p = new bigint();
+    p.bigint_sign = true;
+    p.bigint_len = len;
+    p.bigint_chiffres = chiffres;
+    return p;
   }
   
   public static bigint neg_bigint(bigint a)
   {
-    bigint p = new bigint();
-    p.bigint_sign = !a.bigint_sign;
-    p.bigint_len = a.bigint_len;
-    p.bigint_chiffres = a.bigint_chiffres;
-    return p;
+    bigint q = new bigint();
+    q.bigint_sign = !a.bigint_sign;
+    q.bigint_len = a.bigint_len;
+    q.bigint_chiffres = a.bigint_chiffres;
+    return q;
   }
   
   public static bigint add_bigint(bigint a, bigint b)
@@ -277,11 +277,11 @@ D'ou le nom de la fonction. */
     for (int l = 0 ; l <= 2; l ++)
       if (len != 0 && chiffres[len - 1] == 0)
       len --;
-    bigint q = new bigint();
-    q.bigint_sign = a.bigint_sign == b.bigint_sign;
-    q.bigint_len = len;
-    q.bigint_chiffres = chiffres;
-    return q;
+    bigint r = new bigint();
+    r.bigint_sign = a.bigint_sign == b.bigint_sign;
+    r.bigint_len = len;
+    r.bigint_chiffres = chiffres;
+    return r;
   }
   
   public static bigint bigint_premiers_chiffres(bigint a, int i)
@@ -289,11 +289,11 @@ D'ou le nom de la fonction. */
     int len = min2(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres[len - 1] == 0)
       len --;
-    bigint r = new bigint();
-    r.bigint_sign = a.bigint_sign;
-    r.bigint_len = len;
-    r.bigint_chiffres = a.bigint_chiffres;
-    return r;
+    bigint s = new bigint();
+    s.bigint_sign = a.bigint_sign;
+    s.bigint_len = len;
+    s.bigint_chiffres = a.bigint_chiffres;
+    return s;
   }
   
   public static bigint bigint_shift(bigint a, int i)
@@ -305,11 +305,11 @@ D'ou le nom de la fonction. */
       chiffres[k] = a.bigint_chiffres[k - i];
     else
       chiffres[k] = 0;
-    bigint s = new bigint();
-    s.bigint_sign = a.bigint_sign;
-    s.bigint_len = a.bigint_len + i;
-    s.bigint_chiffres = chiffres;
-    return s;
+    bigint u = new bigint();
+    u.bigint_sign = a.bigint_sign;
+    u.bigint_len = a.bigint_len + i;
+    u.bigint_chiffres = chiffres;
+    return u;
   }
   
   public static bigint mul_bigint(bigint aa, bigint bb)
@@ -364,11 +364,11 @@ Modulo
       t[k] = i % 10;
       i /= 10;
     }
-    bigint u = new bigint();
-    u.bigint_sign = true;
-    u.bigint_len = size;
-    u.bigint_chiffres = t;
-    return u;
+    bigint v = new bigint();
+    v.bigint_sign = true;
+    v.bigint_len = size;
+    v.bigint_chiffres = t;
+    return v;
   }
   
   public static bigint fact_bigint(bigint a)
@@ -399,6 +399,16 @@ Modulo
     return sum_chiffres_bigint(a);
   }
   
+  public static bigint bigint_exp(bigint a, int b)
+  {
+    if (b == 1)
+      return a;
+    else if ((b % 2) == 0)
+      return bigint_exp(mul_bigint(a, a), b / 2);
+    else
+      return mul_bigint(a, bigint_exp(a, b - 1));
+  }
+  
   public static bigint bigint_exp_10chiffres(bigint a, int b)
   {
     a = bigint_premiers_chiffres(a, 10);
@@ -425,13 +435,24 @@ Modulo
     Console.Write("\n");
   }
   
+  public static int euler16()
+  {
+    bigint a = bigint_of_int(2);
+    a = bigint_exp(a, 1000);
+    return sum_chiffres_bigint(a);
+  }
+  
   
   public static void Main(String[] args)
   {
+    Console.Write("euler16 = ");
+    int g = euler16();
+    Console.Write(g);
+    Console.Write("\n");
     euler48();
     Console.Write("euler20 = ");
-    int g = euler20();
-    Console.Write(g);
+    int h = euler20();
+    Console.Write(h);
     Console.Write("\n");
     bigint a = read_bigint();
     bigint b = read_bigint();
@@ -473,8 +494,8 @@ Modulo
     Console.Write(">");
     print_bigint(b);
     Console.Write("=");
-    bool h = bigint_gt(a, b);
-    if (h)
+    bool m = bigint_gt(a, b);
+    if (m)
       Console.Write("True");
     else
       Console.Write("False");

@@ -370,6 +370,16 @@ def euler20(  )
     return (sum_chiffres_bigint(a));
 end
 
+def bigint_exp( a, b )
+    if b == 1 then
+      return (a);
+    elsif (mod(b, 2)) == 0 then
+      return (bigint_exp(mul_bigint(a, a), (b.to_f / 2).to_i));
+    else
+      return (mul_bigint(a, bigint_exp(a, b - 1)));
+    end
+end
+
 def bigint_exp_10chiffres( a, b )
     a = bigint_premiers_chiffres(a, 10);
     if b == 1 then
@@ -394,10 +404,19 @@ def euler48(  )
     print "\n";
 end
 
+def euler16(  )
+    a = bigint_of_int(2)
+    a = bigint_exp(a, 1000);
+    return (sum_chiffres_bigint(a));
+end
+
+print "euler16 = ";
+g = euler16()
+printf "%d\n", g
 euler48();
 print "euler20 = ";
-g = euler20()
-printf "%d\n", g
+h = euler20()
+printf "%d\n", h
 a = read_bigint()
 b = read_bigint()
 print_bigint(a);
@@ -438,8 +457,8 @@ print_bigint(a);
 print ">";
 print_bigint(b);
 print "=";
-h = bigint_gt(a, b)
-if h then
+m = bigint_gt(a, b)
+if m then
   print "True";
 else
   print "False";

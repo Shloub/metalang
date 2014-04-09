@@ -55,11 +55,11 @@ func read_bigint() * bigint{
       chiffres[len - 1 - i] = tmp;
   }
   skip()
-  var m * bigint = new (bigint)
-  (*m).bigint_sign=sign == '+';
-  (*m).bigint_len=len;
-  (*m).bigint_chiffres=chiffres;
-  return m
+  var n * bigint = new (bigint)
+  (*n).bigint_sign=sign == '+';
+  (*n).bigint_len=len;
+  (*n).bigint_chiffres=chiffres;
+  return n
 }
 
 func print_bigint(a * bigint) {
@@ -136,11 +136,11 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
   for len > 0 && chiffres[len - 1] == 0{
                                          len --;
   }
-  var n * bigint = new (bigint)
-  (*n).bigint_sign=true;
-  (*n).bigint_len=len;
-  (*n).bigint_chiffres=chiffres;
-  return n
+  var o * bigint = new (bigint)
+  (*o).bigint_sign=true;
+  (*o).bigint_len=len;
+  (*o).bigint_chiffres=chiffres;
+  return o
 }
 
 func sub_bigint_positif(a * bigint, b * bigint) * bigint{
@@ -166,19 +166,19 @@ Pré-requis : a > b
   for len > 0 && chiffres[len - 1] == 0{
                                          len --;
   }
-  var o * bigint = new (bigint)
-  (*o).bigint_sign=true;
-  (*o).bigint_len=len;
-  (*o).bigint_chiffres=chiffres;
-  return o
+  var p * bigint = new (bigint)
+  (*p).bigint_sign=true;
+  (*p).bigint_len=len;
+  (*p).bigint_chiffres=chiffres;
+  return p
 }
 
 func neg_bigint(a * bigint) * bigint{
-  var p * bigint = new (bigint)
-  (*p).bigint_sign=!(*a).bigint_sign;
-  (*p).bigint_len=(*a).bigint_len;
-  (*p).bigint_chiffres=(*a).bigint_chiffres;
-  return p
+  var q * bigint = new (bigint)
+  (*q).bigint_sign=!(*a).bigint_sign;
+  (*q).bigint_len=(*a).bigint_len;
+  (*q).bigint_chiffres=(*a).bigint_chiffres;
+  return q
 }
 
 func add_bigint(a * bigint, b * bigint) * bigint{
@@ -234,11 +234,11 @@ D'ou le nom de la fonction. */
         len --;
       }
   }
-  var q * bigint = new (bigint)
-  (*q).bigint_sign=(*a).bigint_sign == (*b).bigint_sign;
-  (*q).bigint_len=len;
-  (*q).bigint_chiffres=chiffres;
-  return q
+  var r * bigint = new (bigint)
+  (*r).bigint_sign=(*a).bigint_sign == (*b).bigint_sign;
+  (*r).bigint_len=len;
+  (*r).bigint_chiffres=chiffres;
+  return r
 }
 
 func bigint_premiers_chiffres(a * bigint, i int) * bigint{
@@ -246,11 +246,11 @@ func bigint_premiers_chiffres(a * bigint, i int) * bigint{
   for len != 0 && (*a).bigint_chiffres[len - 1] == 0{
                                                       len --;
   }
-  var r * bigint = new (bigint)
-  (*r).bigint_sign=(*a).bigint_sign;
-  (*r).bigint_len=len;
-  (*r).bigint_chiffres=(*a).bigint_chiffres;
-  return r
+  var s * bigint = new (bigint)
+  (*s).bigint_sign=(*a).bigint_sign;
+  (*s).bigint_len=len;
+  (*s).bigint_chiffres=(*a).bigint_chiffres;
+  return s
 }
 
 func bigint_shift(a * bigint, i int) * bigint{
@@ -263,11 +263,11 @@ func bigint_shift(a * bigint, i int) * bigint{
         chiffres[k] = 0;
       }
   }
-  var s * bigint = new (bigint)
-  (*s).bigint_sign=(*a).bigint_sign;
-  (*s).bigint_len=(*a).bigint_len + i;
-  (*s).bigint_chiffres=chiffres;
-  return s
+  var u * bigint = new (bigint)
+  (*u).bigint_sign=(*a).bigint_sign;
+  (*u).bigint_len=(*a).bigint_len + i;
+  (*u).bigint_chiffres=chiffres;
+  return u
 }
 
 func mul_bigint(aa * bigint, bb * bigint) * bigint{
@@ -320,11 +320,11 @@ func bigint_of_int(i int) * bigint{
     t[k] = i % 10;
       i /= 10;
   }
-  var u * bigint = new (bigint)
-  (*u).bigint_sign=true;
-  (*u).bigint_len=size;
-  (*u).bigint_chiffres=t;
-  return u
+  var v * bigint = new (bigint)
+  (*v).bigint_sign=true;
+  (*v).bigint_len=size;
+  (*v).bigint_chiffres=t;
+  return v
 }
 
 func fact_bigint(a * bigint) * bigint{
@@ -352,6 +352,16 @@ func euler20() int{
   return sum_chiffres_bigint(a)
 }
 
+func bigint_exp(a * bigint, b int) * bigint{
+  if b == 1 {
+    return a
+  } else if (b % 2) == 0 {
+    return bigint_exp(mul_bigint(a, a), b / 2)
+  } else {
+    return mul_bigint(a, bigint_exp(a, b - 1))
+  } 
+}
+
 func bigint_exp_10chiffres(a * bigint, b int) * bigint{
   a = bigint_premiers_chiffres(a, 10);
   if b == 1 {
@@ -376,12 +386,21 @@ func euler48() {
   fmt.Printf("\n");
 }
 
+func euler16() int{
+  var a * bigint = bigint_of_int(2)
+  a = bigint_exp(a, 1000);
+  return sum_chiffres_bigint(a)
+}
+
 func main() {
   reader = bufio.NewReader(os.Stdin)
+  fmt.Printf("euler16 = ");
+  var g int = euler16()
+  fmt.Printf("%d\n", g);
   euler48();
   fmt.Printf("euler20 = ");
-  var g int = euler20()
-  fmt.Printf("%d\n", g);
+  var h int = euler20()
+  fmt.Printf("%d\n", h);
   var a * bigint = read_bigint()
   var b * bigint = read_bigint()
   print_bigint(a);
@@ -422,8 +441,8 @@ func main() {
   fmt.Printf(">");
   print_bigint(b);
   fmt.Printf("=");
-  var h bool = bigint_gt(a, b)
-  if h {
+  var m bool = bigint_gt(a, b)
+  if m {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");
