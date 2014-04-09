@@ -48,11 +48,11 @@ struct bigint * read_bigint(){
     }
   }
   scanf("%*[ \t\r\n]c");
-  struct bigint * n = malloc (sizeof(n) );
-  n->bigint_sign=sign == '+';
-  n->bigint_len=len;
-  n->bigint_chiffres=chiffres;
-  return n;
+  struct bigint * o = malloc (sizeof(o) );
+  o->bigint_sign=sign == '+';
+  o->bigint_len=len;
+  o->bigint_chiffres=chiffres;
+  return o;
 }
 
 void print_bigint(struct bigint * a){
@@ -138,11 +138,11 @@ struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b){
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  struct bigint * o = malloc (sizeof(o) );
-  o->bigint_sign=1;
-  o->bigint_len=len;
-  o->bigint_chiffres=chiffres;
-  return o;
+  struct bigint * p = malloc (sizeof(p) );
+  p->bigint_sign=1;
+  p->bigint_len=len;
+  p->bigint_chiffres=chiffres;
+  return p;
 }
 
 struct bigint * sub_bigint_positif(struct bigint * a, struct bigint * b){
@@ -171,19 +171,19 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  struct bigint * p = malloc (sizeof(p) );
-  p->bigint_sign=1;
-  p->bigint_len=len;
-  p->bigint_chiffres=chiffres;
-  return p;
+  struct bigint * q = malloc (sizeof(q) );
+  q->bigint_sign=1;
+  q->bigint_len=len;
+  q->bigint_chiffres=chiffres;
+  return q;
 }
 
 struct bigint * neg_bigint(struct bigint * a){
-  struct bigint * q = malloc (sizeof(q) );
-  q->bigint_sign=!a->bigint_sign;
-  q->bigint_len=a->bigint_len;
-  q->bigint_chiffres=a->bigint_chiffres;
-  return q;
+  struct bigint * r = malloc (sizeof(r) );
+  r->bigint_sign=!a->bigint_sign;
+  r->bigint_len=a->bigint_len;
+  r->bigint_chiffres=a->bigint_chiffres;
+  return r;
 }
 
 struct bigint * add_bigint(struct bigint * a, struct bigint * b){
@@ -250,22 +250,22 @@ D'ou le nom de la fonction. */
       if (len != 0 && chiffres[len - 1] == 0)
       len --;
   }
-  struct bigint * r = malloc (sizeof(r) );
-  r->bigint_sign=a->bigint_sign == b->bigint_sign;
-  r->bigint_len=len;
-  r->bigint_chiffres=chiffres;
-  return r;
+  struct bigint * s = malloc (sizeof(s) );
+  s->bigint_sign=a->bigint_sign == b->bigint_sign;
+  s->bigint_len=len;
+  s->bigint_chiffres=chiffres;
+  return s;
 }
 
 struct bigint * bigint_premiers_chiffres(struct bigint * a, int i){
   int len = min2(i, a->bigint_len);
   while (len != 0 && a->bigint_chiffres[len - 1] == 0)
     len --;
-  struct bigint * s = malloc (sizeof(s) );
-  s->bigint_sign=a->bigint_sign;
-  s->bigint_len=len;
-  s->bigint_chiffres=a->bigint_chiffres;
-  return s;
+  struct bigint * u = malloc (sizeof(u) );
+  u->bigint_sign=a->bigint_sign;
+  u->bigint_len=len;
+  u->bigint_chiffres=a->bigint_chiffres;
+  return u;
 }
 
 struct bigint * bigint_shift(struct bigint * a, int i){
@@ -279,11 +279,11 @@ struct bigint * bigint_shift(struct bigint * a, int i){
     else
       chiffres[k] = 0;
   }
-  struct bigint * u = malloc (sizeof(u) );
-  u->bigint_sign=a->bigint_sign;
-  u->bigint_len=a->bigint_len + i;
-  u->bigint_chiffres=chiffres;
-  return u;
+  struct bigint * v = malloc (sizeof(v) );
+  v->bigint_sign=a->bigint_sign;
+  v->bigint_len=a->bigint_len + i;
+  v->bigint_chiffres=chiffres;
+  return v;
 }
 
 struct bigint * mul_bigint(struct bigint * aa, struct bigint * bb){
@@ -341,11 +341,11 @@ struct bigint * bigint_of_int(int i){
       i /= 10;
     }
   }
-  struct bigint * v = malloc (sizeof(v) );
-  v->bigint_sign=1;
-  v->bigint_len=size;
-  v->bigint_chiffres=t;
-  return v;
+  struct bigint * w = malloc (sizeof(w) );
+  w->bigint_sign=1;
+  w->bigint_len=size;
+  w->bigint_chiffres=t;
+  return w;
 }
 
 struct bigint * fact_bigint(struct bigint * a){
@@ -418,14 +418,30 @@ int euler16(){
   return sum_chiffres_bigint(a);
 }
 
+int euler25(){
+  int i = 2;
+  struct bigint * a = bigint_of_int(1);
+  struct bigint * b = bigint_of_int(1);
+  while (b->bigint_len < 1000)
+  {
+    struct bigint * c = add_bigint(a, b);
+    a = b;
+    b = c;
+    i ++;
+  }
+  return i;
+}
+
 int main(void){
-  printf("euler16 = ");
-  int g = euler16();
-  printf("%d\n", g);
+  printf("euler25 = ");
+  int g = euler25();
+  printf("%d\neuler16 = ", g);
+  int h = euler16();
+  printf("%d\n", h);
   euler48();
   printf("euler20 = ");
-  int h = euler20();
-  printf("%d\n", h);
+  int m = euler20();
+  printf("%d\n", m);
   struct bigint * a = read_bigint();
   struct bigint * b = read_bigint();
   print_bigint(a);
@@ -466,8 +482,8 @@ int main(void){
   printf(">");
   print_bigint(b);
   printf("=");
-  int m = bigint_gt(a, b);
-  if (m)
+  int n = bigint_gt(a, b);
+  if (n)
     printf("True");
   else
     printf("False");

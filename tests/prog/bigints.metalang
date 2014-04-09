@@ -347,7 +347,21 @@ def int euler16()
 	return sum_chiffres_bigint(a)
 end
 
+def int euler25()
+	def i = 2
+  def a = bigint_of_int(1)
+  def b = bigint_of_int(1)
+  while b.bigint_len < 1000 do
+		def c = add_bigint(a, b)
+		a = b
+		b = c
+		i ++
+  end
+	return i
+end
+
 main
+	print "euler25 = " print (euler25()) print "\n"
 	print "euler16 = " print euler16() print "\n"
 	euler48()
 	print "euler20 = " print euler20() print "\n"
@@ -381,5 +395,4 @@ main
 	print_bigint(b)  print "="
   print bigint_gt(a, b)
 	print "\n"
-
 end

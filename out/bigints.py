@@ -335,13 +335,26 @@ def euler16(  ):
     a = bigint_exp(a, 1000);
     return sum_chiffres_bigint(a);
 
-print( "euler16 = ", end='')
-g = euler16();
-print("%d\n" % ( g ), end='')
+def euler25(  ):
+    i = 2;
+    a = bigint_of_int(1);
+    b = bigint_of_int(1);
+    while (b["bigint_len"] < 1000):
+      c = add_bigint(a, b);
+      a = b;
+      b = c;
+      i += 1
+    return i;
+
+print( "euler25 = ", end='')
+g = euler25();
+print("%d\neuler16 = " % ( g ), end='')
+h = euler16();
+print("%d\n" % ( h ), end='')
 euler48();
 print( "euler20 = ", end='')
-h = euler20();
-print("%d\n" % ( h ), end='')
+m = euler20();
+print("%d\n" % ( m ), end='')
 a = read_bigint();
 b = read_bigint();
 print_bigint(a);
@@ -382,8 +395,8 @@ print_bigint(a);
 print( ">", end='')
 print_bigint(b);
 print( "=", end='')
-m = bigint_gt(a, b);
-if m:
+n = bigint_gt(a, b);
+if n:
   print( "True", end='')
 else:
   print( "False", end='')

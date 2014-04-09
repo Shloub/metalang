@@ -410,13 +410,28 @@ def euler16(  )
     return (sum_chiffres_bigint(a));
 end
 
-print "euler16 = ";
-g = euler16()
-printf "%d\n", g
+def euler25(  )
+    i = 2
+    a = bigint_of_int(1)
+    b = bigint_of_int(1)
+    while b["bigint_len"] < 1000 do
+      c = add_bigint(a, b)
+      a = b;
+      b = c;
+      i += 1
+    end
+    return (i);
+end
+
+print "euler25 = ";
+g = euler25()
+printf "%d\neuler16 = ", g
+h = euler16()
+printf "%d\n", h
 euler48();
 print "euler20 = ";
-h = euler20()
-printf "%d\n", h
+m = euler20()
+printf "%d\n", m
 a = read_bigint()
 b = read_bigint()
 print_bigint(a);
@@ -457,8 +472,8 @@ print_bigint(a);
 print ">";
 print_bigint(b);
 print "=";
-m = bigint_gt(a, b)
-if m then
+n = bigint_gt(a, b)
+if n then
   print "True";
 else
   print "False";

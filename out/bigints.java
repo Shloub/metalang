@@ -44,11 +44,11 @@ public class bigints
       chiffres[len - 1 - i] = tmp;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    bigint n = new bigint();
-    n.bigint_sign = sign == '+';
-    n.bigint_len = len;
-    n.bigint_chiffres = chiffres;
-    return n;
+    bigint o = new bigint();
+    o.bigint_sign = sign == '+';
+    o.bigint_len = len;
+    o.bigint_chiffres = chiffres;
+    return o;
   }
   
   public static void print_bigint(bigint a)
@@ -127,11 +127,11 @@ public class bigints
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint o = new bigint();
-    o.bigint_sign = true;
-    o.bigint_len = len;
-    o.bigint_chiffres = chiffres;
-    return o;
+    bigint p = new bigint();
+    p.bigint_sign = true;
+    p.bigint_len = len;
+    p.bigint_chiffres = chiffres;
+    return p;
   }
   
   public static bigint sub_bigint_positif(bigint a, bigint b)
@@ -158,20 +158,20 @@ Pré-requis : a > b
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint p = new bigint();
-    p.bigint_sign = true;
-    p.bigint_len = len;
-    p.bigint_chiffres = chiffres;
-    return p;
+    bigint q = new bigint();
+    q.bigint_sign = true;
+    q.bigint_len = len;
+    q.bigint_chiffres = chiffres;
+    return q;
   }
   
   public static bigint neg_bigint(bigint a)
   {
-    bigint q = new bigint();
-    q.bigint_sign = !a.bigint_sign;
-    q.bigint_len = a.bigint_len;
-    q.bigint_chiffres = a.bigint_chiffres;
-    return q;
+    bigint r = new bigint();
+    r.bigint_sign = !a.bigint_sign;
+    r.bigint_len = a.bigint_len;
+    r.bigint_chiffres = a.bigint_chiffres;
+    return r;
   }
   
   public static bigint add_bigint(bigint a, bigint b)
@@ -229,11 +229,11 @@ D'ou le nom de la fonction. */
     for (int l = 0 ; l <= 2; l ++)
       if (len != 0 && chiffres[len - 1] == 0)
       len --;
-    bigint r = new bigint();
-    r.bigint_sign = a.bigint_sign == b.bigint_sign;
-    r.bigint_len = len;
-    r.bigint_chiffres = chiffres;
-    return r;
+    bigint s = new bigint();
+    s.bigint_sign = a.bigint_sign == b.bigint_sign;
+    s.bigint_len = len;
+    s.bigint_chiffres = chiffres;
+    return s;
   }
   
   public static bigint bigint_premiers_chiffres(bigint a, int i)
@@ -241,11 +241,11 @@ D'ou le nom de la fonction. */
     int len = min2(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres[len - 1] == 0)
       len --;
-    bigint s = new bigint();
-    s.bigint_sign = a.bigint_sign;
-    s.bigint_len = len;
-    s.bigint_chiffres = a.bigint_chiffres;
-    return s;
+    bigint u = new bigint();
+    u.bigint_sign = a.bigint_sign;
+    u.bigint_len = len;
+    u.bigint_chiffres = a.bigint_chiffres;
+    return u;
   }
   
   public static bigint bigint_shift(bigint a, int i)
@@ -257,11 +257,11 @@ D'ou le nom de la fonction. */
       chiffres[k] = a.bigint_chiffres[k - i];
     else
       chiffres[k] = 0;
-    bigint u = new bigint();
-    u.bigint_sign = a.bigint_sign;
-    u.bigint_len = a.bigint_len + i;
-    u.bigint_chiffres = chiffres;
-    return u;
+    bigint v = new bigint();
+    v.bigint_sign = a.bigint_sign;
+    v.bigint_len = a.bigint_len + i;
+    v.bigint_chiffres = chiffres;
+    return v;
   }
   
   public static bigint mul_bigint(bigint aa, bigint bb)
@@ -316,11 +316,11 @@ Modulo
       t[k] = i % 10;
       i /= 10;
     }
-    bigint v = new bigint();
-    v.bigint_sign = true;
-    v.bigint_len = size;
-    v.bigint_chiffres = t;
-    return v;
+    bigint w = new bigint();
+    w.bigint_sign = true;
+    w.bigint_len = size;
+    w.bigint_chiffres = t;
+    return w;
   }
   
   public static bigint fact_bigint(bigint a)
@@ -394,16 +394,33 @@ Modulo
     return sum_chiffres_bigint(a);
   }
   
+  public static int euler25()
+  {
+    int i = 2;
+    bigint a = bigint_of_int(1);
+    bigint b = bigint_of_int(1);
+    while (b.bigint_len < 1000)
+    {
+      bigint c = add_bigint(a, b);
+      a = b;
+      b = c;
+      i ++;
+    }
+    return i;
+  }
+  
   
   public static void main(String args[])
   {
-    System.out.print("euler16 = ");
-    int g = euler16();
-    System.out.printf("%d%s", g, "\n");
+    System.out.print("euler25 = ");
+    int g = euler25();
+    System.out.printf("%d%s%s", g, "\n", "euler16 = ");
+    int h = euler16();
+    System.out.printf("%d%s", h, "\n");
     euler48();
     System.out.print("euler20 = ");
-    int h = euler20();
-    System.out.printf("%d%s", h, "\n");
+    int m = euler20();
+    System.out.printf("%d%s", m, "\n");
     bigint a = read_bigint();
     bigint b = read_bigint();
     print_bigint(a);
@@ -444,8 +461,8 @@ Modulo
     System.out.print(">");
     print_bigint(b);
     System.out.print("=");
-    boolean m = bigint_gt(a, b);
-    if (m)
+    boolean n = bigint_gt(a, b);
+    if (n)
       System.out.print("True");
     else
       System.out.print("False");
