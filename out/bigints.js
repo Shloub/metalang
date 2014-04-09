@@ -49,19 +49,13 @@ function min2(a, b){
 }
 
 
-function read_bigint(){
-  var len = 0;
-  len=read_int_();
-  stdinsep();
-  var sign = '_';
-  sign=read_char_();
-  stdinsep();
+function read_bigint(len){
   var chiffres = new Array(len);
-  for (var d = 0 ; d <= len - 1; d++)
+  for (var j = 0 ; j <= len - 1; j++)
   {
     var c = '_';
     c=read_char_();
-    chiffres[d] = c.charCodeAt(0) - '0'.charCodeAt(0);
+    chiffres[j] = c.charCodeAt(0);
   }
   for (var i = 0 ; i <= ~~((len - 1) / 2); i++)
   {
@@ -69,9 +63,8 @@ function read_bigint(){
     chiffres[i] = chiffres[len - 1 - i];
     chiffres[len - 1 - i] = tmp;
   }
-  stdinsep();
   var o = {
-             bigint_sign : sign == '+',
+             bigint_sign : 1,
              bigint_len : len,
              bigint_chiffres : chiffres
   };
@@ -420,7 +413,16 @@ function euler25(){
   return i;
 }
 
-util.print("euler25 = ");
+var sum = read_bigint(50);
+for (var i = 2 ; i <= 100; i++)
+{
+  stdinsep();
+  var tmp = read_bigint(50);
+  sum = add_bigint(sum, tmp);
+}
+util.print("euler13 = ");
+print_bigint(sum);
+util.print("\n", "euler25 = ");
 var g = euler25();
 util.print(g, "\n", "euler16 = ");
 var h = euler16();
@@ -429,8 +431,8 @@ euler48();
 util.print("euler20 = ");
 var m = euler20();
 util.print(m, "\n");
-var a = read_bigint();
-var b = read_bigint();
+var a = bigint_of_int(999999);
+var b = bigint_of_int(9951263);
 print_bigint(a);
 util.print(">>1=");
 print_bigint(bigint_shift(a, -1));

@@ -4,21 +4,21 @@ record @bigint
   bigint_chiffres : array<int>
 end
 
-def @bigint read_bigint()
-	def read int len skip
-	def read char sign skip
-	def array<int> chiffres[len] with d do
+def @bigint read_bigint(int len)
+
+	def array<int> chiffres[len] with j do
 		def read char c
-		return int_of_char(c) - int_of_char('0')
+		return int_of_char(c)
 	end
+
 	for i = 0 to (len - 1) / 2 do
 		def tmp = chiffres[i]
 		chiffres[i] = chiffres[len - 1 - i]
 		chiffres[len - 1 - i] = tmp
 	end
-	skip
+
 	return record
-		bigint_sign = sign == '+'
+		bigint_sign = true
 		bigint_len = len
 		bigint_chiffres = chiffres
 	end
@@ -361,13 +361,21 @@ def int euler25()
 end
 
 main
+	def sum = read_bigint(50)
+	for i = 2 to 100 do
+		skip
+		def tmp = read_bigint(50)
+		sum = add_bigint(sum, tmp)
+	end
+
+	print "euler13 = " print_bigint(sum) print "\n"
 	print "euler25 = " print (euler25()) print "\n"
 	print "euler16 = " print euler16() print "\n"
 	euler48()
 	print "euler20 = " print euler20() print "\n"
 
-	def a = read_bigint()
-	def b = read_bigint()
+	def a = bigint_of_int(999999)
+	def b = bigint_of_int(9951263)
 	print_bigint(a) print ">>1="
 	print_bigint(bigint_shift(a, -1))
 	print "\n"
@@ -395,4 +403,5 @@ main
 	print_bigint(b)  print "="
   print bigint_gt(a, b)
 	print "\n"
+
 end

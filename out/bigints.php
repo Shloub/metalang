@@ -37,19 +37,13 @@ function min2($a, $b){
 }
 
 
-function read_bigint(){
-  $len = 0;
-  list($len) = scan("%d");
-  scantrim();
-  $sign = "_";
-  $sign = nextChar();
-  scantrim();
+function read_bigint($len){
   $chiffres = array();
-  for ($d = 0 ; $d < $len; $d++)
+  for ($j = 0 ; $j < $len; $j++)
   {
     $c = "_";
     $c = nextChar();
-    $chiffres[$d] = ord($c) - ord("0");
+    $chiffres[$j] = ord($c);
   }
   for ($i = 0 ; $i <= intval(($len - 1) / 2); $i++)
   {
@@ -57,9 +51,8 @@ function read_bigint(){
     $chiffres[$i] = $chiffres[$len - 1 - $i];
     $chiffres[$len - 1 - $i] = $tmp;
   }
-  scantrim();
   $o = array(
-    "bigint_sign"=>$sign == "+",
+    "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
@@ -416,7 +409,16 @@ function euler25(){
   return $i;
 }
 
-echo "euler25 = ";
+$sum = read_bigint(50);
+for ($i = 2 ; $i <= 100; $i++)
+{
+  scantrim();
+  $tmp = read_bigint(50);
+  $sum = add_bigint($sum, $tmp);
+}
+echo "euler13 = ";
+print_bigint($sum);
+echo "\n", "euler25 = ";
 $g = euler25();
 echo $g, "\n", "euler16 = ";
 $h = euler16();
@@ -425,8 +427,8 @@ euler48();
 echo "euler20 = ";
 $m = euler20();
 echo $m, "\n";
-$a = read_bigint();
-$b = read_bigint();
+$a = bigint_of_int(999999);
+$b = bigint_of_int(9951263);
 print_bigint($a);
 echo ">>1=";
 print_bigint(bigint_shift($a, -1));

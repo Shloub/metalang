@@ -36,27 +36,20 @@ type bigint struct {
   bigint_chiffres []int;
 }
 
-func read_bigint() * bigint{
-  var len int = 0
-  fmt.Fscanf(reader, "%d", &len);
-  skip()
-  var sign byte = '_'
-  fmt.Fscanf(reader, "%c", &sign);
-  skip()
+func read_bigint(len int) * bigint{
   var chiffres []int = make([]int, len)
-  for d := 0 ; d <= len - 1; d++ {
+  for j := 0 ; j <= len - 1; j++ {
     var c byte = '_'
       fmt.Fscanf(reader, "%c", &c);
-      chiffres[d] = (int)(c) - (int)('0');
+      chiffres[j] = (int)(c);
   }
   for i := 0 ; i <= (len - 1) / 2; i++ {
     var tmp int = chiffres[i]
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
   }
-  skip()
   var o * bigint = new (bigint)
-  (*o).bigint_sign=sign == '+';
+  (*o).bigint_sign=true;
   (*o).bigint_len=len;
   (*o).bigint_chiffres=chiffres;
   return o
@@ -407,7 +400,15 @@ func euler25() int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  fmt.Printf("euler25 = ");
+  var sum * bigint = read_bigint(50)
+  for i := 2 ; i <= 100; i++ {
+    skip()
+      var tmp * bigint = read_bigint(50)
+      sum = add_bigint(sum, tmp);
+  }
+  fmt.Printf("euler13 = ");
+  print_bigint(sum);
+  fmt.Printf("\neuler25 = ");
   var g int = euler25()
   fmt.Printf("%d\neuler16 = ", g);
   var h int = euler16()
@@ -416,8 +417,8 @@ func main() {
   fmt.Printf("euler20 = ");
   var m int = euler20()
   fmt.Printf("%d\n", m);
-  var a * bigint = read_bigint()
-  var b * bigint = read_bigint()
+  var a * bigint = bigint_of_int(999999)
+  var b * bigint = bigint_of_int(9951263)
   print_bigint(a);
   fmt.Printf(">>1=");
   print_bigint(bigint_shift(a, -1));

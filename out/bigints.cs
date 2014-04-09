@@ -36,24 +36,6 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-public static int readInt(){
-  int i = 0;
-  char s = readChar_();
-  int sign = 1;
-  if (s == '-'){
-    sign = -1;
-    consommeChar();
-  }
-  do{
-    char c = readChar_();
-    if (c <= '9' && c >= '0'){
-      i = i * 10 + c - '0';
-      consommeChar();
-    }else{
-      return i * sign;
-    }
-  } while(true);
-} 
   
   public static int max2(int a, int b)
   {
@@ -70,20 +52,14 @@ public static int readInt(){
   }
   
   public class bigint {public bool bigint_sign;public int bigint_len;public int[] bigint_chiffres;}
-  public static bigint read_bigint()
+  public static bigint read_bigint(int len)
   {
-    int len = 0;
-    len = readInt();
-    stdin_sep();
-    char sign = '_';
-    sign = readChar();
-    stdin_sep();
     int[] chiffres = new int[len];
-    for (int d = 0 ; d < len; d++)
+    for (int j = 0 ; j < len; j++)
     {
       char c = '_';
       c = readChar();
-      chiffres[d] = c - '0';
+      chiffres[j] = c;
     }
     for (int i = 0 ; i <= (len - 1) / 2; i ++)
     {
@@ -91,9 +67,8 @@ public static int readInt(){
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
     }
-    stdin_sep();
     bigint o = new bigint();
-    o.bigint_sign = sign == (char)43;
+    o.bigint_sign = true;
     o.bigint_len = len;
     o.bigint_chiffres = chiffres;
     return o;
@@ -460,6 +435,16 @@ Modulo
   
   public static void Main(String[] args)
   {
+    bigint sum = read_bigint(50);
+    for (int i = 2 ; i <= 100; i ++)
+    {
+      stdin_sep();
+      bigint tmp = read_bigint(50);
+      sum = add_bigint(sum, tmp);
+    }
+    Console.Write("euler13 = ");
+    print_bigint(sum);
+    Console.Write("\n");
     Console.Write("euler25 = ");
     int g = euler25();
     Console.Write(g);
@@ -473,8 +458,8 @@ Modulo
     int m = euler20();
     Console.Write(m);
     Console.Write("\n");
-    bigint a = read_bigint();
-    bigint b = read_bigint();
+    bigint a = bigint_of_int(999999);
+    bigint b = bigint_of_int(9951263);
     print_bigint(a);
     Console.Write(">>1=");
     print_bigint(bigint_shift(a, -1));

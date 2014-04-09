@@ -19,19 +19,6 @@
       (next-char)
       out
     )))
-(defun mread-int ()
-  (if (eq #\- last-char)
-  (progn (next-char) (- 0 (mread-int)))
-  (let ((out 0))
-    (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
-        (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
-          (next-char)
-        )
-      )
-      out
-    ))))
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
@@ -54,36 +41,31 @@
   bigint_chiffres
   )
 
-(defun read_bigint ()
+(defun read_bigint (len)
 (progn
-  (let ((len (mread-int )))
-    (mread-blank)
-    (let ((sign (mread-char )))
-      (mread-blank)
-      (let
-       ((chiffres (array_init
-                     len
-                     (function (lambda (d)
-                     (block lambda_1
-                       (let ((c (mread-char )))
-                         (return-from lambda_1 (- (char-int c) (char-int #\0)))
-                       )))
-                     ))))
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (quotient (- len 1) 2)))
-        (progn
-          (let ((tmp (aref chiffres i)))
-            (setf (aref chiffres i) (aref chiffres (- (- len 1) i)))
-            (setf (aref chiffres (- (- len 1) i)) tmp)
-          ))
-      )
-      (mread-blank)
-      (let ((o (make-bigint :bigint_sign (eq sign (int-char 43))
-                            :bigint_len len
-                            :bigint_chiffres chiffres)))
-      (return-from read_bigint o)
-      ))))))
+  (let
+   ((chiffres (array_init
+                 len
+                 (function (lambda (j)
+                 (block lambda_1
+                   (let ((c (mread-char )))
+                     (return-from lambda_1 (char-int c))
+                   )))
+                 ))))
+  (do
+    ((i 0 (+ 1 i)))
+    ((> i (quotient (- len 1) 2)))
+    (progn
+      (let ((tmp (aref chiffres i)))
+        (setf (aref chiffres i) (aref chiffres (- (- len 1) i)))
+        (setf (aref chiffres (- (- len 1) i)) tmp)
+      ))
+  )
+  (let ((o (make-bigint :bigint_sign t
+                        :bigint_len len
+                        :bigint_chiffres chiffres)))
+  (return-from read_bigint o)
+  ))))
 
 (defun print_bigint (a)
 (progn
@@ -502,74 +484,88 @@ Modulo
       )))))
 
 (progn
-  (princ "euler25 = ")
-  (let ((g (euler25 )))
-    (princ g)
+  (let ((sum (read_bigint 50)))
+    (do
+      ((i 2 (+ 1 i)))
+      ((> i 100))
+      (progn
+        (mread-blank)
+        (let ((tmp (read_bigint 50)))
+          (setq sum (add_bigint sum tmp))
+        ))
+    )
+    (princ "euler13 = ")
+    (print_bigint sum)
     (princ "
 ")
-    (princ "euler16 = ")
-    (let ((h (euler16 )))
-      (princ h)
+    (princ "euler25 = ")
+    (let ((g (euler25 )))
+      (princ g)
       (princ "
 ")
-      (euler48 )
-      (princ "euler20 = ")
-      (let ((m (euler20 )))
-        (princ m)
+      (princ "euler16 = ")
+      (let ((h (euler16 )))
+        (princ h)
         (princ "
 ")
-        (let ((a (read_bigint )))
-          (let ((b (read_bigint )))
-            (print_bigint a)
-            (princ ">>1=")
-            (print_bigint (bigint_shift a (- 0 1)))
-            (princ "
+        (euler48 )
+        (princ "euler20 = ")
+        (let ((m (euler20 )))
+          (princ m)
+          (princ "
 ")
-            (print_bigint a)
-            (princ "*")
-            (print_bigint b)
-            (princ "=")
-            (print_bigint (mul_bigint a b))
-            (princ "
-")
-            (print_bigint a)
-            (princ "*")
-            (print_bigint b)
-            (princ "=")
-            (print_bigint (mul_bigint_cp a b))
-            (princ "
-")
-            (print_bigint a)
-            (princ "+")
-            (print_bigint b)
-            (princ "=")
-            (print_bigint (add_bigint a b))
-            (princ "
-")
-            (print_bigint b)
-            (princ "-")
-            (print_bigint a)
-            (princ "=")
-            (print_bigint (sub_bigint b a))
-            (princ "
-")
-            (print_bigint a)
-            (princ "-")
-            (print_bigint b)
-            (princ "=")
-            (print_bigint (sub_bigint a b))
-            (princ "
-")
-            (print_bigint a)
-            (princ ">")
-            (print_bigint b)
-            (princ "=")
-            (let ((n (bigint_gt a b)))
-              (if
-                n
-                (princ "True")
-                (princ "False"))
+          (let ((a (bigint_of_int 999999)))
+            (let ((b (bigint_of_int 9951263)))
+              (print_bigint a)
+              (princ ">>1=")
+              (print_bigint (bigint_shift a (- 0 1)))
               (princ "
 ")
-            )))))))
+              (print_bigint a)
+              (princ "*")
+              (print_bigint b)
+              (princ "=")
+              (print_bigint (mul_bigint a b))
+              (princ "
+")
+              (print_bigint a)
+              (princ "*")
+              (print_bigint b)
+              (princ "=")
+              (print_bigint (mul_bigint_cp a b))
+              (princ "
+")
+              (print_bigint a)
+              (princ "+")
+              (print_bigint b)
+              (princ "=")
+              (print_bigint (add_bigint a b))
+              (princ "
+")
+              (print_bigint b)
+              (princ "-")
+              (print_bigint a)
+              (princ "=")
+              (print_bigint (sub_bigint b a))
+              (princ "
+")
+              (print_bigint a)
+              (princ "-")
+              (print_bigint b)
+              (princ "=")
+              (print_bigint (sub_bigint a b))
+              (princ "
+")
+              (print_bigint a)
+              (princ ">")
+              (print_bigint b)
+              (princ "=")
+              (let ((n (bigint_gt a b)))
+                (if
+                  n
+                  (princ "True")
+                  (princ "False"))
+                (princ "
+")
+              ))))))))
 

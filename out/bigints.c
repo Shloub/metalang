@@ -21,21 +21,15 @@ typedef struct bigint {
   int* bigint_chiffres;
 } bigint;
 
-struct bigint * read_bigint(){
-  int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
-  char sign = '_';
-  scanf("%c", &sign);
-  scanf("%*[ \t\r\n]c");
+struct bigint * read_bigint(int len){
   int *chiffres = malloc( len * sizeof(int));
   {
-    int d;
-    for (d = 0 ; d < len; d++)
+    int j;
+    for (j = 0 ; j < len; j++)
     {
       char c = '_';
       scanf("%c", &c);
-      chiffres[d] = c - '0';
+      chiffres[j] = c;
     }
   }
   {
@@ -47,9 +41,8 @@ struct bigint * read_bigint(){
       chiffres[len - 1 - i] = tmp;
     }
   }
-  scanf("%*[ \t\r\n]c");
   struct bigint * o = malloc (sizeof(o) );
-  o->bigint_sign=sign == '+';
+  o->bigint_sign=1;
   o->bigint_len=len;
   o->bigint_chiffres=chiffres;
   return o;
@@ -433,7 +426,19 @@ int euler25(){
 }
 
 int main(void){
-  printf("euler25 = ");
+  struct bigint * sum = read_bigint(50);
+  {
+    int i;
+    for (i = 2 ; i <= 100; i++)
+    {
+      scanf("%*[ \t\r\n]c");
+      struct bigint * tmp = read_bigint(50);
+      sum = add_bigint(sum, tmp);
+    }
+  }
+  printf("euler13 = ");
+  print_bigint(sum);
+  printf("\neuler25 = ");
   int g = euler25();
   printf("%d\neuler16 = ", g);
   int h = euler16();
@@ -442,8 +447,8 @@ int main(void){
   printf("euler20 = ");
   int m = euler20();
   printf("%d\n", m);
-  struct bigint * a = read_bigint();
-  struct bigint * b = read_bigint();
+  struct bigint * a = bigint_of_int(999999);
+  struct bigint * b = bigint_of_int(9951263);
   print_bigint(a);
   printf(">>1=");
   print_bigint(bigint_shift(a, -1));

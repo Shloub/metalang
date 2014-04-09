@@ -19,23 +19,14 @@ public class bigints
   }
   
   static class bigint {public boolean bigint_sign;public int bigint_len;public int[] bigint_chiffres;}
-  public static bigint read_bigint()
+  public static bigint read_bigint(int len)
   {
-    int len = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); len = -scanner.nextInt();
-    }else{
-    len = scanner.nextInt();}
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    char sign = '_';
-    sign = scanner.findWithinHorizon(".", 1).charAt(0);
-    scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] chiffres = new int[len];
-    for (int d = 0 ; d < len; d++)
+    for (int j = 0 ; j < len; j++)
     {
       char c = '_';
       c = scanner.findWithinHorizon(".", 1).charAt(0);
-      chiffres[d] = c - '0';
+      chiffres[j] = c;
     }
     for (int i = 0 ; i <= (len - 1) / 2; i ++)
     {
@@ -43,9 +34,8 @@ public class bigints
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
     }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
     bigint o = new bigint();
-    o.bigint_sign = sign == '+';
+    o.bigint_sign = true;
     o.bigint_len = len;
     o.bigint_chiffres = chiffres;
     return o;
@@ -412,7 +402,16 @@ Modulo
   
   public static void main(String args[])
   {
-    System.out.print("euler25 = ");
+    bigint sum = read_bigint(50);
+    for (int i = 2 ; i <= 100; i ++)
+    {
+      scanner.findWithinHorizon("[\n\r ]*", 1);
+      bigint tmp = read_bigint(50);
+      sum = add_bigint(sum, tmp);
+    }
+    System.out.print("euler13 = ");
+    print_bigint(sum);
+    System.out.printf("%s%s", "\n", "euler25 = ");
     int g = euler25();
     System.out.printf("%d%s%s", g, "\n", "euler16 = ");
     int h = euler16();
@@ -421,8 +420,8 @@ Modulo
     System.out.print("euler20 = ");
     int m = euler20();
     System.out.printf("%d%s", m, "\n");
-    bigint a = read_bigint();
-    bigint b = read_bigint();
+    bigint a = bigint_of_int(999999);
+    bigint b = bigint_of_int(9951263);
     print_bigint(a);
     System.out.print(">>1=");
     print_bigint(bigint_shift(a, -1));

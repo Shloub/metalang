@@ -22,21 +22,6 @@ def stdinsep():
       skipchar()
     else:
       return
-def readint():
-  c = readchar_()
-  if c == '-':
-    sign = -1
-    skipchar()
-  else:
-    sign = 1
-  out = 0
-  while True:
-    c = readchar_()
-    if c <= '9' and c >= '0' :
-      out = out * 10 + int(c)
-      skipchar()
-    else:
-      return out * sign
 def mod(x, y):
   return x - y * math.trunc(x / y)
 
@@ -51,25 +36,18 @@ def min2( a, b ):
     return b;
 
 
-def read_bigint(  ):
-    len = 0;
-    len=readint()
-    stdinsep()
-    sign = '_';
-    sign=readchar()
-    stdinsep()
+def read_bigint( len ):
     chiffres = [None] * len
-    for d in range(0, len):
+    for j in range(0, len):
       c = '_';
       c=readchar()
-      chiffres[d] = ord(c) - ord('0');
+      chiffres[j] = ord(c);
     for i in range(0, 1 + math.trunc((len - 1) / 2)):
       tmp = chiffres[i];
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
-    stdinsep()
     return {
-      "bigint_sign":sign == '+',
+      "bigint_sign":True,
       "bigint_len":len,
       "bigint_chiffres":chiffres};
 
@@ -346,7 +324,14 @@ def euler25(  ):
       i += 1
     return i;
 
-print( "euler25 = ", end='')
+sum = read_bigint(50);
+for i in range(2, 1 + 100):
+  stdinsep()
+  tmp = read_bigint(50);
+  sum = add_bigint(sum, tmp);
+print( "euler13 = ", end='')
+print_bigint(sum);
+print("\neuler25 = ", end='')
 g = euler25();
 print("%d\neuler16 = " % ( g ), end='')
 h = euler16();
@@ -355,8 +340,8 @@ euler48();
 print( "euler20 = ", end='')
 m = euler20();
 print("%d\n" % ( m ), end='')
-a = read_bigint();
-b = read_bigint();
+a = bigint_of_int(999999);
+b = bigint_of_int(9951263);
 print_bigint(a);
 print( ">>1=", end='')
 print_bigint(bigint_shift(a, -(1)));

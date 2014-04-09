@@ -42,33 +42,6 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function read_int_() : Longint;
-var
-   c    : char;
-   i    : Longint;
-   sign :  Longint;
-begin
-   i := 0;
-   c := read_char_aux();
-   if c = '-' then begin
-      skip_char();
-      sign := -1;
-   end
-   else
-      sign := 1;
-
-   repeat
-      c := read_char_aux();
-      if (ord(c) <=57) and (ord(c) >= 48) then
-      begin
-         i := i * 10 + ord(c) - 48;
-         skip_char();
-      end
-      else
-         exit(i * sign);
-   until false;
-end;
-
 
 function max2(a : Longint; b : Longint) : Longint;
 begin
@@ -98,29 +71,21 @@ type
       bigint_chiffres : array of Longint;
     end;
 
-function read_bigint() : bigint;
+function read_bigint(len : Longint) : bigint;
 var
   c : char;
   chiffres : array of Longint;
-  d : Longint;
   i : Longint;
-  len : Longint;
+  j : Longint;
   o : bigint;
-  sign : char;
   tmp : Longint;
 begin
-  len := 0;
-  len := read_int_();
-  skip();
-  sign := #95;
-  sign := read_char_();
-  skip();
   SetLength(chiffres, len);
-  for d := 0 to  len - 1 do
+  for j := 0 to  len - 1 do
   begin
     c := #95;
     c := read_char_();
-    chiffres[d] := ord(c) - ord(#48);
+    chiffres[j] := ord(c);
   end;
   for i := 0 to  (len - 1) Div 2 do
   begin
@@ -128,11 +93,8 @@ begin
     chiffres[i] := chiffres[len - 1 - i];
     chiffres[len - 1 - i] := tmp;
   end;
-  skip();
   new(o);
-  o^.bigint_sign := sign
-  =
-  #43;
+  o^.bigint_sign := true;
   o^.bigint_len := len;
   o^.bigint_chiffres := chiffres;
   exit(o);
@@ -695,9 +657,22 @@ var
   b : bigint;
   g : Longint;
   h : Longint;
+  i : Longint;
   m : Longint;
   n : boolean;
+  sum : bigint;
+  tmp : bigint;
 begin
+  sum := read_bigint(50);
+  for i := 2 to  100 do
+  begin
+    skip();
+    tmp := read_bigint(50);
+    sum := add_bigint(sum, tmp);
+  end;
+  Write('euler13 = ');
+  print_bigint(sum);
+  Write(''#10'');
   Write('euler25 = ');
   g := euler25();
   Write(g);
@@ -711,8 +686,8 @@ begin
   m := euler20();
   Write(m);
   Write(''#10'');
-  a := read_bigint();
-  b := read_bigint();
+  a := bigint_of_int(999999);
+  b := bigint_of_int(9951263);
   print_bigint(a);
   Write('>>1=');
   print_bigint(bigint_shift(a, -1));

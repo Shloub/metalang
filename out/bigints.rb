@@ -18,27 +18,20 @@ def min2( a, b )
 end
 
 
-def read_bigint(  )
-    len = 0
-    len=scanf("%d")[0];
-    scanf("%*\n");
-    sign = "_"
-    sign=scanf("%c")[0];
-    scanf("%*\n");
+def read_bigint( len )
     chiffres = [];
-    for d in (0 ..  len - 1) do
+    for j in (0 ..  len - 1) do
       c = "_"
       c=scanf("%c")[0];
-      chiffres[d] = c.ord - "0".ord;
+      chiffres[j] = c.ord;
     end
     for i in (0 ..  ((len - 1).to_f / 2).to_i) do
       tmp = chiffres[i]
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
     end
-    scanf("%*\n");
     return ({
-      "bigint_sign" => sign == "+",
+      "bigint_sign" => true,
       "bigint_len" => len,
       "bigint_chiffres" => chiffres});
 end
@@ -423,7 +416,15 @@ def euler25(  )
     return (i);
 end
 
-print "euler25 = ";
+sum = read_bigint(50)
+for i in (2 ..  100) do
+  scanf("%*\n");
+  tmp = read_bigint(50)
+  sum = add_bigint(sum, tmp);
+end
+print "euler13 = ";
+print_bigint(sum);
+printf "\neuler25 = ";
 g = euler25()
 printf "%d\neuler16 = ", g
 h = euler16()
@@ -432,8 +433,8 @@ euler48();
 print "euler20 = ";
 m = euler20()
 printf "%d\n", m
-a = read_bigint()
-b = read_bigint()
+a = bigint_of_int(999999)
+b = bigint_of_int(9951263)
 print_bigint(a);
 print ">>1=";
 print_bigint(bigint_shift(a, -1));

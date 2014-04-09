@@ -17,22 +17,17 @@ type bigint = {
   mutable bigint_chiffres : int array;
 };;
 
-let read_bigint () =
-  let len = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let sign = Scanf.scanf "%c" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let chiffres = Array.init len (fun _d ->
+let read_bigint len =
+  let chiffres = Array.init len (fun _j ->
     let c = Scanf.scanf "%c" (fun x -> x) in
-    int_of_char (c) - int_of_char ('0')) in
+    int_of_char (c)) in
   for i = 0 to (len - 1) / 2 do
     let tmp = chiffres.(i) in
     chiffres.(i) <- chiffres.(len - 1 - i);
     chiffres.(len - 1 - i) <- tmp
   done;
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
   {
-    bigint_sign=sign = '+';
+    bigint_sign=true;
     bigint_len=len;
     bigint_chiffres=chiffres;
   }
@@ -360,6 +355,15 @@ let euler25 () =
 
 let () =
 begin
+  let sum = ref( read_bigint 50 ) in
+  for _i = 2 to 100 do
+    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    let tmp = read_bigint 50 in
+    sum := add_bigint (!sum) tmp
+  done;
+  Printf.printf "euler13 = ";
+  print_bigint (!sum);
+  Printf.printf "\n";
   Printf.printf "euler25 = ";
   let g = (euler25 ()) in
   Printf.printf "%d" g;
@@ -373,8 +377,8 @@ begin
   let m = (euler20 ()) in
   Printf.printf "%d" m;
   Printf.printf "\n";
-  let a = (read_bigint ()) in
-  let b = (read_bigint ()) in
+  let a = bigint_of_int 999999 in
+  let b = bigint_of_int 9951263 in
   print_bigint a;
   Printf.printf ">>1=";
   print_bigint (bigint_shift a (-1));
