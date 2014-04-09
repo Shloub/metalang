@@ -6,6 +6,7 @@ public class triangles
   /* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 */
   public static int find0(int len, int[][] tab, int[][] cache, int x, int y)
   {
@@ -15,17 +16,17 @@ public class triangles
     if (y == len - 1)
       return tab[y][x];
     else if (x > y)
-      return 100000;
+      return -10000;
     else if (cache[y][x] != 0)
       return cache[y][x];
     int result = 0;
     int out0 = find0(len, tab, cache, x, y + 1);
     int out1 = find0(len, tab, cache, x + 1, y + 1);
-    if (out0 < out1)
+    if (out0 > out1)
       result = out0 + tab[y][x];
     else
       result = out1 + tab[y][x];
-    cache[y][y] = result;
+    cache[y][x] = result;
     return result;
   }
   
@@ -70,13 +71,13 @@ public class triangles
       tab[i] = tab2;
     }
     int c = find(len, tab);
-    System.out.printf("%d", c);
+    System.out.printf("%d%s", c, "\n");
     for (int k = 0 ; k < len; k++)
     {
       for (int l = 0 ; l <= k; l ++)
       {
         int d = tab[k][l];
-        System.out.printf("%d", d);
+        System.out.printf("%d%s", d, " ");
       }
       System.out.print("\n");
     }

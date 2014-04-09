@@ -35,6 +35,7 @@ def readint():
 """ Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 """
 def find0( len, tab, cache, x, y ):
     """
@@ -43,17 +44,17 @@ def find0( len, tab, cache, x, y ):
     if y == len - 1:
       return tab[y][x];
     elif x > y:
-      return 100000;
+      return -(10000);
     elif cache[y][x] != 0:
       return cache[y][x];
     result = 0;
     out0 = find0(len, tab, cache, x, y + 1);
     out1 = find0(len, tab, cache, x + 1, y + 1);
-    if out0 < out1:
+    if out0 > out1:
       result = out0 + tab[y][x];
     else:
       result = out1 + tab[y][x];
-    cache[y][y] = result;
+    cache[y][x] = result;
     return result;
 
 def find( len, tab ):
@@ -80,10 +81,10 @@ for i in range(0, len):
     tab2[j] = tmp;
   tab[i] = tab2;
 c = find(len, tab);
-print("%d" % c, end='')
+print("%d\n" % ( c ), end='')
 for k in range(0, len):
   for l in range(0, 1 + k):
     d = tab[k][l];
-    print("%d" % d, end='')
+    print("%d " % ( d ), end='')
   print("")
 

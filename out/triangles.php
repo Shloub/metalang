@@ -19,6 +19,7 @@ if ($stdin != '' || feof(STDIN)) break;
 }/* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 */
 function find0($len, &$tab, &$cache, $x, $y){
   /*
@@ -27,17 +28,17 @@ function find0($len, &$tab, &$cache, $x, $y){
   if ($y == $len - 1)
     return $tab[$y][$x];
   else if ($x > $y)
-    return 100000;
+    return -10000;
   else if ($cache[$y][$x] != 0)
     return $cache[$y][$x];
   $result = 0;
   $out0 = find0($len, $tab, $cache, $x, $y + 1);
   $out1 = find0($len, $tab, $cache, $x + 1, $y + 1);
-  if ($out0 < $out1)
+  if ($out0 > $out1)
     $result = $out0 + $tab[$y][$x];
   else
     $result = $out1 + $tab[$y][$x];
-  $cache[$y][$y] = $result;
+  $cache[$y][$x] = $result;
   return $result;
 }
 
@@ -72,13 +73,13 @@ for ($i = 0 ; $i < $len; $i++)
   $tab[$i] = $tab2;
 }
 $c = find($len, $tab);
-echo $c;
+echo $c, "\n";
 for ($k = 0 ; $k < $len; $k++)
 {
   for ($l = 0 ; $l <= $k; $l++)
   {
     $d = $tab[$k][$l];
-    echo $d;
+    echo $d, " ";
   }
   echo "\n";
 }

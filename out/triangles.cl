@@ -32,6 +32,7 @@
 #| Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 |#
 (defun find0 (len tab cache x y)
 (progn
@@ -43,7 +44,7 @@
     (return-from find0 (aref (aref tab y) x))
     (if
       (> x y)
-      (return-from find0 100000)
+      (return-from find0 (- 0 10000))
       (if
         (not (= (aref (aref cache y) x) 0))
         (return-from find0 (aref (aref cache y) x))
@@ -52,10 +53,10 @@
             (let ((out0 (find0 len tab cache x (+ y 1))))
               (let ((out1 (find0 len tab cache (+ x 1) (+ y 1))))
                 (if
-                  (< out0 out1)
+                  (> out0 out1)
                   (setq result (+ out0 (aref (aref tab y) x)))
                   (setq result (+ out1 (aref (aref tab y) x))))
-                (setf (aref (aref cache y) y) result)
+                (setf (aref (aref cache y) x) result)
                 (return-from find0 result)
               )))))))
 ))
@@ -108,6 +109,8 @@
               ))))
     (let ((c (find_ len tab)))
       (princ c)
+      (princ "
+")
       (do
         ((k 0 (+ 1 k)))
         ((> k (- len 1)))
@@ -118,6 +121,7 @@
             (progn
               (let ((d (aref (aref tab k) l)))
                 (princ d)
+                (princ " ")
               ))
           )
           (princ "

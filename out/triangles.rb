@@ -4,6 +4,7 @@ require "scanf.rb"
  Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 
 =end
 
@@ -18,19 +19,19 @@ def find0( len, tab, cache, x, y )
     if y == len - 1 then
       return (tab[y][x]);
     elsif x > y then
-      return (100000);
+      return (-10000);
     elsif cache[y][x] != 0 then
       return (cache[y][x]);
     end
     result = 0
     out0 = find0(len, tab, cache, x, y + 1)
     out1 = find0(len, tab, cache, x + 1, y + 1)
-    if out0 < out1 then
+    if out0 > out1 then
       result = out0 + tab[y][x];
     else
       result = out1 + tab[y][x];
     end
-    cache[y][y] = result;
+    cache[y][x] = result;
     return (result);
 end
 
@@ -63,11 +64,11 @@ for i in (0 ..  len - 1) do
   tab[i] = tab2;
 end
 c = find(len, tab)
-printf "%d", c
+printf "%d\n", c
 for k in (0 ..  len - 1) do
   for l in (0 ..  k) do
     d = tab[k][l]
-    printf "%d", d
+    printf "%d ", d
   end
   print "\n";
 end

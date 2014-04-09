@@ -38,6 +38,7 @@ var read_int_ = function(){
 /* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 */
 function find0(len, tab, cache, x, y){
   /*
@@ -46,17 +47,17 @@ function find0(len, tab, cache, x, y){
   if (y == len - 1)
     return tab[y][x];
   else if (x > y)
-    return 100000;
+    return -10000;
   else if (cache[y][x] != 0)
     return cache[y][x];
   var result = 0;
   var out0 = find0(len, tab, cache, x, y + 1);
   var out1 = find0(len, tab, cache, x + 1, y + 1);
-  if (out0 < out1)
+  if (out0 > out1)
     result = out0 + tab[y][x];
   else
     result = out1 + tab[y][x];
-  cache[y][y] = result;
+  cache[y][x] = result;
   return result;
 }
 
@@ -91,13 +92,13 @@ for (var i = 0 ; i <= len - 1; i++)
   tab[i] = tab2;
 }
 var c = find(len, tab);
-util.print(c);
+util.print(c, "\n");
 for (var k = 0 ; k <= len - 1; k++)
 {
   for (var l = 0 ; l <= k; l++)
   {
     var d = tab[k][l];
-    util.print(d);
+    util.print(d, " ");
   }
   util.print("\n");
 }

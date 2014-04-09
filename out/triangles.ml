@@ -1,6 +1,7 @@
 (* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 *)
 let rec find0 len tab cache x y =
   (*
@@ -9,7 +10,7 @@ let rec find0 len tab cache x y =
   if y = len - 1 then
     tab.(y).(x)
   else if x > y then
-    100000
+    -10000
   else if cache.(y).(x) <> 0 then
     cache.(y).(x)
   else
@@ -17,11 +18,11 @@ let rec find0 len tab cache x y =
       let result = ref( 0 ) in
       let out0 = find0 len tab cache x (y + 1) in
       let out1 = find0 len tab cache (x + 1) (y + 1) in
-      if out0 < out1 then
+      if out0 > out1 then
         result := out0 + tab.(y).(x)
       else
         result := out1 + tab.(y).(x);
-      cache.(y).(y) <- (!result);
+      cache.(y).(x) <- (!result);
       (!result)
     end
 
@@ -48,10 +49,12 @@ begin
     tab2) in
   let c = find (!len) tab in
   Printf.printf "%d" c;
+  Printf.printf "\n";
   for k = 0 to (!len) - 1 do
     for l = 0 to k do
       let d = tab.(k).(l) in
-      Printf.printf "%d" d
+      Printf.printf "%d" d;
+      Printf.printf " "
     done;
     Printf.printf "\n"
   done

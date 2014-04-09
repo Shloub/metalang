@@ -4,6 +4,7 @@
 /* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 */
 int find0(int len, int** tab, int** cache, int x, int y){
   /*
@@ -12,17 +13,17 @@ int find0(int len, int** tab, int** cache, int x, int y){
   if (y == len - 1)
     return tab[y][x];
   else if (x > y)
-    return 100000;
+    return -10000;
   else if (cache[y][x] != 0)
     return cache[y][x];
   int result = 0;
   int out0 = find0(len, tab, cache, x, y + 1);
   int out1 = find0(len, tab, cache, x + 1, y + 1);
-  if (out0 < out1)
+  if (out0 > out1)
     result = out0 + tab[y][x];
   else
     result = out1 + tab[y][x];
-  cache[y][y] = result;
+  cache[y][x] = result;
   return result;
 }
 
@@ -70,7 +71,7 @@ int main(void){
     }
   }
   int c = find(len, tab);
-  printf("%d", c);
+  printf("%d\n", c);
   {
     int k;
     for (k = 0 ; k < len; k++)
@@ -80,7 +81,7 @@ int main(void){
         for (l = 0 ; l <= k; l++)
         {
           int d = tab[k][l];
-          printf("%d", d);
+          printf("%d ", d);
         }
       }
       printf("\n");

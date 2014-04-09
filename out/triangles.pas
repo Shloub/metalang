@@ -64,6 +64,7 @@ end;
 { Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin
+on le retrouve ici : http://projecteuler.net/problem=18
 }
 type e = array of array of Longint;
 function find0(len : Longint; tab : e; cache : e; x : Longint; y : Longint) : Longint;
@@ -81,7 +82,7 @@ begin
     end
   else if x > y then
     begin
-      exit(100000);
+      exit(-10000);
     end
   else if cache[y][x] <> 0
   then
@@ -91,7 +92,7 @@ begin
   result := 0;
   out0 := find0(len, tab, cache, x, y + 1);
   out1 := find0(len, tab, cache, x + 1, y + 1);
-  if out0 < out1
+  if out0 > out1
   then
     begin
       result := out0 + tab[y][x];
@@ -100,7 +101,7 @@ begin
     begin
       result := out1 + tab[y][x];
     end;
-  cache[y][y] := result;
+  cache[y][x] := result;
   exit(result);
 end;
 
@@ -160,12 +161,14 @@ begin
   end;
   c := find(len, tab);
   Write(c);
+  Write(''#10'');
   for k := 0 to  len - 1 do
   begin
     for l := 0 to  k do
     begin
       d := tab[k][l];
       Write(d);
+      Write(' ');
     end;
     Write(''#10'');
   end;
