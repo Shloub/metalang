@@ -1,0 +1,34 @@
+
+main
+	def n = 10 /* normalement on doit mettre 20 mais là on se tape un overflow */
+	n ++
+	def array<array<int>> tab[n] with i do
+		def array<int> tab2[n] with j do
+			return 0
+		end
+		return tab2
+	end
+
+	for l = 0 to n - 1 do
+		tab[n-1][l] = 1
+		tab[l][n-1] = 1
+	end
+
+	for o = 2 to n do
+		def r = n - o
+		for p = 2 to n do
+			def q = n - p
+			tab[r][q] = tab[r + 1][q] + tab[r][q + 1]
+		end
+	end	
+
+	for m = 0 to n - 1 do
+		for k = 0 to n - 1 do
+			print tab[m][k] print " "
+		end
+		print "\n"
+	end
+
+
+	print tab[0][0] print "\n"
+end
