@@ -74,6 +74,17 @@ def int min4(int a, int b, int c, int d)
 	return min3(min2(a, b), c, d)
 end
 
+def int pgcd(int a, int b)
+	def c = min2(a, b)
+	def d = max2(a, b)
+	def reste = d % c
+	if reste == 0 then
+		return c
+	else
+		return pgcd(c, reste)
+	end
+end
+
 macro array<int> native_expand_read_int_line()
   py do "list(map(int, input().split()))"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
