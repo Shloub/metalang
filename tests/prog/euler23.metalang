@@ -1,0 +1,114 @@
+
+def int eratostene(array<int> t, int max)
+	def n = 0
+	for i = 2 to max - 1 do
+		if t[i] == i then
+			n ++
+			def j = i * i
+			while j < max && j > 0 do
+				t[j] = 0
+				j += i
+			end
+    end
+  end
+	return n;
+end
+
+def int fillPrimesFactors(array<int> t, int n, array<int> primes, int nprimes)
+	for i = 0 to nprimes - 1 do
+		def d = primes[i]
+		while n % d == 0 do
+			t[d] ++
+			n /= d
+		end
+		if n == 1 then
+			return primes[i]
+		end
+	end
+	return n
+end
+
+def int sumdivaux2(array<int> t, int n, int i)
+	while i < n && t[i] == 0 do
+		i++
+	end
+	return i
+end
+
+def int sumdivaux(array<int> t, int n, int i)
+	if i > n then
+		return 1
+	elsif t[i] == 0 then
+		return sumdivaux(t, n, sumdivaux2(t, n, i+1))
+	else
+		def o = sumdivaux(t, n, sumdivaux2(t, n, i+1))
+		def out = 0
+		def p = i
+		for j = 1 to t[i] do
+			out += p
+			p = p * i
+		end
+		return (out + 1)* o
+	end
+end
+
+def int sumdiv(int nprimes, array<int> primes, int n)
+	def array<int> t[n+1] with i do
+		return 0
+  end
+	def max = fillPrimesFactors(t, n, primes, nprimes)
+	return sumdivaux(t, max, 0)
+end
+
+main
+	def maximumprimes = 30001
+	def array<int> era[maximumprimes] with s do
+		return s
+	end
+	def nprimes = eratostene(era, maximumprimes)
+	def array<int> primes[nprimes] with t do
+		return 0
+	end
+	def l = 0
+	for k = 2 to maximumprimes - 1 do
+		if era[k] == k then
+			primes[l] = k
+			l++
+		end
+	end
+
+	def n = 100 /* 28124 ça prend trop de temps mais on arrive a passer le test */
+
+	def array<bool> abondant[n+1] with p do
+		return false
+	end
+
+	def array<bool> summable[n+1] with q do
+		return false
+	end
+
+	def sum = 0
+	for r = 2 to n do
+		def other = sumdiv(nprimes, primes, r) - r
+		if other > r then
+			abondant[r] = true
+		end
+	end
+
+	for i = 1 to n do
+		for j = 1 to n do
+			if abondant[i] && abondant[j] && i + j <= n then
+				summable[ i + j] = true
+			end
+		end
+	end
+
+	for o = 1 to n do
+		if !summable[o] then
+			sum += o
+		end
+	end
+
+	print "\n"
+	print sum print "\n"
+end
