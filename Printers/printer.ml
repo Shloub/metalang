@@ -347,6 +347,8 @@ class printer = object(self)
       Format.fprintf f "@[<h>%a *= %a;@]" self#mutable_ m self#expr e2
     | Expr.Div ->
       Format.fprintf f "@[<h>%a /= %a;@]" self#mutable_ m self#expr e2
+    | Expr.Mod ->
+      Format.fprintf f "@[<h>%a %%= %a;@]" self#mutable_ m self#expr e2
 		| _ -> assert false
 
   method hasSelfAffect op = true

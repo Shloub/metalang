@@ -53,6 +53,7 @@ class pyPrinter = object(self)
   | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_ m self#expr e2
   | Expr.Mul -> Format.fprintf f "@[<h>%a *= %a@]" self#mutable_ m self#expr e2
   | Expr.Div -> Format.fprintf f "@[<h>%a = math.trunc(%a / %a)@]" self#mutable_ m self#mutable_ m self#expr e2
+  | Expr.Mod -> Format.fprintf f "@[<h>%a = mod(%a, %a)@]" self#mutable_ m self#mutable_ m self#expr e2
   | _ -> assert false
 
   method lang () = "py"

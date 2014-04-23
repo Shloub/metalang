@@ -66,6 +66,7 @@ class commonLispPrinter = object(self)
   | Expr.Sub -> Format.fprintf f "@[<h>(%a %a ( - %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
   | Expr.Mul -> Format.fprintf f "@[<h>(%a %a ( * %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
   | Expr.Div -> Format.fprintf f "@[<h>(%a %a ( quotient %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
+  | Expr.Mod -> Format.fprintf f "@[<h>(%a %a ( remainder %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
   | _ -> assert false
 
 
