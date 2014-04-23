@@ -1,0 +1,41 @@
+
+def int fact(int n)
+	def prod = 1
+	for i = 2 to n do
+		prod *= i
+	end
+	return prod
+end
+
+def void show(int lim, int nth)
+	def array<int> t[lim] with i do
+		return i
+	end
+	def array<bool> pris[lim] with j do
+		return false
+	end
+	for k = 1 to lim - 1 do
+		def n = fact(lim - k);
+		def nchiffre = nth / n;
+		nth = nth % n;
+		for l = 0 to lim - 1 do
+			if !pris[l] then
+				if nchiffre == 0 then
+					print l
+					pris[l] = true
+				end
+				nchiffre --
+			end
+		end
+	end
+	for m = 0 to lim - 1 do
+		if !pris[m] then
+			print m
+		end
+	end
+	print "\n"
+end
+
+main
+	show(10, 999999);
+end

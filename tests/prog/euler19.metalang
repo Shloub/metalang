@@ -1,0 +1,58 @@
+
+def bool is_leap(int year)
+	return year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)
+end
+
+def int ndayinmonth(int month, int year)
+	if month == 0 then
+		return 31
+	elsif month == 1 then
+		if is_leap(year) then
+			return 29
+		else
+			return 28
+		end
+	elsif month == 2 then
+		return 31
+	elsif month == 3 then
+		return 30
+	elsif month == 4 then
+		return 31
+	elsif month == 5 then
+		return 30
+	elsif month == 6 then
+		return 31
+	elsif month == 7 then
+		return 31
+	elsif month == 8 then
+		return 30
+	elsif month == 9 then
+		return 31
+	elsif month == 10 then
+		return 30
+	elsif month == 11 then
+		return 31
+	end
+	return 0
+end
+
+main
+	def month = 0
+	def year = 1901
+	def dayofweek = 1 /* 01-01-1901 : mardi */
+	def count = 0
+	while year != 2001 do
+		def ndays = ndayinmonth(month, year)
+		dayofweek = (dayofweek + ndays) % 7
+		month ++
+		if month == 12 then
+			month = 0
+			year ++
+		end
+		if dayofweek % 7 == 6 then
+			count ++
+		end
+  end
+	print int count
+	print "\n"
+end
