@@ -277,7 +277,8 @@ class camlPrinter = object(self)
   method bloc f b =
     if List.forall
       (function
-      | Instr.Fixed.F (_, Instr.Comment _) -> true
+      | Instr.Fixed.F (_, (Instr.Comment _
+			  | (Instr.If (_, _, _) )) (* sans begin end, on a un conflit sur le else *)) -> true
       | _ -> false
       )
       b

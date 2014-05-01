@@ -144,6 +144,20 @@ class cPrinter = object(self)
   | [i] -> Format.fprintf f "  %a" self#instr i
   | _ ->  Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
+  method blocinif f li = match li with
+  | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
+                             | (Instr.AllocArray _)
+                             | (Instr.DeclRead _)
+                             | (Instr.Declare _)
+                             | (Instr.Comment _)
+			     | (Instr.If (_, _, _) ) (* sans accolades, on a un conflit sur le else *)
+	))
+    ] ->
+    Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
+  | [i] -> Format.fprintf f "  %a" self#instr i
+  | _ ->  Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
+
+
   method prototype f t = self#ptype f t
 
   method print_proto f (funname, t, li) =
@@ -250,15 +264,15 @@ class cPrinter = object(self)
   method if_ f e ifcase elsecase =
     match elsecase with
       | [] -> Format.fprintf f "@[<h>if@ (%a)@]@\n%a"
- 	self#expr e
-	self#bloc ifcase
+ 				self#expr e
+				self#blocinif ifcase
       | [Instr.Fixed.F ( _, Instr.If (condition, instrs1, instrs2) ) as instr] ->
         Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse %a"
- 	  self#expr e
-          self#bloc ifcase
- 	  self#instr instr
+ 					self#expr e
+          self#blocinif ifcase
+ 					self#instr instr
       | _ -> Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
- 	self#expr e
-        self#bloc ifcase
+ 				self#expr e
+        self#blocinif ifcase
         self#bloc elsecase
 end
