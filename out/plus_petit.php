@@ -20,10 +20,12 @@ if ($stdin != '' || feof(STDIN)) break;
 function go_(&$tab, $a, $b){
   $m = intval(($a + $b) / 2);
   if ($a == $m)
+  {
     if ($tab[$a] == $m)
-    return $b;
-  else
-    return $a;
+      return $b;
+    else
+      return $a;
+  }
   $i = $a;
   $j = $b;
   while ($i < $j)

@@ -61,10 +61,10 @@
         (setf (aref chiffres (- (- len 1) i)) tmp)
       ))
   )
-  (let ((o (make-bigint :bigint_sign t
+  (let ((u (make-bigint :bigint_sign t
                         :bigint_len len
                         :bigint_chiffres chiffres)))
-  (return-from read_bigint o)
+  (return-from read_bigint u)
   ))))
 
 (defun print_bigint (a)
@@ -163,10 +163,10 @@
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((p (make-bigint :bigint_sign t
+      (let ((v (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from add_bigint_positif p)
+      (return-from add_bigint_positif v)
       ))))))
 
 (defun sub_bigint_positif (a b)
@@ -198,18 +198,18 @@ Pré-requis : a > b
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((q (make-bigint :bigint_sign t
+      (let ((w (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from sub_bigint_positif q)
+      (return-from sub_bigint_positif w)
       ))))))
 
 (defun neg_bigint (a)
 (progn
-  (let ((r (make-bigint :bigint_sign (not (bigint-bigint_sign a))
+  (let ((x (make-bigint :bigint_sign (not (bigint-bigint_sign a))
                         :bigint_len (bigint-bigint_len a)
                         :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from neg_bigint r)
+  (return-from neg_bigint x)
 )))
 
 (defun add_bigint (a b)
@@ -279,10 +279,10 @@ D'ou le nom de la fonction. |#
         (and (not (= len 0)) (= (aref chiffres (- len 1)) 0))
         (setq len ( - len 1)))
     )
-    (let ((s (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
+    (let ((y (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
                           :bigint_len len
                           :bigint_chiffres chiffres)))
-    (return-from mul_bigint_cp s)
+    (return-from mul_bigint_cp y)
     )))))
 
 (defun bigint_premiers_chiffres (a i)
@@ -291,10 +291,10 @@ D'ou le nom de la fonction. |#
     (loop while (and (not (= len 0)) (= (aref (bigint-bigint_chiffres a) (- len 1)) 0))
     do (setq len ( - len 1))
     )
-    (let ((u (make-bigint :bigint_sign (bigint-bigint_sign a)
+    (let ((z (make-bigint :bigint_sign (bigint-bigint_sign a)
                           :bigint_len len
                           :bigint_chiffres (bigint-bigint_chiffres a))))
-    (return-from bigint_premiers_chiffres u)
+    (return-from bigint_premiers_chiffres z)
   ))))
 
 (defun bigint_shift (a i)
@@ -311,10 +311,10 @@ D'ou le nom de la fonction. |#
                        (return-from lambda_5 0))
                    ))
                    ))))
-    (let ((v (make-bigint :bigint_sign (bigint-bigint_sign a)
-                          :bigint_len (+ (bigint-bigint_len a) i)
-                          :bigint_chiffres chiffres)))
-    (return-from bigint_shift v)
+    (let ((ba (make-bigint :bigint_sign (bigint-bigint_sign a)
+                           :bigint_len (+ (bigint-bigint_len a) i)
+                           :bigint_chiffres chiffres)))
+    (return-from bigint_shift ba)
     )))))
 
 (defun mul_bigint (aa bb)
@@ -382,10 +382,10 @@ Modulo
         (setq i ( quotient i 10))
       )
     )
-    (let ((w (make-bigint :bigint_sign t
-                          :bigint_len size
-                          :bigint_chiffres t_)))
-    (return-from bigint_of_int w)
+    (let ((bc (make-bigint :bigint_sign t
+                           :bigint_len size
+                           :bigint_chiffres t_)))
+    (return-from bigint_of_int bc)
     )))))
 
 (defun fact_bigint (a)
@@ -483,89 +483,165 @@ Modulo
         (return-from euler25 i)
       )))))
 
+(defun euler29 ()
 (progn
-  (let ((sum (read_bigint 50)))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i 100))
-      (progn
-        (mread-blank)
-        (let ((tmp (read_bigint 50)))
-          (setq sum (add_bigint sum tmp))
-        ))
-    )
-    (princ "euler13 = ")
-    (print_bigint sum)
+  (let ((maxA 5))
+    (let ((maxB 5))
+      (let ((g (+ maxA 1)))
+        (let
+         ((a_bigint (array_init
+                       g
+                       (function (lambda (j)
+                       (block lambda_7
+                         (return-from lambda_7 (bigint_of_int (* j j)))
+                       ))
+                       ))))
+        (let ((h (+ maxA 1)))
+          (let
+           ((a0_bigint (array_init
+                          h
+                          (function (lambda (j2)
+                          (block lambda_8
+                            (return-from lambda_8 (bigint_of_int j2))
+                          ))
+                          ))))
+          (let ((m (+ maxA 1)))
+            (let
+             ((b (array_init
+                    m
+                    (function (lambda (k)
+                    (block lambda_9
+                      (return-from lambda_9 2)
+                    ))
+                    ))))
+            (let ((n 0))
+              (let ((found t))
+                (loop while found
+                do (progn
+                     (let ((min_ (aref a0_bigint 0)))
+                       (setq found nil)
+                       (do
+                         ((i 2 (+ 1 i)))
+                         ((> i maxA))
+                         (if
+                           (<= (aref b i) maxB)
+                           (if
+                             found
+                             (if
+                               (bigint_lt (aref a_bigint i) min_)
+                               (setq min_ (aref a_bigint i)))
+                             (progn
+                               (setq min_ (aref a_bigint i))
+                               (setq found t)
+                             )))
+                       )
+                       (if
+                         found
+                         (progn
+                           (setq n ( + n 1))
+                           (do
+                             ((l 2 (+ 1 l)))
+                             ((> l maxA))
+                             (if
+                               (and (bigint_eq (aref a_bigint l) min_) (<= (aref b l) maxB))
+                               (progn
+                                 (setf (aref b l) (+ (aref b l) 1))
+                                 (setf (aref a_bigint l) (mul_bigint (aref a_bigint l) (aref a0_bigint l)))
+                               ))
+                           )
+                         ))
+                     ))
+                )
+                (return-from euler29 n)
+              ))))))))))))
+
+(progn
+  (let ((o (euler29 )))
+    (princ o)
     (princ "
 ")
-    (princ "euler25 = ")
-    (let ((g (euler25 )))
-      (princ g)
+    (let ((sum (read_bigint 50)))
+      (do
+        ((i 2 (+ 1 i)))
+        ((> i 100))
+        (progn
+          (mread-blank)
+          (let ((tmp (read_bigint 50)))
+            (setq sum (add_bigint sum tmp))
+          ))
+      )
+      (princ "euler13 = ")
+      (print_bigint sum)
       (princ "
 ")
-      (princ "euler16 = ")
-      (let ((h (euler16 )))
-        (princ h)
+      (princ "euler25 = ")
+      (let ((p (euler25 )))
+        (princ p)
         (princ "
 ")
-        (euler48 )
-        (princ "euler20 = ")
-        (let ((m (euler20 )))
-          (princ m)
+        (princ "euler16 = ")
+        (let ((q (euler16 )))
+          (princ q)
           (princ "
 ")
-          (let ((a (bigint_of_int 999999)))
-            (let ((b (bigint_of_int 9951263)))
-              (print_bigint a)
-              (princ ">>1=")
-              (print_bigint (bigint_shift a (- 0 1)))
-              (princ "
+          (euler48 )
+          (princ "euler20 = ")
+          (let ((r (euler20 )))
+            (princ r)
+            (princ "
 ")
-              (print_bigint a)
-              (princ "*")
-              (print_bigint b)
-              (princ "=")
-              (print_bigint (mul_bigint a b))
-              (princ "
-")
-              (print_bigint a)
-              (princ "*")
-              (print_bigint b)
-              (princ "=")
-              (print_bigint (mul_bigint_cp a b))
-              (princ "
-")
-              (print_bigint a)
-              (princ "+")
-              (print_bigint b)
-              (princ "=")
-              (print_bigint (add_bigint a b))
-              (princ "
-")
-              (print_bigint b)
-              (princ "-")
-              (print_bigint a)
-              (princ "=")
-              (print_bigint (sub_bigint b a))
-              (princ "
-")
-              (print_bigint a)
-              (princ "-")
-              (print_bigint b)
-              (princ "=")
-              (print_bigint (sub_bigint a b))
-              (princ "
-")
-              (print_bigint a)
-              (princ ">")
-              (print_bigint b)
-              (princ "=")
-              (let ((n (bigint_gt a b)))
-                (if
-                  n
-                  (princ "True")
-                  (princ "False"))
+            (let ((a (bigint_of_int 999999)))
+              (let ((b (bigint_of_int 9951263)))
+                (print_bigint a)
+                (princ ">>1=")
+                (print_bigint (bigint_shift a (- 0 1)))
                 (princ "
 ")
-              ))))))))
+                (print_bigint a)
+                (princ "*")
+                (print_bigint b)
+                (princ "=")
+                (print_bigint (mul_bigint a b))
+                (princ "
+")
+                (print_bigint a)
+                (princ "*")
+                (print_bigint b)
+                (princ "=")
+                (print_bigint (mul_bigint_cp a b))
+                (princ "
+")
+                (print_bigint a)
+                (princ "+")
+                (print_bigint b)
+                (princ "=")
+                (print_bigint (add_bigint a b))
+                (princ "
+")
+                (print_bigint b)
+                (princ "-")
+                (print_bigint a)
+                (princ "=")
+                (print_bigint (sub_bigint b a))
+                (princ "
+")
+                (print_bigint a)
+                (princ "-")
+                (print_bigint b)
+                (princ "=")
+                (print_bigint (sub_bigint a b))
+                (princ "
+")
+                (print_bigint a)
+                (princ ">")
+                (print_bigint b)
+                (princ "=")
+                (let ((s (bigint_gt a b)))
+                  (if
+                    s
+                    (princ "True")
+                    (princ "False"))
+                  (princ "
+")
+                )))))))))
 

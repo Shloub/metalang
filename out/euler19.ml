@@ -5,10 +5,12 @@ let ndayinmonth month year =
   if month = 0 then
     31
   else if month = 1 then
-    if is_leap year then
-      29
-    else
-      28
+    begin
+      if is_leap year then
+        29
+      else
+        28
+    end
   else if month = 2 then
     31
   else if month = 3 then

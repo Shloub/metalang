@@ -48,11 +48,11 @@ func read_bigint(len int) * bigint{
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
   }
-  var o * bigint = new (bigint)
-  (*o).bigint_sign=true;
-  (*o).bigint_len=len;
-  (*o).bigint_chiffres=chiffres;
-  return o
+  var u * bigint = new (bigint)
+  (*u).bigint_sign=true;
+  (*u).bigint_len=len;
+  (*u).bigint_chiffres=chiffres;
+  return u
 }
 
 func print_bigint(a * bigint) {
@@ -129,11 +129,11 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
   for len > 0 && chiffres[len - 1] == 0{
                                          len --;
   }
-  var p * bigint = new (bigint)
-  (*p).bigint_sign=true;
-  (*p).bigint_len=len;
-  (*p).bigint_chiffres=chiffres;
-  return p
+  var v * bigint = new (bigint)
+  (*v).bigint_sign=true;
+  (*v).bigint_len=len;
+  (*v).bigint_chiffres=chiffres;
+  return v
 }
 
 func sub_bigint_positif(a * bigint, b * bigint) * bigint{
@@ -159,19 +159,19 @@ Pré-requis : a > b
   for len > 0 && chiffres[len - 1] == 0{
                                          len --;
   }
-  var q * bigint = new (bigint)
-  (*q).bigint_sign=true;
-  (*q).bigint_len=len;
-  (*q).bigint_chiffres=chiffres;
-  return q
+  var w * bigint = new (bigint)
+  (*w).bigint_sign=true;
+  (*w).bigint_len=len;
+  (*w).bigint_chiffres=chiffres;
+  return w
 }
 
 func neg_bigint(a * bigint) * bigint{
-  var r * bigint = new (bigint)
-  (*r).bigint_sign=!(*a).bigint_sign;
-  (*r).bigint_len=(*a).bigint_len;
-  (*r).bigint_chiffres=(*a).bigint_chiffres;
-  return r
+  var x * bigint = new (bigint)
+  (*x).bigint_sign=!(*a).bigint_sign;
+  (*x).bigint_len=(*a).bigint_len;
+  (*x).bigint_chiffres=(*a).bigint_chiffres;
+  return x
 }
 
 func add_bigint(a * bigint, b * bigint) * bigint{
@@ -227,11 +227,11 @@ D'ou le nom de la fonction. */
         len --;
       }
   }
-  var s * bigint = new (bigint)
-  (*s).bigint_sign=(*a).bigint_sign == (*b).bigint_sign;
-  (*s).bigint_len=len;
-  (*s).bigint_chiffres=chiffres;
-  return s
+  var y * bigint = new (bigint)
+  (*y).bigint_sign=(*a).bigint_sign == (*b).bigint_sign;
+  (*y).bigint_len=len;
+  (*y).bigint_chiffres=chiffres;
+  return y
 }
 
 func bigint_premiers_chiffres(a * bigint, i int) * bigint{
@@ -239,11 +239,11 @@ func bigint_premiers_chiffres(a * bigint, i int) * bigint{
   for len != 0 && (*a).bigint_chiffres[len - 1] == 0{
                                                       len --;
   }
-  var u * bigint = new (bigint)
-  (*u).bigint_sign=(*a).bigint_sign;
-  (*u).bigint_len=len;
-  (*u).bigint_chiffres=(*a).bigint_chiffres;
-  return u
+  var z * bigint = new (bigint)
+  (*z).bigint_sign=(*a).bigint_sign;
+  (*z).bigint_len=len;
+  (*z).bigint_chiffres=(*a).bigint_chiffres;
+  return z
 }
 
 func bigint_shift(a * bigint, i int) * bigint{
@@ -256,11 +256,11 @@ func bigint_shift(a * bigint, i int) * bigint{
         chiffres[k] = 0;
       }
   }
-  var v * bigint = new (bigint)
-  (*v).bigint_sign=(*a).bigint_sign;
-  (*v).bigint_len=(*a).bigint_len + i;
-  (*v).bigint_chiffres=chiffres;
-  return v
+  var ba * bigint = new (bigint)
+  (*ba).bigint_sign=(*a).bigint_sign;
+  (*ba).bigint_len=(*a).bigint_len + i;
+  (*ba).bigint_chiffres=chiffres;
+  return ba
 }
 
 func mul_bigint(aa * bigint, bb * bigint) * bigint{
@@ -313,11 +313,11 @@ func bigint_of_int(i int) * bigint{
     t[k] = i % 10;
       i /= 10;
   }
-  var w * bigint = new (bigint)
-  (*w).bigint_sign=true;
-  (*w).bigint_len=size;
-  (*w).bigint_chiffres=t;
-  return w
+  var bc * bigint = new (bigint)
+  (*bc).bigint_sign=true;
+  (*bc).bigint_len=size;
+  (*bc).bigint_chiffres=t;
+  return bc
 }
 
 func fact_bigint(a * bigint) * bigint{
@@ -398,8 +398,58 @@ func euler25() int{
   return i
 }
 
+func euler29() int{
+  var maxA int = 5
+  var maxB int = 5
+  var g int = maxA + 1
+  var a_bigint []* bigint = make([]* bigint, g)
+  for j := 0 ; j <= g - 1; j++ {
+    a_bigint[j] = bigint_of_int(j * j);
+  }
+  var h int = maxA + 1
+  var a0_bigint []* bigint = make([]* bigint, h)
+  for j2 := 0 ; j2 <= h - 1; j2++ {
+    a0_bigint[j2] = bigint_of_int(j2);
+  }
+  var m int = maxA + 1
+  var b []int = make([]int, m)
+  for k := 0 ; k <= m - 1; k++ {
+    b[k] = 2;
+  }
+  var n int = 0
+  var found bool = true
+  for found{
+             var min_ * bigint = a0_bigint[0]
+             found = false;
+             for i := 2 ; i <= maxA; i++ {
+               if b[i] <= maxB {
+                   if found {
+                       if bigint_lt(a_bigint[i], min_) {
+                           min_ = a_bigint[i];
+                         }
+                     } else {
+                       min_ = a_bigint[i];
+                       found = true;
+                     }
+                 }
+             }
+             if found {
+               n ++;
+                 for l := 2 ; l <= maxA; l++ {
+                   if bigint_eq(a_bigint[l], min_) && b[l] <= maxB {
+                       b[l] = b[l] + 1;
+                         a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
+                     }
+                 }
+             }
+  }
+  return n
+}
+
 func main() {
   reader = bufio.NewReader(os.Stdin)
+  var o int = euler29()
+  fmt.Printf("%d\n", o);
   var sum * bigint = read_bigint(50)
   for i := 2 ; i <= 100; i++ {
     skip()
@@ -409,14 +459,14 @@ func main() {
   fmt.Printf("euler13 = ");
   print_bigint(sum);
   fmt.Printf("\neuler25 = ");
-  var g int = euler25()
-  fmt.Printf("%d\neuler16 = ", g);
-  var h int = euler16()
-  fmt.Printf("%d\n", h);
+  var p int = euler25()
+  fmt.Printf("%d\neuler16 = ", p);
+  var q int = euler16()
+  fmt.Printf("%d\n", q);
   euler48();
   fmt.Printf("euler20 = ");
-  var m int = euler20()
-  fmt.Printf("%d\n", m);
+  var r int = euler20()
+  fmt.Printf("%d\n", r);
   var a * bigint = bigint_of_int(999999)
   var b * bigint = bigint_of_int(9951263)
   print_bigint(a);
@@ -457,8 +507,8 @@ func main() {
   fmt.Printf(">");
   print_bigint(b);
   fmt.Printf("=");
-  var n bool = bigint_gt(a, b)
-  if n {
+  var s bool = bigint_gt(a, b)
+  if s {
     fmt.Printf("True");
   } else {
     fmt.Printf("False");

@@ -5,10 +5,12 @@
 int go_(std::vector<int >& tab, int a, int b){
   int m = (a + b) / 2;
   if (a == m)
+  {
     if (tab.at(a) == m)
-    return b;
-  else
-    return a;
+      return b;
+    else
+      return a;
+  }
   int i = a;
   int j = b;
   while (i < j)

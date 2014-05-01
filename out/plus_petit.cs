@@ -53,10 +53,12 @@ public static int readInt(){
   {
     int m = (a + b) / 2;
     if (a == m)
+    {
       if (tab[a] == m)
-      return b;
-    else
-      return a;
+        return b;
+      else
+        return a;
+    }
     int i = a;
     int j = b;
     while (i < j)

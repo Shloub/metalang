@@ -416,6 +416,56 @@ def euler25(  )
     return (i);
 end
 
+def euler29(  )
+    maxA = 5
+    maxB = 5
+    g = maxA + 1
+    a_bigint = [];
+    for j in (0 ..  g - 1) do
+      a_bigint[j] = bigint_of_int(j * j);
+    end
+    h = maxA + 1
+    a0_bigint = [];
+    for j2 in (0 ..  h - 1) do
+      a0_bigint[j2] = bigint_of_int(j2);
+    end
+    m = maxA + 1
+    b = [];
+    for k in (0 ..  m - 1) do
+      b[k] = 2;
+    end
+    n = 0
+    found = true
+    while found do
+      min_ = a0_bigint[0]
+      found = false;
+      for i in (2 ..  maxA) do
+        if b[i] <= maxB then
+          if found then
+            if bigint_lt(a_bigint[i], min_) then
+              min_ = a_bigint[i];
+            end
+          else
+            min_ = a_bigint[i];
+            found = true;
+          end
+        end
+      end
+      if found then
+        n += 1
+        for l in (2 ..  maxA) do
+          if bigint_eq(a_bigint[l], min_) && b[l] <= maxB then
+            b[l] = b[l] + 1;
+            a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
+          end
+        end
+      end
+    end
+    return (n);
+end
+
+o = euler29()
+printf "%d\n", o
 sum = read_bigint(50)
 for i in (2 ..  100) do
   scanf("%*\n");
@@ -425,14 +475,14 @@ end
 print "euler13 = ";
 print_bigint(sum);
 printf "\neuler25 = ";
-g = euler25()
-printf "%d\neuler16 = ", g
-h = euler16()
-printf "%d\n", h
+p = euler25()
+printf "%d\neuler16 = ", p
+q = euler16()
+printf "%d\n", q
 euler48();
 print "euler20 = ";
-m = euler20()
-printf "%d\n", m
+r = euler20()
+printf "%d\n", r
 a = bigint_of_int(999999)
 b = bigint_of_int(9951263)
 print_bigint(a);
@@ -473,8 +523,8 @@ print_bigint(a);
 print ">";
 print_bigint(b);
 print "=";
-n = bigint_gt(a, b)
-if n then
+s = bigint_gt(a, b)
+if s then
   print "True";
 else
   print "False";

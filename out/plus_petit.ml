@@ -1,10 +1,12 @@
 let rec go_ tab a b =
   let m = (a + b) / 2 in
   if a = m then
-    if tab.(a) = m then
-      b
-    else
-      a
+    begin
+      if tab.(a) = m then
+        b
+      else
+        a
+    end
   else
     begin
       let i = ref( a ) in

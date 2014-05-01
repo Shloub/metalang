@@ -148,10 +148,12 @@ let neg_bigint a =
 
 let add_bigint a b =
   if a.bigint_sign = b.bigint_sign then
-    if a.bigint_sign then
-      add_bigint_positif a b
-    else
-      neg_bigint (add_bigint_positif a b)
+    begin
+      if a.bigint_sign then
+        add_bigint_positif a b
+      else
+        neg_bigint (add_bigint_positif a b)
+    end
   else if a.bigint_sign then
     begin
       (* a positif, b negatif *)
@@ -353,8 +355,58 @@ let euler25 () =
   done;
   (!i)
 
+let euler29 () =
+  let maxA = 5 in
+  let maxB = 5 in
+  let g = maxA + 1 in
+  let a_bigint = Array.init g (fun j ->
+    bigint_of_int (j * j)) in
+  let h = maxA + 1 in
+  let a0_bigint = Array.init h (fun j2 ->
+    bigint_of_int j2) in
+  let m = maxA + 1 in
+  let b = Array.init m (fun _k ->
+    2) in
+  let n = ref( 0 ) in
+  let found = ref( true ) in
+  while (!found)
+  do
+      let min_ = ref( a0_bigint.(0) ) in
+      found := false;
+      for i = 2 to maxA do
+        if b.(i) <= maxB then
+          begin
+            if (!found) then
+              begin
+                if bigint_lt a_bigint.(i) (!min_) then
+                  min_ := a_bigint.(i)
+              end
+            else
+              begin
+                min_ := a_bigint.(i);
+                found := true
+              end
+          end
+      done;
+      if (!found) then
+        begin
+          n := (!n) + 1;
+          for l = 2 to maxA do
+            if bigint_eq a_bigint.(l) (!min_) && b.(l) <= maxB then
+              begin
+                b.(l) <- b.(l) + 1;
+                a_bigint.(l) <- mul_bigint a_bigint.(l) a0_bigint.(l)
+              end
+          done
+        end
+  done;
+  (!n)
+
 let () =
 begin
+  let o = (euler29 ()) in
+  Printf.printf "%d" o;
+  Printf.printf "\n";
   let sum = ref( read_bigint 50 ) in
   for _i = 2 to 100 do
     Scanf.scanf "%[\n \010]" (fun _ -> ());
@@ -365,17 +417,17 @@ begin
   print_bigint (!sum);
   Printf.printf "\n";
   Printf.printf "euler25 = ";
-  let g = (euler25 ()) in
-  Printf.printf "%d" g;
+  let p = (euler25 ()) in
+  Printf.printf "%d" p;
   Printf.printf "\n";
   Printf.printf "euler16 = ";
-  let h = (euler16 ()) in
-  Printf.printf "%d" h;
+  let q = (euler16 ()) in
+  Printf.printf "%d" q;
   Printf.printf "\n";
   (euler48 ());
   Printf.printf "euler20 = ";
-  let m = (euler20 ()) in
-  Printf.printf "%d" m;
+  let r = (euler20 ()) in
+  Printf.printf "%d" r;
   Printf.printf "\n";
   let a = bigint_of_int 999999 in
   let b = bigint_of_int 9951263 in
@@ -417,8 +469,8 @@ begin
   Printf.printf ">";
   print_bigint b;
   Printf.printf "=";
-  let n = bigint_gt a b in
-  if n then
+  let s = bigint_gt a b in
+  if s then
     Printf.printf "True"
   else
     Printf.printf "False";

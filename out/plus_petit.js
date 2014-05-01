@@ -38,10 +38,12 @@ var read_int_ = function(){
 function go_(tab, a, b){
   var m = ~~((a + b) / 2);
   if (a == m)
+  {
     if (tab[a] == m)
-    return b;
-  else
-    return a;
+      return b;
+    else
+      return a;
+  }
   var i = a;
   var j = b;
   while (i < j)

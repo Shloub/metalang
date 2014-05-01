@@ -12,10 +12,12 @@ public class euler19
     if (month == 0)
       return 31;
     else if (month == 1)
+    {
       if (is_leap(year))
-      return 29;
-    else
-      return 28;
+        return 29;
+      else
+        return 28;
+    }
     else if (month == 2)
       return 31;
     else if (month == 3)
