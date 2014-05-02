@@ -1,0 +1,69 @@
+
+def int eratostene(array<int> t, int max)
+	def n = 0
+	for i = 2 to max - 1 do
+		if t[i] == i then
+			n ++
+			def j = i * i
+			if j / i == i then /* overflow test */
+				while j < max && j > 0 do
+					t[j] = 0
+					j += i
+				end
+			end
+    end
+  end
+	return n;
+end
+
+main
+	def maximumprimes = 1000001
+	def array<int> era[maximumprimes] with j do
+		return j
+	end
+	def nprimes = eratostene(era, maximumprimes)
+	def array<int> primes[nprimes] with o do
+		return 0
+	end
+	def l = 0
+	for k = 2 to maximumprimes - 1 do
+		if era[k] == k then
+			primes[l] = k
+			l++
+		end
+	end
+	print int l print " == " print nprimes print "\n"
+
+	def array<int> sum[nprimes] with i_ do
+		return primes[i_]
+	end
+
+	def maxl = 0
+
+	def process = true
+
+	def stop = maximumprimes - 1
+
+	def len = 1
+	def resp = 1
+	while process do	
+		process = false
+		for i = 0 to stop do
+			if i + len < nprimes then
+				sum[i] += primes[i + len]
+				if maximumprimes > sum[i] then
+					process = true
+					if era[sum[i]] == sum[i] then
+						maxl = len
+						resp = sum[i]
+					end
+				else
+					stop = min2(stop, i)
+				end
+			end
+		end
+		len ++
+	end
+	print resp print "\n"
+	print maxl print "\n"
+end
