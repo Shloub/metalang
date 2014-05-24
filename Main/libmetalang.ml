@@ -370,6 +370,7 @@ let process err c filename =
         try
           if not c.quiet then Printf.printf "Generating %s\n%!" output ;
 					conf_rename lang prog ;
+					Tags.reset ();
           let chan = open_out output in
           let buf = Format.formatter_of_out_channel chan in
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
