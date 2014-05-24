@@ -1,8 +1,4 @@
 Langage & Compilateur :
-  importer math et definir mod en python seulement quand c'est nécéssaire
-  définir mod et / en common lisp seulement quand c'est nécéssaire
-  définir mod en ruby seulement quand c'est nécéssaire
-  virer les floats du projet
   cleaner un peu la lib standard
   types abstract (pour ouvrir un fichier par exemple)
   return checker
