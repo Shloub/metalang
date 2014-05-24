@@ -1,32 +1,32 @@
 (*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*)
+ * Copyright (c) 2012, Prologin
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *)
 
 
 (** C# Printer
-@see <http://prologin.org> Prologin
-@author Prologin (info\@prologin.org)
-@author Maxime Audouin (coucou747\@gmail.com)
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -50,18 +50,18 @@ class csharpPrinter = object(self)
 
 
   method ptype f t =
-      match Type.unfix t with
-      | Type.Integer -> Format.fprintf f "int"
-      | Type.String -> Format.fprintf f "String"
-      | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
-      | Type.Void ->  Format.fprintf f "void"
-      | Type.Bool -> Format.fprintf f "bool"
-      | Type.Char -> Format.fprintf f "char"
-      | Type.Named n -> Format.fprintf f "%s" n
-      | Type.Struct li -> Format.fprintf f "a struct"
-      | Type.Enum _ -> Format.fprintf f "an enum"
-      | Type.Auto -> assert false
-			| Type.Lexems -> assert false
+    match Type.unfix t with
+    | Type.Integer -> Format.fprintf f "int"
+    | Type.String -> Format.fprintf f "String"
+    | Type.Array a -> Format.fprintf f "%a[]" self#ptype a
+    | Type.Void ->  Format.fprintf f "void"
+    | Type.Bool -> Format.fprintf f "bool"
+    | Type.Char -> Format.fprintf f "char"
+    | Type.Named n -> Format.fprintf f "%s" n
+    | Type.Struct li -> Format.fprintf f "a struct"
+    | Type.Enum _ -> Format.fprintf f "an enum"
+    | Type.Auto -> assert false
+    | Type.Lexems -> assert false
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -70,10 +70,10 @@ class csharpPrinter = object(self)
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f
       "using System;@\n%a@\npublic class %s@\n@[<v 2>{%s%s%s%s@\n%a@\n%a@]@\n}@\n"
-(fun f () ->
-if Tags.is_taged "use_readline"
-then Format.fprintf f "using System.Collections.Generic;@\n"
-) ()
+      (fun f () ->
+	if Tags.is_taged "use_readline"
+	then Format.fprintf f "using System.Collections.Generic;@\n"
+      ) ()
       prog.Prog.progname
       (if need then "
 static bool eof;
@@ -153,17 +153,17 @@ public static int readInt(){
 
   method read f t m =
     match Type.unfix t with
-      | Type.Integer ->
-	Format.fprintf f "@[<h>%a = readInt();@]"
-	  self#mutable_ m
-      | Type.Char -> Format.fprintf f "@[<h>%a = readChar();@]"
+    | Type.Integer ->
+      Format.fprintf f "@[<h>%a = readInt();@]"
 	self#mutable_ m
-      | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
+    | Type.Char -> Format.fprintf f "@[<h>%a = readChar();@]"
+      self#mutable_ m
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
 
   method decl_type f name t =
     match (Type.unfix t) with
-	Type.Struct li ->
+      Type.Struct li ->
 	Format.fprintf f "public class %a {%a}"
 	  self#binding name
 	  (print_list
@@ -172,16 +172,16 @@ public static int readInt(){
 	     )
 	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
 	  ) li
-      | Type.Enum li ->
-        Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
-          self#binding name
-          (print_list
-	           (fun t name ->
-               self#binding t name
-	           )
-	           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
-	        ) li
-      | _ -> super#decl_type f name t
+    | Type.Enum li ->
+      Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
+        self#binding name
+        (print_list
+	   (fun t name ->
+             self#binding t name
+	   )
+	   (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+	) li
+    | _ -> super#decl_type f name t
 
 
 end

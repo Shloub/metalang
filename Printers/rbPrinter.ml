@@ -1,33 +1,33 @@
 (*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*)
+ * Copyright (c) 2012, Prologin
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *)
 
 
 (** ruby Printer
-@see <http://prologin.org> Prologin
-@author Prologin (info\@prologin.org)
-@author Maxime Audouin (coucou747\@gmail.com)
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 
@@ -51,8 +51,8 @@ class rbPrinter = object(self)
 
   method header f prog = Format.fprintf f "require \"scanf.rb\"
 %s"
-(if Tags.is_taged "__internal__mod" then
-"def mod(x, y)
+    (if Tags.is_taged "__internal__mod" then
+	"def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 " else "")
@@ -69,14 +69,14 @@ end
     in if self#nop (Expr.unfix a) then pop self#expr f a
       else pop self#printp f a
 
-   method print_proto f (funname, t, li) =
+  method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a )"
       self#funname funname
       (print_list
 	 (fun t (a, type_) ->
-	     self#binding t a)
+	   self#binding t a)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)) li
+	   "%a,@ %a" f1 e1 f2 e2)) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\nend@\n"
@@ -89,14 +89,14 @@ end
       self#bloc li
 
   method read f t mutable_ =
-match Type.unfix t with
-  | Type.Integer ->
-    Format.fprintf f "@[%a=scanf(\"%%d\")[0];@]"
-      self#mutable_ mutable_
-  | Type.Char ->
-    Format.fprintf f "@[%a=scanf(\"%%c\")[0];@]"
-      self#mutable_ mutable_
-	| _ -> assert false (* types non gérés *)
+    match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[%a=scanf(\"%%d\")[0];@]"
+	self#mutable_ mutable_
+    | Type.Char ->
+      Format.fprintf f "@[%a=scanf(\"%%c\")[0];@]"
+	self#mutable_ mutable_
+    | _ -> assert false (* types non gérés *)
 
   method stdin_sep f = Format.fprintf f "@[scanf(\"%%*\\n\");@]"
 
@@ -123,8 +123,8 @@ match Type.unfix t with
       )
 
   method bool f = function
-    | true -> Format.fprintf f "true"
-    | false -> Format.fprintf f "false"
+  | true -> Format.fprintf f "true"
+  | false -> Format.fprintf f "false"
 
   method selfAssoc f m e2 = function
   | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
@@ -142,8 +142,8 @@ match Type.unfix t with
         (self#chf op Left) a
         (self#chf op Right) b
       else super#sbinop f op a b
-		| Expr.Mod ->
-			Format.fprintf f "mod(%a, %a)"
+    | Expr.Mod ->
+      Format.fprintf f "mod(%a, %a)"
         self#expr a
         self#expr b
     | _ -> super#sbinop f op a b
@@ -159,36 +159,36 @@ match Type.unfix t with
     if exprs = [] then
       Format.fprintf f "@[<h>printf \"%s\";@]" format
     else
-    Format.fprintf f "@[<h>printf \"%s\", %a@]" format
-      (print_list
-	 (fun f (t, e) -> self#expr f e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)) exprs
+      Format.fprintf f "@[<h>printf \"%s\", %a@]" format
+	(print_list
+	   (fun f (t, e) -> self#expr f e)
+	   (fun t f1 e1 f2 e2 -> Format.fprintf t
+	     "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[print %s;@]" ( self#noformat s )
   | _ -> Format.fprintf f "@[printf \"%a\", %a@]"
-      self#format_type t
-      self#expr expr
+    self#format_type t
+    self#expr expr
 
   method bloc f li = Format.fprintf f "@[<v 2>  %a@]" self#instructions li
 
   method if_ f e ifcase elsecase =
     match elsecase with
-      | [] ->
-	Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nend"
-	  self#expr e
-	  self#bloc ifcase
-      | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
+    | [] ->
+      Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nend"
+	self#expr e
+	self#bloc ifcase
+    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nels%a"
 	self#expr e
 	self#bloc ifcase
 	self#instr instr
-      | _ ->
-	Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nelse@\n%a@\nend"
-	  self#expr e
-	  self#bloc ifcase
-	  self#bloc elsecase
+    | _ ->
+      Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nelse@\n%a@\nend"
+	self#expr e
+	self#bloc ifcase
+	self#bloc elsecase
 
   method allocarray f binding type_ len =
     Format.fprintf f "@[<h>%a@ =@ [];@]" self#binding binding

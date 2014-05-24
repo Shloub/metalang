@@ -1,32 +1,32 @@
 (*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*)
+ * Copyright (c) 2012, Prologin
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *)
 
 (** python Printer
-@see <http://prologin.org> Prologin
-@author Prologin (info\@prologin.org)
-@author Maxime Audouin (coucou747\@gmail.com)
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -46,7 +46,7 @@ class pyPrinter = object(self)
 
   method record f li =
     Format.fprintf f "{@\n  @[<v>%a@]}"
-     (self#def_fields "") li
+      (self#def_fields "") li
 
   method selfAssoc f m e2 = function
   | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
@@ -61,8 +61,8 @@ class pyPrinter = object(self)
   method enum f e = Format.fprintf f "\"%s\"" e
 
   method unop f op a = match op with
-    | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
-    | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
+  | Expr.Neg -> Format.fprintf f "-(%a)" self#expr a
+  | Expr.Not -> Format.fprintf f "not (%a)" self#expr a
 
   method binop f op a b =
     match op with
@@ -72,8 +72,8 @@ class pyPrinter = object(self)
         (self#chf op Left) a
         (self#chf op Right) b
       else super#binop f op a b
-		| Expr.Mod ->
-			Format.fprintf f "mod(%a, %a)"
+    | Expr.Mod ->
+      Format.fprintf f "mod(%a, %a)"
         self#expr a
         self#expr b
     | _ -> super#binop f op a b
@@ -123,11 +123,11 @@ class pyPrinter = object(self)
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "%s%s%s%s%s%s"
-(if Tags.is_taged "__internal__div" ||
-		Tags.is_taged "__internal__mod" ||
-		Tags.is_taged "use_math"
- then
-"import math
+      (if Tags.is_taged "__internal__div" ||
+	  Tags.is_taged "__internal__mod" ||
+	  Tags.is_taged "use_math"
+       then
+	  "import math
 " else "")
       (if need then "import sys
 char=None
@@ -143,13 +143,13 @@ def skipchar():
   return
 " else "" )
       (if need_readchar then
-"def readchar():
+	  "def readchar():
   out = readchar_()
   skipchar()
   return out
 " else "")
       (if need_stdinsep then
-"def stdinsep():
+	  "def stdinsep():
   while True:
     c = readchar_()
     if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
@@ -158,7 +158,7 @@ def skipchar():
       return
 " else "")
       (if need_readint then
-"def readint():
+	  "def readint():
   c = readchar_()
   if c == '-':
     sign = -1
@@ -174,11 +174,11 @@ def skipchar():
     else:
       return out * sign
 " else "")
-(if Tags.is_taged "__internal__mod" then
-"def mod(x, y):
+      (if Tags.is_taged "__internal__mod" then
+	  "def mod(x, y):
   return x - y * math.trunc(x / y)
 "
- else "")
+       else "")
 
   method prog f prog =
     Format.fprintf f "%a%a%a@\n"
@@ -235,36 +235,36 @@ def skipchar():
 
   method forloop f varname expr1 expr2 li = self#forloop_content f (varname, expr1, expr2, li)
 
- method forloop_content f (varname, expr1, expr2, li) =
-   let default () =
-     Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
-       self#binding varname
-       self#expr expr1
-       self#expr expr2
-       self#bloc li
-   in match Expr.unfix expr2 with
-   | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1)) ->
-     Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ %a):@\n@]%a"
-       self#binding varname
-       self#expr expr1
-       self#expr expr3
-       self#bloc li
-   | _ -> default ()
+  method forloop_content f (varname, expr1, expr2, li) =
+    let default () =
+      Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
+	self#binding varname
+	self#expr expr1
+	self#expr expr2
+	self#bloc li
+    in match Expr.unfix expr2 with
+    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1)) ->
+      Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ %a):@\n@]%a"
+	self#binding varname
+	self#expr expr1
+	self#expr expr3
+	self#bloc li
+    | _ -> default ()
 
-   method print_proto f (funname, t, li) =
+  method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a ):"
       self#funname funname
       (print_list
 	 (fun t (a, type_) ->
-	     self#binding t a)
+	   self#binding t a)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)) li
+	   "%a,@ %a" f1 e1 f2 e2)) li
 
-   method print_args =
-     print_list
-       (fun f (t, e) -> self#expr f e)
-       (fun t f1 e1 f2 e2 -> Format.fprintf t
-	 "%a,@ %a" f1 e1 f2 e2)
+  method print_args =
+    print_list
+      (fun f (t, e) -> self#expr f e)
+      (fun t f1 e1 f2 e2 -> Format.fprintf t
+	"%a,@ %a" f1 e1 f2 e2)
 
   method multi_print f format exprs =
     if exprs = [] then
@@ -288,7 +288,7 @@ def skipchar():
 	Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
       else Format.fprintf f "@[print( %S, end='')@]" s
     | _ ->
-    Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t self#expr expr
+      Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t self#expr expr
 
   method field f field = Format.fprintf f "%S" field
 
@@ -310,19 +310,19 @@ def skipchar():
 
   method mutable_ f m =
     match Mutable.unfix m with
-      | Mutable.Dot (m, field) ->
-	Format.fprintf f "%a[%a]"
-	  self#mutable_ m
-	  self#field field
-      | Mutable.Var binding -> self#binding f binding
-      | Mutable.Array (m, indexes) ->
-	Format.fprintf f "%a[%a]"
-	  self#mutable_ m
-	  (print_list
-	     self#expr
-	     (fun f f1 e1 f2 e2 ->
-	       Format.fprintf f "%a][%a" f1 e1 f2 e2
-	     ))
-	  indexes
+    | Mutable.Dot (m, field) ->
+      Format.fprintf f "%a[%a]"
+	self#mutable_ m
+	self#field field
+    | Mutable.Var binding -> self#binding f binding
+    | Mutable.Array (m, indexes) ->
+      Format.fprintf f "%a[%a]"
+	self#mutable_ m
+	(print_list
+	   self#expr
+	   (fun f f1 e1 f2 e2 ->
+	     Format.fprintf f "%a][%a" f1 e1 f2 e2
+	   ))
+	indexes
 
 end

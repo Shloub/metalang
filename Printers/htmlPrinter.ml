@@ -1,33 +1,33 @@
 (*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*)
+ * Copyright (c) 2012, Prologin
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *)
 
 (** Main printer
     This printer write metalang code.
-@see <http://prologin.org> Prologin
-@author Prologin (info\@prologin.org)
-@author Maxime Audouin (coucou747\@gmail.com)
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Ast
@@ -52,8 +52,8 @@ class htmlPrinter = object(self)
       self#expr e
 
   method bloc f li = Format.fprintf f "<div class=\"metalang_bloc\"><span class=\"keyword\">do</span><div class=\"metalang_bloc_content\">@\n%a</div>@\n<span class=\"keyword\">end</span></div>@\n"
-      (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a@\n%a" f1 e1 f2 e2)) li
+    (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
+      "%a@\n%a" f1 e1 f2 e2)) li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "<span class=\"keyword\">for</span>@ %a=%a@ <span class=\"keyword\">to</span>@ %a@\n%a"
@@ -76,12 +76,12 @@ class htmlPrinter = object(self)
   method ptype f t = Format.fprintf f "<span class=\"type\">%a</span>" super#ptype t
 
   method allocarray_lambda f binding type_ len binding2 lambda =
-      Format.fprintf f "@[<h><span class=\"keyword\">def</span> <span class=\"keyword\">array</span><%a>%a[%a] <span class=\"keyword\">with</span> %a <span class=\"keyword\">do</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>@]"
-	self#ptype type_
-	self#binding binding
-	self#expr len
-	self#binding binding2
-	self#instructions lambda
+    Format.fprintf f "@[<h><span class=\"keyword\">def</span> <span class=\"keyword\">array</span><%a>%a[%a] <span class=\"keyword\">with</span> %a <span class=\"keyword\">do</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>@]"
+      self#ptype type_
+      self#binding binding
+      self#expr len
+      self#binding binding2
+      self#instructions lambda
 
   method field f field =
     Format.fprintf f "<span class=\"metalang_field\">%s</span>" field
@@ -121,20 +121,20 @@ class htmlPrinter = object(self)
 
   method if_ f e ifcase elsecase =
     match elsecase with
-      | [] ->
-	      Format.fprintf f "<span class=\"keyword\">if</span>@ %a@\n<span class=\"keyword\">then</span>@\n@[<v2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
-	        self#expr e
-	        self#instructions ifcase
-      | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
+    | [] ->
+      Format.fprintf f "<span class=\"keyword\">if</span>@ %a@\n<span class=\"keyword\">then</span>@\n@[<v2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
+	self#expr e
+	self#instructions ifcase
+    | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "<span class=\"keyword\">if</span>@ %a <span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">els</span>%a"
-	      self#expr e
-	      self#instructions ifcase
-	      self#instr instr
-      | _ ->
-	Format.fprintf f "<span class=\"keyword\">if</span>@ %a\n<span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">else</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
-	  self#expr e
-	  self#instructions ifcase
-	  self#instructions elsecase
+	self#expr e
+	self#instructions ifcase
+	self#instr instr
+    | _ ->
+      Format.fprintf f "<span class=\"keyword\">if</span>@ %a\n<span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">else</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
+	self#expr e
+	self#instructions ifcase
+	self#instructions elsecase
 
   method instr f t = Format.fprintf f "<div class=\"instruction\">%a</div>@\n" super#instr t
 
@@ -152,7 +152,7 @@ class htmlPrinter = object(self)
 	     self#ptype t
 	     self#binding n)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)) li
+	   "%a,@ %a" f1 e1 f2 e2)) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "<div class==\"metalang_function\"><span class=\"proto\">%a</span>@\n<div class=\"metalang_bloc_content\">%a@]</div><span class=\"keyword\">end</span></div>"
@@ -161,26 +161,26 @@ class htmlPrinter = object(self)
 
   method decl_type f name t =
     match (Type.unfix t) with
-	    | Type.Struct li ->
-	      Format.fprintf f "<span class=\"keyword\">record</span> <span class=\"type\">@@%s</span> <div class=\"metalang_bloc_content\">%a</div><span class=\"keyword\">end</span>"
-	        name
-	        (print_list
-	           (fun t (name, type_) ->
-	             Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#binding name
-	           )
-	           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	        ) li
-      | Type.Enum li ->
-        Format.fprintf f "<span class=\"keyword\">enum</span> <span class=\"type\">@@%s</span> @\n<div class=\"metalang_bloc_content\">@[<v2>  %a@]</div>@\n<span class=\"keyword\">end</span>@\n"
-          name
-          (print_list
-	           (fun t name ->
-               self#binding t name
-	           )
-	           (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
-	        ) li
-      | _ ->
-        Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#binding name self#ptype t
+    | Type.Struct li ->
+      Format.fprintf f "<span class=\"keyword\">record</span> <span class=\"type\">@@%s</span> <div class=\"metalang_bloc_content\">%a</div><span class=\"keyword\">end</span>"
+	name
+	(print_list
+	   (fun t (name, type_) ->
+	     Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#binding name
+	   )
+	   (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+	) li
+    | Type.Enum li ->
+      Format.fprintf f "<span class=\"keyword\">enum</span> <span class=\"type\">@@%s</span> @\n<div class=\"metalang_bloc_content\">@[<v2>  %a@]</div>@\n<span class=\"keyword\">end</span>@\n"
+        name
+        (print_list
+	   (fun t name ->
+             self#binding t name
+	   )
+	   (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
+	) li
+    | _ ->
+      Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#binding name self#ptype t
 
   method main f main = Format.fprintf f "<span class=\"keyword\">main</span><div class=\"metalang_bloc_content\">%a</div>@\n<span class=\"keyword\">end</span>@\n</div>" super#instructions main
 

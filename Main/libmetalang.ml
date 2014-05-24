@@ -3,32 +3,32 @@ open Ast
 
 (** Liste des mots clés à ne pas utiliser en metalang *)
 let keywords lang=
-	let li = [
-"abstract";"add";"alias";"as";"asm";"auto";"and";"assert";
-"base";"bool";"boolean";"break";"byte";"begin";
-"case";"catch";"char";"checked";"class";"const";"continue";"constraint";
-"decimal";"default";"delegate";"do";"double";"delete";"done";"downto";"def";"del";
-"else";"elif";"elsif";"enum";"event";"explicit";"extern";"explicit";"exp";"eval";"end";"exception";"external";"extends";"except";"ensure";
-"False";"false";"finally";"final";"fixed";"float";"for";"foreach";"friend";"from";"fun";"function";"functor";
-"get";"global";"goto";"go";
-"if";"implicit";"in";"int";"interface";"internal";"is";"inline";"init";"include";"inherit";"initializer";"implements";"import";"instanceof";
-"lock";"long";"lazy";"let";"lambda";
-"mutable";"min"; "max";"match";"method";"module";
-"namespace";"new";"null";"native";"None";"nonlocal";"not";"next"; "nil";
-"object";"operator";"out";"override";"or";"of";"open";
-"params";"partial";"private";"protected";"public";"package";"pass";
-"readonly";"ref";"remove";"return";"register";"rec";"raise";"redo";"rescue";"retry";
-"sig";"sbyte";"sealed";"set";"short";"sizeof";"stackalloc";"static";"string";"struct";"switch";"signed";"sizeof";"strictfp";"super";"synchronized";
-"this";"throw";"throws";"transient";"True";"true";"try";"typeof";"template";"typedef";"to";"then";"type";
-"uint";"ulong";"unchecked";"unsafe";"ushort";"using";"unsigned";"unless";"undef";"until";
-"value";"virtual";"void"; "volatile";"val";
-"where";"while";"when";"with";
-"yield";
-	]
-	in match lang with
-	| "cl" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
-	| "php" -> "sqrt" :: "log10" :: li
-	| _ -> li
+  let li = [
+    "abstract";"add";"alias";"as";"asm";"auto";"and";"assert";
+    "base";"bool";"boolean";"break";"byte";"begin";
+    "case";"catch";"char";"checked";"class";"const";"continue";"constraint";
+    "decimal";"default";"delegate";"do";"double";"delete";"done";"downto";"def";"del";
+    "else";"elif";"elsif";"enum";"event";"explicit";"extern";"explicit";"exp";"eval";"end";"exception";"external";"extends";"except";"ensure";
+    "False";"false";"finally";"final";"fixed";"float";"for";"foreach";"friend";"from";"fun";"function";"functor";
+    "get";"global";"goto";"go";
+    "if";"implicit";"in";"int";"interface";"internal";"is";"inline";"init";"include";"inherit";"initializer";"implements";"import";"instanceof";
+    "lock";"long";"lazy";"let";"lambda";
+    "mutable";"min"; "max";"match";"method";"module";
+    "namespace";"new";"null";"native";"None";"nonlocal";"not";"next"; "nil";
+    "object";"operator";"out";"override";"or";"of";"open";
+    "params";"partial";"private";"protected";"public";"package";"pass";
+    "readonly";"ref";"remove";"return";"register";"rec";"raise";"redo";"rescue";"retry";
+    "sig";"sbyte";"sealed";"set";"short";"sizeof";"stackalloc";"static";"string";"struct";"switch";"signed";"sizeof";"strictfp";"super";"synchronized";
+    "this";"throw";"throws";"transient";"True";"true";"try";"typeof";"template";"typedef";"to";"then";"type";
+    "uint";"ulong";"unchecked";"unsafe";"ushort";"using";"unsigned";"unless";"undef";"until";
+    "value";"virtual";"void"; "volatile";"val";
+    "where";"while";"when";"with";
+    "yield";
+  ]
+  in match lang with
+  | "cl" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
+  | "php" -> "sqrt" :: "log10" :: li
+  | _ -> li
 
 let conf_rename lang prog =
   Fresh.fresh_init prog ;
@@ -53,27 +53,27 @@ let pass_base_print (a, prog) =
   (a, prog)
 
 let typed name f (a, b) =
-(*  debug_print b;
-  let before = Passes.WalkCountNoPosition.fold () b in *)
+  (*  debug_print b;
+      let before = Passes.WalkCountNoPosition.fold () b in *)
   let b = f () b in (*
-	let after = Passes.WalkCountNoPosition.fold () b in
-  Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
+		      let after = Passes.WalkCountNoPosition.fold () b in
+		      Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
   (a, b)
 
 let typed_ name f (a, b) = (a, f b)
 
 let check_reads = (fun (tyenv, prog) -> 
-    (if Tags.is_taged "use_readmacros" then
-			let need_stdinsep = prog.Prog.hasSkip in
-			let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
-			let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
-			let need = need_stdinsep || need_readint || need_readchar in
-			if need then
-				begin
-					debug_print prog;
-						raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
-				end );
-			(tyenv, prog))
+  (if Tags.is_taged "use_readmacros" then
+      let need_stdinsep = prog.Prog.hasSkip in
+      let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+      let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+      let need = need_stdinsep || need_readint || need_readchar in
+      if need then
+	begin
+	  debug_print prog;
+	  raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
+	end );
+  (tyenv, prog))
 
 let default_passes (prog : Typer.env * Utils.prog) :
     (Typer.env * Utils.prog ) =
@@ -136,14 +136,14 @@ let common_lisp_passes prog =
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
-	|> check_reads
+  |> check_reads
 
 let ocaml_passes prog =
   prog |> default_passes
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
-	|> check_reads
+  |> check_reads
 
 let no_passes prog =
   prog
@@ -158,13 +158,13 @@ let languages, printers =
       (((Format.formatter -> unit) ->  unit)) -> unit
     =
     (fun (err : ((Format.formatter -> unit) -> unit)) ->
-        let typerEnv, processed  =
-          pa prog
-        in
-        begin
-          pr#setTyperEnv typerEnv;
-          pr#prog out processed
-        end
+      let typerEnv, processed  =
+        pa prog
+      in
+      begin
+        pr#setTyperEnv typerEnv;
+        pr#prog out processed
+      end
 
     )
   in
@@ -228,20 +228,20 @@ let warn_error_of_parse_error filename lexbuf =
     let curr = lexbuf.Lexing.lex_curr_p in
     let line = curr.Lexing.pos_lnum in
     let cnum = curr.Lexing.pos_cnum - curr.Lexing.pos_bol - 1 in
-		let filecontent =
-			let i = open_in filename in
-			let l = ref "" in
-			for j = 1 to line do
-				l := input_line i
-			done; !l
-		in
+    let filecontent =
+      let i = open_in filename in
+      let l = ref "" in
+      for j = 1 to line do
+	l := input_line i
+      done; !l
+    in
     let tok = Lexing.lexeme lexbuf in
     Format.fprintf f "file:%s@\nerror line %d char %d on token %s@\n%s@\n%s^@\n"
       filename line cnum tok filecontent (String.make cnum ' ') ;
   ))
 
 let parse_file parse filename =
-	Ast.parsed_file := filename;
+  Ast.parsed_file := filename;
   let lexbuf = Lexing.from_channel (open_in filename) in
   try parse Lexer.token lexbuf
   with
@@ -249,7 +249,7 @@ let parse_file parse filename =
   | Failure s -> warn_error_of_parse_error filename lexbuf
 
 let parse_string parse str =
-	Ast.parsed_file := "stdin";
+  Ast.parsed_file := "stdin";
   let lexbuf = Lexing.from_string str in
   try parse Lexer.token lexbuf
   with
@@ -264,23 +264,23 @@ let make_prog_helper progname (funs, main) stdlib =
     Prog.funs = stdlib @ funs;
     Prog.main = main ;
   } in
-(*
-  debug_print prog;
+  (*
+    debug_print prog;
 
-  let before = Passes.WalkCountNoPosition.fold () prog in
-  Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before; 
-*)
+    let before = Passes.WalkCountNoPosition.fold () prog in
+    Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before; 
+  *)
   let prog = Eval.EvalConstantes.apply prog in
-(*
-  debug_print prog;
-  let before = Passes.WalkCountNoPosition.fold () prog in
-  Format.fprintf Format.std_formatter "After eval constantes, %d positions missing@\n" before; *)
+  (*
+    debug_print prog;
+    let before = Passes.WalkCountNoPosition.fold () prog in
+    Format.fprintf Format.std_formatter "After eval constantes, %d positions missing@\n" before; *)
 
   let tyenv, prog = Typer.process prog in
-(*
-  let before = Passes.WalkCountNoPosition.fold () prog in
-  Format.fprintf Format.std_formatter "After typer, %d positions missing@\n" before;
-*)
+  (*
+    let before = Passes.WalkCountNoPosition.fold () prog in
+    Format.fprintf Format.std_formatter "After typer, %d positions missing@\n" before;
+  *)
   let prog = RemoveUselessFunctions.apply prog
     (List.filter Passes.no_macro funs) in
   let prog = RemoveUselessTypes.apply prog
@@ -312,18 +312,18 @@ let colore string =
       let () = p#instructions out instructions in
       Format.flush_str_formatter ()
     with Parser.Error ->
-    try
-      let lexbuf = Lexing.from_string string in
-      let instructions = Parser.toplvls Lexer.token lexbuf in
-      let p = new HtmlPrinter.htmlPrinter in
-      let out = Format.str_formatter in
-      let () = p#proglist out instructions in
-      Format.flush_str_formatter ()
-    with Parser.Error -> string
+      try
+	let lexbuf = Lexing.from_string string in
+	let instructions = Parser.toplvls Lexer.token lexbuf in
+	let p = new HtmlPrinter.htmlPrinter in
+	let out = Format.str_formatter in
+	let () = p#proglist out instructions in
+	Format.flush_str_formatter ()
+      with Parser.Error -> string
 
 (**
-  this string is added at the beginning of the stdlib
-  It should be used (eg in macros) to know what's the target language
+   this string is added at the beginning of the stdlib
+   It should be used (eg in macros) to know what's the target language
 *)
 let stdlib_string lang = Printf.sprintf "
 
@@ -369,8 +369,8 @@ let process err c filename =
           lang in
         try
           if not c.quiet then Printf.printf "Generating %s\n%!" output ;
-					conf_rename lang prog ;
-					Tags.reset ();
+	  conf_rename lang prog ;
+	  Tags.reset ();
           let chan = open_out output in
           let buf = Format.formatter_of_out_channel chan in
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
@@ -401,7 +401,7 @@ let js_process err (lang:string) txt stdlib =
       with Parser.Error -> warn_error_of_parse_error "metalang" lexbuf
     in
     let tyenv, prog = js_make_prog_helper lang prog' stdlib in
-		conf_rename lang prog ;
+    conf_rename lang prog ;
     let printer = L.find lang printers in
     Fresh.fresh_init prog ;
     let buf = Format.stdbuf in

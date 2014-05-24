@@ -34,38 +34,38 @@ open Ast
 open Fresh
 open PassesUtils
 
- let rec check ty loc =
-    if Type.unfix ty = Type.Void then
-      raise (Warner.Error (fun f ->
-	Format.fprintf f "Forbiden use of void type %a@\n"
-	  Warner.ploc loc
-      ) )
-    else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
+let rec check ty loc =
+  if Type.unfix ty = Type.Void then
+    raise (Warner.Error (fun f ->
+      Format.fprintf f "Forbiden use of void type %a@\n"
+	Warner.ploc loc
+    ) )
+  else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
 
-  let collectDefReturn env li =
-    let f () i =
-      match Instr.unfix i with
-      | Instr.AllocArray (_, ty, _, _)
-      | Instr.Declare (_, ty, _) ->
-	check ty (Ast.PosMap.get (Instr.Fixed.annot i))
-      | Instr.Return e ->
-	check (Typer.get_type env e) (Ast.PosMap.get (Instr.Fixed.annot i))
-      | _ -> () in
-    List.iter
-      (fun i ->
-        Instr.Writer.Deep.fold f
-          (f () i) i)
-      li
+let collectDefReturn env li =
+  let f () i =
+    match Instr.unfix i with
+    | Instr.AllocArray (_, ty, _, _)
+    | Instr.Declare (_, ty, _) ->
+      check ty (Ast.PosMap.get (Instr.Fixed.annot i))
+    | Instr.Return e ->
+      check (Typer.get_type env e) (Ast.PosMap.get (Instr.Fixed.annot i))
+    | _ -> () in
+  List.iter
+    (fun i ->
+      Instr.Writer.Deep.fold f
+        (f () i) i)
+    li
 
-  let collectDefReturn_fun env = function
-    | Prog.DeclarFun (_, _, params, li) ->
-      collectDefReturn env li;
-      List.iter (fun (_, ty) ->
-	check ty (Ast.PosMap.get (Type.Fixed.annot ty))
-      ) params
-    | _ -> ()
-      
-  let apply (env, prog) =
-    List.iter (fun t -> collectDefReturn_fun env t) prog.Prog.funs;
-    Option.map_default () (collectDefReturn env) prog.Prog.main;
-    env, prog
+let collectDefReturn_fun env = function
+  | Prog.DeclarFun (_, _, params, li) ->
+    collectDefReturn env li;
+    List.iter (fun (_, ty) ->
+      check ty (Ast.PosMap.get (Type.Fixed.annot ty))
+    ) params
+  | _ -> ()
+    
+let apply (env, prog) =
+  List.iter (fun t -> collectDefReturn_fun env t) prog.Prog.funs;
+  Option.map_default () (collectDefReturn env) prog.Prog.main;
+  env, prog

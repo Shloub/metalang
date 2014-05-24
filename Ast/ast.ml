@@ -1,34 +1,34 @@
 (*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*)
+ * Copyright (c) 2012, Prologin
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *)
 
 
 (**
    Ce module contient les différents AST de notre compilateur
-@see <http://prologin.org> Prologin
-@author Prologin (info\@prologin.org)
-@author Maxime Audouin (coucou747\@gmail.com)
+   @see <http://prologin.org> Prologin
+   @author Prologin (info\@prologin.org)
+   @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -47,7 +47,7 @@ let next =
   fun () ->
     let out = !r in
     begin
-     r := (out + 1);
+      r := (out + 1);
       out
     end
 
@@ -98,9 +98,9 @@ end
 module Lexems = struct
 
   type ('token, 'expr) t =
-    | Expr of 'expr
-    | Token of 'token
-    | UnQuote of ('token, 'expr) t list
+  | Expr of 'expr
+  | Token of 'token
+  | UnQuote of ('token, 'expr) t list
 
   let token t = Token t
   let unquote li = UnQuote li
@@ -121,9 +121,9 @@ module Mutable = struct
   (** {2 type} *)
 
   type ('mutable_, 'expr) tofix =
-      Var of varname
-    | Array of 'mutable_ * 'expr list
-    | Dot of 'mutable_ * fieldname
+    Var of varname
+  | Array of 'mutable_ * 'expr list
+  | Dot of 'mutable_ * fieldname
 
   (** {2 Parcours} *)
 
@@ -171,14 +171,14 @@ module Mutable = struct
   let rec foldmap_expr f acc mut =
     let annot = Fixed.annot mut in
     match Fixed.unfix mut with
-      | Var v -> acc, Fixed.fixa annot (Var v)
-      | Dot (m, field) ->
-        let acc, m = foldmap_expr f acc m in
-        acc, Fixed.fixa annot (Dot (m, field))
-      | Array (mut, li) ->
-        let acc, mut = foldmap_expr f acc mut in
-        let acc, li = List.fold_left_map f acc li in
-        acc, Fixed.fixa annot (Array (mut, li) )
+    | Var v -> acc, Fixed.fixa annot (Var v)
+    | Dot (m, field) ->
+      let acc, m = foldmap_expr f acc m in
+      acc, Fixed.fixa annot (Dot (m, field))
+    | Array (mut, li) ->
+      let acc, mut = foldmap_expr f acc mut in
+      let acc, li = List.fold_left_map f acc li in
+      acc, Fixed.fixa annot (Array (mut, li) )
 
   let map_expr f m = foldmap_expr (fun () e -> (), f e) () m |> snd
 
@@ -197,18 +197,18 @@ end
 module Type = struct
 
   type 'a tofix =
-    | Integer
-    | String
-    | Char
-    | Array of 'a
-    | Void
-    | Bool
-    | Lexems
-    | Struct of (fieldname * 'a) list
-    | Enum of fieldname list
-    | Named of typename
-    | Tuple of 'a list
-    | Auto
+  | Integer
+  | String
+  | Char
+  | Array of 'a
+  | Void
+  | Bool
+  | Lexems
+  | Struct of (fieldname * 'a) list
+  | Enum of fieldname list
+  | Named of typename
+  | Tuple of 'a list
+  | Auto
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = 'a tofix
@@ -238,68 +238,68 @@ module Type = struct
 
   let rec compare (ta : t) (tb : t) : int =
     match (unfix ta), (unfix tb) with
-      | Auto, Auto -> 0
-      | Auto, _ -> -1
-      | Lexems, Lexems -> 0
-      | Lexems, Auto -> 1
-      | Lexems, _ -> -1
-      | Integer, Integer -> 0
-      | Integer, (Lexems | Auto) -> 1
-      | Integer, _ -> -1
-      | String, String -> 0
-      | String, (Auto | Lexems | Integer) -> 1
-      | String, _ -> -1
-      | Char, Char -> 0
-      | Char, (Auto | Lexems | Integer | String) -> 1
-      | Char, _ -> -1
-      | Array ca, Array cb -> compare ca cb
-      | Array _, (Char | Auto | Lexems | Integer | String) -> 1
-      | Array _, _ -> -1
-      | Void, Void -> 0
-      | Void, (Array _ | Char | Auto | Lexems | Integer | String) -> 1
-      | Void, _ -> -1
-      | Bool, Bool -> 0
-      | Bool, (Void | Array _ | Char | Auto | Lexems | Integer | String) -> 1
-      | Bool, _ -> -1
-      | Enum _, (Bool | Void | Array _ | Char | Auto | Lexems | Integer | String) -> 1
-      | Enum e1, Enum e2 ->
-	let l1 = List.length e1
-	and l2 = List.length e2 in
-	if l1 = l2 then
-          List.fold_left (fun result (n1, n2) ->
-            if result <> 0 then result else
-              String.compare n1 n2
-          ) 0 (List.combine e1 e2)
-	else l1 - l2
-      | Enum _, _ -> -1
+    | Auto, Auto -> 0
+    | Auto, _ -> -1
+    | Lexems, Lexems -> 0
+    | Lexems, Auto -> 1
+    | Lexems, _ -> -1
+    | Integer, Integer -> 0
+    | Integer, (Lexems | Auto) -> 1
+    | Integer, _ -> -1
+    | String, String -> 0
+    | String, (Auto | Lexems | Integer) -> 1
+    | String, _ -> -1
+    | Char, Char -> 0
+    | Char, (Auto | Lexems | Integer | String) -> 1
+    | Char, _ -> -1
+    | Array ca, Array cb -> compare ca cb
+    | Array _, (Char | Auto | Lexems | Integer | String) -> 1
+    | Array _, _ -> -1
+    | Void, Void -> 0
+    | Void, (Array _ | Char | Auto | Lexems | Integer | String) -> 1
+    | Void, _ -> -1
+    | Bool, Bool -> 0
+    | Bool, (Void | Array _ | Char | Auto | Lexems | Integer | String) -> 1
+    | Bool, _ -> -1
+    | Enum _, (Bool | Void | Array _ | Char | Auto | Lexems | Integer | String) -> 1
+    | Enum e1, Enum e2 ->
+      let l1 = List.length e1
+      and l2 = List.length e2 in
+      if l1 = l2 then
+        List.fold_left (fun result (n1, n2) ->
+          if result <> 0 then result else
+            String.compare n1 n2
+        ) 0 (List.combine e1 e2)
+      else l1 - l2
+    | Enum _, _ -> -1
 
-      | Struct s1, Struct s2 ->
-	let l1 = List.length s1
-	and l2 = List.length s2 in
-	if l1 = l2 then
+    | Struct s1, Struct s2 ->
+      let l1 = List.length s1
+      and l2 = List.length s2 in
+      if l1 = l2 then
         List.fold_left (fun result ((n1, t1), (n2, t2)) ->
           if result <> 0 then result else
             let result = String.compare n1 n2 in
             if result <> 0 then result else
               compare t1 t2
         ) 0 (List.combine s1 s2)
-	else l1 - l2
-      | Tuple li1, Tuple li2 ->
-	let len1 = List.length li1 and
-	    len2 = List.length li2 in
-	if len1 < len2 then -1
-	else if len2 < len1 then 1
-	else List.fold_left (fun acc (t1, t2) ->
-	  if acc = 0 then compare t1 t2
-	  else acc
-	) 0 (List.combine li1 li2)
-      | Tuple _, _ -> 1
-      | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto |
-          Lexems | Integer | String) -> 1
-      | Struct _, _ -> -1
-      | Named n1, Named n2 -> String.compare n1 n2
-      | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
-          Auto | Lexems | Integer | String) -> 1
+      else l1 - l2
+    | Tuple li1, Tuple li2 ->
+      let len1 = List.length li1 and
+	  len2 = List.length li2 in
+      if len1 < len2 then -1
+      else if len2 < len1 then 1
+      else List.fold_left (fun acc (t1, t2) ->
+	if acc = 0 then compare t1 t2
+	else acc
+      ) 0 (List.combine li1 li2)
+    | Tuple _, _ -> 1
+    | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto |
+        Lexems | Integer | String) -> 1
+    | Struct _, _ -> -1
+    | Named n1, Named n2 -> String.compare n1 n2
+    | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
+        Auto | Lexems | Integer | String) -> 1
 
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
@@ -308,53 +308,53 @@ module Type = struct
     let foldmap f acc t =
       let annot = Fixed.annot t in
       match unfix t with
-        | Auto | Integer | String | Char | Void
-        | Bool | Named _
-        | Enum _ | Lexems ->
-          acc, t
-        | Array t ->
-          let acc, t = f acc t in
-          acc, Fixed.fixa annot (Array t)
-				| Tuple li ->
-					let acc, li = List.fold_left_map f acc li in
-					acc, Fixed.fixa annot (Tuple (li))
-        | Struct li ->
-          let acc, li = List.fold_left_map
-            (fun acc (name, t) ->
-              let acc, t = f acc t in
-              acc, (name, t)
-            ) acc li
-          in acc, Fixed.fixa annot (Struct li)
+      | Auto | Integer | String | Char | Void
+      | Bool | Named _
+      | Enum _ | Lexems ->
+        acc, t
+      | Array t ->
+        let acc, t = f acc t in
+        acc, Fixed.fixa annot (Array t)
+      | Tuple li ->
+	let acc, li = List.fold_left_map f acc li in
+	acc, Fixed.fixa annot (Tuple (li))
+      | Struct li ->
+        let acc, li = List.fold_left_map
+          (fun acc (name, t) ->
+            let acc, t = f acc t in
+            acc, (name, t)
+          ) acc li
+        in acc, Fixed.fixa annot (Struct li)
   end)
 
   let type2String (t : string tofix) : string =
     match t with
-      | Auto -> "Auto"
-      | Integer -> "Integer"
-      | String -> "String"
-      | Char -> "Char"
-      | Array t -> "Array("^t^")"
-      | Void -> "Void"
-      | Bool -> "Bool"
-      | Lexems -> "Lexems"
-			| Tuple li ->
-				let str = List.fold_left
-          (fun acc t ->
-            acc ^ ", " ^ t
-          ) "" li
-        in "("^str^")"
-      | Enum e -> let str = List.fold_left
-          (fun acc name ->
-            acc ^ name ^ ", "
-          ) "" e
-        in "Enum("^str^")"
-      | Struct li ->
-        let str = List.fold_left
-          (fun acc (name, t) ->
-            acc ^ name ^ ":"^t^"; "
-          ) "" li
-        in "Struct("^str^")"
-      | Named t -> "Named("^t^")"
+    | Auto -> "Auto"
+    | Integer -> "Integer"
+    | String -> "String"
+    | Char -> "Char"
+    | Array t -> "Array("^t^")"
+    | Void -> "Void"
+    | Bool -> "Bool"
+    | Lexems -> "Lexems"
+    | Tuple li ->
+      let str = List.fold_left
+        (fun acc t ->
+          acc ^ ", " ^ t
+        ) "" li
+      in "("^str^")"
+    | Enum e -> let str = List.fold_left
+		  (fun acc name ->
+		    acc ^ name ^ ", "
+		  ) "" e
+		in "Enum("^str^")"
+    | Struct li ->
+      let str = List.fold_left
+        (fun acc (name, t) ->
+          acc ^ name ^ ":"^t^"; "
+        ) "" li
+      in "Struct("^str^")"
+    | Named t -> "Named("^t^")"
 
   let rec type_t_to_string (t:t) : string =
     type2String (Fixed.map type_t_to_string (unfix t))
@@ -380,7 +380,7 @@ module TypeSet = MakeSet (Type)
 
 (**
    expr module
-this module contains ast for metalang expressions
+   this module contains ast for metalang expressions
 *)
 module Expr = struct
 
@@ -389,30 +389,30 @@ module Expr = struct
 
   (** unary operators *)
   type unop =
-      Neg (** integer *)
-    | Not (** boolean *)
+    Neg (** integer *)
+  | Not (** boolean *)
 
   (** binary operators *)
   type binop =
-    | Add | Sub | Mul | Div (* int *)
-    | Mod (* int *)
-    | Or | And (* bool *)
-    | Lower | LowerEq | Higher | HigherEq (* 'a *)
-    | Eq | Diff (* 'a *)
+  | Add | Sub | Mul | Div (* int *)
+  | Mod (* int *)
+  | Or | And (* bool *)
+  | Lower | LowerEq | Higher | HigherEq (* 'a *)
+  | Eq | Diff (* 'a *)
 
   type ('a, 'lex) tofix =
-      BinOp of 'a * binop * 'a (** operations binaires *)
-    | UnOp of 'a * unop (** operations unaires *)
-    | Char of char
-    | String of string
-    | Integer of int
-    | Bool of bool
-    | Access of 'a Mutable.t (** vaut la valeur du mutable *)
-    | Call of funname * 'a list (** appelle la fonction *)
-    | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
-    | Tuple of 'a list
-    | Record of (varname * 'a) list
-    | Enum of string (** enumerateur *)
+    BinOp of 'a * binop * 'a (** operations binaires *)
+  | UnOp of 'a * unop (** operations unaires *)
+  | Char of char
+  | String of string
+  | Integer of int
+  | Bool of bool
+  | Access of 'a Mutable.t (** vaut la valeur du mutable *)
+  | Call of funname * 'a list (** appelle la fonction *)
+  | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
+  | Tuple of 'a list
+  | Record of (varname * 'a) list
+  | Enum of string (** enumerateur *)
 
   (** {2 parcours} *)
 
@@ -449,33 +449,33 @@ module Expr = struct
     let foldmap f acc t =
       let annot = Fixed.annot t in
       match unfix t with
-        | UnOp (a, op) ->
-          let acc, a = f acc a in
-          (acc, Fixed.fixa annot (UnOp(a, op)))
-        | BinOp (a, op, b) ->
-          let acc, a = f acc a in
-          let acc, b = f acc b in
-          (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
-        | Char _ -> acc, t
-        | String _ -> acc, t
-        | Integer _ -> acc, t
-        | Bool _ -> acc, t
-        | Access m ->
-          let acc, m = Mutable.foldmap_expr f acc m in
-          acc, Fixed.fixa annot (Access m)
-        | Call (name, li) ->
-          let acc, li = List.fold_left_map f acc li in
-          (acc, Fixed.fixa annot (Call(name, li)) )
-        | Lexems x -> acc, Fixed.fixa annot (Lexems x)
-        | Enum x -> acc, Fixed.fixa annot (Enum x)
-	| Tuple li ->
-	  let acc, li = List.fold_left_map f acc li in
-	  acc, Fixed.fixa annot (Tuple li)
-	| Record li ->
-	  let acc, li = List.fold_left_map (fun acc (n, e) ->
-	    let acc, e = f acc e in
-	    acc, (n, e)) acc li in
-	  acc, Fixed.fixa annot (Record li)
+      | UnOp (a, op) ->
+        let acc, a = f acc a in
+        (acc, Fixed.fixa annot (UnOp(a, op)))
+      | BinOp (a, op, b) ->
+        let acc, a = f acc a in
+        let acc, b = f acc b in
+        (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
+      | Char _ -> acc, t
+      | String _ -> acc, t
+      | Integer _ -> acc, t
+      | Bool _ -> acc, t
+      | Access m ->
+        let acc, m = Mutable.foldmap_expr f acc m in
+        acc, Fixed.fixa annot (Access m)
+      | Call (name, li) ->
+        let acc, li = List.fold_left_map f acc li in
+        (acc, Fixed.fixa annot (Call(name, li)) )
+      | Lexems x -> acc, Fixed.fixa annot (Lexems x)
+      | Enum x -> acc, Fixed.fixa annot (Enum x)
+      | Tuple li ->
+	let acc, li = List.fold_left_map f acc li in
+	acc, Fixed.fixa annot (Tuple li)
+      | Record li ->
+	let acc, li = List.fold_left_map (fun acc (n, e) ->
+	  let acc, e = f acc e in
+	  acc, (n, e)) acc li in
+	acc, Fixed.fixa annot (Record li)
   end)
 
   (** {2 utils} *)
@@ -529,23 +529,23 @@ module Instr = struct
   let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.Fixed.fix
 
   type ('a, 'expr) tofix =
-      Declare of varname * Type.t * 'expr
-    | Affect of 'expr Mutable.t * 'expr
-    | Loop of varname * 'expr * 'expr * 'a list
-    | While of 'expr * 'a list
-    | Comment of string
-    | Tag of string
-    | Return of 'expr
-    | AllocArray of varname * Type.t * 'expr * (varname * 'a list) option
-    | AllocRecord of varname * Type.t * (fieldname * 'expr) list
-    | If of 'expr * 'a list * 'a list
-    | Call of funname * 'expr list
-    | Print of Type.t * 'expr
-    | Read of Type.t * 'expr Mutable.t
-    | DeclRead of Type.t * varname
-		| Untuple of (Type.t * varname) list * 'expr
-    | StdinSep
-    | Unquote of 'expr
+    Declare of varname * Type.t * 'expr
+  | Affect of 'expr Mutable.t * 'expr
+  | Loop of varname * 'expr * 'expr * 'a list
+  | While of 'expr * 'a list
+  | Comment of string
+  | Tag of string
+  | Return of 'expr
+  | AllocArray of varname * Type.t * 'expr * (varname * 'a list) option
+  | AllocRecord of varname * Type.t * (fieldname * 'expr) list
+  | If of 'expr * 'a list * 'a list
+  | Call of funname * 'expr list
+  | Print of Type.t * 'expr
+  | Read of Type.t * 'expr Mutable.t
+  | DeclRead of Type.t * varname
+  | Untuple of (Type.t * varname) list * 'expr
+  | StdinSep
+  | Unquote of 'expr
 
   let map_bloc f t = match t with
     | Declare (a, b, c) -> Declare (a, b, c)
@@ -624,34 +624,34 @@ module Instr = struct
     let foldmap f acc t =
       let annot = Fixed.annot t in
       match unfix t with
-        | StdinSep -> acc, t
-        | Declare (_, _, _) -> acc, t
-        | Affect (_, _) -> acc, t
-        | Comment _ -> acc, t
-        | Loop (var, e1, e2, li) ->
-          let acc, li = List.fold_left_map f acc li in
-          acc, Fixed.fixa annot (Loop(var, e1, e2, li))
-        | While (e, li) ->
-          let acc, li = List.fold_left_map f acc li in
-          acc, Fixed.fixa annot (While (e, li))
-        | If (e, cif, celse) ->
-          let acc, cif = List.fold_left_map f acc cif in
-          let acc, celse = List.fold_left_map f acc celse in
-          acc, Fixed.fixa annot (If(e, cif, celse))
-        | Return e -> acc, t
-        | AllocArray (_, _, _, None) -> acc, t
-        | AllocArray (b, t, l, Some (b2, li)) ->
-          let acc, li = List.fold_left_map f acc li in
-          acc, Fixed.fixa annot (AllocArray (b, t, l, Some (b2, li)) )
-        | AllocRecord (_, _, _) ->
-          acc, t
-        | Print _ -> acc, t
-        | Read _ -> acc, t
-        | DeclRead _ -> acc, t
-        | Untuple _ -> acc, t
-        | Call _ -> acc, t
-        | Unquote _ -> acc, t
-        | Tag _ -> acc, t
+      | StdinSep -> acc, t
+      | Declare (_, _, _) -> acc, t
+      | Affect (_, _) -> acc, t
+      | Comment _ -> acc, t
+      | Loop (var, e1, e2, li) ->
+        let acc, li = List.fold_left_map f acc li in
+        acc, Fixed.fixa annot (Loop(var, e1, e2, li))
+      | While (e, li) ->
+        let acc, li = List.fold_left_map f acc li in
+        acc, Fixed.fixa annot (While (e, li))
+      | If (e, cif, celse) ->
+        let acc, cif = List.fold_left_map f acc cif in
+        let acc, celse = List.fold_left_map f acc celse in
+        acc, Fixed.fixa annot (If(e, cif, celse))
+      | Return e -> acc, t
+      | AllocArray (_, _, _, None) -> acc, t
+      | AllocArray (b, t, l, Some (b2, li)) ->
+        let acc, li = List.fold_left_map f acc li in
+        acc, Fixed.fixa annot (AllocArray (b, t, l, Some (b2, li)) )
+      | AllocRecord (_, _, _) ->
+        acc, t
+      | Print _ -> acc, t
+      | Read _ -> acc, t
+      | DeclRead _ -> acc, t
+      | Untuple _ -> acc, t
+      | Call _ -> acc, t
+      | Unquote _ -> acc, t
+      | Tag _ -> acc, t
   end)
 
   let foldmap_expr
@@ -661,54 +661,54 @@ module Instr = struct
 	let a = Fixed.annot i in
         let out, i =
           match unfix i with
-            | Declare (v, t, e) ->
-              let acc, e = f acc e in
-              acc, Declare (v, t, e)
-            | Affect (m, e) ->
-	      let acc, m = Mutable.foldmap_expr f acc m in
-              let acc, e = f acc e in
-              acc, Affect (m, e)
-            | Loop (v, e1, e2, li) ->
-              let acc, e1 = f acc e1 in
-              let acc, e2 = f acc e2 in
-              acc, Loop(v, e1, e2, li)
-            | While (e, li) ->
-              let acc, e = f acc e in
-              acc, While (e, li)
-            | Comment s -> acc, Comment s
-            | Return e ->
-              let acc, e = f acc e in
-              acc, Return e
-            | AllocArray (v, t, e, liopt) ->
-              let acc, e = f acc e in
-              acc, AllocArray (v, t, e, liopt)
-            | AllocRecord (v, t, el) ->
-              let acc, el = List.fold_left_map
-                (fun acc (field, e) ->
-                  let acc, e = f acc e
-                  in acc, (field, e))
-                acc el
-              in acc, AllocRecord (v, t, el)
-            | If (e, li1, li2) ->
-              let acc, e = f acc e in
-              acc, If (e, li1, li2)
-            | Call (funname, li) ->
-              let acc, li = List.fold_left_map f acc li in
-              acc, Call (funname, li)
-            | Print (t, e) ->
-              let acc, e = f acc e in
-              acc, Print (t, e)
-						| Untuple (li, e) ->
-							let acc, e = f acc e in
-							acc, Untuple (li, e)
-            | Read (t, m) ->
-	      let acc, m = Mutable.foldmap_expr f acc m in
-	      acc, Read (t, m)
-            | DeclRead (t, m) ->
-	      acc, DeclRead (t, m)
-            | StdinSep -> acc, StdinSep
-            | Unquote e -> acc, Unquote e
-            | Tag e -> acc, Tag e
+          | Declare (v, t, e) ->
+            let acc, e = f acc e in
+            acc, Declare (v, t, e)
+          | Affect (m, e) ->
+	    let acc, m = Mutable.foldmap_expr f acc m in
+            let acc, e = f acc e in
+            acc, Affect (m, e)
+          | Loop (v, e1, e2, li) ->
+            let acc, e1 = f acc e1 in
+            let acc, e2 = f acc e2 in
+            acc, Loop(v, e1, e2, li)
+          | While (e, li) ->
+            let acc, e = f acc e in
+            acc, While (e, li)
+          | Comment s -> acc, Comment s
+          | Return e ->
+            let acc, e = f acc e in
+            acc, Return e
+          | AllocArray (v, t, e, liopt) ->
+            let acc, e = f acc e in
+            acc, AllocArray (v, t, e, liopt)
+          | AllocRecord (v, t, el) ->
+            let acc, el = List.fold_left_map
+              (fun acc (field, e) ->
+                let acc, e = f acc e
+                in acc, (field, e))
+              acc el
+            in acc, AllocRecord (v, t, el)
+          | If (e, li1, li2) ->
+            let acc, e = f acc e in
+            acc, If (e, li1, li2)
+          | Call (funname, li) ->
+            let acc, li = List.fold_left_map f acc li in
+            acc, Call (funname, li)
+          | Print (t, e) ->
+            let acc, e = f acc e in
+            acc, Print (t, e)
+	  | Untuple (li, e) ->
+	    let acc, e = f acc e in
+	    acc, Untuple (li, e)
+          | Read (t, m) ->
+	    let acc, m = Mutable.foldmap_expr f acc m in
+	    acc, Read (t, m)
+          | DeclRead (t, m) ->
+	    acc, DeclRead (t, m)
+          | StdinSep -> acc, StdinSep
+          | Unquote e -> acc, Unquote e
+          | Tag e -> acc, Tag e
         in out, fixa a i
       ) acc instruction
 
@@ -725,7 +725,7 @@ module Instr = struct
 end
 
 module Prog = struct
-type 'lex t_fun =
+  type 'lex t_fun =
     DeclarFun of varname * Type.t *
         ( varname * Type.t ) list * 'lex Expr.t Instr.t list
   | DeclareType of typename * Type.t
@@ -733,14 +733,14 @@ type 'lex t_fun =
   | Comment of string
   | Unquote of 'lex Expr.t
 
-let unquote u = Unquote u
-let comment s = Comment s
-let declarefun var t li1 li2 = DeclarFun (var, t, li1, li2)
-let macro var t params li = Macro (var, t, params, li)
+  let unquote u = Unquote u
+  let comment s = Comment s
+  let declarefun var t li1 li2 = DeclarFun (var, t, li1, li2)
+  let macro var t params li = Macro (var, t, params, li)
 
 (** global programm type :
     values of this type contains a full metalang programm *)
-type 'lex t =
+  type 'lex t =
     {
       progname : string;
       funs : 'lex t_fun list;

@@ -34,55 +34,55 @@ open Ast
 open Fresh
 open PassesUtils
 
-  type acc0 = Typer.env
-  type 'a acc = Typer.env * TypeSet.t
+type acc0 = Typer.env
+type 'a acc = Typer.env * TypeSet.t
 
-  let init_acc tyenv = tyenv, TypeSet.empty
+let init_acc tyenv = tyenv, TypeSet.empty
 
-  let rec collect_type acc t =
-    let loc = Ast.PosMap.get (Type.Fixed.annot t) in
-    let f (tyenv, acc) t =
-      if TypeSet.mem t acc then (tyenv, acc) else
+let rec collect_type acc t =
+  let loc = Ast.PosMap.get (Type.Fixed.annot t) in
+  let f (tyenv, acc) t =
+    if TypeSet.mem t acc then (tyenv, acc) else
       match Type.Fixed.unfix t with
       | Type.Named n ->
 	let acc = TypeSet.add t acc in
 	collect_type (tyenv, acc) (Typer.expand tyenv t loc)
       | x -> tyenv, TypeSet.add t acc
-    in Type.Writer.Deep.fold f acc t
+  in Type.Writer.Deep.fold f acc t
 
-  let rec process_mutable acc m =
-    let f acc m = match Mutable.Fixed.unfix m with
-(*       | Mutable.Dot (m, f) -> *)
-      | Mutable.Array (m, li) ->
-	List.fold_left process_expr acc li
-      | e -> acc
-    in Mutable.Writer.Deep.fold f acc m
-  and process_expr acc e =
-    let f acc e = match Expr.Fixed.unfix e with
-(*      | Expr.Enum s -> TODO *)
-      | Expr.Access m -> process_mutable acc m
-      | e -> acc
-    in Expr.Writer.Deep.fold f acc e
+let rec process_mutable acc m =
+  let f acc m = match Mutable.Fixed.unfix m with
+      (*       | Mutable.Dot (m, f) -> *)
+    | Mutable.Array (m, li) ->
+      List.fold_left process_expr acc li
+    | e -> acc
+  in Mutable.Writer.Deep.fold f acc m
+and process_expr acc e =
+  let f acc e = match Expr.Fixed.unfix e with
+      (*      | Expr.Enum s -> TODO *)
+    | Expr.Access m -> process_mutable acc m
+    | e -> acc
+  in Expr.Writer.Deep.fold f acc e
 
-  let collect_instr acc i =
-    let f acc i =
-      match Instr.unfix i with
-        | Instr.Declare (_, ty, _) -> collect_type acc ty
-	| Instr.AllocRecord (_, ty, _) -> collect_type acc ty
-	| Instr.AllocArray (_, ty, _, _) -> collect_type acc ty
-        | _ -> acc
-    in
-    let acc = Instr.Writer.Deep.fold f acc i
-    in Instr.fold_expr process_expr acc i
+let collect_instr acc i =
+  let f acc i =
+    match Instr.unfix i with
+    | Instr.Declare (_, ty, _) -> collect_type acc ty
+    | Instr.AllocRecord (_, ty, _) -> collect_type acc ty
+    | Instr.AllocArray (_, ty, _, _) -> collect_type acc ty
+    | _ -> acc
+  in
+  let acc = Instr.Writer.Deep.fold f acc i
+  in Instr.fold_expr process_expr acc i
 
-  let process_main acc m = (List.fold_left collect_instr acc m), m
+let process_main acc m = (List.fold_left collect_instr acc m), m
 
-  let process acc p =
-    let acc = match p with
-      | Prog.DeclarFun (_funname, t, params, instrs) ->
-	let acc = collect_type acc t in
-	let acc = List.fold_left (fun acc (_, t) -> collect_type acc t)
-	  acc params in
-        List.fold_left collect_instr acc instrs
-      | _ -> acc
-    in acc, p
+let process acc p =
+  let acc = match p with
+    | Prog.DeclarFun (_funname, t, params, instrs) ->
+      let acc = collect_type acc t in
+      let acc = List.fold_left (fun acc (_, t) -> collect_type acc t)
+	acc params in
+      List.fold_left collect_instr acc instrs
+    | _ -> acc
+  in acc, p

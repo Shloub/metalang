@@ -23,11 +23,11 @@
  *)
 
 (**
-Cette passe supprime les tags et les inserre dans la map
-@see tags.ml
-    @see <http://prologin.org> Prologin
-    @author Prologin (info\@prologin.org)
-    @author Maxime Audouin (coucou747\@gmail.com)
+   Cette passe supprime les tags et les inserre dans la map
+   @see tags.ml
+   @see <http://prologin.org> Prologin
+   @author Prologin (info\@prologin.org)
+   @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -45,21 +45,21 @@ let init_acc () = ()
 
 let rec iter li =
   List.iter (fun i ->
-		Instr.fold_expr (fun acc e ->
-			Expr.Writer.Deep.iter (fun e ->
-				match Expr.unfix e with
-				| Expr.BinOp(_, Expr.Div, _) -> tag "__internal__div"
-				| Expr.BinOp(_, Expr.Mod, _) -> tag "__internal__mod"
-				| _ -> ()
-			) e
-		) () i
+    Instr.fold_expr (fun acc e ->
+      Expr.Writer.Deep.iter (fun e ->
+	match Expr.unfix e with
+	| Expr.BinOp(_, Expr.Div, _) -> tag "__internal__div"
+	| Expr.BinOp(_, Expr.Mod, _) -> tag "__internal__mod"
+	| _ -> ()
+      ) e
+    ) () i
   ) li
 
 let process acc p =
   match p with
   | Prog.DeclarFun (_, _, _, instrs)->
-		iter instrs; acc, p
+    iter instrs; acc, p
   | _ -> acc, p
 
 let process_main acc m =
-	iter m;	acc, m
+  iter m;	acc, m

@@ -34,31 +34,31 @@ open Ast
 open Fresh
 open PassesUtils
 
-  type acc0 = unit
-  type 'a acc = BindingSet.t
+type acc0 = unit
+type 'a acc = BindingSet.t
 
-  let init_acc () = BindingSet.empty
+let init_acc () = BindingSet.empty
 
-  let process_expr acc e =
-    let f acc e = match Expr.Fixed.unfix e with
-      | Expr.Call (funname, _) -> BindingSet.add funname acc
-      | e -> acc
-    in Expr.Writer.Deep.fold f acc e
+let process_expr acc e =
+  let f acc e = match Expr.Fixed.unfix e with
+    | Expr.Call (funname, _) -> BindingSet.add funname acc
+    | e -> acc
+  in Expr.Writer.Deep.fold f acc e
 
-  let collect_instr acc i =
-    let f acc i =
-      match Instr.unfix i with
-        | Instr.Call (name, li) -> BindingSet.add name acc
-        | _ -> acc
-    in
-    let acc = Instr.Writer.Deep.fold f acc i
-    in Instr.fold_expr process_expr acc i
+let collect_instr acc i =
+  let f acc i =
+    match Instr.unfix i with
+    | Instr.Call (name, li) -> BindingSet.add name acc
+    | _ -> acc
+  in
+  let acc = Instr.Writer.Deep.fold f acc i
+  in Instr.fold_expr process_expr acc i
 
-  let process_main acc m = (List.fold_left collect_instr acc m), m
+let process_main acc m = (List.fold_left collect_instr acc m), m
 
-  let process acc p =
-    let acc = match p with
-      | Prog.DeclarFun (_funname, _t, _params, instrs) ->
-        List.fold_left collect_instr (BindingSet.add _funname acc) instrs
-      | _ -> acc
-    in acc, p
+let process acc p =
+  let acc = match p with
+    | Prog.DeclarFun (_funname, _t, _params, instrs) ->
+      List.fold_left collect_instr (BindingSet.add _funname acc) instrs
+    | _ -> acc
+  in acc, p

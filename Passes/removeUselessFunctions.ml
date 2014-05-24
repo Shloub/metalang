@@ -34,21 +34,21 @@ open Ast
 open Fresh
 open PassesUtils
 
- let apply prog funs =
-    let go f (li, used_functions) = match f with
-			| Prog.Unquote e -> f::li, CollectCalls.process_expr used_functions e
-      | Prog.DeclarFun (v, _,_, _)
-      | Prog.Macro (v, _, _, _) ->
-        if BindingSet.mem v used_functions
-        then (f::li, (Passes.WalkCollectCalls.fold_fun used_functions f) )
-        else (li, used_functions)
-      | Prog.Comment _ -> (f::li, used_functions)
-      | Prog.DeclareType _ -> (f::li, used_functions)
-    in
+let apply prog funs =
+  let go f (li, used_functions) = match f with
+    | Prog.Unquote e -> f::li, CollectCalls.process_expr used_functions e
+    | Prog.DeclarFun (v, _,_, _)
+    | Prog.Macro (v, _, _, _) ->
+      if BindingSet.mem v used_functions
+      then (f::li, (Passes.WalkCollectCalls.fold_fun used_functions f) )
+      else (li, used_functions)
+    | Prog.Comment _ -> (f::li, used_functions)
+    | Prog.DeclareType _ -> (f::li, used_functions)
+  in
 
-    let used_functions = Passes.WalkCollectCalls.fold ()
-      {prog with Prog.funs = funs } in (* fonctions utilisées dans le
-                                          programme (stdlib non comprise) *)
-    let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
-    let prog = { prog with Prog.funs = funs} in
-    prog
+  let used_functions = Passes.WalkCollectCalls.fold ()
+    {prog with Prog.funs = funs } in (* fonctions utilisées dans le
+                                        programme (stdlib non comprise) *)
+  let funs, _ = List.fold_right go prog.Prog.funs ([], used_functions) in
+  let prog = { prog with Prog.funs = funs} in
+  prog

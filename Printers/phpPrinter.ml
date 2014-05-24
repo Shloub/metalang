@@ -1,33 +1,33 @@
 (*
-* Copyright (c) 2012, Prologin
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-*)
+ * Copyright (c) 2012, Prologin
+ * All rights reserved.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *)
 
 
 (** php Printer
-@see <http://prologin.org> Prologin
-@author Prologin (info\@prologin.org)
-@author Maxime Audouin (coucou747\@gmail.com)
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
 open Stdlib
@@ -47,7 +47,7 @@ class phpPrinter = object(self)
 
   method record f li =
     Format.fprintf f "array(@\n  @[<v>%a@])"
-     (self#def_fields "") li
+      (self#def_fields "") li
 
 
   method untuple f li e =
@@ -65,45 +65,45 @@ class phpPrinter = object(self)
 
   method prototype f t =
     match Type.unfix t with
-      | Type.Array _
-      | Type.Named _
-	->
-	Format.fprintf f "&"
-      | _ -> ()
+    | Type.Array _
+    | Type.Named _
+      ->
+      Format.fprintf f "&"
+    | _ -> ()
 
   method stdin_sep f = Format.fprintf f "@[scantrim();@]"
 
   method bool f = function
-    | true -> Format.fprintf f "true"
-    | false -> Format.fprintf f "false"
+  | true -> Format.fprintf f "true"
+  | false -> Format.fprintf f "false"
 
   method read f t m =
     match Type.unfix t with
-      | Type.Char ->
-	Format.fprintf f "@[%a = nextChar();@]"
-	  self#mutable_ m
-      | _ ->
-	Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
-	  self#mutable_ m
-	  self#format_type t
+    | Type.Char ->
+      Format.fprintf f "@[%a = nextChar();@]"
+	self#mutable_ m
+    | _ ->
+      Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
+	self#mutable_ m
+	self#format_type t
 
 
   method mutable_ f m =
     match Mutable.unfix m with
-      | Mutable.Dot (m, field) ->
-	Format.fprintf f "%a[\"%a\"]"
-	  self#mutable_ m
-	  self#field field
-      | Mutable.Var binding -> self#binding f binding
-      | Mutable.Array (m, indexes) ->
-	Format.fprintf f "%a[%a]"
-	  self#mutable_ m
-	  (print_list
-	     self#expr
-	     (fun f f1 e1 f2 e2 ->
-	       Format.fprintf f "%a][%a" f1 e1 f2 e2
-	     ))
-	  indexes
+    | Mutable.Dot (m, field) ->
+      Format.fprintf f "%a[\"%a\"]"
+	self#mutable_ m
+	self#field field
+    | Mutable.Var binding -> self#binding f binding
+    | Mutable.Array (m, indexes) ->
+      Format.fprintf f "%a[%a]"
+	self#mutable_ m
+	(print_list
+	   self#expr
+	   (fun f f1 e1 f2 e2 ->
+	     Format.fprintf f "%a][%a" f1 e1 f2 e2
+	   ))
+	indexes
 
   method main f main = self#instructions f main
 
@@ -152,7 +152,7 @@ function nextChar(){
     | _ -> assert false
 
   method combine_formats () = false
-  
+    
   method multi_print f format exprs =
     Format.fprintf f "@[<h>echo %a;@]"
       (print_list
@@ -172,7 +172,7 @@ function nextChar(){
 	     self#prototype type_
 	     self#binding a)
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)) li
+	   "%a,@ %a" f1 e1 f2 e2)) li
 
 
   method binding f i = Format.fprintf f "$%s" i
@@ -184,7 +184,7 @@ function nextChar(){
     Format.fprintf f "@[<h>%a@ =@ array();@]" self#binding binding
 
   method forloop f varname expr1 expr2 li =
-      self#forloop_content f (varname, expr1, expr2, li)
+    self#forloop_content f (varname, expr1, expr2, li)
 
   method decl_type f name t = ()
 

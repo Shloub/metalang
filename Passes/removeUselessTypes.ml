@@ -34,17 +34,17 @@ open Ast
 open Fresh
 open PassesUtils
 
- let apply prog funs tyenv =
-    let go f (li, used) = match f with
-			| Prog.Unquote _
-      | Prog.DeclarFun (_, _,_, _)
-      | Prog.Macro (_, _, _, _)
-      | Prog.Comment _ -> (f::li, used)
-      | Prog.DeclareType (name, ty) ->
-	if TypeSet.mem ty used
-	then (f::li, used)
-	else (li, used)
-    in let _, used = Passes.WalkCollectTypes.fold tyenv {prog with Prog.funs = funs } in
-    let funs, _ = List.fold_right go prog.Prog.funs ([], used) in
-    let prog = { prog with Prog.funs = funs} in
-    prog
+let apply prog funs tyenv =
+  let go f (li, used) = match f with
+    | Prog.Unquote _
+    | Prog.DeclarFun (_, _,_, _)
+    | Prog.Macro (_, _, _, _)
+    | Prog.Comment _ -> (f::li, used)
+    | Prog.DeclareType (name, ty) ->
+      if TypeSet.mem ty used
+      then (f::li, used)
+      else (li, used)
+  in let _, used = Passes.WalkCollectTypes.fold tyenv {prog with Prog.funs = funs } in
+     let funs, _ = List.fold_right go prog.Prog.funs ([], used) in
+     let prog = { prog with Prog.funs = funs} in
+     prog

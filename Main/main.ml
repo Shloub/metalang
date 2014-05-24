@@ -55,7 +55,7 @@ let config () =
     "-quiet", Unit (fun () -> c.quiet <- true),
     "Display error and warnings only";
 
-     "-nostdlib", Unit (fun () -> c.stdlib <- false),
+    "-nostdlib", Unit (fun () -> c.stdlib <- false),
     "Don't use the standard library";
 
     "-eval", Unit (fun () -> c.eval <- true),
@@ -64,7 +64,7 @@ let config () =
     "-version", Unit (fun () ->
       Printf.printf "Metalang compiler, Version %s\nDate %s\n" Version.version Version.compile_time
     ), "show the version"
- ] in
+  ] in
   Arg.parse spec (fun f -> c.filenames <- f :: c.filenames) descr ;
   c
 

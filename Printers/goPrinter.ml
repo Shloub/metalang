@@ -9,14 +9,14 @@ class goPrinter = object(self)
 
   method lang () = "go"
 
-	method binding f s = Format.fprintf f "%s" s
+  method binding f s = Format.fprintf f "%s" s
 
   method print_fun f funname t li instrs =
     self#calc_used_variables instrs;
     Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"
       self#print_proto (funname, t, li)
       self#instructions instrs
-			
+      
   val mutable reader = false
   method prog f prog =
     let need li = List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
@@ -36,10 +36,10 @@ class goPrinter = object(self)
     reader <- need;
     Format.fprintf f
       "package main@\n%a%a%a%a"
-			(fun f () ->
-				if Tags.is_taged "use_math"
-				then Format.fprintf f "import \"math\";@\n"
-			) ()
+      (fun f () ->
+	if Tags.is_taged "use_math"
+	then Format.fprintf f "import \"math\";@\n"
+      ) ()
       (fun f () -> if need then Format.fprintf f "import \"fmt\"@\nimport \"os\"@\nimport \"bufio\"@\nvar reader *bufio.Reader@\n
 func skip() {
   var c byte
@@ -61,9 +61,9 @@ func skip() {
   method main f main =
     self#calc_used_variables main;
     (if reader then
-    Format.fprintf f "func main() {@\n  reader = bufio.NewReader(os.Stdin)@\n  @[<v>%a@]@\n}@\n"
-    else
-    Format.fprintf f "func main() {@\n@[<v>%a@]@\n}@\n")
+	Format.fprintf f "func main() {@\n  reader = bufio.NewReader(os.Stdin)@\n  @[<v>%a@]@\n}@\n"
+     else
+	Format.fprintf f "func main() {@\n@[<v>%a@]@\n}@\n")
       self#instructions main
 
   method declaration f var t e =
@@ -71,12 +71,12 @@ func skip() {
       self#binding var self#ptype t self#expr e
       self#test_unused var
 
-	method printf f () = Format.fprintf f "fmt.Printf"
+  method printf f () = Format.fprintf f "fmt.Printf"
 
-	method test_unused f var =
-	  if not (BindingSet.mem var used_variables) then
-	    Format.fprintf f "@\n@[<h>_ = %a@]"
-	      self#binding var
+  method test_unused f var =
+    if not (BindingSet.mem var used_variables) then
+      Format.fprintf f "@\n@[<h>_ = %a@]"
+	self#binding var
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "func %a(%a) %a"
@@ -88,7 +88,7 @@ func skip() {
 	     self#prototype type_
 	 )
 	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	     "%a,@ %a" f1 e1 f2 e2)
+	   "%a,@ %a" f1 e1 f2 e2)
       ) li
       self#ptype t
 
@@ -115,20 +115,20 @@ func skip() {
 
   method mutable_ f m =
     match Mutable.unfix m with
-      | Mutable.Dot (m, field) ->
-	Format.fprintf f "(*%a).%a"
-	  self#mutable_ m
-	  self#field field
-      | Mutable.Var binding -> self#binding f binding
-      | Mutable.Array (m, indexes) ->
-	Format.fprintf f "%a[%a]"
-	  self#mutable_ m
-	  (print_list
-	     self#expr
-	     (fun f f1 e1 f2 e2 ->
-	       Format.fprintf f "%a][%a" f1 e1 f2 e2
-	     ))
-	  indexes
+    | Mutable.Dot (m, field) ->
+      Format.fprintf f "(*%a).%a"
+	self#mutable_ m
+	self#field field
+    | Mutable.Var binding -> self#binding f binding
+    | Mutable.Array (m, indexes) ->
+      Format.fprintf f "%a[%a]"
+	self#mutable_ m
+	(print_list
+	   self#expr
+	   (fun f f1 e1 f2 e2 ->
+	     Format.fprintf f "%a][%a" f1 e1 f2 e2
+	   ))
+	indexes
 
   method ptype f t = match Type.unfix t with
   | Type.Array a -> Format.fprintf f "[]%a" self#ptype a
@@ -201,14 +201,14 @@ func skip() {
   method decl_type f name t =
     match (Type.unfix t) with
     | Type.Struct li ->
-	Format.fprintf f "@\ntype %a struct {@\n@[<v 2>  %a@]@\n}@\n"
-	  self#binding name
-	  (print_list
-	     (fun t (name, type_) ->
-	       Format.fprintf t "%a %a;" self#binding name self#ptype type_ 
-	     )
-	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
-	  ) li
+      Format.fprintf f "@\ntype %a struct {@\n@[<v 2>  %a@]@\n}@\n"
+	self#binding name
+	(print_list
+	   (fun t (name, type_) ->
+	     Format.fprintf t "%a %a;" self#binding name self#ptype type_ 
+	   )
+	   (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+	) li
     | Type.Enum li ->
       Format.fprintf f "type %a int@\nconst (@\n@[<v2>  %a@]@\n);"
         self#binding name
