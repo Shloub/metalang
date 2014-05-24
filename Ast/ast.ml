@@ -149,11 +149,11 @@ module Mutable = struct
       match unfix t with
       | Var v -> acc, Var v |> Fixed.fixa annot
       | Array (v, el) ->
-	let acc, v = f acc v in
-	acc, Array (v, el) |> Fixed.fixa annot
+        let acc, v = f acc v in
+        acc, Array (v, el) |> Fixed.fixa annot
       | Dot (v, field) ->
-	let acc, v = f acc v in
-	acc, Dot (v, field) |> Fixed.fixa annot
+        let acc, v = f acc v in
+        acc, Dot (v, field) |> Fixed.fixa annot
   end)
 
   let rec equals cmpe a b = match (unfix a, unfix b) with
@@ -286,12 +286,12 @@ module Type = struct
       else l1 - l2
     | Tuple li1, Tuple li2 ->
       let len1 = List.length li1 and
-	  len2 = List.length li2 in
+          len2 = List.length li2 in
       if len1 < len2 then -1
       else if len2 < len1 then 1
       else List.fold_left (fun acc (t1, t2) ->
-	if acc = 0 then compare t1 t2
-	else acc
+        if acc = 0 then compare t1 t2
+        else acc
       ) 0 (List.combine li1 li2)
     | Tuple _, _ -> 1
     | Struct _, (Enum _| Bool | Void | Array _ | Char | Auto |
@@ -316,8 +316,8 @@ module Type = struct
         let acc, t = f acc t in
         acc, Fixed.fixa annot (Array t)
       | Tuple li ->
-	let acc, li = List.fold_left_map f acc li in
-	acc, Fixed.fixa annot (Tuple (li))
+        let acc, li = List.fold_left_map f acc li in
+        acc, Fixed.fixa annot (Tuple (li))
       | Struct li ->
         let acc, li = List.fold_left_map
           (fun acc (name, t) ->
@@ -344,10 +344,10 @@ module Type = struct
         ) "" li
       in "("^str^")"
     | Enum e -> let str = List.fold_left
-		  (fun acc name ->
-		    acc ^ name ^ ", "
-		  ) "" e
-		in "Enum("^str^")"
+                  (fun acc name ->
+                    acc ^ name ^ ", "
+                  ) "" e
+                in "Enum("^str^")"
     | Struct li ->
       let str = List.fold_left
         (fun acc (name, t) ->
@@ -469,13 +469,13 @@ module Expr = struct
       | Lexems x -> acc, Fixed.fixa annot (Lexems x)
       | Enum x -> acc, Fixed.fixa annot (Enum x)
       | Tuple li ->
-	let acc, li = List.fold_left_map f acc li in
-	acc, Fixed.fixa annot (Tuple li)
+        let acc, li = List.fold_left_map f acc li in
+        acc, Fixed.fixa annot (Tuple li)
       | Record li ->
-	let acc, li = List.fold_left_map (fun acc (n, e) ->
-	  let acc, e = f acc e in
-	  acc, (n, e)) acc li in
-	acc, Fixed.fixa annot (Record li)
+        let acc, li = List.fold_left_map (fun acc (n, e) ->
+          let acc, e = f acc e in
+          acc, (n, e)) acc li in
+        acc, Fixed.fixa annot (Record li)
   end)
 
   (** {2 utils} *)
@@ -658,14 +658,14 @@ module Instr = struct
       f acc instruction =
     Writer.Deep.foldmap
       (fun acc i ->
-	let a = Fixed.annot i in
+        let a = Fixed.annot i in
         let out, i =
           match unfix i with
           | Declare (v, t, e) ->
             let acc, e = f acc e in
             acc, Declare (v, t, e)
           | Affect (m, e) ->
-	    let acc, m = Mutable.foldmap_expr f acc m in
+            let acc, m = Mutable.foldmap_expr f acc m in
             let acc, e = f acc e in
             acc, Affect (m, e)
           | Loop (v, e1, e2, li) ->
@@ -698,14 +698,14 @@ module Instr = struct
           | Print (t, e) ->
             let acc, e = f acc e in
             acc, Print (t, e)
-	  | Untuple (li, e) ->
-	    let acc, e = f acc e in
-	    acc, Untuple (li, e)
+          | Untuple (li, e) ->
+            let acc, e = f acc e in
+            acc, Untuple (li, e)
           | Read (t, m) ->
-	    let acc, m = Mutable.foldmap_expr f acc m in
-	    acc, Read (t, m)
+            let acc, m = Mutable.foldmap_expr f acc m in
+            acc, Read (t, m)
           | DeclRead (t, m) ->
-	    acc, DeclRead (t, m)
+            acc, DeclRead (t, m)
           | StdinSep -> acc, StdinSep
           | Unquote e -> acc, Unquote e
           | Tag e -> acc, Tag e
@@ -738,8 +738,8 @@ module Prog = struct
   let declarefun var t li1 li2 = DeclarFun (var, t, li1, li2)
   let macro var t params li = Macro (var, t, params, li)
 
-(** global programm type :
-    values of this type contains a full metalang programm *)
+  (** global programm type :
+      values of this type contains a full metalang programm *)
   type 'lex t =
     {
       progname : string;

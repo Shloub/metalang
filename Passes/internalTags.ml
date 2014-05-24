@@ -47,10 +47,10 @@ let rec iter li =
   List.iter (fun i ->
     Instr.fold_expr (fun acc e ->
       Expr.Writer.Deep.iter (fun e ->
-	match Expr.unfix e with
-	| Expr.BinOp(_, Expr.Div, _) -> tag "__internal__div"
-	| Expr.BinOp(_, Expr.Mod, _) -> tag "__internal__mod"
-	| _ -> ()
+        match Expr.unfix e with
+        | Expr.BinOp(_, Expr.Div, _) -> tag "__internal__div"
+        | Expr.BinOp(_, Expr.Mod, _) -> tag "__internal__mod"
+        | _ -> ()
       ) e
     ) () i
   ) li
@@ -62,4 +62,4 @@ let process acc p =
   | _ -> acc, p
 
 let process_main acc m =
-  iter m;	acc, m
+  iter m; acc, m

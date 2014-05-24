@@ -47,8 +47,8 @@ let rec write_bool e =
 let rec rewrite (i : 'lex Instr.t) : 'lex Instr.t list = match
     Instr.unfix i with
     | Instr.Print(Type.Fixed.F (_, Type.Bool), Expr.Fixed.F (annot,
-							     Expr.Access ( Mutable.Fixed.F
-									     (_, Mutable.Var b))
+                                                             Expr.Access ( Mutable.Fixed.F
+                                                                             (_, Mutable.Var b))
     ) ) ->
       [write_bool b]
     | j -> [ Instr.deep_map_bloc (List.flatten @* List.map rewrite) j |> Instr.fixa (Instr.Fixed.annot i) ]

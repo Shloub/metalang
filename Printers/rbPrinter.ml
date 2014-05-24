@@ -46,13 +46,13 @@ class rbPrinter = object(self)
   method tuple f li =
     Format.fprintf f "[%a]"
       (print_list self#expr
-	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
       ) li
 
   method header f prog = Format.fprintf f "require \"scanf.rb\"
 %s"
     (if Tags.is_taged "__internal__mod" then
-	"def mod(x, y)
+        "def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 " else "")
@@ -73,10 +73,10 @@ end
     Format.fprintf f "def %a( %a )"
       self#funname funname
       (print_list
-	 (fun t (a, type_) ->
-	   self#binding t a)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) li
+         (fun t (a, type_) ->
+           self#binding t a)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\nend@\n"
@@ -92,10 +92,10 @@ end
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[%a=scanf(\"%%d\")[0];@]"
-	self#mutable_ mutable_
+        self#mutable_ mutable_
     | Type.Char ->
       Format.fprintf f "@[%a=scanf(\"%%c\")[0];@]"
-	self#mutable_ mutable_
+        self#mutable_ mutable_
     | _ -> assert false (* types non gérés *)
 
   method stdin_sep f = Format.fprintf f "@[scanf(\"%%*\\n\");@]"
@@ -147,7 +147,7 @@ end
         self#expr a
         self#expr b
     | _ -> super#sbinop f op a b
-      
+
   method forloop_content f (varname, expr1, expr2, li) =
     Format.fprintf f "@[<h>for@ %a@ in@ (%a .. @ %a) do@\n@]%a@\nend"
       self#binding varname
@@ -160,10 +160,10 @@ end
       Format.fprintf f "@[<h>printf \"%s\";@]" format
     else
       Format.fprintf f "@[<h>printf \"%s\", %a@]" format
-	(print_list
-	   (fun f (t, e) -> self#expr f e)
-	   (fun t f1 e1 f2 e2 -> Format.fprintf t
-	     "%a,@ %a" f1 e1 f2 e2)) exprs
+        (print_list
+           (fun f (t, e) -> self#expr f e)
+           (fun t f1 e1 f2 e2 -> Format.fprintf t
+             "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[print %s;@]" ( self#noformat s )
@@ -177,18 +177,18 @@ end
     match elsecase with
     | [] ->
       Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nend"
-	self#expr e
-	self#bloc ifcase
+        self#expr e
+        self#bloc ifcase
     | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nels%a"
-	self#expr e
-	self#bloc ifcase
-	self#instr instr
+        self#expr e
+        self#bloc ifcase
+        self#instr instr
     | _ ->
       Format.fprintf f "@[<h>if@ %a then@]@\n%a@\nelse@\n%a@\nend"
-	self#expr e
-	self#bloc ifcase
-	self#bloc elsecase
+        self#expr e
+        self#bloc ifcase
+        self#bloc elsecase
 
   method allocarray f binding type_ len =
     Format.fprintf f "@[<h>%a@ =@ [];@]" self#binding binding
@@ -205,13 +205,13 @@ end
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "@[<h>%a => %a@]"
-	  self#field fieldname
-	  self#expr expr
+        Format.fprintf f "@[<h>%a => %a@]"
+          self#field fieldname
+          self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-	Format.fprintf t
-	  "%a,@\n%a" f1 e1 f2 e2)
+        Format.fprintf t
+          "%a,@\n%a" f1 e1 f2 e2)
       f
       li
 

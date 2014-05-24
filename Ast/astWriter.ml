@@ -59,10 +59,10 @@ module F (T : SigAst) = struct
   module Surface = struct
     let fold f0 acc t =
       let f acc t =
-	(f0 acc t), t
+        (f0 acc t), t
       in
       let (acc, t) =
-	T.foldmap f acc t
+        T.foldmap f acc t
       in acc
 
     let iter f0 t = fold (fun acc t -> f0 t) () t
@@ -80,11 +80,11 @@ module F (T : SigAst) = struct
 
     let fold f0 acc t =
       let rec f acc t =
-	let acc, t = T.foldmap f acc t in
-	(f0 acc t), t
+        let acc, t = T.foldmap f acc t in
+        (f0 acc t), t
       in
       let (acc, t) =
-	T.foldmap f acc t in
+        T.foldmap f acc t in
       let (acc, t) = f acc t
       in acc
 
@@ -92,11 +92,11 @@ module F (T : SigAst) = struct
 
     let map f0 m =
       let rec f () m =
-	let (), m = T.foldmap f () m in
-	(), f0 m
+        let (), m = T.foldmap f () m in
+        (), f0 m
       in
       let ((), m) =
-	T.foldmap f () m in
+        T.foldmap f () m in
       let (_, m) = f () m
       in m
   end
@@ -113,21 +113,21 @@ module F (T : SigAst) = struct
 
     let rec map f t =
       let f2 tra acc t =
-	acc, f (fun t ->
-	  let (), t = tra () t
-	  in t) t
+        acc, f (fun t ->
+          let (), t = tra () t
+          in t) t
       in let (), t = foldmap f2 () t in
-	 t
+         t
 
     let rec fold f acc t =
       let f2 tra acc t =
-	let acc = f (fun acc t ->
-	  let acc, t = tra acc t
-	  in acc
-	) acc t
-	in acc, t
+        let acc = f (fun acc t ->
+          let acc, t = tra acc t
+          in acc
+        ) acc t
+        in acc, t
       in let acc, _ = foldmap f2 acc t in
-	 acc
+         acc
 
   end
 

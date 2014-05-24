@@ -38,7 +38,7 @@ let rec check ty loc =
   if Type.unfix ty = Type.Void then
     raise (Warner.Error (fun f ->
       Format.fprintf f "Forbiden use of void type %a@\n"
-	Warner.ploc loc
+        Warner.ploc loc
     ) )
   else Type.Writer.Surface.iter (fun ty -> check ty loc) ty
 
@@ -64,7 +64,7 @@ let collectDefReturn_fun env = function
       check ty (Ast.PosMap.get (Type.Fixed.annot ty))
     ) params
   | _ -> ()
-    
+
 let apply (env, prog) =
   List.iter (fun t -> collectDefReturn_fun env t) prog.Prog.funs;
   Option.map_default () (collectDefReturn env) prog.Prog.main;

@@ -396,7 +396,7 @@ let instrs_of_lexems_list (li:Parser.token list) : Utils.instr list =
 (** Evaluation factor *)
 module EvalF (IO : EvalIO) = struct
 
-(** precompile an expression *)
+  (** precompile an expression *)
   let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
     let loc = PosMap.get (Expr.Fixed.annot t) in
     let res x = Result x in
@@ -424,30 +424,30 @@ module EvalF (IO : EvalIO) = struct
         let mut = mut_val env mut in
         WithEnv (fun execenv ->  mut execenv)
       | Expr.Tuple t ->
-	WithEnv (fun execenv ->
-	  let t = List.map (function
-	    | Result r -> r
-	    | WithEnv f -> f execenv) t in
-	  (Tuple ( Array.of_list t ))
-	)
+        WithEnv (fun execenv ->
+          let t = List.map (function
+            | Result r -> r
+            | WithEnv f -> f execenv) t in
+          (Tuple ( Array.of_list t ))
+        )
       | Expr.Record fields ->
-	let fields = List.map (fun (name, e) ->
-	  index_for_field env name loc, e) fields in
-	let index, fields = List.unzip fields in
-	let index = Array.of_list index in
-	let fields = Array.of_list fields in
-	let len = Array.length fields in
+        let fields = List.map (fun (name, e) ->
+          index_for_field env name loc, e) fields in
+        let index, fields = List.unzip fields in
+        let index = Array.of_list index in
+        let fields = Array.of_list fields in
+        let len = Array.length fields in
 
-	let f execenv =
-	  let record = Array.make len Nil in
-	  let () = for i = 0 to len - 1 do
-	      let index = index.(i) in
-	      let e = fields.(i) in
-	      let e = eval_expr execenv e in
-	      record.(index) <- e
-	    done
-	  in Record record
-	in WithEnv f
+        let f execenv =
+          let record = Array.make len Nil in
+          let () = for i = 0 to len - 1 do
+              let index = index.(i) in
+              let e = fields.(i) in
+              let e = eval_expr execenv e in
+              record.(index) <- e
+            done
+          in Record record
+        in WithEnv f
       | Expr.Call (name, params) ->
         let call = eval_call env name params  in
         WithEnv (fun execenv ->
@@ -461,23 +461,23 @@ module EvalF (IO : EvalIO) = struct
             | [] -> assert false
             | hd::tl -> if String.equals hd e then n else
                 f (n + 1) tl in
-	  let v = f 0 li in
+          let v = f 0 li in
           Integer v |> res
         | _ -> assert false
         end
       | Expr.Lexems l -> precompiledExpr_of_lexems_list l env
-(** precompile an expression from a token list *)
+  (** precompile an expression from a token list *)
   and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =
     let li = List.map (fun l -> match l with
       | Lexems.Expr e -> e
       | Lexems.Token t -> Result (Lexems [t])
       | Lexems.UnQuote e ->
-	let li = precompiledExpr_of_lexems_list e env in
-	match li with
+        let li = precompiledExpr_of_lexems_list e env in
+        match li with
         | Result (Lexems li) ->
           let e = expr_of_lexems_list li
           in precompile_expr e env
-	| Result x -> err_token_expected x
+        | Result x -> err_token_expected x
         | WithEnv f ->
           WithEnv (fun execenv ->
             match f execenv with
@@ -485,7 +485,7 @@ module EvalF (IO : EvalIO) = struct
               let e = expr_of_lexems_list li in
               let r = precompile_expr e env in
               eval_expr execenv r
-	    | x -> err_token_expected x
+            | x -> err_token_expected x
           )
     ) li
     in flatten_lexems li
@@ -500,7 +500,7 @@ module EvalF (IO : EvalIO) = struct
                 execenv.(out) <- v
         with Not_found ->
           raise (Error (fun f ->
-	    let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
+            let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
             Format.fprintf f "Cannot find var %s %a\n" v ploc loc ))
       end
     | Mutable.Array (m, li) ->
@@ -535,7 +535,7 @@ module EvalF (IO : EvalIO) = struct
               let out = StringMap.find v env.vars in fun execenv ->
                 execenv.(out)
         with Not_found ->
-	  let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
+          let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
           raise (Error (fun f -> Format.fprintf f "Cannot find var %s %a\n" v ploc loc))
       end
     | Mutable.Array (m, li) ->
@@ -556,25 +556,25 @@ module EvalF (IO : EvalIO) = struct
         | x ->
           raise (Error (fun f -> Format.fprintf f "Got %s expected Record\n" (typeof x)))
       )
-(** execute a call *)
+  (** execute a call *)
   and eval_call env name params : execenv -> result =
     try
       let r = StringMap.find name env.functions in
       let params = Array.of_list params in
       let nparams = Array.length params - 1 in
       (fun ex_execenv ->
-	let (nvars, instrs) = !r in
-	let eenv:execenv = init_eenv nvars in
-	let () = for i = 0 to nparams do
+        let (nvars, instrs) = !r in
+        let eenv:execenv = init_eenv nvars in
+        let () = for i = 0 to nparams do
             eenv.(i) <- eval_expr ex_execenv params.(i)
           done
-	in try
+        in try
              instrs eenv; Nil
           with Return e -> e
       )
     with Not_found ->
       (fun execenv ->
-	match name, (List.map (eval_expr execenv) params) with
+        match name, (List.map (eval_expr execenv) params) with
         | "int_of_char", [param] ->
           Integer (int_of_char (get_char param))
         | "char_of_int", [param] ->
@@ -582,11 +582,11 @@ module EvalF (IO : EvalIO) = struct
         | "sqrt_", [param] ->
           Integer (int_of_float (sqrt (float_of_int (get_integer param))))
         | _ -> failwith ("The Macro "^name^" cannot be evaluated with"
-			 ^(string_of_int (List.length params))^" arguments")
+                         ^(string_of_int (List.length params))^" arguments")
       )
-(** instruction evaluator : returns a tuple (environment * execution
-    lambda )
-*)
+  (** instruction evaluator : returns a tuple (environment * execution
+      lambda )
+  *)
   and eval_instr env (instr: (env -> precompiledExpr) Instr.t) :
       (env * (execenv -> unit))
       =
@@ -597,16 +597,16 @@ module EvalF (IO : EvalIO) = struct
       let e = e env in
       let env, li = List.fold_left_map add_in_env env li in
       let f execenv =
-	let e = get_tuple ( eval_expr execenv e ) in
-	List.iteri (fun i r ->
-	  execenv.(r) <- e.(i)
-	) li
+        let e = get_tuple ( eval_expr execenv e ) in
+        List.iteri (fun i r ->
+          execenv.(r) <- e.(i)
+        ) li
       in env, f
     | Instr.Declare (varname, _, e) ->
       let e = e env in
       let env, r = add_in_env env varname in
       let f execenv =
-	execenv.(r) <- eval_expr execenv e
+        execenv.(r) <- eval_expr execenv e
       in env, f
     | Instr.Affect (mutable_, e) ->
       let mutable_ = Mutable.map_expr (fun f -> f env) mutable_ in
@@ -619,25 +619,25 @@ module EvalF (IO : EvalIO) = struct
       let env, mut = add_in_env env varname in
       let env, instrs = eval_instrs env instrs in
       let f execenv =
-	let e1 = eval_expr execenv e1 in
-	let e2 = eval_expr execenv e2 in
-	let rec f e =
+        let e1 = eval_expr execenv e1 in
+        let e2 = eval_expr execenv e2 in
+        let rec f e =
           let () = execenv.(mut) <- e in
           if (get_integer e) > (get_integer e2) then ()
           else
             let () = instrs execenv in
             f (Integer (1 + (get_integer e)))
-	in f e1
+        in f e1
       in env, f
     | Instr.While (e, instrs) ->
       let env, instrs = eval_instrs env instrs in
       let e = e env in
       let rec f execenv =
-	let e = eval_expr execenv e in
-	if get_bool e then
+        let e = eval_expr execenv e in
+        if get_bool e then
           let () = instrs execenv
           in f execenv
-	else ()
+        else ()
       in env, f
     | Instr.Comment _ -> env, fun execenv -> ()
     | Instr.Return e ->
@@ -668,48 +668,48 @@ module EvalF (IO : EvalIO) = struct
       end
     | Instr.AllocRecord (var, t, fields) ->
       let fields = List.map (fun (name, e) ->
-	index_for_field env name loc, e env) fields in
+        index_for_field env name loc, e env) fields in
       let index, fields = List.unzip fields in
       let index = Array.of_list index in
       let fields = Array.of_list fields in
       let len = Array.length fields in
       let env, r = add_in_env env var in
       let f execenv =
-	let record = Array.make len Nil in
-	let () = for i = 0 to len - 1 do
+        let record = Array.make len Nil in
+        let () = for i = 0 to len - 1 do
             let index = index.(i) in
             let e = fields.(i) in
             let e = eval_expr execenv e in
             record.(index) <- e
           done
-	in execenv.(r) <- (Record record)
+        in execenv.(r) <- (Record record)
       in env, f
     | Instr.If (e, l1, l2) ->
       let e = e env in
       let env, l1 = eval_instrs env l1 in
       let env, l2 = eval_instrs env l2 in
       let f execenv =
-	if get_bool (eval_expr execenv e)
-	then l1 execenv
-	else l2 execenv
+        if get_bool (eval_expr execenv e)
+        then l1 execenv
+        else l2 execenv
       in env, f
     | Instr.Call (funname, el) ->
       let el = List.map (fun f -> f env) el in
       let call = eval_call env funname el in
       let f execenv =
-	let _ = call execenv in ()
+        let _ = call execenv in ()
       in env, f
     | Instr.Print (t, e) ->
       let e = e env in
       let f execenv =
-	let e = eval_expr execenv e in
-	print t e
+        let e = eval_expr execenv e in
+        print t e
       in env, f
     | Instr.Read (t, mut) ->
       let mut = Mutable.map_expr (fun f -> f env) mut in
       let mut = mut_setval env mut
       in env, (fun execenv ->
-	read t (fun value -> mut execenv value))
+        read t (fun value -> mut execenv value))
     | Instr.DeclRead (t, var) ->
       let env, r = add_in_env env var in
       env, (fun execenv -> read t (fun v -> execenv.(r) <- v))
@@ -719,7 +719,7 @@ module EvalF (IO : EvalIO) = struct
     | Instr.Tag _ -> env, (fun _ -> ())
     | Instr.Unquote li -> assert false
   and print ty e =
-  (** show the value e. it has the type ty*)
+    (** show the value e. it has the type ty*)
     let () = match Type.unfix ty with
       | Type.Array(ty) ->
         let _ = Array.map (fun e -> print ty e) (get_array e) in ()
@@ -730,52 +730,52 @@ module EvalF (IO : EvalIO) = struct
       | _ -> failwith ("cannot print type "^(Type.type_t_to_string ty))
     in ()
   and read ty k = match Type.unfix ty with
-  (* read a value from the type ty and call the continuation k *)
+    (* read a value from the type ty and call the continuation k *)
     | Type.Integer -> k ( Integer (IO.read_int ()))
     | Type.Char -> k (Char (IO.read_char ()))
     | _ -> failwith ("cannot read type "^(Type.type_t_to_string ty))
   and eval_instrs env
-    (** compute the instructions *)
+      (** compute the instructions *)
       (instrs : (env -> precompiledExpr) Ast.Instr.t list)
     : env * (execenv -> unit) =
     let env, precompiled = List.fold_left_map
       (fun env instr ->
-	eval_instr env instr
+        eval_instr env instr
       )
       env instrs
     in let arr = Array.of_list precompiled
        in env, fun execenv ->
-	 Array.iter (fun f -> f execenv) arr
+         Array.iter (fun f -> f execenv) arr
 
-(** precompile a list of instructions*)
+  (** precompile a list of instructions*)
   let rec precompile_instrs li =
     List.map precompile_instr li
-(** precompile an instruction *)
+  (** precompile an instruction *)
   and precompile_instr i =
     let i' = match Instr.unfix i with
       | Instr.Declare (v, t, e) -> Instr.Declare (v, t, precompile_expr e)
       | Instr.Affect (mut, e) -> Instr.Affect (Mutable.map_expr precompile_expr
-						 mut, precompile_expr e)
+                                                 mut, precompile_expr e)
       | Instr.Loop (v, e1, e2, li) ->
-	Instr.Loop (v,
+        Instr.Loop (v,
                     precompile_expr e1,
                     precompile_expr e2,
                     precompile_instrs li)
       | Instr.While (e, li) ->
-	Instr.While (precompile_expr e, precompile_instrs li)
+        Instr.While (precompile_expr e, precompile_instrs li)
       | Instr.Comment s -> Instr.Comment s
       | Instr.Return e -> Instr.Return (precompile_expr e)
       | Instr.AllocArray (v, t, e, opt) ->
-	let opt = match opt with
+        let opt = match opt with
           | None -> None
           | Some ((v, li)) -> Some (v, precompile_instrs li)
-	in Instr.AllocArray(v, t, precompile_expr e, opt)
+        in Instr.AllocArray(v, t, precompile_expr e, opt)
       | Instr.AllocRecord (v, t, li) ->
-	let li = List.map
+        let li = List.map
           (fun (name, e) -> (name, precompile_expr e)) li
-	in Instr.AllocRecord (v, t, li)
+        in Instr.AllocRecord (v, t, li)
       | Instr.If (e, l1, l2) ->
-	Instr.If (precompile_expr e, precompile_instrs l1, precompile_instrs l2)
+        Instr.If (precompile_expr e, precompile_instrs l1, precompile_instrs l2)
       | Instr.Call (name, li) -> Instr.Call (name, List.map precompile_expr li)
       | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
       | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
@@ -786,19 +786,19 @@ module EvalF (IO : EvalIO) = struct
       | Instr.Tag s -> Instr.Tag s
     in Instr.fixa (Instr.Fixed.annot i) i'
 
-(** compile a function into a lambda *)
+  (** compile a function into a lambda *)
   let compile_fun env var t li instrs =
     let nvars = List.length li in
     let thisfunc = ref (0, fun _ -> ()) in
     let env = {env with
       nvars = nvars + 1;
       vars = List.fold_left
-	(fun (f, i) (v, _) ->
+        (fun (f, i) (v, _) ->
           (StringMap.add v i f), i+1
-	)
-	(StringMap.empty, 0) li |> fst;
+        )
+        (StringMap.empty, 0) li |> fst;
       functions =
-	StringMap.add var
+        StringMap.add var
           thisfunc
           env.functions
     }
@@ -807,18 +807,18 @@ module EvalF (IO : EvalIO) = struct
     let () = thisfunc := (env.nvars, instrs)
     in env
 
-(** precompile and eval an expression *)
+  (** precompile and eval an expression *)
   let precompile_eval_expr (env:env) (e:Utils.expr) : result =
     let precompiled = precompile_expr e env in
     let execenv = init_eenv 0 in
     eval_expr execenv precompiled
 
-(** main function of this module : it evalue a full programm *)
+  (** main function of this module : it evalue a full programm *)
   let eval_prog (te : Typer.env) (p:Utils.prog) =
     let f env p = match p with
       | Prog.Unquote _ -> assert false
       | Prog.DeclarFun (var, t, li, instrs) ->
-	compile_fun env var t li instrs
+        compile_fun env var t li instrs
       | Prog.DeclareType _ -> env
       | Prog.Macro (varname, t, li, impls) -> env
       | Prog.Comment s -> env
@@ -826,8 +826,8 @@ module EvalF (IO : EvalIO) = struct
     in let env = List.fold_left f (empty_env te) p.Prog.funs
        in match p.Prog.main with
        | Some instrs ->
-	 let env, f = eval_instrs {env with nvars = 0} (precompile_instrs instrs)
-	 in f (init_eenv ( env.nvars + 1 ))
+         let env, f = eval_instrs {env with nvars = 0} (precompile_instrs instrs)
+         in f (init_eenv ( env.nvars + 1 ))
        | None -> ()
 
 
@@ -889,14 +889,14 @@ module EvalConstantes = struct
           begin match EVAL.precompiledExpr_of_lexems_list li acc
               |> eval_expr execenv with
                 | Lexems li -> instrs_of_lexems_list li
-		| x -> err_token_expected x
+                | x -> err_token_expected x
           end
         | _ ->
           let execenv = init_eenv 0 in
           begin match EVAL.precompile_expr e acc
               |> eval_expr execenv with
                 | Lexems li -> instrs_of_lexems_list li
-		| x -> err_token_expected x
+                | x -> err_token_expected x
           end
         end
       | _ -> [i]
@@ -933,14 +933,14 @@ module EvalConstantes = struct
         begin match EVAL.precompiledExpr_of_lexems_list li acc
             |> eval_expr execenv with
               | Lexems li -> w li
-	      | x -> err_token_expected x
+              | x -> err_token_expected x
         end
       | _ ->
         let execenv = init_eenv 0 in
         begin match EVAL.precompile_expr e acc
             |> eval_expr execenv with
               | Lexems li -> w li
-	      | x -> err_token_expected x
+              | x -> err_token_expected x
         end
       end
     | _ -> acc, [p]
@@ -962,7 +962,7 @@ module EvalConstantes = struct
     let acc, m = match prog.Prog.main with
       | None -> acc, None
       | Some m -> let (a, b) = process_main acc m
-	          in a, Some b
+                  in a, Some b
     in
     {prog with
       Prog.main = m;

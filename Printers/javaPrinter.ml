@@ -62,23 +62,23 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-	Format.fprintf f "static class %a {%a}"
-	  self#binding name
-	  (print_list
-	     (fun t (name, type_) ->
-	       Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
-	     )
-	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	  ) li
+        Format.fprintf f "static class %a {%a}"
+          self#binding name
+          (print_list
+             (fun t (name, type_) ->
+               Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
+             )
+             (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+          ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
         self#binding name
         (print_list
-	   (fun t name ->
+           (fun t name ->
              self#binding t name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
-	) li
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+        ) li
     | _ -> cppprinter#decl_type f name t
 
   method enum f e =
@@ -109,18 +109,18 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     match Type.unfix type_ with
     | Type.Array t2 ->
       Format.fprintf f "@[<h>%a[] %a = new %a[%a]%a;@]"
-	self#ptype type_
-	self#binding binding
+        self#ptype type_
+        self#binding binding
 
-	self#prefix_type t2
-	self#expr len
-	self#suffix_type type_
+        self#prefix_type t2
+        self#expr len
+        self#suffix_type type_
     | _ ->
       Format.fprintf f "@[<h>%a[] %a = new %a[%a];@]"
-	self#ptype type_
-	self#binding binding
-	self#ptype type_
-	self#expr len
+        self#ptype type_
+        self#binding binding
+        self#ptype type_
+        self#expr len
 
   method main f main =
     Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@]@\n}@\n"
@@ -142,8 +142,8 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")){@]@\n@[<h>scanner.next(\"^-\"); %a = -scanner.nextInt();@]@\n@[<h>}else{@]@\n@[<h>%a = scanner.nextInt();}@]"
-	self#mutable_ m
-	self#mutable_ m
+        self#mutable_ m
+        self#mutable_ m
     | Type.String -> (* TODO configure Scanner, read int and do it*)
       Format.fprintf f "TODO" (* TODO *)
     | Type.Char -> Format.fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
@@ -153,9 +153,9 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method multi_print f format exprs =
     Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
       (print_list
-	 (fun f (t, e) -> self#expr f e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) exprs
+         (fun f (t, e) -> self#expr f e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[System.out.print(%S);@]" s
@@ -165,14 +165,14 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "@[<h>%a.%a = %a;@]"
-	  self#binding name
-	  self#field fieldname
-	  self#expr expr
+        Format.fprintf f "@[<h>%a.%a = %a;@]"
+          self#binding name
+          self#field fieldname
+          self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-	Format.fprintf t
-	  "%a@\n%a" f1 e1 f2 e2)
+        Format.fprintf t
+          "%a@\n%a" f1 e1 f2 e2)
       f
       li
 
@@ -189,19 +189,19 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a.%s"
-	self#mutable_ m
-	field
+        self#mutable_ m
+        field
     | Mutable.Var b ->
       self#binding f b
     | Mutable.Array (m, index) ->
       Format.fprintf f "@[<h>%a[%a]@]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a][%a"
-	       f1 e1
-	       f2 e2
-	   )) index
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a][%a"
+               f1 e1
+               f2 e2
+           )) index
 
 end

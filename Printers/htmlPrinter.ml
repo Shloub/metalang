@@ -92,13 +92,13 @@ class htmlPrinter = object(self)
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "%a = %a"
-	  self#field fieldname
-	  self#expr expr
+        Format.fprintf f "%a = %a"
+          self#field fieldname
+          self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-	Format.fprintf t
-	  "%a<br/>@\n%a" f1 e1 f2 e2)
+        Format.fprintf t
+          "%a<br/>@\n%a" f1 e1 f2 e2)
       f
       li
 
@@ -123,18 +123,18 @@ class htmlPrinter = object(self)
     match elsecase with
     | [] ->
       Format.fprintf f "<span class=\"keyword\">if</span>@ %a@\n<span class=\"keyword\">then</span>@\n@[<v2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
-	self#expr e
-	self#instructions ifcase
+        self#expr e
+        self#instructions ifcase
     | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "<span class=\"keyword\">if</span>@ %a <span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">els</span>%a"
-	self#expr e
-	self#instructions ifcase
-	self#instr instr
+        self#expr e
+        self#instructions ifcase
+        self#instr instr
     | _ ->
       Format.fprintf f "<span class=\"keyword\">if</span>@ %a\n<span class=\"keyword\">then</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">else</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>"
-	self#expr e
-	self#instructions ifcase
-	self#instructions elsecase
+        self#expr e
+        self#instructions ifcase
+        self#instructions elsecase
 
   method instr f t = Format.fprintf f "<div class=\"instruction\">%a</div>@\n" super#instr t
 
@@ -147,12 +147,12 @@ class htmlPrinter = object(self)
       self#ptype t
       self#funname funname
       (print_list
-	 (fun f (n, t) ->
-	   Format.fprintf f "%a@ %a"
-	     self#ptype t
-	     self#binding n)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) li
+         (fun f (n, t) ->
+           Format.fprintf f "%a@ %a"
+             self#ptype t
+             self#binding n)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "<div class==\"metalang_function\"><span class=\"proto\">%a</span>@\n<div class=\"metalang_bloc_content\">%a@]</div><span class=\"keyword\">end</span></div>"
@@ -163,22 +163,22 @@ class htmlPrinter = object(self)
     match (Type.unfix t) with
     | Type.Struct li ->
       Format.fprintf f "<span class=\"keyword\">record</span> <span class=\"type\">@@%s</span> <div class=\"metalang_bloc_content\">%a</div><span class=\"keyword\">end</span>"
-	name
-	(print_list
-	   (fun t (name, type_) ->
-	     Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#binding name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	) li
+        name
+        (print_list
+           (fun t (name, type_) ->
+             Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#binding name
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+        ) li
     | Type.Enum li ->
       Format.fprintf f "<span class=\"keyword\">enum</span> <span class=\"type\">@@%s</span> @\n<div class=\"metalang_bloc_content\">@[<v2>  %a@]</div>@\n<span class=\"keyword\">end</span>@\n"
         name
         (print_list
-	   (fun t name ->
+           (fun t name ->
              self#binding t name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
-	) li
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
+        ) li
     | _ ->
       Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#binding name self#ptype t
 

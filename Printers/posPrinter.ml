@@ -60,7 +60,7 @@ class posPrinter = object(self)
   method instr f e =
     let loc = Ast.PosMap.get (Instr.Fixed.annot e) in
     Format.fprintf f "%a%a%a"
-      self#ploc loc 
+      self#ploc loc
       self#annot (Instr.Fixed.annot e)
       super#instr e
 

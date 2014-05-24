@@ -213,18 +213,18 @@ class pasPrinter = object(self)
     match elsecase with
     | [] ->
       Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v2>  %a;@]"
-	self#expr e
-	self#bloc ifcase
+        self#expr e
+        self#bloc ifcase
     | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nelse %a;"
-	self#expr e
-	self#bloc ifcase
-	self#instr instr
+        self#expr e
+        self#bloc ifcase
+        self#instr instr
     | _ ->
       Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a;@]"
-	self#expr e
-	self#bloc ifcase
-	self#bloc elsecase
+        self#expr e
+        self#bloc ifcase
+        self#bloc elsecase
 
   method declare_type f t =
     match Type.unfix t with
@@ -305,31 +305,31 @@ class pasPrinter = object(self)
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a^.%a"
-	self#mutable_ m
-	self#field field
+        self#mutable_ m
+        self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a][%a" f1 e1 f2 e2
-	   ))
-	indexes
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a][%a" f1 e1 f2 e2
+           ))
+        indexes
 
 
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "%a^.%a := %a;"
-	  self#binding name
-	  self#field fieldname
-	  self#expr expr
+        Format.fprintf f "%a^.%a := %a;"
+          self#binding name
+          self#field fieldname
+          self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-	Format.fprintf t
-	  "%a@\n%a" f1 e1 f2 e2)
+        Format.fprintf t
+          "%a@\n%a" f1 e1 f2 e2)
       f
       li
 
@@ -361,8 +361,8 @@ class pasPrinter = object(self)
     Format.fprintf f "program %s;@\n%a%s%s%s%s%s@\n%a%a.@\n@\n"
       prog.Prog.progname
       (fun f () ->
-	if Tags.is_taged "use_math"
-	then Format.fprintf f "Uses math;@\n"
+        if Tags.is_taged "use_math"
+        then Format.fprintf f "Uses math;@\n"
       ) ()
       (if need then "
 var global_char : char;
@@ -455,8 +455,8 @@ end;
 
   method return f e =
     (*    Format.fprintf f "@[<h>%a@ :=@ %a;@]"
-	  self#binding current_function
-	  self#expr e
+          self#binding current_function
+          self#expr e
     *)
     Format.fprintf f "@[<h>exit(%a);@]"
       self#expr e
@@ -480,16 +480,16 @@ end;
       Format.fprintf f "Type %a = (@\n@[<v2>  %a@]);@\n"
         self#binding name
         (print_list
-	   (fun t name ->
+           (fun t name ->
              self#binding t name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
-	) li
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+        ) li
 
     | _ ->
       Format.fprintf f "type %a = %a;"
-	super#ptype t
-	super#binding name
+        super#ptype t
+        super#binding name
 
 
 end

@@ -55,12 +55,12 @@ let fresh_init prog =
       | Instr.AllocRecord(b, _, _)
       | Instr.AllocArray (b, _, _, None)
       | Instr.Loop (b, _, _, _)
-	-> BindingSet.add b acc
+        -> BindingSet.add b acc
       | Instr.AllocArray (b1, _, _, Some (b2, _))
-	->
-	BindingSet.add b1 (BindingSet.add b2 acc)
+        ->
+        BindingSet.add b1 (BindingSet.add b2 acc)
       | Instr.Untuple (li, e) ->
-	List.fold_left (fun acc (_, name) -> BindingSet.add name acc) acc li
+        List.fold_left (fun acc (_, name) -> BindingSet.add name acc) acc li
       | _ -> acc
     ) acc i
   in
@@ -68,8 +68,8 @@ let fresh_init prog =
     | Prog.DeclarFun (v, t, params, instrs) ->
       let acc = BindingSet.add v acc in
       let acc:BindingSet.t = List.fold_left
-	(fun acc ((v:string), _ ) -> BindingSet.add v acc)
-	acc params in
+        (fun acc ((v:string), _ ) -> BindingSet.add v acc)
+        acc params in
       let acc:BindingSet.t = List.fold_left addset acc instrs in
       acc
     | _ -> acc

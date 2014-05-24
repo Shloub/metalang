@@ -135,9 +135,9 @@ var read_int_ = function(){
   method multi_print f format exprs =
     Format.fprintf f "@[<h>util.print(%a);@]"
       (print_list
-	 (fun f (t, e) -> self#expr f e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) exprs
+         (fun f (t, e) -> self#expr f e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr =
     Format.fprintf f "@[util.print(%a);@]" self#expr expr
@@ -156,31 +156,31 @@ var read_int_ = function(){
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a.%a"
-	self#mutable_ m
-	self#field field
+        self#mutable_ m
+        self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a][%a" f1 e1 f2 e2
-	   ))
-	indexes
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a][%a" f1 e1 f2 e2
+           ))
+        indexes
 
 
   method def_fields name f li =
     Format.fprintf f "@[<h>%a@]"
       (print_list
-	 (fun f (fieldname, expr) ->
-	   Format.fprintf f "%a : %a"
-	     self#field fieldname
-	     self#expr expr
-	 )
-	 (fun t f1 e1 f2 e2 ->
-	   Format.fprintf t
-	     "%a,@\n%a" f1 e1 f2 e2)
+         (fun f (fieldname, expr) ->
+           Format.fprintf f "%a : %a"
+             self#field fieldname
+             self#expr expr
+         )
+         (fun t f1 e1 f2 e2 ->
+           Format.fprintf t
+             "%a,@\n%a" f1 e1 f2 e2)
       )
       li
 
@@ -189,10 +189,10 @@ var read_int_ = function(){
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[%a=read_int_();@]"
-	self#mutable_ mutable_
+        self#mutable_ mutable_
     | Type.Char ->
       Format.fprintf f "@[%a=read_char_();@]"
-	self#mutable_ mutable_
+        self#mutable_ mutable_
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
       (Type.type_t_to_string t)
     ))

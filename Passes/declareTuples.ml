@@ -49,18 +49,18 @@ let freshname_ = function
   | Type.Struct li ->
     List.fold_left
       (fun acc (name, t) ->
-	acc ^ "_"^name^"_"^t
+        acc ^ "_"^name^"_"^t
       ) "struct" li
   | Type.Enum li ->
     List.fold_left
       (fun acc name ->
-	acc ^ "_"^name
+        acc ^ "_"^name
       ) "enum" li
   | Type.Named tyname -> tyname
   | Type.Tuple li ->
     List.fold_left
       (fun acc name ->
-	acc ^ "_"^name
+        acc ^ "_"^name
       ) "tuple" li
   | Type.Auto -> "auto"
 

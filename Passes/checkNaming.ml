@@ -94,7 +94,7 @@ let add_local_in_acc funname name acc loc =
 
 
 let is_value funname acc name loc =
-    (* TODO if is parameter, change message *)
+  (* TODO if is parameter, change message *)
   if not(BindingSet.mem name acc.variables) &&
     not(BindingSet.mem name acc.parameters) &&
     not(BindingSet.mem name acc.array)
@@ -103,7 +103,7 @@ let is_value funname acc name loc =
 
 
 let is_local funname acc name loc =
-    (* TODO if is parameter, change message *)
+  (* TODO if is parameter, change message *)
   if not(BindingSet.mem name acc.variables) then
     Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable %a" name Warner.ploc loc)
 
@@ -210,7 +210,7 @@ let rec check_instr funname acc instr =
     let () = check_expr funname acc e in
     List.fold_left (fun acc (_, name) ->
       add_local_in_acc funname name acc loc) acc li
-      
+
 
 let process acc f =
   match f with

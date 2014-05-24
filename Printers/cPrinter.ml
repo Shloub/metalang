@@ -60,7 +60,7 @@ class cPrinter = object(self)
           Format.fprintf f "struct %s *" n
         | Type.Enum _ ->
           Format.fprintf f "%s" n
-	| _ -> assert false
+        | _ -> assert false
     end
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct _ -> Format.fprintf f "a struct"
@@ -84,15 +84,15 @@ class cPrinter = object(self)
   method def_fields name f li =
     Format.fprintf f "@[<h>%a@]"
       (print_list
-	 (fun f (fieldname, expr) ->
-	   Format.fprintf f "%a->%a=%a;"
-	     self#binding name
-	     self#field fieldname
-	     self#expr expr
-	 )
-	 (fun t f1 e1 f2 e2 ->
-	   Format.fprintf t
-	     "%a@\n%a" f1 e1 f2 e2)
+         (fun f (fieldname, expr) ->
+           Format.fprintf f "%a->%a=%a;"
+             self#binding name
+             self#field fieldname
+             self#expr expr
+         )
+         (fun t f1 e1 f2 e2 ->
+           Format.fprintf t
+             "%a@\n%a" f1 e1 f2 e2)
       )
       li
 
@@ -150,7 +150,7 @@ class cPrinter = object(self)
                              | (Instr.DeclRead _)
                              | (Instr.Declare _)
                              | (Instr.Comment _)
-			     | (Instr.If (_, _, _) ) (* sans accolades, on a un conflit sur le else *)
+                             | (Instr.If (_, _, _) ) (* sans accolades, on a un conflit sur le else *)
   ))
     ] ->
     Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
@@ -165,13 +165,13 @@ class cPrinter = object(self)
       self#ptype t
       self#funname funname
       (print_list
-	 (fun t (binding, type_) ->
-	   Format.fprintf t "%a@ %a"
-	     self#prototype type_
-	     self#binding binding
-	 )
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)
+         (fun t (binding, type_) ->
+           Format.fprintf t "%a@ %a"
+             self#prototype type_
+             self#binding binding
+         )
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)
       ) li
 
   method stdin_sep f = Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\");@]"
@@ -180,18 +180,18 @@ class cPrinter = object(self)
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a->%a"
-	self#mutable_ m
-	self#field field
+        self#mutable_ m
+        self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a][%a" f1 e1 f2 e2
-	   ))
-	indexes
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a][%a" f1 e1 f2 e2
+           ))
+        indexes
 
   method read f t m =
     Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#mutable_ m
@@ -203,9 +203,9 @@ class cPrinter = object(self)
       Format.fprintf f "@[<h>%a(\"%s\");@]" self#printf () format
     else
       Format.fprintf f "@[<h>%a(\"%s\", %a);@]" self#printf ()  format
-	(print_list
-	   (fun f (t, e) -> self#expr f e)
-	   (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
+        (print_list
+           (fun f (t, e) -> self#expr f e)
+           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[%a(%s);@]" self#printf () ( self#noformat s )
@@ -214,8 +214,8 @@ class cPrinter = object(self)
   method prog f prog =
     Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n%a@\n%a%a@\n@\n"
       (fun f () ->
-	if Tags.is_taged "use_math"
-	then Format.fprintf f "#include<math.h>@\n"
+        if Tags.is_taged "use_math"
+        then Format.fprintf f "#include<math.h>@\n"
       ) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -223,30 +223,30 @@ class cPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-	Format.fprintf f "struct %a;@\ntypedef struct %a {@\n@[<v 2>  %a@]@\n} %a;@\n"
-	  self#binding name
-	  self#binding name
-	  (print_list
-	     (fun t (name, type_) ->
-	       Format.fprintf t "%a %a;" self#ptype type_ self#binding name
-	     )
-	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
-	  ) li
-	  self#binding name
+        Format.fprintf f "struct %a;@\ntypedef struct %a {@\n@[<v 2>  %a@]@\n} %a;@\n"
+          self#binding name
+          self#binding name
+          (print_list
+             (fun t (name, type_) ->
+               Format.fprintf t "%a %a;" self#ptype type_ self#binding name
+             )
+             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+          ) li
+          self#binding name
     | Type.Enum li ->
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
         self#binding name
         (print_list
-	   (fun t name ->
+           (fun t name ->
              self#binding t name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
-	) li
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+        ) li
         self#binding name
     | _ ->
       Format.fprintf f "typedef %a %a;"
-	baseprinter#ptype t
-	baseprinter#binding name
+        baseprinter#ptype t
+        baseprinter#binding name
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"
@@ -268,9 +268,9 @@ class cPrinter = object(self)
       self#blocinif ifcase
     | [Instr.Fixed.F ( _, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse %a"
- 	self#expr e
+        self#expr e
         self#blocinif ifcase
- 	self#instr instr
+        self#instr instr
     | _ -> Format.fprintf f "@[<h>if@ (%a)@]@\n%a@\nelse@\n%a"
       self#expr e
       self#blocinif ifcase

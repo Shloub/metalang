@@ -48,9 +48,9 @@ let rec contains_sad_return instrs =
     | Instr.While (_, li) -> acc || (contains_return li)
     | Instr.If (_, li1, li2) ->
       acc ||
-	(contains_sad_return li1) || (contains_sad_return li2) ||
-	(( contains_return li1) && not( contains_return li2)) ||
-	(( contains_return li2) && not( contains_return li1))
+        (contains_sad_return li1) || (contains_sad_return li2) ||
+        (( contains_return li1) && not( contains_return li2)) ||
+        (( contains_return li2) && not( contains_return li1))
     | _ -> tra acc i
   in List.fold_left (f (Instr.Writer.Traverse.fold f)) false instrs
 
@@ -91,10 +91,10 @@ class camlPrinter = object(self)
   method untuple f li e =
     Format.fprintf f "@[<h>let (%a) = %a in@]"
       (print_list self#binding
-	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
       ) (List.map snd li)
       self#expr e
-      
+
 
   method record f li =
     Format.fprintf f "{@\n  @[<v>%a@]@\n}"
@@ -112,20 +112,20 @@ class camlPrinter = object(self)
     | Type.Named n -> Format.fprintf f "%s" n
     | Type.Struct li ->
       Format.fprintf f "record{%a}"
-	(print_list
-	   (fun t (name, type_) ->
-	     Format.fprintf t "%s : %a;" name self#ptype type_
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	) li
+        (print_list
+           (fun t (name, type_) ->
+             Format.fprintf t "%s : %a;" name self#ptype type_
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+        ) li
     | Type.Enum li ->
       Format.fprintf f "%a"
-	(print_list
-	   (fun t name ->
-	     Format.fprintf t "%s" name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
-	) li
+        (print_list
+           (fun t name ->
+             Format.fprintf t "%s" name
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
+        ) li
     | Type.Lexems -> assert false
     | Type.Auto -> assert false
 
@@ -196,63 +196,63 @@ class camlPrinter = object(self)
       self#funname funname
     | _ ->
       Format.fprintf f "let@ %a%a@ %a ="
-	self#rec_ rec_
-	self#funname funname
-	(print_list
-	   (fun t (a, b) -> self#binding t a)
-	   (fun t f1 e1 f2 e2 -> Format.fprintf t
-	     "%a@ %a" f1 e1 f2 e2)) li
+        self#rec_ rec_
+        self#funname funname
+        (print_list
+           (fun t (a, b) -> self#binding t a)
+           (fun t f1 e1 f2 e2 -> Format.fprintf t
+             "%a@ %a" f1 e1 f2 e2)) li
 
   (** show an if then else *)
   method if_ f e ifcase elsecase =
     match elsecase with
     | [] ->
       Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]"
-	self#expr e
-	self#bloc ifcase
+        self#expr e
+        self#bloc ifcase
     | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse %a"
-	self#expr e
-	self#bloc ifcase
-	self#instr instr
+        self#expr e
+        self#bloc ifcase
+        self#instr instr
     | _ ->
       Format.fprintf f "@[<h>if@ %a@ then@]@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]"
-	self#expr e
-	self#bloc ifcase
-	self#bloc elsecase
+        self#expr e
+        self#bloc ifcase
+        self#bloc elsecase
 
   (** show an instruction *)
   method instructions f instrs =
     Format.fprintf f "%a%s"
       (print_list
-	 self#instr
-	 (fun t print1 item1 print2 item2 ->
-	   Format.fprintf t "%a@\n%a"
-	     (fun t i ->
-	       match Instr.unfix i with
-	       | Instr.AllocRecord _ -> self#instr f i (* letin -> pas de ; *)
-	       | Instr.AllocArray _ -> self#instr f i (* letin -> pas de ; *)
-	       | Instr.Declare _ -> self#instr f i (* letin -> pas de ; *)
-	       | Instr.Untuple _ -> self#instr f i (* letin -> pas de ; *)
-	       | Instr.DeclRead _ -> self#instr f i
-	       | Instr.Comment _ -> self#instr f i
-	       | Instr.Return _ -> self#instr f i
-	       | _ ->
-		 if (* Si on a que des commentaires ensuite, alors on ne met pas de ; *)
-		   (List.for_all
-		      (function
-		      | (Instr.Fixed.F (_, Instr.Comment _) ) -> true
-		      | _ -> false
-		      )
-		      item2
-		   )
-		 then
-		   self#instr f i
-		 else
-		   Format.fprintf f "%a;" self#instr i
-	     )
-	     item1 print2 item2
-	 )
+         self#instr
+         (fun t print1 item1 print2 item2 ->
+           Format.fprintf t "%a@\n%a"
+             (fun t i ->
+               match Instr.unfix i with
+               | Instr.AllocRecord _ -> self#instr f i (* letin -> pas de ; *)
+               | Instr.AllocArray _ -> self#instr f i (* letin -> pas de ; *)
+               | Instr.Declare _ -> self#instr f i (* letin -> pas de ; *)
+               | Instr.Untuple _ -> self#instr f i (* letin -> pas de ; *)
+               | Instr.DeclRead _ -> self#instr f i
+               | Instr.Comment _ -> self#instr f i
+               | Instr.Return _ -> self#instr f i
+               | _ ->
+                 if (* Si on a que des commentaires ensuite, alors on ne met pas de ; *)
+                   (List.for_all
+                      (function
+                      | (Instr.Fixed.F (_, Instr.Comment _) ) -> true
+                      | _ -> false
+                      )
+                      item2
+                   )
+                 then
+                   self#instr f i
+                 else
+                   Format.fprintf f "%a;" self#instr i
+             )
+             item1 print2 item2
+         )
       ) instrs
       (self#need_unit instrs)
 
@@ -260,11 +260,11 @@ class camlPrinter = object(self)
   method need_unit instrs =
     match List.rev
       (List.filter
-	 (function
-	 | (Instr.Fixed.F (_, Instr.Comment _) ) -> false
-	 | _ -> true
-	 )
-	 instrs
+         (function
+         | (Instr.Fixed.F (_, Instr.Comment _) ) -> false
+         | _ -> true
+         )
+         instrs
       )
     with
     | (Instr.Fixed.F (_, Instr.AllocArray _) ) :: _
@@ -278,7 +278,7 @@ class camlPrinter = object(self)
     if List.forall
       (function
       | Instr.Fixed.F (_, (Instr.Comment _
-			      | (Instr.If (_, _, _) )) (* sans begin end, on a un conflit sur le else *)) -> true
+                              | (Instr.If (_, _, _) )) (* sans begin end, on a un conflit sur le else *)) -> true
       | _ -> false
       )
       b
@@ -287,16 +287,16 @@ class camlPrinter = object(self)
     else
       match b with
       | [i] ->
-	Format.fprintf f "@[<h>%a%s@]" self#instr i
-	  (self#need_unit b)
+        Format.fprintf f "@[<h>%a%s@]" self#instr i
+          (self#need_unit b)
       | _ ->
-	Format.fprintf f "begin@\n@[<v 2>  %a@]@\nend" self#instructions b
+        Format.fprintf f "begin@\n@[<v 2>  %a@]@\nend" self#instructions b
 
   (** show a binding *)
   method binding f i =
     if BindingSet.mem i used_variables then
       Format.fprintf f "%s" i
-    else 
+    else
       Format.fprintf f "_%s" i
 
   method hasSelfAffect op = false
@@ -316,12 +316,12 @@ class camlPrinter = object(self)
   method declaration f var t e =
     if BindingSet.mem var refbindings then
       Format.fprintf f "@[<h>let %a@ =@ ref(@ %a )@ in@]"
-	self#binding var
-	self#expr e
+        self#binding var
+        self#expr e
     else
       Format.fprintf f "@[<h>let %a@ =@ %a@ in@]"
-	self#binding var
-	self#expr e
+        self#binding var
+        self#expr e
 
   (** read a value from stdin into a mutable *)
   method read f t m =
@@ -345,12 +345,12 @@ class camlPrinter = object(self)
     refbindings <-
       List.fold_left
       (Instr.Writer.Deep.fold
-	 (fun acc i ->
-	   match Instr.unfix i with
-	   | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-	   | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
-	   | _ -> acc
-	 ))
+         (fun acc i ->
+           match Instr.unfix i with
+           | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+           | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
+           | _ -> acc
+         ))
       BindingSet.empty
       instrs
 
@@ -368,9 +368,9 @@ class camlPrinter = object(self)
     | Mutable.Var binding ->
       if in_expr && BindingSet.mem binding refbindings
       then
-	Format.fprintf f "(!%a)" self#binding binding
+        Format.fprintf f "(!%a)" self#binding binding
       else
-	self#binding f binding
+        self#binding f binding
     | _ -> self#mutable_rec f m
 
   method mutable_rec f m =
@@ -378,23 +378,23 @@ class camlPrinter = object(self)
     | Mutable.Var binding ->
       if BindingSet.mem binding refbindings
       then
-	Format.fprintf f "(!%a)" self#binding binding
+        Format.fprintf f "(!%a)" self#binding binding
       else
-	self#binding f binding
+        self#binding f binding
     | Mutable.Dot (mutable_, field) ->
       Format.fprintf f "@[<h>%a.%a@]"
-	self#mutable_rec mutable_
-	self#field field
+        self#mutable_rec mutable_
+        self#field field
     | Mutable.Array (mut, indexes) ->
       Format.fprintf f "@[<h>%a.(%a)@]"
-	self#mutable_rec mut
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a).(%a"
-	       f1 e1
-	       f2 e2
-	   )) indexes
+        self#mutable_rec mut
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a).(%a"
+               f1 e1
+               f2 e2
+           )) indexes
 
   (** returns true if the function is recursive *)
   method is_rec funname instrs =
@@ -403,12 +403,12 @@ class camlPrinter = object(self)
       | Instr.Call (name, _) -> acc || name = funname
       | _ -> acc
       ) false i ||
-	Instr.fold_expr (fun acc e ->
-	  Expr.Writer.Deep.fold (fun acc e -> match Expr.unfix e with
-	  | Expr.Call (name, _) -> acc || name = funname
-	  | _ -> acc
-	  ) acc e
-	) false i
+        Instr.fold_expr (fun acc e ->
+          Expr.Writer.Deep.fold (fun acc e -> match Expr.unfix e with
+          | Expr.Call (name, _) -> acc || name = funname
+          | _ -> acc
+          ) acc e
+        ) false i
     in List.fold_left (fun acc i -> acc || is_rec i) false instrs
 
   method print_exnName f (t : unit Type.Fixed.t) =
@@ -416,14 +416,14 @@ class camlPrinter = object(self)
       Format.fprintf f "%s" (TypeMap.find t printed_exn)
     with Not_found ->
       Format.fprintf f "NOT_FOUND_%a" self#ptype t
-	
+
   method print_exns f exns =
     TypeMap.iter (fun ty str ->
       Format.fprintf f "exception %s of %a@\n"
-	str
-	self#ptype ty
+        str
+        self#ptype ty
     ) exns
-      
+
   method used_affect () = true
 
   method print_fun f funname (t : unit Type.Fixed.t) li instrs =
@@ -437,33 +437,33 @@ class camlPrinter = object(self)
     | Type.Fixed.F (_, Type.Void) ->
       if sad_returns then failwith("return in a void function : "^funname)
       else
-	Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
-	  proto (funname, t, li)
-	  self#ref_alias li
-	  self#instructions instrs
+        Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
+          proto (funname, t, li)
+          self#ref_alias li
+          self#instructions instrs
     | _ ->
       if not(sad_returns) then
-	Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
-	  proto (funname, t, li)
-	  self#ref_alias li
-	  self#instructions instrs
+        Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
+          proto (funname, t, li)
+          self#ref_alias li
+          self#instructions instrs
       else
-	let () =
-	  Warner.warn funname (fun t () -> Format.fprintf t "The returns will make a dirty ocaml code")
-	in (* TODO faire un diff pour ne déclarer que les nouvelles *)
-	let () = printed_exn <-
-	  TypeSet.fold (fun t (acc: string TypeMap.t) ->
-	    exn_count <- exn_count + 1;
-	    TypeMap.add t ("Found_"^(string_of_int exn_count)) acc 
-	  ) sad_types
-	  TypeMap.empty
-	in
-	Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
-	  self#print_exns printed_exn
-	  proto (funname, t, li)
-	  self#ref_alias li
-	  self#instructions instrs
-	  self#print_exnName t
+        let () =
+          Warner.warn funname (fun t () -> Format.fprintf t "The returns will make a dirty ocaml code")
+        in (* TODO faire un diff pour ne déclarer que les nouvelles *)
+        let () = printed_exn <-
+          TypeSet.fold (fun t (acc: string TypeMap.t) ->
+            exn_count <- exn_count + 1;
+            TypeMap.add t ("Found_"^(string_of_int exn_count)) acc
+          ) sad_types
+          TypeMap.empty
+        in
+        Format.fprintf f "%a@\n@[<h>%a@]@\n@[<v 2>  %atry@\n%a@\nwith %a (out) -> out@]@\n"
+          self#print_exns printed_exn
+          proto (funname, t, li)
+          self#ref_alias li
+          self#instructions instrs
+          self#print_exnName t
 
   method ref_alias f li = match li with
   | [] -> ()
@@ -482,18 +482,18 @@ class camlPrinter = object(self)
   method multi_print f format exprs =
     Format.fprintf f "@[<h>Printf.printf \"%s\" %a@]" format
       (print_list
-	 (fun f (t, e) -> self#expr f e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@ %a" f1 e1 f2 e2)) exprs
+         (fun f (t, e) -> self#expr f e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr =
     match Expr.unfix expr with
     | Expr.String s -> Format.fprintf f "@[Printf.printf %s@]" ( self#noformat s)
     | _ ->
       Format.fprintf f "@[Printf.printf \"%a\" %a@]"
-	self#format_type t
-	(if self#nop (Expr.unfix expr) then
+        self#format_type t
+        (if self#nop (Expr.unfix expr) then
             self#expr
-	 else self#printp) expr
+         else self#printp) expr
 
   method comment f str =
     Format.fprintf f "(*%s*)" str
@@ -501,11 +501,11 @@ class camlPrinter = object(self)
   method return f e =
     if sad_returns then
       Format.fprintf f "@[<h>raise (%a(%a))@]"
-	self#print_exnName (Typer.get_type (self#getTyperEnv ())  e)
-	self#expr e
+        self#print_exnName (Typer.get_type (self#getTyperEnv ())  e)
+        self#expr e
     else
       Format.fprintf f "@[<h>%a@]" self#expr e
-	
+
   method allocarray_lambda f binding type_ len binding2 lambda =
     let next_sad_return =sad_returns in
     sad_returns <- contains_sad_return lambda;
@@ -513,25 +513,25 @@ class camlPrinter = object(self)
     Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@ in@]"
       self#binding binding
       (fun t () ->
-	if b then
-	  Format.fprintf t "ref(@ "
+        if b then
+          Format.fprintf t "ref(@ "
       ) ()
       (fun f e ->
-	if self#nop (Expr.unfix e) then self#expr f e
-	else Format.fprintf f "(%a)" self#expr e
+        if self#nop (Expr.unfix e) then self#expr f e
+        else Format.fprintf f "(%a)" self#expr e
       ) len
       self#binding binding2
       (fun f () ->
-	if sad_returns then Format.fprintf f "@ try@\n"
+        if sad_returns then Format.fprintf f "@ try@\n"
       ) ()
       self#instructions lambda
       (fun f () ->
-	if sad_returns then Format.fprintf f "@\nwith %a@ out -> out@\n"
-	  self#print_exnName type_
+        if sad_returns then Format.fprintf f "@\nwith %a@ out -> out@\n"
+          self#print_exnName type_
       ) ()
       (fun t () ->
-	if b then
-	  Format.fprintf t ")"
+        if b then
+          Format.fprintf t ")"
       ) ();
     sad_returns <- next_sad_return;
     ()
@@ -541,23 +541,23 @@ class camlPrinter = object(self)
     Format.fprintf f "@[<h>let@ %a@ %a=@ Array.make@ %a@ (Obj.magic@ 0)%a@ in@]"
       self#binding binding
       (fun t () ->
-	if b then
-	  Format.fprintf t "ref(@ "
+        if b then
+          Format.fprintf t "ref(@ "
       ) ()
       self#expr len
       (fun t () ->
-	if b then
-	  Format.fprintf t ")"
+        if b then
+          Format.fprintf t ")"
       ) ()
 
   method affectarray f binding indexes e2 =
     Format.fprintf f "@[<h>%a.(%a)@ <-@ %a@]"
       self#binding binding
       (print_list
-	 self#expr
-	 (fun f f1 e1 f2 e2 ->
-	   Format.fprintf f "%a).(%a" f1 e1 f2 e2
-	 )) indexes
+         self#expr
+         (fun f f1 e1 f2 e2 ->
+           Format.fprintf f "%a).(%a" f1 e1 f2 e2
+         )) indexes
       self#expr e2
 
 
@@ -579,22 +579,22 @@ class camlPrinter = object(self)
     | None ->
       match li with
       | [] ->
-	Format.fprintf f "@[<h>(%a ())@]"
-	  self#funname var
+        Format.fprintf f "@[<h>(%a ())@]"
+          self#funname var
       | _ ->
-	Format.fprintf
-	  f
-	  "@[<h>%a %a@]"
-	  self#funname var
-	  (print_list
-	     (fun t e ->
-	       if self#nop (Expr.unfix e) then self#expr f e
-	       else Format.fprintf f "(%a)" self#expr e
-	     )
-	     (fun t f1 e1 f2 e2 ->
-	       Format.fprintf t "%a@ %a" f1 e1 f2 e2
-	     )
-	  ) li
+        Format.fprintf
+          f
+          "@[<h>%a %a@]"
+          self#funname var
+          (print_list
+             (fun t e ->
+               if self#nop (Expr.unfix e) then self#expr f e
+               else Format.fprintf f "(%a)" self#expr e
+             )
+             (fun t f1 e1 f2 e2 ->
+               Format.fprintf t "%a@ %a" f1 e1 f2 e2
+             )
+          ) li
 
   method call f var li =
     self#apply f var li
@@ -614,13 +614,13 @@ class camlPrinter = object(self)
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "@[<h>%a=%a;@]"
-	  self#field fieldname
-	  self#expr expr
+        Format.fprintf f "@[<h>%a=%a;@]"
+          self#field fieldname
+          self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-	Format.fprintf t
-	  "%a@\n%a" f1 e1 f2 e2)
+        Format.fprintf t
+          "%a@\n%a" f1 e1 f2 e2)
       f
       li
 
@@ -629,40 +629,40 @@ class camlPrinter = object(self)
     Format.fprintf f "let %a = %a{@\n@[<v 2>  %a@]@\n}%a in"
       self#binding name
       (fun t () ->
-	if b then
-	  Format.fprintf t "ref(@ "
+        if b then
+          Format.fprintf t "ref(@ "
       ) ()
       (self#def_fields name) el
       (fun t () ->
-	if b then
-	  Format.fprintf t ")"
+        if b then
+          Format.fprintf t ")"
       ) ()
 
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-	Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
-	  name
-	  (print_list
-	     (fun t (name, type_) ->
-	       Format.fprintf t "@[<h>mutable %s : %a;@]"
-		 name
-		 self#ptype type_
-	     )
-	     (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
-	  ) li
+        Format.fprintf f "type %s = {@\n@[<v 2>  %a@]@\n};;@\n"
+          name
+          (print_list
+             (fun t (name, type_) ->
+               Format.fprintf t "@[<h>mutable %s : %a;@]"
+                 name
+                 self#ptype type_
+             )
+             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+          ) li
     | Type.Enum li ->
       Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
-	name
+        name
         (print_list
-	   (fun t name ->
-	     Format.fprintf t "%s" name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
-	) li
+           (fun t name ->
+             Format.fprintf t "%s" name
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
+        ) li
     | _ ->
       Format.fprintf f "type %a = %a;;"
-	super#binding name
-	super#ptype t
+        super#binding name
+        super#ptype t
 
 end

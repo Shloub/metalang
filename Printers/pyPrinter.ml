@@ -41,7 +41,7 @@ class pyPrinter = object(self)
   method tuple f li =
     Format.fprintf f "@[<h>(%a)@]"
       (print_list self#expr
-	 (fun t fa a fb b -> Format.fprintf t "%a,@ %a" fa a fb b)
+         (fun t fa a fb b -> Format.fprintf t "%a,@ %a" fa a fb b)
       ) li
 
   method record f li =
@@ -77,7 +77,7 @@ class pyPrinter = object(self)
         self#expr a
         self#expr b
     | _ -> super#binop f op a b
-      
+
   method sbinop f op a b = super#binop f op a b
 
   method print_op f op = Format.fprintf f "%s"
@@ -105,10 +105,10 @@ class pyPrinter = object(self)
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[%a=readint()@]"
-	self#mutable_ mutable_
+        self#mutable_ mutable_
     | Type.Char ->
       Format.fprintf f "@[%a=readchar()@]"
-	self#mutable_ mutable_
+        self#mutable_ mutable_
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
       (Type.type_t_to_string t)
     ))
@@ -124,10 +124,10 @@ class pyPrinter = object(self)
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "%s%s%s%s%s%s"
       (if Tags.is_taged "__internal__div" ||
-	  Tags.is_taged "__internal__mod" ||
-	  Tags.is_taged "use_math"
+          Tags.is_taged "__internal__mod" ||
+          Tags.is_taged "use_math"
        then
-	  "import math
+          "import math
 " else "")
       (if need then "import sys
 char=None
@@ -143,13 +143,13 @@ def skipchar():
   return
 " else "" )
       (if need_readchar then
-	  "def readchar():
+          "def readchar():
   out = readchar_()
   skipchar()
   return out
 " else "")
       (if need_stdinsep then
-	  "def stdinsep():
+          "def stdinsep():
   while True:
     c = readchar_()
     if c == '\\n' or c == '\\t' or c == '\\r' or c == ' ':
@@ -158,7 +158,7 @@ def skipchar():
       return
 " else "")
       (if need_readint then
-	  "def readint():
+          "def readint():
   c = readchar_()
   if c == '-':
     sign = -1
@@ -175,7 +175,7 @@ def skipchar():
       return out * sign
 " else "")
       (if Tags.is_taged "__internal__mod" then
-	  "def mod(x, y):
+          "def mod(x, y):
   return x - y * math.trunc(x / y)
 "
        else "")
@@ -199,18 +199,18 @@ def skipchar():
     match elsecase with
     | [] ->
       Format.fprintf f "@[<h>if@ %a:@]@\n%a"
-	self#expr e
-	self#bloc ifcase	
+        self#expr e
+        self#bloc ifcase
     | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nel%a"
-	self#expr e
-	self#bloc ifcase
-	self#instr instr
+        self#expr e
+        self#bloc ifcase
+        self#instr instr
     | _ ->
       Format.fprintf f "@[<h>if@ %a:@]@\n%a@\nelse:@\n%a"
-	self#expr e
-	self#bloc ifcase
-	self#bloc elsecase
+        self#expr e
+        self#bloc ifcase
+        self#bloc elsecase
 
   method comment f str = Format.fprintf f "\"\"\"%s\"\"\"" str
 
@@ -238,54 +238,54 @@ def skipchar():
   method forloop_content f (varname, expr1, expr2, li) =
     let default () =
       Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ 1 + %a):@\n@]%a"
-	self#binding varname
-	self#expr expr1
-	self#expr expr2
-	self#bloc li
+        self#binding varname
+        self#expr expr1
+        self#expr expr2
+        self#bloc li
     in match Expr.unfix expr2 with
     | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1)) ->
       Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ %a):@\n@]%a"
-	self#binding varname
-	self#expr expr1
-	self#expr expr3
-	self#bloc li
+        self#binding varname
+        self#expr expr1
+        self#expr expr3
+        self#bloc li
     | _ -> default ()
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a ):"
       self#funname funname
       (print_list
-	 (fun t (a, type_) ->
-	   self#binding t a)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) li
+         (fun t (a, type_) ->
+           self#binding t a)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) li
 
   method print_args =
     print_list
       (fun f (t, e) -> self#expr f e)
       (fun t f1 e1 f2 e2 -> Format.fprintf t
-	"%a,@ %a" f1 e1 f2 e2)
+        "%a,@ %a" f1 e1 f2 e2)
 
   method multi_print f format exprs =
     if exprs = [] then
       if String.ends_with format "\n" then
-	let l = String.length format in
-	Format.fprintf f "@[<h>print(\"%s\")@]"  (String.sub format 0 (l - 1) )
+        let l = String.length format in
+        Format.fprintf f "@[<h>print(\"%s\")@]"  (String.sub format 0 (l - 1) )
       else Format.fprintf f "@[<h>print(\"%s\", end='')@]" format
     else
       if String.ends_with format "\n" then
-	let l = String.length format in
-	Format.fprintf f "@[<h>print(\"%s\" %% ( %a ))@]" (String.sub format 0 (l - 1) )
-	  self#print_args exprs
+        let l = String.length format in
+        Format.fprintf f "@[<h>print(\"%s\" %% ( %a ))@]" (String.sub format 0 (l - 1) )
+          self#print_args exprs
       else
-	Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='')@]" format self#print_args exprs
+        Format.fprintf f "@[<h>print(\"%s\" %% ( %a ), end='')@]" format self#print_args exprs
 
   method print f t expr =
     match Expr.unfix expr with
     | Expr.String s ->
       if String.ends_with s "\n" then
-	let l = String.length s in
-	Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
+        let l = String.length s in
+        Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
       else Format.fprintf f "@[print( %S, end='')@]" s
     | _ ->
       Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t self#expr expr
@@ -295,13 +295,13 @@ def skipchar():
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "@[<h>%a:%a@]"
-	  self#field fieldname
-	  self#expr expr
+        Format.fprintf f "@[<h>%a:%a@]"
+          self#field fieldname
+          self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-	Format.fprintf t
-	  "%a,@ %a" f1 e1 f2 e2)
+        Format.fprintf t
+          "%a,@ %a" f1 e1 f2 e2)
       f
       li
 
@@ -312,17 +312,17 @@ def skipchar():
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a[%a]"
-	self#mutable_ m
-	self#field field
+        self#mutable_ m
+        self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a][%a" f1 e1 f2 e2
-	   ))
-	indexes
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a][%a" f1 e1 f2 e2
+           ))
+        indexes
 
 end

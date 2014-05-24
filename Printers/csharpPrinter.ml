@@ -71,8 +71,8 @@ class csharpPrinter = object(self)
     Format.fprintf f
       "using System;@\n%a@\npublic class %s@\n@[<v 2>{%s%s%s%s@\n%a@\n%a@]@\n}@\n"
       (fun f () ->
-	if Tags.is_taged "use_readline"
-	then Format.fprintf f "using System.Collections.Generic;@\n"
+        if Tags.is_taged "use_readline"
+        then Format.fprintf f "using System.Collections.Generic;@\n"
       ) ()
       prog.Prog.progname
       (if need then "
@@ -155,7 +155,7 @@ public static int readInt(){
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[<h>%a = readInt();@]"
-	self#mutable_ m
+        self#mutable_ m
     | Type.Char -> Format.fprintf f "@[<h>%a = readChar();@]"
       self#mutable_ m
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
@@ -164,23 +164,23 @@ public static int readInt(){
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-	Format.fprintf f "public class %a {%a}"
-	  self#binding name
-	  (print_list
-	     (fun t (name, type_) ->
-	       Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
-	     )
-	     (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	  ) li
+        Format.fprintf f "public class %a {%a}"
+          self#binding name
+          (print_list
+             (fun t (name, type_) ->
+               Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
+             )
+             (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+          ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
         self#binding name
         (print_list
-	   (fun t name ->
+           (fun t name ->
              self#binding t name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
-	) li
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+        ) li
     | _ -> super#decl_type f name t
 
 

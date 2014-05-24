@@ -54,7 +54,7 @@ class cppPrinter = object(self)
           Format.fprintf f "struct %s *" n
         | Type.Enum _ ->
           Format.fprintf f "%s" n
-	| _ -> assert false
+        | _ -> assert false
     end
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct li -> Format.fprintf f "a struct"
@@ -69,8 +69,8 @@ class cppPrinter = object(self)
     Format.fprintf f
       "#include <cstdlib>@\n#include <cstdio>@\n#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
       (fun f () ->
-	if Tags.is_taged "use_math"
-	then Format.fprintf f "#include<cmath>@\n"
+        if Tags.is_taged "use_math"
+        then Format.fprintf f "#include<cmath>@\n"
       ) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -85,40 +85,40 @@ class cppPrinter = object(self)
     match Type.unfix t with
     | Type.Named typename ->
       Format.fprintf f "%a %a = new %s();@\n%a"
-	self#ptype t
-	self#binding name
-	typename
-	(self#def_fields name) el
+        self#ptype t
+        self#binding name
+        typename
+        (self#def_fields name) el
     | _ -> assert false
 
   method mutable_ f m =
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a->%s"
-	self#mutable_ m
-	field
+        self#mutable_ m
+        field
     | Mutable.Var b ->
       self#binding f b
     | Mutable.Array (m, index) ->
       Format.fprintf f "@[<h>%a.at(%a)@]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a).at(%a"
-	       f1 e1
-	       f2 e2
-	   )) index
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a).at(%a"
+               f1 e1
+               f2 e2
+           )) index
 
   method forloop f varname expr1 expr2 li =
     let default () =
       Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <=@ %a;@ %a@ ++)@\n@]%a"
-	self#binding varname
-	self#expr expr1
-	self#binding varname
-	self#expr expr2
-	self#binding varname
-	self#bloc li
+        self#binding varname
+        self#expr expr1
+        self#binding varname
+        self#expr expr2
+        self#binding varname
+        self#bloc li
     in match Expr.unfix expr2 with
     | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1))
       ->
@@ -136,9 +136,9 @@ class cppPrinter = object(self)
   method multi_print f format exprs =
     Format.fprintf f "@[<h>std::cout << %a;@]"
       (print_list
-	 (fun f (t, e) -> self#expr f e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a@ <<@ %a" f1 e1 f2 e2)) exprs
+         (fun f (t, e) -> self#expr f e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a@ <<@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr =
     Format.fprintf f "@[std::cout << %a;@]"

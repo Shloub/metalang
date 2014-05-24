@@ -61,8 +61,8 @@ let collectReads acc li =
     | Instr.DeclRead (ty, _)
     | Instr.Read(ty, _) ->
       TypeMap.add ty
-	(Ast.PosMap.get (Instr.Fixed.annot i))
-	acc
+        (Ast.PosMap.get (Instr.Fixed.annot i))
+        acc
     | _ -> acc in
   List.fold_left
     (fun acc i ->
@@ -87,8 +87,8 @@ let apply prog =
       match Type.unfix ty with
       | Type.Char | Type.Integer -> ()
       | _ -> raise (Warner.Error (fun f ->
-	Format.fprintf f "Cannot read %s %a@\n"
-	  (Type.type_t_to_string ty) Warner.ploc loc
+        Format.fprintf f "Cannot read %s %a@\n"
+          (Type.type_t_to_string ty) Warner.ploc loc
       ))
     )
     reads_types_map in

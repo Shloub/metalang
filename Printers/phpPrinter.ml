@@ -42,7 +42,7 @@ class phpPrinter = object(self)
   method tuple f li =
     Format.fprintf f "array(%a)"
       (print_list self#expr
-	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
       ) li
 
   method record f li =
@@ -53,7 +53,7 @@ class phpPrinter = object(self)
   method untuple f li e =
     Format.fprintf f "@[<h>list(%a) = %a;@]"
       (print_list self#binding
-	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
       ) (List.map snd li)
       self#expr e
 
@@ -81,29 +81,29 @@ class phpPrinter = object(self)
     match Type.unfix t with
     | Type.Char ->
       Format.fprintf f "@[%a = nextChar();@]"
-	self#mutable_ m
+        self#mutable_ m
     | _ ->
       Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
-	self#mutable_ m
-	self#format_type t
+        self#mutable_ m
+        self#format_type t
 
 
   method mutable_ f m =
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a[\"%a\"]"
-	self#mutable_ m
-	self#field field
+        self#mutable_ m
+        self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a][%a" f1 e1 f2 e2
-	   ))
-	indexes
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a][%a" f1 e1 f2 e2
+           ))
+        indexes
 
   method main f main = self#instructions f main
 
@@ -152,13 +152,13 @@ function nextChar(){
     | _ -> assert false
 
   method combine_formats () = false
-    
+
   method multi_print f format exprs =
     Format.fprintf f "@[<h>echo %a;@]"
       (print_list
-	 (fun f (t, e) -> (self#eprint t) f e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) exprs
+         (fun f (t, e) -> (self#eprint t) f e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = Format.fprintf f "@[echo@ %a;@]" (self#eprint t) expr
 
@@ -166,13 +166,13 @@ function nextChar(){
     Format.fprintf f "function %a(%a)"
       self#funname funname
       (print_list
-	 (fun t (a, type_) ->
-	   Format.fprintf t
-	     "%a%a"
-	     self#prototype type_
-	     self#binding a)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) li
+         (fun t (a, type_) ->
+           Format.fprintf t
+             "%a%a"
+             self#prototype type_
+             self#binding a)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) li
 
 
   method binding f i = Format.fprintf f "$%s" i
@@ -191,13 +191,13 @@ function nextChar(){
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-	Format.fprintf f "@[<h>\"%a\"=>%a@]"
-	  self#field fieldname
-	  self#expr expr
+        Format.fprintf f "@[<h>\"%a\"=>%a@]"
+          self#field fieldname
+          self#expr expr
       )
       (fun t f1 e1 f2 e2 ->
-	Format.fprintf t
-	  "%a,@\n%a" f1 e1 f2 e2)
+        Format.fprintf t
+          "%a,@\n%a" f1 e1 f2 e2)
       f
       li
 

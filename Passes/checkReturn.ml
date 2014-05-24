@@ -40,7 +40,7 @@ let find_return li =
       let loc = Ast.PosMap.get (Instr.Fixed.annot i) in
       Some loc
     | Instr.AllocArray _ -> acc
-    | _ -> tra acc i 
+    | _ -> tra acc i
   in
   let li = List.map
     (fun i ->

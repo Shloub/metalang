@@ -62,9 +62,9 @@ let print_list
     | [hd] -> func t hd
     | hd::tl ->
       sep
-	t
-	func hd
-	p tl
+        t
+        func hd
+        p tl
   in p f li
 
 let print_list_indexed print sep f li =
@@ -75,9 +75,9 @@ let print_list_indexed print sep f li =
     sep
     f
     (snd (List.fold_left_map
-	    (fun i m -> (i+1), (m, i))
-	    0
-	    li
+            (fun i m -> (i+1), (m, i))
+            0
+            li
      ))
 
 let format_type t = match Type.unfix t with
@@ -101,22 +101,22 @@ class printer = object(self)
     and fold_mut acc m = match Mutable.unfix m with
       | Mutable.Var varname -> BindingSet.add varname acc
       | Mutable.Array (_, lie) -> List.fold_left
-	dfold_expr acc lie
+        dfold_expr acc lie
       | _ -> acc
     and dfold_expr acc e =
       Expr.Writer.Deep.fold fold_expr
-	(fold_expr acc e) e
+        (fold_expr acc e) e
     in
     let fold_instr acc i =
       let acc = Instr.fold_expr dfold_expr acc i in
       Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
       | Instr.Affect (m, e) ->
-	begin match Mutable.unfix m with
-	| Mutable.Var var ->
-	  if self#used_affect () then BindingSet.add var acc
-	  else acc
-	| _ -> Mutable.Writer.Deep.fold fold_mut acc m
-	end
+        begin match Mutable.unfix m with
+        | Mutable.Var var ->
+          if self#used_affect () then BindingSet.add var acc
+          else acc
+        | _ -> Mutable.Writer.Deep.fold fold_mut acc m
+        end
       | _ -> acc) acc i
     in
     used_variables <-
@@ -174,9 +174,9 @@ class printer = object(self)
     match Type.unfix t with
     | Type.Tuple li ->
       Format.fprintf f "@[<h>(%a)@]"
-	(print_list self#ptype
-	   (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-	) li
+        (print_list self#ptype
+           (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+        ) li
     | Type.Auto -> ()
     | Type.Integer -> Format.fprintf f "int"
     | Type.String -> Format.fprintf f "string"
@@ -188,20 +188,20 @@ class printer = object(self)
     | Type.Lexems -> Format.fprintf f "lexems"
     | Type.Struct li ->
       Format.fprintf f "record@\n @[<v>%a@]@\nend"
-	(print_list
-	   (fun t (name, type_) ->
-	     Format.fprintf t "%a : %a;" self#binding name self#ptype type_
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	) li
+        (print_list
+           (fun t (name, type_) ->
+             Format.fprintf t "%a : %a;" self#binding name self#ptype type_
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+        ) li
     | Type.Enum li ->
       Format.fprintf f "enum{%a}"
-	(print_list
-	   (fun t name ->
-	     Format.fprintf t "%a " self#binding name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	) li
+        (print_list
+           (fun t name ->
+             Format.fprintf t "%a " self#binding name
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+        ) li
 
   method allocarray f binding type_ len =
     Format.fprintf f "@[<h>def array<%a> %a[%a]"
@@ -225,18 +225,18 @@ class printer = object(self)
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a.%a"
-	self#mutable_ m
-	self#field field
+        self#mutable_ m
+        self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
-	self#mutable_ m
-	(print_list
-	   self#expr
-	   (fun f f1 e1 f2 e2 ->
-	     Format.fprintf f "%a][%a" f1 e1 f2 e2
-	   ))
-	indexes
+        self#mutable_ m
+        (print_list
+           self#expr
+           (fun f f1 e1 f2 e2 ->
+             Format.fprintf f "%a][%a" f1 e1 f2 e2
+           ))
+        indexes
 
   method expand_macro_apply f name t params code li =
     self#expand_macro_call f name t params code li
@@ -247,30 +247,30 @@ class printer = object(self)
     let lang = self#lang () in
     let code_to_expand = List.fold_left
       (fun acc (clang, expantion) ->
-	match acc with
-	| Some _ -> acc
-	| None ->
-	  if clang = "" or clang = lang then
-	    Some expantion
-	  else None
+        match acc with
+        | Some _ -> acc
+        | None ->
+          if clang = "" or clang = lang then
+            Some expantion
+          else None
       ) None
       code
     in match code_to_expand with
     | None -> failwith ("no definition for macro "^name^" in language "^lang)
     | Some s ->
       let listr = List.map
-	(fun e ->
-	  let b = Buffer.create 1 in
-	  let fb = Format.formatter_of_buffer b in
-	  Format.fprintf fb "@[<h>%a@]%!" self#expr e;
-	  Buffer.contents b
-	) li in
+        (fun e ->
+          let b = Buffer.create 1 in
+          let fb = Format.formatter_of_buffer b in
+          Format.fprintf fb "@[<h>%a@]%!" self#expr e;
+          Buffer.contents b
+        ) li in
       let expanded = List.fold_left
-	(fun s ((param, _type), string) ->
-	  String.replace ("$"^param) string s
-	)
-	s
-	(List.combine params listr)
+        (fun s ((param, _type), string) ->
+          String.replace ("$"^param) string s
+        )
+        s
+        (List.combine params listr)
       in Format.fprintf f "%s" expanded
 
   method call f var li =
@@ -279,15 +279,15 @@ class printer = object(self)
       self#expand_macro_call f var t params code li
     | None ->
       Format.fprintf
-	f
-	"@[<h>%a(%a);@]"
-	self#funname var
-	(print_list
-	   self#expr
-	   (fun t f1 e1 f2 e2 ->
-	     Format.fprintf t "%a,@ %a" f1 e1 f2 e2
-	   )
-	) li
+        f
+        "@[<h>%a(%a);@]"
+        self#funname var
+        (print_list
+           self#expr
+           (fun t f1 e1 f2 e2 ->
+             Format.fprintf t "%a,@ %a" f1 e1 f2 e2
+           )
+        ) li
 
   method apply f var li =
     match BindingMap.find_opt var macros with
@@ -295,15 +295,15 @@ class printer = object(self)
       self#expand_macro_apply f var t params code li
     | None ->
       Format.fprintf
-	f
-	"%a(%a)"
-	self#funname var
-	(print_list
-	   self#expr
-	   (fun t f1 e1 f2 e2 ->
-	     Format.fprintf t "%a,@ %a" f1 e1 f2 e2
-	   )
-	) li
+        f
+        "%a(%a)"
+        self#funname var
+        (print_list
+           self#expr
+           (fun t f1 e1 f2 e2 ->
+             Format.fprintf t "%a,@ %a" f1 e1 f2 e2
+           )
+        ) li
 
   method stdin_sep f =
     Format.fprintf f "@[skip@]"
@@ -311,14 +311,14 @@ class printer = object(self)
   method def_fields name f li =
     Format.fprintf f "@[<h>%a@]"
       (print_list
-	 (fun f (fieldname, expr) ->
-	   Format.fprintf f "%a = %a"
-	     self#field fieldname
-	     self#expr expr
-	 )
-	 (fun t f1 e1 f2 e2 ->
-	   Format.fprintf t
-	     "%a@\n%a" f1 e1 f2 e2))
+         (fun f (fieldname, expr) ->
+           Format.fprintf f "%a = %a"
+             self#field fieldname
+             self#expr expr
+         )
+         (fun t f1 e1 f2 e2 ->
+           Format.fprintf t
+             "%a@\n%a" f1 e1 f2 e2))
       li
 
   method allocrecord f name t el =
@@ -408,13 +408,13 @@ class printer = object(self)
   method untuple f li e =
     Format.fprintf f "(%a) = %a"
       (print_list self#binding
-	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
       ) (List.map snd li)
       self#expr e
-      
+
 
   method noformat s = let s = Format.sprintf "%S" s
-		      in String.replace "%" "%%" s
+                      in String.replace "%" "%%" s
 
   method format_type f (t:Type.t) = Format.fprintf f "%s" (format_type t)
 
@@ -433,18 +433,18 @@ class printer = object(self)
     match elsecase with
     | [] ->
       Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v2>  %a@]@\nend"
-	self#expr e
-	self#instructions ifcase
+        self#expr e
+        self#instructions ifcase
     | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
       Format.fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nels%a"
-	self#expr e
-	self#instructions ifcase
-	self#instr instr
+        self#expr e
+        self#instructions ifcase
+        self#instr instr
     | _ ->
       Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]@\nend"
-	self#expr e
-	self#instructions ifcase
-	self#instructions elsecase
+        self#expr e
+        self#instructions ifcase
+        self#instructions elsecase
 
   method bool f = function
   | true -> Format.fprintf f "true"
@@ -563,7 +563,7 @@ class printer = object(self)
   method tuple f li =
     Format.fprintf f "(%a)"
       (print_list self#expr
-	 (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
       ) li
 
   method record f li =
@@ -580,12 +580,12 @@ class printer = object(self)
       self#ptype t
       self#funname funname
       (print_list
-	 (fun f (n, t) ->
-	   Format.fprintf f "%a@ %a"
-	     self#ptype t
-	     self#binding n)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t
-	   "%a,@ %a" f1 e1 f2 e2)) li
+         (fun f (n, t) ->
+           Format.fprintf f "%a@ %a"
+             self#ptype t
+             self#binding n)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a,@ %a" f1 e1 f2 e2)) li
 
 
   method print_fun f funname t li instrs =
@@ -600,8 +600,8 @@ class printer = object(self)
       self#print_fun f var t li instrs
     | Prog.Macro (name, t, params, code) ->
       macros <- BindingMap.add
-	name (t, params, code)
-	macros;
+        name (t, params, code)
+        macros;
       ()
     | Prog.Unquote _ -> assert false
     | Prog.DeclareType (name, t) -> self#decl_type f name t
@@ -610,22 +610,22 @@ class printer = object(self)
     match (Type.unfix t) with
     | Type.Struct li ->
       Format.fprintf f "record %a %a@\nend@\n"
-	self#binding name
-	(print_list
-	   (fun t (name, type_) ->
-	     Format.fprintf t "%a %a;@\n" self#ptype type_ self#binding name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-	) li
+        self#binding name
+        (print_list
+           (fun t (name, type_) ->
+             Format.fprintf t "%a %a;@\n" self#ptype type_ self#binding name
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+        ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a @\n@[<v2>  %a@]@\nend@\n"
         self#binding name
         (print_list
-	   (fun t name ->
+           (fun t name ->
              self#binding t name
-	   )
-	   (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
-	) li
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
+        ) li
     | _ ->
       Format.fprintf f "type %a = %a;" self#binding name self#ptype t
 
@@ -637,54 +637,54 @@ class printer = object(self)
   method multi_print f format exprs =
     Format.fprintf f "@[<v>%a@]"
       (print_list
-	 (fun f (t, e) -> self#print f t e)
-	 (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
+         (fun f (t, e) -> self#print f t e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
 
   method combine_formats () = false
   method instructions0 f instrs =
     if (match instrs with [_] -> false | _ -> true)
       && List.for_all is_print instrs then
       let li = List.map (fun i -> match Instr.unfix i with
-	| Instr.Print (t, i) -> format_type t, (t, i)
-	| _ -> assert false
+        | Instr.Print (t, i) -> format_type t, (t, i)
+        | _ -> assert false
       ) instrs in
       let li =
-	if self#combine_formats () then
-	  List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
-	  | Expr.String s ->
-	    let s = self#noformat s in
-	    (String.sub s 1 ((String.length s) - 2)  , (ty, e))
-	  | _ -> (format, (ty, e))
-	  ) li else li in
+        if self#combine_formats () then
+          List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
+          | Expr.String s ->
+            let s = self#noformat s in
+            (String.sub s 1 ((String.length s) - 2)  , (ty, e))
+          | _ -> (format, (ty, e))
+          ) li else li in
       let formats, exprs = List.unzip li in
       let rec g acc = function
-	| [] -> acc
-	| hd::tl -> g (acc ^ hd) tl
+        | [] -> acc
+        | hd::tl -> g (acc ^ hd) tl
       in
       let format = g "" formats in
-      let exprs = 
-	if self#combine_formats () then
-	  List.filter (fun (ty, e) -> match Expr.unfix e with
-	  | Expr.String _ -> false
-	  | _ -> true
-	  ) exprs
-	else exprs
+      let exprs =
+        if self#combine_formats () then
+          List.filter (fun (ty, e) -> match Expr.unfix e with
+          | Expr.String _ -> false
+          | _ -> true
+          ) exprs
+        else exprs
       in
       self#multi_print f format exprs
     else
       (print_list
-	 self#instr
-	 (fun t print1 item1 print2 item2 ->
-	   Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-	 )
+         self#instr
+         (fun t print1 item1 print2 item2 ->
+           Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+         )
       ) f instrs
 
   method instructions f instrs =
     let rec g b acc1 acc2 = function
       | hd::tl ->
-	if is_print hd = b
-	then g b acc1 (hd::acc2) tl
-	else g (not b) ((List.rev acc2)::acc1) [hd] tl
+        if is_print hd = b
+        then g b acc1 (hd::acc2) tl
+        else g (not b) ((List.rev acc2)::acc1) [hd] tl
       | [] -> List.rev ( (List.rev acc2) :: acc1 )
     in
     let lili = g false [] [] instrs in
@@ -692,17 +692,17 @@ class printer = object(self)
     (print_list
        self#instructions0
        (fun t print1 item1 print2 item2 ->
-	 Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+         Format.fprintf t "%a@\n%a" print1 item1 print2 item2
        )
     ) f lili
 
   method proglist f funs =
     Format.fprintf f "%a@\n"
       (print_list
-	 self#prog_item
-	 (fun t print1 item1 print2 item2 ->
-	   Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-	 )
+         self#prog_item
+         (fun t print1 item1 print2 item2 ->
+           Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+         )
       ) funs
 
   method main f (main : Utils.instr list) =

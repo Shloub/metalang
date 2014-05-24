@@ -22,26 +22,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *)
 
-(** 
-Cette passe de compilation permet d'ajouter un else là ou on peut :
-exemple ::
+(**
+    Cette passe de compilation permet d'ajouter un else là ou on peut :
+    exemple ::
 
-  if ... then
-  ...
-  return ...
-  end
-  ...
+    if ... then
+    ...
+    return ...
+    end
+    ...
 
-On peut facilement ajouter un else :
+    On peut facilement ajouter un else :
 
-  if ... then
-  ...
-  return ...
-  else
-  ...
-  end
+    if ... then
+    ...
+    return ...
+    else
+    ...
+    end
 
-En ocaml, le code généré sera beaucoup plus propre.
+    En ocaml, le code généré sera beaucoup plus propre.
 
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)

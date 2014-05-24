@@ -82,9 +82,9 @@ let run _ =
     eval_btn##onclick <- Html.handler click_eval ;
     let replicate = element "replicate" in
     replicate##onclick <- Html.handler click_replicate ;
-  (* begin match Html.tagged (element "language") with
-     | Html.Select e -> e##onchange <- Html.handler click_replicate
-     | _ -> () end ; *)
+    (* begin match Html.tagged (element "language") with
+       | Html.Select e -> e##onchange <- Html.handler click_replicate
+       | _ -> () end ; *)
     Js._false
   with _ -> Js._false
 

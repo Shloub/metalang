@@ -49,7 +49,7 @@ module WalkTop (T:SigPassTop) = struct
     let acc, m = match prog.Prog.main with
       | None -> acc, None
       | Some m -> match T.process_main acc m with
-	| (acc, main) -> acc, Some main
+        | (acc, main) -> acc, Some main
     in
     { prog with
       Prog.funs = p;
@@ -84,13 +84,13 @@ module Walk (T:SigPass) = struct
   let apply_prog acc p =
     List.fold_left_map
       (fun acc item ->
-	match item with
-	| Prog.Macro _ | Prog.Unquote _ -> acc, item
-	| Prog.Comment _ -> acc, item
-	| Prog.DeclareType _ -> acc, item
-	| Prog.DeclarFun (name, t, params, instrs) ->
-	  let acc, instrs = apply_instr acc instrs
-	  in acc, Prog.DeclarFun (name, t, params, instrs)
+        match item with
+        | Prog.Macro _ | Prog.Unquote _ -> acc, item
+        | Prog.Comment _ -> acc, item
+        | Prog.DeclareType _ -> acc, item
+        | Prog.DeclarFun (name, t, params, instrs) ->
+          let acc, instrs = apply_instr acc instrs
+          in acc, Prog.DeclarFun (name, t, params, instrs)
       )
       acc
       p
@@ -100,7 +100,7 @@ module Walk (T:SigPass) = struct
     let acc, m = match prog.Prog.main with
       | None -> acc, None
       | Some m -> match apply_instr acc m with
-	| (a, b) -> a, Some b
+        | (a, b) -> a, Some b
     in
     {prog with
       Prog.main = m;

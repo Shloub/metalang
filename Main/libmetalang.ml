@@ -56,23 +56,23 @@ let typed name f (a, b) =
   (*  debug_print b;
       let before = Passes.WalkCountNoPosition.fold () b in *)
   let b = f () b in (*
-		      let after = Passes.WalkCountNoPosition.fold () b in
-		      Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
+                      let after = Passes.WalkCountNoPosition.fold () b in
+                      Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
   (a, b)
 
 let typed_ name f (a, b) = (a, f b)
 
-let check_reads = (fun (tyenv, prog) -> 
+let check_reads = (fun (tyenv, prog) ->
   (if Tags.is_taged "use_readmacros" then
       let need_stdinsep = prog.Prog.hasSkip in
       let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
       let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
       let need = need_stdinsep || need_readint || need_readchar in
       if need then
-	begin
-	  debug_print prog;
-	  raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
-	end );
+        begin
+          debug_print prog;
+          raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
+        end );
   (tyenv, prog))
 
 let default_passes (prog : Typer.env * Utils.prog) :
@@ -232,7 +232,7 @@ let warn_error_of_parse_error filename lexbuf =
       let i = open_in filename in
       let l = ref "" in
       for j = 1 to line do
-	l := input_line i
+        l := input_line i
       done; !l
     in
     let tok = Lexing.lexeme lexbuf in
@@ -268,7 +268,7 @@ let make_prog_helper progname (funs, main) stdlib =
     debug_print prog;
 
     let before = Passes.WalkCountNoPosition.fold () prog in
-    Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before; 
+    Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before;
   *)
   let prog = Eval.EvalConstantes.apply prog in
   (*
@@ -313,12 +313,12 @@ let colore string =
       Format.flush_str_formatter ()
     with Parser.Error ->
       try
-	let lexbuf = Lexing.from_string string in
-	let instructions = Parser.toplvls Lexer.token lexbuf in
-	let p = new HtmlPrinter.htmlPrinter in
-	let out = Format.str_formatter in
-	let () = p#proglist out instructions in
-	Format.flush_str_formatter ()
+        let lexbuf = Lexing.from_string string in
+        let instructions = Parser.toplvls Lexer.token lexbuf in
+        let p = new HtmlPrinter.htmlPrinter in
+        let out = Format.str_formatter in
+        let () = p#proglist out instructions in
+        Format.flush_str_formatter ()
       with Parser.Error -> string
 
 (**
@@ -363,14 +363,14 @@ let process err c filename =
       let _ = Eval.eval_prog env prog in ()
     else
       let go lang =
-	let env, prog = make_prog c.stdlib filename lang in
+        let env, prog = make_prog c.stdlib filename lang in
         let printer = L.find lang printers in
         let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^
           lang in
         try
           if not c.quiet then Printf.printf "Generating %s\n%!" output ;
-	  conf_rename lang prog ;
-	  Tags.reset ();
+          conf_rename lang prog ;
+          Tags.reset ();
           let chan = open_out output in
           let buf = Format.formatter_of_out_channel chan in
           Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();

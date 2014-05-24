@@ -288,8 +288,8 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
     let len2 = List.length li2 in
     if len1 = len2 then
       List.fold_left (fun acc (t1, t2_) ->
-	let t2 = ref (Typed (t2_, loc2)) in
-	unify env t1 t2 || acc
+        let t2 = ref (Typed (t2_, loc2)) in
+        unify env t1 t2 || acc
       ) false (List.combine li1 li2)
     else  error_cty !t1 !t2 loc1 loc2
   | PreTyped (Type.Tuple li1, loc1), PreTyped (Type.Tuple li2, loc2) ->
@@ -297,7 +297,7 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
     let len2 = List.length li2 in
     if len1 = len2 then
       List.fold_left (fun acc (t1, t2) ->
-	unify env t1 t2 || acc
+        unify env t1 t2 || acc
       ) false (List.combine li1 li2)
     else  error_cty !t1 !t2 loc1 loc2
   | PreTyped (Type.Array a1, loc1), PreTyped (Type.Array a2, loc2) ->
@@ -318,37 +318,37 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
     let all = List.fold_left
       (fun all (name, t) ->
         let (_, t2) = List.find ((String.equals name) @* fst) li2 in
-	let self_typed = match !t with
-	  | Typed _ -> true
-	  | _ -> false
-	in all && self_typed) true li
+        let self_typed = match !t with
+          | Typed _ -> true
+          | _ -> false
+        in all && self_typed) true li
     in if all then
-	begin t1 := Typed (extract_typed t1, loc1); true end
+        begin t1 := Typed (extract_typed t1, loc1); true end
       else
-	let one = List.fold_left
-	  (fun one (name, t) ->
+        let one = List.fold_left
+          (fun one (name, t) ->
             let (_, t2) = List.find ((String.equals name) @* fst) li2 in
-	    let next = unify env t (ref (Typed (t2, loc2))) in one || next
-	  ) false li
-	in one
+            let next = unify env t (ref (Typed (t2, loc2))) in one || next
+          ) false li
+        in one
   | PreTyped (Type.Struct li, loc1),
-	PreTyped (Type.Struct li2, loc2) ->
+        PreTyped (Type.Struct li2, loc2) ->
     let one, all = List.fold_left
       (fun (one, all) (name, t) ->
         let (_, t2) = List.find
           ((String.equals name) @* fst)
           li2 in
-	let next = unify env t t2 in
-	let self_typed = match !t with
-	  | Typed _ -> true
-	  | _ -> false
-	in
+        let next = unify env t t2 in
+        let self_typed = match !t with
+          | Typed _ -> true
+          | _ -> false
+        in
         (one || next, all && self_typed)
       ) (false, true) li
     in if all then
-	begin
-	  t1 := Typed (extract_typed t1, loc1)
-	end; one
+        begin
+          t1 := Typed (extract_typed t1, loc1)
+        end; one
 
   |  PreTyped (Type.Struct _, loc1), PreTyped (_, loc2) -> error_cty !t1 !t2 loc1 loc2
   | _, Typed (((Type.Fixed.F (_, Type.Named _)) as t), loc) -> begin t2 := Typed ((expand env t loc), loc); true end
@@ -386,11 +386,11 @@ let add_contrainte env c1 c2 =
 (** {2 Collect contraintes functions} *)
 let rec collect_contraintes_expr env e =
   (*      let () =
-	  Format.fprintf
-	  Format.std_formatter
-	  "collecting contraintes in %d@\n"
-	  (Expr.Fixed.annot e)
-	  in *)
+          Format.fprintf
+          Format.std_formatter
+          "collecting contraintes in %d@\n"
+          (Expr.Fixed.annot e)
+          in *)
   let loc e = exprloc e in
   let env, contrainte = match Expr.Fixed.unfix e with
     | Expr.BinOp (a, Expr.Mod, b) ->
@@ -480,8 +480,8 @@ let rec collect_contraintes_expr env e =
       env, tuple_contrainte
     | Expr.Record li ->
       let env, contraintes = List.fold_left_map (fun env (field, e) ->
-	let env, e = collect_contraintes_expr env e in
-	env, (field, e)) env li in
+        let env, e = collect_contraintes_expr env e in
+        env, (field, e)) env li in
       let tuple_contrainte = ref (PreTyped (Type.Struct (contraintes), loc e)) in
       env, tuple_contrainte
   in
@@ -520,9 +520,9 @@ and collect_contraintes_mutable env mut =
     let (ty_dot, ty_mut, _) =
       try StringMap.find name env.fields
       with Not_found ->
-	raise ( Error (fun f ->
-	  Format.fprintf f "Field %s is undefined %a\n%!" name ploc tloc
-	))
+        raise ( Error (fun f ->
+          Format.fprintf f "Field %s is undefined %a\n%!" name ploc tloc
+        ))
     in
     let env, contrainte = collect_contraintes_mutable env mut in
     let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
@@ -535,7 +535,7 @@ let rec collect_contraintes_instructions env instructions
     (ty_ret : typeContrainte ref) =
   List.fold_left
     (fun env instruction ->
-      (* 			let () = Format.printf "collecting instructions contraintes %i\n" (Instr.Fixed.annot instruction) in *)
+      (* let () = Format.printf "collecting instructions contraintes %i\n" (Instr.Fixed.annot instruction) in *)
       let loc = Ast.PosMap.get (Instr.Fixed.annot instruction) in
       match Instr.unfix instruction with
       | Instr.Tag _ -> env
@@ -677,16 +677,16 @@ let rec collect_contraintes_instructions env instructions
 
       | Instr.Untuple (li, e) ->
         let env, contrainte_expr = collect_contraintes_expr env e in
-	let env, li_contraintes =
-	  List.fold_left_map (fun env (ty, variable) ->
-	    let ty = expand env ty loc in
+        let env, li_contraintes =
+          List.fold_left_map (fun env (ty, variable) ->
+            let ty = expand env ty loc in
             let env, contrainte = ty2typeContrainte env ty loc in
-	    env, (contrainte, variable)) env li in
+            env, (contrainte, variable)) env li in
         let env = List.fold_left (fun env (contrainte, variable) ->
           { env with locales = StringMap.add variable contrainte env.locales })
-	  env li_contraintes in
-	let tuple_contrainte = ref (PreTyped (Type.Tuple (List.map fst li_contraintes), loc)) in
-	{env with contraintes = (tuple_contrainte, contrainte_expr) :: env.contraintes}
+          env li_contraintes in
+        let tuple_contrainte = ref (PreTyped (Type.Tuple (List.map fst li_contraintes), loc)) in
+        {env with contraintes = (tuple_contrainte, contrainte_expr) :: env.contraintes}
       | Instr.Read (ty, mut) ->
         let ty = expand env ty loc in
         let env, contrainte_mut = collect_contraintes_mutable env mut in
@@ -703,7 +703,7 @@ let rec collect_contraintes_instructions env instructions
         in env
       | Instr.StdinSep -> env
       | Instr.Unquote li ->
-	raise (Error (fun f -> Format.fprintf f "There is still unquote near %a" ploc loc ))
+        raise (Error (fun f -> Format.fprintf f "There is still unquote near %a" ploc loc ))
     ) env instructions
 
 let collect_contraintes e

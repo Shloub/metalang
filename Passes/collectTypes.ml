@@ -45,21 +45,21 @@ let rec collect_type acc t =
     if TypeSet.mem t acc then (tyenv, acc) else
       match Type.Fixed.unfix t with
       | Type.Named n ->
-	let acc = TypeSet.add t acc in
-	collect_type (tyenv, acc) (Typer.expand tyenv t loc)
+        let acc = TypeSet.add t acc in
+        collect_type (tyenv, acc) (Typer.expand tyenv t loc)
       | x -> tyenv, TypeSet.add t acc
   in Type.Writer.Deep.fold f acc t
 
 let rec process_mutable acc m =
   let f acc m = match Mutable.Fixed.unfix m with
-      (*       | Mutable.Dot (m, f) -> *)
+    (*       | Mutable.Dot (m, f) -> *)
     | Mutable.Array (m, li) ->
       List.fold_left process_expr acc li
     | e -> acc
   in Mutable.Writer.Deep.fold f acc m
 and process_expr acc e =
   let f acc e = match Expr.Fixed.unfix e with
-      (*      | Expr.Enum s -> TODO *)
+    (*      | Expr.Enum s -> TODO *)
     | Expr.Access m -> process_mutable acc m
     | e -> acc
   in Expr.Writer.Deep.fold f acc e
@@ -82,7 +82,7 @@ let process acc p =
     | Prog.DeclarFun (_funname, t, params, instrs) ->
       let acc = collect_type acc t in
       let acc = List.fold_left (fun acc (_, t) -> collect_type acc t)
-	acc params in
+        acc params in
       List.fold_left collect_instr acc instrs
     | _ -> acc
   in acc, p
