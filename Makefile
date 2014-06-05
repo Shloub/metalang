@@ -393,7 +393,7 @@ testCompare : out $(CMPTESTSDEPS)
 TESTSNOTCOMPILE	:= $(addprefix out/, \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)))
 .PHONY: testNotCompile
-testNotCompile : out $(TESTSNOTCOMPILE)
+testNotCompile : metalang out $(TESTSNOTCOMPILE)
 	@echo "$(green)NOT COMPILE TESTS OK$(reset)"
 
 
