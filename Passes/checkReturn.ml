@@ -58,11 +58,63 @@ let check_noreturn li =
       Format.fprintf f "return not expected %a" Warner.ploc loc
     ))
 
+let rec check_must_return li =
+  let last_instrs = List.rev @$ List.filter (fun i -> match Instr.unfix i with
+    | Instr.Comment _ -> false
+    | _ -> true) li in
+  match last_instrs with
+  | [] -> false
+  | hd::tl -> match Instr.unfix hd with
+    | Instr.Return _ -> true
+    | Instr.If (_, li1, li2) -> 
+      (check_must_return li1) && (check_must_return li2)
+    | _ ->  false
+
+let rec check_alloc_inside loc li =
+  let last_instrs = List.rev @$ List.filter (fun i -> match Instr.unfix i with
+    | Instr.Comment _ -> false
+    | _ -> true) li in
+  match last_instrs with
+    | [] ->
+      raise ( Warner.Error (fun f ->
+        Format.fprintf f "return expected %a" Warner.ploc loc
+      ))
+    | hd::tl ->
+      let loc = Ast.PosMap.get (Instr.Fixed.annot hd) in
+      match Instr.unfix hd with
+      | Instr.Return _ ->
+        check_noreturn tl;
+      | Instr.If (_, li1, li2) ->
+        check_noreturn tl;
+        check_alloc_inside loc li1;
+        check_alloc_inside loc li2;
+      | _ ->
+        raise ( Warner.Error (fun f ->
+          Format.fprintf f "return not expected %a" Warner.ploc loc
+        ))
+
+let check_alloc li =
+  let f tra i = match Instr.unfix i with
+    | Instr.AllocArray (_, _, _, Some(_, instrs)) ->
+      let loc = Ast.PosMap.get (Instr.Fixed.annot i) in
+      check_alloc_inside loc instrs
+    | _ -> tra i
+  in List.iter
+    (fun i -> f (Instr.Writer.Traverse.iter f) i) li
+
 let check_fun = function
-  | Prog.DeclarFun (varname, ty, li, instrs) -> begin match Type.unfix ty with
-    | Type.Void -> check_noreturn instrs
-    | _ -> ()
-  end
+  | Prog.DeclarFun (varname, ty, li, instrs) ->
+    let loc = Ast.PosMap.get (Type.Fixed.annot ty) in
+    begin
+      check_alloc instrs;
+      begin match Type.unfix ty with
+      | Type.Void -> check_noreturn instrs
+      | _ -> if not (check_must_return instrs ) then
+          raise ( Warner.Error (fun f ->
+            Format.fprintf f "in %a : not all control paths returns a value." Warner.ploc loc
+          ))
+      end
+    end
   | _ -> ()
 
 let apply () prog =
