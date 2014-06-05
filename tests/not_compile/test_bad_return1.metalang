@@ -1,0 +1,10 @@
+
+def int b()
+  if 0 == 1 then
+    return 0
+  end
+end
+
+main
+  def a = b()
+end

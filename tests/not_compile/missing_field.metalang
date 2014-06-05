@@ -1,14 +1,16 @@
 record @foo
-	toto : int
-	tata : int
+	toto : int;
+	tata : int;
 end
 
-def @foo foo()
-	def foo = record
+def @foo foobar()
+	def @foo foobarblah = record
 		tata = 4
 	end
-return foo
+  return foobarblah
 end
 
 main
+  def a = 0
+  print a
 end
