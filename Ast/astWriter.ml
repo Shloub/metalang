@@ -129,6 +129,8 @@ module F (T : SigAst) = struct
       in let acc, _ = foldmap f2 acc t in
          acc
 
+    let iter f0 t = fold (fun f acc t -> f0 (f ()) t) () t
+
   end
 
 end
