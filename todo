@@ -1,7 +1,6 @@
 Langage & Compilateur :
   cleaner un peu la lib standard
   types abstract (pour ouvrir un fichier par exemple)
-  return checker
   commentaires indentation
   chercher a faire un sort correct
   null
