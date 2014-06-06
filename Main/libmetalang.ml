@@ -231,13 +231,17 @@ let warn_error_of_parse_error filename lexbuf =
     let filecontent =
       let i = open_in filename in
       let l = ref "" in
+      try
       for j = 1 to line do
         l := input_line i
-      done; !l
+      done;
+      !l
+      with End_of_file -> !l
     in
+    let spaces = if cnum = -1 then "" else String.make cnum ' ' in
     let tok = Lexing.lexeme lexbuf in
     Format.fprintf f "file:%s@\nerror line %d char %d on token %s@\n%s@\n%s^@\n"
-      filename line cnum tok filecontent (String.make cnum ' ') ;
+      filename line cnum tok filecontent spaces ;
   ))
 
 let parse_file parse filename =
@@ -246,7 +250,8 @@ let parse_file parse filename =
   try parse Lexer.token lexbuf
   with
   | Parser.Error -> warn_error_of_parse_error filename lexbuf
-  | Failure s -> warn_error_of_parse_error filename lexbuf
+  | Failure s ->
+    warn_error_of_parse_error filename lexbuf
 
 let parse_string parse str =
   Ast.parsed_file := "stdin";

@@ -40,9 +40,12 @@ rule token = parse
 }
 | "{"
     {
+      let oripos = lexbuf.lex_curr_p in
       let rec f (li : (token, token Ast.Expr.t) Ast.Lexems.t list) =
         match token lexbuf with
-				| EOF -> error lexbuf
+				| EOF ->
+				  lexbuf.lex_curr_p <- oripos;
+				  error lexbuf
         | END_QUOTE -> List.rev li
         | UNQUOTE_START ->
           let li2 = Ast.Lexems.unquote (f []) in
