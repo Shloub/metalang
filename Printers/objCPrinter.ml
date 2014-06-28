@@ -31,11 +31,77 @@
 
 open Ast
 open Stdlib
+open Printer
 open CPrinter
 
 class objCPrinter = object(self)
   inherit cPrinter as baseprinter
 
   method lang () = "objc"
+
+  method prog f prog =
+    Format.fprintf f "#import <Foundation/Foundation.h>@\n#include<stdio.h>@\n#include<stdlib.h>@\n%a@\n%a%a@\n@\n"
+      (fun f () ->
+        if Tags.is_taged "use_math"
+        then Format.fprintf f "#include<math.h>@\n"
+      ) ()
+      self#proglist prog.Prog.funs
+      (print_option self#main) prog.Prog.main
+
+  method main f main =
+    Format.fprintf f "@[<v 2>int main(void){@\nNSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];@\n%a@\n[pool drain];@\nreturn 0;@]@\n}" self#instructions main
+
+  method ptype f t =
+    match Type.unfix t with
+    | Type.Integer -> Format.fprintf f "int"
+    | Type.String -> Format.fprintf f "char*"
+    | Type.Array a -> Format.fprintf f "%a*" self#ptype a
+    | Type.Void ->  Format.fprintf f "void"
+    | Type.Bool -> Format.fprintf f "int"
+    | Type.Char -> Format.fprintf f "char"
+    | Type.Named n -> begin match Typer.expand (baseprinter#getTyperEnv ()) t
+        default_location |> Type.unfix with
+        | Type.Struct _ -> Format.fprintf f "%s *" n
+        | Type.Enum _ -> Format.fprintf f "%s" n
+        | _ -> assert false
+    end
+    | Type.Enum _ -> Format.fprintf f "an enum"
+    | Type.Struct _ -> Format.fprintf f "a struct"
+    | Type.Auto -> assert false
+    | Type.Lexems -> assert false
+
+  method allocrecord f name t el =
+    Format.fprintf f "%a %a = [%s alloc];@\n%a"
+      self#ptype t
+      self#binding name
+      (match Type.unfix t with | Type.Named n -> n | _ -> assert false)
+      (self#def_fields name) el
+
+  method decl_type f name t =
+    match (Type.unfix t) with
+      Type.Struct li ->
+        Format.fprintf f "@@interface %a : NSObject@\n{@\n@[<v 2>  %a@]@\n}@\n@@end@\n@@implementation %a @\n@@end@\n"
+          self#binding name
+          (print_list
+             (fun t (name, type_) ->
+               Format.fprintf t "@@public %a %a;" self#ptype type_ self#binding name
+             )
+             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+          ) li
+          self#binding name
+    | Type.Enum li ->
+      Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
+        self#binding name
+        (print_list
+           (fun t name ->
+             self#binding t name
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+        ) li
+        self#binding name
+    | _ ->
+      Format.fprintf f "typedef %a %a;"
+        baseprinter#ptype t
+        baseprinter#binding name
 
 end
