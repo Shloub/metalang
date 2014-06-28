@@ -120,6 +120,7 @@ tar :
 java	?=	java
 python	?=	python3
 
+OBJCFLAGS ?= -O3 -Wall
 CFLAGS ?= -O3 -Wall -lm
 CCFLAGS ?= -O3 -Wall
 
@@ -133,6 +134,9 @@ TESTSDEPS	:= $(addsuffix .test, $(TESTS))
 TMPFILES	:=\
 	$(addsuffix .eval.out, $(TESTS)) \
 	$(addsuffix .go, $(TESTS)) \
+	$(addsuffix .m, $(TESTS)) \
+	$(addsuffix .m.bin, $(TESTS)) \
+	$(addsuffix .m.bin.out, $(TESTS)) \
 	$(addsuffix .c, $(TESTS)) \
 	$(addsuffix .c.bin, $(TESTS)) \
 	$(addsuffix .c.bin.out, $(TESTS)) \
@@ -185,6 +189,13 @@ main.native:
 
 out :
 	@mkdir out
+
+out/%.m : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang m $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang m $< || exit 1; \
+	fi
 
 out/%.cl : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
 	@if [ -e "$(basename $<).compiler_input" ]; then \
@@ -292,6 +303,9 @@ out/%.metalang.test : out/%.metalang Stdlib/stdlib.metalang metalang
 	fi; \
 	done;
 
+out/%.m.bin : out/%.m
+	@gcc `gnustep-config --objc-flags` -lgnustep-base $(OBJCFLAGS) $< -o $@ || exit 1
+
 out/%.c.bin : out/%.c
 	@gcc $(CFLAGS) $< -o $@ || exit 1
 
@@ -363,7 +377,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out
+out/%.test : out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \

@@ -6,6 +6,7 @@ JsPrinter
 OcamlPrinter
 CsharpPrinter
 CPrinter
+ObjCPrinter
 CppPrinter
 PyPrinter
 HtmlPrinter
