@@ -55,7 +55,7 @@ begin
   Scanf.scanf "%[\n \010]" (fun _ -> ());
   Scanf.scanf "%d" (fun value -> t2.bar <- value);
   Scanf.scanf "%[\n \010]" (fun _ -> ());
-  Scanf.scanf "%d" (fun value -> t.blah <- value);
+  Scanf.scanf "%d" (fun value -> t2.blah <- value);
   let a = result t t2 in
   Printf.printf "%d" a;
   let b = t.blah in

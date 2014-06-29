@@ -18,9 +18,7 @@ int exp_(int a, int b){
 int main(){
   int a = 0;
   int b = 0;
-  scanf("%d", &a);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &b);
+  scanf("%d %d", &a, &b);
   int c = exp_(a, b);
   std::cout << c;
   return 0;

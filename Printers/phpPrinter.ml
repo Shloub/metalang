@@ -218,4 +218,6 @@ function nextChar(){
         (fun f () -> super#binop f op a b) ()
       else super#binop f op a b
     | _ -> super#binop f op a b
+
+  method multiread f instrs = self#basemultiread f instrs
 end

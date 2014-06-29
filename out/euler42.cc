@@ -21,8 +21,7 @@ bool is_triangular(int n){
 int score(){
   scanf("%*[ \t\r\n]c");
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   int sum = 0;
   for (int i = 1 ; i <= len; i ++)
   {

@@ -10,8 +10,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int strlen = 0;
-  scanf("%d", &strlen);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &strlen);
   char *tab4 = malloc( strlen * sizeof(char));
   {
     int toto;

@@ -14,11 +14,9 @@ int nth(char* tab, char tofind, int len){
 
 int main(void){
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   char tofind = '\000';
-  scanf("%c", &tofind);
-  scanf("%*[ \t\r\n]c");
+  scanf("%c ", &tofind);
   char *tab = malloc( len * sizeof(char));
   {
     int i;

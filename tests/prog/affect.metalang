@@ -49,7 +49,7 @@ main
   read int t.bar skip
   read int t.blah skip
   read int t2.bar skip
-  read int t.blah
+  read int t2.blah
   print int result(t, t2)
   print int t.blah
 end

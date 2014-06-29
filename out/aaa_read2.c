@@ -5,8 +5,7 @@
 
 int read_int(){
   int out_ = 0;
-  scanf("%d", &out_);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &out_);
   return out_;
 }
 
@@ -17,8 +16,7 @@ int* read_int_line(int n){
     for (i = 0 ; i < n; i++)
     {
       int t = 0;
-      scanf("%d", &t);
-      scanf("%*[ \t\r\n]c");
+      scanf("%d ", &t);
       tab[i] = t;
     }
   }

@@ -203,4 +203,5 @@ var read_int_ = function(){
   method enum f e =
     Format.fprintf f "%S" e
 
+  method multiread f instrs = self#basemultiread f instrs
 end

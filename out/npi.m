@@ -45,8 +45,7 @@ int npi_(char* str, int len){
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   char *tab = malloc( len * sizeof(char));
   {
     int i;

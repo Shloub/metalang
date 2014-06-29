@@ -48,8 +48,7 @@ int find(int len, int** tab){
 
 int main(void){
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   int* *tab = malloc( len * sizeof(int*));
   {
     int i;
@@ -62,8 +61,7 @@ int main(void){
         for (j = 0 ; j < b; j++)
         {
           int tmp = 0;
-          scanf("%d", &tmp);
-          scanf("%*[ \t\r\n]c");
+          scanf("%d ", &tmp);
           tab2[j] = tmp;
         }
       }

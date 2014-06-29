@@ -23,14 +23,12 @@ int montagnes_(std::vector<int >& tab, int len){
 
 int main(){
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   std::vector<int > tab( len );
   for (int i = 0 ; i < len; i++)
   {
     int x = 0;
-    scanf("%d", &x);
-    scanf("%*[ \t\r\n]c");
+    scanf("%d ", &x);
     tab.at(i) = x;
   }
   int a = montagnes_(tab, len);

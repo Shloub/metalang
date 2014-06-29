@@ -54,10 +54,7 @@ int pathfind(std::vector<std::vector<char > >& tab, int x, int y){
 int main(){
   int x = 0;
   int y = 0;
-  scanf("%d", &x);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &y);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d %d ", &x, &y);
   std::vector<std::vector<char > > tab( y );
   for (int i = 0 ; i < y; i++)
   {

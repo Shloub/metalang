@@ -22,17 +22,14 @@ bool devine_(int nombre, std::vector<int >& tab, int len){
 
 int main(){
   int nombre = 0;
-  scanf("%d", &nombre);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &nombre);
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   std::vector<int > tab( len );
   for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;
-    scanf("%d", &tmp);
-    scanf("%*[ \t\r\n]c");
+    scanf("%d ", &tmp);
     tab.at(i) = tmp;
   }
   bool a = devine_(nombre, tab, len);

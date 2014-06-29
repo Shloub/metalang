@@ -45,6 +45,12 @@ let is_print i = match Instr.unfix i with
   | Instr.Print _ -> true
   | _ -> false
 
+let is_stdin i = match Instr.unfix i with
+  | Instr.Read _ -> true
+  | Instr.DeclRead _ -> true
+  | Instr.StdinSep -> true
+  | _ -> false
+
 let print_list
     (func : Format.formatter -> 'a -> unit)
     (sep :
@@ -641,8 +647,20 @@ class printer = object(self)
          (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
 
   method combine_formats () = false
+
+  method multiread f instrs =
+    (print_list
+       self#instr
+       (fun t print1 item1 print2 item2 ->
+         Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+       )
+    ) f instrs
+
   method instructions0 f instrs =
     if (match instrs with [_] -> false | _ -> true)
+      && List.for_all is_stdin instrs then
+      self#multiread f instrs
+    else if (match instrs with [_] -> false | _ -> true)
       && List.for_all is_print instrs then
       let li = List.map (fun i -> match Instr.unfix i with
         | Instr.Print (t, i) -> format_type t, (t, i)
@@ -680,14 +698,15 @@ class printer = object(self)
       ) f instrs
 
   method instructions f instrs =
-    let rec g b acc1 acc2 = function
+    let rec g kind acc1 acc2 = function
       | hd::tl ->
-        if is_print hd = b
-        then g b acc1 (hd::acc2) tl
-        else g (not b) ((List.rev acc2)::acc1) [hd] tl
+        let kind2 = (is_print hd, is_stdin hd) in
+        if kind2 = kind
+        then g kind acc1 (hd::acc2) tl
+        else g kind2 ((List.rev acc2)::acc1) [hd] tl
       | [] -> List.rev ( (List.rev acc2) :: acc1 )
     in
-    let lili = g false [] [] instrs in
+    let lili = g (false, false) [] [] instrs in
     let lili = List.filter ( (<>) [] ) lili in
     (print_list
        self#instructions0

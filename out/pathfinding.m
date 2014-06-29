@@ -60,10 +60,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int x = 0;
   int y = 0;
-  scanf("%d", &x);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &y);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d %d ", &x, &y);
   char* *tab = malloc( y * sizeof(char*));
   {
     int i;

@@ -71,9 +71,9 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     t2.bar = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t.blah = -scanner.nextInt();
+    scanner.next("^-"); t2.blah = -scanner.nextInt();
     }else{
-    t.blah = scanner.nextInt();}
+    t2.blah = scanner.nextInt();}
     int a = result(t, t2);
     System.out.printf("%d", a);
     int b = t.blah;

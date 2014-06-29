@@ -204,4 +204,5 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
                f2 e2
            )) index
 
+  method multiread f instrs = self#basemultiread f instrs
 end

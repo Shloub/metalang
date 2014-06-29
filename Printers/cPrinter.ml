@@ -275,4 +275,23 @@ class cPrinter = object(self)
       self#expr e
       self#blocinif ifcase
       self#bloc elsecase
+
+
+  method basemultiread f instrs = baseprinter#multiread f instrs
+
+  method multiread f instrs =
+    let format, variables =
+      List.fold_left (fun (format, variables) i -> match Instr.unfix i with
+      | Instr.StdinSep -> (format ^ " ", variables)
+      | Instr.Read (t, mutable_) ->
+        let addons = format_type t in
+        (format ^ addons, mutable_::variables)
+      | _ -> assert false
+      ) ("", []) instrs
+    in
+    Format.fprintf f "scanf(\"%s\", %a);"
+      format
+      (print_list (fun f x -> Format.fprintf f "&%a" self#mutable_ x)
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b))
+      (List.rev variables)
 end

@@ -25,9 +25,7 @@ int result(toto * t){
 
 int main(){
   toto * t = mktoto(4);
-  scanf("%d", &t->bar);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &t->blah);
+  scanf("%d %d", &t->bar, &t->blah);
   int a = result(t);
   std::cout << a;
   int b = t->blah;

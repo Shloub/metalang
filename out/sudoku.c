@@ -10,8 +10,7 @@ int* read_sudoku(){
     for (i = 0 ; i < a; i++)
     {
       int k = 0;
-      scanf("%d", &k);
-      scanf("%*[ \t\r\n]c");
+      scanf("%d ", &k);
       out_[i] = k;
     }
   }

@@ -60,13 +60,7 @@ int result(struct toto * t_, struct toto * t2_){
 int main(void){
   struct toto * t = mktoto(4);
   struct toto * t2 = mktoto(5);
-  scanf("%d", &t->bar);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &t->blah);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &t2->bar);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &t->blah);
+  scanf("%d %d %d %d", &t->bar, &t->blah, &t2->bar, &t2->blah);
   int a = result(t, t2);
   printf("%d", a);
   int b = t->blah;

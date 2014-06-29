@@ -97,7 +97,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
       (mread-blank)
       (setf (toto-bar t2) (mread-int ))
       (mread-blank)
-      (setf (toto-blah t__) (mread-int ))
+      (setf (toto-blah t2) (mread-int ))
       (let ((a (result t__ t2)))
         (princ a)
         (let ((b (toto-blah t__)))

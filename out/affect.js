@@ -90,7 +90,7 @@ t.blah=read_int_();
 stdinsep();
 t2.bar=read_int_();
 stdinsep();
-t.blah=read_int_();
+t2.blah=read_int_();
 var a = result(t, t2);
 util.print(a);
 var b = t.blah;

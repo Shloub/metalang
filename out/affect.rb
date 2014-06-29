@@ -57,7 +57,7 @@ t["blah"]=scanf("%d")[0];
 scanf("%*\n");
 t2["bar"]=scanf("%d")[0];
 scanf("%*\n");
-t["blah"]=scanf("%d")[0];
+t2["blah"]=scanf("%d")[0];
 a = result(t, t2)
 printf "%d", a
 b = t["blah"]

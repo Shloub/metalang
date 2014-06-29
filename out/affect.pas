@@ -155,7 +155,7 @@ begin
   skip();
   t2^.bar := read_int_();
   skip();
-  t^.blah := read_int_();
+  t2^.blah := read_int_();
   a := result(t, t2);
   Write(a);
   b := t^.blah;

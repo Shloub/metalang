@@ -20,16 +20,14 @@ void sort_(int* tab, int len){
 
 int main(void){
   int len = 2;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   int *tab = malloc( len * sizeof(int));
   {
     int i_;
     for (i_ = 0 ; i_ < len; i_++)
     {
       int tmp = 0;
-      scanf("%d", &tmp);
-      scanf("%*[ \t\r\n]c");
+      scanf("%d ", &tmp);
       tab[i_] = tmp;
     }
   }

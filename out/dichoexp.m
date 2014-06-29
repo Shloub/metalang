@@ -18,9 +18,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int a = 0;
   int b = 0;
-  scanf("%d", &a);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &b);
+  scanf("%d %d", &a, &b);
   int c = exp_(a, b);
   printf("%d", c);
   [pool drain];

@@ -21,16 +21,14 @@ int montagnes_(int* tab, int len){
 
 int main(void){
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   int *tab = malloc( len * sizeof(int));
   {
     int i;
     for (i = 0 ; i < len; i++)
     {
       int x = 0;
-      scanf("%d", &x);
-      scanf("%*[ \t\r\n]c");
+      scanf("%d ", &x);
       tab[i] = x;
     }
   }

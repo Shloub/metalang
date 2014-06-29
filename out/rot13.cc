@@ -10,8 +10,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 
 int main(){
   int strlen = 0;
-  scanf("%d", &strlen);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &strlen);
   std::vector<char > tab4( strlen );
   for (int toto = 0 ; toto < strlen; toto++)
   {

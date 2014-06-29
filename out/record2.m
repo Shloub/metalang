@@ -28,9 +28,7 @@ int result(toto * t){
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   toto * t = mktoto(4);
-  scanf("%d", &t->bar);
-  scanf("%*[ \t\r\n]c");
-  scanf("%d", &t->blah);
+  scanf("%d %d", &t->bar, &t->blah);
   int a = result(t);
   printf("%d", a);
   int b = t->blah;

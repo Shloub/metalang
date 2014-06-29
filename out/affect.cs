@@ -107,7 +107,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     stdin_sep();
     t2.bar = readInt();
     stdin_sep();
-    t.blah = readInt();
+    t2.blah = readInt();
     int a = result(t, t2);
     Console.Write(a);
     int b = t.blah;

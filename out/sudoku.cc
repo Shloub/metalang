@@ -9,8 +9,7 @@ std::vector<int > read_sudoku(){
   for (int i = 0 ; i < a; i++)
   {
     int k = 0;
-    scanf("%d", &k);
-    scanf("%*[ \t\r\n]c");
+    scanf("%d ", &k);
     out_.at(i) = k;
   }
   return out_;

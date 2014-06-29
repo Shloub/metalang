@@ -325,4 +325,6 @@ def skipchar():
            ))
         indexes
 
+
+  method multiread f instrs = self#basemultiread f instrs
 end

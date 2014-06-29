@@ -34,8 +34,7 @@ void crypte(int taille_cle, std::vector<char >& cle, int taille, std::vector<cha
 
 int main(){
   int taille_cle = 0;
-  scanf("%d", &taille_cle);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &taille_cle);
   std::vector<char > cle( taille_cle );
   for (int index = 0 ; index < taille_cle; index++)
   {
@@ -45,8 +44,7 @@ int main(){
   }
   scanf("%*[ \t\r\n]c");
   int taille = 0;
-  scanf("%d", &taille);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &taille);
   std::vector<char > message( taille );
   for (int index2 = 0 ; index2 < taille; index2++)
   {

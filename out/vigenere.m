@@ -37,8 +37,7 @@ void crypte(int taille_cle, char* cle, int taille, char* message){
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int taille_cle = 0;
-  scanf("%d", &taille_cle);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &taille_cle);
   char *cle = malloc( taille_cle * sizeof(char));
   {
     int index;
@@ -51,8 +50,7 @@ int main(void){
   }
   scanf("%*[ \t\r\n]c");
   int taille = 0;
-  scanf("%d", &taille);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &taille);
   char *message = malloc( taille * sizeof(char));
   {
     int index2;

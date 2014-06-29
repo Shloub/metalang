@@ -224,11 +224,9 @@ struct gamestate * init_(){
 
 struct move * read_move(){
   int x = 0;
-  scanf("%d", &x);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &x);
   int y = 0;
-  scanf("%d", &y);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &y);
   struct move * h = malloc (sizeof(h) );
   h->x=x;
   h->y=y;

@@ -44,8 +44,7 @@ int find(int len, std::vector<std::vector<int > >& tab){
 
 int main(){
   int len = 0;
-  scanf("%d", &len);
-  scanf("%*[ \t\r\n]c");
+  scanf("%d ", &len);
   std::vector<std::vector<int > > tab( len );
   for (int i = 0 ; i < len; i++)
   {
@@ -54,8 +53,7 @@ int main(){
     for (int j = 0 ; j < b; j++)
     {
       int tmp = 0;
-      scanf("%d", &tmp);
-      scanf("%*[ \t\r\n]c");
+      scanf("%d ", &tmp);
       tab2.at(j) = tmp;
     }
     tab.at(i) = tab2;
