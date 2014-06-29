@@ -5,33 +5,33 @@
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
-struct toto;
-typedef struct toto {
+class toto {
+public:
   int foo;
   int bar;
   int blah;
-} toto;
+};
 
-struct toto * mktoto(int v1){
-  struct toto * t = new toto();
+toto * mktoto(int v1){
+  toto * t = new toto();
   t->foo=v1;
   t->bar=v1;
   t->blah=v1;
   return t;
 }
 
-struct toto * mktoto2(int v1){
-  struct toto * t = new toto();
+toto * mktoto2(int v1){
+  toto * t = new toto();
   t->foo=v1 + 3;
   t->bar=v1 + 2;
   t->blah=v1 + 1;
   return t;
 }
 
-int result(struct toto * t_, struct toto * t2_){
-  struct toto * t = t_;
-  struct toto * t2 = t2_;
-  struct toto * t3 = new toto();
+int result(toto * t_, toto * t2_){
+  toto * t = t_;
+  toto * t2 = t2_;
+  toto * t3 = new toto();
   t3->foo=0;
   t3->bar=0;
   t3->blah=0;
@@ -54,8 +54,8 @@ int result(struct toto * t_, struct toto * t2_){
 
 
 int main(void){
-  struct toto * t = mktoto(4);
-  struct toto * t2 = mktoto(5);
+  toto * t = mktoto(4);
+  toto * t2 = mktoto(5);
   scanf("%d", &t->bar);
   scanf("%*[ \t\r\n]c");
   scanf("%d", &t->blah);

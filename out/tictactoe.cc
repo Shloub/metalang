@@ -6,23 +6,23 @@
 Tictactoe : un tictactoe avec une IA
 */
 /* La structure de donnée */
-struct gamestate;
-typedef struct gamestate {
+class gamestate {
+public:
   std::vector<std::vector<int > > cases;
   bool firstToPlay;
   int note;
   bool ended;
-} gamestate;
+};
 
 /* Un Mouvement */
-struct move;
-typedef struct move {
+class move {
+public:
   int x;
   int y;
-} move;
+};
 
 /* On affiche l'état */
-void print_state(struct gamestate * g){
+void print_state(gamestate * g){
   std::cout << "\n|";
   for (int y = 0 ; y <= 2; y ++)
   {
@@ -43,7 +43,7 @@ void print_state(struct gamestate * g){
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-void eval_(struct gamestate * g){
+void eval_(gamestate * g){
   int win = 0;
   int freecase = 0;
   for (int y = 0 ; y <= 2; y ++)
@@ -87,7 +87,7 @@ void eval_(struct gamestate * g){
 }
 
 /* On applique un mouvement */
-void apply_move_xy(int x, int y, struct gamestate * g){
+void apply_move_xy(int x, int y, gamestate * g){
   int player = 2;
   if (g->firstToPlay)
     player = 1;
@@ -95,32 +95,32 @@ void apply_move_xy(int x, int y, struct gamestate * g){
   g->firstToPlay = !g->firstToPlay;
 }
 
-void apply_move(struct move * m, struct gamestate * g){
+void apply_move(move * m, gamestate * g){
   apply_move_xy(m->x, m->y, g);
 }
 
-void cancel_move_xy(int x, int y, struct gamestate * g){
+void cancel_move_xy(int x, int y, gamestate * g){
   g->cases.at(x).at(y) = 0;
   g->firstToPlay = !g->firstToPlay;
   g->ended = false;
 }
 
-void cancel_move(struct move * m, struct gamestate * g){
+void cancel_move(move * m, gamestate * g){
   cancel_move_xy(m->x, m->y, g);
 }
 
-bool can_move_xy(int x, int y, struct gamestate * g){
+bool can_move_xy(int x, int y, gamestate * g){
   return g->cases.at(x).at(y) == 0;
 }
 
-bool can_move(struct move * m, struct gamestate * g){
+bool can_move(move * m, gamestate * g){
   return can_move_xy(m->x, m->y, g);
 }
 
 /*
 Un minimax classique, renvoie la note du plateau
 */
-int minmax(struct gamestate * g){
+int minmax(gamestate * g){
   eval_(g);
   if (g->ended)
     return g->note;
@@ -144,8 +144,8 @@ int minmax(struct gamestate * g){
 /*
 Renvoie le coup de l'IA
 */
-struct move * play(struct gamestate * g){
-  struct move * minMove = new move();
+move * play(gamestate * g){
+  move * minMove = new move();
   minMove->x=0;
   minMove->y=0;
   int minNote = 10000;
@@ -171,7 +171,7 @@ struct move * play(struct gamestate * g){
   return minMove;
 }
 
-struct gamestate * init_(){
+gamestate * init_(){
   int d = 3;
   std::vector<std::vector<int > > cases( d );
   for (int i = 0 ; i < d; i++)
@@ -182,7 +182,7 @@ struct gamestate * init_(){
       tab.at(j) = 0;
     cases.at(i) = tab;
   }
-  struct gamestate * f = new gamestate();
+  gamestate * f = new gamestate();
   f->cases=cases;
   f->firstToPlay=true;
   f->note=0;
@@ -190,14 +190,14 @@ struct gamestate * init_(){
   return f;
 }
 
-struct move * read_move(){
+move * read_move(){
   int x = 0;
   scanf("%d", &x);
   scanf("%*[ \t\r\n]c");
   int y = 0;
   scanf("%d", &y);
   scanf("%*[ \t\r\n]c");
-  struct move * h = new move();
+  move * h = new move();
   h->x=x;
   h->y=y;
   return h;
@@ -207,12 +207,12 @@ struct move * read_move(){
 int main(void){
   for (int i = 0 ; i <= 1; i ++)
   {
-    struct gamestate * state = init_();
-    struct move * k = new move();
+    gamestate * state = init_();
+    move * k = new move();
     k->x=1;
     k->y=1;
     apply_move(k, state);
-    struct move * l = new move();
+    move * l = new move();
     l->x=0;
     l->y=0;
     apply_move(l, state);

@@ -2,22 +2,22 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
-struct toto;
-typedef struct toto {
+class toto {
+public:
   int foo;
   int bar;
   int blah;
-} toto;
+};
 
-struct toto * mktoto(int v1){
-  struct toto * t = new toto();
+toto * mktoto(int v1){
+  toto * t = new toto();
   t->foo=v1;
   t->bar=0;
   t->blah=0;
   return t;
 }
 
-int result(std::vector<struct toto * >& t, int len){
+int result(std::vector<toto * >& t, int len){
   int out_ = 0;
   for (int j = 0 ; j < len; j++)
   {
@@ -30,7 +30,7 @@ int result(std::vector<struct toto * >& t, int len){
 
 int main(void){
   int a = 4;
-  std::vector<struct toto * > t( a );
+  std::vector<toto * > t( a );
   for (int i = 0 ; i < a; i++)
     t.at(i) = mktoto(i);
   scanf("%d", &t.at(0)->bar);

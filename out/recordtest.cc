@@ -2,15 +2,15 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
-struct toto;
-typedef struct toto {
+class toto {
+public:
   int foo;
   int bar;
-} toto;
+};
 
 
 int main(void){
-  struct toto * param = new toto();
+  toto * param = new toto();
   param->foo=0;
   param->bar=0;
   scanf("%d", &param->bar);
