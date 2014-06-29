@@ -13,14 +13,14 @@ int nth(std::vector<char >& tab, char tofind, int len){
 
 int main(){
   int len = 0;
-  scanf("%d ", &len);
+  std::cin >> len >> std::skipws;
   char tofind = '\000';
-  scanf("%c ", &tofind);
+  std::cin >> tofind >> std::skipws;
   std::vector<char > tab( len );
   for (int i = 0 ; i < len; i++)
   {
     char tmp = '\000';
-    scanf("%c", &tmp);
+    std::cin >> tmp >> std::noskipws;
     tab.at(i) = tmp;
   }
   int result = nth(tab, tofind, len);

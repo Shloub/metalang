@@ -36,7 +36,7 @@ void test(intlist * empty){
   int i = -1;
   while (i != 0)
   {
-    scanf("%d", &i);
+    std::cin >> i >> std::noskipws;
     if (i != 0)
       list = cons(list, i);
   }

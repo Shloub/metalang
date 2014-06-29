@@ -13,7 +13,7 @@ std::vector<int > read_int_line(int n){
   for (int i = 0 ; i < n; i++)
   {
     int t = 0;
-    scanf("%d ", &t);
+    std::cin >> t >> std::skipws;
     tab.at(i) = t;
   }
   return tab;
@@ -23,7 +23,7 @@ std::vector<std::vector<int > > read_int_matrix(int x, int y){
   std::vector<std::vector<int > > tab( y );
   for (int z = 0 ; z < y; z++)
   {
-    scanf("%*[ \t\r\n]c");
+    std::cin >> std::skipws;
     tab.at(z) = read_int_line(x);
   }
   return tab;

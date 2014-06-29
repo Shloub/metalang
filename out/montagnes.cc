@@ -23,12 +23,12 @@ int montagnes_(std::vector<int >& tab, int len){
 
 int main(){
   int len = 0;
-  scanf("%d ", &len);
+  std::cin >> len >> std::skipws;
   std::vector<int > tab( len );
   for (int i = 0 ; i < len; i++)
   {
     int x = 0;
-    scanf("%d ", &x);
+    std::cin >> x >> std::skipws;
     tab.at(i) = x;
   }
   int a = montagnes_(tab, len);

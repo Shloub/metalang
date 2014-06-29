@@ -37,7 +37,7 @@ int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, 
 
 int main(){
   int n = 0;
-  scanf("%d ", &n);
+  std::cin >> n >> std::skipws;
   std::vector<std::vector<int > > passepartout( n );
   for (int i = 0 ; i < n; i++)
   {
@@ -46,13 +46,13 @@ int main(){
     for (int j = 0 ; j < c; j++)
     {
       int out__ = 0;
-      scanf("%d ", &out__);
+      std::cin >> out__ >> std::skipws;
       out0.at(j) = out__;
     }
     passepartout.at(i) = out0;
   }
   int m = 0;
-  scanf("%d ", &m);
+  std::cin >> m >> std::skipws;
   std::vector<std::vector<int > > serrures( m );
   for (int k = 0 ; k < m; k++)
   {
@@ -61,7 +61,7 @@ int main(){
     for (int l = 0 ; l < d; l++)
     {
       int out_ = 0;
-      scanf("%d ", &out_);
+      std::cin >> out_ >> std::skipws;
       out1.at(l) = out_;
     }
     serrures.at(k) = out1;

@@ -32,12 +32,12 @@ int pathfind(std::vector<int >& tab, int len){
 
 int main(){
   int len = 0;
-  scanf("%d ", &len);
+  std::cin >> len >> std::skipws;
   std::vector<int > tab( len );
   for (int i = 0 ; i < len; i++)
   {
     int tmp = 0;
-    scanf("%d ", &tmp);
+    std::cin >> tmp >> std::skipws;
     tab.at(i) = tmp;
   }
   int result = pathfind(tab, len);

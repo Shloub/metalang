@@ -4,7 +4,7 @@
 #include <vector>
 int read_int(){
   int out_ = 0;
-  scanf("%d ", &out_);
+  std::cin >> out_ >> std::skipws;
   return out_;
 }
 
@@ -13,7 +13,7 @@ std::vector<int > read_int_line(int n){
   for (int i = 0 ; i < n; i++)
   {
     int t = 0;
-    scanf("%d ", &t);
+    std::cin >> t >> std::skipws;
     tab.at(i) = t;
   }
   return tab;

@@ -10,12 +10,12 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 
 int main(){
   int strlen = 0;
-  scanf("%d ", &strlen);
+  std::cin >> strlen >> std::skipws;
   std::vector<char > tab4( strlen );
   for (int toto = 0 ; toto < strlen; toto++)
   {
     char tmpc = '_';
-    scanf("%c", &tmpc);
+    std::cin >> tmpc >> std::noskipws;
     int c = tmpc;
     if (tmpc != ' ')
       c = ((c - 'a') + 13) % 26 + 'a';

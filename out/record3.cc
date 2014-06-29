@@ -33,7 +33,7 @@ int main(){
   std::vector<toto * > t( a );
   for (int i = 0 ; i < a; i++)
     t.at(i) = mktoto(i);
-  scanf("%d %d", &t.at(0)->bar, &t.at(1)->blah);
+  std::cin >> t.at(0)->bar >> std::skipws >> t.at(1)->blah >> std::noskipws;
   int b = result(t, 4);
   std::cout << b;
   int c = t.at(2)->blah;

@@ -19,14 +19,14 @@ bool is_triangular(int n){
 }
 
 int score(){
-  scanf("%*[ \t\r\n]c");
+  std::cin >> std::skipws;
   int len = 0;
-  scanf("%d ", &len);
+  std::cin >> len >> std::skipws;
   int sum = 0;
   for (int i = 1 ; i <= len; i ++)
   {
     char c = '_';
-    scanf("%c", &c);
+    std::cin >> c >> std::noskipws;
     sum += (c - 'A') + 1;
     /*		print c print " " print sum print " " */
   }
@@ -46,7 +46,7 @@ int main(){
   std::cout << "\n";
   int sum = 0;
   int n = 0;
-  scanf("%d", &n);
+  std::cin >> n >> std::noskipws;
   for (int i = 1 ; i <= n; i ++)
     sum += score();
   std::cout << sum << "\n";

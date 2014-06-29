@@ -179,4 +179,27 @@ class cppPrinter = object(self)
         self#ptype t
         self#binding name
 
+  method stdin_sep f = Format.fprintf f "@[std::cin >> std::skipws;@]"
+
+  method multiread f instrs = (* TODO, quand on a plusieurs noskip ou skip à la suite, il faut les virer*)
+    let skipfirst, variables =
+      List.fold_left (fun (skipfirst, variables) i -> match Instr.unfix i with
+      | Instr.Read (t, mutable_) -> skipfirst, (t, mutable_, false)::variables
+      | Instr.StdinSep -> begin match variables with
+        | (t, m, s)::tl -> skipfirst, (t, m, true)::tl
+        | [] -> true, []
+      end
+      | _ -> assert false
+      ) (false, []) instrs
+    in
+    Format.fprintf f "std::cin%a%a;" (* par default, on est dans un état noskip *)
+      (fun f b -> if b then Format.fprintf f " >> std::skipws"
+      ) skipfirst
+      (print_list (fun f (t, x, b) ->
+        Format.fprintf f " >> %a >> std::%sskipws" self#mutable_ x
+          (if b then "" else "no")
+       )
+         (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b))
+      (List.rev variables)
+
 end

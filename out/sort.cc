@@ -16,12 +16,12 @@ void sort_(std::vector<int >& tab, int len){
 
 int main(){
   int len = 2;
-  scanf("%d ", &len);
+  std::cin >> len >> std::skipws;
   std::vector<int > tab( len );
   for (int i_ = 0 ; i_ < len; i_++)
   {
     int tmp = 0;
-    scanf("%d ", &tmp);
+    std::cin >> tmp >> std::skipws;
     tab.at(i_) = tmp;
   }
   sort_(tab, len);

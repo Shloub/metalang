@@ -13,7 +13,7 @@ int main(){
   toto * param = new toto();
   param->foo=0;
   param->bar=0;
-  scanf("%d %d", &param->bar, &param->foo);
+  std::cin >> param->bar >> std::skipws >> param->foo >> std::noskipws;
   int a = param->bar + param->foo * param->bar;
   std::cout << a;
   return 0;

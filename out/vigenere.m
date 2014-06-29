@@ -48,7 +48,7 @@ int main(void){
       cle[index] = out_;
     }
   }
-  scanf("%*[ \t\r\n]c");
+  scanf(" ");
   int taille = 0;
   scanf("%d ", &taille);
   char *message = malloc( taille * sizeof(char));

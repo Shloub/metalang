@@ -289,9 +289,9 @@ class cPrinter = object(self)
       | _ -> assert false
       ) ("", []) instrs
     in
-    Format.fprintf f "scanf(\"%s\", %a);"
+    Format.fprintf f "scanf(\"%s\"%a);"
       format
-      (print_list (fun f x -> Format.fprintf f "&%a" self#mutable_ x)
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b))
+      (print_list (fun f x -> Format.fprintf f ", &%a" self#mutable_ x)
+         (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b))
       (List.rev variables)
 end

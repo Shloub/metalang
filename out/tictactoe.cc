@@ -192,9 +192,9 @@ gamestate * init_(){
 
 move * read_move(){
   int x = 0;
-  scanf("%d ", &x);
+  std::cin >> x >> std::skipws;
   int y = 0;
-  scanf("%d ", &y);
+  std::cin >> y >> std::skipws;
   move * h = new move();
   h->x=x;
   h->y=y;

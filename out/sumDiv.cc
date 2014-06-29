@@ -46,7 +46,7 @@ int sumdiv(int n){
 int main(){
   /* Programme principal */
   int n = 0;
-  scanf("%d", &n);
+  std::cin >> n >> std::noskipws;
   /* Lecture de l'entier */
   int b = sumdiv(n);
   std::cout << b;

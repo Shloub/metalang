@@ -76,7 +76,7 @@ int main(void){
           tab2[j] = tmp;
         }
       }
-      scanf("%*[ \t\r\n]c");
+      scanf(" ");
       tab[i] = tab2;
     }
   }

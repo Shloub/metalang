@@ -17,7 +17,7 @@ int main(){
   for (int j = 0 ; j < g; j++)
   {
     char c = '_';
-    scanf("%c", &c);
+    std::cin >> c >> std::noskipws;
     int d = c - '0';
     i *= d;
     last.at(j) = d;
@@ -28,7 +28,7 @@ int main(){
   for (int k = 1 ; k <= 995; k ++)
   {
     char e = '_';
-    scanf("%c", &e);
+    std::cin >> e >> std::noskipws;
     int f = e - '0';
     if (f == 0)
     {

@@ -18,7 +18,7 @@ int exp_(int a, int b){
 int main(){
   int a = 0;
   int b = 0;
-  scanf("%d %d", &a, &b);
+  std::cin >> a >> std::skipws >> b >> std::noskipws;
   int c = exp_(a, b);
   std::cout << c;
   return 0;

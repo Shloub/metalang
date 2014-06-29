@@ -19,7 +19,7 @@ int is_triangular(int n){
 }
 
 int score(){
-  scanf("%*[ \t\r\n]c");
+  scanf(" ");
   int len = 0;
   scanf("%d ", &len);
   int sum = 0;

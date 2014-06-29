@@ -11,13 +11,13 @@ read int, read char et skip
 
 int main(){
   int len = 0;
-  scanf("%d ", &len);
+  std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
   std::vector<int > tab( len );
   for (int i = 0 ; i < len; i++)
   {
     int tmpi1 = 0;
-    scanf("%d ", &tmpi1);
+    std::cin >> tmpi1 >> std::skipws;
     std::cout << i << "=>" << tmpi1 << " ";
     tab.at(i) = tmpi1;
   }
@@ -26,18 +26,18 @@ int main(){
   for (int i_ = 0 ; i_ < len; i_++)
   {
     int tmpi2 = 0;
-    scanf("%d ", &tmpi2);
+    std::cin >> tmpi2 >> std::skipws;
     std::cout << i_ << "==>" << tmpi2 << " ";
     tab2.at(i_) = tmpi2;
   }
   int strlen = 0;
-  scanf("%d ", &strlen);
+  std::cin >> strlen >> std::skipws;
   std::cout << strlen << "=strlen\n";
   std::vector<char > tab4( strlen );
   for (int toto = 0 ; toto < strlen; toto++)
   {
     char tmpc = '_';
-    scanf("%c", &tmpc);
+    std::cin >> tmpc >> std::noskipws;
     int c = tmpc;
     std::cout << tmpc << ":" << c << " ";
     if (tmpc != ' ')

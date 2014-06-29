@@ -6,7 +6,7 @@
 
 int read_int(){
   int out_ = 0;
-  scanf("%d ", &out_);
+  std::cin >> out_ >> std::skipws;
   return out_;
 }
 
@@ -15,7 +15,7 @@ std::vector<int > read_int_line(int n){
   for (int i = 0 ; i < n; i++)
   {
     int t = 0;
-    scanf("%d ", &t);
+    std::cin >> t >> std::skipws;
     tab.at(i) = t;
   }
   return tab;
@@ -26,10 +26,10 @@ std::vector<char > read_char_line(int n){
   for (int i = 0 ; i < n; i++)
   {
     char t = '_';
-    scanf("%c", &t);
+    std::cin >> t >> std::noskipws;
     tab.at(i) = t;
   }
-  scanf("%*[ \t\r\n]c");
+  std::cin >> std::skipws;
   return tab;
 }
 

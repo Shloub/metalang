@@ -9,7 +9,7 @@ std::vector<int > read_sudoku(){
   for (int i = 0 ; i < a; i++)
   {
     int k = 0;
-    scanf("%d ", &k);
+    std::cin >> k >> std::skipws;
     out_.at(i) = k;
   }
   return out_;

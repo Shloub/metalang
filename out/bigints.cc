@@ -27,7 +27,7 @@ bigint * read_bigint(int len){
   for (int j = 0 ; j < len; j++)
   {
     char c = '_';
-    scanf("%c", &c);
+    std::cin >> c >> std::noskipws;
     chiffres.at(j) = c;
   }
   for (int i = 0 ; i <= (len - 1) / 2; i ++)
@@ -440,7 +440,7 @@ int main(){
   bigint * sum = read_bigint(50);
   for (int i = 2 ; i <= 100; i ++)
   {
-    scanf("%*[ \t\r\n]c");
+    std::cin >> std::skipws;
     bigint * tmp = read_bigint(50);
     sum = add_bigint(sum, tmp);
   }

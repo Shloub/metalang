@@ -35,7 +35,7 @@ char* read_char_line(int n){
       tab[i] = t;
     }
   }
-  scanf("%*[ \t\r\n]c");
+  scanf(" ");
   return tab;
 }
 

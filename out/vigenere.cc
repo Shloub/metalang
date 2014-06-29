@@ -34,22 +34,22 @@ void crypte(int taille_cle, std::vector<char >& cle, int taille, std::vector<cha
 
 int main(){
   int taille_cle = 0;
-  scanf("%d ", &taille_cle);
+  std::cin >> taille_cle >> std::skipws;
   std::vector<char > cle( taille_cle );
   for (int index = 0 ; index < taille_cle; index++)
   {
     char out_ = '_';
-    scanf("%c", &out_);
+    std::cin >> out_ >> std::noskipws;
     cle.at(index) = out_;
   }
-  scanf("%*[ \t\r\n]c");
+  std::cin >> std::skipws;
   int taille = 0;
-  scanf("%d ", &taille);
+  std::cin >> taille >> std::skipws;
   std::vector<char > message( taille );
   for (int index2 = 0 ; index2 < taille; index2++)
   {
     char out2 = '_';
-    scanf("%c", &out2);
+    std::cin >> out2 >> std::noskipws;
     message.at(index2) = out2;
   }
   crypte(taille_cle, cle, taille, message);

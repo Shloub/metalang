@@ -56,7 +56,7 @@ int result(toto * t_, toto * t2_){
 int main(){
   toto * t = mktoto(4);
   toto * t2 = mktoto(5);
-  scanf("%d %d %d %d", &t->bar, &t->blah, &t2->bar, &t2->blah);
+  std::cin >> t->bar >> std::skipws >> t->blah >> std::skipws >> t2->bar >> std::skipws >> t2->blah >> std::noskipws;
   int a = result(t, t2);
   std::cout << a;
   int b = t->blah;

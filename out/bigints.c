@@ -503,7 +503,7 @@ int main(void){
     int i;
     for (i = 2 ; i <= 100; i++)
     {
-      scanf("%*[ \t\r\n]c");
+      scanf(" ");
       struct bigint * tmp = read_bigint(50);
       sum = add_bigint(sum, tmp);
     }
