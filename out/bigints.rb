@@ -358,7 +358,12 @@ end
 =end
 
 def euler20(  )
-    a = bigint_of_int(100)
+    a = bigint_of_int(15)
+    
+=begin
+ normalement c'est 100 
+=end
+
     a = fact_bigint(a);
     return (sum_chiffres_bigint(a));
 end
@@ -386,7 +391,12 @@ end
 
 def euler48(  )
     sum = bigint_of_int(0)
-    for i in (1 ..  1000) do
+    for i in (1 ..  100) do
+      
+=begin
+ 1000 normalement 
+=end
+
       ib = bigint_of_int(i)
       ibeib = bigint_exp_10chiffres(ib, i)
       sum = add_bigint(sum, ibeib);
@@ -399,7 +409,12 @@ end
 
 def euler16(  )
     a = bigint_of_int(2)
-    a = bigint_exp(a, 1000);
+    a = bigint_exp(a, 100);
+    
+=begin
+ 1000 normalement 
+=end
+
     return (sum_chiffres_bigint(a));
 end
 
@@ -407,7 +422,12 @@ def euler25(  )
     i = 2
     a = bigint_of_int(1)
     b = bigint_of_int(1)
-    while b["bigint_len"] < 1000 do
+    while b["bigint_len"] < 100 do
+      
+=begin
+ 1000 normalement 
+=end
+
       c = add_bigint(a, b)
       a = b;
       b = c;

@@ -366,7 +366,8 @@ int sum_chiffres_bigint(struct bigint * a){
 
 /* http://projecteuler.net/problem=20 */
 int euler20(){
-  struct bigint * a = bigint_of_int(100);
+  struct bigint * a = bigint_of_int(15);
+  /* normalement c'est 100 */
   a = fact_bigint(a);
   return sum_chiffres_bigint(a);
 }
@@ -394,8 +395,9 @@ void euler48(){
   struct bigint * sum = bigint_of_int(0);
   {
     int i;
-    for (i = 1 ; i <= 1000; i++)
+    for (i = 1 ; i <= 100; i++)
     {
+      /* 1000 normalement */
       struct bigint * ib = bigint_of_int(i);
       struct bigint * ibeib = bigint_exp_10chiffres(ib, i);
       sum = add_bigint(sum, ibeib);
@@ -409,7 +411,8 @@ void euler48(){
 
 int euler16(){
   struct bigint * a = bigint_of_int(2);
-  a = bigint_exp(a, 1000);
+  a = bigint_exp(a, 100);
+  /* 1000 normalement */
   return sum_chiffres_bigint(a);
 }
 
@@ -417,8 +420,9 @@ int euler25(){
   int i = 2;
   struct bigint * a = bigint_of_int(1);
   struct bigint * b = bigint_of_int(1);
-  while (b->bigint_len < 1000)
+  while (b->bigint_len < 100)
   {
+    /* 1000 normalement */
     struct bigint * c = add_bigint(a, b);
     a = b;
     b = c;

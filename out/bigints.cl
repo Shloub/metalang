@@ -415,7 +415,8 @@ Modulo
 #| http://projecteuler.net/problem=20 |#
 (defun euler20 ()
 (progn
-  (let ((a (bigint_of_int 100)))
+  (let ((a (bigint_of_int 15)))
+    #| normalement c'est 100 |#
     (setq a (fact_bigint a))
     (return-from euler20 (sum_chiffres_bigint a))
   )))
@@ -446,8 +447,9 @@ Modulo
   (let ((sum (bigint_of_int 0)))
     (do
       ((i 1 (+ 1 i)))
-      ((> i 1000))
+      ((> i 100))
       (progn
+        #| 1000 normalement |#
         (let ((ib (bigint_of_int i)))
           (let ((ibeib (bigint_exp_10chiffres ib i)))
             (setq sum (add_bigint sum ibeib))
@@ -463,7 +465,8 @@ Modulo
 (defun euler16 ()
 (progn
   (let ((a (bigint_of_int 2)))
-    (setq a (bigint_exp a 1000))
+    (setq a (bigint_exp a 100))
+    #| 1000 normalement |#
     (return-from euler16 (sum_chiffres_bigint a))
   )))
 
@@ -472,8 +475,9 @@ Modulo
   (let ((i 2))
     (let ((a (bigint_of_int 1)))
       (let ((b (bigint_of_int 1)))
-        (loop while (< (bigint-bigint_len b) 1000)
+        (loop while (< (bigint-bigint_len b) 100)
         do (progn
+             #| 1000 normalement |#
              (let ((c (add_bigint a b)))
                (setq a b)
                (setq b c)

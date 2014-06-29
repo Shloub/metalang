@@ -340,7 +340,8 @@ func sum_chiffres_bigint(a * bigint) int{
 
 /* http://projecteuler.net/problem=20 */
 func euler20() int{
-  var a * bigint = bigint_of_int(100)
+  var a * bigint = bigint_of_int(15)
+  /* normalement c'est 100 */
   a = fact_bigint(a);
   return sum_chiffres_bigint(a)
 }
@@ -368,8 +369,9 @@ func bigint_exp_10chiffres(a * bigint, b int) * bigint{
 
 func euler48() {
   var sum * bigint = bigint_of_int(0)
-  for i := 1 ; i <= 1000; i++ {
-    var ib * bigint = bigint_of_int(i)
+  for i := 1 ; i <= 100; i++ {
+    /* 1000 normalement */
+      var ib * bigint = bigint_of_int(i)
       var ibeib * bigint = bigint_exp_10chiffres(ib, i)
       sum = add_bigint(sum, ibeib);
       sum = bigint_premiers_chiffres(sum, 10);
@@ -381,7 +383,8 @@ func euler48() {
 
 func euler16() int{
   var a * bigint = bigint_of_int(2)
-  a = bigint_exp(a, 1000);
+  a = bigint_exp(a, 100);
+  /* 1000 normalement */
   return sum_chiffres_bigint(a)
 }
 
@@ -389,11 +392,12 @@ func euler25() int{
   var i int = 2
   var a * bigint = bigint_of_int(1)
   var b * bigint = bigint_of_int(1)
-  for (*b).bigint_len < 1000{
-                              var c * bigint = add_bigint(a, b)
-                              a = b;
-                              b = c;
-                              i ++;
+  for (*b).bigint_len < 100{
+                             /* 1000 normalement */
+                             var c * bigint = add_bigint(a, b)
+                             a = b;
+                             b = c;
+                             i ++;
   }
   return i
 }

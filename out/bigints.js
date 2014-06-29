@@ -357,7 +357,8 @@ function sum_chiffres_bigint(a){
 
 /* http://projecteuler.net/problem=20 */
 function euler20(){
-  var a = bigint_of_int(100);
+  var a = bigint_of_int(15);
+  /* normalement c'est 100 */
   a = fact_bigint(a);
   return sum_chiffres_bigint(a);
 }
@@ -383,8 +384,9 @@ function bigint_exp_10chiffres(a, b){
 
 function euler48(){
   var sum = bigint_of_int(0);
-  for (var i = 1 ; i <= 1000; i++)
+  for (var i = 1 ; i <= 100; i++)
   {
+    /* 1000 normalement */
     var ib = bigint_of_int(i);
     var ibeib = bigint_exp_10chiffres(ib, i);
     sum = add_bigint(sum, ibeib);
@@ -397,7 +399,8 @@ function euler48(){
 
 function euler16(){
   var a = bigint_of_int(2);
-  a = bigint_exp(a, 1000);
+  a = bigint_exp(a, 100);
+  /* 1000 normalement */
   return sum_chiffres_bigint(a);
 }
 
@@ -405,8 +408,9 @@ function euler25(){
   var i = 2;
   var a = bigint_of_int(1);
   var b = bigint_of_int(1);
-  while (b.bigint_len < 1000)
+  while (b.bigint_len < 100)
   {
+    /* 1000 normalement */
     var c = add_bigint(a, b);
     a = b;
     b = c;

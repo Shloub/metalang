@@ -303,7 +303,8 @@ let sum_chiffres_bigint a =
 
 (* http://projecteuler.net/problem=20 *)
 let euler20 () =
-  let a = ref( bigint_of_int 100 ) in
+  let a = ref( bigint_of_int 15 ) in
+  (* normalement c'est 100 *)
   a := fact_bigint (!a);
   sum_chiffres_bigint (!a)
 
@@ -327,7 +328,8 @@ let rec bigint_exp_10chiffres a b =
 
 let euler48 () =
   let sum = ref( bigint_of_int 0 ) in
-  for i = 1 to 1000 do
+  for i = 1 to 100 do
+    (* 1000 normalement *)
     let ib = bigint_of_int i in
     let ibeib = bigint_exp_10chiffres ib i in
     sum := add_bigint (!sum) ibeib;
@@ -339,15 +341,17 @@ let euler48 () =
 
 let euler16 () =
   let a = ref( bigint_of_int 2 ) in
-  a := bigint_exp (!a) 1000;
+  a := bigint_exp (!a) 100;
+  (* 1000 normalement *)
   sum_chiffres_bigint (!a)
 
 let euler25 () =
   let i = ref( 2 ) in
   let a = ref( bigint_of_int 1 ) in
   let b = ref( bigint_of_int 1 ) in
-  while (!b).bigint_len < 1000
+  while (!b).bigint_len < 100
   do
+      (* 1000 normalement *)
       let c = add_bigint (!a) (!b) in
       a := (!b);
       b := c;

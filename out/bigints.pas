@@ -562,7 +562,8 @@ function euler20() : Longint;
 var
   a : bigint;
 begin
-  a := bigint_of_int(100);
+  a := bigint_of_int(15);
+  { normalement c'est 100 }
   a := fact_bigint(a);
   exit(sum_chiffres_bigint(a));
 end;
@@ -610,8 +611,9 @@ var
   sum : bigint;
 begin
   sum := bigint_of_int(0);
-  for i := 1 to  1000 do
+  for i := 1 to  100 do
   begin
+    { 1000 normalement }
     ib := bigint_of_int(i);
     ibeib := bigint_exp_10chiffres(ib, i);
     sum := add_bigint(sum, ibeib);
@@ -627,7 +629,8 @@ var
   a : bigint;
 begin
   a := bigint_of_int(2);
-  a := bigint_exp(a, 1000);
+  a := bigint_exp(a, 100);
+  { 1000 normalement }
   exit(sum_chiffres_bigint(a));
 end;
 
@@ -641,8 +644,9 @@ begin
   i := 2;
   a := bigint_of_int(1);
   b := bigint_of_int(1);
-  while b^.bigint_len < 1000 do
+  while b^.bigint_len < 100 do
   begin
+    { 1000 normalement }
     c := add_bigint(a, b);
     a := b;
     b := c;
