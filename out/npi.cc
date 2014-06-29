@@ -40,7 +40,7 @@ int npi_(std::vector<char >& str, int len){
 }
 
 
-int main(void){
+int main(){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c");

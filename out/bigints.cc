@@ -434,7 +434,7 @@ int euler29(){
 }
 
 
-int main(void){
+int main(){
   int o = euler29();
   std::cout << o << "\n";
   bigint * sum = read_bigint(50);

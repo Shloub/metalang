@@ -32,7 +32,7 @@ void crypte(int taille_cle, std::vector<char >& cle, int taille, std::vector<cha
 }
 
 
-int main(void){
+int main(){
   int taille_cle = 0;
   scanf("%d", &taille_cle);
   scanf("%*[ \t\r\n]c");

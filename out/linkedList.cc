@@ -43,7 +43,7 @@ void test(intlist * empty){
 }
 
 
-int main(void){
+int main(){
   
   return 0;
 }

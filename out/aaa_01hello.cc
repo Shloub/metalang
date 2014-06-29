@@ -4,7 +4,7 @@
 #include <vector>
 
 
-int main(void){
+int main(){
   std::cout << "Hello World";
   return 0;
 }

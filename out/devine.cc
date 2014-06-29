@@ -20,7 +20,7 @@ bool devine_(int nombre, std::vector<int >& tab, int len){
 }
 
 
-int main(void){
+int main(){
   int nombre = 0;
   scanf("%d", &nombre);
   scanf("%*[ \t\r\n]c");

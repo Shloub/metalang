@@ -9,7 +9,7 @@ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compila
 et qui produit les macros metalang correspondante
 */
 
-int main(void){
+int main(){
   char input = ' ';
   int current_pos = 500;
   int a = 1000;

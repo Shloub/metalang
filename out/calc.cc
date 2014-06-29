@@ -21,7 +21,7 @@ int fibo(int a, int b, int i){
 }
 
 
-int main(void){
+int main(){
   int c = fibo(1, 2, 4);
   std::cout << c;
   return 0;

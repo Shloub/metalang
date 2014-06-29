@@ -35,7 +35,7 @@ int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, 
 }
 
 
-int main(void){
+int main(){
   int n = 0;
   scanf("%d", &n);
   scanf("%*[ \t\r\n]c");

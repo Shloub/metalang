@@ -4,7 +4,7 @@
 #include <vector>
 
 
-int main(void){
+int main(){
   int lim = 100;
   int sum = (lim * (lim + 1)) / 2;
   int carressum = sum * sum;

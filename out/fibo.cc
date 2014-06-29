@@ -20,7 +20,7 @@ int fibo_(int a, int b, int i){
 }
 
 
-int main(void){
+int main(){
   int a = 0;
   int b = 0;
   int i = 0;

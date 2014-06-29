@@ -23,7 +23,7 @@ int result(toto * t){
 }
 
 
-int main(void){
+int main(){
   toto * t = mktoto(4);
   scanf("%d", &t->bar);
   scanf("%*[ \t\r\n]c");

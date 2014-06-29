@@ -29,7 +29,7 @@ int eratostene(std::vector<int >& t, int max_){
 }
 
 
-int main(void){
+int main(){
   int maximumprimes = 1000001;
   std::vector<int > era( maximumprimes );
   for (int j = 0 ; j < maximumprimes; j++)

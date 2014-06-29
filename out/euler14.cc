@@ -24,7 +24,7 @@ int find(int n, std::vector<int >& m){
 }
 
 
-int main(void){
+int main(){
   int a = 1000000;
   std::vector<int > m( a );
   for (int j = 0 ; j < a; j++)

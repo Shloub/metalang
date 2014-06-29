@@ -37,7 +37,7 @@ int result(int len, std::vector<int >& tab){
 }
 
 
-int main(void){
+int main(){
   int len = read_int();
   std::cout << len << "\n";
   std::vector<int > tab = read_int_line(len);

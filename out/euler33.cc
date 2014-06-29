@@ -25,7 +25,7 @@ int pgcd(int a, int b){
 }
 
 
-int main(void){
+int main(){
   int top = 1;
   int bottom = 1;
   for (int i = 1 ; i <= 9; i ++)

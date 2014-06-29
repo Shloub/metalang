@@ -32,7 +32,7 @@ std::vector<std::vector<int > > read_int_matrix(int x, int y){
 }
 
 
-int main(void){
+int main(){
   int len = read_int();
   std::cout << len << "=len\n";
   std::vector<int > tab1 = read_int_line(len);

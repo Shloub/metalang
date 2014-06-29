@@ -39,7 +39,7 @@ void show(int lim, int nth){
 }
 
 
-int main(void){
+int main(){
   show(10, 999999);
   return 0;
 }

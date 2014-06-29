@@ -43,7 +43,7 @@ int sumdiv(int n){
 }
 
 
-int main(void){
+int main(){
   /* Programme principal */
   int n = 0;
   scanf("%d", &n);

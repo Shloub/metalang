@@ -15,7 +15,7 @@ int exp_(int a, int b){
 }
 
 
-int main(void){
+int main(){
   int a = 0;
   int b = 0;
   scanf("%d", &a);

@@ -53,7 +53,7 @@ int result(toto * t_, toto * t2_){
 }
 
 
-int main(void){
+int main(){
   toto * t = mktoto(4);
   toto * t2 = mktoto(5);
   scanf("%d", &t->bar);

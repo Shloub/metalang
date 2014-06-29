@@ -28,7 +28,7 @@ int result(std::vector<toto * >& t, int len){
 }
 
 
-int main(void){
+int main(){
   int a = 4;
   std::vector<toto * > t( a );
   for (int i = 0 ; i < a; i++)

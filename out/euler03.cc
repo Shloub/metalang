@@ -4,7 +4,7 @@
 #include <vector>
 
 
-int main(void){
+int main(){
   int maximum = 1;
   int b0 = 2;
   int a = 408464633;

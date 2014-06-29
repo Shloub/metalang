@@ -30,7 +30,7 @@ int pathfind(std::vector<int >& tab, int len){
 }
 
 
-int main(void){
+int main(){
   int len = 0;
   scanf("%d", &len);
   scanf("%*[ \t\r\n]c");

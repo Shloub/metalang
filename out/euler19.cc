@@ -40,7 +40,7 @@ int ndayinmonth(int month, int year){
 }
 
 
-int main(void){
+int main(){
   int month = 0;
   int year = 1901;
   int dayofweek = 1;

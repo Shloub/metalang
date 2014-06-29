@@ -10,7 +10,7 @@ int max2(int a, int b){
 }
 
 
-int main(void){
+int main(){
   int i = 1;
   int g = 5;
   std::vector<int > last( g );

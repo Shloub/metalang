@@ -9,7 +9,7 @@ public:
 };
 
 
-int main(void){
+int main(){
   toto * param = new toto();
   param->foo=0;
   param->bar=0;

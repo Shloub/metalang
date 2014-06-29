@@ -38,7 +38,7 @@ int score(){
 }
 
 
-int main(void){
+int main(){
   for (int i = 1 ; i <= 55; i ++)
     if (is_triangular(i))
   {

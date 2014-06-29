@@ -23,7 +23,7 @@ int find(int n, std::vector<int >& t, int used, int nth){
 }
 
 
-int main(void){
+int main(){
   int n = 10001;
   std::vector<int > t( n );
   for (int i = 0 ; i < n; i++)

@@ -32,7 +32,7 @@ int sumdiag(int n){
 }
 
 
-int main(void){
+int main(){
   int a = sumdiag(1001);
   std::cout << a;
   return 0;

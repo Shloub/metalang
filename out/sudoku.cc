@@ -67,7 +67,7 @@ bool solve(std::vector<int >& sudoku_){
 }
 
 
-int main(void){
+int main(){
   std::vector<int > sudoku_ = read_sudoku();
   print_sudoku(sudoku_);
   if (solve(sudoku_))

@@ -18,7 +18,7 @@ int periode(std::vector<int >& restes, int len, int a, int b){
 }
 
 
-int main(void){
+int main(){
   int c = 1000;
   std::vector<int > t( c );
   for (int j = 0 ; j < c; j++)

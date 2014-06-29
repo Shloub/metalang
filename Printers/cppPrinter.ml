@@ -81,6 +81,9 @@ class cppPrinter = object(self)
       self#binding binding
       self#expr len
 
+  method main f main =
+    Format.fprintf f "@[<v 2>int main(){@\n%a@\nreturn 0;@]@\n}" self#instructions main
+
   method allocrecord f name t el =
     match Type.unfix t with
     | Type.Named typename ->

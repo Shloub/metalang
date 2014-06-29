@@ -8,7 +8,7 @@
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
 
-int main(void){
+int main(){
   int strlen = 0;
   scanf("%d", &strlen);
   scanf("%*[ \t\r\n]c");

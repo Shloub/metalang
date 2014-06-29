@@ -34,7 +34,7 @@ int chiffre(int c, int m){
 }
 
 
-int main(void){
+int main(){
   int m = 1;
   for (int a = 0 ; a <= 9; a ++)
     for (int f = 1 ; f <= 9; f ++)

@@ -204,7 +204,7 @@ move * read_move(){
 }
 
 
-int main(void){
+int main(){
   for (int i = 0 ; i <= 1; i ++)
   {
     gamestate * state = init_();

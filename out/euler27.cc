@@ -42,7 +42,7 @@ int test(int a, int b, std::vector<int >& primes, int len){
 }
 
 
-int main(void){
+int main(){
   int maximumprimes = 1000;
   std::vector<int > era( maximumprimes );
   for (int j = 0 ; j < maximumprimes; j++)

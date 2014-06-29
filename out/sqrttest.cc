@@ -9,7 +9,7 @@ int isqrt(int c){
 }
 
 
-int main(void){
+int main(){
   int a = isqrt(4);
   std::cout << a << " ";
   int b = isqrt(16);

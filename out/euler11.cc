@@ -46,7 +46,7 @@ public:
 };
 
 
-int main(void){
+int main(){
   int c = 8;
   std::vector<tuple_int_int * > directions( c );
   for (int i = 0 ; i < c; i++)

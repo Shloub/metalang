@@ -27,7 +27,7 @@ std::vector<int > primesfactors(int n){
 }
 
 
-int main(void){
+int main(){
   int lim = 20;
   int e = lim + 1;
   std::vector<int > o( e );
