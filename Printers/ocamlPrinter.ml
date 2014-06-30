@@ -250,6 +250,35 @@ class camlPrinter = object(self)
   method instructions0 f instrs =
     if List.for_all self#is_stdin instrs then
       self#multiread f instrs
+    else if (match instrs with [_] -> false | _ -> true) (* TODO factoriser ça *)
+      && List.for_all self#is_print instrs then
+      let li = List.map (fun i -> match Instr.unfix i with
+        | Instr.Print (t, i) -> format_type t, (t, i)
+        | _ -> assert false
+      ) instrs in
+      let li =
+        if self#combine_formats () then
+          List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
+          | Expr.String s ->
+            let s = self#noformat s in
+            (String.sub s 1 ((String.length s) - 2)  , (ty, e))
+          | _ -> (format, (ty, e))
+          ) li else li in
+      let formats, exprs = List.unzip li in
+      let rec g acc = function
+        | [] -> acc
+        | hd::tl -> g (acc ^ hd) tl
+      in
+      let format = g "" formats in
+      let exprs =
+        if self#combine_formats () then
+          List.filter (fun (ty, e) -> match Expr.unfix e with
+          | Expr.String _ -> false
+          | _ -> true
+          ) exprs
+        else exprs
+      in
+      self#multi_print f format exprs
     else
       print_list
         self#instr
@@ -762,5 +791,15 @@ class camlPrinter = object(self)
       affect
       print_return ()
       print_in ()
+
+  method printf f () = Format.fprintf f "Printf.printf"
+  method multi_print f format exprs =
+    if exprs = [] then
+      Format.fprintf f "@[<h>%a \"%s\"@]" self#printf () format
+    else
+      Format.fprintf f "@[<h>%a \"%s\" %a@]" self#printf ()  format
+        (print_list
+           (fun f (t, e) -> self#expr f e)
+           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@ %a" f1 e1 f2 e2)) exprs
 
 end
