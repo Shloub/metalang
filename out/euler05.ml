@@ -41,7 +41,6 @@ begin
       product := (!product) * k
     done
   done;
-  Printf.printf "%d" (!product);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!product)
 end
  

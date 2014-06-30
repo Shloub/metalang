@@ -46,7 +46,6 @@ begin
       done
     done
   done;
-  Printf.printf "%d" (!m);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!m)
 end
  

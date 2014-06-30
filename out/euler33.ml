@@ -32,10 +32,7 @@ begin
             let b = j * 10 + k in
             if a * k = i * b then
               begin
-                Printf.printf "%d" a;
-                Printf.printf "/";
-                Printf.printf "%d" b;
-                Printf.printf "\n";
+                Printf.printf "%d/%d\n" a b;
                 top := (!top) * a;
                 bottom := (!bottom) * b
               end
@@ -43,16 +40,10 @@ begin
       done
     done
   done;
-  Printf.printf "%d" (!top);
-  Printf.printf "/";
-  Printf.printf "%d" (!bottom);
-  Printf.printf "\n";
+  Printf.printf "%d/%d\n" (!top) (!bottom);
   let p = pgcd (!top) (!bottom) in
-  Printf.printf "pgcd=";
-  Printf.printf "%d" p;
-  Printf.printf "\n";
+  Printf.printf "pgcd=%d\n" p;
   let e = (!bottom) / p in
-  Printf.printf "%d" e;
-  Printf.printf "\n"
+  Printf.printf "%d\n" e
 end
  

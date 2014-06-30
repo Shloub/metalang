@@ -21,8 +21,7 @@ begin
       done;
       if not (!found) then
         begin
-          Printf.printf "%d" (!a);
-          Printf.printf "\n";
+          Printf.printf "%d\n" (!a);
           a := 1
         end
   done

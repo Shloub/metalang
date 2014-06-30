@@ -31,7 +31,6 @@ begin
   let t = Array.init n (fun _i ->
     2) in
   let a = find 3 t 1 n in
-  Printf.printf "%d" a;
-  Printf.printf "\n"
+  Printf.printf "%d\n" a
 end
  

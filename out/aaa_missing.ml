@@ -30,8 +30,7 @@ let result len tab =
 let () =
 begin
   let len = (read_int ()) in
-  Printf.printf "%d" len;
-  Printf.printf "\n";
+  Printf.printf "%d\n" len;
   let tab = read_int_line len in
   let a = result len tab in
   Printf.printf "%d" a

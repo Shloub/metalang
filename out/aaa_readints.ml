@@ -17,23 +17,19 @@ let read_int_matrix x y =
 let () =
 begin
   let len = ref( (read_int ()) ) in
-  Printf.printf "%d" (!len);
-  Printf.printf "=len\n";
+  Printf.printf "%d=len\n" (!len);
   let tab1 = read_int_line (!len) in
   for i = 0 to (!len) - 1 do
-    Printf.printf "%d" i;
-    Printf.printf "=>";
+    Printf.printf "%d=>" i;
     let a = tab1.(i) in
-    Printf.printf "%d" a;
-    Printf.printf "\n"
+    Printf.printf "%d\n" a
   done;
   len := (read_int ());
   let tab2 = read_int_matrix (!len) ((!len) - 1) in
   for i = 0 to (!len) - 2 do
     for j = 0 to (!len) - 1 do
       let b = tab2.(i).(j) in
-      Printf.printf "%d" b;
-      Printf.printf " "
+      Printf.printf "%d " b
     done;
     Printf.printf "\n"
   done

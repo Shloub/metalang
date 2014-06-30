@@ -46,13 +46,11 @@ begin
       (!tmp)) in
     tab2) in
   let c = find (!len) tab in
-  Printf.printf "%d" c;
-  Printf.printf "\n";
+  Printf.printf "%d\n" c;
   for k = 0 to (!len) - 1 do
     for l = 0 to k do
       let d = tab.(k).(l) in
-      Printf.printf "%d" d;
-      Printf.printf " "
+      Printf.printf "%d " d
     done;
     Printf.printf "\n"
   done

@@ -104,8 +104,6 @@ begin
     if not summable.(o) then
       sum := (!sum) + o
   done;
-  Printf.printf "\n";
-  Printf.printf "%d" (!sum);
-  Printf.printf "\n"
+  Printf.printf "\n%d\n" (!sum)
 end
  

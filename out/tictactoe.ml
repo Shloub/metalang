@@ -141,12 +141,7 @@ let play g =
         begin
           apply_move_xy x y g;
           let currentNote = minmax g in
-          Printf.printf "%d" x;
-          Printf.printf ", ";
-          Printf.printf "%d" y;
-          Printf.printf ", ";
-          Printf.printf "%d" currentNote;
-          Printf.printf "\n";
+          Printf.printf "%d, %d, %d\n" x y currentNote;
           cancel_move_xy x y g;
           if currentNote < (!minNote) then
             begin
@@ -160,8 +155,7 @@ let play g =
   let a = minMove.x in
   Printf.printf "%d" a;
   let b = minMove.y in
-  Printf.printf "%d" b;
-  Printf.printf "\n";
+  Printf.printf "%d\n" b;
   minMove
 
 let init_ () =
@@ -211,8 +205,7 @@ begin
     done;
     print_state state;
     let e = state.note in
-    Printf.printf "%d" e;
-    Printf.printf "\n"
+    Printf.printf "%d\n" e
   done
 end
  

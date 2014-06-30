@@ -80,10 +80,7 @@ begin
         l := (!l) + 1
       end
   done;
-  Printf.printf "%d" (!l);
-  Printf.printf " == ";
-  Printf.printf "%d" nprimes;
-  Printf.printf "\n";
+  Printf.printf "%d == %d\n" (!l) nprimes;
   let sum = ref( 0 ) in
   for n = 2 to 10000 do
     let other = sumdiv nprimes primes n - n in
@@ -92,16 +89,11 @@ begin
         let othersum = sumdiv nprimes primes other - other in
         if othersum = n then
           begin
-            Printf.printf "%d" other;
-            Printf.printf " & ";
-            Printf.printf "%d" n;
-            Printf.printf "\n";
+            Printf.printf "%d & %d\n" other n;
             sum := (!sum) + other + n
           end
       end
   done;
-  Printf.printf "\n";
-  Printf.printf "%d" (!sum);
-  Printf.printf "\n"
+  Printf.printf "\n%d\n" (!sum)
 end
  

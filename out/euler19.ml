@@ -54,7 +54,6 @@ begin
       if ((!dayofweek) mod 7) = 6 then
         count := (!count) + 1
   done;
-  Printf.printf "%d" (!count);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!count)
 end
  

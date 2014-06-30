@@ -34,10 +34,7 @@ begin
         l := (!l) + 1
       end
   done;
-  Printf.printf "%d" (!l);
-  Printf.printf " == ";
-  Printf.printf "%d" nprimes;
-  Printf.printf "\n";
+  Printf.printf "%d == %d\n" (!l) nprimes;
   let canbe = Array.init maximumprimes (fun _i_ ->
     false) in
   for i = 0 to nprimes - 1 do
@@ -51,8 +48,7 @@ begin
     let m2 = m * 2 + 1 in
     if m2 < maximumprimes && not canbe.(m2) then
       begin
-        Printf.printf "%d" m2;
-        Printf.printf "\n"
+        Printf.printf "%d\n" m2
       end
   done
 end

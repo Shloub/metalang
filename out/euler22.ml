@@ -16,7 +16,6 @@ begin
   for i = 1 to n do
     sum := (!sum) + i * (score ())
   done;
-  Printf.printf "%d" (!sum);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!sum)
 end
  

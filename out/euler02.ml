@@ -12,7 +12,6 @@ begin
       a := (!b);
       b := (!b) + c
   done;
-  Printf.printf "%d" (!sum);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!sum)
 end
  

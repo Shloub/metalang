@@ -54,7 +54,6 @@ begin
       done
     done
   done;
-  Printf.printf "%d" (!max_);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!max_)
 end
  

@@ -29,8 +29,7 @@ begin
   for i = 1 to 55 do
     if is_triangular i then
       begin
-        Printf.printf "%d" i;
-        Printf.printf " "
+        Printf.printf "%d " i
       end
   done;
   Printf.printf "\n";
@@ -39,7 +38,6 @@ begin
   for i = 1 to n do
     sum := (!sum) + (score ())
   done;
-  Printf.printf "%d" (!sum);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!sum)
 end
  

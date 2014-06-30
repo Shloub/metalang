@@ -409,8 +409,7 @@ let euler29 () =
 let () =
 begin
   let o = (euler29 ()) in
-  Printf.printf "%d" o;
-  Printf.printf "\n";
+  Printf.printf "%d\n" o;
   let sum = ref( read_bigint 50 ) in
   for _i = 2 to 100 do
     Scanf.scanf " " (fun () -> ());
@@ -419,20 +418,15 @@ begin
   done;
   Printf.printf "euler13 = ";
   print_bigint (!sum);
-  Printf.printf "\n";
-  Printf.printf "euler25 = ";
+  Printf.printf "\neuler25 = ";
   let p = (euler25 ()) in
-  Printf.printf "%d" p;
-  Printf.printf "\n";
-  Printf.printf "euler16 = ";
+  Printf.printf "%d\neuler16 = " p;
   let q = (euler16 ()) in
-  Printf.printf "%d" q;
-  Printf.printf "\n";
+  Printf.printf "%d\n" q;
   (euler48 ());
   Printf.printf "euler20 = ";
   let r = (euler20 ()) in
-  Printf.printf "%d" r;
-  Printf.printf "\n";
+  Printf.printf "%d\n" r;
   let a = bigint_of_int 999999 in
   let b = bigint_of_int 9951263 in
   print_bigint a;

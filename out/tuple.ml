@@ -6,9 +6,6 @@ let () =
 begin
   let t = f ((0, 1)) in
   let (a, b) = t in
-  Printf.printf "%d" a;
-  Printf.printf " -- ";
-  Printf.printf "%d" b;
-  Printf.printf "--\n"
+  Printf.printf "%d -- %d--\n" a b
 end
  

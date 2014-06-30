@@ -40,10 +40,7 @@ begin
         l := (!l) + 1
       end
   done;
-  Printf.printf "%d" (!l);
-  Printf.printf " == ";
-  Printf.printf "%d" nprimes;
-  Printf.printf "\n";
+  Printf.printf "%d == %d\n" (!l) nprimes;
   let sum = Array.init nprimes (fun i_ ->
     primes.(i_)) in
   let maxl = ref( 0 ) in
@@ -73,9 +70,6 @@ begin
       done;
       len := (!len) + 1
   done;
-  Printf.printf "%d" (!resp);
-  Printf.printf "\n";
-  Printf.printf "%d" (!maxl);
-  Printf.printf "\n"
+  Printf.printf "%d\n%d\n" (!resp) (!maxl)
 end
  

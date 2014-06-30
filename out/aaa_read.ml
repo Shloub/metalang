@@ -7,33 +7,22 @@ read int, read char et skip
 let () =
 begin
   let len = Scanf.scanf "%d " (fun v_0 -> v_0) in
-  Printf.printf "%d" len;
-  Printf.printf "=len\n";
+  Printf.printf "%d=len\n" len;
   let _tab = Array.init len (fun i ->
     let tmpi1 = Scanf.scanf "%d " (fun v_0 -> v_0) in
-    Printf.printf "%d" i;
-    Printf.printf "=>";
-    Printf.printf "%d" tmpi1;
-    Printf.printf " ";
+    Printf.printf "%d=>%d " i tmpi1;
     tmpi1) in
   Printf.printf "\n";
   let _tab2 = Array.init len (fun i_ ->
     let tmpi2 = Scanf.scanf "%d " (fun v_0 -> v_0) in
-    Printf.printf "%d" i_;
-    Printf.printf "==>";
-    Printf.printf "%d" tmpi2;
-    Printf.printf " ";
+    Printf.printf "%d==>%d " i_ tmpi2;
     tmpi2) in
   let strlen = Scanf.scanf "%d " (fun v_0 -> v_0) in
-  Printf.printf "%d" strlen;
-  Printf.printf "=strlen\n";
+  Printf.printf "%d=strlen\n" strlen;
   let tab4 = Array.init strlen (fun _toto ->
     let tmpc = Scanf.scanf "%c" (fun v_0 -> v_0) in
     let c = ref( int_of_char (tmpc) ) in
-    Printf.printf "%c" tmpc;
-    Printf.printf ":";
-    Printf.printf "%d" (!c);
-    Printf.printf " ";
+    Printf.printf "%c:%d " tmpc (!c);
     if tmpc <> ' ' then
       c := (((!c) - int_of_char ('a')) + 13) mod 26 + int_of_char ('a');
     char_of_int ((!c))) in

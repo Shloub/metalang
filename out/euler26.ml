@@ -34,9 +34,6 @@ begin
         m := p
       end
   done;
-  Printf.printf "%d" (!mi);
-  Printf.printf "\n";
-  Printf.printf "%d" (!m);
-  Printf.printf "\n"
+  Printf.printf "%d\n%d\n" (!mi) (!m)
 end
  

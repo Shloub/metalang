@@ -36,7 +36,6 @@ begin
     index := ((!index) + 1) mod 5;
     max_ := max2 (!max_) (!i)
   done;
-  Printf.printf "%d" (!max_);
-  Printf.printf "\n"
+  Printf.printf "%d\n" (!max_)
 end
  

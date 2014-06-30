@@ -22,13 +22,11 @@ begin
   for m = 0 to (!n) - 1 do
     for k = 0 to (!n) - 1 do
       let a = tab.(m).(k) in
-      Printf.printf "%d" a;
-      Printf.printf " "
+      Printf.printf "%d " a
     done;
     Printf.printf "\n"
   done;
   let b = tab.(0).(0) in
-  Printf.printf "%d" b;
-  Printf.printf "\n"
+  Printf.printf "%d\n" b
 end
  

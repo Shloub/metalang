@@ -61,10 +61,7 @@ begin
         l := (!l) + 1
       end
   done;
-  Printf.printf "%d" (!l);
-  Printf.printf " == ";
-  Printf.printf "%d" nprimes;
-  Printf.printf "\n";
+  Printf.printf "%d == %d\n" (!l) nprimes;
   let ma = ref( 0 ) in
   let mb = ref( 0 ) in
   for b = 3 to 999 do
@@ -88,13 +85,6 @@ begin
           end
       done
   done;
-  Printf.printf "%d" (!ma);
-  Printf.printf " ";
-  Printf.printf "%d" (!mb);
-  Printf.printf "\n";
-  Printf.printf "%d" (!max_);
-  Printf.printf "\n";
-  Printf.printf "%d" (!result);
-  Printf.printf "\n"
+  Printf.printf "%d %d\n%d\n%d\n" (!ma) (!mb) (!max_) (!result)
 end
  

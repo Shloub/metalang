@@ -33,9 +33,6 @@ begin
         maxi := i
       end
   done;
-  Printf.printf "%d" (!max_);
-  Printf.printf "\n";
-  Printf.printf "%d" (!maxi);
-  Printf.printf "\n"
+  Printf.printf "%d\n%d\n" (!max_) (!maxi)
 end
  

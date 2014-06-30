@@ -26,7 +26,6 @@ begin
     i) in
   t.(1) <- 0;
   let a = eratostene t n in
-  Printf.printf "%d" a;
-  Printf.printf "\n"
+  Printf.printf "%d\n" a
 end
  

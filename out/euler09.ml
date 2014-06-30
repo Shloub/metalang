@@ -11,15 +11,9 @@ begin
       let cc = c * c in
       if cc = a2b2 && c > a then
         begin
-          Printf.printf "%d" a;
-          Printf.printf "\n";
-          Printf.printf "%d" b;
-          Printf.printf "\n";
-          Printf.printf "%d" c;
-          Printf.printf "\n";
+          Printf.printf "%d\n%d\n%d\n" a b c;
           let d = a * b * c in
-          Printf.printf "%d" d;
-          Printf.printf "\n"
+          Printf.printf "%d\n" d
         end
     done
   done
