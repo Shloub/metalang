@@ -54,7 +54,7 @@ int pathfind(std::vector<std::vector<char > >& tab, int x, int y){
 int main(){
   int x = 0;
   int y = 0;
-  std::cin >> x >> std::skipws >> y >> std::skipws;
+  std::cin >> x >> std::skipws >> y;
   std::vector<std::vector<char > > tab( y );
   for (int i = 0 ; i < y; i++)
   {

@@ -24,7 +24,7 @@ int main(){
   int a = 0;
   int b = 0;
   int i = 0;
-  std::cin >> a >> std::skipws >> b >> std::skipws >> i >> std::noskipws;
+  std::cin >> a >> std::skipws >> b >> i >> std::noskipws;
   int c = fibo_(a, b, i);
   std::cout << c;
   return 0;

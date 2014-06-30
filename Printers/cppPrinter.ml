@@ -192,12 +192,23 @@ class cppPrinter = object(self)
       | _ -> assert false
       ) (false, []) instrs
     in
-    Format.fprintf f "std::cin%a%a;" (* par default, on est dans un état noskip *)
-      (fun f b -> if b then Format.fprintf f " >> std::skipws"
+    let lastSkip = ref false in
+    let skipSet = ref false in
+    Format.fprintf f "std::cin%a%a;"
+      (fun f b -> if b then begin
+        Format.fprintf f " >> std::skipws";
+        lastSkip := true;
+        skipSet := true;
+      end
       ) skipfirst
       (print_list (fun f (t, x, b) ->
-        Format.fprintf f " >> %a >> std::%sskipws" self#mutable_ x
-          (if b then "" else "no")
+        if !lastSkip = b && !skipSet then
+          Format.fprintf f " >> %a" self#mutable_ x
+        else
+          Format.fprintf f " >> %a >> std::%sskipws" self#mutable_ x
+            (if b then "" else "no");
+        lastSkip := b;
+        skipSet := true;
        )
          (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b))
       (List.rev variables)
