@@ -221,40 +221,70 @@ class camlPrinter = object(self)
         self#bloc ifcase
         self#bloc elsecase
 
+  method ends_with_stop instrs1 instrs2 =
+    if List.for_all self#is_stdin instrs1 &&
+      List.exists (fun i -> match Instr.unfix i with
+      | Instr.DeclRead _ -> true
+      | _ -> false
+      ) instrs1
+    then false
+    else match Instr.unfix (List.hd (List.rev instrs1)) with
+    | Instr.AllocRecord _  (* letin -> pas de ; *)
+    | Instr.AllocArray _
+    | Instr.Declare _ 
+    | Instr.Untuple _
+    | Instr.DeclRead _
+    | Instr.Comment _  (* le ; a déjà été mis *)
+    | Instr.Return _ (* return -> pas de ; *)
+      -> false
+    | _ -> (* Si on a que des commentaires ensuite, alors on ne met pas de ; *)
+      List.exists
+        (function
+        | (Instr.Fixed.F (_, Instr.Comment _) ) -> false
+        | _ -> true
+        )
+        instrs2
+      
+
+  (** show an instruction *)
+  method instructions0 f instrs =
+    if List.for_all self#is_stdin instrs then
+      self#multiread f instrs
+    else
+      print_list
+        self#instr
+        (fun t print1 item1 print2 item2 ->
+          if self#ends_with_stop [item1] item2 then
+            Format.fprintf t "%a;@\n%a" print1 item1 print2 item2
+          else
+            Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+        ) f instrs
+
   (** show an instruction *)
   method instructions f instrs =
+    let rec g kind acc1 acc2 = function
+      | hd::tl ->
+        let kind2 = (self#is_print hd, self#is_stdin hd) in
+        if kind2 = kind
+        then g kind acc1 (hd::acc2) tl
+        else g kind2 ((List.rev acc2)::acc1) [hd] tl
+      | [] -> List.rev ( (List.rev acc2) :: acc1 )
+    in
+    let lili = g (false, false) [] [] instrs in
+    let lili = List.filter ( (<>) [] ) lili in
     Format.fprintf f "%a%s"
       (print_list
-         self#instr
+         self#instructions0
          (fun t print1 item1 print2 item2 ->
-           Format.fprintf t "%a@\n%a"
-             (fun t i ->
-               match Instr.unfix i with
-               | Instr.AllocRecord _ -> self#instr f i (* letin -> pas de ; *)
-               | Instr.AllocArray _ -> self#instr f i (* letin -> pas de ; *)
-               | Instr.Declare _ -> self#instr f i (* letin -> pas de ; *)
-               | Instr.Untuple _ -> self#instr f i (* letin -> pas de ; *)
-               | Instr.DeclRead _ -> self#instr f i
-               | Instr.Comment _ -> self#instr f i
-               | Instr.Return _ -> self#instr f i
-               | _ ->
-                 if (* Si on a que des commentaires ensuite, alors on ne met pas de ; *)
-                   (List.for_all
-                      (function
-                      | (Instr.Fixed.F (_, Instr.Comment _) ) -> true
-                      | _ -> false
-                      )
-                      item2
-                   )
-                 then
-                   self#instr f i
-                 else
-                   Format.fprintf f "%a;" self#instr i
-             )
-             item1 print2 item2
+           if self#ends_with_stop item1 (List.flatten item2) then (* oui je sais c'est sale *)
+             Format.fprintf t "%a;@\n%a" print1 item1 print2 item2
+           else
+             Format.fprintf t "%a@\n%a" print1 item1 print2 item2
          )
-      ) instrs
+      ) lili
       (self#need_unit instrs)
+
+
 
   (** returns true if the function need to returns unit *)
   method need_unit instrs =
@@ -664,5 +694,73 @@ class camlPrinter = object(self)
       Format.fprintf f "type %a = %a;;"
         super#binding name
         super#ptype t
+
+  method multiread f instrs =
+    let format, variables =
+      List.fold_left (fun (format, variables) i -> match Instr.unfix i with
+      | Instr.StdinSep -> (format ^ " ", variables)
+      | Instr.DeclRead (t, v) ->
+        let addons = format_type t in
+        (format ^ addons, (true, Mutable.var v)::variables)
+      | Instr.Read (t, mutable_) ->
+        let addons = format_type t in
+        (format ^ addons, (false, mutable_)::variables)
+      | _ -> assert false
+      ) ("", []) instrs
+    in
+    let variables = List.mapi (fun i (b, m) -> (i, b, m) ) (List.rev variables) in
+    let declares, affect = List.partition (fun (_, b, _) -> b) variables in
+    let print_return : Format.formatter -> unit -> unit = match declares with
+      | [] -> (fun _ () ->
+        match affect with
+        | [] -> Format.fprintf f "()"
+        | _ -> ())
+      | li -> (fun f () ->
+        Format.fprintf f "%a%a"
+          (fun f () -> if [] <> affect then Format.fprintf f ";@\n") ()
+          (print_list
+             (fun f (i, b, v) -> Format.fprintf f "v_%d" i)
+             (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b))
+      declares )
+    in
+    let print_in : Format.formatter -> unit -> unit  = match declares with
+      | [] -> fun _ () -> ()
+      | li -> fun f () -> Format.fprintf f " in"
+    in
+    let print_variables : Format.formatter -> unit -> unit =
+      match variables with
+      | [] -> fun f () -> Format.fprintf f "()"
+      | _ ->
+        fun f () ->
+          print_list (fun f (i, b, m) -> Format.fprintf f "v_%d" i)
+            (fun t fa a fb b -> Format.fprintf t "%a %a" fa a fb b)
+            f
+            variables
+    in
+    let print_let : Format.formatter -> unit -> unit  = match declares with
+      | [] -> (fun _ () -> ())
+      | li -> (fun f () ->
+        Format.fprintf f "let %a = "
+          (print_list
+             (fun f (_, _, v) -> self#mutable_ f v)
+             (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b))
+      declares )
+    in Format.fprintf f "%aScanf.scanf \"%s\" (fun %a -> @[<v>%a%a@])%a"
+      print_let ()
+      format
+
+      print_variables ()
+
+      (print_list (fun f (i, b, m) -> Format.fprintf f "%a %s v_%d"
+        self#mutable_ m
+        (match Mutable.Fixed.unfix m with
+        | Mutable.Var _ -> ":="
+        | Mutable.Array _ -> "<-"
+        | Mutable.Dot _ -> "<-"
+        ) i)
+         (fun t fa a fb b -> Format.fprintf t "%a;@\n%a" fa a fb b))
+      affect
+      print_return ()
+      print_in ()
 
 end
