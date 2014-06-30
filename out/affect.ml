@@ -49,13 +49,10 @@ let () =
 begin
   let t = mktoto 4 in
   let t2 = mktoto 5 in
-  Scanf.scanf "%d" (fun value -> t.bar <- value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  Scanf.scanf "%d" (fun value -> t.blah <- value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  Scanf.scanf "%d" (fun value -> t2.bar <- value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  Scanf.scanf "%d" (fun value -> t2.blah <- value);
+  Scanf.scanf "%d %d %d %d" (fun v_0 v_1 v_2 v_3 -> t.bar <- v_0;
+                                                    t.blah <- v_1;
+                                                    t2.bar <- v_2;
+                                                    t2.blah <- v_3);
   let a = result t t2 in
   Printf.printf "%d" a;
   let b = t.blah in

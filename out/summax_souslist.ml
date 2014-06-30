@@ -13,12 +13,10 @@ let summax lst len =
 let () =
 begin
   let len = ref( 0 ) in
-  Scanf.scanf "%d" (fun value -> len := value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  Scanf.scanf "%d " (fun v_0 -> len := v_0);
   let tab = Array.init (!len) (fun _i ->
     let tmp = ref( 0 ) in
-    Scanf.scanf "%d" (fun value -> tmp := value);
-    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
     (!tmp)) in
   let result = summax tab (!len) in
   Printf.printf "%d" result

@@ -19,9 +19,8 @@ let result t =
 let () =
 begin
   let t = mktoto 4 in
-  Scanf.scanf "%d" (fun value -> t.bar <- value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  Scanf.scanf "%d" (fun value -> t.blah <- value);
+  Scanf.scanf "%d %d" (fun v_0 v_1 -> t.bar <- v_0;
+                                      t.blah <- v_1);
   let a = result t in
   Printf.printf "%d" a;
   let b = t.blah in

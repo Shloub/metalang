@@ -30,7 +30,7 @@ let test empty =
   let i = ref( -1 ) in
   while (!i) <> 0
   do
-      Scanf.scanf "%d" (fun value -> i := value);
+      Scanf.scanf "%d" (fun v_0 -> i := v_0);
       if (!i) <> 0 then
         list := cons (!list) (!i)
   done

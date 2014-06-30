@@ -19,13 +19,9 @@ let devine_ nombre tab len =
 
 let () =
 begin
-  let nombre = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let len = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let nombre, len = Scanf.scanf "%d %d " (fun v_0 v_1 -> v_0, v_1) in
   let tab = Array.init len (fun _i ->
-    let tmp = Scanf.scanf "%d" (fun x -> x) in
-    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    let tmp = Scanf.scanf "%d " (fun v_0 -> v_0) in
     tmp) in
   let a = devine_ nombre tab len in
   if a then

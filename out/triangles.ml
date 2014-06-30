@@ -37,14 +37,12 @@ let find len tab =
 let () =
 begin
   let len = ref( 0 ) in
-  Scanf.scanf "%d" (fun value -> len := value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  Scanf.scanf "%d " (fun v_0 -> len := v_0);
   let tab = Array.init (!len) (fun i ->
     let b = i + 1 in
     let tab2 = Array.init b (fun _j ->
       let tmp = ref( 0 ) in
-      Scanf.scanf "%d" (fun value -> tmp := value);
-      Scanf.scanf "%[\n \010]" (fun _ -> ());
+      Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
       (!tmp)) in
     tab2) in
   let c = find (!len) tab in

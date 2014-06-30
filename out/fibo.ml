@@ -18,11 +18,9 @@ begin
   let a = ref( 0 ) in
   let b = ref( 0 ) in
   let i = ref( 0 ) in
-  Scanf.scanf "%d" (fun value -> a := value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  Scanf.scanf "%d" (fun value -> b := value);
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  Scanf.scanf "%d" (fun value -> i := value);
+  Scanf.scanf "%d %d %d" (fun v_0 v_1 v_2 -> a := v_0;
+                                             b := v_1;
+                                             i := v_2);
   let c = fibo_ (!a) (!b) (!i) in
   Printf.printf "%d" c
 end

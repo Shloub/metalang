@@ -12,12 +12,10 @@ let is_triangular n =
   a * (a + 1) = n * 2
 
 let score () =
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let len = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let len = Scanf.scanf " %d " (fun v_0 -> v_0) in
   let sum = ref( 0 ) in
   for _i = 1 to len do
-    let c = Scanf.scanf "%c" (fun x -> x) in
+    let c = Scanf.scanf "%c" (fun v_0 -> v_0) in
     sum := (!sum) + (int_of_char (c) - int_of_char ('A')) + 1
     (*		print c print " " print sum print " " *)
   done;
@@ -37,7 +35,7 @@ begin
   done;
   Printf.printf "\n";
   let sum = ref( 0 ) in
-  let n = Scanf.scanf "%d" (fun x -> x) in
+  let n = Scanf.scanf "%d" (fun v_0 -> v_0) in
   for i = 1 to n do
     sum := (!sum) + (score ())
   done;

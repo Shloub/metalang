@@ -6,14 +6,13 @@ let max2 a b =
 
 let read_int_line n =
   let tab = Array.init n (fun _i ->
-    let t = Scanf.scanf "%d" (fun x -> x) in
-    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    let t = Scanf.scanf "%d " (fun v_0 -> v_0) in
     t) in
   tab
 
 let read_int_matrix x y =
   let tab = Array.init y (fun _z ->
-    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    Scanf.scanf " " (fun () -> ());
     read_int_line x) in
   tab
 

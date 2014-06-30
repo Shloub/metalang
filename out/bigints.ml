@@ -19,7 +19,7 @@ type bigint = {
 
 let read_bigint len =
   let chiffres = Array.init len (fun _j ->
-    let c = Scanf.scanf "%c" (fun x -> x) in
+    let c = Scanf.scanf "%c" (fun v_0 -> v_0) in
     int_of_char (c)) in
   for i = 0 to (len - 1) / 2 do
     let tmp = chiffres.(i) in
@@ -413,7 +413,7 @@ begin
   Printf.printf "\n";
   let sum = ref( read_bigint 50 ) in
   for _i = 2 to 100 do
-    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    Scanf.scanf " " (fun () -> ());
     let tmp = read_bigint 50 in
     sum := add_bigint (!sum) tmp
   done;

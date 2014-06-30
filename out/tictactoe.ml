@@ -179,10 +179,7 @@ let init_ () =
   }
 
 let read_move () =
-  let x = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
-  let y = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let x, y = Scanf.scanf "%d %d " (fun v_0 v_1 -> v_0, v_1) in
   {
     x=x;
     y=y;

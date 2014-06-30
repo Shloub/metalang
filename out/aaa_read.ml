@@ -6,13 +6,11 @@ read int, read char et skip
 *)
 let () =
 begin
-  let len = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let len = Scanf.scanf "%d " (fun v_0 -> v_0) in
   Printf.printf "%d" len;
   Printf.printf "=len\n";
   let _tab = Array.init len (fun i ->
-    let tmpi1 = Scanf.scanf "%d" (fun x -> x) in
-    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    let tmpi1 = Scanf.scanf "%d " (fun v_0 -> v_0) in
     Printf.printf "%d" i;
     Printf.printf "=>";
     Printf.printf "%d" tmpi1;
@@ -20,19 +18,17 @@ begin
     tmpi1) in
   Printf.printf "\n";
   let _tab2 = Array.init len (fun i_ ->
-    let tmpi2 = Scanf.scanf "%d" (fun x -> x) in
-    Scanf.scanf "%[\n \010]" (fun _ -> ());
+    let tmpi2 = Scanf.scanf "%d " (fun v_0 -> v_0) in
     Printf.printf "%d" i_;
     Printf.printf "==>";
     Printf.printf "%d" tmpi2;
     Printf.printf " ";
     tmpi2) in
-  let strlen = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let strlen = Scanf.scanf "%d " (fun v_0 -> v_0) in
   Printf.printf "%d" strlen;
   Printf.printf "=strlen\n";
   let tab4 = Array.init strlen (fun _toto ->
-    let tmpc = Scanf.scanf "%c" (fun x -> x) in
+    let tmpc = Scanf.scanf "%c" (fun v_0 -> v_0) in
     let c = ref( int_of_char (tmpc) ) in
     Printf.printf "%c" tmpc;
     Printf.printf ":";

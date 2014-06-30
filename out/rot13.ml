@@ -5,10 +5,9 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 *)
 let () =
 begin
-  let strlen = Scanf.scanf "%d" (fun x -> x) in
-  Scanf.scanf "%[\n \010]" (fun _ -> ());
+  let strlen = Scanf.scanf "%d " (fun v_0 -> v_0) in
   let tab4 = Array.init strlen (fun _toto ->
-    let tmpc = Scanf.scanf "%c" (fun x -> x) in
+    let tmpc = Scanf.scanf "%c" (fun v_0 -> v_0) in
     let c = ref( int_of_char (tmpc) ) in
     if tmpc <> ' ' then
       c := (((!c) - int_of_char ('a')) + 13) mod 26 + int_of_char ('a');
