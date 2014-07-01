@@ -11,6 +11,9 @@ int main(void){
   int len = 0;
   scanf("%d ", &len);
   printf("%d=len\n", len);
+  len *= 2;
+  printf("len*2=%d\n", len);
+  len /= 2;
   int *tab = malloc( len * sizeof(int));
   {
     int i;

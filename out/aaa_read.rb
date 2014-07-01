@@ -16,6 +16,9 @@ len = 0
 len=scanf("%d")[0];
 scanf("%*\n");
 printf "%d=len\n", len
+len *= 2
+printf "len*2=%d\n", len
+len = (len.to_f / 2).to_i
 tab = [];
 for i in (0 ..  len - 1) do
   tmpi1 = 0

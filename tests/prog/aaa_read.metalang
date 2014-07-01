@@ -7,6 +7,11 @@ main
   def read int len skip
   print int len
   print string "=len\n"
+  len = len * 2
+  print string "len*2="
+  print int len
+  print string "\n"
+  len = len / 2
   def array<int> tab[len] with i do
     def read int tmpi1 skip
     print int i

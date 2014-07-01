@@ -749,7 +749,13 @@ class camlPrinter = object(self)
         Format.fprintf f "%a%a"
           (fun f () -> if [] <> affect then Format.fprintf f ";@\n") ()
           (print_list
-             (fun f (i, b, v) -> Format.fprintf f "v_%d" i)
+             (fun f (i, b, v) ->
+               let v = match Mutable.unfix v with
+                 | Mutable.Var v -> v
+                 | _ -> assert false
+               in
+               if BindingSet.mem v refbindings then Format.fprintf f "ref v_%d" i
+               else Format.fprintf f "v_%d" i)
              (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b))
       declares )
     in

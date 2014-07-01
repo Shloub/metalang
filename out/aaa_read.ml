@@ -6,14 +6,17 @@ read int, read char et skip
 *)
 let () =
 begin
-  let len = Scanf.scanf "%d " (fun v_0 -> v_0) in
-  Printf.printf "%d=len\n" len;
-  let _tab = Array.init len (fun i ->
+  let len = Scanf.scanf "%d " (fun v_0 -> ref v_0) in
+  Printf.printf "%d=len\n" (!len);
+  len := (!len) * 2;
+  Printf.printf "len*2=%d\n" (!len);
+  len := (!len) / 2;
+  let _tab = Array.init (!len) (fun i ->
     let tmpi1 = Scanf.scanf "%d " (fun v_0 -> v_0) in
     Printf.printf "%d=>%d " i tmpi1;
     tmpi1) in
   Printf.printf "\n";
-  let _tab2 = Array.init len (fun i_ ->
+  let _tab2 = Array.init (!len) (fun i_ ->
     let tmpi2 = Scanf.scanf "%d " (fun v_0 -> v_0) in
     Printf.printf "%d==>%d " i_ tmpi2;
     tmpi2) in

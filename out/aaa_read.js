@@ -45,6 +45,9 @@ var len = 0;
 len=read_int_();
 stdinsep();
 util.print(len, "=len\n");
+len *= 2;
+util.print("len*2=", len, "\n");
+len = ~~(len / 2);
 var tab = new Array(len);
 for (var i = 0 ; i <= len - 1; i++)
 {

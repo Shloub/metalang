@@ -13,6 +13,9 @@ int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
+  len *= 2;
+  std::cout << "len*2=" << len << "\n";
+  len /= 2;
   std::vector<int > tab( len );
   for (int i = 0 ; i < len; i++)
   {

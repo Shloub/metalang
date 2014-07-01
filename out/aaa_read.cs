@@ -67,6 +67,9 @@ read int, read char et skip
     len = readInt();
     stdin_sep();
     Console.Write(len + "=len\n");
+    len *= 2;
+    Console.Write("len*2=" + len + "\n");
+    len /= 2;
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {

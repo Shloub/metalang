@@ -26,6 +26,9 @@ func main() {
   fmt.Fscanf(reader, "%d", &len);
   skip()
   fmt.Printf("%d=len\n", len);
+  len *= 2;
+  fmt.Printf("len*2=%d\n", len);
+  len /= 2;
   var tab []int = make([]int, len)
   for i := 0 ; i <= len - 1; i++ {
     var tmpi1 int = 0

@@ -49,6 +49,9 @@ len = 0;
 len=readint()
 stdinsep()
 print("%d=len\n" % ( len ), end='')
+len *= 2
+print("len*2=%d\n" % ( len ), end='')
+len = math.trunc(len / 2)
 tab = [None] * len
 for i in range(0, len):
   tmpi1 = 0;

@@ -97,6 +97,11 @@ begin
   skip();
   Write(len);
   Write('=len'#10'');
+  len := len * 2;
+  Write('len*2=');
+  Write(len);
+  Write(''#10'');
+  len := len Div 2;
   SetLength(tab, len);
   for i := 0 to  len - 1 do
   begin

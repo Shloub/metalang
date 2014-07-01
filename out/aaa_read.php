@@ -33,6 +33,9 @@ $len = 0;
 list($len) = scan("%d");
 scantrim();
 echo $len, "=len\n";
+$len *= 2;
+echo "len*2=", $len, "\n";
+$len = intval($len / 2);
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {

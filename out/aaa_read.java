@@ -19,6 +19,9 @@ read int, read char et skip
     len = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
     System.out.printf("%d=len\n", len);
+    len *= 2;
+    System.out.printf("len*2=%d\n", len);
+    len /= 2;
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {

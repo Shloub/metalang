@@ -47,6 +47,12 @@ read int, read char et skip
     (princ len)
     (princ "=len
 ")
+    (setq len ( * len 2))
+    (princ "len*2=")
+    (princ len)
+    (princ "
+")
+    (setq len ( quotient len 2))
     (let
      ((tab (array_init
               len
