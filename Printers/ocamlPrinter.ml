@@ -628,6 +628,7 @@ class camlPrinter = object(self)
   | Expr.String _ -> true
   | Expr.Access _ -> true
   | Expr.Call (_, _) -> false
+  | Expr.Record _ -> true
   | _ -> false
 
   (* Todo virer les parentheses quand on peut*)
