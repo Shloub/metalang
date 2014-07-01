@@ -143,7 +143,7 @@ var read_int_ = function(){
     Format.fprintf f "@[util.print(%a);@]" self#expr expr
 
   method allocrecord f name t el =
-    Format.fprintf f "@[<h>var %a@ =@ {@[<v2>@\n%a@]@\n};@]"
+    Format.fprintf f "@[<h>@[<v2>var %a = {@\n%a@]@\n};@]"
       self#binding name
       (self#def_fields name) el
 
