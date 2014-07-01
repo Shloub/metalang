@@ -49,7 +49,7 @@ public class euler08
       index = (index + 1) % 5;
       max_ = max2(max_, i);
     }
-    System.out.printf("%d%s", max_, "\n");
+    System.out.printf("%d\n", max_);
   }
   
 }

@@ -31,39 +31,30 @@ read int, read char et skip
   public static void Main(String[] args)
   {
     int len = read_int();
-    Console.Write(len);
-    Console.Write("=len\n");
+    Console.Write(len + "=len\n");
     int[] tab = read_int_line(len);
     for (int i = 0 ; i < len; i++)
     {
-      Console.Write(i);
-      Console.Write("=>");
+      Console.Write(i + "=>");
       int a = tab[i];
-      Console.Write(a);
-      Console.Write(" ");
+      Console.Write(a + " ");
     }
     Console.Write("\n");
     int[] tab2 = read_int_line(len);
     for (int i_ = 0 ; i_ < len; i_++)
     {
-      Console.Write(i_);
-      Console.Write("==>");
+      Console.Write(i_ + "==>");
       int b = tab2[i_];
-      Console.Write(b);
-      Console.Write(" ");
+      Console.Write(b + " ");
     }
     int strlen = read_int();
-    Console.Write(strlen);
-    Console.Write("=strlen\n");
+    Console.Write(strlen + "=strlen\n");
     char[] tab4 = read_char_line(strlen);
     for (int i3 = 0 ; i3 < strlen; i3++)
     {
       char tmpc = tab4[i3];
       int c = tmpc;
-      Console.Write(tmpc);
-      Console.Write(":");
-      Console.Write(c);
-      Console.Write(" ");
+      Console.Write(tmpc + ":" + c + " ");
       if (tmpc != (char)32)
         c = ((c - 'a') + 13) % 26 + 'a';
       tab4[i3] = (char)(c);

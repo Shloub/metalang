@@ -50,7 +50,7 @@ public class aaa_missing
   public static void main(String args[])
   {
     int len = read_int();
-    System.out.printf("%d%s", len, "\n");
+    System.out.printf("%d\n", len);
     int[] tab = read_int_line(len);
     int a = result(len, tab);
     System.out.printf("%d", a);

@@ -41,10 +41,7 @@ public class euler46
       primes[l] = k;
       l ++;
     }
-    Console.Write(l);
-    Console.Write(" == ");
-    Console.Write(nprimes);
-    Console.Write("\n");
+    Console.Write(l + " == " + nprimes + "\n");
     bool[] canbe = new bool[maximumprimes];
     for (int i_ = 0 ; i_ < maximumprimes; i_++)
       canbe[i_] = false;
@@ -60,8 +57,7 @@ public class euler46
       int m2 = m * 2 + 1;
       if (m2 < maximumprimes && !canbe[m2])
       {
-        Console.Write(m2);
-        Console.Write("\n");
+        Console.Write(m2 + "\n");
       }
     }
   }

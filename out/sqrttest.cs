@@ -12,23 +12,17 @@ public class sqrttest
   public static void Main(String[] args)
   {
     int a = isqrt(4);
-    Console.Write(a);
-    Console.Write(" ");
+    Console.Write(a + " ");
     int b = isqrt(16);
-    Console.Write(b);
-    Console.Write(" ");
+    Console.Write(b + " ");
     int d = isqrt(20);
-    Console.Write(d);
-    Console.Write(" ");
+    Console.Write(d + " ");
     int e = isqrt(1000);
-    Console.Write(e);
-    Console.Write(" ");
+    Console.Write(e + " ");
     int f = isqrt(500);
-    Console.Write(f);
-    Console.Write(" ");
+    Console.Write(f + " ");
     int g = isqrt(10);
-    Console.Write(g);
-    Console.Write(" ");
+    Console.Write(g + " ");
   }
   
 }

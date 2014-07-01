@@ -10,8 +10,7 @@ public class euler01
     for (int i = 0 ; i <= 999; i ++)
       if ((i % 3) == 0 || (i % 5) == 0)
       sum += i;
-    Console.Write(sum);
-    Console.Write("\n");
+    Console.Write(sum + "\n");
   }
   
 }

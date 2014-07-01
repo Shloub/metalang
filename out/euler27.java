@@ -65,7 +65,7 @@ public class euler27
       primes[l] = k;
       l ++;
     }
-    System.out.printf("%d%s%d%s", l, " == ", nprimes, "\n");
+    System.out.printf("%d == %d\n", l, nprimes);
     int ma = 0;
     int mb = 0;
     for (int b = 3 ; b <= 999; b ++)
@@ -89,7 +89,7 @@ public class euler27
           mb = -b;
         }
     }
-    System.out.printf("%d%s%d%s%d%s%d%s", ma, " ", mb, "\n", max_, "\n", result, "\n");
+    System.out.printf("%d %d\n%d\n%d\n", ma, mb, max_, result);
   }
   
 }

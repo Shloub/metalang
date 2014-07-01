@@ -11,7 +11,7 @@ public class euler01
     for (int i = 0 ; i <= 999; i ++)
       if ((i % 3) == 0 || (i % 5) == 0)
       sum += i;
-    System.out.printf("%d%s", sum, "\n");
+    System.out.printf("%d\n", sum);
   }
   
 }

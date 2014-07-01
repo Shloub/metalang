@@ -7,7 +7,7 @@ public class str2
   
   public static void main(String args[])
   {
-    System.out.printf("%s%s", "ma petite chaine", " en or");
+    System.out.print("ma petite chaine en or");
   }
   
 }

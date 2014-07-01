@@ -13,17 +13,17 @@ public class sqrttest
   public static void main(String args[])
   {
     int a = isqrt(4);
-    System.out.printf("%d%s", a, " ");
+    System.out.printf("%d ", a);
     int b = isqrt(16);
-    System.out.printf("%d%s", b, " ");
+    System.out.printf("%d ", b);
     int d = isqrt(20);
-    System.out.printf("%d%s", d, " ");
+    System.out.printf("%d ", d);
     int e = isqrt(1000);
-    System.out.printf("%d%s", e, " ");
+    System.out.printf("%d ", e);
     int f = isqrt(500);
-    System.out.printf("%d%s", f, " ");
+    System.out.printf("%d ", f);
     int g = isqrt(10);
-    System.out.printf("%d%s", g, " ");
+    System.out.printf("%d ", g);
   }
   
 }

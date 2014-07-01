@@ -459,7 +459,7 @@ Modulo
   public static void main(String args[])
   {
     int o = euler29();
-    System.out.printf("%d%s", o, "\n");
+    System.out.printf("%d\n", o);
     bigint sum = read_bigint(50);
     for (int i = 2 ; i <= 100; i ++)
     {
@@ -469,15 +469,15 @@ Modulo
     }
     System.out.print("euler13 = ");
     print_bigint(sum);
-    System.out.printf("%s%s", "\n", "euler25 = ");
+    System.out.print("\neuler25 = ");
     int p = euler25();
-    System.out.printf("%d%s%s", p, "\n", "euler16 = ");
+    System.out.printf("%d\neuler16 = ", p);
     int q = euler16();
-    System.out.printf("%d%s", q, "\n");
+    System.out.printf("%d\n", q);
     euler48();
     System.out.print("euler20 = ");
     int r = euler20();
-    System.out.printf("%d%s", r, "\n");
+    System.out.printf("%d\n", r);
     bigint a = bigint_of_int(999999);
     bigint b = bigint_of_int(9951263);
     print_bigint(a);

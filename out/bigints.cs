@@ -492,8 +492,7 @@ Modulo
   public static void Main(String[] args)
   {
     int o = euler29();
-    Console.Write(o);
-    Console.Write("\n");
+    Console.Write(o + "\n");
     bigint sum = read_bigint(50);
     for (int i = 2 ; i <= 100; i ++)
     {
@@ -503,20 +502,15 @@ Modulo
     }
     Console.Write("euler13 = ");
     print_bigint(sum);
-    Console.Write("\n");
-    Console.Write("euler25 = ");
+    Console.Write("\n" + "euler25 = ");
     int p = euler25();
-    Console.Write(p);
-    Console.Write("\n");
-    Console.Write("euler16 = ");
+    Console.Write(p + "\n" + "euler16 = ");
     int q = euler16();
-    Console.Write(q);
-    Console.Write("\n");
+    Console.Write(q + "\n");
     euler48();
     Console.Write("euler20 = ");
     int r = euler20();
-    Console.Write(r);
-    Console.Write("\n");
+    Console.Write(r + "\n");
     bigint a = bigint_of_int(999999);
     bigint b = bigint_of_int(9951263);
     print_bigint(a);

@@ -83,7 +83,7 @@ public class euler12
   public static void main(String args[])
   {
     int e = find(500);
-    System.out.printf("%d%s", e, "\n");
+    System.out.printf("%d\n", e);
   }
   
 }

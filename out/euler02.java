@@ -18,7 +18,7 @@ public class euler02
       a = b;
       b += c;
     }
-    System.out.printf("%d%s", sum, "\n");
+    System.out.printf("%d\n", sum);
   }
   
 }

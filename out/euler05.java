@@ -47,7 +47,7 @@ public class euler05
     for (int k = 1 ; k <= lim; k ++)
       for (int l = 1 ; l <= o[k]; l ++)
         product *= k;
-    System.out.printf("%d%s", product, "\n");
+    System.out.printf("%d\n", product);
   }
   
 }

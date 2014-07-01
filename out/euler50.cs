@@ -48,10 +48,7 @@ public class euler50
       primes[l] = k;
       l ++;
     }
-    Console.Write(l);
-    Console.Write(" == ");
-    Console.Write(nprimes);
-    Console.Write("\n");
+    Console.Write(l + " == " + nprimes + "\n");
     int[] sum = new int[nprimes];
     for (int i_ = 0 ; i_ < nprimes; i_++)
       sum[i_] = primes[i_];
@@ -81,10 +78,7 @@ public class euler50
       }
       len ++;
     }
-    Console.Write(resp);
-    Console.Write("\n");
-    Console.Write(maxl);
-    Console.Write("\n");
+    Console.Write(resp + "\n" + maxl + "\n");
   }
   
 }

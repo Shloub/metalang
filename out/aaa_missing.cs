@@ -35,8 +35,7 @@ public class aaa_missing
   public static void Main(String[] args)
   {
     int len = read_int();
-    Console.Write(len);
-    Console.Write("\n");
+    Console.Write(len + "\n");
     int[] tab = read_int_line(len);
     int a = result(len, tab);
     Console.Write(a);

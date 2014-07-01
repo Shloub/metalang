@@ -27,7 +27,7 @@ public class euler03
       }
       if (!found)
       {
-        System.out.printf("%d%s", a, "\n");
+        System.out.printf("%d\n", a);
         a = 1;
       }
     }

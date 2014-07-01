@@ -49,7 +49,7 @@ public class euler42
     for (int i = 1 ; i <= 55; i ++)
       if (is_triangular(i))
     {
-      System.out.printf("%d%s", i, " ");
+      System.out.printf("%d ", i);
     }
     System.out.print("\n");
     int sum = 0;
@@ -60,7 +60,7 @@ public class euler42
     n = scanner.nextInt();}
     for (int i = 1 ; i <= n; i ++)
       sum += score();
-    System.out.printf("%d%s", sum, "\n");
+    System.out.printf("%d\n", sum);
   }
   
 }

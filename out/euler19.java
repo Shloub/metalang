@@ -63,7 +63,7 @@ public class euler19
       if ((dayofweek % 7) == 6)
         count ++;
     }
-    System.out.printf("%d%s", count, "\n");
+    System.out.printf("%d\n", count);
   }
   
 }

@@ -115,7 +115,7 @@ public class euler23
     for (int o = 1 ; o <= n; o ++)
       if (!summable[o])
       sum += o;
-    System.out.printf("%s%d%s", "\n", sum, "\n");
+    System.out.printf("\n%d\n", sum);
   }
   
 }

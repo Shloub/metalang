@@ -42,7 +42,7 @@ public class euler46
       primes[l] = k;
       l ++;
     }
-    System.out.printf("%d%s%d%s", l, " == ", nprimes, "\n");
+    System.out.printf("%d == %d\n", l, nprimes);
     boolean[] canbe = new boolean[maximumprimes];
     for (int i_ = 0 ; i_ < maximumprimes; i_++)
       canbe[i_] = false;
@@ -58,7 +58,7 @@ public class euler46
       int m2 = m * 2 + 1;
       if (m2 < maximumprimes && !canbe[m2])
       {
-        System.out.printf("%d%s", m2, "\n");
+        System.out.printf("%d\n", m2);
       }
     }
   }

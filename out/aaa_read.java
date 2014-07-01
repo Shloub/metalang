@@ -18,7 +18,7 @@ read int, read char et skip
     }else{
     len = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    System.out.printf("%d%s", len, "=len\n");
+    System.out.printf("%d=len\n", len);
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
@@ -28,7 +28,7 @@ read int, read char et skip
       }else{
       tmpi1 = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      System.out.printf("%d%s%d%s", i, "=>", tmpi1, " ");
+      System.out.printf("%d=>%d ", i, tmpi1);
       tab[i] = tmpi1;
     }
     System.out.print("\n");
@@ -41,7 +41,7 @@ read int, read char et skip
       }else{
       tmpi2 = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      System.out.printf("%d%s%d%s", i_, "==>", tmpi2, " ");
+      System.out.printf("%d==>%d ", i_, tmpi2);
       tab2[i_] = tmpi2;
     }
     int strlen = 0;
@@ -50,14 +50,14 @@ read int, read char et skip
     }else{
     strlen = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    System.out.printf("%d%s", strlen, "=strlen\n");
+    System.out.printf("%d=strlen\n", strlen);
     char[] tab4 = new char[strlen];
     for (int toto = 0 ; toto < strlen; toto++)
     {
       char tmpc = '_';
       tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
       int c = tmpc;
-      System.out.printf("%c%s%d%s", tmpc, ":", c, " ");
+      System.out.printf("%c:%d ", tmpc, c);
       if (tmpc != ' ')
         c = ((c - 'a') + 13) % 26 + 'a';
       tab4[toto] = (char)(c);

@@ -200,12 +200,7 @@ Renvoie le coup de l'IA
     {
       apply_move_xy(x, y, g);
       int currentNote = minmax(g);
-      Console.Write(x);
-      Console.Write(", ");
-      Console.Write(y);
-      Console.Write(", ");
-      Console.Write(currentNote);
-      Console.Write("\n");
+      Console.Write(x + ", " + y + ", " + currentNote + "\n");
       cancel_move_xy(x, y, g);
       if (currentNote < minNote)
       {
@@ -217,8 +212,7 @@ Renvoie le coup de l'IA
     int a = minMove.x;
     Console.Write(a);
     int b = minMove.y;
-    Console.Write(b);
-    Console.Write("\n");
+    Console.Write(b + "\n");
     return minMove;
   }
   
@@ -284,8 +278,7 @@ Renvoie le coup de l'IA
       }
       print_state(state);
       int e = state.note;
-      Console.Write(e);
-      Console.Write("\n");
+      Console.Write(e + "\n");
     }
   }
   

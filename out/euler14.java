@@ -45,7 +45,7 @@ public class euler14
         maxi = i;
       }
     }
-    System.out.printf("%d%s%d%s", max_, "\n", maxi, "\n");
+    System.out.printf("%d\n%d\n", max_, maxi);
   }
   
 }

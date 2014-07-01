@@ -49,7 +49,7 @@ public class euler50
       primes[l] = k;
       l ++;
     }
-    System.out.printf("%d%s%d%s", l, " == ", nprimes, "\n");
+    System.out.printf("%d == %d\n", l, nprimes);
     int[] sum = new int[nprimes];
     for (int i_ = 0 ; i_ < nprimes; i_++)
       sum[i_] = primes[i_];
@@ -79,7 +79,7 @@ public class euler50
       }
       len ++;
     }
-    System.out.printf("%d%s%d%s", resp, "\n", maxl, "\n");
+    System.out.printf("%d\n%d\n", resp, maxl);
   }
   
 }

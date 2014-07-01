@@ -114,9 +114,7 @@ public class euler23
     for (int o = 1 ; o <= n; o ++)
       if (!summable[o])
       sum += o;
-    Console.Write("\n");
-    Console.Write(sum);
-    Console.Write("\n");
+    Console.Write("\n" + sum + "\n");
   }
   
 }

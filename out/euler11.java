@@ -121,7 +121,7 @@ public class euler11
         for (int y = 0 ; y <= 19; y ++)
           max_ = max2(max_, find(4, m, x, y, dx, dy));
     }
-    System.out.printf("%d%s", max_, "\n");
+    System.out.printf("%d\n", max_);
   }
   
 }

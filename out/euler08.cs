@@ -71,8 +71,7 @@ public static char readChar(){
       index = (index + 1) % 5;
       max_ = max2(max_, i);
     }
-    Console.Write(max_);
-    Console.Write("\n");
+    Console.Write(max_ + "\n");
   }
   
 }

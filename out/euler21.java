@@ -91,7 +91,7 @@ public class euler21
       primes[l] = k;
       l ++;
     }
-    System.out.printf("%d%s%d%s", l, " == ", nprimes, "\n");
+    System.out.printf("%d == %d\n", l, nprimes);
     int sum = 0;
     for (int n = 2 ; n <= 10000; n ++)
     {
@@ -101,12 +101,12 @@ public class euler21
         int othersum = sumdiv(nprimes, primes, other) - other;
         if (othersum == n)
         {
-          System.out.printf("%d%s%d%s", other, " & ", n, "\n");
+          System.out.printf("%d & %d\n", other, n);
           sum += other + n;
         }
       }
     }
-    System.out.printf("%s%d%s", "\n", sum, "\n");
+    System.out.printf("\n%d\n", sum);
   }
   
 }

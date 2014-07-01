@@ -82,8 +82,7 @@ public class euler12
   public static void Main(String[] args)
   {
     int e = find(500);
-    Console.Write(e);
-    Console.Write("\n");
+    Console.Write(e + "\n");
   }
   
 }

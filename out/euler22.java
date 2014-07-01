@@ -35,7 +35,7 @@ public class euler22
     n = scanner.nextInt();}
     for (int i = 1 ; i <= n; i ++)
       sum += i * score();
-    System.out.printf("%d%s", sum, "\n");
+    System.out.printf("%d\n", sum);
   }
   
 }

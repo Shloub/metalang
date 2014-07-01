@@ -154,7 +154,7 @@ Renvoie le coup de l'IA
     {
       apply_move_xy(x, y, g);
       int currentNote = minmax(g);
-      System.out.printf("%d%s%d%s%d%s", x, ", ", y, ", ", currentNote, "\n");
+      System.out.printf("%d, %d, %d\n", x, y, currentNote);
       cancel_move_xy(x, y, g);
       if (currentNote < minNote)
       {
@@ -166,7 +166,7 @@ Renvoie le coup de l'IA
     int a = minMove.x;
     System.out.printf("%d", a);
     int b = minMove.y;
-    System.out.printf("%d%s", b, "\n");
+    System.out.printf("%d\n", b);
     return minMove;
   }
   
@@ -238,7 +238,7 @@ Renvoie le coup de l'IA
       }
       print_state(state);
       int e = state.note;
-      System.out.printf("%d%s", e, "\n");
+      System.out.printf("%d\n", e);
     }
   }
   

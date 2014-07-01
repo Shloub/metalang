@@ -25,7 +25,7 @@ public class tuple
     tuple_int_int d = t;
     int a = d.tuple_int_int_field_0;
     int b = d.tuple_int_int_field_1;
-    System.out.printf("%d%s%d%s", a, " -- ", b, "--\n");
+    System.out.printf("%d -- %d--\n", a, b);
   }
   
 }

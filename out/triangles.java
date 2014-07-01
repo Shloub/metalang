@@ -71,13 +71,13 @@ on le retrouve ici : http://projecteuler.net/problem=18
       tab[i] = tab2;
     }
     int c = find(len, tab);
-    System.out.printf("%d%s", c, "\n");
+    System.out.printf("%d\n", c);
     for (int k = 0 ; k < len; k++)
     {
       for (int l = 0 ; l <= k; l ++)
       {
         int d = tab[k][l];
-        System.out.printf("%d%s", d, " ");
+        System.out.printf("%d ", d);
       }
       System.out.print("\n");
     }

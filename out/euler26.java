@@ -37,7 +37,7 @@ public class euler26
         m = p;
       }
     }
-    System.out.printf("%d%s%d%s", mi, "\n", m, "\n");
+    System.out.printf("%d\n%d\n", mi, m);
   }
   
 }

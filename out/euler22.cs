@@ -80,8 +80,7 @@ public static int readInt(){
     n = readInt();
     for (int i = 1 ; i <= n; i ++)
       sum += i * score();
-    Console.Write(sum);
-    Console.Write("\n");
+    Console.Write(sum + "\n");
   }
   
 }

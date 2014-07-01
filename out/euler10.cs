@@ -33,8 +33,7 @@ public class euler10
       t[i] = i;
     t[1] = 0;
     int a = eratostene(t, n);
-    Console.Write(a);
-    Console.Write("\n");
+    Console.Write(a + "\n");
   }
   
 }

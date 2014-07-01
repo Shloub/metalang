@@ -34,7 +34,7 @@ public class euler10
       t[i] = i;
     t[1] = 0;
     int a = eratostene(t, n);
-    System.out.printf("%d%s", a, "\n");
+    System.out.printf("%d\n", a);
   }
   
 }

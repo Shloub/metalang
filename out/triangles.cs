@@ -111,15 +111,13 @@ on le retrouve ici : http://projecteuler.net/problem=18
       tab[i] = tab2;
     }
     int c = find(len, tab);
-    Console.Write(c);
-    Console.Write("\n");
+    Console.Write(c + "\n");
     for (int k = 0 ; k < len; k++)
     {
       for (int l = 0 ; l <= k; l ++)
       {
         int d = tab[k][l];
-        Console.Write(d);
-        Console.Write(" ");
+        Console.Write(d + " ");
       }
       Console.Write("\n");
     }

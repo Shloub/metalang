@@ -42,16 +42,16 @@ public class euler33
       int b = j * 10 + k;
       if (a * k == i * b)
       {
-        System.out.printf("%d%s%d%s", a, "/", b, "\n");
+        System.out.printf("%d/%d\n", a, b);
         top *= a;
         bottom *= b;
       }
     }
-    System.out.printf("%d%s%d%s", top, "/", bottom, "\n");
+    System.out.printf("%d/%d\n", top, bottom);
     int p = pgcd(top, bottom);
-    System.out.printf("%s%d%s", "pgcd=", p, "\n");
+    System.out.printf("pgcd=%d\n", p);
     int e = bottom / p;
-    System.out.printf("%d%s", e, "\n");
+    System.out.printf("%d\n", e);
   }
   
 }

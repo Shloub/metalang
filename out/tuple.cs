@@ -24,10 +24,7 @@ public class tuple
     tuple_int_int d = t;
     int a = d.tuple_int_int_field_0;
     int b = d.tuple_int_int_field_1;
-    Console.Write(a);
-    Console.Write(" -- ");
-    Console.Write(b);
-    Console.Write("--\n");
+    Console.Write(a + " -- " + b + "--\n");
   }
   
 }

@@ -37,12 +37,12 @@ public class euler15
       for (int k = 0 ; k < n; k++)
       {
         int a = tab[m][k];
-        System.out.printf("%d%s", a, " ");
+        System.out.printf("%d ", a);
       }
       System.out.print("\n");
     }
     int b = tab[0][0];
-    System.out.printf("%d%s", b, "\n");
+    System.out.printf("%d\n", b);
   }
   
 }

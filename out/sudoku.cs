@@ -72,8 +72,7 @@ public static int readInt(){
       for (int x = 0 ; x <= 8; x ++)
       {
         int b = sudoku_[x + y * 9];
-        Console.Write(b);
-        Console.Write(" ");
+        Console.Write(b + " ");
         if ((x % 3) == 2)
           Console.Write(" ");
       }

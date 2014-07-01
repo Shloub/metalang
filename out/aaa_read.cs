@@ -66,18 +66,14 @@ read int, read char et skip
     int len = 0;
     len = readInt();
     stdin_sep();
-    Console.Write(len);
-    Console.Write("=len\n");
+    Console.Write(len + "=len\n");
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
       int tmpi1 = 0;
       tmpi1 = readInt();
       stdin_sep();
-      Console.Write(i);
-      Console.Write("=>");
-      Console.Write(tmpi1);
-      Console.Write(" ");
+      Console.Write(i + "=>" + tmpi1 + " ");
       tab[i] = tmpi1;
     }
     Console.Write("\n");
@@ -87,27 +83,20 @@ read int, read char et skip
       int tmpi2 = 0;
       tmpi2 = readInt();
       stdin_sep();
-      Console.Write(i_);
-      Console.Write("==>");
-      Console.Write(tmpi2);
-      Console.Write(" ");
+      Console.Write(i_ + "==>" + tmpi2 + " ");
       tab2[i_] = tmpi2;
     }
     int strlen = 0;
     strlen = readInt();
     stdin_sep();
-    Console.Write(strlen);
-    Console.Write("=strlen\n");
+    Console.Write(strlen + "=strlen\n");
     char[] tab4 = new char[strlen];
     for (int toto = 0 ; toto < strlen; toto++)
     {
       char tmpc = '_';
       tmpc = readChar();
       int c = tmpc;
-      Console.Write(tmpc);
-      Console.Write(":");
-      Console.Write(c);
-      Console.Write(" ");
+      Console.Write(tmpc + ":" + c + " ");
       if (tmpc != (char)32)
         c = ((c - 'a') + 13) % 26 + 'a';
       tab4[toto] = (char)(c);

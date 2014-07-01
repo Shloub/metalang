@@ -17,8 +17,7 @@ public class euler02
       a = b;
       b += c;
     }
-    Console.Write(sum);
-    Console.Write("\n");
+    Console.Write(sum + "\n");
   }
   
 }
