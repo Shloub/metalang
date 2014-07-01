@@ -38,6 +38,8 @@ open JavaPrinter
 class csharpPrinter = object(self)
   inherit javaPrinter as super
 
+  method combine_formats () = false
+
   method lang () = "csharp"
 
   method char f c =
@@ -149,7 +151,11 @@ public static int readInt(){
   method length f tab =
     Format.fprintf f "%a.Length" self#mutable_ tab
 
-  method multi_print f format exprs = super#base_multi_print f format exprs
+  method multi_print f format exprs =
+      Format.fprintf f "@[<h>Console.Write(%a);@]"
+        (print_list
+           (fun f (t, e) -> self#expr f e)
+           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a + %a" f1 e1 f2 e2)) exprs
 
   method read f t m =
     match Type.unfix t with

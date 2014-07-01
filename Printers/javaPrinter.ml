@@ -38,6 +38,8 @@ open CppPrinter
 class javaPrinter = object(self) (* TODO scanf et printf*)
   inherit cppPrinter as cppprinter
 
+  method combine_formats () = true
+
   method lang () = "java"
 
   method prototype f t = self#ptype f t
@@ -151,11 +153,15 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     | _ -> failwith("unsuported read")
 
   method multi_print f format exprs =
-    Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
-      (print_list
-         (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) exprs
+    match exprs with
+    | [] ->
+      Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format
+    | _ ->
+      Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
+        (print_list
+           (fun f (t, e) -> self#expr f e)
+           (fun t f1 e1 f2 e2 -> Format.fprintf t
+             "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.String s -> Format.fprintf f "@[System.out.print(%S);@]" s
