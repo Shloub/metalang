@@ -49,8 +49,8 @@ type 'lex acc = unit;;
 let init_acc () = ();;
 
 let expand i = match Instr.unfix i with
-  | Instr.DeclRead (t, binding) ->
-    [ Instr.fixa (Instr.Fixed.annot i) (Instr.Declare (binding, t, Expr.default_value t) );
+  | Instr.DeclRead (t, binding, option) ->
+    [ Instr.fixa (Instr.Fixed.annot i) (Instr.Declare (binding, t, Expr.default_value t, option) );
       Instr.fixa (Instr.Fixed.annot i) (Instr.Read (t, (Instr.mutable_var binding)));
     ]
   | _ -> [i]

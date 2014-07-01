@@ -528,8 +528,23 @@ module Instr = struct
   let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.Fixed.fix
   let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.Fixed.fix
 
+  type declaration_option =
+    {
+      useless : bool;
+    }
+
+  let default_declaration_option =
+    {
+      useless = false
+    }
+
+  let useless_declaration_option =
+    {
+      useless = true
+    }
+
   type ('a, 'expr) tofix =
-    Declare of varname * Type.t * 'expr
+    Declare of varname * Type.t * 'expr * declaration_option
   | Affect of 'expr Mutable.t * 'expr
   | Loop of varname * 'expr * 'expr * 'a list
   | While of 'expr * 'a list
@@ -542,13 +557,13 @@ module Instr = struct
   | Call of funname * 'expr list
   | Print of Type.t * 'expr
   | Read of Type.t * 'expr Mutable.t
-  | DeclRead of Type.t * varname
+  | DeclRead of Type.t * varname * declaration_option
   | Untuple of (Type.t * varname) list * 'expr
   | StdinSep
   | Unquote of 'expr
 
   let map_bloc f t = match t with
-    | Declare (a, b, c) -> Declare (a, b, c)
+    | Declare (a, b, c, d) -> Declare (a, b, c, d)
     | Affect (var, e) -> Affect (var, e)
     | Comment s -> Comment s
     | Loop (var, e1, e2, li) ->
@@ -565,7 +580,7 @@ module Instr = struct
       AllocRecord (a, b, c)
     | Print (a, b) -> Print (a, b)
     | Read (a, b) -> Read (a, b)
-    | DeclRead (a, b) -> DeclRead (a, b)
+    | DeclRead (a, b, opt) -> DeclRead (a, b, opt)
     | Call (a, b) -> Call (a, b)
     | StdinSep -> StdinSep
     | Unquote e -> Unquote e
@@ -597,9 +612,9 @@ module Instr = struct
   let stdin_sep () = StdinSep |> fix
   let print t v = Print (t, v) |> fix
   let read t v = Read (t, v) |> fix
-  let readdecl t v = DeclRead (t, v) |> fix
+  let readdecl t v opt = DeclRead (t, v, opt) |> fix
   let call v p = Call (v, p) |> fix
-  let declare v t e =  Declare (v, t, e) |> fix
+  let declare v t e opt =  Declare (v, t, e, opt) |> fix
   let affect v e = Affect (v, e) |> fix
   let unquote e = Unquote e |> fix
   let loop v e1 e2 li = Loop (v, e1, e2, li) |> fix
@@ -625,7 +640,7 @@ module Instr = struct
       let annot = Fixed.annot t in
       match unfix t with
       | StdinSep -> acc, t
-      | Declare (_, _, _) -> acc, t
+      | Declare (_, _, _, _) -> acc, t
       | Affect (_, _) -> acc, t
       | Comment _ -> acc, t
       | Loop (var, e1, e2, li) ->
@@ -661,9 +676,9 @@ module Instr = struct
         let a = Fixed.annot i in
         let out, i =
           match unfix i with
-          | Declare (v, t, e) ->
+          | Declare (v, t, e, opt) ->
             let acc, e = f acc e in
-            acc, Declare (v, t, e)
+            acc, Declare (v, t, e, opt)
           | Affect (m, e) ->
             let acc, m = Mutable.foldmap_expr f acc m in
             let acc, e = f acc e in
@@ -704,8 +719,8 @@ module Instr = struct
           | Read (t, m) ->
             let acc, m = Mutable.foldmap_expr f acc m in
             acc, Read (t, m)
-          | DeclRead (t, m) ->
-            acc, DeclRead (t, m)
+          | DeclRead (t, m, opt) ->
+            acc, DeclRead (t, m, opt)
           | StdinSep -> acc, StdinSep
           | Unquote e -> acc, Unquote e
           | Tag e -> acc, Tag e

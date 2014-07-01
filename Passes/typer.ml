@@ -539,7 +539,7 @@ let rec collect_contraintes_instructions env instructions
       let loc = Ast.PosMap.get (Instr.Fixed.annot instruction) in
       match Instr.unfix instruction with
       | Instr.Tag _ -> env
-      | Instr.Declare (var, ty, e) ->
+      | Instr.Declare (var, ty, e, _) ->
         let ty = expand env ty loc in
         let env, contrainte_expr = collect_contraintes_expr env e in
         let env, contrainte_ty = ty2typeContrainte env ty loc in
@@ -694,7 +694,7 @@ let rec collect_contraintes_instructions env instructions
         {env with
           contraintes = (contrainte_mut, contrainte_expr) ::
             env.contraintes}
-      | Instr.DeclRead (ty, var) ->
+      | Instr.DeclRead (ty, var, _) ->
         let ty = expand env ty loc in
         let env, ty = ty2typeContrainte env ty loc in
         let env =
@@ -761,8 +761,8 @@ let map_ty env prog =
   let f instr =
     let a = Instr.Fixed.annot instr in
     match Instr.unfix instr with
-    | Instr.Declare (p1, ty, p2) ->
-      let ty = map_ty ty in Instr.fixa a (Instr.Declare (p1, ty, p2) )
+    | Instr.Declare (p1, ty, p2, opt) ->
+      let ty = map_ty ty in Instr.fixa a (Instr.Declare (p1, ty, p2, opt) )
     | Instr.AllocArray (p1, ty, p2, p3) ->
       let ty = map_ty ty in Instr.fixa a (Instr.AllocArray (p1, ty, p2, p3) )
     | Instr.AllocRecord (p1, ty, p2) ->
@@ -771,8 +771,8 @@ let map_ty env prog =
       let ty = map_ty ty in Instr.fixa a (Instr.Print (ty, p1) )
     | Instr.Read (ty, p1) ->
       let ty = map_ty ty in Instr.fixa a (Instr.Read (ty, p1) )
-    | Instr.DeclRead (ty, p1) ->
-      let ty = map_ty ty in Instr.fixa a (Instr.DeclRead (ty, p1) )
+    | Instr.DeclRead (ty, p1, opt) ->
+      let ty = map_ty ty in Instr.fixa a (Instr.DeclRead (ty, p1, opt) )
     | Instr.Untuple (li, e) ->
       let li = List.map (fun (t, name) -> map_ty t, name) li
       in Instr.fixa a (Instr.Untuple (li, e) )

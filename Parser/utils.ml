@@ -1,5 +1,6 @@
 open Parser
 let rec string_of_lexem f = function
+  | USELESS -> Format.fprintf f "inline "
   | COMMENT c -> Format.fprintf f "/* %s */ " c
   | MAIN -> Format.fprintf f "main "
   | IF -> Format.fprintf f "if "

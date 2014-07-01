@@ -151,7 +151,7 @@ let rec check_instr funname acc instr =
   let loc = Ast.PosMap.get (Instr.Fixed.annot instr) in
   match Instr.unfix instr with
   | Instr.Tag _ -> acc
-  | Instr.Declare (var, t, e) ->
+  | Instr.Declare (var, t, e, _) ->
     let () = check_expr funname acc e in
     add_local_in_acc funname var acc loc
   | Instr.Affect (mut, e) ->
@@ -198,7 +198,7 @@ let rec check_instr funname acc instr =
     in acc
   | Instr.Print (t, e) ->
     let () = check_expr funname acc e in acc
-  | Instr.DeclRead (t, v) ->
+  | Instr.DeclRead (t, v, _) ->
     add_local_in_acc funname v acc loc
   | Instr.Read (t, mut) ->
     let () = check_mutable funname acc mut in

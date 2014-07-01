@@ -70,6 +70,7 @@ rule token = parse
 | "print" { PRINT }
 | "skip"  { SKIP }
 | "macro" { MACRO }
+| "inline" { USELESS }
 
 (* control flow *)
 | "if"   { IF }

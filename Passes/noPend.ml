@@ -76,7 +76,7 @@ let rec process (acc:'lex acc) i =
       let loc = PosMap.get (Instr.Fixed.annot t0) in
       let b = fresh () in
       [
-        Instr.Declare (b, t, e) |> Instr.fixa annot |> locate loc;
+        Instr.Declare (b, t, e, Instr.default_declaration_option) |> Instr.fixa annot |> locate loc;
         Instr.Print(t, locatee loc (Expr.access (locatem loc (Mutable.var b))))
       |> Instr.fixa annot |> locate loc;
       ]
@@ -92,7 +92,7 @@ let rec process (acc:'lex acc) i =
       let loc = PosMap.get (Instr.Fixed.annot t0) in
       let b = fresh () in
       [
-        Instr.Declare (b, Type.integer, e) |> Instr.fixa annot;
+        Instr.Declare (b, Type.integer, e, Instr.useless_declaration_option) |> Instr.fixa annot;
         Instr.AllocArray(b0, t,
                          Expr.access (Mutable.var b),
                          lambdaopt) |> Instr.fixa annot  |> locate loc;

@@ -46,7 +46,7 @@ let collectDefReturn env li =
   let f () i =
     match Instr.unfix i with
     | Instr.AllocArray (_, ty, _, _)
-    | Instr.Declare (_, ty, _) ->
+    | Instr.Declare (_, ty, _, _) ->
       check ty (Ast.PosMap.get (Instr.Fixed.annot i))
     | Instr.Return e ->
       check (Typer.get_type env e) (Ast.PosMap.get (Instr.Fixed.annot i))

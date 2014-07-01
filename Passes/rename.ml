@@ -81,8 +81,8 @@ let rec process_instr map i =
   let i2 = match Instr.unfix i with
     | Instr.Unquote (e) -> Instr.Unquote (process_expr map e)
     | Instr.Tag s -> Instr.Tag s
-    | Instr.Declare (v, t, e) ->
-      Instr.Declare ( (mapname map v), t, process_expr map e)
+    | Instr.Declare (v, t, e, option) ->
+      Instr.Declare ( (mapname map v), t, process_expr map e, option)
     | Instr.Affect (m, e) ->
       Instr.Affect ((mapmutable map m), process_expr map e)
     | Instr.Loop (var, e1, e2, li) ->
@@ -113,8 +113,8 @@ let rec process_instr map i =
       Instr.Print (t, process_expr map e)
     | Instr.Read (t, m) ->
       Instr.Read (t, mapmutable map m)
-    | Instr.DeclRead (t, v)->
-      Instr.DeclRead (t, mapname map v)
+    | Instr.DeclRead (t, v, opt) ->
+      Instr.DeclRead (t, mapname map v, opt)
     | Instr.Untuple (li, e)->
       Instr.Untuple (List.map (fun (t, n) -> t, mapname map n) li, process_expr map e)
     | Instr.StdinSep -> Instr.StdinSep

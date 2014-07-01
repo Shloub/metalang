@@ -73,7 +73,7 @@ let finstr acc (i: 'a Ast.Instr.t) =
     else acc + 1
   in match Instr.unfix i with
   | Instr.Tag _ | Instr.Comment _ -> acc
-  | Instr.Declare (_, t, e) -> acc + count_type t + count_expr e
+  | Instr.Declare (_, t, e, _) -> acc + count_type t + count_expr e
   | Instr.Affect (m, e) -> acc + count_expr e + count_mut m
   | Instr.Loop (_, e1, e2, _) -> acc + count_expr e1 + count_expr e2
   | Instr.While (e, _) -> acc + count_expr e
@@ -84,7 +84,7 @@ let finstr acc (i: 'a Ast.Instr.t) =
   | Instr.Call (_, li) ->acc + count_exprs li
   | Instr.Print (t, e) -> acc + count_type t + count_expr e
   | Instr.Read (t, e) -> acc + count_type t + count_mut e
-  | Instr.DeclRead (t, _) -> acc + count_type t
+  | Instr.DeclRead (t, _, _) -> acc + count_type t
   | Instr.StdinSep -> acc
   | Instr.Unquote e -> acc + count_expr e
 

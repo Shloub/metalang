@@ -354,7 +354,7 @@ class printer = object(self)
     | Instr.Tag s ->  Format.fprintf f "tag %s@\n" s
     | Instr.Unquote li -> Format.fprintf f "${%a}" self#expr li
     | Instr.StdinSep -> self#stdin_sep f
-    | Instr.Declare (varname, type_, expr) -> self#declaration f varname type_ expr
+    | Instr.Declare (varname, type_, expr, _option) -> self#declaration f varname type_ expr
     | Instr.Affect (mutable_, expr) ->
       begin match Expr.unfix expr with
       | Expr.BinOp (e1, op, e2) ->
@@ -397,7 +397,7 @@ class printer = object(self)
     | Instr.Call (var, li) -> self#call f var li
 
     | Instr.Read (t, mutable_) -> self#read f t mutable_
-    | Instr.DeclRead (t, var) -> self#read_decl f t var
+    | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
     | Instr.Print (t, expr) -> self#print f t expr
     | Instr.Untuple (li, e) -> self#untuple f li e
 

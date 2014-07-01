@@ -24,7 +24,7 @@
 %}
 %token<string> COMMENT
 %token MAIN IF THEN ELSE ELSIF END DO FOR TO WHILE RETURN TAG
-%token DEF MACRO WITH
+%token DEF MACRO WITH USELESS
 %token READ PRINT SKIP
 %token ENUM RECORD
 %token SET DOT COMMA PERIOD COLON AT
@@ -190,8 +190,11 @@ typed_varnames :
 
 
 define_var :
-| DEF IDENT SET expr { I.declare $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $4 }
-| DEF typ IDENT SET expr { I.declare $3 $2 $5 }
+
+| DEF IDENT SET expr { I.declare $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $4 I.default_declaration_option }
+| DEF USELESS IDENT SET expr { I.declare $3 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3))) ) $5 I.useless_declaration_option }
+| DEF typ IDENT SET expr { I.declare $3 $2 $5 I.default_declaration_option }
+| DEF USELESS typ IDENT SET expr { I.declare $4 $3 $6 I.useless_declaration_option }
 | DEF IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
     { I.alloc_array_lambda $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $4 $7 $9 }
 | DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
@@ -200,8 +203,10 @@ define_var :
     | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10
 		| _ -> failwith "expected array"
 	}
-| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $3 }
-| DEF READ typ IDENT { I.readdecl $3 $4 }
+| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $3 I.default_declaration_option }
+| DEF READ typ IDENT { I.readdecl $3 $4 I.default_declaration_option }
+| DEF USELESS READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3)))) $4 I.useless_declaration_option }
+| DEF USELESS READ typ IDENT { I.readdecl $4 $5 I.useless_declaration_option }
 | DEF LEFT_PARENS typed_varnames SET expr { I.untuple $3 $5 }
 ;
 

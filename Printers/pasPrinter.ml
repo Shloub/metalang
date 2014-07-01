@@ -244,7 +244,7 @@ class pasPrinter = object(self)
       (Instr.Writer.Deep.fold
          (fun () i ->
            match Instr.Fixed.unfix i with
-           | Instr.Declare (b, t, _) ->
+           | Instr.Declare (b, t, _, _) ->
              self#declare_type f t
            | Instr.AllocArray (b, t, _, _) ->
              self#declare_type f t
@@ -282,7 +282,7 @@ class pasPrinter = object(self)
            match Instr.Fixed.unfix i with
            | Instr.Loop (b, _, _, _) ->
              BindingMap.add b Type.integer bindings
-           | Instr.Declare (b, t, _) ->
+           | Instr.Declare (b, t, _, _) ->
              BindingMap.add b t bindings
            | Instr.AllocArray (b, t, _, _) ->
              BindingMap.add b (Type.array t) bindings

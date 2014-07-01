@@ -602,7 +602,7 @@ module EvalF (IO : EvalIO) = struct
           execenv.(r) <- e.(i)
         ) li
       in env, f
-    | Instr.Declare (varname, _, e) ->
+    | Instr.Declare (varname, _, e, _) ->
       let e = e env in
       let env, r = add_in_env env varname in
       let f execenv =
@@ -710,7 +710,7 @@ module EvalF (IO : EvalIO) = struct
       let mut = mut_setval env mut
       in env, (fun execenv ->
         read t (fun value -> mut execenv value))
-    | Instr.DeclRead (t, var) ->
+    | Instr.DeclRead (t, var, _) ->
       let env, r = add_in_env env var in
       env, (fun execenv -> read t (fun v -> execenv.(r) <- v))
     | Instr.StdinSep _ ->
@@ -753,7 +753,7 @@ module EvalF (IO : EvalIO) = struct
   (** precompile an instruction *)
   and precompile_instr i =
     let i' = match Instr.unfix i with
-      | Instr.Declare (v, t, e) -> Instr.Declare (v, t, precompile_expr e)
+      | Instr.Declare (v, t, e, opt) -> Instr.Declare (v, t, precompile_expr e, opt)
       | Instr.Affect (mut, e) -> Instr.Affect (Mutable.map_expr precompile_expr
                                                  mut, precompile_expr e)
       | Instr.Loop (v, e1, e2, li) ->
@@ -779,7 +779,7 @@ module EvalF (IO : EvalIO) = struct
       | Instr.Call (name, li) -> Instr.Call (name, List.map precompile_expr li)
       | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
       | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
-      | Instr.DeclRead (t, v) -> Instr.DeclRead (t, v)
+      | Instr.DeclRead (t, v, opt) -> Instr.DeclRead (t, v, opt)
       | Instr.Untuple (li, e) -> Instr.Untuple (li, precompile_expr e)
       | Instr.StdinSep -> Instr.StdinSep
       | Instr.Unquote li -> assert false

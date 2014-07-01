@@ -50,8 +50,8 @@ let fresh_init prog =
   let addset acc i = Instr.Writer.Deep.fold
     (fun acc i ->
       match Instr.unfix i with
-      | Instr.Declare (b, _, _)
-      | Instr.DeclRead (_, b)
+      | Instr.Declare (b, _, _, _)
+      | Instr.DeclRead (_, b, _)
       | Instr.AllocRecord(b, _, _)
       | Instr.AllocArray (b, _, _, None)
       | Instr.Loop (b, _, _, _)

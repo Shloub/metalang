@@ -58,7 +58,7 @@ let hasSkip_progitem li =
 let collectReads acc li =
   let f acc i =
     match Instr.unfix i with
-    | Instr.DeclRead (ty, _)
+    | Instr.DeclRead (ty, _, _)
     | Instr.Read(ty, _) ->
       TypeMap.add ty
         (Ast.PosMap.get (Instr.Fixed.annot i))

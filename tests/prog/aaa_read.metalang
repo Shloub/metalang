@@ -13,7 +13,7 @@ main
   print string "\n"
   len = len / 2
   def array<int> tab[len] with i do
-    def read int tmpi1 skip
+    def inline read int tmpi1 skip
     print int i
     print string "=>"
     print int tmpi1
@@ -22,7 +22,7 @@ main
   end
   print string "\n"
   def array<int> tab2[len] with i_ do
-    def read int tmpi2 skip
+    def inline read int tmpi2 skip
     print int i_
     print string "==>"
     print int tmpi2
