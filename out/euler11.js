@@ -79,64 +79,64 @@ for (var i = 0 ; i <= c - 1; i++)
   if (i == 0)
 {
   var p = {
-             tuple_int_int_field_0 : 0,
-             tuple_int_int_field_1 : 1
+    tuple_int_int_field_0 : 0,
+    tuple_int_int_field_1 : 1
   };
   directions[i] = p;
 }
 else if (i == 1)
 {
   var o = {
-             tuple_int_int_field_0 : 1,
-             tuple_int_int_field_1 : 0
+    tuple_int_int_field_0 : 1,
+    tuple_int_int_field_1 : 0
   };
   directions[i] = o;
 }
 else if (i == 2)
 {
   var l = {
-             tuple_int_int_field_0 : 0,
-             tuple_int_int_field_1 : -1
+    tuple_int_int_field_0 : 0,
+    tuple_int_int_field_1 : -1
   };
   directions[i] = l;
 }
 else if (i == 3)
 {
   var k = {
-             tuple_int_int_field_0 : -1,
-             tuple_int_int_field_1 : 0
+    tuple_int_int_field_0 : -1,
+    tuple_int_int_field_1 : 0
   };
   directions[i] = k;
 }
 else if (i == 4)
 {
   var h = {
-             tuple_int_int_field_0 : 1,
-             tuple_int_int_field_1 : 1
+    tuple_int_int_field_0 : 1,
+    tuple_int_int_field_1 : 1
   };
   directions[i] = h;
 }
 else if (i == 5)
 {
   var g = {
-             tuple_int_int_field_0 : 1,
-             tuple_int_int_field_1 : -1
+    tuple_int_int_field_0 : 1,
+    tuple_int_int_field_1 : -1
   };
   directions[i] = g;
 }
 else if (i == 6)
 {
   var f = {
-             tuple_int_int_field_0 : -1,
-             tuple_int_int_field_1 : 1
+    tuple_int_int_field_0 : -1,
+    tuple_int_int_field_1 : 1
   };
   directions[i] = f;
 }
 else
 {
   var e = {
-             tuple_int_int_field_0 : -1,
-             tuple_int_int_field_1 : -1
+    tuple_int_int_field_0 : -1,
+    tuple_int_int_field_1 : -1
   };
   directions[i] = e;
 }

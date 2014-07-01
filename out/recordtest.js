@@ -37,8 +37,8 @@ var read_int_ = function(){
 
 
 var param = {
-               foo : 0,
-               bar : 0
+  foo : 0,
+  bar : 0
 };
 param.bar=read_int_();
 stdinsep();

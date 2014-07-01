@@ -64,9 +64,9 @@ function read_bigint(len){
     chiffres[len - 1 - i] = tmp;
   }
   var u = {
-             bigint_sign : 1,
-             bigint_len : len,
-             bigint_chiffres : chiffres
+    bigint_sign : 1,
+    bigint_len : len,
+    bigint_chiffres : chiffres
   };
   return u;
 }
@@ -143,9 +143,9 @@ function add_bigint_positif(a, b){
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
   var v = {
-             bigint_sign : 1,
-             bigint_len : len,
-             bigint_chiffres : chiffres
+    bigint_sign : 1,
+    bigint_len : len,
+    bigint_chiffres : chiffres
   };
   return v;
 }
@@ -174,18 +174,18 @@ Pré-requis : a > b
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
   var w = {
-             bigint_sign : 1,
-             bigint_len : len,
-             bigint_chiffres : chiffres
+    bigint_sign : 1,
+    bigint_len : len,
+    bigint_chiffres : chiffres
   };
   return w;
 }
 
 function neg_bigint(a){
   var x = {
-             bigint_sign : !a.bigint_sign,
-             bigint_len : a.bigint_len,
-             bigint_chiffres : a.bigint_chiffres
+    bigint_sign : !a.bigint_sign,
+    bigint_len : a.bigint_len,
+    bigint_chiffres : a.bigint_chiffres
   };
   return x;
 }
@@ -245,9 +245,9 @@ D'ou le nom de la fonction. */
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
   var y = {
-             bigint_sign : a.bigint_sign == b.bigint_sign,
-             bigint_len : len,
-             bigint_chiffres : chiffres
+    bigint_sign : a.bigint_sign == b.bigint_sign,
+    bigint_len : len,
+    bigint_chiffres : chiffres
   };
   return y;
 }
@@ -257,9 +257,9 @@ function bigint_premiers_chiffres(a, i){
   while (len != 0 && a.bigint_chiffres[len - 1] == 0)
     len --;
   var z = {
-             bigint_sign : a.bigint_sign,
-             bigint_len : len,
-             bigint_chiffres : a.bigint_chiffres
+    bigint_sign : a.bigint_sign,
+    bigint_len : len,
+    bigint_chiffres : a.bigint_chiffres
   };
   return z;
 }
@@ -273,9 +273,9 @@ function bigint_shift(a, i){
   else
     chiffres[k] = 0;
   var ba = {
-              bigint_sign : a.bigint_sign,
-              bigint_len : a.bigint_len + i,
-              bigint_chiffres : chiffres
+    bigint_sign : a.bigint_sign,
+    bigint_len : a.bigint_len + i,
+    bigint_chiffres : chiffres
   };
   return ba;
 }
@@ -330,9 +330,9 @@ function bigint_of_int(i){
     i = ~~(i / 10);
   }
   var bc = {
-              bigint_sign : 1,
-              bigint_len : size,
-              bigint_chiffres : t
+    bigint_sign : 1,
+    bigint_len : size,
+    bigint_chiffres : t
   };
   return bc;
 }

@@ -167,8 +167,8 @@ Renvoie le coup de l'IA
 */
 function play(g){
   var minMove = {
-                   x : 0,
-                   y : 0
+    x : 0,
+    y : 0
   };
   var minNote = 10000;
   for (var x = 0 ; x <= 2; x++)
@@ -205,10 +205,10 @@ function init_(){
     cases[i] = tab;
   }
   var f = {
-             cases : cases,
-             firstToPlay : 1,
-             note : 0,
-             ended : 0
+    cases : cases,
+    firstToPlay : 1,
+    note : 0,
+    ended : 0
   };
   return f;
 }
@@ -221,8 +221,8 @@ function read_move(){
   y=read_int_();
   stdinsep();
   var h = {
-             x : x,
-             y : y
+    x : x,
+    y : y
   };
   return h;
 }
@@ -231,13 +231,13 @@ for (var i = 0 ; i <= 1; i++)
 {
   var state = init_();
   var k = {
-             x : 1,
-             y : 1
+    x : 1,
+    y : 1
   };
   apply_move(k, state);
   var l = {
-             x : 0,
-             y : 0
+    x : 0,
+    y : 0
   };
   apply_move(l, state);
   while (!state.ended)

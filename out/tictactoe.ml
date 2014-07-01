@@ -183,14 +183,14 @@ let () =
 begin
   for _i = 0 to 1 do
     let state = (init_ ()) in
-    apply_move ({
+    apply_move {
       x=1;
       y=1;
-    }) state;
-    apply_move ({
+    } state;
+    apply_move {
       x=0;
       y=0;
-    }) state;
+    } state;
     while not state.ended
     do
         print_state state;

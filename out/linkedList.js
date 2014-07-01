@@ -38,8 +38,8 @@ var read_int_ = function(){
 
 function cons(list, i){
   var out_ = {
-                head : i,
-                tail : list
+    head : i,
+    tail : list
   };
   return out_;
 }
@@ -50,8 +50,8 @@ function rev2(empty, acc, torev){
   else
   {
     var acc2 = {
-                  head : torev.head,
-                  tail : acc
+      head : torev.head,
+      tail : acc
     };
     return rev2(empty, acc, torev.tail);
   }
