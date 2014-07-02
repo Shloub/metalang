@@ -57,6 +57,8 @@ let keywords lang=
     "value";"virtual";"void"; "volatile";"val";
     "where";"while";"when";"with";
     "yield";
+
+    "qsort"
   ]
   in match lang with
   | "cl" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li

@@ -30,7 +30,20 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun sort_ (tab len)
+(defun copytab (tab len)
+(progn
+  (let
+   ((o (array_init
+          len
+          (function (lambda (i)
+          (block lambda_1
+            (return-from lambda_1 (aref tab i))
+          ))
+          ))))
+  (return-from copytab o)
+  )))
+
+(defun bubblesort (tab len)
 (do
   ((i 0 (+ 1 i)))
   ((> i (- len 1)))
@@ -47,6 +60,39 @@
     )
   ))
 
+(defun qsort_ (tab len i j)
+(if
+  (< i j)
+  (progn
+    (let ((i0 i))
+      (let ((j0 j))
+        #| pivot : tab[0] |#
+        (loop while (not (= i j))
+        do (if
+             (> (aref tab i) (aref tab j))
+             (if
+               (= i (- j 1))
+               (progn
+                 #| on inverse simplement|#
+                 (let ((tmp (aref tab i)))
+                   (setf (aref tab i) (aref tab j))
+                   (setf (aref tab j) tmp)
+                   (setq i ( + i 1))
+                 ))
+               (progn
+                 #| on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] |#
+                 (let ((tmp (aref tab i)))
+                   (setf (aref tab i) (aref tab j))
+                   (setf (aref tab j) (aref tab (+ i 1)))
+                   (setf (aref tab (+ i 1)) tmp)
+                   (setq i ( + i 1))
+                 )))
+             (setq j ( - j 1)))
+        )
+        (qsort_ tab len i0 (- i 1))
+        (qsort_ tab len (+ i 1) j0)
+      )))))
+
 (progn
   (let ((len 2))
     (setq len (mread-int ))
@@ -55,21 +101,38 @@
      ((tab (array_init
               len
               (function (lambda (i_)
-              (block lambda_1
+              (block lambda_2
                 (let ((tmp 0))
                   (setq tmp (mread-int ))
                   (mread-blank)
-                  (return-from lambda_1 tmp)
+                  (return-from lambda_2 tmp)
                 )))
               ))))
-    (sort_ tab len)
-    (do
-      ((i 0 (+ 1 i)))
-      ((> i (- len 1)))
-      (progn
-        (let ((a (aref tab i)))
-          (princ a)
-        ))
-    )
-    )))
+    (let ((tab2 (copytab tab len)))
+      (bubblesort tab2 len)
+      (do
+        ((i 0 (+ 1 i)))
+        ((> i (- len 1)))
+        (progn
+          (let ((a (aref tab2 i)))
+            (princ a)
+            (princ " ")
+          ))
+      )
+      (princ "
+")
+      (let ((tab3 (copytab tab len)))
+        (qsort_ tab3 len 0 (- len 1))
+        (do
+          ((i 0 (+ 1 i)))
+          ((> i (- len 1)))
+          (progn
+            (let ((b (aref tab3 i)))
+              (princ b)
+              (princ " ")
+            ))
+        )
+        (princ "
+")
+      )))))
 

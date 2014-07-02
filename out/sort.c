@@ -1,7 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void sort_(int* tab, int len){
+int* copytab(int* tab, int len){
+  int *o = malloc( len * sizeof(int));
+  {
+    int i;
+    for (i = 0 ; i < len; i++)
+      o[i] = tab[i];
+  }
+  return o;
+}
+
+void bubblesort(int* tab, int len){
   {
     int i;
     for (i = 0 ; i < len; i++)
@@ -18,6 +28,40 @@ void sort_(int* tab, int len){
   }
 }
 
+void qsort_(int* tab, int len, int i, int j){
+  if (i < j)
+  {
+    int i0 = i;
+    int j0 = j;
+    /* pivot : tab[0] */
+    while (i != j)
+      if (tab[i] > tab[j])
+    {
+      if (i == j - 1)
+      {
+        /* on inverse simplement*/
+        int tmp = tab[i];
+        tab[i] = tab[j];
+        tab[j] = tmp;
+        i ++;
+      }
+      else
+      {
+        /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
+        int tmp = tab[i];
+        tab[i] = tab[j];
+        tab[j] = tab[i + 1];
+        tab[i + 1] = tmp;
+        i ++;
+      }
+    }
+    else
+      j --;
+    qsort_(tab, len, i0, i - 1);
+    qsort_(tab, len, i + 1, j0);
+  }
+}
+
 int main(void){
   int len = 2;
   scanf("%d ", &len);
@@ -31,15 +75,28 @@ int main(void){
       tab[i_] = tmp;
     }
   }
-  sort_(tab, len);
+  int* tab2 = copytab(tab, len);
+  bubblesort(tab2, len);
   {
     int i;
     for (i = 0 ; i < len; i++)
     {
-      int a = tab[i];
-      printf("%d", a);
+      int a = tab2[i];
+      printf("%d ", a);
     }
   }
+  printf("\n");
+  int* tab3 = copytab(tab, len);
+  qsort_(tab3, len, 0, len - 1);
+  {
+    int i;
+    for (i = 0 ; i < len; i++)
+    {
+      int b = tab3[i];
+      printf("%d ", b);
+    }
+  }
+  printf("\n");
   return 0;
 }
 

@@ -61,8 +61,21 @@ begin
    until false;
 end;
 
-type b = array of Longint;
-procedure sort_(tab : b; len : Longint);
+type c = array of Longint;
+function copytab(tab : c; len : Longint) : c;
+var
+  i : Longint;
+  o : c;
+begin
+  SetLength(o, len);
+  for i := 0 to  len - 1 do
+  begin
+    o[i] := tab[i];
+  end;
+  exit(o);
+end;
+
+procedure bubblesort(tab : c; len : Longint);
 var
   i : Longint;
   j : Longint;
@@ -83,13 +96,62 @@ begin
   end;
 end;
 
+procedure qsort_(tab : c; len : Longint; i : Longint; j : Longint);
+var
+  i0 : Longint;
+  j0 : Longint;
+  tmp : Longint;
+begin
+  if i < j
+  then
+    begin
+      i0 := i;
+      j0 := j;
+      { pivot : tab[0] }
+      while i <> j do
+      begin
+        if tab[i] > tab[j]
+        then
+          begin
+            if i = (j - 1)
+            then
+              begin
+                { on inverse simplement}
+                tmp := tab[i];
+                tab[i] := tab[j];
+                tab[j] := tmp;
+                i := i + 1;
+              end
+            else
+              begin
+                { on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] }
+                tmp := tab[i];
+                tab[i] := tab[j];
+                tab[j] := tab[i + 1];
+                tab[i + 1] := tmp;
+                i := i + 1;
+              end;
+          end
+        else
+          begin
+            j := j - 1;
+          end;
+      end;
+      qsort_(tab, len, i0, i - 1);
+      qsort_(tab, len, i + 1, j0);
+    end;
+end;
+
 
 var
   a : Longint;
+  b : Longint;
   i : Longint;
   i_ : Longint;
   len : Longint;
-  tab : b;
+  tab : c;
+  tab2 : c;
+  tab3 : c;
   tmp : Longint;
 begin
   len := 2;
@@ -103,12 +165,24 @@ begin
     skip();
     tab[i_] := tmp;
   end;
-  sort_(tab, len);
+  tab2 := copytab(tab, len);
+  bubblesort(tab2, len);
   for i := 0 to  len - 1 do
   begin
-    a := tab[i];
+    a := tab2[i];
     Write(a);
+    Write(' ');
   end;
+  Write(''#10'');
+  tab3 := copytab(tab, len);
+  qsort_(tab3, len, 0, len - 1);
+  for i := 0 to  len - 1 do
+  begin
+    b := tab3[i];
+    Write(b);
+    Write(' ');
+  end;
+  Write(''#10'');
 end.
 
 

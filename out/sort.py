@@ -33,13 +33,44 @@ def readint():
     else:
       return out * sign
 
-def sort_( tab, len ):
+def copytab( tab, len ):
+    o = [None] * len
+    for i in range(0, len):
+      o[i] = tab[i];
+    return o;
+
+def bubblesort( tab, len ):
     for i in range(0, len):
       for j in range(i + 1, len):
         if tab[i] > tab[j]:
           tmp = tab[i];
           tab[i] = tab[j];
           tab[j] = tmp;
+
+def qsort_( tab, len, i, j ):
+    if i < j:
+      i0 = i;
+      j0 = j;
+      """ pivot : tab[0] """
+      while (i != j):
+        if tab[i] > tab[j]:
+          if i == j - 1:
+            """ on inverse simplement"""
+            tmp = tab[i];
+            tab[i] = tab[j];
+            tab[j] = tmp;
+            i += 1
+          else:
+            """ on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] """
+            tmp = tab[i];
+            tab[i] = tab[j];
+            tab[j] = tab[i + 1];
+            tab[i + 1] = tmp;
+            i += 1
+        else:
+          j -= 1
+      qsort_(tab, len, i0, i - 1);
+      qsort_(tab, len, i + 1, j0);
 
 len = 2;
 len=readint()
@@ -50,8 +81,16 @@ for i_ in range(0, len):
   tmp=readint()
   stdinsep()
   tab[i_] = tmp;
-sort_(tab, len);
+tab2 = copytab(tab, len);
+bubblesort(tab2, len);
 for i in range(0, len):
-  a = tab[i];
-  print("%d" % a, end='')
+  a = tab2[i];
+  print("%d " % ( a ), end='')
+print("")
+tab3 = copytab(tab, len);
+qsort_(tab3, len, 0, len - 1);
+for i in range(0, len):
+  b = tab3[i];
+  print("%d " % ( b ), end='')
+print("")
 

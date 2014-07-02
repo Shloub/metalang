@@ -1,4 +1,9 @@
-let sort_ tab len =
+let copytab tab len =
+  let o = Array.init len (fun i ->
+    tab.(i)) in
+  o
+
+let bubblesort tab len =
   for i = 0 to len - 1 do
     for j = i + 1 to len - 1 do
       if tab.(i) > tab.(j) then
@@ -10,6 +15,43 @@ let sort_ tab len =
     done
   done
 
+let rec qsort_ tab len i j =
+  let i = ref i in
+  let j = ref j in
+  if (!i) < (!j) then
+    begin
+      let i0 = (!i) in
+      let j0 = (!j) in
+      (* pivot : tab[0] *)
+      while (!i) <> (!j)
+      do
+          if tab.((!i)) > tab.((!j)) then
+            begin
+              if (!i) = (!j) - 1 then
+                begin
+                  (* on inverse simplement*)
+                  let tmp = tab.((!i)) in
+                  tab.((!i)) <- tab.((!j));
+                  tab.((!j)) <- tmp;
+                  i := (!i) + 1
+                end
+              else
+                begin
+                  (* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] *)
+                  let tmp = tab.((!i)) in
+                  tab.((!i)) <- tab.((!j));
+                  tab.((!j)) <- tab.((!i) + 1);
+                  tab.((!i) + 1) <- tmp;
+                  i := (!i) + 1
+                end
+            end
+          else
+            j := (!j) - 1
+      done;
+      qsort_ tab len i0 ((!i) - 1);
+      qsort_ tab len ((!i) + 1) j0
+    end
+
 let () =
 begin
   let len = ref( 2 ) in
@@ -18,10 +60,19 @@ begin
     let tmp = ref( 0 ) in
     Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
     (!tmp)) in
-  sort_ tab (!len);
+  let tab2 = copytab tab (!len) in
+  bubblesort tab2 (!len);
   for i = 0 to (!len) - 1 do
-    let a = tab.(i) in
-    Printf.printf "%d" a
-  done
+    let a = tab2.(i) in
+    Printf.printf "%d " a
+  done;
+  Printf.printf "\n";
+  let tab3 = copytab tab (!len) in
+  qsort_ tab3 (!len) 0 ((!len) - 1);
+  for i = 0 to (!len) - 1 do
+    let b = tab3.(i) in
+    Printf.printf "%d " b
+  done;
+  Printf.printf "\n"
 end
  
