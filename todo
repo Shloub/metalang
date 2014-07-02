@@ -2,7 +2,6 @@ Langage & Compilateur :
   cleaner un peu la lib standard
   types abstract (pour ouvrir un fichier par exemple)
   commentaires indentation
-  chercher a faire un sort correct
   null
   une lib standard avec des listes et des arbres
 
@@ -18,6 +17,5 @@ autres printers :
   perl
   ada
   sql
-  objective C
 
 portage windows
