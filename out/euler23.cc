@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 int eratostene(std::vector<int >& t, int max_){

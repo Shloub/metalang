@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 bool is_leap(int year){

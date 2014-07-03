@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 /* Ce code a été généré par metalang

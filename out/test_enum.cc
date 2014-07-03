@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 typedef enum foo_t {

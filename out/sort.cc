@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 std::vector<int > copytab(std::vector<int >& tab, int len){

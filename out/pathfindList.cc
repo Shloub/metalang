@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 int pathfind_aux(std::vector<int >& cache, std::vector<int >& tab, int len, int pos){

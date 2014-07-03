@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 int periode(std::vector<int >& restes, int len, int a, int b){

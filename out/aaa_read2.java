@@ -5,6 +5,7 @@ public class aaa_read2
   static Scanner scanner = new Scanner(System.in);
   
   
+  
   public static int read_int()
   {
     int out_ = 0;
@@ -34,15 +35,7 @@ public class aaa_read2
   
   public static char[] read_char_line(int n)
   {
-    char[] tab = new char[n];
-    for (int i = 0 ; i < n; i++)
-    {
-      char t = '_';
-      t = scanner.findWithinHorizon(".", 1).charAt(0);
-      tab[i] = t;
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    return tab;
+    return scanner.nextLine().toCharArray();
   }
   
   /*

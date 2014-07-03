@@ -1,7 +1,13 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
+std::vector<char> getline(){
+  std::string line;
+  std::cin.ignore();
+  std::getline(std::cin, line);
+  std::vector<char> c(line.begin(), line.end());
+  return c;
+}
+
 
 
 int read_int(){
@@ -22,15 +28,7 @@ std::vector<int > read_int_line(int n){
 }
 
 std::vector<char > read_char_line(int n){
-  std::vector<char > tab( n );
-  for (int i = 0 ; i < n; i++)
-  {
-    char t = '_';
-    std::cin >> t >> std::noskipws;
-    tab.at(i) = t;
-  }
-  std::cin >> std::skipws;
-  return tab;
+  return getline();
 }
 
 /*

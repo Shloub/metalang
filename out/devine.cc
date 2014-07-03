@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
 #include <iostream>
 #include <vector>
 bool devine_(int nombre, std::vector<int >& tab, int len){
