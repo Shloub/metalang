@@ -67,11 +67,20 @@ class cppPrinter = object(self)
 
   method prog f prog =
     Format.fprintf f
-      "#include <cstdlib>@\n#include <cstdio>@\n#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
+      "#include <iostream>@\n#include <vector>@\n%a%a@\n%a\n"
       (fun f () ->
         if Tags.is_taged "use_math"
-        then Format.fprintf f "#include<cmath>@\n"
+        then Format.fprintf f "#include<cmath>@\n";
+        if Tags.is_taged "use_cc_readline"
+        then Format.fprintf f "std::vector<char> getline(){
+  std::string line;
+  std::cin.ignore();
+  std::getline(std::cin, line);
+  std::vector<char> c(line.begin(), line.end());
+  return c;
+}@\n"
       ) ()
+
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 

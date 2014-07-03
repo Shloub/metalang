@@ -96,11 +96,13 @@ macro array<char> native_expand_read_char_line()
   py do "list(input())"
   php do "fgets(STDIN)"
   csharp do "Console.ReadLine().ToCharArray()"
+  java do "scanner.nextLine().toCharArray()"
+  cpp do "getline()"
   *  do "E R R O R"
 end
 
 macro array<array<int>> py_expand_read_int_matrix(int y)
-  py do "[list(map(int, input().split())) for i in range(y)]"
+  py do "[list(map(int, input().split())) for i in range($y)]"
   *  do "E R R O R"
 end
 
@@ -156,7 +158,14 @@ def array<int> read_int_line(int n)
 end
 
 def lexems expand_read_char_line(lexems a)
-    if current_language() == LANG_Py ||
+  if current_language() == LANG_Cc ||
+  current_language() == LANG_Java
+  then
+    return {
+		tag use_cc_readline
+    return native_expand_read_char_line( )
+    }
+  elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Cs
 	  then
