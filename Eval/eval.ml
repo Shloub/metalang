@@ -134,6 +134,8 @@ let get_bool = function
 
 let err_token_expected x = raise (Warner.Error (fun f -> Format.fprintf f "Got %s expected token list" (typeof x)))
 
+let err_bad_arg_number s n1 n2 = raise (Warner.Error (fun f -> Format.fprintf f "Bad number of arguments %S : %d vs %d@\n" s n1 n2))
+
 
 (** extract an ocaml token list from a value *)
 let get_tokens = function
@@ -564,6 +566,8 @@ module EvalF (IO : EvalIO) = struct
       let nparams = Array.length params - 1 in
       (fun ex_execenv ->
         let (nvars, instrs) = !r in
+        if nvars < (Array.length params) then
+          err_bad_arg_number name nvars (Array.length params);
         let eenv:execenv = init_eenv nvars in
         let () = for i = 0 to nparams do
             eenv.(i) <- eval_expr ex_execenv params.(i)
