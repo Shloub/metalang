@@ -106,7 +106,6 @@ let check_reads = (fun (tyenv, prog) ->
       let need = need_stdinsep || need_readint || need_readchar in
       if need then
         begin
-          debug_print prog;
           raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
         end );
   (tyenv, prog))
