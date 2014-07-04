@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct tuple_int_int;
 typedef struct tuple_int_int {
   int tuple_int_int_field_0;
   int tuple_int_int_field_1;

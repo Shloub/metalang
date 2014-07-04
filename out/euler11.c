@@ -41,7 +41,6 @@ int find(int n, int** m, int x, int y, int dx, int dy){
     return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
 }
 
-struct tuple_int_int;
 typedef struct tuple_int_int {
   int tuple_int_int_field_0;
   int tuple_int_int_field_1;

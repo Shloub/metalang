@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct toto;
 typedef struct toto {
   int foo;
   int bar;

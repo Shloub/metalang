@@ -5,7 +5,6 @@
 Tictactoe : un tictactoe avec une IA
 */
 /* La structure de donnée */
-struct gamestate;
 typedef struct gamestate {
   int** cases;
   int firstToPlay;
@@ -14,7 +13,6 @@ typedef struct gamestate {
 } gamestate;
 
 /* Un Mouvement */
-struct move;
 typedef struct move {
   int x;
   int y;

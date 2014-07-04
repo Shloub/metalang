@@ -15,7 +15,6 @@ int min2(int a, int b){
     return b;
 }
 
-struct bigint;
 typedef struct bigint {
   int bigint_sign;
   int bigint_len;
