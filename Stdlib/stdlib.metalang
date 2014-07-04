@@ -204,7 +204,6 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
 			end
     return {
       def array<array<int>> tab[${y}] with z do
-				${ s }
 				return read_int_line(x)
       end
       return tab
@@ -214,4 +213,17 @@ end
 
 def array<array<int>> read_int_matrix(int x, int y)
     ${expand_read_int_matrix( {x}, {y} )}
+end
+
+def lexems expand_read_char_matrix(lexems x, lexems y)
+	return {
+  def array<array<char>> tab[${y}] with z do
+		return read_char_line(x)
+  end
+  return tab
+  }
+end
+
+def array<array<char>> read_char_matrix(int x, int y)
+    ${expand_read_char_matrix( {x}, {y} )}
 end
