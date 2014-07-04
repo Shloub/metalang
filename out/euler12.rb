@@ -40,7 +40,7 @@ def fillPrimesFactors( t, n, primes, nprimes )
 end
 
 def find( ndiv2 )
-    maximumprimes = 10000
+    maximumprimes = 110
     era = [];
     for j in (0 ..  maximumprimes - 1) do
       era[j] = j;
@@ -57,7 +57,7 @@ def find( ndiv2 )
         l += 1
       end
     end
-    for n in (1 ..  1000000) do
+    for n in (1 ..  10000) do
       c = n + 2
       primesFactors = [];
       for m in (0 ..  c - 1) do

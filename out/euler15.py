@@ -1,4 +1,3 @@
-
 n = 10;
 """ normalement on doit mettre 20 mais là on se tape un overflow """
 n += 1

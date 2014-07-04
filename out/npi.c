@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 int is_number(char c){
   return c <= '9' && c >= '0';
 }

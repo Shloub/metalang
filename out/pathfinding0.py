@@ -9,8 +9,6 @@ def min3( a, b, c ):
 def min4( a, b, c, d ):
     return min3(min2(a, b), c, d);
 
-
-
 def read_int(  ):
     return int(input());
 

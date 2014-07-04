@@ -25,7 +25,6 @@ public static char readChar(){
   consommeChar();
   return out_;
 }
-  
   public static int max2(int a, int b)
   {
     if (a > b)

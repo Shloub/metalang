@@ -73,7 +73,7 @@ function fillPrimesFactors(t, n, primes, nprimes){
 }
 
 function find(ndiv2){
-  var maximumprimes = 10000;
+  var maximumprimes = 110;
   var era = new Array(maximumprimes);
   for (var j = 0 ; j <= maximumprimes - 1; j++)
     era[j] = j;
@@ -88,7 +88,7 @@ function find(ndiv2){
     primes[l] = k;
     l ++;
   }
-  for (var n = 1 ; n <= 1000000; n++)
+  for (var n = 1 ; n <= 10000; n++)
   {
     var c = n + 2;
     var primesFactors = new Array(c);

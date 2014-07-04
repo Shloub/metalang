@@ -2,8 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
-
 int position_alphabet(char c){
   int i = c;
   if (i <= 'Z' && i >= 'A')

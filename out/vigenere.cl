@@ -36,7 +36,6 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-
 (defun position_alphabet (c)
 (progn
   (let ((i (char-int c)))

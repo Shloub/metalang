@@ -39,8 +39,6 @@ def readint():
       return out * sign
 def mod(x, y):
   return x - y * math.trunc(x / y)
-
-
 """
 Ce test effectue un rot13 sur une chaine lue en entrée
 """

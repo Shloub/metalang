@@ -42,7 +42,7 @@ exception Found_2 of int
 
 let find ndiv2 =
   try
-  let maximumprimes = 10000 in
+  let maximumprimes = 110 in
   let era = Array.init maximumprimes (fun j ->
     j) in
   let nprimes = eratostene era maximumprimes in
@@ -56,7 +56,7 @@ let find ndiv2 =
         l := (!l) + 1
       end
   done;
-  for n = 1 to 1000000 do
+  for n = 1 to 10000 do
     let c = n + 2 in
     let primesFactors = Array.init c (fun _m ->
       0) in

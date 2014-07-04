@@ -591,16 +591,20 @@ class printer = object(self)
 
   method prog_item f t =
     match t with
-    | Prog.Comment s -> self#comment f s
+    | Prog.Comment s -> self#comment f s;
+      Format.fprintf f "@\n"
     | Prog.DeclarFun (var, t, li, instrs) ->
-      self#print_fun f var t li instrs
+      self#print_fun f var t li instrs;
+      Format.fprintf f "@\n"
     | Prog.Macro (name, t, params, code) ->
       macros <- BindingMap.add
         name (t, params, code)
         macros;
       ()
     | Prog.Unquote _ -> assert false
-    | Prog.DeclareType (name, t) -> self#decl_type f name t
+    | Prog.DeclareType (name, t) ->
+      self#decl_type f name t;
+      Format.fprintf f "@\n"
 
   method decl_type f name t =
     match (Type.unfix t) with
@@ -715,11 +719,11 @@ class printer = object(self)
     ) f lili
 
   method proglist f funs =
-    Format.fprintf f "%a@\n"
+    Format.fprintf f "%a"
       (print_list
          self#prog_item
          (fun t print1 item1 print2 item2 ->
-           Format.fprintf t "%a@\n%a" print1 item1 print2 item2
+           Format.fprintf t "%a%a" print1 item1 print2 item2
          )
       ) funs
 

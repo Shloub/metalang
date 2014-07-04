@@ -1,6 +1,3 @@
-
-
-
 let read_int () =
   Scanf.scanf "%d " (fun x -> x)
 

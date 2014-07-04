@@ -5,7 +5,6 @@ function max2($a, $b){
   return $b;
 }
 
-
 function read_int_line($n){
   return array_map("intval", explode(" ", fgets(STDIN)));
 }

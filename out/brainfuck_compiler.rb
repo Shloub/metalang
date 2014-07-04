@@ -1,6 +1,5 @@
 require "scanf.rb"
 
-
 =begin
 
 Ce test permet de tester les macros

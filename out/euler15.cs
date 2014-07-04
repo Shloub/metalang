@@ -3,7 +3,6 @@ using System;
 public class euler15
 {
   
-  
   public static void Main(String[] args)
   {
     int n = 10;

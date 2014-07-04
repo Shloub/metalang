@@ -28,7 +28,6 @@ function isqrt($c){
   return intval(sqrt($c));
 }
 
-
 function is_triangular($n){
   /*
    n = k * (k + 1) / 2

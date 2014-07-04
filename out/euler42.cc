@@ -1,11 +1,9 @@
 #include <iostream>
 #include <vector>
 #include<cmath>
-
 int isqrt(int c){
   return sqrt(c);
 }
-
 
 bool is_triangular(int n){
   /*

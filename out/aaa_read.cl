@@ -35,8 +35,6 @@
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
-
-
 #|
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip

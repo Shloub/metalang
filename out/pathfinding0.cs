@@ -20,8 +20,6 @@ public class pathfinding0
     return min3(min2(a, b), c, d);
   }
   
-  
-  
   public static int read_int()
   {
     return int.Parse(Console.ReadLine());

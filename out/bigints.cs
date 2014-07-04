@@ -36,7 +36,6 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-  
   public static int max2(int a, int b)
   {
     if (a > b)

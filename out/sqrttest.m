@@ -3,7 +3,6 @@
 #include<stdlib.h>
 #include<math.h>
 
-
 int isqrt(int c){
   return sqrt(c);
 }

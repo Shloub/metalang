@@ -10,9 +10,6 @@ std::vector<char> getline(){
   std::vector<char> c(line.begin(), line.end());
   return c;
 }
-
-
-
 int read_int(){
   int out_ = 0;
   std::cin >> out_ >> std::skipws;

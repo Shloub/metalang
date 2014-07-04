@@ -1,7 +1,6 @@
 program euler09;
 
 
-
 var
   a : Longint;
   a2b2 : Longint;

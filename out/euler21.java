@@ -76,7 +76,7 @@ public class euler21
   
   public static void main(String args[])
   {
-    int maximumprimes = 10001;
+    int maximumprimes = 1001;
     int[] era = new int[maximumprimes];
     for (int j = 0 ; j < maximumprimes; j++)
       era[j] = j;
@@ -93,7 +93,7 @@ public class euler21
     }
     System.out.printf("%d == %d\n", l, nprimes);
     int sum = 0;
-    for (int n = 2 ; n <= 10000; n ++)
+    for (int n = 2 ; n <= 1000; n ++)
     {
       int other = sumdiv(nprimes, primes, n) - n;
       if (other > n)

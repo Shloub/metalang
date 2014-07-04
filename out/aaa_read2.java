@@ -3,9 +3,6 @@ import java.util.*;
 public class aaa_read2
 {
   static Scanner scanner = new Scanner(System.in);
-  
-  
-  
   public static int read_int()
   {
     int out_ = 0;

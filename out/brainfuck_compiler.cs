@@ -2,7 +2,6 @@ using System;
 
 public class brainfuck_compiler
 {
-  
   /*
 Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation

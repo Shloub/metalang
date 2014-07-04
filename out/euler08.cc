@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-
 int max2(int a, int b){
   if (a > b)
     return a;

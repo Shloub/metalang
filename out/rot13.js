@@ -35,8 +35,6 @@ var read_int_ = function(){
 }
 
 
-
-
 /*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */

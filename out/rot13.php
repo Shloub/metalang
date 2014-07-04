@@ -23,9 +23,7 @@ function nextChar(){
   $out = $stdin[0];
   $stdin = substr($stdin, 1);
   return $out;
-}
-
-/*
+}/*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
 $strlen = 0;

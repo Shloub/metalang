@@ -1,7 +1,6 @@
 import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
-
 maximum = 1;
 b0 = 2;
 a = 408464633;

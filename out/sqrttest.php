@@ -1,5 +1,4 @@
 <?php
-
 function isqrt($c){
   return intval(sqrt($c));
 }

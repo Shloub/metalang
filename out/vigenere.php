@@ -24,7 +24,6 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-
 function position_alphabet($c){
   $i = ord($c);
   if ($i <= ord("Z") && $i >= ord("A"))

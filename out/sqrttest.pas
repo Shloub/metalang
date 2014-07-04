@@ -1,7 +1,6 @@
 program sqrttest;
 Uses math;
 
-
 function isqrt(c : Longint) : Longint;
 begin
   exit(Floor(Sqrt(c)));

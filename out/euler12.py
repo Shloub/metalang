@@ -28,7 +28,7 @@ def fillPrimesFactors( t, n, primes, nprimes ):
     return n;
 
 def find( ndiv2 ):
-    maximumprimes = 10000;
+    maximumprimes = 110;
     era = [None] * maximumprimes
     for j in range(0, maximumprimes):
       era[j] = j;
@@ -41,7 +41,7 @@ def find( ndiv2 ):
       if era[k] == k:
         primes[l] = k;
         l += 1
-    for n in range(1, 1 + 1000000):
+    for n in range(1, 1 + 10000):
       c = n + 2;
       primesFactors = [None] * c
       for m in range(0, c):

@@ -1,5 +1,3 @@
-
-
 let position_alphabet c =
   let i = int_of_char (c) in
   if i <= int_of_char ('Z') && i >= int_of_char ('A') then

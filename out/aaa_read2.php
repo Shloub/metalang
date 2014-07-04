@@ -1,9 +1,4 @@
 <?php
-
-
-
-
-
 function read_int(){
   return intval(trim(fgets(STDIN)));
 }

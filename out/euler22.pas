@@ -69,7 +69,6 @@ begin
    until false;
 end;
 
-
 function score() : Longint;
 var
   c : char;

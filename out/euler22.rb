@@ -1,5 +1,4 @@
 require "scanf.rb"
-
 def score(  )
     scanf("%*\n");
     len = 0

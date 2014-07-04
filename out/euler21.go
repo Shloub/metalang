@@ -80,7 +80,7 @@ func sumdiv(nprimes int, primes []int, n int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var maximumprimes int = 10001
+  var maximumprimes int = 1001
   var era []int = make([]int, maximumprimes)
   for j := 0 ; j <= maximumprimes - 1; j++ {
     era[j] = j;
@@ -99,7 +99,7 @@ func main() {
   }
   fmt.Printf("%d == %d\n", l, nprimes);
   var sum int = 0
-  for n := 2 ; n <= 10000; n++ {
+  for n := 2 ; n <= 1000; n++ {
     var other int = sumdiv(nprimes, primes, n) - n
       if other > n {
         var othersum int = sumdiv(nprimes, primes, other) - other

@@ -35,11 +35,9 @@ var read_int_ = function(){
 }
 
 
-
 function isqrt(c){
   return Math.floor(Math.sqrt(c));
 }
-
 
 function is_triangular(n){
   /*

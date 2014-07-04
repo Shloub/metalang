@@ -66,7 +66,7 @@ let sumdiv nprimes primes n =
 
 let () =
 begin
-  let maximumprimes = 10001 in
+  let maximumprimes = 1001 in
   let era = Array.init maximumprimes (fun j ->
     j) in
   let nprimes = eratostene era maximumprimes in
@@ -82,7 +82,7 @@ begin
   done;
   Printf.printf "%d == %d\n" (!l) nprimes;
   let sum = ref( 0 ) in
-  for n = 2 to 10000 do
+  for n = 2 to 1000 do
     let other = sumdiv nprimes primes n - n in
     if other > n then
       begin

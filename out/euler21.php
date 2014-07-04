@@ -64,7 +64,7 @@ function sumdiv($nprimes, &$primes, $n){
   return sumdivaux($t, $max_, 0);
 }
 
-$maximumprimes = 10001;
+$maximumprimes = 1001;
 $era = array();
 for ($j = 0 ; $j < $maximumprimes; $j++)
   $era[$j] = $j;
@@ -81,7 +81,7 @@ for ($k = 2 ; $k < $maximumprimes; $k++)
 }
 echo $l, " == ", $nprimes, "\n";
 $sum = 0;
-for ($n = 2 ; $n <= 10000; $n++)
+for ($n = 2 ; $n <= 1000; $n++)
 {
   $other = sumdiv($nprimes, $primes, $n) - $n;
   if ($other > $n)

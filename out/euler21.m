@@ -81,7 +81,7 @@ int sumdiv(int nprimes, int* primes, int n){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int maximumprimes = 10001;
+  int maximumprimes = 1001;
   int *era = malloc( maximumprimes * sizeof(int));
   {
     int j;
@@ -109,7 +109,7 @@ int main(void){
   int sum = 0;
   {
     int n;
-    for (n = 2 ; n <= 10000; n++)
+    for (n = 2 ; n <= 1000; n++)
     {
       int other = sumdiv(nprimes, primes, n) - n;
       if (other > n)

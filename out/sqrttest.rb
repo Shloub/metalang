@@ -1,5 +1,4 @@
 require "scanf.rb"
-
 def isqrt( c )
     return (Math.sqrt(c).to_i);
 end

@@ -35,8 +35,6 @@
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
-
-
 #|
 Ce test effectue un rot13 sur une chaine lue en entrée
 |#

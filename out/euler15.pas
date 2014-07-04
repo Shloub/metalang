@@ -1,7 +1,6 @@
 program euler15;
 
 
-
 var
   a : Longint;
   b : Longint;

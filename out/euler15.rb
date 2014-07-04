@@ -1,5 +1,4 @@
 require "scanf.rb"
-
 n = 10
 
 =begin

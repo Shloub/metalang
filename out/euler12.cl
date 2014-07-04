@@ -62,7 +62,7 @@
 
 (defun find_ (ndiv2)
 (progn
-  (let ((maximumprimes 10000))
+  (let ((maximumprimes 110))
     (let
      ((era (array_init
               maximumprimes
@@ -93,7 +93,7 @@
         )
         (do
           ((n 1 (+ 1 n)))
-          ((> n 1000000))
+          ((> n 10000))
           (progn
             (let ((c (+ n 2)))
               (let

@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 public class aaa_read2
 {
-  
-  
-  
-  
-  
   public static int read_int()
   {
     return int.Parse(Console.ReadLine());

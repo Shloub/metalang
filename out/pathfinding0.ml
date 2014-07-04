@@ -10,7 +10,6 @@ let min3 a b c =
 let min4 a b c d =
   min3 (min2 a b) c d
 
-
 let read_int () =
   Scanf.scanf "%d " (fun x -> x)
 

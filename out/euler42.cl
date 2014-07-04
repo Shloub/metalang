@@ -39,7 +39,6 @@
 (defun isqrt_ (c)
 (return-from isqrt_ (isqrt c)))
 
-
 (defun is_triangular (n)
 (progn
   #|

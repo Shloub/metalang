@@ -4,7 +4,6 @@ public class euler06
 {
   static Scanner scanner = new Scanner(System.in);
   
-  
   public static void main(String args[])
   {
     int lim = 100;

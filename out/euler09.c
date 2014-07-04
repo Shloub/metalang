@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 int main(void){
   /*
 	a + b + c = 1000 && a * a + b * b = c * c

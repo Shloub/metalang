@@ -1,5 +1,4 @@
 import math
-
 def isqrt( c ):
     return math.floor(math.sqrt(c));
 

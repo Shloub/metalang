@@ -54,7 +54,6 @@ public static int readInt(){
     }
   } while(true);
 } 
-  
   public static bool is_number(char c)
   {
     return c <= '9' && c >= '0';

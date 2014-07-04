@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-
 int score(){
   std::cin >> std::skipws;
   int len = 0;

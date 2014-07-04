@@ -67,7 +67,7 @@ int sumdiv(int nprimes, std::vector<int >& primes, int n){
 
 
 int main(){
-  int maximumprimes = 10001;
+  int maximumprimes = 1001;
   std::vector<int > era( maximumprimes );
   for (int j = 0 ; j < maximumprimes; j++)
     era.at(j) = j;
@@ -84,7 +84,7 @@ int main(){
   }
   std::cout << l << " == " << nprimes << "\n";
   int sum = 0;
-  for (int n = 2 ; n <= 10000; n ++)
+  for (int n = 2 ; n <= 1000; n ++)
   {
     int other = sumdiv(nprimes, primes, n) - n;
     if (other > n)

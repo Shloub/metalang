@@ -35,7 +35,6 @@ var read_int_ = function(){
 }
 
 
-
 function max2(a, b){
   if (a > b)
     return a;

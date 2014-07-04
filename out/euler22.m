@@ -2,7 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 int score(){
   scanf(" ");
   int len = 0;

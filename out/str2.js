@@ -35,7 +35,6 @@ var read_int_ = function(){
 }
 
 
-
 util.print("ma petite chaine", " en or");
 
 

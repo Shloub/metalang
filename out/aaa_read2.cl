@@ -36,7 +36,6 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-
 (defun read_int ()
 (progn
   (let ((out_ (mread-int )))

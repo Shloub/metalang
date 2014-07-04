@@ -3,7 +3,6 @@ using System;
 public class aaa_integer
 {
   
-  
   public static void Main(String[] args)
   {
     int i = 0;

@@ -1,7 +1,6 @@
 program euler03;
 
 
-
 var
   a : Longint;
   b : Longint;

@@ -70,12 +70,10 @@ begin
    until false;
 end;
 
-
 function isqrt(c : Longint) : Longint;
 begin
   exit(Floor(Sqrt(c)));
 end;
-
 
 function is_triangular(n : Longint) : boolean;
 var

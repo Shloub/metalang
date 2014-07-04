@@ -54,8 +54,6 @@ public static int readInt(){
     }
   } while(true);
 } 
-  
-  
   public static int position_alphabet(char c)
   {
     int i = c;

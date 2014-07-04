@@ -4,7 +4,6 @@ public class euler15
 {
   static Scanner scanner = new Scanner(System.in);
   
-  
   public static void main(String args[])
   {
     int n = 10;

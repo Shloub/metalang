@@ -69,8 +69,6 @@ begin
    until false;
 end;
 
-
-
 function read_int() : Longint;
 var
   out_ : Longint;

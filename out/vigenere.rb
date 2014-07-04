@@ -3,7 +3,6 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-
 def position_alphabet( c )
     i = c.ord
     if i <= "Z".ord && i >= "A".ord then

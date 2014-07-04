@@ -54,12 +54,10 @@ public static int readInt(){
     }
   } while(true);
 } 
-  
   public static int isqrt(int c)
   {
     return (int)Math.Sqrt(c);
   }
-  
   
   public static bool is_triangular(int n)
   {

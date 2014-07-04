@@ -3,7 +3,6 @@ using System;
 public class euler03
 {
   
-  
   public static void Main(String[] args)
   {
     int maximum = 1;

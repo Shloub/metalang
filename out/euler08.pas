@@ -26,7 +26,6 @@ begin
    skip_char();
    read_char_ := c;
 end;
-
 function max2(a : Longint; b : Longint) : Longint;
 begin
   if a > b

@@ -54,8 +54,6 @@ public static int readInt(){
     }
   } while(true);
 } 
-  
-  
   /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip

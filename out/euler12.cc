@@ -38,7 +38,7 @@ int fillPrimesFactors(std::vector<int >& t, int n, std::vector<int >& primes, in
 }
 
 int find(int ndiv2){
-  int maximumprimes = 10000;
+  int maximumprimes = 110;
   std::vector<int > era( maximumprimes );
   for (int j = 0 ; j < maximumprimes; j++)
     era.at(j) = j;
@@ -53,7 +53,7 @@ int find(int ndiv2){
     primes.at(l) = k;
     l ++;
   }
-  for (int n = 1 ; n <= 1000000; n ++)
+  for (int n = 1 ; n <= 10000; n ++)
   {
     int c = n + 2;
     std::vector<int > primesFactors( c );

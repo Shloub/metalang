@@ -35,7 +35,6 @@ var read_int_ = function(){
 }
 
 
-
 var maximum = 1;
 var b0 = 2;
 var a = 408464633;

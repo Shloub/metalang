@@ -41,7 +41,6 @@ def readint():
 def isqrt( c ):
     return math.floor(math.sqrt(c));
 
-
 def is_triangular( n ):
     """
    n = k * (k + 1) / 2

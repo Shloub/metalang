@@ -35,7 +35,6 @@ var read_int_ = function(){
 }
 
 
-
 var i = 0;
 i --;
 util.print(i, "\n");

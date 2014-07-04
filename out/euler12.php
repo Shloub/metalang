@@ -37,7 +37,7 @@ function fillPrimesFactors(&$t, $n, &$primes, $nprimes){
 }
 
 function find($ndiv2){
-  $maximumprimes = 10000;
+  $maximumprimes = 110;
   $era = array();
   for ($j = 0 ; $j < $maximumprimes; $j++)
     $era[$j] = $j;
@@ -52,7 +52,7 @@ function find($ndiv2){
     $primes[$l] = $k;
     $l ++;
   }
-  for ($n = 1 ; $n <= 1000000; $n++)
+  for ($n = 1 ; $n <= 10000; $n++)
   {
     $c = $n + 2;
     $primesFactors = array();

@@ -1,6 +1,5 @@
 require "scanf.rb"
 
-
 =begin
 
 	a + b + c = 1000 && a * a + b * b = c * c

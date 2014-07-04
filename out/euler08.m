@@ -2,7 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 int max2(int a, int b){
   if (a > b)
     return a;

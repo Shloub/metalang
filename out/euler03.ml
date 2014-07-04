@@ -1,4 +1,3 @@
-
 let () =
 begin
   let _maximum = 1 in

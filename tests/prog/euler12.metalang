@@ -30,7 +30,7 @@ end
 
 
 def int find(int ndiv2)
-	def maximumprimes = 10000
+	def maximumprimes = 110
 	def array<int> era[maximumprimes] with j do
 		return j
 	end
@@ -46,7 +46,7 @@ def int find(int ndiv2)
 		end
 	end
 
-	for n = 1 to 1000000 do
+	for n = 1 to 10000 do
 		def array<int> primesFactors[n + 2] with m do
 			return 0
 		end

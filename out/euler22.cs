@@ -54,7 +54,6 @@ public static int readInt(){
     }
   } while(true);
 } 
-  
   public static int score()
   {
     stdin_sep();

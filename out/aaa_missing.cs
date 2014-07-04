@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class aaa_missing
 {
-  
-  
   public static int read_int()
   {
     return int.Parse(Console.ReadLine());

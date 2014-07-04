@@ -1,7 +1,5 @@
-
 let isqrt c =
   (int_of_float (sqrt (float_of_int ( c))))
-
 
 let is_triangular n =
   (*

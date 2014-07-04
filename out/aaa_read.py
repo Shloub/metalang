@@ -39,8 +39,6 @@ def readint():
       return out * sign
 def mod(x, y):
   return x - y * math.trunc(x / y)
-
-
 """
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip

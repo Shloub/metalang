@@ -61,7 +61,7 @@ def int sumdiv(int nprimes, array<int> primes, int n)
 end
 
 main
-	def maximumprimes = 10001
+	def maximumprimes = 1001
 	def array<int> era[maximumprimes] with j do
 		return j
 	end
@@ -80,7 +80,7 @@ main
 	print int l print " == " print nprimes print "\n"
 
 	def sum = 0
-	for n = 2 to 10000 do
+	for n = 2 to 1000 do
 		def other = sumdiv(nprimes, primes, n) - n
 		if other > n then
 			def othersum = sumdiv(nprimes, primes, other) - other

@@ -1,8 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
-
 int read_int(){
   int out_ = 0;
   scanf("%d ", &out_);

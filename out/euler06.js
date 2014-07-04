@@ -35,7 +35,6 @@ var read_int_ = function(){
 }
 
 
-
 var lim = 100;
 var sum = ~~((lim * (lim + 1)) / 2);
 var carressum = sum * sum;

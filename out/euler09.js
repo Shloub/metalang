@@ -35,7 +35,6 @@ var read_int_ = function(){
 }
 
 
-
 /*
 	a + b + c = 1000 && a * a + b * b = c * c
 	*/

@@ -3,7 +3,6 @@ import java.util.*;
 public class npi
 {
   static Scanner scanner = new Scanner(System.in);
-  
   public static boolean is_number(char c)
   {
     return c <= '9' && c >= '0';

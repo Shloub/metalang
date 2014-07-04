@@ -35,8 +35,6 @@ var read_int_ = function(){
 }
 
 
-
-
 function read_int(){
   var out_ = 0;
   out_=read_int_();

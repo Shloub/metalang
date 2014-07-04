@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 
-
 int main(){
   int sum = 0;
   for (int i = 0 ; i <= 999; i ++)

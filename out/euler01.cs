@@ -3,7 +3,6 @@ using System;
 public class euler01
 {
   
-  
   public static void Main(String[] args)
   {
     int sum = 0;

@@ -49,7 +49,7 @@ def sumdiv( nprimes, primes, n ):
     max_ = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max_, 0);
 
-maximumprimes = 10001;
+maximumprimes = 1001;
 era = [None] * maximumprimes
 for j in range(0, maximumprimes):
   era[j] = j;
@@ -64,7 +64,7 @@ for k in range(2, maximumprimes):
     l += 1
 print("%d == %d\n" % ( l, nprimes ), end='')
 sum = 0;
-for n in range(2, 1 + 10000):
+for n in range(2, 1 + 1000):
   other = sumdiv(nprimes, primes, n) - n;
   if other > n:
     othersum = sumdiv(nprimes, primes, other) - other;

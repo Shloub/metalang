@@ -1,4 +1,3 @@
-
 let () =
 begin
   let sum = ref( 0 ) in

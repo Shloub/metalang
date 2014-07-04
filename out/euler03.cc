@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 
-
 int main(){
   int maximum = 1;
   int b0 = 2;

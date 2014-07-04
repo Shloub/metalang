@@ -3,7 +3,6 @@ import java.util.*;
 public class sqrttest
 {
   static Scanner scanner = new Scanner(System.in);
-  
   public static int isqrt(int c)
   {
     return (int)Math.sqrt(c);

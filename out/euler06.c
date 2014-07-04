@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 int main(void){
   int lim = 100;
   int sum = (lim * (lim + 1)) / 2;

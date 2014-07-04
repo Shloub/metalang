@@ -52,7 +52,7 @@ func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
 }
 
 func find(ndiv2 int) int{
-  var maximumprimes int = 10000
+  var maximumprimes int = 110
   var era []int = make([]int, maximumprimes)
   for j := 0 ; j <= maximumprimes - 1; j++ {
     era[j] = j;
@@ -69,7 +69,7 @@ func find(ndiv2 int) int{
           l ++;
       }
   }
-  for n := 1 ; n <= 1000000; n++ {
+  for n := 1 ; n <= 10000; n++ {
     var c int = n + 2
       var primesFactors []int = make([]int, c)
       for m := 0 ; m <= c - 1; m++ {

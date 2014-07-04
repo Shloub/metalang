@@ -44,7 +44,7 @@ public class euler12
   
   public static int find(int ndiv2)
   {
-    int maximumprimes = 10000;
+    int maximumprimes = 110;
     int[] era = new int[maximumprimes];
     for (int j = 0 ; j < maximumprimes; j++)
       era[j] = j;
@@ -59,7 +59,7 @@ public class euler12
       primes[l] = k;
       l ++;
     }
-    for (int n = 1 ; n <= 1000000; n ++)
+    for (int n = 1 ; n <= 10000; n ++)
     {
       int c = n + 2;
       int[] primesFactors = new int[c];

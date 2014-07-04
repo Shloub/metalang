@@ -35,7 +35,6 @@ var read_int_ = function(){
 }
 
 
-
 function score(){
   stdinsep();
   var len = 0;

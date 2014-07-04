@@ -1,4 +1,3 @@
-
 let () =
 begin
   let a = ref( 1 ) in

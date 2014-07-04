@@ -66,7 +66,7 @@ def sumdiv( nprimes, primes, n )
     return (sumdivaux(t, max_, 0));
 end
 
-maximumprimes = 10001
+maximumprimes = 1001
 era = [];
 for j in (0 ..  maximumprimes - 1) do
   era[j] = j;
@@ -85,7 +85,7 @@ for k in (2 ..  maximumprimes - 1) do
 end
 printf "%d == %d\n", l, nprimes
 sum = 0
-for n in (2 ..  10000) do
+for n in (2 ..  1000) do
   other = sumdiv(nprimes, primes, n) - n
   if other > n then
     othersum = sumdiv(nprimes, primes, other) - other

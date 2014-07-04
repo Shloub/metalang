@@ -35,8 +35,6 @@ var read_int_ = function(){
 }
 
 
-
-
 function position_alphabet(c){
   var i = c.charCodeAt(0);
   if (i <= 'Z'.charCodeAt(0) && i >= 'A'.charCodeAt(0))

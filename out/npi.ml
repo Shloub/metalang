@@ -1,4 +1,3 @@
-
 let is_number c =
   int_of_char (c) <= int_of_char ('9') && int_of_char (c) >= int_of_char ('0')
 

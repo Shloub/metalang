@@ -20,7 +20,6 @@ func isqrt(c int) int{
   return int(math.Sqrt(float64(c)))
 }
 
-
 func is_triangular(n int) bool{
   /*
    n = k * (k + 1) / 2

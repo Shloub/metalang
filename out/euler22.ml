@@ -1,4 +1,3 @@
-
 let score () =
   let len = Scanf.scanf " %d " (fun v_0 -> v_0) in
   let sum = ref( 0 ) in

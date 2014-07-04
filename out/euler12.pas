@@ -75,7 +75,7 @@ var
   primes : f;
   primesFactors : f;
 begin
-  maximumprimes := 10000;
+  maximumprimes := 110;
   SetLength(era, maximumprimes);
   for j := 0 to  maximumprimes - 1 do
   begin
@@ -97,7 +97,7 @@ begin
         l := l + 1;
       end;
   end;
-  for n := 1 to  1000000 do
+  for n := 1 to  10000 do
   begin
     c := n + 2;
     SetLength(primesFactors, c);

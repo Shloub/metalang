@@ -46,7 +46,7 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes){
 }
 
 int find(int ndiv2){
-  int maximumprimes = 10000;
+  int maximumprimes = 110;
   int *era = malloc( maximumprimes * sizeof(int));
   {
     int j;
@@ -72,7 +72,7 @@ int find(int ndiv2){
   }
   {
     int n;
-    for (n = 1 ; n <= 1000000; n++)
+    for (n = 1 ; n <= 10000; n++)
     {
       int c = n + 2;
       int *primesFactors = malloc( c * sizeof(int));

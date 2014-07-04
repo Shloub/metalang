@@ -118,7 +118,7 @@ var
   primes : b;
   sum : Longint;
 begin
-  maximumprimes := 10001;
+  maximumprimes := 1001;
   SetLength(era, maximumprimes);
   for j := 0 to  maximumprimes - 1 do
   begin
@@ -145,7 +145,7 @@ begin
   Write(nprimes);
   Write(''#10'');
   sum := 0;
-  for n := 2 to  10000 do
+  for n := 2 to  1000 do
   begin
     other := sumdiv(nprimes, primes, n) - n;
     if other > n

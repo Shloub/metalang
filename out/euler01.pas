@@ -1,7 +1,6 @@
 program euler01;
 
 
-
 var
   i : Longint;
   sum : Longint;

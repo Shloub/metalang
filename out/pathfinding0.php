@@ -13,8 +13,6 @@ function min4($a, $b, $c, $d){
   return min3(min2($a, $b), $c, $d);
 }
 
-
-
 function read_int(){
   return intval(trim(fgets(STDIN)));
 }

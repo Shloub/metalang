@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 
-
 int main(){
   int lim = 100;
   int sum = (lim * (lim + 1)) / 2;

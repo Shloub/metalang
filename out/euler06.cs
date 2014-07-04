@@ -3,7 +3,6 @@ using System;
 public class euler06
 {
   
-  
   public static void Main(String[] args)
   {
     int lim = 100;

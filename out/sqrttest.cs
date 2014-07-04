@@ -2,7 +2,6 @@ using System;
 
 public class sqrttest
 {
-  
   public static int isqrt(int c)
   {
     return (int)Math.Sqrt(c);

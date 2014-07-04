@@ -10,7 +10,6 @@ public class euler11
     return b;
   }
   
-  
   public static int[] read_int_line(int n)
   {
     return new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();

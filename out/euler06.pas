@@ -1,7 +1,6 @@
 program euler06;
 
 
-
 var
   a : Longint;
   carressum : Longint;

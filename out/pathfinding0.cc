@@ -24,7 +24,6 @@ int min4(int a, int b, int c, int d){
   return min3(min2(a, b), c, d);
 }
 
-
 int read_int(){
   int out_ = 0;
   std::cin >> out_ >> std::skipws;

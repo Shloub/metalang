@@ -100,7 +100,7 @@ function sumdiv(nprimes, primes, n){
   return sumdivaux(t, max_, 0);
 }
 
-var maximumprimes = 10001;
+var maximumprimes = 1001;
 var era = new Array(maximumprimes);
 for (var j = 0 ; j <= maximumprimes - 1; j++)
   era[j] = j;
@@ -117,7 +117,7 @@ for (var k = 2 ; k <= maximumprimes - 1; k++)
 }
 util.print(l, " == ", nprimes, "\n");
 var sum = 0;
-for (var n = 2 ; n <= 10000; n++)
+for (var n = 2 ; n <= 1000; n++)
 {
   var other = sumdiv(nprimes, primes, n) - n;
   if (other > n)

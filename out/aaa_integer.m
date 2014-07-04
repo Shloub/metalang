@@ -2,7 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i = 0;

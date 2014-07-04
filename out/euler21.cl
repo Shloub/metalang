@@ -100,7 +100,7 @@
     )))))
 
 (progn
-  (let ((maximumprimes 10001))
+  (let ((maximumprimes 1001))
     (let
      ((era (array_init
               maximumprimes
@@ -137,7 +137,7 @@
         (let ((sum 0))
           (do
             ((n 2 (+ 1 n)))
-            ((> n 10000))
+            ((> n 1000))
             (progn
               (let ((other (- (sumdiv nprimes primes n) n)))
                 (if

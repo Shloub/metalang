@@ -1,7 +1,6 @@
 program aaa_integer;
 
 
-
 var
   a : Longint;
   b : Longint;

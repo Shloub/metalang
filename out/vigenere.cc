@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-
-
 int position_alphabet(char c){
   int i = c;
   if (i <= 'Z' && i >= 'A')

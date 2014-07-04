@@ -14,7 +14,6 @@ func skip() {
   }
 }
 
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var i int = 0

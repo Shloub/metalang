@@ -69,8 +69,6 @@ begin
    until false;
 end;
 
-
-
 function position_alphabet(c : char) : Longint;
 var
   i : Longint;
