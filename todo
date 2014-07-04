@@ -2,8 +2,9 @@ Langage & Compilateur :
   cleaner un peu la lib standard
   types abstract (pour ouvrir un fichier par exemple)
   commentaires indentation
-  null
+  type option
   une lib standard avec des listes et des arbres
+  inline fonctions
 
 outils :
   un meilleur mode vim
