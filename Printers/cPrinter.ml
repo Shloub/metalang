@@ -223,8 +223,13 @@ class cPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        Format.fprintf f "struct %a;@\ntypedef struct %a {@\n@[<v 2>  %a@]@\n} %a;@\n"
-          self#binding name
+        let b = List.exists (fun (n, t) -> match Type.unfix t with
+          | Type.Named n -> n = name
+          | _ -> false) li in
+        Format.fprintf f "%atypedef struct %a {@\n@[<v 2>  %a@]@\n} %a;@\n"
+          (fun f b ->
+            if b then Format.fprintf f "struct %a;@\n" self#binding name
+          ) b
           self#binding name
           (print_list
              (fun t (name, type_) ->
