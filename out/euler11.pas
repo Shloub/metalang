@@ -98,7 +98,6 @@ begin
   SetLength(tab, y);
   for z := 0 to  y - 1 do
   begin
-    skip();
     tab[z] := read_int_line(x);
   end;
   exit(tab);

@@ -12,7 +12,6 @@ let read_int_line n =
 
 let read_int_matrix x y =
   let tab = Array.init y (fun _z ->
-    Scanf.scanf " " (fun () -> ());
     read_int_line x) in
   tab
 

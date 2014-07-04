@@ -26,10 +26,7 @@ int** read_int_matrix(int x, int y){
   {
     int z;
     for (z = 0 ; z < y; z++)
-    {
-      scanf(" ");
       tab[z] = read_int_line(x);
-    }
   }
   return tab;
 }

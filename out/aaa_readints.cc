@@ -20,10 +20,7 @@ std::vector<int > read_int_line(int n){
 std::vector<std::vector<int > > read_int_matrix(int x, int y){
   std::vector<std::vector<int > > tab( y );
   for (int z = 0 ; z < y; z++)
-  {
-    std::cin >> std::skipws;
     tab.at(z) = read_int_line(x);
-  }
   return tab;
 }
 

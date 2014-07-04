@@ -1,8 +1,11 @@
 #include <iostream>
 #include <vector>
 std::vector<char> getline(){
+  if (std::cin.flags() & std::ios_base::skipws){
+    std::cin.ignore();
+    std::cin.unsetf(std::ios::skipws);
+  }
   std::string line;
-  std::cin.ignore();
   std::getline(std::cin, line);
   std::vector<char> c(line.begin(), line.end());
   return c;

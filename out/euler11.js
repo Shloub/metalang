@@ -56,10 +56,7 @@ function read_int_line(n){
 function read_int_matrix(x, y){
   var tab = new Array(y);
   for (var z = 0 ; z <= y - 1; z++)
-  {
-    stdinsep();
     tab[z] = read_int_line(x);
-  }
   return tab;
 }
 

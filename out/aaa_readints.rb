@@ -20,7 +20,6 @@ end
 def read_int_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      scanf("%*\n");
       tab[z] = read_int_line(x);
     end
     return (tab);

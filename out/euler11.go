@@ -36,8 +36,7 @@ func read_int_line(n int) []int{
 func read_int_matrix(x int, y int) [][]int{
   var tab [][]int = make([][]int, y)
   for z := 0 ; z <= y - 1; z++ {
-    skip()
-      tab[z] = read_int_line(x);
+    tab[z] = read_int_line(x);
   }
   return tab
 }

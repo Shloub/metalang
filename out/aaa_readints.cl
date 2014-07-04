@@ -59,7 +59,6 @@
             y
             (function (lambda (z)
             (block lambda_2
-              (mread-blank)
               (return-from lambda_2 (read_int_line x))
             ))
             ))))
