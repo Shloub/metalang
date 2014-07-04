@@ -1,6 +1,6 @@
+
 let read_int () =
-  let out_ = Scanf.scanf "%d " (fun v_0 -> v_0) in
-  out_
+  Scanf.scanf "%d " (fun x -> x)
 
 let read_int_line n =
   let tab = Array.init n (fun _i ->

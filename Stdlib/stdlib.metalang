@@ -110,11 +110,16 @@ macro int native_expand_read_int()
   py do "int(input())"
   php do "intval(trim(fgets(STDIN)))"
 	csharp do "int.Parse(Console.ReadLine())"
+	ml do "Scanf.scanf \"%d \" (fun x -> x)"
   *  do "E R R O R"
 end
 
 def lexems expand_read_int()
-	if current_language() == LANG_Py ||
+if current_language() == LANG_Ml then
+  return {
+  return native_expand_read_int()
+  }
+	elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Cs
 	then

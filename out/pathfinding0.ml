@@ -10,9 +10,9 @@ let min3 a b c =
 let min4 a b c d =
   min3 (min2 a b) c d
 
+
 let read_int () =
-  let out_ = Scanf.scanf "%d " (fun v_0 -> v_0) in
-  out_
+  Scanf.scanf "%d " (fun x -> x)
 
 let read_char_line n =
   let tab = Array.init n (fun _i ->
