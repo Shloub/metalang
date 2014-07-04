@@ -4,9 +4,7 @@ public class euler05
 {
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.Max(a, b);
   }
   
   public static int[] primesfactors(int n)

@@ -1,8 +1,6 @@
 import math
 def min2( a, b ):
-    if a < b:
-      return a;
-    return b;
+    return min(a, b);
 
 def eratostene( t, max_ ):
     n = 0;

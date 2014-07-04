@@ -36,9 +36,7 @@ var read_int_ = function(){
 
 
 function min2(a, b){
-  if (a < b)
-    return a;
-  return b;
+  return Math.min(a, b);
 }
 
 function eratostene(t, max_){

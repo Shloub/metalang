@@ -75,8 +75,11 @@ begin
   then
     begin
       exit(a);
+    end
+  else
+    begin
+      exit(b);
     end;
-  exit(b);
 end;
 
 function min3(a : Longint; b : Longint; c : Longint) : Longint;

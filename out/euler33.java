@@ -5,16 +5,12 @@ public class euler33
   static Scanner scanner = new Scanner(System.in);
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.max(a, b);
   }
   
   public static int min2(int a, int b)
   {
-    if (a < b)
-      return a;
-    return b;
+    return Math.min(a, b);
   }
   
   public static int pgcd(int a, int b)

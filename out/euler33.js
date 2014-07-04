@@ -36,15 +36,11 @@ var read_int_ = function(){
 
 
 function max2(a, b){
-  if (a > b)
-    return a;
-  return b;
+  return Math.max(a, b);
 }
 
 function min2(a, b){
-  if (a < b)
-    return a;
-  return b;
+  return Math.min(a, b);
 }
 
 function pgcd(a, b){

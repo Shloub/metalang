@@ -51,9 +51,7 @@ public static int readInt(){
 } 
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.Max(a, b);
   }
   
   public static int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)

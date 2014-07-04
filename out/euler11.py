@@ -1,7 +1,5 @@
 def max2( a, b ):
-    if a > b:
-      return a;
-    return b;
+    return max(a, b);
 
 def read_int_matrix( x, y ):
     return [list(map(int, input().split())) for i in range(y)];

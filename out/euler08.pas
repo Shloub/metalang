@@ -32,8 +32,11 @@ begin
   then
     begin
       exit(a);
+    end
+  else
+    begin
+      exit(b);
     end;
-  exit(b);
 end;
 
 

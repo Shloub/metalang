@@ -2,8 +2,9 @@ require "scanf.rb"
 def min2( a, b )
     if a < b then
       return (a);
+    else
+      return (b);
     end
-    return (b);
 end
 
 def eratostene( t, max_ )

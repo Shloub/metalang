@@ -1,8 +1,6 @@
 <?php
 function max2($a, $b){
-  if ($a > $b)
-    return $a;
-  return $b;
+  return max($a, $b);
 }
 
 function eratostene(&$t, $max_){

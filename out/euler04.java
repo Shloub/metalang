@@ -5,9 +5,7 @@ public class euler04
   static Scanner scanner = new Scanner(System.in);
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.max(a, b);
   }
   
   /*

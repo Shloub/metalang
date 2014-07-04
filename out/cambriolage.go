@@ -18,8 +18,9 @@ func skip() {
 func max2(a int, b int) int{
   if a > b {
     return a
+  } else {
+    return b
   }
-  return b
 }
 
 func nbPassePartout(n int, passepartout [][]int, m int, serrures [][]int) int{

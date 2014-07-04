@@ -5,9 +5,7 @@ public class pathfinding
   static Scanner scanner = new Scanner(System.in);
   public static int min2(int a, int b)
   {
-    if (a < b)
-      return a;
-    return b;
+    return Math.min(a, b);
   }
   
   public static int min3(int a, int b, int c)

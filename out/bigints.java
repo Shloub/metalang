@@ -5,16 +5,12 @@ public class bigints
   static Scanner scanner = new Scanner(System.in);
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.max(a, b);
   }
   
   public static int min2(int a, int b)
   {
-    if (a < b)
-      return a;
-    return b;
+    return Math.min(a, b);
   }
   
   static class bigint {public boolean bigint_sign;public int bigint_len;public int[] bigint_chiffres;}

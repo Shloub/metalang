@@ -4,7 +4,8 @@
 int max2(int a, int b){
   if (a > b)
     return a;
-  return b;
+  else
+    return b;
 }
 
 int* read_int_line(int n){

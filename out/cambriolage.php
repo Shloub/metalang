@@ -18,9 +18,7 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 }
 function max2($a, $b){
-  if ($a > $b)
-    return $a;
-  return $b;
+  return max($a, $b);
 }
 
 function nbPassePartout($n, &$passepartout, $m, &$serrures){

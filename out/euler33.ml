@@ -1,14 +1,8 @@
 let max2 a b =
-  if a > b then
-    a
-  else
-    b
+  max a b
 
 let min2 a b =
-  if a < b then
-    a
-  else
-    b
+  min a b
 
 let rec pgcd a b =
   let c = min2 a b in

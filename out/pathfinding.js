@@ -35,18 +35,8 @@ var read_int_ = function(){
 }
 
 
-function min2(a, b){
-  if (a < b)
-    return a;
-  return b;
-}
-
-function min3(a, b, c){
-  return min2(min2(a, b), c);
-}
-
 function min4(a, b, c, d){
-  return min3(min2(a, b), c, d);
+  return Math.min(a, b, c, d);
 }
 
 function pathfind_aux(cache, tab, x, y, posX, posY){

@@ -1,8 +1,5 @@
 let min2 a b =
-  if a < b then
-    a
-  else
-    b
+  min a b
 
 let min3 a b c =
   min2 (min2 a b) c

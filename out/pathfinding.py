@@ -37,16 +37,8 @@ def readint():
     else:
       return out * sign
 
-def min2( a, b ):
-    if a < b:
-      return a;
-    return b;
-
-def min3( a, b, c ):
-    return min2(min2(a, b), c);
-
 def min4( a, b, c, d ):
-    return min3(min2(a, b), c, d);
+    return min(a, b, c, d);
 
 def pathfind_aux( cache, tab, x, y, posX, posY ):
     if posX == x - 1 and posY == y - 1:

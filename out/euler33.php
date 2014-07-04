@@ -1,14 +1,10 @@
 <?php
 function max2($a, $b){
-  if ($a > $b)
-    return $a;
-  return $b;
+  return max($a, $b);
 }
 
 function min2($a, $b){
-  if ($a < $b)
-    return $a;
-  return $b;
+  return min($a, $b);
 }
 
 function pgcd($a, $b){

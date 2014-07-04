@@ -18,15 +18,17 @@ func skip() {
 func max2(a int, b int) int{
   if a > b {
     return a
+  } else {
+    return b
   }
-  return b
 }
 
 func min2(a int, b int) int{
   if a < b {
     return a
+  } else {
+    return b
   }
-  return b
 }
 
 func pgcd(a int, b int) int{

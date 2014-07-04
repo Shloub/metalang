@@ -6,8 +6,11 @@ begin
   then
     begin
       exit(a);
+    end
+  else
+    begin
+      exit(b);
     end;
-  exit(b);
 end;
 
 function min2(a : Longint; b : Longint) : Longint;
@@ -16,8 +19,11 @@ begin
   then
     begin
       exit(a);
+    end
+  else
+    begin
+      exit(b);
     end;
-  exit(b);
 end;
 
 function pgcd(a : Longint; b : Longint) : Longint;

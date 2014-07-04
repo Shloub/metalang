@@ -38,16 +38,12 @@ public static void stdin_sep(){
 }
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.Max(a, b);
   }
   
   public static int min2(int a, int b)
   {
-    if (a < b)
-      return a;
-    return b;
+    return Math.Min(a, b);
   }
   
   public class bigint {public bool bigint_sign;public int bigint_len;public int[] bigint_chiffres;}

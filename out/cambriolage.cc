@@ -3,7 +3,8 @@
 int max2(int a, int b){
   if (a > b)
     return a;
-  return b;
+  else
+    return b;
 }
 
 int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, std::vector<std::vector<int > >& serrures){

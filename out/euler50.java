@@ -5,9 +5,7 @@ public class euler50
   static Scanner scanner = new Scanner(System.in);
   public static int min2(int a, int b)
   {
-    if (a < b)
-      return a;
-    return b;
+    return Math.min(a, b);
   }
   
   public static int eratostene(int[] t, int max_)

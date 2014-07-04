@@ -3,7 +3,8 @@
 int min2(int a, int b){
   if (a < b)
     return a;
-  return b;
+  else
+    return b;
 }
 
 int min3(int a, int b, int c){

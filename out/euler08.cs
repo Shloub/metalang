@@ -27,9 +27,7 @@ public static char readChar(){
 }
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.Max(a, b);
   }
   
   

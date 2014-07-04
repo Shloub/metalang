@@ -2,14 +2,10 @@ import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
 def max2( a, b ):
-    if a > b:
-      return a;
-    return b;
+    return max(a, b);
 
 def min2( a, b ):
-    if a < b:
-      return a;
-    return b;
+    return min(a, b);
 
 def pgcd( a, b ):
     c = min2(a, b);

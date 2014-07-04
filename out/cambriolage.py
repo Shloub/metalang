@@ -34,9 +34,7 @@ def readint():
       return out * sign
 
 def max2( a, b ):
-    if a > b:
-      return a;
-    return b;
+    return max(a, b);
 
 def nbPassePartout( n, passepartout, m, serrures ):
     max_ancient = 0;

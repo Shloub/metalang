@@ -1,8 +1,5 @@
 let max2 a b =
-  if a > b then
-    a
-  else
-    b
+  max a b
 
 let eratostene t max_ =
   let n = ref( 0 ) in

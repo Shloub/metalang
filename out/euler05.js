@@ -36,9 +36,7 @@ var read_int_ = function(){
 
 
 function max2(a, b){
-  if (a > b)
-    return a;
-  return b;
+  return Math.max(a, b);
 }
 
 function primesfactors(n){

@@ -1,8 +1,5 @@
 let max2 a b =
-  if a > b then
-    a
-  else
-    b
+  max a b
 
 let () =
 begin

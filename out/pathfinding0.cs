@@ -5,9 +5,7 @@ public class pathfinding0
 {
   public static int min2(int a, int b)
   {
-    if (a < b)
-      return a;
-    return b;
+    return Math.Min(a, b);
   }
   
   public static int min3(int a, int b, int c)

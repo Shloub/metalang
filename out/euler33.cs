@@ -4,16 +4,12 @@ public class euler33
 {
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.Max(a, b);
   }
   
   public static int min2(int a, int b)
   {
-    if (a < b)
-      return a;
-    return b;
+    return Math.Min(a, b);
   }
   
   public static int pgcd(int a, int b)

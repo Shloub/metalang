@@ -18,8 +18,9 @@ func skip() {
 func min2(a int, b int) int{
   if a < b {
     return a
+  } else {
+    return b
   }
-  return b
 }
 
 func min3(a int, b int, c int) int{

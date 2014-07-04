@@ -4,9 +4,7 @@ public class euler12
 {
   public static int max2(int a, int b)
   {
-    if (a > b)
-      return a;
-    return b;
+    return Math.Max(a, b);
   }
   
   public static int eratostene(int[] t, int max_)
