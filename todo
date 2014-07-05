@@ -20,3 +20,6 @@ autres printers :
   sql
 
 portage windows
+
+tests :
+  prologin_template_dico
