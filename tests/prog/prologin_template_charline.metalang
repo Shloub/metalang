@@ -1,0 +1,16 @@
+
+def int programme_candidat(array<char> tableau, int taille)
+  def out = 0
+  for i = 0 to taille - 1 do
+    out += int_of_char(tableau[i]) * i
+    print tableau[i]
+  end
+  print "--\n"
+  return out
+end
+
+main
+  def taille = read_int()
+  def tableau = read_char_line(taille)
+  print programme_candidat(tableau, taille) print "\n"
+end
