@@ -50,7 +50,7 @@ let hasSkip li =
 let hasSkip_progitem li =
   List.fold_right
     (fun f b -> match f with
-    | Prog.DeclarFun (_, _, _, li) ->
+    | Prog.DeclarFun (_, _, _, li, _) ->
       b || (hasSkip li)
     | _ -> b
     ) li false
@@ -73,7 +73,7 @@ let collectReads acc li =
 let collectReads_progitem li =
   List.fold_right
     (fun f acc -> match f with
-    | Prog.DeclarFun (_, _, _, li) -> collectReads acc li
+    | Prog.DeclarFun (_, _, _, li, _) -> collectReads acc li
     | _ -> acc
     ) li TypeMap.empty
 

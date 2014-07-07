@@ -53,8 +53,8 @@ let rec map li =
 
 let process acc p =
   match p with
-  | Prog.DeclarFun (funname, t, params, instrs) ->
-    acc, Prog.DeclarFun (funname, t, params, map instrs)
+  | Prog.DeclarFun (funname, t, params, instrs, opt) ->
+    acc, Prog.DeclarFun (funname, t, params, map instrs, opt)
   | _ -> acc, p
 
 let process_main acc m = acc, map m

@@ -58,7 +58,7 @@ let process_main acc m = (List.fold_left collect_instr acc m), m
 
 let process acc p =
   let acc = match p with
-    | Prog.DeclarFun (_funname, _t, _params, instrs) ->
+    | Prog.DeclarFun (_funname, _t, _params, instrs, _) ->
       List.fold_left collect_instr (BindingSet.add _funname acc) instrs
     | _ -> acc
   in acc, p

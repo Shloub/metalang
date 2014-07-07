@@ -20,7 +20,7 @@ macro int sqrt_(int c)
   * do "sqrt($c)"
 end
 
-def int isqrt(int c)
+def inline int isqrt(int c)
   tag use_math
   return sqrt_(c)
 end
@@ -78,7 +78,7 @@ def lexems macro_max2(lexems a, lexems b)
   end
 end
 
-def int max2(int a, int b)
+def inline int max2(int a, int b)
 	${ macro_max2( {a}, {b} ) }
 end
 
@@ -120,7 +120,7 @@ def lexems macro_min2(lexems a, lexems b)
   end
 end
 
-def int min2(int a, int b)
+def inline int min2(int a, int b)
 	${ macro_min2( {a}, {b} ) }
 end
 
@@ -135,7 +135,7 @@ def lexems macro_min3(lexems a, lexems b, lexems c)
   end
 end
 
-def int min3(int a, int b, int c)
+def inline int min3(int a, int b, int c)
 	${ macro_min3( {a}, {b}, {c} )}
 end
 
@@ -149,7 +149,8 @@ def lexems macro_min4(lexems a, lexems b, lexems c, lexems d)
     return { 	return min3(min2(a, b), c, d) }
   end
 end
-def int min4(int a, int b, int c, int d)
+
+def inline int min4(int a, int b, int c, int d)
 	${ macro_min4( {a}, {b}, {c}, {d} )}
 end
 
@@ -212,7 +213,7 @@ if current_language() == LANG_Ml then
 	end
 end
 
-def int read_int()
+def inline int read_int()
   ${ expand_read_int() }
 end
 
@@ -237,7 +238,7 @@ def lexems expand_read_int_line(lexems a)
    end
 end
 
-def array<int> read_int_line(int n)
+def inline array<int> read_int_line(int n)
   ${expand_read_int_line( {n} )}
 end
 
@@ -270,7 +271,7 @@ def lexems expand_read_char_line(lexems a)
    end
 end
 
-def array<char> read_char_line(int n)
+def inline array<char> read_char_line(int n)
     ${expand_read_char_line( {n} )}
 end
 

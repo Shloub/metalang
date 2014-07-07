@@ -25,7 +25,7 @@ class goPrinter = object(self)
       | Instr.DeclRead _ -> true
       | _ -> acc) false) li in
     let need_prog_item = function
-      | Prog.DeclarFun (var, t, li, instrs) ->
+      | Prog.DeclarFun (var, t, li, instrs, _) ->
         need instrs
       | _ -> false
     in

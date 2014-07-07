@@ -57,7 +57,7 @@ let rec iter li =
 
 let process acc p =
   match p with
-  | Prog.DeclarFun (_, _, _, instrs)->
+  | Prog.DeclarFun (_, _, _, instrs, _)->
     iter instrs; acc, p
   | _ -> acc, p
 

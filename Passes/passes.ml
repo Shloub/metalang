@@ -51,7 +51,7 @@ module WalkExpandUnTuple = WalkTop(ExpandUnTuple);;
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function
-  | Prog.DeclarFun (_, ty, li, instrs) ->
+  | Prog.DeclarFun (_, ty, li, instrs, opt) ->
     begin match Type.unfix ty with
     | Type.Lexems -> false
     | _ -> true

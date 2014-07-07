@@ -88,9 +88,9 @@ module Walk (T:SigPass) = struct
         | Prog.Macro _ | Prog.Unquote _ -> acc, item
         | Prog.Comment _ -> acc, item
         | Prog.DeclareType _ -> acc, item
-        | Prog.DeclarFun (name, t, params, instrs) ->
+        | Prog.DeclarFun (name, t, params, instrs, opt) ->
           let acc, instrs = apply_instr acc instrs
-          in acc, Prog.DeclarFun (name, t, params, instrs)
+          in acc, Prog.DeclarFun (name, t, params, instrs, opt)
       )
       acc
       p

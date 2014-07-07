@@ -58,7 +58,7 @@ let collectDefReturn env li =
     li
 
 let collectDefReturn_fun env = function
-  | Prog.DeclarFun (_, _, params, li) ->
+  | Prog.DeclarFun (_, _, params, li, opt) ->
     collectDefReturn env li;
     List.iter (fun (_, ty) ->
       check ty (Ast.PosMap.get (Type.Fixed.annot ty))

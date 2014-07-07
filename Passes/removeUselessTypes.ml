@@ -37,7 +37,7 @@ open PassesUtils
 let apply prog funs tyenv =
   let go f (li, used) = match f with
     | Prog.Unquote _
-    | Prog.DeclarFun (_, _,_, _)
+    | Prog.DeclarFun (_, _,_, _, _)
     | Prog.Macro (_, _, _, _)
     | Prog.Comment _ -> (f::li, used)
     | Prog.DeclareType (name, ty) ->

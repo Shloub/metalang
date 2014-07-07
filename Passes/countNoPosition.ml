@@ -96,11 +96,11 @@ let count (li: 'a Ast.Expr.t Ast.Instr.t list) =
 
 let process acc p =
   match p with
-  | Prog.DeclarFun (funname, t, params, instrs) ->
+  | Prog.DeclarFun (funname, t, params, instrs, opt) ->
     (acc + count instrs +
        count_type t +
        count_tys (List.map snd params)
-    ), Prog.DeclarFun (funname, t, params, instrs)
+    ), Prog.DeclarFun (funname, t, params, instrs, opt)
   | _ -> acc, p
 
 let process_main acc m = acc + count m, m

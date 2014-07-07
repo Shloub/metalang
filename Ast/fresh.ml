@@ -65,7 +65,7 @@ let fresh_init prog =
     ) acc i
   in
   let addtop (acc : BindingSet.t) t : BindingSet.t = match t with
-    | Prog.DeclarFun (v, t, params, instrs) ->
+    | Prog.DeclarFun (v, t, params, instrs, _) ->
       let acc = BindingSet.add v acc in
       let acc:BindingSet.t = List.fold_left
         (fun acc ((v:string), _ ) -> BindingSet.add v acc)

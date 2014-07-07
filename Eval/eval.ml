@@ -821,7 +821,7 @@ module EvalF (IO : EvalIO) = struct
   let eval_prog (te : Typer.env) (p:Utils.prog) =
     let f env p = match p with
       | Prog.Unquote _ -> assert false
-      | Prog.DeclarFun (var, t, li, instrs) ->
+      | Prog.DeclarFun (var, t, li, instrs, _) ->
         compile_fun env var t li instrs
       | Prog.DeclareType _ -> env
       | Prog.Macro (varname, t, li, impls) -> env
@@ -917,11 +917,11 @@ module EvalConstantes = struct
 
   let rec process acc p =
     match p with
-    | Prog.DeclarFun (funname, t, params, instrs) ->
+    | Prog.DeclarFun (funname, t, params, instrs, opt) ->
       let acc, instrs = List.fold_left_map collect_instr acc instrs in
       let instrs = List.flatten instrs in
       let acc = EVAL.compile_fun acc funname t params instrs in
-      acc, [Prog.DeclarFun (funname, t, params, instrs)]
+      acc, [Prog.DeclarFun (funname, t, params, instrs, opt)]
     | Prog.Unquote e ->
       let w li =
         let li = prog_list_of_lexems_list li in

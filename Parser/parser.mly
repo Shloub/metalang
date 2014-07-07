@@ -313,8 +313,10 @@ args :
 define :
 | UNQUOTE_START expr END_QUOTE { P.unquote $2 }
 | COMMENT { P.comment $1 }
+| DEF USELESS typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
+	{ P.declarefun $4 $3 $6 $8 P.useless_declaration_option }
 | DEF typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
-	{ P.declarefun $3 $2 $5 $7 }
+	{ P.declarefun $3 $2 $5 $7 P.default_declaration_option }
 
 | MACRO typ IDENT LEFT_PARENS args RIGHT_PARENS macro* END
 	{ P.macro $3 $2 $5 $7 }

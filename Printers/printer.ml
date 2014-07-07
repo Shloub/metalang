@@ -593,7 +593,7 @@ class printer = object(self)
     match t with
     | Prog.Comment s -> self#comment f s;
       Format.fprintf f "@\n"
-    | Prog.DeclarFun (var, t, li, instrs) ->
+    | Prog.DeclarFun (var, t, li, instrs, _opt) ->
       self#print_fun f var t li instrs;
       Format.fprintf f "@\n"
     | Prog.Macro (name, t, params, code) ->

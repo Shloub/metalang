@@ -221,7 +221,7 @@ let process acc f =
   | Prog.Comment _ -> acc, f
   | Prog.DeclareType (name, ty) ->
     add_type_in_acc name name acc f (Ast.PosMap.get (Type.Fixed.annot ty))
-  | Prog.DeclarFun (funname, t, params, instrs) ->
+  | Prog.DeclarFun (funname, t, params, instrs, _) ->
     let loc = Ast.PosMap.get (Type.Fixed.annot t) in
     let acc, f = add_fun_in_acc funname funname acc f loc in
     let acc0 = List.fold_left (fun acc (name, t) ->

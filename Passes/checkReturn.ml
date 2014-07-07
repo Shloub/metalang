@@ -103,7 +103,7 @@ let check_alloc li =
     (fun i -> f (Instr.Writer.Traverse.iter f) i) li
 
 let check_fun = function
-  | Prog.DeclarFun (varname, ty, li, instrs) ->
+  | Prog.DeclarFun (varname, ty, li, instrs, opt) ->
     let loc = Ast.PosMap.get (Type.Fixed.annot ty) in
     begin
       check_alloc instrs;

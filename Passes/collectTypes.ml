@@ -79,7 +79,7 @@ let process_main acc m = (List.fold_left collect_instr acc m), m
 
 let process acc p =
   let acc = match p with
-    | Prog.DeclarFun (_funname, t, params, instrs) ->
+    | Prog.DeclarFun (_funname, t, params, instrs, _) ->
       let acc = collect_type acc t in
       let acc = List.fold_left (fun acc (_, t) -> collect_type acc t)
         acc params in

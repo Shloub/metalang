@@ -784,13 +784,13 @@ let map_ty env prog =
     ) instrs
   in
   let toplvl = function
-    | Prog.DeclarFun (var, ty, params, instrs) ->
+    | Prog.DeclarFun (var, ty, params, instrs, opt) ->
       let ty = map_ty ty in
       let params = List.map
         (fun (a, b) -> a, map_ty b) params
       in
       let instrs = map_instrs instrs in
-      Prog.DeclarFun (var, ty, params, instrs)
+      Prog.DeclarFun (var, ty, params, instrs, opt)
     | x -> x
   in
   { prog with
@@ -835,7 +835,7 @@ let process_fundecl e ((funname, ty, params, instructions) as tuple) =
 
 let process_tfun env p = match p with
   | Prog.Unquote _ -> assert false
-  | Prog.DeclarFun (varname, ty, li, instrs) ->
+  | Prog.DeclarFun (varname, ty, li, instrs, _) ->
     process_fundecl env (varname, ty, li, instrs)
   | Prog.DeclareType (name, ty) ->
     { env with

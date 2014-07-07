@@ -740,9 +740,25 @@ module Instr = struct
 end
 
 module Prog = struct
+
+  type declaration_option =
+    {
+      useless : bool;
+    }
+
+  let default_declaration_option =
+    {
+      useless = false
+    }
+
+  let useless_declaration_option =
+    {
+      useless = true
+    }
+
   type 'lex t_fun =
     DeclarFun of varname * Type.t *
-        ( varname * Type.t ) list * 'lex Expr.t Instr.t list
+        ( varname * Type.t ) list * 'lex Expr.t Instr.t list * declaration_option
   | DeclareType of typename * Type.t
   | Macro of varname * Type.t * (varname * Type.t) list * (string * string) list
   | Comment of string
@@ -750,7 +766,7 @@ module Prog = struct
 
   let unquote u = Unquote u
   let comment s = Comment s
-  let declarefun var t li1 li2 = DeclarFun (var, t, li1, li2)
+  let declarefun var t li1 li2 opt = DeclarFun (var, t, li1, li2, opt)
   let macro var t params li = Macro (var, t, params, li)
 
   (** global programm type :

@@ -92,9 +92,9 @@ let mapti i tyenv acc =
 
 let process (tyenv, acc) p =
   match p with
-  | Prog.DeclarFun (x, y, z, instrs)->
+  | Prog.DeclarFun (x, y, z, instrs, opt)->
     let instrs = List.map (fun i -> mapti i tyenv acc) instrs in
-    (tyenv, acc), Prog.DeclarFun (x, mapt y acc, maptli z acc, List.collect (rewrite acc) instrs)
+    (tyenv, acc), Prog.DeclarFun (x, mapt y acc, maptli z acc, List.collect (rewrite acc) instrs, opt)
   | _ -> (tyenv, acc), p
 
 let process_main (tyenv, acc) instrs =

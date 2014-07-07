@@ -98,7 +98,7 @@ let process_li tyenv acc li=
   List.fold_left (process_i tyenv) acc li
 
 let process_top tyenv (acc1, acc2, li0) t = match t with
-  | Prog.DeclarFun (_, _, _, li) ->
+  | Prog.DeclarFun (_, _, _, li, _) ->
     let acc1, acc2, li0 = process_li tyenv (acc1, acc2, li0) li
     in acc1, acc2, t::li0
   | _ -> acc1, acc2, t::li0

@@ -123,9 +123,9 @@ let rec process_instr map i =
 let process_main acc m = acc, List.map (process_instr acc) m
 let process acc p =
   let p = match p with
-    | Prog.DeclarFun (funname, t, params, instrs) ->
+    | Prog.DeclarFun (funname, t, params, instrs, opt) ->
       Prog.DeclarFun (mapname acc funname, t,
                       (List.map (fun (n, t) -> (mapname acc n), t) params),
-                      (List.map (process_instr acc) instrs))
+                      (List.map (process_instr acc) instrs), opt)
     | _ -> p (* TODO *)
   in acc, p
