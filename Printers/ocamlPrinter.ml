@@ -538,12 +538,6 @@ class camlPrinter = object(self)
 
   method combine_formats () = true
 
-  method multi_print f format exprs =
-    Format.fprintf f "@[<h>Printf.printf \"%s\" %a@]" format
-      (print_list
-         (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@ %a" f1 e1 f2 e2)) exprs
-
   method print f t expr =
     match Expr.unfix expr with
     | Expr.String s -> Format.fprintf f "@[Printf.printf %s@]" ( self#noformat s)
@@ -806,7 +800,10 @@ class camlPrinter = object(self)
     else
       Format.fprintf f "@[<h>%a \"%s\" %a@]" self#printf ()  format
         (print_list
-           (fun f (t, e) -> self#expr f e)
+           (fun f (t, expr) ->
+             (if self#nop (Expr.unfix expr) then
+                 self#expr
+              else self#printp) f expr)
            (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@ %a" f1 e1 f2 e2)) exprs
 
 end

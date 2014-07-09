@@ -262,7 +262,10 @@ def skipchar():
 
   method print_args =
     print_list
-      (fun f (t, e) -> self#expr f e)
+      (fun f (t, expr) ->
+        (if self#nop (Expr.unfix expr) then
+            self#expr
+         else self#printp) f expr)
       (fun t f1 e1 f2 e2 -> Format.fprintf t
         "%a,@ %a" f1 e1 f2 e2)
 
@@ -288,7 +291,11 @@ def skipchar():
         Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )
       else Format.fprintf f "@[print( %S, end='')@]" s
     | _ ->
-      Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t self#expr expr
+      Format.fprintf f "@[print(\"%a\" %% %a, end='')@]" self#format_type t
+        (fun f expr ->
+          if self#nop (Expr.unfix expr) then
+              self#expr f expr
+           else self#printp f expr) expr
 
   method field f field = Format.fprintf f "%S" field
 

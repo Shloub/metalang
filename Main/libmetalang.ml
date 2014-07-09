@@ -118,7 +118,7 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "check return" CheckReturn.apply
   |> typed "remove tags" Passes.WalkRemoveTags.apply
   |> typed "rename" Passes.WalkRename.apply
-  |> typed "expend" Passes.WalkNopend.apply
+  |> typed "expand" Passes.WalkNopend.apply
   |> typed "expend print" Passes.WalkExpandPrint.apply
   |> typed "internal tags" Passes.WalkInternalTags.apply
   |> snd |> Typer.process

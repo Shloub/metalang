@@ -20,5 +20,4 @@ main
      read int t.bar skip
      read int t.blah
      print int result(t)
-     print int t.blah
 end

@@ -28,6 +28,7 @@ main
   end
   read int t[0].bar skip
   read int t[1].blah
-  print int result(t, 4)
+  def titi = result(t, 4)
+  print int titi
   print int t[2].blah
 end

@@ -152,7 +152,7 @@ public static int readInt(){
     Format.fprintf f "%a.Length" self#mutable_ tab
 
   method multi_print f format exprs =
-      Format.fprintf f "@[<h>Console.Write(%a);@]"
+      Format.fprintf f "@[<h>Console.Write(\"\" + %a);@]" (* TODO faire un truc si un des deux premier opérende est une chaine*)
         (print_list
            (fun f (t, e) -> self#expr f e)
            (fun t f1 e1 f2 e2 -> Format.fprintf t "%a + %a" f1 e1 f2 e2)) exprs

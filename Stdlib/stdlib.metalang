@@ -34,6 +34,7 @@ macro char char_of_int(int c)
   php do "chr($c)"
   go do "(byte)($c)"
   clisp do "(int-char $c)"
+  cpp do "(char)($c)"
   *  do "$c"
 end
 

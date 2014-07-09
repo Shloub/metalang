@@ -72,14 +72,18 @@ let rec process (acc:'lex acc) i =
       )) ->
       [fixed_map t0]
     | Instr.Print(t, e) ->
-      let annot = Instr.Fixed.annot t0 in
-      let loc = PosMap.get (Instr.Fixed.annot t0) in
-      let b = fresh () in
-      [
-        Instr.Declare (b, t, e, Instr.default_declaration_option) |> Instr.fixa annot |> locate loc;
-        Instr.Print(t, locatee loc (Expr.access (locatem loc (Mutable.var b))))
-      |> Instr.fixa annot |> locate loc;
-      ]
+      begin match Type.unfix t with
+      | Type.Bool ->
+        let annot = Instr.Fixed.annot t0 in
+        let loc = PosMap.get (Instr.Fixed.annot t0) in
+        let b = fresh () in
+        [
+          Instr.Declare (b, t, e, Instr.default_declaration_option) |> Instr.fixa annot |> locate loc;
+          Instr.Print(t, locatee loc (Expr.access (locatem loc (Mutable.var b))))
+        |> Instr.fixa annot |> locate loc;
+        ]
+      | _ -> [t0]
+      end
     | Instr.AllocArray(b0, t, e, lambdaopt) ->
       let annot = Instr.Fixed.annot t0 in
       let lambdaopt = match lambdaopt with
@@ -103,5 +107,6 @@ let rec process (acc:'lex acc) i =
       (List.flatten @* (List.map inner_map))
       (Instr.unfix t)
       |> Instr.fixa (Instr.Fixed.annot t)
-  in acc, List.flatten (List.map inner_map i);;
-let init_acc _ = ();;
+  in acc, List.flatten (List.map inner_map i)
+
+let init_acc () = ()
