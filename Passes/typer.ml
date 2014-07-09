@@ -356,11 +356,15 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
 
   | _ -> raise (Error (fun f -> Format.fprintf f "FAIL %S %S" (contr2str !t1) (contr2str !t2)))
 
-
 (** {2 Accessors}*)
 let is_int env expr =
   match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
   | Typed (Type.Fixed.F (_, Type.Integer), _) -> true
+  | _ -> false
+
+let is_bool env expr =
+  match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
+  | Typed (Type.Fixed.F (_, Type.Bool), _) -> true
   | _ -> false
 
 let get_type env expr =

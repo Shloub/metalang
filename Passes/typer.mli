@@ -38,6 +38,7 @@ val process : Utils.prog -> env * Utils.prog
 val typed : env -> Utils.expr -> bool
 val get_type : env -> Utils.expr -> Ast.Type.t
 val is_int : env -> Utils.expr -> bool
+val is_bool : env -> Utils.expr -> bool
 val type_of_field : env -> string -> Ast.location -> Ast.Type.t
 val expand : env -> Ast.Type.t -> Ast.location -> Ast.Type.t
 val type_for_enum : string -> env -> Ast.Type.t
