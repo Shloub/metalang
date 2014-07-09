@@ -44,37 +44,29 @@
     #|
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
 |#
-    (let ((a (quotient 117 17)))
-      (princ a)
-      (princ "
+    (princ (quotient 117 17))
+    (princ "
 ")
-      (let ((b (quotient 117 (- 0 17))))
-        (princ b)
-        (princ "
+    (princ (quotient 117 (- 0 17)))
+    (princ "
 ")
-        (let ((c (quotient (- 0 117) 17)))
-          (princ c)
-          (princ "
+    (princ (quotient (- 0 117) 17))
+    (princ "
 ")
-          (let ((d (quotient (- 0 117) (- 0 17))))
-            (princ d)
-            (princ "
+    (princ (quotient (- 0 117) (- 0 17)))
+    (princ "
 ")
-            (let ((e (remainder 117 17)))
-              (princ e)
-              (princ "
+    (princ (remainder 117 17))
+    (princ "
 ")
-              (let ((f (remainder 117 (- 0 17))))
-                (princ f)
-                (princ "
+    (princ (remainder 117 (- 0 17)))
+    (princ "
 ")
-                (let ((g (remainder (- 0 117) 17)))
-                  (princ g)
-                  (princ "
+    (princ (remainder (- 0 117) 17))
+    (princ "
 ")
-                  (let ((h (remainder (- 0 117) (- 0 17))))
-                    (princ h)
-                    (princ "
+    (princ (remainder (- 0 117) (- 0 17)))
+    (princ "
 ")
-                  ))))))))))
+  ))
 

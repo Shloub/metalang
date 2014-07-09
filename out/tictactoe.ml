@@ -152,17 +152,14 @@ let play g =
         end
     done
   done;
-  let a = minMove.x in
-  Printf.printf "%d" a;
-  let b = minMove.y in
-  Printf.printf "%d\n" b;
+  Printf.printf "%d%d\n" minMove.x minMove.y;
   minMove
 
 let init_ () =
-  let d = 3 in
-  let cases = Array.init d (fun _i ->
-    let c = 3 in
-    let tab = Array.init c (fun _j ->
+  let b = 3 in
+  let cases = Array.init b (fun _i ->
+    let a = 3 in
+    let tab = Array.init a (fun _j ->
       0) in
     tab) in
   {
@@ -204,8 +201,7 @@ begin
           end
     done;
     print_state state;
-    let e = state.note in
-    Printf.printf "%d\n" e
+    Printf.printf "%d\n" state.note
   done
 end
  

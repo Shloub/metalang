@@ -59,7 +59,6 @@ La suite de fibonaci
         (setq b (mread-int ))
         (mread-blank)
         (setq i (mread-int ))
-        (let ((c (fibo_ a b i)))
-          (princ c)
-        )))))
+        (princ (fibo_ a b i))
+      ))))
 

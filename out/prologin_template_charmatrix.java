@@ -35,8 +35,7 @@ public class prologin_template_charmatrix
       for (int j = 0 ; j < taille_x; j++)
       {
         out_ += tableau[i][j] * (i + j * 2);
-        char a = tableau[i][j];
-        System.out.printf("%c", a);
+        System.out.printf("%c", tableau[i][j]);
       }
       System.out.print("--\n");
     }
@@ -49,8 +48,7 @@ public class prologin_template_charmatrix
     int taille_x = read_int();
     int taille_y = read_int();
     char[][] tableau = read_char_matrix(taille_x, taille_y);
-    int b = programme_candidat(tableau, taille_x, taille_y);
-    System.out.printf("%d\n", b);
+    System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   
 }

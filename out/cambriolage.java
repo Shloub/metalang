@@ -84,8 +84,7 @@ public class cambriolage
       }
       serrures[k] = out1;
     }
-    int e = nbPassePartout(n, passepartout, m, serrures);
-    System.out.printf("%d", e);
+    System.out.printf("%d", nbPassePartout(n, passepartout, m, serrures));
   }
   
 }

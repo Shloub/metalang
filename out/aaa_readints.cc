@@ -31,9 +31,7 @@ int main(){
   std::vector<int > tab1 = read_int_line(len);
   for (int i = 0 ; i < len; i++)
   {
-    std::cout << i << "=>";
-    int a = tab1.at(i);
-    std::cout << a << "\n";
+    std::cout << i << "=>" << tab1.at(i) << "\n";
   }
   len = read_int();
   std::vector<std::vector<int > > tab2 = read_int_matrix(len, len - 1);
@@ -41,8 +39,7 @@ int main(){
   {
     for (int j = 0 ; j < len; j++)
     {
-      int b = tab2.at(i).at(j);
-      std::cout << b << " ";
+      std::cout << tab2.at(i).at(j) << " ";
     }
     std::cout << "\n";
   }

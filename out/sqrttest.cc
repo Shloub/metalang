@@ -7,18 +7,7 @@ int isqrt(int c){
 
 
 int main(){
-  int a = isqrt(4);
-  std::cout << a << " ";
-  int b = isqrt(16);
-  std::cout << b << " ";
-  int d = isqrt(20);
-  std::cout << d << " ";
-  int e = isqrt(1000);
-  std::cout << e << " ";
-  int f = isqrt(500);
-  std::cout << f << " ";
-  int g = isqrt(10);
-  std::cout << g << " ";
+  std::cout << isqrt(4) << " " << isqrt(16) << " " << isqrt(20) << " " << isqrt(1000) << " " << isqrt(500) << " " << isqrt(10) << " ";
   return 0;
 }
 

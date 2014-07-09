@@ -15,7 +15,6 @@ begin
   let b = ref( 0 ) in
   Scanf.scanf "%d %d" (fun v_0 v_1 -> a := v_0;
                                       b := v_1);
-  let c = exp_ (!a) (!b) in
-  Printf.printf "%d" c
+  Printf.printf "%d" (exp_ (!a) (!b))
 end
  

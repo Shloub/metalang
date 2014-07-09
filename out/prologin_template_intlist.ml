@@ -18,7 +18,6 @@ let () =
 begin
   let taille = (read_int ()) in
   let tableau = read_int_line taille in
-  let a = programme_candidat tableau taille in
-  Printf.printf "%d\n" a
+  Printf.printf "%d\n" (programme_candidat tableau taille)
 end
  

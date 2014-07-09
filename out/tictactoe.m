@@ -197,36 +197,33 @@ move * play(gamestate * g){
       }
     }
   }
-  int a = minMove->x;
-  printf("%d", a);
-  int b = minMove->y;
-  printf("%d\n", b);
+  printf("%d%d\n", minMove->x, minMove->y);
   return minMove;
 }
 
 gamestate * init_(){
-  int d = 3;
-  int* *cases = malloc( d * sizeof(int*));
+  int b = 3;
+  int* *cases = malloc( b * sizeof(int*));
   {
     int i;
-    for (i = 0 ; i < d; i++)
+    for (i = 0 ; i < b; i++)
     {
-      int c = 3;
-      int *tab = malloc( c * sizeof(int));
+      int a = 3;
+      int *tab = malloc( a * sizeof(int));
       {
         int j;
-        for (j = 0 ; j < c; j++)
+        for (j = 0 ; j < a; j++)
           tab[j] = 0;
       }
       cases[i] = tab;
     }
   }
-  gamestate * f = [gamestate alloc];
-  f->cases=cases;
-  f->firstToPlay=1;
-  f->note=0;
-  f->ended=0;
-  return f;
+  gamestate * c = [gamestate alloc];
+  c->cases=cases;
+  c->firstToPlay=1;
+  c->note=0;
+  c->ended=0;
+  return c;
 }
 
 move * read_move(){
@@ -234,10 +231,10 @@ move * read_move(){
   scanf("%d ", &x);
   int y = 0;
   scanf("%d ", &y);
-  move * h = [move alloc];
-  h->x=x;
-  h->y=y;
-  return h;
+  move * d = [move alloc];
+  d->x=x;
+  d->y=y;
+  return d;
 }
 
 int main(void){
@@ -247,14 +244,14 @@ int main(void){
     for (i = 0 ; i <= 1; i++)
     {
       gamestate * state = init_();
-      move * k = [move alloc];
-      k->x=1;
-      k->y=1;
-      apply_move(k, state);
-      move * l = [move alloc];
-      l->x=0;
-      l->y=0;
-      apply_move(l, state);
+      move * e = [move alloc];
+      e->x=1;
+      e->y=1;
+      apply_move(e, state);
+      move * f = [move alloc];
+      f->x=0;
+      f->y=0;
+      apply_move(f, state);
       while (!state->ended)
       {
         print_state(state);
@@ -268,8 +265,7 @@ int main(void){
         }
       }
       print_state(state);
-      int e = state->note;
-      printf("%d\n", e);
+      printf("%d\n", state->note);
     }
   }
   [pool drain];

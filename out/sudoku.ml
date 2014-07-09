@@ -10,8 +10,7 @@ let read_sudoku () =
 let print_sudoku sudoku_ =
   for y = 0 to 8 do
     for x = 0 to 8 do
-      let b = sudoku_.(x + y * 9) in
-      Printf.printf "%d " b;
+      Printf.printf "%d " sudoku_.(x + y * 9);
       if (x mod 3) = 2 then
         Printf.printf " "
     done;

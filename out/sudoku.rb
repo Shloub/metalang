@@ -27,8 +27,7 @@ end
 def print_sudoku( sudoku_ )
     for y in (0 ..  8) do
       for x in (0 ..  8) do
-        b = sudoku_[x + y * 9]
-        printf "%d ", b
+        printf "%d ", sudoku_[x + y * 9]
         if (mod(x, 3)) == 2 then
           print " ";
         end

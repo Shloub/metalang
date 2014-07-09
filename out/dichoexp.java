@@ -30,8 +30,7 @@ public class dichoexp
     scanner.next("^-"); b = -scanner.nextInt();
     }else{
     b = scanner.nextInt();}
-    int c = exp_(a, b);
-    System.out.printf("%d", c);
+    System.out.printf("%d", exp_(a, b));
   }
   
 }

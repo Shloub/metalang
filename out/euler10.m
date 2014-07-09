@@ -36,8 +36,7 @@ int main(void){
       t[i] = i;
   }
   t[1] = 0;
-  int a = eratostene(t, n);
-  printf("%d\n", a);
+  printf("%d\n", eratostene(t, n));
   [pool drain];
   return 0;
 }

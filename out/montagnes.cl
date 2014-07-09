@@ -67,7 +67,6 @@
                   (return-from lambda_1 x)
                 )))
               ))))
-    (let ((a (montagnes_ tab len)))
-      (princ a)
-    ))))
+    (princ (montagnes_ tab len))
+    )))
 

@@ -110,10 +110,7 @@ public static int readInt(){
     }
     crypte(taille_cle, cle, taille, message);
     for (int i = 0 ; i < taille; i++)
-    {
-      char a = message[i];
-      Console.Write(a);
-    }
+      Console.Write(message[i]);
     Console.Write("\n");
   }
   

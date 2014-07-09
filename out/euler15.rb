@@ -27,11 +27,9 @@ for o in (2 ..  n) do
 end
 for m in (0 ..  n - 1) do
   for k in (0 ..  n - 1) do
-    a = tab[m][k]
-    printf "%d ", a
+    printf "%d ", tab[m][k]
   end
   print "\n";
 end
-b = tab[0][0]
-printf "%d\n", b
+printf "%d\n", tab[0][0]
 

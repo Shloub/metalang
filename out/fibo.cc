@@ -23,8 +23,7 @@ int main(){
   int b = 0;
   int i = 0;
   std::cin >> a >> std::skipws >> b >> i >> std::noskipws;
-  int c = fibo_(a, b, i);
-  std::cout << c;
+  std::cout << fibo_(a, b, i);
   return 0;
 }
 

@@ -107,26 +107,24 @@ on le retrouve ici : http://projecteuler.net/problem=18
                   (return-from lambda_3 tab2)
                   ))))
               ))))
-    (let ((c (find_ len tab)))
-      (princ c)
-      (princ "
+    (princ (find_ len tab))
+    (princ "
 ")
-      (do
-        ((k 0 (+ 1 k)))
-        ((> k (- len 1)))
-        (progn
-          (do
-            ((l 0 (+ 1 l)))
-            ((> l k))
-            (progn
-              (let ((d (aref (aref tab k) l)))
-                (princ d)
-                (princ " ")
-              ))
+    (do
+      ((k 0 (+ 1 k)))
+      ((> k (- len 1)))
+      (progn
+        (do
+          ((l 0 (+ 1 l)))
+          ((> l k))
+          (progn
+            (princ (aref (aref tab k) l))
+            (princ " ")
           )
-          (princ "
-")
         )
+        (princ "
+")
       )
-    ))))
+    )
+    )))
 

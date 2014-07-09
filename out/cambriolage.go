@@ -83,7 +83,6 @@ func main() {
       }
       serrures[k] = out1;
   }
-  var e int = nbPassePartout(n, passepartout, m, serrures)
-  fmt.Printf("%d", e);
+  fmt.Printf("%d", nbPassePartout(n, passepartout, m, serrures));
 }
 

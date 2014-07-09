@@ -98,15 +98,13 @@ end;
 
 
 var
-  b : Longint;
   n : Longint;
 begin
   { Programme principal }
   n := 0;
   n := read_int_();
   { Lecture de l'entier }
-  b := sumdiv(n);
-  Write(b);
+  Write(sumdiv(n));
 end.
 
 

@@ -29,11 +29,11 @@ public class bigints
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
     }
-    bigint u = new bigint();
-    u.bigint_sign = true;
-    u.bigint_len = len;
-    u.bigint_chiffres = chiffres;
-    return u;
+    bigint o = new bigint();
+    o.bigint_sign = true;
+    o.bigint_len = len;
+    o.bigint_chiffres = chiffres;
+    return o;
   }
   
   public static void print_bigint(bigint a)
@@ -41,10 +41,7 @@ public class bigints
     if (!a.bigint_sign)
       System.out.printf("%c", '-');
     for (int i = 0 ; i < a.bigint_len; i++)
-    {
-      int e = a.bigint_chiffres[a.bigint_len - 1 - i];
-      System.out.printf("%d", e);
-    }
+      System.out.printf("%d", a.bigint_chiffres[a.bigint_len - 1 - i]);
   }
   
   public static boolean bigint_eq(bigint a, bigint b)
@@ -112,11 +109,11 @@ public class bigints
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint v = new bigint();
-    v.bigint_sign = true;
-    v.bigint_len = len;
-    v.bigint_chiffres = chiffres;
-    return v;
+    bigint p = new bigint();
+    p.bigint_sign = true;
+    p.bigint_len = len;
+    p.bigint_chiffres = chiffres;
+    return p;
   }
   
   public static bigint sub_bigint_positif(bigint a, bigint b)
@@ -143,20 +140,20 @@ Pré-requis : a > b
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint w = new bigint();
-    w.bigint_sign = true;
-    w.bigint_len = len;
-    w.bigint_chiffres = chiffres;
-    return w;
+    bigint q = new bigint();
+    q.bigint_sign = true;
+    q.bigint_len = len;
+    q.bigint_chiffres = chiffres;
+    return q;
   }
   
   public static bigint neg_bigint(bigint a)
   {
-    bigint x = new bigint();
-    x.bigint_sign = !a.bigint_sign;
-    x.bigint_len = a.bigint_len;
-    x.bigint_chiffres = a.bigint_chiffres;
-    return x;
+    bigint r = new bigint();
+    r.bigint_sign = !a.bigint_sign;
+    r.bigint_len = a.bigint_len;
+    r.bigint_chiffres = a.bigint_chiffres;
+    return r;
   }
   
   public static bigint add_bigint(bigint a, bigint b)
@@ -216,11 +213,11 @@ D'ou le nom de la fonction. */
     for (int l = 0 ; l <= 2; l ++)
       if (len != 0 && chiffres[len - 1] == 0)
       len --;
-    bigint y = new bigint();
-    y.bigint_sign = a.bigint_sign == b.bigint_sign;
-    y.bigint_len = len;
-    y.bigint_chiffres = chiffres;
-    return y;
+    bigint s = new bigint();
+    s.bigint_sign = a.bigint_sign == b.bigint_sign;
+    s.bigint_len = len;
+    s.bigint_chiffres = chiffres;
+    return s;
   }
   
   public static bigint bigint_premiers_chiffres(bigint a, int i)
@@ -228,27 +225,27 @@ D'ou le nom de la fonction. */
     int len = min2(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres[len - 1] == 0)
       len --;
-    bigint z = new bigint();
-    z.bigint_sign = a.bigint_sign;
-    z.bigint_len = len;
-    z.bigint_chiffres = a.bigint_chiffres;
-    return z;
+    bigint u = new bigint();
+    u.bigint_sign = a.bigint_sign;
+    u.bigint_len = len;
+    u.bigint_chiffres = a.bigint_chiffres;
+    return u;
   }
   
   public static bigint bigint_shift(bigint a, int i)
   {
-    int f = a.bigint_len + i;
-    int[] chiffres = new int[f];
-    for (int k = 0 ; k < f; k++)
+    int e = a.bigint_len + i;
+    int[] chiffres = new int[e];
+    for (int k = 0 ; k < e; k++)
       if (k >= i)
       chiffres[k] = a.bigint_chiffres[k - i];
     else
       chiffres[k] = 0;
-    bigint ba = new bigint();
-    ba.bigint_sign = a.bigint_sign;
-    ba.bigint_len = a.bigint_len + i;
-    ba.bigint_chiffres = chiffres;
-    return ba;
+    bigint v = new bigint();
+    v.bigint_sign = a.bigint_sign;
+    v.bigint_len = a.bigint_len + i;
+    v.bigint_chiffres = chiffres;
+    return v;
   }
   
   public static bigint mul_bigint(bigint aa, bigint bb)
@@ -303,11 +300,11 @@ Modulo
       t[k] = i % 10;
       i /= 10;
     }
-    bigint bc = new bigint();
-    bc.bigint_sign = true;
-    bc.bigint_len = size;
-    bc.bigint_chiffres = t;
-    return bc;
+    bigint w = new bigint();
+    w.bigint_sign = true;
+    w.bigint_len = size;
+    w.bigint_chiffres = t;
+    return w;
   }
   
   public static bigint fact_bigint(bigint a)
@@ -404,17 +401,17 @@ Modulo
   {
     int maxA = 5;
     int maxB = 5;
-    int g = maxA + 1;
-    bigint[] a_bigint = new bigint[g];
-    for (int j = 0 ; j < g; j++)
+    int f = maxA + 1;
+    bigint[] a_bigint = new bigint[f];
+    for (int j = 0 ; j < f; j++)
       a_bigint[j] = bigint_of_int(j * j);
-    int h = maxA + 1;
-    bigint[] a0_bigint = new bigint[h];
-    for (int j2 = 0 ; j2 < h; j2++)
+    int g = maxA + 1;
+    bigint[] a0_bigint = new bigint[g];
+    for (int j2 = 0 ; j2 < g; j2++)
       a0_bigint[j2] = bigint_of_int(j2);
-    int m = maxA + 1;
-    int[] b = new int[m];
-    for (int k = 0 ; k < m; k++)
+    int h = maxA + 1;
+    int[] b = new int[h];
+    for (int k = 0 ; k < h; k++)
       b[k] = 2;
     int n = 0;
     boolean found = true;
@@ -453,8 +450,7 @@ Modulo
   
   public static void main(String args[])
   {
-    int o = euler29();
-    System.out.printf("%d\n", o);
+    System.out.printf("%d\n", euler29());
     bigint sum = read_bigint(50);
     for (int i = 2 ; i <= 100; i ++)
     {
@@ -464,15 +460,9 @@ Modulo
     }
     System.out.print("euler13 = ");
     print_bigint(sum);
-    System.out.print("\neuler25 = ");
-    int p = euler25();
-    System.out.printf("%d\neuler16 = ", p);
-    int q = euler16();
-    System.out.printf("%d\n", q);
+    System.out.printf("\neuler25 = %d\neuler16 = %d\n", euler25(), euler16());
     euler48();
-    System.out.print("euler20 = ");
-    int r = euler20();
-    System.out.printf("%d\n", r);
+    System.out.printf("euler20 = %d\n", euler20());
     bigint a = bigint_of_int(999999);
     bigint b = bigint_of_int(9951263);
     print_bigint(a);
@@ -513,8 +503,8 @@ Modulo
     System.out.print(">");
     print_bigint(b);
     System.out.print("=");
-    boolean s = bigint_gt(a, b);
-    if (s)
+    boolean m = bigint_gt(a, b);
+    if (m)
       System.out.print("True");
     else
       System.out.print("False");

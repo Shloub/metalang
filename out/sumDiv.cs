@@ -89,8 +89,7 @@ public static int readInt(){
     int n = 0;
     n = readInt();
     /* Lecture de l'entier */
-    int b = sumdiv(n);
-    Console.Write(b);
+    Console.Write(sumdiv(n));
   }
   
 }

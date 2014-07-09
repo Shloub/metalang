@@ -83,8 +83,7 @@ int main(void){
       serrures[k] = out1;
     }
   }
-  int e = nbPassePartout(n, passepartout, m, serrures);
-  printf("%d", e);
+  printf("%d", nbPassePartout(n, passepartout, m, serrures));
   return 0;
 }
 

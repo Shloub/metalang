@@ -39,17 +39,6 @@ function isqrt(c){
   return Math.floor(Math.sqrt(c));
 }
 
-var a = isqrt(4);
-util.print(a, " ");
-var b = isqrt(16);
-util.print(b, " ");
-var d = isqrt(20);
-util.print(d, " ");
-var e = isqrt(1000);
-util.print(e, " ");
-var f = isqrt(500);
-util.print(f, " ");
-var g = isqrt(10);
-util.print(g, " ");
+util.print(isqrt(4), " ", isqrt(16), " ", isqrt(20), " ", isqrt(1000), " ", isqrt(500), " ", isqrt(10), " ");
 
 

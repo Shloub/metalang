@@ -80,7 +80,6 @@
                   (return-from lambda_1 tmp)
                 )))
               ))))
-    (let ((c (plus_petit_ tab len)))
-      (princ c)
-    ))))
+    (princ (plus_petit_ tab len))
+    )))
 

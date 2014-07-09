@@ -40,10 +40,8 @@ public class record3
     scanner.next("^-"); t[1].blah = -scanner.nextInt();
     }else{
     t[1].blah = scanner.nextInt();}
-    int b = result(t, 4);
-    System.out.printf("%d", b);
-    int c = t[2].blah;
-    System.out.printf("%d", c);
+    int titi = result(t, 4);
+    System.out.printf("%d%d", titi, t[2].blah);
   }
   
 }

@@ -51,7 +51,6 @@ var
   a : Longint;
   b : Longint;
   bottom : Longint;
-  e : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -93,8 +92,7 @@ begin
   Write('pgcd=');
   Write(p);
   Write(''#10'');
-  e := bottom Div p;
-  Write(e);
+  Write(bottom Div p);
   Write(''#10'');
 end.
 

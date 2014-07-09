@@ -51,8 +51,7 @@ int main(void){
   int len = read_int();
   printf("%d\n", len);
   int* tab = read_int_line(len);
-  int a = result(len, tab);
-  printf("%d", a);
+  printf("%d", result(len, tab));
   [pool drain];
   return 0;
 }

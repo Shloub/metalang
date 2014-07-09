@@ -65,10 +65,7 @@ public class vigenere
     }
     crypte(taille_cle, cle, taille, message);
     for (int i = 0 ; i < taille; i++)
-    {
-      char a = message[i];
-      System.out.printf("%c", a);
-    }
+      System.out.printf("%c", message[i]);
     System.out.print("\n");
   }
   

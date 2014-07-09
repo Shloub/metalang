@@ -17,9 +17,7 @@ public class euler09
         int cc = c * c;
         if (cc == a2b2 && c > a)
         {
-          System.out.printf("%d\n%d\n%d\n", a, b, c);
-          int d = a * b * c;
-          System.out.printf("%d\n", d);
+          System.out.printf("%d\n%d\n%d\n%d\n", a, b, c, a * b * c);
         }
     }
   }

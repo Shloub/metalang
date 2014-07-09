@@ -40,7 +40,6 @@
   (setf (toto-bar param) (mread-int ))
   (mread-blank)
   (setf (toto-foo param) (mread-int ))
-  (let ((a (+ (toto-bar param) (* (toto-foo param) (toto-bar param)))))
-    (princ a)
-  )))
+  (princ (+ (toto-bar param) (* (toto-foo param) (toto-bar param))))
+))
 

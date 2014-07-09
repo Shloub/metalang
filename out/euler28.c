@@ -34,8 +34,7 @@ int sumdiag(int n){
 }
 
 int main(void){
-  int a = sumdiag(1001);
-  printf("%d", a);
+  printf("%d", sumdiag(1001));
   return 0;
 }
 

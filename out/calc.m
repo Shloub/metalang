@@ -25,8 +25,7 @@ int fibo(int a, int b, int i){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int c = fibo(1, 2, 4);
-  printf("%d", c);
+  printf("%d", fibo(1, 2, 4));
   [pool drain];
   return 0;
 }

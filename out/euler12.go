@@ -94,7 +94,6 @@ func find(ndiv2 int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var e int = find(500)
-  fmt.Printf("%d\n", e);
+  fmt.Printf("%d\n", find(500));
 }
 

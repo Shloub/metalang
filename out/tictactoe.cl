@@ -248,27 +248,25 @@ Renvoie le coup de l'IA
             )))
         )
     )
-    (let ((a (move-x minMove)))
-      (princ a)
-      (let ((b (move-y minMove)))
-        (princ b)
-        (princ "
+    (princ (move-x minMove))
+    (princ (move-y minMove))
+    (princ "
 ")
-        (return-from play minMove)
-      ))))))
+    (return-from play minMove)
+  ))))
 
 (defun init_ ()
 (progn
-  (let ((d 3))
+  (let ((b 3))
     (let
      ((cases (array_init
-                d
+                b
                 (function (lambda (i)
                 (block lambda_1
-                  (let ((c 3))
+                  (let ((a 3))
                     (let
                      ((tab (array_init
-                              c
+                              a
                               (function (lambda (j)
                               (block lambda_2
                                 (return-from lambda_2 0)
@@ -277,11 +275,11 @@ Renvoie le coup de l'IA
                     (return-from lambda_1 tab)
                     ))))
                 ))))
-    (let ((f (make-gamestate :cases cases
+    (let ((c (make-gamestate :cases cases
                              :firstToPlay t
                              :note 0
                              :ended nil)))
-    (return-from init_ f)
+    (return-from init_ c)
     )))))
 
 (defun read_move ()
@@ -290,9 +288,9 @@ Renvoie le coup de l'IA
     (mread-blank)
     (let ((y (mread-int )))
       (mread-blank)
-      (let ((h (make-move :x x
+      (let ((d (make-move :x x
                           :y y)))
-      (return-from read_move h)
+      (return-from read_move d)
     )))))
 
 (do
@@ -300,12 +298,12 @@ Renvoie le coup de l'IA
   ((> i 1))
   (progn
     (let ((state (init_ )))
-      (let ((k (make-move :x 1
+      (let ((e (make-move :x 1
                           :y 1)))
-      (apply_move k state)
-      (let ((l (make-move :x 0
+      (apply_move e state)
+      (let ((f (make-move :x 0
                           :y 0)))
-      (apply_move l state)
+      (apply_move f state)
       (loop while (not (gamestate-ended state))
       do (progn
            (print_state state)
@@ -321,10 +319,9 @@ Renvoie le coup de l'IA
            )
       )
       (print_state state)
-      (let ((e (gamestate-note state)))
-        (princ e)
-        (princ "
+      (princ (gamestate-note state))
+      (princ "
 ")
-      )))))
+    ))))
 )
 

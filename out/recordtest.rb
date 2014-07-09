@@ -6,6 +6,5 @@ param = {
 param["bar"]=scanf("%d")[0];
 scanf("%*\n");
 param["foo"]=scanf("%d")[0];
-a = param["bar"] + param["foo"] * param["bar"]
-printf "%d", a
+printf "%d", param["bar"] + param["foo"] * param["bar"]
 

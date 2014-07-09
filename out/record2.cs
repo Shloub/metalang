@@ -72,10 +72,7 @@ public static int readInt(){
     t.bar = readInt();
     stdin_sep();
     t.blah = readInt();
-    int a = result(t);
-    Console.Write(a);
-    int b = t.blah;
-    Console.Write(b);
+    Console.Write(result(t));
   }
   
 }

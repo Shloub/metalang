@@ -28,6 +28,5 @@ function sumdiag($n){
   return $sum;
 }
 
-$a = sumdiag(1001);
-echo $a;
+echo sumdiag(1001);
 ?>

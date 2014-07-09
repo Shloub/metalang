@@ -74,9 +74,6 @@ for ($index2 = 0 ; $index2 < $taille; $index2++)
 }
 crypte($taille_cle, $cle, $taille, $message);
 for ($i = 0 ; $i < $taille; $i++)
-{
-  $a = $message[$i];
-  echo $a;
-}
+  echo $message[$i];
 echo "\n";
 ?>

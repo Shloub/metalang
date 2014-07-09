@@ -55,6 +55,5 @@ def find( ndiv2 ):
       """ print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" """
     return 0;
 
-e = find(500);
-print("%d\n" % ( e ), end='')
+print("%d\n" % ( find(500) ), end='')
 

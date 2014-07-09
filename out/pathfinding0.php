@@ -47,8 +47,7 @@ function pathfind(&$tab, $x, $y){
     $tmp = array();
     for ($j = 0 ; $j < $x; $j++)
     {
-      $e = $tab[$i][$j];
-      echo $e;
+      echo $tab[$i][$j];
       $tmp[$j] = -1;
     }
     echo "\n";

@@ -185,30 +185,27 @@ func play(g * gamestate) * move{
           }
       }
   }
-  var a int = (*minMove).x
-  fmt.Printf("%d", a);
-  var b int = (*minMove).y
-  fmt.Printf("%d\n", b);
+  fmt.Printf("%d%d\n", (*minMove).x, (*minMove).y);
   return minMove
 }
 
 func init_() * gamestate{
-  var d int = 3
-  var cases [][]int = make([][]int, d)
-  for i := 0 ; i <= d - 1; i++ {
-    var c int = 3
-      var tab []int = make([]int, c)
-      for j := 0 ; j <= c - 1; j++ {
+  var b int = 3
+  var cases [][]int = make([][]int, b)
+  for i := 0 ; i <= b - 1; i++ {
+    var a int = 3
+      var tab []int = make([]int, a)
+      for j := 0 ; j <= a - 1; j++ {
         tab[j] = 0;
       }
       cases[i] = tab;
   }
-  var f * gamestate = new (gamestate)
-  (*f).cases=cases;
-  (*f).firstToPlay=true;
-  (*f).note=0;
-  (*f).ended=false;
-  return f
+  var c * gamestate = new (gamestate)
+  (*c).cases=cases;
+  (*c).firstToPlay=true;
+  (*c).note=0;
+  (*c).ended=false;
+  return c
 }
 
 func read_move() * move{
@@ -218,24 +215,24 @@ func read_move() * move{
   var y int = 0
   fmt.Fscanf(reader, "%d", &y);
   skip()
-  var h * move = new (move)
-  (*h).x=x;
-  (*h).y=y;
-  return h
+  var d * move = new (move)
+  (*d).x=x;
+  (*d).y=y;
+  return d
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
   for i := 0 ; i <= 1; i++ {
     var state * gamestate = init_()
-      var k * move = new (move)
-      (*k).x=1;
-      (*k).y=1;
-      apply_move(k, state);
-      var l * move = new (move)
-      (*l).x=0;
-      (*l).y=0;
-      apply_move(l, state);
+      var e * move = new (move)
+      (*e).x=1;
+      (*e).y=1;
+      apply_move(e, state);
+      var f * move = new (move)
+      (*f).x=0;
+      (*f).y=0;
+      apply_move(f, state);
       for !(*state).ended{
                            print_state(state);
                            apply_move(play(state), state);
@@ -247,8 +244,7 @@ func main() {
                            }
       }
       print_state(state);
-      var e int = (*state).note
-      fmt.Printf("%d\n", e);
+      fmt.Printf("%d\n", (*state).note);
   }
 }
 

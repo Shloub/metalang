@@ -36,7 +36,7 @@ public class euler26
         m = p;
       }
     }
-    Console.Write(mi + "\n" + m + "\n");
+    Console.Write("" + mi + "\n" + m + "\n");
   }
   
 }

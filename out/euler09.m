@@ -19,9 +19,7 @@ int main(void){
         int cc = c * c;
         if (cc == a2b2 && c > a)
         {
-          printf("%d\n%d\n%d\n", a, b, c);
-          int d = a * b * c;
-          printf("%d\n", d);
+          printf("%d\n%d\n%d\n%d\n", a, b, c, a * b * c);
         }
       }
     }

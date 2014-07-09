@@ -84,16 +84,14 @@ $tab2 = copytab($tab, $len);
 bubblesort($tab2, $len);
 for ($i = 0 ; $i < $len; $i++)
 {
-  $a = $tab2[$i];
-  echo $a, " ";
+  echo $tab2[$i], " ";
 }
 echo "\n";
 $tab3 = copytab($tab, $len);
 qsort_($tab3, $len, 0, $len - 1);
 for ($i = 0 ; $i < $len; $i++)
 {
-  $b = $tab3[$i];
-  echo $b, " ";
+  echo $tab3[$i], " ";
 }
 echo "\n";
 ?>

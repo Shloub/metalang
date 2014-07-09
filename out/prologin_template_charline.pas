@@ -79,12 +79,12 @@ begin
   exit(out_);
 end;
 
-type c = array of char;
-function read_char_line(n : Longint) : c;
+type a = array of char;
+function read_char_line(n : Longint) : a;
 var
   i : Longint;
   t : char;
-  tab : c;
+  tab : a;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -97,9 +97,8 @@ begin
   exit(tab);
 end;
 
-function programme_candidat(tableau : c; taille : Longint) : Longint;
+function programme_candidat(tableau : a; taille : Longint) : Longint;
 var
-  a : char;
   i : Longint;
   out_ : Longint;
 begin
@@ -107,8 +106,7 @@ begin
   for i := 0 to  taille - 1 do
   begin
     out_ := out_ + ord(tableau[i]) * i;
-    a := tableau[i];
-    Write(a);
+    Write(tableau[i]);
   end;
   Write('--'#10'');
   exit(out_);
@@ -116,14 +114,12 @@ end;
 
 
 var
-  b : Longint;
-  tableau : c;
+  tableau : a;
   taille : Longint;
 begin
   taille := read_int();
   tableau := read_char_line(taille);
-  b := programme_candidat(tableau, taille);
-  Write(b);
+  Write(programme_candidat(tableau, taille));
   Write(''#10'');
 end.
 

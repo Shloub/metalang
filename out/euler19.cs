@@ -62,7 +62,7 @@ public class euler19
       if ((dayofweek % 7) == 6)
         count ++;
     }
-    Console.Write(count + "\n");
+    Console.Write("" + count + "\n");
   }
   
 }

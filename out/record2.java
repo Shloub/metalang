@@ -32,10 +32,7 @@ public class record2
     scanner.next("^-"); t.blah = -scanner.nextInt();
     }else{
     t.blah = scanner.nextInt();}
-    int a = result(t);
-    System.out.printf("%d", a);
-    int b = t.blah;
-    System.out.printf("%d", b);
+    System.out.printf("%d", result(t));
   }
   
 }

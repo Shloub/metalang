@@ -48,8 +48,5 @@ t = mktoto(4);
 t["bar"]=readint()
 stdinsep()
 t["blah"]=readint()
-a = result(t);
-print("%d" % a, end='')
-b = t["blah"];
-print("%d" % b, end='')
+print("%d" % result(t), end='')
 

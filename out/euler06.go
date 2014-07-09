@@ -20,7 +20,6 @@ func main() {
   var sum int = (lim * (lim + 1)) / 2
   var carressum int = sum * sum
   var sumcarres int = (lim * (lim + 1) * (2 * lim + 1)) / 6
-  var a int = carressum - sumcarres
-  fmt.Printf("%d", a);
+  fmt.Printf("%d", carressum - sumcarres);
 }
 

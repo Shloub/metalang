@@ -25,13 +25,11 @@ public class aaa_readints
   public static void Main(String[] args)
   {
     int len = read_int();
-    Console.Write(len + "=len\n");
+    Console.Write("" + len + "=len\n");
     int[] tab1 = read_int_line(len);
     for (int i = 0 ; i < len; i++)
     {
-      Console.Write(i + "=>");
-      int a = tab1[i];
-      Console.Write(a + "\n");
+      Console.Write("" + i + "=>" + tab1[i] + "\n");
     }
     len = read_int();
     int[][] tab2 = read_int_matrix(len, len - 1);
@@ -39,8 +37,7 @@ public class aaa_readints
     {
       for (int j = 0 ; j < len; j++)
       {
-        int b = tab2[i][j];
-        Console.Write(b + " ");
+        Console.Write("" + tab2[i][j] + " ");
       }
       Console.Write("\n");
     }

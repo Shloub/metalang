@@ -41,8 +41,7 @@ La suite de fibonaci
     scanner.next("^-"); i = -scanner.nextInt();
     }else{
     i = scanner.nextInt();}
-    int c = fibo_(a, b, i);
-    System.out.printf("%d", c);
+    System.out.printf("%d", fibo_(a, b, i));
   }
   
 }

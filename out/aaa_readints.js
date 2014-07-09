@@ -66,9 +66,7 @@ util.print(len, "=len\n");
 var tab1 = read_int_line(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  util.print(i, "=>");
-  var a = tab1[i];
-  util.print(a, "\n");
+  util.print(i, "=>", tab1[i], "\n");
 }
 len = read_int();
 var tab2 = read_int_matrix(len, len - 1);
@@ -76,8 +74,7 @@ for (var i = 0 ; i <= len - 2; i++)
 {
   for (var j = 0 ; j <= len - 1; j++)
   {
-    var b = tab2[i][j];
-    util.print(b, " ");
+    util.print(tab2[i][j], " ");
   }
   util.print("\n");
 }

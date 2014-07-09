@@ -122,16 +122,14 @@ public static int readInt(){
     bubblesort(tab2, len);
     for (int i = 0 ; i < len; i++)
     {
-      int a = tab2[i];
-      Console.Write(a + " ");
+      Console.Write("" + tab2[i] + " ");
     }
     Console.Write("\n");
     int[] tab3 = copytab(tab, len);
     qsort_(tab3, len, 0, len - 1);
     for (int i = 0 ; i < len; i++)
     {
-      int b = tab3[i];
-      Console.Write(b + " ");
+      Console.Write("" + tab3[i] + " ");
     }
     Console.Write("\n");
   }

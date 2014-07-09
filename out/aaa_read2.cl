@@ -89,10 +89,9 @@ read int, read char et skip
         (progn
           (princ i)
           (princ "=>")
-          (let ((a (aref tab i)))
-            (princ a)
-            (princ " ")
-          ))
+          (princ (aref tab i))
+          (princ " ")
+        )
       )
       (princ "
 ")
@@ -103,10 +102,9 @@ read int, read char et skip
           (progn
             (princ i_)
             (princ "==>")
-            (let ((b (aref tab2 i_)))
-              (princ b)
-              (princ " ")
-            ))
+            (princ (aref tab2 i_))
+            (princ " ")
+          )
         )
         (let ((strlen (read_int )))
           (princ strlen)
@@ -132,10 +130,7 @@ read int, read char et skip
             (do
               ((j 0 (+ 1 j)))
               ((> j (- strlen 1)))
-              (progn
-                (let ((d (aref tab4 j)))
-                  (princ d)
-                ))
+              (princ (aref tab4 j))
             )
           ))))))
 

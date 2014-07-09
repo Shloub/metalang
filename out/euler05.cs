@@ -44,7 +44,7 @@ public class euler05
     for (int k = 1 ; k <= lim; k ++)
       for (int l = 1 ; l <= o[k]; l ++)
         product *= k;
-    Console.Write(product + "\n");
+    Console.Write("" + product + "\n");
   }
   
 }

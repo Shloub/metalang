@@ -36,8 +36,7 @@ public class euler28
   
   public static void main(String args[])
   {
-    int a = sumdiag(1001);
-    System.out.printf("%d", a);
+    System.out.printf("%d", sumdiag(1001));
   }
   
 }

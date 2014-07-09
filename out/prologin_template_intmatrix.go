@@ -56,7 +56,6 @@ func main() {
   var taille_x int = read_int()
   var taille_y int = read_int()
   var tableau [][]int = read_int_matrix(taille_x, taille_y)
-  var a int = programme_candidat(tableau, taille_x, taille_y)
-  fmt.Printf("%d\n", a);
+  fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }
 

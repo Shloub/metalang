@@ -79,12 +79,12 @@ begin
   exit(out_);
 end;
 
-type e = array of Longint;
-function read_int_line(n : Longint) : e;
+type a = array of Longint;
+function read_int_line(n : Longint) : a;
 var
   i : Longint;
   t : Longint;
-  tab : e;
+  tab : a;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -97,12 +97,12 @@ begin
   exit(tab);
 end;
 
-type f = array of char;
-function read_char_line(n : Longint) : f;
+type b = array of char;
+function read_char_line(n : Longint) : b;
 var
   i : Longint;
   t : char;
-  tab : f;
+  tab : b;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -121,19 +121,16 @@ read int, read char et skip
 }
 
 var
-  a : Longint;
-  b : Longint;
   c : Longint;
-  d : char;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
   j : Longint;
   len : Longint;
   strlen : Longint;
-  tab : e;
-  tab2 : e;
-  tab4 : f;
+  tab : a;
+  tab2 : a;
+  tab4 : b;
   tmpc : char;
 begin
   len := read_int();
@@ -144,8 +141,7 @@ begin
   begin
     Write(i);
     Write('=>');
-    a := tab[i];
-    Write(a);
+    Write(tab[i]);
     Write(' ');
   end;
   Write(''#10'');
@@ -154,8 +150,7 @@ begin
   begin
     Write(i_);
     Write('==>');
-    b := tab2[i_];
-    Write(b);
+    Write(tab2[i_]);
     Write(' ');
   end;
   strlen := read_int();
@@ -179,8 +174,7 @@ begin
   end;
   for j := 0 to  strlen - 1 do
   begin
-    d := tab4[j];
-    Write(d);
+    Write(tab4[j]);
   end;
 end.
 

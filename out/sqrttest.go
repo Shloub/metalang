@@ -22,17 +22,6 @@ func isqrt(c int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var a int = isqrt(4)
-  fmt.Printf("%d ", a);
-  var b int = isqrt(16)
-  fmt.Printf("%d ", b);
-  var d int = isqrt(20)
-  fmt.Printf("%d ", d);
-  var e int = isqrt(1000)
-  fmt.Printf("%d ", e);
-  var f int = isqrt(500)
-  fmt.Printf("%d ", f);
-  var g int = isqrt(10)
-  fmt.Printf("%d ", g);
+  fmt.Printf("%d %d %d %d %d %d ", isqrt(4), isqrt(16), isqrt(20), isqrt(1000), isqrt(500), isqrt(10));
 }
 

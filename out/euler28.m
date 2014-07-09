@@ -36,8 +36,7 @@ int sumdiag(int n){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int a = sumdiag(1001);
-  printf("%d", a);
+  printf("%d", sumdiag(1001));
   [pool drain];
   return 0;
 }

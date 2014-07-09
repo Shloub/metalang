@@ -51,8 +51,7 @@ int main(void){
   int n = 0;
   scanf("%d", &n);
   /* Lecture de l'entier */
-  int b = sumdiv(n);
-  printf("%d", b);
+  printf("%d", sumdiv(n));
   [pool drain];
   return 0;
 }

@@ -44,7 +44,6 @@ func main() {
   for i := 0 ; i <= n - 1; i++ {
     t[i] = 2;
   }
-  var a int = find(3, t, 1, n)
-  fmt.Printf("%d\n", a);
+  fmt.Printf("%d\n", find(3, t, 1, n));
 }
 

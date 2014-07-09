@@ -46,9 +46,7 @@ public class aaa_readints
     int[] tab1 = read_int_line(len);
     for (int i = 0 ; i < len; i++)
     {
-      System.out.printf("%d=>", i);
-      int a = tab1[i];
-      System.out.printf("%d\n", a);
+      System.out.printf("%d=>%d\n", i, tab1[i]);
     }
     len = read_int();
     int[][] tab2 = read_int_matrix(len, len - 1);
@@ -56,8 +54,7 @@ public class aaa_readints
     {
       for (int j = 0 ; j < len; j++)
       {
-        int b = tab2[i][j];
-        System.out.printf("%d ", b);
+        System.out.printf("%d ", tab2[i][j]);
       }
       System.out.print("\n");
     }

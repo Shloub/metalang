@@ -293,8 +293,6 @@ Renvoie le coup de l'IA
 }
 function play(g : gamestate) : move;
 var
-  a : Longint;
-  b : Longint;
   currentNote : Longint;
   minMove : move;
   minNote : Longint;
@@ -331,48 +329,46 @@ begin
         end;
     end;
   end;
-  a := minMove^.x;
-  Write(a);
-  b := minMove^.y;
-  Write(b);
+  Write(minMove^.x);
+  Write(minMove^.y);
   Write(''#10'');
   exit(minMove);
 end;
 
-type n = array of Longint;
+type h = array of Longint;
 function init_() : gamestate;
 var
-  c : Longint;
-  cases : array of n;
-  d : Longint;
-  f : gamestate;
+  a : Longint;
+  b : Longint;
+  c : gamestate;
+  cases : array of h;
   i : Longint;
   j : Longint;
-  tab : n;
+  tab : h;
 begin
-  d := 3;
-  SetLength(cases, d);
-  for i := 0 to  d - 1 do
+  b := 3;
+  SetLength(cases, b);
+  for i := 0 to  b - 1 do
   begin
-    c := 3;
-    SetLength(tab, c);
-    for j := 0 to  c - 1 do
+    a := 3;
+    SetLength(tab, a);
+    for j := 0 to  a - 1 do
     begin
       tab[j] := 0;
     end;
     cases[i] := tab;
   end;
-  new(f);
-  f^.cases := cases;
-  f^.firstToPlay := true;
-  f^.note := 0;
-  f^.ended := false;
-  exit(f);
+  new(c);
+  c^.cases := cases;
+  c^.firstToPlay := true;
+  c^.note := 0;
+  c^.ended := false;
+  exit(c);
 end;
 
 function read_move() : move;
 var
-  h : move;
+  d : move;
   x : Longint;
   y : Longint;
 begin
@@ -382,31 +378,30 @@ begin
   y := 0;
   y := read_int_();
   skip();
-  new(h);
-  h^.x := x;
-  h^.y := y;
-  exit(h);
+  new(d);
+  d^.x := x;
+  d^.y := y;
+  exit(d);
 end;
 
 
 var
-  e : Longint;
+  e : move;
+  f : move;
   i : Longint;
-  k : move;
-  l : move;
   state : gamestate;
 begin
   for i := 0 to  1 do
   begin
     state := init_();
-    new(k);
-    k^.x := 1;
-    k^.y := 1;
-    apply_move(k, state);
-    new(l);
-    l^.x := 0;
-    l^.y := 0;
-    apply_move(l, state);
+    new(e);
+    e^.x := 1;
+    e^.y := 1;
+    apply_move(e, state);
+    new(f);
+    f^.x := 0;
+    f^.y := 0;
+    apply_move(f, state);
     while not state^.ended do
     begin
       print_state(state);
@@ -421,8 +416,7 @@ begin
         end;
     end;
     print_state(state);
-    e := state^.note;
-    Write(e);
+    Write(state^.note);
     Write(''#10'');
   end;
 end.

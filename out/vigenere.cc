@@ -11,7 +11,7 @@ int position_alphabet(char c){
 }
 
 char of_position_alphabet(int c){
-  return c + 'a';
+  return (char)(c + 'a');
 }
 
 void crypte(int taille_cle, std::vector<char >& cle, int taille, std::vector<char >& message){
@@ -50,10 +50,7 @@ int main(){
   }
   crypte(taille_cle, cle, taille, message);
   for (int i = 0 ; i < taille; i++)
-  {
-    char a = message.at(i);
-    std::cout << a;
-  }
+    std::cout << message.at(i);
   std::cout << "\n";
   return 0;
 }

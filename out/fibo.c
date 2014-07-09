@@ -26,8 +26,7 @@ int main(void){
   int b = 0;
   int i = 0;
   scanf("%d %d %d", &a, &b, &i);
-  int c = fibo_(a, b, i);
-  printf("%d", c);
+  printf("%d", fibo_(a, b, i));
   return 0;
 }
 

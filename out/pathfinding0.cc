@@ -71,8 +71,7 @@ int pathfind(std::vector<std::vector<char > >& tab, int x, int y){
     std::vector<int > tmp( x );
     for (int j = 0 ; j < x; j++)
     {
-      char e = tab.at(i).at(j);
-      std::cout << e;
+      std::cout << tab.at(i).at(j);
       tmp.at(j) = -1;
     }
     std::cout << "\n";

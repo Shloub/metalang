@@ -77,8 +77,7 @@ while mem[current_pos] != 0 do
   mem[current_pos] = mem[current_pos] - 1;
   current_pos -= 1
   mem[current_pos] = mem[current_pos] + 1;
-  b = mem[current_pos]
-  printf "%c", b
+  printf "%c", mem[current_pos]
   current_pos += 1
 end
 

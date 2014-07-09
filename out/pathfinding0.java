@@ -73,8 +73,7 @@ public class pathfinding0
       int[] tmp = new int[x];
       for (int j = 0 ; j < x; j++)
       {
-        char e = tab[i][j];
-        System.out.printf("%c", e);
+        System.out.printf("%c", tab[i][j]);
         tmp[j] = -1;
       }
       System.out.print("\n");

@@ -21,14 +21,12 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 )
     out_ = 0
     for i in (0 ..  taille1 - 1) do
       out_ += tableau1[i].ord * i
-      a = tableau1[i]
-      printf "%c", a
+      printf "%c", tableau1[i]
     end
     print "--\n";
     for j in (0 ..  taille2 - 1) do
       out_ += tableau2[j].ord * j * 100
-      b = tableau2[j]
-      printf "%c", b
+      printf "%c", tableau2[j]
     end
     print "--\n";
     return (out_);
@@ -38,6 +36,5 @@ taille1 = read_int()
 taille2 = read_int()
 tableau1 = read_char_line(taille1)
 tableau2 = read_char_line(taille2)
-c = programme_candidat(tableau1, taille1, tableau2, taille2)
-printf "%d\n", c
+printf "%d\n", programme_candidat(tableau1, taille1, tableau2, taille2)
 

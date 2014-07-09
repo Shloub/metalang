@@ -86,15 +86,13 @@ end;
 var
   a : Longint;
   b : Longint;
-  c : Longint;
 begin
   a := 0;
   b := 0;
   a := read_int_();
   skip();
   b := read_int_();
-  c := exp_(a, b);
-  Write(c);
+  Write(exp_(a, b));
 end.
 
 

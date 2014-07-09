@@ -82,8 +82,8 @@ var
   chiffres : array of Longint;
   i : Longint;
   j : Longint;
+  o : bigint;
   tmp : Longint;
-  u : bigint;
 begin
   SetLength(chiffres, len);
   for j := 0 to  len - 1 do
@@ -98,16 +98,15 @@ begin
     chiffres[i] := chiffres[len - 1 - i];
     chiffres[len - 1 - i] := tmp;
   end;
-  new(u);
-  u^.bigint_sign := true;
-  u^.bigint_len := len;
-  u^.bigint_chiffres := chiffres;
-  exit(u);
+  new(o);
+  o^.bigint_sign := true;
+  o^.bigint_len := len;
+  o^.bigint_chiffres := chiffres;
+  exit(o);
 end;
 
 procedure print_bigint(a : bigint);
 var
-  e : Longint;
   i : Longint;
 begin
   if not a^.bigint_sign
@@ -117,8 +116,7 @@ begin
     end;
   for i := 0 to  a^.bigint_len - 1 do
   begin
-    e := a^.bigint_chiffres[a^.bigint_len - 1 - i];
-    Write(e);
+    Write(a^.bigint_chiffres[a^.bigint_len - 1 - i]);
   end;
 end;
 
@@ -206,9 +204,9 @@ var
   chiffres : array of Longint;
   i : Longint;
   len : Longint;
+  p : bigint;
   retenue : Longint;
   tmp : Longint;
-  v : bigint;
 begin
   { Une addition ou on en a rien a faire des signes }
   len := max2(a^.bigint_len, b^.bigint_len) + 1;
@@ -234,11 +232,11 @@ begin
   begin
     len := len - 1;
   end;
-  new(v);
-  v^.bigint_sign := true;
-  v^.bigint_len := len;
-  v^.bigint_chiffres := chiffres;
-  exit(v);
+  new(p);
+  p^.bigint_sign := true;
+  p^.bigint_len := len;
+  p^.bigint_chiffres := chiffres;
+  exit(p);
 end;
 
 function sub_bigint_positif(a : bigint; b : bigint) : bigint;
@@ -246,9 +244,9 @@ var
   chiffres : array of Longint;
   i : Longint;
   len : Longint;
+  q : bigint;
   retenue : Longint;
   tmp : Longint;
-  w : bigint;
 begin
   { Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -280,22 +278,22 @@ Pré-requis : a > b
   begin
     len := len - 1;
   end;
-  new(w);
-  w^.bigint_sign := true;
-  w^.bigint_len := len;
-  w^.bigint_chiffres := chiffres;
-  exit(w);
+  new(q);
+  q^.bigint_sign := true;
+  q^.bigint_len := len;
+  q^.bigint_chiffres := chiffres;
+  exit(q);
 end;
 
 function neg_bigint(a : bigint) : bigint;
 var
-  x : bigint;
+  r : bigint;
 begin
-  new(x);
-  x^.bigint_sign := not a^.bigint_sign;
-  x^.bigint_len := a^.bigint_len;
-  x^.bigint_chiffres := a^.bigint_chiffres;
-  exit(x);
+  new(r);
+  r^.bigint_sign := not a^.bigint_sign;
+  r^.bigint_len := a^.bigint_len;
+  r^.bigint_chiffres := a^.bigint_chiffres;
+  exit(r);
 end;
 
 function add_bigint(a : bigint; b : bigint) : bigint;
@@ -355,7 +353,7 @@ var
   l : Longint;
   len : Longint;
   retenue : Longint;
-  y : bigint;
+  s : bigint;
 begin
   { Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -387,42 +385,42 @@ D'ou le nom de la fonction. }
         len := len - 1;
       end;
   end;
-  new(y);
-  y^.bigint_sign := a^.bigint_sign
+  new(s);
+  s^.bigint_sign := a^.bigint_sign
   =
   b^.bigint_sign;
-  y^.bigint_len := len;
-  y^.bigint_chiffres := chiffres;
-  exit(y);
+  s^.bigint_len := len;
+  s^.bigint_chiffres := chiffres;
+  exit(s);
 end;
 
 function bigint_premiers_chiffres(a : bigint; i : Longint) : bigint;
 var
   len : Longint;
-  z : bigint;
+  u : bigint;
 begin
   len := min2(i, a^.bigint_len);
   while (len <> 0) and (a^.bigint_chiffres[len - 1] = 0) do
   begin
     len := len - 1;
   end;
-  new(z);
-  z^.bigint_sign := a^.bigint_sign;
-  z^.bigint_len := len;
-  z^.bigint_chiffres := a^.bigint_chiffres;
-  exit(z);
+  new(u);
+  u^.bigint_sign := a^.bigint_sign;
+  u^.bigint_len := len;
+  u^.bigint_chiffres := a^.bigint_chiffres;
+  exit(u);
 end;
 
 function bigint_shift(a : bigint; i : Longint) : bigint;
 var
-  ba : bigint;
   chiffres : array of Longint;
-  f : Longint;
+  e : Longint;
   k : Longint;
+  v : bigint;
 begin
-  f := a^.bigint_len + i;
-  SetLength(chiffres, f);
-  for k := 0 to  f - 1 do
+  e := a^.bigint_len + i;
+  SetLength(chiffres, e);
+  for k := 0 to  e - 1 do
   begin
     if k >= i
     then
@@ -434,13 +432,13 @@ begin
         chiffres[k] := 0;
       end;
   end;
-  new(ba);
-  ba^.bigint_sign := a^.bigint_sign;
-  ba^.bigint_len := a^.bigint_len
+  new(v);
+  v^.bigint_sign := a^.bigint_sign;
+  v^.bigint_len := a^.bigint_len
   +
   i;
-  ba^.bigint_chiffres := chiffres;
-  exit(ba);
+  v^.bigint_chiffres := chiffres;
+  exit(v);
 end;
 
 function mul_bigint(aa : bigint; bb : bigint) : bigint;
@@ -505,11 +503,11 @@ end;
 
 function bigint_of_int(i : Longint) : bigint;
 var
-  bc : bigint;
   j : Longint;
   k : Longint;
   size : Longint;
   t : array of Longint;
+  w : bigint;
 begin
   size := log10(i);
   if i = 0
@@ -527,11 +525,11 @@ begin
     t[k] := i Mod 10;
     i := i Div 10;
   end;
-  new(bc);
-  bc^.bigint_sign := true;
-  bc^.bigint_len := size;
-  bc^.bigint_chiffres := t;
-  exit(bc);
+  new(w);
+  w^.bigint_sign := true;
+  w^.bigint_len := size;
+  w^.bigint_chiffres := t;
+  exit(w);
 end;
 
 function fact_bigint(a : bigint) : bigint;
@@ -665,6 +663,7 @@ var
   a0_bigint : array of bigint;
   a_bigint : array of bigint;
   b : array of Longint;
+  f : Longint;
   found : boolean;
   g : Longint;
   h : Longint;
@@ -673,7 +672,6 @@ var
   j2 : Longint;
   k : Longint;
   l : Longint;
-  m : Longint;
   maxA : Longint;
   maxB : Longint;
   min_ : bigint;
@@ -681,21 +679,21 @@ var
 begin
   maxA := 5;
   maxB := 5;
-  g := maxA + 1;
-  SetLength(a_bigint, g);
-  for j := 0 to  g - 1 do
+  f := maxA + 1;
+  SetLength(a_bigint, f);
+  for j := 0 to  f - 1 do
   begin
     a_bigint[j] := bigint_of_int(j * j);
   end;
-  h := maxA + 1;
-  SetLength(a0_bigint, h);
-  for j2 := 0 to  h - 1 do
+  g := maxA + 1;
+  SetLength(a0_bigint, g);
+  for j2 := 0 to  g - 1 do
   begin
     a0_bigint[j2] := bigint_of_int(j2);
   end;
-  m := maxA + 1;
-  SetLength(b, m);
-  for k := 0 to  m - 1 do
+  h := maxA + 1;
+  SetLength(b, h);
+  for k := 0 to  h - 1 do
   begin
     b[k] := 2;
   end;
@@ -749,16 +747,11 @@ var
   a : bigint;
   b : bigint;
   i : Longint;
-  o : Longint;
-  p : Longint;
-  q : Longint;
-  r : Longint;
-  s : boolean;
+  m : boolean;
   sum : bigint;
   tmp : bigint;
 begin
-  o := euler29();
-  Write(o);
+  Write(euler29());
   Write(''#10'');
   sum := read_bigint(50);
   for i := 2 to  100 do
@@ -771,17 +764,14 @@ begin
   print_bigint(sum);
   Write(''#10'');
   Write('euler25 = ');
-  p := euler25();
-  Write(p);
+  Write(euler25());
   Write(''#10'');
   Write('euler16 = ');
-  q := euler16();
-  Write(q);
+  Write(euler16());
   Write(''#10'');
   euler48();
   Write('euler20 = ');
-  r := euler20();
-  Write(r);
+  Write(euler20());
   Write(''#10'');
   a := bigint_of_int(999999);
   b := bigint_of_int(9951263);
@@ -823,8 +813,8 @@ begin
   Write('>');
   print_bigint(b);
   Write('=');
-  s := bigint_gt(a, b);
-  if s
+  m := bigint_gt(a, b);
+  if m
   then
     begin
       Write('True');

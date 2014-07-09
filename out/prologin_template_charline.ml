@@ -12,8 +12,7 @@ let programme_candidat tableau taille =
   let out_ = ref( 0 ) in
   for i = 0 to taille - 1 do
     out_ := (!out_) + int_of_char (tableau.(i)) * i;
-    let a = tableau.(i) in
-    Printf.printf "%c" a
+    Printf.printf "%c" tableau.(i)
   done;
   Printf.printf "--\n";
   (!out_)
@@ -22,7 +21,6 @@ let () =
 begin
   let taille = (read_int ()) in
   let tableau = read_char_line taille in
-  let b = programme_candidat tableau taille in
-  Printf.printf "%d\n" b
+  Printf.printf "%d\n" (programme_candidat tableau taille)
 end
  

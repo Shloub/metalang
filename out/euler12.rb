@@ -84,6 +84,5 @@ def find( ndiv2 )
     return (0);
 end
 
-e = find(500)
-printf "%d\n", e
+printf "%d\n", find(500)
 

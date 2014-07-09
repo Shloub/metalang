@@ -28,6 +28,5 @@ for i in (0 ..  len - 1) do
   scanf("%*\n");
   tab[i] = x;
 end
-a = montagnes_(tab, len)
-printf "%d", a
+printf "%d", montagnes_(tab, len)
 

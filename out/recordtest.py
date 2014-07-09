@@ -39,6 +39,5 @@ param = {
 param["bar"]=readint()
 stdinsep()
 param["foo"]=readint()
-a = param["bar"] + param["foo"] * param["bar"];
-print("%d" % a, end='')
+print("%d" % (param["bar"] + param["foo"] * param["bar"]), end='')
 

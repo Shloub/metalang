@@ -37,14 +37,12 @@ func programme_candidat(tableau1 []byte, taille1 int, tableau2 []byte, taille2 i
   var out_ int = 0
   for i := 0 ; i <= taille1 - 1; i++ {
     out_ += (int)(tableau1[i]) * i;
-      var a byte = tableau1[i]
-      fmt.Printf("%c", a);
+      fmt.Printf("%c", tableau1[i]);
   }
   fmt.Printf("--\n");
   for j := 0 ; j <= taille2 - 1; j++ {
     out_ += (int)(tableau2[j]) * j * 100;
-      var b byte = tableau2[j]
-      fmt.Printf("%c", b);
+      fmt.Printf("%c", tableau2[j]);
   }
   fmt.Printf("--\n");
   return out_
@@ -56,7 +54,6 @@ func main() {
   var taille2 int = read_int()
   var tableau1 []byte = read_char_line(taille1)
   var tableau2 []byte = read_char_line(taille2)
-  var c int = programme_candidat(tableau1, taille1, tableau2, taille2)
-  fmt.Printf("%d\n", c);
+  fmt.Printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
 }
 

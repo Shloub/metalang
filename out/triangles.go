@@ -72,12 +72,10 @@ func main() {
       }
       tab[i] = tab2;
   }
-  var c int = find(len, tab)
-  fmt.Printf("%d\n", c);
+  fmt.Printf("%d\n", find(len, tab));
   for k := 0 ; k <= len - 1; k++ {
     for l := 0 ; l <= k; l++ {
-        var d int = tab[k][l]
-          fmt.Printf("%d ", d);
+        fmt.Printf("%d ", tab[k][l]);
       }
       fmt.Printf("\n");
   }

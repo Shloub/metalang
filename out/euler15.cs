@@ -34,13 +34,11 @@ public class euler15
     {
       for (int k = 0 ; k < n; k++)
       {
-        int a = tab[m][k];
-        Console.Write(a + " ");
+        Console.Write("" + tab[m][k] + " ");
       }
       Console.Write("\n");
     }
-    int b = tab[0][0];
-    Console.Write(b + "\n");
+    Console.Write("" + tab[0][0] + "\n");
   }
   
 }

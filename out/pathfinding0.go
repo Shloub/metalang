@@ -83,8 +83,7 @@ func pathfind(tab [][]byte, x int, y int) int{
   for i := 0 ; i <= y - 1; i++ {
     var tmp []int = make([]int, x)
       for j := 0 ; j <= x - 1; j++ {
-        var e byte = tab[i][j]
-          fmt.Printf("%c", e);
+        fmt.Printf("%c", tab[i][j]);
           tmp[j] = -1;
       }
       fmt.Printf("\n");

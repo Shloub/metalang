@@ -17,9 +17,7 @@ for o in range(2, 1 + n):
     tab[r][q] = tab[r + 1][q] + tab[r][q + 1];
 for m in range(0, n):
   for k in range(0, n):
-    a = tab[m][k];
-    print("%d " % ( a ), end='')
+    print("%d " % ( tab[m][k] ), end='')
   print("")
-b = tab[0][0];
-print("%d\n" % ( b ), end='')
+print("%d\n" % ( tab[0][0] ), end='')
 

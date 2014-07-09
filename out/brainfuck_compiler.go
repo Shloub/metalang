@@ -91,8 +91,7 @@ func main() {
                              mem[current_pos] = mem[current_pos] - 1;
                              current_pos --;
                              mem[current_pos] = mem[current_pos] + 1;
-                             var b byte = (byte)(mem[current_pos])
-                             fmt.Printf("%c", b);
+                             fmt.Printf("%c", (byte)(mem[current_pos]));
                              current_pos ++;
   }
 }

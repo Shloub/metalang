@@ -25,8 +25,7 @@ int programme_candidat(std::vector<char >& tableau, int taille){
   for (int i = 0 ; i < taille; i++)
   {
     out_ += tableau.at(i) * i;
-    char a = tableau.at(i);
-    std::cout << a;
+    std::cout << tableau.at(i);
   }
   std::cout << "--\n";
   return out_;
@@ -36,8 +35,7 @@ int programme_candidat(std::vector<char >& tableau, int taille){
 int main(){
   int taille = read_int();
   std::vector<char > tableau = read_char_line(taille);
-  int b = programme_candidat(tableau, taille);
-  std::cout << b << "\n";
+  std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }
 

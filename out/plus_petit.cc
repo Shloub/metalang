@@ -44,8 +44,7 @@ int main(){
     std::cin >> tmp >> std::skipws;
     tab.at(i) = tmp;
   }
-  int c = plus_petit_(tab, len);
-  std::cout << c;
+  std::cout << plus_petit_(tab, len);
   return 0;
 }
 

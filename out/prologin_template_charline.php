@@ -12,8 +12,7 @@ function programme_candidat(&$tableau, $taille){
   for ($i = 0 ; $i < $taille; $i++)
   {
     $out_ += ord($tableau[$i]) * $i;
-    $a = $tableau[$i];
-    echo $a;
+    echo $tableau[$i];
   }
   echo "--\n";
   return $out_;
@@ -21,6 +20,5 @@ function programme_candidat(&$tableau, $taille){
 
 $taille = read_int();
 $tableau = read_char_line($taille);
-$b = programme_candidat($tableau, $taille);
-echo $b, "\n";
+echo programme_candidat($tableau, $taille), "\n";
 ?>

@@ -71,8 +71,6 @@ for (var i = 1 ; i <= 9; i++)
 }
 util.print(top, "/", bottom, "\n");
 var p = pgcd(top, bottom);
-util.print("pgcd=", p, "\n");
-var e = ~~(bottom / p);
-util.print(e, "\n");
+util.print("pgcd=", p, "\n", ~~(bottom / p), "\n");
 
 

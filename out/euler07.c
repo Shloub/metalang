@@ -32,8 +32,7 @@ int main(void){
     for (i = 0 ; i < n; i++)
       t[i] = 2;
   }
-  int a = find(3, t, 1, n);
-  printf("%d\n", a);
+  printf("%d\n", find(3, t, 1, n));
   return 0;
 }
 

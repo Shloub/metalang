@@ -26,8 +26,7 @@ public class prologin_template_intlist
   {
     int taille = read_int();
     int[] tableau = read_int_line(taille);
-    int a = programme_candidat(tableau, taille);
-    Console.Write(a + "\n");
+    Console.Write("" + programme_candidat(tableau, taille) + "\n");
   }
   
 }

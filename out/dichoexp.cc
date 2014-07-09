@@ -17,8 +17,7 @@ int main(){
   int a = 0;
   int b = 0;
   std::cin >> a >> std::skipws >> b >> std::noskipws;
-  int c = exp_(a, b);
-  std::cout << c;
+  std::cout << exp_(a, b);
   return 0;
 }
 

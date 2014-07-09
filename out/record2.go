@@ -40,9 +40,6 @@ func main() {
   fmt.Fscanf(reader, "%d", &(*t).bar);
   skip()
   fmt.Fscanf(reader, "%d", &(*t).blah);
-  var a int = result(t)
-  fmt.Printf("%d", a);
-  var b int = (*t).blah
-  fmt.Printf("%d", b);
+  fmt.Printf("%d", result(t));
 }
 

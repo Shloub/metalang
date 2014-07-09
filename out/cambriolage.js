@@ -99,7 +99,6 @@ for (var k = 0 ; k <= m - 1; k++)
   }
   serrures[k] = out1;
 }
-var e = nbPassePartout(n, passepartout, m, serrures);
-util.print(e);
+util.print(nbPassePartout(n, passepartout, m, serrures));
 
 

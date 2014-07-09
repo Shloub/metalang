@@ -79,8 +79,7 @@ et qui produit les macros metalang correspondante
       mem[current_pos] = mem[current_pos] - 1;
       current_pos --;
       mem[current_pos] = mem[current_pos] + 1;
-      char b = (char)(mem[current_pos]);
-      Console.Write(b);
+      Console.Write((char)(mem[current_pos]));
       current_pos ++;
     }
   }

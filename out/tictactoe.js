@@ -186,31 +186,28 @@ function play(g){
       minMove.y = y;
     }
   }
-  var a = minMove.x;
-  util.print(a);
-  var b = minMove.y;
-  util.print(b, "\n");
+  util.print(minMove.x, minMove.y, "\n");
   return minMove;
 }
 
 function init_(){
-  var d = 3;
-  var cases = new Array(d);
-  for (var i = 0 ; i <= d - 1; i++)
+  var b = 3;
+  var cases = new Array(b);
+  for (var i = 0 ; i <= b - 1; i++)
   {
-    var c = 3;
-    var tab = new Array(c);
-    for (var j = 0 ; j <= c - 1; j++)
+    var a = 3;
+    var tab = new Array(a);
+    for (var j = 0 ; j <= a - 1; j++)
       tab[j] = 0;
     cases[i] = tab;
   }
-  var f = {
+  var c = {
     cases : cases,
     firstToPlay : 1,
     note : 0,
     ended : 0
   };
-  return f;
+  return c;
 }
 
 function read_move(){
@@ -220,26 +217,26 @@ function read_move(){
   var y = 0;
   y=read_int_();
   stdinsep();
-  var h = {
+  var d = {
     x : x,
     y : y
   };
-  return h;
+  return d;
 }
 
 for (var i = 0 ; i <= 1; i++)
 {
   var state = init_();
-  var k = {
+  var e = {
     x : 1,
     y : 1
   };
-  apply_move(k, state);
-  var l = {
+  apply_move(e, state);
+  var f = {
     x : 0,
     y : 0
   };
-  apply_move(l, state);
+  apply_move(f, state);
   while (!state.ended)
   {
     print_state(state);
@@ -253,8 +250,7 @@ for (var i = 0 ; i <= 1; i++)
     }
   }
   print_state(state);
-  var e = state.note;
-  util.print(e, "\n");
+  util.print(state.note, "\n");
 }
 
 

@@ -52,8 +52,7 @@ public class aaa_missing
     int len = read_int();
     System.out.printf("%d\n", len);
     int[] tab = read_int_line(len);
-    int a = result(len, tab);
-    System.out.printf("%d", a);
+    System.out.printf("%d", result(len, tab));
   }
   
 }

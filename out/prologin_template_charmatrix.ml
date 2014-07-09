@@ -18,8 +18,7 @@ let programme_candidat tableau taille_x taille_y =
   for i = 0 to taille_y - 1 do
     for j = 0 to taille_x - 1 do
       out_ := (!out_) + int_of_char (tableau.(i).(j)) * (i + j * 2);
-      let a = tableau.(i).(j) in
-      Printf.printf "%c" a
+      Printf.printf "%c" tableau.(i).(j)
     done;
     Printf.printf "--\n"
   done;
@@ -30,7 +29,6 @@ begin
   let taille_x = (read_int ()) in
   let taille_y = (read_int ()) in
   let tableau = read_char_matrix taille_x taille_y in
-  let b = programme_candidat tableau taille_x taille_y in
-  Printf.printf "%d\n" b
+  Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
 end
  

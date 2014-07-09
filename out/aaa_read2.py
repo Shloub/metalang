@@ -18,15 +18,11 @@ len = read_int();
 print("%d=len\n" % ( len ), end='')
 tab = read_int_line(len);
 for i in range(0, len):
-  print("%d=>" % ( i ), end='')
-  a = tab[i];
-  print("%d " % ( a ), end='')
+  print("%d=>%d " % ( i, tab[i] ), end='')
 print("")
 tab2 = read_int_line(len);
 for i_ in range(0, len):
-  print("%d==>" % ( i_ ), end='')
-  b = tab2[i_];
-  print("%d " % ( b ), end='')
+  print("%d==>%d " % ( i_, tab2[i_] ), end='')
 strlen = read_int();
 print("%d=strlen\n" % ( strlen ), end='')
 tab4 = read_char_line(strlen);
@@ -38,6 +34,5 @@ for i3 in range(0, strlen):
     c = mod((c - ord('a')) + 13, 26) + ord('a');
   tab4[i3] = c;
 for j in range(0, strlen):
-  d = tab4[j];
-  print("%c" % d, end='')
+  print("%c" % tab4[j], end='')
 

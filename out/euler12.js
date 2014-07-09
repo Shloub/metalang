@@ -105,7 +105,6 @@ function find(ndiv2){
   return 0;
 }
 
-var e = find(500);
-util.print(e, "\n");
+util.print(find(500), "\n");
 
 

@@ -46,8 +46,7 @@ func programme_candidat(tableau [][]byte, taille_x int, taille_y int) int{
   for i := 0 ; i <= taille_y - 1; i++ {
     for j := 0 ; j <= taille_x - 1; j++ {
         out_ += (int)(tableau[i][j]) * (i + j * 2);
-          var a byte = tableau[i][j]
-          fmt.Printf("%c", a);
+          fmt.Printf("%c", tableau[i][j]);
       }
       fmt.Printf("--\n");
   }
@@ -59,7 +58,6 @@ func main() {
   var taille_x int = read_int()
   var taille_y int = read_int()
   var tableau [][]byte = read_char_matrix(taille_x, taille_y)
-  var b int = programme_candidat(tableau, taille_x, taille_y)
-  fmt.Printf("%d\n", b);
+  fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }
 

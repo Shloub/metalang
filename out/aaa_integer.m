@@ -22,22 +22,7 @@ int main(void){
   /*
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
 */
-  int a = 117 / 17;
-  printf("%d\n", a);
-  int b = 117 / -17;
-  printf("%d\n", b);
-  int c = -117 / 17;
-  printf("%d\n", c);
-  int d = -117 / -17;
-  printf("%d\n", d);
-  int e = 117 % 17;
-  printf("%d\n", e);
-  int f = 117 % -17;
-  printf("%d\n", f);
-  int g = -117 % 17;
-  printf("%d\n", g);
-  int h = -117 % -17;
-  printf("%d\n", h);
+  printf("%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n", 117 / 17, 117 / -17, -117 / 17, -117 / -17, 117 % 17, 117 % -17, -117 % 17, -117 % -17);
   [pool drain];
   return 0;
 }

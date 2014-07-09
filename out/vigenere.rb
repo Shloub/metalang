@@ -50,8 +50,7 @@ for index2 in (0 ..  taille - 1) do
 end
 crypte(taille_cle, cle, taille, message);
 for i in (0 ..  taille - 1) do
-  a = message[i]
-  printf "%c", a
+  printf "%c", message[i]
 end
 print "\n";
 

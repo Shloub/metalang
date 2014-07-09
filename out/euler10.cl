@@ -50,9 +50,8 @@
              ))
              ))))
     (setf (aref t_ 1) 0)
-    (let ((a (eratostene t_ n)))
-      (princ a)
-      (princ "
+    (princ (eratostene t_ n))
+    (princ "
 ")
-    ))))
+    )))
 

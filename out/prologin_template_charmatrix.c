@@ -43,8 +43,7 @@ int programme_candidat(char** tableau, int taille_x, int taille_y){
         for (j = 0 ; j < taille_x; j++)
         {
           out_ += tableau[i][j] * (i + j * 2);
-          char a = tableau[i][j];
-          printf("%c", a);
+          printf("%c", tableau[i][j]);
         }
       }
       printf("--\n");
@@ -57,8 +56,7 @@ int main(void){
   int taille_x = read_int();
   int taille_y = read_int();
   char** tableau = read_char_matrix(taille_x, taille_y);
-  int b = programme_candidat(tableau, taille_x, taille_y);
-  printf("%d\n", b);
+  printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   return 0;
 }
 

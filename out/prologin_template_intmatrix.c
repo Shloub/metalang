@@ -49,8 +49,7 @@ int main(void){
   int taille_x = read_int();
   int taille_y = read_int();
   int** tableau = read_int_matrix(taille_x, taille_y);
-  int a = programme_candidat(tableau, taille_x, taille_y);
-  printf("%d\n", a);
+  printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   return 0;
 }
 

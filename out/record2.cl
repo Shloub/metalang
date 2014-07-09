@@ -54,9 +54,6 @@
     (setf (toto-bar t_) (mread-int ))
     (mread-blank)
     (setf (toto-blah t_) (mread-int ))
-    (let ((a (result t_)))
-      (princ a)
-      (let ((b (toto-blah t_)))
-        (princ b)
-      ))))
+    (princ (result t_))
+  ))
 

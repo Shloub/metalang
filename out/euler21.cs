@@ -90,7 +90,7 @@ public class euler21
       primes[l] = k;
       l ++;
     }
-    Console.Write(l + " == " + nprimes + "\n");
+    Console.Write("" + l + " == " + nprimes + "\n");
     int sum = 0;
     for (int n = 2 ; n <= 1000; n ++)
     {
@@ -100,12 +100,12 @@ public class euler21
         int othersum = sumdiv(nprimes, primes, other) - other;
         if (othersum == n)
         {
-          Console.Write(other + " & " + n + "\n");
+          Console.Write("" + other + " & " + n + "\n");
           sum += other + n;
         }
       }
     }
-    Console.Write("\n" + sum + "\n");
+    Console.Write("" + "\n" + sum + "\n");
   }
   
 }

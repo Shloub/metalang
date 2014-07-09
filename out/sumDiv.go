@@ -56,7 +56,6 @@ func main() {
   var n int = 0
   fmt.Fscanf(reader, "%d", &n);
   /* Lecture de l'entier */
-  var b int = sumdiv(n)
-  fmt.Printf("%d", b);
+  fmt.Printf("%d", sumdiv(n));
 }
 

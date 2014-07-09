@@ -95,10 +95,7 @@
       (do
         ((i 0 (+ 1 i)))
         ((> i (- taille 1)))
-        (progn
-          (let ((a (aref message i)))
-            (princ a)
-          ))
+        (princ (aref message i))
       )
       (princ "
 ")

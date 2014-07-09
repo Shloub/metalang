@@ -34,7 +34,6 @@ func main() {
   fmt.Fscanf(reader, "%d", &a);
   skip()
   fmt.Fscanf(reader, "%d", &b);
-  var c int = exp_(a, b)
-  fmt.Printf("%d", c);
+  fmt.Printf("%d", exp_(a, b));
 }
 

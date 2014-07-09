@@ -17,8 +17,5 @@ t = mktoto(4)
 t["bar"]=scanf("%d")[0];
 scanf("%*\n");
 t["blah"]=scanf("%d")[0];
-a = result(t)
-printf "%d", a
-b = t["blah"]
-printf "%d", b
+printf "%d", result(t)
 

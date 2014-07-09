@@ -70,7 +70,6 @@ type
 
 
 var
-  a : Longint;
   param : toto;
 begin
   new(param);
@@ -79,8 +78,7 @@ begin
   param^.bar := read_int_();
   skip();
   param^.foo := read_int_();
-  a := param^.bar + param^.foo * param^.bar;
-  Write(a);
+  Write(param^.bar + param^.foo * param^.bar);
 end.
 
 

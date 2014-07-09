@@ -25,6 +25,5 @@ $t = array();
 for ($i = 0 ; $i < $n; $i++)
   $t[$i] = $i;
 $t[1] = 0;
-$a = eratostene($t, $n);
-echo $a, "\n";
+echo eratostene($t, $n), "\n";
 ?>

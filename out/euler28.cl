@@ -43,8 +43,5 @@
         (return-from sumdiag sum)
       )))))
 
-(progn
-  (let ((a (sumdiag 1001)))
-    (princ a)
-  ))
+(princ (sumdiag 1001))
 

@@ -62,9 +62,7 @@ for (var i = 0 ; i <= a - 1; i++)
 t[0].bar=read_int_();
 stdinsep();
 t[1].blah=read_int_();
-var b = result(t, 4);
-util.print(b);
-var c = t[2].blah;
-util.print(c);
+var titi = result(t, 4);
+util.print(titi, t[2].blah);
 
 

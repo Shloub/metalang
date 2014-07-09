@@ -81,6 +81,5 @@ for ($k = 0 ; $k < $m; $k++)
   }
   $serrures[$k] = $out1;
 }
-$e = nbPassePartout($n, $passepartout, $m, $serrures);
-echo $e;
+echo nbPassePartout($n, $passepartout, $m, $serrures);
 ?>

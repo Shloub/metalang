@@ -80,8 +80,7 @@ public class euler12
   
   public static void main(String args[])
   {
-    int e = find(500);
-    System.out.printf("%d\n", e);
+    System.out.printf("%d\n", find(500));
   }
   
 }

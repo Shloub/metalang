@@ -66,10 +66,7 @@ int main(void){
   toto * t = mktoto(4);
   toto * t2 = mktoto(5);
   scanf("%d %d %d %d", &t->bar, &t->blah, &t2->bar, &t2->blah);
-  int a = result(t, t2);
-  printf("%d", a);
-  int b = t->blah;
-  printf("%d", b);
+  printf("%d%d", result(t, t2), t->blah);
   [pool drain];
   return 0;
 }

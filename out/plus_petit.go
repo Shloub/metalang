@@ -59,7 +59,6 @@ func main() {
       skip()
       tab[i] = tmp;
   }
-  var c int = plus_petit_(tab, len)
-  fmt.Printf("%d", c);
+  fmt.Printf("%d", plus_petit_(tab, len));
 }
 

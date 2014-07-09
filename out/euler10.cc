@@ -28,8 +28,7 @@ int main(){
   for (int i = 0 ; i < n; i++)
     t.at(i) = i;
   t.at(1) = 0;
-  int a = eratostene(t, n);
-  std::cout << a << "\n";
+  std::cout << eratostene(t, n) << "\n";
   return 0;
 }
 

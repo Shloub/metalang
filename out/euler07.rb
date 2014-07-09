@@ -30,6 +30,5 @@ t = [];
 for i in (0 ..  n - 1) do
   t[i] = 2;
 end
-a = find(3, t, 1, n)
-printf "%d\n", a
+printf "%d\n", find(3, t, 1, n)
 

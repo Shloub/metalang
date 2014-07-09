@@ -59,7 +59,6 @@ var n = 10001;
 var t = new Array(n);
 for (var i = 0 ; i <= n - 1; i++)
   t[i] = 2;
-var a = find(3, t, 1, n);
-util.print(a, "\n");
+util.print(find(3, t, 1, n), "\n");
 
 

@@ -8,8 +8,7 @@ int main(void){
   int sum = (lim * (lim + 1)) / 2;
   int carressum = sum * sum;
   int sumcarres = (lim * (lim + 1) * (2 * lim + 1)) / 6;
-  int a = carressum - sumcarres;
-  printf("%d", a);
+  printf("%d", carressum - sumcarres);
   [pool drain];
   return 0;
 }

@@ -27,9 +27,7 @@ begin
     mktoto i) in
   Scanf.scanf "%d %d" (fun v_0 v_1 -> t.(0).bar <- v_0;
                                       t.(1).blah <- v_1);
-  let b = result t 4 in
-  Printf.printf "%d" b;
-  let c = t.(2).blah in
-  Printf.printf "%d" c
+  let titi = result t 4 in
+  Printf.printf "%d%d" titi t.(2).blah
 end
  

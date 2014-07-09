@@ -31,13 +31,11 @@ int main(){
   {
     for (int k = 0 ; k < n; k++)
     {
-      int a = tab.at(m).at(k);
-      std::cout << a << " ";
+      std::cout << tab.at(m).at(k) << " ";
     }
     std::cout << "\n";
   }
-  int b = tab.at(0).at(0);
-  std::cout << b << "\n";
+  std::cout << tab.at(0).at(0) << "\n";
   return 0;
 }
 

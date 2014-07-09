@@ -23,6 +23,5 @@ $n = 10001;
 $t = array();
 for ($i = 0 ; $i < $n; $i++)
   $t[$i] = 2;
-$a = find(3, $t, 1, $n);
-echo $a, "\n";
+echo find(3, $t, 1, $n), "\n";
 ?>

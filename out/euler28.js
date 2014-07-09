@@ -64,7 +64,6 @@ function sumdiag(n){
   return sum;
 }
 
-var a = sumdiag(1001);
-util.print(a);
+util.print(sumdiag(1001));
 
 

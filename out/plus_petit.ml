@@ -40,7 +40,6 @@ begin
     let tmp = ref( 0 ) in
     Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
     (!tmp)) in
-  let c = plus_petit_ tab (!len) in
-  Printf.printf "%d" c
+  Printf.printf "%d" (plus_petit_ tab (!len))
 end
  

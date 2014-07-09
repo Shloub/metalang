@@ -64,12 +64,10 @@ for (var m = 0 ; m <= n - 1; m++)
 {
   for (var k = 0 ; k <= n - 1; k++)
   {
-    var a = tab[m][k];
-    util.print(a, " ");
+    util.print(tab[m][k], " ");
   }
   util.print("\n");
 }
-var b = tab[0][0];
-util.print(b, "\n");
+util.print(tab[0][0], "\n");
 
 

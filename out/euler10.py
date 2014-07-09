@@ -20,6 +20,5 @@ t = [None] * n
 for i in range(0, n):
   t[i] = i;
 t[1] = 0;
-a = eratostene(t, n);
-print("%d\n" % ( a ), end='')
+print("%d\n" % ( eratostene(t, n) ), end='')
 

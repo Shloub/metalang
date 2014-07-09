@@ -83,9 +83,8 @@
           ((> j (- taille_x 1)))
           (progn
             (setq out_ ( + out_ (* (char-int (aref (aref tableau i) j)) (+ i (* j 2)))))
-            (let ((a (aref (aref tableau i) j)))
-              (princ a)
-            ))
+            (princ (aref (aref tableau i) j))
+          )
         )
         (princ "--
 ")
@@ -98,9 +97,8 @@
   (let ((taille_x (read_int )))
     (let ((taille_y (read_int )))
       (let ((tableau (read_char_matrix taille_x taille_y)))
-        (let ((b (programme_candidat tableau taille_x taille_y)))
-          (princ b)
-          (princ "
+        (princ (programme_candidat tableau taille_x taille_y))
+        (princ "
 ")
-        )))))
+      ))))
 

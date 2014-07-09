@@ -25,6 +25,5 @@ function programme_candidat(&$tableau, $x, $y){
 $taille_x = read_int();
 $taille_y = read_int();
 $tableau = read_int_matrix($taille_x, $taille_y);
-$a = programme_candidat($tableau, $taille_x, $taille_y);
-echo $a, "\n";
+echo programme_candidat($tableau, $taille_x, $taille_y), "\n";
 ?>

@@ -53,9 +53,6 @@ begin
                                                     t.blah <- v_1;
                                                     t2.bar <- v_2;
                                                     t2.blah <- v_3);
-  let a = result t t2 in
-  Printf.printf "%d" a;
-  let b = t.blah in
-  Printf.printf "%d" b
+  Printf.printf "%d%d" (result t t2) t.blah
 end
  

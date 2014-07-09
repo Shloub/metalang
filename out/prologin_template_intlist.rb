@@ -27,6 +27,5 @@ end
 
 taille = read_int()
 tableau = read_int_line(taille)
-a = programme_candidat(tableau, taille)
-printf "%d\n", a
+printf "%d\n", programme_candidat(tableau, taille)
 

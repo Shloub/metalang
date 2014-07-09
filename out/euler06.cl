@@ -16,7 +16,6 @@
     (let ((sum (quotient (* lim (+ lim 1)) 2)))
       (let ((carressum (* sum sum)))
         (let ((sumcarres (quotient (* (* lim (+ lim 1)) (+ (* 2 lim) 1)) 6)))
-          (let ((a (- carressum sumcarres)))
-            (princ a)
-          ))))))
+          (princ (- carressum sumcarres))
+        )))))
 

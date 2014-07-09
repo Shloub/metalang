@@ -102,12 +102,12 @@ begin
   exit(out_);
 end;
 
-type f = array of char;
-function read_char_line(n : Longint) : f;
+type e = array of char;
+function read_char_line(n : Longint) : e;
 var
   i : Longint;
   t : char;
-  tab : f;
+  tab : e;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -120,10 +120,10 @@ begin
   exit(tab);
 end;
 
-type g = array of f;
-function read_char_matrix(x : Longint; y : Longint) : g;
+type f = array of e;
+function read_char_matrix(x : Longint; y : Longint) : f;
 var
-  tab : g;
+  tab : f;
   z : Longint;
 begin
   SetLength(tab, y);
@@ -134,8 +134,8 @@ begin
   exit(tab);
 end;
 
-type h = array of array of Longint;
-function pathfind_aux(cache : h; tab : g; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
+type g = array of array of Longint;
+function pathfind_aux(cache : g; tab : f; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
   out_ : Longint;
   val1 : Longint;
@@ -173,14 +173,13 @@ begin
     end;;;;
 end;
 
-type k = array of Longint;
-function pathfind(tab : g; x : Longint; y : Longint) : Longint;
+type h = array of Longint;
+function pathfind(tab : f; x : Longint; y : Longint) : Longint;
 var
-  cache : h;
-  e : char;
+  cache : g;
   i : Longint;
   j : Longint;
-  tmp : k;
+  tmp : h;
 begin
   SetLength(cache, y);
   for i := 0 to  y - 1 do
@@ -188,8 +187,7 @@ begin
     SetLength(tmp, x);
     for j := 0 to  x - 1 do
     begin
-      e := tab[i][j];
-      Write(e);
+      Write(tab[i][j]);
       tmp[j] := -1;
     end;
     Write(''#10'');
@@ -201,7 +199,7 @@ end;
 
 var
   result : Longint;
-  tab : g;
+  tab : f;
   x : Longint;
   y : Longint;
 begin

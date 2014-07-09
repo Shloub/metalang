@@ -39,7 +39,6 @@ begin
   let n = ref( 0 ) in
   Scanf.scanf "%d" (fun v_0 -> n := v_0);
   (* Lecture de l'entier *)
-  let b = sumdiv (!n) in
-  Printf.printf "%d" b
+  Printf.printf "%d" (sumdiv (!n))
 end
  

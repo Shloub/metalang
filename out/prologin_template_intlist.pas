@@ -71,12 +71,12 @@ begin
   exit(out_);
 end;
 
-type b = array of Longint;
-function read_int_line(n : Longint) : b;
+type a = array of Longint;
+function read_int_line(n : Longint) : a;
 var
   i : Longint;
   t : Longint;
-  tab : b;
+  tab : a;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -89,7 +89,7 @@ begin
   exit(tab);
 end;
 
-function programme_candidat(tableau : b; taille : Longint) : Longint;
+function programme_candidat(tableau : a; taille : Longint) : Longint;
 var
   i : Longint;
   out_ : Longint;
@@ -104,14 +104,12 @@ end;
 
 
 var
-  a : Longint;
-  tableau : b;
+  tableau : a;
   taille : Longint;
 begin
   taille := read_int();
   tableau := read_int_line(taille);
-  a := programme_candidat(tableau, taille);
-  Write(a);
+  Write(programme_candidat(tableau, taille));
   Write(''#10'');
 end.
 

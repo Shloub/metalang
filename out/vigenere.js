@@ -85,10 +85,7 @@ for (var index2 = 0 ; index2 <= taille - 1; index2++)
 }
 crypte(taille_cle, cle, taille, message);
 for (var i = 0 ; i <= taille - 1; i++)
-{
-  var a = message[i];
-  util.print(a);
-}
+  util.print(message[i]);
 util.print("\n");
 
 

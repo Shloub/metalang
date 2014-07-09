@@ -25,7 +25,6 @@ begin
     let x = ref( 0 ) in
     Scanf.scanf "%d " (fun v_0 -> x := v_0);
     (!x)) in
-  let a = montagnes_ tab (!len) in
-  Printf.printf "%d" a
+  Printf.printf "%d" (montagnes_ tab (!len))
 end
  

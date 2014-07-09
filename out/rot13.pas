@@ -74,7 +74,6 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 }
 
 var
-  a : char;
   c : Longint;
   j : Longint;
   strlen : Longint;
@@ -100,8 +99,7 @@ begin
   end;
   for j := 0 to  strlen - 1 do
   begin
-    a := tab4[j];
-    Write(a);
+    Write(tab4[j]);
   end;
 end.
 

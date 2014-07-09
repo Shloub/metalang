@@ -69,6 +69,5 @@ function find($ndiv2){
   return 0;
 }
 
-$e = find(500);
-echo $e, "\n";
+echo find(500), "\n";
 ?>

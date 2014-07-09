@@ -67,8 +67,7 @@ def pathfind( tab, x, y )
     for i in (0 ..  y - 1) do
       tmp = [];
       for j in (0 ..  x - 1) do
-        e = tab[i][j]
-        printf "%c", e
+        printf "%c", tab[i][j]
         tmp[j] = -1;
       end
       print "\n";

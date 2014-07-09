@@ -13,8 +13,8 @@ begin
     end;
 end;
 
-type f = array of Longint;
-function eratostene(t : f; max_ : Longint) : Longint;
+type e = array of Longint;
+function eratostene(t : e; max_ : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -38,7 +38,7 @@ begin
   exit(n);
 end;
 
-function fillPrimesFactors(t : f; n : Longint; primes : f; nprimes : Longint) : Longint;
+function fillPrimesFactors(t : e; n : Longint; primes : e; nprimes : Longint) : Longint;
 var
   d : Longint;
   i : Longint;
@@ -63,7 +63,7 @@ end;
 function find(ndiv2 : Longint) : Longint;
 var
   c : Longint;
-  era : f;
+  era : e;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -75,8 +75,8 @@ var
   ndivs : Longint;
   nprimes : Longint;
   o : Longint;
-  primes : f;
-  primesFactors : f;
+  primes : e;
+  primesFactors : e;
 begin
   maximumprimes := 110;
   SetLength(era, maximumprimes);
@@ -130,11 +130,8 @@ begin
 end;
 
 
-var
-  e : Longint;
 begin
-  e := find(500);
-  Write(e);
+  Write(find(500));
   Write(''#10'');
 end.
 

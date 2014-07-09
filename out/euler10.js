@@ -61,7 +61,6 @@ var t = new Array(n);
 for (var i = 0 ; i <= n - 1; i++)
   t[i] = i;
 t[1] = 0;
-var a = eratostene(t, n);
-util.print(a, "\n");
+util.print(eratostene(t, n), "\n");
 
 

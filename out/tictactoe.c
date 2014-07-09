@@ -188,36 +188,33 @@ struct move * play(struct gamestate * g){
       }
     }
   }
-  int a = minMove->x;
-  printf("%d", a);
-  int b = minMove->y;
-  printf("%d\n", b);
+  printf("%d%d\n", minMove->x, minMove->y);
   return minMove;
 }
 
 struct gamestate * init_(){
-  int d = 3;
-  int* *cases = malloc( d * sizeof(int*));
+  int b = 3;
+  int* *cases = malloc( b * sizeof(int*));
   {
     int i;
-    for (i = 0 ; i < d; i++)
+    for (i = 0 ; i < b; i++)
     {
-      int c = 3;
-      int *tab = malloc( c * sizeof(int));
+      int a = 3;
+      int *tab = malloc( a * sizeof(int));
       {
         int j;
-        for (j = 0 ; j < c; j++)
+        for (j = 0 ; j < a; j++)
           tab[j] = 0;
       }
       cases[i] = tab;
     }
   }
-  struct gamestate * f = malloc (sizeof(f) );
-  f->cases=cases;
-  f->firstToPlay=1;
-  f->note=0;
-  f->ended=0;
-  return f;
+  struct gamestate * c = malloc (sizeof(c) );
+  c->cases=cases;
+  c->firstToPlay=1;
+  c->note=0;
+  c->ended=0;
+  return c;
 }
 
 struct move * read_move(){
@@ -225,10 +222,10 @@ struct move * read_move(){
   scanf("%d ", &x);
   int y = 0;
   scanf("%d ", &y);
-  struct move * h = malloc (sizeof(h) );
-  h->x=x;
-  h->y=y;
-  return h;
+  struct move * d = malloc (sizeof(d) );
+  d->x=x;
+  d->y=y;
+  return d;
 }
 
 int main(void){
@@ -237,14 +234,14 @@ int main(void){
     for (i = 0 ; i <= 1; i++)
     {
       struct gamestate * state = init_();
-      struct move * k = malloc (sizeof(k) );
-      k->x=1;
-      k->y=1;
-      apply_move(k, state);
-      struct move * l = malloc (sizeof(l) );
-      l->x=0;
-      l->y=0;
-      apply_move(l, state);
+      struct move * e = malloc (sizeof(e) );
+      e->x=1;
+      e->y=1;
+      apply_move(e, state);
+      struct move * f = malloc (sizeof(f) );
+      f->x=0;
+      f->y=0;
+      apply_move(f, state);
       while (!state->ended)
       {
         print_state(state);
@@ -258,8 +255,7 @@ int main(void){
         }
       }
       print_state(state);
-      int e = state->note;
-      printf("%d\n", e);
+      printf("%d\n", state->note);
     }
   }
   return 0;

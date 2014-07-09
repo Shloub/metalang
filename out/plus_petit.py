@@ -68,6 +68,5 @@ for i in range(0, len):
   tmp=readint()
   stdinsep()
   tab[i] = tmp;
-c = plus_petit_(tab, len);
-print("%d" % c, end='')
+print("%d" % plus_petit_(tab, len), end='')
 

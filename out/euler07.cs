@@ -31,8 +31,7 @@ public class euler07
     int[] t = new int[n];
     for (int i = 0 ; i < n; i++)
       t[i] = 2;
-    int a = find(3, t, 1, n);
-    Console.Write(a + "\n");
+    Console.Write("" + find(3, t, 1, n) + "\n");
   }
   
 }

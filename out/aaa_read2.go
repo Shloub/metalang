@@ -54,16 +54,12 @@ func main() {
   fmt.Printf("%d=len\n", len);
   var tab []int = read_int_line(len)
   for i := 0 ; i <= len - 1; i++ {
-    fmt.Printf("%d=>", i);
-      var a int = tab[i]
-      fmt.Printf("%d ", a);
+    fmt.Printf("%d=>%d ", i, tab[i]);
   }
   fmt.Printf("\n");
   var tab2 []int = read_int_line(len)
   for i_ := 0 ; i_ <= len - 1; i_++ {
-    fmt.Printf("%d==>", i_);
-      var b int = tab2[i_]
-      fmt.Printf("%d ", b);
+    fmt.Printf("%d==>%d ", i_, tab2[i_]);
   }
   var strlen int = read_int()
   fmt.Printf("%d=strlen\n", strlen);
@@ -78,8 +74,7 @@ func main() {
       tab4[i3] = (byte)(c);
   }
   for j := 0 ; j <= strlen - 1; j++ {
-    var d byte = tab4[j]
-      fmt.Printf("%c", d);
+    fmt.Printf("%c", tab4[j]);
   }
 }
 

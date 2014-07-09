@@ -39,9 +39,7 @@ int main(void){
     int i;
     for (i = 0 ; i < len; i++)
     {
-      printf("%d=>", i);
-      int a = tab1[i];
-      printf("%d\n", a);
+      printf("%d=>%d\n", i, tab1[i]);
     }
   }
   len = read_int();
@@ -54,8 +52,7 @@ int main(void){
         int j;
         for (j = 0 ; j < len; j++)
         {
-          int b = tab2[i][j];
-          printf("%d ", b);
+          printf("%d ", tab2[i][j]);
         }
       }
       printf("\n");

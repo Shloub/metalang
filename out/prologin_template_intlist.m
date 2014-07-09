@@ -36,8 +36,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int taille = read_int();
   int* tableau = read_int_line(taille);
-  int a = programme_candidat(tableau, taille);
-  printf("%d\n", a);
+  printf("%d\n", programme_candidat(tableau, taille));
   [pool drain];
   return 0;
 }

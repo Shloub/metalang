@@ -79,7 +79,6 @@ for index2 in range(0, taille):
   message[index2] = out2;
 crypte(taille_cle, cle, taille, message);
 for i in range(0, taille):
-  a = message[i];
-  print("%c" % a, end='')
+  print("%c" % message[i], end='')
 print("")
 

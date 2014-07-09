@@ -61,10 +61,7 @@ int main(void){
   {
     int i;
     for (i = 0 ; i < taille; i++)
-    {
-      char a = message[i];
-      printf("%c", a);
-    }
+      printf("%c", message[i]);
   }
   printf("\n");
   return 0;

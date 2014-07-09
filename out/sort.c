@@ -81,8 +81,7 @@ int main(void){
     int i;
     for (i = 0 ; i < len; i++)
     {
-      int a = tab2[i];
-      printf("%d ", a);
+      printf("%d ", tab2[i]);
     }
   }
   printf("\n");
@@ -92,8 +91,7 @@ int main(void){
     int i;
     for (i = 0 ; i < len; i++)
     {
-      int b = tab3[i];
-      printf("%d ", b);
+      printf("%d ", tab3[i]);
     }
   }
   printf("\n");

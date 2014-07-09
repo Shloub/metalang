@@ -10,8 +10,7 @@ public class euler06
     int sum = (lim * (lim + 1)) / 2;
     int carressum = sum * sum;
     int sumcarres = (lim * (lim + 1) * (2 * lim + 1)) / 6;
-    int a = carressum - sumcarres;
-    System.out.printf("%d", a);
+    System.out.printf("%d", carressum - sumcarres);
   }
   
 }

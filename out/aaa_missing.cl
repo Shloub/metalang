@@ -86,7 +86,6 @@
     (princ "
 ")
     (let ((tab (read_int_line len)))
-      (let ((a (result len tab)))
-        (princ a)
-      ))))
+      (princ (result len tab))
+    )))
 

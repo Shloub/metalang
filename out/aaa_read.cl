@@ -106,10 +106,7 @@ read int, read char et skip
       (do
         ((j 0 (+ 1 j)))
         ((> j (- strlen 1)))
-        (progn
-          (let ((a (aref tab4 j)))
-            (princ a)
-          ))
+        (princ (aref tab4 j))
       )
       ))))))
 

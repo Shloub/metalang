@@ -67,8 +67,7 @@ public class pathfinding0
       int[] tmp = new int[x];
       for (int j = 0 ; j < x; j++)
       {
-        char e = tab[i][j];
-        Console.Write(e);
+        Console.Write(tab[i][j]);
         tmp[j] = -1;
       }
       Console.Write("\n");
@@ -82,7 +81,7 @@ public class pathfinding0
   {
     int x = read_int();
     int y = read_int();
-    Console.Write(x + " " + y + "\n");
+    Console.Write("" + x + " " + y + "\n");
     char[][] tab = read_char_matrix(x, y);
     int result = pathfind(tab, x, y);
     Console.Write(result);

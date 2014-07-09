@@ -114,10 +114,9 @@
         ((i 0 (+ 1 i)))
         ((> i (- len 1)))
         (progn
-          (let ((a (aref tab2 i)))
-            (princ a)
-            (princ " ")
-          ))
+          (princ (aref tab2 i))
+          (princ " ")
+        )
       )
       (princ "
 ")
@@ -127,10 +126,9 @@
           ((i 0 (+ 1 i)))
           ((> i (- len 1)))
           (progn
-            (let ((b (aref tab3 i)))
-              (princ b)
-              (princ " ")
-            ))
+            (princ (aref tab3 i))
+            (princ " ")
+          )
         )
         (princ "
 ")

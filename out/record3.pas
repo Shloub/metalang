@@ -80,8 +80,8 @@ begin
   exit(t);
 end;
 
-type d = array of toto;
-function result(t : d; len : Longint) : Longint;
+type b = array of toto;
+function result(t : b; len : Longint) : Longint;
 var
   j : Longint;
   out_ : Longint;
@@ -98,10 +98,9 @@ end;
 
 var
   a : Longint;
-  b : Longint;
-  c : Longint;
   i : Longint;
-  t : d;
+  t : b;
+  titi : Longint;
 begin
   a := 4;
   SetLength(t, a);
@@ -112,10 +111,9 @@ begin
   t[0]^.bar := read_int_();
   skip();
   t[1]^.blah := read_int_();
-  b := result(t, 4);
-  Write(b);
-  c := t[2]^.blah;
-  Write(c);
+  titi := result(t, 4);
+  Write(titi);
+  Write(t[2]^.blah);
 end.
 
 

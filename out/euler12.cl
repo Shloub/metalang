@@ -124,9 +124,8 @@
       )))))))
 
 (progn
-  (let ((e (find_ 500)))
-    (princ e)
-    (princ "
+  (princ (find_ 500))
+  (princ "
 ")
-  ))
+)
 

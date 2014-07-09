@@ -66,9 +66,8 @@
 (progn
   (let ((taille (read_int )))
     (let ((tableau (read_int_line taille)))
-      (let ((a (programme_candidat tableau taille)))
-        (princ a)
-        (princ "
+      (princ (programme_candidat tableau taille))
+      (princ "
 ")
-      ))))
+    )))
 

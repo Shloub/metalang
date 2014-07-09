@@ -44,8 +44,6 @@ for ($i = 0 ; $i < $a; $i++)
 list($t[0]["bar"]) = scan("%d");
 scantrim();
 list($t[1]["blah"]) = scan("%d");
-$b = result($t, 4);
-echo $b;
-$c = $t[2]["blah"];
-echo $c;
+$titi = result($t, 4);
+echo $titi, $t[2]["blah"];
 ?>

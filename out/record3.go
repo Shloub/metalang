@@ -48,9 +48,7 @@ func main() {
   fmt.Fscanf(reader, "%d", &(*t[0]).bar);
   skip()
   fmt.Fscanf(reader, "%d", &(*t[1]).blah);
-  var b int = result(t, 4)
-  fmt.Printf("%d", b);
-  var c int = (*t[2]).blah
-  fmt.Printf("%d", c);
+  var titi int = result(t, 4)
+  fmt.Printf("%d%d", titi, (*t[2]).blah);
 }
 

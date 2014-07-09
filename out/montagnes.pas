@@ -61,8 +61,8 @@ begin
    until false;
 end;
 
-type b = array of Longint;
-function montagnes_(tab : b; len : Longint) : Longint;
+type a = array of Longint;
+function montagnes_(tab : a; len : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -93,10 +93,9 @@ end;
 
 
 var
-  a : Longint;
   i : Longint;
   len : Longint;
-  tab : b;
+  tab : a;
   x : Longint;
 begin
   len := 0;
@@ -110,8 +109,7 @@ begin
     skip();
     tab[i] := x;
   end;
-  a := montagnes_(tab, len);
-  Write(a);
+  Write(montagnes_(tab, len));
 end.
 
 

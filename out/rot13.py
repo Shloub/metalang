@@ -54,6 +54,5 @@ for toto in range(0, strlen):
     c = mod((c - ord('a')) + 13, 26) + ord('a');
   tab4[toto] = c;
 for j in range(0, strlen):
-  a = tab4[j];
-  print("%c" % a, end='')
+  print("%c" % tab4[j], end='')
 

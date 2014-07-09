@@ -76,7 +76,6 @@
   (let ((n 0))
     (setq n (mread-int ))
     #| Lecture de l'entier |#
-    (let ((b (sumdiv n)))
-      (princ b)
-    )))
+    (princ (sumdiv n))
+  ))
 

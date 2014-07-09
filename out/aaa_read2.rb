@@ -44,16 +44,12 @@ len = read_int()
 printf "%d=len\n", len
 tab = read_int_line(len)
 for i in (0 ..  len - 1) do
-  printf "%d=>", i
-  a = tab[i]
-  printf "%d ", a
+  printf "%d=>%d ", i, tab[i]
 end
 print "\n";
 tab2 = read_int_line(len)
 for i_ in (0 ..  len - 1) do
-  printf "%d==>", i_
-  b = tab2[i_]
-  printf "%d ", b
+  printf "%d==>%d ", i_, tab2[i_]
 end
 strlen = read_int()
 printf "%d=strlen\n", strlen
@@ -68,7 +64,6 @@ for i3 in (0 ..  strlen - 1) do
   tab4[i3] = c;
 end
 for j in (0 ..  strlen - 1) do
-  d = tab4[j]
-  printf "%c", d
+  printf "%c", tab4[j]
 end
 

@@ -63,15 +63,13 @@ begin
   let tab2 = copytab tab (!len) in
   bubblesort tab2 (!len);
   for i = 0 to (!len) - 1 do
-    let a = tab2.(i) in
-    Printf.printf "%d " a
+    Printf.printf "%d " tab2.(i)
   done;
   Printf.printf "\n";
   let tab3 = copytab tab (!len) in
   qsort_ tab3 (!len) 0 ((!len) - 1);
   for i = 0 to (!len) - 1 do
-    let b = tab3.(i) in
-    Printf.printf "%d " b
+    Printf.printf "%d " tab3.(i)
   done;
   Printf.printf "\n"
 end

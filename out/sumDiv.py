@@ -61,6 +61,5 @@ def sumdiv( n ):
 n = 0;
 n=readint()
 """ Lecture de l'entier """
-b = sumdiv(n);
-print("%d" % b, end='')
+print("%d" % sumdiv(n), end='')
 

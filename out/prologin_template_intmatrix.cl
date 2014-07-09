@@ -84,9 +84,8 @@
   (let ((taille_x (read_int )))
     (let ((taille_y (read_int )))
       (let ((tableau (read_int_matrix taille_x taille_y)))
-        (let ((a (programme_candidat tableau taille_x taille_y)))
-          (princ a)
-          (princ "
+        (princ (programme_candidat tableau taille_x taille_y))
+        (princ "
 ")
-        )))))
+      ))))
 

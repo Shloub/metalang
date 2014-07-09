@@ -20,6 +20,5 @@ b = 0
 a=scanf("%d")[0];
 scanf("%*\n");
 b=scanf("%d")[0];
-c = exp_(a, b)
-printf "%d", c
+printf "%d", exp_(a, b)
 

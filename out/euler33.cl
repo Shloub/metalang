@@ -76,9 +76,8 @@
         (princ p)
         (princ "
 ")
-        (let ((e (quotient bottom p)))
-          (princ e)
-          (princ "
+        (princ (quotient bottom p))
+        (princ "
 ")
-        )))))
+      ))))
 

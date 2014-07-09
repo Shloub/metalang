@@ -10,9 +10,7 @@ begin
       let cc = c * c in
       if cc = a2b2 && c > a then
         begin
-          Printf.printf "%d\n%d\n%d\n" a b c;
-          let d = a * b * c in
-          Printf.printf "%d\n" d
+          Printf.printf "%d\n%d\n%d\n%d\n" a b c (a * b * c)
         end
     done
   done

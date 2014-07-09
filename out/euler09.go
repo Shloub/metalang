@@ -25,9 +25,7 @@ func main() {
           var a2b2 int = a * a + b * b
           var cc int = c * c
           if cc == a2b2 && c > a {
-            fmt.Printf("%d\n%d\n%d\n", a, b, c);
-              var d int = a * b * c
-              fmt.Printf("%d\n", d);
+            fmt.Printf("%d\n%d\n%d\n%d\n", a, b, c, a * b * c);
           }
       }
   }

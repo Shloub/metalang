@@ -57,10 +57,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
     (do
       ((j 0 (+ 1 j)))
       ((> j (- strlen 1)))
-      (progn
-        (let ((a (aref tab4 j)))
-          (princ a)
-        ))
+      (princ (aref tab4 j))
     )
     )))
 

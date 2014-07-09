@@ -34,8 +34,7 @@ int main(void){
       tab[i] = x;
     }
   }
-  int a = montagnes_(tab, len);
-  printf("%d", a);
+  printf("%d", montagnes_(tab, len));
   [pool drain];
   return 0;
 }

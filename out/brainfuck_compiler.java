@@ -80,8 +80,7 @@ et qui produit les macros metalang correspondante
       mem[current_pos] = mem[current_pos] - 1;
       current_pos --;
       mem[current_pos] = mem[current_pos] + 1;
-      char b = (char)(mem[current_pos]);
-      System.out.printf("%c", b);
+      System.out.printf("%c", (char)(mem[current_pos]));
       current_pos ++;
     }
   }

@@ -19,8 +19,7 @@ public class prologin_template_charline
     for (int i = 0 ; i < taille; i++)
     {
       out_ += tableau[i] * i;
-      char a = tableau[i];
-      Console.Write(a);
+      Console.Write(tableau[i]);
     }
     Console.Write("--\n");
     return out_;
@@ -31,8 +30,7 @@ public class prologin_template_charline
   {
     int taille = read_int();
     char[] tableau = read_char_line(taille);
-    int b = programme_candidat(tableau, taille);
-    Console.Write(b + "\n");
+    Console.Write("" + programme_candidat(tableau, taille) + "\n");
   }
   
 }

@@ -26,8 +26,7 @@ int main(){
   std::vector<int > t( n );
   for (int i = 0 ; i < n; i++)
     t.at(i) = 2;
-  int a = find(3, t, 1, n);
-  std::cout << a << "\n";
+  std::cout << find(3, t, 1, n) << "\n";
   return 0;
 }
 

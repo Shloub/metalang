@@ -46,7 +46,6 @@ func main() {
       skip()
       tab[i] = x;
   }
-  var a int = montagnes_(tab, len)
-  fmt.Printf("%d", a);
+  fmt.Printf("%d", montagnes_(tab, len));
 }
 

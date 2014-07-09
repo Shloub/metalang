@@ -55,10 +55,7 @@ int main(){
   toto * t = mktoto(4);
   toto * t2 = mktoto(5);
   std::cin >> t->bar >> std::skipws >> t->blah >> t2->bar >> t2->blah >> std::noskipws;
-  int a = result(t, t2);
-  std::cout << a;
-  int b = t->blah;
-  std::cout << b;
+  std::cout << result(t, t2) << t->blah;
   return 0;
 }
 

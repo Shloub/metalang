@@ -25,6 +25,5 @@ def sumdiag( n ):
       sum += un
     return sum;
 
-a = sumdiag(1001);
-print("%d" % a, end='')
+print("%d" % sumdiag(1001), end='')
 

@@ -11,18 +11,7 @@ public class sqrttest
   
   public static void main(String args[])
   {
-    int a = isqrt(4);
-    System.out.printf("%d ", a);
-    int b = isqrt(16);
-    System.out.printf("%d ", b);
-    int d = isqrt(20);
-    System.out.printf("%d ", d);
-    int e = isqrt(1000);
-    System.out.printf("%d ", e);
-    int f = isqrt(500);
-    System.out.printf("%d ", f);
-    int g = isqrt(10);
-    System.out.printf("%d ", g);
+    System.out.printf("%d %d %d %d %d %d ", isqrt(4), isqrt(16), isqrt(20), isqrt(1000), isqrt(500), isqrt(10));
   }
   
 }

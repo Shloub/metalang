@@ -28,7 +28,6 @@ func main() {
   fmt.Fscanf(reader, "%d", &(*param).bar);
   skip()
   fmt.Fscanf(reader, "%d", &(*param).foo);
-  var a int = (*param).bar + (*param).foo * (*param).bar
-  fmt.Printf("%d", a);
+  fmt.Printf("%d", (*param).bar + (*param).foo * (*param).bar);
 }
 

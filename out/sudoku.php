@@ -36,8 +36,7 @@ function print_sudoku(&$sudoku_){
   {
     for ($x = 0 ; $x <= 8; $x++)
     {
-      $b = $sudoku_[$x + $y * 9];
-      echo $b, " ";
+      echo $sudoku_[$x + $y * 9], " ";
       if (($x % 3) == 2)
         echo " ";
     }

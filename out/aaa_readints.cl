@@ -77,11 +77,10 @@
         (progn
           (princ i)
           (princ "=>")
-          (let ((a (aref tab1 i)))
-            (princ a)
-            (princ "
+          (princ (aref tab1 i))
+          (princ "
 ")
-          ))
+        )
       )
       (setq len (read_int ))
       (let ((tab2 (read_int_matrix len (- len 1))))
@@ -93,10 +92,9 @@
               ((j 0 (+ 1 j)))
               ((> j (- len 1)))
               (progn
-                (let ((b (aref (aref tab2 i) j)))
-                  (princ b)
-                  (princ " ")
-                ))
+                (princ (aref (aref tab2 i) j))
+                (princ " ")
+              )
             )
             (princ "
 ")

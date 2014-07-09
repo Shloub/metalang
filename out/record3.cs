@@ -80,10 +80,8 @@ public static int readInt(){
     t[0].bar = readInt();
     stdin_sep();
     t[1].blah = readInt();
-    int b = result(t, 4);
-    Console.Write(b);
-    int c = t[2].blah;
-    Console.Write(c);
+    int titi = result(t, 4);
+    Console.Write("" + titi + t[2].blah);
   }
   
 }

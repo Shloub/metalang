@@ -29,8 +29,7 @@ int programme_candidat(char* tableau, int taille){
     for (i = 0 ; i < taille; i++)
     {
       out_ += tableau[i] * i;
-      char a = tableau[i];
-      printf("%c", a);
+      printf("%c", tableau[i]);
     }
   }
   printf("--\n");
@@ -40,8 +39,7 @@ int programme_candidat(char* tableau, int taille){
 int main(void){
   int taille = read_int();
   char* tableau = read_char_line(taille);
-  int b = programme_candidat(tableau, taille);
-  printf("%d\n", b);
+  printf("%d\n", programme_candidat(tableau, taille));
   return 0;
 }
 

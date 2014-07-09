@@ -168,32 +168,29 @@ function play(&$g){
       $minMove["y"] = $y;
     }
   }
-  $a = $minMove["x"];
-  echo $a;
-  $b = $minMove["y"];
-  echo $b, "\n";
+  echo $minMove["x"], $minMove["y"], "\n";
   return $minMove;
 }
 
 function init_(){
-  $d = 3;
+  $b = 3;
   $cases = array();
-  for ($i = 0 ; $i < $d; $i++)
+  for ($i = 0 ; $i < $b; $i++)
   {
-    $c = 3;
+    $a = 3;
     $tab = array();
-    for ($j = 0 ; $j < $c; $j++)
+    for ($j = 0 ; $j < $a; $j++)
       $tab[$j] = 0;
     $cases[$i] = $tab;
   }
-  $f = array(
+  $c = array(
     "cases"=>$cases,
     "firstToPlay"=>true,
     "note"=>0,
     "ended"=>false
   );
   
-  return $f;
+  return $c;
 }
 
 function read_move(){
@@ -203,29 +200,29 @@ function read_move(){
   $y = 0;
   list($y) = scan("%d");
   scantrim();
-  $h = array(
+  $d = array(
     "x"=>$x,
     "y"=>$y
   );
   
-  return $h;
+  return $d;
 }
 
 for ($i = 0 ; $i <= 1; $i++)
 {
   $state = init_();
-  $k = array(
+  $e = array(
     "x"=>1,
     "y"=>1
   );
   
-  apply_move($k, $state);
-  $l = array(
+  apply_move($e, $state);
+  $f = array(
     "x"=>0,
     "y"=>0
   );
   
-  apply_move($l, $state);
+  apply_move($f, $state);
   while (!$state["ended"])
   {
     print_state($state);
@@ -239,7 +236,6 @@ for ($i = 0 ; $i <= 1; $i++)
     }
   }
   print_state($state);
-  $e = $state["note"];
-  echo $e, "\n";
+  echo $state["note"], "\n";
 }
 ?>

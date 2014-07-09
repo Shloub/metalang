@@ -10,9 +10,7 @@ for ($a = 1 ; $a <= 1000; $a++)
     $cc = $c * $c;
     if ($cc == $a2b2 && $c > $a)
     {
-      echo $a, "\n", $b, "\n", $c, "\n";
-      $d = $a * $b * $c;
-      echo $d, "\n";
+      echo $a, "\n", $b, "\n", $c, "\n", $a * $b * $c, "\n";
     }
 }
 ?>

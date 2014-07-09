@@ -29,8 +29,7 @@ let print_bigint a =
   if not a.bigint_sign then
     Printf.printf "%c" '-';
   for i = 0 to a.bigint_len - 1 do
-    let e = a.bigint_chiffres.(a.bigint_len - 1 - i) in
-    Printf.printf "%d" e
+    Printf.printf "%d" a.bigint_chiffres.(a.bigint_len - 1 - i)
   done
 
 exception Found_1 of bool
@@ -208,8 +207,8 @@ let bigint_premiers_chiffres a i =
   }
 
 let bigint_shift a i =
-  let f = a.bigint_len + i in
-  let chiffres = Array.init f (fun k ->
+  let e = a.bigint_len + i in
+  let chiffres = Array.init e (fun k ->
     if k >= i then
       a.bigint_chiffres.(k - i)
     else
@@ -355,14 +354,14 @@ let euler25 () =
 let euler29 () =
   let maxA = 5 in
   let maxB = 5 in
-  let g = maxA + 1 in
-  let a_bigint = Array.init g (fun j ->
+  let f = maxA + 1 in
+  let a_bigint = Array.init f (fun j ->
     bigint_of_int (j * j)) in
-  let h = maxA + 1 in
-  let a0_bigint = Array.init h (fun j2 ->
+  let g = maxA + 1 in
+  let a0_bigint = Array.init g (fun j2 ->
     bigint_of_int j2) in
-  let m = maxA + 1 in
-  let b = Array.init m (fun _k ->
+  let h = maxA + 1 in
+  let b = Array.init h (fun _k ->
     2) in
   let n = ref( 0 ) in
   let found = ref( true ) in
@@ -401,8 +400,7 @@ let euler29 () =
 
 let () =
 begin
-  let o = (euler29 ()) in
-  Printf.printf "%d\n" o;
+  Printf.printf "%d\n" ((euler29 ()));
   let sum = ref( read_bigint 50 ) in
   for _i = 2 to 100 do
     Scanf.scanf " " (fun () -> ());
@@ -411,15 +409,9 @@ begin
   done;
   Printf.printf "euler13 = ";
   print_bigint (!sum);
-  Printf.printf "\neuler25 = ";
-  let p = (euler25 ()) in
-  Printf.printf "%d\neuler16 = " p;
-  let q = (euler16 ()) in
-  Printf.printf "%d\n" q;
+  Printf.printf "\neuler25 = %d\neuler16 = %d\n" ((euler25 ())) ((euler16 ()));
   (euler48 ());
-  Printf.printf "euler20 = ";
-  let r = (euler20 ()) in
-  Printf.printf "%d\n" r;
+  Printf.printf "euler20 = %d\n" ((euler20 ()));
   let a = bigint_of_int 999999 in
   let b = bigint_of_int 9951263 in
   print_bigint a;
@@ -460,8 +452,8 @@ begin
   Printf.printf ">";
   print_bigint b;
   Printf.printf "=";
-  let s = bigint_gt a b in
-  if s then
+  let m = bigint_gt a b in
+  if m then
     Printf.printf "True"
   else
     Printf.printf "False";

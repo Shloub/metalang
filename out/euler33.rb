@@ -49,7 +49,5 @@ for i in (1 ..  9) do
 end
 printf "%d/%d\n", top, bottom
 p = pgcd(top, bottom)
-printf "pgcd=%d\n", p
-e = (bottom.to_f / p).to_i
-printf "%d\n", e
+printf "pgcd=%d\n%d\n", p, (bottom.to_f / p).to_i
 

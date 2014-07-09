@@ -50,9 +50,7 @@ int main(void){
     int i;
     for (i = 0 ; i < len; i++)
     {
-      printf("%d=>", i);
-      int a = tab[i];
-      printf("%d ", a);
+      printf("%d=>%d ", i, tab[i]);
     }
   }
   printf("\n");
@@ -61,9 +59,7 @@ int main(void){
     int i_;
     for (i_ = 0 ; i_ < len; i_++)
     {
-      printf("%d==>", i_);
-      int b = tab2[i_];
-      printf("%d ", b);
+      printf("%d==>%d ", i_, tab2[i_]);
     }
   }
   int strlen = read_int();
@@ -84,10 +80,7 @@ int main(void){
   {
     int j;
     for (j = 0 ; j < strlen; j++)
-    {
-      char d = tab4[j];
-      printf("%c", d);
-    }
+      printf("%c", tab4[j]);
   }
   [pool drain];
   return 0;

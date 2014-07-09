@@ -34,6 +34,5 @@ for i in (0 ..  n - 1) do
   t[i] = i;
 end
 t[1] = 0;
-a = eratostene(t, n)
-printf "%d\n", a
+printf "%d\n", eratostene(t, n)
 

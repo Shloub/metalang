@@ -98,8 +98,7 @@ public static int readInt(){
       stdin_sep();
       tab[i] = tmp;
     }
-    int c = plus_petit_(tab, len);
-    Console.Write(c);
+    Console.Write(plus_petit_(tab, len));
   }
   
 }

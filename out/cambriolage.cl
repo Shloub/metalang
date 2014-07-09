@@ -115,7 +115,6 @@
                          (return-from lambda_3 out1)
                          ))))
                      ))))
-      (let ((e (nbPassePartout n passepartout m serrures)))
-        (princ e)
-      ))))))
+      (princ (nbPassePartout n passepartout m serrures))
+      )))))
 

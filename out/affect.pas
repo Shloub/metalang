@@ -100,12 +100,12 @@ begin
   exit(t);
 end;
 
-type c = array of Longint;
+type a = array of Longint;
 function result(t_ : toto; t2_ : toto) : Longint;
 var
-  cache0 : c;
-  cache1 : c;
-  cache2 : c;
+  cache0 : a;
+  cache1 : a;
+  cache2 : a;
   i : Longint;
   j : Longint;
   len : Longint;
@@ -142,8 +142,6 @@ end;
 
 
 var
-  a : Longint;
-  b : Longint;
   t : toto;
   t2 : toto;
 begin
@@ -156,10 +154,8 @@ begin
   t2^.bar := read_int_();
   skip();
   t2^.blah := read_int_();
-  a := result(t, t2);
-  Write(a);
-  b := t^.blah;
-  Write(b);
+  Write(result(t, t2));
+  Write(t^.blah);
 end.
 
 

@@ -36,8 +36,6 @@ begin
   done;
   Printf.printf "%d/%d\n" (!top) (!bottom);
   let p = pgcd (!top) (!bottom) in
-  Printf.printf "pgcd=%d\n" p;
-  let e = (!bottom) / p in
-  Printf.printf "%d\n" e
+  Printf.printf "pgcd=%d\n%d\n" p ((!bottom) / p)
 end
  

@@ -12,6 +12,5 @@ def programme_candidat( tableau, taille ):
 
 taille = read_int();
 tableau = read_int_line(taille);
-a = programme_candidat(tableau, taille);
-print("%d\n" % ( a ), end='')
+print("%d\n" % ( programme_candidat(tableau, taille) ), end='')
 

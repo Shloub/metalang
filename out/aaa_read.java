@@ -64,10 +64,7 @@ read int, read char et skip
       tab4[toto] = (char)(c);
     }
     for (int j = 0 ; j < strlen; j++)
-    {
-      char a = tab4[j];
-      System.out.printf("%c", a);
-    }
+      System.out.printf("%c", tab4[j]);
   }
   
 }

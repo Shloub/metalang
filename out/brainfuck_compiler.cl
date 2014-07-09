@@ -90,10 +90,9 @@ et qui produit les macros metalang correspondante
              (setf (aref mem_ current_pos) (- (aref mem_ current_pos) 1))
              (setq current_pos ( - current_pos 1))
              (setf (aref mem_ current_pos) (+ (aref mem_ current_pos) 1))
-             (let ((b (int-char (aref mem_ current_pos))))
-               (princ b)
-               (setq current_pos ( + current_pos 1))
-             ))
+             (princ (int-char (aref mem_ current_pos)))
+             (setq current_pos ( + current_pos 1))
+             )
         )
         )))))
 

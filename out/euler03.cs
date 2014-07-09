@@ -25,7 +25,7 @@ public class euler03
       }
       if (!found)
       {
-        Console.Write(a + "\n");
+        Console.Write("" + a + "\n");
         a = 1;
       }
     }

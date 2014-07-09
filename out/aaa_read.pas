@@ -75,7 +75,6 @@ read int, read char et skip
 }
 
 var
-  a : char;
   c : Longint;
   i : Longint;
   i_ : Longint;
@@ -149,8 +148,7 @@ begin
   end;
   for j := 0 to  strlen - 1 do
   begin
-    a := tab4[j];
-    Write(a);
+    Write(tab4[j]);
   end;
 end.
 

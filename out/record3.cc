@@ -32,10 +32,8 @@ int main(){
   for (int i = 0 ; i < a; i++)
     t.at(i) = mktoto(i);
   std::cin >> t.at(0)->bar >> std::skipws >> t.at(1)->blah >> std::noskipws;
-  int b = result(t, 4);
-  std::cout << b;
-  int c = t.at(2)->blah;
-  std::cout << c;
+  int titi = result(t, 4);
+  std::cout << titi << t.at(2)->blah;
   return 0;
 }
 

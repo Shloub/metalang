@@ -76,8 +76,7 @@ int main(){
     mem.at(current_pos) = mem.at(current_pos) - 1;
     current_pos --;
     mem.at(current_pos) = mem.at(current_pos) + 1;
-    char b = mem.at(current_pos);
-    std::cout << b;
+    std::cout << (char)(mem.at(current_pos));
     current_pos ++;
   }
   return 0;

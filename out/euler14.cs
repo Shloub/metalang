@@ -44,7 +44,7 @@ public class euler14
         maxi = i;
       }
     }
-    Console.Write(max_ + "\n" + maxi + "\n");
+    Console.Write("" + max_ + "\n" + maxi + "\n");
   }
   
 }

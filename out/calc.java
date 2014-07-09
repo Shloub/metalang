@@ -25,8 +25,7 @@ La suite de fibonaci
   
   public static void main(String args[])
   {
-    int c = fibo(1, 2, 4);
-    System.out.printf("%d", c);
+    System.out.printf("%d", fibo(1, 2, 4));
   }
   
 }

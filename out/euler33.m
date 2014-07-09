@@ -55,9 +55,7 @@ int main(void){
   }
   printf("%d/%d\n", top, bottom);
   int p = pgcd(top, bottom);
-  printf("pgcd=%d\n", p);
-  int e = bottom / p;
-  printf("%d\n", e);
+  printf("pgcd=%d\n%d\n", p, bottom / p);
   [pool drain];
   return 0;
 }

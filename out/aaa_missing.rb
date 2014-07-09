@@ -43,6 +43,5 @@ end
 len = read_int()
 printf "%d\n", len
 tab = read_int_line(len)
-a = result(len, tab)
-printf "%d", a
+printf "%d", result(len, tab)
 

@@ -83,6 +83,5 @@ for k in range(0, m):
     stdinsep()
     out1[l] = out_;
   serrures[k] = out1;
-e = nbPassePartout(n, passepartout, m, serrures);
-print("%d" % e, end='')
+print("%d" % nbPassePartout(n, passepartout, m, serrures), end='')
 

@@ -53,8 +53,7 @@ public class prologin_template_intmatrix
     int taille_x = read_int();
     int taille_y = read_int();
     int[][] tableau = read_int_matrix(taille_x, taille_y);
-    int a = programme_candidat(tableau, taille_x, taille_y);
-    System.out.printf("%d\n", a);
+    System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   
 }

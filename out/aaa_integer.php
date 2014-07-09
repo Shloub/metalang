@@ -17,20 +17,5 @@ echo $i, "\n";
 /*
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
 */
-$a = intval(117 / 17);
-echo $a, "\n";
-$b = intval(117 / -17);
-echo $b, "\n";
-$c = intval(-117 / 17);
-echo $c, "\n";
-$d = intval(-117 / -17);
-echo $d, "\n";
-$e = 117 % 17;
-echo $e, "\n";
-$f = 117 % -17;
-echo $f, "\n";
-$g = -117 % 17;
-echo $g, "\n";
-$h = -117 % -17;
-echo $h, "\n";
+echo intval(117 / 17), "\n", intval(117 / -17), "\n", intval(-117 / 17), "\n", intval(-117 / -17), "\n", 117 % 17, "\n", 117 % -17, "\n", -117 % 17, "\n", -117 % -17, "\n";
 ?>

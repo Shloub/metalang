@@ -35,8 +35,7 @@ public class euler28
   
   public static void Main(String[] args)
   {
-    int a = sumdiag(1001);
-    Console.Write(a);
+    Console.Write(sumdiag(1001));
   }
   
 }

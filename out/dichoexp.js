@@ -52,7 +52,6 @@ var b = 0;
 a=read_int_();
 stdinsep();
 b=read_int_();
-var c = exp_(a, b);
-util.print(c);
+util.print(exp_(a, b));
 
 

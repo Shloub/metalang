@@ -33,8 +33,7 @@ func main() {
       tab4[toto] = (byte)(c);
   }
   for j := 0 ; j <= strlen - 1; j++ {
-    var a byte = tab4[j]
-      fmt.Printf("%c", a);
+    fmt.Printf("%c", tab4[j]);
   }
 }
 

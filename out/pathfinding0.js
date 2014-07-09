@@ -94,8 +94,7 @@ function pathfind(tab, x, y){
     var tmp = new Array(x);
     for (var j = 0 ; j <= x - 1; j++)
     {
-      var e = tab[i][j];
-      util.print(e);
+      util.print(tab[i][j]);
       tmp[j] = -1;
     }
     util.print("\n");

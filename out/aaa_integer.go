@@ -34,21 +34,6 @@ func main() {
   /*
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo
 */
-  var a int = 117 / 17
-  fmt.Printf("%d\n", a);
-  var b int = 117 / -17
-  fmt.Printf("%d\n", b);
-  var c int = -117 / 17
-  fmt.Printf("%d\n", c);
-  var d int = -117 / -17
-  fmt.Printf("%d\n", d);
-  var e int = 117 % 17
-  fmt.Printf("%d\n", e);
-  var f int = 117 % -17
-  fmt.Printf("%d\n", f);
-  var g int = -117 % 17
-  fmt.Printf("%d\n", g);
-  var h int = -117 % -17
-  fmt.Printf("%d\n", h);
+  fmt.Printf("%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n", 117 / 17, 117 / -17, -117 / 17, -117 / -17, 117 % 17, 117 % -17, -117 % 17, -117 % -17);
 }
 

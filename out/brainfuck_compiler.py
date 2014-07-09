@@ -71,7 +71,6 @@ while (mem[current_pos] != 0):
   mem[current_pos] = mem[current_pos] - 1;
   current_pos -= 1
   mem[current_pos] = mem[current_pos] + 1;
-  b = mem[current_pos];
-  print("%c" % b, end='')
+  print("%c" % mem[current_pos], end='')
   current_pos += 1
 

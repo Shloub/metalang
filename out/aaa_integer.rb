@@ -25,20 +25,5 @@ http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_l
 
 =end
 
-a = (117.to_f / 17).to_i
-printf "%d\n", a
-b = (117.to_f / -17).to_i
-printf "%d\n", b
-c = (-117.to_f / 17).to_i
-printf "%d\n", c
-d = (-117.to_f / -17).to_i
-printf "%d\n", d
-e = mod(117, 17)
-printf "%d\n", e
-f = mod(117, -17)
-printf "%d\n", f
-g = mod(-117, 17)
-printf "%d\n", g
-h = mod(-117, -17)
-printf "%d\n", h
+printf "%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n", (117.to_f / 17).to_i, (117.to_f / -17).to_i, (-117.to_f / 17).to_i, (-117.to_f / -17).to_i, mod(117, 17), mod(117, -17), mod(-117, 17), mod(-117, -17)
 

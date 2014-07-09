@@ -48,7 +48,6 @@
       (setq a (mread-int ))
       (mread-blank)
       (setq b (mread-int ))
-      (let ((c (exp_ a b)))
-        (princ c)
-      ))))
+      (princ (exp_ a b))
+    )))
 

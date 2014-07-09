@@ -57,13 +57,12 @@
         ((x 0 (+ 1 x)))
         ((> x 8))
         (progn
-          (let ((b (aref sudoku_ (+ x (* y 9)))))
-            (princ b)
-            (princ " ")
-            (if
-              (= (remainder x 3) 2)
-              (princ " "))
-          ))
+          (princ (aref sudoku_ (+ x (* y 9))))
+          (princ " ")
+          (if
+            (= (remainder x 3) 2)
+            (princ " "))
+        )
       )
       (princ "
 ")

@@ -64,7 +64,6 @@ for (var i = 0 ; i <= len - 1; i++)
   stdinsep();
   tab[i] = x;
 }
-var a = montagnes_(tab, len);
-util.print(a);
+util.print(montagnes_(tab, len));
 
 

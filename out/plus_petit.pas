@@ -61,8 +61,8 @@ begin
    until false;
 end;
 
-type d = array of Longint;
-function go_(tab : d; a : Longint; b : Longint) : Longint;
+type c = array of Longint;
+function go_(tab : c; a : Longint; b : Longint) : Longint;
 var
   e : Longint;
   i : Longint;
@@ -111,17 +111,16 @@ begin
     end;
 end;
 
-function plus_petit_(tab : d; len : Longint) : Longint;
+function plus_petit_(tab : c; len : Longint) : Longint;
 begin
   exit(go_(tab, 0, len));
 end;
 
 
 var
-  c : Longint;
   i : Longint;
   len : Longint;
-  tab : d;
+  tab : c;
   tmp : Longint;
 begin
   len := 0;
@@ -135,8 +134,7 @@ begin
     skip();
     tab[i] := tmp;
   end;
-  c := plus_petit_(tab, len);
-  Write(c);
+  Write(plus_petit_(tab, len));
 end.
 
 

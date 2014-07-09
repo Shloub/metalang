@@ -43,7 +43,6 @@ var param = {
 param.bar=read_int_();
 stdinsep();
 param.foo=read_int_();
-var a = param.bar + param.foo * param.bar;
-util.print(a);
+util.print(param.bar + param.foo * param.bar);
 
 

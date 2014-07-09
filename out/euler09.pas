@@ -7,7 +7,6 @@ var
   b : Longint;
   c : Longint;
   cc : Longint;
-  d : Longint;
 begin
   {
 	a + b + c = 1000 && a * a + b * b = c * c
@@ -28,8 +27,7 @@ begin
           Write(''#10'');
           Write(c);
           Write(''#10'');
-          d := a * b * c;
-          Write(d);
+          Write(a * b * c);
           Write(''#10'');
         end;
     end;

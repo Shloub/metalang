@@ -63,7 +63,6 @@ function programme_candidat(tableau, taille){
 
 var taille = read_int();
 var tableau = read_int_line(taille);
-var a = programme_candidat(tableau, taille);
-util.print(a, "\n");
+util.print(programme_candidat(tableau, taille), "\n");
 
 

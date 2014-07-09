@@ -37,11 +37,8 @@ begin
 end;
 
 
-var
-  a : Longint;
 begin
-  a := sumdiag(1001);
-  Write(a);
+  Write(sumdiag(1001));
 end.
 
 

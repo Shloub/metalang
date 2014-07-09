@@ -65,6 +65,5 @@ for k in (0 ..  m - 1) do
   end
   serrures[k] = out1;
 end
-e = nbPassePartout(n, passepartout, m, serrures)
-printf "%d", e
+printf "%d", nbPassePartout(n, passepartout, m, serrures)
 

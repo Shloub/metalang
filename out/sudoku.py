@@ -50,8 +50,7 @@ def read_sudoku(  ):
 def print_sudoku( sudoku_ ):
     for y in range(0, 1 + 8):
       for x in range(0, 1 + 8):
-        b = sudoku_[x + y * 9];
-        print("%d " % ( b ), end='')
+        print("%d " % ( sudoku_[x + y * 9] ), end='')
         if (mod(x, 3)) == 2:
           print( " ", end='')
       print("")

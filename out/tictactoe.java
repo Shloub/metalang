@@ -163,31 +163,28 @@ Renvoie le coup de l'IA
         minMove.y = y;
       }
     }
-    int a = minMove.x;
-    System.out.printf("%d", a);
-    int b = minMove.y;
-    System.out.printf("%d\n", b);
+    System.out.printf("%d%d\n", minMove.x, minMove.y);
     return minMove;
   }
   
   public static gamestate init_()
   {
-    int d = 3;
-    int[][] cases = new int[d][];
-    for (int i = 0 ; i < d; i++)
+    int b = 3;
+    int[][] cases = new int[b][];
+    for (int i = 0 ; i < b; i++)
     {
-      int c = 3;
-      int[] tab = new int[c];
-      for (int j = 0 ; j < c; j++)
+      int a = 3;
+      int[] tab = new int[a];
+      for (int j = 0 ; j < a; j++)
         tab[j] = 0;
       cases[i] = tab;
     }
-    gamestate f = new gamestate();
-    f.cases = cases;
-    f.firstToPlay = true;
-    f.note = 0;
-    f.ended = false;
-    return f;
+    gamestate c = new gamestate();
+    c.cases = cases;
+    c.firstToPlay = true;
+    c.note = 0;
+    c.ended = false;
+    return c;
   }
   
   public static move read_move()
@@ -204,10 +201,10 @@ Renvoie le coup de l'IA
     }else{
     y = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    move h = new move();
-    h.x = x;
-    h.y = y;
-    return h;
+    move d = new move();
+    d.x = x;
+    d.y = y;
+    return d;
   }
   
   
@@ -216,14 +213,14 @@ Renvoie le coup de l'IA
     for (int i = 0 ; i <= 1; i ++)
     {
       gamestate state = init_();
-      move k = new move();
-      k.x = 1;
-      k.y = 1;
-      apply_move(k, state);
-      move l = new move();
-      l.x = 0;
-      l.y = 0;
-      apply_move(l, state);
+      move e = new move();
+      e.x = 1;
+      e.y = 1;
+      apply_move(e, state);
+      move f = new move();
+      f.x = 0;
+      f.y = 0;
+      apply_move(f, state);
       while (!state.ended)
       {
         print_state(state);
@@ -237,8 +234,7 @@ Renvoie le coup de l'IA
         }
       }
       print_state(state);
-      int e = state.note;
-      System.out.printf("%d\n", e);
+      System.out.printf("%d\n", state.note);
     }
   }
   

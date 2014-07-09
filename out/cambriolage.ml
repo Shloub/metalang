@@ -44,7 +44,6 @@ begin
       let out_ = Scanf.scanf "%d " (fun v_0 -> v_0) in
       out_) in
     out1) in
-  let e = nbPassePartout n passepartout m serrures in
-  Printf.printf "%d" e
+  Printf.printf "%d" (nbPassePartout n passepartout m serrures)
 end
  

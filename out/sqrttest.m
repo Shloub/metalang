@@ -9,18 +9,7 @@ int isqrt(int c){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int a = isqrt(4);
-  printf("%d ", a);
-  int b = isqrt(16);
-  printf("%d ", b);
-  int d = isqrt(20);
-  printf("%d ", d);
-  int e = isqrt(1000);
-  printf("%d ", e);
-  int f = isqrt(500);
-  printf("%d ", f);
-  int g = isqrt(10);
-  printf("%d ", g);
+  printf("%d %d %d %d %d %d ", isqrt(4), isqrt(16), isqrt(20), isqrt(1000), isqrt(500), isqrt(10));
   [pool drain];
   return 0;
 }

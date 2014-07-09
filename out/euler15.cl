@@ -62,18 +62,16 @@
           ((k 0 (+ 1 k)))
           ((> k (- n 1)))
           (progn
-            (let ((a (aref (aref tab m) k)))
-              (princ a)
-              (princ " ")
-            ))
+            (princ (aref (aref tab m) k))
+            (princ " ")
+          )
         )
         (princ "
 ")
       )
     )
-    (let ((b (aref (aref tab 0) 0)))
-      (princ b)
-      (princ "
+    (princ (aref (aref tab 0) 0))
+    (princ "
 ")
-    ))))
+    )))
 

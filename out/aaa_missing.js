@@ -72,7 +72,6 @@ function result(len, tab){
 var len = read_int();
 util.print(len, "\n");
 var tab = read_int_line(len);
-var a = result(len, tab);
-util.print(a);
+util.print(result(len, tab));
 
 

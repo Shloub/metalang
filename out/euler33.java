@@ -45,9 +45,7 @@ public class euler33
     }
     System.out.printf("%d/%d\n", top, bottom);
     int p = pgcd(top, bottom);
-    System.out.printf("pgcd=%d\n", p);
-    int e = bottom / p;
-    System.out.printf("%d\n", e);
+    System.out.printf("pgcd=%d\n%d\n", p, bottom / p);
   }
   
 }

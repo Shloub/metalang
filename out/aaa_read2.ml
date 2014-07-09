@@ -24,16 +24,12 @@ begin
   Printf.printf "%d=len\n" len;
   let tab = read_int_line len in
   for i = 0 to len - 1 do
-    Printf.printf "%d=>" i;
-    let a = tab.(i) in
-    Printf.printf "%d " a
+    Printf.printf "%d=>%d " i tab.(i)
   done;
   Printf.printf "\n";
   let tab2 = read_int_line len in
   for i_ = 0 to len - 1 do
-    Printf.printf "%d==>" i_;
-    let b = tab2.(i_) in
-    Printf.printf "%d " b
+    Printf.printf "%d==>%d " i_ tab2.(i_)
   done;
   let strlen = (read_int ()) in
   Printf.printf "%d=strlen\n" strlen;
@@ -47,8 +43,7 @@ begin
     tab4.(i3) <- char_of_int ((!c))
   done;
   for j = 0 to strlen - 1 do
-    let d = tab4.(j) in
-    Printf.printf "%c" d
+    Printf.printf "%c" tab4.(j)
   done
 end
  

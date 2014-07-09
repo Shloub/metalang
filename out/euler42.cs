@@ -95,7 +95,7 @@ public static int readInt(){
     for (int i = 1 ; i <= 55; i ++)
       if (is_triangular(i))
     {
-      Console.Write(i + " ");
+      Console.Write("" + i + " ");
     }
     Console.Write("\n");
     int sum = 0;
@@ -103,7 +103,7 @@ public static int readInt(){
     n = readInt();
     for (int i = 1 ; i <= n; i ++)
       sum += score();
-    Console.Write(sum + "\n");
+    Console.Write("" + sum + "\n");
   }
   
 }

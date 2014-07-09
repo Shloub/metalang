@@ -7,31 +7,18 @@ begin
 end;
 
 
-var
-  a : Longint;
-  b : Longint;
-  d : Longint;
-  e : Longint;
-  f : Longint;
-  g : Longint;
 begin
-  a := isqrt(4);
-  Write(a);
+  Write(isqrt(4));
   Write(' ');
-  b := isqrt(16);
-  Write(b);
+  Write(isqrt(16));
   Write(' ');
-  d := isqrt(20);
-  Write(d);
+  Write(isqrt(20));
   Write(' ');
-  e := isqrt(1000);
-  Write(e);
+  Write(isqrt(1000));
   Write(' ');
-  f := isqrt(500);
-  Write(f);
+  Write(isqrt(500));
   Write(' ');
-  g := isqrt(10);
-  Write(g);
+  Write(isqrt(10));
   Write(' ');
 end.
 

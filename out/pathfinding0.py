@@ -37,8 +37,7 @@ def pathfind( tab, x, y ):
     for i in range(0, y):
       tmp = [None] * x
       for j in range(0, x):
-        e = tab[i][j];
-        print("%c" % e, end='')
+        print("%c" % tab[i][j], end='')
         tmp[j] = -(1);
       print("")
       cache[i] = tmp;

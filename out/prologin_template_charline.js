@@ -59,8 +59,7 @@ function programme_candidat(tableau, taille){
   for (var i = 0 ; i <= taille - 1; i++)
   {
     out_ += tableau[i].charCodeAt(0) * i;
-    var a = tableau[i];
-    util.print(a);
+    util.print(tableau[i]);
   }
   util.print("--\n");
   return out_;
@@ -68,7 +67,6 @@ function programme_candidat(tableau, taille){
 
 var taille = read_int();
 var tableau = read_char_line(taille);
-var b = programme_candidat(tableau, taille);
-util.print(b, "\n");
+util.print(programme_candidat(tableau, taille), "\n");
 
 

@@ -60,7 +60,6 @@ stdinsep();
 b=read_int_();
 stdinsep();
 i=read_int_();
-var c = fibo_(a, b, i);
-util.print(c);
+util.print(fibo_(a, b, i));
 
 

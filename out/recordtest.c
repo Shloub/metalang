@@ -11,8 +11,7 @@ int main(void){
   param->foo=0;
   param->bar=0;
   scanf("%d %d", &param->bar, &param->foo);
-  int a = param->bar + param->foo * param->bar;
-  printf("%d", a);
+  printf("%d", param->bar + param->foo * param->bar);
   return 0;
 }
 

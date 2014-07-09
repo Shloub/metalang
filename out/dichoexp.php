@@ -34,6 +34,5 @@ $b = 0;
 list($a) = scan("%d");
 scantrim();
 list($b) = scan("%d");
-$c = exp_($a, $b);
-echo $c;
+echo exp_($a, $b);
 ?>

@@ -73,7 +73,6 @@ let find ndiv2 =
 
 let () =
 begin
-  let e = find 500 in
-  Printf.printf "%d\n" e
+  Printf.printf "%d\n" (find 500)
 end
  

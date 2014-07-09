@@ -25,7 +25,6 @@ begin
   let t = Array.init n (fun i ->
     i) in
   t.(1) <- 0;
-  let a = eratostene t n in
-  Printf.printf "%d\n" a
+  Printf.printf "%d\n" (eratostene t n)
 end
  

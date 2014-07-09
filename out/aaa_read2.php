@@ -20,17 +20,13 @@ echo $len, "=len\n";
 $tab = read_int_line($len);
 for ($i = 0 ; $i < $len; $i++)
 {
-  echo $i, "=>";
-  $a = $tab[$i];
-  echo $a, " ";
+  echo $i, "=>", $tab[$i], " ";
 }
 echo "\n";
 $tab2 = read_int_line($len);
 for ($i_ = 0 ; $i_ < $len; $i_++)
 {
-  echo $i_, "==>";
-  $b = $tab2[$i_];
-  echo $b, " ";
+  echo $i_, "==>", $tab2[$i_], " ";
 }
 $strlen = read_int();
 echo $strlen, "=strlen\n";
@@ -45,8 +41,5 @@ for ($i3 = 0 ; $i3 < $strlen; $i3++)
   $tab4[$i3] = chr($c);
 }
 for ($j = 0 ; $j < $strlen; $j++)
-{
-  $d = $tab4[$j];
-  echo $d;
-}
+  echo $tab4[$j];
 ?>

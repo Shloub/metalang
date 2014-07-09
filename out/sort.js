@@ -102,16 +102,14 @@ var tab2 = copytab(tab, len);
 bubblesort(tab2, len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  var a = tab2[i];
-  util.print(a, " ");
+  util.print(tab2[i], " ");
 }
 util.print("\n");
 var tab3 = copytab(tab, len);
 qsort_(tab3, len, 0, len - 1);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  var b = tab3[i];
-  util.print(b, " ");
+  util.print(tab3[i], " ");
 }
 util.print("\n");
 

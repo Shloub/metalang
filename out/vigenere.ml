@@ -33,8 +33,7 @@ begin
     out2) in
   crypte taille_cle cle taille message;
   for i = 0 to taille - 1 do
-    let a = message.(i) in
-    Printf.printf "%c" a
+    Printf.printf "%c" message.(i)
   done;
   Printf.printf "\n"
 end

@@ -29,10 +29,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   toto * t = mktoto(4);
   scanf("%d %d", &t->bar, &t->blah);
-  int a = result(t);
-  printf("%d", a);
-  int b = t->blah;
-  printf("%d", b);
+  printf("%d", result(t));
   [pool drain];
   return 0;
 }

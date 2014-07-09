@@ -26,7 +26,6 @@ begin
   let taille_x = (read_int ()) in
   let taille_y = (read_int ()) in
   let tableau = read_int_matrix taille_x taille_y in
-  let a = programme_candidat tableau taille_x taille_y in
-  Printf.printf "%d\n" a
+  Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
 end
  

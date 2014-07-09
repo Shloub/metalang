@@ -64,7 +64,7 @@ public class euler27
       primes[l] = k;
       l ++;
     }
-    Console.Write(l + " == " + nprimes + "\n");
+    Console.Write("" + l + " == " + nprimes + "\n");
     int ma = 0;
     int mb = 0;
     for (int b = 3 ; b <= 999; b ++)
@@ -88,7 +88,7 @@ public class euler27
           mb = -b;
         }
     }
-    Console.Write(ma + " " + mb + "\n" + max_ + "\n" + result + "\n");
+    Console.Write("" + ma + " " + mb + "\n" + max_ + "\n" + result + "\n");
   }
   
 }

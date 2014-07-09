@@ -54,9 +54,6 @@ var t = mktoto(4);
 t.bar=read_int_();
 stdinsep();
 t.blah=read_int_();
-var a = result(t);
-util.print(a);
-var b = t.blah;
-util.print(b);
+util.print(result(t));
 
 

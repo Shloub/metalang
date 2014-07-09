@@ -29,16 +29,13 @@ len = read_int()
 printf "%d=len\n", len
 tab1 = read_int_line(len)
 for i in (0 ..  len - 1) do
-  printf "%d=>", i
-  a = tab1[i]
-  printf "%d\n", a
+  printf "%d=>%d\n", i, tab1[i]
 end
 len = read_int();
 tab2 = read_int_matrix(len, len - 1)
 for i in (0 ..  len - 2) do
   for j in (0 ..  len - 1) do
-    b = tab2[i][j]
-    printf "%d ", b
+    printf "%d ", tab2[i][j]
   end
   print "\n";
 end

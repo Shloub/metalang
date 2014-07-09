@@ -66,9 +66,8 @@
       ((> i (- taille1 1)))
       (progn
         (setq out_ ( + out_ (* (char-int (aref tableau1 i)) i)))
-        (let ((a (aref tableau1 i)))
-          (princ a)
-        ))
+        (princ (aref tableau1 i))
+      )
     )
     (princ "--
 ")
@@ -77,9 +76,8 @@
       ((> j (- taille2 1)))
       (progn
         (setq out_ ( + out_ (* (char-int (aref tableau2 j)) (* j 100))))
-        (let ((b (aref tableau2 j)))
-          (princ b)
-        ))
+        (princ (aref tableau2 j))
+      )
     )
     (princ "--
 ")
@@ -91,9 +89,8 @@
     (let ((tableau1 (read_char_line taille1)))
       (let ((taille2 (read_int )))
         (let ((tableau2 (read_char_line taille2)))
-          (let ((c (programme_candidat tableau1 taille1 tableau2 taille2)))
-            (princ c)
-            (princ "
+          (princ (programme_candidat tableau1 taille1 tableau2 taille2))
+          (princ "
 ")
-          ))))))
+        )))))
 

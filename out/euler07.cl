@@ -48,9 +48,8 @@
                (return-from lambda_1 2)
              ))
              ))))
-    (let ((a (find_ 3 t_ 1 n)))
-      (princ a)
-      (princ "
+    (princ (find_ 3 t_ 1 n))
+    (princ "
 ")
-    ))))
+    )))
 

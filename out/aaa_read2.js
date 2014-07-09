@@ -75,17 +75,13 @@ util.print(len, "=len\n");
 var tab = read_int_line(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  util.print(i, "=>");
-  var a = tab[i];
-  util.print(a, " ");
+  util.print(i, "=>", tab[i], " ");
 }
 util.print("\n");
 var tab2 = read_int_line(len);
 for (var i_ = 0 ; i_ <= len - 1; i_++)
 {
-  util.print(i_, "==>");
-  var b = tab2[i_];
-  util.print(b, " ");
+  util.print(i_, "==>", tab2[i_], " ");
 }
 var strlen = read_int();
 util.print(strlen, "=strlen\n");
@@ -100,9 +96,6 @@ for (var i3 = 0 ; i3 <= strlen - 1; i3++)
   tab4[i3] = String.fromCharCode(c);
 }
 for (var j = 0 ; j <= strlen - 1; j++)
-{
-  var d = tab4[j];
-  util.print(d);
-}
+  util.print(tab4[j]);
 
 

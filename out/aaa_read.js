@@ -81,9 +81,6 @@ for (var toto = 0 ; toto <= strlen - 1; toto++)
   tab4[toto] = String.fromCharCode(c);
 }
 for (var j = 0 ; j <= strlen - 1; j++)
-{
-  var a = tab4[j];
-  util.print(a);
-}
+  util.print(tab4[j]);
 
 

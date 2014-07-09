@@ -37,10 +37,8 @@ int main(void){
       t[i] = mktoto(i);
   }
   scanf("%d %d", &t[0]->bar, &t[1]->blah);
-  int b = result(t, 4);
-  printf("%d", b);
-  int c = t[2]->blah;
-  printf("%d", c);
+  int titi = result(t, 4);
+  printf("%d%d", titi, t[2]->blah);
   return 0;
 }
 

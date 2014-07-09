@@ -21,7 +21,6 @@ begin
   Scanf.scanf "%d %d %d" (fun v_0 v_1 v_2 -> a := v_0;
                                              b := v_1;
                                              i := v_2);
-  let c = fibo_ (!a) (!b) (!i) in
-  Printf.printf "%d" c
+  Printf.printf "%d" (fibo_ (!a) (!b) (!i))
 end
  

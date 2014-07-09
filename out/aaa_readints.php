@@ -19,9 +19,7 @@ echo $len, "=len\n";
 $tab1 = read_int_line($len);
 for ($i = 0 ; $i < $len; $i++)
 {
-  echo $i, "=>";
-  $a = $tab1[$i];
-  echo $a, "\n";
+  echo $i, "=>", $tab1[$i], "\n";
 }
 $len = read_int();
 $tab2 = read_int_matrix($len, $len - 1);
@@ -29,8 +27,7 @@ for ($i = 0 ; $i <= $len - 2; $i++)
 {
   for ($j = 0 ; $j < $len; $j++)
   {
-    $b = $tab2[$i][$j];
-    echo $b, " ";
+    echo $tab2[$i][$j], " ";
   }
   echo "\n";
 }

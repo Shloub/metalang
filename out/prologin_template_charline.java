@@ -25,8 +25,7 @@ public class prologin_template_charline
     for (int i = 0 ; i < taille; i++)
     {
       out_ += tableau[i] * i;
-      char a = tableau[i];
-      System.out.printf("%c", a);
+      System.out.printf("%c", tableau[i]);
     }
     System.out.print("--\n");
     return out_;
@@ -37,8 +36,7 @@ public class prologin_template_charline
   {
     int taille = read_int();
     char[] tableau = read_char_line(taille);
-    int b = programme_candidat(tableau, taille);
-    System.out.printf("%d\n", b);
+    System.out.printf("%d\n", programme_candidat(tableau, taille));
   }
   
 }

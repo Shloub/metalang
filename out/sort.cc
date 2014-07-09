@@ -67,16 +67,14 @@ int main(){
   bubblesort(tab2, len);
   for (int i = 0 ; i < len; i++)
   {
-    int a = tab2.at(i);
-    std::cout << a << " ";
+    std::cout << tab2.at(i) << " ";
   }
   std::cout << "\n";
   std::vector<int > tab3 = copytab(tab, len);
   qsort_(tab3, len, 0, len - 1);
   for (int i = 0 ; i < len; i++)
   {
-    int b = tab3.at(i);
-    std::cout << b << " ";
+    std::cout << tab3.at(i) << " ";
   }
   std::cout << "\n";
   return 0;

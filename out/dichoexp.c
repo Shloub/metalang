@@ -17,8 +17,7 @@ int main(void){
   int a = 0;
   int b = 0;
   scanf("%d %d", &a, &b);
-  int c = exp_(a, b);
-  printf("%d", c);
+  printf("%d", exp_(a, b));
   return 0;
 }
 

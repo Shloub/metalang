@@ -118,8 +118,7 @@ public static int readInt(){
       }
       serrures[k] = out1;
     }
-    int e = nbPassePartout(n, passepartout, m, serrures);
-    Console.Write(e);
+    Console.Write(nbPassePartout(n, passepartout, m, serrures));
   }
   
 }

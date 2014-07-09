@@ -81,8 +81,7 @@ int pathfind(char** tab, int x, int y){
         int j;
         for (j = 0 ; j < x; j++)
         {
-          char e = tab[i][j];
-          printf("%c", e);
+          printf("%c", tab[i][j]);
           tmp[j] = -1;
         }
       }

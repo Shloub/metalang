@@ -73,8 +73,7 @@ while ($mem[$current_pos] != 0)
   $mem[$current_pos] = $mem[$current_pos] - 1;
   $current_pos --;
   $mem[$current_pos] = $mem[$current_pos] + 1;
-  $b = chr($mem[$current_pos]);
-  echo $b;
+  echo chr($mem[$current_pos]);
   $current_pos ++;
 }
 ?>

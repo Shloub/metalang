@@ -12,9 +12,7 @@ for a in (1 ..  1000) do
     a2b2 = a * a + b * b
     cc = c * c
     if cc == a2b2 && c > a then
-      printf "%d\n%d\n%d\n", a, b, c
-      d = a * b * c
-      printf "%d\n", d
+      printf "%d\n%d\n%d\n%d\n", a, b, c, a * b * c
     end
   end
 end

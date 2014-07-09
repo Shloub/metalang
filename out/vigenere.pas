@@ -94,8 +94,8 @@ begin
   exit(chr(c + ord(#97)));
 end;
 
-type b = array of char;
-procedure crypte(taille_cle : Longint; cle : b; taille : Longint; message : b);
+type a = array of char;
+procedure crypte(taille_cle : Longint; cle : a; taille : Longint; message : a);
 var
   addon : Longint;
   i : Longint;
@@ -117,12 +117,11 @@ end;
 
 
 var
-  a : char;
-  cle : b;
+  cle : a;
   i : Longint;
   index : Longint;
   index2 : Longint;
-  message : b;
+  message : a;
   out2 : char;
   out_ : char;
   taille : Longint;
@@ -152,8 +151,7 @@ begin
   crypte(taille_cle, cle, taille, message);
   for i := 0 to  taille - 1 do
   begin
-    a := message[i];
-    Write(a);
+    Write(message[i]);
   end;
   Write(''#10'');
 end.

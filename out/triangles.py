@@ -80,11 +80,9 @@ for i in range(0, len):
     stdinsep()
     tab2[j] = tmp;
   tab[i] = tab2;
-c = find(len, tab);
-print("%d\n" % ( c ), end='')
+print("%d\n" % ( find(len, tab) ), end='')
 for k in range(0, len):
   for l in range(0, 1 + k):
-    d = tab[k][l];
-    print("%d " % ( d ), end='')
+    print("%d " % ( tab[k][l] ), end='')
   print("")
 

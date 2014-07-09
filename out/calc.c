@@ -23,8 +23,7 @@ int fibo(int a, int b, int i){
 }
 
 int main(void){
-  int c = fibo(1, 2, 4);
-  printf("%d", c);
+  printf("%d", fibo(1, 2, 4));
   return 0;
 }
 

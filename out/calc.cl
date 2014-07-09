@@ -32,8 +32,5 @@ La suite de fibonaci
         (return-from fibo out_)
       )))))
 
-(progn
-  (let ((c (fibo 1 2 4)))
-    (princ c)
-  ))
+(princ (fibo 1 2 4))
 

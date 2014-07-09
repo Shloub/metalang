@@ -70,14 +70,12 @@ on le retrouve ici : http://projecteuler.net/problem=18
       }
       tab[i] = tab2;
     }
-    int c = find(len, tab);
-    System.out.printf("%d\n", c);
+    System.out.printf("%d\n", find(len, tab));
     for (int k = 0 ; k < len; k++)
     {
       for (int l = 0 ; l <= k; l ++)
       {
-        int d = tab[k][l];
-        System.out.printf("%d ", d);
+        System.out.printf("%d ", tab[k][l]);
       }
       System.out.print("\n");
     }

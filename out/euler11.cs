@@ -105,7 +105,7 @@ public class euler11
         for (int y = 0 ; y <= 19; y ++)
           max_ = max2(max_, find(4, m, x, y, dx, dy));
     }
-    Console.Write(max_ + "\n");
+    Console.Write("" + max_ + "\n");
   }
   
 }

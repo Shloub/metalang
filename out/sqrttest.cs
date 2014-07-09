@@ -10,18 +10,7 @@ public class sqrttest
   
   public static void Main(String[] args)
   {
-    int a = isqrt(4);
-    Console.Write(a + " ");
-    int b = isqrt(16);
-    Console.Write(b + " ");
-    int d = isqrt(20);
-    Console.Write(d + " ");
-    int e = isqrt(1000);
-    Console.Write(e + " ");
-    int f = isqrt(500);
-    Console.Write(f + " ");
-    int g = isqrt(10);
-    Console.Write(g + " ");
+    Console.Write("" + isqrt(4) + " " + isqrt(16) + " " + isqrt(20) + " " + isqrt(1000) + " " + isqrt(500) + " " + isqrt(10) + " ");
   }
   
 }

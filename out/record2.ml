@@ -21,9 +21,6 @@ begin
   let t = mktoto 4 in
   Scanf.scanf "%d %d" (fun v_0 v_1 -> t.bar <- v_0;
                                       t.blah <- v_1);
-  let a = result t in
-  Printf.printf "%d" a;
-  let b = t.blah in
-  Printf.printf "%d" b
+  Printf.printf "%d" (result t)
 end
  

@@ -72,14 +72,12 @@ for ($i = 0 ; $i < $len; $i++)
   }
   $tab[$i] = $tab2;
 }
-$c = find($len, $tab);
-echo $c, "\n";
+echo find($len, $tab), "\n";
 for ($k = 0 ; $k < $len; $k++)
 {
   for ($l = 0 ; $l <= $k; $l++)
   {
-    $d = $tab[$k][$l];
-    echo $d, " ";
+    echo $tab[$k][$l], " ";
   }
   echo "\n";
 }

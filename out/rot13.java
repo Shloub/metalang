@@ -26,10 +26,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
       tab4[toto] = (char)(c);
     }
     for (int j = 0 ; j < strlen; j++)
-    {
-      char a = tab4[j];
-      System.out.printf("%c", a);
-    }
+      System.out.printf("%c", tab4[j]);
   }
   
 }

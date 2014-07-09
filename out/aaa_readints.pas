@@ -71,12 +71,12 @@ begin
   exit(out_);
 end;
 
-type c = array of Longint;
-function read_int_line(n : Longint) : c;
+type a = array of Longint;
+function read_int_line(n : Longint) : a;
 var
   i : Longint;
   t : Longint;
-  tab : c;
+  tab : a;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -89,10 +89,10 @@ begin
   exit(tab);
 end;
 
-type d = array of c;
-function read_int_matrix(x : Longint; y : Longint) : d;
+type b = array of a;
+function read_int_matrix(x : Longint; y : Longint) : b;
 var
-  tab : d;
+  tab : b;
   z : Longint;
 begin
   SetLength(tab, y);
@@ -105,13 +105,11 @@ end;
 
 
 var
-  a : Longint;
-  b : Longint;
   i : Longint;
   j : Longint;
   len : Longint;
-  tab1 : c;
-  tab2 : d;
+  tab1 : a;
+  tab2 : b;
 begin
   len := read_int();
   Write(len);
@@ -121,8 +119,7 @@ begin
   begin
     Write(i);
     Write('=>');
-    a := tab1[i];
-    Write(a);
+    Write(tab1[i]);
     Write(''#10'');
   end;
   len := read_int();
@@ -131,8 +128,7 @@ begin
   begin
     for j := 0 to  len - 1 do
     begin
-      b := tab2[i][j];
-      Write(b);
+      Write(tab2[i][j]);
       Write(' ');
     end;
     Write(''#10'');

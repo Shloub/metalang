@@ -32,8 +32,7 @@ public class euler10
     for (int i = 0 ; i < n; i++)
       t[i] = i;
     t[1] = 0;
-    int a = eratostene(t, n);
-    Console.Write(a + "\n");
+    Console.Write("" + eratostene(t, n) + "\n");
   }
   
 }

@@ -82,8 +82,5 @@ stdinsep()
 t2["bar"]=readint()
 stdinsep()
 t2["blah"]=readint()
-a = result(t, t2);
-print("%d" % a, end='')
-b = t["blah"];
-print("%d" % b, end='')
+print("%d%d" % ( result(t, t2), t["blah"] ), end='')
 

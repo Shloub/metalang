@@ -109,8 +109,7 @@ while (mem[current_pos] != 0)
   mem[current_pos] = mem[current_pos] - 1;
   current_pos --;
   mem[current_pos] = mem[current_pos] + 1;
-  var b = String.fromCharCode(mem[current_pos]);
-  util.print(b);
+  util.print(String.fromCharCode(mem[current_pos]));
   current_pos ++;
 }
 

@@ -11,14 +11,11 @@ len = read_int();
 print("%d=len\n" % ( len ), end='')
 tab1 = read_int_line(len);
 for i in range(0, len):
-  print("%d=>" % ( i ), end='')
-  a = tab1[i];
-  print("%d\n" % ( a ), end='')
+  print("%d=>%d\n" % ( i, tab1[i] ), end='')
 len = read_int();
 tab2 = read_int_matrix(len, len - 1);
 for i in range(0, 1 + len - 2):
   for j in range(0, len):
-    b = tab2[i][j];
-    print("%d " % ( b ), end='')
+    print("%d " % ( tab2[i][j] ), end='')
   print("")
 

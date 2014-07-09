@@ -31,8 +31,7 @@ func read_sudoku() []int{
 func print_sudoku(sudoku_ []int) {
   for y := 0 ; y <= 8; y++ {
     for x := 0 ; x <= 8; x++ {
-        var b int = sudoku_[x + y * 9]
-          fmt.Printf("%d ", b);
+        fmt.Printf("%d ", sudoku_[x + y * 9]);
           if (x % 3) == 2 {
             fmt.Printf(" ");
           }

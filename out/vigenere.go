@@ -64,8 +64,7 @@ func main() {
   }
   crypte(taille_cle, cle, taille, message);
   for i := 0 ; i <= taille - 1; i++ {
-    var a byte = message[i]
-      fmt.Printf("%c", a);
+    fmt.Printf("%c", message[i]);
   }
   fmt.Printf("\n");
 }

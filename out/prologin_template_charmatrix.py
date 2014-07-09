@@ -15,14 +15,12 @@ def programme_candidat( tableau, taille_x, taille_y ):
     for i in range(0, taille_y):
       for j in range(0, taille_x):
         out_ += ord(tableau[i][j]) * (i + j * 2)
-        a = tableau[i][j];
-        print("%c" % a, end='')
+        print("%c" % tableau[i][j], end='')
       print("--")
     return out_;
 
 taille_x = read_int();
 taille_y = read_int();
 tableau = read_char_matrix(taille_x, taille_y);
-b = programme_candidat(tableau, taille_x, taille_y);
-print("%d\n" % ( b ), end='')
+print("%d\n" % ( programme_candidat(tableau, taille_x, taille_y) ), end='')
 

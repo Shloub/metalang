@@ -91,14 +91,12 @@ for (var i = 0 ; i <= len - 1; i++)
   }
   tab[i] = tab2;
 }
-var c = find(len, tab);
-util.print(c, "\n");
+util.print(find(len, tab), "\n");
 for (var k = 0 ; k <= len - 1; k++)
 {
   for (var l = 0 ; l <= k; l++)
   {
-    var d = tab[k][l];
-    util.print(d, " ");
+    util.print(tab[k][l], " ");
   }
   util.print("\n");
 }

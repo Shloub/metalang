@@ -91,9 +91,6 @@ stdinsep();
 t2.bar=read_int_();
 stdinsep();
 t2.blah=read_int_();
-var a = result(t, t2);
-util.print(a);
-var b = t.blah;
-util.print(b);
+util.print(result(t, t2), t.blah);
 
 

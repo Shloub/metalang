@@ -35,7 +35,5 @@ for ($i = 1 ; $i <= 9; $i++)
 }
 echo $top, "/", $bottom, "\n";
 $p = pgcd($top, $bottom);
-echo "pgcd=", $p, "\n";
-$e = intval($bottom / $p);
-echo $e, "\n";
+echo "pgcd=", $p, "\n", intval($bottom / $p), "\n";
 ?>

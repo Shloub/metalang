@@ -70,9 +70,8 @@
     (setf (toto-bar (aref t_ 0)) (mread-int ))
     (mread-blank)
     (setf (toto-blah (aref t_ 1)) (mread-int ))
-    (let ((b (result t_ 4)))
-      (princ b)
-      (let ((c (toto-blah (aref t_ 2))))
-        (princ c)
-      )))))
+    (let ((titi (result t_ 4)))
+      (princ titi)
+      (princ (toto-blah (aref t_ 2)))
+    ))))
 

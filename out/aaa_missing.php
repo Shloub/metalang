@@ -25,6 +25,5 @@ function result($len, &$tab){
 $len = read_int();
 echo $len, "\n";
 $tab = read_int_line($len);
-$a = result($len, $tab);
-echo $a;
+echo result($len, $tab);
 ?>

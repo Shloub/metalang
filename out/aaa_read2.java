@@ -47,17 +47,13 @@ read int, read char et skip
     int[] tab = read_int_line(len);
     for (int i = 0 ; i < len; i++)
     {
-      System.out.printf("%d=>", i);
-      int a = tab[i];
-      System.out.printf("%d ", a);
+      System.out.printf("%d=>%d ", i, tab[i]);
     }
     System.out.print("\n");
     int[] tab2 = read_int_line(len);
     for (int i_ = 0 ; i_ < len; i_++)
     {
-      System.out.printf("%d==>", i_);
-      int b = tab2[i_];
-      System.out.printf("%d ", b);
+      System.out.printf("%d==>%d ", i_, tab2[i_]);
     }
     int strlen = read_int();
     System.out.printf("%d=strlen\n", strlen);
@@ -72,10 +68,7 @@ read int, read char et skip
       tab4[i3] = (char)(c);
     }
     for (int j = 0 ; j < strlen; j++)
-    {
-      char d = tab4[j];
-      System.out.printf("%c", d);
-    }
+      System.out.printf("%c", tab4[j]);
   }
   
 }

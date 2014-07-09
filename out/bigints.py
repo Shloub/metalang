@@ -51,8 +51,7 @@ def print_bigint( a ):
     if not (a["bigint_sign"]):
       print("%c" % '-', end='')
     for i in range(0, a["bigint_len"]):
-      e = a["bigint_chiffres"][a["bigint_len"] - 1 - i];
-      print("%d" % e, end='')
+      print("%d" % a["bigint_chiffres"][a["bigint_len"] - 1 - i], end='')
 
 def bigint_eq( a, b ):
     """ Renvoie vrai si a = b """
@@ -196,9 +195,9 @@ def bigint_premiers_chiffres( a, i ):
       "bigint_chiffres":a["bigint_chiffres"]};
 
 def bigint_shift( a, i ):
-    f = a["bigint_len"] + i;
-    chiffres = [None] * f
-    for k in range(0, f):
+    e = a["bigint_len"] + i;
+    chiffres = [None] * e
+    for k in range(0, e):
       if k >= i:
         chiffres[k] = a["bigint_chiffres"][k - i];
       else:
@@ -327,17 +326,17 @@ def euler25(  ):
 def euler29(  ):
     maxA = 5;
     maxB = 5;
-    g = maxA + 1;
-    a_bigint = [None] * g
-    for j in range(0, g):
+    f = maxA + 1;
+    a_bigint = [None] * f
+    for j in range(0, f):
       a_bigint[j] = bigint_of_int(j * j);
-    h = maxA + 1;
-    a0_bigint = [None] * h
-    for j2 in range(0, h):
+    g = maxA + 1;
+    a0_bigint = [None] * g
+    for j2 in range(0, g):
       a0_bigint[j2] = bigint_of_int(j2);
-    m = maxA + 1;
-    b = [None] * m
-    for k in range(0, m):
+    h = maxA + 1;
+    b = [None] * h
+    for k in range(0, h):
       b[k] = 2;
     n = 0;
     found = True;
@@ -360,8 +359,7 @@ def euler29(  ):
             a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
     return n;
 
-o = euler29();
-print("%d\n" % ( o ), end='')
+print("%d\n" % ( euler29() ), end='')
 sum = read_bigint(50);
 for i in range(2, 1 + 100):
   stdinsep()
@@ -369,15 +367,9 @@ for i in range(2, 1 + 100):
   sum = add_bigint(sum, tmp);
 print( "euler13 = ", end='')
 print_bigint(sum);
-print("\neuler25 = ", end='')
-p = euler25();
-print("%d\neuler16 = " % ( p ), end='')
-q = euler16();
-print("%d\n" % ( q ), end='')
+print("\neuler25 = %d\neuler16 = %d\n" % ( euler25(), euler16() ), end='')
 euler48();
-print( "euler20 = ", end='')
-r = euler20();
-print("%d\n" % ( r ), end='')
+print("euler20 = %d\n" % ( euler20() ), end='')
 a = bigint_of_int(999999);
 b = bigint_of_int(9951263);
 print_bigint(a);
@@ -418,8 +410,8 @@ print_bigint(a);
 print( ">", end='')
 print_bigint(b);
 print( "=", end='')
-s = bigint_gt(a, b);
-if s:
+m = bigint_gt(a, b);
+if m:
   print( "True", end='')
 else:
   print( "False", end='')

@@ -25,10 +25,7 @@ int main(void){
   {
     int j;
     for (j = 0 ; j < strlen; j++)
-    {
-      char a = tab4[j];
-      printf("%c", a);
-    }
+      printf("%c", tab4[j]);
   }
   [pool drain];
   return 0;

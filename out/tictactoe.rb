@@ -194,20 +194,17 @@ def play( g )
         end
       end
     end
-    a = minMove["x"]
-    printf "%d", a
-    b = minMove["y"]
-    printf "%d\n", b
+    printf "%d%d\n", minMove["x"], minMove["y"]
     return (minMove);
 end
 
 def init_(  )
-    d = 3
+    b = 3
     cases = [];
-    for i in (0 ..  d - 1) do
-      c = 3
+    for i in (0 ..  b - 1) do
+      a = 3
       tab = [];
-      for j in (0 ..  c - 1) do
+      for j in (0 ..  a - 1) do
         tab[j] = 0;
       end
       cases[i] = tab;
@@ -250,7 +247,6 @@ for i in (0 ..  1) do
     end
   end
   print_state(state);
-  e = state["note"]
-  printf "%d\n", e
+  printf "%d\n", state["note"]
 end
 

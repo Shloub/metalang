@@ -45,12 +45,10 @@ begin
       Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
       (!tmp)) in
     tab2) in
-  let c = find (!len) tab in
-  Printf.printf "%d\n" c;
+  Printf.printf "%d\n" (find (!len) tab);
   for k = 0 to (!len) - 1 do
     for l = 0 to k do
-      let d = tab.(k).(l) in
-      Printf.printf "%d " d
+      Printf.printf "%d " tab.(k).(l)
     done;
     Printf.printf "\n"
   done

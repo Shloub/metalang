@@ -29,8 +29,7 @@ int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2)
     for (i = 0 ; i < taille1; i++)
     {
       out_ += tableau1[i] * i;
-      char a = tableau1[i];
-      printf("%c", a);
+      printf("%c", tableau1[i]);
     }
   }
   printf("--\n");
@@ -39,8 +38,7 @@ int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2)
     for (j = 0 ; j < taille2; j++)
     {
       out_ += tableau2[j] * j * 100;
-      char b = tableau2[j];
-      printf("%c", b);
+      printf("%c", tableau2[j]);
     }
   }
   printf("--\n");
@@ -52,8 +50,7 @@ int main(void){
   int taille2 = read_int();
   char* tableau1 = read_char_line(taille1);
   char* tableau2 = read_char_line(taille2);
-  int c = programme_candidat(tableau1, taille1, tableau2, taille2);
-  printf("%d\n", c);
+  printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   return 0;
 }
 

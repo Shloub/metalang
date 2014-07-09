@@ -1,7 +1,7 @@
 program euler10;
 
-type b = array of Longint;
-function eratostene(t : b; max_ : Longint) : Longint;
+type a = array of Longint;
+function eratostene(t : a; max_ : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -34,10 +34,9 @@ end;
 
 
 var
-  a : Longint;
   i : Longint;
   n : Longint;
-  t : b;
+  t : a;
 begin
   n := 100000;
   { normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages }
@@ -47,8 +46,7 @@ begin
     t[i] := i;
   end;
   t[1] := 0;
-  a := eratostene(t, n);
-  Write(a);
+  Write(eratostene(t, n));
   Write(''#10'');
 end.
 

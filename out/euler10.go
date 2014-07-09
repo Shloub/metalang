@@ -44,7 +44,6 @@ func main() {
     t[i] = i;
   }
   t[1] = 0;
-  var a int = eratostene(t, n)
-  fmt.Printf("%d\n", a);
+  fmt.Printf("%d\n", eratostene(t, n));
 }
 

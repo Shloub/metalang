@@ -88,18 +88,13 @@ end;
 
 
 var
-  a : Longint;
-  b : Longint;
   t : toto;
 begin
   t := mktoto(4);
   t^.bar := read_int_();
   skip();
   t^.blah := read_int_();
-  a := result(t);
-  Write(a);
-  b := t^.blah;
-  Write(b);
+  Write(result(t));
 end.
 
 

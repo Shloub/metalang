@@ -40,12 +40,10 @@ func main() {
   }
   for m := 0 ; m <= n - 1; m++ {
     for k := 0 ; k <= n - 1; k++ {
-        var a int = tab[m][k]
-          fmt.Printf("%d ", a);
+        fmt.Printf("%d ", tab[m][k]);
       }
       fmt.Printf("\n");
   }
-  var b int = tab[0][0]
-  fmt.Printf("%d\n", b);
+  fmt.Printf("%d\n", tab[0][0]);
 }
 

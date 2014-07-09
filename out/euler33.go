@@ -63,8 +63,6 @@ func main() {
   }
   fmt.Printf("%d/%d\n", top, bottom);
   var p int = pgcd(top, bottom)
-  fmt.Printf("pgcd=%d\n", p);
-  var e int = bottom / p
-  fmt.Printf("%d\n", e);
+  fmt.Printf("pgcd=%d\n%d\n", p, bottom / p);
 }
 

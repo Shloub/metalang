@@ -19,8 +19,7 @@ public class recordtest
     scanner.next("^-"); param.foo = -scanner.nextInt();
     }else{
     param.foo = scanner.nextInt();}
-    int a = param.bar + param.foo * param.bar;
-    System.out.printf("%d", a);
+    System.out.printf("%d", param.bar + param.foo * param.bar);
   }
   
 }

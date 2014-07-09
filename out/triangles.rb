@@ -63,12 +63,10 @@ for i in (0 ..  len - 1) do
   end
   tab[i] = tab2;
 end
-c = find(len, tab)
-printf "%d\n", c
+printf "%d\n", find(len, tab)
 for k in (0 ..  len - 1) do
   for l in (0 ..  k) do
-    d = tab[k][l]
-    printf "%d ", d
+    printf "%d ", tab[k][l]
   end
   print "\n";
 end

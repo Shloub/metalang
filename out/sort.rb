@@ -74,15 +74,13 @@ end
 tab2 = copytab(tab, len)
 bubblesort(tab2, len);
 for i in (0 ..  len - 1) do
-  a = tab2[i]
-  printf "%d ", a
+  printf "%d ", tab2[i]
 end
 print "\n";
 tab3 = copytab(tab, len)
 qsort_(tab3, len, 0, len - 1);
 for i in (0 ..  len - 1) do
-  b = tab3[i]
-  printf "%d ", b
+  printf "%d ", tab3[i]
 end
 print "\n";
 

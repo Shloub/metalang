@@ -68,8 +68,7 @@ function programme_candidat(tableau, taille_x, taille_y){
     for (var j = 0 ; j <= taille_x - 1; j++)
     {
       out_ += tableau[i][j].charCodeAt(0) * (i + j * 2);
-      var a = tableau[i][j];
-      util.print(a);
+      util.print(tableau[i][j]);
     }
     util.print("--\n");
   }
@@ -79,7 +78,6 @@ function programme_candidat(tableau, taille_x, taille_y){
 var taille_x = read_int();
 var taille_y = read_int();
 var tableau = read_char_matrix(taille_x, taille_y);
-var b = programme_candidat(tableau, taille_x, taille_y);
-util.print(b, "\n");
+util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 
 

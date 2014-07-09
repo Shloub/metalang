@@ -42,17 +42,13 @@ int main(){
   std::vector<int > tab = read_int_line(len);
   for (int i = 0 ; i < len; i++)
   {
-    std::cout << i << "=>";
-    int a = tab.at(i);
-    std::cout << a << " ";
+    std::cout << i << "=>" << tab.at(i) << " ";
   }
   std::cout << "\n";
   std::vector<int > tab2 = read_int_line(len);
   for (int i_ = 0 ; i_ < len; i_++)
   {
-    std::cout << i_ << "==>";
-    int b = tab2.at(i_);
-    std::cout << b << " ";
+    std::cout << i_ << "==>" << tab2.at(i_) << " ";
   }
   int strlen = read_int();
   std::cout << strlen << "=strlen\n";
@@ -64,13 +60,10 @@ int main(){
     std::cout << tmpc << ":" << c << " ";
     if (tmpc != ' ')
       c = ((c - 'a') + 13) % 26 + 'a';
-    tab4.at(i3) = c;
+    tab4.at(i3) = (char)(c);
   }
   for (int j = 0 ; j < strlen; j++)
-  {
-    char d = tab4.at(j);
-    std::cout << d;
-  }
+    std::cout << tab4.at(j);
   return 0;
 }
 

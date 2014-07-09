@@ -25,15 +25,13 @@ public class prologin_template_2charline
     for (int i = 0 ; i < taille1; i++)
     {
       out_ += tableau1[i] * i;
-      char a = tableau1[i];
-      System.out.printf("%c", a);
+      System.out.printf("%c", tableau1[i]);
     }
     System.out.print("--\n");
     for (int j = 0 ; j < taille2; j++)
     {
       out_ += tableau2[j] * j * 100;
-      char b = tableau2[j];
-      System.out.printf("%c", b);
+      System.out.printf("%c", tableau2[j]);
     }
     System.out.print("--\n");
     return out_;
@@ -46,8 +44,7 @@ public class prologin_template_2charline
     char[] tableau1 = read_char_line(taille1);
     int taille2 = read_int();
     char[] tableau2 = read_char_line(taille2);
-    int c = programme_candidat(tableau1, taille1, tableau2, taille2);
-    System.out.printf("%d\n", c);
+    System.out.printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   }
   
 }

@@ -25,8 +25,6 @@ end
 t[0]["bar"]=scanf("%d")[0];
 scanf("%*\n");
 t[1]["blah"]=scanf("%d")[0];
-b = result(t, 4)
-printf "%d", b
-c = t[2]["blah"]
-printf "%d", c
+titi = result(t, 4)
+printf "%d%d", titi, t[2]["blah"]
 

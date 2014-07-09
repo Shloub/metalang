@@ -69,8 +69,5 @@ for ($toto = 0 ; $toto < $strlen; $toto++)
   $tab4[$toto] = chr($c);
 }
 for ($j = 0 ; $j < $strlen; $j++)
-{
-  $a = $tab4[$j];
-  echo $a;
-}
+  echo $tab4[$j];
 ?>

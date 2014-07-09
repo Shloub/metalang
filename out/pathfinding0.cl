@@ -119,10 +119,9 @@
                           x
                           (function (lambda (j)
                           (block lambda_4
-                            (let ((e (aref (aref tab i) j)))
-                              (princ e)
-                              (return-from lambda_4 (- 0 1))
-                            )))
+                            (princ (aref (aref tab i) j))
+                            (return-from lambda_4 (- 0 1))
+                          ))
                           ))))
                 (princ "
 ")

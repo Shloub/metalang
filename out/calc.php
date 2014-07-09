@@ -17,6 +17,5 @@ function fibo($a, $b, $i){
   return $out_;
 }
 
-$c = fibo(1, 2, 4);
-echo $c;
+echo fibo(1, 2, 4);
 ?>

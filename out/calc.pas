@@ -26,11 +26,8 @@ begin
 end;
 
 
-var
-  c : Longint;
 begin
-  c := fibo(1, 2, 4);
-  Write(c);
+  Write(fibo(1, 2, 4));
 end.
 
 

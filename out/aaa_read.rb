@@ -50,7 +50,6 @@ for toto in (0 ..  strlen - 1) do
   tab4[toto] = c;
 end
 for j in (0 ..  strlen - 1) do
-  a = tab4[j]
-  printf "%c", a
+  printf "%c", tab4[j]
 end
 

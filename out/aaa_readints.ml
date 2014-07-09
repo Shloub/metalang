@@ -18,16 +18,13 @@ begin
   Printf.printf "%d=len\n" (!len);
   let tab1 = read_int_line (!len) in
   for i = 0 to (!len) - 1 do
-    Printf.printf "%d=>" i;
-    let a = tab1.(i) in
-    Printf.printf "%d\n" a
+    Printf.printf "%d=>%d\n" i tab1.(i)
   done;
   len := (read_int ());
   let tab2 = read_int_matrix (!len) ((!len) - 1) in
   for i = 0 to (!len) - 2 do
     for j = 0 to (!len) - 1 do
-      let b = tab2.(i).(j) in
-      Printf.printf "%d " b
+      Printf.printf "%d " tab2.(i).(j)
     done;
     Printf.printf "\n"
   done

@@ -21,6 +21,5 @@ n = 10001;
 t = [None] * n
 for i in range(0, n):
   t[i] = 2;
-a = find(3, t, 1, n);
-print("%d\n" % ( a ), end='')
+print("%d\n" % ( find(3, t, 1, n) ), end='')
 

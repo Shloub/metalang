@@ -41,6 +41,5 @@ scantrim();
 list($b) = scan("%d");
 scantrim();
 list($i) = scan("%d");
-$c = fibo_($a, $b, $i);
-echo $c;
+echo fibo_($a, $b, $i);
 ?>

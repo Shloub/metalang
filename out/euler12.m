@@ -101,8 +101,7 @@ int find(int ndiv2){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int e = find(500);
-  printf("%d\n", e);
+  printf("%d\n", find(500));
   [pool drain];
   return 0;
 }

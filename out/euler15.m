@@ -52,15 +52,13 @@ int main(void){
         int k;
         for (k = 0 ; k < n; k++)
         {
-          int a = tab[m][k];
-          printf("%d ", a);
+          printf("%d ", tab[m][k]);
         }
       }
       printf("\n");
     }
   }
-  int b = tab[0][0];
-  printf("%d\n", b);
+  printf("%d\n", tab[0][0]);
   [pool drain];
   return 0;
 }

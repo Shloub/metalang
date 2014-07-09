@@ -37,16 +37,14 @@ public class euler33
       int b = j * 10 + k;
       if (a * k == i * b)
       {
-        Console.Write(a + "/" + b + "\n");
+        Console.Write("" + a + "/" + b + "\n");
         top *= a;
         bottom *= b;
       }
     }
-    Console.Write(top + "/" + bottom + "\n");
+    Console.Write("" + top + "/" + bottom + "\n");
     int p = pgcd(top, bottom);
-    Console.Write("pgcd=" + p + "\n");
-    int e = bottom / p;
-    Console.Write(e + "\n");
+    Console.Write("" + "pgcd=" + p + "\n" + bottom / p + "\n");
   }
   
 }

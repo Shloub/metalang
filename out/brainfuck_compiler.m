@@ -81,8 +81,7 @@ int main(void){
     mem[current_pos] = mem[current_pos] - 1;
     current_pos --;
     mem[current_pos] = mem[current_pos] + 1;
-    char b = mem[current_pos];
-    printf("%c", b);
+    printf("%c", mem[current_pos]);
     current_pos ++;
   }
   [pool drain];

@@ -21,6 +21,5 @@ def result( len, tab ):
 len = read_int();
 print("%d\n" % ( len ), end='')
 tab = read_int_line(len);
-a = result(len, tab);
-print("%d" % a, end='')
+print("%d" % result(len, tab), end='')
 

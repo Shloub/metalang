@@ -8,7 +8,6 @@ et qui produit les macros metalang correspondante
 
 var
   a : Longint;
-  b : char;
   current_pos : Longint;
   i : Longint;
   input : char;
@@ -85,8 +84,7 @@ begin
     mem[current_pos] := mem[current_pos] - 1;
     current_pos := current_pos - 1;
     mem[current_pos] := mem[current_pos] + 1;
-    b := chr(mem[current_pos]);
-    Write(b);
+    Write(chr(mem[current_pos]));
     current_pos := current_pos + 1;
   end;
 end.

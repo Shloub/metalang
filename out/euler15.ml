@@ -20,12 +20,10 @@ begin
   done;
   for m = 0 to (!n) - 1 do
     for k = 0 to (!n) - 1 do
-      let a = tab.(m).(k) in
-      Printf.printf "%d " a
+      Printf.printf "%d " tab.(m).(k)
     done;
     Printf.printf "\n"
   done;
-  let b = tab.(0).(0) in
-  Printf.printf "%d\n" b
+  Printf.printf "%d\n" tab.(0).(0)
 end
  

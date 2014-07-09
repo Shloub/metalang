@@ -37,8 +37,7 @@ func programme_candidat(tableau []byte, taille int) int{
   var out_ int = 0
   for i := 0 ; i <= taille - 1; i++ {
     out_ += (int)(tableau[i]) * i;
-      var a byte = tableau[i]
-      fmt.Printf("%c", a);
+      fmt.Printf("%c", tableau[i]);
   }
   fmt.Printf("--\n");
   return out_
@@ -48,7 +47,6 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   var taille int = read_int()
   var tableau []byte = read_char_line(taille)
-  var b int = programme_candidat(tableau, taille)
-  fmt.Printf("%d\n", b);
+  fmt.Printf("%d\n", programme_candidat(tableau, taille));
 }
 

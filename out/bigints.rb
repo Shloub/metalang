@@ -43,8 +43,7 @@ def print_bigint( a )
       printf "%c", "-"
     end
     for i in (0 ..  a["bigint_len"] - 1) do
-      e = a["bigint_chiffres"][a["bigint_len"] - 1 - i]
-      printf "%d", e
+      printf "%d", a["bigint_chiffres"][a["bigint_len"] - 1 - i]
     end
 end
 
@@ -253,9 +252,9 @@ def bigint_premiers_chiffres( a, i )
 end
 
 def bigint_shift( a, i )
-    f = a["bigint_len"] + i
+    e = a["bigint_len"] + i
     chiffres = [];
-    for k in (0 ..  f - 1) do
+    for k in (0 ..  e - 1) do
       if k >= i then
         chiffres[k] = a["bigint_chiffres"][k - i];
       else
@@ -441,19 +440,19 @@ end
 def euler29(  )
     maxA = 5
     maxB = 5
-    g = maxA + 1
+    f = maxA + 1
     a_bigint = [];
-    for j in (0 ..  g - 1) do
+    for j in (0 ..  f - 1) do
       a_bigint[j] = bigint_of_int(j * j);
     end
-    h = maxA + 1
+    g = maxA + 1
     a0_bigint = [];
-    for j2 in (0 ..  h - 1) do
+    for j2 in (0 ..  g - 1) do
       a0_bigint[j2] = bigint_of_int(j2);
     end
-    m = maxA + 1
+    h = maxA + 1
     b = [];
-    for k in (0 ..  m - 1) do
+    for k in (0 ..  h - 1) do
       b[k] = 2;
     end
     n = 0
@@ -486,8 +485,7 @@ def euler29(  )
     return (n);
 end
 
-o = euler29()
-printf "%d\n", o
+printf "%d\n", euler29()
 sum = read_bigint(50)
 for i in (2 ..  100) do
   scanf("%*\n");
@@ -496,15 +494,9 @@ for i in (2 ..  100) do
 end
 print "euler13 = ";
 print_bigint(sum);
-printf "\neuler25 = ";
-p = euler25()
-printf "%d\neuler16 = ", p
-q = euler16()
-printf "%d\n", q
+printf "\neuler25 = %d\neuler16 = %d\n", euler25(), euler16()
 euler48();
-print "euler20 = ";
-r = euler20()
-printf "%d\n", r
+printf "euler20 = %d\n", euler20()
 a = bigint_of_int(999999)
 b = bigint_of_int(9951263)
 print_bigint(a);
@@ -545,8 +537,8 @@ print_bigint(a);
 print ">";
 print_bigint(b);
 print "=";
-s = bigint_gt(a, b)
-if s then
+m = bigint_gt(a, b)
+if m then
   print "True";
 else
   print "False";

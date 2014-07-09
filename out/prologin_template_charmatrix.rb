@@ -30,8 +30,7 @@ def programme_candidat( tableau, taille_x, taille_y )
     for i in (0 ..  taille_y - 1) do
       for j in (0 ..  taille_x - 1) do
         out_ += tableau[i][j].ord * (i + j * 2)
-        a = tableau[i][j]
-        printf "%c", a
+        printf "%c", tableau[i][j]
       end
       print "--\n";
     end
@@ -41,6 +40,5 @@ end
 taille_x = read_int()
 taille_y = read_int()
 tableau = read_char_matrix(taille_x, taille_y)
-b = programme_candidat(tableau, taille_x, taille_y)
-printf "%d\n", b
+printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
 

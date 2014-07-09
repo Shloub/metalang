@@ -11,15 +11,15 @@ Il effectue du loop unrolling
   {
     int j = 0;
     j = 0;
-    Console.Write(j + "\n");
+    Console.Write("" + j + "\n");
     j = 1;
-    Console.Write(j + "\n");
+    Console.Write("" + j + "\n");
     j = 2;
-    Console.Write(j + "\n");
+    Console.Write("" + j + "\n");
     j = 3;
-    Console.Write(j + "\n");
+    Console.Write("" + j + "\n");
     j = 4;
-    Console.Write(j + "\n");
+    Console.Write("" + j + "\n");
   }
   
 }

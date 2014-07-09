@@ -70,8 +70,7 @@ int main(void){
       tab[i] = tab2;
     }
   }
-  int c = find(len, tab);
-  printf("%d\n", c);
+  printf("%d\n", find(len, tab));
   {
     int k;
     for (k = 0 ; k < len; k++)
@@ -80,8 +79,7 @@ int main(void){
         int l;
         for (l = 0 ; l <= k; l++)
         {
-          int d = tab[k][l];
-          printf("%d ", d);
+          printf("%d ", tab[k][l]);
         }
       }
       printf("\n");

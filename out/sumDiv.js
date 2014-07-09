@@ -79,7 +79,6 @@ function sumdiv(n){
 var n = 0;
 n=read_int_();
 /* Lecture de l'entier */
-var b = sumdiv(n);
-util.print(b);
+util.print(sumdiv(n));
 
 

@@ -33,7 +33,6 @@ func fibo(a int, b int, i int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var c int = fibo(1, 2, 4)
-  fmt.Printf("%d", c);
+  fmt.Printf("%d", fibo(1, 2, 4));
 }
 

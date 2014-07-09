@@ -28,11 +28,9 @@ for ($m = 0 ; $m < $n; $m++)
 {
   for ($k = 0 ; $k < $n; $k++)
   {
-    $a = $tab[$m][$k];
-    echo $a, " ";
+    echo $tab[$m][$k], " ";
   }
   echo "\n";
 }
-$b = $tab[0][0];
-echo $b, "\n";
+echo $tab[0][0], "\n";
 ?>

@@ -57,7 +57,6 @@ func main() {
   var len int = read_int()
   fmt.Printf("%d\n", len);
   var tab []int = read_int_line(len)
-  var a int = result(len, tab)
-  fmt.Printf("%d", a);
+  fmt.Printf("%d", result(len, tab));
 }
 

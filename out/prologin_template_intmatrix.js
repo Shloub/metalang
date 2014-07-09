@@ -72,7 +72,6 @@ function programme_candidat(tableau, x, y){
 var taille_x = read_int();
 var taille_y = read_int();
 var tableau = read_int_matrix(taille_x, taille_y);
-var a = programme_candidat(tableau, taille_x, taille_y);
-util.print(a, "\n");
+util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 
 

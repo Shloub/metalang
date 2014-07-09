@@ -20,6 +20,5 @@ def fibo( a, b, i )
     return (out_);
 end
 
-c = fibo(1, 2, 4)
-printf "%d", c
+printf "%d", fibo(1, 2, 4)
 

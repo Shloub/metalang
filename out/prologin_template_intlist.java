@@ -43,8 +43,7 @@ public class prologin_template_intlist
   {
     int taille = read_int();
     int[] tableau = read_int_line(taille);
-    int a = programme_candidat(tableau, taille);
-    System.out.printf("%d\n", a);
+    System.out.printf("%d\n", programme_candidat(tableau, taille));
   }
   
 }

@@ -12,8 +12,7 @@ int main(){
   param->foo=0;
   param->bar=0;
   std::cin >> param->bar >> std::skipws >> param->foo >> std::noskipws;
-  int a = param->bar + param->foo * param->bar;
-  std::cout << a;
+  std::cout << param->bar + param->foo * param->bar;
   return 0;
 }
 

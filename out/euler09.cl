@@ -37,11 +37,10 @@
                   (princ c)
                   (princ "
 ")
-                  (let ((d (* (* a b) c)))
-                    (princ d)
-                    (princ "
+                  (princ (* (* a b) c))
+                  (princ "
 ")
-                  )))
+                ))
             ))))
       )
   )

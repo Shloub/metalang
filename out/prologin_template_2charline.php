@@ -12,15 +12,13 @@ function programme_candidat(&$tableau1, $taille1, &$tableau2, $taille2){
   for ($i = 0 ; $i < $taille1; $i++)
   {
     $out_ += ord($tableau1[$i]) * $i;
-    $a = $tableau1[$i];
-    echo $a;
+    echo $tableau1[$i];
   }
   echo "--\n";
   for ($j = 0 ; $j < $taille2; $j++)
   {
     $out_ += ord($tableau2[$j]) * $j * 100;
-    $b = $tableau2[$j];
-    echo $b;
+    echo $tableau2[$j];
   }
   echo "--\n";
   return $out_;
@@ -30,6 +28,5 @@ $taille1 = read_int();
 $tableau1 = read_char_line($taille1);
 $taille2 = read_int();
 $tableau2 = read_char_line($taille2);
-$c = programme_candidat($tableau1, $taille1, $tableau2, $taille2);
-echo $c, "\n";
+echo programme_candidat($tableau1, $taille1, $tableau2, $taille2), "\n";
 ?>

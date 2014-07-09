@@ -16,6 +16,5 @@ function programme_candidat(&$tableau, $taille){
 
 $taille = read_int();
 $tableau = read_int_line($taille);
-$a = programme_candidat($tableau, $taille);
-echo $a, "\n";
+echo programme_candidat($tableau, $taille), "\n";
 ?>

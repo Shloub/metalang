@@ -46,8 +46,7 @@ let rec pathfind_aux cache tab x y posX posY =
 let pathfind tab x y =
   let cache = Array.init y (fun i ->
     let tmp = Array.init x (fun j ->
-      let e = tab.(i).(j) in
-      Printf.printf "%c" e;
+      Printf.printf "%c" tab.(i).(j);
       -1) in
     Printf.printf "\n";
     tmp) in

@@ -54,8 +54,6 @@ for i in range(0, a):
 t[0]["bar"]=readint()
 stdinsep()
 t[1]["blah"]=readint()
-b = result(t, 4);
-print("%d" % b, end='')
-c = t[2]["blah"];
-print("%d" % c, end='')
+titi = result(t, 4);
+print("%d%d" % ( titi, t[2]["blah"] ), end='')
 

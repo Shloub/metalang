@@ -61,11 +61,11 @@ begin
    until false;
 end;
 
-type c = array of Longint;
-function copytab(tab : c; len : Longint) : c;
+type a = array of Longint;
+function copytab(tab : a; len : Longint) : a;
 var
   i : Longint;
-  o : c;
+  o : a;
 begin
   SetLength(o, len);
   for i := 0 to  len - 1 do
@@ -75,7 +75,7 @@ begin
   exit(o);
 end;
 
-procedure bubblesort(tab : c; len : Longint);
+procedure bubblesort(tab : a; len : Longint);
 var
   i : Longint;
   j : Longint;
@@ -96,7 +96,7 @@ begin
   end;
 end;
 
-procedure qsort_(tab : c; len : Longint; i : Longint; j : Longint);
+procedure qsort_(tab : a; len : Longint; i : Longint; j : Longint);
 var
   i0 : Longint;
   j0 : Longint;
@@ -144,14 +144,12 @@ end;
 
 
 var
-  a : Longint;
-  b : Longint;
   i : Longint;
   i_ : Longint;
   len : Longint;
-  tab : c;
-  tab2 : c;
-  tab3 : c;
+  tab : a;
+  tab2 : a;
+  tab3 : a;
   tmp : Longint;
 begin
   len := 2;
@@ -169,8 +167,7 @@ begin
   bubblesort(tab2, len);
   for i := 0 to  len - 1 do
   begin
-    a := tab2[i];
-    Write(a);
+    Write(tab2[i]);
     Write(' ');
   end;
   Write(''#10'');
@@ -178,8 +175,7 @@ begin
   qsort_(tab3, len, 0, len - 1);
   for i := 0 to  len - 1 do
   begin
-    b := tab3[i];
-    Write(b);
+    Write(tab3[i]);
     Write(' ');
   end;
   Write(''#10'');

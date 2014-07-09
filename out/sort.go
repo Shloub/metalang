@@ -80,15 +80,13 @@ func main() {
   var tab2 []int = copytab(tab, len)
   bubblesort(tab2, len);
   for i := 0 ; i <= len - 1; i++ {
-    var a int = tab2[i]
-      fmt.Printf("%d ", a);
+    fmt.Printf("%d ", tab2[i]);
   }
   fmt.Printf("\n");
   var tab3 []int = copytab(tab, len)
   qsort_(tab3, len, 0, len - 1);
   for i := 0 ; i <= len - 1; i++ {
-    var b int = tab3[i]
-      fmt.Printf("%d ", b);
+    fmt.Printf("%d ", tab3[i]);
   }
   fmt.Printf("\n");
 }

@@ -40,7 +40,6 @@ func main() {
   fmt.Fscanf(reader, "%d", &b);
   skip()
   fmt.Fscanf(reader, "%d", &i);
-  var c int = fibo_(a, b, i)
-  fmt.Printf("%d", c);
+  fmt.Printf("%d", fibo_(a, b, i));
 }
 

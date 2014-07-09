@@ -24,8 +24,7 @@ La suite de fibonaci
   
   public static void Main(String[] args)
   {
-    int c = fibo(1, 2, 4);
-    Console.Write(c);
+    Console.Write(fibo(1, 2, 4));
   }
   
 }

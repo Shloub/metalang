@@ -16,7 +16,6 @@ let fibo a b i =
 
 let () =
 begin
-  let c = fibo 1 2 4 in
-  Printf.printf "%d" c
+  Printf.printf "%d" (fibo 1 2 4)
 end
  

@@ -34,8 +34,7 @@ int programme_candidat(int* tableau, int taille){
 int main(void){
   int taille = read_int();
   int* tableau = read_int_line(taille);
-  int a = programme_candidat(tableau, taille);
-  printf("%d\n", a);
+  printf("%d\n", programme_candidat(tableau, taille));
   return 0;
 }
 

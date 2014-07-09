@@ -47,16 +47,13 @@ func main() {
   fmt.Printf("%d=len\n", len);
   var tab1 []int = read_int_line(len)
   for i := 0 ; i <= len - 1; i++ {
-    fmt.Printf("%d=>", i);
-      var a int = tab1[i]
-      fmt.Printf("%d\n", a);
+    fmt.Printf("%d=>%d\n", i, tab1[i]);
   }
   len = read_int();
   var tab2 [][]int = read_int_matrix(len, len - 1)
   for i := 0 ; i <= len - 2; i++ {
     for j := 0 ; j <= len - 1; j++ {
-        var b int = tab2[i][j]
-          fmt.Printf("%d ", b);
+        fmt.Printf("%d ", tab2[i][j]);
       }
       fmt.Printf("\n");
   }

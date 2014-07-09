@@ -49,8 +49,7 @@ int main(void){
       tab[i] = tmp;
     }
   }
-  int c = plus_petit_(tab, len);
-  printf("%d", c);
+  printf("%d", plus_petit_(tab, len));
   [pool drain];
   return 0;
 }

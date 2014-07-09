@@ -37,8 +37,7 @@ int main(){
   int taille_x = read_int();
   int taille_y = read_int();
   std::vector<std::vector<int > > tableau = read_int_matrix(taille_x, taille_y);
-  int a = programme_candidat(tableau, taille_x, taille_y);
-  std::cout << a << "\n";
+  std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;
 }
 

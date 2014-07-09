@@ -28,8 +28,7 @@ int programme_candidat(std::vector<int >& tableau, int taille){
 int main(){
   int taille = read_int();
   std::vector<int > tableau = read_int_line(taille);
-  int a = programme_candidat(tableau, taille);
-  std::cout << a << "\n";
+  std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }
 

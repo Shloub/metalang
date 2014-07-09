@@ -45,7 +45,6 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   var taille int = read_int()
   var tableau []int = read_int_line(taille)
-  var a int = programme_candidat(tableau, taille)
-  fmt.Printf("%d\n", a);
+  fmt.Printf("%d\n", programme_candidat(tableau, taille));
 }
 

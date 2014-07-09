@@ -27,8 +27,7 @@ void print_sudoku(int* sudoku_){
         int x;
         for (x = 0 ; x <= 8; x++)
         {
-          int b = sudoku_[x + y * 9];
-          printf("%d ", b);
+          printf("%d ", sudoku_[x + y * 9]);
           if ((x % 3) == 2)
             printf(" ");
         }

@@ -41,13 +41,10 @@ int main(){
     std::cout << tmpc << ":" << c << " ";
     if (tmpc != ' ')
       c = ((c - 'a') + 13) % 26 + 'a';
-    tab4.at(toto) = c;
+    tab4.at(toto) = (char)(c);
   }
   for (int j = 0 ; j < strlen; j++)
-  {
-    char a = tab4.at(j);
-    std::cout << a;
-  }
+    std::cout << tab4.at(j);
   return 0;
 }
 

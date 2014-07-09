@@ -29,8 +29,7 @@ int main(){
     std::cin >> x >> std::skipws;
     tab.at(i) = x;
   }
-  int a = montagnes_(tab, len);
-  std::cout << a;
+  std::cout << montagnes_(tab, len);
   return 0;
 }
 

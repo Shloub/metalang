@@ -2,8 +2,6 @@ program euler15;
 
 
 var
-  a : Longint;
-  b : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -48,14 +46,12 @@ begin
   begin
     for k := 0 to  n - 1 do
     begin
-      a := tab[m][k];
-      Write(a);
+      Write(tab[m][k]);
       Write(' ');
     end;
     Write(''#10'');
   end;
-  b := tab[0][0];
-  Write(b);
+  Write(tab[0][0]);
   Write(''#10'');
 end.
 

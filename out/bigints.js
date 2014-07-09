@@ -58,22 +58,19 @@ function read_bigint(len){
     chiffres[i] = chiffres[len - 1 - i];
     chiffres[len - 1 - i] = tmp;
   }
-  var u = {
+  var o = {
     bigint_sign : 1,
     bigint_len : len,
     bigint_chiffres : chiffres
   };
-  return u;
+  return o;
 }
 
 function print_bigint(a){
   if (!a.bigint_sign)
     util.print('-');
   for (var i = 0 ; i <= a.bigint_len - 1; i++)
-  {
-    var e = a.bigint_chiffres[a.bigint_len - 1 - i];
-    util.print(e);
-  }
+    util.print(a.bigint_chiffres[a.bigint_len - 1 - i]);
 }
 
 function bigint_eq(a, b){
@@ -137,12 +134,12 @@ function add_bigint_positif(a, b){
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  var v = {
+  var p = {
     bigint_sign : 1,
     bigint_len : len,
     bigint_chiffres : chiffres
   };
-  return v;
+  return p;
 }
 
 function sub_bigint_positif(a, b){
@@ -168,21 +165,21 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  var w = {
+  var q = {
     bigint_sign : 1,
     bigint_len : len,
     bigint_chiffres : chiffres
   };
-  return w;
+  return q;
 }
 
 function neg_bigint(a){
-  var x = {
+  var r = {
     bigint_sign : !a.bigint_sign,
     bigint_len : a.bigint_len,
     bigint_chiffres : a.bigint_chiffres
   };
-  return x;
+  return r;
 }
 
 function add_bigint(a, b){
@@ -239,40 +236,40 @@ D'ou le nom de la fonction. */
   for (var l = 0 ; l <= 2; l++)
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
-  var y = {
+  var s = {
     bigint_sign : a.bigint_sign == b.bigint_sign,
     bigint_len : len,
     bigint_chiffres : chiffres
   };
-  return y;
+  return s;
 }
 
 function bigint_premiers_chiffres(a, i){
   var len = min2(i, a.bigint_len);
   while (len != 0 && a.bigint_chiffres[len - 1] == 0)
     len --;
-  var z = {
+  var u = {
     bigint_sign : a.bigint_sign,
     bigint_len : len,
     bigint_chiffres : a.bigint_chiffres
   };
-  return z;
+  return u;
 }
 
 function bigint_shift(a, i){
-  var f = a.bigint_len + i;
-  var chiffres = new Array(f);
-  for (var k = 0 ; k <= f - 1; k++)
+  var e = a.bigint_len + i;
+  var chiffres = new Array(e);
+  for (var k = 0 ; k <= e - 1; k++)
     if (k >= i)
     chiffres[k] = a.bigint_chiffres[k - i];
   else
     chiffres[k] = 0;
-  var ba = {
+  var v = {
     bigint_sign : a.bigint_sign,
     bigint_len : a.bigint_len + i,
     bigint_chiffres : chiffres
   };
-  return ba;
+  return v;
 }
 
 function mul_bigint(aa, bb){
@@ -324,12 +321,12 @@ function bigint_of_int(i){
     t[k] = ~~(i % 10);
     i = ~~(i / 10);
   }
-  var bc = {
+  var w = {
     bigint_sign : 1,
     bigint_len : size,
     bigint_chiffres : t
   };
-  return bc;
+  return w;
 }
 
 function fact_bigint(a){
@@ -417,17 +414,17 @@ function euler25(){
 function euler29(){
   var maxA = 5;
   var maxB = 5;
-  var g = maxA + 1;
-  var a_bigint = new Array(g);
-  for (var j = 0 ; j <= g - 1; j++)
+  var f = maxA + 1;
+  var a_bigint = new Array(f);
+  for (var j = 0 ; j <= f - 1; j++)
     a_bigint[j] = bigint_of_int(j * j);
-  var h = maxA + 1;
-  var a0_bigint = new Array(h);
-  for (var j2 = 0 ; j2 <= h - 1; j2++)
+  var g = maxA + 1;
+  var a0_bigint = new Array(g);
+  for (var j2 = 0 ; j2 <= g - 1; j2++)
     a0_bigint[j2] = bigint_of_int(j2);
-  var m = maxA + 1;
-  var b = new Array(m);
-  for (var k = 0 ; k <= m - 1; k++)
+  var h = maxA + 1;
+  var b = new Array(h);
+  for (var k = 0 ; k <= h - 1; k++)
     b[k] = 2;
   var n = 0;
   var found = 1;
@@ -463,8 +460,7 @@ function euler29(){
   return n;
 }
 
-var o = euler29();
-util.print(o, "\n");
+util.print(euler29(), "\n");
 var sum = read_bigint(50);
 for (var i = 2 ; i <= 100; i++)
 {
@@ -474,15 +470,9 @@ for (var i = 2 ; i <= 100; i++)
 }
 util.print("euler13 = ");
 print_bigint(sum);
-util.print("\n", "euler25 = ");
-var p = euler25();
-util.print(p, "\n", "euler16 = ");
-var q = euler16();
-util.print(q, "\n");
+util.print("\n", "euler25 = ", euler25(), "\n", "euler16 = ", euler16(), "\n");
 euler48();
-util.print("euler20 = ");
-var r = euler20();
-util.print(r, "\n");
+util.print("euler20 = ", euler20(), "\n");
 var a = bigint_of_int(999999);
 var b = bigint_of_int(9951263);
 print_bigint(a);
@@ -523,8 +513,8 @@ print_bigint(a);
 util.print(">");
 print_bigint(b);
 util.print("=");
-var s = bigint_gt(a, b);
-if (s)
+var m = bigint_gt(a, b);
+if (m)
   util.print("True");
 else
   util.print("False");

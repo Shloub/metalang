@@ -6,8 +6,7 @@ int main(){
   int sum = (lim * (lim + 1)) / 2;
   int carressum = sum * sum;
   int sumcarres = (lim * (lim + 1) * (2 * lim + 1)) / 6;
-  int a = carressum - sumcarres;
-  std::cout << a;
+  std::cout << carressum - sumcarres;
   return 0;
 }
 

@@ -84,13 +84,11 @@ for i_ in range(0, len):
 tab2 = copytab(tab, len);
 bubblesort(tab2, len);
 for i in range(0, len):
-  a = tab2[i];
-  print("%d " % ( a ), end='')
+  print("%d " % ( tab2[i] ), end='')
 print("")
 tab3 = copytab(tab, len);
 qsort_(tab3, len, 0, len - 1);
 for i in range(0, len):
-  b = tab3[i];
-  print("%d " % ( b ), end='')
+  print("%d " % ( tab3[i] ), end='')
 print("")
 

@@ -89,7 +89,6 @@ end;
 var
   a : Longint;
   b : Longint;
-  c : Longint;
   i : Longint;
 begin
   a := 0;
@@ -100,8 +99,7 @@ begin
   b := read_int_();
   skip();
   i := read_int_();
-  c := fibo_(a, b, i);
-  Write(c);
+  Write(fibo_(a, b, i));
 end.
 
 

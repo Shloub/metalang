@@ -39,7 +39,6 @@ var lim = 100;
 var sum = ~~((lim * (lim + 1)) / 2);
 var carressum = sum * sum;
 var sumcarres = ~~((lim * (lim + 1) * (2 * lim + 1)) / 6);
-var a = carressum - sumcarres;
-util.print(a);
+util.print(carressum - sumcarres);
 
 

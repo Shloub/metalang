@@ -44,7 +44,6 @@ func sumdiag(n int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var a int = sumdiag(1001)
-  fmt.Printf("%d", a);
+  fmt.Printf("%d", sumdiag(1001));
 }
 
