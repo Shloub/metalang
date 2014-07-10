@@ -82,6 +82,8 @@ let fresh_init prog =
   let () = bindings := set
   in ();;
 
+let forbid n = bindings := BindingSet.add n !bindings
+
 let fresh =
   let r = ref (-1) in
   let rec gen () =
