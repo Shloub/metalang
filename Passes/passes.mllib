@@ -21,3 +21,4 @@ InternalTags
 UnTuple
 RecordExprToInstr
 DeclareTuples
+InlineFuncs

@@ -79,7 +79,7 @@ def lexems macro_max2(lexems a, lexems b)
   end
 end
 
-def inline int max2(int a, int b)
+def int max2(int a, int b)
 	${ macro_max2( {a}, {b} ) }
 end
 
@@ -121,7 +121,7 @@ def lexems macro_min2(lexems a, lexems b)
   end
 end
 
-def inline int min2(int a, int b)
+def int min2(int a, int b)
 	${ macro_min2( {a}, {b} ) }
 end
 
