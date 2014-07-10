@@ -91,11 +91,11 @@ let pass_base_print (a, prog) =
   (a, prog)
 
 let typed name f (a, b) =
-  (*  debug_print b;
-      let before = Passes.WalkCountNoPosition.fold () b in *)
+(*      let before = Passes.WalkCountNoPosition.fold () b in *)
   let b = f () b in (*
                       let after = Passes.WalkCountNoPosition.fold () b in
                       Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
+(*  base_print b; *)
   (a, b)
 
 let typed_ name f (a, b) = (a, f b)
@@ -123,6 +123,9 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "expand" Passes.WalkNopend.apply
   |> typed "expend print" Passes.WalkExpandPrint.apply
   |> typed "internal tags" Passes.WalkInternalTags.apply
+  |> typed "inline" Passes.WalkInlineFuncs.apply
+(*  |> (fun (a, b) -> base_print b;
+    (a, b)) *)
   |> snd |> Typer.process
 
 let clike_passes prog =

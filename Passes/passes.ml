@@ -48,6 +48,7 @@ module WalkCheckNaming = WalkTop(CheckNaming);;
 module WalkRename = WalkTop(Rename);;
 module WalkInternalTags = WalkTop(InternalTags);;
 module WalkExpandUnTuple = WalkTop(ExpandUnTuple);;
+module WalkInlineFuncs = WalkTop(InlineFuncs);;
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function
