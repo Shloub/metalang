@@ -265,9 +265,9 @@ class printer = object(self)
         ) li in
       let expanded = List.fold_left
         (fun s ((param, _type), string) ->
-          String.replace ("$"^param) string s
+          String.replace ("$__MACRO__PARAM__"^param) string s
         )
-        s
+        (String.replace "$" "$__MACRO__PARAM__" s)
         (List.combine params listr)
       in Format.fprintf f "%s" expanded
 
