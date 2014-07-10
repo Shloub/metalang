@@ -88,19 +88,18 @@
         (princ len)
         (princ "
 ")
-        (let ((d len))
-          (let
-           ((e (array_init
-                  d
-                  (function (lambda (f)
-                  (block lambda_3
-                    (let ((g (mread-int )))
-                      (mread-blank)
-                      (return-from lambda_3 g)
-                    )))
-                  ))))
-          (let ((c e))
-            (let ((tab c))
-              (princ (result len tab))
-            ))))))))
+        (let
+         ((d (array_init
+                len
+                (function (lambda (e)
+                (block lambda_3
+                  (let ((f (mread-int )))
+                    (mread-blank)
+                    (return-from lambda_3 f)
+                  )))
+                ))))
+        (let ((c d))
+          (let ((tab c))
+            (princ (result len tab))
+          )))))))
 

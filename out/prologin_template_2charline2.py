@@ -20,11 +20,9 @@ a = int(input());
 taille1 = a;
 b = int(input());
 taille2 = b;
-d = taille1;
 c = list(input());
 tableau1 = c;
-f = taille2;
-e = list(input());
-tableau2 = e;
+d = list(input());
+tableau2 = d;
 print("%d\n" % ( programme_candidat(tableau1, taille1, tableau2, taille2) ), end='')
 

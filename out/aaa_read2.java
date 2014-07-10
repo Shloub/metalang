@@ -51,55 +51,52 @@ read int, read char et skip
     int a = b;
     int len = a;
     System.out.printf("%d=len\n", len);
-    int e = len;
-    int[] f = new int[e];
-    for (int g = 0 ; g < e; g++)
+    int[] e = new int[len];
+    for (int f = 0 ; f < len; f++)
     {
-      int h = 0;
+      int g = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); h = -scanner.nextInt();
+      scanner.next("^-"); g = -scanner.nextInt();
       }else{
-      h = scanner.nextInt();}
+      g = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      f[g] = h;
+      e[f] = g;
     }
-    int[] d = f;
+    int[] d = e;
     int[] tab = d;
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d=>%d ", i, tab[i]);
     }
     System.out.print("\n");
-    int l = len;
-    int[] m = new int[l];
-    for (int o = 0 ; o < l; o++)
+    int[] k = new int[len];
+    for (int l = 0 ; l < len; l++)
     {
-      int p = 0;
+      int m = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); p = -scanner.nextInt();
+      scanner.next("^-"); m = -scanner.nextInt();
       }else{
-      p = scanner.nextInt();}
+      m = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      m[o] = p;
+      k[l] = m;
     }
-    int[] k = m;
-    int[] tab2 = k;
+    int[] h = k;
+    int[] tab2 = h;
     for (int i_ = 0 ; i_ < len; i_++)
     {
       System.out.printf("%d==>%d ", i_, tab2[i_]);
     }
-    int r = 0;
+    int p = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); r = -scanner.nextInt();
+    scanner.next("^-"); p = -scanner.nextInt();
     }else{
-    r = scanner.nextInt();}
+    p = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int q = r;
-    int strlen = q;
+    int o = p;
+    int strlen = o;
     System.out.printf("%d=strlen\n", strlen);
-    int u = strlen;
-    char[] s = scanner.nextLine().toCharArray();
-    char[] tab4 = s;
+    char[] q = scanner.nextLine().toCharArray();
+    char[] tab4 = q;
     for (int i3 = 0 ; i3 < strlen; i3++)
     {
       char tmpc = tab4[i3];

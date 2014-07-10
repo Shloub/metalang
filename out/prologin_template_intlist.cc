@@ -30,15 +30,14 @@ int main(){
   std::cin >> b >> std::skipws;
   int a = b;
   int taille = a;
-  int d = taille;
-  std::vector<int > e( d );
-  for (int f = 0 ; f < d; f++)
+  std::vector<int > d( taille );
+  for (int e = 0 ; e < taille; e++)
   {
-    int g = 0;
-    std::cin >> g >> std::skipws;
-    e.at(f) = g;
+    int f = 0;
+    std::cin >> f >> std::skipws;
+    d.at(e) = f;
   }
-  std::vector<int > c = e;
+  std::vector<int > c = d;
   std::vector<int > tableau = c;
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;

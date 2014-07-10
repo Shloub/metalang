@@ -16,9 +16,7 @@ public class pathfinding0
   public static int min4(int a, int b, int c, int d)
   {
     int f = min2(a, b);
-    int g = c;
-    int h = d;
-    int e = min2(min2(f, g), h);
+    int e = min2(min2(f, c), d);
     return e;
   }
   
@@ -43,9 +41,8 @@ public class pathfinding0
     char[][] tab = new char[y][];
     for (int z = 0 ; z < y; z++)
     {
-      int l = x;
-      char[] k = scanner.nextLine().toCharArray();
-      tab[z] = k;
+      char[] g = scanner.nextLine().toCharArray();
+      tab[z] = g;
     }
     return tab;
   }
@@ -67,16 +64,10 @@ public class pathfinding0
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int o = val1;
-      int p = val2;
-      int q = val3;
-      int r = val4;
-      int s = min2(o, p);
-      int t = q;
-      int u = r;
-      int v = min2(min2(s, t), u);
-      int m = v;
-      int out_ = 1 + m;
+      int k = min2(val1, val2);
+      int l = min2(min2(k, val3), val4);
+      int h = l;
+      int out_ = 1 + h;
       cache[posY][posX] = out_;
       return out_;
     }
@@ -102,22 +93,22 @@ public class pathfinding0
   
   public static void main(String args[])
   {
-    int ba = 0;
+    int o = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); ba = -scanner.nextInt();
+    scanner.next("^-"); o = -scanner.nextInt();
     }else{
-    ba = scanner.nextInt();}
+    o = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int w = ba;
-    int x = w;
-    int bc = 0;
+    int m = o;
+    int x = m;
+    int q = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); bc = -scanner.nextInt();
+    scanner.next("^-"); q = -scanner.nextInt();
     }else{
-    bc = scanner.nextInt();}
+    q = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int bb = bc;
-    int y = bb;
+    int p = q;
+    int y = p;
     System.out.printf("%d %d\n", x, y);
     char[][] tab = read_char_matrix(x, y);
     int result = pathfind(tab, x, y);

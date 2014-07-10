@@ -37,15 +37,14 @@ func read_int_line(n int) []int{
 func read_int_matrix(x int, y int) [][]int{
   var tab [][]int = make([][]int, y)
   for z := 0 ; z <= y - 1; z++ {
-    var e int = x
-      var f []int = make([]int, e)
-      for g := 0 ; g <= e - 1; g++ {
-        var h int = 0
-          fmt.Fscanf(reader, "%d", &h);
+    var e []int = make([]int, x)
+      for f := 0 ; f <= x - 1; f++ {
+        var g int = 0
+          fmt.Fscanf(reader, "%d", &g);
           skip()
-          f[g] = h;
+          e[f] = g;
       }
-      var d []int = f
+      var d []int = e
       tab[z] = d;
   }
   return tab
@@ -73,53 +72,53 @@ func main() {
   var directions []* tuple_int_int = make([]* tuple_int_int, c)
   for i := 0 ; i <= c - 1; i++ {
     if i == 0 {
-        var v * tuple_int_int = new (tuple_int_int)
-          (*v).tuple_int_int_field_0=0;
-          (*v).tuple_int_int_field_1=1;
-          directions[i] = v;
-      } else if i == 1 {
         var u * tuple_int_int = new (tuple_int_int)
-          (*u).tuple_int_int_field_0=1;
-          (*u).tuple_int_int_field_1=0;
+          (*u).tuple_int_int_field_0=0;
+          (*u).tuple_int_int_field_1=1;
           directions[i] = u;
-      } else if i == 2 {
+      } else if i == 1 {
         var s * tuple_int_int = new (tuple_int_int)
-          (*s).tuple_int_int_field_0=0;
-          (*s).tuple_int_int_field_1=-1;
+          (*s).tuple_int_int_field_0=1;
+          (*s).tuple_int_int_field_1=0;
           directions[i] = s;
-      } else if i == 3 {
+      } else if i == 2 {
         var r * tuple_int_int = new (tuple_int_int)
-          (*r).tuple_int_int_field_0=-1;
-          (*r).tuple_int_int_field_1=0;
+          (*r).tuple_int_int_field_0=0;
+          (*r).tuple_int_int_field_1=-1;
           directions[i] = r;
-      } else if i == 4 {
+      } else if i == 3 {
         var q * tuple_int_int = new (tuple_int_int)
-          (*q).tuple_int_int_field_0=1;
-          (*q).tuple_int_int_field_1=1;
+          (*q).tuple_int_int_field_0=-1;
+          (*q).tuple_int_int_field_1=0;
           directions[i] = q;
-      } else if i == 5 {
+      } else if i == 4 {
         var p * tuple_int_int = new (tuple_int_int)
           (*p).tuple_int_int_field_0=1;
-          (*p).tuple_int_int_field_1=-1;
+          (*p).tuple_int_int_field_1=1;
           directions[i] = p;
-      } else if i == 6 {
+      } else if i == 5 {
         var o * tuple_int_int = new (tuple_int_int)
-          (*o).tuple_int_int_field_0=-1;
-          (*o).tuple_int_int_field_1=1;
+          (*o).tuple_int_int_field_0=1;
+          (*o).tuple_int_int_field_1=-1;
           directions[i] = o;
-      } else {
+      } else if i == 6 {
         var l * tuple_int_int = new (tuple_int_int)
-        (*l).tuple_int_int_field_0=-1;
-        (*l).tuple_int_int_field_1=-1;
-        directions[i] = l;
+          (*l).tuple_int_int_field_0=-1;
+          (*l).tuple_int_int_field_1=1;
+          directions[i] = l;
+      } else {
+        var k * tuple_int_int = new (tuple_int_int)
+        (*k).tuple_int_int_field_0=-1;
+        (*k).tuple_int_int_field_1=-1;
+        directions[i] = k;
       }      
   }
   var max_ int = 0
   var m [][]int = read_int_matrix(20, 20)
   for j := 0 ; j <= 7; j++ {
-    var k * tuple_int_int = directions[j]
-      var dx int = (*k).tuple_int_int_field_0
-      var dy int = (*k).tuple_int_int_field_1
+    var h * tuple_int_int = directions[j]
+      var dx int = (*h).tuple_int_int_field_0
+      var dy int = (*h).tuple_int_int_field_1
       for x := 0 ; x <= 19; x++ {
         for y := 0 ; y <= 19; y++ {
             max_ = max2(max_, find(4, m, x, y, dx, dy));

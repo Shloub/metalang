@@ -71,12 +71,12 @@ begin
   exit(out_);
 end;
 
-type r = array of Longint;
-function read_int_line(n : Longint) : r;
+type p = array of Longint;
+function read_int_line(n : Longint) : p;
 var
   i : Longint;
   t : Longint;
-  tab : r;
+  tab : p;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -89,30 +89,28 @@ begin
   exit(tab);
 end;
 
-type s = array of r;
-function read_int_matrix(x : Longint; y : Longint) : s;
+type q = array of p;
+function read_int_matrix(x : Longint; y : Longint) : q;
 var
-  a : r;
-  b : Longint;
-  c : r;
+  a : p;
+  b : p;
+  c : Longint;
   d : Longint;
-  e : Longint;
-  tab : s;
+  tab : q;
   z : Longint;
 begin
   SetLength(tab, y);
   for z := 0 to  y - 1 do
   begin
-    b := x;
-    SetLength(c, b);
-    for d := 0 to  b - 1 do
+    SetLength(b, x);
+    for c := 0 to  x - 1 do
     begin
-      e := 0;
-      e := read_int_();
+      d := 0;
+      d := read_int_();
       skip();
-      c[d] := e;
+      b[c] := d;
     end;
-    a := c;
+    a := b;
     tab[z] := a;
   end;
   exit(tab);
@@ -120,39 +118,37 @@ end;
 
 
 var
+  e : Longint;
   f : Longint;
-  g : Longint;
-  h : r;
+  g : p;
+  h : p;
   i : Longint;
   j : Longint;
   k : Longint;
-  l : r;
+  l : Longint;
   len : Longint;
   m : Longint;
   o : Longint;
-  p : Longint;
-  q : Longint;
-  tab1 : r;
-  tab2 : s;
+  tab1 : p;
+  tab2 : q;
 begin
-  g := 0;
-  g := read_int_();
+  f := 0;
+  f := read_int_();
   skip();
-  f := g;
-  len := f;
+  e := f;
+  len := e;
   Write(len);
   Write('=len'#10'');
-  k := len;
-  SetLength(l, k);
-  for m := 0 to  k - 1 do
+  SetLength(h, len);
+  for k := 0 to  len - 1 do
   begin
-    o := 0;
-    o := read_int_();
+    l := 0;
+    l := read_int_();
     skip();
-    l[m] := o;
+    h[k] := l;
   end;
-  h := l;
-  tab1 := h;
+  g := h;
+  tab1 := g;
   for i := 0 to  len - 1 do
   begin
     Write(i);
@@ -160,11 +156,11 @@ begin
     Write(tab1[i]);
     Write(''#10'');
   end;
-  q := 0;
-  q := read_int_();
+  o := 0;
+  o := read_int_();
   skip();
-  p := q;
-  len := p;
+  m := o;
+  len := m;
   tab2 := read_int_matrix(len, len - 1);
   for i := 0 to  len - 2 do
   begin

@@ -36,15 +36,14 @@ func read_char_line(n int) []byte{
 func read_char_matrix(x int, y int) [][]byte{
   var tab [][]byte = make([][]byte, y)
   for z := 0 ; z <= y - 1; z++ {
-    var b int = x
-      var c []byte = make([]byte, b)
-      for d := 0 ; d <= b - 1; d++ {
-        var e byte = '_'
-          fmt.Fscanf(reader, "%c", &e);
-          c[d] = e;
+    var b []byte = make([]byte, x)
+      for c := 0 ; c <= x - 1; c++ {
+        var d byte = '_'
+          fmt.Fscanf(reader, "%c", &d);
+          b[c] = d;
       }
       skip()
-      var a []byte = c
+      var a []byte = b
       tab[z] = a;
   }
   return tab
@@ -64,16 +63,16 @@ func programme_candidat(tableau [][]byte, taille_x int, taille_y int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var g int = 0
-  fmt.Fscanf(reader, "%d", &g);
+  var f int = 0
+  fmt.Fscanf(reader, "%d", &f);
   skip()
-  var f int = g
-  var taille_x int = f
-  var k int = 0
-  fmt.Fscanf(reader, "%d", &k);
+  var e int = f
+  var taille_x int = e
+  var h int = 0
+  fmt.Fscanf(reader, "%d", &h);
   skip()
-  var h int = k
-  var taille_y int = h
+  var g int = h
+  var taille_y int = g
   var tableau [][]byte = read_char_matrix(taille_x, taille_y)
   fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }

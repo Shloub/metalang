@@ -79,12 +79,12 @@ begin
   exit(out_);
 end;
 
-type h = array of char;
-function read_char_line(n : Longint) : h;
+type g = array of char;
+function read_char_line(n : Longint) : g;
 var
   i : Longint;
   t : char;
-  tab : h;
+  tab : g;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -97,7 +97,7 @@ begin
   exit(tab);
 end;
 
-function programme_candidat(tableau : h; taille : Longint) : Longint;
+function programme_candidat(tableau : g; taille : Longint) : Longint;
 var
   i : Longint;
   out_ : Longint;
@@ -116,12 +116,11 @@ end;
 var
   a : Longint;
   b : Longint;
-  c : h;
-  d : Longint;
-  e : h;
-  f : Longint;
-  g : char;
-  tableau : h;
+  c : g;
+  d : g;
+  e : Longint;
+  f : char;
+  tableau : g;
   taille : Longint;
 begin
   b := 0;
@@ -129,16 +128,15 @@ begin
   skip();
   a := b;
   taille := a;
-  d := taille;
-  SetLength(e, d);
-  for f := 0 to  d - 1 do
+  SetLength(d, taille);
+  for e := 0 to  taille - 1 do
   begin
-    g := #95;
-    g := read_char_();
-    e[f] := g;
+    f := #95;
+    f := read_char_();
+    d[e] := f;
   end;
   skip();
-  c := e;
+  c := d;
   tableau := c;
   Write(programme_candidat(tableau, taille));
   Write(''#10'');

@@ -28,19 +28,18 @@ char** read_char_matrix(int x, int y){
     int z;
     for (z = 0 ; z < y; z++)
     {
-      int b = x;
-      char *c = malloc( b * sizeof(char));
+      char *b = malloc( x * sizeof(char));
       {
-        int d;
-        for (d = 0 ; d < b; d++)
+        int c;
+        for (c = 0 ; c < x; c++)
         {
-          char e = '_';
-          scanf("%c", &e);
-          c[d] = e;
+          char d = '_';
+          scanf("%c", &d);
+          b[c] = d;
         }
       }
       scanf(" ");
-      char* a = c;
+      char* a = b;
       tab[z] = a;
     }
   }
@@ -68,14 +67,14 @@ int programme_candidat(char** tableau, int taille_x, int taille_y){
 }
 
 int main(void){
-  int g = 0;
-  scanf("%d ", &g);
-  int f = g;
-  int taille_x = f;
-  int k = 0;
-  scanf("%d ", &k);
-  int h = k;
-  int taille_y = h;
+  int f = 0;
+  scanf("%d ", &f);
+  int e = f;
+  int taille_x = e;
+  int h = 0;
+  scanf("%d ", &h);
+  int g = h;
+  int taille_y = g;
   char** tableau = read_char_matrix(taille_x, taille_y);
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   return 0;

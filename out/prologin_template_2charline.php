@@ -26,13 +26,11 @@ function programme_candidat(&$tableau1, $taille1, &$tableau2, $taille2){
 
 $a = intval(trim(fgets(STDIN)));
 $taille1 = $a;
-$c = $taille1;
 $b = fgets(STDIN);
 $tableau1 = $b;
-$d = intval(trim(fgets(STDIN)));
-$taille2 = $d;
-$f = $taille2;
-$e = fgets(STDIN);
-$tableau2 = $e;
+$c = intval(trim(fgets(STDIN)));
+$taille2 = $c;
+$d = fgets(STDIN);
+$tableau2 = $d;
 echo programme_candidat($tableau1, $taille1, $tableau2, $taille2), "\n";
 ?>

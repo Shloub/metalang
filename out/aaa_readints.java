@@ -35,19 +35,18 @@ public class aaa_readints
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
     {
-      int b = x;
-      int[] c = new int[b];
-      for (int d = 0 ; d < b; d++)
+      int[] b = new int[x];
+      for (int c = 0 ; c < x; c++)
       {
-        int e = 0;
+        int d = 0;
         if (scanner.hasNext("^-")){
-        scanner.next("^-"); e = -scanner.nextInt();
+        scanner.next("^-"); d = -scanner.nextInt();
         }else{
-        e = scanner.nextInt();}
+        d = scanner.nextInt();}
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        c[d] = e;
+        b[c] = d;
       }
-      int[] a = c;
+      int[] a = b;
       tab[z] = a;
     }
     return tab;
@@ -56,41 +55,40 @@ public class aaa_readints
   
   public static void main(String args[])
   {
-    int g = 0;
+    int f = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); g = -scanner.nextInt();
+    scanner.next("^-"); f = -scanner.nextInt();
     }else{
-    g = scanner.nextInt();}
+    f = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int f = g;
-    int len = f;
+    int e = f;
+    int len = e;
     System.out.printf("%d=len\n", len);
-    int k = len;
-    int[] l = new int[k];
-    for (int m = 0 ; m < k; m++)
+    int[] h = new int[len];
+    for (int k = 0 ; k < len; k++)
     {
-      int o = 0;
+      int l = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); o = -scanner.nextInt();
+      scanner.next("^-"); l = -scanner.nextInt();
       }else{
-      o = scanner.nextInt();}
+      l = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      l[m] = o;
+      h[k] = l;
     }
-    int[] h = l;
-    int[] tab1 = h;
+    int[] g = h;
+    int[] tab1 = g;
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d=>%d\n", i, tab1[i]);
     }
-    int q = 0;
+    int o = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); q = -scanner.nextInt();
+    scanner.next("^-"); o = -scanner.nextInt();
     }else{
-    q = scanner.nextInt();}
+    o = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int p = q;
-    len = p;
+    int m = o;
+    len = m;
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)
     {

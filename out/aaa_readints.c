@@ -27,18 +27,17 @@ int** read_int_matrix(int x, int y){
     int z;
     for (z = 0 ; z < y; z++)
     {
-      int b = x;
-      int *c = malloc( b * sizeof(int));
+      int *b = malloc( x * sizeof(int));
       {
-        int d;
-        for (d = 0 ; d < b; d++)
+        int c;
+        for (c = 0 ; c < x; c++)
         {
-          int e = 0;
-          scanf("%d ", &e);
-          c[d] = e;
+          int d = 0;
+          scanf("%d ", &d);
+          b[c] = d;
         }
       }
-      int* a = c;
+      int* a = b;
       tab[z] = a;
     }
   }
@@ -46,24 +45,23 @@ int** read_int_matrix(int x, int y){
 }
 
 int main(void){
-  int g = 0;
-  scanf("%d ", &g);
-  int f = g;
-  int len = f;
+  int f = 0;
+  scanf("%d ", &f);
+  int e = f;
+  int len = e;
   printf("%d=len\n", len);
-  int k = len;
-  int *l = malloc( k * sizeof(int));
+  int *h = malloc( len * sizeof(int));
   {
-    int m;
-    for (m = 0 ; m < k; m++)
+    int k;
+    for (k = 0 ; k < len; k++)
     {
-      int o = 0;
-      scanf("%d ", &o);
-      l[m] = o;
+      int l = 0;
+      scanf("%d ", &l);
+      h[k] = l;
     }
   }
-  int* h = l;
-  int* tab1 = h;
+  int* g = h;
+  int* tab1 = g;
   {
     int i;
     for (i = 0 ; i < len; i++)
@@ -71,10 +69,10 @@ int main(void){
       printf("%d=>%d\n", i, tab1[i]);
     }
   }
-  int q = 0;
-  scanf("%d ", &q);
-  int p = q;
-  len = p;
+  int o = 0;
+  scanf("%d ", &o);
+  int m = o;
+  len = m;
   int** tab2 = read_int_matrix(len, len - 1);
   {
     int i;

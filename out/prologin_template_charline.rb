@@ -32,15 +32,14 @@ b=scanf("%d")[0];
 scanf("%*\n");
 a = b
 taille = a
-d = taille
-e = [];
-for f in (0 ..  d - 1) do
-  g = "_"
-  g=scanf("%c")[0];
-  e[f] = g;
+d = [];
+for e in (0 ..  taille - 1) do
+  f = "_"
+  f=scanf("%c")[0];
+  d[e] = f;
 end
 scanf("%*\n");
-c = e
+c = d
 tableau = c
 printf "%d\n", programme_candidat(tableau, taille)
 

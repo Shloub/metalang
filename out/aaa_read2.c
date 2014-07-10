@@ -46,18 +46,17 @@ int main(void){
   int a = b;
   int len = a;
   printf("%d=len\n", len);
-  int e = len;
-  int *f = malloc( e * sizeof(int));
+  int *e = malloc( len * sizeof(int));
   {
-    int g;
-    for (g = 0 ; g < e; g++)
+    int f;
+    for (f = 0 ; f < len; f++)
     {
-      int h = 0;
-      scanf("%d ", &h);
-      f[g] = h;
+      int g = 0;
+      scanf("%d ", &g);
+      e[f] = g;
     }
   }
-  int* d = f;
+  int* d = e;
   int* tab = d;
   {
     int i;
@@ -67,19 +66,18 @@ int main(void){
     }
   }
   printf("\n");
-  int l = len;
-  int *m = malloc( l * sizeof(int));
+  int *k = malloc( len * sizeof(int));
   {
-    int o;
-    for (o = 0 ; o < l; o++)
+    int l;
+    for (l = 0 ; l < len; l++)
     {
-      int p = 0;
-      scanf("%d ", &p);
-      m[o] = p;
+      int m = 0;
+      scanf("%d ", &m);
+      k[l] = m;
     }
   }
-  int* k = m;
-  int* tab2 = k;
+  int* h = k;
+  int* tab2 = h;
   {
     int i_;
     for (i_ = 0 ; i_ < len; i_++)
@@ -87,25 +85,24 @@ int main(void){
       printf("%d==>%d ", i_, tab2[i_]);
     }
   }
-  int r = 0;
-  scanf("%d ", &r);
-  int q = r;
-  int strlen = q;
+  int p = 0;
+  scanf("%d ", &p);
+  int o = p;
+  int strlen = o;
   printf("%d=strlen\n", strlen);
-  int u = strlen;
-  char *v = malloc( u * sizeof(char));
+  char *r = malloc( strlen * sizeof(char));
   {
-    int w;
-    for (w = 0 ; w < u; w++)
+    int s;
+    for (s = 0 ; s < strlen; s++)
     {
-      char x = '_';
-      scanf("%c", &x);
-      v[w] = x;
+      char u = '_';
+      scanf("%c", &u);
+      r[s] = u;
     }
   }
   scanf(" ");
-  char* s = v;
-  char* tab4 = s;
+  char* q = r;
+  char* tab4 = q;
   {
     int i3;
     for (i3 = 0 ; i3 < strlen; i3++)

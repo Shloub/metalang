@@ -24,7 +24,6 @@ std::vector<std::vector<char > > read_char_matrix(int x, int y){
   std::vector<std::vector<char > > tab( y );
   for (int z = 0 ; z < y; z++)
   {
-    int b = x;
     std::vector<char > a = getline();
     tab.at(z) = a;
   }
@@ -47,14 +46,14 @@ int programme_candidat(std::vector<std::vector<char > >& tableau, int taille_x, 
 
 
 int main(){
-  int d = 0;
-  std::cin >> d >> std::skipws;
-  int c = d;
-  int taille_x = c;
-  int f = 0;
-  std::cin >> f >> std::skipws;
-  int e = f;
-  int taille_y = e;
+  int c = 0;
+  std::cin >> c >> std::skipws;
+  int b = c;
+  int taille_x = b;
+  int e = 0;
+  std::cin >> e >> std::skipws;
+  int d = e;
+  int taille_y = d;
   std::vector<std::vector<char > > tableau = read_char_matrix(taille_x, taille_y);
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;

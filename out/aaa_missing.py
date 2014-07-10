@@ -21,7 +21,6 @@ def result( len, tab ):
 a = int(input());
 len = a;
 print("%d\n" % ( len ), end='')
-c = len;
 b = list(map(int, input().split()));
 tab = b;
 print("%d" % result(len, tab), end='')

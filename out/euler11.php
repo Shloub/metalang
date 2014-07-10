@@ -11,7 +11,6 @@ function read_int_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
   {
-    $e = $x;
     $d = array_map("intval", explode(" ", fgets(STDIN)));
     $tab[$z] = $d;
   }

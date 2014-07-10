@@ -76,54 +76,51 @@ stdinsep();
 var a = b;
 var len = a;
 util.print(len, "=len\n");
-var e = len;
-var f = new Array(e);
-for (var g = 0 ; g <= e - 1; g++)
+var e = new Array(len);
+for (var f = 0 ; f <= len - 1; f++)
 {
-  var h = 0;
-  h=read_int_();
+  var g = 0;
+  g=read_int_();
   stdinsep();
-  f[g] = h;
+  e[f] = g;
 }
-var d = f;
+var d = e;
 var tab = d;
 for (var i = 0 ; i <= len - 1; i++)
 {
   util.print(i, "=>", tab[i], " ");
 }
 util.print("\n");
-var l = len;
-var m = new Array(l);
-for (var o = 0 ; o <= l - 1; o++)
+var k = new Array(len);
+for (var l = 0 ; l <= len - 1; l++)
 {
-  var p = 0;
-  p=read_int_();
+  var m = 0;
+  m=read_int_();
   stdinsep();
-  m[o] = p;
+  k[l] = m;
 }
-var k = m;
-var tab2 = k;
+var h = k;
+var tab2 = h;
 for (var i_ = 0 ; i_ <= len - 1; i_++)
 {
   util.print(i_, "==>", tab2[i_], " ");
 }
-var r = 0;
-r=read_int_();
+var p = 0;
+p=read_int_();
 stdinsep();
-var q = r;
-var strlen = q;
+var o = p;
+var strlen = o;
 util.print(strlen, "=strlen\n");
-var u = strlen;
-var v = new Array(u);
-for (var w = 0 ; w <= u - 1; w++)
+var r = new Array(strlen);
+for (var s = 0 ; s <= strlen - 1; s++)
 {
-  var x = '_';
-  x=read_char_();
-  v[w] = x;
+  var u = '_';
+  u=read_char_();
+  r[s] = u;
 }
 stdinsep();
-var s = v;
-var tab4 = s;
+var q = r;
+var tab4 = q;
 for (var i3 = 0 ; i3 <= strlen - 1; i3++)
 {
   var tmpc = tab4[i3];

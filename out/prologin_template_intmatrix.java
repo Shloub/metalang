@@ -35,19 +35,18 @@ public class prologin_template_intmatrix
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
     {
-      int b = x;
-      int[] c = new int[b];
-      for (int d = 0 ; d < b; d++)
+      int[] b = new int[x];
+      for (int c = 0 ; c < x; c++)
       {
-        int e = 0;
+        int d = 0;
         if (scanner.hasNext("^-")){
-        scanner.next("^-"); e = -scanner.nextInt();
+        scanner.next("^-"); d = -scanner.nextInt();
         }else{
-        e = scanner.nextInt();}
+        d = scanner.nextInt();}
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        c[d] = e;
+        b[c] = d;
       }
-      int[] a = c;
+      int[] a = b;
       tab[z] = a;
     }
     return tab;
@@ -65,22 +64,22 @@ public class prologin_template_intmatrix
   
   public static void main(String args[])
   {
-    int g = 0;
+    int f = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); g = -scanner.nextInt();
+    scanner.next("^-"); f = -scanner.nextInt();
     }else{
-    g = scanner.nextInt();}
+    f = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int f = g;
-    int taille_x = f;
-    int k = 0;
+    int e = f;
+    int taille_x = e;
+    int h = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); k = -scanner.nextInt();
+    scanner.next("^-"); h = -scanner.nextInt();
     }else{
-    k = scanner.nextInt();}
+    h = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int h = k;
-    int taille_y = h;
+    int g = h;
+    int taille_y = g;
     int[][] tableau = read_int_matrix(taille_x, taille_y);
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }

@@ -58,16 +58,15 @@ function read_int_matrix(x, y){
   var tab = new Array(y);
   for (var z = 0 ; z <= y - 1; z++)
   {
-    var b = x;
-    var c = new Array(b);
-    for (var d = 0 ; d <= b - 1; d++)
+    var b = new Array(x);
+    for (var c = 0 ; c <= x - 1; c++)
     {
-      var e = 0;
-      e=read_int_();
+      var d = 0;
+      d=read_int_();
       stdinsep();
-      c[d] = e;
+      b[c] = d;
     }
-    var a = c;
+    var a = b;
     tab[z] = a;
   }
   return tab;
@@ -81,16 +80,16 @@ function programme_candidat(tableau, x, y){
   return out_;
 }
 
-var g = 0;
-g=read_int_();
+var f = 0;
+f=read_int_();
 stdinsep();
-var f = g;
-var taille_x = f;
-var k = 0;
-k=read_int_();
+var e = f;
+var taille_x = e;
+var h = 0;
+h=read_int_();
 stdinsep();
-var h = k;
-var taille_y = h;
+var g = h;
+var taille_y = g;
 var tableau = read_int_matrix(taille_x, taille_y);
 util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 

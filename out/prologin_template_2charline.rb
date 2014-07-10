@@ -37,30 +37,28 @@ b=scanf("%d")[0];
 scanf("%*\n");
 a = b
 taille1 = a
-d = taille1
-e = [];
-for f in (0 ..  d - 1) do
-  g = "_"
-  g=scanf("%c")[0];
-  e[f] = g;
+d = [];
+for e in (0 ..  taille1 - 1) do
+  f = "_"
+  f=scanf("%c")[0];
+  d[e] = f;
 end
 scanf("%*\n");
-c = e
+c = d
 tableau1 = c
-k = 0
-k=scanf("%d")[0];
+h = 0
+h=scanf("%d")[0];
 scanf("%*\n");
-h = k
-taille2 = h
-m = taille2
-o = [];
-for p in (0 ..  m - 1) do
-  q = "_"
-  q=scanf("%c")[0];
-  o[p] = q;
+g = h
+taille2 = g
+l = [];
+for m in (0 ..  taille2 - 1) do
+  o = "_"
+  o=scanf("%c")[0];
+  l[m] = o;
 end
 scanf("%*\n");
-l = o
-tableau2 = l
+k = l
+tableau2 = k
 printf "%d\n", programme_candidat(tableau1, taille1, tableau2, taille2)
 

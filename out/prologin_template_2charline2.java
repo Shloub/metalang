@@ -56,12 +56,10 @@ public class prologin_template_2charline2
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int c = d;
     int taille2 = c;
-    int f = taille1;
     char[] e = scanner.nextLine().toCharArray();
     char[] tableau1 = e;
-    int h = taille2;
-    char[] g = scanner.nextLine().toCharArray();
-    char[] tableau2 = g;
+    char[] f = scanner.nextLine().toCharArray();
+    char[] tableau2 = f;
     System.out.printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   }
   

@@ -46,15 +46,14 @@ scanf("%*\n");
 a = b
 len = a
 printf "%d\n", len
-d = len
-e = [];
-for f in (0 ..  d - 1) do
-  g = 0
-  g=scanf("%d")[0];
+d = [];
+for e in (0 ..  len - 1) do
+  f = 0
+  f=scanf("%d")[0];
   scanf("%*\n");
-  e[f] = g;
+  d[e] = f;
 end
-c = e
+c = d
 tab = c
 printf "%d", result(len, tab)
 

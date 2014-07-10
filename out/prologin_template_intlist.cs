@@ -26,7 +26,6 @@ public class prologin_template_intlist
   {
     int a = int.Parse(Console.ReadLine());
     int taille = a;
-    int c = taille;
     int[] b = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     int[] tableau = b;
     Console.Write("" + programme_candidat(tableau, taille) + "\n");

@@ -18,13 +18,11 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 ):
 
 a = int(input());
 taille1 = a;
-c = taille1;
 b = list(input());
 tableau1 = b;
-d = int(input());
-taille2 = d;
-f = taille2;
-e = list(input());
-tableau2 = e;
+c = int(input());
+taille2 = c;
+d = list(input());
+tableau2 = d;
 print("%d\n" % ( programme_candidat(tableau1, taille1, tableau2, taille2) ), end='')
 

@@ -51,18 +51,17 @@ int main(void){
   int a = b;
   int len = a;
   printf("%d\n", len);
-  int d = len;
-  int *e = malloc( d * sizeof(int));
+  int *d = malloc( len * sizeof(int));
   {
-    int f;
-    for (f = 0 ; f < d; f++)
+    int e;
+    for (e = 0 ; e < len; e++)
     {
-      int g = 0;
-      scanf("%d ", &g);
-      e[f] = g;
+      int f = 0;
+      scanf("%d ", &f);
+      d[e] = f;
     }
   }
-  int* c = e;
+  int* c = d;
   int* tab = c;
   printf("%d", result(len, tab));
   return 0;

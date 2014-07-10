@@ -75,16 +75,15 @@ stdinsep();
 var a = b;
 var len = a;
 util.print(len, "\n");
-var d = len;
-var e = new Array(d);
-for (var f = 0 ; f <= d - 1; f++)
+var d = new Array(len);
+for (var e = 0 ; e <= len - 1; e++)
 {
-  var g = 0;
-  g=read_int_();
+  var f = 0;
+  f=read_int_();
   stdinsep();
-  e[f] = g;
+  d[e] = f;
 }
-var c = e;
+var c = d;
 var tab = c;
 util.print(result(len, tab));
 

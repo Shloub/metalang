@@ -13,9 +13,7 @@ end
 
 def min4( a, b, c, d )
     f = min2(a, b)
-    g = c
-    h = d
-    e = min2(min2(f, g), h)
+    e = min2(min2(f, c), d)
     return (e);
 end
 
@@ -34,16 +32,10 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      l = val1
-      m = val2
-      n = val3
-      o = val4
-      p = min2(l, m)
-      q = n
-      r = o
-      s = min2(min2(p, q), r)
-      k = s
-      out_ = 1 + k
+      h = min2(val1, val2)
+      k = min2(min2(h, val3), val4)
+      g = k
+      out_ = 1 + g
       cache[posY][posX] = out_;
       return (out_);
     end

@@ -52,38 +52,36 @@ int main(void){
   scanf("%d ", &b);
   int a = b;
   int taille1 = a;
-  int d = taille1;
-  char *e = malloc( d * sizeof(char));
+  char *d = malloc( taille1 * sizeof(char));
   {
-    int f;
-    for (f = 0 ; f < d; f++)
+    int e;
+    for (e = 0 ; e < taille1; e++)
     {
-      char g = '_';
-      scanf("%c", &g);
-      e[f] = g;
+      char f = '_';
+      scanf("%c", &f);
+      d[e] = f;
     }
   }
   scanf(" ");
-  char* c = e;
+  char* c = d;
   char* tableau1 = c;
-  int k = 0;
-  scanf("%d ", &k);
-  int h = k;
-  int taille2 = h;
-  int m = taille2;
-  char *o = malloc( m * sizeof(char));
+  int h = 0;
+  scanf("%d ", &h);
+  int g = h;
+  int taille2 = g;
+  char *l = malloc( taille2 * sizeof(char));
   {
-    int p;
-    for (p = 0 ; p < m; p++)
+    int m;
+    for (m = 0 ; m < taille2; m++)
     {
-      char q = '_';
-      scanf("%c", &q);
-      o[p] = q;
+      char o = '_';
+      scanf("%c", &o);
+      l[m] = o;
     }
   }
   scanf(" ");
-  char* l = o;
-  char* tableau2 = l;
+  char* k = l;
+  char* tableau2 = k;
   printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   [pool drain];
   return 0;

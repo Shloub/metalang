@@ -30,7 +30,6 @@ public class prologin_template_charline
   {
     int a = int.Parse(Console.ReadLine());
     int taille = a;
-    int c = taille;
     char[] b = Console.ReadLine().ToCharArray();
     char[] tableau = b;
     Console.Write("" + programme_candidat(tableau, taille) + "\n");

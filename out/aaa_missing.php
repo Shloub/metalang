@@ -25,7 +25,6 @@ function result($len, &$tab){
 $a = intval(trim(fgets(STDIN)));
 $len = $a;
 echo $len, "\n";
-$c = $len;
 $b = array_map("intval", explode(" ", fgets(STDIN)));
 $tab = $b;
 echo result($len, $tab);

@@ -49,19 +49,18 @@ public class prologin_template_intlist
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int a = b;
     int taille = a;
-    int d = taille;
-    int[] e = new int[d];
-    for (int f = 0 ; f < d; f++)
+    int[] d = new int[taille];
+    for (int e = 0 ; e < taille; e++)
     {
-      int g = 0;
+      int f = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); g = -scanner.nextInt();
+      scanner.next("^-"); f = -scanner.nextInt();
       }else{
-      g = scanner.nextInt();}
+      f = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      e[f] = g;
+      d[e] = f;
     }
-    int[] c = e;
+    int[] c = d;
     int[] tableau = c;
     System.out.printf("%d\n", programme_candidat(tableau, taille));
   }

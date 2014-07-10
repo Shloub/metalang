@@ -59,76 +59,74 @@
             y
             (function (lambda (z)
             (block lambda_2
-              (let ((b x))
-                (let
-                 ((c (array_init
-                        b
-                        (function (lambda (d)
-                        (block lambda_3
-                          (let ((e (mread-int )))
-                            (mread-blank)
-                            (return-from lambda_3 e)
-                          )))
-                        ))))
-                (let ((a c))
-                  (return-from lambda_2 a)
-                )))))
+              (let
+               ((b (array_init
+                      x
+                      (function (lambda (c)
+                      (block lambda_3
+                        (let ((d (mread-int )))
+                          (mread-blank)
+                          (return-from lambda_3 d)
+                        )))
+                      ))))
+              (let ((a b))
+                (return-from lambda_2 a)
+              ))))
             ))))
   (return-from read_int_matrix tab)
   )))
 
 (progn
-  (let ((g (mread-int )))
+  (let ((f (mread-int )))
     (mread-blank)
-    (let ((f g))
-      (let ((len f))
+    (let ((e f))
+      (let ((len e))
         (princ len)
         (princ "=len
 ")
-        (let ((k len))
-          (let
-           ((l (array_init
-                  k
-                  (function (lambda (m)
-                  (block lambda_4
-                    (let ((o (mread-int )))
-                      (mread-blank)
-                      (return-from lambda_4 o)
-                    )))
-                  ))))
-          (let ((h l))
-            (let ((tab1 h))
-              (do
-                ((i 0 (+ 1 i)))
-                ((> i (- len 1)))
-                (progn
-                  (princ i)
-                  (princ "=>")
-                  (princ (aref tab1 i))
-                  (princ "
+        (let
+         ((h (array_init
+                len
+                (function (lambda (k)
+                (block lambda_4
+                  (let ((l (mread-int )))
+                    (mread-blank)
+                    (return-from lambda_4 l)
+                  )))
+                ))))
+        (let ((g h))
+          (let ((tab1 g))
+            (do
+              ((i 0 (+ 1 i)))
+              ((> i (- len 1)))
+              (progn
+                (princ i)
+                (princ "=>")
+                (princ (aref tab1 i))
+                (princ "
 ")
-                )
               )
-              (let ((q (mread-int )))
-                (mread-blank)
-                (let ((p q))
-                  (setq len p)
-                  (let ((tab2 (read_int_matrix len (- len 1))))
-                    (do
-                      ((i 0 (+ 1 i)))
-                      ((> i (- len 2)))
-                      (progn
-                        (do
-                          ((j 0 (+ 1 j)))
-                          ((> j (- len 1)))
-                          (progn
-                            (princ (aref (aref tab2 i) j))
-                            (princ " ")
-                          )
+            )
+            (let ((o (mread-int )))
+              (mread-blank)
+              (let ((m o))
+                (setq len m)
+                (let ((tab2 (read_int_matrix len (- len 1))))
+                  (do
+                    ((i 0 (+ 1 i)))
+                    ((> i (- len 2)))
+                    (progn
+                      (do
+                        ((j 0 (+ 1 j)))
+                        ((> j (- len 1)))
+                        (progn
+                          (princ (aref (aref tab2 i) j))
+                          (princ " ")
                         )
-                        (princ "
-")
                       )
+                      (princ "
+")
                     )
-                  )))))))))))
+                  )
+                ))))))))))
 

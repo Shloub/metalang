@@ -18,7 +18,6 @@ public class prologin_template_charmatrix
     char[][] tab = new char[y][];
     for (int z = 0 ; z < y; z++)
     {
-      int b = x;
       char[] a = Console.ReadLine().ToCharArray();
       tab[z] = a;
     }
@@ -43,10 +42,10 @@ public class prologin_template_charmatrix
   
   public static void Main(String[] args)
   {
+    int b = int.Parse(Console.ReadLine());
+    int taille_x = b;
     int c = int.Parse(Console.ReadLine());
-    int taille_x = c;
-    int d = int.Parse(Console.ReadLine());
-    int taille_y = d;
+    int taille_y = c;
     char[][] tableau = read_char_matrix(taille_x, taille_y);
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }

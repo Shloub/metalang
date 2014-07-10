@@ -21,15 +21,14 @@ end
 def read_int_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      e = x
-      f = [];
-      for g in (0 ..  e - 1) do
-        h = 0
-        h=scanf("%d")[0];
+      e = [];
+      for f in (0 ..  x - 1) do
+        g = 0
+        g=scanf("%d")[0];
         scanf("%*\n");
-        f[g] = h;
+        e[f] = g;
       end
-      d = f
+      d = e
       tab[z] = d;
     end
     return (tab);

@@ -39,15 +39,14 @@ int main(){
   int a = b;
   int len = a;
   std::cout << len << "\n";
-  int d = len;
-  std::vector<int > e( d );
-  for (int f = 0 ; f < d; f++)
+  std::vector<int > d( len );
+  for (int e = 0 ; e < len; e++)
   {
-    int g = 0;
-    std::cin >> g >> std::skipws;
-    e.at(f) = g;
+    int f = 0;
+    std::cin >> f >> std::skipws;
+    d.at(e) = f;
   }
-  std::vector<int > c = e;
+  std::vector<int > c = d;
   std::vector<int > tab = c;
   std::cout << result(len, tab);
   return 0;

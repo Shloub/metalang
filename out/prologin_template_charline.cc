@@ -37,7 +37,6 @@ int main(){
   std::cin >> b >> std::skipws;
   int a = b;
   int taille = a;
-  int d = taille;
   std::vector<char > c = getline();
   std::vector<char > tableau = c;
   std::cout << programme_candidat(tableau, taille) << "\n";

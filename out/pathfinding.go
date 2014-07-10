@@ -29,9 +29,7 @@ func min3(a int, b int, c int) int{
 
 func min4(a int, b int, c int, d int) int{
   var f int = min2(a, b)
-  var g int = c
-  var h int = d
-  var e int = min2(min2(f, g), h)
+  var e int = min2(min2(f, c), d)
   return e
 }
 
@@ -50,16 +48,10 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
     var val2 int = pathfind_aux(cache, tab, x, y, posX - 1, posY)
     var val3 int = pathfind_aux(cache, tab, x, y, posX, posY - 1)
     var val4 int = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-    var l int = val1
-    var m int = val2
-    var n int = val3
-    var o int = val4
-    var p int = min2(l, m)
-    var q int = n
-    var r int = o
-    var s int = min2(min2(p, q), r)
-    var k int = s
-    var out_ int = 1 + k
+    var h int = min2(val1, val2)
+    var k int = min2(min2(h, val3), val4)
+    var g int = k
+    var out_ int = 1 + g
     cache[posY][posX] = out_;
     return out_
   }   

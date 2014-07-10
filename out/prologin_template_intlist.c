@@ -36,18 +36,17 @@ int main(void){
   scanf("%d ", &b);
   int a = b;
   int taille = a;
-  int d = taille;
-  int *e = malloc( d * sizeof(int));
+  int *d = malloc( taille * sizeof(int));
   {
-    int f;
-    for (f = 0 ; f < d; f++)
+    int e;
+    for (e = 0 ; e < taille; e++)
     {
-      int g = 0;
-      scanf("%d ", &g);
-      e[f] = g;
+      int f = 0;
+      scanf("%d ", &f);
+      d[e] = f;
     }
   }
-  int* c = e;
+  int* c = d;
   int* tableau = c;
   printf("%d\n", programme_candidat(tableau, taille));
   return 0;

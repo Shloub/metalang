@@ -18,7 +18,6 @@ read int, read char et skip
 $a = intval(trim(fgets(STDIN)));
 $len = $a;
 echo $len, "=len\n";
-$d = $len;
 $b = array_map("intval", explode(" ", fgets(STDIN)));
 $tab = $b;
 for ($i = 0 ; $i < $len; $i++)
@@ -26,19 +25,17 @@ for ($i = 0 ; $i < $len; $i++)
   echo $i, "=>", $tab[$i], " ";
 }
 echo "\n";
-$f = $len;
-$e = array_map("intval", explode(" ", fgets(STDIN)));
-$tab2 = $e;
+$d = array_map("intval", explode(" ", fgets(STDIN)));
+$tab2 = $d;
 for ($i_ = 0 ; $i_ < $len; $i_++)
 {
   echo $i_, "==>", $tab2[$i_], " ";
 }
-$g = intval(trim(fgets(STDIN)));
-$strlen = $g;
+$e = intval(trim(fgets(STDIN)));
+$strlen = $e;
 echo $strlen, "=strlen\n";
-$k = $strlen;
-$h = fgets(STDIN);
-$tab4 = $h;
+$f = fgets(STDIN);
+$tab4 = $f;
 for ($i3 = 0 ; $i3 < $strlen; $i3++)
 {
   $tmpc = $tab4[$i3];

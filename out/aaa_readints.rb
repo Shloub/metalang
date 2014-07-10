@@ -20,44 +20,42 @@ end
 def read_int_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      b = x
-      c = [];
-      for d in (0 ..  b - 1) do
-        e = 0
-        e=scanf("%d")[0];
+      b = [];
+      for c in (0 ..  x - 1) do
+        d = 0
+        d=scanf("%d")[0];
         scanf("%*\n");
-        c[d] = e;
+        b[c] = d;
       end
-      a = c
+      a = b
       tab[z] = a;
     end
     return (tab);
 end
 
-g = 0
-g=scanf("%d")[0];
+f = 0
+f=scanf("%d")[0];
 scanf("%*\n");
-f = g
-len = f
+e = f
+len = e
 printf "%d=len\n", len
-k = len
-l = [];
-for m in (0 ..  k - 1) do
-  o = 0
-  o=scanf("%d")[0];
+h = [];
+for k in (0 ..  len - 1) do
+  l = 0
+  l=scanf("%d")[0];
   scanf("%*\n");
-  l[m] = o;
+  h[k] = l;
 end
-h = l
-tab1 = h
+g = h
+tab1 = g
 for i in (0 ..  len - 1) do
   printf "%d=>%d\n", i, tab1[i]
 end
-q = 0
-q=scanf("%d")[0];
+o = 0
+o=scanf("%d")[0];
 scanf("%*\n");
-p = q
-len = p;
+m = o
+len = m;
 tab2 = read_int_matrix(len, len - 1)
 for i in (0 ..  len - 2) do
   for j in (0 ..  len - 1) do

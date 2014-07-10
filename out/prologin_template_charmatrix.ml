@@ -10,12 +10,11 @@ let read_char_line n =
 
 let read_char_matrix x y =
   let tab = Array.init y (fun _z ->
-    let b = x in
-    let c = Array.init b (fun _d ->
-      let e = Scanf.scanf "%c" (fun v_0 -> v_0) in
-      e) in
+    let b = Array.init x (fun _c ->
+      let d = Scanf.scanf "%c" (fun v_0 -> v_0) in
+      d) in
     Scanf.scanf " " (fun () -> ());
-    let a = c in
+    let a = b in
     a) in
   tab
 
@@ -32,10 +31,10 @@ let programme_candidat tableau taille_x taille_y =
 
 let () =
 begin
+  let e = Scanf.scanf "%d " (fun x -> x) in
+  let taille_x = e in
   let f = Scanf.scanf "%d " (fun x -> x) in
-  let taille_x = f in
-  let g = Scanf.scanf "%d " (fun x -> x) in
-  let taille_y = g in
+  let taille_y = f in
   let tableau = read_char_matrix taille_x taille_y in
   Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
 end

@@ -50,15 +50,14 @@ func main() {
   skip()
   var a int = b
   var taille int = a
-  var d int = taille
-  var e []byte = make([]byte, d)
-  for f := 0 ; f <= d - 1; f++ {
-    var g byte = '_'
-      fmt.Fscanf(reader, "%c", &g);
-      e[f] = g;
+  var d []byte = make([]byte, taille)
+  for e := 0 ; e <= taille - 1; e++ {
+    var f byte = '_'
+      fmt.Fscanf(reader, "%c", &f);
+      d[e] = f;
   }
   skip()
-  var c []byte = e
+  var c []byte = d
   var tableau []byte = c
   fmt.Printf("%d\n", programme_candidat(tableau, taille));
 }

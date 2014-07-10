@@ -93,35 +93,33 @@
           (mread-blank)
           (let ((c d))
             (let ((taille2 c))
-              (let ((f taille1))
-                (let
-                 ((g (array_init
-                        f
-                        (function (lambda (h)
-                        (block lambda_2
-                          (let ((k (mread-char )))
-                            (return-from lambda_2 k)
-                          )))
-                        ))))
-                (mread-blank)
-                (let ((e g))
-                  (let ((tableau1 e))
-                    (let ((m taille2))
-                      (let
-                       ((o (array_init
-                              m
-                              (function (lambda (p)
-                              (block lambda_3
-                                (let ((q (mread-char )))
-                                  (return-from lambda_3 q)
-                                )))
-                              ))))
-                      (mread-blank)
-                      (let ((l o))
-                        (let ((tableau2 l))
-                          (princ
-                          (programme_candidat tableau1 taille1 tableau2 taille2))
-                          (princ "
+              (let
+               ((f (array_init
+                      taille1
+                      (function (lambda (g)
+                      (block lambda_2
+                        (let ((h (mread-char )))
+                          (return-from lambda_2 h)
+                        )))
+                      ))))
+              (mread-blank)
+              (let ((e f))
+                (let ((tableau1 e))
+                  (let
+                   ((l (array_init
+                          taille2
+                          (function (lambda (m)
+                          (block lambda_3
+                            (let ((o (mread-char )))
+                              (return-from lambda_3 o)
+                            )))
+                          ))))
+                  (mread-blank)
+                  (let ((k l))
+                    (let ((tableau2 k))
+                      (princ
+                      (programme_candidat tableau1 taille1 tableau2 taille2))
+                      (princ "
 ")
-                        )))))))))))))))
+                    )))))))))))))
 

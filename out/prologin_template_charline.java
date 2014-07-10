@@ -42,7 +42,6 @@ public class prologin_template_charline
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int a = b;
     int taille = a;
-    int d = taille;
     char[] c = scanner.nextLine().toCharArray();
     char[] tableau = c;
     System.out.printf("%d\n", programme_candidat(tableau, taille));

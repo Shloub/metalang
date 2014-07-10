@@ -81,28 +81,26 @@ d=read_int_();
 stdinsep();
 var c = d;
 var taille2 = c;
-var f = taille1;
-var g = new Array(f);
-for (var h = 0 ; h <= f - 1; h++)
+var f = new Array(taille1);
+for (var g = 0 ; g <= taille1 - 1; g++)
 {
-  var k = '_';
-  k=read_char_();
-  g[h] = k;
+  var h = '_';
+  h=read_char_();
+  f[g] = h;
 }
 stdinsep();
-var e = g;
+var e = f;
 var tableau1 = e;
-var m = taille2;
-var o = new Array(m);
-for (var p = 0 ; p <= m - 1; p++)
+var l = new Array(taille2);
+for (var m = 0 ; m <= taille2 - 1; m++)
 {
-  var q = '_';
-  q=read_char_();
-  o[p] = q;
+  var o = '_';
+  o=read_char_();
+  l[m] = o;
 }
 stdinsep();
-var l = o;
-var tableau2 = l;
+var k = l;
+var tableau2 = k;
 util.print(programme_candidat(tableau1, taille1, tableau2, taille2), "\n");
 
 

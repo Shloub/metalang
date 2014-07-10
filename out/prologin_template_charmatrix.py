@@ -7,7 +7,6 @@ def read_char_line( n ):
 def read_char_matrix( x, y ):
     tab = [None] * y
     for z in range(0, y):
-      b = x;
       a = list(input());
       tab[z] = a;
     return tab;
@@ -21,10 +20,10 @@ def programme_candidat( tableau, taille_x, taille_y ):
       print("--")
     return out_;
 
+b = int(input());
+taille_x = b;
 c = int(input());
-taille_x = c;
-d = int(input());
-taille_y = d;
+taille_y = c;
 tableau = read_char_matrix(taille_x, taille_y);
 print("%d\n" % ( programme_candidat(tableau, taille_x, taille_y) ), end='')
 

@@ -10,13 +10,12 @@ def read_int_matrix( x, y ):
 a = int(input());
 len = a;
 print("%d=len\n" % ( len ), end='')
-c = len;
 b = list(map(int, input().split()));
 tab1 = b;
 for i in range(0, len):
   print("%d=>%d\n" % ( i, tab1[i] ), end='')
-d = int(input());
-len = d;
+c = int(input());
+len = c;
 tab2 = read_int_matrix(len, len - 1);
 for i in range(0, 1 + len - 2):
   for j in range(0, len):

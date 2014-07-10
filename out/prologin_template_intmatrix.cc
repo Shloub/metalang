@@ -21,15 +21,14 @@ std::vector<std::vector<int > > read_int_matrix(int x, int y){
   std::vector<std::vector<int > > tab( y );
   for (int z = 0 ; z < y; z++)
   {
-    int b = x;
-    std::vector<int > c( b );
-    for (int d = 0 ; d < b; d++)
+    std::vector<int > b( x );
+    for (int c = 0 ; c < x; c++)
     {
-      int e = 0;
-      std::cin >> e >> std::skipws;
-      c.at(d) = e;
+      int d = 0;
+      std::cin >> d >> std::skipws;
+      b.at(c) = d;
     }
-    std::vector<int > a = c;
+    std::vector<int > a = b;
     tab.at(z) = a;
   }
   return tab;
@@ -45,14 +44,14 @@ int programme_candidat(std::vector<std::vector<int > >& tableau, int x, int y){
 
 
 int main(){
-  int g = 0;
-  std::cin >> g >> std::skipws;
-  int f = g;
-  int taille_x = f;
-  int k = 0;
-  std::cin >> k >> std::skipws;
-  int h = k;
-  int taille_y = h;
+  int f = 0;
+  std::cin >> f >> std::skipws;
+  int e = f;
+  int taille_x = e;
+  int h = 0;
+  std::cin >> h >> std::skipws;
+  int g = h;
+  int taille_y = g;
   std::vector<std::vector<int > > tableau = read_int_matrix(taille_x, taille_y);
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;

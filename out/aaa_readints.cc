@@ -21,15 +21,14 @@ std::vector<std::vector<int > > read_int_matrix(int x, int y){
   std::vector<std::vector<int > > tab( y );
   for (int z = 0 ; z < y; z++)
   {
-    int b = x;
-    std::vector<int > c( b );
-    for (int d = 0 ; d < b; d++)
+    std::vector<int > b( x );
+    for (int c = 0 ; c < x; c++)
     {
-      int e = 0;
-      std::cin >> e >> std::skipws;
-      c.at(d) = e;
+      int d = 0;
+      std::cin >> d >> std::skipws;
+      b.at(c) = d;
     }
-    std::vector<int > a = c;
+    std::vector<int > a = b;
     tab.at(z) = a;
   }
   return tab;
@@ -37,29 +36,28 @@ std::vector<std::vector<int > > read_int_matrix(int x, int y){
 
 
 int main(){
-  int g = 0;
-  std::cin >> g >> std::skipws;
-  int f = g;
-  int len = f;
+  int f = 0;
+  std::cin >> f >> std::skipws;
+  int e = f;
+  int len = e;
   std::cout << len << "=len\n";
-  int k = len;
-  std::vector<int > l( k );
-  for (int m = 0 ; m < k; m++)
+  std::vector<int > h( len );
+  for (int k = 0 ; k < len; k++)
   {
-    int o = 0;
-    std::cin >> o >> std::skipws;
-    l.at(m) = o;
+    int l = 0;
+    std::cin >> l >> std::skipws;
+    h.at(k) = l;
   }
-  std::vector<int > h = l;
-  std::vector<int > tab1 = h;
+  std::vector<int > g = h;
+  std::vector<int > tab1 = g;
   for (int i = 0 ; i < len; i++)
   {
     std::cout << i << "=>" << tab1.at(i) << "\n";
   }
-  int q = 0;
-  std::cin >> q >> std::skipws;
-  int p = q;
-  len = p;
+  int o = 0;
+  std::cin >> o >> std::skipws;
+  int m = o;
+  len = m;
   std::vector<std::vector<int > > tab2 = read_int_matrix(len, len - 1);
   for (int i = 0 ; i <= len - 2; i ++)
   {

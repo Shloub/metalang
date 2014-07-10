@@ -28,7 +28,6 @@ read int, read char et skip
     int a = int.Parse(Console.ReadLine());
     int len = a;
     Console.Write("" + len + "=len\n");
-    int d = len;
     int[] b = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     int[] tab = b;
     for (int i = 0 ; i < len; i++)
@@ -36,19 +35,17 @@ read int, read char et skip
       Console.Write("" + i + "=>" + tab[i] + " ");
     }
     Console.Write("\n");
-    int f = len;
-    int[] e = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    int[] tab2 = e;
+    int[] d = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab2 = d;
     for (int i_ = 0 ; i_ < len; i_++)
     {
       Console.Write("" + i_ + "==>" + tab2[i_] + " ");
     }
-    int g = int.Parse(Console.ReadLine());
-    int strlen = g;
+    int e = int.Parse(Console.ReadLine());
+    int strlen = e;
     Console.Write("" + strlen + "=strlen\n");
-    int k = strlen;
-    char[] h = Console.ReadLine().ToCharArray();
-    char[] tab4 = h;
+    char[] f = Console.ReadLine().ToCharArray();
+    char[] tab4 = f;
     for (int i3 = 0 ; i3 < strlen; i3++)
     {
       char tmpc = tab4[i3];

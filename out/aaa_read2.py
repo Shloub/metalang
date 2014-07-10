@@ -17,23 +17,20 @@ read int, read char et skip
 a = int(input());
 len = a;
 print("%d=len\n" % ( len ), end='')
-d = len;
 b = list(map(int, input().split()));
 tab = b;
 for i in range(0, len):
   print("%d=>%d " % ( i, tab[i] ), end='')
 print("")
-f = len;
-e = list(map(int, input().split()));
-tab2 = e;
+d = list(map(int, input().split()));
+tab2 = d;
 for i_ in range(0, len):
   print("%d==>%d " % ( i_, tab2[i_] ), end='')
-g = int(input());
-strlen = g;
+e = int(input());
+strlen = e;
 print("%d=strlen\n" % ( strlen ), end='')
-k = strlen;
-h = list(input());
-tab4 = h;
+f = list(input());
+tab4 = f;
 for i3 in range(0, strlen):
   tmpc = tab4[i3];
   c = ord(tmpc);

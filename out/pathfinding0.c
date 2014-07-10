@@ -14,9 +14,7 @@ int min3(int a, int b, int c){
 
 int min4(int a, int b, int c, int d){
   int f = min2(a, b);
-  int g = c;
-  int h = d;
-  int e = min2(min2(f, g), h);
+  int e = min2(min2(f, c), d);
   return e;
 }
 
@@ -47,20 +45,19 @@ char** read_char_matrix(int x, int y){
     int z;
     for (z = 0 ; z < y; z++)
     {
-      int l = x;
-      char *m = malloc( l * sizeof(char));
+      char *h = malloc( x * sizeof(char));
       {
-        int o;
-        for (o = 0 ; o < l; o++)
+        int k;
+        for (k = 0 ; k < x; k++)
         {
-          char p = '_';
-          scanf("%c", &p);
-          m[o] = p;
+          char l = '_';
+          scanf("%c", &l);
+          h[k] = l;
         }
       }
       scanf(" ");
-      char* k = m;
-      tab[z] = k;
+      char* g = h;
+      tab[z] = g;
     }
   }
   return tab;
@@ -82,16 +79,10 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int r = val1;
-    int s = val2;
-    int u = val3;
-    int v = val4;
-    int w = min2(r, s);
-    int ba = u;
-    int bb = v;
-    int bc = min2(min2(w, ba), bb);
-    int q = bc;
-    int out_ = 1 + q;
+    int o = min2(val1, val2);
+    int p = min2(min2(o, val3), val4);
+    int m = p;
+    int out_ = 1 + m;
     cache[posY][posX] = out_;
     return out_;
   }
@@ -120,14 +111,14 @@ int pathfind(char** tab, int x, int y){
 }
 
 int main(void){
-  int be = 0;
-  scanf("%d ", &be);
-  int bd = be;
-  int x = bd;
-  int bg = 0;
-  scanf("%d ", &bg);
-  int bf = bg;
-  int y = bf;
+  int r = 0;
+  scanf("%d ", &r);
+  int q = r;
+  int x = q;
+  int u = 0;
+  scanf("%d ", &u);
+  int s = u;
+  int y = s;
   printf("%d %d\n", x, y);
   char** tab = read_char_matrix(x, y);
   int result = pathfind(tab, x, y);

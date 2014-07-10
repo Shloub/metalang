@@ -14,7 +14,6 @@ def programme_candidat( tableau, taille ):
 
 a = int(input());
 taille = a;
-c = taille;
 b = list(input());
 tableau = b;
 print("%d\n" % ( programme_candidat(tableau, taille) ), end='')

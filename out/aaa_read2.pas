@@ -79,12 +79,12 @@ begin
   exit(out_);
 end;
 
-type y = array of Longint;
-function read_int_line(n : Longint) : y;
+type v = array of Longint;
+function read_int_line(n : Longint) : v;
 var
   i : Longint;
   t : Longint;
-  tab : y;
+  tab : v;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -97,12 +97,12 @@ begin
   exit(tab);
 end;
 
-type z = array of char;
-function read_char_line(n : Longint) : z;
+type w = array of char;
+function read_char_line(n : Longint) : w;
 var
   i : Longint;
   t : char;
-  tab : z;
+  tab : w;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -124,33 +124,30 @@ var
   a : Longint;
   b : Longint;
   c : Longint;
-  d : y;
-  e : Longint;
-  f : y;
+  d : v;
+  e : v;
+  f : Longint;
   g : Longint;
-  h : Longint;
+  h : v;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
   j : Longint;
-  k : y;
+  k : v;
   l : Longint;
   len : Longint;
-  m : y;
+  m : Longint;
   o : Longint;
   p : Longint;
-  q : Longint;
-  r : Longint;
-  s : z;
+  q : w;
+  r : w;
+  s : Longint;
   strlen : Longint;
-  tab : y;
-  tab2 : y;
-  tab4 : z;
+  tab : v;
+  tab2 : v;
+  tab4 : w;
   tmpc : char;
-  u : Longint;
-  v : z;
-  w : Longint;
-  x : char;
+  u : char;
 begin
   b := 0;
   b := read_int_();
@@ -159,16 +156,15 @@ begin
   len := a;
   Write(len);
   Write('=len'#10'');
-  e := len;
-  SetLength(f, e);
-  for g := 0 to  e - 1 do
+  SetLength(e, len);
+  for f := 0 to  len - 1 do
   begin
-    h := 0;
-    h := read_int_();
+    g := 0;
+    g := read_int_();
     skip();
-    f[g] := h;
+    e[f] := g;
   end;
-  d := f;
+  d := e;
   tab := d;
   for i := 0 to  len - 1 do
   begin
@@ -178,17 +174,16 @@ begin
     Write(' ');
   end;
   Write(''#10'');
-  l := len;
-  SetLength(m, l);
-  for o := 0 to  l - 1 do
+  SetLength(k, len);
+  for l := 0 to  len - 1 do
   begin
-    p := 0;
-    p := read_int_();
+    m := 0;
+    m := read_int_();
     skip();
-    m[o] := p;
+    k[l] := m;
   end;
-  k := m;
-  tab2 := k;
+  h := k;
+  tab2 := h;
   for i_ := 0 to  len - 1 do
   begin
     Write(i_);
@@ -196,24 +191,23 @@ begin
     Write(tab2[i_]);
     Write(' ');
   end;
-  r := 0;
-  r := read_int_();
+  p := 0;
+  p := read_int_();
   skip();
-  q := r;
-  strlen := q;
+  o := p;
+  strlen := o;
   Write(strlen);
   Write('=strlen'#10'');
-  u := strlen;
-  SetLength(v, u);
-  for w := 0 to  u - 1 do
+  SetLength(r, strlen);
+  for s := 0 to  strlen - 1 do
   begin
-    x := #95;
-    x := read_char_();
-    v[w] := x;
+    u := #95;
+    u := read_char_();
+    r[s] := u;
   end;
   skip();
-  s := v;
-  tab4 := s;
+  q := r;
+  tab4 := q;
   for i3 := 0 to  strlen - 1 do
   begin
     tmpc := tab4[i3];

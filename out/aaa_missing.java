@@ -58,19 +58,18 @@ public class aaa_missing
     int a = b;
     int len = a;
     System.out.printf("%d\n", len);
-    int d = len;
-    int[] e = new int[d];
-    for (int f = 0 ; f < d; f++)
+    int[] d = new int[len];
+    for (int e = 0 ; e < len; e++)
     {
-      int g = 0;
+      int f = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); g = -scanner.nextInt();
+      scanner.next("^-"); f = -scanner.nextInt();
       }else{
-      g = scanner.nextInt();}
+      f = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      e[f] = g;
+      d[e] = f;
     }
-    int[] c = e;
+    int[] c = d;
     int[] tab = c;
     System.out.printf("%d", result(len, tab));
   }

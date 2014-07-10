@@ -56,49 +56,46 @@ func main() {
   var a int = b
   var len int = a
   fmt.Printf("%d=len\n", len);
-  var e int = len
-  var f []int = make([]int, e)
-  for g := 0 ; g <= e - 1; g++ {
-    var h int = 0
-      fmt.Fscanf(reader, "%d", &h);
+  var e []int = make([]int, len)
+  for f := 0 ; f <= len - 1; f++ {
+    var g int = 0
+      fmt.Fscanf(reader, "%d", &g);
       skip()
-      f[g] = h;
+      e[f] = g;
   }
-  var d []int = f
+  var d []int = e
   var tab []int = d
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d ", i, tab[i]);
   }
   fmt.Printf("\n");
-  var l int = len
-  var m []int = make([]int, l)
-  for o := 0 ; o <= l - 1; o++ {
-    var p int = 0
-      fmt.Fscanf(reader, "%d", &p);
+  var k []int = make([]int, len)
+  for l := 0 ; l <= len - 1; l++ {
+    var m int = 0
+      fmt.Fscanf(reader, "%d", &m);
       skip()
-      m[o] = p;
+      k[l] = m;
   }
-  var k []int = m
-  var tab2 []int = k
+  var h []int = k
+  var tab2 []int = h
   for i_ := 0 ; i_ <= len - 1; i_++ {
     fmt.Printf("%d==>%d ", i_, tab2[i_]);
   }
-  var r int = 0
-  fmt.Fscanf(reader, "%d", &r);
+  var p int = 0
+  fmt.Fscanf(reader, "%d", &p);
   skip()
-  var q int = r
-  var strlen int = q
+  var o int = p
+  var strlen int = o
   fmt.Printf("%d=strlen\n", strlen);
-  var u int = strlen
-  var v []byte = make([]byte, u)
-  for w := 0 ; w <= u - 1; w++ {
-    var x byte = '_'
-      fmt.Fscanf(reader, "%c", &x);
-      v[w] = x;
+  var r []byte = make([]byte, strlen)
+  for s := 0 ; s <= strlen - 1; s++ {
+    var u byte = '_'
+      fmt.Fscanf(reader, "%c", &u);
+      r[s] = u;
   }
   skip()
-  var s []byte = v
-  var tab4 []byte = s
+  var q []byte = r
+  var tab4 []byte = q
   for i3 := 0 ; i3 <= strlen - 1; i3++ {
     var tmpc byte = tab4[i3]
       var c int = (int)(tmpc)

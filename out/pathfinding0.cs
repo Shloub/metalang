@@ -16,9 +16,7 @@ public class pathfinding0
   public static int min4(int a, int b, int c, int d)
   {
     int f = min2(a, b);
-    int g = c;
-    int h = d;
-    int e = min2(min2(f, g), h);
+    int e = min2(min2(f, c), d);
     return e;
   }
   
@@ -37,9 +35,8 @@ public class pathfinding0
     char[][] tab = new char[y][];
     for (int z = 0 ; z < y; z++)
     {
-      int l = x;
-      char[] k = Console.ReadLine().ToCharArray();
-      tab[z] = k;
+      char[] g = Console.ReadLine().ToCharArray();
+      tab[z] = g;
     }
     return tab;
   }
@@ -61,16 +58,10 @@ public class pathfinding0
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int o = val1;
-      int p = val2;
-      int q = val3;
-      int r = val4;
-      int s = min2(o, p);
-      int t = q;
-      int u = r;
-      int v = min2(min2(s, t), u);
-      int m = v;
-      int out_ = 1 + m;
+      int k = min2(val1, val2);
+      int l = min2(min2(k, val3), val4);
+      int h = l;
+      int out_ = 1 + h;
       cache[posY][posX] = out_;
       return out_;
     }
@@ -96,10 +87,10 @@ public class pathfinding0
   
   public static void Main(String[] args)
   {
-    int w = int.Parse(Console.ReadLine());
-    int x = w;
-    int ba = int.Parse(Console.ReadLine());
-    int y = ba;
+    int m = int.Parse(Console.ReadLine());
+    int x = m;
+    int o = int.Parse(Console.ReadLine());
+    int y = o;
     Console.Write("" + x + " " + y + "\n");
     char[][] tab = read_char_matrix(x, y);
     int result = pathfind(tab, x, y);

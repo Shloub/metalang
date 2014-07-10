@@ -43,16 +43,14 @@ int main(){
   std::cin >> b >> std::skipws;
   int a = b;
   int taille1 = a;
-  int d = taille1;
   std::vector<char > c = getline();
   std::vector<char > tableau1 = c;
-  int f = 0;
-  std::cin >> f >> std::skipws;
-  int e = f;
-  int taille2 = e;
-  int h = taille2;
-  std::vector<char > g = getline();
-  std::vector<char > tableau2 = g;
+  int e = 0;
+  std::cin >> e >> std::skipws;
+  int d = e;
+  int taille2 = d;
+  std::vector<char > f = getline();
+  std::vector<char > tableau2 = f;
   std::cout << programme_candidat(tableau1, taille1, tableau2, taille2) << "\n";
   return 0;
 }

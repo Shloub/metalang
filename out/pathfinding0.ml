@@ -6,9 +6,7 @@ let min3 a b c =
 
 let min4 a b c d =
   let f = min2 a b in
-  let g = c in
-  let h = d in
-  let e = min2 (min2 f g) h in
+  let e = min2 (min2 f c) d in
   e
 
 let read_int () =
@@ -23,13 +21,12 @@ let read_char_line n =
 
 let read_char_matrix x y =
   let tab = Array.init y (fun _z ->
-    let l = x in
-    let m = Array.init l (fun _o ->
-      let p = Scanf.scanf "%c" (fun v_0 -> v_0) in
-      p) in
+    let h = Array.init x (fun _k ->
+      let l = Scanf.scanf "%c" (fun v_0 -> v_0) in
+      l) in
     Scanf.scanf " " (fun () -> ());
-    let k = m in
-    k) in
+    let g = h in
+    g) in
   tab
 
 let rec pathfind_aux cache tab x y posX posY =
@@ -48,16 +45,10 @@ let rec pathfind_aux cache tab x y posX posY =
       let val2 = pathfind_aux cache tab x y (posX - 1) posY in
       let val3 = pathfind_aux cache tab x y posX (posY - 1) in
       let val4 = pathfind_aux cache tab x y posX (posY + 1) in
-      let r = val1 in
-      let s = val2 in
-      let u = val3 in
-      let v = val4 in
-      let w = min2 r s in
-      let ba = u in
-      let bb = v in
-      let bc = min2 (min2 w ba) bb in
-      let q = bc in
-      let out_ = 1 + q in
+      let o = min2 val1 val2 in
+      let p = min2 (min2 o val3) val4 in
+      let m = p in
+      let out_ = 1 + m in
       cache.(posY).(posX) <- out_;
       out_
     end
@@ -73,10 +64,10 @@ let pathfind tab x y =
 
 let () =
 begin
-  let bd = Scanf.scanf "%d " (fun x -> x) in
-  let x = bd in
-  let be = Scanf.scanf "%d " (fun x -> x) in
-  let y = be in
+  let q = Scanf.scanf "%d " (fun x -> x) in
+  let x = q in
+  let r = Scanf.scanf "%d " (fun x -> x) in
+  let y = r in
   Printf.printf "%d %d\n" x y;
   let tab = read_char_matrix x y in
   let result = pathfind tab x y in

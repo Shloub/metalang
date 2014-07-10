@@ -46,49 +46,46 @@ scanf("%*\n");
 a = b
 len = a
 printf "%d=len\n", len
-e = len
-f = [];
-for g in (0 ..  e - 1) do
-  h = 0
-  h=scanf("%d")[0];
+e = [];
+for f in (0 ..  len - 1) do
+  g = 0
+  g=scanf("%d")[0];
   scanf("%*\n");
-  f[g] = h;
+  e[f] = g;
 end
-d = f
+d = e
 tab = d
 for i in (0 ..  len - 1) do
   printf "%d=>%d ", i, tab[i]
 end
 print "\n";
-l = len
-m = [];
-for o in (0 ..  l - 1) do
-  p = 0
-  p=scanf("%d")[0];
+k = [];
+for l in (0 ..  len - 1) do
+  m = 0
+  m=scanf("%d")[0];
   scanf("%*\n");
-  m[o] = p;
+  k[l] = m;
 end
-k = m
-tab2 = k
+h = k
+tab2 = h
 for i_ in (0 ..  len - 1) do
   printf "%d==>%d ", i_, tab2[i_]
 end
-r = 0
-r=scanf("%d")[0];
+p = 0
+p=scanf("%d")[0];
 scanf("%*\n");
-q = r
-strlen = q
+o = p
+strlen = o
 printf "%d=strlen\n", strlen
-u = strlen
-v = [];
-for w in (0 ..  u - 1) do
-  x = "_"
-  x=scanf("%c")[0];
-  v[w] = x;
+r = [];
+for s in (0 ..  strlen - 1) do
+  u = "_"
+  u=scanf("%c")[0];
+  r[s] = u;
 end
 scanf("%*\n");
-s = v
-tab4 = s
+q = r
+tab4 = q
 for i3 in (0 ..  strlen - 1) do
   tmpc = tab4[i3]
   c = tmpc.ord
