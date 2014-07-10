@@ -78,11 +78,12 @@ let rec rename_mut acc mut =
     Mutable.Dot (m, n) |> Mutable.Fixed.fixa annot
 (* renomme les variables de e, suivant la map acc *)
 and rename_e acc e =
-  let f e = match Expr.unfix e with
+  let f g e =
+    match Expr.unfix e with
     | Expr.Access mut ->
       Expr.Access (rename_mut acc mut) |> Expr.Fixed.fixa (Expr.Fixed.annot e)
-    | _ -> e
-  in Expr.Writer.Deep.map f e
+    | _ -> g e
+  in f (Expr.Writer.Traverse.map f) e
 
 let rec rename_instr acc (instr:Utils.instr) =
   let annot = Instr.Fixed.annot instr in
@@ -112,7 +113,8 @@ let rec rename_instr acc (instr:Utils.instr) =
     acc, Instr.While (e, li) |> Instr.fixa annot
   | Instr.Comment _s -> acc, instr
   | Instr.Tag _s ->  acc, instr
-  | Instr.Return e -> acc, Instr.Return (rename_e acc e) |> Instr.fixa annot
+  | Instr.Return e ->
+    acc, Instr.Return (rename_e acc e) |> Instr.fixa annot
   | Instr.AllocArray (name, t, e, None) ->
     let e = rename_e acc e in
     let newname = Fresh.fresh () in
@@ -207,8 +209,7 @@ let rec map_e acc e =
 and map_mut acc mut =
   let annot = Mutable.Fixed.annot mut in
   match Mutable.unfix mut with
-  | Mutable.Var varname ->
-    [], mut
+  | Mutable.Var _varname -> [], mut
   | Mutable.Array (m, li) ->
     let addon, m = map_mut acc m in
     let addon, li = List.fold_left_map (fun addon e ->
@@ -221,14 +222,17 @@ and map_mut acc mut =
     addon, Mutable.Dot (m, n) |> Mutable.Fixed.fixa annot
 
 and insert content retype params values optionreturn =
-  let acc0, params = List.fold_left_map (fun acc (name, ty) ->
-    let newname = Fresh.fresh () in
-    StringMap.add name newname acc, (newname, ty)
-  ) StringMap.empty params in
   let paramscouples = List.zip params values in
-  let declares = List.map (fun ((name, type_), val_) ->
-    Instr.declare name type_ val_ Instr.useless_declaration_option
-  ) paramscouples in
+  let acc0, declares = List.fold_left_map (fun acc ((name, type_), expr) ->
+    match Expr.unfix expr with
+    | Expr.Access (Mutable.Fixed.F (_, Mutable.Var newname)) -> (* on évite un déclare quand c'est possible *)
+      StringMap.add name newname acc, None
+    | _ ->
+      let newname = Fresh.fresh () in
+      let declare = Some (Instr.declare newname type_ expr Instr.useless_declaration_option) in
+      StringMap.add name newname acc, declare
+  ) StringMap.empty paramscouples in
+  let declares = List.filter_map (fun x -> x) declares in
   let content = rename_instrs acc0 content in
   let content = match optionreturn with
     | None -> content
