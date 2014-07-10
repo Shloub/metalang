@@ -40,8 +40,21 @@ def result( len, tab )
     return (-1);
 end
 
-len = read_int()
+b = 0
+b=scanf("%d")[0];
+scanf("%*\n");
+a = b
+len = a
 printf "%d\n", len
-tab = read_int_line(len)
+d = len
+e = [];
+for f in (0 ..  d - 1) do
+  g = 0
+  g=scanf("%d")[0];
+  scanf("%*\n");
+  e[f] = g;
+end
+c = e
+tab = c
 printf "%d", result(len, tab)
 

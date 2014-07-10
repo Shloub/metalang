@@ -46,9 +46,24 @@ int result(int len, int* tab){
 }
 
 int main(void){
-  int len = read_int();
+  int b = 0;
+  scanf("%d ", &b);
+  int a = b;
+  int len = a;
   printf("%d\n", len);
-  int* tab = read_int_line(len);
+  int d = len;
+  int *e = malloc( d * sizeof(int));
+  {
+    int f;
+    for (f = 0 ; f < d; f++)
+    {
+      int g = 0;
+      scanf("%d ", &g);
+      e[f] = g;
+    }
+  }
+  int* c = e;
+  int* tab = c;
   printf("%d", result(len, tab));
   return 0;
 }

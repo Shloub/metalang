@@ -54,9 +54,22 @@ func result(len int, tab []int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = read_int()
+  var b int = 0
+  fmt.Fscanf(reader, "%d", &b);
+  skip()
+  var a int = b
+  var len int = a
   fmt.Printf("%d\n", len);
-  var tab []int = read_int_line(len)
+  var d int = len
+  var e []int = make([]int, d)
+  for f := 0 ; f <= d - 1; f++ {
+    var g int = 0
+      fmt.Fscanf(reader, "%d", &g);
+      skip()
+      e[f] = g;
+  }
+  var c []int = e
+  var tab []int = c
   fmt.Printf("%d", result(len, tab));
 }
 

@@ -9,18 +9,30 @@ let read_int_line n =
 
 let read_int_matrix x y =
   let tab = Array.init y (fun _z ->
-    read_int_line x) in
+    let b = x in
+    let c = Array.init b (fun _d ->
+      let e = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      e) in
+    let a = c in
+    a) in
   tab
 
 let () =
 begin
-  let len = ref( (read_int ()) ) in
+  let f = Scanf.scanf "%d " (fun x -> x) in
+  let len = ref( f ) in
   Printf.printf "%d=len\n" (!len);
-  let tab1 = read_int_line (!len) in
+  let h = (!len) in
+  let k = Array.init h (fun _l ->
+    let m = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    m) in
+  let g = k in
+  let tab1 = g in
   for i = 0 to (!len) - 1 do
     Printf.printf "%d=>%d\n" i tab1.(i)
   done;
-  len := (read_int ());
+  let o = Scanf.scanf "%d " (fun x -> x) in
+  len := o;
   let tab2 = read_int_matrix (!len) ((!len) - 1) in
   for i = 0 to (!len) - 2 do
     for j = 0 to (!len) - 1 do

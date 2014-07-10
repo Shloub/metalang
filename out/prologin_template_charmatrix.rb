@@ -20,7 +20,16 @@ end
 def read_char_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      tab[z] = read_char_line(x);
+      b = x
+      c = [];
+      for d in (0 ..  b - 1) do
+        e = "_"
+        e=scanf("%c")[0];
+        c[d] = e;
+      end
+      scanf("%*\n");
+      a = c
+      tab[z] = a;
     end
     return (tab);
 end
@@ -37,8 +46,16 @@ def programme_candidat( tableau, taille_x, taille_y )
     return (out_);
 end
 
-taille_x = read_int()
-taille_y = read_int()
+g = 0
+g=scanf("%d")[0];
+scanf("%*\n");
+f = g
+taille_x = f
+k = 0
+k=scanf("%d")[0];
+scanf("%*\n");
+h = k
+taille_y = h
 tableau = read_char_matrix(taille_x, taille_y)
 printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
 

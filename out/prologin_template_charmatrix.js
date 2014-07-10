@@ -57,7 +57,19 @@ function read_char_line(n){
 function read_char_matrix(x, y){
   var tab = new Array(y);
   for (var z = 0 ; z <= y - 1; z++)
-    tab[z] = read_char_line(x);
+  {
+    var b = x;
+    var c = new Array(b);
+    for (var d = 0 ; d <= b - 1; d++)
+    {
+      var e = '_';
+      e=read_char_();
+      c[d] = e;
+    }
+    stdinsep();
+    var a = c;
+    tab[z] = a;
+  }
   return tab;
 }
 
@@ -75,8 +87,16 @@ function programme_candidat(tableau, taille_x, taille_y){
   return out_;
 }
 
-var taille_x = read_int();
-var taille_y = read_int();
+var g = 0;
+g=read_int_();
+stdinsep();
+var f = g;
+var taille_x = f;
+var k = 0;
+k=read_int_();
+stdinsep();
+var h = k;
+var taille_y = h;
 var tableau = read_char_matrix(taille_x, taille_y);
 util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 

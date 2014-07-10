@@ -18,7 +18,10 @@ function programme_candidat(&$tableau, $taille){
   return $out_;
 }
 
-$taille = read_int();
-$tableau = read_char_line($taille);
+$a = intval(trim(fgets(STDIN)));
+$taille = $a;
+$c = $taille;
+$b = fgets(STDIN);
+$tableau = $b;
 echo programme_candidat($tableau, $taille), "\n";
 ?>

@@ -36,7 +36,16 @@ func read_int_line(n int) []int{
 func read_int_matrix(x int, y int) [][]int{
   var tab [][]int = make([][]int, y)
   for z := 0 ; z <= y - 1; z++ {
-    tab[z] = read_int_line(x);
+    var b int = x
+      var c []int = make([]int, b)
+      for d := 0 ; d <= b - 1; d++ {
+        var e int = 0
+          fmt.Fscanf(reader, "%d", &e);
+          skip()
+          c[d] = e;
+      }
+      var a []int = c
+      tab[z] = a;
   }
   return tab
 }
@@ -53,8 +62,16 @@ func programme_candidat(tableau [][]int, x int, y int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var taille_x int = read_int()
-  var taille_y int = read_int()
+  var g int = 0
+  fmt.Fscanf(reader, "%d", &g);
+  skip()
+  var f int = g
+  var taille_x int = f
+  var k int = 0
+  fmt.Fscanf(reader, "%d", &k);
+  skip()
+  var h int = k
+  var taille_y int = h
   var tableau [][]int = read_int_matrix(taille_x, taille_y)
   fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }

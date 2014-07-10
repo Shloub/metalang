@@ -27,7 +27,20 @@ def programme_candidat( tableau, taille )
     return (out_);
 end
 
-taille = read_int()
-tableau = read_char_line(taille)
+b = 0
+b=scanf("%d")[0];
+scanf("%*\n");
+a = b
+taille = a
+d = taille
+e = [];
+for f in (0 ..  d - 1) do
+  g = "_"
+  g=scanf("%c")[0];
+  e[f] = g;
+end
+scanf("%*\n");
+c = e
+tableau = c
 printf "%d\n", programme_candidat(tableau, taille)
 

@@ -85,12 +85,43 @@
   )))
 
 (progn
-  (let ((taille1 (read_int )))
-    (let ((taille2 (read_int )))
-      (let ((tableau1 (read_char_line taille1)))
-        (let ((tableau2 (read_char_line taille2)))
-          (princ (programme_candidat tableau1 taille1 tableau2 taille2))
-          (princ "
+  (let ((b (mread-int )))
+    (mread-blank)
+    (let ((a b))
+      (let ((taille1 a))
+        (let ((d (mread-int )))
+          (mread-blank)
+          (let ((c d))
+            (let ((taille2 c))
+              (let ((f taille1))
+                (let
+                 ((g (array_init
+                        f
+                        (function (lambda (h)
+                        (block lambda_2
+                          (let ((k (mread-char )))
+                            (return-from lambda_2 k)
+                          )))
+                        ))))
+                (mread-blank)
+                (let ((e g))
+                  (let ((tableau1 e))
+                    (let ((m taille2))
+                      (let
+                       ((o (array_init
+                              m
+                              (function (lambda (p)
+                              (block lambda_3
+                                (let ((q (mread-char )))
+                                  (return-from lambda_3 q)
+                                )))
+                              ))))
+                      (mread-blank)
+                      (let ((l o))
+                        (let ((tableau2 l))
+                          (princ
+                          (programme_candidat tableau1 taille1 tableau2 taille2))
+                          (princ "
 ")
-        )))))
+                        )))))))))))))))
 

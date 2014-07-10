@@ -7,18 +7,43 @@ begin
 end;
 
 
+var
+  a : Longint;
+  b : Longint;
+  d : Longint;
+  e : Longint;
+  f : Longint;
+  g : Longint;
+  h : Longint;
+  i : Longint;
+  j : Longint;
+  k : Longint;
+  l : Longint;
+  m : Longint;
 begin
-  Write(isqrt(4));
+  b := 4;
+  a := Floor(Sqrt(b));
+  Write(a);
   Write(' ');
-  Write(isqrt(16));
+  e := 16;
+  d := Floor(Sqrt(e));
+  Write(d);
   Write(' ');
-  Write(isqrt(20));
+  g := 20;
+  f := Floor(Sqrt(g));
+  Write(f);
   Write(' ');
-  Write(isqrt(1000));
+  i := 1000;
+  h := Floor(Sqrt(i));
+  Write(h);
   Write(' ');
-  Write(isqrt(500));
+  k := 500;
+  j := Floor(Sqrt(k));
+  Write(j);
   Write(' ');
-  Write(isqrt(10));
+  m := 10;
+  l := Floor(Sqrt(m));
+  Write(l);
   Write(' ');
 end.
 

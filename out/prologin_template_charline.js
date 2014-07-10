@@ -65,8 +65,22 @@ function programme_candidat(tableau, taille){
   return out_;
 }
 
-var taille = read_int();
-var tableau = read_char_line(taille);
+var b = 0;
+b=read_int_();
+stdinsep();
+var a = b;
+var taille = a;
+var d = taille;
+var e = new Array(d);
+for (var f = 0 ; f <= d - 1; f++)
+{
+  var g = '_';
+  g=read_char_();
+  e[f] = g;
+}
+stdinsep();
+var c = e;
+var tableau = c;
 util.print(programme_candidat(tableau, taille), "\n");
 
 

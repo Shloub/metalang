@@ -7,12 +7,16 @@ def read_int_line( n ):
 def read_int_matrix( x, y ):
     return [list(map(int, input().split())) for i in range(y)];
 
-len = read_int();
+a = int(input());
+len = a;
 print("%d=len\n" % ( len ), end='')
-tab1 = read_int_line(len);
+c = len;
+b = list(map(int, input().split()));
+tab1 = b;
 for i in range(0, len):
   print("%d=>%d\n" % ( i, tab1[i] ), end='')
-len = read_int();
+d = int(input());
+len = d;
 tab2 = read_int_matrix(len, len - 1);
 for i in range(0, 1 + len - 2):
   for j in range(0, len):

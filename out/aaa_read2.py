@@ -14,18 +14,26 @@ def read_char_line( n ):
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 """
-len = read_int();
+a = int(input());
+len = a;
 print("%d=len\n" % ( len ), end='')
-tab = read_int_line(len);
+d = len;
+b = list(map(int, input().split()));
+tab = b;
 for i in range(0, len):
   print("%d=>%d " % ( i, tab[i] ), end='')
 print("")
-tab2 = read_int_line(len);
+f = len;
+e = list(map(int, input().split()));
+tab2 = e;
 for i_ in range(0, len):
   print("%d==>%d " % ( i_, tab2[i_] ), end='')
-strlen = read_int();
+g = int(input());
+strlen = g;
 print("%d=strlen\n" % ( strlen ), end='')
-tab4 = read_char_line(strlen);
+k = strlen;
+h = list(input());
+tab4 = h;
 for i3 in range(0, strlen):
   tmpc = tab4[i3];
   c = ord(tmpc);

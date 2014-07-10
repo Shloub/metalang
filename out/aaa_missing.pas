@@ -71,12 +71,12 @@ begin
   exit(out_);
 end;
 
-type a = array of Longint;
-function read_int_line(n : Longint) : a;
+type h = array of Longint;
+function read_int_line(n : Longint) : h;
 var
   i : Longint;
   t : Longint;
-  tab : a;
+  tab : h;
 begin
   SetLength(tab, n);
   for i := 0 to  n - 1 do
@@ -92,7 +92,7 @@ end;
 {
   Ce test a été généré par Metalang.
 }
-function result(len : Longint; tab : a) : Longint;
+function result(len : Longint; tab : h) : Longint;
 var
   i : Longint;
   i1 : Longint;
@@ -121,13 +121,34 @@ end;
 
 
 var
+  a : Longint;
+  b : Longint;
+  c : h;
+  d : Longint;
+  e : h;
+  f : Longint;
+  g : Longint;
   len : Longint;
-  tab : a;
+  tab : h;
 begin
-  len := read_int();
+  b := 0;
+  b := read_int_();
+  skip();
+  a := b;
+  len := a;
   Write(len);
   Write(''#10'');
-  tab := read_int_line(len);
+  d := len;
+  SetLength(e, d);
+  for f := 0 to  d - 1 do
+  begin
+    g := 0;
+    g := read_int_();
+    skip();
+    e[f] := g;
+  end;
+  c := e;
+  tab := c;
   Write(result(len, tab));
 end.
 

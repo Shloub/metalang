@@ -10,7 +10,11 @@ function read_int_line($n){
 function read_int_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
-    $tab[$z] = read_int_line($x);
+  {
+    $e = $x;
+    $d = array_map("intval", explode(" ", fgets(STDIN)));
+    $tab[$z] = $d;
+  }
   return $tab;
 }
 

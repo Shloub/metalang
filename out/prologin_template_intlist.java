@@ -41,8 +41,28 @@ public class prologin_template_intlist
   
   public static void main(String args[])
   {
-    int taille = read_int();
-    int[] tableau = read_int_line(taille);
+    int b = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int a = b;
+    int taille = a;
+    int d = taille;
+    int[] e = new int[d];
+    for (int f = 0 ; f < d; f++)
+    {
+      int g = 0;
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); g = -scanner.nextInt();
+      }else{
+      g = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
+      e[f] = g;
+    }
+    int[] c = e;
+    int[] tableau = c;
     System.out.printf("%d\n", programme_candidat(tableau, taille));
   }
   

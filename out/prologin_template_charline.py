@@ -12,7 +12,10 @@ def programme_candidat( tableau, taille ):
     print("--")
     return out_;
 
-taille = read_int();
-tableau = read_char_line(taille);
+a = int(input());
+taille = a;
+c = taille;
+b = list(input());
+tableau = b;
 print("%d\n" % ( programme_candidat(tableau, taille) ), end='')
 

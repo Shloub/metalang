@@ -39,10 +39,20 @@ int programme_candidat(std::vector<char >& tableau1, int taille1, std::vector<ch
 
 
 int main(){
-  int taille1 = read_int();
-  std::vector<char > tableau1 = read_char_line(taille1);
-  int taille2 = read_int();
-  std::vector<char > tableau2 = read_char_line(taille2);
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int taille1 = a;
+  int d = taille1;
+  std::vector<char > c = getline();
+  std::vector<char > tableau1 = c;
+  int f = 0;
+  std::cin >> f >> std::skipws;
+  int e = f;
+  int taille2 = e;
+  int h = taille2;
+  std::vector<char > g = getline();
+  std::vector<char > tableau2 = g;
   std::cout << programme_candidat(tableau1, taille1, tableau2, taille2) << "\n";
   return 0;
 }

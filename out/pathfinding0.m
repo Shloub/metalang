@@ -14,7 +14,11 @@ int min3(int a, int b, int c){
 }
 
 int min4(int a, int b, int c, int d){
-  return min3(min2(a, b), c, d);
+  int f = min2(a, b);
+  int g = c;
+  int h = d;
+  int e = min2(min2(f, g), h);
+  return e;
 }
 
 int read_int(){
@@ -43,7 +47,22 @@ char** read_char_matrix(int x, int y){
   {
     int z;
     for (z = 0 ; z < y; z++)
-      tab[z] = read_char_line(x);
+    {
+      int l = x;
+      char *m = malloc( l * sizeof(char));
+      {
+        int o;
+        for (o = 0 ; o < l; o++)
+        {
+          char p = '_';
+          scanf("%c", &p);
+          m[o] = p;
+        }
+      }
+      scanf(" ");
+      char* k = m;
+      tab[z] = k;
+    }
   }
   return tab;
 }
@@ -64,7 +83,16 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int out_ = 1 + min4(val1, val2, val3, val4);
+    int r = val1;
+    int s = val2;
+    int u = val3;
+    int v = val4;
+    int w = min2(r, s);
+    int ba = u;
+    int bb = v;
+    int bc = min2(min2(w, ba), bb);
+    int q = bc;
+    int out_ = 1 + q;
     cache[posY][posX] = out_;
     return out_;
   }
@@ -94,8 +122,14 @@ int pathfind(char** tab, int x, int y){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int x = read_int();
-  int y = read_int();
+  int be = 0;
+  scanf("%d ", &be);
+  int bd = be;
+  int x = bd;
+  int bg = 0;
+  scanf("%d ", &bg);
+  int bf = bg;
+  int y = bf;
   printf("%d %d\n", x, y);
   char** tab = read_char_matrix(x, y);
   int result = pathfind(tab, x, y);

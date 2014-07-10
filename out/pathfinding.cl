@@ -46,7 +46,13 @@
 (return-from min3 (min2 (min2 a b) c)))
 
 (defun min4 (a b c d)
-(return-from min4 (min3 (min2 a b) c d)))
+(progn
+  (let ((f (min2 a b)))
+    (let ((g c))
+      (let ((h d))
+        (let ((e (min2 (min2 f g) h)))
+          (return-from min4 e)
+        ))))))
 
 (defun pathfind_aux (cache tab x y posX posY)
 (if
@@ -67,10 +73,19 @@
             (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
               (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
                 (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
-                  (let ((out_ (+ 1 (min4 val1 val2 val3 val4))))
-                    (setf (aref (aref cache posY) posX) out_)
-                    (return-from pathfind_aux out_)
-                  )))))))))))
+                  (let ((l val1))
+                    (let ((m val2))
+                      (let ((n val3))
+                        (let ((o val4))
+                          (let ((p (min2 l m)))
+                            (let ((q n))
+                              (let ((r o))
+                                (let ((s (min2 (min2 p q) r)))
+                                  (let ((k s))
+                                    (let ((out_ (+ 1 k)))
+                                      (setf (aref (aref cache posY) posX) out_)
+                                      (return-from pathfind_aux out_)
+                                    ))))))))))))))))))))
 
 (defun pathfind (tab x y)
 (progn

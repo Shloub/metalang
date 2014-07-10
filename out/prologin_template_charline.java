@@ -34,8 +34,17 @@ public class prologin_template_charline
   
   public static void main(String args[])
   {
-    int taille = read_int();
-    char[] tableau = read_char_line(taille);
+    int b = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int a = b;
+    int taille = a;
+    int d = taille;
+    char[] c = scanner.nextLine().toCharArray();
+    char[] tableau = c;
     System.out.printf("%d\n", programme_candidat(tableau, taille));
   }
   

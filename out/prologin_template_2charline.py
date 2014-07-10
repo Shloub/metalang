@@ -16,9 +16,15 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 ):
     print("--")
     return out_;
 
-taille1 = read_int();
-tableau1 = read_char_line(taille1);
-taille2 = read_int();
-tableau2 = read_char_line(taille2);
+a = int(input());
+taille1 = a;
+c = taille1;
+b = list(input());
+tableau1 = b;
+d = int(input());
+taille2 = d;
+f = taille2;
+e = list(input());
+tableau2 = e;
 print("%d\n" % ( programme_candidat(tableau1, taille1, tableau2, taille2) ), end='')
 

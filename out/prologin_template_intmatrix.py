@@ -11,8 +11,10 @@ def programme_candidat( tableau, x, y ):
         out_ += tableau[i][j] * (i * 2 + j)
     return out_;
 
-taille_x = read_int();
-taille_y = read_int();
+a = int(input());
+taille_x = a;
+b = int(input());
+taille_y = b;
 tableau = read_int_matrix(taille_x, taille_y);
 print("%d\n" % ( programme_candidat(tableau, taille_x, taille_y) ), end='')
 

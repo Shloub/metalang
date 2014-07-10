@@ -49,9 +49,29 @@ public class aaa_missing
   
   public static void main(String args[])
   {
-    int len = read_int();
+    int b = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int a = b;
+    int len = a;
     System.out.printf("%d\n", len);
-    int[] tab = read_int_line(len);
+    int d = len;
+    int[] e = new int[d];
+    for (int f = 0 ; f < d; f++)
+    {
+      int g = 0;
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); g = -scanner.nextInt();
+      }else{
+      g = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
+      e[f] = g;
+    }
+    int[] c = e;
+    int[] tab = c;
     System.out.printf("%d", result(len, tab));
   }
   

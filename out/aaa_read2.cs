@@ -25,22 +25,30 @@ read int, read char et skip
   
   public static void Main(String[] args)
   {
-    int len = read_int();
+    int a = int.Parse(Console.ReadLine());
+    int len = a;
     Console.Write("" + len + "=len\n");
-    int[] tab = read_int_line(len);
+    int d = len;
+    int[] b = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab = b;
     for (int i = 0 ; i < len; i++)
     {
       Console.Write("" + i + "=>" + tab[i] + " ");
     }
     Console.Write("\n");
-    int[] tab2 = read_int_line(len);
+    int f = len;
+    int[] e = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab2 = e;
     for (int i_ = 0 ; i_ < len; i_++)
     {
       Console.Write("" + i_ + "==>" + tab2[i_] + " ");
     }
-    int strlen = read_int();
+    int g = int.Parse(Console.ReadLine());
+    int strlen = g;
     Console.Write("" + strlen + "=strlen\n");
-    char[] tab4 = read_char_line(strlen);
+    int k = strlen;
+    char[] h = Console.ReadLine().ToCharArray();
+    char[] tab4 = h;
     for (int i3 = 0 ; i3 < strlen; i3++)
     {
       char tmpc = tab4[i3];

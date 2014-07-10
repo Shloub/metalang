@@ -14,7 +14,11 @@ function read_char_line($n){
 function read_char_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
-    $tab[$z] = read_char_line($x);
+  {
+    $f = $x;
+    $e = fgets(STDIN);
+    $tab[$z] = $e;
+  }
   return $tab;
 }
 
@@ -34,7 +38,12 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
     $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-    $out_ = 1 + min4($val1, $val2, $val3, $val4);
+    $h = $val1;
+    $k = $val2;
+    $l = $val3;
+    $m = $val4;
+    $g = min($h, $k, $l, $m);
+    $out_ = 1 + $g;
     $cache[$posY][$posX] = $out_;
     return $out_;
   }
@@ -56,8 +65,10 @@ function pathfind(&$tab, $x, $y){
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
-$x = read_int();
-$y = read_int();
+$o = intval(trim(fgets(STDIN)));
+$x = $o;
+$p = intval(trim(fgets(STDIN)));
+$y = $p;
 echo $x, " ", $y, "\n";
 $tab = read_char_matrix($x, $y);
 $result = pathfind($tab, $x, $y);

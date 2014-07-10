@@ -43,9 +43,24 @@ read int, read char et skip
 */
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int len = read_int();
+  int b = 0;
+  scanf("%d ", &b);
+  int a = b;
+  int len = a;
   printf("%d=len\n", len);
-  int* tab = read_int_line(len);
+  int e = len;
+  int *f = malloc( e * sizeof(int));
+  {
+    int g;
+    for (g = 0 ; g < e; g++)
+    {
+      int h = 0;
+      scanf("%d ", &h);
+      f[g] = h;
+    }
+  }
+  int* d = f;
+  int* tab = d;
   {
     int i;
     for (i = 0 ; i < len; i++)
@@ -54,7 +69,19 @@ int main(void){
     }
   }
   printf("\n");
-  int* tab2 = read_int_line(len);
+  int l = len;
+  int *m = malloc( l * sizeof(int));
+  {
+    int o;
+    for (o = 0 ; o < l; o++)
+    {
+      int p = 0;
+      scanf("%d ", &p);
+      m[o] = p;
+    }
+  }
+  int* k = m;
+  int* tab2 = k;
   {
     int i_;
     for (i_ = 0 ; i_ < len; i_++)
@@ -62,9 +89,25 @@ int main(void){
       printf("%d==>%d ", i_, tab2[i_]);
     }
   }
-  int strlen = read_int();
+  int r = 0;
+  scanf("%d ", &r);
+  int q = r;
+  int strlen = q;
   printf("%d=strlen\n", strlen);
-  char* tab4 = read_char_line(strlen);
+  int u = strlen;
+  char *v = malloc( u * sizeof(char));
+  {
+    int w;
+    for (w = 0 ; w < u; w++)
+    {
+      char x = '_';
+      scanf("%c", &x);
+      v[w] = x;
+    }
+  }
+  scanf(" ");
+  char* s = v;
+  char* tab4 = s;
   {
     int i3;
     for (i3 = 0 ; i3 < strlen; i3++)

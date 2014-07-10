@@ -46,7 +46,13 @@
 (return-from min3 (min2 (min2 a b) c)))
 
 (defun min4 (a b c d)
-(return-from min4 (min3 (min2 a b) c d)))
+(progn
+  (let ((f (min2 a b)))
+    (let ((g c))
+      (let ((h d))
+        (let ((e (min2 (min2 f g) h)))
+          (return-from min4 e)
+        ))))))
 
 (defun read_int ()
 (progn
@@ -77,8 +83,20 @@
             y
             (function (lambda (z)
             (block lambda_2
-              (return-from lambda_2 (read_char_line x))
-            ))
+              (let ((l x))
+                (let
+                 ((m (array_init
+                        l
+                        (function (lambda (o)
+                        (block lambda_3
+                          (let ((p (mread-char )))
+                            (return-from lambda_3 p)
+                          )))
+                        ))))
+                (mread-blank)
+                (let ((k m))
+                  (return-from lambda_2 k)
+                )))))
             ))))
   (return-from read_char_matrix tab)
   )))
@@ -102,10 +120,19 @@
             (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
               (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
                 (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
-                  (let ((out_ (+ 1 (min4 val1 val2 val3 val4))))
-                    (setf (aref (aref cache posY) posX) out_)
-                    (return-from pathfind_aux out_)
-                  )))))))))))
+                  (let ((r val1))
+                    (let ((s val2))
+                      (let ((u val3))
+                        (let ((v val4))
+                          (let ((w (min2 r s)))
+                            (let ((ba u))
+                              (let ((bb v))
+                                (let ((bc (min2 (min2 w ba) bb)))
+                                  (let ((q bc))
+                                    (let ((out_ (+ 1 q)))
+                                      (setf (aref (aref cache posY) posX) out_)
+                                      (return-from pathfind_aux out_)
+                                    ))))))))))))))))))))
 
 (defun pathfind (tab x y)
 (progn
@@ -113,34 +140,40 @@
    ((cache (array_init
               y
               (function (lambda (i)
-              (block lambda_3
+              (block lambda_4
                 (let
                  ((tmp (array_init
                           x
                           (function (lambda (j)
-                          (block lambda_4
+                          (block lambda_5
                             (princ (aref (aref tab i) j))
-                            (return-from lambda_4 (- 0 1))
+                            (return-from lambda_5 (- 0 1))
                           ))
                           ))))
                 (princ "
 ")
-                (return-from lambda_3 tmp)
+                (return-from lambda_4 tmp)
                 )))
               ))))
   (return-from pathfind (pathfind_aux cache tab x y 0 0))
   )))
 
 (progn
-  (let ((x (read_int )))
-    (let ((y (read_int )))
-      (princ x)
-      (princ " ")
-      (princ y)
-      (princ "
+  (let ((be (mread-int )))
+    (mread-blank)
+    (let ((bd be))
+      (let ((x bd))
+        (let ((bg (mread-int )))
+          (mread-blank)
+          (let ((bf bg))
+            (let ((y bf))
+              (princ x)
+              (princ " ")
+              (princ y)
+              (princ "
 ")
-      (let ((tab (read_char_matrix x y)))
-        (let ((result (pathfind tab x y)))
-          (princ result)
-        )))))
+              (let ((tab (read_char_matrix x y)))
+                (let ((result (pathfind tab x y)))
+                  (princ result)
+                )))))))))
 

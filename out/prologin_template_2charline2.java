@@ -40,10 +40,28 @@ public class prologin_template_2charline2
   
   public static void main(String args[])
   {
-    int taille1 = read_int();
-    int taille2 = read_int();
-    char[] tableau1 = read_char_line(taille1);
-    char[] tableau2 = read_char_line(taille2);
+    int b = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int a = b;
+    int taille1 = a;
+    int d = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); d = -scanner.nextInt();
+    }else{
+    d = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int c = d;
+    int taille2 = c;
+    int f = taille1;
+    char[] e = scanner.nextLine().toCharArray();
+    char[] tableau1 = e;
+    int h = taille2;
+    char[] g = scanner.nextLine().toCharArray();
+    char[] tableau2 = g;
     System.out.printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   }
   

@@ -61,7 +61,19 @@ function read_char_line(n){
 function read_char_matrix(x, y){
   var tab = new Array(y);
   for (var z = 0 ; z <= y - 1; z++)
-    tab[z] = read_char_line(x);
+  {
+    var f = x;
+    var g = new Array(f);
+    for (var h = 0 ; h <= f - 1; h++)
+    {
+      var k = '_';
+      k=read_char_();
+      g[h] = k;
+    }
+    stdinsep();
+    var e = g;
+    tab[z] = e;
+  }
   return tab;
 }
 
@@ -81,7 +93,12 @@ function pathfind_aux(cache, tab, x, y, posX, posY){
     var val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     var val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     var val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    var out_ = 1 + min4(val1, val2, val3, val4);
+    var m = val1;
+    var o = val2;
+    var p = val3;
+    var q = val4;
+    var l = Math.min(m, o, p, q);
+    var out_ = 1 + l;
     cache[posY][posX] = out_;
     return out_;
   }
@@ -103,8 +120,16 @@ function pathfind(tab, x, y){
   return pathfind_aux(cache, tab, x, y, 0, 0);
 }
 
-var x = read_int();
-var y = read_int();
+var s = 0;
+s=read_int_();
+stdinsep();
+var r = s;
+var x = r;
+var v = 0;
+v=read_int_();
+stdinsep();
+var u = v;
+var y = u;
 util.print(x, " ", y, "\n");
 var tab = read_char_matrix(x, y);
 var result = pathfind(tab, x, y);

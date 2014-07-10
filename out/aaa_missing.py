@@ -18,8 +18,11 @@ def result( len, tab ):
         return i2;
     return -(1);
 
-len = read_int();
+a = int(input());
+len = a;
 print("%d\n" % ( len ), end='')
-tab = read_int_line(len);
+c = len;
+b = list(map(int, input().split()));
+tab = b;
 print("%d" % result(len, tab), end='')
 

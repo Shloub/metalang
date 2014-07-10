@@ -5,7 +5,11 @@ let min3 a b c =
   min2 (min2 a b) c
 
 let min4 a b c d =
-  min3 (min2 a b) c d
+  let f = min2 a b in
+  let g = c in
+  let h = d in
+  let e = min2 (min2 f g) h in
+  e
 
 let rec pathfind_aux cache tab x y posX posY =
   if posX = x - 1 && posY = y - 1 then
@@ -23,7 +27,16 @@ let rec pathfind_aux cache tab x y posX posY =
       let val2 = pathfind_aux cache tab x y (posX - 1) posY in
       let val3 = pathfind_aux cache tab x y posX (posY - 1) in
       let val4 = pathfind_aux cache tab x y posX (posY + 1) in
-      let out_ = 1 + min4 val1 val2 val3 val4 in
+      let l = val1 in
+      let m = val2 in
+      let n = val3 in
+      let o = val4 in
+      let p = min2 l m in
+      let q = n in
+      let r = o in
+      let s = min2 (min2 p q) r in
+      let k = s in
+      let out_ = 1 + k in
       cache.(posY).(posX) <- out_;
       out_
     end

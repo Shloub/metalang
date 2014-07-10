@@ -22,8 +22,11 @@ function result($len, &$tab){
   return -1;
 }
 
-$len = read_int();
+$a = intval(trim(fgets(STDIN)));
+$len = $a;
 echo $len, "\n";
-$tab = read_int_line($len);
+$c = $len;
+$b = array_map("intval", explode(" ", fgets(STDIN)));
+$tab = $b;
 echo result($len, $tab);
 ?>

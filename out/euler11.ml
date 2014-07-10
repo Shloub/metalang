@@ -9,7 +9,12 @@ let read_int_line n =
 
 let read_int_matrix x y =
   let tab = Array.init y (fun _z ->
-    read_int_line x) in
+    let e = x in
+    let f = Array.init e (fun _g ->
+      let h = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      h) in
+    let d = f in
+    d) in
   tab
 
 let rec find n m x y dx dy =

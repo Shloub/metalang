@@ -34,10 +34,16 @@ public class prologin_template_2charline
   
   public static void Main(String[] args)
   {
-    int taille1 = read_int();
-    char[] tableau1 = read_char_line(taille1);
-    int taille2 = read_int();
-    char[] tableau2 = read_char_line(taille2);
+    int a = int.Parse(Console.ReadLine());
+    int taille1 = a;
+    int c = taille1;
+    char[] b = Console.ReadLine().ToCharArray();
+    char[] tableau1 = b;
+    int d = int.Parse(Console.ReadLine());
+    int taille2 = d;
+    int f = taille2;
+    char[] e = Console.ReadLine().ToCharArray();
+    char[] tableau2 = e;
     Console.Write("" + programme_candidat(tableau1, taille1, tableau2, taille2) + "\n");
   }
   

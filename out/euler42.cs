@@ -65,7 +65,9 @@ public static int readInt(){
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-    int a = isqrt(n * 2);
+    int d = n * 2;
+    int b = (int)Math.Sqrt(d);
+    int a = b;
     return a * (a + 1) == n * 2;
   }
   

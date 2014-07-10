@@ -33,8 +33,13 @@ int programme_candidat(std::vector<char >& tableau, int taille){
 
 
 int main(){
-  int taille = read_int();
-  std::vector<char > tableau = read_char_line(taille);
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int taille = a;
+  int d = taille;
+  std::vector<char > c = getline();
+  std::vector<char > tableau = c;
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }

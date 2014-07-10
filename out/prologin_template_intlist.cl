@@ -64,10 +64,25 @@
   )))
 
 (progn
-  (let ((taille (read_int )))
-    (let ((tableau (read_int_line taille)))
-      (princ (programme_candidat tableau taille))
-      (princ "
+  (let ((b (mread-int )))
+    (mread-blank)
+    (let ((a b))
+      (let ((taille a))
+        (let ((d taille))
+          (let
+           ((e (array_init
+                  d
+                  (function (lambda (f)
+                  (block lambda_2
+                    (let ((g (mread-int )))
+                      (mread-blank)
+                      (return-from lambda_2 g)
+                    )))
+                  ))))
+          (let ((c e))
+            (let ((tableau c))
+              (princ (programme_candidat tableau taille))
+              (princ "
 ")
-    )))
+            ))))))))
 

@@ -17,21 +17,29 @@ public class aaa_readints
   {
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
-      tab[z] = read_int_line(x);
+    {
+      int b = x;
+      int[] a = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+      tab[z] = a;
+    }
     return tab;
   }
   
   
   public static void Main(String[] args)
   {
-    int len = read_int();
+    int c = int.Parse(Console.ReadLine());
+    int len = c;
     Console.Write("" + len + "=len\n");
-    int[] tab1 = read_int_line(len);
+    int e = len;
+    int[] d = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab1 = d;
     for (int i = 0 ; i < len; i++)
     {
       Console.Write("" + i + "=>" + tab1[i] + "\n");
     }
-    len = read_int();
+    int f = int.Parse(Console.ReadLine());
+    len = f;
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)
     {

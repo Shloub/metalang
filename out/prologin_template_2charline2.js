@@ -71,10 +71,38 @@ function programme_candidat(tableau1, taille1, tableau2, taille2){
   return out_;
 }
 
-var taille1 = read_int();
-var taille2 = read_int();
-var tableau1 = read_char_line(taille1);
-var tableau2 = read_char_line(taille2);
+var b = 0;
+b=read_int_();
+stdinsep();
+var a = b;
+var taille1 = a;
+var d = 0;
+d=read_int_();
+stdinsep();
+var c = d;
+var taille2 = c;
+var f = taille1;
+var g = new Array(f);
+for (var h = 0 ; h <= f - 1; h++)
+{
+  var k = '_';
+  k=read_char_();
+  g[h] = k;
+}
+stdinsep();
+var e = g;
+var tableau1 = e;
+var m = taille2;
+var o = new Array(m);
+for (var p = 0 ; p <= m - 1; p++)
+{
+  var q = '_';
+  q=read_char_();
+  o[p] = q;
+}
+stdinsep();
+var l = o;
+var tableau2 = l;
 util.print(programme_candidat(tableau1, taille1, tableau2, taille2), "\n");
 
 

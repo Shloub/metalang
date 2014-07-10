@@ -34,9 +34,21 @@ int result(int len, std::vector<int >& tab){
 
 
 int main(){
-  int len = read_int();
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int len = a;
   std::cout << len << "\n";
-  std::vector<int > tab = read_int_line(len);
+  int d = len;
+  std::vector<int > e( d );
+  for (int f = 0 ; f < d; f++)
+  {
+    int g = 0;
+    std::cin >> g >> std::skipws;
+    e.at(f) = g;
+  }
+  std::vector<int > c = e;
+  std::vector<int > tab = c;
   std::cout << result(len, tab);
   return 0;
 }

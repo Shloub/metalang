@@ -26,8 +26,20 @@ int programme_candidat(std::vector<int >& tableau, int taille){
 
 
 int main(){
-  int taille = read_int();
-  std::vector<int > tableau = read_int_line(taille);
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int taille = a;
+  int d = taille;
+  std::vector<int > e( d );
+  for (int f = 0 ; f < d; f++)
+  {
+    int g = 0;
+    std::cin >> g >> std::skipws;
+    e.at(f) = g;
+  }
+  std::vector<int > c = e;
+  std::vector<int > tableau = c;
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }

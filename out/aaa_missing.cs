@@ -32,9 +32,12 @@ public class aaa_missing
   
   public static void Main(String[] args)
   {
-    int len = read_int();
+    int a = int.Parse(Console.ReadLine());
+    int len = a;
     Console.Write("" + len + "\n");
-    int[] tab = read_int_line(len);
+    int c = len;
+    int[] b = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab = b;
     Console.Write(result(len, tab));
   }
   

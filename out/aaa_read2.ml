@@ -20,20 +20,38 @@ read int, read char et skip
 *)
 let () =
 begin
-  let len = (read_int ()) in
+  let a = Scanf.scanf "%d " (fun x -> x) in
+  let len = a in
   Printf.printf "%d=len\n" len;
-  let tab = read_int_line len in
+  let d = len in
+  let e = Array.init d (fun _f ->
+    let g = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    g) in
+  let b = e in
+  let tab = b in
   for i = 0 to len - 1 do
     Printf.printf "%d=>%d " i tab.(i)
   done;
   Printf.printf "\n";
-  let tab2 = read_int_line len in
+  let k = len in
+  let l = Array.init k (fun _m ->
+    let o = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    o) in
+  let h = l in
+  let tab2 = h in
   for i_ = 0 to len - 1 do
     Printf.printf "%d==>%d " i_ tab2.(i_)
   done;
-  let strlen = (read_int ()) in
+  let p = Scanf.scanf "%d " (fun x -> x) in
+  let strlen = p in
   Printf.printf "%d=strlen\n" strlen;
-  let tab4 = read_char_line strlen in
+  let r = strlen in
+  let s = Array.init r (fun _u ->
+    let v = Scanf.scanf "%c" (fun v_0 -> v_0) in
+    v) in
+  Scanf.scanf " " (fun () -> ());
+  let q = s in
+  let tab4 = q in
   for i3 = 0 to strlen - 1 do
     let tmpc = tab4.(i3) in
     let c = ref( int_of_char (tmpc) ) in

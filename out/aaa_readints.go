@@ -36,20 +36,46 @@ func read_int_line(n int) []int{
 func read_int_matrix(x int, y int) [][]int{
   var tab [][]int = make([][]int, y)
   for z := 0 ; z <= y - 1; z++ {
-    tab[z] = read_int_line(x);
+    var b int = x
+      var c []int = make([]int, b)
+      for d := 0 ; d <= b - 1; d++ {
+        var e int = 0
+          fmt.Fscanf(reader, "%d", &e);
+          skip()
+          c[d] = e;
+      }
+      var a []int = c
+      tab[z] = a;
   }
   return tab
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = read_int()
+  var g int = 0
+  fmt.Fscanf(reader, "%d", &g);
+  skip()
+  var f int = g
+  var len int = f
   fmt.Printf("%d=len\n", len);
-  var tab1 []int = read_int_line(len)
+  var k int = len
+  var l []int = make([]int, k)
+  for m := 0 ; m <= k - 1; m++ {
+    var o int = 0
+      fmt.Fscanf(reader, "%d", &o);
+      skip()
+      l[m] = o;
+  }
+  var h []int = l
+  var tab1 []int = h
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d\n", i, tab1[i]);
   }
-  len = read_int();
+  var q int = 0
+  fmt.Fscanf(reader, "%d", &q);
+  skip()
+  var p int = q
+  len = p;
   var tab2 [][]int = read_int_matrix(len, len - 1)
   for i := 0 ; i <= len - 2; i++ {
     for j := 0 ; j <= len - 1; j++ {

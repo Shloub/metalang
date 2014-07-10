@@ -50,20 +50,55 @@ read int, read char et skip
 */
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = read_int()
+  var b int = 0
+  fmt.Fscanf(reader, "%d", &b);
+  skip()
+  var a int = b
+  var len int = a
   fmt.Printf("%d=len\n", len);
-  var tab []int = read_int_line(len)
+  var e int = len
+  var f []int = make([]int, e)
+  for g := 0 ; g <= e - 1; g++ {
+    var h int = 0
+      fmt.Fscanf(reader, "%d", &h);
+      skip()
+      f[g] = h;
+  }
+  var d []int = f
+  var tab []int = d
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d ", i, tab[i]);
   }
   fmt.Printf("\n");
-  var tab2 []int = read_int_line(len)
+  var l int = len
+  var m []int = make([]int, l)
+  for o := 0 ; o <= l - 1; o++ {
+    var p int = 0
+      fmt.Fscanf(reader, "%d", &p);
+      skip()
+      m[o] = p;
+  }
+  var k []int = m
+  var tab2 []int = k
   for i_ := 0 ; i_ <= len - 1; i_++ {
     fmt.Printf("%d==>%d ", i_, tab2[i_]);
   }
-  var strlen int = read_int()
+  var r int = 0
+  fmt.Fscanf(reader, "%d", &r);
+  skip()
+  var q int = r
+  var strlen int = q
   fmt.Printf("%d=strlen\n", strlen);
-  var tab4 []byte = read_char_line(strlen)
+  var u int = strlen
+  var v []byte = make([]byte, u)
+  for w := 0 ; w <= u - 1; w++ {
+    var x byte = '_'
+      fmt.Fscanf(reader, "%c", &x);
+      v[w] = x;
+  }
+  skip()
+  var s []byte = v
+  var tab4 []byte = s
   for i3 := 0 ; i3 <= strlen - 1; i3++ {
     var tmpc byte = tab4[i3]
       var c int = (int)(tmpc)

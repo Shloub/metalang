@@ -37,22 +37,48 @@ read int, read char et skip
 */
 
 int main(){
-  int len = read_int();
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int len = a;
   std::cout << len << "=len\n";
-  std::vector<int > tab = read_int_line(len);
+  int e = len;
+  std::vector<int > f( e );
+  for (int g = 0 ; g < e; g++)
+  {
+    int h = 0;
+    std::cin >> h >> std::skipws;
+    f.at(g) = h;
+  }
+  std::vector<int > d = f;
+  std::vector<int > tab = d;
   for (int i = 0 ; i < len; i++)
   {
     std::cout << i << "=>" << tab.at(i) << " ";
   }
   std::cout << "\n";
-  std::vector<int > tab2 = read_int_line(len);
+  int l = len;
+  std::vector<int > m( l );
+  for (int o = 0 ; o < l; o++)
+  {
+    int p = 0;
+    std::cin >> p >> std::skipws;
+    m.at(o) = p;
+  }
+  std::vector<int > k = m;
+  std::vector<int > tab2 = k;
   for (int i_ = 0 ; i_ < len; i_++)
   {
     std::cout << i_ << "==>" << tab2.at(i_) << " ";
   }
-  int strlen = read_int();
+  int r = 0;
+  std::cin >> r >> std::skipws;
+  int q = r;
+  int strlen = q;
   std::cout << strlen << "=strlen\n";
-  std::vector<char > tab4 = read_char_line(strlen);
+  int u = strlen;
+  std::vector<char > s = getline();
+  std::vector<char > tab4 = s;
   for (int i3 = 0 ; i3 < strlen; i3++)
   {
     char tmpc = tab4.at(i3);

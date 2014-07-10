@@ -20,20 +20,46 @@ std::vector<int > read_int_line(int n){
 std::vector<std::vector<int > > read_int_matrix(int x, int y){
   std::vector<std::vector<int > > tab( y );
   for (int z = 0 ; z < y; z++)
-    tab.at(z) = read_int_line(x);
+  {
+    int b = x;
+    std::vector<int > c( b );
+    for (int d = 0 ; d < b; d++)
+    {
+      int e = 0;
+      std::cin >> e >> std::skipws;
+      c.at(d) = e;
+    }
+    std::vector<int > a = c;
+    tab.at(z) = a;
+  }
   return tab;
 }
 
 
 int main(){
-  int len = read_int();
+  int g = 0;
+  std::cin >> g >> std::skipws;
+  int f = g;
+  int len = f;
   std::cout << len << "=len\n";
-  std::vector<int > tab1 = read_int_line(len);
+  int k = len;
+  std::vector<int > l( k );
+  for (int m = 0 ; m < k; m++)
+  {
+    int o = 0;
+    std::cin >> o >> std::skipws;
+    l.at(m) = o;
+  }
+  std::vector<int > h = l;
+  std::vector<int > tab1 = h;
   for (int i = 0 ; i < len; i++)
   {
     std::cout << i << "=>" << tab1.at(i) << "\n";
   }
-  len = read_int();
+  int q = 0;
+  std::cin >> q >> std::skipws;
+  int p = q;
+  len = p;
   std::vector<std::vector<int > > tab2 = read_int_matrix(len, len - 1);
   for (int i = 0 ; i <= len - 2; i ++)
   {

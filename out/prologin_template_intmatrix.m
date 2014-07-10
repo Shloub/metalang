@@ -27,7 +27,21 @@ int** read_int_matrix(int x, int y){
   {
     int z;
     for (z = 0 ; z < y; z++)
-      tab[z] = read_int_line(x);
+    {
+      int b = x;
+      int *c = malloc( b * sizeof(int));
+      {
+        int d;
+        for (d = 0 ; d < b; d++)
+        {
+          int e = 0;
+          scanf("%d ", &e);
+          c[d] = e;
+        }
+      }
+      int* a = c;
+      tab[z] = a;
+    }
   }
   return tab;
 }
@@ -48,8 +62,14 @@ int programme_candidat(int** tableau, int x, int y){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int taille_x = read_int();
-  int taille_y = read_int();
+  int g = 0;
+  scanf("%d ", &g);
+  int f = g;
+  int taille_x = f;
+  int k = 0;
+  scanf("%d ", &k);
+  int h = k;
+  int taille_y = h;
   int** tableau = read_int_matrix(taille_x, taille_y);
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   [pool drain];

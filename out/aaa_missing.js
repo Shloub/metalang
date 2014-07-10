@@ -69,9 +69,23 @@ function result(len, tab){
   return -1;
 }
 
-var len = read_int();
+var b = 0;
+b=read_int_();
+stdinsep();
+var a = b;
+var len = a;
 util.print(len, "\n");
-var tab = read_int_line(len);
+var d = len;
+var e = new Array(d);
+for (var f = 0 ; f <= d - 1; f++)
+{
+  var g = 0;
+  g=read_int_();
+  stdinsep();
+  e[f] = g;
+}
+var c = e;
+var tab = c;
 util.print(result(len, tab));
 
 

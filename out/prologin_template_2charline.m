@@ -48,10 +48,42 @@ int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2)
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int taille1 = read_int();
-  char* tableau1 = read_char_line(taille1);
-  int taille2 = read_int();
-  char* tableau2 = read_char_line(taille2);
+  int b = 0;
+  scanf("%d ", &b);
+  int a = b;
+  int taille1 = a;
+  int d = taille1;
+  char *e = malloc( d * sizeof(char));
+  {
+    int f;
+    for (f = 0 ; f < d; f++)
+    {
+      char g = '_';
+      scanf("%c", &g);
+      e[f] = g;
+    }
+  }
+  scanf(" ");
+  char* c = e;
+  char* tableau1 = c;
+  int k = 0;
+  scanf("%d ", &k);
+  int h = k;
+  int taille2 = h;
+  int m = taille2;
+  char *o = malloc( m * sizeof(char));
+  {
+    int p;
+    for (p = 0 ; p < m; p++)
+    {
+      char q = '_';
+      scanf("%c", &q);
+      o[p] = q;
+    }
+  }
+  scanf(" ");
+  char* l = o;
+  char* tableau2 = l;
   printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   [pool drain];
   return 0;

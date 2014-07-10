@@ -50,10 +50,36 @@ func programme_candidat(tableau1 []byte, taille1 int, tableau2 []byte, taille2 i
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var taille1 int = read_int()
-  var tableau1 []byte = read_char_line(taille1)
-  var taille2 int = read_int()
-  var tableau2 []byte = read_char_line(taille2)
+  var b int = 0
+  fmt.Fscanf(reader, "%d", &b);
+  skip()
+  var a int = b
+  var taille1 int = a
+  var d int = taille1
+  var e []byte = make([]byte, d)
+  for f := 0 ; f <= d - 1; f++ {
+    var g byte = '_'
+      fmt.Fscanf(reader, "%c", &g);
+      e[f] = g;
+  }
+  skip()
+  var c []byte = e
+  var tableau1 []byte = c
+  var k int = 0
+  fmt.Fscanf(reader, "%d", &k);
+  skip()
+  var h int = k
+  var taille2 int = h
+  var m int = taille2
+  var o []byte = make([]byte, m)
+  for p := 0 ; p <= m - 1; p++ {
+    var q byte = '_'
+      fmt.Fscanf(reader, "%c", &q);
+      o[p] = q;
+  }
+  skip()
+  var l []byte = o
+  var tableau2 []byte = l
   fmt.Printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
 }
 

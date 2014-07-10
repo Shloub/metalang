@@ -10,18 +10,26 @@ function read_int_line($n){
 function read_int_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
-    $tab[$z] = read_int_line($x);
+  {
+    $b = $x;
+    $a = array_map("intval", explode(" ", fgets(STDIN)));
+    $tab[$z] = $a;
+  }
   return $tab;
 }
 
-$len = read_int();
+$c = intval(trim(fgets(STDIN)));
+$len = $c;
 echo $len, "=len\n";
-$tab1 = read_int_line($len);
+$e = $len;
+$d = array_map("intval", explode(" ", fgets(STDIN)));
+$tab1 = $d;
 for ($i = 0 ; $i < $len; $i++)
 {
   echo $i, "=>", $tab1[$i], "\n";
 }
-$len = read_int();
+$f = intval(trim(fgets(STDIN)));
+$len = $f;
 $tab2 = read_int_matrix($len, $len - 1);
 for ($i = 0 ; $i <= $len - 2; $i++)
 {

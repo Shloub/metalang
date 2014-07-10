@@ -40,20 +40,55 @@ read int, read char et skip
 
 =end
 
-len = read_int()
+b = 0
+b=scanf("%d")[0];
+scanf("%*\n");
+a = b
+len = a
 printf "%d=len\n", len
-tab = read_int_line(len)
+e = len
+f = [];
+for g in (0 ..  e - 1) do
+  h = 0
+  h=scanf("%d")[0];
+  scanf("%*\n");
+  f[g] = h;
+end
+d = f
+tab = d
 for i in (0 ..  len - 1) do
   printf "%d=>%d ", i, tab[i]
 end
 print "\n";
-tab2 = read_int_line(len)
+l = len
+m = [];
+for o in (0 ..  l - 1) do
+  p = 0
+  p=scanf("%d")[0];
+  scanf("%*\n");
+  m[o] = p;
+end
+k = m
+tab2 = k
 for i_ in (0 ..  len - 1) do
   printf "%d==>%d ", i_, tab2[i_]
 end
-strlen = read_int()
+r = 0
+r=scanf("%d")[0];
+scanf("%*\n");
+q = r
+strlen = q
 printf "%d=strlen\n", strlen
-tab4 = read_char_line(strlen)
+u = strlen
+v = [];
+for w in (0 ..  u - 1) do
+  x = "_"
+  x=scanf("%c")[0];
+  v[w] = x;
+end
+scanf("%*\n");
+s = v
+tab4 = s
 for i3 in (0 ..  strlen - 1) do
   tmpc = tab4[i3]
   c = tmpc.ord

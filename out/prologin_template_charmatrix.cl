@@ -65,8 +65,20 @@
             y
             (function (lambda (z)
             (block lambda_2
-              (return-from lambda_2 (read_char_line x))
-            ))
+              (let ((b x))
+                (let
+                 ((c (array_init
+                        b
+                        (function (lambda (d)
+                        (block lambda_3
+                          (let ((e (mread-char )))
+                            (return-from lambda_3 e)
+                          )))
+                        ))))
+                (mread-blank)
+                (let ((a c))
+                  (return-from lambda_2 a)
+                )))))
             ))))
   (return-from read_char_matrix tab)
   )))
@@ -94,11 +106,17 @@
   )))
 
 (progn
-  (let ((taille_x (read_int )))
-    (let ((taille_y (read_int )))
-      (let ((tableau (read_char_matrix taille_x taille_y)))
-        (princ (programme_candidat tableau taille_x taille_y))
-        (princ "
+  (let ((g (mread-int )))
+    (mread-blank)
+    (let ((f g))
+      (let ((taille_x f))
+        (let ((k (mread-int )))
+          (mread-blank)
+          (let ((h k))
+            (let ((taille_y h))
+              (let ((tableau (read_char_matrix taille_x taille_y)))
+                (princ (programme_candidat tableau taille_x taille_y))
+                (princ "
 ")
-      ))))
+              ))))))))
 

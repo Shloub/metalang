@@ -32,9 +32,35 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 )
     return (out_);
 end
 
-taille1 = read_int()
-taille2 = read_int()
-tableau1 = read_char_line(taille1)
-tableau2 = read_char_line(taille2)
+b = 0
+b=scanf("%d")[0];
+scanf("%*\n");
+a = b
+taille1 = a
+d = 0
+d=scanf("%d")[0];
+scanf("%*\n");
+c = d
+taille2 = c
+f = taille1
+g = [];
+for h in (0 ..  f - 1) do
+  k = "_"
+  k=scanf("%c")[0];
+  g[h] = k;
+end
+scanf("%*\n");
+e = g
+tableau1 = e
+m = taille2
+o = [];
+for p in (0 ..  m - 1) do
+  q = "_"
+  q=scanf("%c")[0];
+  o[p] = q;
+end
+scanf("%*\n");
+l = o
+tableau2 = l
 printf "%d\n", programme_candidat(tableau1, taille1, tableau2, taille2)
 

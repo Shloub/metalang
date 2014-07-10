@@ -15,22 +15,30 @@ function read_char_line($n){
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-$len = read_int();
+$a = intval(trim(fgets(STDIN)));
+$len = $a;
 echo $len, "=len\n";
-$tab = read_int_line($len);
+$d = $len;
+$b = array_map("intval", explode(" ", fgets(STDIN)));
+$tab = $b;
 for ($i = 0 ; $i < $len; $i++)
 {
   echo $i, "=>", $tab[$i], " ";
 }
 echo "\n";
-$tab2 = read_int_line($len);
+$f = $len;
+$e = array_map("intval", explode(" ", fgets(STDIN)));
+$tab2 = $e;
 for ($i_ = 0 ; $i_ < $len; $i_++)
 {
   echo $i_, "==>", $tab2[$i_], " ";
 }
-$strlen = read_int();
+$g = intval(trim(fgets(STDIN)));
+$strlen = $g;
 echo $strlen, "=strlen\n";
-$tab4 = read_char_line($strlen);
+$k = $strlen;
+$h = fgets(STDIN);
+$tab4 = $h;
 for ($i3 = 0 ; $i3 < $strlen; $i3++)
 {
   $tmpc = $tab4[$i3];

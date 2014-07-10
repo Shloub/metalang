@@ -28,9 +28,15 @@ let result len tab =
 
 let () =
 begin
-  let len = (read_int ()) in
+  let a = Scanf.scanf "%d " (fun x -> x) in
+  let len = a in
   Printf.printf "%d\n" len;
-  let tab = read_int_line len in
+  let c = len in
+  let d = Array.init c (fun _e ->
+    let f = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    f) in
+  let b = d in
+  let tab = b in
   Printf.printf "%d" (result len tab)
 end
  

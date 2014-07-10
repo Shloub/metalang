@@ -13,7 +13,11 @@ int min3(int a, int b, int c){
 }
 
 int min4(int a, int b, int c, int d){
-  return min3(min2(a, b), c, d);
+  int f = min2(a, b);
+  int g = c;
+  int h = d;
+  int e = min2(min2(f, g), h);
+  return e;
 }
 
 int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
@@ -32,7 +36,16 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int out_ = 1 + min4(val1, val2, val3, val4);
+    int l = val1;
+    int m = val2;
+    int n = val3;
+    int o = val4;
+    int p = min2(l, m);
+    int q = n;
+    int r = o;
+    int s = min2(min2(p, q), r);
+    int k = s;
+    int out_ = 1 + k;
     cache[posY][posX] = out_;
     return out_;
   }

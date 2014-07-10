@@ -17,7 +17,11 @@ public class prologin_template_intmatrix
   {
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
-      tab[z] = read_int_line(x);
+    {
+      int b = x;
+      int[] a = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+      tab[z] = a;
+    }
     return tab;
   }
   
@@ -33,8 +37,10 @@ public class prologin_template_intmatrix
   
   public static void Main(String[] args)
   {
-    int taille_x = read_int();
-    int taille_y = read_int();
+    int c = int.Parse(Console.ReadLine());
+    int taille_x = c;
+    int d = int.Parse(Console.ReadLine());
+    int taille_y = d;
     int[][] tableau = read_int_matrix(taille_x, taille_y);
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }
