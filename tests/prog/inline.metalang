@@ -1,0 +1,15 @@
+
+def inline void foo(int i)
+  print i print "\n"
+end
+
+def inline void foobar(int i)
+  foo(i)
+  print "foobar"
+end
+
+main
+  foo(0)
+  foobar(12)
+  foo(1)
+end
