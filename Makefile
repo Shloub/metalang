@@ -140,6 +140,9 @@ TMPFILES	:=\
 	$(addsuffix .c, $(TESTS)) \
 	$(addsuffix .c.bin, $(TESTS)) \
 	$(addsuffix .c.bin.out, $(TESTS)) \
+	$(addsuffix .hs, $(TESTS)) \
+	$(addsuffix .hs.exe, $(TESTS)) \
+	$(addsuffix .hs.exe.out, $(TESTS)) \
 	$(addsuffix .ml, $(TESTS)) \
 	$(addsuffix .ml.out, $(TESTS)) \
 	$(addsuffix .ml.native, $(TESTS)) \
@@ -253,6 +256,13 @@ out/%.ml : tests/prog/%.metalang metalang out
 	 ./metalang -quiet -o out -lang ml $< || exit 1; \
 	fi
 
+out/%.hs : tests/prog/%.metalang metalang out
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang hs $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang hs $< || exit 1; \
+	fi
+
 out/%.rb : tests/prog/%.metalang metalang out
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang rb $< < "$(basename $<).compiler_input" || exit 1; \
@@ -305,6 +315,7 @@ out/%.metalang.test : out/%.metalang Stdlib/stdlib.metalang metalang
 
 out/%.m.bin : out/%.m
 	@gcc `gnustep-config --objc-flags` -lgnustep-base $(OBJCFLAGS) $< -o $@ || exit 1
+	@rm out/$(basename $*).m.d || exit 0
 
 out/%.c.bin : out/%.c
 	@gcc $(CFLAGS) $< -o $@ || exit 1
@@ -323,11 +334,10 @@ out/%.class : out/%.java
 out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
-out/%.ml.native : out/%.ml
-	@ocamlopt -w +A -g out/$(basename $*).ml -o out/$(basename $*).ml.native || exit 1
-	@rm out/$(basename $*).cmx || exit 0
-	@rm out/$(basename $*).cmi || exit 0
-	@rm out/$(basename $*).o || exit 0
+out/%.hs.exe : out/%.hs
+	@ghc out/$(basename $*).hs -o out/$(basename $*).hs.exe || exit 1
+	@rm out/$(basename $*).o
+	@rm out/$(basename $*).hi
 
 out/%.ml.byte : out/%.ml
 	@ocamlc -w +A -g out/$(basename $*).ml -o -g out/$(basename $*).ml.byte || exit 1
@@ -345,6 +355,9 @@ out/%.eval.out : metalang
 	fi;
 
 out/%.ml.native.out : out/%.ml.native
+	@./$< < tests/prog/$(basename $*).in > $@ || exit 1;
+
+out/%.hs.exe.out : out/%.hs.exe
 	@./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.go.out : out/%.go
@@ -377,7 +390,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out
+out/%.test : out/%.hs.exe.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \

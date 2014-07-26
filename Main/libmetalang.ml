@@ -212,6 +212,7 @@ let languages, printers =
     "java", clike_passes => new JavaPrinter.javaPrinter ;
     "js",   clike_passes => new JsPrinter.jsPrinter ;
     "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
+    "hs",   ocaml_passes => new HaskellPrinter.haskellPrinter ;
     "php",  php_passes => new PhpPrinter.phpPrinter ;
     "rb",   python_passes => new RbPrinter.rbPrinter ;
     "py",   python_passes => new PyPrinter.pyPrinter ;
@@ -382,6 +383,7 @@ enum @target_language
   LANG_Go
   LANG_Cl
   LANG_M
+  LANG_Hs
   LANG_Metalang_parsed
 end
 def @target_language current_language ()
