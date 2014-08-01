@@ -107,12 +107,6 @@ tar :
 	cp _tags tarball/_tags
 	cp myocamlbuild.ml tarball/myocamlbuild.ml
 	cp Makefile tarball/Makefile
-	rm tarball/tests/prog/cambriolage.in
-	rm tarball/tests/prog/cambriolage.metalang
-	rm tarball/tests/prog/montagnes.in
-	rm tarball/tests/prog/montagnes.metalang
-	rm tarball/tests/prog/summax_souslist.in
-	rm tarball/tests/prog/summax_souslist.metalang
 	tar -czf tarball.tar.gz tarball
 	rm -rf tarball
 
@@ -149,6 +143,12 @@ TMPFILES	:=\
 	$(addsuffix .ml.native.out, $(TESTS)) \
 	$(addsuffix .ml.byte, $(TESTS)) \
 	$(addsuffix .ml.byte.out, $(TESTS)) \
+	$(addsuffix .fun.ml, $(TESTS)) \
+	$(addsuffix .fun.ml.out, $(TESTS)) \
+	$(addsuffix .fun.ml.native, $(TESTS)) \
+	$(addsuffix .fun.ml.native.out, $(TESTS)) \
+	$(addsuffix .fun.ml.byte, $(TESTS)) \
+	$(addsuffix .fun.ml.byte.out, $(TESTS)) \
 	$(addsuffix .java, $(TESTS)) \
 	$(addsuffix .java.out, $(TESTS)) \
 	$(addsuffix .js, $(TESTS)) \
@@ -249,6 +249,13 @@ out/%.metalang_parsed : tests/prog/%.metalang metalang out
 	 ./metalang -quiet -o out -lang metalang $< || exit 1; \
 	fi
 
+out/%.fun.ml : tests/prog/%.metalang metalang out
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang fun.ml $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang fun.ml $< || exit 1; \
+	fi
+
 out/%.ml : tests/prog/%.metalang metalang out
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang ml $< < "$(basename $<).compiler_input" || exit 1; \
@@ -334,6 +341,12 @@ out/%.class : out/%.java
 out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
+out/%.ml.native : out/%.ml
+	@ocamlopt -w +A -g out/$(basename $*).ml -o out/$(basename $*).ml.native || exit 1
+	@rm out/$(basename $*).cmx || exit 0
+	@rm out/$(basename $*).cmi || exit 0
+	@rm out/$(basename $*).o || exit 0
+
 out/%.hs.exe : out/%.hs
 	@ghc out/$(basename $*).hs -o out/$(basename $*).hs.exe || exit 1
 	@rm out/$(basename $*).o
@@ -390,7 +403,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.hs.exe.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out
+out/%.test : out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out # out/%.fun.ml.native.out out/%.fun.ml.out out/%.hs.exe.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \

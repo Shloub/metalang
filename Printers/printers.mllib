@@ -4,6 +4,7 @@ PhpPrinter
 JavaPrinter
 JsPrinter
 OcamlPrinter
+OcamlFunPrinter
 CsharpPrinter
 CPrinter
 ObjCPrinter

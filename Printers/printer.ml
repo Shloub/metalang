@@ -589,7 +589,7 @@ class printer = object(self)
       self#print_proto (funname, t, li)
       self#instructions instrs
 
-  method prog_item f t =
+  method prog_item (f:Format.formatter) t =
     match t with
     | Prog.Comment s -> self#comment f s;
       Format.fprintf f "@\n"

@@ -180,17 +180,16 @@ let ocaml_passes prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
 
+let fun_passes prog =
+  prog |> default_passes
+  |> (fun (a, b) -> a, TransformFun.transform (a, b))
+
 let no_passes prog =
   prog
 
 module L = StringMap
 let languages, printers =
-  let ( => )
-      (pa : (Typer.env * Utils.prog) -> Typer.env * Utils.prog )
-      pr
-      (out: Format.formatter)
-      (prog : Typer.env * Utils.prog) :
-      (((Format.formatter -> unit) ->  unit)) -> unit
+  let ( => ) pa pr out prog
     =
     (fun (err : ((Format.formatter -> unit) -> unit)) ->
       let typerEnv, processed  =
@@ -212,6 +211,7 @@ let languages, printers =
     "java", clike_passes => new JavaPrinter.javaPrinter ;
     "js",   clike_passes => new JsPrinter.jsPrinter ;
     "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
+    "fun.ml",  fun_passes => new OcamlFunPrinter.camlFunPrinter ;
     "hs",   ocaml_passes => new HaskellPrinter.haskellPrinter ;
     "php",  php_passes => new PhpPrinter.phpPrinter ;
     "rb",   python_passes => new RbPrinter.rbPrinter ;
@@ -266,14 +266,18 @@ let warn_error_of_parse_error filename lexbuf =
     let line = curr.Lexing.pos_lnum in
     let cnum = curr.Lexing.pos_cnum - curr.Lexing.pos_bol - 1 in
     let filecontent =
-      let i = open_in filename in
-      let l = ref "" in
       try
-      for j = 1 to line do
-        l := input_line i
-      done;
-      !l
-      with End_of_file -> !l
+        let i =
+          open_in filename
+        in
+        let l = ref "" in
+        try
+          for j = 1 to line do
+            l := input_line i
+          done;
+          !l
+        with End_of_file -> !l
+      with Sys_error s -> ""
     in
     let spaces = if cnum = -1 then "" else String.make cnum ' ' in
     let tok = Lexing.lexeme lexbuf in
@@ -308,7 +312,6 @@ let make_prog_helper progname (funs, main) stdlib =
   } in
   (*
     debug_print prog;
-
     let before = Passes.WalkCountNoPosition.fold () prog in
     Format.fprintf Format.std_formatter "After parsing, %d positions missing@\n" before;
   *)
@@ -377,6 +380,7 @@ enum @target_language
   LANG_Java
   LANG_Js
   LANG_Ml
+  LANG_Fun_ml
   LANG_Php
   LANG_Rb
   LANG_Py
@@ -390,7 +394,7 @@ def @target_language current_language ()
   return LANG_%s
 end
 
-" (String.capitalize lang)
+" (String.replace "." "_" (String.capitalize lang))
 
 let make_prog stdlib filename lang =
   let progname = Filename.chop_extension $ Filename.basename filename in
@@ -407,20 +411,23 @@ let process err c filename =
       let _ = Eval.eval_prog env prog in ()
     else
       let go lang =
-        let env, prog = make_prog c.stdlib filename lang in
-        let printer = L.find lang printers in
-        let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^
-          lang in
         try
-          if not c.quiet then Printf.printf "Generating %s\n%!" output ;
-          conf_rename lang prog ;
-          Tags.reset ();
-          let chan = open_out output in
-          let buf = Format.formatter_of_out_channel chan in
-          Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
-          close_out chan
+          let env, prog = make_prog c.stdlib filename lang in
+          let printer = L.find lang printers in
+          let output = c.output_dir ^ "/" ^ prog.Prog.progname ^ "." ^
+            lang in
+          try
+            if not c.quiet then Printf.printf "Generating %s\n%!" output ;
+            conf_rename lang prog ;
+            Tags.reset ();
+            let chan = open_out output in
+            let buf = Format.formatter_of_out_channel chan in
+            Format.fprintf buf "%a@;%!" (fun f () -> printer f (env, prog) err) ();
+            close_out chan
+          with Warner.Error e ->
+            Unix.unlink output;
+            err e
         with Warner.Error e ->
-          Unix.unlink output;
           err e
       in List.iter go c.languages
   with Warner.Error e ->
