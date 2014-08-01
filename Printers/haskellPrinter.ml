@@ -49,6 +49,45 @@ class haskellPrinter = object(self)
     Format.fprintf f "@[<v 2>@[<h>main =@\n@[<v 2>  %a@]@\n"
       self#instructions main
 
+  method print_fun_type f (funname, t, li) =
+    let ptli t = function
+      | [] ->
+        Format.fprintf f "%a :: IO %a"
+          self#binding funname
+          self#ptype t
+      | li ->
+      Format.fprintf f "%a :: %a -> IO %a"
+        self#binding funname
+        (print_list
+           self#ptype
+           (fun t print1 item1 print2 item2 ->
+             Format.fprintf t "%a@ -> %a" print1 item1 print2 item2
+           )) (List.rev (List.rev_map snd li))
+        self#ptype t
+    in  match Type.unfix t with
+    | Type.Void ->
+      begin match List.rev li with
+      | (_, hd)::tl -> ptli hd (List.rev tl)
+      | [] -> Format.fprintf f "%a :: IO ()" self#binding funname
+      end
+    | _ -> ptli t li
+    
+
+  method print_fun_args f (funname, t, li) =
+    Format.fprintf f "%a %a ="
+      self#binding funname
+      (print_list
+         self#binding
+         (fun t print1 item1 print2 item2 ->
+           Format.fprintf t "%a@ %a" print1 item1 print2 item2
+         )) (List.map fst li)
+
+  method print_fun f funname t li instrs =
+    Format.fprintf f "@[<h>%a@]@\n@[<h>%a@]@\n@[<v 2>  %a@]@\n"
+      self#print_fun_type (funname, t, li)
+      self#print_fun_args (funname, t, li)
+      self#instructions instrs
+
   method instructions f instrs =
     Format.fprintf f "do@[<v>@\n%a@]@\n"
       (print_list
@@ -111,10 +150,9 @@ class haskellPrinter = object(self)
 
   method ptype f t =
     match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "Integer"
+    | Type.Integer -> Format.fprintf f "Int"
     | Type.String -> Format.fprintf f "String"
     | Type.Array a -> Format.fprintf f "[%a]" self#ptype a
-    | Type.Void ->  Format.fprintf f "Void"
     | Type.Bool -> Format.fprintf f "Bool"
     | Type.Char -> Format.fprintf f "Char"
 (* TODO *)
