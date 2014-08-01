@@ -85,11 +85,17 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let e = expr e in
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [e]
-    | A.Instr.Affect (m, e) ->
+
+    | A.Instr.DeclRead (t, v, _) ->
+      let tl = instrs suite contsuite contreturn (v::env) tl in
+      F.Expr.readin (F.Expr.fun_ [v] tl) t
+
+    | A.Instr.Affect (m, e) -> 
       let e = expr e in
       let v = name_of_mutable m in
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [affect_mutable m e]
+
     | A.Instr.Return e ->
       begin match contreturn with
       | Some contreturn -> F.Expr.apply contreturn [expr e] (* TODO assert tl is empty *)
@@ -97,8 +103,8 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       end
     | A.Instr.Call (funname, eli) ->
       let next = instrs suite contsuite contreturn env tl in
-      let current = F.Expr.apply (F.Expr.binding funname) (List.map expr eli)
-      in F.Expr.ignore current next (* TODO propager les affectations des mutables *)
+      let next = F.Expr.fun_ [] next in (* continuation *)
+      F.Expr.apply (F.Expr.binding funname) (next::(List.map expr eli))
     | A.Instr.Comment str ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.comment str next
@@ -116,7 +122,9 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let e = expr e in
       F.Expr.print e ty next
 
-    (* propager les affectations *)
+    | A.Instr.StdinSep ->
+      let next = instrs suite contsuite contreturn env tl in
+      F.Expr.skipin next
 
 (*
     | A.Instr.Loop (var, from, end_, li) ->
@@ -125,8 +133,6 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.While (e, li) ->
     | A.Instr.AllocArray (name, t, e, Some li) ->
     | A.Instr.Read (t, mut) ->
-    | A.Instr.DeclRead (t, name, _) ->
-    | A.Instr.StdinSep ->
 *)
 
     | A.Instr.AllocRecord (varname, ty, li) -> assert false (* TODO *)
@@ -139,8 +145,9 @@ let transform (tyenv, prog) =
   let fonctions = List.filter_map
     (function
     | Ast.Prog.DeclarFun (name, _, params, is, _) ->
+      let params = "return" :: (List.map fst params) in
       let e = instrs false (F.Expr.binding "return") (Some (F.Expr.binding "return")) [] is in
-      Some (name, F.Expr.fun_ (List.map fst params) e)
+      Some (name, F.Expr.fun_ params e)
     | _ -> None) prog.Ast.Prog.funs
   in match prog.Ast.Prog.main with
   | None -> fonctions
