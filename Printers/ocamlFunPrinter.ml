@@ -23,13 +23,90 @@
  *
  *)
 
+module E = AstFun.Expr
+
 class camlFunPrinter = object(self)
 
   val mutable typerEnv : Typer.env = Typer.empty
   method getTyperEnv () = typerEnv
   method setTyperEnv t = typerEnv <- t
 
-  method prog (f:Format.formatter) (prog:AstFun.prog) = ()
+  method binopstr = function
+  | Ast.Expr.Add -> "+"
+  | Ast.Expr.Sub -> "-"
+  | Ast.Expr.Mul -> "*"
+  | Ast.Expr.Div -> "/"
+  | Ast.Expr.Mod -> "mod"
+  | Ast.Expr.Or -> "||"
+  | Ast.Expr.And -> "&&"
+  | Ast.Expr.Lower -> "<"
+  | Ast.Expr.LowerEq -> "<="
+  | Ast.Expr.Higher -> ">"
+  | Ast.Expr.HigherEq -> ">="
+  | Ast.Expr.Eq -> "="
+  | Ast.Expr.Diff -> "<>"
+
+  method unopstr = function
+  | Ast.Expr.Neg -> "-"
+  | Ast.Expr.Not -> "not"
+
+  method pbinop f op = Format.fprintf f "%s" (self#binopstr op)
+  method punop f op = Format.fprintf f "%s" (self#unopstr op)
+
+  method comment f s c = Format.fprintf f "(* %s *) %a" s self#expr c
+  method binop f a op b = Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
+  method unop f a op = Format.fprintf f "(%a %a)"self#punop op self#expr a
+  method fun_ f params e = Format.fprintf f "(fun %a -> %a)"
+    (Printer.print_list
+       self#binding
+       (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+    self#expr e
+
+  method ignore f e1 e2 = Format.fprintf f "%a;@\n%a" self#expr e1 self#expr e2
+
+  method binding f s = Format.fprintf f "%s" s
+
+  method print f e ty next =
+    Format.fprintf f "Printf.printf %S %a; %a"
+      (Printer.format_type ty)
+      self#expr e
+      self#expr next
+
+  method lief f = function
+  | E.Unit ->  Format.fprintf f "()"
+  | E.Char c -> Format.fprintf f "%C" c
+  | E.String s -> Format.fprintf f "%S" s
+  | E.Integer i -> Format.fprintf f "%i" i
+  | E.Bool true -> Format.fprintf f "true"
+  | E.Bool false -> Format.fprintf f "false"
+  | E.Enum s -> Format.fprintf f "%s" s
+  | E.Binding s -> self#binding f s
+
+  method expr f e = match E.unfix e with
+  | E.BinOp (a, op, b) -> self#binop f a op b
+  | E.UnOp (a, op) -> self#unop f a op
+  | E.Fun (params, e) -> self#fun_ f params e
+  | E.Apply (e, li) ->
+    Format.fprintf f "(%a %a)"
+      self#expr e
+      (Printer.print_list
+         self#expr
+         (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+  | E.Lief l -> self#lief f l
+  | E.Comment (s, c) -> self#comment f s c
+  | E.Ignore (e1, e2) -> self#ignore f e1 e2
+  | E.If (e1, e2, e3) ->
+    Format.fprintf f "if %a then %a else %a"
+      self#expr e1 self#expr e2 self#expr e3
+  | E.Print (e, ty, next) ->
+    self#print f e ty next
+
+  method decl f (name, e) =
+    Format.fprintf f "let %a = %a;;@\n"
+      self#binding name self#expr e
+
+  method prog (f:Format.formatter) (prog:AstFun.prog) =
+    List.iter (self#decl f) prog
 
 end
 
