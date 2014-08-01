@@ -135,7 +135,7 @@ class cppPrinter = object(self)
         self#binding varname
         self#bloc li
     in match Expr.unfix expr2 with
-    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1))
+    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1)))
       ->
       Format.fprintf f "@[<h>for@ (int %a@ =@ %a@ ;@ %a@ <@ %a;@ %a++)@\n@]%a"
         self#binding varname

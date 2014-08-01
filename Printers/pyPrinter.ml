@@ -243,7 +243,7 @@ def skipchar():
         self#expr expr2
         self#bloc li
     in match Expr.unfix expr2 with
-    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1)) ->
+    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1))) ->
       Format.fprintf f "@[<h>for@ %a@ in@ range(%a,@ %a):@\n@]%a"
         self#binding varname
         self#expr expr1
@@ -285,7 +285,7 @@ def skipchar():
 
   method print f t expr =
     match Expr.unfix expr with
-    | Expr.String s ->
+    | Expr.Lief (Expr.String s) ->
       if String.ends_with s "\n" then
         let l = String.length s in
         Format.fprintf f "@[print(%S)@]" (String.sub s 0 (l - 1) )

@@ -187,17 +187,16 @@ class commonLispPrinter = object(self)
     in
     let t = Expr.unfix t in
     match t with
-    | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> binop op a b
-    | Expr.Integer i -> Format.fprintf f "%i" i
-    | Expr.String i -> self#string f i
     | Expr.Access a -> self#access f a
     | Expr.Call (funname, li) -> self#apply f funname li
-    | Expr.Char (c) -> self#char f c
-    | Expr.Enum e -> Format.fprintf f "'%s" e
     | Expr.Lexems e -> assert false
     | Expr.Record e -> self#record f e
+    | Expr.Lief l -> self#lief f l
+
+  method enum f e =
+    Format.fprintf f "'%s" e
 
   method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     match BindingMap.find_opt var macros with

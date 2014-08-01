@@ -164,7 +164,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
              "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
-  | Expr.String s -> Format.fprintf f "@[System.out.print(%S);@]" s
+  | Expr.Lief (Expr.String s) -> Format.fprintf f "@[System.out.print(%S);@]" s
   | _ ->
     Format.fprintf f "@[System.out.printf(\"%a\", %a);@]" self#format_type t self#expr expr
 

@@ -64,10 +64,7 @@ let rec process (acc:'lex acc) i =
       (_,
        (Expr.Access ( Mutable.Fixed.F
                         (_, Mutable.Var _))
-           | Expr.Char _
-           | Expr.String _
-           | Expr.Integer _
-           | Expr.Bool _
+           | Expr.Lief _
        )
       )) ->
       [fixed_map t0]

@@ -325,7 +325,7 @@ class printer = object(self)
 
   method selfAssoc f m e2 = function
   | Expr.Add -> begin match Expr.unfix e2 with
-    | Expr.Integer 1 ->
+    | Expr.Lief (Expr.Integer 1) ->
       Format.fprintf f "@[<h>%a ++;@]" self#mutable_ m
     | _ ->
       Format.fprintf f "@[<h>%a += %a;@]" self#mutable_ m
@@ -333,7 +333,7 @@ class printer = object(self)
   end
   | Expr.Sub ->
     begin match Expr.unfix e2 with
-    | Expr.Integer 1 ->
+    | Expr.Lief (Expr.Integer 1) ->
       Format.fprintf f "@[<h>%a --;@]" self#mutable_ m
     | _ ->
       Format.fprintf f "@[<h>%a -= %a;@]" self#mutable_ m
@@ -475,13 +475,9 @@ class printer = object(self)
         Format.fprintf f "%a(%a)" pop () self#expr a
 
   method nop = function
-  | Expr.Integer _ -> true
-  | Expr.String _ -> true
-  | Expr.Char _ -> true
-  | Expr.Bool _ -> true
+  | Expr.Lief _ -> true
   | Expr.Access _ -> true
   | Expr.Call (_, _) -> true
-  | Expr.Enum _ -> true
   | _ -> false
 
   method printp f e =
@@ -539,20 +535,23 @@ class printer = object(self)
   method lexems f (li : (Parser.token, Utils.expr) Lexems.t list )  =
     Utils.lexems f li
 
+  method lief f = function
+    | Expr.Enum e -> self#enum f e
+    | Expr.Bool b -> self#bool f b
+    | Expr.Integer i -> self#integer f i
+    | Expr.String i -> self#string f i
+    | Expr.Char (c) -> self#char f c
+
   method expr f t =
     let t = Expr.unfix t in
     match t with
-    | Expr.Enum e -> self#enum f e
+    | Expr.Lief l -> self#lief f l
     | Expr.Lexems li -> self#lexems f li
-    | Expr.Bool b -> self#bool f b
     | Expr.UnOp (a, op) -> self#unop f op a
     | Expr.BinOp (a, op, b) -> self#binop f op a b
-    | Expr.Integer i -> self#integer f i
-    | Expr.String i -> self#string f i
     | Expr.Access m ->
       self#access f m
     | Expr.Call (funname, li) -> self#apply f funname li
-    | Expr.Char (c) -> self#char f c
     | Expr.Tuple li -> self#tuple f li
     | Expr.Record li -> self#record f li
 
@@ -672,7 +671,7 @@ class printer = object(self)
       let li =
         if self#combine_formats () then
           List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
-          | Expr.String s ->
+          | Expr.Lief (Expr.String s) ->
             let s = self#noformat s in
             (String.sub s 1 ((String.length s) - 2)  , (ty, e))
           | _ -> (format, (ty, e))
@@ -686,7 +685,7 @@ class printer = object(self)
       let exprs =
         if self#combine_formats () then
           List.filter (fun (ty, e) -> match Expr.unfix e with
-          | Expr.String _ -> false
+          | Expr.Lief (Expr.String _) -> false
           | _ -> true
           ) exprs
         else exprs

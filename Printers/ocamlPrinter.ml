@@ -259,7 +259,7 @@ class camlPrinter = object(self)
       let li =
         if self#combine_formats () then
           List.map ( fun (format, (ty, e)) -> match Expr.unfix e with
-          | Expr.String s ->
+          | Expr.Lief (Expr.String s) ->
             let s = self#noformat s in
             (String.sub s 1 ((String.length s) - 2)  , (ty, e))
           | _ -> (format, (ty, e))
@@ -273,7 +273,7 @@ class camlPrinter = object(self)
       let exprs =
         if self#combine_formats () then
           List.filter (fun (ty, e) -> match Expr.unfix e with
-          | Expr.String _ -> false
+          | Expr.Lief (Expr.String _) -> false
           | _ -> true
           ) exprs
         else exprs
@@ -540,7 +540,7 @@ class camlPrinter = object(self)
 
   method print f t expr =
     match Expr.unfix expr with
-    | Expr.String s -> Format.fprintf f "@[Printf.printf %s@]" ( self#noformat s)
+    | Expr.Lief (Expr.String s) -> Format.fprintf f "@[Printf.printf %s@]" ( self#noformat s)
     | _ ->
       Format.fprintf f "@[Printf.printf \"%a\" %a@]"
         self#format_type t
@@ -615,11 +615,7 @@ class camlPrinter = object(self)
 
 
   method nop = function
-  | Expr.Enum _ -> true
-  | Expr.Char _ -> true
-  | Expr.Bool _ -> true
-  | Expr.Integer _ -> true
-  | Expr.String _ -> true
+  | Expr.Lief _ -> true
   | Expr.Access _ -> true
   | Expr.Call (_, _) -> false
   | Expr.Record _ -> true

@@ -166,7 +166,7 @@ end
              "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
-  | Expr.String s -> Format.fprintf f "@[print %s;@]" ( self#noformat s )
+  | Expr.Lief (Expr.String s) -> Format.fprintf f "@[print %s;@]" ( self#noformat s )
   | _ -> Format.fprintf f "@[printf \"%a\", %a@]"
     self#format_type t
     self#expr expr

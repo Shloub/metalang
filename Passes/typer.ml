@@ -440,16 +440,22 @@ let rec collect_contraintes_expr env e =
       let env, acontrainte = collect_contraintes_expr env a in
       let env = add_contrainte env acontrainte contrainte in
       env, contrainte
-    | Expr.Char _ ->
-      env, ref (Typed (Type.char, loc e))
-    | Expr.String _ ->
-      env, ref (Typed (Type.string, loc e))
-    | Expr.Integer _ ->
-      env, ref (Typed (Type.integer, loc e))
+    | Expr.Lief l -> begin match l with
+      | Expr.Char _ ->
+        env, ref (Typed (Type.char, loc e))
+      | Expr.String _ ->
+        env, ref (Typed (Type.string, loc e))
+      | Expr.Integer _ ->
+        env, ref (Typed (Type.integer, loc e))
+      | Expr.Bool _ ->
+        env, ref (Typed (Type.bool, loc e))
+      | Expr.Enum en ->
+        let (t, _) = StringMap.find en env.enum in (* TODO not found*)
+        let contrainte = ref (Typed (t, loc e) ) in
+        env, contrainte
+    end
     | Expr.Lexems li -> (* TODO typer les insertions *)
       env, ref (Typed (Type.lexems, loc e))
-    | Expr.Bool _ ->
-      env, ref (Typed (Type.bool, loc e))
     | Expr.Access mut ->
       collect_contraintes_mutable env mut
     | Expr.Call ("instant", [param]) ->
@@ -474,10 +480,6 @@ let rec collect_contraintes_expr env e =
               env.contraintes} in env
         ) env (List.zip args_ty li) in
       env, out_ty
-    | Expr.Enum en ->
-      let (t, _) = StringMap.find en env.enum in (* TODO not found*)
-      let contrainte = ref (Typed (t, loc e) ) in
-      env, contrainte
     | Expr.Tuple t ->
       let env, contraintes = List.fold_left_map collect_contraintes_expr env t in
       let tuple_contrainte = ref (PreTyped (Type.Tuple contraintes, loc e)) in

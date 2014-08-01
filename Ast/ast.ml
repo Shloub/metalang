@@ -400,19 +400,22 @@ module Expr = struct
   | Lower | LowerEq | Higher | HigherEq (* 'a *)
   | Eq | Diff (* 'a *)
 
-  type ('a, 'lex) tofix =
-    BinOp of 'a * binop * 'a (** operations binaires *)
-  | UnOp of 'a * unop (** operations unaires *)
+  type lief =
   | Char of char
   | String of string
   | Integer of int
   | Bool of bool
+  | Enum of string (** enumerateur *)
+
+  type ('a, 'lex) tofix =
+    BinOp of 'a * binop * 'a (** operations binaires *)
+  | UnOp of 'a * unop (** operations unaires *)
+  | Lief of lief
   | Access of 'a Mutable.t (** vaut la valeur du mutable *)
   | Call of funname * 'a list (** appelle la fonction *)
   | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
   | Tuple of 'a list
   | Record of (varname * 'a) list
-  | Enum of string (** enumerateur *)
 
   (** {2 parcours} *)
 
@@ -422,17 +425,12 @@ module Expr = struct
     let map f = function
       | BinOp (a, op, b) -> BinOp ((f a), op, f b)
       | UnOp (a, op) -> UnOp((f a), op)
-      | (
-        Integer _
-            | String _
-            | Char _
-            | Bool _) as lief -> lief
+      | Lief l -> Lief l
       | Access m ->
         let (), m2 = Mutable.foldmap_expr (fun () e -> (), f e) () m in
         Access m2
       | Call (n, li) -> Call (n, List.map f li)
       | Lexems x -> Lexems (List.map (Lexems.map_expr f) x)
-      | Enum e -> Enum e
       | Tuple e -> Tuple (List.map f e)
       | Record li -> Record (List.map (fun (n, e) -> n, f e) li)
 
@@ -456,10 +454,7 @@ module Expr = struct
         let acc, a = f acc a in
         let acc, b = f acc b in
         (acc, Fixed.fixa annot (BinOp (a, op, b) ) )
-      | Char _ -> acc, t
-      | String _ -> acc, t
-      | Integer _ -> acc, t
-      | Bool _ -> acc, t
+      | Lief _ -> acc, t
       | Access m ->
         let acc, m = Mutable.foldmap_expr f acc m in
         acc, Fixed.fixa annot (Access m)
@@ -467,7 +462,6 @@ module Expr = struct
         let acc, li = List.fold_left_map f acc li in
         (acc, Fixed.fixa annot (Call(name, li)) )
       | Lexems x -> acc, Fixed.fixa annot (Lexems x)
-      | Enum x -> acc, Fixed.fixa annot (Enum x)
       | Tuple li ->
         let acc, li = List.fold_left_map f acc li in
         acc, Fixed.fixa annot (Tuple li)
@@ -480,17 +474,17 @@ module Expr = struct
 
   (** {2 utils} *)
 
-  let bool b = fix (Bool b)
+  let bool b = fix (Lief (Bool b))
 
-  let enum e = fix (Enum e)
+  let enum e = fix (Lief (Enum e))
 
   let unop op a = fix (UnOp (a, op))
   let binop op a b = fix (BinOp (a, op, b))
 
-  let integer i = fix (Integer i)
-  let char i = fix (Char i)
-  let string f = fix (String f)
-  let boolean b = fix (Bool b)
+  let integer i = fix (Lief (Integer i))
+  let char i = fix (Lief (Char i))
+  let string f = fix (Lief (String f))
+  let boolean b = fix (Lief (Bool b))
 
   let lexems li = fix (Lexems li)
 

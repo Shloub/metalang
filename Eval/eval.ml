@@ -404,10 +404,24 @@ module EvalF (IO : EvalIO) = struct
     let res x = Result x in
     match Expr.Fixed.map (fun e -> precompile_expr e env)
       (Expr.Fixed.unfix t) with
-      | Expr.Char c -> Char c |> res
-      | Expr.String s -> String s |> res
-      | Expr.Integer i -> Integer i |> res
-      | Expr.Bool b -> Bool b |> res
+      | Expr.Lief l -> begin match l with
+        | Expr.Char c -> Char c |> res
+        | Expr.String s -> String s |> res
+        | Expr.Integer i -> Integer i |> res
+        | Expr.Bool b -> Bool b |> res
+        | Expr.Enum e ->
+          let t = Typer.type_for_enum e env.tyenv in
+          begin match Type.unfix t with
+          | Type.Enum li ->
+            let rec f n = function
+              | [] -> assert false
+              | hd::tl -> if String.equals hd e then n else
+                  f (n + 1) tl in
+            let v = f 0 li in
+            Integer v |> res
+          | _ -> assert false
+          end
+      end
       | Expr.BinOp (a, op, b) ->
         binop loc op a b
       | Expr.UnOp (Result r, Expr.Neg) ->
@@ -455,18 +469,6 @@ module EvalF (IO : EvalIO) = struct
         WithEnv (fun execenv ->
           call execenv
         )
-      | Expr.Enum e ->
-        let t = Typer.type_for_enum e env.tyenv in
-        begin match Type.unfix t with
-        | Type.Enum li ->
-          let rec f n = function
-            | [] -> assert false
-            | hd::tl -> if String.equals hd e then n else
-                f (n + 1) tl in
-          let v = f 0 li in
-          Integer v |> res
-        | _ -> assert false
-        end
       | Expr.Lexems l -> precompiledExpr_of_lexems_list l env
   (** precompile an expression from a token list *)
   and precompiledExpr_of_lexems_list li (env:env): precompiledExpr =

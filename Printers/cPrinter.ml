@@ -120,7 +120,7 @@ class cPrinter = object(self)
         self#binding varname
         self#bloc li
     in match Expr.unfix expr2 with
-    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Integer 1)) ->
+    | Expr.BinOp (expr3, Expr.Sub, Expr.Fixed.F (_, Expr.Lief (Expr.Integer 1))) ->
       Format.fprintf f "@[<h>for@ (%a@ =@ %a@ ;@ %a@ <@ %a;@ %a++)@\n@]%a"
         self#binding varname
         self#expr expr1
@@ -208,7 +208,7 @@ class cPrinter = object(self)
            (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
-  | Expr.String s -> Format.fprintf f "@[%a(%s);@]" self#printf () ( self#noformat s )
+  | Expr.Lief (Expr.String s) -> Format.fprintf f "@[%a(%s);@]" self#printf () ( self#noformat s )
   | _ -> Format.fprintf f "@[%a(\"%a\", %a);@]" self#printf () self#format_type t self#expr expr
 
   method prog f prog =
