@@ -90,6 +90,16 @@ module F (T : SigAst) = struct
 
     let iter f t = fold (fun () t -> f t) () t
 
+    exception Found
+
+    let exists f t =
+      try
+        fold (fun b t ->
+          if f t then raise Found
+          else false
+        ) false t
+      with Found -> true
+
     let map f0 m =
       let rec f () m =
         let (), m = T.foldmap f () m in
