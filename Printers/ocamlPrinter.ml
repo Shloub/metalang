@@ -221,30 +221,32 @@ class camlPrinter = object(self)
         self#bloc ifcase
         self#bloc elsecase
 
+  method nocomment li = List.filter (fun i -> match Instr.unfix i with
+  | Instr.Comment _ -> false
+  | _ -> true
+  ) li
+
   method ends_with_stop instrs1 instrs2 =
+    let instrs2 = self#nocomment instrs2 in
     if List.for_all self#is_stdin instrs1 &&
       List.exists (fun i -> match Instr.unfix i with
       | Instr.DeclRead _ -> true
       | _ -> false
       ) instrs1
     then false
-    else match Instr.unfix (List.hd (List.rev instrs1)) with
-    | Instr.AllocRecord _  (* letin -> pas de ; *)
-    | Instr.AllocArray _
-    | Instr.Declare _ 
-    | Instr.Untuple _
-    | Instr.DeclRead _
-    | Instr.Comment _  (* le ; a déjà été mis *)
-    | Instr.Return _ (* return -> pas de ; *)
-      -> false
-    | _ -> (* Si on a que des commentaires ensuite, alors on ne met pas de ; *)
-      List.exists
-        (function
-        | (Instr.Fixed.F (_, Instr.Comment _) ) -> false
-        | _ -> true
-        )
-        instrs2
-      
+    else match instrs1 with
+    | [] -> false
+    | _ -> begin match Instr.unfix (List.hd (List.rev instrs1)) with
+      | Instr.AllocRecord _  (* letin -> pas de ; *)
+      | Instr.AllocArray _
+      | Instr.Declare _ 
+      | Instr.Untuple _
+      | Instr.DeclRead _
+      | Instr.Comment _  (* le ; a déjà été mis *)
+      | Instr.Return _ (* return -> pas de ; *)
+        -> false
+      | _ -> true
+    end
 
   (** show an instruction *)
   method instructions0 f instrs =
@@ -280,14 +282,15 @@ class camlPrinter = object(self)
       in
       self#multi_print f format exprs
     else
-      print_list
-        self#instr
-        (fun t print1 item1 print2 item2 ->
-          if self#ends_with_stop [item1] item2 then
-            Format.fprintf t "%a;@\n%a" print1 item1 print2 item2
+      let rec g f = function
+        | [] -> ()
+        | [hd] -> self#instr f hd
+        | hd::tl ->
+          if self#ends_with_stop [hd] tl then
+            Format.fprintf f "%a;@\n%a" self#instr hd g tl
           else
-            Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-        ) f instrs
+            Format.fprintf f "%a@\n%a" self#instr hd g tl
+      in Format.fprintf f "%a (*--*)" g instrs
 
   (** show an instruction *)
   method instructions f instrs =
