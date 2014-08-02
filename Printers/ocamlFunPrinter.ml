@@ -65,6 +65,29 @@ class camlFunPrinter = object(self)
          (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
       self#expr e
 
+  method letrecin f name params e1 e2 = match params with
+  | [] -> Format.fprintf f "@[<v 2>let rec %a () =@\n%a in@\n%a@]"
+    self#binding name
+    self#expr e1
+    self#expr e2
+  | _ ->
+    Format.fprintf f "@[<v 2>let rec %a %a =@\n%a in@\n%a@]"
+      self#binding name
+      (Printer.print_list
+         self#binding
+         (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+      self#expr e1
+      self#expr e2
+
+  method funtuple f params e =
+    match params with
+    | [] -> Format.fprintf f "(fun () -> %a)" self#expr e
+    | _ -> Format.fprintf f "(fun@[ (%a) ->@\n%a@])"
+      (Printer.print_list
+         self#binding
+         (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) params
+      self#expr e
+
   method ignore f e1 e2 = Format.fprintf f "%a;@\n%a" self#expr e1 self#expr e2
 
   method binding f s = Format.fprintf f "%s" s
@@ -98,11 +121,18 @@ class camlFunPrinter = object(self)
        self#expr
        (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
 
+  method tuple f li = Format.fprintf f "(%a)"
+    (Printer.print_list self#expr
+       (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
+
   method expr f e = match E.unfix e with
+  | E.LetRecIn (name, params, e1, e2) -> self#letrecin f name params e1 e2
   | E.BinOp (a, op, b) -> self#binop f a op b
   | E.UnOp (a, op) -> self#unop f a op
   | E.Fun (params, e) -> self#fun_ f params e
+  | E.FunTuple (params, e) -> self#funtuple f params e
   | E.Apply (e, li) -> self#apply f e li
+  | E.Tuple li -> self#tuple f li
   | E.Lief l -> self#lief f l
   | E.Comment (s, c) -> self#comment f s c
   | E.Ignore (e1, e2) -> self#ignore f e1 e2
@@ -115,10 +145,13 @@ class camlFunPrinter = object(self)
     self#read f ty next
 
   method decl f (name, e) =
-    Format.fprintf f "let %a = @[<h>%a@];;@\n"
+    Format.fprintf f "@[<v 2>let %a =@\n%a@];;@\n"
       self#binding name self#expr e
 
+  method header f () = ()
+
   method prog (f:Format.formatter) (prog:AstFun.prog) =
+    self#header f ();
     List.iter (self#decl f) prog
 
 end

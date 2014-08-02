@@ -52,27 +52,46 @@ let need_cont e =
   | A.Expr.Call _ -> true
   | _ -> false ) e
 
-let rec expr cont e =
+let accessmut_nocont m = match A.Mutable.unfix m with
+  | A.Mutable.Var varname -> F.Expr.binding varname
+  | A.Mutable.Array (m, li) -> assert false (* TODO *)
+  | A.Mutable.Dot (mut, field) -> assert false
+
+let rec expr_nocont e =
   match A.Expr.unfix e with
-  | A.Expr.UnOp (e, op) ->
-    let f = Fresh.fresh () in
-    let cont = F.Expr.fun_ [f] (F.Expr.apply cont [F.Expr.unop (F.Expr.binding f) op])
-    in expr cont e
-  | A.Expr.BinOp (e1, op, e2) ->
+  | A.Expr.UnOp (e, op) -> F.Expr.unop (expr_nocont e) op
+  | A.Expr.BinOp (e1, op, e2) ->  F.Expr.binop (expr_nocont e1) op (expr_nocont e2)
+  | A.Expr.Lief l -> F.Expr.lief (lief l)
+  | A.Expr.Access m -> accessmut_nocont m
+  | A.Expr.Call(funname, params) -> assert false
+(*   | A.Expr.Tuple li -> F.Expr.tuple (List.map expr li)
+  | A.Expr.Record r -> F.Expr.record (List.map (fun (a, b) -> a, expr b) r) *)
+  | A.Expr.Lexems _ -> assert false
+
+
+let rec expr cont e =
+  if need_cont e then
+    match A.Expr.unfix e with
+    | A.Expr.UnOp (e, op) ->
+      let f = Fresh.fresh () in
+      let cont = F.Expr.fun_ [f] (F.Expr.apply cont [F.Expr.unop (F.Expr.binding f) op])
+      in expr cont e
+    | A.Expr.BinOp (e1, op, e2) ->
       let f1 = Fresh.fresh () in
       let f2 = Fresh.fresh () in
       let c = F.Expr.fun_ [f1; f2]
         (F.Expr.apply cont [F.Expr.binop (F.Expr.binding f1) op (F.Expr.binding f2)]) in
       let c = expr c e2 in
       expr c e1
-  | A.Expr.Lief l -> F.Expr.apply cont [F.Expr.lief (lief l)]
-  | A.Expr.Access m -> accessmut cont m
-  | A.Expr.Call(funname, params) ->
-    let c = F.Expr.apply (F.Expr.binding funname) [cont] in
-    List.fold_left expr c params
-(*   | A.Expr.Tuple li -> F.Expr.tuple (List.map expr li)
-  | A.Expr.Record r -> F.Expr.record (List.map (fun (a, b) -> a, expr b) r) *)
-  | A.Expr.Lexems _ -> assert false
+    | A.Expr.Lief l -> F.Expr.apply cont [F.Expr.lief (lief l)]
+    | A.Expr.Access m -> accessmut cont m
+    | A.Expr.Call(funname, params) ->
+      let c = F.Expr.apply (F.Expr.binding funname) [cont] in
+      List.fold_left expr c params
+  (*   | A.Expr.Tuple li -> F.Expr.tuple (List.map expr li)
+       | A.Expr.Record r -> F.Expr.record (List.map (fun (a, b) -> a, expr b) r) *)
+    | A.Expr.Lexems _ -> assert false
+  else F.Expr.apply cont [expr_nocont e]
 
 and accessmut cont m = match A.Mutable.unfix m with
   | A.Mutable.Var varname -> F.Expr.apply cont [F.Expr.binding varname]
@@ -101,7 +120,8 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
 
     | A.Instr.Affect (m, e) ->
       let v = name_of_mutable m in
-      let tl = instrs suite contsuite contreturn (v::env) tl in
+      let nenv = if List.mem v env then env else v::env in
+      let tl = instrs suite contsuite contreturn nenv tl in
       affect_mutable (F.Expr.fun_ [v] tl) m e
 
     | A.Instr.Return e ->
@@ -136,11 +156,34 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.skipin next
 
+    | A.Instr.While (e, li) ->
+      let next = instrs suite contsuite contreturn env tl in
+      let next = F.Expr.funtuple env next in
+      let returnenv = F.Expr.tuple (List.map F.Expr.binding env) in
+      let returnenv_fun = F.Expr.fun_ env returnenv in
+      let content = instrs true returnenv_fun contreturn env li in
+      let content = F.Expr.funtuple env content in
+      let b = Fresh.fresh () in
+      let loop = Fresh.fresh () in
+      let env2 = Fresh.fresh () in
+      let conte = F.Expr.fun_ [b] (F.Expr.if_ (F.Expr.binding b)
+                                     (F.Expr.apply (F.Expr.binding loop) [F.Expr.apply content [returnenv]])
+                                     (F.Expr.apply next [returnenv])) in
+      let e = expr conte e in
+
+      F.Expr.letrecin loop [env2] (F.Expr.apply
+                                     (F.Expr.funtuple env e)
+                                     [F.Expr.binding env2]
+      )
+        (F.Expr.apply (F.Expr.binding loop) [returnenv])
+        
+        
+
+
 (*
     | A.Instr.Loop (var, from, end_, li) ->
       let body = instrs contreturn contsuite (var::env) li in
       let next = instrs contreturn contsuite env tl in
-    | A.Instr.While (e, li) ->
     | A.Instr.AllocArray (name, t, e, Some li) ->
     | A.Instr.Read (t, mut) ->
 *)
