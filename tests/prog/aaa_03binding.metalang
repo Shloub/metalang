@@ -1,0 +1,25 @@
+
+def int g(int i)
+  def j = i * 4
+  if j % 2 == 1 then
+    return 0
+  end
+  return j
+end
+
+def void h(int i)
+  print i
+  print "\n"
+end
+
+main
+  h(14)
+  def a = 4
+  def b = 5
+  print a + b
+  /* main */
+  h(15)
+  a = 2
+  b = 1
+  print a + b
+end
