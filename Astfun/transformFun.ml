@@ -47,30 +47,40 @@ let lief = function
   | A.Expr.Bool b -> F.Expr.Bool b
   | A.Expr.Enum e -> F.Expr.Enum e
 
-let rec expr e = match A.Expr.unfix e with
+let need_cont e =
+  A.Expr.Writer.Deep.exists (fun e -> match A.Expr.unfix e with
+  | A.Expr.Call _ -> true
+  | _ -> false ) e
+
+let rec expr cont e =
+  match A.Expr.unfix e with
   | A.Expr.UnOp (e, op) ->
-    F.Expr.unop (expr e) op
+    let f = Fresh.fresh () in
+    let cont = F.Expr.fun_ [f] (F.Expr.apply cont [F.Expr.unop (F.Expr.binding f) op])
+    in expr cont e
   | A.Expr.BinOp (e1, op, e2) ->
-    F.Expr.binop (expr e1) op (expr e2)
-  | A.Expr.Lief l -> F.Expr.lief (lief l)
-  | A.Expr.Access m -> accessmut m
+      let f1 = Fresh.fresh () in
+      let f2 = Fresh.fresh () in
+      let c = F.Expr.fun_ [f1; f2]
+        (F.Expr.apply cont [F.Expr.binop (F.Expr.binding f1) op (F.Expr.binding f2)]) in
+      let c = expr c e2 in
+      expr c e1
+  | A.Expr.Lief l -> F.Expr.apply cont [F.Expr.lief (lief l)]
+  | A.Expr.Access m -> accessmut cont m
   | A.Expr.Call(funname, params) ->
-    F.Expr.apply (F.Expr.binding funname) (List.map expr params)
+    let c = F.Expr.apply (F.Expr.binding funname) [cont] in
+    List.fold_left expr c params
 (*   | A.Expr.Tuple li -> F.Expr.tuple (List.map expr li)
   | A.Expr.Record r -> F.Expr.record (List.map (fun (a, b) -> a, expr b) r) *)
   | A.Expr.Lexems _ -> assert false
-and accessmut m = match A.Mutable.unfix m with
-  | A.Mutable.Var varname -> F.Expr.binding varname
-  | A.Mutable.Array (m, li) ->
-    let m = accessmut m in
-    let li = List.map expr li in
-    List.fold_left (fun e param ->
-      F.Expr.apply e [param]
-    ) m li
+
+and accessmut cont m = match A.Mutable.unfix m with
+  | A.Mutable.Var varname -> F.Expr.apply cont [F.Expr.binding varname]
+  | A.Mutable.Array (m, li) -> assert false (* TODO *)
   | A.Mutable.Dot (mut, field) -> assert false
 
-let affect_mutable m e = match A.Mutable.unfix m with
-  | A.Mutable.Var varname -> e
+let affect_mutable cont m e = match A.Mutable.unfix m with
+  | A.Mutable.Var varname -> expr cont e
   | _ -> assert false (* TODO *)
 
 let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
@@ -82,29 +92,28 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     end
   | hd::tl -> match A.Instr.unfix hd with
     | A.Instr.Declare (v, ty, e, _) -> (* letin ? *)
-      let e = expr e in
       let tl = instrs suite contsuite contreturn (v::env) tl in
-      F.Expr.apply (F.Expr.fun_ [v] tl) [e]
+      expr (F.Expr.fun_ [v] tl) e
 
     | A.Instr.DeclRead (t, v, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.readin (F.Expr.fun_ [v] tl) t
 
-    | A.Instr.Affect (m, e) -> 
-      let e = expr e in
+    | A.Instr.Affect (m, e) ->
       let v = name_of_mutable m in
       let tl = instrs suite contsuite contreturn (v::env) tl in
-      F.Expr.apply (F.Expr.fun_ [v] tl) [affect_mutable m e]
+      affect_mutable (F.Expr.fun_ [v] tl) m e
 
     | A.Instr.Return e ->
       begin match contreturn with
-      | Some contreturn -> F.Expr.apply contreturn [expr e] (* TODO assert tl is empty *)
+      | Some contreturn -> expr contreturn e
       | None -> assert false
       end
     | A.Instr.Call (funname, eli) ->
       let next = instrs suite contsuite contreturn env tl in
       let next = F.Expr.fun_ [] next in (* continuation *)
-      F.Expr.apply (F.Expr.binding funname) (next::(List.map expr eli))
+      let c = F.Expr.apply (F.Expr.binding funname) [next] in
+      List.fold_left expr c eli
     | A.Instr.Comment str ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.comment str next
@@ -113,15 +122,16 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = F.Expr.fun_ env next in
       let body1 = instrs true next contreturn env l1 in
       let body2 = instrs true next contreturn env l2 in
-      let e: F.Expr.t = expr e in
       let l1: F.Expr.t = F.Expr.fun_ [] body1 in
       let l2: F.Expr.t = F.Expr.fun_ [] body2 in
-      F.Expr.apply (F.Expr.if_ e l1 l2) []
+      let f = Fresh.fresh () in
+      let c = F.Expr.fun_ [f] (F.Expr.apply (F.Expr.if_ (F.Expr.binding f) l1 l2) []) in
+      expr c e
     | A.Instr.Print (ty, e) ->
       let next = instrs suite contsuite contreturn env tl in
-      let e = expr e in
-      F.Expr.print e ty next
-
+      let f = Fresh.fresh () in
+      let c = F.Expr.fun_ [f] (F.Expr.print (F.Expr.binding f) ty next) in
+      expr c e
     | A.Instr.StdinSep ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.skipin next
