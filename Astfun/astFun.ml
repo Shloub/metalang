@@ -38,6 +38,8 @@ module Expr = struct
 
   type lief = (* le même type que dans Ast, sauf qu'on ajoute unit *)
   | Unit
+  | Error
+  | IntMapEmpty
   | Char of char
   | String of string
   | Integer of int
@@ -60,6 +62,8 @@ module Expr = struct
   | Print of 'a * Ast.Type.t * 'a
   | ReadIn of Ast.Type.t * 'a
   | SkipIn of 'a
+  | IntMapAdd of 'a * 'a * 'a
+  | IntMapGet of 'a * 'a
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = 'a tofix
@@ -67,8 +71,8 @@ module Expr = struct
     let map f = function
       | LetRecIn (name, params, e1, e2) ->
         LetRecIn (name, params, f e1, f e2)
-      | BinOp (a, op, b) -> BinOp ((f a), op, f b)
-      | UnOp (a, op) -> UnOp ((f a), op)
+      | BinOp (a, op, b) -> BinOp (f a, op, f b)
+      | UnOp (a, op) -> UnOp (f a, op)
       | Fun (params, e) -> Fun (params, f e)
       | FunTuple (params, e) -> Fun (params, f e)
       | Apply (e, li) -> Apply (f e, List.map f li)
@@ -80,6 +84,8 @@ module Expr = struct
       | Print (e, ty, next) -> Print (f e, ty, f next)
       | ReadIn (ty, e) -> ReadIn (ty, f e)
       | SkipIn e -> SkipIn (f e)
+      | IntMapAdd (e1, e2, e3) -> IntMapAdd (f e1, f e2, f e3)
+      | IntMapGet (e1, e2) -> IntMapGet (f e1, f e2)
     let next () = next ()
   end)
 
@@ -141,11 +147,25 @@ module Expr = struct
         | SkipIn e ->
           let acc, e = f acc e in
           acc, SkipIn e
+        | IntMapAdd (e1, e2, e3) ->
+          let acc, e1 = f acc e1 in
+          let acc, e2 = f acc e2 in
+          let acc, e3 = f acc e3 in
+          acc, IntMapAdd (e1, e2, e3)
+        | IntMapGet (e1, e2) ->
+          let acc, e1 = f acc e1 in
+          let acc, e2 = f acc e2 in
+          acc, IntMapGet (e1, e2)
       in acc, fixa annot unfixed
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
   let lief l = fix (Lief l)
   let unit = lief (Unit)
+  let error = lief (Error)
+  let intmapempty = lief (IntMapEmpty)
+  let intmapadd e1 e2 e3 = fix (IntMapAdd (e1, e2, e3))
+  let intmapget e1 e2 = fix (IntMapGet (e1, e2))
+  let integer i = lief (Integer i)
   let unop e op = fix (UnOp (e, op))
   let binop e1 op e2 = fix (BinOp (e1, op, e2))
   let binding s = fix (Lief (Binding s))

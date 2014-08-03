@@ -104,7 +104,9 @@ class camlFunPrinter = object(self)
       self#expr next
 
   method lief f = function
-  | E.Unit ->  Format.fprintf f "()"
+  | E.Error -> Format.fprintf f "(assert false)"
+  | E.Unit -> Format.fprintf f "()"
+  | E.IntMapEmpty -> Format.fprintf f "IntMap.empty"
   | E.Char c -> Format.fprintf f "%C" c
   | E.String s -> Format.fprintf f "%S" s
   | E.Integer i -> Format.fprintf f "%i" i
@@ -141,14 +143,20 @@ class camlFunPrinter = object(self)
       self#expr e1 self#expr e2 self#expr e3
   | E.Print (e, ty, next) ->
     self#print f e ty next
-  | E.ReadIn (ty, next) ->
-    self#read f ty next
+  | E.ReadIn (ty, next) -> self#read f ty next
+  | E.IntMapAdd (map, index, value) -> Format.fprintf f "(IntMap.add %a %a %a)" self#expr index self#expr value self#expr map
+  | E.IntMapGet (map, index) -> Format.fprintf f "(IntMap.find %a %a)" self#expr index self#expr map
 
   method decl f (name, e) =
     Format.fprintf f "@[<v 2>let %a =@\n%a@];;@\n"
       self#binding name self#expr e
 
-  method header f () = ()
+  method header f () = Format.fprintf f
+"module IntSet = Map.Make (struct
+  type t = int
+  let compare : int -> int -> int = Pervasives.compare
+end)
+"
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
     self#header f ();

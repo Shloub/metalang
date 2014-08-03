@@ -290,7 +290,7 @@ class camlPrinter = object(self)
             Format.fprintf f "%a;@\n%a" self#instr hd g tl
           else
             Format.fprintf f "%a@\n%a" self#instr hd g tl
-      in Format.fprintf f "%a (*--*)" g instrs
+      in Format.fprintf f "%a" g instrs
 
   (** show an instruction *)
   method instructions f instrs =
