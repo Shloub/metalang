@@ -52,12 +52,16 @@ let need_cont e =
   | A.Expr.Call _ -> true
   | _ -> false ) e
 
-let accessmut_nocont m = match A.Mutable.unfix m with
+let rec accessmut_nocont m = match A.Mutable.unfix m with
   | A.Mutable.Var varname -> F.Expr.binding varname
-  | A.Mutable.Array (m, li) -> assert false (* TODO *)
+  | A.Mutable.Array (m, li) ->
+    let m = accessmut_nocont m in
+    List.fold_right (fun i acc ->
+      let e = expr_nocont i in
+      F.Expr.intmapget acc e
+    ) li m
   | A.Mutable.Dot (mut, field) -> assert false
-
-let rec expr_nocont e =
+and expr_nocont e =
   match A.Expr.unfix e with
   | A.Expr.UnOp (e, op) -> F.Expr.unop (expr_nocont e) op
   | A.Expr.BinOp (e1, op, e2) ->  F.Expr.binop (expr_nocont e1) op (expr_nocont e2)
@@ -105,8 +109,11 @@ and accessmut cont m = match A.Mutable.unfix m with
     accessmut cont mut
   | A.Mutable.Dot (mut, field) -> assert false
 
-let affect_mutable cont m e = match A.Mutable.unfix m with
+let rec affect_mutable cont m e = match A.Mutable.unfix m with
   | A.Mutable.Var varname -> expr cont e
+  | A.Mutable.Array (mut, []) -> assert false
+  | A.Mutable.Array (mut, [item]) -> assert false (* TODO *)
+  | A.Mutable.Array (mut, hd::tl) -> assert false (* TODO *)
   | _ -> assert false (* TODO *)
 
 let rec affect_mutable_f cont m e = match A.Mutable.unfix m with
@@ -227,25 +234,10 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
         ) in
       let e = expr cont from_ in
       expr e end_
-    | A.Instr.AllocArray (name, t, e, Some li) ->
-assert false
-(*
-      let loop = Fresh.fresh () in
-
-
-
-
-      let var_plus_un = F.Expr.binop (F.Expr.binding var) Ast.Expr.Add (F.Expr.integer 1) in
-      let content = F.Expr.if_ (F.Expr.binop (F.Expr.binding var) Ast.Expr.LowerEq (F.Expr.binding to_) )
-        (F.Expr.apply (F.Expr.binding loop)
-           [var_plus_un ;
-            F.Expr.apply (F.Expr.apply content [F.Expr.binding var]) [F.Expr.binding env2]])
-        (F.Expr.apply next [F.Expr.binding env2]) in
-
-
-      *)
-
-
+    | A.Instr.AllocArray (name, t, e, Some li) -> assert false
+    | A.Instr.AllocArray (name, t, e, None) -> (* WARNING : on ignore complètement e... *)
+      let tl = instrs suite contsuite contreturn (name::env) tl in
+      F.Expr.apply (F.Expr.fun_ [name] tl) [F.Expr.intmapempty]
     | A.Instr.AllocRecord (varname, ty, li) -> assert false (* TODO *)
     | A.Instr.Untuple (vars, e) -> assert false (* TODO *)
     | A.Instr.AllocArray (name, t, e, None) -> assert false

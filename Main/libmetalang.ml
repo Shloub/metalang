@@ -182,6 +182,9 @@ let ocaml_passes prog =
 
 let fun_passes prog =
   prog |> default_passes
+  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+(* ça n'a pas l'air fonctionnel, mais la structure d'array ne l'est pas non plus,
+alors que l'intmap l'est. Donc on applique cette passe quand même.*)
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
 
 let no_passes prog =
