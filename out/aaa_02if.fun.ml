@@ -4,12 +4,15 @@ module IntSet = Map.Make (struct
 end)
 
 let main =
-  ((fun c ->
-       ((if c
-         then (fun () -> ((fun a ->
-                              Printf.printf "%s" a;
-                              ((fun () -> ()) ())) "true <-\n ->\n"))
-         else (fun () -> ((fun b ->
-                              Printf.printf "%s" b;
-                              ((fun () -> ()) ())) "false <-\n ->\n"))) ())) true);;
+  (((fun b e ->
+        ((if e
+          then (fun () -> ((fun c ->
+                               Printf.printf "%s" c;
+                               (b ())) "true <-\n ->\n"))
+          else (fun () -> ((fun d ->
+                               Printf.printf "%s" d;
+                               (b ())) "false <-\n ->\n"))) ())) (fun () -> ((fun
+   a ->
+  Printf.printf "%s" a;
+  ()) "small test end\n"))) true);;
 

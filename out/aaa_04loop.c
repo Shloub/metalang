@@ -18,7 +18,7 @@ int main(void){
     i ++;
     j += i;
   }
-  printf("%d%d", j, i);
+  printf("%d%dFIN TEST\n", j, i);
   return 0;
 }
 

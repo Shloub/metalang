@@ -10,5 +10,5 @@ while i < 10 do
   i += 1
   j += i
 end
-printf "%d%d", j, i
+printf "%d%dFIN TEST\n", j, i
 

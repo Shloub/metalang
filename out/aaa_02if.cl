@@ -11,12 +11,16 @@
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
 
-(if
-  t
-  (princ "true <-
+(progn
+  (if
+    t
+    (princ "true <-
  ->
 ")
-  (princ "false <-
+    (princ "false <-
  ->
 "))
+  (princ "small test end
+")
+)
 

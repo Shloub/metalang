@@ -27,6 +27,6 @@ func main() {
               i ++;
               j += i;
   }
-  fmt.Printf("%d%d", j, i);
+  fmt.Printf("%d%dFIN TEST\n", j, i);
 }
 

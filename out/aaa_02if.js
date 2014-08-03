@@ -39,5 +39,6 @@ if (1)
   util.print("true <-\n ->\n");
 else
   util.print("false <-\n ->\n");
+util.print("small test end\n");
 
 

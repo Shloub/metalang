@@ -11,6 +11,7 @@ begin
     begin
       Write('false <-'#10' ->'#10'');
     end;
+  Write('small test end'#10'');
 end.
 
 

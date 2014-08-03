@@ -5,39 +5,39 @@ end)
 
 let main =
   ((fun j ->
-       (((fun m n ->
-             let rec o k p =
-               (if (k <= n)
-                then (o (k + 1) (((fun k ->
+       (((fun n o ->
+             let rec p k q =
+               (if (k <= o)
+                then (p (k + 1) (((fun k ->
                                       (fun (j) ->
                                           ((fun j ->
-                                               ((fun h ->
-                                                    Printf.printf "%d" h;
-                                                    ((fun g ->
-                                                         Printf.printf "%s" g;
-                                                         ((fun j ->
-                                                              (j)) j)) "\n")) j)) (j + k)))) k) p))
+                                               ((fun l ->
+                                                    Printf.printf "%d" l;
+                                                    ((fun h ->
+                                                         Printf.printf "%s" h;
+                                                         ((fun () -> (j)) ())) "\n")) j)) (j + k)))) k) q))
                 else ((fun (j) ->
                           ((fun i ->
-                               let rec e f =
+                               let rec f g =
                                  ((fun (i, j) ->
-                                      ((fun d ->
-                                           (if d
-                                            then (e ((fun (i, j) ->
-                                                         ((fun c ->
-                                                              Printf.printf "%d" c;
+                                      ((fun e ->
+                                           (if e
+                                            then (f ((fun (i, j) ->
+                                                         ((fun d ->
+                                                              Printf.printf "%d" d;
                                                               ((fun i ->
                                                                    ((fun
                                                                     j ->
-                                                                   ((fun
-                                                                    i j ->
-                                                                   (i, j)) i j)) (j + i))) (i + 1))) i)) (i, j)))
+                                                                   ((fun () -> (i, j)) ())) (j + i))) (i + 1))) i)) (i, j)))
                                             else ((fun (i, j) ->
-                                                      ((fun b ->
-                                                           Printf.printf "%d" b;
-                                                           ((fun a ->
-                                                                Printf.printf "%d" a;
-                                                                ()) i)) j)) (i, j)))) (i < 10))) f) in
-                                 (e (i, j))) 4)) p)) in
-               (o m (j))) 0) 10)) 0);;
+                                                      ((fun c ->
+                                                           Printf.printf "%d" c;
+                                                           ((fun b ->
+                                                                Printf.printf "%d" b;
+                                                                ((fun
+                                                                 a ->
+                                                                Printf.printf "%s" a;
+                                                                ()) "FIN TEST\n")) i)) j)) (i, j)))) (i < 10))) g) in
+                                 (f (i, j))) 4)) q)) in
+               (p n (j))) 0) 10)) 0);;
 

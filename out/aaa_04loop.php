@@ -12,5 +12,5 @@ while ($i < 10)
   $i ++;
   $j += $i;
 }
-echo $j, $i;
+echo $j, $i, "FIN TEST\n";
 ?>

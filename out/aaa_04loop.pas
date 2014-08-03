@@ -22,6 +22,7 @@ begin
   end;
   Write(j);
   Write(i);
+  Write('FIN TEST'#10'');
 end.
 
 

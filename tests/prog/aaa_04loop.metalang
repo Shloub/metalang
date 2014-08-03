@@ -14,4 +14,5 @@ main
   end
   print j
   print i
+  print "FIN TEST\n"
 end

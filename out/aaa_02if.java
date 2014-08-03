@@ -10,6 +10,7 @@ public class aaa_02if
       System.out.print("true <-\n ->\n");
     else
       System.out.print("false <-\n ->\n");
+    System.out.print("small test end\n");
   }
   
 }

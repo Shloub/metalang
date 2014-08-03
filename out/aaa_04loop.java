@@ -19,7 +19,7 @@ public class aaa_04loop
       i ++;
       j += i;
     }
-    System.out.printf("%d%d", j, i);
+    System.out.printf("%d%dFIN TEST\n", j, i);
   }
   
 }

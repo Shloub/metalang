@@ -12,6 +12,6 @@ begin
       i := (!i) + 1;
       j := (!j) + (!i)
   done;
-  Printf.printf "%d%d" (!j) (!i)
+  Printf.printf "%d%dFIN TEST\n" (!j) (!i)
 end
  

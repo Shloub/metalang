@@ -6,6 +6,7 @@ int main(){
     std::cout << "true <-\n ->\n";
   else
     std::cout << "false <-\n ->\n";
+  std::cout << "small test end\n";
   return 0;
 }
 

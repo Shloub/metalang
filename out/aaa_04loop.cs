@@ -18,7 +18,7 @@ public class aaa_04loop
       i ++;
       j += i;
     }
-    Console.Write("" + j + i);
+    Console.Write("" + j + i + "FIN TEST\n");
   }
   
 }

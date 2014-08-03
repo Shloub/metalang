@@ -15,7 +15,7 @@ int main(){
     i ++;
     j += i;
   }
-  std::cout << j << i;
+  std::cout << j << i << "FIN TEST\n";
   return 0;
 }
 

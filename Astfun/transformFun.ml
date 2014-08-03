@@ -116,7 +116,7 @@ let rec affect_mutable_f cont m e = match A.Mutable.unfix m with
 
 let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
   | [] ->
-    if suite then F.Expr.apply contsuite (List.map F.Expr.binding env)
+    if suite then F.Expr.apply contsuite []
     else begin match contreturn with
     | Some c -> F.Expr.apply c []
     | None -> F.Expr.unit
@@ -160,13 +160,15 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       F.Expr.comment str next
     | A.Instr.If (e, l1, l2) ->
       let next = instrs suite contsuite contreturn env tl in
-      let next = F.Expr.fun_ env next in
-      let body1 = instrs true next contreturn env l1 in
-      let body2 = instrs true next contreturn env l2 in
+      let next = F.Expr.fun_ [] next in
+      let nextname = Fresh.fresh () in
+      let body1 = instrs true (F.Expr.binding nextname) contreturn env l1 in
+      let body2 = instrs true (F.Expr.binding nextname) contreturn env l2 in
       let l1: F.Expr.t = F.Expr.fun_ [] body1 in
       let l2: F.Expr.t = F.Expr.fun_ [] body2 in
       let f = Fresh.fresh () in
-      let c = F.Expr.fun_ [f] (F.Expr.apply (F.Expr.if_ (F.Expr.binding f) l1 l2) []) in
+      let c = F.Expr.fun_ [nextname; f] (F.Expr.apply (F.Expr.if_ (F.Expr.binding f) l1 l2) []) in
+      let c = F.Expr.apply c [next] in
       expr c e
     | A.Instr.Print (ty, e) ->
       let next = instrs suite contsuite contreturn env tl in
@@ -179,8 +181,9 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.While (e, li) ->
       let next = instrs suite contsuite contreturn env tl in
       let next = F.Expr.funtuple env next in
+
       let returnenv = F.Expr.tuple (List.map F.Expr.binding env) in
-      let returnenv_fun = F.Expr.fun_ env returnenv in
+      let returnenv_fun = F.Expr.fun_ [] returnenv in
       let content = instrs true returnenv_fun contreturn env li in
       let content = F.Expr.funtuple env content in
       let b = Fresh.fresh () in
@@ -201,7 +204,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = instrs suite contsuite  contreturn env tl in
       let next = F.Expr.funtuple env next in
       let returnenv = F.Expr.tuple (List.map F.Expr.binding env) in
-      let returnenv_fun = F.Expr.fun_ env returnenv in
+      let returnenv_fun = F.Expr.fun_ [] returnenv in
       let content = instrs true returnenv_fun contreturn env li in
       let content = F.Expr.funtuple env content in
       let content = F.Expr.fun_ [var] content in

@@ -21,5 +21,6 @@ func main() {
   } else {
     fmt.Printf("false <-\n ->\n");
   }
+  fmt.Printf("small test end\n");
 }
 

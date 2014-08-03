@@ -7,5 +7,5 @@ while (i < 10):
   print("%d" % i, end='')
   i += 1
   j += i
-print("%d%d" % ( j, i ), end='')
+print("%d%dFIN TEST\n" % ( j, i ), end='')
 

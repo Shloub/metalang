@@ -48,6 +48,6 @@ while (i < 10)
   i ++;
   j += i;
 }
-util.print(j, i);
+util.print(j, i, "FIN TEST\n");
 
 

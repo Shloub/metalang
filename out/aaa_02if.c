@@ -6,6 +6,7 @@ int main(void){
     printf("true <-\n ->\n");
   else
     printf("false <-\n ->\n");
+  printf("small test end\n");
   return 0;
 }
 

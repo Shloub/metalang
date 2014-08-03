@@ -33,5 +33,7 @@
       )
       (princ j)
       (princ i)
+      (princ "FIN TEST
+")
     )))
 
