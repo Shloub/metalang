@@ -1,0 +1,17 @@
+
+
+main
+  def j = 0
+  for k = 0 to 10 do
+    j += k
+    print j print "\n"
+  end
+  def i = 4
+  while i < 10 do
+    print i
+    i ++
+    j += i
+  end
+  print j
+  print i
+end
