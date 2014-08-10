@@ -162,7 +162,7 @@ class cPrinter = object(self)
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "%a %a(%a)"
-      self#ptype t
+      self#prototype t
       self#funname funname
       (print_list
          (fun t (binding, type_) ->
