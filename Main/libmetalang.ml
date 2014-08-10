@@ -70,7 +70,8 @@ let conf_rename lang prog =
   Fresh.fresh_init prog ;
   Rename.clear ();
   Rename.add prog.Prog.progname ;
-  List.iter Rename.add (keywords lang)
+  List.iter Rename.add (keywords lang);
+  List.iter Fresh.add (keywords lang)
 
 (** {2 Languages definition } *)
 

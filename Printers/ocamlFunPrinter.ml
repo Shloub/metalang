@@ -24,6 +24,7 @@
  *)
 
 module E = AstFun.Expr
+module Type = Ast.Type
 
 class camlFunPrinter = object(self)
 
@@ -93,13 +94,13 @@ class camlFunPrinter = object(self)
   method binding f s = Format.fprintf f "%s" s
 
   method print f e ty next =
-    Format.fprintf f "Printf.printf %S %a;@\n%a"
+    Format.fprintf f "(Printf.printf %S %a;@\n%a)"
       (Printer.format_type ty)
       self#expr e
       self#expr next
 
   method read f ty next =
-    Format.fprintf f "Scanf.Scanf %S %a"
+    Format.fprintf f "Scanf.scanf %S %a"
       (Printer.format_type ty)
       self#expr next
 
@@ -144,15 +145,66 @@ class camlFunPrinter = object(self)
   | E.Print (e, ty, next) ->
     self#print f e ty next
   | E.ReadIn (ty, next) -> self#read f ty next
-  | E.IntMapAdd (map, index, value) -> Format.fprintf f "(IntMap.add %a %a %a)" self#expr index self#expr value self#expr map
-  | E.IntMapGet (map, index) -> Format.fprintf f "(IntMap.find %a %a)" self#expr index self#expr map
+  | E.IntMapAdd (index, value, map) -> Format.fprintf f "(IntMap.add %a %a %a)"
+    self#expr index self#expr value self#expr map
+  | E.IntMapGet (index, map) -> Format.fprintf f "(IntMap.find %a %a)" self#expr index self#expr map
+  | E.SkipIn (e) ->
+    Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> %a))" self#expr e
+  | E.Block li ->
+    Format.fprintf f "@[<v 2>begin@\n%a@\nend@]@\n"
+      (Printer.print_list
+         self#expr
+         (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+  | E.Record li -> Format.fprintf f "{%a}"
+    (Printer.print_list
+       (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
+       (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+  | E.RecordWith (record, expr, field) -> Format.fprintf f "{ %a with %s = %a }"
+    self#expr record
+    field
+    self#expr expr
+  | E.RecordAccess (record, field) -> Format.fprintf f "%a.%s" self#expr record field
 
-  method decl f (name, e) =
-    Format.fprintf f "@[<v 2>let %a =@\n%a@];;@\n"
+  (** show a type *)
+  method ptype f (t : Type.t ) =
+    match Type.Fixed.unfix t with
+    | Type.Integer -> Format.fprintf f "int"
+    | Type.String -> Format.fprintf f "string"
+    | Type.Array a -> Format.fprintf f "%a IntMap.t" self#ptype a
+    | Type.Void ->  Format.fprintf f "void"
+    | Type.Bool -> Format.fprintf f "bool"
+    | Type.Char -> Format.fprintf f "char"
+    | Type.Named n -> Format.fprintf f "%s" n
+    | Type.Struct li ->
+      Format.fprintf f "{%a}"
+        (Printer.print_list
+           (fun t (name, type_) ->
+             Format.fprintf t "%s : %a;" name self#ptype type_
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+        ) li
+    | Type.Enum li ->
+      Format.fprintf f "%a"
+        (Printer.print_list
+           (fun t name ->
+             Format.fprintf t "%s" name
+           )
+           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
+        ) li
+    | Type.Lexems -> assert false
+    | Type.Auto -> assert false
+
+
+  method decl f d = match d with
+  | AstFun.Declaration (name, e) ->
+    Format.fprintf f "@[<v 2>let rec %a =@\n%a@];;@\n" (* TODO is_rec ?*)
       self#binding name self#expr e
+  | AstFun.DeclareType (name, ty) ->
+    Format.fprintf f "@[<v 2>type %a =@\n%a@];;@\n"
+      self#binding name self#ptype ty
 
   method header f () = Format.fprintf f
-"module IntSet = Map.Make (struct
+"module IntMap = Map.Make (struct
   type t = int
   let compare : int -> int -> int = Pervasives.compare
 end)

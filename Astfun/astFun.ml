@@ -64,6 +64,10 @@ module Expr = struct
   | SkipIn of 'a
   | IntMapAdd of 'a * 'a * 'a
   | IntMapGet of 'a * 'a
+  | Block of 'a list
+  | Record of ('a * string) list
+  | RecordWith of 'a * 'a * string
+  | RecordAccess of 'a * string
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = 'a tofix
@@ -86,6 +90,10 @@ module Expr = struct
       | SkipIn e -> SkipIn (f e)
       | IntMapAdd (e1, e2, e3) -> IntMapAdd (f e1, f e2, f e3)
       | IntMapGet (e1, e2) -> IntMapGet (f e1, f e2)
+      | Block li -> Block (List.map f li)
+      | Record li -> Record (List.map (fun (e, s) -> f e, s) li)
+      | RecordWith (e1, e2, s) -> RecordWith (f e1, f e2, s)
+      | RecordAccess (e, s) -> RecordAccess (f e, s)
     let next () = next ()
   end)
 
@@ -156,6 +164,23 @@ module Expr = struct
           let acc, e1 = f acc e1 in
           let acc, e2 = f acc e2 in
           acc, IntMapGet (e1, e2)
+	| Block li ->
+	  let acc, li = List.fold_left_map f acc li in
+	  acc, Block li
+	| Record li ->
+	  let acc, li = List.fold_left_map (fun acc (e, s) ->
+	    let acc, e = f acc e in
+	    acc, (e, s)
+	  ) acc li in
+	  acc, Record li
+	| RecordWith (e1, e2, s) ->
+          let acc, e1 = f acc e1 in
+          let acc, e2 = f acc e2 in
+          acc, RecordWith (e1, e2, s)
+	| RecordAccess (e, s) ->
+	  let acc, e = f acc e in
+	  acc, RecordAccess (e, s)
+
       in acc, fixa annot unfixed
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
@@ -179,10 +204,16 @@ module Expr = struct
   let print e ty next = fix (Print (e, ty, next))
   let readin e ty = fix (ReadIn (ty, e))
   let skipin e = fix (SkipIn e)
+  let block li = fix (Block li)
+  let record li = fix (Record li)
+  let recordwith e1 e2 s = fix (RecordWith (e1, e2, s))
+  let recordaccess e s = fix (RecordAccess (e, s))
 end
 
 type expr = Expr.t
 
-type declaration = varname * expr
+type declaration =
+| Declaration of varname * expr
+| DeclareType of varname * Ast.Type.t
 
 type prog = declaration list

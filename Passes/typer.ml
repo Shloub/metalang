@@ -906,3 +906,5 @@ let typename_for_field en env =
   with Not_found _ ->
     raise ( Error (fun f ->
       Format.fprintf f "Cannot find typename for field %s\n" en))
+
+let byname name env = StringMap.find name env.gamma

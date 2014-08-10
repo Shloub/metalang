@@ -44,3 +44,4 @@ val expand : env -> Ast.Type.t -> Ast.location -> Ast.Type.t
 val type_for_enum : string -> env -> Ast.Type.t
 val typename_for_enum : string -> env -> string
 val typename_for_field : string -> env -> string
+val byname : string -> env -> Ast.Type.t

@@ -1,6 +1,11 @@
 
+def bool f(int i)
+    if i == 0 then return true end
+    return false
+end
+
 main
-  if true then
+  if f(4) then
     print "true <-\n ->\n"
   else
     print "false <-\n ->\n"

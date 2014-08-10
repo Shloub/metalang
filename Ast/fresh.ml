@@ -46,6 +46,9 @@ let var_of_int =
 
 let bindings = ref BindingSet.empty
 
+let add s =
+  bindings := BindingSet.add s !bindings
+
 let fresh_init prog =
   let addset acc i = Instr.Writer.Deep.fold
     (fun acc i ->

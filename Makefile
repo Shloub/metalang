@@ -341,6 +341,12 @@ out/%.class : out/%.java
 out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
+out/%.fun.ml.native : out/%.fun.ml
+	@ocamlopt -w +A -g out/$(basename $*).fun.ml -o out/$(basename $*).fun.ml.native || exit 1
+	@rm out/$(basename $*).fun.cmx || exit 0
+	@rm out/$(basename $*).fun.cmi || exit 0
+	@rm out/$(basename $*).fun.o || exit 0
+
 out/%.ml.native : out/%.ml
 	@ocamlopt -w +A -g out/$(basename $*).ml -o out/$(basename $*).ml.native || exit 1
 	@rm out/$(basename $*).cmx || exit 0
@@ -403,7 +409,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.out # out/%.fun.ml.native.out out/%.hs.exe.out
+out/%.test : out/%.ml.native.out out/%.fun.ml.native.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \

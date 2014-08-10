@@ -1,8 +1,15 @@
-
+def void g(array<bool> t, int index)
+    t[index] = false
+end
 
 main
   def a[5] with i do
     print i
-    return i * 2
+    return i % 2 == 0
   end
+  print a[0]
+  print "\n"
+  g(a, 0)
+  print a[0]
+  print "\n"
 end
