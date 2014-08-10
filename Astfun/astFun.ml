@@ -39,7 +39,6 @@ module Expr = struct
   type lief = (* le même type que dans Ast, sauf qu'on ajoute unit *)
   | Unit
   | Error
-  | IntMapEmpty
   | Char of char
   | String of string
   | Integer of int
@@ -62,12 +61,13 @@ module Expr = struct
   | Print of 'a * Ast.Type.t * 'a
   | ReadIn of Ast.Type.t * 'a
   | SkipIn of 'a
-  | IntMapAdd of 'a * 'a * 'a
-  | IntMapGet of 'a * 'a
   | Block of 'a list
   | Record of ('a * string) list
-  | RecordWith of 'a * 'a * string
+  | RecordAffectIn of 'a * string * 'a * 'a
   | RecordAccess of 'a * string
+  | ArrayMake of 'a * 'a
+  | ArrayAccess of 'a * 'a list
+  | ArrayAffectIn of 'a * 'a list * 'a * 'a
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = 'a tofix
@@ -88,12 +88,14 @@ module Expr = struct
       | Print (e, ty, next) -> Print (f e, ty, f next)
       | ReadIn (ty, e) -> ReadIn (ty, f e)
       | SkipIn e -> SkipIn (f e)
-      | IntMapAdd (e1, e2, e3) -> IntMapAdd (f e1, f e2, f e3)
-      | IntMapGet (e1, e2) -> IntMapGet (f e1, f e2)
       | Block li -> Block (List.map f li)
       | Record li -> Record (List.map (fun (e, s) -> f e, s) li)
-      | RecordWith (e1, e2, s) -> RecordWith (f e1, f e2, s)
+      | RecordAffectIn (e1, s, e2, in_) -> RecordAffectIn (f e1, s, f e2, f in_)
       | RecordAccess (e, s) -> RecordAccess (f e, s)
+      | ArrayAccess (tab, indexes) -> ArrayAccess (f tab, List.map f indexes)
+      | ArrayMake (len, lambda) -> ArrayMake (f len, f lambda)
+      | ArrayAffectIn (tab, indexes, v, in_) -> ArrayAffectIn (f tab, List.map f indexes, f v, f in_)
+
     let next () = next ()
   end)
 
@@ -155,15 +157,6 @@ module Expr = struct
         | SkipIn e ->
           let acc, e = f acc e in
           acc, SkipIn e
-        | IntMapAdd (e1, e2, e3) ->
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          let acc, e3 = f acc e3 in
-          acc, IntMapAdd (e1, e2, e3)
-        | IntMapGet (e1, e2) ->
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          acc, IntMapGet (e1, e2)
 	| Block li ->
 	  let acc, li = List.fold_left_map f acc li in
 	  acc, Block li
@@ -173,23 +166,34 @@ module Expr = struct
 	    acc, (e, s)
 	  ) acc li in
 	  acc, Record li
-	| RecordWith (e1, e2, s) ->
+	| RecordAffectIn (e1, s, e2, in_) ->
           let acc, e1 = f acc e1 in
           let acc, e2 = f acc e2 in
-          acc, RecordWith (e1, e2, s)
+          let acc, in_ = f acc in_ in
+          acc, RecordAffectIn (e1, s, e2, in_)
 	| RecordAccess (e, s) ->
 	  let acc, e = f acc e in
 	  acc, RecordAccess (e, s)
-
+	| ArrayAccess (tab, indexes) ->
+	  let acc, tab = f acc tab in
+	  let acc, indexes = List.fold_left_map f acc indexes in
+	  acc, ArrayAccess (tab, indexes)
+	| ArrayMake (len, lambda) ->
+	  let acc, len = f acc len in
+	  let acc, lambda = f acc lambda in
+	  acc, ArrayMake (len, lambda)
+	| ArrayAffectIn (tab, indexes, v, in_) ->
+	  let acc, tab = f acc tab in
+	  let acc, indexes = List.fold_left_map f acc indexes in
+	  let acc, v = f acc v in
+	  let acc, in_ = f acc in_ in
+	  acc, ArrayAffectIn (tab, indexes, v, in_)
       in acc, fixa annot unfixed
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
   let lief l = fix (Lief l)
   let unit = lief (Unit)
   let error = lief (Error)
-  let intmapempty = lief (IntMapEmpty)
-  let intmapadd e1 e2 e3 = fix (IntMapAdd (e1, e2, e3))
-  let intmapget e1 e2 = fix (IntMapGet (e1, e2))
   let integer i = lief (Integer i)
   let unop e op = fix (UnOp (e, op))
   let binop e1 op e2 = fix (BinOp (e1, op, e2))
@@ -206,8 +210,11 @@ module Expr = struct
   let skipin e = fix (SkipIn e)
   let block li = fix (Block li)
   let record li = fix (Record li)
-  let recordwith e1 e2 s = fix (RecordWith (e1, e2, s))
   let recordaccess e s = fix (RecordAccess (e, s))
+  let recordaffectin record field value in_ = fix (RecordAffectIn (record, field, value, in_))
+  let arraymake len lambda = fix (ArrayMake (len, lambda))
+  let arrayaccess tab indexes = fix (ArrayAccess (tab, indexes))
+  let arrayaffectin tab indexes v in_ = fix (ArrayAffectIn (tab, indexes, v, in_))
 end
 
 type expr = Expr.t
@@ -215,5 +222,5 @@ type expr = Expr.t
 type declaration =
 | Declaration of varname * expr
 | DeclareType of varname * Ast.Type.t
-
+| Macro of varname * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
 type prog = declaration list

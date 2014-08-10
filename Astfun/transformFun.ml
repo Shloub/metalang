@@ -35,24 +35,10 @@ open Stdlib
 module F = AstFun
 module A = Ast
 
-
-type acc = int list StringMap.t (* les paramètres qui se font écraser *)
-
-(* ce type sert à encapsuler les valeurs qui pourraient être affectées lors d'appels de fonctions *)
-type compiledExpr =
-| Into of ((F.Expr.t -> F.Expr.t) -> F.Expr.t)
-| Expr of F.Expr.t
-
-let expand_fun f = function
-  | Expr e -> f e
-  | Into e -> e f
-
-let expand = expand_fun (fun e -> e)
-
 let rec name_of_mutable m = match A.Mutable.unfix m with
-  | A.Mutable.Var varname -> varname
+  | A.Mutable.Var varname -> Some varname
   | A.Mutable.Array (m, _)
-  | A.Mutable.Dot (m, _) -> name_of_mutable m
+  | A.Mutable.Dot (m, _) -> None
 
 let lief = function
   | A.Expr.Char c -> F.Expr.Char c
@@ -75,49 +61,18 @@ let rec mutable_type tyenv t = match A.Type.unfix t with
   | A.Type.Tuple li -> List.exists (mutable_type tyenv) li
   | A.Type.Auto -> assert false (* on a besoin d'un truc typế à ce moment de la compilation *)
 
-let rec accessmut (m:compiledExpr A.Mutable.t) : compiledExpr = match A.Mutable.unfix m with
-  | A.Mutable.Var varname -> Expr (F.Expr.binding varname)
+let rec accessmut (m:F.Expr.t A.Mutable.t) : F.Expr.t = match A.Mutable.unfix m with
+  | A.Mutable.Var varname -> F.Expr.binding varname
   | A.Mutable.Array (m, li) ->
-    let m = accessmut m in
-    List.fold_left (fun acc e -> match (acc, e) with
-    | Expr acc, Expr e -> Expr (F.Expr.intmapget e acc)
-    | Into acc, Expr e -> Into (fun into -> acc (fun acc -> into ( F.Expr.intmapget e acc)))
-    | Expr acc, Into e -> Into (fun into -> e (fun e -> into ( F.Expr.intmapget e acc)))
-    | Into acc, Into e -> Into (fun into -> e (fun e -> acc (fun acc -> into ( F.Expr.intmapget e acc))))
-    ) m li
-  | A.Mutable.Dot (mut, field) -> begin match accessmut mut with
-    | Expr mut -> Expr (F.Expr.recordaccess mut field)
-    | Into mut -> Into (fun into -> mut (fun mut -> into (F.Expr.recordaccess mut field)))
-  end
-
-let rec affect_mutable (cont:F.Expr.t) (m:compiledExpr A.Mutable.t) (e:F.Expr.t) = match A.Mutable.unfix m with
-  | A.Mutable.Var varname -> Expr (F.Expr.apply cont [e])
-  | A.Mutable.Array (mut, []) -> assert false
-  | A.Mutable.Array (mut, [Expr item]) ->
-    let namemut = Fresh.fresh () in
-    let cont e = F.Expr.fun_ [namemut]
-      (F.Expr.apply cont [F.Expr.intmapadd
-			     item
-			     e
-			     (F.Expr.binding namemut)
-			 ])
-    in begin match accessmut mut with
-    | Expr mut -> Expr (F.Expr.apply (cont e) [mut])
-    | Into mut -> Into (fun into -> mut (fun mut -> into (F.Expr.apply (cont e) [mut])))
-
-    end
-  | A.Mutable.Array (mut, hd::tl) -> assert false (* TODO *)
+    F.Expr.arrayaccess (accessmut m) li
   | A.Mutable.Dot (mut, field) ->
-    let affecte muta = F.Expr.recordwith muta e field
-    in match accessmut mut with
-    | Expr muta -> affect_mutable cont mut (affecte muta)
-    | Into muta ->
-      let name = Fresh.fresh () in
-      let e = F.Expr.binding name in
-      match affect_mutable cont mut e with
-      | Expr m -> (* Into (fun into -> muta (fun muta -> into (F.Expr.apply m [affecte muta]))) *)
-	assert false
-      | Into m -> assert false
+    let mut = accessmut mut in F.Expr.recordaccess mut field
+
+let rec affect_mutable (cont:F.Expr.t) (m:F.Expr.t A.Mutable.t) (e:F.Expr.t) = match A.Mutable.unfix m with
+  | A.Mutable.Var varname -> F.Expr.apply cont [e]
+  | A.Mutable.Array (mut, []) -> assert false
+  | A.Mutable.Array (mut, item) -> F.Expr.arrayaffectin (accessmut mut) item e cont
+  | A.Mutable.Dot (mut, field) -> F.Expr.recordaffectin (accessmut mut) field e cont
 
 
 let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
@@ -128,63 +83,41 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | None -> F.Expr.unit
     end
   | hd::tl -> match A.Instr.unfix hd with
-    | A.Instr.Declare (v, ty, Expr e, _) ->
+    | A.Instr.Declare (v, ty, e, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [e]
-    | A.Instr.Declare (v, ty, Into e, _) ->
-      let tl = instrs suite contsuite contreturn (v::env) tl in
-      e (fun e -> F.Expr.apply (F.Expr.fun_ [v] tl) [e])
     | A.Instr.DeclRead (t, v, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.readin (F.Expr.fun_ [v] tl) t
-(*
     | A.Instr.AllocRecord (v, ty, li) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [F.Expr.record (List.map (fun (a, b) -> b, a) li)]
-*)
-    | A.Instr.Affect (m, Expr e) ->
+    | A.Instr.Affect (m, e) ->
       let v = name_of_mutable m in
-      let nenv = if List.mem v env then env else v::env in
+      let nenv = Option.map_default env (fun v -> if List.mem v env then env else v::env) v in
       let tl = instrs suite contsuite contreturn nenv tl in
-      expand @$ affect_mutable (F.Expr.fun_ [v] tl) m e
-    | A.Instr.Affect (m, Into e) ->
-      let v = name_of_mutable m in
-      let nenv = if List.mem v env then env else v::env in
-      let tl = instrs suite contsuite contreturn nenv tl in
-      e (fun e -> expand @$ affect_mutable (F.Expr.fun_ [v] tl) m e)
-
+      begin match v with
+      | Some v -> affect_mutable (F.Expr.fun_ [v] tl) m e
+      | None -> affect_mutable tl m e
+      end
     | A.Instr.Read (ty, m) ->
       let v = name_of_mutable m in
-      let nenv = if List.mem v env then env else v::env in
+      let nenv = Option.map_default env (fun v -> if List.mem v env then env else v::env) v in
       let tl = instrs suite contsuite contreturn nenv tl in
       let f = Fresh.fresh () in
-      let cont = affect_mutable (F.Expr.fun_ [v] tl) m (F.Expr.binding f) in
-      begin match cont with
-      | Expr cont -> F.Expr.readin (F.Expr.fun_ [f] cont) ty
-      | Into cont -> cont (fun cont -> F.Expr.readin (F.Expr.fun_ [f] cont) ty)
-      end
-    | A.Instr.Return (Expr e) ->
+      let cont = match v with
+	| Some v -> affect_mutable (F.Expr.fun_ [v] tl) m (F.Expr.binding f)
+	| None -> affect_mutable tl m (F.Expr.binding f)
+      in F.Expr.readin (F.Expr.fun_ [f] cont) ty
+    | A.Instr.Return ( e) ->
       begin match contreturn with
       | Some contreturn -> F.Expr.apply contreturn [e]
       | None -> e
       end
-    | A.Instr.Return (Into e) ->
-      begin match contreturn with
-      | Some contreturn -> e (fun e -> F.Expr.apply contreturn [e])
-      | None -> e (fun e -> e)
-      end
     | A.Instr.Call (funname, eli) ->
       let next = instrs suite contsuite contreturn env tl in
-      let call = List.fold_left (fun acc e -> match acc, e with
-	| Expr acc, Expr e -> Expr (F.Expr.apply acc [e])
-	| Expr acc, Into e -> Into (fun into -> e (fun e -> into ( F.Expr.apply acc [e] )))
-	| Into acc, Expr e -> Into (fun into -> acc (fun acc -> into ( F.Expr.apply acc [e] )))
-	| Into acc, Into e -> Into (fun into -> acc (fun acc -> e (fun e -> into ( F.Expr.apply acc [e] ))))
-      ) (Expr (F.Expr.binding funname)) eli
-      in begin match call with
-      | Expr call -> F.Expr.block [call; next]
-      | Into call -> call (fun call -> F.Expr.block [call; next])
-      end
+      let call = F.Expr.apply (F.Expr.binding funname) eli
+      in F.Expr.block [call; next]
    | A.Instr.Comment str ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.comment str next
@@ -195,20 +128,15 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let ncont = F.Expr.apply (F.Expr.binding nextname) (List.map F.Expr.binding env) in 
       let body1 = instrs true ncont contreturn env l1 in
       let body2 = instrs true ncont contreturn env l2 in
-      expand_fun (fun e ->
 	F.Expr.apply
 	  (F.Expr.fun_ [nextname] (F.Expr.if_ e body1 body2))
-	  [next]) e
-    | A.Instr.Print (ty, Expr e) ->
+	  [next]
+    | A.Instr.Print (ty, e) ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.print e ty next
-    | A.Instr.Print (ty, Into e) ->
-      let next = instrs suite contsuite contreturn env tl in
-      e (fun e -> F.Expr.print e ty next)  
     | A.Instr.StdinSep ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.skipin next
-
     | A.Instr.While (e, li) ->
       let next = instrs suite contsuite contreturn env tl in
       let b = Fresh.fresh () in
@@ -216,9 +144,8 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let returnenv = List.map F.Expr.binding env in
       let nextLoop = F.Expr.apply (F.Expr.binding loop) returnenv in
       let content = instrs true nextLoop contreturn env li in
-      let contentif = expand_fun (fun e -> F.Expr.if_ e content next) e in
+      let contentif = F.Expr.if_ e content next in
       F.Expr.letrecin loop env contentif (F.Expr.apply (F.Expr.binding loop) returnenv)
-      
     | A.Instr.Loop (var, from_, end_, li) ->
       let var_plus_un = F.Expr.binop (F.Expr.binding var) Ast.Expr.Add (F.Expr.integer 1) in
       let next = instrs suite contsuite  contreturn env tl in
@@ -234,69 +161,55 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
         (F.Expr.letrecin loop (var::env) content
            (F.Expr.apply (F.Expr.binding loop) ((F.Expr.binding from)::returnenv))
         ) in
-      expand_fun (fun from_ -> expand_fun (fun end_ -> F.Expr.apply cont [from_; end_]) end_ ) from_
-    | A.Instr.AllocArray (name, t, e, Some li) -> assert false
-
-    | A.Instr.AllocArray (name, t, e, None) -> (* WARNING : on ignore complètement e... *)
-      let tl = instrs suite contsuite contreturn (name::env) tl in
-      F.Expr.apply (F.Expr.fun_ [name] tl) [F.Expr.intmapempty]
-
+      F.Expr.apply cont [from_; end_]
+    | A.Instr.AllocArray (name, t, e, Some (varname, li)) ->
+      let o = Fresh.fresh () in
+      let returnenv = F.Expr.tuple (List.map F.Expr.binding env) in
+      let returncont = F.Expr.fun_ [o] (F.Expr.tuple [returnenv; F.Expr.binding o] ) in
+      let content = instrs false contsuite (Some returncont) (varname::env) li in
+      let content = F.Expr.funtuple env content in
+      let content = F.Expr.fun_ [varname] content in
+      let next = instrs suite contsuite  contreturn env tl in
+      let next = F.Expr.fun_ [name] next in
+      F.Expr.apply next [F.Expr.apply (F.Expr.arraymake e content) [returnenv] ]
+    | A.Instr.AllocArray (name, t, e, None) -> assert false
     | A.Instr.Untuple (vars, e) ->
       let vars = List.map snd vars in
       let tl = instrs suite contsuite contreturn (List.append vars env) tl in
-      expand_fun (fun e -> F.Expr.apply (F.Expr.funtuple vars tl) [e]) e
+      F.Expr.apply (F.Expr.funtuple vars tl) [e]
     | A.Instr.Tag s -> assert false
     | A.Instr.Unquote e -> assert false
 
-let rec expr (acc:acc) e =
-  let e = A.Expr.Fixed.map (expr acc) (A.Expr.unfix e) in
+let rec expr e =
+  let e = A.Expr.Fixed.map expr (A.Expr.unfix e) in
   match e with
-  | A.Expr.UnOp (Expr e, op) -> Expr (F.Expr.unop e op)
-  | A.Expr.UnOp (Into e, op) -> Into (fun into -> e (fun e -> into (F.Expr.unop e op)))
-  | A.Expr.BinOp (Into e1, op, Into e2) ->
-    Into (fun into -> e1 (fun e1 -> e2 (fun e2 -> into (F.Expr.binop e1 op e2 ))))
-  | A.Expr.BinOp (Into e1, op, Expr e2) ->
-    Into (fun into -> e1 (fun e1 -> into (F.Expr.binop e1 op e2 )))
-  | A.Expr.BinOp (Expr e1, op, Into e2) ->
-    Into (fun into -> e2 (fun e2 -> into (F.Expr.binop e1 op e2 )))
-  | A.Expr.BinOp (Expr e1, op, Expr e2) ->
-    Expr (F.Expr.binop e1 op e2)
-  | A.Expr.Lief l -> Expr (F.Expr.lief (lief l))
+  | A.Expr.UnOp (e, op) -> F.Expr.unop e op
+  | A.Expr.BinOp (e1, op, e2) -> F.Expr.binop e1 op e2
+  | A.Expr.Lief l -> F.Expr.lief (lief l)
   | A.Expr.Access m -> accessmut m
-  | A.Expr.Call(funname, params) ->
-    let paramsacc = Option.default [] (StringMap.find_opt funname acc) in
-    snd @$ List.fold_left (fun (i, acc) e ->
-(*      if List.mem i paramsacc then *)
-      i + 1, match acc, e with
-    | Expr acc, Expr e -> Expr (F.Expr.apply acc [e])
-    | Expr acc, Into e -> Into (fun into -> e (fun e -> into ( F.Expr.apply acc [e] )))
-    | Into acc, Expr e -> Into (fun into -> acc (fun acc -> into ( F.Expr.apply acc [e] )))
-    | Into acc, Into e -> Into (fun into -> acc (fun acc -> e (fun e -> into ( F.Expr.apply acc [e] ))))
-    ) (0, (Expr (F.Expr.binding funname))) params
-(*
+  | A.Expr.Call(funname, params) -> F.Expr.apply (F.Expr.binding funname) params
   | A.Expr.Tuple li -> F.Expr.tuple li
   | A.Expr.Record r -> F.Expr.record (List.map (fun (a, b) -> b, a) r)
-*)
   | A.Expr.Lexems _ -> assert false
 
-let rec instr_to_finstr acc i =
-  let f e = expr acc e in
+let rec instr_to_finstr i =
+  let f e = expr e in
   (* let i2 = A.Instr.map_expr f i in *)
   let unfixed = match A.Instr.unfix i with
   | A.Instr.Declare (vn, t, e, opt) -> A.Instr.Declare (vn, t, f e, opt)
   | A.Instr.Affect (mut, e) -> A.Instr.Affect (A.Mutable.map_expr f mut, f e)
-  | A.Instr.Loop (varname, e1, e2, li) -> A.Instr.Loop (varname, f e1, f e2, List.map (instr_to_finstr acc) li)
-  | A.Instr.While (e, li) -> A.Instr.While (f e, List.map (instr_to_finstr acc) li)
+  | A.Instr.Loop (varname, e1, e2, li) -> A.Instr.Loop (varname, f e1, f e2, List.map instr_to_finstr li)
+  | A.Instr.While (e, li) -> A.Instr.While (f e, List.map instr_to_finstr li)
   | A.Instr.Comment s -> A.Instr.Comment s
   | A.Instr.Tag s -> A.Instr.Tag s
   | A.Instr.Return e -> A.Instr.Return (f e)
   | A.Instr.AllocArray (varname, ty, e, opt) ->
     A.Instr.AllocArray (varname, ty, f e, Option.map (fun (name, li) ->
-      name, List.map (instr_to_finstr acc) li) opt)
+      name, List.map instr_to_finstr li) opt)
   | A.Instr.AllocRecord (varname, ty, li) ->
     A.Instr.AllocRecord (varname, ty, List.map (fun (field, e) -> field, f e) li)
   | A.Instr.If (e, l1, l2) ->
-    A.Instr.If (f e, List.map (instr_to_finstr acc) l1, List.map (instr_to_finstr acc) l2)
+    A.Instr.If (f e, List.map instr_to_finstr l1, List.map instr_to_finstr l2)
   | A.Instr.Call (funname, li) ->
     A.Instr.Call (funname, List.map f li)
   | A.Instr.Print (ty, e) -> A.Instr.Print (ty, f e)
@@ -307,23 +220,23 @@ let rec instr_to_finstr acc i =
   | A.Instr.Unquote e -> A.Instr.Unquote (f e)
   in A.Instr.fixa (A.Instr.Fixed.annot i) unfixed
 
-let instrs acc suite contsuite contreturn env li =
-  let li = List.map (instr_to_finstr acc) li in
+let instrs suite contsuite contreturn env li =
+  let li = List.map instr_to_finstr li in
   instrs suite contsuite contreturn env li
 
 let transform (tyenv, prog) =
-  let acc, fonctions = List.fold_left_map
-    (fun acc item -> match item with
+  let fonctions = List.filter_map (function
     | Ast.Prog.DeclarFun (name, _, params, is, _) ->
       let params = List.map fst params in
-      let e = instrs acc false (F.Expr.unit) None params is in
-      acc, Some (F.Declaration (name, F.Expr.fun_ params e))
+      let e = instrs false (F.Expr.unit) None params is in
+      Some (F.Declaration (name, F.Expr.fun_ params e))
     | Ast.Prog.DeclareType (typename, ty) ->
-      acc, Some (F.DeclareType (typename, ty))
-    | _ -> acc, None) StringMap.empty prog.Ast.Prog.funs
-  in let fonctions = List.filter_map (fun x -> x) fonctions
+      Some (F.DeclareType (typename, ty))
+    | Ast.Prog.Macro (name, ty, params, code) ->
+      Some (F.Macro (name, ty, params, code))
+    | _ -> None) prog.Ast.Prog.funs
   in match prog.Ast.Prog.main with
   | None -> fonctions
   | Some m ->
-    let main = instrs acc false (F.Expr.unit) None [] m in
+    let main = instrs false (F.Expr.unit) None [] m in
     List.append fonctions [F.Declaration ("main", main)]

@@ -226,27 +226,21 @@ class camlPrinter = object(self)
   | _ -> true
   ) li
 
-  method ends_with_stop instrs1 instrs2 =
+  method ends_with_stop instr1 instrs2 =
     let instrs2 = self#nocomment instrs2 in
-    if List.for_all self#is_stdin instrs1 &&
-      List.exists (fun i -> match Instr.unfix i with
-      | Instr.DeclRead _ -> true
-      | _ -> false
-      ) instrs1
+    if instrs2 = [] then false else
+    if self#is_stdin instr1
     then false
-    else match instrs1 with
-    | [] -> false
-    | _ -> begin match Instr.unfix (List.hd (List.rev instrs1)) with
-      | Instr.AllocRecord _  (* letin -> pas de ; *)
-      | Instr.AllocArray _
-      | Instr.Declare _ 
-      | Instr.Untuple _
-      | Instr.DeclRead _
-      | Instr.Comment _  (* le ; a déjà été mis *)
-      | Instr.Return _ (* return -> pas de ; *)
-        -> false
-      | _ -> true
-    end
+    else match Instr.unfix instr1 with
+    | Instr.AllocRecord _  (* letin -> pas de ; *)
+    | Instr.AllocArray _
+    | Instr.Declare _ 
+    | Instr.Untuple _
+    | Instr.DeclRead _
+    | Instr.Comment _  (* le ; a déjà été mis *)
+    | Instr.Return _ (* return -> pas de ; *)
+      -> false
+    | _ -> true
 
   (** show an instruction *)
   method instructions0 f instrs =
@@ -286,7 +280,7 @@ class camlPrinter = object(self)
         | [] -> ()
         | [hd] -> self#instr f hd
         | hd::tl ->
-          if self#ends_with_stop [hd] tl then
+          if self#ends_with_stop hd tl then
             Format.fprintf f "%a;@\n%a" self#instr hd g tl
           else
             Format.fprintf f "%a@\n%a" self#instr hd g tl
@@ -308,32 +302,28 @@ class camlPrinter = object(self)
       (print_list
          self#instructions0
          (fun t print1 item1 print2 item2 ->
-           if self#ends_with_stop item1 (List.flatten item2) then (* oui je sais c'est sale *)
+           if not (self#need_unit item1) then (* oui je sais c'est sale *)
              Format.fprintf t "%a;@\n%a" print1 item1 print2 item2
            else
              Format.fprintf t "%a@\n%a" print1 item1 print2 item2
          )
       ) lili
-      (self#need_unit instrs)
+      (if self#need_unit instrs then " ()" else "")
 
 
 
   (** returns true if the function need to returns unit *)
   method need_unit instrs =
-    match List.rev
-      (List.filter
-         (function
-         | (Instr.Fixed.F (_, Instr.Comment _) ) -> false
-         | _ -> true
-         )
-         instrs
-      )
-    with
-    | (Instr.Fixed.F (_, Instr.AllocArray _) ) :: _
-    | (Instr.Fixed.F (_, Instr.Declare _) ) :: _
-    | (Instr.Fixed.F (_, Instr.DeclRead _)) :: _
-    | [] -> " ()"
-    | _ -> ""
+    let instrs = self#nocomment instrs in
+    if instrs = [] then true
+    else if (List.for_all self#is_stdin instrs) && List.exists (fun i -> match Instr.unfix i with
+    | Instr.DeclRead _ -> true
+    | _ -> false
+    ) instrs
+    then true
+    else match List.map Instr.unfix instrs |> List.rev with
+    | (Instr.AllocArray _ | Instr.Declare _ | Instr.DeclRead _ | Instr.Untuple _) :: _ -> true
+    | _ -> false
 
   (** show a bloc of instructions *)
   method bloc f b =
@@ -350,7 +340,7 @@ class camlPrinter = object(self)
       match b with
       | [i] ->
         Format.fprintf f "@[<h>%a%s@]" self#instr i
-          (self#need_unit b)
+          (if self#need_unit b then " ()" else "")
       | _ ->
         Format.fprintf f "begin@\n@[<v 2>  %a@]@\nend" self#instructions b
 
