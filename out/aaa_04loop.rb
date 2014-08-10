@@ -1,4 +1,26 @@
 require "scanf.rb"
+def mod(x, y)
+  return x - y * (x.to_f / y).to_i
+end
+
+def h( i )
+    
+=begin
+  for j = i - 2 to i + 2 do
+    if i % j == 5 then return true end
+  end 
+=end
+
+    j = i - 2
+    while j <= i + 2 do
+      if (mod(i, j)) == 5 then
+        return (true);
+      end
+      j += 1
+    end
+    return (false);
+end
+
 j = 0
 for k in (0 ..  10) do
   j += k

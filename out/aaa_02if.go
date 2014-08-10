@@ -14,9 +14,17 @@ func skip() {
   }
 }
 
+
+func f(i int) bool{
+  if i == 0 {
+    return true
+  }
+  return false
+}
+
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  if true {
+  if f(4) {
     fmt.Printf("true <-\n ->\n");
   } else {
     fmt.Printf("false <-\n ->\n");

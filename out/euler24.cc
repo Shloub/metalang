@@ -8,30 +8,30 @@ int fact(int n){
 }
 
 void show(int lim, int nth){
-  std::vector<int > t( lim );
+  std::vector<int > *t = new std::vector<int>( lim );
   for (int i = 0 ; i < lim; i++)
-    t.at(i) = i;
-  std::vector<bool > pris( lim );
+    t->at(i) = i;
+  std::vector<bool > *pris = new std::vector<bool>( lim );
   for (int j = 0 ; j < lim; j++)
-    pris.at(j) = false;
+    pris->at(j) = false;
   for (int k = 1 ; k < lim; k++)
   {
     int n = fact(lim - k);
     int nchiffre = nth / n;
     nth %= n;
     for (int l = 0 ; l < lim; l++)
-      if (!pris.at(l))
+      if (!pris->at(l))
     {
       if (nchiffre == 0)
       {
         std::cout << l;
-        pris.at(l) = true;
+        pris->at(l) = true;
       }
       nchiffre --;
     }
   }
   for (int m = 0 ; m < lim; m++)
-    if (!pris.at(m))
+    if (!pris->at(m))
     std::cout << m;
   std::cout << "\n";
 }

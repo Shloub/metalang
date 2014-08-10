@@ -17,7 +17,7 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }/* lit un sudoku sur l'entrée standard */
-function read_sudoku(){
+function &read_sudoku(){
   $a = 9 * 9;
   $out_ = array();
   for ($i = 0 ; $i < $a; $i++)

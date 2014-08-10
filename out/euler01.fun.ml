@@ -1,31 +1,27 @@
-module IntSet = Map.Make (struct
-  type t = int
-  let compare : int -> int -> int = Pervasives.compare
-end)
+module Array = struct
+  include Array
+  let init_withenv len f env =
+    let refenv = ref env in
+    Array.init len (fun i ->
+      let env, out = f i !refenv in
+      refenv := env;
+      out
+    )
+end
 
-let main =
+let rec main =
   ((fun sum ->
-       (((fun e f ->
-             let rec g i h =
-               (if (i <= f)
-                then (g (i + 1) (((fun i ->
-                                      (fun (sum) ->
-                                          ((fun c ->
-                                               ((if c
-                                                 then (fun () -> ((fun
-                                                  sum ->
-                                                 ((fun sum ->
-                                                      ((fun sum ->
-                                                           (sum)) sum)) sum)) (sum + i)))
-                                                 else (fun () -> ((fun
-                                                  sum ->
-                                                 ((fun sum ->
-                                                      (sum)) sum)) sum))) ())) (((i mod 3) = 0) || ((i mod 5) = 0))))) i) h))
-                else ((fun (sum) ->
-                          ((fun b ->
-                               Printf.printf "%d" b;
-                               ((fun a ->
-                                    Printf.printf "%s" a;
-                                    ()) "\n")) sum)) h)) in
-               (g e (sum))) 0) 999)) 0);;
+       ((fun c d ->
+            let rec a i sum =
+              (if (i <= d)
+               then ((fun b ->
+                         (if (((i mod 3) = 0) || ((i mod 5) = 0))
+                          then ((fun sum ->
+                                    (b sum)) (sum + i))
+                          else (b sum))) (fun sum ->
+                                             (a (i + 1) sum)))
+               else (Printf.printf "%d" sum;
+               (Printf.printf "%s" "\n";
+               ()))) in
+              (a c sum)) 0 999)) 0);;
 

@@ -7,7 +7,7 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 int main(){
   int strlen = 0;
   std::cin >> strlen >> std::skipws;
-  std::vector<char > tab4( strlen );
+  std::vector<char > *tab4 = new std::vector<char>( strlen );
   for (int toto = 0 ; toto < strlen; toto++)
   {
     char tmpc = '_';
@@ -15,10 +15,10 @@ int main(){
     int c = tmpc;
     if (tmpc != ' ')
       c = ((c - 'a') + 13) % 26 + 'a';
-    tab4.at(toto) = (char)(c);
+    tab4->at(toto) = (char)(c);
   }
   for (int j = 0 ; j < strlen; j++)
-    std::cout << tab4.at(j);
+    std::cout << tab4->at(j);
   return 0;
 }
 

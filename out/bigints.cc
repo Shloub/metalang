@@ -18,22 +18,22 @@ class bigint {
 public:
   bool bigint_sign;
   int bigint_len;
-  std::vector<int > bigint_chiffres;
+  std::vector<int> * bigint_chiffres;
 };
 
 bigint * read_bigint(int len){
-  std::vector<int > chiffres( len );
+  std::vector<int > *chiffres = new std::vector<int>( len );
   for (int j = 0 ; j < len; j++)
   {
     char c = '_';
     std::cin >> c >> std::noskipws;
-    chiffres.at(j) = c;
+    chiffres->at(j) = c;
   }
   for (int i = 0 ; i <= (len - 1) / 2; i ++)
   {
-    int tmp = chiffres.at(i);
-    chiffres.at(i) = chiffres.at(len - 1 - i);
-    chiffres.at(len - 1 - i) = tmp;
+    int tmp = chiffres->at(i);
+    chiffres->at(i) = chiffres->at(len - 1 - i);
+    chiffres->at(len - 1 - i) = tmp;
   }
   bigint * o = new bigint();
   o->bigint_sign=true;
@@ -46,7 +46,7 @@ void print_bigint(bigint * a){
   if (!a->bigint_sign)
     std::cout << '-';
   for (int i = 0 ; i < a->bigint_len; i++)
-    std::cout << a->bigint_chiffres.at(a->bigint_len - 1 - i);
+    std::cout << a->bigint_chiffres->at(a->bigint_len - 1 - i);
 }
 
 bool bigint_eq(bigint * a, bigint * b){
@@ -58,7 +58,7 @@ bool bigint_eq(bigint * a, bigint * b){
   else
   {
     for (int i = 0 ; i < a->bigint_len; i++)
-      if (a->bigint_chiffres.at(i) != b->bigint_chiffres.at(i))
+      if (a->bigint_chiffres->at(i) != b->bigint_chiffres->at(i))
       return false;
     return true;
   }
@@ -80,9 +80,9 @@ bool bigint_gt(bigint * a, bigint * b){
       for (int i = 0 ; i < a->bigint_len; i++)
       {
         int j = a->bigint_len - 1 - i;
-        if (a->bigint_chiffres.at(j) > b->bigint_chiffres.at(j))
+        if (a->bigint_chiffres->at(j) > b->bigint_chiffres->at(j))
           return a->bigint_sign;
-        else if (a->bigint_chiffres.at(j) < b->bigint_chiffres.at(j))
+        else if (a->bigint_chiffres->at(j) < b->bigint_chiffres->at(j))
           return !a->bigint_sign;
     }
     return true;
@@ -97,18 +97,18 @@ bigint * add_bigint_positif(bigint * a, bigint * b){
   /* Une addition ou on en a rien a faire des signes */
   int len = max2(a->bigint_len, b->bigint_len) + 1;
   int retenue = 0;
-  std::vector<int > chiffres( len );
+  std::vector<int > *chiffres = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
   {
     int tmp = retenue;
     if (i < a->bigint_len)
-      tmp += a->bigint_chiffres.at(i);
+      tmp += a->bigint_chiffres->at(i);
     if (i < b->bigint_len)
-      tmp += b->bigint_chiffres.at(i);
+      tmp += b->bigint_chiffres->at(i);
     retenue = tmp / 10;
-    chiffres.at(i) = tmp % 10;
+    chiffres->at(i) = tmp % 10;
   }
-  while (len > 0 && chiffres.at(len - 1) == 0)
+  while (len > 0 && chiffres->at(len - 1) == 0)
     len --;
   bigint * p = new bigint();
   p->bigint_sign=true;
@@ -123,12 +123,12 @@ Pré-requis : a > b
 */
   int len = a->bigint_len;
   int retenue = 0;
-  std::vector<int > chiffres( len );
+  std::vector<int > *chiffres = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
   {
-    int tmp = retenue + a->bigint_chiffres.at(i);
+    int tmp = retenue + a->bigint_chiffres->at(i);
     if (i < b->bigint_len)
-      tmp -= b->bigint_chiffres.at(i);
+      tmp -= b->bigint_chiffres->at(i);
     if (tmp < 0)
     {
       tmp += 10;
@@ -136,9 +136,9 @@ Pré-requis : a > b
     }
     else
       retenue = 0;
-    chiffres.at(i) = tmp;
+    chiffres->at(i) = tmp;
   }
-  while (len > 0 && chiffres.at(len - 1) == 0)
+  while (len > 0 && chiffres->at(len - 1) == 0)
     len --;
   bigint * q = new bigint();
   q->bigint_sign=true;
@@ -190,24 +190,24 @@ bigint * mul_bigint_cp(bigint * a, bigint * b){
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   int len = a->bigint_len + b->bigint_len + 1;
-  std::vector<int > chiffres( len );
+  std::vector<int > *chiffres = new std::vector<int>( len );
   for (int k = 0 ; k < len; k++)
-    chiffres.at(k) = 0;
+    chiffres->at(k) = 0;
   for (int i = 0 ; i < a->bigint_len; i++)
   {
     int retenue = 0;
     for (int j = 0 ; j < b->bigint_len; j++)
     {
-      chiffres.at(i + j) = chiffres.at(i + j) + retenue + b->bigint_chiffres.at(j) * a->bigint_chiffres.at(i);
-      retenue = chiffres.at(i + j) / 10;
-      chiffres.at(i + j) = chiffres.at(i + j) % 10;
+      chiffres->at(i + j) = chiffres->at(i + j) + retenue + b->bigint_chiffres->at(j) * a->bigint_chiffres->at(i);
+      retenue = chiffres->at(i + j) / 10;
+      chiffres->at(i + j) = chiffres->at(i + j) % 10;
     }
-    chiffres.at(i + b->bigint_len) = chiffres.at(i + b->bigint_len) + retenue;
+    chiffres->at(i + b->bigint_len) = chiffres->at(i + b->bigint_len) + retenue;
   }
-  chiffres.at(a->bigint_len + b->bigint_len) = chiffres.at(a->bigint_len + b->bigint_len - 1) / 10;
-  chiffres.at(a->bigint_len + b->bigint_len - 1) = chiffres.at(a->bigint_len + b->bigint_len - 1) % 10;
+  chiffres->at(a->bigint_len + b->bigint_len) = chiffres->at(a->bigint_len + b->bigint_len - 1) / 10;
+  chiffres->at(a->bigint_len + b->bigint_len - 1) = chiffres->at(a->bigint_len + b->bigint_len - 1) % 10;
   for (int l = 0 ; l <= 2; l ++)
-    if (len != 0 && chiffres.at(len - 1) == 0)
+    if (len != 0 && chiffres->at(len - 1) == 0)
     len --;
   bigint * s = new bigint();
   s->bigint_sign=a->bigint_sign == b->bigint_sign;
@@ -218,7 +218,7 @@ D'ou le nom de la fonction. */
 
 bigint * bigint_premiers_chiffres(bigint * a, int i){
   int len = min2(i, a->bigint_len);
-  while (len != 0 && a->bigint_chiffres.at(len - 1) == 0)
+  while (len != 0 && a->bigint_chiffres->at(len - 1) == 0)
     len --;
   bigint * u = new bigint();
   u->bigint_sign=a->bigint_sign;
@@ -229,12 +229,12 @@ bigint * bigint_premiers_chiffres(bigint * a, int i){
 
 bigint * bigint_shift(bigint * a, int i){
   int e = a->bigint_len + i;
-  std::vector<int > chiffres( e );
+  std::vector<int > *chiffres = new std::vector<int>( e );
   for (int k = 0 ; k < e; k++)
     if (k >= i)
-    chiffres.at(k) = a->bigint_chiffres.at(k - i);
+    chiffres->at(k) = a->bigint_chiffres->at(k - i);
   else
-    chiffres.at(k) = 0;
+    chiffres->at(k) = 0;
   bigint * v = new bigint();
   v->bigint_sign=a->bigint_sign;
   v->bigint_len=a->bigint_len + i;
@@ -283,12 +283,12 @@ bigint * bigint_of_int(int i){
   int size = log10(i);
   if (i == 0)
     size = 0;
-  std::vector<int > t( size );
+  std::vector<int > *t = new std::vector<int>( size );
   for (int j = 0 ; j < size; j++)
-    t.at(j) = 0;
+    t->at(j) = 0;
   for (int k = 0 ; k < size; k++)
   {
-    t.at(k) = i % 10;
+    t->at(k) = i % 10;
     i /= 10;
   }
   bigint * w = new bigint();
@@ -312,7 +312,7 @@ bigint * fact_bigint(bigint * a){
 int sum_chiffres_bigint(bigint * a){
   int out_ = 0;
   for (int i = 0 ; i < a->bigint_len; i++)
-    out_ += a->bigint_chiffres.at(i);
+    out_ += a->bigint_chiffres->at(i);
   return out_;
 }
 
@@ -384,34 +384,34 @@ int euler29(){
   int maxA = 5;
   int maxB = 5;
   int f = maxA + 1;
-  std::vector<bigint * > a_bigint( f );
+  std::vector<bigint * > *a_bigint = new std::vector<bigint *>( f );
   for (int j = 0 ; j < f; j++)
-    a_bigint.at(j) = bigint_of_int(j * j);
+    a_bigint->at(j) = bigint_of_int(j * j);
   int g = maxA + 1;
-  std::vector<bigint * > a0_bigint( g );
+  std::vector<bigint * > *a0_bigint = new std::vector<bigint *>( g );
   for (int j2 = 0 ; j2 < g; j2++)
-    a0_bigint.at(j2) = bigint_of_int(j2);
+    a0_bigint->at(j2) = bigint_of_int(j2);
   int h = maxA + 1;
-  std::vector<int > b( h );
+  std::vector<int > *b = new std::vector<int>( h );
   for (int k = 0 ; k < h; k++)
-    b.at(k) = 2;
+    b->at(k) = 2;
   int n = 0;
   bool found = true;
   while (found)
   {
-    bigint * min_ = a0_bigint.at(0);
+    bigint * min_ = a0_bigint->at(0);
     found = false;
     for (int i = 2 ; i <= maxA; i ++)
-      if (b.at(i) <= maxB)
+      if (b->at(i) <= maxB)
     {
       if (found)
       {
-        if (bigint_lt(a_bigint.at(i), min_))
-          min_ = a_bigint.at(i);
+        if (bigint_lt(a_bigint->at(i), min_))
+          min_ = a_bigint->at(i);
       }
       else
       {
-        min_ = a_bigint.at(i);
+        min_ = a_bigint->at(i);
         found = true;
       }
     }
@@ -419,10 +419,10 @@ int euler29(){
     {
       n ++;
       for (int l = 2 ; l <= maxA; l ++)
-        if (bigint_eq(a_bigint.at(l), min_) && b.at(l) <= maxB)
+        if (bigint_eq(a_bigint->at(l), min_) && b->at(l) <= maxB)
       {
-        b.at(l) = b.at(l) + 1;
-        a_bigint.at(l) = mul_bigint(a_bigint.at(l), a0_bigint.at(l));
+        b->at(l) = b->at(l) + 1;
+        a_bigint->at(l) = mul_bigint(a_bigint->at(l), a0_bigint->at(l));
       }
     }
   }

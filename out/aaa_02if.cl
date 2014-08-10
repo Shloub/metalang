@@ -11,9 +11,15 @@
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
 
+(defun f (i)
+(if
+  (= i 0)
+  (return-from f t)
+  (return-from f nil)))
+
 (progn
   (if
-    t
+    (f 4)
     (princ "true <-
  ->
 ")

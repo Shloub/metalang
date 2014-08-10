@@ -3,11 +3,11 @@ function read_int(){
   return intval(trim(fgets(STDIN)));
 }
 
-function read_char_line($n){
+function &read_char_line($n){
   return fgets(STDIN);
 }
 
-function read_char_matrix($x, $y){
+function &read_char_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
     $tab[$z] = read_char_line($x);

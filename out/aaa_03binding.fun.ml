@@ -1,32 +1,42 @@
-module IntSet = Map.Make (struct
-  type t = int
-  let compare : int -> int -> int = Pervasives.compare
-end)
+module Array = struct
+  include Array
+  let init_withenv len f env =
+    let refenv = ref env in
+    Array.init len (fun i ->
+      let env, out = f i !refenv in
+      refenv := env;
+      out
+    )
+end
 
-let g =
-  (fun return i ->
+let rec g =
+  (fun i ->
       ((fun j ->
-           (((fun e f ->
-                 ((if f
-                   then (fun () -> (return 0))
-                   else (fun () -> (e ()))) ())) (fun () -> (return j))) ((j mod 2) = 1))) (i * 4)));;
-let h =
-  (fun return i ->
-      ((fun d ->
-           Printf.printf "%d" d;
            ((fun c ->
-                Printf.printf "%s" c;
-                (return ())) "\n")) i));;
-let main =
-  ((h (fun () -> ((fun a ->
-                      ((fun b ->
-                           ((fun l ->
-                                Printf.printf "%d" l;
-                                (*  main  *) ((h (fun () -> ((fun a ->
-                                                                 ((fun
-                                                                  b ->
-                                                                 ((fun
-                                                                  k ->
-                                                                 Printf.printf "%d" k;
-                                                                 ()) (a + b))) 1)) 2))) 15)) (a + b))) 5)) 4))) 14);;
+                (if ((j mod 2) = 1)
+                 then 0
+                 else (c j i))) (fun j i ->
+                                    j))) (i * 4)));;
+let rec h =
+  (fun i ->
+      (Printf.printf "%d" i;
+      (Printf.printf "%s" "\n";
+      ())));;
+let rec main =
+  begin
+    (h 14);
+    ((fun a ->
+         ((fun b ->
+              (Printf.printf "%d" (a + b);
+              (*  main  *)
+              begin
+                (h 15);
+                ((fun a ->
+                     ((fun b ->
+                          (Printf.printf "%d" (a + b);
+                          ())) 1)) 2)
+                end
+              )) 5)) 4)
+    end
+  ;;
 

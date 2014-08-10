@@ -33,7 +33,7 @@ function min2($a, $b){
 }
 
 
-function read_bigint($len){
+function &read_bigint($len){
   $chiffres = array();
   for ($j = 0 ; $j < $len; $j++)
   {
@@ -107,7 +107,7 @@ function bigint_lt(&$a, &$b){
   return !bigint_gt($a, $b);
 }
 
-function add_bigint_positif(&$a, &$b){
+function &add_bigint_positif(&$a, &$b){
   /* Une addition ou on en a rien a faire des signes */
   $len = max2($a["bigint_len"], $b["bigint_len"]) + 1;
   $retenue = 0;
@@ -133,7 +133,7 @@ function add_bigint_positif(&$a, &$b){
   return $p;
 }
 
-function sub_bigint_positif(&$a, &$b){
+function &sub_bigint_positif(&$a, &$b){
   /* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
 */
@@ -165,7 +165,7 @@ Pré-requis : a > b
   return $q;
 }
 
-function neg_bigint(&$a){
+function &neg_bigint(&$a){
   $r = array(
     "bigint_sign"=>!$a["bigint_sign"],
     "bigint_len"=>$a["bigint_len"],
@@ -175,7 +175,7 @@ function neg_bigint(&$a){
   return $r;
 }
 
-function add_bigint(&$a, &$b){
+function &add_bigint(&$a, &$b){
   if ($a["bigint_sign"] == $b["bigint_sign"])
   {
     if ($a["bigint_sign"])
@@ -201,11 +201,11 @@ function add_bigint(&$a, &$b){
   }
 }
 
-function sub_bigint(&$a, &$b){
+function &sub_bigint(&$a, &$b){
   return add_bigint($a, neg_bigint($b));
 }
 
-function mul_bigint_cp(&$a, &$b){
+function &mul_bigint_cp(&$a, &$b){
   /* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
@@ -238,7 +238,7 @@ D'ou le nom de la fonction. */
   return $s;
 }
 
-function bigint_premiers_chiffres(&$a, $i){
+function &bigint_premiers_chiffres(&$a, $i){
   $len = min2($i, $a["bigint_len"]);
   while ($len != 0 && $a["bigint_chiffres"][$len - 1] == 0)
     $len --;
@@ -251,7 +251,7 @@ function bigint_premiers_chiffres(&$a, $i){
   return $u;
 }
 
-function bigint_shift(&$a, $i){
+function &bigint_shift(&$a, $i){
   $e = $a["bigint_len"] + $i;
   $chiffres = array();
   for ($k = 0 ; $k < $e; $k++)
@@ -268,7 +268,7 @@ function bigint_shift(&$a, $i){
   return $v;
 }
 
-function mul_bigint(&$aa, &$bb){
+function &mul_bigint(&$aa, &$bb){
   if ($aa["bigint_len"] == 0)
     return $aa;
   else if ($bb["bigint_len"] == 0)
@@ -305,7 +305,7 @@ function log10_($a){
   return $out_;
 }
 
-function bigint_of_int($i){
+function &bigint_of_int($i){
   $size = log10_($i);
   if ($i == 0)
     $size = 0;
@@ -326,7 +326,7 @@ function bigint_of_int($i){
   return $w;
 }
 
-function fact_bigint(&$a){
+function &fact_bigint(&$a){
   $one = bigint_of_int(1);
   $out_ = $one;
   while (!bigint_eq($a, $one))
@@ -352,7 +352,7 @@ function euler20(){
   return sum_chiffres_bigint($a);
 }
 
-function bigint_exp(&$a, $b){
+function &bigint_exp(&$a, $b){
   if ($b == 1)
     return $a;
   else if (($b % 2) == 0)
@@ -361,7 +361,7 @@ function bigint_exp(&$a, $b){
     return mul_bigint($a, bigint_exp($a, $b - 1));
 }
 
-function bigint_exp_10chiffres(&$a, $b){
+function &bigint_exp_10chiffres(&$a, $b){
   $a = bigint_premiers_chiffres($a, 10);
   if ($b == 1)
     return $a;

@@ -17,7 +17,7 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-function mktoto($v1){
+function &mktoto($v1){
   $t = array(
     "foo"=>$v1,
     "bar"=>0,

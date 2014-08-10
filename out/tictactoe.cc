@@ -6,7 +6,7 @@ Tictactoe : un tictactoe avec une IA
 /* La structure de donnée */
 class gamestate {
 public:
-  std::vector<std::vector<int > > cases;
+  std::vector<std::vector<int> *> * cases;
   bool firstToPlay;
   int note;
   bool ended;
@@ -26,9 +26,9 @@ void print_state(gamestate * g){
   {
     for (int x = 0 ; x <= 2; x ++)
     {
-      if (g->cases.at(x).at(y) == 0)
+      if (g->cases->at(x)->at(y) == 0)
         std::cout << " ";
-      else if (g->cases.at(x).at(y) == 1)
+      else if (g->cases->at(x)->at(y) == 1)
         std::cout << "O";
       else
         std::cout << "X";
@@ -50,10 +50,10 @@ void eval_(gamestate * g){
     int lin = -1;
     for (int x = 0 ; x <= 2; x ++)
     {
-      if (g->cases.at(x).at(y) == 0)
+      if (g->cases->at(x)->at(y) == 0)
         freecase ++;
-      int colv = g->cases.at(x).at(y);
-      int linv = g->cases.at(y).at(x);
+      int colv = g->cases->at(x)->at(y);
+      int linv = g->cases->at(y)->at(x);
       if (col == -1 && colv != 0)
         col = colv;
       else if (colv != col)
@@ -70,9 +70,9 @@ void eval_(gamestate * g){
   }
   for (int x = 1 ; x <= 2; x ++)
   {
-    if (g->cases.at(0).at(0) == x && g->cases.at(1).at(1) == x && g->cases.at(2).at(2) == x)
+    if (g->cases->at(0)->at(0) == x && g->cases->at(1)->at(1) == x && g->cases->at(2)->at(2) == x)
       win = x;
-    if (g->cases.at(0).at(2) == x && g->cases.at(1).at(1) == x && g->cases.at(2).at(0) == x)
+    if (g->cases->at(0)->at(2) == x && g->cases->at(1)->at(1) == x && g->cases->at(2)->at(0) == x)
       win = x;
   }
   g->ended = win != 0 || freecase == 0;
@@ -89,7 +89,7 @@ void apply_move_xy(int x, int y, gamestate * g){
   int player = 2;
   if (g->firstToPlay)
     player = 1;
-  g->cases.at(x).at(y) = player;
+  g->cases->at(x)->at(y) = player;
   g->firstToPlay = !g->firstToPlay;
 }
 
@@ -98,7 +98,7 @@ void apply_move(move * m, gamestate * g){
 }
 
 void cancel_move_xy(int x, int y, gamestate * g){
-  g->cases.at(x).at(y) = 0;
+  g->cases->at(x)->at(y) = 0;
   g->firstToPlay = !g->firstToPlay;
   g->ended = false;
 }
@@ -108,7 +108,7 @@ void cancel_move(move * m, gamestate * g){
 }
 
 bool can_move_xy(int x, int y, gamestate * g){
-  return g->cases.at(x).at(y) == 0;
+  return g->cases->at(x)->at(y) == 0;
 }
 
 bool can_move(move * m, gamestate * g){
@@ -168,14 +168,14 @@ move * play(gamestate * g){
 
 gamestate * init_(){
   int b = 3;
-  std::vector<std::vector<int > > cases( b );
+  std::vector<std::vector<int> * > *cases = new std::vector<std::vector<int> *>( b );
   for (int i = 0 ; i < b; i++)
   {
     int a = 3;
-    std::vector<int > tab( a );
+    std::vector<int > *tab = new std::vector<int>( a );
     for (int j = 0 ; j < a; j++)
-      tab.at(j) = 0;
-    cases.at(i) = tab;
+      tab->at(j) = 0;
+    cases->at(i) = tab;
   }
   gamestate * c = new gamestate();
   c->cases=cases;

@@ -1,8 +1,18 @@
 program aaa_02if;
 
+function f(i : Longint) : boolean;
+begin
+  if i = 0
+  then
+    begin
+      exit(true);
+    end;
+  exit(false);
+end;
+
 
 begin
-  if true
+  if f(4)
   then
     begin
       Write('true <-'#10' ->'#10'');

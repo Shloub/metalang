@@ -9,7 +9,7 @@ function scan($format){
   $stdin = substr($stdin, strlen($out[0]));
   return $out;
 }
-function cons(&$list, $i){
+function &cons(&$list, $i){
   $out_ = array(
     "head"=>$i,
     "tail"=>$list
@@ -18,7 +18,7 @@ function cons(&$list, $i){
   return $out_;
 }
 
-function rev2(&$empty, &$acc, &$torev){
+function &rev2(&$empty, &$acc, &$torev){
   if ($torev == $empty)
     return $acc;
   else
@@ -32,7 +32,7 @@ function rev2(&$empty, &$acc, &$torev){
   }
 }
 
-function rev(&$empty, &$torev){
+function &rev(&$empty, &$torev){
   return rev2($empty, $empty, $torev);
 }
 

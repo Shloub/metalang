@@ -3,10 +3,17 @@ import java.util.*;
 public class aaa_02if
 {
   static Scanner scanner = new Scanner(System.in);
+  public static boolean f(int i)
+  {
+    if (i == 0)
+      return true;
+    return false;
+  }
+  
   
   public static void main(String args[])
   {
-    if (true)
+    if (f(4))
       System.out.print("true <-\n ->\n");
     else
       System.out.print("false <-\n ->\n");

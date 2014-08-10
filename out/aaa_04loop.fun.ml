@@ -1,43 +1,50 @@
-module IntSet = Map.Make (struct
-  type t = int
-  let compare : int -> int -> int = Pervasives.compare
-end)
+module Array = struct
+  include Array
+  let init_withenv len f env =
+    let refenv = ref env in
+    Array.init len (fun i ->
+      let env, out = f i !refenv in
+      refenv := env;
+      out
+    )
+end
 
-let main =
+let rec h =
+  (fun i ->
+      (*   for j = i - 2 to i + 2 do
+    if i % j == 5 then return true end
+  end  *)
+      ((fun j ->
+           let rec b j i =
+             (if (j <= (i + 2))
+              then ((fun c ->
+                        (if ((i mod j) = 5)
+                         then true
+                         else (c j i))) (fun j i ->
+                                            ((fun j ->
+                                                 (b j i)) (j + 1))))
+              else false) in
+             (b j i)) (i - 2)));;
+let rec main =
   ((fun j ->
-       (((fun n o ->
-             let rec p k q =
-               (if (k <= o)
-                then (p (k + 1) (((fun k ->
-                                      (fun (j) ->
-                                          ((fun j ->
-                                               ((fun l ->
-                                                    Printf.printf "%d" l;
-                                                    ((fun h ->
-                                                         Printf.printf "%s" h;
-                                                         ((fun () -> (j)) ())) "\n")) j)) (j + k)))) k) q))
-                else ((fun (j) ->
-                          ((fun i ->
-                               let rec f g =
-                                 ((fun (i, j) ->
-                                      ((fun e ->
-                                           (if e
-                                            then (f ((fun (i, j) ->
-                                                         ((fun d ->
-                                                              Printf.printf "%d" d;
-                                                              ((fun i ->
-                                                                   ((fun
-                                                                    j ->
-                                                                   ((fun () -> (i, j)) ())) (j + i))) (i + 1))) i)) (i, j)))
-                                            else ((fun (i, j) ->
-                                                      ((fun c ->
-                                                           Printf.printf "%d" c;
-                                                           ((fun b ->
-                                                                Printf.printf "%d" b;
-                                                                ((fun
-                                                                 a ->
-                                                                Printf.printf "%s" a;
-                                                                ()) "FIN TEST\n")) i)) j)) (i, j)))) (i < 10))) g) in
-                                 (f (i, j))) 4)) q)) in
-               (p n (j))) 0) 10)) 0);;
+       ((fun g l ->
+            let rec f k j =
+              (if (k <= l)
+               then ((fun j ->
+                         (Printf.printf "%d" j;
+                         (Printf.printf "%s" "\n";
+                         (f (k + 1) j)))) (j + k))
+               else ((fun i ->
+                         let rec e i j =
+                           (if (i < 10)
+                            then (Printf.printf "%d" i;
+                            ((fun i ->
+                                 ((fun j ->
+                                      (e i j)) (j + i))) (i + 1)))
+                            else (Printf.printf "%d" j;
+                            (Printf.printf "%d" i;
+                            (Printf.printf "%s" "FIN TEST\n";
+                            ())))) in
+                           (e i j)) 4)) in
+              (f g j)) 0 10)) 0);;
 

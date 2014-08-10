@@ -14,6 +14,21 @@ func skip() {
   }
 }
 
+
+func h(i int) bool{
+  /*  for j = i - 2 to i + 2 do
+    if i % j == 5 then return true end
+  end */
+  var j int = i - 2
+  for j <= i + 2{
+                  if (i % j) == 5 {
+                    return true
+                  }
+                  j ++;
+  }
+  return false
+}
+
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var j int = 0

@@ -3,11 +3,11 @@ function read_int(){
   return intval(trim(fgets(STDIN)));
 }
 
-function read_int_line($n){
+function &read_int_line($n){
   return array_map("intval", explode(" ", fgets(STDIN)));
 }
 
-function read_char_line($n){
+function &read_char_line($n){
   return fgets(STDIN);
 }
 

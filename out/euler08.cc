@@ -11,14 +11,14 @@ int max2(int a, int b){
 int main(){
   int i = 1;
   int g = 5;
-  std::vector<int > last( g );
+  std::vector<int > *last = new std::vector<int>( g );
   for (int j = 0 ; j < g; j++)
   {
     char c = '_';
     std::cin >> c >> std::noskipws;
     int d = c - '0';
     i *= d;
-    last.at(j) = d;
+    last->at(j) = d;
   }
   int max_ = i;
   int index = 0;
@@ -37,10 +37,10 @@ int main(){
     {
       i *= f;
       if (nskipdiv < 0)
-        i /= last.at(index);
+        i /= last->at(index);
       nskipdiv --;
     }
-    last.at(index) = f;
+    last->at(index) = f;
     index = (index + 1) % 5;
     max_ = max2(max_, i);
   }

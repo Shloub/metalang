@@ -146,7 +146,7 @@ function minmax(&$g){
 /*
 Renvoie le coup de l'IA
 */
-function play(&$g){
+function &play(&$g){
   $minMove = array(
     "x"=>0,
     "y"=>0
@@ -172,7 +172,7 @@ function play(&$g){
   return $minMove;
 }
 
-function init_(){
+function &init_(){
   $b = 3;
   $cases = array();
   for ($i = 0 ; $i < $b; $i++)
@@ -193,7 +193,7 @@ function init_(){
   return $c;
 }
 
-function read_move(){
+function &read_move(){
   $x = 0;
   list($x) = scan("%d");
   scantrim();

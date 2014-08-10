@@ -1,18 +1,27 @@
-module IntSet = Map.Make (struct
-  type t = int
-  let compare : int -> int -> int = Pervasives.compare
-end)
+module Array = struct
+  include Array
+  let init_withenv len f env =
+    let refenv = ref env in
+    Array.init len (fun i ->
+      let env, out = f i !refenv in
+      refenv := env;
+      out
+    )
+end
 
-let main =
-  (((fun b e ->
-        ((if e
-          then (fun () -> ((fun c ->
-                               Printf.printf "%s" c;
-                               (b ())) "true <-\n ->\n"))
-          else (fun () -> ((fun d ->
-                               Printf.printf "%s" d;
-                               (b ())) "false <-\n ->\n"))) ())) (fun () -> ((fun
-   a ->
-  Printf.printf "%s" a;
-  ()) "small test end\n"))) true);;
+let rec f =
+  (fun i ->
+      ((fun a ->
+           (if (i = 0)
+            then true
+            else (a i))) (fun i ->
+                             false)));;
+let rec main =
+  ((fun b ->
+       (if (f 4)
+        then (Printf.printf "%s" "true <-\n ->\n";
+        (b ()))
+        else (Printf.printf "%s" "false <-\n ->\n";
+        (b ())))) (fun () -> (Printf.printf "%s" "small test end\n";
+  ())));;
 

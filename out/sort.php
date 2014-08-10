@@ -17,7 +17,7 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-function copytab(&$tab, $len){
+function &copytab(&$tab, $len){
   $o = array();
   for ($i = 0 ; $i < $len; $i++)
     $o[$i] = $tab[$i];

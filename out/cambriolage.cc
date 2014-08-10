@@ -7,25 +7,25 @@ int max2(int a, int b){
     return b;
 }
 
-int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, std::vector<std::vector<int > >& serrures){
+int nbPassePartout(int n, std::vector<std::vector<int> *> * passepartout, int m, std::vector<std::vector<int> *> * serrures){
   int max_ancient = 0;
   int max_recent = 0;
   for (int i = 0 ; i < m; i++)
   {
-    if (serrures.at(i).at(0) == -1 && serrures.at(i).at(1) > max_ancient)
-      max_ancient = serrures.at(i).at(1);
-    if (serrures.at(i).at(0) == 1 && serrures.at(i).at(1) > max_recent)
-      max_recent = serrures.at(i).at(1);
+    if (serrures->at(i)->at(0) == -1 && serrures->at(i)->at(1) > max_ancient)
+      max_ancient = serrures->at(i)->at(1);
+    if (serrures->at(i)->at(0) == 1 && serrures->at(i)->at(1) > max_recent)
+      max_recent = serrures->at(i)->at(1);
   }
   int max_ancient_pp = 0;
   int max_recent_pp = 0;
   for (int i = 0 ; i < n; i++)
   {
-    std::vector<int > pp = passepartout.at(i);
-    if (pp.at(0) >= max_ancient && pp.at(1) >= max_recent)
+    std::vector<int> * pp = passepartout->at(i);
+    if (pp->at(0) >= max_ancient && pp->at(1) >= max_recent)
       return 1;
-    max_ancient_pp = max2(max_ancient_pp, pp.at(0));
-    max_recent_pp = max2(max_recent_pp, pp.at(1));
+    max_ancient_pp = max2(max_ancient_pp, pp->at(0));
+    max_recent_pp = max2(max_recent_pp, pp->at(1));
   }
   if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
     return 2;
@@ -37,33 +37,33 @@ int nbPassePartout(int n, std::vector<std::vector<int > >& passepartout, int m, 
 int main(){
   int n = 0;
   std::cin >> n >> std::skipws;
-  std::vector<std::vector<int > > passepartout( n );
+  std::vector<std::vector<int> * > *passepartout = new std::vector<std::vector<int> *>( n );
   for (int i = 0 ; i < n; i++)
   {
     int c = 2;
-    std::vector<int > out0( c );
+    std::vector<int > *out0 = new std::vector<int>( c );
     for (int j = 0 ; j < c; j++)
     {
       int out__ = 0;
       std::cin >> out__ >> std::skipws;
-      out0.at(j) = out__;
+      out0->at(j) = out__;
     }
-    passepartout.at(i) = out0;
+    passepartout->at(i) = out0;
   }
   int m = 0;
   std::cin >> m >> std::skipws;
-  std::vector<std::vector<int > > serrures( m );
+  std::vector<std::vector<int> * > *serrures = new std::vector<std::vector<int> *>( m );
   for (int k = 0 ; k < m; k++)
   {
     int d = 2;
-    std::vector<int > out1( d );
+    std::vector<int > *out1 = new std::vector<int>( d );
     for (int l = 0 ; l < d; l++)
     {
       int out_ = 0;
       std::cin >> out_ >> std::skipws;
-      out1.at(l) = out_;
+      out1->at(l) = out_;
     }
-    serrures.at(k) = out1;
+    serrures->at(k) = out1;
   }
   std::cout << nbPassePartout(n, passepartout, m, serrures);
   return 0;

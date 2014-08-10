@@ -11,16 +11,37 @@
 (defun quotient (a b) (truncate a b))
 (defun remainder (a b) (- a (* b (truncate a b))))
 
+(defun id (b)
+(return-from id b))
+
+(defun g (t_ index)
+(setf (aref t_ index) nil))
+
 (progn
-  (let ((b 5))
+  (let ((c 5))
     (let
      ((a (array_init
-            b
+            c
             (function (lambda (i)
             (block lambda_1
               (princ i)
-              (return-from lambda_1 (* i 2))
+              (return-from lambda_1 (= (remainder i 2) 0))
             ))
             ))))
-    )))
+    (let ((d (aref a 0)))
+      (if
+        d
+        (princ "True")
+        (princ "False"))
+      (princ "
+")
+      (g (id a) 0)
+      (let ((e (aref a 0)))
+        (if
+          e
+          (princ "True")
+          (princ "False"))
+        (princ "
+")
+      )))))
 

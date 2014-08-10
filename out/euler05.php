@@ -3,7 +3,7 @@ function max2($a, $b){
   return max($a, $b);
 }
 
-function primesfactors($n){
+function &primesfactors($n){
   $c = $n + 1;
   $tab = array();
   for ($i = 0 ; $i < $c; $i++)
