@@ -409,7 +409,7 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	@mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.ml.native.out out/%.fun.ml.native.out
+out/%.test : out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \

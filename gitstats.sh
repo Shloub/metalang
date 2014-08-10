@@ -8,14 +8,17 @@ walk(){
 }
 
 countml(){
-    find . -name "*.ml" -not -path "./out/"  -not -path "./_build/*" -exec cat {} \; | wc -l
+    find . -name "*.ml" -not -path "./out/*"  -not -path "./_build/*" -exec cat {} \; | wc -l
 }
 
 count(){
-    find ./out -name "$1" -exec cat {} \; | wc -l
+    find ./out -name "$1" -exec cat {} \; | wc -c
 }
 
-counttests(){
+counttestschars(){
+    find ./tests/prog -name "*.metalang" -exec cat {} \; | wc -c
+}
+counttestslines(){
     find ./tests/prog -name "*.metalang" -exec cat {} \; | wc -l
 }
 
@@ -38,7 +41,8 @@ makepoints(){
     statComp=`countml`
     echo "$1 $statComp" >> countlines.dat
     if [ -d ./tests/prog ]; then
-    statMETALANG=`counttests`
+    statMETALANG=`counttestschars`
+    statMETALANGL=`counttestslines`
     statML=`count '*.ml'`
     statC=`count '*.c'`
     statCC=`count '*.cc'`
@@ -64,8 +68,8 @@ makepoints(){
     statCS=$(( $statCS * 1000 / $statMETALANG ))
     statCL=$(( $statCL * 1000 / $statMETALANG ))
 
-    if [ "$statMETALANG" != "0" ]; then
-	echo "$1 $statMETALANG" >> countlinesTest.dat
+    if [ "$statMETALANGL" != "0" ]; then
+	echo "$1 $statMETALANGL" >> countlinesTest.dat
     fi
     if [ "$statML" != "0" ]; then
 	echo "$1 $statML" >> countlinesML.dat
