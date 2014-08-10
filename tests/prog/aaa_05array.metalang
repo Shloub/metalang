@@ -1,3 +1,8 @@
+
+def array<bool> id(array<bool> b)
+    return b
+end
+
 def void g(array<bool> t, int index)
     t[index] = false
 end
@@ -9,7 +14,7 @@ main
   end
   print a[0]
   print "\n"
-  g(a, 0)
+  g(id(a), 0)
   print a[0]
   print "\n"
 end

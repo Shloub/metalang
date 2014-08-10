@@ -136,7 +136,7 @@ module Mutable = struct
       | Dot (m, fi) -> Dot (f m, fi)
     let next () = next ()
   end)
-  type 'a t = 'a Fixed.t
+  type 'expr t = 'expr Fixed.t
   let fix = Fixed.fix
   let unfix = Fixed.unfix
 
@@ -721,10 +721,12 @@ module Instr = struct
         in out, fixa a i
       ) acc instruction
 
-  let map_expr f i =
+  let map_expr : (('a -> 'b) -> 'a t -> 'b t) = fun f i ->
     let f2 () e = (), (f e) in
     let (), i = foldmap_expr f2 () i
     in i
+
+  let remexpr : ('a t -> unit t) = fun i -> map_expr (fun e -> ()) i
 
   let fold_expr f acc i =
     let f2 acc e = (f acc e), e in
