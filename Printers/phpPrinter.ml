@@ -163,7 +163,13 @@ function nextChar(){
   method print f t expr = Format.fprintf f "@[echo@ %a;@]" (self#eprint t) expr
 
   method print_proto f (funname, t, li) =
-    Format.fprintf f "function %a(%a)"
+    Format.fprintf f "function %a%a(%a)"
+      (fun f t -> match Type.unfix t with
+      | Type.Array _
+      | Type.Named _ ->
+        Format.fprintf f "&"
+      | _ -> ()
+      ) t
       self#funname funname
       (print_list
          (fun t (a, type_) ->
