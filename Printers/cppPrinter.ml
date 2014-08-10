@@ -44,7 +44,7 @@ class cppPrinter = object(self)
     match Type.unfix t with
     | Type.Integer -> Format.fprintf f "int"
     | Type.String -> Format.fprintf f "std::string"
-    | Type.Array a -> Format.fprintf f "std::vector<%a >" self#ptype a
+    | Type.Array a -> Format.fprintf f "std::vector<%a> *" self#ptype a
     | Type.Void ->  Format.fprintf f "void"
     | Type.Bool -> Format.fprintf f "bool"
     | Type.Char -> Format.fprintf f "char"
@@ -72,14 +72,14 @@ class cppPrinter = object(self)
         if Tags.is_taged "use_math"
         then Format.fprintf f "#include<cmath>@\n";
         if Tags.is_taged "use_cc_readline"
-        then Format.fprintf f "std::vector<char> getline(){
+        then Format.fprintf f "std::vector<char> *getline(){
   if (std::cin.flags() & std::ios_base::skipws){
     std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
   }
   std::string line;
   std::getline(std::cin, line);
-  std::vector<char> c(line.begin(), line.end());
+  std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }@\n"
       ) ()
@@ -88,9 +88,10 @@ class cppPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method allocarray f binding type_ len =
-    Format.fprintf f "@[<h>std::vector<%a > %a( %a );@]"
+    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>( %a );@]"
       self#ptype type_
       self#binding binding
+      self#ptype type_
       self#expr len
 
   method main f main =
@@ -115,12 +116,12 @@ class cppPrinter = object(self)
     | Mutable.Var b ->
       self#binding f b
     | Mutable.Array (m, index) ->
-      Format.fprintf f "@[<h>%a.at(%a)@]"
+      Format.fprintf f "@[<h>%a->at(%a)@]"
         self#mutable_ m
         (print_list
            self#expr
            (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a).at(%a"
+             Format.fprintf f "%a)->at(%a"
                f1 e1
                f2 e2
            )) index
@@ -158,12 +159,6 @@ class cppPrinter = object(self)
   method print f t expr =
     Format.fprintf f "@[std::cout << %a;@]"
       self#expr expr
-
-  method prototype f t =
-    match Type.unfix t with
-    | Type.Array _ ->
-      Format.fprintf f "%a&" self#ptype t
-    | _ -> self#ptype f t
 
   method decl_type f name t =
     match (Type.unfix t) with
