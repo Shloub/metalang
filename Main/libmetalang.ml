@@ -220,6 +220,7 @@ let languages, printers =
     "py",   python_passes => new PyPrinter.pyPrinter ;
     "go",   clike_passes => new GoPrinter.goPrinter ;
     "cl",   common_lisp_passes  => new CommonLispPrinter.commonLispPrinter ;
+    "rkt",  fun_passes => new RacketPrinter.racketPrinter ;
 
     "metalang_parsed", no_passes => new Printer.printer ;
   (* Si on met cette passe en premier,
@@ -390,6 +391,7 @@ enum @target_language
   LANG_Cl
   LANG_M
   LANG_Hs
+  LANG_Rkt
   LANG_Metalang_parsed
 end
 def @target_language current_language ()
