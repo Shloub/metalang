@@ -65,7 +65,7 @@ module Expr = struct
   | Record of ('a * string) list
   | RecordAffectIn of 'a * string * 'a * 'a
   | RecordAccess of 'a * string
-  | ArrayMake of 'a * 'a
+  | ArrayMake of 'a * 'a * 'a
   | ArrayAccess of 'a * 'a list
   | ArrayAffectIn of 'a * 'a list * 'a * 'a
   | LetIn of (string * 'a ) list * 'a
@@ -94,7 +94,7 @@ module Expr = struct
       | RecordAffectIn (e1, s, e2, in_) -> RecordAffectIn (f e1, s, f e2, f in_)
       | RecordAccess (e, s) -> RecordAccess (f e, s)
       | ArrayAccess (tab, indexes) -> ArrayAccess (f tab, List.map f indexes)
-      | ArrayMake (len, lambda) -> ArrayMake (f len, f lambda)
+      | ArrayMake (len, lambda, env) -> ArrayMake (f len, f lambda, f env)
       | ArrayAffectIn (tab, indexes, v, in_) -> ArrayAffectIn (f tab, List.map f indexes, f v, f in_)
       | LetIn (params, b) -> LetIn (List.map (fun (s, a) -> s, f a) params, f b)
     let next () = next ()
@@ -178,10 +178,11 @@ module Expr = struct
 	  let acc, tab = f acc tab in
 	  let acc, indexes = List.fold_left_map f acc indexes in
 	  acc, ArrayAccess (tab, indexes)
-	| ArrayMake (len, lambda) ->
+	| ArrayMake (len, lambda, env) ->
 	  let acc, len = f acc len in
+	  let acc, env = f acc env in
 	  let acc, lambda = f acc lambda in
-	  acc, ArrayMake (len, lambda)
+	  acc, ArrayMake (len, lambda, env)
 	| ArrayAffectIn (tab, indexes, v, in_) ->
 	  let acc, tab = f acc tab in
 	  let acc, indexes = List.fold_left_map f acc indexes in
@@ -223,7 +224,7 @@ module Expr = struct
   let record li = fix (Record li)
   let recordaccess e s = fix (RecordAccess (e, s))
   let recordaffectin record field value in_ = fix (RecordAffectIn (record, field, value, in_))
-  let arraymake len lambda = fix (ArrayMake (len, lambda))
+  let arraymake len lambda env = fix (ArrayMake (len, lambda, env))
   let arrayaccess tab indexes = fix (ArrayAccess (tab, indexes))
   let arrayaffectin tab indexes v in_ = fix (ArrayAffectIn (tab, indexes, v, in_))
 end

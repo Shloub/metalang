@@ -248,28 +248,28 @@ out/%.metalang_parsed : tests/prog/%.metalang metalang
 	 ./metalang -quiet -o out -lang metalang $< || exit 1; \
 	fi
 
-out/%.fun.ml : tests/prog/%.metalang metalang out
+out/%.fun.ml : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang fun.ml $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang fun.ml $< || exit 1; \
 	fi
 
-out/%.ml : tests/prog/%.metalang metalang out
+out/%.ml : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang ml $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang ml $< || exit 1; \
 	fi
 
-out/%.hs : tests/prog/%.metalang metalang out
+out/%.hs : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang hs $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang hs $< || exit 1; \
 	fi
 
-out/%.rb : tests/prog/%.metalang metalang out
+out/%.rb : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang rb $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -302,6 +302,13 @@ out/%.php : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	./metalang -o out -lang php $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang php $< || exit 1; \
+	fi
+
+out/%.rkt : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang rkt $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang rkt $< || exit 1; \
 	fi
 
 out/%.metalang.test : out/%.metalang Stdlib/stdlib.metalang metalang
@@ -436,6 +443,9 @@ SOURCEGENERATIONS := \
 	$(addsuffix .c, $(TESTS)) \
 	$(addsuffix .pas, $(TESTS)) \
 	$(addsuffix .java, $(TESTS)) \
+	$(addsuffix .hs, $(TESTS)) \
+	$(addsuffix .rkt, $(TESTS)) \
+	$(addsuffix .fun.ml, $(TESTS)) \
 	$(addsuffix .cs, $(TESTS)) \
 	$(addsuffix .go, $(TESTS)) \
 	$(addsuffix .cl, $(TESTS))
@@ -451,6 +461,16 @@ compileML: $(COMPILEMLDEPS)
 EXECMLDEPS := $(addsuffix .ml.native.out, $(TESTS))
 execML: $(EXECMLDEPS)
 	@echo "$(green)OCAML EXEC OK$(reset)"
+	@echo "ok" > $@
+
+COMPILEFUNMLDEPS := $(addsuffix .fun.ml.native, $(TESTS))
+compileFUNML: $(COMPILEFUNMLDEPS)
+	@echo "$(green)FUN OCAML COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECMLDEPS := $(addsuffix .fun.ml.native.out, $(TESTS))
+execFUNML: $(EXECFUNMLDEPS)
+	@echo "$(green)FUN OCAML EXEC OK$(reset)"
 	@echo "ok" > $@
 
 COMPILECDEPS := $(addsuffix .c.bin, $(TESTS))
@@ -543,7 +563,12 @@ execGO: $(EXECGODEPS)
 	@echo "$(green)@$ OK$(reset)"
 	@echo "ok" > $@
 
-compileAll: metalang compileML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
+EXECRKTDEPS := $(addsuffix .rkt.out, $(TESTS))
+execRKT: $(EXECRKTDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+compileAll: metalang compileML compileFUNML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
 	@echo "$(green)ALL COMPILATION OK$(reset)"
 	@echo "ok" > $@
 

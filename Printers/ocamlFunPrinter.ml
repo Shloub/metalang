@@ -208,12 +208,12 @@ class camlFunPrinter = object(self)
     Format.fprintf f "(%a.%s <- %a; %a)"
       self#expr record field
       self#expr value self#expr in_
-  | E.ArrayMake (len, lambda) -> self#arraymake f len lambda
+  | E.ArrayMake (len, lambda, env) -> self#arraymake f len lambda env
   | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
   | E.ArrayAffectIn (tab, indexes, v, in_) -> self#arrayaffectin f tab indexes v in_
   | E.LetIn (params, b) -> self#letin f params b
 
-  method arraymake f len lambda = Format.fprintf f "(Array.init_withenv %a %a )" self#expr len self#expr lambda
+  method arraymake f len lambda env = Format.fprintf f "(Array.init_withenv %a %a %a)" self#expr len self#expr lambda self#expr env
 
   method arrayindex f tab indexes =
     Format.fprintf f "%a.(%a)"

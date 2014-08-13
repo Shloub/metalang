@@ -68,22 +68,23 @@ class racketPrinter = object(self)
   method binop f a op b = Format.fprintf f "(%a %a %a)" self#pbinop op self#expr a self#expr b
 
   method fun_ f params e =
-    match params with
-    | [] -> Format.fprintf f "@[<v 2>(lambda () @\n%a@])@]" self#expr e
-    | [hd] -> Format.fprintf f "@[<v 2>(lambda (%a) @\n%a@])@]" self#binding hd self#expr e
-    | hd::tl -> Format.fprintf f "@[<v 2>(lambda (%a) %a@])@]" self#binding hd (fun f () -> self#fun_ f tl e) ()
+    Format.fprintf f "@[<v 2>(lambda (%a) @\n%a@])@]"
+      (Printer.print_list self#binding
+      (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b))
+      params
+      self#expr e
 
   method header f () = Format.fprintf f "#lang racket
 (require racket/block)
 
-(define array_init_withenv (lambda (len) (lambda (f) (lambda (env)
+(define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
+    (let ([o (f i env)])
       (block
         (set! env (car o))
         (cdr o)
       )
-    )))))))
+    )))))
 "
 
   method toplvl_declare f name e = Format.fprintf f "@[<v 2>(define %a %a@])@\n" self#binding name self#expr e
@@ -109,14 +110,21 @@ class racketPrinter = object(self)
        self#expr
        (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)) li
 
-  method tuple f li = Format.fprintf f "#(%a)"
-    (Printer.print_list self#expr
-       (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+  method tuple f li =
+    match List.rev li with
+    | [] -> assert false
+    | hd::tl ->
+      let tl = List.rev tl in
+      Format.fprintf f "'(%a . %a)"
+	(Printer.print_list self#expr
+	   (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) tl
+	self#expr hd
 
-  method apply_nomacros f e li = match List.rev li with
-  | [] -> Format.fprintf f "(%a)" self#expr e
-  | [e2] -> Format.fprintf f "(%a %a)" self#expr e self#expr e2
-  | hd::tl -> Format.fprintf f "(%a %a)" (fun f () -> self#apply_nomacros f e tl) () self#expr hd
+  method apply_nomacros f e li =
+    Format.fprintf f "(%a %a)"
+      self#expr e
+      (Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+      
 
   method letrecin f name params e1 e2 = (* TODO *)
     let e1 = E.fun_ params e1 in
@@ -125,11 +133,11 @@ class racketPrinter = object(self)
       self#expr e1
       self#expr e2
 
-  method arraymake f len lambda = Format.fprintf f "((array_init_withenv %a) %a)" self#expr len self#expr lambda
+  method arraymake f len lambda env = Format.fprintf f "(array_init_withenv %a %a %a)" self#expr len self#expr lambda self#expr env
 
   method arrayindex f tab indexes =
     match List.rev indexes with
-    | [] -> assert false
+    | [] -> self#expr f tab
     | [expr] ->
       Format.fprintf f "(vector-ref %a %a)"
 	self#expr tab
@@ -139,10 +147,15 @@ class racketPrinter = object(self)
       self#expr hd
 
   method arrayaffectin f tab indexes v in_ =
-    Format.fprintf f "(block (vector-set! %a %a) %a)"
-      (fun f () -> self#arrayindex f tab indexes) ()
-      self#expr v
-      self#expr in_
+    match List.rev indexes with
+    | [] -> assert false
+    | hd::tl ->
+      let tl = List.rev tl in
+      Format.fprintf f "(block (vector-set! %a %a %a) %a)"
+	(fun f () -> self#arrayindex f tab tl) ()
+	self#expr hd
+	self#expr v
+	self#expr in_
 end
 
 let racketPrinter = new racketPrinter

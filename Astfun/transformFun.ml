@@ -171,7 +171,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let content = F.Expr.fun_ [varname] content in
       let next = instrs suite contsuite  contreturn env tl in
       let next = F.Expr.fun_ [name] next in
-      F.Expr.apply next [F.Expr.apply (F.Expr.arraymake e content) [returnenv] ]
+      F.Expr.apply next [F.Expr.arraymake e content returnenv]
     | A.Instr.AllocArray (name, t, e, None) -> assert false
     | A.Instr.Untuple (vars, e) ->
       let vars = List.map snd vars in
