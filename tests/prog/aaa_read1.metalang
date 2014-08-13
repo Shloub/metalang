@@ -1,0 +1,7 @@
+
+main
+  def str = read_char_line(12)
+  for i = 0 to 11 do
+    print str[i]
+  end
+end

@@ -10,27 +10,29 @@ module Array = struct
 end
 
 let rec main =
-  Scanf.scanf "%d" (fun strlen ->
-                       (Scanf.scanf "%[\n \010]" (fun _ -> ((fun tab4 ->
-                                                                ((fun
-                                                                 e f ->
-                                                                let rec d j strlen =
-                                                                  (if (j <= f)
-                                                                   then (Printf.printf "%c" tab4.(j);
-                                                                   (d (j + 1) strlen))
-                                                                   else ()) in
-                                                                  (d e strlen)) 0 (strlen - 1))) ((Array.init_withenv strlen (fun
-                        toto ->
-                       (fun (strlen) ->
-                           Scanf.scanf "%c" (fun tmpc ->
-                                                ((fun c ->
-                                                     ((fun b ->
-                                                          (if (tmpc <> ' ')
-                                                           then ((fun
-                                                            c ->
-                                                           (b c tmpc toto strlen)) ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))))
-                                                           else (b c tmpc toto strlen))) (fun
-                                                      c tmpc toto strlen ->
-                                                     ((fun a ->
-                                                          ((strlen), a)) (char_of_int (c)))))) (int_of_char (tmpc)))))) ) (strlen))))));;
+  Scanf.scanf "%d"
+  (fun strlen ->
+      (Scanf.scanf "%[\n \010]" (fun _ -> let tab4 = (Array.init_withenv strlen (fun
+       toto strlen ->
+      Scanf.scanf "%c"
+      (fun tmpc ->
+          let c = (int_of_char (tmpc)) in
+          let b = (fun c tmpc toto strlen ->
+                      let a = (char_of_int (c)) in
+                      (strlen, a)) in
+          (if (tmpc <> ' ')
+           then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
+           (b c tmpc toto strlen)
+           else (b c tmpc toto strlen)))) strlen) in
+      let e = 0 in
+      let f = (strlen - 1) in
+      let rec d j strlen =
+        (if (j <= f)
+         then begin
+                (Printf.printf "%c" tab4.(j));
+                (d (j + 1) strlen)
+                end
+         
+         else ()) in
+        (d e strlen))));;
 

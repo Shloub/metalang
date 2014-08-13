@@ -18,48 +18,59 @@ let rec is_triangular =
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
     *)
-      ((fun a ->
-           ((a * (a + 1)) = (n * 2))) (isqrt (n * 2))));;
+      let a = (isqrt (n * 2)) in
+      ((a * (a + 1)) = (n * 2)));;
 let rec score =
-  (fun () -> (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d" (fun
-   len ->
-  (Scanf.scanf "%[\n \010]" (fun _ -> ((fun sum ->
-                                           ((fun e f ->
-                                                let rec d i sum len =
-                                                  (if (i <= f)
-                                                   then Scanf.scanf "%c" (fun
-                                                    c ->
-                                                   ((fun sum ->
-                                                        (* 		print c print " " print sum print " "  *)
-                                                        (d (i + 1) sum len)) (sum + (((int_of_char (c)) - (int_of_char ('A'))) + 1))))
-                                                   else ((fun b ->
-                                                             (if (is_triangular sum)
-                                                              then 1
-                                                              else 0)) (fun
-                                                    sum len ->
-                                                   ()))) in
-                                                  (d e sum len)) 1 len)) 0)))))));;
+  (fun () -> (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+  (fun len ->
+      (Scanf.scanf "%[\n \010]" (fun _ -> let sum = 0 in
+      let e = 1 in
+      let f = len in
+      let rec d i sum len =
+        (if (i <= f)
+         then Scanf.scanf "%c"
+         (fun c ->
+             let sum = (sum + (((int_of_char (c)) - (int_of_char ('A'))) + 1)) in
+             (* 		print c print " " print sum print " "  *)
+             (d (i + 1) sum len))
+         else let b = (fun sum len ->
+                          ()) in
+         (if (is_triangular sum)
+          then 1
+          else 0)) in
+        (d e sum len)))))));;
 let rec main =
-  ((fun m o ->
-       let rec k i =
-         (if (i <= o)
-          then ((fun l ->
-                    (if (is_triangular i)
-                     then (Printf.printf "%d" i;
-                     (Printf.printf "%s" " ";
-                     (l ())))
-                     else (l ()))) (fun () -> (k (i + 1))))
-          else (Printf.printf "%s" "\n";
-          ((fun sum ->
-               Scanf.scanf "%d" (fun n ->
-                                    ((fun h j ->
-                                         let rec g i n sum =
-                                           (if (i <= j)
-                                            then ((fun sum ->
-                                                      (g (i + 1) n sum)) (sum + (score ())))
-                                            else (Printf.printf "%d" sum;
-                                            (Printf.printf "%s" "\n";
-                                            ()))) in
-                                           (g h n sum)) 1 n))) 0))) in
-         (k m)) 1 55);;
+  let m = 1 in
+  let o = 55 in
+  let rec k i =
+    (if (i <= o)
+     then let l = (fun () -> (k (i + 1))) in
+     (if (is_triangular i)
+      then begin
+             (Printf.printf "%d" i);
+             (Printf.printf "%s" " ");
+             (l ())
+             end
+      
+      else (l ()))
+     else begin
+            (Printf.printf "%s" "\n");
+            let sum = 0 in
+            Scanf.scanf "%d"
+            (fun n ->
+                let h = 1 in
+                let j = n in
+                let rec g i n sum =
+                  (if (i <= j)
+                   then let sum = (sum + (score ())) in
+                   (g (i + 1) n sum)
+                   else begin
+                          (Printf.printf "%d" sum);
+                          (Printf.printf "%s" "\n")
+                          end
+                   ) in
+                  (g h n sum))
+            end
+     ) in
+    (k m);;
 

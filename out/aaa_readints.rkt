@@ -1,0 +1,101 @@
+#lang racket
+(require racket/block)
+
+(define array_init_withenv (lambda (len f env)
+  (build-vector len (lambda (i)
+    (let ([o ((f i) env)])
+      (block
+        (set! env (car o))
+        (cadr o)
+      )
+    )))))
+(define last-char 0)
+(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
+(next-char)
+(define mread-char (lambda ()
+  (let ([ out last-char])
+    (block
+      (next-char)
+      out
+    ))))
+
+(define mread-int (lambda ()
+  (if (eq? #\- last-char)
+  (block
+    (next-char) (- 0 (mread-int)))
+    (letrec ([w (lambda (out)
+      (if (eof-object? last-char)
+        out
+        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
+          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
+            (block
+              (next-char)
+              (w out)
+          ))
+        out
+      )))]) (w 0)))))
+
+(define mread-blank (lambda ()
+  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
+))
+
+(define read_int (lambda () 
+                   ((lambda (out_) 
+                      (block (mread-blank) out_ )) (mread-int))))
+(define read_int_line (lambda (n) 
+                        (let ([tab (array_init_withenv n (lambda (i) 
+                                                           (lambda (n) 
+                                                             ((lambda (t_) 
+                                                                (block (mread-blank) 
+                                                                (let ([b t_])
+                                                                  (list n b)) )) (mread-int)))) n)])
+tab)))
+(define read_int_matrix (lambda (x y) 
+                          (let ([tab (array_init_withenv y (lambda (z) 
+                                                             (lambda (internal_env) (apply (lambda
+                                                              (x y) 
+                                                             (let ([a (read_int_line x)])
+                                                               (list (list x y) a))) internal_env))) (list x y))])
+                          tab)))
+(define main (let ([len (read_int )])
+               (block
+                 (display len)
+                 (display "=len\n")
+                 (let ([tab1 (read_int_line len)])
+                   (let ([l 0])
+                     (let ([m (- len 1)])
+                       (letrec ([k (lambda (i tab1 len) 
+                                     (if (<= i m)
+                                       (block
+                                         (display i)
+                                         (display "=>")
+                                         (display (vector-ref tab1 i))
+                                         (display "\n")
+                                         (k (+ i 1) tab1 len)
+                                         )
+                                       (let ([len (read_int )])
+                                         (let ([tab2 (read_int_matrix len (- len 1))])
+                                           (let ([g 0])
+                                             (let ([h (- len 2)])
+                                               (letrec ([c (lambda (i tab2 tab1 len) 
+                                                             (if (<= i h)
+                                                               (let ([e 0])
+                                                                 (let ([f (- len 1)])
+                                                                   (letrec ([d 
+                                                                    (lambda (j tab2 tab1 len) 
+                                                                    (if (<= j f)
+                                                                    (block
+                                                                    (display (vector-ref (vector-ref tab2 i) j))
+                                                                    (display " ")
+                                                                    (d (+ j 1) tab2 tab1 len)
+                                                                    )
+                                                                    (block
+                                                                    (display "\n")
+                                                                    (c (+ i 1) tab2 tab1 len)
+                                                                    )))])
+                                                                   (d e tab2 tab1 len))))
+                                                             '()))])
+                                             (c g tab2 tab1 len))))))))])
+                   (k l tab1 len)))))
+)))
+

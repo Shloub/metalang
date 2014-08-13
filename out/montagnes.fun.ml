@@ -11,46 +11,39 @@ end
 
 let rec montagnes_ =
   (fun tab len ->
-      ((fun max_ ->
-           ((fun j ->
-                ((fun i ->
-                     let rec b i j max_ tab len =
-                       (if (i >= 0)
-                        then ((fun x ->
-                                  let rec e x i j max_ tab len =
-                                    (if ((j >= 0) && (x > tab.((len - j))))
-                                     then ((fun j ->
-                                               (e x i j max_ tab len)) (j - 1))
-                                     else ((fun j ->
-                                               (tab.((len - j)) <- x; ((fun
-                                                c ->
-                                               (if (j > max_)
-                                                then ((fun max_ ->
-                                                          (c x i j max_ tab len)) j)
-                                                else (c x i j max_ tab len))) (fun
-                                                x i j max_ tab len ->
-                                               ((fun i ->
-                                                    (b i j max_ tab len)) (i - 1)))))) (j + 1))) in
-                                    (e x i j max_ tab len)) tab.(i))
-                        else max_) in
-                       (b i j max_ tab len)) (len - 2))) 1)) 1));;
+      let max_ = 1 in
+      let j = 1 in
+      let i = (len - 2) in
+      let rec b i j max_ tab len =
+        (if (i >= 0)
+         then let x = tab.(i) in
+         let rec e x i j max_ tab len =
+           (if ((j >= 0) && (x > tab.((len - j))))
+            then let j = (j - 1) in
+            (e x i j max_ tab len)
+            else let j = (j + 1) in
+            (tab.((len - j)) <- x; let c = (fun x i j max_ tab len ->
+                                               let i = (i - 1) in
+                                               (b i j max_ tab len)) in
+            (if (j > max_)
+             then let max_ = j in
+             (c x i j max_ tab len)
+             else (c x i j max_ tab len)))) in
+           (e x i j max_ tab len)
+         else max_) in
+        (b i j max_ tab len));;
 let rec main =
-  ((fun len ->
-       Scanf.scanf "%d" (fun h ->
-                            ((fun len ->
-                                 (Scanf.scanf "%[\n \010]" (fun _ -> ((fun
-                                  tab ->
-                                 (Printf.printf "%d" (montagnes_ tab len);
-                                 ())) ((Array.init_withenv len (fun i ->
-                                                                   (fun
-                                                                    (len) ->
-                                                                   ((fun
-                                                                    x ->
-                                                                   Scanf.scanf "%d" (fun
-                                                                    g ->
-                                                                   ((fun
-                                                                    x ->
-                                                                   (Scanf.scanf "%[\n \010]" (fun _ -> ((fun
-                                                                    f ->
-                                                                   ((len), f)) x)))) g))) 0))) ) (len)))))) h))) 0);;
+  let len = 0 in
+  Scanf.scanf "%d"
+  (fun h ->
+      let len = h in
+      (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun
+       i len ->
+      let x = 0 in
+      Scanf.scanf "%d"
+      (fun g ->
+          let x = g in
+          (Scanf.scanf "%[\n \010]" (fun _ -> let f = x in
+          (len, f))))) len) in
+      (Printf.printf "%d" (montagnes_ tab len)))));;
 

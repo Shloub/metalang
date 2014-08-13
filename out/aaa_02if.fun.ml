@@ -11,17 +11,22 @@ end
 
 let rec f =
   (fun i ->
-      ((fun a ->
-           (if (i = 0)
-            then true
-            else (a i))) (fun i ->
-                             false)));;
+      let a = (fun i ->
+                  false) in
+      (if (i = 0)
+       then true
+       else (a i)));;
 let rec main =
-  ((fun b ->
-       (if (f 4)
-        then (Printf.printf "%s" "true <-\n ->\n";
-        (b ()))
-        else (Printf.printf "%s" "false <-\n ->\n";
-        (b ())))) (fun () -> (Printf.printf "%s" "small test end\n";
-  ())));;
+  let b = (fun () -> (Printf.printf "%s" "small test end\n")) in
+  (if (f 4)
+   then begin
+          (Printf.printf "%s" "true <-\n ->\n");
+          (b ())
+          end
+   
+   else begin
+          (Printf.printf "%s" "false <-\n ->\n");
+          (b ())
+          end
+   );;
 

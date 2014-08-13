@@ -10,7 +10,10 @@ module Array = struct
 end
 
 let rec main =
-  (Printf.printf "%s" "ma petite chaine";
-  (Printf.printf "%s" " en or";
-  ()));;
+  begin
+    (Printf.printf "%s" "ma petite chaine");
+    (Printf.printf "%s" " en or");
+    ()
+    end
+  ;;
 

@@ -16,32 +16,44 @@ let rec g =
   (fun t index ->
       (t.(index) <- false; ()));;
 let rec main =
-  ((fun c ->
-       ((fun a ->
-            ((fun d ->
-                 ((fun j ->
-                      (if d
-                       then (Printf.printf "%s" "True";
-                       (j d c))
-                       else (Printf.printf "%s" "False";
-                       (j d c)))) (fun d c ->
-                                      (Printf.printf "%s" "\n";
-                                      begin
-                                        (g (id a) 0);
-                                        ((fun e ->
-                                             ((fun h ->
-                                                  (if e
-                                                   then (Printf.printf "%s" "True";
-                                                   (h e d c))
-                                                   else (Printf.printf "%s" "False";
-                                                   (h e d c)))) (fun e d c ->
-                                                                    (Printf.printf "%s" "\n";
-                                                                    ())))) a.(0))
-                                        end
-                                      )))) a.(0))) ((Array.init_withenv c (fun
-        i ->
-       (fun (c) ->
-           (Printf.printf "%d" i;
-           ((fun f ->
-                ((c), f)) ((i mod 2) = 0))))) ) (c)))) 5);;
+  let c = 5 in
+  let a = (Array.init_withenv c (fun i c ->
+                                    begin
+                                      (Printf.printf "%d" i);
+                                      let f = ((i mod 2) = 0) in
+                                      (c, f)
+                                      end
+                                    ) c) in
+  let d = a.(0) in
+  let j = (fun d c ->
+              begin
+                (Printf.printf "%s" "\n");
+                (g (id a) 0);
+                let e = a.(0) in
+                let h = (fun e d c ->
+                            (Printf.printf "%s" "\n")) in
+                (if e
+                 then begin
+                        (Printf.printf "%s" "True");
+                        (h e d c)
+                        end
+                 
+                 else begin
+                        (Printf.printf "%s" "False");
+                        (h e d c)
+                        end
+                 )
+                end
+              ) in
+  (if d
+   then begin
+          (Printf.printf "%s" "True");
+          (j d c)
+          end
+   
+   else begin
+          (Printf.printf "%s" "False");
+          (j d c)
+          end
+   );;
 

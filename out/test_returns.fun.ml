@@ -11,39 +11,36 @@ end
 
 let rec is_pair =
   (fun i ->
-      ((fun j ->
-           ((fun c ->
-                (if (i < 10)
-                 then ((fun j ->
-                           ((fun e ->
-                                (if (i = 0)
-                                 then ((fun j ->
-                                           true) 4)
-                                 else (e j i))) (fun j i ->
-                                                    ((fun j ->
-                                                         ((fun d ->
-                                                              (if (i = 2)
-                                                               then ((fun
-                                                                j ->
-                                                               true) 4)
-                                                               else (d j i))) (fun
-                                                          j i ->
-                                                         ((fun j ->
-                                                              (c j i)) 5)))) 3)))) 2)
-                 else (c j i))) (fun j i ->
-                                    ((fun j ->
-                                         ((fun a ->
-                                              (if (i < 20)
-                                               then ((fun b ->
-                                                         (if (i = 22)
-                                                          then ((fun j ->
-                                                                    (b j i)) 0)
-                                                          else (b j i))) (fun
-                                                j i ->
-                                               ((fun j ->
-                                                    (a j i)) 8)))
-                                               else (a j i))) (fun j i ->
-                                                                  ((i mod 2) = 0)))) 6)))) 1));;
+      let j = 1 in
+      let c = (fun j i ->
+                  let j = 6 in
+                  let a = (fun j i ->
+                              ((i mod 2) = 0)) in
+                  (if (i < 20)
+                   then let b = (fun j i ->
+                                    let j = 8 in
+                                    (a j i)) in
+                   (if (i = 22)
+                    then let j = 0 in
+                    (b j i)
+                    else (b j i))
+                   else (a j i))) in
+      (if (i < 10)
+       then let j = 2 in
+       let e = (fun j i ->
+                   let j = 3 in
+                   let d = (fun j i ->
+                               let j = 5 in
+                               (c j i)) in
+                   (if (i = 2)
+                    then let j = 4 in
+                    true
+                    else (d j i))) in
+       (if (i = 0)
+        then let j = 4 in
+        true
+        else (e j i))
+       else (c j i)));;
 let rec main =
   ();;
 

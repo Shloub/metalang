@@ -11,66 +11,67 @@ end
 
 let rec max2 =
   (fun a b ->
-      ((fun q ->
-           (if (a > b)
-            then a
-            else b)) (fun a b ->
-                         ())));;
+      let q = (fun a b ->
+                  ()) in
+      (if (a > b)
+       then a
+       else b));;
 let rec primesfactors =
   (fun n ->
-      ((fun c ->
-           ((fun tab ->
-                ((fun d ->
-                     let rec h d c n =
-                       (if ((n <> 1) && ((d * d) <= n))
-                        then ((fun p ->
-                                  (if ((n mod d) = 0)
-                                   then (tab.(d) <- (tab.(d) + 1); ((fun
-                                    n ->
-                                   (p d c n)) (n / d)))
-                                   else ((fun d ->
-                                             (p d c n)) (d + 1)))) (fun
-                         d c n ->
-                        (h d c n)))
-                        else (tab.(n) <- (tab.(n) + 1); tab)) in
-                       (h d c n)) 2)) ((Array.init_withenv c (fun i ->
-                                                                 (fun
-                                                                  (c, n) ->
-                                                                 ((fun
-                                                                  f ->
-                                                                 ((c, n), f)) 0))) ) (c, n)))) (n + 1)));;
+      let c = (n + 1) in
+      let tab = (Array.init_withenv c (fun i ->
+                                          (fun (c, n) ->
+                                              let f = 0 in
+                                              ((c, n), f))) (c, n)) in
+      let d = 2 in
+      let rec h d c n =
+        (if ((n <> 1) && ((d * d) <= n))
+         then let p = (fun d c n ->
+                          (h d c n)) in
+         (if ((n mod d) = 0)
+          then (tab.(d) <- (tab.(d) + 1); let n = (n / d) in
+          (p d c n))
+          else let d = (d + 1) in
+          (p d c n))
+         else (tab.(n) <- (tab.(n) + 1); tab)) in
+        (h d c n));;
 let rec main =
-  ((fun lim ->
-       ((fun e ->
-            ((fun o ->
-                 ((fun bd be ->
-                      let rec z i e lim =
-                        (if (i <= be)
-                         then ((fun t ->
-                                   ((fun bb bc ->
-                                        let rec ba j t e lim =
-                                          (if (j <= bc)
-                                           then (o.(j) <- (max2 o.(j) t.(j)); (ba (j + 1) t e lim))
-                                           else (z (i + 1) e lim)) in
-                                          (ba bb t e lim)) 1 i)) (primesfactors i))
-                         else ((fun product ->
-                                   ((fun x y ->
-                                        let rec s k product e lim =
-                                          (if (k <= y)
-                                           then ((fun v w ->
-                                                     let rec u l product e lim =
-                                                       (if (l <= w)
-                                                        then ((fun product ->
-                                                                  (u (l + 1) product e lim)) (product * k))
-                                                        else (s (k + 1) product e lim)) in
-                                                       (u v product e lim)) 1 o.(k))
-                                           else (Printf.printf "%d" product;
-                                           (Printf.printf "%s" "\n";
-                                           ()))) in
-                                          (s x product e lim)) 1 lim)) 1)) in
-                        (z bd e lim)) 1 lim)) ((Array.init_withenv e (fun
-             m ->
-            (fun (e, lim) ->
-                ((fun r ->
-                     ((e, lim), r)) 0))) ) (e, lim)))) (lim + 1))) 20);;
+  let lim = 20 in
+  let e = (lim + 1) in
+  let o = (Array.init_withenv e (fun m ->
+                                    (fun (e, lim) ->
+                                        let r = 0 in
+                                        ((e, lim), r))) (e, lim)) in
+  let bd = 1 in
+  let be = lim in
+  let rec z i e lim =
+    (if (i <= be)
+     then let t = (primesfactors i) in
+     let bb = 1 in
+     let bc = i in
+     let rec ba j t e lim =
+       (if (j <= bc)
+        then (o.(j) <- (max2 o.(j) t.(j)); (ba (j + 1) t e lim))
+        else (z (i + 1) e lim)) in
+       (ba bb t e lim)
+     else let product = 1 in
+     let x = 1 in
+     let y = lim in
+     let rec s k product e lim =
+       (if (k <= y)
+        then let v = 1 in
+        let w = o.(k) in
+        let rec u l product e lim =
+          (if (l <= w)
+           then let product = (product * k) in
+           (u (l + 1) product e lim)
+           else (s (k + 1) product e lim)) in
+          (u v product e lim)
+        else begin
+               (Printf.printf "%d" product);
+               (Printf.printf "%s" "\n")
+               end
+        ) in
+       (s x product e lim)) in
+    (z bd e lim);;
 

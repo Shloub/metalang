@@ -13,6 +13,6 @@ type foo_t = Foo
   | Bar
   | Blah;;
 let rec main =
-  ((fun foo_val ->
-       ()) Foo);;
+  let foo_val = Foo in
+  ();;
 

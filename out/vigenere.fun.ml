@@ -11,66 +11,66 @@ end
 
 let rec position_alphabet =
   (fun c ->
-      ((fun i ->
-           ((fun f ->
-                (if ((i <= (int_of_char ('Z'))) && (i >= (int_of_char ('A'))))
-                 then (i - (int_of_char ('A')))
-                 else ((fun g ->
-                           (if ((i <= (int_of_char ('z'))) && (i >= (int_of_char ('a'))))
-                            then (i - (int_of_char ('a')))
-                            else (- 1))) (fun i c ->
-                                             (f i c))))) (fun i c ->
-                                                             ()))) (int_of_char (c))));;
+      let i = (int_of_char (c)) in
+      let f = (fun i c ->
+                  ()) in
+      (if ((i <= (int_of_char ('Z'))) && (i >= (int_of_char ('A'))))
+       then (i - (int_of_char ('A')))
+       else let g = (fun i c ->
+                        (f i c)) in
+       (if ((i <= (int_of_char ('z'))) && (i >= (int_of_char ('a'))))
+        then (i - (int_of_char ('a')))
+        else (- 1))));;
 let rec of_position_alphabet =
   (fun c ->
       (char_of_int ((c + (int_of_char ('a'))))));;
 let rec crypte =
   (fun taille_cle cle taille message ->
-      ((fun d e ->
-           let rec a i taille_cle cle taille message =
-             (if (i <= e)
-              then ((fun lettre ->
-                        ((fun b ->
-                             (if (lettre <> (- 1))
-                              then ((fun addon ->
-                                        ((fun new_ ->
-                                             (message.(i) <- (of_position_alphabet new_); (b lettre taille_cle cle taille message))) ((addon + lettre) mod 26))) (position_alphabet cle.((i mod taille_cle))))
-                              else (b lettre taille_cle cle taille message))) (fun
-                         lettre taille_cle cle taille message ->
-                        (a (i + 1) taille_cle cle taille message)))) (position_alphabet message.(i)))
-              else ()) in
-             (a d taille_cle cle taille message)) 0 (taille - 1)));;
+      let d = 0 in
+      let e = (taille - 1) in
+      let rec a i taille_cle cle taille message =
+        (if (i <= e)
+         then let lettre = (position_alphabet message.(i)) in
+         let b = (fun lettre taille_cle cle taille message ->
+                     (a (i + 1) taille_cle cle taille message)) in
+         (if (lettre <> (- 1))
+          then let addon = (position_alphabet cle.((i mod taille_cle))) in
+          let new_ = ((addon + lettre) mod 26) in
+          (message.(i) <- (of_position_alphabet new_); (b lettre taille_cle cle taille message))
+          else (b lettre taille_cle cle taille message))
+         else ()) in
+        (a d taille_cle cle taille message));;
 let rec main =
-  Scanf.scanf "%d" (fun taille_cle ->
-                       (Scanf.scanf "%[\n \010]" (fun _ -> ((fun cle ->
-                                                                (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d" (fun
-                                                                 taille ->
-                                                                (Scanf.scanf "%[\n \010]" (fun _ -> ((fun
-                                                                 message ->
-                                                                begin
-                                                                  (crypte taille_cle cle taille message);
-                                                                  ((fun
-                                                                   l m ->
-                                                                  let rec k i taille taille_cle =
-                                                                    (
-                                                                    if (i <= m)
-                                                                    then (Printf.printf "%c" message.(i);
-                                                                    (k (i + 1) taille taille_cle))
-                                                                    else (Printf.printf "%s" "\n";
-                                                                    ())) in
-                                                                    (k l taille taille_cle)) 0 (taille - 1))
-                                                                  end
-                                                                ) ((Array.init_withenv taille (fun
-                                                                 index2 ->
-                                                                (fun (taille, taille_cle) ->
-                                                                    Scanf.scanf "%c" (fun
-                                                                     out2 ->
-                                                                    ((fun
-                                                                     j ->
-                                                                    ((taille, taille_cle), j)) out2)))) ) (taille, taille_cle))))))))) ((Array.init_withenv taille_cle (fun
-                        index ->
-                       (fun (taille_cle) ->
-                           Scanf.scanf "%c" (fun out_ ->
-                                                ((fun h ->
-                                                     ((taille_cle), h)) out_)))) ) (taille_cle))))));;
+  Scanf.scanf "%d"
+  (fun taille_cle ->
+      (Scanf.scanf "%[\n \010]" (fun _ -> let cle = (Array.init_withenv taille_cle (fun
+       index taille_cle ->
+      Scanf.scanf "%c"
+      (fun out_ ->
+          let h = out_ in
+          (taille_cle, h))) taille_cle) in
+      (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+      (fun taille ->
+          (Scanf.scanf "%[\n \010]" (fun _ -> let message = (Array.init_withenv taille (fun
+           index2 ->
+          (fun (taille, taille_cle) ->
+              Scanf.scanf "%c"
+              (fun out2 ->
+                  let j = out2 in
+                  ((taille, taille_cle), j)))) (taille, taille_cle)) in
+          begin
+            (crypte taille_cle cle taille message);
+            let l = 0 in
+            let m = (taille - 1) in
+            let rec k i taille taille_cle =
+              (if (i <= m)
+               then begin
+                      (Printf.printf "%c" message.(i));
+                      (k (i + 1) taille taille_cle)
+                      end
+               
+               else (Printf.printf "%s" "\n")) in
+              (k l taille taille_cle)
+            end
+          ))))))));;
 

@@ -1,0 +1,6 @@
+
+main
+  def len = read_int()
+  print len
+  print "\n"
+end

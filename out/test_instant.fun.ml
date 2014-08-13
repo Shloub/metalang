@@ -13,6 +13,5 @@ let rec foo =
   (fun a b ->
       (a + b));;
 let rec main =
-  (Printf.printf "%d" 10;
-  ());;
+  (Printf.printf "%d" 10);;
 

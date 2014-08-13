@@ -11,39 +11,37 @@ end
 
 let rec nth =
   (fun tab tofind len ->
-      ((fun out_ ->
-           ((fun c d ->
-                let rec a i out_ tab tofind len =
-                  (if (i <= d)
-                   then ((fun b ->
-                             (if (tab.(i) = tofind)
-                              then ((fun out_ ->
-                                        (b out_ tab tofind len)) (out_ + 1))
-                              else (b out_ tab tofind len))) (fun out_ tab tofind len ->
-                                                                 (a (i + 1) out_ tab tofind len)))
-                   else out_) in
-                  (a c out_ tab tofind len)) 0 (len - 1))) 0));;
+      let out_ = 0 in
+      let c = 0 in
+      let d = (len - 1) in
+      let rec a i out_ tab tofind len =
+        (if (i <= d)
+         then let b = (fun out_ tab tofind len ->
+                          (a (i + 1) out_ tab tofind len)) in
+         (if (tab.(i) = tofind)
+          then let out_ = (out_ + 1) in
+          (b out_ tab tofind len)
+          else (b out_ tab tofind len))
+         else out_) in
+        (a c out_ tab tofind len));;
 let rec main =
-  ((fun len ->
-       Scanf.scanf "%d" (fun h ->
-                            ((fun len ->
-                                 (Scanf.scanf "%[\n \010]" (fun _ -> ((fun
-                                  tofind ->
-                                 Scanf.scanf "%c" (fun g ->
-                                                      ((fun tofind ->
-                                                           (Scanf.scanf "%[\n \010]" (fun _ -> ((fun
-                                                            tab ->
-                                                           ((fun result ->
-                                                                (Printf.printf "%d" result;
-                                                                ())) (nth tab tofind len))) ((Array.init_withenv len (fun
-                                                            i ->
-                                                           (fun (tofind, len) ->
-                                                               ((fun tmp ->
-                                                                    Scanf.scanf "%c" (fun
-                                                                     f ->
-                                                                    ((fun
-                                                                     tmp ->
-                                                                    ((fun
-                                                                     e ->
-                                                                    ((tofind, len), e)) tmp)) f))) '\000'))) ) (tofind, len)))))) g))) '\000')))) h))) 0);;
+  let len = 0 in
+  Scanf.scanf "%d"
+  (fun h ->
+      let len = h in
+      (Scanf.scanf "%[\n \010]" (fun _ -> let tofind = '\000' in
+      Scanf.scanf "%c"
+      (fun g ->
+          let tofind = g in
+          (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun
+           i ->
+          (fun (tofind, len) ->
+              let tmp = '\000' in
+              Scanf.scanf "%c"
+              (fun f ->
+                  let tmp = f in
+                  let e = tmp in
+                  ((tofind, len), e)))) (tofind, len)) in
+          let result = (nth tab tofind len) in
+          (Printf.printf "%d" result)))))));;
 

@@ -12,38 +12,38 @@ end
 type intlist = {mutable head : int; mutable tail : intlist;};;
 let rec cons =
   (fun list i ->
-      ((fun out_ ->
-           out_) {head=i;
-      tail=list}));;
+      let out_ = {head=i;
+      tail=list} in
+      out_);;
 let rec rev2 =
   (fun empty acc torev ->
-      ((fun e ->
-           (if (torev = empty)
-            then acc
-            else ((fun acc2 ->
-                      (rev2 empty acc torev.tail)) {head=torev.head;
-            tail=acc}))) (fun empty acc torev ->
-                             ())));;
+      let e = (fun empty acc torev ->
+                  ()) in
+      (if (torev = empty)
+       then acc
+       else let acc2 = {head=torev.head;
+       tail=acc} in
+       (rev2 empty acc torev.tail)));;
 let rec rev =
   (fun empty torev ->
       (rev2 empty empty torev));;
 let rec test =
   (fun empty ->
-      ((fun list ->
-           ((fun i ->
-                let rec b i list empty =
-                  (if (i <> 0)
-                   then Scanf.scanf "%d" (fun d ->
-                                             ((fun i ->
-                                                  ((fun c ->
-                                                       (if (i <> 0)
-                                                        then ((fun list ->
-                                                                  (c i list empty)) (cons list i))
-                                                        else (c i list empty))) (fun
-                                                   i list empty ->
-                                                  (b i list empty)))) d))
-                   else ()) in
-                  (b i list empty)) (- 1))) empty));;
+      let list = empty in
+      let i = (- 1) in
+      let rec b i list empty =
+        (if (i <> 0)
+         then Scanf.scanf "%d"
+         (fun d ->
+             let i = d in
+             let c = (fun i list empty ->
+                         (b i list empty)) in
+             (if (i <> 0)
+              then let list = (cons list i) in
+              (c i list empty)
+              else (c i list empty)))
+         else ()) in
+        (b i list empty));;
 let rec main =
   ();;
 

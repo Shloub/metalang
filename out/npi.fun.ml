@@ -14,62 +14,53 @@ let rec is_number =
       (((int_of_char (c)) <= (int_of_char ('9'))) && ((int_of_char (c)) >= (int_of_char ('0')))));;
 let rec npi_ =
   (fun str len ->
-      ((fun stack ->
-           ((fun ptrStack ->
-                ((fun ptrStr ->
-                     let rec d ptrStr ptrStack str len =
-                       (if (ptrStr < len)
-                        then ((fun e ->
-                                  (if (str.(ptrStr) = ' ')
-                                   then ((fun ptrStr ->
-                                             (e ptrStr ptrStack str len)) (ptrStr + 1))
-                                   else ((fun f ->
-                                             (if (is_number str.(ptrStr))
-                                              then ((fun num ->
-                                                        let rec h num ptrStr ptrStack str len =
-                                                          (if (str.(ptrStr) <> ' ')
-                                                           then ((fun
-                                                            num ->
-                                                           ((fun ptrStr ->
-                                                                (h num ptrStr ptrStack str len)) (ptrStr + 1))) (((num * 10) + (int_of_char (str.(ptrStr)))) - (int_of_char ('0'))))
-                                                           else (stack.(ptrStack) <- num; ((fun
-                                                            ptrStack ->
-                                                           (f ptrStr ptrStack str len)) (ptrStack + 1)))) in
-                                                          (h num ptrStr ptrStack str len)) 0)
-                                              else ((fun j ->
-                                                        (if (str.(ptrStr) = '+')
-                                                         then (stack.((ptrStack - 2)) <- (stack.((ptrStack - 2)) + stack.((ptrStack - 1))); ((fun
-                                                          ptrStack ->
-                                                         ((fun ptrStr ->
-                                                              (j ptrStr ptrStack str len)) (ptrStr + 1))) (ptrStack - 1)))
-                                                         else (j ptrStr ptrStack str len))) (fun
-                                               ptrStr ptrStack str len ->
-                                              (f ptrStr ptrStack str len))))) (fun
-                                    ptrStr ptrStack str len ->
-                                   (e ptrStr ptrStack str len))))) (fun
-                         ptrStr ptrStack str len ->
-                        (d ptrStr ptrStack str len)))
-                        else stack.(0)) in
-                       (d ptrStr ptrStack str len)) 0)) 0)) ((Array.init_withenv len (fun
-       i ->
-      (fun (str, len) ->
-          ((fun a ->
-               ((str, len), a)) 0))) ) (str, len))));;
+      let stack = (Array.init_withenv len (fun i ->
+                                              (fun (str, len) ->
+                                                  let a = 0 in
+                                                  ((str, len), a))) (str, len)) in
+      let ptrStack = 0 in
+      let ptrStr = 0 in
+      let rec d ptrStr ptrStack str len =
+        (if (ptrStr < len)
+         then let e = (fun ptrStr ptrStack str len ->
+                          (d ptrStr ptrStack str len)) in
+         (if (str.(ptrStr) = ' ')
+          then let ptrStr = (ptrStr + 1) in
+          (e ptrStr ptrStack str len)
+          else let f = (fun ptrStr ptrStack str len ->
+                           (e ptrStr ptrStack str len)) in
+          (if (is_number str.(ptrStr))
+           then let num = 0 in
+           let rec h num ptrStr ptrStack str len =
+             (if (str.(ptrStr) <> ' ')
+              then let num = (((num * 10) + (int_of_char (str.(ptrStr)))) - (int_of_char ('0'))) in
+              let ptrStr = (ptrStr + 1) in
+              (h num ptrStr ptrStack str len)
+              else (stack.(ptrStack) <- num; let ptrStack = (ptrStack + 1) in
+              (f ptrStr ptrStack str len))) in
+             (h num ptrStr ptrStack str len)
+           else let j = (fun ptrStr ptrStack str len ->
+                            (f ptrStr ptrStack str len)) in
+           (if (str.(ptrStr) = '+')
+            then (stack.((ptrStack - 2)) <- (stack.((ptrStack - 2)) + stack.((ptrStack - 1))); let ptrStack = (ptrStack - 1) in
+            let ptrStr = (ptrStr + 1) in
+            (j ptrStr ptrStack str len))
+            else (j ptrStr ptrStack str len))))
+         else stack.(0)) in
+        (d ptrStr ptrStack str len));;
 let rec main =
-  ((fun len ->
-       Scanf.scanf "%d" (fun m ->
-                            ((fun len ->
-                                 (Scanf.scanf "%[\n \010]" (fun _ -> ((fun
-                                  tab ->
-                                 ((fun result ->
-                                      (Printf.printf "%d" result;
-                                      ())) (npi_ tab len))) ((Array.init_withenv len (fun
-                                  i ->
-                                 (fun (len) ->
-                                     ((fun tmp ->
-                                          Scanf.scanf "%c" (fun l ->
-                                                               ((fun tmp ->
-                                                                    ((fun
-                                                                     k ->
-                                                                    ((len), k)) tmp)) l))) '\000'))) ) (len)))))) m))) 0);;
+  let len = 0 in
+  Scanf.scanf "%d"
+  (fun m ->
+      let len = m in
+      (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun
+       i len ->
+      let tmp = '\000' in
+      Scanf.scanf "%c"
+      (fun l ->
+          let tmp = l in
+          let k = tmp in
+          (len, k))) len) in
+      let result = (npi_ tab len) in
+      (Printf.printf "%d" result))));;
 

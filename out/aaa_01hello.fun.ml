@@ -10,6 +10,5 @@ module Array = struct
 end
 
 let rec main =
-  (Printf.printf "%s" "Hello World";
-  ());;
+  (Printf.printf "%s" "Hello World");;
 

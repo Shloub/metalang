@@ -11,41 +11,41 @@ end
 
 let rec eratostene =
   (fun t max_ ->
-      ((fun sum ->
-           ((fun f g ->
-                let rec a i sum t max_ =
-                  (if (i <= g)
-                   then ((fun b ->
-                             (if (t.(i) = i)
-                              then ((fun sum ->
-                                        ((fun j ->
-                                             (* 
+      let sum = 0 in
+      let f = 2 in
+      let g = (max_ - 1) in
+      let rec a i sum t max_ =
+        (if (i <= g)
+         then let b = (fun sum t max_ ->
+                          (a (i + 1) sum t max_)) in
+         (if (t.(i) = i)
+          then let sum = (sum + i) in
+          let j = (i * i) in
+          (* 
 			detect overflow
 			 *)
-                                             ((fun c ->
-                                                  (if ((j / i) = i)
-                                                   then let rec e j sum t max_ =
-                                                          (if ((j < max_) && (j > 0))
-                                                           then (t.(j) <- 0; ((fun
-                                                            j ->
-                                                           (e j sum t max_)) (j + i)))
-                                                           else (c j sum t max_)) in
-                                                          (e j sum t max_)
-                                                   else (c j sum t max_))) (fun
-                                              j sum t max_ ->
-                                             (b sum t max_)))) (i * i))) (sum + i))
-                              else (b sum t max_))) (fun sum t max_ ->
-                                                        (a (i + 1) sum t max_)))
-                   else sum) in
-                  (a f sum t max_)) 2 (max_ - 1))) 0));;
+          let c = (fun j sum t max_ ->
+                      (b sum t max_)) in
+          (if ((j / i) = i)
+           then let rec e j sum t max_ =
+                  (if ((j < max_) && (j > 0))
+                   then (t.(j) <- 0; let j = (j + i) in
+                   (e j sum t max_))
+                   else (c j sum t max_)) in
+                  (e j sum t max_)
+           else (c j sum t max_))
+          else (b sum t max_))
+         else sum) in
+        (a f sum t max_));;
 let rec main =
-  ((fun n ->
-       (*  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages  *)
-       ((fun t ->
-            (t.(1) <- 0; (Printf.printf "%d" (eratostene t n);
-            (Printf.printf "%s" "\n";
-            ())))) ((Array.init_withenv n (fun i ->
-                                              (fun (n) ->
-                                                  ((fun h ->
-                                                       ((n), h)) i))) ) (n)))) 100000);;
+  let n = 100000 in
+  (*  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages  *)
+  let t = (Array.init_withenv n (fun i n ->
+                                    let h = i in
+                                    (n, h)) n) in
+  (t.(1) <- 0; begin
+                 (Printf.printf "%d" (eratostene t n));
+                 (Printf.printf "%s" "\n")
+                 end
+  );;
 

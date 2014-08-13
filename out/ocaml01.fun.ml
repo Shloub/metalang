@@ -10,20 +10,22 @@ module Array = struct
 end
 
 let rec foo =
-  (fun () -> ((fun f g ->
-                  let rec e i =
-                    (if (i <= g)
-                     then (e (i + 1))
-                     else 0) in
-                    (e f)) 0 10));;
+  (fun () -> let f = 0 in
+  let g = 10 in
+  let rec e i =
+    (if (i <= g)
+     then (e (i + 1))
+     else 0) in
+    (e f));;
 let rec bar =
-  (fun () -> ((fun c d ->
-                  let rec b i =
-                    (if (i <= d)
-                     then ((fun a ->
-                               (b (i + 1))) 0)
-                     else 0) in
-                    (b c)) 0 10));;
+  (fun () -> let c = 0 in
+  let d = 10 in
+  let rec b i =
+    (if (i <= d)
+     then let a = 0 in
+     (b (i + 1))
+     else 0) in
+    (b c));;
 let rec main =
   ();;
 

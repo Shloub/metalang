@@ -10,11 +10,13 @@ module Array = struct
 end
 
 let rec main =
-  ((fun i ->
-       (* while i < 10 do  *)
-       (Printf.printf "%d" i;
-       ((fun i ->
-            (*   end  *)
-            (Printf.printf "%d" i;
-            ())) (i + 1)))) 4);;
+  let i = 4 in
+  (* while i < 10 do  *)
+  begin
+    (Printf.printf "%d" i);
+    let i = (i + 1) in
+    (*   end  *)
+    (Printf.printf "%d" i)
+    end
+  ;;
 

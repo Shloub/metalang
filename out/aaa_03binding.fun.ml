@@ -11,32 +11,36 @@ end
 
 let rec g =
   (fun i ->
-      ((fun j ->
-           ((fun c ->
-                (if ((j mod 2) = 1)
-                 then 0
-                 else (c j i))) (fun j i ->
-                                    j))) (i * 4)));;
+      let j = (i * 4) in
+      let c = (fun j i ->
+                  j) in
+      (if ((j mod 2) = 1)
+       then 0
+       else (c j i)));;
 let rec h =
   (fun i ->
-      (Printf.printf "%d" i;
-      (Printf.printf "%s" "\n";
-      ())));;
+      begin
+        (Printf.printf "%d" i);
+        (Printf.printf "%s" "\n")
+        end
+      );;
 let rec main =
   begin
     (h 14);
-    ((fun a ->
-         ((fun b ->
-              (Printf.printf "%d" (a + b);
-              (*  main  *)
-              begin
-                (h 15);
-                ((fun a ->
-                     ((fun b ->
-                          (Printf.printf "%d" (a + b);
-                          ())) 1)) 2)
-                end
-              )) 5)) 4)
+    let a = 4 in
+    let b = 5 in
+    begin
+      (Printf.printf "%d" (a + b));
+      (*  main  *)
+      begin
+        (h 15);
+        let a = 2 in
+        let b = 1 in
+        (Printf.printf "%d" (a + b))
+        end
+      
+      end
+    
     end
   ;;
 

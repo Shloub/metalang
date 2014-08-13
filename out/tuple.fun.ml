@@ -14,11 +14,13 @@ let rec f =
       ((fun (a, b) ->
            ((a + 1), (b + 1))) tuple_));;
 let rec main =
-  ((fun t ->
-       ((fun (a, b) ->
-            (Printf.printf "%d" a;
-            (Printf.printf "%s" " -- ";
-            (Printf.printf "%d" b;
-            (Printf.printf "%s" "--\n";
-            ()))))) t)) (f (0, 1)));;
+  let t = (f (0, 1)) in
+  ((fun (a, b) ->
+       begin
+         (Printf.printf "%d" a);
+         (Printf.printf "%s" " -- ");
+         (Printf.printf "%d" b);
+         (Printf.printf "%s" "--\n")
+         end
+       ) t);;
 

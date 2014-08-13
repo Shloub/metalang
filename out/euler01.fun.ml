@@ -10,18 +10,21 @@ module Array = struct
 end
 
 let rec main =
-  ((fun sum ->
-       ((fun c d ->
-            let rec a i sum =
-              (if (i <= d)
-               then ((fun b ->
-                         (if (((i mod 3) = 0) || ((i mod 5) = 0))
-                          then ((fun sum ->
-                                    (b sum)) (sum + i))
-                          else (b sum))) (fun sum ->
-                                             (a (i + 1) sum)))
-               else (Printf.printf "%d" sum;
-               (Printf.printf "%s" "\n";
-               ()))) in
-              (a c sum)) 0 999)) 0);;
+  let sum = 0 in
+  let c = 0 in
+  let d = 999 in
+  let rec a i sum =
+    (if (i <= d)
+     then let b = (fun sum ->
+                      (a (i + 1) sum)) in
+     (if (((i mod 3) = 0) || ((i mod 5) = 0))
+      then let sum = (sum + i) in
+      (b sum)
+      else (b sum))
+     else begin
+            (Printf.printf "%d" sum);
+            (Printf.printf "%s" "\n")
+            end
+     ) in
+    (a c sum);;
 

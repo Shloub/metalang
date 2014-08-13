@@ -1,0 +1,106 @@
+#lang racket
+(require racket/block)
+
+(define array_init_withenv (lambda (len f env)
+  (build-vector len (lambda (i)
+    (let ([o ((f i) env)])
+      (block
+        (set! env (car o))
+        (cadr o)
+      )
+    )))))
+(define last-char 0)
+(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
+(next-char)
+(define mread-char (lambda ()
+  (let ([ out last-char])
+    (block
+      (next-char)
+      out
+    ))))
+
+(define mread-int (lambda ()
+  (if (eq? #\- last-char)
+  (block
+    (next-char) (- 0 (mread-int)))
+    (letrec ([w (lambda (out)
+      (if (eof-object? last-char)
+        out
+        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
+          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
+            (block
+              (next-char)
+              (w out)
+          ))
+        out
+      )))]) (w 0)))))
+
+(define mread-blank (lambda ()
+  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
+))
+
+(define max2 (lambda (a b) 
+               (let ([h (lambda (a b) 
+                          '())])
+               (if (> a b)
+                 a
+                 b))))
+(define chiffre (lambda (c m) 
+                  (let ([g (lambda (c m) 
+                             '())])
+                  (if (eq? c 0)
+                    (remainder m 10)
+                    (chiffre (- c 1) (quotient m 10))))))
+(define main (let ([m 1])
+               (let ([bb 0])
+                 (let ([bc 9])
+                   (letrec ([i (lambda (a m) 
+                                 (if (<= a bc)
+                                   (let ([z 1])
+                                     (let ([ba 9])
+                                       (letrec ([j (lambda (f m) 
+                                                     (if (<= f ba)
+                                                       (let ([x 0])
+                                                         (let ([y 9])
+                                                           (letrec ([k 
+                                                             (lambda (d m) 
+                                                               (if (<= d y)
+                                                                 (let ([v 1])
+                                                                   (let ([w 9])
+                                                                    (letrec ([l 
+                                                                    (lambda (c m) 
+                                                                    (if (<= c w)
+                                                                    (let ([s 0])
+                                                                    (let ([u 9])
+                                                                    (letrec ([n 
+                                                                    (lambda (b m) 
+                                                                    (if (<= b u)
+                                                                    (let ([q 0])
+                                                                    (let ([r 9])
+                                                                    (letrec ([o 
+                                                                    (lambda (e m) 
+                                                                    (if (<= e r)
+                                                                    (let ([mul (+ (+ (+ (+ (* a d) (* 10 (+ (* a e) (* b d)))) (* 100 (+ (+ (* a f) (* b e)) (* c d)))) (* 1000 (+ (* c e) (* b f)))) (* (* 10000 c) f))])
+                                                                    (let ([p 
+                                                                    (lambda (mul m) 
+                                                                    (o (+ e 1) m))])
+                                                                    (if (and (and (eq? (chiffre 0 mul) (chiffre 5 mul)) (eq? (chiffre 1 mul) (chiffre 4 mul))) (eq? (chiffre 2 mul) (chiffre 3 mul)))
+                                                                    (let ([m (max2 mul m)])
+                                                                    (p mul m))
+                                                                    (p mul m))))
+                                                                    (n (+ b 1) m)))])
+                                                                    (o q m))))
+                                                                    (l (+ c 1) m)))])
+                                                                    (n s m))))
+                                                                    (k (+ d 1) m)))])
+                                                               (l v m))))
+                                                         (j (+ f 1) m)))])
+                                         (k x m))))
+                                   (i (+ a 1) m)))])
+                   (j z m))))
+  (block
+    (display m)
+    (display "\n")
+    )))])
+(i bb m))))))
+

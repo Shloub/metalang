@@ -11,15 +11,14 @@ end
 
 let rec foo =
   (fun a ->
-      ((fun a ->
-           ()) 4));;
+      let a = 4 in
+      ());;
 let rec main =
-  ((fun a ->
-       begin
-         (foo a);
-         (Printf.printf "%d" a;
-         (Printf.printf "%s" "\n";
-         ()))
-         end
-       ) 0);;
+  let a = 0 in
+  begin
+    (foo a);
+    (Printf.printf "%d" a);
+    (Printf.printf "%s" "\n")
+    end
+  ;;
 

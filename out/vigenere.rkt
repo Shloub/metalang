@@ -1,0 +1,98 @@
+#lang racket
+(require racket/block)
+
+(define array_init_withenv (lambda (len f env)
+  (build-vector len (lambda (i)
+    (let ([o ((f i) env)])
+      (block
+        (set! env (car o))
+        (cadr o)
+      )
+    )))))
+(define last-char 0)
+(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
+(next-char)
+(define mread-char (lambda ()
+  (let ([ out last-char])
+    (block
+      (next-char)
+      out
+    ))))
+
+(define mread-int (lambda ()
+  (if (eq? #\- last-char)
+  (block
+    (next-char) (- 0 (mread-int)))
+    (letrec ([w (lambda (out)
+      (if (eof-object? last-char)
+        out
+        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
+          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
+            (block
+              (next-char)
+              (w out)
+          ))
+        out
+      )))]) (w 0)))))
+
+(define mread-blank (lambda ()
+  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
+))
+
+(define position_alphabet (lambda (c) 
+                            (let ([i (char->integer c)])
+                              (let ([f (lambda (i c) 
+                                         '())])
+                              (if (and (<= i (char->integer #\Z)) (>= i (char->integer #\A)))
+                                (- i (char->integer #\A))
+                                (let ([g (lambda (i c) 
+                                           (f i c))])
+                                (if (and (<= i (char->integer #\z)) (>= i (char->integer #\a)))
+                                  (- i (char->integer #\a))
+                                  (- 1))))))))
+(define of_position_alphabet (lambda (c) 
+                               (integer->char (+ c (char->integer #\a)))))
+(define crypte (lambda (taille_cle cle taille message) 
+                 (let ([d 0])
+                   (let ([e (- taille 1)])
+                     (letrec ([a (lambda (i taille_cle cle taille message) 
+                                   (if (<= i e)
+                                     (let ([lettre (position_alphabet (vector-ref message i))])
+                                       (let ([b (lambda (lettre taille_cle cle taille message) 
+                                                  (a (+ i 1) taille_cle cle taille message))])
+                                       (if (not (eq? lettre (- 1)))
+                                         (let ([addon (position_alphabet (vector-ref cle (remainder i taille_cle)))])
+                                           (let ([new_ (remainder (+ addon lettre) 26)])
+                                             (block (vector-set! message i (of_position_alphabet new_)) (b lettre taille_cle cle taille message))))
+                                         (b lettre taille_cle cle taille message))))
+                                   '()))])
+                   (a d taille_cle cle taille message))))))
+(define main ((lambda (taille_cle) 
+                (block (mread-blank) (let ([cle (array_init_withenv taille_cle 
+                                       (lambda (index) 
+                                         (lambda (taille_cle) 
+                                           ((lambda (out_) 
+                                              (let ([h out_])
+                                                (list taille_cle h))) (mread-char)))) taille_cle)])
+(block (mread-blank) ((lambda (taille) 
+                        (block (mread-blank) (let ([message (array_init_withenv taille 
+                                               (lambda (index2) 
+                                                 (lambda (internal_env) (apply (lambda
+                                                  (taille taille_cle) 
+                                                 ((lambda (out2) 
+                                                    (let ([j out2])
+                                                      (list (list taille taille_cle) j))) (mread-char))) internal_env))) (list taille taille_cle))])
+(block
+  (crypte taille_cle cle taille message)
+  (let ([l 0])
+    (let ([m (- taille 1)])
+      (letrec ([k (lambda (i taille taille_cle) 
+                    (if (<= i m)
+                      (block
+                        (display (vector-ref message i))
+                        (k (+ i 1) taille taille_cle)
+                        )
+                      (display "\n")))])
+      (k l taille taille_cle))))
+)) )) (mread-int)) )) )) (mread-int)))
+

@@ -11,60 +11,52 @@ end
 
 let rec max2 =
   (fun a b ->
-      ((fun h ->
-           (if (a > b)
-            then a
-            else b)) (fun a b ->
-                         ())));;
+      let h = (fun a b ->
+                  ()) in
+      (if (a > b)
+       then a
+       else b));;
 let rec main =
-  ((fun i ->
-       ((fun g ->
-            ((fun last ->
-                 ((fun max_ ->
-                      ((fun index ->
-                           ((fun nskipdiv ->
-                                ((fun p q ->
-                                     let rec m k nskipdiv index max_ g i =
-                                       (if (k <= q)
-                                        then Scanf.scanf "%c" (fun e ->
-                                                                  ((fun
-                                                                   f ->
-                                                                  ((fun
-                                                                   n ->
-                                                                  (if (f = 0)
-                                                                   then ((fun
-                                                                    i ->
-                                                                   ((fun
-                                                                    nskipdiv ->
-                                                                   (n f e nskipdiv index max_ g i)) 4)) 1)
-                                                                   else ((fun
-                                                                    i ->
-                                                                   ((fun
-                                                                    o ->
-                                                                   (if (nskipdiv < 0)
-                                                                    then ((fun
-                                                                     i ->
-                                                                    (o f e nskipdiv index max_ g i)) (i / last.(index)))
-                                                                    else (o f e nskipdiv index max_ g i))) (fun
-                                                                    f e nskipdiv index max_ g i ->
-                                                                   ((fun
-                                                                    nskipdiv ->
-                                                                   (n f e nskipdiv index max_ g i)) (nskipdiv - 1))))) (i * f)))) (fun
-                                                                   f e nskipdiv index max_ g i ->
-                                                                  (last.(index) <- f; ((fun
-                                                                   index ->
-                                                                  ((fun
-                                                                   max_ ->
-                                                                  (m (k + 1) nskipdiv index max_ g i)) (max2 max_ i))) ((index + 1) mod 5)))))) ((int_of_char (e)) - (int_of_char ('0')))))
-                                        else (Printf.printf "%d" max_;
-                                        (Printf.printf "%s" "\n";
-                                        ()))) in
-                                       (m p nskipdiv index max_ g i)) 1 995)) 0)) 0)) i)) ((Array.init_withenv g (fun
-             j ->
-            (fun (g, i) ->
-                Scanf.scanf "%c" (fun c ->
-                                     ((fun d ->
-                                          ((fun i ->
-                                               ((fun l ->
-                                                    ((g, i), l)) d)) (i * d))) ((int_of_char (c)) - (int_of_char ('0'))))))) ) (g, i)))) 5)) 1);;
+  let i = 1 in
+  let g = 5 in
+  let last = (Array.init_withenv g (fun j ->
+                                       (fun (g, i) ->
+                                           Scanf.scanf "%c"
+                                           (fun c ->
+                                               let d = ((int_of_char (c)) - (int_of_char ('0'))) in
+                                               let i = (i * d) in
+                                               let l = d in
+                                               ((g, i), l)))) (g, i)) in
+  let max_ = i in
+  let index = 0 in
+  let nskipdiv = 0 in
+  let p = 1 in
+  let q = 995 in
+  let rec m k nskipdiv index max_ g i =
+    (if (k <= q)
+     then Scanf.scanf "%c"
+     (fun e ->
+         let f = ((int_of_char (e)) - (int_of_char ('0'))) in
+         let n = (fun f e nskipdiv index max_ g i ->
+                     (last.(index) <- f; let index = ((index + 1) mod 5) in
+                     let max_ = (max2 max_ i) in
+                     (m (k + 1) nskipdiv index max_ g i))) in
+         (if (f = 0)
+          then let i = 1 in
+          let nskipdiv = 4 in
+          (n f e nskipdiv index max_ g i)
+          else let i = (i * f) in
+          let o = (fun f e nskipdiv index max_ g i ->
+                      let nskipdiv = (nskipdiv - 1) in
+                      (n f e nskipdiv index max_ g i)) in
+          (if (nskipdiv < 0)
+           then let i = (i / last.(index)) in
+           (o f e nskipdiv index max_ g i)
+           else (o f e nskipdiv index max_ g i))))
+     else begin
+            (Printf.printf "%d" max_);
+            (Printf.printf "%s" "\n")
+            end
+     ) in
+    (m p nskipdiv index max_ g i);;
 

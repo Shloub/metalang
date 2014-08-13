@@ -10,23 +10,24 @@ module Array = struct
 end
 
 let rec main =
-  ((fun a ->
-       ((fun b ->
-            ((fun sum ->
-                 let rec e sum b a =
-                   (if (a < 4000000)
-                    then ((fun f ->
-                              (if ((a mod 2) = 0)
-                               then ((fun sum ->
-                                         (f sum b a)) (sum + a))
-                               else (f sum b a))) (fun sum b a ->
-                                                      ((fun c ->
-                                                           ((fun a ->
-                                                                ((fun
-                                                                 b ->
-                                                                (e sum b a)) (b + c))) b)) a)))
-                    else (Printf.printf "%d" sum;
-                    (Printf.printf "%s" "\n";
-                    ()))) in
-                   (e sum b a)) 0)) 2)) 1);;
+  let a = 1 in
+  let b = 2 in
+  let sum = 0 in
+  let rec e sum b a =
+    (if (a < 4000000)
+     then let f = (fun sum b a ->
+                      let c = a in
+                      let a = b in
+                      let b = (b + c) in
+                      (e sum b a)) in
+     (if ((a mod 2) = 0)
+      then let sum = (sum + a) in
+      (f sum b a)
+      else (f sum b a))
+     else begin
+            (Printf.printf "%d" sum);
+            (Printf.printf "%s" "\n")
+            end
+     ) in
+    (e sum b a);;
 

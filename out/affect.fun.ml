@@ -12,61 +12,53 @@ end
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;};;
 let rec mktoto =
   (fun v1 ->
-      ((fun t ->
-           t) {foo=v1;
+      let t = {foo=v1;
       bar=v1;
-      blah=v1}));;
+      blah=v1} in
+      t);;
 let rec mktoto2 =
   (fun v1 ->
-      ((fun t ->
-           t) {foo=(v1 + 3);
+      let t = {foo=(v1 + 3);
       bar=(v1 + 2);
-      blah=(v1 + 1)}));;
+      blah=(v1 + 1)} in
+      t);;
 let rec result =
   (fun t_ t2_ ->
-      ((fun t ->
-           ((fun t2 ->
-                ((fun t3 ->
-                     ((fun t3 ->
-                          ((fun t ->
-                               ((fun t2 ->
-                                    (t.blah <- (t.blah + 1); ((fun len ->
-                                                                  ((fun
-                                                                   cache0 ->
-                                                                  ((fun
-                                                                   cache1 ->
-                                                                  ((fun
-                                                                   cache2 ->
-                                                                  ((fun
-                                                                   cache0 ->
-                                                                  ((fun
-                                                                   cache2 ->
-                                                                  ((t.foo + (t.blah * t.bar)) + (t.bar * t.foo))) cache0)) cache1)) cache0)) ((Array.init_withenv len (fun
-                                                                   j ->
-                                                                  (fun
-                                                                   (len, t3, t2, t, t_, t2_) ->
-                                                                  ((fun
-                                                                   b ->
-                                                                  ((len, t3, t2, t, t_, t2_), b)) j))) ) (len, t3, t2, t, t_, t2_)))) ((Array.init_withenv len (fun
-                                                                   i ->
-                                                                  (fun
-                                                                   (len, t3, t2, t, t_, t2_) ->
-                                                                  ((fun
-                                                                   a ->
-                                                                  ((len, t3, t2, t, t_, t2_), a)) (- i)))) ) (len, t3, t2, t, t_, t2_)))) 1))) t3)) t2)) t2)) {foo=0;
-                bar=0;
-                blah=0})) t2_)) t_));;
+      let t = t_ in
+      let t2 = t2_ in
+      let t3 = {foo=0;
+      bar=0;
+      blah=0} in
+      let t3 = t2 in
+      let t = t2 in
+      let t2 = t3 in
+      (t.blah <- (t.blah + 1); let len = 1 in
+      let cache0 = (Array.init_withenv len (fun i ->
+                                               (fun (len, t3, t2, t, t_, t2_) ->
+                                                   let a = (- i) in
+                                                   ((len, t3, t2, t, t_, t2_), a))) (len, t3, t2, t, t_, t2_)) in
+      let cache1 = (Array.init_withenv len (fun j ->
+                                               (fun (len, t3, t2, t, t_, t2_) ->
+                                                   let b = j in
+                                                   ((len, t3, t2, t, t_, t2_), b))) (len, t3, t2, t, t_, t2_)) in
+      let cache2 = cache0 in
+      let cache0 = cache1 in
+      let cache2 = cache0 in
+      ((t.foo + (t.blah * t.bar)) + (t.bar * t.foo))));;
 let rec main =
-  ((fun t ->
-       ((fun t2 ->
-            Scanf.scanf "%d" (fun f ->
-                                 (t.bar <- f; (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d" (fun
-                                  e ->
-                                 (t.blah <- e; (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d" (fun
-                                  d ->
-                                 (t2.bar <- d; (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d" (fun
-                                  c ->
-                                 (t2.blah <- c; (Printf.printf "%d" (result t t2);
-                                 (Printf.printf "%d" t.blah;
-                                 ()))))))))))))))))) (mktoto 5))) (mktoto 4));;
+  let t = (mktoto 4) in
+  let t2 = (mktoto 5) in
+  Scanf.scanf "%d"
+  (fun f ->
+      (t.bar <- f; (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+      (fun e ->
+          (t.blah <- e; (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+          (fun d ->
+              (t2.bar <- d; (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+              (fun c ->
+                  (t2.blah <- c; begin
+                                   (Printf.printf "%d" (result t t2));
+                                   (Printf.printf "%d" t.blah)
+                                   end
+                  ))))))))))))));;
 

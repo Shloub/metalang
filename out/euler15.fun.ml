@@ -10,50 +10,61 @@ module Array = struct
 end
 
 let rec main =
-  ((fun n ->
-       (*  normalement on doit mettre 20 mais là on se tape un overflow  *)
-       ((fun n ->
-            ((fun tab ->
-                 ((fun z ba ->
-                      let rec y l n =
-                        (if (l <= ba)
-                         then (tab.((n - 1)).(l) <- 1; (tab.(l).((n - 1)) <- 1; (y (l + 1) n)))
-                         else ((fun w x ->
-                                   let rec s o n =
-                                     (if (o <= x)
-                                      then ((fun r ->
-                                                ((fun u v ->
-                                                     let rec t p r n =
-                                                       (if (p <= v)
-                                                        then ((fun q ->
-                                                                  (tab.(r).(q) <- (tab.((r + 1)).(q) + tab.(r).((q + 1))); (t (p + 1) r n))) (n - p))
-                                                        else (s (o + 1) n)) in
-                                                       (t u r n)) 2 n)) (n - o))
-                                      else ((fun g h ->
-                                                let rec c m n =
-                                                  (if (m <= h)
-                                                   then ((fun e f ->
-                                                             let rec d k n =
-                                                               (if (k <= f)
-                                                                then (Printf.printf "%d" tab.(m).(k);
-                                                                (Printf.printf "%s" " ";
-                                                                (d (k + 1) n)))
-                                                                else (Printf.printf "%s" "\n";
-                                                                (c (m + 1) n))) in
-                                                               (d e n)) 0 (n - 1))
-                                                   else (Printf.printf "%d" tab.(0).(0);
-                                                   (Printf.printf "%s" "\n";
-                                                   ()))) in
-                                                  (c g n)) 0 (n - 1))) in
-                                     (s w n)) 2 n)) in
-                        (y z n)) 0 (n - 1))) ((Array.init_withenv n (fun
-             i ->
-            (fun (n) ->
-                ((fun tab2 ->
-                     ((fun a ->
-                          ((n), a)) tab2)) ((Array.init_withenv n (fun
-                 j ->
-                (fun (i, n) ->
-                    ((fun b ->
-                         ((i, n), b)) 0))) ) (i, n))))) ) (n)))) (n + 1))) 10);;
+  let n = 10 in
+  (*  normalement on doit mettre 20 mais là on se tape un overflow  *)
+  let n = (n + 1) in
+  let tab = (Array.init_withenv n (fun i n ->
+                                      let tab2 = (Array.init_withenv n (fun
+                                       j ->
+                                      (fun (i, n) ->
+                                          let b = 0 in
+                                          ((i, n), b))) (i, n)) in
+                                      let a = tab2 in
+                                      (n, a)) n) in
+  let z = 0 in
+  let ba = (n - 1) in
+  let rec y l n =
+    (if (l <= ba)
+     then (tab.((n - 1)).(l) <- 1; (tab.(l).((n - 1)) <- 1; (y (l + 1) n)))
+     else let w = 2 in
+     let x = n in
+     let rec s o n =
+       (if (o <= x)
+        then let r = (n - o) in
+        let u = 2 in
+        let v = n in
+        let rec t p r n =
+          (if (p <= v)
+           then let q = (n - p) in
+           (tab.(r).(q) <- (tab.((r + 1)).(q) + tab.(r).((q + 1))); (t (p + 1) r n))
+           else (s (o + 1) n)) in
+          (t u r n)
+        else let g = 0 in
+        let h = (n - 1) in
+        let rec c m n =
+          (if (m <= h)
+           then let e = 0 in
+           let f = (n - 1) in
+           let rec d k n =
+             (if (k <= f)
+              then begin
+                     (Printf.printf "%d" tab.(m).(k));
+                     (Printf.printf "%s" " ");
+                     (d (k + 1) n)
+                     end
+              
+              else begin
+                     (Printf.printf "%s" "\n");
+                     (c (m + 1) n)
+                     end
+              ) in
+             (d e n)
+           else begin
+                  (Printf.printf "%d" tab.(0).(0));
+                  (Printf.printf "%s" "\n")
+                  end
+           ) in
+          (c g n)) in
+       (s w n)) in
+    (y z n);;
 

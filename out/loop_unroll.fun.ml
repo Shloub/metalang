@@ -10,21 +10,35 @@ module Array = struct
 end
 
 let rec main =
-  ((fun j ->
-       ((fun j ->
-            (Printf.printf "%d" j;
-            (Printf.printf "%s" "\n";
-            ((fun j ->
-                 (Printf.printf "%d" j;
-                 (Printf.printf "%s" "\n";
-                 ((fun j ->
-                      (Printf.printf "%d" j;
-                      (Printf.printf "%s" "\n";
-                      ((fun j ->
-                           (Printf.printf "%d" j;
-                           (Printf.printf "%s" "\n";
-                           ((fun j ->
-                                (Printf.printf "%d" j;
-                                (Printf.printf "%s" "\n";
-                                ()))) 4)))) 3)))) 2)))) 1)))) 0)) 0);;
+  let j = 0 in
+  let j = 0 in
+  begin
+    (Printf.printf "%d" j);
+    (Printf.printf "%s" "\n");
+    let j = 1 in
+    begin
+      (Printf.printf "%d" j);
+      (Printf.printf "%s" "\n");
+      let j = 2 in
+      begin
+        (Printf.printf "%d" j);
+        (Printf.printf "%s" "\n");
+        let j = 3 in
+        begin
+          (Printf.printf "%d" j);
+          (Printf.printf "%s" "\n");
+          let j = 4 in
+          begin
+            (Printf.printf "%d" j);
+            (Printf.printf "%s" "\n")
+            end
+          
+          end
+        
+        end
+      
+      end
+    
+    end
+  ;;
 

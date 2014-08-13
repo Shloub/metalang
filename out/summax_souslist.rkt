@@ -1,0 +1,77 @@
+#lang racket
+(require racket/block)
+
+(define array_init_withenv (lambda (len f env)
+  (build-vector len (lambda (i)
+    (let ([o ((f i) env)])
+      (block
+        (set! env (car o))
+        (cadr o)
+      )
+    )))))
+(define last-char 0)
+(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
+(next-char)
+(define mread-char (lambda ()
+  (let ([ out last-char])
+    (block
+      (next-char)
+      out
+    ))))
+
+(define mread-int (lambda ()
+  (if (eq? #\- last-char)
+  (block
+    (next-char) (- 0 (mread-int)))
+    (letrec ([w (lambda (out)
+      (if (eof-object? last-char)
+        out
+        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
+          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
+            (block
+              (next-char)
+              (w out)
+          ))
+        out
+      )))]) (w 0)))))
+
+(define mread-blank (lambda ()
+  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
+))
+
+(define summax (lambda (lst len) 
+                 (let ([current 0])
+                   (let ([max_ 0])
+                     (let ([d 0])
+                       (let ([e (- len 1)])
+                         (letrec ([a (lambda (i max_ current lst len) 
+                                       (if (<= i e)
+                                         (let ([current (+ current (vector-ref lst i))])
+                                           (let ([c (lambda (max_ current lst len) 
+                                                      (let ([b (lambda (max_ current lst len) 
+                                                                 (a (+ i 1) max_ current lst len))])
+                                                      (if (< max_ current)
+                                                        (let ([max_ current])
+                                                          (b max_ current lst len))
+                                                        (b max_ current lst len))))])
+                                         (if (< current 0)
+                                           (let ([current 0])
+                                             (c max_ current lst len))
+                                           (c max_ current lst len))))
+                           max_))])
+                     (a d max_ current lst len))))))))
+(define main (let ([len 0])
+               ((lambda (h) 
+                  (let ([len h])
+                    (block (mread-blank) (let ([tab (array_init_withenv len 
+                                           (lambda (i) 
+                                             (lambda (len) 
+                                               (let ([tmp 0])
+                                                 ((lambda (g) 
+                                                    (let ([tmp g])
+                                                      (block (mread-blank) 
+                                                      (let ([f tmp])
+                                                        (list len f)) ))) (mread-int))))) len)])
+               (let ([result (summax tab len)])
+                 (display result))) ))) (mread-int))))
+

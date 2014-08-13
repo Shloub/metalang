@@ -13,49 +13,48 @@ let rec periode =
   (fun restes len a b ->
       let rec e restes len a b =
         (if (a <> 0)
-         then ((fun chiffre ->
-                   ((fun reste ->
-                        ((fun h k ->
-                             let rec f i reste chiffre restes len a b =
-                               (if (i <= k)
-                                then ((fun g ->
-                                          (if (restes.(i) = reste)
-                                           then (len - i)
-                                           else (g reste chiffre restes len a b))) (fun
-                                 reste chiffre restes len a b ->
-                                (f (i + 1) reste chiffre restes len a b)))
-                                else (restes.(len) <- reste; ((fun len ->
-                                                                  ((fun
-                                                                   a ->
-                                                                  (e restes len a b)) (reste * 10))) (len + 1)))) in
-                               (f h reste chiffre restes len a b)) 0 (len - 1))) (a mod b))) (a / b))
+         then let chiffre = (a / b) in
+         let reste = (a mod b) in
+         let h = 0 in
+         let k = (len - 1) in
+         let rec f i reste chiffre restes len a b =
+           (if (i <= k)
+            then let g = (fun reste chiffre restes len a b ->
+                             (f (i + 1) reste chiffre restes len a b)) in
+            (if (restes.(i) = reste)
+             then (len - i)
+             else (g reste chiffre restes len a b))
+            else (restes.(len) <- reste; let len = (len + 1) in
+            let a = (reste * 10) in
+            (e restes len a b))) in
+           (f h reste chiffre restes len a b)
          else 0) in
         (e restes len a b));;
 let rec main =
-  ((fun c ->
-       ((fun t ->
-            ((fun m ->
-                 ((fun mi ->
-                      ((fun q r ->
-                           let rec n i mi m c =
-                             (if (i <= r)
-                              then ((fun p ->
-                                        ((fun o ->
-                                             (if (p > m)
-                                              then ((fun mi ->
-                                                        ((fun m ->
-                                                             (o p mi m c)) p)) i)
-                                              else (o p mi m c))) (fun
-                                         p mi m c ->
-                                        (n (i + 1) mi m c)))) (periode t 0 1 i))
-                              else (Printf.printf "%d" mi;
-                              (Printf.printf "%s" "\n";
-                              (Printf.printf "%d" m;
-                              (Printf.printf "%s" "\n";
-                              ()))))) in
-                             (n q mi m c)) 1 1000)) 0)) 0)) ((Array.init_withenv c (fun
-        j ->
-       (fun (c) ->
-           ((fun l ->
-                ((c), l)) 0))) ) (c)))) 1000);;
+  let c = 1000 in
+  let t = (Array.init_withenv c (fun j c ->
+                                    let l = 0 in
+                                    (c, l)) c) in
+  let m = 0 in
+  let mi = 0 in
+  let q = 1 in
+  let r = 1000 in
+  let rec n i mi m c =
+    (if (i <= r)
+     then let p = (periode t 0 1 i) in
+     let o = (fun p mi m c ->
+                 (n (i + 1) mi m c)) in
+     (if (p > m)
+      then let mi = i in
+      let m = p in
+      (o p mi m c)
+      else (o p mi m c))
+     else begin
+            (Printf.printf "%d" mi);
+            (Printf.printf "%s" "\n");
+            (Printf.printf "%d" m);
+            (Printf.printf "%s" "\n")
+            end
+     ) in
+    (n q mi m c);;
 

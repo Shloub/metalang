@@ -11,21 +11,24 @@ end
 
 let rec fibo =
   (fun a b i ->
-      ((fun out_ ->
-           ((fun a2 ->
-                ((fun b2 ->
-                     ((fun d e ->
-                          let rec c j b2 a2 out_ a b i =
-                            (if (j <= e)
-                             then (Printf.printf "%d" j;
-                             ((fun out_ ->
-                                  ((fun tmp ->
-                                       ((fun b2 ->
-                                            ((fun a2 ->
-                                                 (c (j + 1) b2 a2 out_ a b i)) tmp)) (b2 + a2))) b2)) (out_ + a2)))
-                             else out_) in
-                            (c d b2 a2 out_ a b i)) 0 (i + 1))) b)) a)) 0));;
+      let out_ = 0 in
+      let a2 = a in
+      let b2 = b in
+      let d = 0 in
+      let e = (i + 1) in
+      let rec c j b2 a2 out_ a b i =
+        (if (j <= e)
+         then begin
+                (Printf.printf "%d" j);
+                let out_ = (out_ + a2) in
+                let tmp = b2 in
+                let b2 = (b2 + a2) in
+                let a2 = tmp in
+                (c (j + 1) b2 a2 out_ a b i)
+                end
+         
+         else out_) in
+        (c d b2 a2 out_ a b i));;
 let rec main =
-  (Printf.printf "%d" (fibo 1 2 4);
-  ());;
+  (Printf.printf "%d" (fibo 1 2 4));;
 
