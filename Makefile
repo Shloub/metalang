@@ -121,6 +121,8 @@ CCFLAGS ?= -O3 -Wall
 TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, \
 	$(shell ls tests/not_compile/)))
 
+COMPILER_SOURCES:= $(shell find . -name "*.ml" -not -path "./out/*" -not -path "./_build/*")
+
 TESTSFILES	:= $(filter %.metalang, $(shell ls tests/prog/))
 TESTS		:= $(addprefix out/, $(basename $(TESTSFILES)))
 TESTSDEPS	:= $(addsuffix .test, $(TESTS))
@@ -181,68 +183,65 @@ TMPFILES	:=\
 
 .SECONDARY: $(TMPFILES)
 
-.PHONY: metalang
-metalang : main.byte
-	@mv _build/Main/main.byte metalang
+metalang : $(COMPILER_SOURCES) main.byte
+	@cp _build/Main/main.byte metalang
 
-main.byte :
+main.byte : $(COMPILER_SOURCES)
 	@ocamlbuild -tag debug Main/main.byte
-main.native:
+
+main.native : $(COMPILER_SOURCES)
 	@ocamlbuild Main/main.native
 
-out :
-	@mkdir out
-
-out/%.m : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
+out/%.m : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang m $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang m $< || exit 1; \
 	fi
 
-out/%.cl : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
+out/%.cl : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cl $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang cl $< || exit 1; \
 	fi
 
-out/%.go : tests/prog/%.metalang metalang Stdlib/stdlib.metalang out
+out/%.go : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang go $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang go $< || exit 1; \
 	fi
 
-out/%.java : tests/prog/%.metalang metalang out
+out/%.java : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang java $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang java $< || exit 1; \
 	fi
 
-out/%.js : tests/prog/%.metalang metalang out
+out/%.js : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang js $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang js $< || exit 1; \
 	fi
 
-out/%.cs : tests/prog/%.metalang metalang out
+out/%.cs : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cs $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang cs $< || exit 1; \
 	fi
 
-out/%.pas : tests/prog/%.metalang metalang out Stdlib/stdlib.metalang
+out/%.pas : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang pas $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang pas $< || exit 1; \
 	fi
 
-out/%.metalang_parsed : tests/prog/%.metalang metalang out
+out/%.metalang_parsed : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang metalang_parsed $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -277,28 +276,28 @@ out/%.rb : tests/prog/%.metalang metalang out
 	 ./metalang -quiet -o out -lang rb $< || exit 1; \
 	fi
 
-out/%.py : tests/prog/%.metalang metalang out Stdlib/stdlib.metalang 
+out/%.py : tests/prog/%.metalang metalang Stdlib/stdlib.metalang 
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang py $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang py $< || exit 1; \
 	fi
 
-out/%.c : tests/prog/%.metalang metalang out
+out/%.c : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang c $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang c $< || exit 1; \
 	fi
 
-out/%.cc : tests/prog/%.metalang metalang out
+out/%.cc : tests/prog/%.metalang metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cc $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang cc $< || exit 1; \
 	fi
 
-out/%.php : tests/prog/%.metalang metalang out Stdlib/stdlib.metalang
+out/%.php : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang php $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -426,10 +425,132 @@ out/%.test : out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.o
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+SOURCEGENERATIONS := \
+	$(addsuffix .m, $(TESTS)) \
+	$(addsuffix .ml, $(TESTS)) \
+	$(addsuffix .py, $(TESTS)) \
+	$(addsuffix .php, $(TESTS)) \
+	$(addsuffix .rb, $(TESTS)) \
+	$(addsuffix .js, $(TESTS)) \
+	$(addsuffix .cc, $(TESTS)) \
+	$(addsuffix .c, $(TESTS)) \
+	$(addsuffix .pas, $(TESTS)) \
+	$(addsuffix .java, $(TESTS)) \
+	$(addsuffix .cs, $(TESTS)) \
+	$(addsuffix .go, $(TESTS)) \
+	$(addsuffix .cl, $(TESTS))
+allsources: $(SOURCEGENERATIONS)
+	@echo "$(green)all sources OK$(reset) $*"
+	@echo "source generation" > $@
+
+COMPILEMLDEPS := $(addsuffix .ml.native, $(TESTS))
+compileML: $(COMPILEMLDEPS)
+	@echo "$(green)OCAML COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECMLDEPS := $(addsuffix .ml.native.out, $(TESTS))
+execML: $(EXECMLDEPS)
+	@echo "$(green)OCAML EXEC OK$(reset)"
+	@echo "ok" > $@
+
+COMPILECDEPS := $(addsuffix .c.bin, $(TESTS))
+compileC: $(COMPILECDEPS)
+	@echo "$(green)C COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECCDEPS := $(addsuffix .c.bin.out, $(TESTS))
+execC: $(EXECCDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+COMPILEPASDEPS := $(addsuffix .pas.bin, $(TESTS))
+compilePAS: $(COMPILEPASDEPS)
+	@echo "$(green)PASCAL COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECPASDEPS := $(addsuffix .pas.bin.out, $(TESTS))
+execPAS: $(EXECPASDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+COMPILECCDEPS := $(addsuffix .cc.bin, $(TESTS))
+compileCC: $(COMPILECCDEPS)
+	@echo "$(green)CC COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECCCDEPS := $(addsuffix .cc.bin.out, $(TESTS))
+execCC: $(EXECCCDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+COMPILEJAVADEPS := $(addsuffix .class, $(TESTS))
+compileJAVA: $(COMPILEJAVADEPS)
+	@echo "$(green)JAVA COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECJAVADEPS := $(addsuffix .class.out, $(TESTS))
+execJAVA: $(EXECJAVADEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+COMPILECSDEPS := $(addsuffix .exe, $(TESTS))
+compileCS: $(COMPILECSDEPS)
+	@echo "$(green)CSHARP COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECCSDEPS := $(addsuffix .exe.out, $(TESTS))
+execCS: $(EXECCSDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+COMPILEOBJCDEPS := $(addsuffix .m.bin, $(TESTS))
+compileOBJC: $(COMPILEOBJCDEPS)
+	@echo "$(green)OBJ-C COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECOBJCDEPS := $(addsuffix .m.bin.out, $(TESTS))
+execOBJC: $(EXECOBJCDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+EXECPYDEPS := $(addsuffix .py.out, $(TESTS))
+execPY: $(EXECPYDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+EXECRBDEPS := $(addsuffix .rb.out, $(TESTS))
+execRB: $(EXECRBDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+EXECPHPDEPS := $(addsuffix .php.out, $(TESTS))
+execPHP: $(EXECPHPDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+EXECJSDEPS := $(addsuffix .js.out, $(TESTS))
+execJS: $(EXECJSDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+EXECCLDEPS := $(addsuffix .cl.out, $(TESTS))
+execCL: $(EXECCLDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+EXECGODEPS := $(addsuffix .go.out, $(TESTS))
+execGO: $(EXECGODEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+compileAll: metalang compileML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
+	@echo "$(green)ALL COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
 #never remove tmp files : powerfull for debug
 CMPTESTSDEPS	:= $(addsuffix .test, $(TESTS))
 .PHONY: testCompare
-testCompare : out $(CMPTESTSDEPS)
+testCompare : compileAll $(CMPTESTSDEPS)
 	@echo "$(green)ALL TESTS OK$(reset)"
 
 %.not_compile : metalang
@@ -447,7 +568,7 @@ testNotCompile : metalang out $(TESTSNOTCOMPILE)
 
 
 METATESTSDEPS	:= $(addsuffix .metalang.test, $(TESTS))
-metatest : out $(METATESTSDEPS)
+metatest : $(METATESTSDEPS)
 	@echo "$(green)METALANG TESTS OK$(reset)"
 
 
@@ -468,5 +589,6 @@ js/meta.js : js/test.js
 .PHONY: clean
 clean :
 	@rm -rf out 2> /dev/null || true
+	@mkdir out
 	@ocamlbuild -clean
 	@echo "OK"
