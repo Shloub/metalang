@@ -184,6 +184,7 @@ let ocaml_passes prog =
 let fun_passes prog =
   prog |> default_passes
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
+  |> (fun (a, b) -> a, Makelet.apply b)
 
 let no_passes prog =
   prog

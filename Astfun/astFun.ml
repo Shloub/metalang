@@ -58,7 +58,7 @@ module Expr = struct
   | Comment of string * 'a
   | Ignore of 'a * 'a
   | If of 'a * 'a * 'a
-  | Print of 'a * Ast.Type.t * 'a
+  | Print of 'a * Ast.Type.t
   | ReadIn of Ast.Type.t * 'a
   | SkipIn of 'a
   | Block of 'a list
@@ -68,6 +68,7 @@ module Expr = struct
   | ArrayMake of 'a * 'a
   | ArrayAccess of 'a * 'a list
   | ArrayAffectIn of 'a * 'a list * 'a * 'a
+  | LetIn of (string * 'a ) list * 'a
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = 'a tofix
@@ -85,7 +86,7 @@ module Expr = struct
       | Comment (s, c) -> Comment (s, f c)
       | Ignore (e1, e2) -> Ignore (f e1, f e2)
       | If (e1, e2, e3) -> If (f e1, f e2, f e3)
-      | Print (e, ty, next) -> Print (f e, ty, f next)
+      | Print (e, ty) -> Print (f e, ty)
       | ReadIn (ty, e) -> ReadIn (ty, f e)
       | SkipIn e -> SkipIn (f e)
       | Block li -> Block (List.map f li)
@@ -95,7 +96,7 @@ module Expr = struct
       | ArrayAccess (tab, indexes) -> ArrayAccess (f tab, List.map f indexes)
       | ArrayMake (len, lambda) -> ArrayMake (f len, f lambda)
       | ArrayAffectIn (tab, indexes, v, in_) -> ArrayAffectIn (f tab, List.map f indexes, f v, f in_)
-
+      | LetIn (params, b) -> LetIn (List.map (fun (s, a) -> s, f a) params, f b)
     let next () = next ()
   end)
 
@@ -147,10 +148,9 @@ module Expr = struct
           let acc, e2 = f acc e2 in
           let acc, e3 = f acc e3 in
           acc, If (e1, e2, e3)
-        | Print (e, ty, next) ->
+        | Print (e, ty) ->
           let acc, e = f acc e in
-          let acc, next = f acc next in
-          acc, Print (e, ty, next)
+          acc, Print (e, ty)
         | ReadIn (ty, e) ->
           let acc, e = f acc e in
           acc, ReadIn (ty, e)
@@ -188,9 +188,19 @@ module Expr = struct
 	  let acc, v = f acc v in
 	  let acc, in_ = f acc in_ in
 	  acc, ArrayAffectIn (tab, indexes, v, in_)
+	| LetIn (params, b) ->
+	  let acc, params =
+	    List.fold_left_map (fun acc (s, a) ->
+	      let acc, a = f acc a
+	      in acc, (s, a))
+	      acc params in
+	  let acc, b = f acc b in
+	  acc, LetIn (params, b)
       in acc, fixa annot unfixed
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
+  let letin name e1 e2 = fix (LetIn ([name, e1], e2) )
+  let letand params e2 = fix (LetIn (params, e2) )
   let lief l = fix (Lief l)
   let unit = lief (Unit)
   let error = lief (Error)
@@ -205,10 +215,11 @@ module Expr = struct
   let comment s c = fix (Comment (s, c))
   let ignore e1 e2 = fix (Ignore (e1, e2))
   let if_ e1 e2 e3 = fix (If (e1, e2, e3))
-  let print e ty next = fix (Print (e, ty, next))
+  let block li = fix (Block li)
+  let print e ty next = block [ fix (Print (e, ty)); next]
+  let print_ e ty = fix (Print (e, ty))
   let readin e ty = fix (ReadIn (ty, e))
   let skipin e = fix (SkipIn e)
-  let block li = fix (Block li)
   let record li = fix (Record li)
   let recordaccess e s = fix (RecordAccess (e, s))
   let recordaffectin record field value in_ = fix (RecordAffectIn (record, field, value, in_))

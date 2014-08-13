@@ -99,14 +99,13 @@ class camlFunPrinter = object(self)
 
   method binding f s = Format.fprintf f "%s" s
 
-  method print f e ty next =
-    Format.fprintf f "(Printf.printf %S %a;@\n%a)"
+  method print f e ty =
+    Format.fprintf f "(Printf.printf %S %a)"
       (Printer.format_type ty)
       self#expr e
-      self#expr next
 
   method read f ty next =
-    Format.fprintf f "Scanf.scanf %S %a"
+    Format.fprintf f "Scanf.scanf %S@\n%a"
       (Printer.format_type ty)
       self#expr next
 
@@ -151,15 +150,17 @@ class camlFunPrinter = object(self)
         (List.combine params listr)
       in Format.fprintf f "(%s)" expanded
 
+  method apply_nomacros f e li =
+    match li with
+    | [] -> Format.fprintf f "(%a ())" self#expr e
+    | _ -> Format.fprintf f "(%a %a)"
+      self#expr e
+      (Printer.print_list
+	 self#expr
+	 (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+
   method apply f e li =
-    let default () =
-      match li with
-      | [] -> Format.fprintf f "(%a ())" self#expr e
-      | _ -> Format.fprintf f "(%a %a)"
-	self#expr e
-	(Printer.print_list
-	   self#expr
-	   (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+    let default () = self#apply_nomacros f e li
     in
     match E.unfix e with
     | E.Lief ( E.Binding binding ) ->
@@ -173,6 +174,13 @@ class camlFunPrinter = object(self)
     (Printer.print_list self#expr
        (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
 
+  method if_ f e1 e2 e3 = Format.fprintf f "(@[if %a@\nthen %a@\nelse %a)@]" self#expr e1 self#expr e2 self#expr e3
+
+  method block f li = Format.fprintf f "@[<v 2>begin@\n%a@\nend@]@\n"
+    (Printer.print_list
+       self#expr
+       (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+
   method expr f e = match E.unfix e with
   | E.LetRecIn (name, params, e1, e2) -> self#letrecin f name params e1 e2
   | E.BinOp (a, op, b) -> self#binop f a op b
@@ -184,19 +192,13 @@ class camlFunPrinter = object(self)
   | E.Lief l -> self#lief f l
   | E.Comment (s, c) -> self#comment f s c
   | E.Ignore (e1, e2) -> self#ignore f e1 e2
-  | E.If (e1, e2, e3) ->
-    Format.fprintf f "(@[if %a@\nthen %a@\nelse %a)@]"
-      self#expr e1 self#expr e2 self#expr e3
-  | E.Print (e, ty, next) ->
-    self#print f e ty next
+  | E.If (e1, e2, e3) -> self#if_ f e1 e2 e3
+  | E.Print (e, ty) ->
+    self#print f e ty
   | E.ReadIn (ty, next) -> self#read f ty next
   | E.SkipIn (e) ->
     Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> %a))" self#expr e
-  | E.Block li ->
-    Format.fprintf f "@[<v 2>begin@\n%a@\nend@]@\n"
-      (Printer.print_list
-         self#expr
-         (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+  | E.Block li -> self#block f li
   | E.Record li -> Format.fprintf f "{%a}"
     (Printer.print_list
        (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
@@ -206,20 +208,36 @@ class camlFunPrinter = object(self)
     Format.fprintf f "(%a.%s <- %a; %a)"
       self#expr record field
       self#expr value self#expr in_
-  | E.ArrayMake (len, lambda) ->
-    Format.fprintf f "(Array.init_withenv %a %a )" self#expr len self#expr lambda
-  | E.ArrayAccess (tab, indexes) ->
+  | E.ArrayMake (len, lambda) -> self#arraymake f len lambda
+  | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
+  | E.ArrayAffectIn (tab, indexes, v, in_) -> self#arrayaffectin f tab indexes v in_
+  | E.LetIn (params, b) -> self#letin f params b
+
+  method arraymake f len lambda = Format.fprintf f "(Array.init_withenv %a %a )" self#expr len self#expr lambda
+
+  method arrayindex f tab indexes =
     Format.fprintf f "%a.(%a)"
       self#expr tab
       (Printer.print_list self#expr
 	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
-  | E.ArrayAffectIn (tab, indexes, v, in_) ->
+
+  method arrayaffectin f tab indexes v in_ =
     Format.fprintf f "(%a.(%a) <- %a; %a)"
       self#expr tab
       (Printer.print_list self#expr
 	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
-    self#expr v
-    self#expr in_
+      self#expr v
+      self#expr in_
+
+  method letin f params b  = Format.fprintf f "let %a in@\n%a"
+    (Printer.print_list
+       (fun f (s, a) ->
+	 Format.fprintf f "%a = %a"
+	   self#binding s self#expr a
+       )
+       (fun f pa a pb b -> Format.fprintf f "%a@\nand %a" pa a pb b))
+    params
+    self#expr b
 
   (** show a type *)
   method ptype f (t : Type.t ) =
@@ -250,10 +268,12 @@ class camlFunPrinter = object(self)
     | Type.Lexems -> assert false
     | Type.Auto -> assert false
 
-  method decl f d = match d with
-  | AstFun.Declaration (name, e) ->
+  method toplvl_declare f name e = 
     Format.fprintf f "@[<v 2>let rec %a =@\n%a@];;@\n" (* TODO is_rec ?*)
       self#binding name self#expr e
+
+  method decl f d = match d with
+  | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
   | AstFun.DeclareType (name, ty) ->
     Format.fprintf f "@[<v 2>type %a = %a@];;@\n"
       self#binding name self#ptype ty

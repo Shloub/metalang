@@ -1,8 +1,8 @@
-<Main/*.byte>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun
-<Main/*.native>: use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun
-<Main/*.cmo>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun
-<Main/*.cmx>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun
-<Main/*.ml>: use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun
+<Main/*.byte>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun, use_passesfun
+<Main/*.native>: use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun, use_passesfun
+<Main/*.cmo>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun, use_passesfun
+<Main/*.cmx>:   use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun, use_passesfun
+<Main/*.ml>: use_str, use_stdlib, use_ast, use_printers, use_parser, use_eval, use_unix, use_sys, use_passes, use_astfun, use_passesfun
 <Parser/*.ml>: use_str, use_stdlib, use_ast
 <Parser/*.cmx>: use_str, use_stdlib, use_ast
 <Parser/*.native>: use_str, use_stdlib, use_ast
@@ -19,4 +19,4 @@ true: use_str
 
 true : use_menhir
 
-"Stdlib" or "Ast" or "Parser" or "Printers" or "Eval" or "Passes" or "Astfun" or "Main" : include
+"Stdlib" or "Ast" or "Parser" or "Printers" or "Eval" or "Passes" or "Astfun" or "Passesfun" or "Main" : include
