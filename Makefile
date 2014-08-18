@@ -432,7 +432,7 @@ out/%.test : out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.o
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
-out/%.test_rkt_ml : out/%.rkt.out out/%.ml.out
+out/%.test_rkt_ml : out/%.rkt.out out/%.fun.ml.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -448,26 +448,13 @@ out/%.test_rkt_ml : out/%.rkt.out out/%.ml.out
 
 testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
 
-SOURCEGENERATIONS := \
-	$(addsuffix .m, $(TESTS)) \
-	$(addsuffix .ml, $(TESTS)) \
-	$(addsuffix .py, $(TESTS)) \
-	$(addsuffix .php, $(TESTS)) \
-	$(addsuffix .rb, $(TESTS)) \
-	$(addsuffix .js, $(TESTS)) \
-	$(addsuffix .cc, $(TESTS)) \
-	$(addsuffix .c, $(TESTS)) \
-	$(addsuffix .pas, $(TESTS)) \
-	$(addsuffix .java, $(TESTS)) \
-	$(addsuffix .hs, $(TESTS)) \
-	$(addsuffix .rkt, $(TESTS)) \
-	$(addsuffix .fun.ml, $(TESTS)) \
-	$(addsuffix .cs, $(TESTS)) \
-	$(addsuffix .go, $(TESTS)) \
-	$(addsuffix .cl, $(TESTS))
-allsources: $(SOURCEGENERATIONS)
+%.sources: $(addsuffix .%, $(TESTS))
+	@echo "$(green)$@ OK$(reset) $*"
+	@echo "ok" > $@
+
+allsources: m.sources ml.sources py.sources php.sources rb.sources js.sources cc.sources c.sources pas.sources java.sources hs.sources rkt.sources fun.ml.sources cs.sources go.sources cl.sources
 	@echo "$(green)all sources OK$(reset) $*"
-	@echo "source generation" > $@
+	@echo "ok" > $@
 
 COMPILEMLDEPS := $(addsuffix .ml.native, $(TESTS))
 compileML: $(COMPILEMLDEPS)
