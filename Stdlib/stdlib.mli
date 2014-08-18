@@ -164,8 +164,8 @@ module String :
 sig
 
   type t = string
-
-	val ends_with : string -> string -> bool
+  val split : string -> char -> string list
+  val ends_with : string -> string -> bool
   val length : string -> int
   val get : string -> int -> char
   val set : string -> int -> char -> unit

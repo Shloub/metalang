@@ -219,6 +219,14 @@ end
 
 module String = struct
   include String
+
+let rec split s c =
+  try
+    let index = String.index s c in
+    (String.sub s 0 index) :: (split (String.sub s (index +1) ((String.length s) - index - 1)) c)
+  with Not_found -> [s]
+
+
   let of_string (s:string) = (s:t)
   let equals a b = 0 = compare a b
   let lines = Str.split $ Str.regexp "\n+"
