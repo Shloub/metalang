@@ -33,7 +33,11 @@ open AstFun
    @author Maxime Audouin (coucou747\@gmail.com)
 *)
 
-let transform e = match Expr.unfix e with
+type config = {
+  curry : bool
+}
+
+let transform config e = match Expr.unfix e with
   | Expr.Tuple [] -> Expr.unit
   | Expr.Tuple ([e]) -> e
   | Expr.Block [hd] -> hd
@@ -53,8 +57,8 @@ let transform e = match Expr.unfix e with
     Expr.block li
   | Expr.FunTuple ([param], e) -> Expr.fun_ [param] e
 
-(*  | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) ->
-    Expr.fun_ (List.append params params2) expr *)
+  | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) when config.curry ->
+    Expr.fun_ (List.append params params2) expr
   | Expr.Apply ( Expr.Fixed.F (_, Expr.FunTuple (params, expr)), [Expr.Fixed.F (_, Expr.Tuple values)]) ->
     Expr.letand (List.combine params values) expr
   | Expr.Apply ( (Expr.Fixed.F (_, Expr.Fun (params, expr) ), values)) ->
@@ -68,14 +72,14 @@ let transform e = match Expr.unfix e with
     in f expr (params, values)
   | _ -> e
 
-let rec tr e =
-  let e2 = Expr.Writer.Deep.map transform (transform e)
+let rec tr config e =
+  let e2 = Expr.Writer.Deep.map (transform config) (transform config e)
   in if e = e2 then e
-    else tr e2
+    else tr config e2
 
-let apply p =
+let apply config p =
   List.map (function
-  | Declaration (name, e) -> Declaration (name, tr e)
+  | Declaration (name, e) -> Declaration (name, tr config e)
   | x -> x
   ) p
 

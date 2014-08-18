@@ -182,10 +182,10 @@ let ocaml_passes prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
 
-let fun_passes prog =
+let fun_passes config prog =
   prog |> default_passes
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
-  |> (fun (a, b) -> a, Makelet.apply b)
+  |> (fun (a, b) -> a, Makelet.apply config b)
 
 let no_passes prog =
   prog
@@ -214,14 +214,14 @@ let languages, printers =
     "java", clike_passes => new JavaPrinter.javaPrinter ;
     "js",   clike_passes => new JsPrinter.jsPrinter ;
     "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
-    "fun.ml",  fun_passes => new OcamlFunPrinter.camlFunPrinter ;
+    "fun.ml",  fun_passes {Makelet.curry=true} => new OcamlFunPrinter.camlFunPrinter ;
     "hs",   ocaml_passes => new HaskellPrinter.haskellPrinter ;
     "php",  php_passes => new PhpPrinter.phpPrinter ;
     "rb",   python_passes => new RbPrinter.rbPrinter ;
     "py",   python_passes => new PyPrinter.pyPrinter ;
     "go",   clike_passes => new GoPrinter.goPrinter ;
     "cl",   common_lisp_passes  => new CommonLispPrinter.commonLispPrinter ;
-    "rkt",  fun_passes => new RacketPrinter.racketPrinter ;
+    "rkt",  fun_passes {Makelet.curry=false} => new RacketPrinter.racketPrinter ;
 
     "metalang_parsed", no_passes => new Printer.printer ;
   (* Si on met cette passe en premier,
