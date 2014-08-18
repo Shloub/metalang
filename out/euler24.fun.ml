@@ -9,74 +9,72 @@ module Array = struct
     )
 end
 
-let rec fact =
+let fact =
   (fun n ->
       let prod = 1 in
-      let w = 2 in
-      let x = n in
-      let rec v i prod n =
-        (if (i <= x)
+      let s = 2 in
+      let u = n in
+      let rec r i prod =
+        (if (i <= u)
          then let prod = (prod * i) in
-         (v (i + 1) prod n)
+         (r (i + 1) prod)
          else prod) in
-        (v w prod n));;
-let rec show =
+        (r s prod));;
+let show =
   (fun lim nth ->
       let t = (Array.init_withenv lim (fun i ->
-                                          (fun (lim, nth) ->
-                                              let a = i in
-                                              ((lim, nth), a))) (lim, nth)) in
+                                          (fun () -> let a = i in
+                                          ((), a))) ()) in
       let pris = (Array.init_withenv lim (fun j ->
-                                             (fun (lim, nth) ->
-                                                 let b = false in
-                                                 ((lim, nth), b))) (lim, nth)) in
-      let s = 1 in
-      let u = (lim - 1) in
-      let rec g k lim nth =
-        (if (k <= u)
+                                             (fun () -> let b = false in
+                                             ((), b))) ()) in
+      let p = 1 in
+      let q = (lim - 1) in
+      let rec f k nth =
+        (if (k <= q)
          then let n = (fact (lim - k)) in
          let nchiffre = (nth / n) in
          let nth = (nth mod n) in
-         let q = 0 in
-         let r = (lim - 1) in
-         let rec h l nchiffre n lim nth =
-           (if (l <= r)
-            then let o = (fun nchiffre n lim nth ->
-                             (h (l + 1) nchiffre n lim nth)) in
-            (if (not pris.(l))
-             then let p = (fun nchiffre n lim nth ->
-                              let nchiffre = (nchiffre - 1) in
-                              (o nchiffre n lim nth)) in
-             (if (nchiffre = 0)
-              then begin
-                     (Printf.printf "%d" l);
-                     (pris.(l) <- true; (p nchiffre n lim nth))
-                     end
-              
-              else (p nchiffre n lim nth))
-             else (o nchiffre n lim nth))
-            else (g (k + 1) lim nth)) in
-           (h q nchiffre n lim nth)
-         else let e = 0 in
-         let f = (lim - 1) in
-         let rec c m lim nth =
-           (if (m <= f)
-            then let d = (fun lim nth ->
-                             (c (m + 1) lim nth)) in
-            (if (not pris.(m))
-             then begin
-                    (Printf.printf "%d" m);
-                    (d lim nth)
-                    end
-             
-             else (d lim nth))
+         let h = 0 in
+         let o = (lim - 1) in
+         let rec g l nchiffre =
+           (if (l <= o)
+            then let nchiffre = (if (not pris.(l))
+                                 then (
+                                        (if (nchiffre = 0)
+                                         then (
+                                                (Printf.printf "%d" l);
+                                                pris.(l) <- true;
+                                                ()
+                                                )
+                                         
+                                         else ());
+                                        let nchiffre = (nchiffre - 1) in
+                                        nchiffre
+                                        )
+                                 
+                                 else nchiffre) in
+            (g (l + 1) nchiffre)
+            else (f (k + 1) nth)) in
+           (g h nchiffre)
+         else let d = 0 in
+         let e = (lim - 1) in
+         let rec c m =
+           (if (m <= e)
+            then (
+                   (if (not pris.(m))
+                    then (Printf.printf "%d" m)
+                    else ());
+                   (c (m + 1))
+                   )
+            
             else (Printf.printf "%s" "\n")) in
-           (c e lim nth)) in
-        (g s lim nth));;
-let rec main =
-  begin
+           (c d)) in
+        (f p nth));;
+let main =
+  (
     (show 10 999999);
     ()
-    end
+    )
   ;;
 

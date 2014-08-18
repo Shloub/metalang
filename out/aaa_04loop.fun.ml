@@ -1,59 +1,46 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    )
-end
-
-let rec h =
+let h =
   (fun i ->
       (*   for j = i - 2 to i + 2 do
     if i % j == 5 then return true end
   end  *)
       let j = (i - 2) in
-      let rec b j i =
+      let rec b j =
         (if (j <= (i + 2))
-         then let c = (fun j i ->
-                          let j = (j + 1) in
-                          (b j i)) in
-         (if ((i mod j) = 5)
-          then true
-          else (c j i))
+         then (if ((i mod j) = 5)
+               then true
+               else let j = (j + 1) in
+               (b j))
          else false) in
-        (b j i));;
-let rec main =
+        (b j));;
+let main =
   let j = 0 in
-  let g = 0 in
-  let l = 10 in
-  let rec f k j =
-    (if (k <= l)
+  let f = 0 in
+  let g = 10 in
+  let rec e k j =
+    (if (k <= g)
      then let j = (j + k) in
-     begin
+     (
        (Printf.printf "%d" j);
        (Printf.printf "%s" "\n");
-       (f (k + 1) j)
-       end
+       (e (k + 1) j)
+       )
      
      else let i = 4 in
-     let rec e i j =
+     let rec d i j =
        (if (i < 10)
-        then begin
+        then (
                (Printf.printf "%d" i);
                let i = (i + 1) in
                let j = (j + i) in
-               (e i j)
-               end
+               (d i j)
+               )
         
-        else begin
+        else (
                (Printf.printf "%d" j);
                (Printf.printf "%d" i);
                (Printf.printf "%s" "FIN TEST\n")
-               end
+               )
         ) in
-       (e i j)) in
-    (f g j);;
+       (d i j)) in
+    (e f j);;
 

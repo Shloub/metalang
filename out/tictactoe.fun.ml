@@ -11,328 +11,328 @@ end
 
 type gamestate = {mutable cases : int array array; mutable firstToPlay : bool; mutable note : int; mutable ended : bool;};;
 type move = {mutable x : int; mutable y : int;};;
-let rec print_state =
+let print_state =
   (fun g ->
-      begin
+      (
         (Printf.printf "%s" "\n|");
-        let ce = 0 in
-        let cf = 2 in
-        let rec bx y g =
-          (if (y <= cf)
-           then let cc = 0 in
-           let cd = 2 in
-           let rec bz x g =
-             (if (x <= cd)
-              then let ca = (fun g ->
-                                begin
-                                  (Printf.printf "%s" "|");
-                                  (bz (x + 1) g)
-                                  end
-                                ) in
-              (if (g.cases.(x).(y) = 0)
-               then begin
-                      (Printf.printf "%s" " ");
-                      (ca g)
-                      end
-               
-               else let cb = (fun g ->
-                                 (ca g)) in
-               (if (g.cases.(x).(y) = 1)
-                then begin
-                       (Printf.printf "%s" "O");
-                       (cb g)
-                       end
-                
-                else begin
-                       (Printf.printf "%s" "X");
-                       (cb g)
-                       end
-                ))
-              else let by = (fun g ->
-                                (bx (y + 1) g)) in
-              (if (y <> 2)
-               then begin
-                      (Printf.printf "%s" "\n|-|-|-|\n|");
-                      (by g)
-                      end
-               
-               else (by g))) in
-             (bz cc g)
+        let bj = 0 in
+        let bk = 2 in
+        let rec bf y =
+          (if (y <= bk)
+           then let bh = 0 in
+           let bi = 2 in
+           let rec bg x =
+             (if (x <= bi)
+              then (
+                     (if (g.cases.(x).(y) = 0)
+                      then (Printf.printf "%s" " ")
+                      else (
+                             (if (g.cases.(x).(y) = 1)
+                              then (Printf.printf "%s" "O")
+                              else (Printf.printf "%s" "X"));
+                             ()
+                             )
+                      );
+                     (Printf.printf "%s" "|");
+                     (bg (x + 1))
+                     )
+              
+              else (
+                     (if (y <> 2)
+                      then (Printf.printf "%s" "\n|-|-|-|\n|")
+                      else ());
+                     (bf (y + 1))
+                     )
+              ) in
+             (bg bh)
            else (Printf.printf "%s" "\n")) in
-          (bx ce g)
-        end
+          (bf bj)
+        )
       );;
-let rec eval_ =
+let eval_ =
   (fun g ->
       let win = 0 in
       let freecase = 0 in
-      let bv = 0 in
-      let bw = 2 in
-      let rec bk y freecase win g =
-        (if (y <= bw)
+      let bd = 0 in
+      let be = 2 in
+      let rec z y freecase win =
+        (if (y <= be)
          then let col = (- 1) in
          let lin = (- 1) in
-         let bt = 0 in
-         let bu = 2 in
-         let rec bn x lin col freecase win g =
-           (if (x <= bu)
-            then let bs = (fun lin col freecase win g ->
-                              let colv = g.cases.(x).(y) in
-                              let linv = g.cases.(y).(x) in
-                              let bq = (fun linv colv lin col freecase win g ->
-                                           let bo = (fun linv colv lin col freecase win g ->
-                                                        (bn (x + 1) lin col freecase win g)) in
-                                           (if ((lin = (- 1)) && (linv <> 0))
-                                            then let lin = linv in
-                                            (bo linv colv lin col freecase win g)
-                                            else let bp = (fun linv colv lin col freecase win g ->
-                                                              (bo linv colv lin col freecase win g)) in
-                                            (if (linv <> lin)
-                                             then let lin = (- 2) in
-                                             (bp linv colv lin col freecase win g)
-                                             else (bp linv colv lin col freecase win g)))) in
-                              (if ((col = (- 1)) && (colv <> 0))
-                               then let col = colv in
-                               (bq linv colv lin col freecase win g)
-                               else let br = (fun linv colv lin col freecase win g ->
-                                                 (bq linv colv lin col freecase win g)) in
-                               (if (colv <> col)
-                                then let col = (- 2) in
-                                (br linv colv lin col freecase win g)
-                                else (br linv colv lin col freecase win g)))) in
-            (if (g.cases.(x).(y) = 0)
-             then let freecase = (freecase + 1) in
-             (bs lin col freecase win g)
-             else (bs lin col freecase win g))
-            else let bl = (fun lin col freecase win g ->
-                              (bk (y + 1) freecase win g)) in
-            (if (col >= 0)
-             then let win = col in
-             (bl lin col freecase win g)
-             else let bm = (fun lin col freecase win g ->
-                               (bl lin col freecase win g)) in
-             (if (lin >= 0)
-              then let win = lin in
-              (bm lin col freecase win g)
-              else (bm lin col freecase win g)))) in
-           (bn bt lin col freecase win g)
-         else let bi = 1 in
-         let bj = 2 in
-         let rec bf x freecase win g =
-           (if (x <= bj)
-            then let bh = (fun freecase win g ->
-                              let bg = (fun freecase win g ->
-                                           (bf (x + 1) freecase win g)) in
-                              (if (((g.cases.(0).(2) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(0) = x))
-                               then let win = x in
-                               (bg freecase win g)
-                               else (bg freecase win g))) in
-            (if (((g.cases.(0).(0) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(2) = x))
-             then let win = x in
-             (bh freecase win g)
-             else (bh freecase win g))
-            else (g.ended <- ((win <> 0) || (freecase = 0)); let bd = (fun
-             freecase win g ->
-            ()) in
-            (if (win = 1)
-             then (g.note <- 1000; (bd freecase win g))
-             else let be = (fun freecase win g ->
-                               (bd freecase win g)) in
-             (if (win = 2)
-              then (g.note <- (- 1000); (be freecase win g))
-              else (g.note <- 0; (be freecase win g)))))) in
-           (bf bi freecase win g)) in
-        (bk bv freecase win g));;
-let rec apply_move_xy =
+         let bb = 0 in
+         let bc = 2 in
+         let rec ba x col freecase lin =
+           (if (x <= bc)
+            then let freecase = (if (g.cases.(x).(y) = 0)
+                                 then let freecase = (freecase + 1) in
+                                 freecase
+                                 else freecase) in
+            let colv = g.cases.(x).(y) in
+            let linv = g.cases.(y).(x) in
+            let col = (if ((col = (- 1)) && (colv <> 0))
+                       then let col = colv in
+                       col
+                       else let col = (if (colv <> col)
+                                       then let col = (- 2) in
+                                       col
+                                       else col) in
+                       col) in
+            let lin = (if ((lin = (- 1)) && (linv <> 0))
+                       then let lin = linv in
+                       lin
+                       else let lin = (if (linv <> lin)
+                                       then let lin = (- 2) in
+                                       lin
+                                       else lin) in
+                       lin) in
+            (ba (x + 1) col freecase lin)
+            else let win = (if (col >= 0)
+                            then let win = col in
+                            win
+                            else let win = (if (lin >= 0)
+                                            then let win = lin in
+                                            win
+                                            else win) in
+                            win) in
+            (z (y + 1) freecase win)) in
+           (ba bb col freecase lin)
+         else let v = 1 in
+         let w = 2 in
+         let rec u x win =
+           (if (x <= w)
+            then let win = (if (((g.cases.(0).(0) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(2) = x))
+                            then let win = x in
+                            win
+                            else win) in
+            let win = (if (((g.cases.(0).(2) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(0) = x))
+                       then let win = x in
+                       win
+                       else win) in
+            (u (x + 1) win)
+            else (
+                   g.ended <- ((win <> 0) || (freecase = 0));
+                   (if (win = 1)
+                    then (
+                           g.note <- 1000;
+                           ()
+                           )
+                    
+                    else (
+                           (if (win = 2)
+                            then (
+                                   g.note <- (- 1000);
+                                   ()
+                                   )
+                            
+                            else (
+                                   g.note <- 0;
+                                   ()
+                                   )
+                            );
+                           ()
+                           )
+                    );
+                   ()
+                   )
+            ) in
+           (u v win)) in
+        (z bd freecase win));;
+let apply_move_xy =
   (fun x y g ->
       let player = 2 in
-      let bc = (fun player x y g ->
-                   (g.cases.(x).(y) <- player; (g.firstToPlay <- (not g.firstToPlay); ()))) in
-      (if g.firstToPlay
-       then let player = 1 in
-       (bc player x y g)
-       else (bc player x y g)));;
-let rec apply_move =
+      let player = (if g.firstToPlay
+                    then let player = 1 in
+                    player
+                    else player) in
+      (
+        g.cases.(x).(y) <- player;
+        g.firstToPlay <- (not g.firstToPlay);
+        ()
+        )
+      );;
+let apply_move =
   (fun m g ->
-      begin
+      (
         (apply_move_xy m.x m.y g);
         ()
-        end
+        )
       );;
-let rec cancel_move_xy =
+let cancel_move_xy =
   (fun x y g ->
-      (g.cases.(x).(y) <- 0; (g.firstToPlay <- (not g.firstToPlay); (g.ended <- false; ()))));;
-let rec cancel_move =
+      (
+        g.cases.(x).(y) <- 0;
+        g.firstToPlay <- (not g.firstToPlay);
+        g.ended <- false;
+        ()
+        )
+      );;
+let cancel_move =
   (fun m g ->
-      begin
+      (
         (cancel_move_xy m.x m.y g);
         ()
-        end
+        )
       );;
-let rec can_move_xy =
+let can_move_xy =
   (fun x y g ->
       (g.cases.(x).(y) = 0));;
-let rec can_move =
+let can_move =
   (fun m g ->
       (can_move_xy m.x m.y g));;
 let rec minmax =
   (fun g ->
-      begin
+      (
         (eval_ g);
-        let bb = (fun g ->
-                     let maxNote = (- 10000) in
-                     let ba = (fun maxNote g ->
-                                  let w = 0 in
-                                  let z = 2 in
-                                  let rec q x maxNote g =
-                                    (if (x <= z)
-                                     then let u = 0 in
-                                     let v = 2 in
-                                     let rec r y maxNote g =
-                                       (if (y <= v)
-                                        then let s = (fun maxNote g ->
-                                                         (r (y + 1) maxNote g)) in
-                                        (if (can_move_xy x y g)
-                                         then begin
-                                                (apply_move_xy x y g);
-                                                let currentNote = (minmax g) in
-                                                begin
-                                                  (cancel_move_xy x y g);
-                                                  (*  Minimum ou Maximum selon le coté ou l'on joue *)
-                                                  let t = (fun currentNote maxNote g ->
-                                                              (s maxNote g)) in
-                                                  (if ((currentNote > maxNote) = g.firstToPlay)
-                                                   then let maxNote = currentNote in
-                                                   (t currentNote maxNote g)
-                                                   else (t currentNote maxNote g))
-                                                  end
-                                                
-                                                end
-                                         
-                                         else (s maxNote g))
-                                        else (q (x + 1) maxNote g)) in
-                                       (r u maxNote g)
-                                     else maxNote) in
-                                    (q w maxNote g)) in
-                     (if (not g.firstToPlay)
-                      then let maxNote = 10000 in
-                      (ba maxNote g)
-                      else (ba maxNote g))) in
         (if g.ended
          then g.note
-         else (bb g))
-        end
+         else let maxNote = (- 10000) in
+         let maxNote = (if (not g.firstToPlay)
+                        then let maxNote = 10000 in
+                        maxNote
+                        else maxNote) in
+         let s = 0 in
+         let t = 2 in
+         let rec o x maxNote =
+           (if (x <= t)
+            then let q = 0 in
+            let r = 2 in
+            let rec p y maxNote =
+              (if (y <= r)
+               then let maxNote = (if (can_move_xy x y g)
+                                   then (
+                                          (apply_move_xy x y g);
+                                          let currentNote = (minmax g) in
+                                          (
+                                            (cancel_move_xy x y g);
+                                            (*  Minimum ou Maximum selon le coté ou l'on joue *)
+                                            let maxNote = (if ((currentNote > maxNote) = g.firstToPlay)
+                                                           then let maxNote = currentNote in
+                                                           maxNote
+                                                           else maxNote) in
+                                            maxNote
+                                            )
+                                          
+                                          )
+                                   
+                                   else maxNote) in
+               (p (y + 1) maxNote)
+               else (o (x + 1) maxNote)) in
+              (p q maxNote)
+            else maxNote) in
+           (o s maxNote))
+        )
       );;
-let rec play =
+let play =
   (fun g ->
       let minMove = {x=0;
       y=0} in
       let minNote = 10000 in
-      let o = 0 in
-      let p = 2 in
-      let rec e x minNote minMove g =
-        (if (x <= p)
-         then let l = 0 in
-         let n = 2 in
-         let rec f y minNote minMove g =
-           (if (y <= n)
-            then let h = (fun minNote minMove g ->
-                             (f (y + 1) minNote minMove g)) in
-            (if (can_move_xy x y g)
-             then begin
-                    (apply_move_xy x y g);
-                    let currentNote = (minmax g) in
-                    begin
-                      (Printf.printf "%d" x);
-                      (Printf.printf "%s" ", ");
-                      (Printf.printf "%d" y);
-                      (Printf.printf "%s" ", ");
-                      (Printf.printf "%d" currentNote);
-                      (Printf.printf "%s" "\n");
-                      (cancel_move_xy x y g);
-                      let k = (fun currentNote minNote minMove g ->
-                                  (h minNote minMove g)) in
-                      (if (currentNote < minNote)
-                       then let minNote = currentNote in
-                       (minMove.x <- x; (minMove.y <- y; (k currentNote minNote minMove g)))
-                       else (k currentNote minNote minMove g))
-                      end
-                    
-                    end
-             
-             else (h minNote minMove g))
-            else (e (x + 1) minNote minMove g)) in
-           (f l minNote minMove g)
-         else begin
+      let l = 0 in
+      let n = 2 in
+      let rec e x minNote =
+        (if (x <= n)
+         then let h = 0 in
+         let k = 2 in
+         let rec f y minNote =
+           (if (y <= k)
+            then let minNote = (if (can_move_xy x y g)
+                                then (
+                                       (apply_move_xy x y g);
+                                       let currentNote = (minmax g) in
+                                       (
+                                         (Printf.printf "%d" x);
+                                         (Printf.printf "%s" ", ");
+                                         (Printf.printf "%d" y);
+                                         (Printf.printf "%s" ", ");
+                                         (Printf.printf "%d" currentNote);
+                                         (Printf.printf "%s" "\n");
+                                         (cancel_move_xy x y g);
+                                         let minNote = (if (currentNote < minNote)
+                                                        then let minNote = currentNote in
+                                                        (
+                                                          minMove.x <- x;
+                                                          minMove.y <- y;
+                                                          minNote
+                                                          )
+                                                        
+                                                        else minNote) in
+                                         minNote
+                                         )
+                                       
+                                       )
+                                
+                                else minNote) in
+            (f (y + 1) minNote)
+            else (e (x + 1) minNote)) in
+           (f h minNote)
+         else (
                 (Printf.printf "%d" minMove.x);
                 (Printf.printf "%d" minMove.y);
                 (Printf.printf "%s" "\n");
                 minMove
-                end
+                )
          ) in
-        (e o minNote minMove g));;
-let rec init_ =
+        (e l minNote));;
+let init_ =
   (fun () -> let b = 3 in
-  let cases = (Array.init_withenv b (fun i b ->
-                                        let a = 3 in
+  let cases = (Array.init_withenv b (fun i ->
+                                        (fun () -> let a = 3 in
                                         let tab = (Array.init_withenv a (fun
                                          j ->
-                                        (fun (a, i, b) ->
-                                            let d = 0 in
-                                            ((a, i, b), d))) (a, i, b)) in
+                                        (fun () -> let d = 0 in
+                                        ((), d))) ()) in
                                         let c = tab in
-                                        (b, c)) b) in
+                                        ((), c))) ()) in
   {cases=cases;
   firstToPlay=true;
   note=0;
   ended=false});;
-let rec read_move =
+let read_move =
   (fun () -> Scanf.scanf "%d"
   (fun x ->
       (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
       (fun y ->
           (Scanf.scanf "%[\n \010]" (fun _ -> {x=x;
           y=y})))))));;
-let rec main =
-  let ck = 0 in
-  let cl = 1 in
-  let rec cg i =
-    (if (i <= cl)
+let main =
+  let bo = 0 in
+  let bp = 1 in
+  let rec bl i =
+    (if (i <= bp)
      then let state = (init_ ()) in
-     begin
+     (
        (apply_move {x=1;
        y=1} state);
        (apply_move {x=0;
        y=0} state);
-       let rec ci state =
+       let rec bn () =
          (if (not state.ended)
-          then begin
+          then (
                  (print_state state);
                  (apply_move (play state) state);
                  (eval_ state);
                  (print_state state);
-                 let cj = (fun state ->
-                              (ci state)) in
                  (if (not state.ended)
-                  then begin
+                  then (
                          (apply_move (play state) state);
                          (eval_ state);
-                         (cj state)
-                         end
+                         ()
+                         )
                   
-                  else (cj state))
-                 end
+                  else ());
+                 (bn ())
+                 )
           
-          else begin
+          else (
                  (print_state state);
                  (Printf.printf "%d" state.note);
                  (Printf.printf "%s" "\n");
-                 (cg (i + 1))
-                 end
+                 (bl (i + 1))
+                 )
           ) in
-         (ci state)
-       end
+         (bn ())
+       )
      
      else ()) in
-    (cg ck);;
+    (bl bo);;
 

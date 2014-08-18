@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -12,13 +11,6 @@
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,13 +26,12 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
 (define max2 (lambda (a b) 
-               (let ([v (lambda (a b) 
+               (let ([r (lambda (_) 
                           '())])
                (if (> a b)
                  a
@@ -48,74 +39,66 @@
 (define nbPassePartout (lambda (n passepartout m serrures) 
                          (let ([max_ancient 0])
                            (let ([max_recent 0])
-                             (let ([s 0])
-                               (let ([u (- m 1)])
-                                 (letrec ([p (lambda (i max_recent max_ancient n passepartout m serrures) 
-                                               (if (<= i u)
-                                                 (let ([r (lambda (max_recent max_ancient n passepartout m serrures) 
-                                                            (let ([q 
-                                                              (lambda (max_recent max_ancient n passepartout m serrures) 
-                                                                (p (+ i 1) max_recent max_ancient n passepartout m serrures))])
-                                                            (if (and (eq? (vector-ref (vector-ref serrures i) 0) 1) (> (vector-ref (vector-ref serrures i) 1) max_recent))
-                                                              (let ([max_recent (vector-ref (vector-ref serrures i) 1)])
-                                                                (q max_recent max_ancient n passepartout m serrures))
-                                                              (q max_recent max_ancient n passepartout m serrures))))])
-                                               (if (and (eq? (vector-ref (vector-ref serrures i) 0) (- 1)) (> (vector-ref (vector-ref serrures i) 1) max_ancient))
-                                                 (let ([max_ancient (vector-ref (vector-ref serrures i) 1)])
-                                                   (r max_recent max_ancient n passepartout m serrures))
-                                                 (r max_recent max_ancient n passepartout m serrures)))
-                                   (let ([max_ancient_pp 0])
-                                     (let ([max_recent_pp 0])
-                                       (let ([h 0])
-                                         (let ([o (- n 1)])
-                                           (letrec ([f (lambda (i max_recent_pp max_ancient_pp max_recent max_ancient n passepartout m serrures) 
-                                                         (if (<= i o)
-                                                           (let ([pp (vector-ref passepartout i)])
-                                                             (let ([g 
-                                                               (lambda (pp max_recent_pp max_ancient_pp max_recent max_ancient n passepartout m serrures) 
-                                                                 (let ([max_ancient_pp (max2 max_ancient_pp (vector-ref pp 0))])
-                                                                   (let ([max_recent_pp (max2 max_recent_pp (vector-ref pp 1))])
-                                                                    (f (+ i 1) max_recent_pp max_ancient_pp max_recent max_ancient n passepartout m serrures))))])
-                                                             (if (and (>= (vector-ref pp 0) max_ancient) (>= (vector-ref pp 1) max_recent))
-                                                               1
-                                                               (g pp max_recent_pp max_ancient_pp max_recent max_ancient n passepartout m serrures))))
-                                                         (let ([e (lambda (max_recent_pp max_ancient_pp max_recent max_ancient n passepartout m serrures) 
-                                                                    '())])
-                                                         (if (and (>= max_ancient_pp max_ancient) (>= max_recent_pp max_recent))
-                                                           2
-                                                           0))))])
-                                       (f h max_recent_pp max_ancient_pp max_recent max_ancient n passepartout m serrures))))))))])
-  (p s max_recent max_ancient n passepartout m serrures))))))))
+                             (let ([p 0])
+                               (let ([q (- m 1)])
+                                 (letrec ([o (lambda (i max_ancient max_recent) 
+                                               (if (<= i q)
+                                                 (let ([max_ancient (if (and (eq? (vector-ref (vector-ref serrures i) 0) (- 1)) (> (vector-ref (vector-ref serrures i) 1) max_ancient))
+                                                                    (let ([max_ancient (vector-ref (vector-ref serrures i) 1)])
+                                                                    max_ancient)
+                                                                    max_ancient)])
+                                                   (let ([max_recent 
+                                                     (if (and (eq? (vector-ref (vector-ref serrures i) 0) 1) (> (vector-ref (vector-ref serrures i) 1) max_recent))
+                                                       (let ([max_recent (vector-ref (vector-ref serrures i) 1)])
+                                                         max_recent)
+                                                       max_recent)])
+                                                     (o (+ i 1) max_ancient max_recent)))
+                                                 (let ([max_ancient_pp 0])
+                                                   (let ([max_recent_pp 0])
+                                                     (let ([g 0])
+                                                       (let ([h (- n 1)])
+                                                         (letrec ([f 
+                                                           (lambda (i max_ancient_pp max_recent_pp) 
+                                                             (if (<= i h)
+                                                               (let ([pp (vector-ref passepartout i)])
+                                                                 (if (and (>= (vector-ref pp 0) max_ancient) (>= (vector-ref pp 1) max_recent))
+                                                                   1
+                                                                   (let ([max_ancient_pp (max2 max_ancient_pp (vector-ref pp 0))])
+                                                                    (let ([max_recent_pp (max2 max_recent_pp (vector-ref pp 1))])
+                                                                    (f (+ i 1) max_ancient_pp max_recent_pp)))))
+                                                               (let ([e 
+                                                                 (lambda (_) 
+                                                                   '())])
+                                                               (if (and (>= max_ancient_pp max_ancient) (>= max_recent_pp max_recent))
+                                                                 2
+                                                                 0))))])
+                                                       (f g max_ancient_pp max_recent_pp))))))))])
+                             (o p max_ancient max_recent))))))))
 (define main ((lambda (n) 
                 (block (mread-blank) (let ([passepartout (array_init_withenv n 
                                        (lambda (i) 
-                                         (lambda (n) 
-                                           (let ([c 2])
-                                             (let ([out0 (array_init_withenv c 
-                                               (lambda (j) 
-                                                 (lambda (internal_env) (apply (lambda
-                                                  (c i n) 
-                                                 ((lambda (out__) 
-                                                    (block (mread-blank) 
-                                                    (let ([x out__])
-                                                      (list (list c i n) x)) )) (mread-int))) internal_env))) (list c i n))])
-                                           (let ([w out0])
-                                             (list n w)))))) n)])
+                                         (lambda (_) (let ([c 2])
+                                                       (let ([out0 (array_init_withenv c 
+                                                         (lambda (j) 
+                                                           (lambda (_) (
+                                                           (lambda (out__) 
+                                                             (block (mread-blank) 
+                                                             (let ([u out__])
+                                                               (list '() u)) )) (mread-int)))) '())])
+                                         (let ([s out0])
+                                           (list '() s)))))) '())])
 ((lambda (m) 
    (block (mread-blank) (let ([serrures (array_init_withenv m (lambda (k) 
-                                                                (lambda (internal_env) (apply (lambda
-                                                                 (m n) 
+                                                                (lambda (_) 
                                                                 (let ([d 2])
                                                                   (let ([out1 (array_init_withenv d 
                                                                     (lambda (l) 
-                                                                    (lambda (internal_env) (apply (lambda
-                                                                     (d k m n) 
-                                                                    (
+                                                                    (lambda (_) (
                                                                     (lambda (out_) 
                                                                     (block (mread-blank) 
-                                                                    (let ([z out_])
-                                                                    (list (list d k m n) z)) )) (mread-int))) internal_env))) (list d k m n))])
-                                                                (let ([y out1])
-                                                                  (list (list m n) y))))) internal_env))) (list m n))])
+                                                                    (let ([w out_])
+                                                                    (list '() w)) )) (mread-int)))) '())])
+                                                                (let ([v out1])
+                                                                  (list '() v)))))) '())])
 (display (nbPassePartout n passepartout m serrures))) )) (mread-int))) )) (mread-int)))
 

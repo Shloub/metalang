@@ -9,101 +9,104 @@ module Array = struct
     )
 end
 
-let rec read_int =
+let read_int =
   (fun () -> Scanf.scanf "%d"
   (fun out_ ->
       (Scanf.scanf "%[\n \010]" (fun _ -> out_))));;
-let rec read_int_line =
+let read_int_line =
   (fun n ->
-      let tab = (Array.init_withenv n (fun i n ->
-                                          Scanf.scanf "%d"
+      let tab = (Array.init_withenv n (fun i ->
+                                          (fun () -> Scanf.scanf "%d"
                                           (fun t ->
                                               (Scanf.scanf "%[\n \010]" (fun _ -> let b = t in
-                                              (n, b))))) n) in
+                                              ((), b)))))) ()) in
       tab);;
-let rec read_char_line =
+let read_char_line =
   (fun n ->
-      let tab = (Array.init_withenv n (fun i n ->
-                                          Scanf.scanf "%c"
+      let tab = (Array.init_withenv n (fun i ->
+                                          (fun () -> Scanf.scanf "%c"
                                           (fun t ->
                                               let a = t in
-                                              (n, a))) n) in
+                                              ((), a)))) ()) in
       (Scanf.scanf "%[\n \010]" (fun _ -> tab)));;
-let rec main =
+let main =
   let len = (read_int ()) in
-  begin
+  (
     (Printf.printf "%d" len);
     (Printf.printf "%s" "=len\n");
     let tab = (read_int_line len) in
-    let r = 0 in
-    let s = (len - 1) in
-    let rec q i tab len =
-      (if (i <= s)
-       then begin
+    let q = 0 in
+    let r = (len - 1) in
+    let rec p i =
+      (if (i <= r)
+       then (
               (Printf.printf "%d" i);
               (Printf.printf "%s" "=>");
               (Printf.printf "%d" tab.(i));
               (Printf.printf "%s" " ");
-              (q (i + 1) tab len)
-              end
+              (p (i + 1))
+              )
        
-       else begin
+       else (
               (Printf.printf "%s" "\n");
               let tab2 = (read_int_line len) in
-              let o = 0 in
-              let p = (len - 1) in
-              let rec m i_ tab2 tab len =
-                (if (i_ <= p)
-                 then begin
+              let m = 0 in
+              let o = (len - 1) in
+              let rec l i_ =
+                (if (i_ <= o)
+                 then (
                         (Printf.printf "%d" i_);
                         (Printf.printf "%s" "==>");
                         (Printf.printf "%d" tab2.(i_));
                         (Printf.printf "%s" " ");
-                        (m (i_ + 1) tab2 tab len)
-                        end
+                        (l (i_ + 1))
+                        )
                  
                  else let strlen = (read_int ()) in
-                 begin
+                 (
                    (Printf.printf "%d" strlen);
                    (Printf.printf "%s" "=strlen\n");
                    let tab4 = (read_char_line strlen) in
-                   let k = 0 in
-                   let l = (strlen - 1) in
-                   let rec g i3 tab4 strlen tab2 tab len =
-                     (if (i3 <= l)
+                   let h = 0 in
+                   let k = (strlen - 1) in
+                   let rec g i3 =
+                     (if (i3 <= k)
                       then let tmpc = tab4.(i3) in
                       let c = (int_of_char (tmpc)) in
-                      begin
+                      (
                         (Printf.printf "%c" tmpc);
                         (Printf.printf "%s" ":");
                         (Printf.printf "%d" c);
                         (Printf.printf "%s" " ");
-                        let h = (fun c tmpc tab4 strlen tab2 tab len ->
-                                    (tab4.(i3) <- (char_of_int (c)); (g (i3 + 1) tab4 strlen tab2 tab len))) in
-                        (if (tmpc <> ' ')
-                         then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
-                         (h c tmpc tab4 strlen tab2 tab len)
-                         else (h c tmpc tab4 strlen tab2 tab len))
-                        end
+                        let c = (if (tmpc <> ' ')
+                                 then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
+                                 c
+                                 else c) in
+                        (
+                          tab4.(i3) <- (char_of_int (c));
+                          (g (i3 + 1))
+                          )
+                        
+                        )
                       
                       else let e = 0 in
                       let f = (strlen - 1) in
-                      let rec d j tab4 strlen tab2 tab len =
+                      let rec d j =
                         (if (j <= f)
-                         then begin
+                         then (
                                 (Printf.printf "%c" tab4.(j));
-                                (d (j + 1) tab4 strlen tab2 tab len)
-                                end
+                                (d (j + 1))
+                                )
                          
                          else ()) in
-                        (d e tab4 strlen tab2 tab len)) in
-                     (g k tab4 strlen tab2 tab len)
-                   end
+                        (d e)) in
+                     (g h)
+                   )
                  ) in
-                (m o tab2 tab len)
-              end
+                (l m)
+              )
        ) in
-      (q r tab len)
-    end
+      (p q)
+    )
   ;;
 

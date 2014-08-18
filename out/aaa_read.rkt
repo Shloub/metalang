@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -18,7 +17,6 @@
       (next-char)
       out
     ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,7 +32,6 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
@@ -51,41 +48,37 @@
                                            (let ([len (quotient len 2)])
                                              (let ([tab (array_init_withenv len 
                                                (lambda (i) 
-                                                 (lambda (len) 
-                                                   ((lambda (tmpi1) 
-                                                      (block (mread-blank) 
-                                                      (block
-                                                        (display i)
-                                                        (display "=>")
-                                                        (display tmpi1)
-                                                        (display " ")
-                                                        (let ([a tmpi1])
-                                                          (list len a))
-                                                        ) )) (mread-int)))) len)])
-                                         (block
-                                           (display "\n")
-                                           (let ([tab2 (array_init_withenv len 
-                                             (lambda (i_) 
-                                               (lambda (len) 
-                                                 ((lambda (tmpi2) 
-                                                    (block (mread-blank) 
-                                                    (block
-                                                      (display i_)
-                                                      (display "==>")
-                                                      (display tmpi2)
-                                                      (display " ")
-                                                      (let ([b tmpi2])
-                                                        (list len b))
-                                                      ) )) (mread-int)))) len)])
-                                       ((lambda (strlen) 
-                                          (block (mread-blank) (block
-                                                                 (display strlen)
-                                                                 (display "=strlen\n")
-                                                                 (let ([tab4 (array_init_withenv strlen 
-                                                                   (lambda (toto) 
-                                                                    (lambda (internal_env) (apply (lambda
-                                                                     (strlen len) 
-                                                                    (
+                                                 (lambda (_) ((lambda (tmpi1) 
+                                                                (block (mread-blank) 
+                                                                (block
+                                                                  (display i)
+                                                                  (display "=>")
+                                                                  (display tmpi1)
+                                                                  (display " ")
+                                                                  (let ([a tmpi1])
+                                                                    (list '() a))
+                                                                  ) )) (mread-int)))) '())])
+                                           (block
+                                             (display "\n")
+                                             (let ([tab2 (array_init_withenv len 
+                                               (lambda (i_) 
+                                                 (lambda (_) ((lambda (tmpi2) 
+                                                                (block (mread-blank) 
+                                                                (block
+                                                                  (display i_)
+                                                                  (display "==>")
+                                                                  (display tmpi2)
+                                                                  (display " ")
+                                                                  (let ([b tmpi2])
+                                                                    (list '() b))
+                                                                  ) )) (mread-int)))) '())])
+                                           ((lambda (strlen) 
+                                              (block (mread-blank) (block
+                                                                    (display strlen)
+                                                                    (display "=strlen\n")
+                                                                    (let ([tab4 (array_init_withenv strlen 
+                                                                    (lambda (toto) 
+                                                                    (lambda (_) (
                                                                     (lambda (tmpc) 
                                                                     (let ([c (char->integer tmpc)])
                                                                     (block
@@ -93,26 +86,25 @@
                                                                     (display ":")
                                                                     (display c)
                                                                     (display " ")
-                                                                    (let ([e 
-                                                                    (lambda (c tmpc toto strlen len) 
-                                                                    (let ([d (integer->char c)])
-                                                                    (list (list strlen len) d)))])
+                                                                    (let ([c 
                                                                     (if (not (eq? tmpc #\Space))
                                                                     (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
-                                                                    (e c tmpc toto strlen len))
-                                                                    (e c tmpc toto strlen len)))
-                                                                    ))) (mread-char))) internal_env))) (list strlen len))])
-                                       (let ([g 0])
-                                         (let ([h (- strlen 1)])
-                                           (letrec ([f (lambda (j strlen len) 
-                                                         (if (<= j h)
-                                                           (block
-                                                             (display (vector-ref tab4 j))
-                                                             (f (+ j 1) strlen len)
-                                                             )
-                                                           '()))])
-                                           (f g strlen len)))))
-  ) )) (mread-int)))
+                                                                    c)
+                                                                    c)])
+                                                                    (let ([d (integer->char c)])
+                                                                    (list '() d)))
+                                                                    ))) (mread-char)))) '())])
+                                              (let ([f 0])
+                                                (let ([g (- strlen 1)])
+                                                  (letrec ([e (lambda (j) 
+                                                                (if (<= j g)
+                                                                  (block
+                                                                    (display (vector-ref tab4 j))
+                                                                    (e (+ j 1))
+                                                                    )
+                                                                  '()))])
+                                                  (e f)))))
+                                         ) )) (mread-int)))
 )))
 ))
 ) )) (mread-int)))

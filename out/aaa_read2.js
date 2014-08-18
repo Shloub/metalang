@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -33,8 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function read_int(){
   var out_ = 0;
   out_=read_int_();
@@ -97,5 +94,4 @@ for (var i3 = 0 ; i3 <= strlen - 1; i3++)
 }
 for (var j = 0 ; j <= strlen - 1; j++)
   util.print(tab4[j]);
-
 

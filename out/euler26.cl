@@ -8,9 +8,7 @@
         (setq i (+ 1 i ))))
         out
     ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
 (defun periode (restes len a b)
 (progn
   (loop while (not (= a 0))
@@ -64,4 +62,5 @@
         (princ "
 ")
       )))))
+
 

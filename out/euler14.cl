@@ -8,9 +8,7 @@
         (setq i (+ 1 i ))))
         out
     ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
 (defun next_ (n)
 (if
   (= (remainder n 2) 0)
@@ -65,4 +63,5 @@
         (princ "
 ")
       )))))
+
 

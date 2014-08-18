@@ -1,15 +1,8 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
-}
-var read_char_ = function(){
-    if (current_char == null) current_char = read_char0();
-    var out = current_char;
-    current_char = read_char0();
-    return out;
 }
 var stdinsep = function(){
     if (current_char == null) current_char = read_char0();
@@ -32,10 +25,7 @@ var read_int_ = function(){
             return out * sign;
         }
     }
-}
-
-
-/*
+}/*
 La suite de fibonaci
 */
 function fibo_(a, b, i){
@@ -61,5 +51,4 @@ b=read_int_();
 stdinsep();
 i=read_int_();
 util.print(fibo_(a, b, i));
-
 

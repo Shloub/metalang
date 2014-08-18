@@ -9,39 +9,37 @@ module Array = struct
     )
 end
 
-let rec nth =
+let nth =
   (fun tab tofind len ->
       let out_ = 0 in
-      let c = 0 in
-      let d = (len - 1) in
-      let rec a i out_ tab tofind len =
-        (if (i <= d)
-         then let b = (fun out_ tab tofind len ->
-                          (a (i + 1) out_ tab tofind len)) in
-         (if (tab.(i) = tofind)
-          then let out_ = (out_ + 1) in
-          (b out_ tab tofind len)
-          else (b out_ tab tofind len))
+      let b = 0 in
+      let c = (len - 1) in
+      let rec a i out_ =
+        (if (i <= c)
+         then let out_ = (if (tab.(i) = tofind)
+                          then let out_ = (out_ + 1) in
+                          out_
+                          else out_) in
+         (a (i + 1) out_)
          else out_) in
-        (a c out_ tab tofind len));;
-let rec main =
+        (a b out_));;
+let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun h ->
-      let len = h in
+  (fun g ->
+      let len = g in
       (Scanf.scanf "%[\n \010]" (fun _ -> let tofind = '\000' in
       Scanf.scanf "%c"
-      (fun g ->
-          let tofind = g in
+      (fun f ->
+          let tofind = f in
           (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun
            i ->
-          (fun (tofind, len) ->
-              let tmp = '\000' in
-              Scanf.scanf "%c"
-              (fun f ->
-                  let tmp = f in
-                  let e = tmp in
-                  ((tofind, len), e)))) (tofind, len)) in
+          (fun () -> let tmp = '\000' in
+          Scanf.scanf "%c"
+          (fun e ->
+              let tmp = e in
+              let d = tmp in
+              ((), d)))) ()) in
           let result = (nth tab tofind len) in
           (Printf.printf "%d" result)))))));;
 

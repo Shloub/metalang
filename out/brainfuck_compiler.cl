@@ -7,10 +7,7 @@
         (setf (aref out i) (funcall fun i))
         (setq i (+ 1 i ))))
         out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-#|
+    ))#|
 Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 et qui produit les macros metalang correspondante
@@ -95,4 +92,5 @@ et qui produit les macros metalang correspondante
              )
         )
         )))))
+
 

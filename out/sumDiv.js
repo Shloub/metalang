@@ -1,20 +1,8 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
-}
-var read_char_ = function(){
-    if (current_char == null) current_char = read_char0();
-    var out = current_char;
-    current_char = read_char0();
-    return out;
-}
-var stdinsep = function(){
-    if (current_char == null) current_char = read_char0();
-    while (current_char == '\n' || current_char == ' ' || current_char == '\t')
-        current_char = read_char0();
 }
 var read_int_ = function(){
     if (current_char == null) current_char = read_char0();
@@ -33,8 +21,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function foo(){
   var a = 0;
   /* test */
@@ -80,5 +66,4 @@ var n = 0;
 n=read_int_();
 /* Lecture de l'entier */
 util.print(sumdiv(n));
-
 

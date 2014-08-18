@@ -8,9 +8,7 @@
         (setq i (+ 1 i ))))
         out
     ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
 (defun max2 (a b)
 (if
   (> a b)
@@ -128,4 +126,5 @@
   (princ "
 ")
 )
+
 

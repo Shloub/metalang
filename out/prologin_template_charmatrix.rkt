@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -18,7 +17,6 @@
       (next-char)
       out
     ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,52 +32,50 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define read_int (lambda () 
+(define read_int (lambda (_) 
                    ((lambda (out_) 
                       (block (mread-blank) out_ )) (mread-int))))
 (define read_char_line (lambda (n) 
                          (let ([tab (array_init_withenv n (lambda (i) 
-                                                            (lambda (n) 
-                                                              ((lambda (t_) 
-                                                                 (let ([h t_])
-                                                                   (list n h))) (mread-char)))) n)])
-(block (mread-blank) tab ))))
+                                                            (lambda (_) (
+                                                            (lambda (t_) 
+                                                              (let ([h t_])
+                                                                (list '() h))) (mread-char)))) '())])
+  (block (mread-blank) tab ))))
 (define read_char_matrix (lambda (x y) 
                            (let ([tab (array_init_withenv y (lambda (z) 
-                                                              (lambda (internal_env) (apply (lambda
-                                                               (x y) 
+                                                              (lambda (_) 
                                                               (let ([g (read_char_line x)])
-                                                                (list (list x y) g))) internal_env))) (list x y))])
+                                                                (list '() g)))) '())])
                            tab)))
 (define programme_candidat (lambda (tableau taille_x taille_y) 
                              (let ([out_ 0])
                                (let ([e 0])
                                  (let ([f (- taille_y 1)])
-                                   (letrec ([a (lambda (i out_ tableau taille_x taille_y) 
+                                   (letrec ([a (lambda (i out_) 
                                                  (if (<= i f)
                                                    (let ([c 0])
                                                      (let ([d (- taille_x 1)])
-                                                       (letrec ([b (lambda (j out_ tableau taille_x taille_y) 
+                                                       (letrec ([b (lambda (j out_) 
                                                                     (if (<= j d)
                                                                     (let ([out_ (+ out_ (* (char->integer (vector-ref (vector-ref tableau i) j)) (+ i (* j 2))))])
                                                                     (block
                                                                     (display (vector-ref (vector-ref tableau i) j))
-                                                                    (b (+ j 1) out_ tableau taille_x taille_y)
+                                                                    (b (+ j 1) out_)
                                                                     ))
                                                                     (block
                                                                     (display "--\n")
-                                                                    (a (+ i 1) out_ tableau taille_x taille_y)
+                                                                    (a (+ i 1) out_)
                                                                     )))])
-                                                       (b c out_ tableau taille_x taille_y))))
+                                                       (b c out_))))
                                                  out_))])
-                                 (a e out_ tableau taille_x taille_y)))))))
-(define main (let ([taille_x (read_int )])
-               (let ([taille_y (read_int )])
+                                 (a e out_)))))))
+(define main (let ([taille_x (read_int 'nil)])
+               (let ([taille_y (read_int 'nil)])
                  (let ([tableau (read_char_matrix taille_x taille_y)])
                    (block
                      (display (programme_candidat tableau taille_x taille_y))

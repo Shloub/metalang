@@ -9,8 +9,6 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
 (defun eratostene (t_ max_)
 (progn
   (let ((sum 0))
@@ -54,4 +52,5 @@
     (princ "
 ")
     )))
+
 

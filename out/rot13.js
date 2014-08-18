@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -32,10 +31,7 @@ var read_int_ = function(){
             return out * sign;
         }
     }
-}
-
-
-/*
+}/*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
 var strlen = 0;
@@ -53,5 +49,4 @@ for (var toto = 0 ; toto <= strlen - 1; toto++)
 }
 for (var j = 0 ; j <= strlen - 1; j++)
   util.print(tab4[j]);
-
 

@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -33,8 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function min4(a, b, c, d){
   return Math.min(a, b, c, d);
 }
@@ -109,5 +106,4 @@ util.print(x, " ", y, "\n");
 var tab = read_char_matrix(x, y);
 var result = pathfind(tab, x, y);
 util.print(result);
-
 

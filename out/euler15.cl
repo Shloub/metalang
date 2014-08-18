@@ -8,9 +8,6 @@
         (setq i (+ 1 i ))))
         out
     ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
 (progn
   (let ((n 10))
     #| normalement on doit mettre 20 mais là on se tape un overflow |#
@@ -74,4 +71,5 @@
     (princ "
 ")
     )))
+
 

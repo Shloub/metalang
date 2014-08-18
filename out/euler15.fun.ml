@@ -9,62 +9,70 @@ module Array = struct
     )
 end
 
-let rec main =
+let main =
   let n = 10 in
   (*  normalement on doit mettre 20 mais là on se tape un overflow  *)
   let n = (n + 1) in
-  let tab = (Array.init_withenv n (fun i n ->
-                                      let tab2 = (Array.init_withenv n (fun
+  let tab = (Array.init_withenv n (fun i ->
+                                      (fun () -> let tab2 = (Array.init_withenv n (fun
                                        j ->
-                                      (fun (i, n) ->
-                                          let b = 0 in
-                                          ((i, n), b))) (i, n)) in
+                                      (fun () -> let b = 0 in
+                                      ((), b))) ()) in
                                       let a = tab2 in
-                                      (n, a)) n) in
+                                      ((), a))) ()) in
   let z = 0 in
   let ba = (n - 1) in
-  let rec y l n =
+  let rec y l =
     (if (l <= ba)
-     then (tab.((n - 1)).(l) <- 1; (tab.(l).((n - 1)) <- 1; (y (l + 1) n)))
+     then (
+            tab.((n - 1)).(l) <- 1;
+            tab.(l).((n - 1)) <- 1;
+            (y (l + 1))
+            )
+     
      else let w = 2 in
      let x = n in
-     let rec s o n =
+     let rec s o =
        (if (o <= x)
         then let r = (n - o) in
         let u = 2 in
         let v = n in
-        let rec t p r n =
+        let rec t p =
           (if (p <= v)
            then let q = (n - p) in
-           (tab.(r).(q) <- (tab.((r + 1)).(q) + tab.(r).((q + 1))); (t (p + 1) r n))
-           else (s (o + 1) n)) in
-          (t u r n)
+           (
+             tab.(r).(q) <- (tab.((r + 1)).(q) + tab.(r).((q + 1)));
+             (t (p + 1))
+             )
+           
+           else (s (o + 1))) in
+          (t u)
         else let g = 0 in
         let h = (n - 1) in
-        let rec c m n =
+        let rec c m =
           (if (m <= h)
            then let e = 0 in
            let f = (n - 1) in
-           let rec d k n =
+           let rec d k =
              (if (k <= f)
-              then begin
+              then (
                      (Printf.printf "%d" tab.(m).(k));
                      (Printf.printf "%s" " ");
-                     (d (k + 1) n)
-                     end
+                     (d (k + 1))
+                     )
               
-              else begin
+              else (
                      (Printf.printf "%s" "\n");
-                     (c (m + 1) n)
-                     end
+                     (c (m + 1))
+                     )
               ) in
-             (d e n)
-           else begin
+             (d e)
+           else (
                   (Printf.printf "%d" tab.(0).(0));
                   (Printf.printf "%s" "\n")
-                  end
+                  )
            ) in
-          (c g n)) in
-       (s w n)) in
-    (y z n);;
+          (c g)) in
+       (s w)) in
+    (y z);;
 

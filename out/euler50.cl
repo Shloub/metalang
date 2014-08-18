@@ -9,8 +9,6 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
 (defun min2 (a b)
 (if
   (< a b)
@@ -126,4 +124,5 @@
                   (princ "
 ")
                 ))))))))))))
+
 

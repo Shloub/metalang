@@ -1,61 +1,22 @@
 #lang racket
 (require racket/block)
-
-(define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    )))))
-(define last-char 0)
-(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
-(next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-
-(define mread-int (lambda ()
-  (if (eq? #\- last-char)
-  (block
-    (next-char) (- 0 (mread-int)))
-    (letrec ([w (lambda (out)
-      (if (eof-object? last-char)
-        out
-        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
-          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
-            (block
-              (next-char)
-              (w out)
-          ))
-        out
-      )))]) (w 0)))))
-
-(define mread-blank (lambda ()
-  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
-))
-
 (define main (let ([a 1])
-               (let ([b 2])
-                 (let ([sum 0])
-                   (letrec ([e (lambda (sum b a) 
-                                 (if (< a 4000000)
-                                   (let ([f (lambda (sum b a) 
-                                              (let ([c a])
-                                                (let ([a b])
-                                                  (let ([b (+ b c)])
-                                                    (e sum b a)))))])
-                                   (if (eq? (remainder a 2) 0)
-                                     (let ([sum (+ sum a)])
-                                       (f sum b a))
-                                     (f sum b a)))
-                                 (block
-                                   (display sum)
-                                   (display "\n")
-                                   )))])
-                 (e sum b a))))))
+                                                   (let ([b 2])
+                                                     (let ([sum 0])
+                                                       (letrec ([e (lambda (a b sum) 
+                                                                    (if (< a 4000000)
+                                                                    (let ([sum 
+                                                                    (if (eq? (remainder a 2) 0)
+                                                                    (let ([sum (+ sum a)])
+                                                                    sum)
+                                                                    sum)])
+                                                                    (let ([c a])
+                                                                    (let ([a b])
+                                                                    (let ([b (+ b c)])
+                                                                    (e a b sum)))))
+                                                                    (block
+                                                                    (display sum)
+                                                                    (display "\n")
+                                                                    )))])
+                                                       (e a b sum))))))
 

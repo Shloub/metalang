@@ -1,16 +1,5 @@
 
-(si::use-fast-links nil)
-(defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+(si::use-fast-links nil)(defun remainder (a b) (- a (* b (truncate a b))))
 (defun is_leap (year)
 (return-from is_leap (or (= (remainder year 400) 0) (and (not (= (remainder year 100) 0)) (= (remainder year 4) 0)))))
 
@@ -82,4 +71,5 @@
           (princ "
 ")
         )))))
+
 

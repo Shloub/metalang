@@ -1,16 +1,5 @@
 
-(si::use-fast-links nil)
-(defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-(let ((last-char 0)))
+(si::use-fast-links nil)(let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -56,4 +45,5 @@
     (setf (toto-blah t_) (mread-int ))
     (princ (result t_))
   ))
+
 

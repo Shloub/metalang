@@ -1,24 +1,8 @@
 #lang racket
 (require racket/block)
-
-(define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    )))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,7 +18,6 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))

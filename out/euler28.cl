@@ -1,16 +1,6 @@
 
 (si::use-fast-links nil)
-(defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-#|
+(defun quotient (a b) (truncate a b))#|
 
 43 44 45 46 47 48 49
 42 21 22 23 24 25 26
@@ -44,4 +34,5 @@
       )))))
 
 (princ (sumdiag 1001))
+
 

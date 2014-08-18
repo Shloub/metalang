@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -12,13 +11,6 @@
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,7 +26,6 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
@@ -47,31 +38,30 @@
                  (let ([out_ 0])
                    (let ([c 0])
                      (let ([d (- len 1)])
-                       (letrec ([b (lambda (j out_ t_ len) 
+                       (letrec ([b (lambda (j out_) 
                                      (if (<= j d)
                                        (block
                                          (set-toto-blah! (vector-ref t_ j) (+ (toto-blah (vector-ref t_ j)) 1))
                                          (let ([out_ (+ (+ (+ out_ (toto-foo (vector-ref t_ j))) (* (toto-blah (vector-ref t_ j)) (toto-bar (vector-ref t_ j)))) (* (toto-bar (vector-ref t_ j)) (toto-foo (vector-ref t_ j))))])
-                                           (b (+ j 1) out_ t_ len))
+                                           (b (+ j 1) out_))
                                          )
                                        out_))])
-                       (b c out_ t_ len)))))))
+                       (b c out_)))))))
 (define main (let ([a 4])
                (let ([t_ (array_init_withenv a (lambda (i) 
-                                                 (lambda (a) 
-                                                   (let ([e (mktoto i)])
-                                                     (list a e)))) a)])
-  ((lambda (g) 
-     (block
-       (set-toto-bar! (vector-ref t_ 0) g)
-       (block (mread-blank) ((lambda (f) 
-                               (block
-                                 (set-toto-blah! (vector-ref t_ 1) f)
-                                 (let ([titi (result t_ 4)])
-                                   (block
-                                     (display titi)
-                                     (display (toto-blah (vector-ref t_ 2)))
-                                     ))
-                                 )) (mread-int)) )
-     )) (mread-int)))))
+                                                 (lambda (_) (let ([e (mktoto i)])
+                                                               (list '() e)))) '())])
+               ((lambda (g) 
+                  (block
+                    (set-toto-bar! (vector-ref t_ 0) g)
+                    (block (mread-blank) ((lambda (f) 
+                                            (block
+                                              (set-toto-blah! (vector-ref t_ 1) f)
+                                              (let ([titi (result t_ 4)])
+                                                (block
+                                                  (display titi)
+                                                  (display (toto-blah (vector-ref t_ 2)))
+                                                  ))
+                                              )) (mread-int)) )
+                  )) (mread-int)))))
 

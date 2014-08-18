@@ -1,15 +1,4 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    )
-end
-
-let rec foo =
+let foo =
   (fun () -> let f = 0 in
   let g = 10 in
   let rec e i =
@@ -17,7 +6,7 @@ let rec foo =
      then (e (i + 1))
      else 0) in
     (e f));;
-let rec bar =
+let bar =
   (fun () -> let c = 0 in
   let d = 10 in
   let rec b i =
@@ -26,6 +15,6 @@ let rec bar =
      (b (i + 1))
      else 0) in
     (b c));;
-let rec main =
+let main =
   ();;
 

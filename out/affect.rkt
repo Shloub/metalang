@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -12,13 +11,6 @@
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,7 +26,6 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
@@ -58,16 +49,12 @@
                                (let ([len 1])
                                  (let ([cache0 (array_init_withenv len 
                                    (lambda (i) 
-                                     (lambda (internal_env) (apply (lambda
-                                      (len t3 t2 t__ t_ t2_) 
-                                     (let ([a (- i)])
-                                       (list (list len t3 t2 t__ t_ t2_) a))) internal_env))) (list len t3 t2 t__ t_ t2_))])
+                                     (lambda (_) (let ([a (- i)])
+                                                   (list '() a)))) '())])
                                  (let ([cache1 (array_init_withenv len 
                                    (lambda (j) 
-                                     (lambda (internal_env) (apply (lambda
-                                      (len t3 t2 t__ t_ t2_) 
-                                     (let ([b j])
-                                       (list (list len t3 t2 t__ t_ t2_) b))) internal_env))) (list len t3 t2 t__ t_ t2_))])
+                                     (lambda (_) (let ([b j])
+                                                   (list '() b)))) '())])
                                  (let ([cache2 cache0])
                                    (let ([cache0 cache1])
                                      (let ([cache2 cache0])

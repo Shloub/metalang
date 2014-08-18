@@ -7,10 +7,7 @@
         (setf (aref out i) (funcall fun i))
         (setq i (+ 1 i ))))
         out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-(let ((last-char 0)))
+    ))(let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -99,4 +96,5 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     (let ((result (npi_ tab len)))
       (princ result)
     ))))
+
 

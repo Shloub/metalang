@@ -1,15 +1,8 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
-}
-var read_char_ = function(){
-    if (current_char == null) current_char = read_char0();
-    var out = current_char;
-    current_char = read_char0();
-    return out;
 }
 var stdinsep = function(){
     if (current_char == null) current_char = read_char0();
@@ -33,9 +26,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
-
 function mktoto(v1){
   var t = {
     foo : v1,
@@ -55,5 +45,4 @@ t.bar=read_int_();
 stdinsep();
 t.blah=read_int_();
 util.print(result(t));
-
 

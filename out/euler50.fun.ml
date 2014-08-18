@@ -9,111 +9,118 @@ module Array = struct
     )
 end
 
-let rec min2 =
+let min2 =
   (fun a b ->
-      let p = (fun a b ->
-                  ()) in
+      let h = (fun () -> ()) in
       (if (a < b)
        then a
        else b));;
-let rec eratostene =
+let eratostene =
   (fun t max_ ->
       let n = 0 in
-      let h = 2 in
-      let m = (max_ - 1) in
-      let rec c i n t max_ =
-        (if (i <= m)
-         then let d = (fun n t max_ ->
-                          (c (i + 1) n t max_)) in
-         (if (t.(i) = i)
-          then let n = (n + 1) in
-          let j = (i * i) in
-          let e = (fun j n t max_ ->
-                      (d n t max_)) in
-          (if ((j / i) = i)
-           then (*  overflow test  *)
-           let rec g j n t max_ =
-             (if ((j < max_) && (j > 0))
-              then (t.(j) <- 0; let j = (j + i) in
-              (g j n t max_))
-              else (e j n t max_)) in
-             (g j n t max_)
-           else (e j n t max_))
-          else (d n t max_))
+      let f = 2 in
+      let g = (max_ - 1) in
+      let rec c i n =
+        (if (i <= g)
+         then let n = (if (t.(i) = i)
+                       then let n = (n + 1) in
+                       let j = (i * i) in
+                       let j = (if ((j / i) = i)
+                                then (*  overflow test  *)
+                                let rec e j =
+                                  (if ((j < max_) && (j > 0))
+                                   then (
+                                          t.(j) <- 0;
+                                          let j = (j + i) in
+                                          (e j)
+                                          )
+                                   
+                                   else j) in
+                                  (e j)
+                                else j) in
+                       n
+                       else n) in
+         (c (i + 1) n)
          else n) in
-        (c h n t max_));;
-let rec main =
+        (c f n));;
+let main =
   let maximumprimes = 1000001 in
-  let era = (Array.init_withenv maximumprimes (fun j maximumprimes ->
-                                                  let q = j in
-                                                  (maximumprimes, q)) maximumprimes) in
+  let era = (Array.init_withenv maximumprimes (fun j ->
+                                                  (fun () -> let m = j in
+                                                  ((), m))) ()) in
   let nprimes = (eratostene era maximumprimes) in
   let primes = (Array.init_withenv nprimes (fun o ->
-                                               (fun (nprimes, maximumprimes) ->
-                                                   let r = 0 in
-                                                   ((nprimes, maximumprimes), r))) (nprimes, maximumprimes)) in
+                                               (fun () -> let p = 0 in
+                                               ((), p))) ()) in
   let l = 0 in
-  let be = 2 in
-  let bf = (maximumprimes - 1) in
-  let rec bc k l nprimes maximumprimes =
-    (if (k <= bf)
-     then let bd = (fun l nprimes maximumprimes ->
-                       (bc (k + 1) l nprimes maximumprimes)) in
-     (if (era.(k) = k)
-      then (primes.(l) <- k; let l = (l + 1) in
-      (bd l nprimes maximumprimes))
-      else (bd l nprimes maximumprimes))
-     else begin
+  let y = 2 in
+  let z = (maximumprimes - 1) in
+  let rec x k l =
+    (if (k <= z)
+     then let l = (if (era.(k) = k)
+                   then (
+                          primes.(l) <- k;
+                          let l = (l + 1) in
+                          l
+                          )
+                   
+                   else l) in
+     (x (k + 1) l)
+     else (
             (Printf.printf "%d" l);
             (Printf.printf "%s" " == ");
             (Printf.printf "%d" nprimes);
             (Printf.printf "%s" "\n");
             let sum = (Array.init_withenv nprimes (fun i_ ->
-                                                      (fun (l, nprimes, maximumprimes) ->
-                                                          let s = primes.(i_) in
-                                                          ((l, nprimes, maximumprimes), s))) (l, nprimes, maximumprimes)) in
+                                                      (fun () -> let q = primes.(i_) in
+                                                      ((), q))) ()) in
             let maxl = 0 in
             let process = true in
             let stop = (maximumprimes - 1) in
             let len = 1 in
             let resp = 1 in
-            let rec v resp len stop process maxl l nprimes maximumprimes =
+            let rec s len maxl process resp stop =
               (if process
                then let process = false in
-               let ba = 0 in
-               let bb = stop in
-               let rec w i resp len stop process maxl l nprimes maximumprimes =
-                 (if (i <= bb)
-                  then let x = (fun resp len stop process maxl l nprimes maximumprimes ->
-                                   (w (i + 1) resp len stop process maxl l nprimes maximumprimes)) in
-                  (if ((i + len) < nprimes)
-                   then (sum.(i) <- (sum.(i) + primes.((i + len))); let y = (fun
-                    resp len stop process maxl l nprimes maximumprimes ->
-                   (x resp len stop process maxl l nprimes maximumprimes)) in
-                   (if (maximumprimes > sum.(i))
-                    then let process = true in
-                    let z = (fun resp len stop process maxl l nprimes maximumprimes ->
-                                (y resp len stop process maxl l nprimes maximumprimes)) in
-                    (if (era.(sum.(i)) = sum.(i))
-                     then let maxl = len in
-                     let resp = sum.(i) in
-                     (z resp len stop process maxl l nprimes maximumprimes)
-                     else (z resp len stop process maxl l nprimes maximumprimes))
-                    else let stop = (min2 stop i) in
-                    (y resp len stop process maxl l nprimes maximumprimes)))
-                   else (x resp len stop process maxl l nprimes maximumprimes))
+               let v = 0 in
+               let w = stop in
+               let rec u i maxl process resp stop =
+                 (if (i <= w)
+                  then ((fun (maxl, process, resp, stop) ->
+                            (u (i + 1) maxl process resp stop)) (if ((i + len) < nprimes)
+                                                                 then 
+                                                                 (
+                                                                   sum.(i) <- (sum.(i) + primes.((i + len)));
+                                                                   ((fun
+                                                                    (maxl, process, resp, stop) ->
+                                                                   (maxl, process, resp, stop)) (
+                                                                   if (maximumprimes > sum.(i))
+                                                                   then let process = true in
+                                                                   ((fun
+                                                                    (maxl, resp) ->
+                                                                   (maxl, process, resp, stop)) (
+                                                                   if (era.(sum.(i)) = sum.(i))
+                                                                   then let maxl = len in
+                                                                   let resp = sum.(i) in
+                                                                   (maxl, resp)
+                                                                   else (maxl, resp)))
+                                                                   else let stop = (min2 stop i) in
+                                                                   (maxl, process, resp, stop)))
+                                                                   )
+                                                                 
+                                                                 else (maxl, process, resp, stop)))
                   else let len = (len + 1) in
-                  (v resp len stop process maxl l nprimes maximumprimes)) in
-                 (w ba resp len stop process maxl l nprimes maximumprimes)
-               else begin
+                  (s len maxl process resp stop)) in
+                 (u v maxl process resp stop)
+               else (
                       (Printf.printf "%d" resp);
                       (Printf.printf "%s" "\n");
                       (Printf.printf "%d" maxl);
                       (Printf.printf "%s" "\n")
-                      end
+                      )
                ) in
-              (v resp len stop process maxl l nprimes maximumprimes)
-            end
+              (s len maxl process resp stop)
+            )
      ) in
-    (bc be l nprimes maximumprimes);;
+    (x y l);;
 

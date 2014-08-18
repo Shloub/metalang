@@ -7,10 +7,7 @@
         (setf (aref out i) (funcall fun i))
         (setq i (+ 1 i ))))
         out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+    ))(defun remainder (a b) (- a (* b (truncate a b))))
 (defun id (b)
 (return-from id b))
 
@@ -44,4 +41,5 @@
         (princ "
 ")
       )))))
+
 

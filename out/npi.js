@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -33,8 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function is_number(c){
   return c.charCodeAt(0) <= '9'.charCodeAt(0) && c.charCodeAt(0) >= '0'.charCodeAt(0);
 }
@@ -83,5 +80,4 @@ for (var i = 0 ; i <= len - 1; i++)
 }
 var result = npi_(tab, len);
 util.print(result);
-
 

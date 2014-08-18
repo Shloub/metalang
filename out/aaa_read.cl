@@ -8,9 +8,7 @@
         (setq i (+ 1 i ))))
         out
     ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-(let ((last-char 0)))
+(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))(let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -109,4 +107,5 @@ read int, read char et skip
         (princ (aref tab4 j))
       )
       ))))))
+
 

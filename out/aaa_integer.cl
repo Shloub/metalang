@@ -1,16 +1,6 @@
 
 (si::use-fast-links nil)
-(defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
 (progn
   (let ((i 0))
     (setq i ( - i 1))
@@ -69,4 +59,5 @@ http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_l
     (princ "
 ")
   ))
+
 

@@ -10,36 +10,48 @@ module Array = struct
 end
 
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;};;
-let rec mktoto =
+let mktoto =
   (fun v1 ->
       let t = {foo=v1;
       bar=0;
       blah=0} in
       t);;
-let rec result =
+let result =
   (fun t len ->
       let out_ = 0 in
       let c = 0 in
       let d = (len - 1) in
-      let rec b j out_ t len =
+      let rec b j out_ =
         (if (j <= d)
-         then (t.(j).blah <- (t.(j).blah + 1); let out_ = (((out_ + t.(j).foo) + (t.(j).blah * t.(j).bar)) + (t.(j).bar * t.(j).foo)) in
-         (b (j + 1) out_ t len))
+         then (
+                t.(j).blah <- (t.(j).blah + 1);
+                let out_ = (((out_ + t.(j).foo) + (t.(j).blah * t.(j).bar)) + (t.(j).bar * t.(j).foo)) in
+                (b (j + 1) out_)
+                )
+         
          else out_) in
-        (b c out_ t len));;
-let rec main =
+        (b c out_));;
+let main =
   let a = 4 in
-  let t = (Array.init_withenv a (fun i a ->
-                                    let e = (mktoto i) in
-                                    (a, e)) a) in
+  let t = (Array.init_withenv a (fun i ->
+                                    (fun () -> let e = (mktoto i) in
+                                    ((), e))) ()) in
   Scanf.scanf "%d"
   (fun g ->
-      (t.(0).bar <- g; (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
-      (fun f ->
-          (t.(1).blah <- f; let titi = (result t 4) in
-          begin
-            (Printf.printf "%d" titi);
-            (Printf.printf "%d" t.(2).blah)
-            end
-          ))))));;
+      (
+        t.(0).bar <- g;
+        (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+        (fun f ->
+            (
+              t.(1).blah <- f;
+              let titi = (result t 4) in
+              (
+                (Printf.printf "%d" titi);
+                (Printf.printf "%d" t.(2).blah)
+                )
+              
+              )
+            )))
+        )
+      );;
 

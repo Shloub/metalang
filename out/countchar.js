@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -33,8 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function nth(tab, tofind, len){
   var out_ = 0;
   for (var i = 0 ; i <= len - 1; i++)
@@ -58,5 +55,4 @@ for (var i = 0 ; i <= len - 1; i++)
 }
 var result = nth(tab, tofind, len);
 util.print(result);
-
 

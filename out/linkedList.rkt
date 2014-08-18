@@ -1,24 +1,8 @@
 #lang racket
 (require racket/block)
-
-(define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    )))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -35,16 +19,12 @@
         out
       )))]) (w 0)))))
 
-(define mread-blank (lambda ()
-  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
-))
-
 (struct intlist ([head #:mutable] [tail #:mutable]))
 (define cons_ (lambda (list i) 
                 (let ([out_ (intlist i list)])
                   out_)))
 (define rev2 (lambda (empty acc torev) 
-               (let ([e (lambda (empty acc torev) 
+               (let ([d (lambda (_) 
                           '())])
                (if (eq? torev empty)
                  acc
@@ -55,17 +35,16 @@
 (define test (lambda (empty) 
                (let ([list empty])
                  (let ([i (- 1)])
-                   (letrec ([b (lambda (i list empty) 
+                   (letrec ([b (lambda (i list) 
                                  (if (not (eq? i 0))
-                                   ((lambda (d) 
-                                      (let ([i d])
-                                        (let ([c (lambda (i list empty) 
-                                                   (b i list empty))])
-                                        (if (not (eq? i 0))
-                                          (let ([list (cons_ list i)])
-                                            (c i list empty))
-                                          (c i list empty))))) (mread-int))
-                     '()))])
-               (b i list empty))))))
+                                   ((lambda (c) 
+                                      (let ([i c])
+                                        (let ([list (if (not (eq? i 0))
+                                                      (let ([list (cons_ list i)])
+                                                        list)
+                                                      list)])
+                                          (b i list)))) (mread-int))
+                                 '()))])
+                 (b i list))))))
 (define main '())
 

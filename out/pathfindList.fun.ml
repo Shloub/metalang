@@ -11,44 +11,48 @@ end
 
 let rec pathfind_aux =
   (fun cache tab len pos ->
-      let b = (fun cache tab len pos ->
-                  ()) in
+      let b = (fun () -> ()) in
       (if (pos >= (len - 1))
        then 0
-       else let c = (fun cache tab len pos ->
-                        (b cache tab len pos)) in
+       else let c = (fun () -> (b ())) in
        (if (cache.(pos) <> (- 1))
         then cache.(pos)
-        else (cache.(pos) <- (len * 2); let posval = (pathfind_aux cache tab len tab.(pos)) in
-        let oneval = (pathfind_aux cache tab len (pos + 1)) in
-        let out_ = 0 in
-        let d = (fun out_ oneval posval cache tab len pos ->
-                    (cache.(pos) <- out_; out_)) in
-        (if (posval < oneval)
-         then let out_ = (1 + posval) in
-         (d out_ oneval posval cache tab len pos)
-         else let out_ = (1 + oneval) in
-         (d out_ oneval posval cache tab len pos))))));;
-let rec pathfind =
+        else (
+               cache.(pos) <- (len * 2);
+               let posval = (pathfind_aux cache tab len tab.(pos)) in
+               let oneval = (pathfind_aux cache tab len (pos + 1)) in
+               let out_ = 0 in
+               let out_ = (if (posval < oneval)
+                           then let out_ = (1 + posval) in
+                           out_
+                           else let out_ = (1 + oneval) in
+                           out_) in
+               (
+                 cache.(pos) <- out_;
+                 out_
+                 )
+               
+               )
+        )));;
+let pathfind =
   (fun tab len ->
       let cache = (Array.init_withenv len (fun i ->
-                                              (fun (tab, len) ->
-                                                  let a = (- 1) in
-                                                  ((tab, len), a))) (tab, len)) in
+                                              (fun () -> let a = (- 1) in
+                                              ((), a))) ()) in
       (pathfind_aux cache tab len 0));;
-let rec main =
+let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun g ->
-      let len = g in
+  (fun f ->
+      let len = f in
       (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun
-       i len ->
-      let tmp = 0 in
+       i ->
+      (fun () -> let tmp = 0 in
       Scanf.scanf "%d"
-      (fun f ->
-          let tmp = f in
-          (Scanf.scanf "%[\n \010]" (fun _ -> let e = tmp in
-          (len, e))))) len) in
+      (fun e ->
+          let tmp = e in
+          (Scanf.scanf "%[\n \010]" (fun _ -> let d = tmp in
+          ((), d)))))) ()) in
       let result = (pathfind tab len) in
       (Printf.printf "%d" result))));;
 

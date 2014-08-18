@@ -9,30 +9,29 @@ module Array = struct
     )
 end
 
-let rec main =
+let main =
   Scanf.scanf "%d"
   (fun strlen ->
       (Scanf.scanf "%[\n \010]" (fun _ -> let tab4 = (Array.init_withenv strlen (fun
-       toto strlen ->
-      Scanf.scanf "%c"
+       toto ->
+      (fun () -> Scanf.scanf "%c"
       (fun tmpc ->
           let c = (int_of_char (tmpc)) in
-          let b = (fun c tmpc toto strlen ->
-                      let a = (char_of_int (c)) in
-                      (strlen, a)) in
-          (if (tmpc <> ' ')
-           then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
-           (b c tmpc toto strlen)
-           else (b c tmpc toto strlen)))) strlen) in
-      let e = 0 in
-      let f = (strlen - 1) in
-      let rec d j strlen =
-        (if (j <= f)
-         then begin
+          let c = (if (tmpc <> ' ')
+                   then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
+                   c
+                   else c) in
+          let a = (char_of_int (c)) in
+          ((), a)))) ()) in
+      let d = 0 in
+      let e = (strlen - 1) in
+      let rec b j =
+        (if (j <= e)
+         then (
                 (Printf.printf "%c" tab4.(j));
-                (d (j + 1) strlen)
-                end
+                (b (j + 1))
+                )
          
          else ()) in
-        (d e strlen))));;
+        (b d))));;
 

@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -9,44 +8,13 @@
         (cadr o)
       )
     )))))
-(define last-char 0)
-(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
-(next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-
-(define mread-int (lambda ()
-  (if (eq? #\- last-char)
-  (block
-    (next-char) (- 0 (mread-int)))
-    (letrec ([w (lambda (out)
-      (if (eof-object? last-char)
-        out
-        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
-          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
-            (block
-              (next-char)
-              (w out)
-          ))
-        out
-      )))]) (w 0)))))
-
-(define mread-blank (lambda ()
-  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
-))
 
 (define main (let ([input #\Space])
                (let ([current_pos 500])
                  (let ([a 1000])
                    (let ([mem_ (array_init_withenv a (lambda (i) 
-                                                       (lambda (internal_env) (apply (lambda
-                                                        (a current_pos input) 
-                                                       (let ([b 0])
-                                                         (list (list a current_pos input) b))) internal_env))) (list a current_pos input))])
+                                                       (lambda (_) (let ([b 0])
+                                                                    (list '() b)))) '())])
                    (block
                      (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
                      (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
@@ -107,7 +75,7 @@
                          (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
                          (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
                          (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
-                         (letrec ([d (lambda (a current_pos input) 
+                         (letrec ([d (lambda (current_pos) 
                                        (if (not (eq? (vector-ref mem_ current_pos) 0))
                                          (block
                                            (vector-set! mem_ current_pos (- (vector-ref mem_ current_pos) 1))
@@ -116,11 +84,11 @@
                                                (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
                                                (display (integer->char (vector-ref mem_ current_pos)))
                                                (let ([current_pos (+ current_pos 1)])
-                                                 (d a current_pos input))
+                                                 (d current_pos))
                                                ))
                                            )
                                          '()))])
-                         (d a current_pos input))
+                         (d current_pos))
                        ))
                    ))))))
 

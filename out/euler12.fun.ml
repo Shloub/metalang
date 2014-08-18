@@ -9,112 +9,117 @@ module Array = struct
     )
 end
 
-let rec max2 =
+let max2 =
   (fun a b ->
-      let bn = (fun a b ->
-                   ()) in
+      let bi = (fun () -> ()) in
       (if (a > b)
        then a
        else b));;
-let rec eratostene =
+let eratostene =
   (fun t max_ ->
       let n = 0 in
-      let bl = 2 in
-      let bm = (max_ - 1) in
-      let rec bh i n t max_ =
-        (if (i <= bm)
-         then let bi = (fun n t max_ ->
-                           (bh (i + 1) n t max_)) in
-         (if (t.(i) = i)
-          then let j = (i * i) in
-          let n = (n + 1) in
-          let rec bk j n t max_ =
-            (if ((j < max_) && (j > 0))
-             then (t.(j) <- 0; let j = (j + i) in
-             (bk j n t max_))
-             else (bi n t max_)) in
-            (bk j n t max_)
-          else (bi n t max_))
+      let bg = 2 in
+      let bh = (max_ - 1) in
+      let rec bd i n =
+        (if (i <= bh)
+         then let n = (if (t.(i) = i)
+                       then let j = (i * i) in
+                       let n = (n + 1) in
+                       let rec bf j =
+                         (if ((j < max_) && (j > 0))
+                          then (
+                                 t.(j) <- 0;
+                                 let j = (j + i) in
+                                 (bf j)
+                                 )
+                          
+                          else n) in
+                         (bf j)
+                       else n) in
+         (bd (i + 1) n)
          else n) in
-        (bh bl n t max_));;
-let rec fillPrimesFactors =
+        (bd bg n));;
+let fillPrimesFactors =
   (fun t n primes nprimes ->
-      let bf = 0 in
-      let bg = (nprimes - 1) in
-      let rec bb i t n primes nprimes =
-        (if (i <= bg)
+      let bb = 0 in
+      let bc = (nprimes - 1) in
+      let rec y i n =
+        (if (i <= bc)
          then let d = primes.(i) in
-         let rec be d t n primes nprimes =
+         let rec ba n =
            (if ((n mod d) = 0)
-            then (t.(d) <- (t.(d) + 1); let n = (n / d) in
-            (be d t n primes nprimes))
-            else let bc = (fun d t n primes nprimes ->
-                              (bb (i + 1) t n primes nprimes)) in
-            (if (n = 1)
-             then primes.(i)
-             else (bc d t n primes nprimes))) in
-           (be d t n primes nprimes)
+            then (
+                   t.(d) <- (t.(d) + 1);
+                   let n = (n / d) in
+                   (ba n)
+                   )
+            
+            else (if (n = 1)
+                  then primes.(i)
+                  else (y (i + 1) n))) in
+           (ba n)
          else n) in
-        (bb bf t n primes nprimes));;
-let rec find =
+        (y bb n));;
+let find =
   (fun ndiv2 ->
       let maximumprimes = 110 in
       let era = (Array.init_withenv maximumprimes (fun j ->
-                                                      (fun (maximumprimes, ndiv2) ->
-                                                          let e = j in
-                                                          ((maximumprimes, ndiv2), e))) (maximumprimes, ndiv2)) in
+                                                      (fun () -> let e = j in
+                                                      ((), e))) ()) in
       let nprimes = (eratostene era maximumprimes) in
       let primes = (Array.init_withenv nprimes (fun o ->
-                                                   (fun (nprimes, maximumprimes, ndiv2) ->
-                                                       let f = 0 in
-                                                       ((nprimes, maximumprimes, ndiv2), f))) (nprimes, maximumprimes, ndiv2)) in
+                                                   (fun () -> let f = 0 in
+                                                   ((), f))) ()) in
       let l = 0 in
-      let z = 2 in
-      let ba = (maximumprimes - 1) in
-      let rec x k l nprimes maximumprimes ndiv2 =
-        (if (k <= ba)
-         then let y = (fun l nprimes maximumprimes ndiv2 ->
-                          (x (k + 1) l nprimes maximumprimes ndiv2)) in
-         (if (era.(k) = k)
-          then (primes.(l) <- k; let l = (l + 1) in
-          (y l nprimes maximumprimes ndiv2))
-          else (y l nprimes maximumprimes ndiv2))
-         else let v = 1 in
-         let w = 10000 in
-         let rec g n l nprimes maximumprimes ndiv2 =
-           (if (n <= w)
+      let w = 2 in
+      let x = (maximumprimes - 1) in
+      let rec v k l =
+        (if (k <= x)
+         then let l = (if (era.(k) = k)
+                       then (
+                              primes.(l) <- k;
+                              let l = (l + 1) in
+                              l
+                              )
+                       
+                       else l) in
+         (v (k + 1) l)
+         else let s = 1 in
+         let u = 10000 in
+         let rec g n =
+           (if (n <= u)
             then let c = (n + 2) in
             let primesFactors = (Array.init_withenv c (fun m ->
-                                                          (fun (c, l, nprimes, maximumprimes, ndiv2) ->
-                                                              let h = 0 in
-                                                              ((c, l, nprimes, maximumprimes, ndiv2), h))) (c, l, nprimes, maximumprimes, ndiv2)) in
+                                                          (fun () -> let h = 0 in
+                                                          ((), h))) ()) in
             let max_ = (max2 (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)) in
-            (primesFactors.(2) <- (primesFactors.(2) - 1); let ndivs = 1 in
-            let s = 0 in
-            let u = max_ in
-            let rec q i ndivs max_ c l nprimes maximumprimes ndiv2 =
-              (if (i <= u)
-               then let r = (fun ndivs max_ c l nprimes maximumprimes ndiv2 ->
-                                (q (i + 1) ndivs max_ c l nprimes maximumprimes ndiv2)) in
-               (if (primesFactors.(i) <> 0)
-                then let ndivs = (ndivs * (1 + primesFactors.(i))) in
-                (r ndivs max_ c l nprimes maximumprimes ndiv2)
-                else (r ndivs max_ c l nprimes maximumprimes ndiv2))
-               else let p = (fun ndivs max_ c l nprimes maximumprimes ndiv2 ->
-                                (*  print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n"  *)
-                                (g (n + 1) l nprimes maximumprimes ndiv2)) in
-               (if (ndivs > ndiv2)
-                then ((n * (n + 1)) / 2)
-                else (p ndivs max_ c l nprimes maximumprimes ndiv2))) in
-              (q s ndivs max_ c l nprimes maximumprimes ndiv2))
+            (
+              primesFactors.(2) <- (primesFactors.(2) - 1);
+              let ndivs = 1 in
+              let q = 0 in
+              let r = max_ in
+              let rec p i ndivs =
+                (if (i <= r)
+                 then let ndivs = (if (primesFactors.(i) <> 0)
+                                   then let ndivs = (ndivs * (1 + primesFactors.(i))) in
+                                   ndivs
+                                   else ndivs) in
+                 (p (i + 1) ndivs)
+                 else (if (ndivs > ndiv2)
+                       then ((n * (n + 1)) / 2)
+                       else (*  print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n"  *)
+                       (g (n + 1)))) in
+                (p q ndivs)
+              )
+            
             else 0) in
-           (g v l nprimes maximumprimes ndiv2)) in
-        (x z l nprimes maximumprimes ndiv2));;
-let rec main =
-  begin
+           (g s)) in
+        (v w l));;
+let main =
+  (
     (Printf.printf "%d" (find 500));
     (Printf.printf "%s" "\n");
     ()
-    end
+    )
   ;;
 

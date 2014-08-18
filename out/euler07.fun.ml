@@ -9,41 +9,42 @@ module Array = struct
     )
 end
 
-let rec divisible =
+let divisible =
   (fun n t size ->
-      let f = 0 in
-      let g = (size - 1) in
-      let rec d i n t size =
-        (if (i <= g)
-         then let e = (fun n t size ->
-                          (d (i + 1) n t size)) in
-         (if ((n mod t.(i)) = 0)
-          then true
-          else (e n t size))
+      let d = 0 in
+      let e = (size - 1) in
+      let rec c i =
+        (if (i <= e)
+         then (if ((n mod t.(i)) = 0)
+               then true
+               else (c (i + 1)))
          else false) in
-        (d f n t size));;
-let rec find =
+        (c d));;
+let find =
   (fun n t used nth ->
-      let rec b n t used nth =
+      let rec b n used =
         (if (used <> nth)
-         then let c = (fun n t used nth ->
-                          (b n t used nth)) in
-         (if (divisible n t used)
-          then let n = (n + 1) in
-          (c n t used nth)
-          else (t.(used) <- n; let n = (n + 1) in
-          let used = (used + 1) in
-          (c n t used nth)))
+         then ((fun (n, used) ->
+                   (b n used)) (if (divisible n t used)
+                                then let n = (n + 1) in
+                                (n, used)
+                                else (
+                                       t.(used) <- n;
+                                       let n = (n + 1) in
+                                       let used = (used + 1) in
+                                       (n, used)
+                                       )
+                                ))
          else t.((used - 1))) in
-        (b n t used nth));;
-let rec main =
+        (b n used));;
+let main =
   let n = 10001 in
-  let t = (Array.init_withenv n (fun i n ->
-                                    let h = 2 in
-                                    (n, h)) n) in
-  begin
+  let t = (Array.init_withenv n (fun i ->
+                                    (fun () -> let f = 2 in
+                                    ((), f))) ()) in
+  (
     (Printf.printf "%d" (find 3 t 1 n));
     (Printf.printf "%s" "\n")
-    end
+    )
   ;;
 

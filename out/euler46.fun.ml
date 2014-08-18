@@ -9,97 +9,107 @@ module Array = struct
     )
 end
 
-let rec eratostene =
+let eratostene =
   (fun t max_ ->
       let n = 0 in
-      let f = 2 in
-      let g = (max_ - 1) in
-      let rec a i n t max_ =
-        (if (i <= g)
-         then let b = (fun n t max_ ->
-                          (a (i + 1) n t max_)) in
-         (if (t.(i) = i)
-          then let n = (n + 1) in
-          let j = (i * i) in
-          let c = (fun j n t max_ ->
-                      (b n t max_)) in
-          (if ((j / i) = i)
-           then (*  overflow test  *)
-           let rec e j n t max_ =
-             (if ((j < max_) && (j > 0))
-              then (t.(j) <- 0; let j = (j + i) in
-              (e j n t max_))
-              else (c j n t max_)) in
-             (e j n t max_)
-           else (c j n t max_))
-          else (b n t max_))
+      let d = 2 in
+      let e = (max_ - 1) in
+      let rec a i n =
+        (if (i <= e)
+         then let n = (if (t.(i) = i)
+                       then let n = (n + 1) in
+                       let j = (i * i) in
+                       let j = (if ((j / i) = i)
+                                then (*  overflow test  *)
+                                let rec c j =
+                                  (if ((j < max_) && (j > 0))
+                                   then (
+                                          t.(j) <- 0;
+                                          let j = (j + i) in
+                                          (c j)
+                                          )
+                                   
+                                   else j) in
+                                  (c j)
+                                else j) in
+                       n
+                       else n) in
+         (a (i + 1) n)
          else n) in
-        (a f n t max_));;
-let rec main =
+        (a d n));;
+let main =
   let maximumprimes = 6000 in
-  let era = (Array.init_withenv maximumprimes (fun j_ maximumprimes ->
-                                                  let h = j_ in
-                                                  (maximumprimes, h)) maximumprimes) in
+  let era = (Array.init_withenv maximumprimes (fun j_ ->
+                                                  (fun () -> let f = j_ in
+                                                  ((), f))) ()) in
   let nprimes = (eratostene era maximumprimes) in
   let primes = (Array.init_withenv nprimes (fun o ->
-                                               (fun (nprimes, maximumprimes) ->
-                                                   let p = 0 in
-                                                   ((nprimes, maximumprimes), p))) (nprimes, maximumprimes)) in
+                                               (fun () -> let g = 0 in
+                                               ((), g))) ()) in
   let l = 0 in
-  let bf = 2 in
-  let bg = (maximumprimes - 1) in
-  let rec bd k l nprimes maximumprimes =
-    (if (k <= bg)
-     then let be = (fun l nprimes maximumprimes ->
-                       (bd (k + 1) l nprimes maximumprimes)) in
-     (if (era.(k) = k)
-      then (primes.(l) <- k; let l = (l + 1) in
-      (be l nprimes maximumprimes))
-      else (be l nprimes maximumprimes))
-     else begin
+  let ba = 2 in
+  let bb = (maximumprimes - 1) in
+  let rec z k l =
+    (if (k <= bb)
+     then let l = (if (era.(k) = k)
+                   then (
+                          primes.(l) <- k;
+                          let l = (l + 1) in
+                          l
+                          )
+                   
+                   else l) in
+     (z (k + 1) l)
+     else (
             (Printf.printf "%d" l);
             (Printf.printf "%s" " == ");
             (Printf.printf "%d" nprimes);
             (Printf.printf "%s" "\n");
             let canbe = (Array.init_withenv maximumprimes (fun i_ ->
-                                                              (fun (l, nprimes, maximumprimes) ->
-                                                                  let q = false in
-                                                                  ((l, nprimes, maximumprimes), q))) (l, nprimes, maximumprimes)) in
-            let bb = 0 in
-            let bc = (nprimes - 1) in
-            let rec w i l nprimes maximumprimes =
-              (if (i <= bc)
-               then let z = 0 in
-               let ba = (maximumprimes - 1) in
-               let rec x j l nprimes maximumprimes =
-                 (if (j <= ba)
+                                                              (fun () -> let h = false in
+                                                              ((), h))) ()) in
+            let x = 0 in
+            let y = (nprimes - 1) in
+            let rec s i =
+              (if (i <= y)
+               then let v = 0 in
+               let w = (maximumprimes - 1) in
+               let rec u j =
+                 (if (j <= w)
                   then let n = (primes.(i) + ((2 * j) * j)) in
-                  let y = (fun n l nprimes maximumprimes ->
-                              (x (j + 1) l nprimes maximumprimes)) in
-                  (if (n < maximumprimes)
-                   then (canbe.(n) <- true; (y n l nprimes maximumprimes))
-                   else (y n l nprimes maximumprimes))
-                  else (w (i + 1) l nprimes maximumprimes)) in
-                 (x z l nprimes maximumprimes)
-               else let u = 1 in
-               let v = maximumprimes in
-               let rec r m l nprimes maximumprimes =
-                 (if (m <= v)
+                  (
+                    (if (n < maximumprimes)
+                     then (
+                            canbe.(n) <- true;
+                            ()
+                            )
+                     
+                     else ());
+                    (u (j + 1))
+                    )
+                  
+                  else (s (i + 1))) in
+                 (u v)
+               else let q = 1 in
+               let r = maximumprimes in
+               let rec p m =
+                 (if (m <= r)
                   then let m2 = ((m * 2) + 1) in
-                  let s = (fun m2 l nprimes maximumprimes ->
-                              (r (m + 1) l nprimes maximumprimes)) in
-                  (if ((m2 < maximumprimes) && (not canbe.(m2)))
-                   then begin
-                          (Printf.printf "%d" m2);
-                          (Printf.printf "%s" "\n");
-                          (s m2 l nprimes maximumprimes)
-                          end
-                   
-                   else (s m2 l nprimes maximumprimes))
+                  (
+                    (if ((m2 < maximumprimes) && (not canbe.(m2)))
+                     then (
+                            (Printf.printf "%d" m2);
+                            (Printf.printf "%s" "\n")
+                            )
+                     
+                     else ());
+                    (p (m + 1))
+                    )
+                  
                   else ()) in
-                 (r u l nprimes maximumprimes)) in
-              (w bb l nprimes maximumprimes)
-            end
+                 (p q)) in
+              (s x)
+            )
      ) in
-    (bd bf l nprimes maximumprimes);;
+    (z ba l);;
 

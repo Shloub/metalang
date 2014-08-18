@@ -8,9 +8,7 @@
         (setq i (+ 1 i ))))
         out
     ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
 (defun fact (n)
 (progn
   (let ((prod 1))
@@ -76,4 +74,5 @@
   ))))
 
 (show 10 999999)
+
 

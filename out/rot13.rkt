@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -18,7 +17,6 @@
       (next-char)
       out
     ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,7 +32,6 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
@@ -42,24 +39,22 @@
 (define main ((lambda (strlen) 
                 (block (mread-blank) (let ([tab4 (array_init_withenv strlen 
                                        (lambda (toto) 
-                                         (lambda (strlen) 
-                                           ((lambda (tmpc) 
-                                              (let ([c (char->integer tmpc)])
-                                                (let ([b (lambda (c tmpc toto strlen) 
-                                                           (let ([a (integer->char c)])
-                                                             (list strlen a)))])
-                                                (if (not (eq? tmpc #\Space))
-                                                  (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
-                                                    (b c tmpc toto strlen))
-                                                  (b c tmpc toto strlen))))) (mread-char)))) strlen)])
-(let ([e 0])
-  (let ([f (- strlen 1)])
-    (letrec ([d (lambda (j strlen) 
-                  (if (<= j f)
-                    (block
-                      (display (vector-ref tab4 j))
-                      (d (+ j 1) strlen)
-                      )
-                    '()))])
-    (d e strlen))))) )) (mread-int)))
+                                         (lambda (_) ((lambda (tmpc) 
+                                                        (let ([c (char->integer tmpc)])
+                                                          (let ([c (if (not (eq? tmpc #\Space))
+                                                                    (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
+                                                                    c)
+                                                                    c)])
+                                                            (let ([a (integer->char c)])
+                                                              (list '() a))))) (mread-char)))) '())])
+  (let ([d 0])
+    (let ([e (- strlen 1)])
+      (letrec ([b (lambda (j) 
+                    (if (<= j e)
+                      (block
+                        (display (vector-ref tab4 j))
+                        (b (+ j 1))
+                        )
+                      '()))])
+      (b d))))) )) (mread-int)))
 

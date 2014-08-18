@@ -9,68 +9,71 @@ module Array = struct
     )
 end
 
-let rec position_alphabet =
+let position_alphabet =
   (fun c ->
       let i = (int_of_char (c)) in
-      let f = (fun i c ->
-                  ()) in
+      let e = (fun () -> ()) in
       (if ((i <= (int_of_char ('Z'))) && (i >= (int_of_char ('A'))))
        then (i - (int_of_char ('A')))
-       else let g = (fun i c ->
-                        (f i c)) in
+       else let f = (fun () -> (e ())) in
        (if ((i <= (int_of_char ('z'))) && (i >= (int_of_char ('a'))))
         then (i - (int_of_char ('a')))
         else (- 1))));;
-let rec of_position_alphabet =
+let of_position_alphabet =
   (fun c ->
       (char_of_int ((c + (int_of_char ('a'))))));;
-let rec crypte =
+let crypte =
   (fun taille_cle cle taille message ->
-      let d = 0 in
-      let e = (taille - 1) in
-      let rec a i taille_cle cle taille message =
-        (if (i <= e)
+      let b = 0 in
+      let d = (taille - 1) in
+      let rec a i =
+        (if (i <= d)
          then let lettre = (position_alphabet message.(i)) in
-         let b = (fun lettre taille_cle cle taille message ->
-                     (a (i + 1) taille_cle cle taille message)) in
-         (if (lettre <> (- 1))
-          then let addon = (position_alphabet cle.((i mod taille_cle))) in
-          let new_ = ((addon + lettre) mod 26) in
-          (message.(i) <- (of_position_alphabet new_); (b lettre taille_cle cle taille message))
-          else (b lettre taille_cle cle taille message))
+         (
+           (if (lettre <> (- 1))
+            then let addon = (position_alphabet cle.((i mod taille_cle))) in
+            let new_ = ((addon + lettre) mod 26) in
+            (
+              message.(i) <- (of_position_alphabet new_);
+              ()
+              )
+            
+            else ());
+           (a (i + 1))
+           )
+         
          else ()) in
-        (a d taille_cle cle taille message));;
-let rec main =
+        (a b));;
+let main =
   Scanf.scanf "%d"
   (fun taille_cle ->
       (Scanf.scanf "%[\n \010]" (fun _ -> let cle = (Array.init_withenv taille_cle (fun
-       index taille_cle ->
-      Scanf.scanf "%c"
+       index ->
+      (fun () -> Scanf.scanf "%c"
       (fun out_ ->
-          let h = out_ in
-          (taille_cle, h))) taille_cle) in
+          let g = out_ in
+          ((), g)))) ()) in
       (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
       (fun taille ->
           (Scanf.scanf "%[\n \010]" (fun _ -> let message = (Array.init_withenv taille (fun
            index2 ->
-          (fun (taille, taille_cle) ->
-              Scanf.scanf "%c"
-              (fun out2 ->
-                  let j = out2 in
-                  ((taille, taille_cle), j)))) (taille, taille_cle)) in
-          begin
+          (fun () -> Scanf.scanf "%c"
+          (fun out2 ->
+              let h = out2 in
+              ((), h)))) ()) in
+          (
             (crypte taille_cle cle taille message);
-            let l = 0 in
-            let m = (taille - 1) in
-            let rec k i taille taille_cle =
-              (if (i <= m)
-               then begin
+            let k = 0 in
+            let l = (taille - 1) in
+            let rec j i =
+              (if (i <= l)
+               then (
                       (Printf.printf "%c" message.(i));
-                      (k (i + 1) taille taille_cle)
-                      end
+                      (j (i + 1))
+                      )
                
                else (Printf.printf "%s" "\n")) in
-              (k l taille taille_cle)
-            end
+              (j k)
+            )
           ))))))));;
 

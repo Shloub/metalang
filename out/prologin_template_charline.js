@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -33,8 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function read_int(){
   var out_ = 0;
   out_=read_int_();
@@ -68,5 +65,4 @@ function programme_candidat(tableau, taille){
 var taille = read_int();
 var tableau = read_char_line(taille);
 util.print(programme_candidat(tableau, taille), "\n");
-
 

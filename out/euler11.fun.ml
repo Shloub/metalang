@@ -9,104 +9,94 @@ module Array = struct
     )
 end
 
-let rec max2 =
+let max2 =
   (fun a b ->
-      let h = (fun a b ->
-                  ()) in
+      let h = (fun () -> ()) in
       (if (a > b)
        then a
        else b));;
-let rec read_int_line =
+let read_int_line =
   (fun n ->
-      let tab = (Array.init_withenv n (fun i n ->
-                                          Scanf.scanf "%d"
+      let tab = (Array.init_withenv n (fun i ->
+                                          (fun () -> Scanf.scanf "%d"
                                           (fun t ->
                                               (Scanf.scanf "%[\n \010]" (fun _ -> let g = t in
-                                              (n, g))))) n) in
+                                              ((), g)))))) ()) in
       tab);;
-let rec read_int_matrix =
+let read_int_matrix =
   (fun x y ->
       let tab = (Array.init_withenv y (fun z ->
-                                          (fun (x, y) ->
-                                              let f = (read_int_line x) in
-                                              ((x, y), f))) (x, y)) in
+                                          (fun () -> let f = (read_int_line x) in
+                                          ((), f))) ()) in
       tab);;
 let rec find =
   (fun n m x y dx dy ->
-      let d = (fun n m x y dx dy ->
-                  ()) in
+      let d = (fun () -> ()) in
       (if ((((x < 0) || (x = 20)) || (y < 0)) || (y = 20))
        then (- 1)
-       else let e = (fun n m x y dx dy ->
-                        (d n m x y dx dy)) in
+       else let e = (fun () -> (d ())) in
        (if (n = 0)
         then 1
         else (m.(y).(x) * (find (n - 1) m (x + dx) (y + dy) dx dy)))));;
-let rec main =
+let main =
   let c = 8 in
-  let directions = (Array.init_withenv c (fun i c ->
-                                             let l = (fun i c k ->
-                                                         (c, k)) in
+  let directions = (Array.init_withenv c (fun i ->
+                                             (fun () -> let l = (fun k ->
+                                                                    ((), k)) in
                                              (if (i = 0)
                                               then let k = (0, 1) in
-                                              (c, k)
-                                              else let o = (fun i c ->
-                                                               (l i c)) in
+                                              ((), k)
+                                              else let o = (fun () -> (l ())) in
                                               (if (i = 1)
                                                then let k = (1, 0) in
-                                               (c, k)
-                                               else let p = (fun i c ->
-                                                                (o i c)) in
+                                               ((), k)
+                                               else let p = (fun () -> (o ())) in
                                                (if (i = 2)
                                                 then let k = (0, (- 1)) in
-                                                (c, k)
-                                                else let q = (fun i c ->
-                                                                 (p i c)) in
+                                                ((), k)
+                                                else let q = (fun () -> (p ())) in
                                                 (if (i = 3)
                                                  then let k = ((- 1), 0) in
-                                                 (c, k)
-                                                 else let r = (fun i c ->
-                                                                  (q i c)) in
+                                                 ((), k)
+                                                 else let r = (fun () -> (q ())) in
                                                  (if (i = 4)
                                                   then let k = (1, 1) in
-                                                  (c, k)
-                                                  else let s = (fun i c ->
-                                                                   (r i c)) in
+                                                  ((), k)
+                                                  else let s = (fun () -> (r ())) in
                                                   (if (i = 5)
                                                    then let k = (1, (- 1)) in
-                                                   (c, k)
-                                                   else let u = (fun i c ->
-                                                                    (s i c)) in
+                                                   ((), k)
+                                                   else let u = (fun () -> (s ())) in
                                                    (if (i = 6)
                                                     then let k = ((- 1), 1) in
-                                                    (c, k)
+                                                    ((), k)
                                                     else let k = ((- 1), (- 1)) in
-                                                    (c, k))))))))) c) in
+                                                    ((), k)))))))))) ()) in
   let max_ = 0 in
   let m = (read_int_matrix 20 20) in
   let bf = 0 in
   let bg = 7 in
-  let rec v j m max_ c =
+  let rec v j max_ =
     (if (j <= bg)
      then ((fun (dx, dy) ->
                let bd = 0 in
                let be = 19 in
-               let rec w x dx dy m max_ c =
+               let rec w x max_ =
                  (if (x <= be)
                   then let bb = 0 in
                   let bc = 19 in
-                  let rec ba y dx dy m max_ c =
+                  let rec ba y max_ =
                     (if (y <= bc)
                      then let max_ = (max2 max_ (find 4 m x y dx dy)) in
-                     (ba (y + 1) dx dy m max_ c)
-                     else (w (x + 1) dx dy m max_ c)) in
-                    (ba bb dx dy m max_ c)
-                  else (v (j + 1) m max_ c)) in
-                 (w bd dx dy m max_ c)) directions.(j))
-     else begin
+                     (ba (y + 1) max_)
+                     else (w (x + 1) max_)) in
+                    (ba bb max_)
+                  else (v (j + 1) max_)) in
+                 (w bd max_)) directions.(j))
+     else (
             (Printf.printf "%d" max_);
             (Printf.printf "%s" "\n")
-            end
+            )
      ) in
-    (v bf m max_ c);;
+    (v bf max_);;
 

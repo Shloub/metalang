@@ -9,48 +9,49 @@ module Array = struct
     )
 end
 
-let rec read_int =
+let read_int =
   (fun () -> Scanf.scanf "%d"
   (fun out_ ->
       (Scanf.scanf "%[\n \010]" (fun _ -> out_))));;
-let rec read_int_line =
+let read_int_line =
   (fun n ->
-      let tab = (Array.init_withenv n (fun i n ->
-                                          Scanf.scanf "%d"
+      let tab = (Array.init_withenv n (fun i ->
+                                          (fun () -> Scanf.scanf "%d"
                                           (fun t ->
-                                              (Scanf.scanf "%[\n \010]" (fun _ -> let j = t in
-                                              (n, j))))) n) in
+                                              (Scanf.scanf "%[\n \010]" (fun _ -> let h = t in
+                                              ((), h)))))) ()) in
       tab);;
-let rec result =
+let result =
   (fun len tab ->
       let tab2 = (Array.init_withenv len (fun i ->
-                                             (fun (len, tab) ->
-                                                 let a = false in
-                                                 ((len, tab), a))) (len, tab)) in
-      let g = 0 in
-      let h = (len - 1) in
-      let rec f i1 len tab =
-        (if (i1 <= h)
-         then (tab2.(tab.(i1)) <- true; (f (i1 + 1) len tab))
-         else let d = 0 in
-         let e = (len - 1) in
-         let rec b i2 len tab =
-           (if (i2 <= e)
-            then let c = (fun len tab ->
-                             (b (i2 + 1) len tab)) in
-            (if (not tab2.(i2))
-             then i2
-             else (c len tab))
+                                             (fun () -> let a = false in
+                                             ((), a))) ()) in
+      let f = 0 in
+      let g = (len - 1) in
+      let rec e i1 =
+        (if (i1 <= g)
+         then (
+                tab2.(tab.(i1)) <- true;
+                (e (i1 + 1))
+                )
+         
+         else let c = 0 in
+         let d = (len - 1) in
+         let rec b i2 =
+           (if (i2 <= d)
+            then (if (not tab2.(i2))
+                  then i2
+                  else (b (i2 + 1)))
             else (- 1)) in
-           (b d len tab)) in
-        (f g len tab));;
-let rec main =
+           (b c)) in
+        (e f));;
+let main =
   let len = (read_int ()) in
-  begin
+  (
     (Printf.printf "%d" len);
     (Printf.printf "%s" "\n");
     let tab = (read_int_line len) in
     (Printf.printf "%d" (result len tab))
-    end
+    )
   ;;
 

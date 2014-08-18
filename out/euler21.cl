@@ -8,9 +8,7 @@
         (setq i (+ 1 i ))))
         out
     ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
+(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
 (defun eratostene (t_ max_)
 (progn
   (let ((n 0))
@@ -163,4 +161,5 @@
           (princ "
 ")
         )))))))
+
 

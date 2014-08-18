@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -33,8 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function isqrt(c){
   return Math.floor(Math.sqrt(c));
 }
@@ -79,5 +76,4 @@ n=read_int_();
 for (var i = 1 ; i <= n; i++)
   sum += score();
 util.print(sum, "\n");
-
 

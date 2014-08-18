@@ -9,60 +9,60 @@ module Array = struct
     )
 end
 
-let rec read_int =
+let read_int =
   (fun () -> Scanf.scanf "%d"
   (fun out_ ->
       (Scanf.scanf "%[\n \010]" (fun _ -> out_))));;
-let rec read_char_line =
+let read_char_line =
   (fun n ->
-      let tab = (Array.init_withenv n (fun i n ->
-                                          Scanf.scanf "%c"
+      let tab = (Array.init_withenv n (fun i ->
+                                          (fun () -> Scanf.scanf "%c"
                                           (fun t ->
                                               let g = t in
-                                              (n, g))) n) in
+                                              ((), g)))) ()) in
       (Scanf.scanf "%[\n \010]" (fun _ -> tab)));;
-let rec programme_candidat =
+let programme_candidat =
   (fun tableau1 taille1 tableau2 taille2 ->
       let out_ = 0 in
       let e = 0 in
       let f = (taille1 - 1) in
-      let rec d i out_ tableau1 taille1 tableau2 taille2 =
+      let rec d i out_ =
         (if (i <= f)
          then let out_ = (out_ + ((int_of_char (tableau1.(i))) * i)) in
-         begin
+         (
            (Printf.printf "%c" tableau1.(i));
-           (d (i + 1) out_ tableau1 taille1 tableau2 taille2)
-           end
+           (d (i + 1) out_)
+           )
          
-         else begin
+         else (
                 (Printf.printf "%s" "--\n");
                 let b = 0 in
                 let c = (taille2 - 1) in
-                let rec a j out_ tableau1 taille1 tableau2 taille2 =
+                let rec a j out_ =
                   (if (j <= c)
                    then let out_ = (out_ + ((int_of_char (tableau2.(j))) * (j * 100))) in
-                   begin
+                   (
                      (Printf.printf "%c" tableau2.(j));
-                     (a (j + 1) out_ tableau1 taille1 tableau2 taille2)
-                     end
+                     (a (j + 1) out_)
+                     )
                    
-                   else begin
+                   else (
                           (Printf.printf "%s" "--\n");
                           out_
-                          end
+                          )
                    ) in
-                  (a b out_ tableau1 taille1 tableau2 taille2)
-                end
+                  (a b out_)
+                )
          ) in
-        (d e out_ tableau1 taille1 tableau2 taille2));;
-let rec main =
+        (d e out_));;
+let main =
   let taille1 = (read_int ()) in
   let taille2 = (read_int ()) in
   let tableau1 = (read_char_line taille1) in
   let tableau2 = (read_char_line taille2) in
-  begin
+  (
     (Printf.printf "%d" (programme_candidat tableau1 taille1 tableau2 taille2));
     (Printf.printf "%s" "\n")
-    end
+    )
   ;;
 

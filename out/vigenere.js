@@ -1,4 +1,3 @@
-
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
@@ -33,8 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-
-
 function position_alphabet(c){
   var i = c.charCodeAt(0);
   if (i <= 'Z'.charCodeAt(0) && i >= 'A'.charCodeAt(0))
@@ -87,5 +84,4 @@ crypte(taille_cle, cle, taille, message);
 for (var i = 0 ; i <= taille - 1; i++)
   util.print(message[i]);
 util.print("\n");
-
 

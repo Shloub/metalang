@@ -1,19 +1,8 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    )
-end
-
-let rec isqrt =
+let isqrt =
   (fun c ->
       ((int_of_float (sqrt (float_of_int ( c))))));;
-let rec main =
-  begin
+let main =
+  (
     (Printf.printf "%d" (isqrt 4));
     (Printf.printf "%s" " ");
     (Printf.printf "%d" (isqrt 16));
@@ -26,6 +15,6 @@ let rec main =
     (Printf.printf "%s" " ");
     (Printf.printf "%d" (isqrt 10));
     (Printf.printf "%s" " ")
-    end
+    )
   ;;
 

@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -18,7 +17,6 @@
       (next-char)
       out
     ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,53 +32,52 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define read_int (lambda () 
+(define read_int (lambda (_) 
                    ((lambda (out_) 
                       (block (mread-blank) out_ )) (mread-int))))
 (define read_char_line (lambda (n) 
                          (let ([tab (array_init_withenv n (lambda (i) 
-                                                            (lambda (n) 
-                                                              ((lambda (t_) 
-                                                                 (let ([g t_])
-                                                                   (list n g))) (mread-char)))) n)])
-(block (mread-blank) tab ))))
+                                                            (lambda (_) (
+                                                            (lambda (t_) 
+                                                              (let ([g t_])
+                                                                (list '() g))) (mread-char)))) '())])
+  (block (mread-blank) tab ))))
 (define programme_candidat (lambda (tableau1 taille1 tableau2 taille2) 
                              (let ([out_ 0])
                                (let ([e 0])
                                  (let ([f (- taille1 1)])
-                                   (letrec ([d (lambda (i out_ tableau1 taille1 tableau2 taille2) 
+                                   (letrec ([d (lambda (i out_) 
                                                  (if (<= i f)
                                                    (let ([out_ (+ out_ (* (char->integer (vector-ref tableau1 i)) i))])
                                                      (block
                                                        (display (vector-ref tableau1 i))
-                                                       (d (+ i 1) out_ tableau1 taille1 tableau2 taille2)
+                                                       (d (+ i 1) out_)
                                                        ))
                                                    (block
                                                      (display "--\n")
                                                      (let ([b 0])
                                                        (let ([c (- taille2 1)])
                                                          (letrec ([a 
-                                                           (lambda (j out_ tableau1 taille1 tableau2 taille2) 
+                                                           (lambda (j out_) 
                                                              (if (<= j c)
                                                                (let ([out_ (+ out_ (* (char->integer (vector-ref tableau2 j)) (* j 100)))])
                                                                  (block
                                                                    (display (vector-ref tableau2 j))
-                                                                   (a (+ j 1) out_ tableau1 taille1 tableau2 taille2)
+                                                                   (a (+ j 1) out_)
                                                                    ))
                                                                (block
                                                                  (display "--\n")
                                                                  out_
                                                                  )))])
-                                                         (a b out_ tableau1 taille1 tableau2 taille2))))
+                                                         (a b out_))))
                                                    )))])
-                                 (d e out_ tableau1 taille1 tableau2 taille2)))))))
-(define main (let ([taille1 (read_int )])
-               (let ([taille2 (read_int )])
+                                 (d e out_)))))))
+(define main (let ([taille1 (read_int 'nil)])
+               (let ([taille2 (read_int 'nil)])
                  (let ([tableau1 (read_char_line taille1)])
                    (let ([tableau2 (read_char_line taille2)])
                      (block

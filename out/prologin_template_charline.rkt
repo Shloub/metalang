@@ -1,6 +1,5 @@
 #lang racket
 (require racket/block)
-
 (define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -18,7 +17,6 @@
       (next-char)
       out
     ))))
-
 (define mread-int (lambda ()
   (if (eq? #\- last-char)
   (block
@@ -34,38 +32,37 @@
           ))
         out
       )))]) (w 0)))))
-
 (define mread-blank (lambda ()
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define read_int (lambda () 
+(define read_int (lambda (_) 
                    ((lambda (out_) 
                       (block (mread-blank) out_ )) (mread-int))))
 (define read_char_line (lambda (n) 
                          (let ([tab (array_init_withenv n (lambda (i) 
-                                                            (lambda (n) 
-                                                              ((lambda (t_) 
-                                                                 (let ([d t_])
-                                                                   (list n d))) (mread-char)))) n)])
-(block (mread-blank) tab ))))
+                                                            (lambda (_) (
+                                                            (lambda (t_) 
+                                                              (let ([d t_])
+                                                                (list '() d))) (mread-char)))) '())])
+  (block (mread-blank) tab ))))
 (define programme_candidat (lambda (tableau taille) 
                              (let ([out_ 0])
                                (let ([b 0])
                                  (let ([c (- taille 1)])
-                                   (letrec ([a (lambda (i out_ tableau taille) 
+                                   (letrec ([a (lambda (i out_) 
                                                  (if (<= i c)
                                                    (let ([out_ (+ out_ (* (char->integer (vector-ref tableau i)) i))])
                                                      (block
                                                        (display (vector-ref tableau i))
-                                                       (a (+ i 1) out_ tableau taille)
+                                                       (a (+ i 1) out_)
                                                        ))
                                                    (block
                                                      (display "--\n")
                                                      out_
                                                      )))])
-                                   (a b out_ tableau taille)))))))
-(define main (let ([taille (read_int )])
+                                   (a b out_)))))))
+(define main (let ([taille (read_int 'nil)])
                (let ([tableau (read_char_line taille)])
                  (block
                    (display (programme_candidat tableau taille))
