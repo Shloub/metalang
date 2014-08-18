@@ -112,14 +112,19 @@
                                                                 (letrec ([d 
                                                                   (lambda (p sudoku_) 
                                                                     (if (<= p g)
-                                                                    (block (vector-set! sudoku_ i p) 
+                                                                    (block
+                                                                    (vector-set! sudoku_ i p)
                                                                     (let ([e 
                                                                     (lambda (sudoku_) 
                                                                     (d (+ p 1) sudoku_))])
                                                                     (if (solve sudoku_)
                                                                     #t
-                                                                    (e sudoku_))))
-                                                                    (block (vector-set! sudoku_ i 0) #f)))])
+                                                                    (e sudoku_)))
+                                                                    )
+                                                                    (block
+                                                                    (vector-set! sudoku_ i 0)
+                                                                    #f
+                                                                    )))])
                                                               (d f sudoku_))))
                                                         (c sudoku_)))
                                           #f))])

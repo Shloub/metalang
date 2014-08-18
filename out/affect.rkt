@@ -53,35 +53,46 @@
                        (let ([t3 t2])
                          (let ([t__ t2])
                            (let ([t2 t3])
-                             (block (set-toto-blah! t__ (+ (toto-blah t__) 1)) 
-                             (let ([len 1])
-                               (let ([cache0 (array_init_withenv len 
-                                 (lambda (i) 
-                                   (lambda (internal_env) (apply (lambda
-                                    (len t3 t2 t__ t_ t2_) 
-                                   (let ([a (- i)])
-                                     (list (list len t3 t2 t__ t_ t2_) a))) internal_env))) (list len t3 t2 t__ t_ t2_))])
-                               (let ([cache1 (array_init_withenv len 
-                                 (lambda (j) 
-                                   (lambda (internal_env) (apply (lambda
-                                    (len t3 t2 t__ t_ t2_) 
-                                   (let ([b j])
-                                     (list (list len t3 t2 t__ t_ t2_) b))) internal_env))) (list len t3 t2 t__ t_ t2_))])
-                               (let ([cache2 cache0])
-                                 (let ([cache0 cache1])
-                                   (let ([cache2 cache0])
-                                     (+ (+ (toto-foo t__) (* (toto-blah t__) (toto-bar t__))) (* (toto-bar t__) (toto-foo t__))))))))))))))))))
+                             (block
+                               (set-toto-blah! t__ (+ (toto-blah t__) 1))
+                               (let ([len 1])
+                                 (let ([cache0 (array_init_withenv len 
+                                   (lambda (i) 
+                                     (lambda (internal_env) (apply (lambda
+                                      (len t3 t2 t__ t_ t2_) 
+                                     (let ([a (- i)])
+                                       (list (list len t3 t2 t__ t_ t2_) a))) internal_env))) (list len t3 t2 t__ t_ t2_))])
+                                 (let ([cache1 (array_init_withenv len 
+                                   (lambda (j) 
+                                     (lambda (internal_env) (apply (lambda
+                                      (len t3 t2 t__ t_ t2_) 
+                                     (let ([b j])
+                                       (list (list len t3 t2 t__ t_ t2_) b))) internal_env))) (list len t3 t2 t__ t_ t2_))])
+                                 (let ([cache2 cache0])
+                                   (let ([cache0 cache1])
+                                     (let ([cache2 cache0])
+                                       (+ (+ (toto-foo t__) (* (toto-blah t__) (toto-bar t__))) (* (toto-bar t__) (toto-foo t__)))))))))
+                           )))))))))
 (define main (let ([t__ (mktoto 4)])
                (let ([t2 (mktoto 5)])
                  ((lambda (f) 
-                    (block (set-toto-bar! t__ f) (block (mread-blank) (
-                    (lambda (e) 
-                      (block (set-toto-blah! t__ e) (block (mread-blank) (
-                      (lambda (d) 
-                        (block (set-toto-bar! t2 d) (block (mread-blank) (
-                        (lambda (c) 
-                          (block (set-toto-blah! t2 c) (block
-                                                         (display (result t__ t2))
-                                                         (display (toto-blah t__))
-                                                         ))) (mread-int)) ))) (mread-int)) ))) (mread-int)) ))) (mread-int)))))
+                    (block
+                      (set-toto-bar! t__ f)
+                      (block (mread-blank) ((lambda (e) 
+                                              (block
+                                                (set-toto-blah! t__ e)
+                                                (block (mread-blank) (
+                                                (lambda (d) 
+                                                  (block
+                                                    (set-toto-bar! t2 d)
+                                                    (block (mread-blank) (
+                                                    (lambda (c) 
+                                                      (block
+                                                        (set-toto-blah! t2 c)
+                                                        (display (result t__ t2))
+                                                        (display (toto-blah t__))
+                                                        )) (mread-int)) )
+                                                  )) (mread-int)) )
+                      )) (mread-int)) )
+               )) (mread-int)))))
 

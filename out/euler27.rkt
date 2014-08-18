@@ -52,9 +52,11 @@
                                                (let ([j (* i i)])
                                                  (letrec ([u (lambda (j n t_ max_) 
                                                                (if (and (< j max_) (> j 0))
-                                                                 (block (vector-set! t_ j 0) 
-                                                                 (let ([j (+ j i)])
-                                                                   (u j n t_ max_)))
+                                                                 (block
+                                                                   (vector-set! t_ j 0)
+                                                                   (let ([j (+ j i)])
+                                                                    (u j n t_ max_))
+                                                                   )
                                                                  (r n t_ max_)))])
                                                  (u j n t_ max_))))
                                            (r n t_ max_)))
@@ -111,8 +113,11 @@
                                (let ([bj (lambda (l nprimes max_ result maximumprimes) 
                                            (bi (+ k 1) l nprimes max_ result maximumprimes))])
                                (if (eq? (vector-ref era k) k)
-                                 (block (vector-set! primes l k) (let ([l (+ l 1)])
-                                                                   (bj l nprimes max_ result maximumprimes)))
+                                 (block
+                                   (vector-set! primes l k)
+                                   (let ([l (+ l 1)])
+                                     (bj l nprimes max_ result maximumprimes))
+                                   )
                                  (bj l nprimes max_ result maximumprimes)))
                              (block
                                (display l)

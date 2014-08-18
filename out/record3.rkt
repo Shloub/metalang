@@ -49,9 +49,11 @@
                      (let ([d (- len 1)])
                        (letrec ([b (lambda (j out_ t_ len) 
                                      (if (<= j d)
-                                       (block (set-toto-blah! (vector-ref t_ j) (+ (toto-blah (vector-ref t_ j)) 1)) 
-                                       (let ([out_ (+ (+ (+ out_ (toto-foo (vector-ref t_ j))) (* (toto-blah (vector-ref t_ j)) (toto-bar (vector-ref t_ j)))) (* (toto-bar (vector-ref t_ j)) (toto-foo (vector-ref t_ j))))])
-                                         (b (+ j 1) out_ t_ len)))
+                                       (block
+                                         (set-toto-blah! (vector-ref t_ j) (+ (toto-blah (vector-ref t_ j)) 1))
+                                         (let ([out_ (+ (+ (+ out_ (toto-foo (vector-ref t_ j))) (* (toto-blah (vector-ref t_ j)) (toto-bar (vector-ref t_ j)))) (* (toto-bar (vector-ref t_ j)) (toto-foo (vector-ref t_ j))))])
+                                           (b (+ j 1) out_ t_ len))
+                                         )
                                        out_))])
                        (b c out_ t_ len)))))))
 (define main (let ([a 4])
@@ -60,11 +62,16 @@
                                                    (let ([e (mktoto i)])
                                                      (list a e)))) a)])
   ((lambda (g) 
-     (block (set-toto-bar! (vector-ref t_ 0) g) (block (mread-blank) (
-     (lambda (f) 
-       (block (set-toto-blah! (vector-ref t_ 1) f) (let ([titi (result t_ 4)])
-                                                     (block
-                                                       (display titi)
-                                                       (display (toto-blah (vector-ref t_ 2)))
-                                                       )))) (mread-int)) ))) (mread-int)))))
+     (block
+       (set-toto-bar! (vector-ref t_ 0) g)
+       (block (mread-blank) ((lambda (f) 
+                               (block
+                                 (set-toto-blah! (vector-ref t_ 1) f)
+                                 (let ([titi (result t_ 4)])
+                                   (block
+                                     (display titi)
+                                     (display (toto-blah (vector-ref t_ 2)))
+                                     ))
+                                 )) (mread-int)) )
+     )) (mread-int)))))
 

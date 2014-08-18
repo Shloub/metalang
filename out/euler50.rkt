@@ -62,9 +62,11 @@
                                                    ; overflow test 
                                                    (letrec ([g (lambda (j n t_ max_) 
                                                                  (if (and (< j max_) (> j 0))
-                                                                   (block (vector-set! t_ j 0) 
-                                                                   (let ([j (+ j i)])
-                                                                    (g j n t_ max_)))
+                                                                   (block
+                                                                    (vector-set! t_ j 0)
+                                                                    (let ([j (+ j i)])
+                                                                    (g j n t_ max_))
+                                                                    )
                                                                    (e j n t_ max_)))])
                                                    (g j n t_ max_))
                                                  (e j n t_ max_)))))
@@ -90,8 +92,11 @@
                            (let ([bd (lambda (l nprimes maximumprimes) 
                                        (bc (+ k 1) l nprimes maximumprimes))])
                            (if (eq? (vector-ref era k) k)
-                             (block (vector-set! primes l k) (let ([l (+ l 1)])
-                                                               (bd l nprimes maximumprimes)))
+                             (block
+                               (vector-set! primes l k)
+                               (let ([l (+ l 1)])
+                                 (bd l nprimes maximumprimes))
+                               )
                              (bd l nprimes maximumprimes)))
                          (block
                            (display l)
@@ -120,11 +125,12 @@
                                                                    (lambda (resp len stop process maxl l nprimes maximumprimes) 
                                                                     (w (+ i 1) resp len stop process maxl l nprimes maximumprimes))])
                                                                  (if (< (+ i len) nprimes)
-                                                                   (block (vector-set! sum i (+ (vector-ref sum i) (vector-ref primes (+ i len)))) 
-                                                                   (let ([y 
+                                                                   (block
+                                                                    (vector-set! sum i (+ (vector-ref sum i) (vector-ref primes (+ i len))))
+                                                                    (let ([y 
                                                                     (lambda (resp len stop process maxl l nprimes maximumprimes) 
                                                                     (x resp len stop process maxl l nprimes maximumprimes))])
-                                                                   (if (> maximumprimes (vector-ref sum i))
+                                                                    (if (> maximumprimes (vector-ref sum i))
                                                                     (let ([process #t])
                                                                     (let ([z 
                                                                     (lambda (resp len stop process maxl l nprimes maximumprimes) 
@@ -134,8 +140,9 @@
                                                                     (let ([resp (vector-ref sum i)])
                                                                     (z resp len stop process maxl l nprimes maximumprimes)))
                                                                     (z resp len stop process maxl l nprimes maximumprimes))))
-                                                                   (let ([stop (min2 stop i)])
-                                                                    (y resp len stop process maxl l nprimes maximumprimes)))))
+                                                                    (let ([stop (min2 stop i)])
+                                                                    (y resp len stop process maxl l nprimes maximumprimes))))
+                                                                 )
                                                                (x resp len stop process maxl l nprimes maximumprimes)))
                                                            (let ([len (+ len 1)])
                                                              (v resp len stop process maxl l nprimes maximumprimes))))])

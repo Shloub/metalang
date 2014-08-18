@@ -83,13 +83,18 @@
                                         (k cache tab x y posX posY))])
                              (if (not (eq? (vector-ref (vector-ref cache posY) posX) (- 1)))
                                (vector-ref (vector-ref cache posY) posX)
-                               (block (vector-set! (vector-ref cache posY) posX (* (* x y) 10)) 
-                               (let ([val1 (pathfind_aux cache tab x y (+ posX 1) posY)])
-                                 (let ([val2 (pathfind_aux cache tab x y (- posX 1) posY)])
-                                   (let ([val3 (pathfind_aux cache tab x y posX (- posY 1))])
-                                     (let ([val4 (pathfind_aux cache tab x y posX (+ posY 1))])
-                                       (let ([out_ (+ 1 (min4 val1 val2 val3 val4))])
-                                         (block (vector-set! (vector-ref cache posY) posX out_) out_)))))))))))))))))
+                               (block
+                                 (vector-set! (vector-ref cache posY) posX (* (* x y) 10))
+                                 (let ([val1 (pathfind_aux cache tab x y (+ posX 1) posY)])
+                                   (let ([val2 (pathfind_aux cache tab x y (- posX 1) posY)])
+                                     (let ([val3 (pathfind_aux cache tab x y posX (- posY 1))])
+                                       (let ([val4 (pathfind_aux cache tab x y posX (+ posY 1))])
+                                         (let ([out_ (+ 1 (min4 val1 val2 val3 val4))])
+                                           (block
+                                             (vector-set! (vector-ref cache posY) posX out_)
+                                             out_
+                                             ))))))
+                                 )))))))))))
 (define pathfind (lambda (tab x y) 
                    (let ([cache (array_init_withenv y (lambda (i) 
                                                         (lambda (internal_env) (apply (lambda

@@ -201,19 +201,20 @@ class camlFunPrinter = object(self)
   | E.Block li -> self#block f li
   | E.Record li -> self#record f li
   | E.RecordAccess (record, field) -> self#recordaccess f record field
-  | E.RecordAffectIn (record, field, value, in_) -> self#recordaffectin f record field value in_
+  | E.RecordAffect (record, field, value) -> self#recordaffect f record field value
   | E.ArrayMake (len, lambda, env) -> self#arraymake f len lambda env
   | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
-  | E.ArrayAffectIn (tab, indexes, v, in_) -> self#arrayaffectin f tab indexes v in_
+  | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect f tab indexes v
   | E.LetIn (params, b) -> self#letin f params b
 
   method recordaccess f record field  =
     Format.fprintf f "%a.%s" self#expr record field
 
-  method recordaffectin f record field value in_ =
-    Format.fprintf f "(%a.%s <- %a; %a)"
+  method recordaffect f record field value =
+    Format.fprintf f "%a.%s <- %a"
       self#expr record field
-      self#expr value self#expr in_
+      self#expr value
+
   method record f li =
     Format.fprintf f "{%a}"
       (Printer.print_list
@@ -230,13 +231,12 @@ class camlFunPrinter = object(self)
       (Printer.print_list self#expr
 	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
 
-  method arrayaffectin f tab indexes v in_ =
-    Format.fprintf f "(%a.(%a) <- %a; %a)"
+  method arrayaffect f tab indexes v =
+    Format.fprintf f "%a.(%a) <- %a"
       self#expr tab
       (Printer.print_list self#expr
 	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
       self#expr v
-      self#expr in_
 
   method letin f params b  = Format.fprintf f "let %a in@\n%a"
     (Printer.print_list

@@ -48,7 +48,10 @@
                              (let ([out0 (find0 len tab cache x (+ y 1))])
                                (let ([out1 (find0 len tab cache (+ x 1) (+ y 1))])
                                  (let ([e (lambda (out1 out0 result len tab cache x y) 
-                                            (block (vector-set! (vector-ref cache y) x result) result))])
+                                            (block
+                                              (vector-set! (vector-ref cache y) x result)
+                                              result
+                                              ))])
                                  (if (> out0 out1)
                                    (let ([result (+ out0 (vector-ref (vector-ref tab y) x))])
                                      (e out1 out0 result len tab cache x y))

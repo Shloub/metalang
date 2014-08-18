@@ -58,12 +58,17 @@
                                             (let ([p (lambda (d c n) 
                                                        (h d c n))])
                                             (if (eq? (remainder n d) 0)
-                                              (block (vector-set! tab d (+ (vector-ref tab d) 1)) 
-                                              (let ([n (quotient n d)])
-                                                (p d c n)))
+                                              (block
+                                                (vector-set! tab d (+ (vector-ref tab d) 1))
+                                                (let ([n (quotient n d)])
+                                                  (p d c n))
+                                                )
                                               (let ([d (+ d 1)])
                                                 (p d c n))))
-                                          (block (vector-set! tab n (+ (vector-ref tab n) 1)) tab)))])
+                                          (block
+                                            (vector-set! tab n (+ (vector-ref tab n) 1))
+                                            tab
+                                            )))])
                           (h d c n)))))))
 (define main (let ([lim 20])
                (let ([e (+ lim 1)])
@@ -81,7 +86,10 @@
                                          (let ([bc i])
                                            (letrec ([ba (lambda (j t_ e lim) 
                                                           (if (<= j bc)
-                                                            (block (vector-set! o j (max2 (vector-ref o j) (vector-ref t_ j))) (ba (+ j 1) t_ e lim))
+                                                            (block
+                                                              (vector-set! o j (max2 (vector-ref o j) (vector-ref t_ j)))
+                                                              (ba (+ j 1) t_ e lim)
+                                                              )
                                                             (z (+ i 1) e lim)))])
                                            (ba bb t_ e lim)))))
                                    (let ([product 1])

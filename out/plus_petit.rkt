@@ -53,7 +53,11 @@
                                                    (let ([i (+ i 1)])
                                                      (g e j i m tab a b))
                                                    (let ([j (- j 1)])
-                                                     (block (vector-set! tab i (vector-ref tab j)) (block (vector-set! tab j e) (g e j i m tab a b)))))))
+                                                     (block
+                                                       (vector-set! tab i (vector-ref tab j))
+                                                       (vector-set! tab j e)
+                                                       (g e j i m tab a b)
+                                                       )))))
                                              (let ([c (lambda (j i m tab a b) 
                                                         '())])
                                              (if (< i m)

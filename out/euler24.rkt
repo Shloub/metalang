@@ -82,7 +82,8 @@
                                                                (if (eq? nchiffre 0)
                                                                  (block
                                                                    (display l)
-                                                                   (block (vector-set! pris l #t) (p nchiffre n lim nth_))
+                                                                   (vector-set! pris l #t)
+                                                                   (p nchiffre n lim nth_)
                                                                    )
                                                                  (p nchiffre n lim nth_)))
                                                              (o nchiffre n lim nth_)))

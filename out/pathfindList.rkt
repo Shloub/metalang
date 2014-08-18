@@ -48,17 +48,22 @@
                                     (b cache tab len pos))])
                          (if (not (eq? (vector-ref cache pos) (- 1)))
                            (vector-ref cache pos)
-                           (block (vector-set! cache pos (* len 2)) (let ([posval (pathfind_aux cache tab len (vector-ref tab pos))])
-                                                                    (let ([oneval (pathfind_aux cache tab len (+ pos 1))])
-                                                                    (let ([out_ 0])
-                                                                    (let ([d 
-                                                                    (lambda (out_ oneval posval cache tab len pos) 
-                                                                    (block (vector-set! cache pos out_) out_))])
-                                                                    (if (< posval oneval)
-                                                                    (let ([out_ (+ 1 posval)])
-                                                                    (d out_ oneval posval cache tab len pos))
-                                                                    (let ([out_ (+ 1 oneval)])
-                                                                    (d out_ oneval posval cache tab len pos))))))))))))))
+                           (block
+                             (vector-set! cache pos (* len 2))
+                             (let ([posval (pathfind_aux cache tab len (vector-ref tab pos))])
+                               (let ([oneval (pathfind_aux cache tab len (+ pos 1))])
+                                 (let ([out_ 0])
+                                   (let ([d (lambda (out_ oneval posval cache tab len pos) 
+                                              (block
+                                                (vector-set! cache pos out_)
+                                                out_
+                                                ))])
+                                   (if (< posval oneval)
+                                     (let ([out_ (+ 1 posval)])
+                                       (d out_ oneval posval cache tab len pos))
+                                     (let ([out_ (+ 1 oneval)])
+                                       (d out_ oneval posval cache tab len pos)))))))
+                           )))))))
 (define pathfind (lambda (tab len) 
                    (let ([cache (array_init_withenv len (lambda (i) 
                                                           (lambda (internal_env) (apply (lambda

@@ -56,9 +56,11 @@
                                                    ; overflow test 
                                                    (letrec ([e (lambda (j n t_ max_) 
                                                                  (if (and (< j max_) (> j 0))
-                                                                   (block (vector-set! t_ j 0) 
-                                                                   (let ([j (+ j i)])
-                                                                    (e j n t_ max_)))
+                                                                   (block
+                                                                    (vector-set! t_ j 0)
+                                                                    (let ([j (+ j i)])
+                                                                    (e j n t_ max_))
+                                                                    )
                                                                    (c j n t_ max_)))])
                                                    (e j n t_ max_))
                                                  (c j n t_ max_)))))
@@ -84,8 +86,11 @@
                            (let ([be (lambda (l nprimes maximumprimes) 
                                        (bd (+ k 1) l nprimes maximumprimes))])
                            (if (eq? (vector-ref era k) k)
-                             (block (vector-set! primes l k) (let ([l (+ l 1)])
-                                                               (be l nprimes maximumprimes)))
+                             (block
+                               (vector-set! primes l k)
+                               (let ([l (+ l 1)])
+                                 (be l nprimes maximumprimes))
+                               )
                              (be l nprimes maximumprimes)))
                          (block
                            (display l)
@@ -110,7 +115,10 @@
                                                                     (lambda (n l nprimes maximumprimes) 
                                                                     (x (+ j 1) l nprimes maximumprimes))])
                                                                     (if (< n maximumprimes)
-                                                                    (block (vector-set! canbe n #t) (y n l nprimes maximumprimes))
+                                                                    (block
+                                                                    (vector-set! canbe n #t)
+                                                                    (y n l nprimes maximumprimes)
+                                                                    )
                                                                     (y n l nprimes maximumprimes))))
                                                                  (w (+ i 1) l nprimes maximumprimes)))])
                                                  (x z l nprimes maximumprimes))))

@@ -58,7 +58,10 @@
                                (c n m))])
                     (if (not (eq? (vector-ref m n) 0))
                       (vector-ref m n)
-                      (block (vector-set! m n (+ 1 (find_ (next_ n) m))) (vector-ref m n))))))))))
+                      (block
+                        (vector-set! m n (+ 1 (find_ (next_ n) m)))
+                        (vector-ref m n)
+                        )))))))))
 (define main (let ([a 1000000])
                (let ([m (array_init_withenv a (lambda (j) 
                                                 (lambda (a) 

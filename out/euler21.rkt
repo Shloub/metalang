@@ -52,9 +52,11 @@
                                                (let ([j (* i i)])
                                                  (letrec ([bb (lambda (j n t_ max_) 
                                                                 (if (and (< j max_) (> j 0))
-                                                                  (block (vector-set! t_ j 0) 
-                                                                  (let ([j (+ j i)])
-                                                                    (bb j n t_ max_)))
+                                                                  (block
+                                                                    (vector-set! t_ j 0)
+                                                                    (let ([j (+ j i)])
+                                                                    (bb j n t_ max_))
+                                                                    )
                                                                   (z n t_ max_)))])
                                                  (bb j n t_ max_))))
                                            (z n t_ max_)))
@@ -68,9 +70,11 @@
                                                 (let ([d (vector-ref primes i)])
                                                   (letrec ([v (lambda (d t_ n primes nprimes) 
                                                                 (if (eq? (remainder n d) 0)
-                                                                  (block (vector-set! t_ d (+ (vector-ref t_ d) 1)) 
-                                                                  (let ([n (quotient n d)])
-                                                                    (v d t_ n primes nprimes)))
+                                                                  (block
+                                                                    (vector-set! t_ d (+ (vector-ref t_ d) 1))
+                                                                    (let ([n (quotient n d)])
+                                                                    (v d t_ n primes nprimes))
+                                                                    )
                                                                   (let ([s 
                                                                     (lambda (d t_ n primes nprimes) 
                                                                     (r (+ i 1) t_ n primes nprimes))])
@@ -136,8 +140,11 @@
                            (let ([bm (lambda (l nprimes maximumprimes) 
                                        (bl (+ k 1) l nprimes maximumprimes))])
                            (if (eq? (vector-ref era k) k)
-                             (block (vector-set! primes l k) (let ([l (+ l 1)])
-                                                               (bm l nprimes maximumprimes)))
+                             (block
+                               (vector-set! primes l k)
+                               (let ([l (+ l 1)])
+                                 (bm l nprimes maximumprimes))
+                               )
                              (bm l nprimes maximumprimes)))
                          (block
                            (display l)

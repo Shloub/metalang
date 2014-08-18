@@ -58,9 +58,11 @@
                                                  (if (eq? (quotient j i) i)
                                                    (letrec ([e (lambda (j sum t_ max_) 
                                                                  (if (and (< j max_) (> j 0))
-                                                                   (block (vector-set! t_ j 0) 
-                                                                   (let ([j (+ j i)])
-                                                                    (e j sum t_ max_)))
+                                                                   (block
+                                                                    (vector-set! t_ j 0)
+                                                                    (let ([j (+ j i)])
+                                                                    (e j sum t_ max_))
+                                                                    )
                                                                    (c j sum t_ max_)))])
                                                    (e j sum t_ max_))
                                                  (c j sum t_ max_)))))
@@ -73,8 +75,9 @@
                                                  (lambda (n) 
                                                    (let ([h i])
                                                      (list n h)))) n)])
-  (block (vector-set! t_ 1 0) (block
-                                (display (eratostene t_ n))
-                                (display "\n")
-                                )))))
+  (block
+    (vector-set! t_ 1 0)
+    (display (eratostene t_ n))
+    (display "\n")
+    ))))
 

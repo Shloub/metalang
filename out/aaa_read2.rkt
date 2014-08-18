@@ -106,7 +106,10 @@ tab)))
                                                                     (display " ")
                                                                     (let ([h 
                                                                     (lambda (c tmpc tab4 strlen tab2 tab len) 
-                                                                    (block (vector-set! tab4 i3 (integer->char c)) (g (+ i3 1) tab4 strlen tab2 tab len)))])
+                                                                    (block
+                                                                    (vector-set! tab4 i3 (integer->char c))
+                                                                    (g (+ i3 1) tab4 strlen tab2 tab len)
+                                                                    ))])
                                                                     (if (not (eq? tmpc #\Space))
                                                                     (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
                                                                     (h c tmpc tab4 strlen tab2 tab len))

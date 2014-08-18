@@ -221,16 +221,15 @@ class racketPrinter = object(self)
       (fun f tl -> self#arrayindex f tab tl) tl
       self#expr hd
 
-  method arrayaffectin f tab indexes v in_ =
+  method arrayaffect f tab indexes v =
     match List.rev indexes with
     | [] -> assert false
     | hd::tl ->
       let tl = List.rev tl in
-      Format.fprintf f "(block (vector-set! %a %a %a) %a)"
+      Format.fprintf f "(vector-set! %a %a %a)"
 	(fun f () -> self#arrayindex f tab tl) ()
 	self#expr hd
 	self#expr v
-	self#expr in_
 
 
 
@@ -239,13 +238,12 @@ class racketPrinter = object(self)
       (self#typename_of_field field)
       field self#expr record
 
-  method recordaffectin f record field value in_ =
-    Format.fprintf f "(block (set-%s-%s! %a %a) %a)"
+  method recordaffect f record field value =
+    Format.fprintf f "(set-%s-%s! %a %a)"
       (self#typename_of_field field)
       field
       self#expr record
       self#expr value
-      self#expr in_
 
   method record f li =
     let li = List.sort (fun (_, f1) (_, f2) -> String.compare f1 f2) li in

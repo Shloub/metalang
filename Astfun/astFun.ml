@@ -63,11 +63,11 @@ module Expr = struct
   | SkipIn of 'a
   | Block of 'a list
   | Record of ('a * string) list
-  | RecordAffectIn of 'a * string * 'a * 'a
+  | RecordAffect of 'a * string * 'a
   | RecordAccess of 'a * string
   | ArrayMake of 'a * 'a * 'a
   | ArrayAccess of 'a * 'a list
-  | ArrayAffectIn of 'a * 'a list * 'a * 'a
+  | ArrayAffect of 'a * 'a list * 'a
   | LetIn of (string * 'a ) list * 'a
 
   module Fixed = Fix(struct
@@ -91,11 +91,11 @@ module Expr = struct
       | SkipIn e -> SkipIn (f e)
       | Block li -> Block (List.map f li)
       | Record li -> Record (List.map (fun (e, s) -> f e, s) li)
-      | RecordAffectIn (e1, s, e2, in_) -> RecordAffectIn (f e1, s, f e2, f in_)
+      | RecordAffect (e1, s, e2) -> RecordAffect (f e1, s, f e2)
       | RecordAccess (e, s) -> RecordAccess (f e, s)
       | ArrayAccess (tab, indexes) -> ArrayAccess (f tab, List.map f indexes)
       | ArrayMake (len, lambda, env) -> ArrayMake (f len, f lambda, f env)
-      | ArrayAffectIn (tab, indexes, v, in_) -> ArrayAffectIn (f tab, List.map f indexes, f v, f in_)
+      | ArrayAffect (tab, indexes, v) -> ArrayAffect (f tab, List.map f indexes, f v)
       | LetIn (params, b) -> LetIn (List.map (fun (s, a) -> s, f a) params, f b)
     let next () = next ()
   end)
@@ -166,11 +166,10 @@ module Expr = struct
 	    acc, (e, s)
 	  ) acc li in
 	  acc, Record li
-	| RecordAffectIn (e1, s, e2, in_) ->
+	| RecordAffect (e1, s, e2) ->
           let acc, e1 = f acc e1 in
           let acc, e2 = f acc e2 in
-          let acc, in_ = f acc in_ in
-          acc, RecordAffectIn (e1, s, e2, in_)
+          acc, RecordAffect (e1, s, e2)
 	| RecordAccess (e, s) ->
 	  let acc, e = f acc e in
 	  acc, RecordAccess (e, s)
@@ -183,12 +182,11 @@ module Expr = struct
 	  let acc, env = f acc env in
 	  let acc, lambda = f acc lambda in
 	  acc, ArrayMake (len, lambda, env)
-	| ArrayAffectIn (tab, indexes, v, in_) ->
+	| ArrayAffect (tab, indexes, v) ->
 	  let acc, tab = f acc tab in
 	  let acc, indexes = List.fold_left_map f acc indexes in
 	  let acc, v = f acc v in
-	  let acc, in_ = f acc in_ in
-	  acc, ArrayAffectIn (tab, indexes, v, in_)
+	  acc, ArrayAffect (tab, indexes, v)
 	| LetIn (params, b) ->
 	  let acc, params =
 	    List.fold_left_map (fun acc (s, a) ->
@@ -223,10 +221,10 @@ module Expr = struct
   let skipin e = fix (SkipIn e)
   let record li = fix (Record li)
   let recordaccess e s = fix (RecordAccess (e, s))
-  let recordaffectin record field value in_ = fix (RecordAffectIn (record, field, value, in_))
+  let recordaffectin record field value in_ = block [fix (RecordAffect (record, field, value)); in_]
   let arraymake len lambda env = fix (ArrayMake (len, lambda, env))
   let arrayaccess tab indexes = fix (ArrayAccess (tab, indexes))
-  let arrayaffectin tab indexes v in_ = fix (ArrayAffectIn (tab, indexes, v, in_))
+  let arrayaffectin tab indexes v in_ = block [fix (ArrayAffect (tab, indexes, v)); in_]
 end
 
 type expr = Expr.t

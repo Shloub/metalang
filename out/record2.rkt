@@ -44,9 +44,18 @@
                  (let ([t_ (toto 0 0 v1)])
                    t_)))
 (define result (lambda (t_) 
-                 (block (set-toto-blah! t_ (+ (toto-blah t_) 1)) (+ (+ (toto-foo t_) (* (toto-blah t_) (toto-bar t_))) (* (toto-bar t_) (toto-foo t_))))))
+                 (block
+                   (set-toto-blah! t_ (+ (toto-blah t_) 1))
+                   (+ (+ (toto-foo t_) (* (toto-blah t_) (toto-bar t_))) (* (toto-bar t_) (toto-foo t_)))
+                   )))
 (define main (let ([t_ (mktoto 4)])
                ((lambda (b) 
-                  (block (set-toto-bar! t_ b) (block (mread-blank) ((lambda (a) 
-                                                                    (block (set-toto-blah! t_ a) (display (result t_)))) (mread-int)) ))) (mread-int))))
+                  (block
+                    (set-toto-bar! t_ b)
+                    (block (mread-blank) ((lambda (a) 
+                                            (block
+                                              (set-toto-blah! t_ a)
+                                              (display (result t_))
+                                              )) (mread-int)) )
+                  )) (mread-int))))
 

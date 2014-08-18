@@ -63,7 +63,10 @@
                                        (if (not (eq? lettre (- 1)))
                                          (let ([addon (position_alphabet (vector-ref cle (remainder i taille_cle)))])
                                            (let ([new_ (remainder (+ addon lettre) 26)])
-                                             (block (vector-set! message i (of_position_alphabet new_)) (b lettre taille_cle cle taille message))))
+                                             (block
+                                               (vector-set! message i (of_position_alphabet new_))
+                                               (b lettre taille_cle cle taille message)
+                                               )))
                                          (b lettre taille_cle cle taille message))))
                                    '()))])
                    (a d taille_cle cle taille message))))))

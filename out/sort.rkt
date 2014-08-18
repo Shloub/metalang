@@ -60,7 +60,11 @@
                                                                  (g (+ j 1) tab len))])
                                                              (if (> (vector-ref tab i) (vector-ref tab j))
                                                                (let ([tmp (vector-ref tab i)])
-                                                                 (block (vector-set! tab i (vector-ref tab j)) (block (vector-set! tab j tmp) (h tab len))))
+                                                                 (block
+                                                                   (vector-set! tab i (vector-ref tab j))
+                                                                   (vector-set! tab j tmp)
+                                                                   (h tab len)
+                                                                   ))
                                                                (h tab len)))
                                                            (f (+ i 1) tab len)))])
                                            (g k tab len))))
@@ -83,14 +87,21 @@
                                          (if (eq? i (- j 1))
                                            ; on inverse simplement
                                            (let ([tmp (vector-ref tab i)])
-                                             (block (vector-set! tab i (vector-ref tab j)) (block (vector-set! tab j tmp) 
-                                             (let ([i (+ i 1)])
-                                               (e j0 i0 tab len i j)))))
+                                             (block
+                                               (vector-set! tab i (vector-ref tab j))
+                                               (vector-set! tab j tmp)
+                                               (let ([i (+ i 1)])
+                                                 (e j0 i0 tab len i j))
+                                               ))
                                            ; on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
                                            (let ([tmp (vector-ref tab i)])
-                                             (block (vector-set! tab i (vector-ref tab j)) (block (vector-set! tab j (vector-ref tab (+ i 1))) (block (vector-set! tab (+ i 1) tmp) 
-                                             (let ([i (+ i 1)])
-                                               (e j0 i0 tab len i j))))))))
+                                             (block
+                                               (vector-set! tab i (vector-ref tab j))
+                                               (vector-set! tab j (vector-ref tab (+ i 1)))
+                                               (vector-set! tab (+ i 1) tmp)
+                                               (let ([i (+ i 1)])
+                                                 (e j0 i0 tab len i j))
+                                               ))))
                                        (let ([j (- j 1)])
                                          (d j0 i0 tab len i j))))
                          (block

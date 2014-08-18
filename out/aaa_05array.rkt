@@ -42,7 +42,10 @@
 (define id (lambda (b) 
              b))
 (define g (lambda (t_ index) 
-            (block (vector-set! t_ index #f) '())))
+            (block
+              (vector-set! t_ index #f)
+              '()
+              )))
 (define main (let ([c 5])
                (let ([a (array_init_withenv c (lambda (i) 
                                                 (lambda (c) 
