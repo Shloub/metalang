@@ -52,8 +52,9 @@ let transform e = match Expr.unfix e with
     ) li) in
     Expr.block li
   | Expr.FunTuple ([param], e) -> Expr.fun_ [param] e
-  | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) ->
-    Expr.fun_ (List.append params params2) expr
+
+(*  | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) ->
+    Expr.fun_ (List.append params params2) expr *)
   | Expr.Apply ( Expr.Fixed.F (_, Expr.FunTuple (params, expr)), [Expr.Fixed.F (_, Expr.Tuple values)]) ->
     Expr.letand (List.combine params values) expr
   | Expr.Apply ( (Expr.Fixed.F (_, Expr.Fun (params, expr) ), values)) ->

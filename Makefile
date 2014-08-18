@@ -432,6 +432,22 @@ out/%.test : out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.o
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+out/%.test_rkt_ml : out/%.rkt.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
+testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
+
 SOURCEGENERATIONS := \
 	$(addsuffix .m, $(TESTS)) \
 	$(addsuffix .ml, $(TESTS)) \

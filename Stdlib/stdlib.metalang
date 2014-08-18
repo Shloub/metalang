@@ -17,6 +17,7 @@ macro int sqrt_(int c)
   clisp do "(isqrt $c)"
 	go do "int(math.Sqrt(float64($c)))"
   php do "intval(sqrt($c))"
+  rkt do "integer-sqrt $c"
   * do "sqrt($c)"
 end
 
@@ -35,6 +36,7 @@ macro char char_of_int(int c)
   go do "(byte)($c)"
   clisp do "(int-char $c)"
   cpp do "(char)($c)"
+  rkt do "integer->char $c"
   *  do "$c"
 end
 
@@ -47,6 +49,7 @@ macro int int_of_char(char c)
   php do "ord($c)"
   go do "(int)($c)"
   js do "$c.charCodeAt(0)"
+  rkt do "char->integer $c"
   *  do "$c"
 end
 

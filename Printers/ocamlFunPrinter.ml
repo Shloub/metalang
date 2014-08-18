@@ -37,6 +37,7 @@ class camlFunPrinter = object(self)
   val mutable typerEnv : Typer.env = Typer.empty
   method getTyperEnv () = typerEnv
   method setTyperEnv t = typerEnv <- t
+  method typename_of_field field = Typer.typename_for_field field typerEnv
 
   method binopstr = function
   | Ast.Expr.Add -> "+"
@@ -196,22 +197,30 @@ class camlFunPrinter = object(self)
   | E.Print (e, ty) ->
     self#print f e ty
   | E.ReadIn (ty, next) -> self#read f ty next
-  | E.SkipIn (e) ->
-    Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> %a))" self#expr e
+  | E.SkipIn (e) -> self#skipin f e
   | E.Block li -> self#block f li
-  | E.Record li -> Format.fprintf f "{%a}"
-    (Printer.print_list
-       (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
-       (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
-  | E.RecordAccess (record, field) -> Format.fprintf f "%a.%s" self#expr record field
-  | E.RecordAffectIn (record, field, value, in_) ->
-    Format.fprintf f "(%a.%s <- %a; %a)"
-      self#expr record field
-      self#expr value self#expr in_
+  | E.Record li -> self#record f li
+  | E.RecordAccess (record, field) -> self#recordaccess f record field
+  | E.RecordAffectIn (record, field, value, in_) -> self#recordaffectin f record field value in_
   | E.ArrayMake (len, lambda, env) -> self#arraymake f len lambda env
   | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
   | E.ArrayAffectIn (tab, indexes, v, in_) -> self#arrayaffectin f tab indexes v in_
   | E.LetIn (params, b) -> self#letin f params b
+
+  method recordaccess f record field  =
+    Format.fprintf f "%a.%s" self#expr record field
+
+  method recordaffectin f record field value in_ =
+    Format.fprintf f "(%a.%s <- %a; %a)"
+      self#expr record field
+      self#expr value self#expr in_
+  method record f li =
+    Format.fprintf f "{%a}"
+      (Printer.print_list
+	 (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
+	 (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+
+  method skipin f e = Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> %a))" self#expr e
 
   method arraymake f len lambda env = Format.fprintf f "(Array.init_withenv %a %a %a)" self#expr len self#expr lambda self#expr env
 
@@ -272,11 +281,12 @@ class camlFunPrinter = object(self)
     Format.fprintf f "@[<v 2>let rec %a =@\n%a@];;@\n" (* TODO is_rec ?*)
       self#binding name self#expr e
 
+  method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>type %a = %a@];;@\n"
+    self#binding name self#ptype ty
+
   method decl f d = match d with
   | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
-  | AstFun.DeclareType (name, ty) ->
-    Format.fprintf f "@[<v 2>type %a = %a@];;@\n"
-      self#binding name self#ptype ty
+  | AstFun.DeclareType (name, ty) -> self#toplvl_declarety f name ty
   | AstFun.Macro (name, t, params, code) ->
       macros <- Ast.BindingMap.add
         name (t, params, code)

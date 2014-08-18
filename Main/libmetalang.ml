@@ -62,6 +62,7 @@ let keywords lang=
   ]
   in match lang with
   | "cl" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
+  | "rkt" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
   | "php" -> "sqrt" :: "log10" :: li
   | "m" -> "log10" :: "id" :: li
   | _ -> li
