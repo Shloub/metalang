@@ -36,6 +36,8 @@ open Stdlib
 
 module E = AstFun.Expr
 module Type = Ast.Type
+module TypeSet = Ast.TypeSet
+
 class racketPrinter = object(self)
   inherit OcamlFunPrinter.camlFunPrinter as super
   method lang () = "rkt"
@@ -100,10 +102,16 @@ class racketPrinter = object(self)
       params
       self#expr e
 
-  method header f () = Format.fprintf f "#lang racket
+  method header f opts =
+    let need_stdinsep = opts.AstFun.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) opts.AstFun.reads in
+    let need_readchar = TypeSet.mem (Type.char) opts.AstFun.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+Format.fprintf f "#lang racket
 (require racket/block)
-
-(define array_init_withenv (lambda (len f env)
+%a%a%a%a%a"
+(fun f () -> if Tags.is_taged "__internal__allocArray" then Format.fprintf f
+"(define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
@@ -111,17 +119,23 @@ class racketPrinter = object(self)
         (cadr o)
       )
     )))))
-(define last-char 0)
+"
+) ()
+(fun f () -> if need then Format.fprintf f
+"(define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
-(define mread-char (lambda ()
+") ()
+(fun f () -> if need_readchar then Format.fprintf f
+"(define mread-char (lambda ()
   (let ([ out last-char])
     (block
       (next-char)
       out
     ))))
-
-(define mread-int (lambda ()
+") ()
+(fun f () -> if need_readint then Format.fprintf f
+"(define mread-int (lambda ()
   (if (eq? #\\- last-char)
   (block
     (next-char) (- 0 (mread-int)))
@@ -136,11 +150,14 @@ class racketPrinter = object(self)
           ))
         out
       )))]) (w 0)))))
-
-(define mread-blank (lambda ()
+") ()
+(fun f () -> if need_stdinsep then Format.fprintf f 
+"(define mread-blank (lambda ()
   (if (or (eq? last-char #\\NewLine) (eq? last-char #\\Space) ) (block (next-char) (mread-blank)) '())
 ))
-"
+") ()
+
+
   method skipin f e = Format.fprintf f "(block (mread-blank) %a )" self#expr e
 
   method read f ty next = match Type.unfix ty with

@@ -184,6 +184,8 @@ let ocaml_passes prog =
 
 let fun_passes config prog =
   prog |> default_passes
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply config b)
 
@@ -207,7 +209,7 @@ let languages, printers =
   in
   let ls = [
     "c",    clike_passes => new CPrinter.cPrinter ;
-    "m", clike_passes => new ObjCPrinter.objCPrinter ;
+    "m",    clike_passes => new ObjCPrinter.objCPrinter ;
     "pas",  clike_passes => new PasPrinter.pasPrinter ;
     "cc",   clike_passes => new CppPrinter.cppPrinter ;
     "cs",   clike_passes => new CsharpPrinter.csharpPrinter ;

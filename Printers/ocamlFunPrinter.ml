@@ -177,7 +177,7 @@ class camlFunPrinter = object(self)
 
   method if_ f e1 e2 e3 = Format.fprintf f "(@[if %a@\nthen %a@\nelse %a)@]" self#expr e1 self#expr e2 self#expr e3
 
-  method block f li = Format.fprintf f "@[<v 2>begin@\n%a@\nend@]@\n"
+  method block f li = Format.fprintf f "@[<v 2>(@\n%a@\n)@]@\n"
     (Printer.print_list
        self#expr
        (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
@@ -298,8 +298,10 @@ class camlFunPrinter = object(self)
         macros;
       ()
 
-  method header f () = Format.fprintf f
-"module Array = struct
+  method header f opts =
+    if Tags.is_taged "__internal__allocArray" then
+      Format.fprintf f
+	"module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
@@ -312,8 +314,8 @@ end
 "
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
-    self#header f ();
-    List.iter (self#decl f) prog
+    self#header f prog.AstFun.options;
+    List.iter (self#decl f) prog.AstFun.declarations
 
 end
 

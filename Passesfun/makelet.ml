@@ -78,8 +78,9 @@ let rec tr config e =
     else tr config e2
 
 let apply config p =
-  List.map (function
+  let declarations = List.map (function
   | Declaration (name, e) -> Declaration (name, tr config e)
   | x -> x
-  ) p
+  ) p.declarations
+  in {p with declarations = declarations }
 

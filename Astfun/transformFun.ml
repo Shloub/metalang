@@ -235,8 +235,12 @@ let transform (tyenv, prog) =
     | Ast.Prog.Macro (name, ty, params, code) ->
       Some (F.Macro (name, ty, params, code))
     | _ -> None) prog.Ast.Prog.funs
-  in match prog.Ast.Prog.main with
+  in let declarations = match prog.Ast.Prog.main with
   | None -> fonctions
   | Some m ->
     let main = instrs false (F.Expr.unit) None [] m in
     List.append fonctions [F.Declaration ("main", main)]
+     in { AstFun.declarations = declarations; options = {
+       AstFun.reads = prog.Ast.Prog.reads;
+       AstFun.hasSkip = prog.Ast.Prog.hasSkip;
+     }}

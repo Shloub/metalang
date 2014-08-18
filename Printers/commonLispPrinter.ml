@@ -309,14 +309,15 @@ class commonLispPrinter = object(self)
       funname_ <- exname;
     end
 
-  (* TODO n'afficher array_init que quand on en a besoin *)
   method prog f (prog:Utils.prog) =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "
-(si::use-fast-links nil)
+(si::use-fast-links nil)%s%s%s%s%s%s%s%a
+"
+(if Tags.is_taged "__internal__allocArray" then "
 (defun array_init (len fun)
   (let ((out (make-array len)) (i 0))
     (while (not (= i len))
@@ -324,10 +325,9 @@ class commonLispPrinter = object(self)
         (setf (aref out i) (funcall fun i))
         (setq i (+ 1 i ))))
         out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-%s%s%s%s%a"
+    ))" else "")
+(if Tags.is_taged "__internal__div" then "\n(defun quotient (a b) (truncate a b))" else "")
+(if Tags.is_taged "__internal__mod" then "(defun remainder (a b) (- a (* b (truncate a b))))" else "")
       (if need then
           "(let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
