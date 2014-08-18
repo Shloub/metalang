@@ -45,6 +45,12 @@ let init_acc () = ()
 
 let rec iter li =
   List.iter (fun i ->
+    Instr.Writer.Deep.iter (fun i ->
+      begin match Instr.unfix i with
+      | Instr.AllocArray _ -> tag "__internal__allocArray"
+      | _ -> ()
+      end;
+    ) i;
     Instr.fold_expr (fun acc e ->
       Expr.Writer.Deep.iter (fun e ->
         match Expr.unfix e with
