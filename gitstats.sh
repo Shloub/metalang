@@ -16,7 +16,7 @@ count(){
 }
 
 counttestschars(){
-    find ./tests/prog -name "*.metalang" -exec cat {} \; | wc -c
+    find ./tests/prog -name "*.metalang" -exec cat {} \; | tr -d ' \n' | wc -c
 }
 counttestslines(){
     find ./tests/prog -name "*.metalang" -exec cat {} \; | wc -l

@@ -1,21 +1,37 @@
-# todo temps de compilations
-# todo temps d'executions
-
 st(){
-    find out -name "$1" -exec cat {} \; | tr -d ' ' | wc -c
+    find "$1" -name "$2" -exec cat {} \; | tr -d ' \n' | wc -c
 }
 
-c=$(st "*.c")
-cc=$(st "*.cc")
-ml=$(st "*.ml")
-php=$(st "*.php")
-js=$(st "*.js")
-go=$(st "*.go")
-cl=$(st "*.cl")
-py=$(st "*.py")
-rb=$(st "*.rb")
-cs=$(st "*.cs")
-java=$(st "*.java")
+metalang=$(st "tests/prog" "*.metalang")
+c=$(st "out" "*.c")
+cc=$(st "out" "*.cc")
+ml=$(st "out" "*.ml")
+funml=$(st "out" "*.fun.ml")
+rkt=$(st "out" "*.rkt")
+php=$(st "out" "*.php")
+js=$(st "out" "*.js")
+go=$(st "out" "*.go")
+cl=$(st "out" "*.cl")
+py=$(st "out" "*.py")
+rb=$(st "out" "*.rb")
+cs=$(st "out" "*.cs")
+java=$(st "out" "*.java")
+
+ml=$(( $ml - $funml ))
+
+c=$(( $c * 1000 / $metalang))
+cc=$(( $cc * 1000 / $metalang))
+ml=$(( $ml * 1000 / $metalang))
+funml=$(( $funml * 1000 / $metalang))
+rkt=$(( $rkt * 1000 / $metalang))
+php=$(( $php * 1000 / $metalang))
+js=$(( $js * 1000 / $metalang))
+go=$(( $go * 1000 / $metalang))
+cl=$(( $cl * 1000 / $metalang))
+py=$(( $py * 1000 / $metalang))
+rb=$(( $rb * 1000 / $metalang))
+cs=$(( $cs * 1000 / $metalang))
+java=$(( $java * 1000 / $metalang))
 
 file="stats_repartition.dat"
 
@@ -33,6 +49,8 @@ echo "[$exarcint.$exarcfloat:$arcint.$arcfloat]"
 echo "c $c" > "$file"
 echo "cc $cc" >> "$file"
 echo "ml $ml" >> "$file"
+echo "funml $funml" >> "$file"
+echo "rkt $rkt" >> "$file"
 echo "php $php" >> "$file"
 echo "js $js" >> "$file"
 echo "go $go" >> "$file"
@@ -58,7 +76,7 @@ set title \"repartition des langages\"
 set style fill solid 0.25 noborder
 set boxwidth 0.75
 set yrange [0:*]
-set xtic rotate by 90 scale 0 font \",8\""
+set xtic rotate by -25 scale 0 font \",8\""
     exarc=0
     n=10
 # lignes commentées pour la création d'un camembert
