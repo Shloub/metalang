@@ -277,8 +277,13 @@ class camlFunPrinter = object(self)
     | Type.Lexems -> assert false
     | Type.Auto -> assert false
 
+  method is_rec name e =
+    E.Writer.Deep.fold (fun acc e -> acc || match E.unfix e with
+    | E.Lief (E.Binding n) -> n = name
+    | _ -> false) false e
+
   method toplvl_declare f name e = 
-    Format.fprintf f "@[<v 2>let rec %a =@\n%a@];;@\n" (* TODO is_rec ?*)
+    Format.fprintf f "@[<v 2>let%s %a =@\n%a@];;@\n" (if self#is_rec name e then " rec" else "")
       self#binding name self#expr e
 
   method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>type %a = %a@];;@\n"
