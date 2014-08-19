@@ -9,12 +9,14 @@ ml=$(st "out" "*.ml")
 funml=$(st "out" "*.fun.ml")
 rkt=$(st "out" "*.rkt")
 php=$(st "out" "*.php")
+pas=$(st "out" "*.pas")
 js=$(st "out" "*.js")
 go=$(st "out" "*.go")
 cl=$(st "out" "*.cl")
 py=$(st "out" "*.py")
 rb=$(st "out" "*.rb")
 cs=$(st "out" "*.cs")
+m=$(st "out" "*.m")
 java=$(st "out" "*.java")
 
 ml=$(( $ml - $funml ))
@@ -25,12 +27,14 @@ ml=$(( $ml * 1000 / $metalang))
 funml=$(( $funml * 1000 / $metalang))
 rkt=$(( $rkt * 1000 / $metalang))
 php=$(( $php * 1000 / $metalang))
+pas=$(( $pas * 1000 / $metalang))
 js=$(( $js * 1000 / $metalang))
 go=$(( $go * 1000 / $metalang))
 cl=$(( $cl * 1000 / $metalang))
 py=$(( $py * 1000 / $metalang))
 rb=$(( $rb * 1000 / $metalang))
 cs=$(( $cs * 1000 / $metalang))
+m=$(( $m * 1000 / $metalang))
 java=$(( $java * 1000 / $metalang))
 
 file="stats_repartition.dat"
@@ -46,19 +50,35 @@ local exarcfloat=$(echo ${exarc:0:2} | rev )
 echo "[$exarcint.$exarcfloat:$arcint.$arcfloat]"
 }
 
-echo "c $c" > "$file"
-echo "cc $cc" >> "$file"
-echo "ml $ml" >> "$file"
-echo "funml $funml" >> "$file"
-echo "rkt $rkt" >> "$file"
-echo "php $php" >> "$file"
-echo "js $js" >> "$file"
-echo "go $go" >> "$file"
-echo "cl $cl" >> "$file"
-echo "py $py" >> "$file"
-echo "rb $rb" >> "$file"
-echo "cs $cs" >> "$file"
-echo "java $java" >> "$file"
+swap(){
+    local line
+    local i
+    local word
+    while read line; do
+	for i in $(echo "$line" | rev); do
+	    word=$(echo "$i" | rev)
+	    echo -n "$word "
+	done
+	echo
+    done
+}
+
+(echo "c $c
+cc $cc
+ml $ml
+funml $funml
+rkt $rkt
+php $php
+pas $pas
+js $js
+go $go
+cl $cl
+m $m
+py $py
+rb $rb
+cs $cs
+java $java" | swap | sort | swap ) > "$file"
+
 filestatsplot(){
     IFS='
 '
