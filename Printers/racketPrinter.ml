@@ -159,7 +159,7 @@ Format.fprintf f "#lang racket
 ") ()
 
 
-  method skipin f e = Format.fprintf f "(block (mread-blank) %a )" self#expr e
+  method skip f = Format.fprintf f "(mread-blank)"
 
   method read f ty next = match Type.unfix ty with
   | Type.Char -> Format.fprintf f "(%a (mread-char))" self#expr next

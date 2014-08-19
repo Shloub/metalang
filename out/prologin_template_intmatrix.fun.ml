@@ -11,11 +11,19 @@ end
 
 let read_int () =
   Scanf.scanf "%d"
-  (fun  out_ -> (Scanf.scanf "%[\n \010]" (fun _ -> out_)))
+  (fun  out_ -> (
+                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                  out_
+                  )
+  )
 let read_int_line n =
   let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
-  (fun  t -> (Scanf.scanf "%[\n \010]" (fun _ -> let h = t in
-  ((), h))))) ()) in
+  (fun  t -> (
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               let h = t in
+               ((), h)
+               )
+  )) ()) in
   tab
 let read_int_matrix x y =
   let tab = (Array.init_withenv y (fun  z () -> let g = (read_int_line x) in

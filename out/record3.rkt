@@ -59,15 +59,16 @@
   ((lambda (g) 
      (block
        (set-toto-bar! (vector-ref t_ 0) g)
-       (block (mread-blank) ((lambda (f) 
-                               (block
-                                 (set-toto-blah! (vector-ref t_ 1) f)
-                                 (let ([titi (result t_ 4)])
-                                 (block
-                                   (display titi)
-                                   (display (toto-blah (vector-ref t_ 2)))
-                                   ))
-                                 )) (mread-int)) )
+       (mread-blank)
+       ((lambda (f) 
+          (block
+            (set-toto-blah! (vector-ref t_ 1) f)
+            (let ([titi (result t_ 4)])
+            (block
+              (display titi)
+              (display (toto-blah (vector-ref t_ 2)))
+              ))
+            )) (mread-int))
      )) (mread-int))))
 )
 

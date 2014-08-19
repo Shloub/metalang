@@ -121,11 +121,7 @@ let main =
         then let other = ((sumdiv nprimes primes r) - r) in
         (
           (if (other > r)
-           then (
-                  abondant.(r) <- true;
-                  ()
-                  )
-           
+           then abondant.(r) <- true
            else ());
           (bu (r + 1))
           )
@@ -140,11 +136,7 @@ let main =
              (if (j <= br)
               then (
                      (if ((abondant.(i) && abondant.(j)) && ((i + j) <= n))
-                      then (
-                             summable.((i + j)) <- true;
-                             ()
-                             )
-                      
+                      then summable.((i + j)) <- true
                       else ());
                      (bp (j + 1))
                      )

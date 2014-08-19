@@ -428,8 +428,7 @@ let euler29 () =
                                 (if ((bigint_eq a_bigint.(l) min_) && (b.(l) <= maxB))
                                  then (
                                         b.(l) <- (b.(l) + 1);
-                                        a_bigint.(l) <- (mul_bigint a_bigint.(l) a0_bigint.(l));
-                                        ()
+                                        a_bigint.(l) <- (mul_bigint a_bigint.(l) a0_bigint.(l))
                                         )
                                  
                                  else ());
@@ -452,9 +451,13 @@ let main =
     let dw = 100 in
     let rec du i sum =
       (if (i <= dw)
-       then (Scanf.scanf "%[\n \010]" (fun _ -> let tmp = (read_bigint 50) in
-       let sum = (add_bigint sum tmp) in
-       (du (i + 1) sum)))
+       then (
+              (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+              let tmp = (read_bigint 50) in
+              let sum = (add_bigint sum tmp) in
+              (du (i + 1) sum)
+              )
+       
        else (
               (Printf.printf "%s" "euler13 = ");
               (print_bigint sum);

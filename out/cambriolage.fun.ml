@@ -50,18 +50,34 @@ let nbPassePartout n passepartout m serrures =
     (o p max_ancient max_recent)
 let main =
   Scanf.scanf "%d"
-  (fun  n -> (Scanf.scanf "%[\n \010]" (fun _ -> let passepartout = (Array.init_withenv n (fun  i () -> let c = 2 in
-  let out0 = (Array.init_withenv c (fun  j () -> Scanf.scanf "%d"
-  (fun  out__ -> (Scanf.scanf "%[\n \010]" (fun _ -> let t = out__ in
-  ((), t))))) ()) in
-  let s = out0 in
-  ((), s)) ()) in
-  Scanf.scanf "%d"
-  (fun  m -> (Scanf.scanf "%[\n \010]" (fun _ -> let serrures = (Array.init_withenv m (fun  k () -> let d = 2 in
-  let out1 = (Array.init_withenv d (fun  l () -> Scanf.scanf "%d"
-  (fun  out_ -> (Scanf.scanf "%[\n \010]" (fun _ -> let v = out_ in
-  ((), v))))) ()) in
-  let u = out1 in
-  ((), u)) ()) in
-  (Printf.printf "%d" (nbPassePartout n passepartout m serrures))))))))
+  (fun  n -> (
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               let passepartout = (Array.init_withenv n (fun  i () -> let c = 2 in
+               let out0 = (Array.init_withenv c (fun  j () -> Scanf.scanf "%d"
+               (fun  out__ -> (
+                                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                let t = out__ in
+                                ((), t)
+                                )
+               )) ()) in
+               let s = out0 in
+               ((), s)) ()) in
+               Scanf.scanf "%d"
+               (fun  m -> (
+                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                            let serrures = (Array.init_withenv m (fun  k () -> let d = 2 in
+                            let out1 = (Array.init_withenv d (fun  l () -> Scanf.scanf "%d"
+                            (fun  out_ -> (
+                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                            let v = out_ in
+                                            ((), v)
+                                            )
+                            )) ()) in
+                            let u = out1 in
+                            ((), u)) ()) in
+                            (Printf.printf "%d" (nbPassePartout n passepartout m serrures))
+                            )
+               )
+               )
+  )
 

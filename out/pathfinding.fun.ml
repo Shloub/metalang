@@ -56,15 +56,27 @@ let main =
   let y = 0 in
   Scanf.scanf "%d"
   (fun  r -> let x = r in
-  (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
-  (fun  q -> let y = q in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv y (fun  i () -> let tab2 = (Array.init_withenv x (fun  j () -> let tmp = '\000' in
-  Scanf.scanf "%c"
-  (fun  p -> let tmp = p in
-  let o = tmp in
-  ((), o))) ()) in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let n = tab2 in
-  ((), n)))) ()) in
-  let result = (pathfind tab x y) in
-  (Printf.printf "%d" result)))))))
+  (
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    Scanf.scanf "%d"
+    (fun  q -> let y = q in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      let tab = (Array.init_withenv y (fun  i () -> let tab2 = (Array.init_withenv x (fun  j () -> let tmp = '\000' in
+      Scanf.scanf "%c"
+      (fun  p -> let tmp = p in
+      let o = tmp in
+      ((), o))) ()) in
+      (
+        (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+        let n = tab2 in
+        ((), n)
+        )
+      ) ()) in
+      let result = (pathfind tab x y) in
+      (Printf.printf "%d" result)
+      )
+    )
+    )
+  )
 

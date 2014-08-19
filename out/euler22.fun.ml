@@ -1,16 +1,24 @@
 let score () =
-  (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
-  (fun  len -> (Scanf.scanf "%[\n \010]" (fun _ -> let sum = 0 in
-  let b = 1 in
-  let d = len in
-  let rec a i sum =
-    (if (i <= d)
-     then Scanf.scanf "%c"
-     (fun  c -> let sum = (sum + (((int_of_char (c)) - (int_of_char ('A'))) + 1)) in
-     (* 		print c print " " print sum print " "  *)
-     (a (i + 1) sum))
-     else sum) in
-    (a b sum))))))
+  (
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    Scanf.scanf "%d"
+    (fun  len -> (
+                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                   let sum = 0 in
+                   let b = 1 in
+                   let d = len in
+                   let rec a i sum =
+                     (if (i <= d)
+                      then Scanf.scanf "%c"
+                      (fun  c -> let sum = (sum + (((int_of_char (c)) - (int_of_char ('A'))) + 1)) in
+                      (* 		print c print " " print sum print " "  *)
+                      (a (i + 1) sum))
+                      else sum) in
+                     (a b sum)
+                   )
+    )
+    )
+  
 let main =
   let sum = 0 in
   Scanf.scanf "%d"

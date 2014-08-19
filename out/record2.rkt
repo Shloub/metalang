@@ -40,11 +40,12 @@
   ((lambda (b) 
      (block
        (set-toto-bar! t_ b)
-       (block (mread-blank) ((lambda (a) 
-                               (block
-                                 (set-toto-blah! t_ a)
-                                 (display (result t_))
-                                 )) (mread-int)) )
+       (mread-blank)
+       ((lambda (a) 
+          (block
+            (set-toto-blah! t_ a)
+            (display (result t_))
+            )) (mread-int))
      )) (mread-int)))
 )
 

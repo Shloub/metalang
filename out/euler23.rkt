@@ -137,10 +137,7 @@
                                 (let ([other (- (sumdiv nprimes primes r) r)])
                                 (block
                                   (if (> other r)
-                                  (block
-                                    (vector-set! abondant r #t)
-                                    '()
-                                    )
+                                  (vector-set! abondant r #t)
                                   '())
                                   (bu (+ r 1))
                                   ))
@@ -154,10 +151,7 @@
                                                               (if (<= j br)
                                                               (block
                                                                 (if (and (and (vector-ref abondant i) (vector-ref abondant j)) (<= (+ i j) n))
-                                                                (block
-                                                                  (vector-set! summable (+ i j) #t)
-                                                                  '()
-                                                                  )
+                                                                (vector-set! summable (+ i j) #t)
                                                                 '())
                                                                 (bp (+ j 1))
                                                                 )

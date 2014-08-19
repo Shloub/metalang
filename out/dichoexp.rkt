@@ -38,8 +38,11 @@
   (let ([b 0])
   ((lambda (e) 
      (let ([a e])
-     (block (mread-blank) ((lambda (d) 
-                             (let ([b d])
-                             (display (exp_ a b)))) (mread-int)) ))) (mread-int))))
+     (block
+       (mread-blank)
+       ((lambda (d) 
+          (let ([b d])
+          (display (exp_ a b)))) (mread-int))
+     ))) (mread-int))))
 )
 

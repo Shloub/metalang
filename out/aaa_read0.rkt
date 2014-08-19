@@ -25,7 +25,10 @@
 (define (read_int _)
   ;toto
   ((lambda (out_) 
-     (block (mread-blank) out_ )) (mread-int))
+     (block
+       (mread-blank)
+       out_
+       )) (mread-int))
 )
 (define main
   (let ([len (read_int 'nil)])

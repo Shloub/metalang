@@ -53,7 +53,6 @@
                                 (block
                                   (vector-set! tab i (vector-ref tab j))
                                   (vector-set! tab j tmp)
-                                  '()
                                   ))
                                 '())
                                 (d (+ j 1))
@@ -111,14 +110,17 @@
   (let ([len 2])
   ((lambda (v) 
      (let ([len v])
-     (block (mread-blank) (let ([tab (array_init_withenv len (lambda (i_) 
-                                                               (lambda (_) 
-                                                               (let ([tmp 0])
-                                                               ((lambda (m) 
-                                                                  (let ([tmp m])
-                                                                  (block (mread-blank) 
-                                                                  (let ([l tmp])
-                                                                  (list '() l)) ))) (mread-int))))) '())])
+     (block
+       (mread-blank)
+       (let ([tab (array_init_withenv len (lambda (i_) 
+                                            (lambda (_) (let ([tmp 0])
+                                                        ((lambda (m) 
+                                                           (let ([tmp m])
+                                                           (block
+                                                             (mread-blank)
+                                                             (let ([l tmp])
+                                                             (list '() l))
+                                                             ))) (mread-int))))) '())])
      (let ([tab2 (copytab tab len)])
      (block
        (bubblesort tab2 len)
@@ -150,6 +152,7 @@
                        ))
                      )))])
        (r s))))
-     ))) ))) (mread-int)))
+     )))
+  ))) (mread-int)))
 )
 

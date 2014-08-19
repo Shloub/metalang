@@ -507,7 +507,6 @@
                                                        (block
                                                          (vector-set! b l (+ (vector-ref b l) 1))
                                                          (vector-set! a_bigint l (mul_bigint (vector-ref a_bigint l) (vector-ref a0_bigint l)))
-                                                         '()
                                                          )
                                                        '())
                                                        (u (+ l 1))
@@ -529,9 +528,12 @@
     (let ([dw 100])
     (letrec ([du (lambda (i sum) 
                    (if (<= i dw)
-                   (block (mread-blank) (let ([tmp (read_bigint 50)])
-                                        (let ([sum (add_bigint sum tmp)])
-                                        (du (+ i 1) sum))) )
+                   (block
+                     (mread-blank)
+                     (let ([tmp (read_bigint 50)])
+                     (let ([sum (add_bigint sum tmp)])
+                     (du (+ i 1) sum)))
+                     )
                    (block
                      (display "euler13 = ")
                      (print_bigint sum)

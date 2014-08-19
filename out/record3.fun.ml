@@ -36,7 +36,8 @@ let main =
   Scanf.scanf "%d"
   (fun  g -> (
                t.(0).bar <- g;
-               (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               Scanf.scanf "%d"
                (fun  f -> (
                             t.(1).blah <- f;
                             let titi = (result t 4) in
@@ -46,7 +47,7 @@ let main =
                               )
                             
                             )
-               )))
+               )
                )
   )
 

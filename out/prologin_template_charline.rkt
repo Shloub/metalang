@@ -39,7 +39,10 @@
 (define (read_int _)
   ;toto
   ((lambda (out_) 
-     (block (mread-blank) out_ )) (mread-int))
+     (block
+       (mread-blank)
+       out_
+       )) (mread-int))
 )
 (define (read_char_line n)
   ;toto
@@ -47,7 +50,10 @@
                                      (lambda (_) ((lambda (t_) 
                                                     (let ([d t_])
                                                     (list '() d))) (mread-char)))) '())])
-(block (mread-blank) tab ))
+(block
+  (mread-blank)
+  tab
+  ))
 )
 (define (programme_candidat tableau taille)
   ;toto

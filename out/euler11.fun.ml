@@ -16,8 +16,12 @@ let max2 a b =
    else b)
 let read_int_line n =
   let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
-  (fun  t -> (Scanf.scanf "%[\n \010]" (fun _ -> let g = t in
-  ((), g))))) ()) in
+  (fun  t -> (
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               let g = t in
+               ((), g)
+               )
+  )) ()) in
   tab
 let read_int_matrix x y =
   let tab = (Array.init_withenv y (fun  z () -> let f = (read_int_line x) in

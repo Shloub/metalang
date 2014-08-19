@@ -45,10 +45,16 @@
   (let ([i 0])
   ((lambda (h) 
      (let ([a h])
-     (block (mread-blank) ((lambda (g) 
-                             (let ([b g])
-                             (block (mread-blank) ((lambda (f) 
-                                                     (let ([i f])
-                                                     (display (fibo_ a b i)))) (mread-int)) ))) (mread-int)) ))) (mread-int)))))
+     (block
+       (mread-blank)
+       ((lambda (g) 
+          (let ([b g])
+          (block
+            (mread-blank)
+            ((lambda (f) 
+               (let ([i f])
+               (display (fibo_ a b i)))) (mread-int))
+          ))) (mread-int))
+     ))) (mread-int)))))
 )
 

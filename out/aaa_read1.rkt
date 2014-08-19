@@ -27,7 +27,10 @@
                                      (lambda (_) ((lambda (t_) 
                                                     (let ([a t_])
                                                     (list '() a))) (mread-char)))) '())])
-(block (mread-blank) tab ))
+(block
+  (mread-blank)
+  tab
+  ))
 )
 (define main
   (let ([str (read_char_line 12)])

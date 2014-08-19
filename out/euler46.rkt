@@ -79,10 +79,7 @@
                                               (let ([n (+ (vector-ref primes i) (* (* 2 j) j))])
                                               (block
                                                 (if (< n maximumprimes)
-                                                (block
-                                                  (vector-set! canbe n #t)
-                                                  '()
-                                                  )
+                                                (vector-set! canbe n #t)
                                                 '())
                                                 (u (+ j 1))
                                                 ))

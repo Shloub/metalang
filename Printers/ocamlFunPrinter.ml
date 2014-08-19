@@ -190,7 +190,7 @@ class camlFunPrinter = object(self)
   | E.Print (e, ty) ->
     self#print f e ty
   | E.ReadIn (ty, next) -> self#read f ty next
-  | E.SkipIn (e) -> self#skipin f e
+  | E.Skip -> self#skip f
   | E.Block li -> self#block f li
   | E.Record li -> self#record f li
   | E.RecordAccess (record, field) -> self#recordaccess f record field
@@ -214,7 +214,7 @@ class camlFunPrinter = object(self)
 	 (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
 	 (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
 
-  method skipin f e = Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> %a))" self#expr e
+  method skip f = Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ()))"
 
   method arraymake f len lambda env = Format.fprintf f "(Array.init_withenv %a %a %a)" self#expr len self#expr lambda self#expr env
 

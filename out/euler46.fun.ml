@@ -75,11 +75,7 @@ let main =
                   then let n = (primes.(i) + ((2 * j) * j)) in
                   (
                     (if (n < maximumprimes)
-                     then (
-                            canbe.(n) <- true;
-                            ()
-                            )
-                     
+                     then canbe.(n) <- true
                      else ());
                     (u (j + 1))
                     )

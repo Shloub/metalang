@@ -42,9 +42,11 @@
   ;toto
   (let ([tab (array_init_withenv n (lambda (i) 
                                      (lambda (_) ((lambda (t_) 
-                                                    (block (mread-blank) 
-                                                    (let ([g t_])
-                                                    (list '() g)) )) (mread-int)))) '())])
+                                                    (block
+                                                      (mread-blank)
+                                                      (let ([g t_])
+                                                      (list '() g))
+                                                      )) (mread-int)))) '())])
 tab)
 )
 (define (read_int_matrix x y)

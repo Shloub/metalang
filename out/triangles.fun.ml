@@ -45,39 +45,47 @@ let main =
   let len = 0 in
   Scanf.scanf "%d"
   (fun  t -> let len = t in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun  i () -> let b = (i + 1) in
-  let tab2 = (Array.init_withenv b (fun  j () -> let tmp = 0 in
-  Scanf.scanf "%d"
-  (fun  m -> let tmp = m in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let h = tmp in
-  ((), h))))) ()) in
-  let g = tab2 in
-  ((), g)) ()) in
   (
-    (Printf.printf "%d" (find len tab));
-    (Printf.printf "%s" "\n");
-    let r = 0 in
-    let s = (len - 1) in
-    let rec n k =
-      (if (k <= s)
-       then let p = 0 in
-       let q = k in
-       let rec o l =
-         (if (l <= q)
-          then (
-                 (Printf.printf "%d" tab.(k).(l));
-                 (Printf.printf "%s" " ");
-                 (o (l + 1))
-                 )
-          
-          else (
-                 (Printf.printf "%s" "\n");
-                 (n (k + 1))
-                 )
-          ) in
-         (o p)
-       else ()) in
-      (n r)
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    let tab = (Array.init_withenv len (fun  i () -> let b = (i + 1) in
+    let tab2 = (Array.init_withenv b (fun  j () -> let tmp = 0 in
+    Scanf.scanf "%d"
+    (fun  m -> let tmp = m in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      let h = tmp in
+      ((), h)
+      )
+    )) ()) in
+    let g = tab2 in
+    ((), g)) ()) in
+    (
+      (Printf.printf "%d" (find len tab));
+      (Printf.printf "%s" "\n");
+      let r = 0 in
+      let s = (len - 1) in
+      let rec n k =
+        (if (k <= s)
+         then let p = 0 in
+         let q = k in
+         let rec o l =
+           (if (l <= q)
+            then (
+                   (Printf.printf "%d" tab.(k).(l));
+                   (Printf.printf "%s" " ");
+                   (o (l + 1))
+                   )
+            
+            else (
+                   (Printf.printf "%s" "\n");
+                   (n (k + 1))
+                   )
+            ) in
+           (o p)
+         else ()) in
+        (n r)
+      )
+    
     )
-  )))
+  )
 

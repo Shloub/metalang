@@ -41,11 +41,19 @@ let main =
   let len = 0 in
   Scanf.scanf "%d"
   (fun  f -> let len = f in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun  i () -> let tmp = 0 in
-  Scanf.scanf "%d"
-  (fun  e -> let tmp = e in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let d = tmp in
-  ((), d))))) ()) in
-  let result = (pathfind tab len) in
-  (Printf.printf "%d" result))))
+  (
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    let tab = (Array.init_withenv len (fun  i () -> let tmp = 0 in
+    Scanf.scanf "%d"
+    (fun  e -> let tmp = e in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      let d = tmp in
+      ((), d)
+      )
+    )) ()) in
+    let result = (pathfind tab len) in
+    (Printf.printf "%d" result)
+    )
+  )
 

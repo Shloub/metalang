@@ -15,10 +15,7 @@
 )
 (define (g t_ index)
   ;toto
-  (block
-    (vector-set! t_ index #f)
-    '()
-    )
+  (vector-set! t_ index #f)
 )
 (define main
   (let ([c 5])

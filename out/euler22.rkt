@@ -30,18 +30,24 @@
 
 (define (score _)
   ;toto
-  (block (mread-blank) ((lambda (len) 
-                          (block (mread-blank) (let ([sum 0])
-                                               (let ([b 1])
-                                               (let ([d len])
-                                               (letrec ([a (lambda (i sum) 
-                                                             (if (<= i d)
-                                                             ((lambda (c) 
-                                                                (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
-                                                                ;		print c print " " print sum print " " 
-                                                                (a (+ i 1) sum))) (mread-char))
-                                                             sum))])
-                                               (a b sum))))) )) (mread-int)) )
+  (block
+    (mread-blank)
+    ((lambda (len) 
+       (block
+         (mread-blank)
+         (let ([sum 0])
+         (let ([b 1])
+         (let ([d len])
+         (letrec ([a (lambda (i sum) 
+                       (if (<= i d)
+                       ((lambda (c) 
+                          (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
+                          ;		print c print " " print sum print " " 
+                          (a (+ i 1) sum))) (mread-char))
+                       sum))])
+         (a b sum)))))
+    )) (mread-int))
+)
 )
 (define main
   (let ([sum 0])

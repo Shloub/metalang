@@ -40,8 +40,7 @@ let show lim nth =
                                     (if (nchiffre = 0)
                                      then (
                                             (Printf.printf "%d" l);
-                                            pris.(l) <- true;
-                                            ()
+                                            pris.(l) <- true
                                             )
                                      
                                      else ());

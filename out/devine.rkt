@@ -56,19 +56,26 @@
 )
 (define main
   ((lambda (nombre) 
-     (block (mread-blank) ((lambda (len) 
-                             (block (mread-blank) (let ([tab (array_init_withenv len 
-                                                  (lambda (i) 
-                                                    (lambda (_) ((lambda (tmp) 
-                                                                   (block (mread-blank) 
-                                                                   (let ([e tmp])
-                                                                   (list '() e)) )) (mread-int)))) '())])
-     (let ([a (devine_ nombre tab len)])
      (block
-       (if a
-       (display "True")
-       (display "False"))
-       '()
-       ))) )) (mread-int)) )) (mread-int))
+       (mread-blank)
+       ((lambda (len) 
+          (block
+            (mread-blank)
+            (let ([tab (array_init_withenv len (lambda (i) 
+                                                 (lambda (_) ((lambda (tmp) 
+                                                                (block
+                                                                  (mread-blank)
+                                                                  (let ([e tmp])
+                                                                  (list '() e))
+                                                                  )) (mread-int)))) '())])
+          (let ([a (devine_ nombre tab len)])
+          (block
+            (if a
+            (display "True")
+            (display "False"))
+            '()
+            )))
+       )) (mread-int))
+)) (mread-int))
 )
 

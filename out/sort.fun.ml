@@ -27,8 +27,7 @@ let bubblesort tab len =
                 then let tmp = tab.(i) in
                 (
                   tab.(i) <- tab.(j);
-                  tab.(j) <- tmp;
-                  ()
+                  tab.(j) <- tmp
                   )
                 
                 else ());
@@ -83,46 +82,54 @@ let main =
   let len = 2 in
   Scanf.scanf "%d"
   (fun  u -> let len = u in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun  i_ () -> let tmp = 0 in
-  Scanf.scanf "%d"
-  (fun  m -> let tmp = m in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let l = tmp in
-  ((), l))))) ()) in
-  let tab2 = (copytab tab len) in
   (
-    (bubblesort tab2 len);
-    let s = 0 in
-    let t = (len - 1) in
-    let rec r i =
-      (if (i <= t)
-       then (
-              (Printf.printf "%d" tab2.(i));
-              (Printf.printf "%s" " ");
-              (r (i + 1))
-              )
-       
-       else (
-              (Printf.printf "%s" "\n");
-              let tab3 = (copytab tab len) in
-              (
-                (qsort_ tab3 len 0 (len - 1));
-                let p = 0 in
-                let q = (len - 1) in
-                let rec n i =
-                  (if (i <= q)
-                   then (
-                          (Printf.printf "%d" tab3.(i));
-                          (Printf.printf "%s" " ");
-                          (n (i + 1))
-                          )
-                   
-                   else (Printf.printf "%s" "\n")) in
-                  (n p)
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    let tab = (Array.init_withenv len (fun  i_ () -> let tmp = 0 in
+    Scanf.scanf "%d"
+    (fun  m -> let tmp = m in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      let l = tmp in
+      ((), l)
+      )
+    )) ()) in
+    let tab2 = (copytab tab len) in
+    (
+      (bubblesort tab2 len);
+      let s = 0 in
+      let t = (len - 1) in
+      let rec r i =
+        (if (i <= t)
+         then (
+                (Printf.printf "%d" tab2.(i));
+                (Printf.printf "%s" " ");
+                (r (i + 1))
                 )
-              
-              )
-       ) in
-      (r s)
+         
+         else (
+                (Printf.printf "%s" "\n");
+                let tab3 = (copytab tab len) in
+                (
+                  (qsort_ tab3 len 0 (len - 1));
+                  let p = 0 in
+                  let q = (len - 1) in
+                  let rec n i =
+                    (if (i <= q)
+                     then (
+                            (Printf.printf "%d" tab3.(i));
+                            (Printf.printf "%s" " ");
+                            (n (i + 1))
+                            )
+                     
+                     else (Printf.printf "%s" "\n")) in
+                    (n p)
+                  )
+                
+                )
+         ) in
+        (r s)
+      )
+    
     )
-  )))
+  )
 

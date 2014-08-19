@@ -48,23 +48,26 @@ let main =
   Scanf.scanf "%d"
   (fun  f -> (
                t.bar <- f;
-               (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               Scanf.scanf "%d"
                (fun  e -> (
                             t.blah <- e;
-                            (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                            Scanf.scanf "%d"
                             (fun  d -> (
                                          t2.bar <- d;
-                                         (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+                                         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                         Scanf.scanf "%d"
                                          (fun  c -> (
                                                       t2.blah <- c;
                                                       (Printf.printf "%d" (result t t2));
                                                       (Printf.printf "%d" t.blah)
                                                       )
-                                         )))
                                          )
-                            )))
+                                         )
                             )
-               )))
+                            )
+               )
                )
   )
 

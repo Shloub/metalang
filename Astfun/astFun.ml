@@ -47,6 +47,7 @@ module Expr = struct
   | Binding of string
 
   type 'a tofix =
+  | Skip
   | LetRecIn of string * string list * 'a * 'a
   | UnOp of 'a * Ast.Expr.unop
   | BinOp of 'a * Ast.Expr.binop * 'a
@@ -60,7 +61,6 @@ module Expr = struct
   | If of 'a * 'a * 'a
   | Print of 'a * Ast.Type.t
   | ReadIn of Ast.Type.t * 'a
-  | SkipIn of 'a
   | Block of 'a list
   | Record of ('a * string) list
   | RecordAffect of 'a * string * 'a
@@ -88,7 +88,7 @@ module Expr = struct
       | If (e1, e2, e3) -> If (f e1, f e2, f e3)
       | Print (e, ty) -> Print (f e, ty)
       | ReadIn (ty, e) -> ReadIn (ty, f e)
-      | SkipIn e -> SkipIn (f e)
+      | Skip -> Skip
       | Block li -> Block (List.map f li)
       | Record li -> Record (List.map (fun (e, s) -> f e, s) li)
       | RecordAffect (e1, s, e2) -> RecordAffect (f e1, s, f e2)
@@ -154,9 +154,7 @@ module Expr = struct
         | ReadIn (ty, e) ->
           let acc, e = f acc e in
           acc, ReadIn (ty, e)
-        | SkipIn e ->
-          let acc, e = f acc e in
-          acc, SkipIn e
+        | Skip -> acc, Skip
 	| Block li ->
 	  let acc, li = List.fold_left_map f acc li in
 	  acc, Block li
@@ -218,7 +216,7 @@ module Expr = struct
   let print e ty next = block [ fix (Print (e, ty)); next]
   let print_ e ty = fix (Print (e, ty))
   let readin e ty = fix (ReadIn (ty, e))
-  let skipin e = fix (SkipIn e)
+  let skipin e = block [fix Skip; e]
   let record li = fix (Record li)
   let recordaccess e s = fix (RecordAccess (e, s))
   let recordaffectin record field value in_ = block [fix (RecordAffect (record, field, value)); in_]

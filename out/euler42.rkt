@@ -43,23 +43,28 @@
 )
 (define (score _)
   ;toto
-  (block (mread-blank) ((lambda (len) 
-                          (block (mread-blank) (let ([sum 0])
-                                               (let ([e 1])
-                                               (let ([f len])
-                                               (letrec ([d (lambda (i sum) 
-                                                             (if (<= i f)
-                                                             ((lambda (c) 
-                                                                (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
-                                                                ;		print c print " " print sum print " " 
-                                                                (d (+ i 1) sum))) (mread-char))
-                                                             (let ([b 
-                                                             (lambda (_) 
-                                                               '())])
-                                                             (if (is_triangular sum)
-                                                             1
-                                                             0))))])
-                                               (d e sum))))) )) (mread-int)) )
+  (block
+    (mread-blank)
+    ((lambda (len) 
+       (block
+         (mread-blank)
+         (let ([sum 0])
+         (let ([e 1])
+         (let ([f len])
+         (letrec ([d (lambda (i sum) 
+                       (if (<= i f)
+                       ((lambda (c) 
+                          (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
+                          ;		print c print " " print sum print " " 
+                          (d (+ i 1) sum))) (mread-char))
+                       (let ([b (lambda (_) 
+                                  '())])
+                       (if (is_triangular sum)
+                       1
+                       0))))])
+         (d e sum)))))
+  )) (mread-int))
+)
 )
 (define main
   (let ([l 1])

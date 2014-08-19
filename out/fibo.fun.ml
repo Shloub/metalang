@@ -19,9 +19,17 @@ let main =
   let i = 0 in
   Scanf.scanf "%d"
   (fun  h -> let a = h in
-  (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
-  (fun  g -> let b = g in
-  (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
-  (fun  f -> let i = f in
-  (Printf.printf "%d" (fibo_ a b i)))))))))
+  (
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    Scanf.scanf "%d"
+    (fun  g -> let b = g in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      Scanf.scanf "%d"
+      (fun  f -> let i = f in
+      (Printf.printf "%d" (fibo_ a b i)))
+      )
+    )
+    )
+  )
 

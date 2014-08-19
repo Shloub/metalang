@@ -38,10 +38,18 @@ let main =
   let len = 0 in
   Scanf.scanf "%d"
   (fun  g -> let len = g in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun  i () -> let x = 0 in
-  Scanf.scanf "%d"
-  (fun  f -> let x = f in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let e = x in
-  ((), e))))) ()) in
-  (Printf.printf "%d" (montagnes_ tab len)))))
+  (
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    let tab = (Array.init_withenv len (fun  i () -> let x = 0 in
+    Scanf.scanf "%d"
+    (fun  f -> let x = f in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      let e = x in
+      ((), e)
+      )
+    )) ()) in
+    (Printf.printf "%d" (montagnes_ tab len))
+    )
+  )
 

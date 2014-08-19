@@ -53,11 +53,15 @@ let main =
   let len = 0 in
   Scanf.scanf "%d"
   (fun  j -> let len = j in
-  (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun  i () -> let tmp = '\000' in
-  Scanf.scanf "%c"
-  (fun  h -> let tmp = h in
-  let g = tmp in
-  ((), g))) ()) in
-  let result = (npi_ tab len) in
-  (Printf.printf "%d" result))))
+  (
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    let tab = (Array.init_withenv len (fun  i () -> let tmp = '\000' in
+    Scanf.scanf "%c"
+    (fun  h -> let tmp = h in
+    let g = tmp in
+    ((), g))) ()) in
+    let result = (npi_ tab len) in
+    (Printf.printf "%d" result)
+    )
+  )
 

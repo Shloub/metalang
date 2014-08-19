@@ -46,7 +46,6 @@
                                                 (block
                                                   (display l)
                                                   (vector-set! pris l #t)
-                                                  '()
                                                   )
                                                 '())
                                                 (let ([nchiffre (- nchiffre 1)])

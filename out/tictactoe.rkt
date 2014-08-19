@@ -130,20 +130,11 @@
                                (block
                                  (set-gamestate-ended! g (or (not (eq? win 0)) (eq? freecase 0)))
                                  (if (eq? win 1)
-                                 (block
-                                   (set-gamestate-note! g 1000)
-                                   '()
-                                   )
+                                 (set-gamestate-note! g 1000)
                                  (block
                                    (if (eq? win 2)
-                                   (block
-                                     (set-gamestate-note! g (- 1000))
-                                     '()
-                                     )
-                                   (block
-                                     (set-gamestate-note! g 0)
-                                     '()
-                                     ))
+                                   (set-gamestate-note! g (- 1000))
+                                   (set-gamestate-note! g 0))
                                    '()
                                    ))
                                  '()
@@ -161,7 +152,6 @@
   (block
     (vector-set! (vector-ref (gamestate-cases g) x) y player)
     (set-gamestate-firstToPlay! g (not (gamestate-firstToPlay g)))
-    '()
     )))
 )
 (define (apply_move m g)
@@ -177,7 +167,6 @@
     (vector-set! (vector-ref (gamestate-cases g) x) y 0)
     (set-gamestate-firstToPlay! g (not (gamestate-firstToPlay g)))
     (set-gamestate-ended! g #f)
-    '()
     )
 )
 (define (cancel_move m g)
@@ -299,8 +288,14 @@
 (define (read_move _)
   ;toto
   ((lambda (x) 
-     (block (mread-blank) ((lambda (y) 
-                             (block (mread-blank) (move x y) )) (mread-int)) )) (mread-int))
+     (block
+       (mread-blank)
+       ((lambda (y) 
+          (block
+            (mread-blank)
+            (move x y)
+            )) (mread-int))
+     )) (mread-int))
 )
 (define main
   (let ([bp 0])

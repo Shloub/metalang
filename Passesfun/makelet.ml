@@ -42,10 +42,10 @@ let transform config e = match Expr.unfix e with
   | Expr.Tuple ([e]) -> e
   | Expr.Block [hd] -> hd
   | Expr.Block [
-    Expr.Fixed.F (_, Expr.Print (e, ty)) ;
+    Expr.Fixed.F (_, (
+      (Expr.Print _) | (Expr.RecordAffect _) | (Expr.ArrayAffect _))) as e ;
     Expr.Fixed.F (_, Expr.Lief (Expr.Unit))
-  ] ->
-    Expr.print_ e ty
+  ] -> e
   | Expr.Block li when (List.exists (fun e -> match Expr.unfix e with
     | Expr.Block _ -> true
     | _ -> false
@@ -55,6 +55,14 @@ let transform config e = match Expr.unfix e with
       | _ -> [e]
     ) li) in
     Expr.block li
+  | Expr.Block li when List.exists (fun e -> match Expr.unfix e with
+    | Expr.LetIn _ -> true | _ -> false) (List.tl (List.rev li)) ->
+    let rec f acc = function
+      | [] -> assert false
+      | hd::tl -> match Expr.unfix hd with
+	| Expr.LetIn (bindings, e) -> List.rev ( (Expr.letand bindings (Expr.block (e::tl))) :: acc)
+	| _ -> f (hd::acc) tl
+    in Expr.block (f [] li)
   | Expr.Apply (Expr.Fixed.F (_, Expr.FunTuple ([], e1)), [e2]) -> Expr.block [e2; e1]
   | Expr.FunTuple ([param], e) -> Expr.fun_ [param] e
   | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) when config.curry ->

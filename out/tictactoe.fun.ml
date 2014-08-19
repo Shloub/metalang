@@ -110,23 +110,11 @@ let eval_ g =
         else (
                g.ended <- ((win <> 0) || (freecase = 0));
                (if (win = 1)
-                then (
-                       g.note <- 1000;
-                       ()
-                       )
-                
+                then g.note <- 1000
                 else (
                        (if (win = 2)
-                        then (
-                               g.note <- (- 1000);
-                               ()
-                               )
-                        
-                        else (
-                               g.note <- 0;
-                               ()
-                               )
-                        );
+                        then g.note <- (- 1000)
+                        else g.note <- 0);
                        ()
                        )
                 );
@@ -143,8 +131,7 @@ let apply_move_xy x y g =
                 else player) in
   (
     g.cases.(x).(y) <- player;
-    g.firstToPlay <- (not g.firstToPlay);
-    ()
+    g.firstToPlay <- (not g.firstToPlay)
     )
   
 let apply_move m g =
@@ -157,8 +144,7 @@ let cancel_move_xy x y g =
   (
     g.cases.(x).(y) <- 0;
     g.firstToPlay <- (not g.firstToPlay);
-    g.ended <- false;
-    ()
+    g.ended <- false
     )
   
 let cancel_move m g =
@@ -276,9 +262,17 @@ let init_ () =
   ended=false}
 let read_move () =
   Scanf.scanf "%d"
-  (fun  x -> (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
-  (fun  y -> (Scanf.scanf "%[\n \010]" (fun _ -> {x=x;
-  y=y}))))))
+  (fun  x -> (
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               Scanf.scanf "%d"
+               (fun  y -> (
+                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                            {x=x;
+                            y=y}
+                            )
+               )
+               )
+  )
 let main =
   let bo = 0 in
   let bp = 1 in

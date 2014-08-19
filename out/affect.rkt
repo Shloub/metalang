@@ -70,21 +70,23 @@
   ((lambda (f) 
      (block
        (set-toto-bar! t__ f)
-       (block (mread-blank) ((lambda (e) 
-                               (block
-                                 (set-toto-blah! t__ e)
-                                 (block (mread-blank) ((lambda (d) 
-                                                         (block
-                                                           (set-toto-bar! t2 d)
-                                                           (block (mread-blank) (
-                                                           (lambda (c) 
-                                                             (block
-                                                               (set-toto-blah! t2 c)
-                                                               (display (result t__ t2))
-                                                               (display (toto-blah t__))
-                                                               )) (mread-int)) )
-                                                         )) (mread-int)) )
-       )) (mread-int)) )
+       (mread-blank)
+       ((lambda (e) 
+          (block
+            (set-toto-blah! t__ e)
+            (mread-blank)
+            ((lambda (d) 
+               (block
+                 (set-toto-bar! t2 d)
+                 (mread-blank)
+                 ((lambda (c) 
+                    (block
+                      (set-toto-blah! t2 c)
+                      (display (result t__ t2))
+                      (display (toto-blah t__))
+                      )) (mread-int))
+               )) (mread-int))
+       )) (mread-int))
   )) (mread-int))))
 )
 

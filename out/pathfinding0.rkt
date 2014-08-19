@@ -55,7 +55,10 @@
 (define (read_int _)
   ;toto
   ((lambda (out_) 
-     (block (mread-blank) out_ )) (mread-int))
+     (block
+       (mread-blank)
+       out_
+       )) (mread-int))
 )
 (define (read_char_line n)
   ;toto
@@ -63,7 +66,10 @@
                                      (lambda (_) ((lambda (t_) 
                                                     (let ([o t_])
                                                     (list '() o))) (mread-char)))) '())])
-(block (mread-blank) tab ))
+(block
+  (mread-blank)
+  tab
+  ))
 )
 (define (read_char_matrix x y)
   ;toto

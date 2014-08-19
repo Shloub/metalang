@@ -12,11 +12,7 @@ end
 let id b =
   b
 let g t index =
-  (
-    t.(index) <- false;
-    ()
-    )
-  
+  t.(index) <- false
 let main =
   let c = 5 in
   let a = (Array.init_withenv c (fun  i () -> (

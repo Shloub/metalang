@@ -12,8 +12,12 @@ end
 let read_sudoku () =
   let a = (9 * 9) in
   let out_ = (Array.init_withenv a (fun  i () -> Scanf.scanf "%d"
-  (fun  k -> (Scanf.scanf "%[\n \010]" (fun _ -> let u = k in
-  ((), u))))) ()) in
+  (fun  k -> (
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               let u = k in
+               ((), u)
+               )
+  )) ()) in
   out_
 let print_sudoku sudoku_ =
   let r = 0 in

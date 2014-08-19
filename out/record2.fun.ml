@@ -15,12 +15,13 @@ let main =
   Scanf.scanf "%d"
   (fun  b -> (
                t.bar <- b;
-               (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               Scanf.scanf "%d"
                (fun  a -> (
                             t.blah <- a;
                             (Printf.printf "%d" (result t))
                             )
-               )))
+               )
                )
   )
 

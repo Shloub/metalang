@@ -33,16 +33,28 @@ let devine_ nombre tab len =
     (b c max_ min_)
 let main =
   Scanf.scanf "%d"
-  (fun  nombre -> (Scanf.scanf "%[\n \010]" (fun _ -> Scanf.scanf "%d"
-  (fun  len -> (Scanf.scanf "%[\n \010]" (fun _ -> let tab = (Array.init_withenv len (fun  i () -> Scanf.scanf "%d"
-  (fun  tmp -> (Scanf.scanf "%[\n \010]" (fun _ -> let e = tmp in
-  ((), e))))) ()) in
-  let a = (devine_ nombre tab len) in
-  (
-    (if a
-     then (Printf.printf "%s" "True")
-     else (Printf.printf "%s" "False"));
-    ()
-    )
-  ))))))
+  (fun  nombre -> (
+                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                    Scanf.scanf "%d"
+                    (fun  len -> (
+                                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                   let tab = (Array.init_withenv len (fun  i () -> Scanf.scanf "%d"
+                                   (fun  tmp -> (
+                                                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                                  let e = tmp in
+                                                  ((), e)
+                                                  )
+                                   )) ()) in
+                                   let a = (devine_ nombre tab len) in
+                                   (
+                                     (if a
+                                      then (Printf.printf "%s" "True")
+                                      else (Printf.printf "%s" "False"));
+                                     ()
+                                     )
+                                   
+                                   )
+                    )
+                    )
+  )
 

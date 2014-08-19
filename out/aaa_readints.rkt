@@ -33,15 +33,20 @@
 (define (read_int _)
   ;toto
   ((lambda (out_) 
-     (block (mread-blank) out_ )) (mread-int))
+     (block
+       (mread-blank)
+       out_
+       )) (mread-int))
 )
 (define (read_int_line n)
   ;toto
   (let ([tab (array_init_withenv n (lambda (i) 
                                      (lambda (_) ((lambda (t_) 
-                                                    (block (mread-blank) 
-                                                    (let ([b t_])
-                                                    (list '() b)) )) (mread-int)))) '())])
+                                                    (block
+                                                      (mread-blank)
+                                                      (let ([b t_])
+                                                      (list '() b))
+                                                      )) (mread-int)))) '())])
 tab)
 )
 (define (read_int_matrix x y)

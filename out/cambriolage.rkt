@@ -77,31 +77,39 @@
 )
 (define main
   ((lambda (n) 
-     (block (mread-blank) (let ([passepartout (array_init_withenv n (lambda (i) 
-                                                                    (lambda (_) 
-                                                                    (let ([c 2])
-                                                                    (let ([out0 (array_init_withenv c 
-                                                                    (lambda (j) 
-                                                                    (lambda (_) (
-                                                                    (lambda (out__) 
-                                                                    (block (mread-blank) 
+     (block
+       (mread-blank)
+       (let ([passepartout (array_init_withenv n (lambda (i) 
+                                                   (lambda (_) (let ([c 2])
+                                                               (let ([out0 (array_init_withenv c 
+                                                               (lambda (j) 
+                                                                 (lambda (_) (
+                                                                 (lambda (out__) 
+                                                                   (block
+                                                                    (mread-blank)
                                                                     (let ([u out__])
-                                                                    (list '() u)) )) (mread-int)))) '())])
-                                                                    (let ([s out0])
-                                                                    (list '() s)))))) '())])
-((lambda (m) 
-   (block (mread-blank) (let ([serrures (array_init_withenv m (lambda (k) 
-                                                                (lambda (_) 
-                                                                (let ([d 2])
-                                                                (let ([out1 (array_init_withenv d 
-                                                                (lambda (l) 
-                                                                  (lambda (_) (
-                                                                  (lambda (out_) 
-                                                                    (block (mread-blank) 
-                                                                    (let ([w out_])
-                                                                    (list '() w)) )) (mread-int)))) '())])
-                                                                (let ([v out1])
-                                                                (list '() v)))))) '())])
-(display (nbPassePartout n passepartout m serrures))) )) (mread-int))) )) (mread-int))
+                                                                    (list '() u))
+                                                                    )) (mread-int)))) '())])
+                                                   (let ([s out0])
+                                                   (list '() s)))))) '())])
+  ((lambda (m) 
+     (block
+       (mread-blank)
+       (let ([serrures (array_init_withenv m (lambda (k) 
+                                               (lambda (_) (let ([d 2])
+                                                           (let ([out1 (array_init_withenv d 
+                                                           (lambda (l) 
+                                                             (lambda (_) (
+                                                             (lambda (out_) 
+                                                               (block
+                                                                 (mread-blank)
+                                                                 (let ([w out_])
+                                                                 (list '() w))
+                                                                 )) (mread-int)))) '())])
+                                               (let ([v out1])
+                                               (list '() v)))))) '())])
+  (display (nbPassePartout n passepartout m serrures)))
+)) (mread-int)))
+)) (mread-int))
 )
 
