@@ -171,7 +171,7 @@ Format.fprintf f "#lang racket
     | E.Fun (params, e) ->
       let params = if params = [] then ["_"] else params in
       Format.fprintf f "@[<v2>(define (%a %a)@\n;toto@\n%a@]@\n)@\n" self#binding name
-	(Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+	(Printer.print_list self#binding Printer.sep_space) params
 	self#expr e
     | _ -> Format.fprintf f "@[<v2>(define %a@\n%a@]@\n)@\n" self#binding name self#expr e
 
@@ -182,7 +182,7 @@ Format.fprintf f "#lang racket
       Format.fprintf f "@[<v 2>(struct %a (%a)@])@\n"
 	self#binding name
 	(Printer.print_list (fun f name -> Format.fprintf f "[%s #:mutable]" name)
-	   (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) fields
+	Printer.sep_space) fields
     | _ -> ()
 
   method print f e ty =
@@ -197,7 +197,7 @@ Format.fprintf f "#lang racket
     | _ -> Format.fprintf f "(lambda (internal_env) (apply (lambda@[ (%a) @\n%a@]) internal_env))"
       (Printer.print_list
          self#binding
-         (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+	 Printer.sep_space) params
       self#expr e
 
   method letin f params b  = Format.fprintf f "@[(let (%a)@\n%a@])"
@@ -218,7 +218,7 @@ Format.fprintf f "#lang racket
   method tuple f li =
     Format.fprintf f "(list %a)"
       (Printer.print_list self#expr
-	 (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+      Printer.sep_space) li
 
   method apply_nomacros f e li =
     if li = [] then
@@ -226,7 +226,7 @@ Format.fprintf f "#lang racket
     else
       Format.fprintf f "(%a %a)"
 	self#expr e
-	(Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+	(Printer.print_list self#expr Printer.sep_space) li
       
 
   method letrecin f name params e1 e2 = (* TODO *)
@@ -280,7 +280,7 @@ Format.fprintf f "#lang racket
       (self#typename_of_field f1)
       (Printer.print_list
 	 (fun f (expr, field) -> Format.fprintf f "%a" self#expr expr)
-	 (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+	 Printer.sep_space) li
 
 
 end

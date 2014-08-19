@@ -80,7 +80,7 @@ class camlFunPrinter = object(self)
       self#binding name
       (Printer.print_list
          self#binding
-         (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+	 Printer.sep_space) params
       self#expr e1
       self#expr e2
 
@@ -148,14 +148,10 @@ class camlFunPrinter = object(self)
     match li with
     | [] -> Format.fprintf f "(%a ())" self#expr e
     | _ -> Format.fprintf f "(%a %a)"
-      self#expr e
-      (Printer.print_list
-	 self#expr
-	 (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+      self#expr e (Printer.print_list self#expr Printer.sep_space) li
 
   method apply f e li =
-    let default () = self#apply_nomacros f e li
-    in
+    let default () = self#apply_nomacros f e li in
     match E.unfix e with
     | E.Lief ( E.Binding binding ) ->
       begin match Ast.BindingMap.find_opt binding macros with
@@ -258,7 +254,7 @@ class camlFunPrinter = object(self)
            (fun t (name, type_) ->
              Format.fprintf t "mutable %s : %a;" name self#ptype type_
            )
-           (fun t fa a fb b -> Format.fprintf t "%a %a" fa a fb b)
+           Printer.sep_space
         ) li
     | Type.Enum li ->
       Format.fprintf f "%a"

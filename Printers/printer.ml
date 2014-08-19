@@ -63,6 +63,8 @@ let print_list
         p tl
   in p f li
 
+let sep_space f pa a pb b = Format.fprintf f "%a %a" pa a pb b
+
 let print_list_indexed print sep f li =
   print_list
     (fun f (toprint, index) ->
