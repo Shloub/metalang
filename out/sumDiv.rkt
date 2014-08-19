@@ -19,44 +19,54 @@
         out
       )))]) (w 0)))))
 
-(define foo (lambda (_) 
-              (let ([a 0])
-                ; test 
-                (let ([a (+ a 1)])
-                  ; test 2 
-                  '()))))
-(define foo2 (lambda (_) 
-               '()))
-(define foo3 (lambda (_) 
-               (block
-                 (if (eq? 1 1)
-                   '()
-                   '())
-                 '()
-                 )))
-(define sumdiv (lambda (n) 
-                 ; On désire renvoyer la somme des diviseurs 
-                 (let ([out_ 0])
-                   ; On déclare un entier qui contiendra la somme 
-                   (let ([c 1])
-                     (let ([d n])
-                       (letrec ([b (lambda (i out_) 
-                                     (if (<= i d)
-                                       ; La boucle : i est le diviseur potentiel
-                                       (let ([out_ (if (eq? (remainder n i) 0)
-                                                     ; Si i divise 
-                                                     (let ([out_ (+ out_ i)])
-                                                       ; On incrémente 
-                                                       out_)
-                                                     ; nop 
-                                                     out_)])
-                                         (b (+ i 1) out_))
-                                       out_))])
-                       (b c out_)))))))
-(define main ; Programme principal 
+(define (foo _)
+  ;toto
+  (let ([a 0])
+  ; test 
+  (let ([a (+ a 1)])
+  ; test 2 
+  '()))
+)
+(define (foo2 _)
+  ;toto
+  '()
+)
+(define (foo3 _)
+  ;toto
+  (block
+    (if (eq? 1 1)
+    '()
+    '())
+    '()
+    )
+)
+(define (sumdiv n)
+  ;toto
+  ; On désire renvoyer la somme des diviseurs 
+  (let ([out_ 0])
+  ; On déclare un entier qui contiendra la somme 
+  (let ([c 1])
+  (let ([d n])
+  (letrec ([b (lambda (i out_) 
+                (if (<= i d)
+                ; La boucle : i est le diviseur potentiel
+                (let ([out_ (if (eq? (remainder n i) 0)
+                            ; Si i divise 
+                            (let ([out_ (+ out_ i)])
+                            ; On incrémente 
+                            out_)
+                            ; nop 
+                            out_)])
+                (b (+ i 1) out_))
+                out_))])
+  (b c out_)))))
+)
+(define main
+  ; Programme principal 
   (let ([n 0])
-    ((lambda (e) 
-       (let ([n e])
-         ; Lecture de l'entier 
-         (display (sumdiv n)))) (mread-int))))
+  ((lambda (e) 
+     (let ([n e])
+     ; Lecture de l'entier 
+     (display (sumdiv n)))) (mread-int)))
+)
 

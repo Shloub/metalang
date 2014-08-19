@@ -23,14 +23,16 @@
 ))
 
 (struct toto ([bar #:mutable] [foo #:mutable]))
-(define main (let ([param (toto 0 0)])
-               ((lambda (b) 
-                  (block
-                    (set-toto-bar! param b)
-                    (block (mread-blank) ((lambda (a) 
-                                            (block
-                                              (set-toto-foo! param a)
-                                              (display (+ (toto-bar param) (* (toto-foo param) (toto-bar param))))
-                                              )) (mread-int)) )
-                  )) (mread-int))))
+(define main
+  (let ([param (toto 0 0)])
+  ((lambda (b) 
+     (block
+       (set-toto-bar! param b)
+       (block (mread-blank) ((lambda (a) 
+                               (block
+                                 (set-toto-foo! param a)
+                                 (display (+ (toto-bar param) (* (toto-foo param) (toto-bar param))))
+                                 )) (mread-int)) )
+     )) (mread-int)))
+)
 

@@ -28,62 +28,69 @@
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define isqrt_ (lambda (c) 
-                 (integer-sqrt c)))
-(define is_triangular (lambda (n) 
-                        ;
-                        ;   n = k * (k + 1) / 2
-                        ;	  n * 2 = k * (k + 1)
-                        ;   
-                        (let ([a (isqrt_ (* n 2))])
-                          (eq? (* a (+ a 1)) (* n 2)))))
-(define score (lambda (_) 
-                (block (mread-blank) ((lambda (len) 
-                                        (block (mread-blank) (let ([sum 0])
-                                                               (let ([e 1])
-                                                                 (let ([f len])
-                                                                   (letrec ([d 
-                                                                    (lambda (i sum) 
-                                                                    (if (<= i f)
-                                                                    ((lambda (c) 
-                                                                    (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
-                                                                    ;		print c print " " print sum print " " 
-                                                                    (d (+ i 1) sum))) (mread-char))
-                                                                    (let ([b 
-                                                                    (lambda (_) 
-                                                                    '())])
-                                                                    (if (is_triangular sum)
-                                                                    1
-                                                                    0))))])
-                                                               (d e sum))))) )) (mread-int)) )))
-(define main (let ([l 1])
-               (let ([m 55])
-                 (letrec ([k (lambda (i) 
-                               (if (<= i m)
-                                 (block
-                                   (if (is_triangular i)
-                                     (block
-                                       (display i)
-                                       (display " ")
-                                       )
-                                     '())
-                                   (k (+ i 1))
-                                   )
-                                 (block
-                                   (display "\n")
-                                   (let ([sum 0])
-                                     ((lambda (n) 
-                                        (let ([h 1])
-                                          (let ([j n])
-                                            (letrec ([g (lambda (i sum) 
-                                                          (if (<= i j)
-                                                            (let ([sum (+ sum (score 'nil))])
-                                                              (g (+ i 1) sum))
-                                                            (block
-                                                              (display sum)
-                                                              (display "\n")
-                                                              )))])
-                                            (g h sum))))) (mread-int)))
-                               )))])
-  (k l)))))
+(define (isqrt_ c)
+  ;toto
+  (integer-sqrt c)
+)
+(define (is_triangular n)
+  ;toto
+  ;
+  ;   n = k * (k + 1) / 2
+  ;	  n * 2 = k * (k + 1)
+  ;   
+  (let ([a (isqrt_ (* n 2))])
+  (eq? (* a (+ a 1)) (* n 2)))
+)
+(define (score _)
+  ;toto
+  (block (mread-blank) ((lambda (len) 
+                          (block (mread-blank) (let ([sum 0])
+                                               (let ([e 1])
+                                               (let ([f len])
+                                               (letrec ([d (lambda (i sum) 
+                                                             (if (<= i f)
+                                                             ((lambda (c) 
+                                                                (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
+                                                                ;		print c print " " print sum print " " 
+                                                                (d (+ i 1) sum))) (mread-char))
+                                                             (let ([b 
+                                                             (lambda (_) 
+                                                               '())])
+                                                             (if (is_triangular sum)
+                                                             1
+                                                             0))))])
+                                               (d e sum))))) )) (mread-int)) )
+)
+(define main
+  (let ([l 1])
+  (let ([m 55])
+  (letrec ([k (lambda (i) 
+                (if (<= i m)
+                (block
+                  (if (is_triangular i)
+                  (block
+                    (display i)
+                    (display " ")
+                    )
+                  '())
+                  (k (+ i 1))
+                  )
+                (block
+                  (display "\n")
+                  (let ([sum 0])
+                  ((lambda (n) 
+                     (let ([h 1])
+                     (let ([j n])
+                     (letrec ([g (lambda (i sum) 
+                                   (if (<= i j)
+                                   (let ([sum (+ sum (score 'nil))])
+                                   (g (+ i 1) sum))
+                                   (block
+                                     (display sum)
+                                     (display "\n")
+                                     )))])
+                     (g h sum))))) (mread-int)))
+                )))])
+  (k l))))
+)
 

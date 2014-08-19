@@ -1,4 +1,7 @@
 #lang racket
 (require racket/block)
-(define main (display "Hello World"))
+
+(define main
+  (display "Hello World")
+)
 

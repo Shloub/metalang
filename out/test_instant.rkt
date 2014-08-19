@@ -1,6 +1,11 @@
 #lang racket
 (require racket/block)
-(define foo (lambda (a b) 
-                                                  (+ a b)))
-(define main (display 10))
+
+(define (foo a b)
+  ;toto
+  (+ a b)
+)
+(define main
+  (display 10)
+)
 

@@ -110,7 +110,7 @@ class racketPrinter = object(self)
     let need = need_stdinsep || need_readint || need_readchar in
 Format.fprintf f "#lang racket
 (require racket/block)
-%a%a%a%a%a"
+%a%a%a%a%a@\n"
 (fun f () -> if Tags.is_taged "__internal__allocArray" then Format.fprintf f
 "(define array_init_withenv (lambda (len f env)
   (build-vector len (lambda (i)
@@ -166,7 +166,14 @@ Format.fprintf f "#lang racket
   | Type.Integer -> Format.fprintf f "(%a (mread-int))" self#expr next
   | _ -> assert false
 
-  method toplvl_declare f name e = Format.fprintf f "@[<v 2>(define %a %a@])@\n" self#binding name self#expr e
+  method toplvl_declare f name e =
+    match E.unfix e with
+    | E.Fun (params, e) ->
+      let params = if params = [] then ["_"] else params in
+      Format.fprintf f "@[<v2>(define (%a %a)@\n;toto@\n%a@]@\n)@\n" self#binding name
+	(Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+	self#expr e
+    | _ -> Format.fprintf f "@[<v2>(define %a@\n%a@]@\n)@\n" self#binding name self#expr e
 
   method toplvl_declarety f name ty =
     match Ast.Type.unfix ty with
@@ -182,7 +189,7 @@ Format.fprintf f "#lang racket
     Format.fprintf f "(display %a)"
       self#expr e
 
-  method if_ f e1 e2 e3 = Format.fprintf f "@[<v 2>(if %a@\n%a@\n%a)@]" self#expr e1 self#expr e2 self#expr e3
+  method if_ f e1 e2 e3 = Format.fprintf f "@[(if %a@\n%a@\n%a)@]" self#expr e1 self#expr e2 self#expr e3
 
   method funtuple f params e =
     match params with
@@ -193,7 +200,7 @@ Format.fprintf f "#lang racket
          (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
       self#expr e
 
-  method letin f params b  = Format.fprintf f "@[<v 2>(let (%a)@\n%a@])"
+  method letin f params b  = Format.fprintf f "@[(let (%a)@\n%a@])"
     (Printer.print_list
        (fun f (s, a) ->
 	 Format.fprintf f "[%a %a]"

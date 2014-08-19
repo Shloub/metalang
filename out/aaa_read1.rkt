@@ -21,22 +21,25 @@
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define read_char_line (lambda (n) 
-                         (let ([tab (array_init_withenv n (lambda (i) 
-                                                            (lambda (_) (
-                                                            (lambda (t_) 
-                                                              (let ([a t_])
-                                                                (list '() a))) (mread-char)))) '())])
-  (block (mread-blank) tab ))))
-(define main (let ([str (read_char_line 12)])
-               (let ([c 0])
-                 (let ([d 11])
-                   (letrec ([b (lambda (i) 
-                                 (if (<= i d)
-                                   (block
-                                     (display (vector-ref str i))
-                                     (b (+ i 1))
-                                     )
-                                   '()))])
-                   (b c))))))
+(define (read_char_line n)
+  ;toto
+  (let ([tab (array_init_withenv n (lambda (i) 
+                                     (lambda (_) ((lambda (t_) 
+                                                    (let ([a t_])
+                                                    (list '() a))) (mread-char)))) '())])
+(block (mread-blank) tab ))
+)
+(define main
+  (let ([str (read_char_line 12)])
+  (let ([c 0])
+  (let ([d 11])
+  (letrec ([b (lambda (i) 
+                (if (<= i d)
+                (block
+                  (display (vector-ref str i))
+                  (b (+ i 1))
+                  )
+                '()))])
+  (b c)))))
+)
 
