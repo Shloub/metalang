@@ -55,8 +55,8 @@ let transform config e = match Expr.unfix e with
       | _ -> [e]
     ) li) in
     Expr.block li
+  | Expr.Apply (Expr.Fixed.F (_, Expr.FunTuple ([], e1)), [e2]) -> Expr.block [e2; e1]
   | Expr.FunTuple ([param], e) -> Expr.fun_ [param] e
-
   | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) when config.curry ->
     Expr.fun_ (List.append params params2) expr
   | Expr.Apply ( Expr.Fixed.F (_, Expr.FunTuple (params, expr)), [Expr.Fixed.F (_, Expr.Tuple values)]) ->

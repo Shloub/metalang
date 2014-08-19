@@ -25,6 +25,9 @@
 
 (**
    Ce module transforme un ast metalang impératif en ast fonctionnel
+   On concerve les effets de bords sur les records et les arrays.
+   Aucune technique ne permet de se passer de ces effets de bords sans pourrir le code.
+   Par contre, on supprime les références et les returns.
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)
@@ -34,6 +37,15 @@ open Stdlib
 
 module F = AstFun
 module A = Ast
+
+let may_return i =
+  let f tra acc i =
+    match A.Instr.unfix i with
+    | A.Instr.Return i -> true
+    | A.Instr.AllocArray _ -> acc
+    | _ -> tra acc i
+  in f (A.Instr.Writer.Traverse.fold f) false i
+let bad_return li = List.exists may_return li
 
 let rec name_of_mutable m = match A.Mutable.unfix m with
   | A.Mutable.Var varname -> Some varname
@@ -74,6 +86,17 @@ let rec affect_mutable (cont:F.Expr.t) (m:F.Expr.t A.Mutable.t) (e:F.Expr.t) = m
   | A.Mutable.Array (mut, item) -> F.Expr.arrayaffectin (accessmut mut) item e cont
   | A.Mutable.Dot (mut, field) -> F.Expr.recordaffectin (accessmut mut) field e cont
 
+let affected li =
+  List.fold_left (fun acc i ->
+    A.Instr.Writer.Deep.fold (fun acc i -> match A.Instr.unfix i with
+    | A.Instr.Read (_, m)
+    | A.Instr.Affect (m, _) -> begin match name_of_mutable m with
+      | None -> acc
+      | Some s -> A.BindingSet.add s acc
+    end
+    | _ -> acc
+    ) acc i
+  ) A.BindingSet.empty li
 
 let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
   | [] ->
@@ -122,15 +145,32 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.comment str next
     | A.Instr.If (e, l1, l2) ->
+      let affectedl1 = affected l1 in
+      let affectedl2 = affected l2 in
+      let affected = A.BindingSet.elements @$ A.BindingSet.union affectedl1 affectedl2 in
+      let affected = List.filter (fun x -> List.mem x env) affected in
       let next = instrs suite contsuite contreturn env tl in
-      let next = F.Expr.fun_ env next in
-      let nextname = Fresh.fresh () in
-      let ncont = F.Expr.apply (F.Expr.binding nextname) (List.map F.Expr.binding env) in 
-      let body1 = instrs true ncont contreturn env l1 in
-      let body2 = instrs true ncont contreturn env l2 in
+      let brl1 = bad_return l1 in
+      let brl2 = bad_return l2 in
+      if (brl1 || brl2) && not (brl1 && brl2) then (* xor *)
+	let body1 = instrs true next contreturn env l1 in
+	let body2 = instrs true next contreturn env l2 in
+	F.Expr.if_ e body1 body2
+      else if brl2 || brl1 then
+	let next = F.Expr.fun_ affected next in
+	let nextname = Fresh.fresh () in
+	let ncont = F.Expr.apply (F.Expr.binding nextname) (List.map F.Expr.binding affected) in 
+	let body1 = instrs true ncont contreturn env l1 in
+	let body2 = instrs true ncont contreturn env l2 in
 	F.Expr.apply
 	  (F.Expr.fun_ [nextname] (F.Expr.if_ e body1 body2))
 	  [next]
+      else
+	let next = F.Expr.funtuple affected next in
+	let ncont = F.Expr.tuple (List.map F.Expr.binding affected) in 
+	let body1 = instrs true ncont contreturn env l1 in
+	let body2 = instrs true ncont contreturn env l2 in
+	F.Expr.apply next [F.Expr.if_ e body1 body2]
     | A.Instr.Print (ty, e) ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.print e ty next
@@ -138,19 +178,21 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.skipin next
     | A.Instr.While (e, li) ->
+      let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
       let next = instrs suite contsuite contreturn env tl in
       let b = Fresh.fresh () in
       let loop = Fresh.fresh () in
-      let returnenv = List.map F.Expr.binding env in
+      let returnenv = List.map F.Expr.binding affected in
       let nextLoop = F.Expr.apply (F.Expr.binding loop) returnenv in
       let content = instrs true nextLoop contreturn env li in
       let contentif = F.Expr.if_ e content next in
-      F.Expr.letrecin loop env contentif (F.Expr.apply (F.Expr.binding loop) returnenv)
+      F.Expr.letrecin loop affected contentif (F.Expr.apply (F.Expr.binding loop) returnenv)
     | A.Instr.Loop (var, from_, end_, li) ->
+      let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
       let var_plus_un = F.Expr.binop (F.Expr.binding var) Ast.Expr.Add (F.Expr.integer 1) in
-      let next = instrs suite contsuite  contreturn env tl in
+      let next = instrs suite contsuite contreturn env tl in
       let loop = Fresh.fresh () in
-      let returnenv = List.map F.Expr.binding env in
+      let returnenv = List.map F.Expr.binding affected in
       let calloop = F.Expr.apply (F.Expr.binding loop) ((var_plus_un)::returnenv) in
       let content = instrs true calloop contreturn env li in
       let from = Fresh.fresh () in
@@ -158,16 +200,17 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let content = F.Expr.if_ (F.Expr.binop (F.Expr.binding var) Ast.Expr.LowerEq (F.Expr.binding to_) )
         content next in
       let cont = F.Expr.fun_ [from; to_]
-        (F.Expr.letrecin loop (var::env) content
+        (F.Expr.letrecin loop (var::affected) content
            (F.Expr.apply (F.Expr.binding loop) ((F.Expr.binding from)::returnenv))
         ) in
       F.Expr.apply cont [from_; end_]
     | A.Instr.AllocArray (name, t, e, Some (varname, li)) ->
+      let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
       let o = Fresh.fresh () in
-      let returnenv = F.Expr.tuple (List.map F.Expr.binding env) in
+      let returnenv = F.Expr.tuple (List.map F.Expr.binding affected) in
       let returncont = F.Expr.fun_ [o] (F.Expr.tuple [returnenv; F.Expr.binding o] ) in
       let content = instrs false contsuite (Some returncont) (varname::env) li in
-      let content = F.Expr.funtuple env content in
+      let content = F.Expr.funtuple affected content in
       let content = F.Expr.fun_ [varname] content in
       let next = instrs suite contsuite  contreturn env tl in
       let next = F.Expr.fun_ [name] next in

@@ -96,6 +96,7 @@ class racketPrinter = object(self)
     | _ -> Format.fprintf f "(%a %a %a)" self#pbinop op self#expr a self#expr b
 
   method fun_ f params e =
+    let params = if params = [] then ["_"] else params in
     Format.fprintf f "@[<v 2>(lambda (%a) @\n%a@])@]"
       (Printer.print_list self#binding
       (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b))
@@ -185,7 +186,7 @@ Format.fprintf f "#lang racket
 
   method funtuple f params e =
     match params with
-    | [] -> Format.fprintf f "(lambda () %a)" self#expr e
+    | [] -> Format.fprintf f "(lambda (_) %a)" self#expr e
     | _ -> Format.fprintf f "(lambda (internal_env) (apply (lambda@[ (%a) @\n%a@]) internal_env))"
       (Printer.print_list
          self#binding
@@ -213,9 +214,12 @@ Format.fprintf f "#lang racket
 	 (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
 
   method apply_nomacros f e li =
-    Format.fprintf f "(%a %a)"
-      self#expr e
-      (Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
+    if li = [] then
+      Format.fprintf f "(%a 'nil)" self#expr e
+    else
+      Format.fprintf f "(%a %a)"
+	self#expr e
+	(Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li
       
 
   method letrecin f name params e1 e2 = (* TODO *)
