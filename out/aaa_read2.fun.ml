@@ -9,26 +9,19 @@ module Array = struct
     )
 end
 
-let read_int =
-  (fun () -> Scanf.scanf "%d"
-  (fun out_ ->
-      (Scanf.scanf "%[\n \010]" (fun _ -> out_))));;
-let read_int_line =
-  (fun n ->
-      let tab = (Array.init_withenv n (fun i ->
-                                          (fun () -> Scanf.scanf "%d"
-                                          (fun t ->
-                                              (Scanf.scanf "%[\n \010]" (fun _ -> let b = t in
-                                              ((), b)))))) ()) in
-      tab);;
-let read_char_line =
-  (fun n ->
-      let tab = (Array.init_withenv n (fun i ->
-                                          (fun () -> Scanf.scanf "%c"
-                                          (fun t ->
-                                              let a = t in
-                                              ((), a)))) ()) in
-      (Scanf.scanf "%[\n \010]" (fun _ -> tab)));;
+let read_int () =
+  Scanf.scanf "%d"
+  (fun  out_ -> (Scanf.scanf "%[\n \010]" (fun _ -> out_)))
+let read_int_line n =
+  let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
+  (fun  t -> (Scanf.scanf "%[\n \010]" (fun _ -> let b = t in
+  ((), b))))) ()) in
+  tab
+let read_char_line n =
+  let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%c"
+  (fun  t -> let a = t in
+  ((), a))) ()) in
+  (Scanf.scanf "%[\n \010]" (fun _ -> tab))
 let main =
   let len = (read_int ()) in
   (
@@ -108,5 +101,5 @@ let main =
        ) in
       (p q)
     )
-  ;;
+  
 

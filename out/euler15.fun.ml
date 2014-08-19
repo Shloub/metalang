@@ -13,13 +13,10 @@ let main =
   let n = 10 in
   (*  normalement on doit mettre 20 mais là on se tape un overflow  *)
   let n = (n + 1) in
-  let tab = (Array.init_withenv n (fun i ->
-                                      (fun () -> let tab2 = (Array.init_withenv n (fun
-                                       j ->
-                                      (fun () -> let b = 0 in
-                                      ((), b))) ()) in
-                                      let a = tab2 in
-                                      ((), a))) ()) in
+  let tab = (Array.init_withenv n (fun  i () -> let tab2 = (Array.init_withenv n (fun  j () -> let b = 0 in
+  ((), b)) ()) in
+  let a = tab2 in
+  ((), a)) ()) in
   let z = 0 in
   let ba = (n - 1) in
   let rec y l =
@@ -74,5 +71,5 @@ let main =
            ) in
           (c g)) in
        (s w)) in
-    (y z);;
+    (y z)
 

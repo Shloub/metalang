@@ -8,15 +8,14 @@ let main =
      let found = false in
      let rec f a b b0 found =
        (if ((b * b) < a)
-        then ((fun (a, b, b0, found) ->
-                  let b = (b + 1) in
-                  (f a b b0 found)) (if ((a mod b) = 0)
-                                     then let a = (a / b) in
-                                     let b0 = b in
-                                     let b = a in
-                                     let found = true in
-                                     (a, b, b0, found)
-                                     else (a, b, b0, found)))
+        then ((fun  (a, b, b0, found) -> let b = (b + 1) in
+        (f a b b0 found)) (if ((a mod b) = 0)
+                           then let a = (a / b) in
+                           let b0 = b in
+                           let b = a in
+                           let found = true in
+                           (a, b, b0, found)
+                           else (a, b, b0, found)))
         else let a = (if (not found)
                       then (
                              (Printf.printf "%d" a);
@@ -29,5 +28,5 @@ let main =
         (d a b0)) in
        (f a b b0 found)
      else ()) in
-    (d a b0);;
+    (d a b0)
 

@@ -9,43 +9,40 @@ module Array = struct
     )
 end
 
-let eratostene =
-  (fun t max_ ->
-      let n = 0 in
-      let d = 2 in
-      let e = (max_ - 1) in
-      let rec a i n =
-        (if (i <= e)
-         then let n = (if (t.(i) = i)
-                       then let n = (n + 1) in
-                       let j = (i * i) in
-                       let j = (if ((j / i) = i)
-                                then (*  overflow test  *)
-                                let rec c j =
-                                  (if ((j < max_) && (j > 0))
-                                   then (
-                                          t.(j) <- 0;
-                                          let j = (j + i) in
-                                          (c j)
-                                          )
-                                   
-                                   else j) in
-                                  (c j)
-                                else j) in
-                       n
-                       else n) in
-         (a (i + 1) n)
-         else n) in
-        (a d n));;
+let eratostene t max_ =
+  let n = 0 in
+  let d = 2 in
+  let e = (max_ - 1) in
+  let rec a i n =
+    (if (i <= e)
+     then let n = (if (t.(i) = i)
+                   then let n = (n + 1) in
+                   let j = (i * i) in
+                   let j = (if ((j / i) = i)
+                            then (*  overflow test  *)
+                            let rec c j =
+                              (if ((j < max_) && (j > 0))
+                               then (
+                                      t.(j) <- 0;
+                                      let j = (j + i) in
+                                      (c j)
+                                      )
+                               
+                               else j) in
+                              (c j)
+                            else j) in
+                   n
+                   else n) in
+     (a (i + 1) n)
+     else n) in
+    (a d n)
 let main =
   let maximumprimes = 6000 in
-  let era = (Array.init_withenv maximumprimes (fun j_ ->
-                                                  (fun () -> let f = j_ in
-                                                  ((), f))) ()) in
+  let era = (Array.init_withenv maximumprimes (fun  j_ () -> let f = j_ in
+  ((), f)) ()) in
   let nprimes = (eratostene era maximumprimes) in
-  let primes = (Array.init_withenv nprimes (fun o ->
-                                               (fun () -> let g = 0 in
-                                               ((), g))) ()) in
+  let primes = (Array.init_withenv nprimes (fun  o () -> let g = 0 in
+  ((), g)) ()) in
   let l = 0 in
   let ba = 2 in
   let bb = (maximumprimes - 1) in
@@ -65,9 +62,8 @@ let main =
             (Printf.printf "%s" " == ");
             (Printf.printf "%d" nprimes);
             (Printf.printf "%s" "\n");
-            let canbe = (Array.init_withenv maximumprimes (fun i_ ->
-                                                              (fun () -> let h = false in
-                                                              ((), h))) ()) in
+            let canbe = (Array.init_withenv maximumprimes (fun  i_ () -> let h = false in
+            ((), h)) ()) in
             let x = 0 in
             let y = (nprimes - 1) in
             let rec s i =
@@ -111,5 +107,5 @@ let main =
               (s x)
             )
      ) in
-    (z ba l);;
+    (z ba l)
 

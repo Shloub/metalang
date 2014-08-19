@@ -14,5 +14,5 @@ let main =
             (Printf.printf "%s" "\n")
             )
      ) in
-    (a b sum);;
+    (a b sum)
 

@@ -9,33 +9,30 @@ module Array = struct
     )
 end
 
-let next_ =
-  (fun n ->
-      let e = (fun () -> ()) in
-      (if ((n mod 2) = 0)
-       then (n / 2)
-       else ((3 * n) + 1)));;
-let rec find =
-  (fun n m ->
-      let b = (fun () -> ()) in
-      (if (n = 1)
-       then 1
-       else let c = (fun () -> (b ())) in
-       (if (n >= 1000000)
-        then (1 + (find (next_ n) m))
-        else let d = (fun () -> (c ())) in
-        (if (m.(n) <> 0)
-         then m.(n)
-         else (
-                m.(n) <- (1 + (find (next_ n) m));
-                m.(n)
-                )
-         ))));;
+let next_ n =
+  let e () = () in
+  (if ((n mod 2) = 0)
+   then (n / 2)
+   else ((3 * n) + 1))
+let rec find n m =
+  let b () = () in
+  (if (n = 1)
+   then 1
+   else let c () = (b ()) in
+   (if (n >= 1000000)
+    then (1 + (find (next_ n) m))
+    else let d () = (c ()) in
+    (if (m.(n) <> 0)
+     then m.(n)
+     else (
+            m.(n) <- (1 + (find (next_ n) m));
+            m.(n)
+            )
+     )))
 let main =
   let a = 1000000 in
-  let m = (Array.init_withenv a (fun j ->
-                                    (fun () -> let f = 0 in
-                                    ((), f))) ()) in
+  let m = (Array.init_withenv a (fun  j () -> let f = 0 in
+  ((), f)) ()) in
   let max_ = 0 in
   let maxi = 0 in
   let h = 1 in
@@ -44,12 +41,11 @@ let main =
     (if (i <= k)
      then (*  normalement on met 999999 mais ça dépasse les int32...  *)
      let n2 = (find i m) in
-     ((fun (max_, maxi) ->
-          (g (i + 1) max_ maxi)) (if (n2 > max_)
-                                  then let max_ = n2 in
-                                  let maxi = i in
-                                  (max_, maxi)
-                                  else (max_, maxi)))
+     ((fun  (max_, maxi) -> (g (i + 1) max_ maxi)) (if (n2 > max_)
+                                                    then let max_ = n2 in
+                                                    let maxi = i in
+                                                    (max_, maxi)
+                                                    else (max_, maxi)))
      else (
             (Printf.printf "%d" max_);
             (Printf.printf "%s" "\n");
@@ -57,5 +53,5 @@ let main =
             (Printf.printf "%s" "\n")
             )
      ) in
-    (g h max_ maxi);;
+    (g h max_ maxi)
 

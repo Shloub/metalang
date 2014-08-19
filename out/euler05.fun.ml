@@ -9,43 +9,38 @@ module Array = struct
     )
 end
 
-let max2 =
-  (fun a b ->
-      let p = (fun () -> ()) in
-      (if (a > b)
-       then a
-       else b));;
-let primesfactors =
-  (fun n ->
-      let c = (n + 1) in
-      let tab = (Array.init_withenv c (fun i ->
-                                          (fun () -> let f = 0 in
-                                          ((), f))) ()) in
-      let d = 2 in
-      let rec h d n =
-        (if ((n <> 1) && ((d * d) <= n))
-         then ((fun (d, n) ->
-                   (h d n)) (if ((n mod d) = 0)
-                             then (
-                                    tab.(d) <- (tab.(d) + 1);
-                                    let n = (n / d) in
-                                    (d, n)
-                                    )
-                             
-                             else let d = (d + 1) in
-                             (d, n)))
-         else (
-                tab.(n) <- (tab.(n) + 1);
-                tab
-                )
-         ) in
-        (h d n));;
+let max2 a b =
+  let p () = () in
+  (if (a > b)
+   then a
+   else b)
+let primesfactors n =
+  let c = (n + 1) in
+  let tab = (Array.init_withenv c (fun  i () -> let f = 0 in
+  ((), f)) ()) in
+  let d = 2 in
+  let rec h d n =
+    (if ((n <> 1) && ((d * d) <= n))
+     then ((fun  (d, n) -> (h d n)) (if ((n mod d) = 0)
+                                     then (
+                                            tab.(d) <- (tab.(d) + 1);
+                                            let n = (n / d) in
+                                            (d, n)
+                                            )
+                                     
+                                     else let d = (d + 1) in
+                                     (d, n)))
+     else (
+            tab.(n) <- (tab.(n) + 1);
+            tab
+            )
+     ) in
+    (h d n)
 let main =
   let lim = 20 in
   let e = (lim + 1) in
-  let o = (Array.init_withenv e (fun m ->
-                                    (fun () -> let q = 0 in
-                                    ((), q))) ()) in
+  let o = (Array.init_withenv e (fun  m () -> let q = 0 in
+  ((), q)) ()) in
   let bc = 1 in
   let bd = lim in
   let rec y i =
@@ -81,5 +76,5 @@ let main =
                )
         ) in
        (r w product)) in
-    (y bc);;
+    (y bc)
 

@@ -1,24 +1,21 @@
-let max2 =
-  (fun a b ->
-      let g = (fun () -> ()) in
-      (if (a > b)
-       then a
-       else b));;
-let min2 =
-  (fun a b ->
-      let f = (fun () -> ()) in
-      (if (a < b)
-       then a
-       else b));;
-let rec pgcd =
-  (fun a b ->
-      let c = (min2 a b) in
-      let d = (max2 a b) in
-      let reste = (d mod c) in
-      let e = (fun () -> ()) in
-      (if (reste = 0)
-       then c
-       else (pgcd c reste)));;
+let max2 a b =
+  let g () = () in
+  (if (a > b)
+   then a
+   else b)
+let min2 a b =
+  let f () = () in
+  (if (a < b)
+   then a
+   else b)
+let rec pgcd a b =
+  let c = (min2 a b) in
+  let d = (max2 a b) in
+  let reste = (d mod c) in
+  let e () = () in
+  (if (reste = 0)
+   then c
+   else (pgcd c reste))
 let main =
   let top = 1 in
   let bottom = 1 in
@@ -34,25 +31,24 @@ let main =
         let o = 9 in
         let rec m k bottom top =
           (if (k <= o)
-           then ((fun (bottom, top) ->
-                     (m (k + 1) bottom top)) (if ((i <> j) && (j <> k))
-                                              then let a = ((i * 10) + j) in
-                                              let b = ((j * 10) + k) in
-                                              ((fun (bottom, top) ->
-                                                   (bottom, top)) (if ((a * k) = (i * b))
-                                                                   then 
-                                                                   (
-                                                                    (Printf.printf "%d" a);
-                                                                    (Printf.printf "%s" "/");
-                                                                    (Printf.printf "%d" b);
-                                                                    (Printf.printf "%s" "\n");
-                                                                    let top = (top * a) in
-                                                                    let bottom = (bottom * b) in
-                                                                    (bottom, top)
-                                                                    )
-                                                                   
-                                                                   else (bottom, top)))
-                                              else (bottom, top)))
+           then ((fun  (bottom, top) -> (m (k + 1) bottom top)) (if ((i <> j) && (j <> k))
+                                                                 then let a = ((i * 10) + j) in
+                                                                 let b = ((j * 10) + k) in
+                                                                 ((fun  (bottom, top) -> (bottom, top)) (
+                                                                 if ((a * k) = (i * b))
+                                                                 then 
+                                                                 (
+                                                                   (Printf.printf "%d" a);
+                                                                   (Printf.printf "%s" "/");
+                                                                   (Printf.printf "%d" b);
+                                                                   (Printf.printf "%s" "\n");
+                                                                   let top = (top * a) in
+                                                                   let bottom = (bottom * b) in
+                                                                   (bottom, top)
+                                                                   )
+                                                                 
+                                                                 else (bottom, top)))
+                                                                 else (bottom, top)))
            else (l (j + 1) bottom top)) in
           (m n bottom top)
         else (h (i + 1) bottom top)) in
@@ -73,5 +69,5 @@ let main =
             
             )
      ) in
-    (h s bottom top);;
+    (h s bottom top)
 

@@ -9,25 +9,22 @@ module Array = struct
     )
 end
 
-let id =
-  (fun b ->
-      b);;
-let g =
-  (fun t index ->
-      (
-        t.(index) <- false;
-        ()
-        )
-      );;
+let id b =
+  b
+let g t index =
+  (
+    t.(index) <- false;
+    ()
+    )
+  
 let main =
   let c = 5 in
-  let a = (Array.init_withenv c (fun i ->
-                                    (fun () -> (
-                                                 (Printf.printf "%d" i);
-                                                 let f = ((i mod 2) = 0) in
-                                                 ((), f)
-                                                 )
-                                    )) ()) in
+  let a = (Array.init_withenv c (fun  i () -> (
+                                                (Printf.printf "%d" i);
+                                                let f = ((i mod 2) = 0) in
+                                                ((), f)
+                                                )
+  ) ()) in
   let d = a.(0) in
   (
     (if d
@@ -44,5 +41,5 @@ let main =
       )
     
     )
-  ;;
+  
 

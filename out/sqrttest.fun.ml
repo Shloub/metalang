@@ -1,6 +1,5 @@
-let isqrt =
-  (fun c ->
-      ((int_of_float (sqrt (float_of_int ( c))))));;
+let isqrt c =
+  ((int_of_float (sqrt (float_of_int ( c)))))
 let main =
   (
     (Printf.printf "%d" (isqrt 4));
@@ -16,5 +15,5 @@ let main =
     (Printf.printf "%d" (isqrt 10));
     (Printf.printf "%s" " ")
     )
-  ;;
+  
 

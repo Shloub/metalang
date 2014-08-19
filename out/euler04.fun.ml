@@ -1,15 +1,13 @@
-let max2 =
-  (fun a b ->
-      let h = (fun () -> ()) in
-      (if (a > b)
-       then a
-       else b));;
-let rec chiffre =
-  (fun c m ->
-      let g = (fun () -> ()) in
-      (if (c = 0)
-       then (m mod 10)
-       else (chiffre (c - 1) (m / 10))));;
+let max2 a b =
+  let h () = () in
+  (if (a > b)
+   then a
+   else b)
+let rec chiffre c m =
+  let g () = () in
+  (if (c = 0)
+   then (m mod 10)
+   else (chiffre (c - 1) (m / 10)))
 let main =
   let m = 1 in
   let z = 0 in
@@ -57,5 +55,5 @@ let main =
             (Printf.printf "%s" "\n")
             )
      ) in
-    (i z m);;
+    (i z m)
 

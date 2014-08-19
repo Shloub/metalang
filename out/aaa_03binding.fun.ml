@@ -1,16 +1,14 @@
-let g =
-  (fun i ->
-      let j = (i * 4) in
-      (if ((j mod 2) = 1)
-       then 0
-       else j));;
-let h =
-  (fun i ->
-      (
-        (Printf.printf "%d" i);
-        (Printf.printf "%s" "\n")
-        )
-      );;
+let g i =
+  let j = (i * 4) in
+  (if ((j mod 2) = 1)
+   then 0
+   else j)
+let h i =
+  (
+    (Printf.printf "%d" i);
+    (Printf.printf "%s" "\n")
+    )
+  
 let main =
   (
     (h 14);
@@ -29,5 +27,5 @@ let main =
       )
     
     )
-  ;;
+  
 

@@ -1,8 +1,7 @@
-let f =
-  (fun i ->
-      (if (i = 0)
-       then true
-       else false));;
+let f i =
+  (if (i = 0)
+   then true
+   else false)
 let main =
   (
     (if (f 4)
@@ -10,5 +9,5 @@ let main =
      else (Printf.printf "%s" "false <-\n ->\n"));
     (Printf.printf "%s" "small test end\n")
     )
-  ;;
+  
 

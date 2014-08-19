@@ -33,5 +33,5 @@ let main =
         else (d (a + 1))) in
        (e f)
      else ()) in
-    (d h);;
+    (d h)
 

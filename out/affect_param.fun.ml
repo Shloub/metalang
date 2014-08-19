@@ -1,7 +1,6 @@
-let foo =
-  (fun a ->
-      let a = 4 in
-      ());;
+let foo a =
+  let a = 4 in
+  ()
 let main =
   let a = 0 in
   (
@@ -9,5 +8,5 @@ let main =
     (Printf.printf "%d" a);
     (Printf.printf "%s" "\n")
     )
-  ;;
+  
 

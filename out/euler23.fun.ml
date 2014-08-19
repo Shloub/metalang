@@ -9,96 +9,88 @@ module Array = struct
     )
 end
 
-let eratostene =
-  (fun t max_ ->
-      let n = 0 in
-      let bf = 2 in
-      let bg = (max_ - 1) in
-      let rec bc i n =
-        (if (i <= bg)
-         then let n = (if (t.(i) = i)
-                       then let n = (n + 1) in
-                       let j = (i * i) in
-                       let rec be j =
-                         (if ((j < max_) && (j > 0))
-                          then (
-                                 t.(j) <- 0;
-                                 let j = (j + i) in
-                                 (be j)
-                                 )
-                          
-                          else n) in
-                         (be j)
-                       else n) in
-         (bc (i + 1) n)
-         else n) in
-        (bc bf n));;
-let fillPrimesFactors =
-  (fun t n primes nprimes ->
-      let ba = 0 in
-      let bb = (nprimes - 1) in
-      let rec x i n =
-        (if (i <= bb)
-         then let d = primes.(i) in
-         let rec z n =
-           (if ((n mod d) = 0)
-            then (
-                   t.(d) <- (t.(d) + 1);
-                   let n = (n / d) in
-                   (z n)
-                   )
-            
-            else (if (n = 1)
-                  then primes.(i)
-                  else (x (i + 1) n))) in
-           (z n)
-         else n) in
-        (x ba n));;
-let sumdivaux2 =
-  (fun t n i ->
-      let rec w i =
-        (if ((i < n) && (t.(i) = 0))
-         then let i = (i + 1) in
-         (w i)
-         else i) in
-        (w i));;
-let rec sumdivaux =
-  (fun t n i ->
-      let f = (fun () -> ()) in
-      (if (i > n)
-       then 1
-       else let g = (fun () -> (f ())) in
-       (if (t.(i) = 0)
-        then (sumdivaux t n (sumdivaux2 t n (i + 1)))
-        else let o = (sumdivaux t n (sumdivaux2 t n (i + 1))) in
-        let out_ = 0 in
-        let p = i in
-        let m = 1 in
-        let u = t.(i) in
-        let rec h j out_ p =
-          (if (j <= u)
-           then let out_ = (out_ + p) in
-           let p = (p * i) in
-           (h (j + 1) out_ p)
-           else ((out_ + 1) * o)) in
-          (h m out_ p))));;
-let sumdiv =
-  (fun nprimes primes n ->
-      let a = (n + 1) in
-      let t = (Array.init_withenv a (fun i ->
-                                        (fun () -> let e = 0 in
-                                        ((), e))) ()) in
-      let max_ = (fillPrimesFactors t n primes nprimes) in
-      (sumdivaux t max_ 0));;
+let eratostene t max_ =
+  let n = 0 in
+  let bf = 2 in
+  let bg = (max_ - 1) in
+  let rec bc i n =
+    (if (i <= bg)
+     then let n = (if (t.(i) = i)
+                   then let n = (n + 1) in
+                   let j = (i * i) in
+                   let rec be j =
+                     (if ((j < max_) && (j > 0))
+                      then (
+                             t.(j) <- 0;
+                             let j = (j + i) in
+                             (be j)
+                             )
+                      
+                      else n) in
+                     (be j)
+                   else n) in
+     (bc (i + 1) n)
+     else n) in
+    (bc bf n)
+let fillPrimesFactors t n primes nprimes =
+  let ba = 0 in
+  let bb = (nprimes - 1) in
+  let rec x i n =
+    (if (i <= bb)
+     then let d = primes.(i) in
+     let rec z n =
+       (if ((n mod d) = 0)
+        then (
+               t.(d) <- (t.(d) + 1);
+               let n = (n / d) in
+               (z n)
+               )
+        
+        else (if (n = 1)
+              then primes.(i)
+              else (x (i + 1) n))) in
+       (z n)
+     else n) in
+    (x ba n)
+let sumdivaux2 t n i =
+  let rec w i =
+    (if ((i < n) && (t.(i) = 0))
+     then let i = (i + 1) in
+     (w i)
+     else i) in
+    (w i)
+let rec sumdivaux t n i =
+  let f () = () in
+  (if (i > n)
+   then 1
+   else let g () = (f ()) in
+   (if (t.(i) = 0)
+    then (sumdivaux t n (sumdivaux2 t n (i + 1)))
+    else let o = (sumdivaux t n (sumdivaux2 t n (i + 1))) in
+    let out_ = 0 in
+    let p = i in
+    let m = 1 in
+    let u = t.(i) in
+    let rec h j out_ p =
+      (if (j <= u)
+       then let out_ = (out_ + p) in
+       let p = (p * i) in
+       (h (j + 1) out_ p)
+       else ((out_ + 1) * o)) in
+      (h m out_ p)))
+let sumdiv nprimes primes n =
+  let a = (n + 1) in
+  let t = (Array.init_withenv a (fun  i () -> let e = 0 in
+  ((), e)) ()) in
+  let max_ = (fillPrimesFactors t n primes nprimes) in
+  (sumdivaux t max_ 0)
 let main =
   let maximumprimes = 30001 in
-  let era = (Array.init_withenv maximumprimes (fun s ->
-                                                  (fun () -> let bh = s in
-                                                  ((), bh))) ()) in
+  let era = (Array.init_withenv maximumprimes (fun  s () -> let bh = s in
+  ((), bh)) ()) in
   let nprimes = (eratostene era maximumprimes) in
-  let primes = (Array.init_withenv nprimes (fun t ->
-                                               (fun () -> let bi = 0 in
-                                               ((), bi))) ()) in
+  let primes = (Array.init_withenv nprimes (fun  t () -> let bi = 0 in
+  ((), bi)) ()) in
   let l = 0 in
   let by = 2 in
   let bz = (maximumprimes - 1) in
@@ -116,13 +108,11 @@ let main =
      else let n = 100 in
      (*  28124 ça prend trop de temps mais on arrive a passer le test  *)
      let b = (n + 1) in
-     let abondant = (Array.init_withenv b (fun p ->
-                                              (fun () -> let bj = false in
-                                              ((), bj))) ()) in
+     let abondant = (Array.init_withenv b (fun  p () -> let bj = false in
+     ((), bj)) ()) in
      let c = (n + 1) in
-     let summable = (Array.init_withenv c (fun q ->
-                                              (fun () -> let bk = false in
-                                              ((), bk))) ()) in
+     let summable = (Array.init_withenv c (fun  q () -> let bk = false in
+     ((), bk)) ()) in
      let sum = 0 in
      let bv = 2 in
      let bw = n in
@@ -179,5 +169,5 @@ let main =
              (bl bm sum)) in
           (bo bs)) in
        (bu bv)) in
-    (bx by l);;
+    (bx by l)
 

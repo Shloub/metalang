@@ -9,34 +9,32 @@ module Array = struct
     )
 end
 
-let periode =
-  (fun restes len a b ->
-      let rec e a len =
-        (if (a <> 0)
-         then let chiffre = (a / b) in
-         let reste = (a mod b) in
-         let g = 0 in
-         let h = (len - 1) in
-         let rec f i =
-           (if (i <= h)
-            then (if (restes.(i) = reste)
-                  then (len - i)
-                  else (f (i + 1)))
-            else (
-                   restes.(len) <- reste;
-                   let len = (len + 1) in
-                   let a = (reste * 10) in
-                   (e a len)
-                   )
-            ) in
-           (f g)
-         else 0) in
-        (e a len));;
+let periode restes len a b =
+  let rec e a len =
+    (if (a <> 0)
+     then let chiffre = (a / b) in
+     let reste = (a mod b) in
+     let g = 0 in
+     let h = (len - 1) in
+     let rec f i =
+       (if (i <= h)
+        then (if (restes.(i) = reste)
+              then (len - i)
+              else (f (i + 1)))
+        else (
+               restes.(len) <- reste;
+               let len = (len + 1) in
+               let a = (reste * 10) in
+               (e a len)
+               )
+        ) in
+       (f g)
+     else 0) in
+    (e a len)
 let main =
   let c = 1000 in
-  let t = (Array.init_withenv c (fun j ->
-                                    (fun () -> let k = 0 in
-                                    ((), k))) ()) in
+  let t = (Array.init_withenv c (fun  j () -> let k = 0 in
+  ((), k)) ()) in
   let m = 0 in
   let mi = 0 in
   let n = 1 in
@@ -44,12 +42,11 @@ let main =
   let rec l i m mi =
     (if (i <= o)
      then let p = (periode t 0 1 i) in
-     ((fun (m, mi) ->
-          (l (i + 1) m mi)) (if (p > m)
-                             then let mi = i in
-                             let m = p in
-                             (m, mi)
-                             else (m, mi)))
+     ((fun  (m, mi) -> (l (i + 1) m mi)) (if (p > m)
+                                          then let mi = i in
+                                          let m = p in
+                                          (m, mi)
+                                          else (m, mi)))
      else (
             (Printf.printf "%d" mi);
             (Printf.printf "%s" "\n");
@@ -57,5 +54,5 @@ let main =
             (Printf.printf "%s" "\n")
             )
      ) in
-    (l n m mi);;
+    (l n m mi)
 

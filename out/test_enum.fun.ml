@@ -1,7 +1,7 @@
 type foo_t = Foo
   | Bar
-  | Blah;;
+  | Blah
 let main =
   let foo_val = Foo in
-  ();;
+  ()
 

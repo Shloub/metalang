@@ -64,14 +64,11 @@ class camlFunPrinter = object(self)
   method comment f s c = Format.fprintf f "(* %s *)@\n%a" s self#expr c
   method binop f a op b = Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
   method unop f a op = Format.fprintf f "(%a %a)"self#punop op self#expr a
+
+
   method fun_ f params e =
-    match params with
-    | [] -> Format.fprintf f "(fun () -> %a)" self#expr e
-    | _ -> Format.fprintf f "(fun@[ %a ->@\n%a@])"
-      (Printer.print_list
-         self#binding
-         (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
-      self#expr e
+    let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
+    Format.fprintf f "(fun %a -> %a)" pparams () self#expr e
 
   method letrecin f name params e1 e2 = match params with
   | [] -> Format.fprintf f "@[<v 2>let rec %a () =@\n%a in@\n%a@]"
@@ -88,13 +85,9 @@ class camlFunPrinter = object(self)
       self#expr e2
 
   method funtuple f params e =
-    match params with
-    | [] -> Format.fprintf f "(fun () -> %a)" self#expr e
-    | _ -> Format.fprintf f "(fun@[ (%a) ->@\n%a@])"
-      (Printer.print_list
-         self#binding
-         (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) params
-      self#expr e
+    let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
+    Format.fprintf f "(fun %a -> %a)" pparams () self#expr e
+
 
   method ignore f e1 e2 = Format.fprintf f "%a;@\n%a" self#expr e1 self#expr e2
 
@@ -241,8 +234,9 @@ class camlFunPrinter = object(self)
   method letin f params b  = Format.fprintf f "let %a in@\n%a"
     (Printer.print_list
        (fun f (s, a) ->
-	 Format.fprintf f "%a = %a"
-	   self#binding s self#expr a
+	 let pparams, a = self#extract_fun_params a (fun f () -> ()) in
+	 Format.fprintf f "%a%a = %a"
+	   self#binding s pparams () self#expr a
        )
        (fun f pa a pb b -> Format.fprintf f "%a@\nand %a" pa a pb b))
     params
@@ -282,11 +276,24 @@ class camlFunPrinter = object(self)
     | E.Lief (E.Binding n) -> n = name
     | _ -> false) false e
 
-  method toplvl_declare f name e = 
-    Format.fprintf f "@[<v 2>let%s %a =@\n%a@];;@\n" (if self#is_rec name e then " rec" else "")
-      self#binding name self#expr e
+  method extract_fun_params e acc = match E.unfix e with
+  | E.Fun ([], e) ->
+    let acc f () = Format.fprintf f "%a ()" acc ()
+    in self#extract_fun_params e acc
+  | E.Fun (params, e) ->
+    let acc f () = Format.fprintf f "%a %a" acc () (Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+    in self#extract_fun_params e acc
+  | E.FunTuple (params, e) ->
+    let acc f () = Format.fprintf f "%a (%a)" acc () (Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) params
+    in self#extract_fun_params e acc
+  | _ -> acc, e
 
-  method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>type %a = %a@];;@\n"
+  method toplvl_declare f name e = 
+    let pparams, e = self#extract_fun_params e (fun f () -> ()) in
+    Format.fprintf f "@[<v 2>let%s %a%a =@\n%a@]@\n" (if self#is_rec name e then " rec" else "")
+      self#binding name pparams () self#expr e
+
+  method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>type %a = %a@]@\n"
     self#binding name self#ptype ty
 
   method decl f d = match d with
