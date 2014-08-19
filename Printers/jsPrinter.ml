@@ -85,24 +85,31 @@ class jsPrinter = object(self)
       ) li
 
   method prog f prog =
-    Format.fprintf f "
-var util = require(\"util\");
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    Format.fprintf f "%s%s%s%s%a%a@\n"
+(if need then "var util = require(\"util\");
 var fs = require(\"fs\");
 var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
-}
+}" else "")
+(if need_readchar then "
 var read_char_ = function(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();
     return out;
-}
+}" else "")
+(if need_stdinsep then "
 var stdinsep = function(){
     if (current_char == null) current_char = read_char0();
     while (current_char == '\\n' || current_char == ' ' || current_char == '\\t')
         current_char = read_char0();
-}
+}" else "")
+(if need_readint then "
 var read_int_ = function(){
     if (current_char == null) current_char = read_char0();
     var sign = 1;
@@ -119,9 +126,7 @@ var read_int_ = function(){
             return out * sign;
         }
     }
-}
-
-@\n%a%a@\n@\n"
+}" else "")
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
