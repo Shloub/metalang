@@ -65,6 +65,7 @@ macro int native_macro_max2(int a, int b)
   csharp do "Math.Max($a, $b)"
   php do "max($a, $b)"
   py do "max($a, $b)"
+  rkt do "max $a $b"
   * do "ERROR"
 end
 
@@ -73,7 +74,9 @@ def lexems macro_max2(lexems a, lexems b)
   current_language() == LANG_Js ||
   current_language() == LANG_Php ||
   current_language() == LANG_Cs ||
+  current_language() == LANG_Rkt ||
   current_language() == LANG_Ml ||
+  current_language() == LANG_Fun_ml ||
   current_language() == LANG_Py
   then
     return { return native_macro_max2( ${a}, ${b}) }
@@ -93,6 +96,7 @@ macro int native_macro_min2(int a, int b)
   csharp do "Math.Min($a, $b)"
   php do "min($a, $b)"
   py do "min($a, $b)"
+  rkt do "min $a $b"
   * do "ERROR"
 end
 
@@ -100,6 +104,7 @@ macro int native_macro_min3(int a, int b, int c)
   js do "Math.min($a, $b, $c)"
   php do "min($a, $b, $c)"
   py do "min($a, $b, $c)"
+  rkt do "min $a $b $c"
   * do "ERROR"
 end
 
@@ -107,6 +112,7 @@ macro int native_macro_min4(int a, int b, int c, int d)
   js do "Math.min($a, $b, $c, $d)"
   php do "min($a, $b, $c, $d)"
   py do "min($a, $b, $c, $d)"
+  rkt do "min $a $b $c $d"
   * do "ERROR"
 end
 
@@ -116,7 +122,9 @@ def lexems macro_min2(lexems a, lexems b)
   current_language() == LANG_Php ||
   current_language() == LANG_Cs ||
   current_language() == LANG_Ml ||
-  current_language() == LANG_Py
+  current_language() == LANG_Fun_ml ||
+  current_language() == LANG_Py ||
+  current_language() == LANG_Rkt
   then
     return { return native_macro_min2( ${a}, ${b}) }
   else
@@ -131,7 +139,8 @@ end
 def lexems macro_min3(lexems a, lexems b, lexems c)
   if current_language() == LANG_Js ||
   current_language() == LANG_Php ||
-  current_language() == LANG_Py
+  current_language() == LANG_Py ||
+  current_language() == LANG_Rkt
   then
     return { return native_macro_min3( ${a}, ${b}, ${c}) }
   else
@@ -146,7 +155,8 @@ end
 def lexems macro_min4(lexems a, lexems b, lexems c, lexems d)
   if current_language() == LANG_Js ||
   current_language() == LANG_Php ||
-  current_language() == LANG_Py
+  current_language() == LANG_Py ||
+  current_language() == LANG_Rkt
   then
     return { return native_macro_min4( ${a}, ${b}, ${c}, ${d}) }
   else
@@ -172,7 +182,8 @@ end
 macro array<int> native_expand_read_int_line()
   py do "list(map(int, input().split()))"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
-	csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll<int>(int.Parse).ToArray()"
+  csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll<int>(int.Parse).ToArray()"
+  rkt do "list->vector (map string->number (regexp-split \" \" (read-line)))"
   *  do "E R R O R"
 end
 
@@ -182,6 +193,7 @@ macro array<char> native_expand_read_char_line()
   csharp do "Console.ReadLine().ToCharArray()"
   java do "scanner.nextLine().toCharArray()"
   cpp do "getline()"
+  rkt do "list->vector (string->list (read-line))"
   *  do "E R R O R"
 end
 
@@ -193,18 +205,22 @@ end
 macro int native_expand_read_int()
   py do "int(input())"
   php do "intval(trim(fgets(STDIN)))"
-	csharp do "int.Parse(Console.ReadLine())"
-	ml do "Scanf.scanf \"%d \" (fun x -> x)"
+  csharp do "int.Parse(Console.ReadLine())"
+  ml do "Scanf.scanf \"%d \" (fun x -> x)"
+  rkt do "string->number (read-line)"
   *  do "E R R O R"
 end
 
 def lexems expand_read_int()
-if current_language() == LANG_Ml then
+if current_language() == LANG_Ml ||
+current_language() == LANG_Fun_ml
+then
   return {
   return native_expand_read_int()
   }
 	elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
+	current_language() == LANG_Rkt ||
 	current_language() == LANG_Cs
 	then
     return {
@@ -224,7 +240,8 @@ end
 def lexems expand_read_int_line(lexems a)
     if current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
-	current_language() == LANG_Cs
+	current_language() == LANG_Cs ||
+	current_language() == LANG_Rkt
 	  then
       return {
 			  tag use_readmacros
@@ -256,6 +273,7 @@ def lexems expand_read_char_line(lexems a)
     }
   elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
+	current_language() == LANG_Rkt ||
 	current_language() == LANG_Cs
 	  then
       return {
