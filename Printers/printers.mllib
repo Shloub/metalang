@@ -13,3 +13,4 @@ PyPrinter
 HtmlPrinter
 GoPrinter
 RacketPrinter
+PerlPrinter

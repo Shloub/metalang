@@ -224,11 +224,8 @@ let languages, printers =
     "go",   clike_passes => new GoPrinter.goPrinter ;
     "cl",   common_lisp_passes  => new CommonLispPrinter.commonLispPrinter ;
     "rkt",  fun_passes {Makelet.curry=false} => new RacketPrinter.racketPrinter ;
-
+    "pl", clike_passes => new PerlPrinter.perlPrinter ;
     "metalang_parsed", no_passes => new Printer.printer ;
-  (* Si on met cette passe en premier,
-     on se retrouve avec les erreurs de typages avant les erreurs de naming
-  *)
   ] in
   let langs : string list = List.map fst ls in
   let map = L.from_list ls
@@ -380,20 +377,21 @@ let stdlib_string lang = Printf.sprintf "
 
 enum @target_language
   LANG_C
-  LANG_Pas
   LANG_Cc
+  LANG_Cl
   LANG_Cs
+  LANG_Fun_ml
+  LANG_Go
+  LANG_Hs
   LANG_Java
   LANG_Js
-  LANG_Ml
-  LANG_Fun_ml
-  LANG_Php
-  LANG_Rb
-  LANG_Py
-  LANG_Go
-  LANG_Cl
   LANG_M
-  LANG_Hs
+  LANG_Ml
+  LANG_Pas
+  LANG_Php
+  LANG_Pl
+  LANG_Py
+  LANG_Rb
   LANG_Rkt
   LANG_Metalang_parsed
 end
