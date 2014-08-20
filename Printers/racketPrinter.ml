@@ -185,9 +185,6 @@ Format.fprintf f "#lang racket
 	Printer.sep_space) fields
     | _ -> ()
 
-  method print f e ty =
-    Format.fprintf f "(display %a)"
-      self#expr e
 
   method if_ f e1 e2 e3 = Format.fprintf f "@[(if %a@\n%a@\n%a)@]" self#expr e1 self#expr e2 self#expr e3
 
@@ -210,10 +207,18 @@ Format.fprintf f "#lang racket
     params
     self#expr b
 
-  method block f li = Format.fprintf f "@[<v 2>(block@\n%a@\n)@]"
+  method block1 f li = Format.fprintf f "@[<v 2>(block@\n%a@\n)@]"
     (Printer.print_list
-       self#expr
+       (fun f func -> func f ())
        (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)) li
+
+  method print f e ty =
+    Format.fprintf f "(display %a)"
+      self#expr e
+
+  method print_list f li =
+    match li with [e, ty] -> self#print f e ty
+    | _ -> Format.fprintf f "(map display (list %a))" (Printer.print_list self#expr Printer.sep_space) (List.map fst li)
 
   method tuple f li =
     Format.fprintf f "(list %a)"

@@ -93,10 +93,11 @@ class camlFunPrinter = object(self)
 
   method binding f s = Format.fprintf f "%s" s
 
-  method print f e ty =
-    Format.fprintf f "(Printf.printf %S %a)"
-      (Printer.format_type ty)
-      self#expr e
+  method print f e ty = match E.unfix e with
+  | E.Lief (E.String s) -> Format.fprintf f "(Printf.printf %S)" s
+  | _ -> Format.fprintf f "(Printf.printf %S %a)"
+    (Printer.format_type ty)
+    self#expr e
 
   method read f ty next =
     Format.fprintf f "Scanf.scanf %S@\n%a"
@@ -166,10 +167,45 @@ class camlFunPrinter = object(self)
 
   method if_ f e1 e2 e3 = Format.fprintf f "(@[if %a@\nthen %a@\nelse %a)@]" self#expr e1 self#expr e2 self#expr e3
 
-  method block f li = Format.fprintf f "@[<v 2>(@\n%a@\n)@]@\n"
+  method block0 f li = Format.fprintf f "@[<v 2>(@\n%a@\n)@]@\n"
     (Printer.print_list
        self#expr
        (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+
+  method block1 f li = Format.fprintf f "@[<v 2>(@\n%a@\n)@]@\n"
+    (Printer.print_list
+       (fun f func -> func f ())
+       (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+
+  method print_list f li =
+    let formats = List.map (fun (e, ty) ->
+      match E.unfix e with
+      | E.Lief (E.String s) -> None, s
+      | _ -> Some e, Printer.format_type ty
+    ) li in
+    let exprs = List.filter_map fst formats in
+    let formats = String.join (List.map snd formats) in
+    Format.fprintf f "(Printf.printf %S %a)"
+      formats
+      (Printer.print_list self#expr Printer.sep_space) exprs
+
+  method block f li =
+    let rec p_print acc_fun acc_print = function
+      | [] ->
+	if acc_print = [] then List.rev acc_fun
+	else let funp f () = self#print_list f (List.rev acc_print)
+	     in List.rev (funp::acc_fun)
+      | hd::tl -> match E.unfix hd with
+	| E.Print (e, ty) -> p_print acc_fun ((e, ty)::acc_print) tl
+	| _ ->
+	  if acc_print <> [] then
+	    let funp f () = self#print_list f (List.rev acc_print) in
+	    let fune f () = self#expr f hd in
+	    p_print (fune::funp::acc_fun) []  tl
+	  else
+	    let fune f () = self#expr f hd in
+	    p_print (fune::acc_fun) []  tl
+    in self#block1 f (p_print [] [] li)
 
   method expr f e = match E.unfix e with
   | E.LetRecIn (name, params, e1, e2) -> self#letrecin f name params e1 e2
