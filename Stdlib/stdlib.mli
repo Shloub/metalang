@@ -164,6 +164,7 @@ module String :
 sig
 
   type t = string
+  val join : string list -> string
   val split : string -> char -> string list
   val ends_with : string -> string -> bool
   val length : string -> int
