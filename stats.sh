@@ -17,6 +17,7 @@ py=$(st "out" "*.py")
 rb=$(st "out" "*.rb")
 cs=$(st "out" "*.cs")
 m=$(st "out" "*.m")
+pl=$(st "out" "*.pl")
 java=$(st "out" "*.java")
 
 ml=$(( $ml - $funml ))
@@ -35,6 +36,7 @@ py=$(( $py * 1000 / $metalang))
 rb=$(( $rb * 1000 / $metalang))
 cs=$(( $cs * 1000 / $metalang))
 m=$(( $m * 1000 / $metalang))
+pl=$(( $pl * 1000 / $metalang))
 java=$(( $java * 1000 / $metalang))
 
 file="stats_repartition.dat"
@@ -77,6 +79,7 @@ m $m
 py $py
 rb $rb
 cs $cs
+pl $pl
 java $java" | swap | sort | swap ) > "$file"
 
 filestatsplot(){
