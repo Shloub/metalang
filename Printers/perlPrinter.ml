@@ -40,7 +40,6 @@ class perlPrinter = object(self)
   method lang () = "pl"
 
   method is_stdin i =false
-  method is_print i =false
 
   method combine_formats () = false
 
@@ -60,6 +59,12 @@ class perlPrinter = object(self)
 
   method print f t expr =
 Format.fprintf f "print(%a);" self#expr expr
+
+  method multi_print f format exprs =
+    Format.fprintf f "@[<h>print(%a);@]"
+      (print_list
+         (fun f (t, e) -> self#expr f e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a, %a" f1 e1 f2 e2)) exprs
 
   method print_proto f (funname, t, li) =
     if li = [] then Format.fprintf f "sub %a{" self#funname funname
