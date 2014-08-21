@@ -48,7 +48,18 @@ module WalkCheckNaming = WalkTop(CheckNaming);;
 module WalkRename = WalkTop(Rename);;
 module WalkInternalTags = WalkTop(InternalTags);;
 module WalkExpandUnTuple = WalkTop(ExpandUnTuple);;
-module WalkInlineFuncs = WalkTop(InlineFuncs);;
+module WalkInlineFuncs0 = WalkTop(InlineFuncs);;
+module WalkInlineFuncs = struct
+
+
+
+  let apply () p =
+    let p = WalkInlineFuncs0.apply () p in
+    {p with Prog.funs = List.filter (function
+    | Prog.DeclarFun (name, t, params, instrs, {Prog.useless=true}) -> false
+    | _ -> true) p.Prog.funs}
+
+end
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function

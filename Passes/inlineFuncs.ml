@@ -172,13 +172,7 @@ let rec map_e acc e =
   | Expr.UnOp (e, op) ->
     let addon, e = map_e acc e in
     addon, Expr.UnOp (e, op) |> Expr.Fixed.fixa annot
-
-  | Expr.Char _
-  | Expr.String _
-  | Expr.Integer _
-  | Expr.Bool _
-  | Expr.Enum _
-  | Expr.Lexems _ -> [], e
+  | Expr.Lief _ -> [], e
   | Expr.Access m ->
     let addon, m =  map_mut acc m
     in addon, Expr.Access m |> Expr.Fixed.fixa annot
