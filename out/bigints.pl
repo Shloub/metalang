@@ -1,25 +1,14 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
-sub readint {
-    if (!defined $currentchar){ nextchar(); }
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
+  if (!defined $currentchar){ nextchar() ; }
+  my $o = $currentchar;
+  nextchar();
+  return $o;
 }
-
 sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
-
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
@@ -50,12 +39,12 @@ sub min2{
 sub read_bigint{
   my($len) = @_;
   my $chiffres = [];
-  foreach $j (0 .. $len - 1) {
+  foreach my $j (0 .. $len - 1) {
     my $c = '_';
     $c = readchar();
     $chiffres->[$j] = ord($c);
     }
-  foreach $i (0 .. int(($len - 1) / (2))) {
+  foreach my $i (0 .. int(($len - 1) / (2))) {
     my $tmp = $chiffres->[$i];
     $chiffres->[$i] = $chiffres->[$len - 1 - $i];
     $chiffres->[$len - 1 - $i] = $tmp;
@@ -73,7 +62,7 @@ sub print_bigint{
   }else{
   
   }
-  foreach $i (0 .. $a->{"bigint_len"} - 1) {
+  foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     print($a->{"bigint_chiffres"}->[$a->{"bigint_len"}
     -
     1
@@ -93,7 +82,7 @@ sub bigint_eq{
   if ($a->{"bigint_len"} ne $b->{"bigint_len"}) {
   return 0;
   }else{
-  foreach $i (0 .. $a->{"bigint_len"} - 1) {
+  foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     if ($a->{"bigint_chiffres"}->[$i] ne $b->{"bigint_chiffres"}->[$i]) {
     return 0;
     }else{
@@ -122,7 +111,7 @@ sub bigint_gt{
   if ($a->{"bigint_len"} < $b->{"bigint_len"}) {
   return !$a->{"bigint_sign"};
   }else{
-  foreach $i (0 .. $a->{"bigint_len"} - 1) {
+  foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     my $j = $a->{"bigint_len"} - 1 - $i;
     if ($a->{"bigint_chiffres"}->[$j] > $b->{"bigint_chiffres"}->[$j]) {
     return $a->{"bigint_sign"};
@@ -155,7 +144,7 @@ sub add_bigint_positif{
   my $len = max2($a->{"bigint_len"}, $b->{"bigint_len"}) + 1;
   my $retenue = 0;
   my $chiffres = [];
-  foreach $i (0 .. $len - 1) {
+  foreach my $i (0 .. $len - 1) {
     my $tmp = $retenue;
     if ($i < $a->{"bigint_len"}) {
     $tmp = $tmp + $a->{"bigint_chiffres"}->[$i];
@@ -190,7 +179,7 @@ sub sub_bigint_positif{
   my $len = $a->{"bigint_len"};
   my $retenue = 0;
   my $chiffres = [];
-  foreach $i (0 .. $len - 1) {
+  foreach my $i (0 .. $len - 1) {
     my $tmp = $retenue + $a->{"bigint_chiffres"}->[$i];
     if ($i < $b->{"bigint_len"}) {
     $tmp = $tmp - $b->{"bigint_chiffres"}->[$i];
@@ -268,12 +257,12 @@ sub mul_bigint_cp{
   
   my $len = $a->{"bigint_len"} + $b->{"bigint_len"} + 1;
   my $chiffres = [];
-  foreach $k (0 .. $len - 1) {
+  foreach my $k (0 .. $len - 1) {
     $chiffres->[$k] = 0;
     }
-  foreach $i (0 .. $a->{"bigint_len"} - 1) {
+  foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     my $retenue = 0;
-    foreach $j (0 .. $b->{"bigint_len"} - 1) {
+    foreach my $j (0 .. $b->{"bigint_len"} - 1) {
       $chiffres->[$i + $j] = $chiffres->[$i + $j] + $retenue + $b->{"bigint_chiffres"}->[$j] * $a->{"bigint_chiffres"}->[$i];
       $retenue = int(($chiffres->[$i + $j]) / (10));
       $chiffres->[$i + $j] = remainder($chiffres->[$i + $j], 10);
@@ -282,7 +271,7 @@ sub mul_bigint_cp{
     }
   $chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"}] = int(($chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1]) / (10));
   $chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1] = remainder($chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1], 10);
-  foreach $l (0 .. 2) {
+  foreach my $l (0 .. 2) {
     if ($len ne 0 && $chiffres->[$len - 1] eq 0) {
     $len = $len - 1;
     }else{
@@ -314,7 +303,7 @@ sub bigint_shift{
   $i) = @_;
   my $e = $a->{"bigint_len"} + $i;
   my $chiffres = [];
-  foreach $k (0 .. $e - 1) {
+  foreach my $k (0 .. $e - 1) {
     if ($k >= $i) {
     $chiffres->[$k] = $a->{"bigint_chiffres"}->[$k - $i];
     }else{
@@ -386,10 +375,10 @@ sub bigint_of_int{
   
   }
   my $t = [];
-  foreach $j (0 .. $size - 1) {
+  foreach my $j (0 .. $size - 1) {
     $t->[$j] = 0;
     }
-  foreach $k (0 .. $size - 1) {
+  foreach my $k (0 .. $size - 1) {
     $t->[$k] = remainder($i, 10);
     $i = int(($i) / (10));
     }
@@ -414,7 +403,7 @@ sub fact_bigint{
 sub sum_chiffres_bigint{
   my($a) = @_;
   my $out_ = 0;
-  foreach $i (0 .. $a->{"bigint_len"} - 1) {
+  foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     $out_ = $out_ + $a->{"bigint_chiffres"}->[$i];
     }
   return $out_;
@@ -461,7 +450,7 @@ sub bigint_exp_10chiffres{
 
 sub euler48{
   my $sum = bigint_of_int(0);
-  foreach $i (1 .. 100) {
+  foreach my $i (1 .. 100) {
     # 1000 normalement 
     
     my $ib = bigint_of_int($i);
@@ -503,17 +492,17 @@ sub euler29{
   my $maxB = 5;
   my $f = $maxA + 1;
   my $a_bigint = [];
-  foreach $j (0 .. $f - 1) {
+  foreach my $j (0 .. $f - 1) {
     $a_bigint->[$j] = bigint_of_int($j * $j);
     }
   my $g = $maxA + 1;
   my $a0_bigint = [];
-  foreach $j2 (0 .. $g - 1) {
+  foreach my $j2 (0 .. $g - 1) {
     $a0_bigint->[$j2] = bigint_of_int($j2);
     }
   my $h = $maxA + 1;
   my $b = [];
-  foreach $k (0 .. $h - 1) {
+  foreach my $k (0 .. $h - 1) {
     $b->[$k] = 2;
     }
   my $n = 0;
@@ -522,7 +511,7 @@ sub euler29{
   {
     my $min_ = $a0_bigint->[0];
     $found = 0;
-    foreach $i (2 .. $maxA) {
+    foreach my $i (2 .. $maxA) {
       if ($b->[$i] <= $maxB) {
       if ($found) {
       if (bigint_lt($a_bigint->[$i], $min_)) {
@@ -540,7 +529,7 @@ sub euler29{
       }
     if ($found) {
     $n = $n + 1;
-    foreach $l (2 .. $maxA) {
+    foreach my $l (2 .. $maxA) {
       if (bigint_eq($a_bigint->[$l], $min_) && $b->[$l] <= $maxB) {
       $b->[$l] = $b->[$l] + 1;
       $a_bigint->[$l] = mul_bigint($a_bigint->[$l], $a0_bigint->[$l]);
@@ -555,27 +544,18 @@ sub euler29{
   return $n;
 }
 
-print(euler29());
-print("\n");
+print(euler29(), "\n");
 my $sum = read_bigint(50);
-foreach $i (2 .. 100) {
+foreach my $i (2 .. 100) {
   readspaces();
   my $tmp = read_bigint(50);
   $sum = add_bigint($sum, $tmp);
   }
 print("euler13 = ");
 print_bigint($sum);
-print("\n");
-print("euler25 = ");
-print(euler25());
-print("\n");
-print("euler16 = ");
-print(euler16());
-print("\n");
+print("\n", "euler25 = ", euler25(), "\n", "euler16 = ", euler16(), "\n");
 euler48();
-print("euler20 = ");
-print(euler20());
-print("\n");
+print("euler20 = ", euler20(), "\n");
 my $a = bigint_of_int(999999);
 my $b = bigint_of_int(9951263);
 print_bigint($a);

@@ -1,29 +1,22 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
 sub readint {
-    if (!defined $currentchar){ nextchar(); }
+  if (!defined $currentchar){
+     nextchar();
+  }
   my $o = 0;
   my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  if ($currentchar eq '-') {
+    $sign = -1;
+    nextchar();
+  }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
     nextchar();
   }
   return $o * $sign;
-}
-
-sub readspaces {
+}sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub remainder {
-    my ($a, $b) = @_;
-    return 0 unless $b && $a;
-    return $a - int($a / $b) * $b;
 }
 
 #
@@ -41,8 +34,8 @@ sub remainder {
 sub print_state{
   my($g) = @_;
   print("\n|");
-  foreach $y (0 .. 2) {
-    foreach $x (0 .. 2) {
+  foreach my $y (0 .. 2) {
+    foreach my $x (0 .. 2) {
       if ($g->{"cases"}->[$x]->[$y] eq 0) {
       print(" ");
       }else{
@@ -69,10 +62,10 @@ sub eval_{
   my($g) = @_;
   my $win = 0;
   my $freecase = 0;
-  foreach $y (0 .. 2) {
+  foreach my $y (0 .. 2) {
     my $col = -1;
     my $lin = -1;
-    foreach $x (0 .. 2) {
+    foreach my $x (0 .. 2) {
       if ($g->{"cases"}->[$x]->[$y] eq 0) {
       $freecase = $freecase + 1;
       }else{
@@ -109,7 +102,7 @@ sub eval_{
     }
     }
     }
-  foreach $x (1 .. 2) {
+  foreach my $x (1 .. 2) {
     if ($g->{"cases"}->[0]->[0] eq $x && $g->{"cases"}->[1]->[1] eq $x && $g->{"cases"}->[2]->[2] eq $x) {
     $win = $x;
     }else{
@@ -201,8 +194,8 @@ sub minmax{
   }else{
   
   }
-  foreach $x (0 .. 2) {
-    foreach $y (0 .. 2) {
+  foreach my $x (0 .. 2) {
+    foreach my $y (0 .. 2) {
       if (can_move_xy($x, $y, $g)) {
       apply_move_xy($x, $y, $g);
       my $currentNote = minmax($g);
@@ -231,17 +224,12 @@ sub play{
   my $minMove = {"x"=>0,
                  "y"=>0};
   my $minNote = 10000;
-  foreach $x (0 .. 2) {
-    foreach $y (0 .. 2) {
+  foreach my $x (0 .. 2) {
+    foreach my $y (0 .. 2) {
       if (can_move_xy($x, $y, $g)) {
       apply_move_xy($x, $y, $g);
       my $currentNote = minmax($g);
-      print($x);
-      print(", ");
-      print($y);
-      print(", ");
-      print($currentNote);
-      print("\n");
+      print($x, ", ", $y, ", ", $currentNote, "\n");
       cancel_move_xy($x, $y, $g);
       if ($currentNote < $minNote) {
       $minNote = $currentNote;
@@ -255,19 +243,17 @@ sub play{
       }
       }
     }
-  print($minMove->{"x"});
-  print($minMove->{"y"});
-  print("\n");
+  print($minMove->{"x"}, $minMove->{"y"}, "\n");
   return $minMove;
 }
 
 sub init_{
   my $b = 3;
   my $cases = [];
-  foreach $i (0 .. $b - 1) {
+  foreach my $i (0 .. $b - 1) {
     my $a = 3;
     my $tab = [];
-    foreach $j (0 .. $a - 1) {
+    foreach my $j (0 .. $a - 1) {
       $tab->[$j] = 0;
       }
     $cases->[$i] = $tab;
@@ -291,7 +277,7 @@ sub read_move{
   return $d;
 }
 
-foreach $i (0 .. 1) {
+foreach my $i (0 .. 1) {
   my $state = init_();
   my $e = {"x"=>1,
            "y"=>1};
@@ -313,8 +299,7 @@ foreach $i (0 .. 1) {
     }
   }
   print_state($state);
-  print($state->{"note"});
-  print("\n");
+  print($state->{"note"}, "\n");
   }
 
 

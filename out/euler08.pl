@@ -1,25 +1,11 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
-sub readint {
-    if (!defined $currentchar){ nextchar(); }
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
+  if (!defined $currentchar){ nextchar() ; }
+  my $o = $currentchar;
+  nextchar();
+  return $o;
 }
-
-sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
@@ -39,7 +25,7 @@ sub max2{
 my $i = 1;
 my $g = 5;
 my $last = [];
-foreach $j (0 .. $g - 1) {
+foreach my $j (0 .. $g - 1) {
   my $c = '_';
   $c = readchar();
   my $d = ord($c) - ord('0');
@@ -49,7 +35,7 @@ foreach $j (0 .. $g - 1) {
 my $max_ = $i;
 my $index = 0;
 my $nskipdiv = 0;
-foreach $k (1 .. 995) {
+foreach my $k (1 .. 995) {
   my $e = '_';
   $e = readchar();
   my $f = ord($e) - ord('0');
@@ -69,7 +55,6 @@ foreach $k (1 .. 995) {
   $index = remainder($index + 1, 5);
   $max_ = max2($max_, $i);
   }
-print($max_);
-print("\n");
+print($max_, "\n");
 
 

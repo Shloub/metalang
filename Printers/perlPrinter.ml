@@ -87,36 +87,55 @@ Format.fprintf f "print(%a);" self#expr expr
   method decl_type f name t = ()
 
   method prog f prog =
-    Format.fprintf f "#!/usr/bin/perl@\n%a@\n%a%a@\n@\n"
-(fun f () ->
-Format.fprintf f "
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
-sub readint {
-    if (!defined $currentchar){ nextchar(); }
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    Format.fprintf f "#!/usr/bin/perl@\n%a%a%a%a%a@\n%a%a@\n@\n"
+      (fun f () ->
+	if need then Format.fprintf f "sub nextchar{ sysread STDIN, $currentchar, 1; }
+") ()
+      (fun f () ->
+	if need_readchar then Format.fprintf f
+	  "sub readchar{
+  if (!defined $currentchar){ nextchar() ; }
+  my $o = $currentchar;
+  nextchar();
+  return $o;
+}
+") ()
+      (fun f () ->
+	if need_readint then Format.fprintf f
+	  "sub readint {
+  if (!defined $currentchar){
+     nextchar();
+  }
   my $o = 0;
   my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  if ($currentchar eq '-') {
+    $sign = -1;
+    nextchar();
+  }
   while ($currentchar =~ /\\d/){
     $o = $o * 10 + $currentchar;
     nextchar();
   }
   return $o * $sign;
-}
-
-sub readspaces {
+}") ()
+      (fun f () ->
+	if need_stdinsep then Format.fprintf f
+	  "sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq \"\\r\" || $currentchar eq \"\\n\"){ nextchar() ; }
 }
-
-sub remainder {
+") ()
+      (fun f () -> if Tags.is_taged "__internal__mod" then Format.fprintf f
+	  "sub remainder {
     my ($a, $b) = @@_;
     return 0 unless $b && $a;
     return $a - int($a / $b) * $b;
 }
 "
-) ()
+      ) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
@@ -138,7 +157,7 @@ sub remainder {
       binding
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v 2>@[<h>foreach %a (%a .. %a) {@]@\n%a@\n}@]"
+    Format.fprintf f "@[<v 2>@[<h>foreach my %a (%a .. %a) {@]@\n%a@\n}@]"
       self#binding varname
       self#expr expr1
       self#expr expr2

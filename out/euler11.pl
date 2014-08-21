@@ -1,29 +1,22 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
 sub readint {
-    if (!defined $currentchar){ nextchar(); }
+  if (!defined $currentchar){
+     nextchar();
+  }
   my $o = 0;
   my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  if ($currentchar eq '-') {
+    $sign = -1;
+    nextchar();
+  }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
     nextchar();
   }
   return $o * $sign;
-}
-
-sub readspaces {
+}sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub remainder {
-    my ($a, $b) = @_;
-    return 0 unless $b && $a;
-    return $a - int($a / $b) * $b;
 }
 
 sub max2{
@@ -39,7 +32,7 @@ sub max2{
 sub read_int_line{
   my($n) = @_;
   my $tab = [];
-  foreach $i (0 .. $n - 1) {
+  foreach my $i (0 .. $n - 1) {
     my $t = 0;
     $t = readint();
     readspaces();
@@ -52,7 +45,7 @@ sub read_int_matrix{
   my($x,
   $y) = @_;
   my $tab = [];
-  foreach $z (0 .. $y - 1) {
+  foreach my $z (0 .. $y - 1) {
     $tab->[$z] = read_int_line($x);
     }
   return $tab;
@@ -79,7 +72,7 @@ sub find{
 
 my $c = 8;
 my $directions = [];
-foreach $i (0 .. $c - 1) {
+foreach my $i (0 .. $c - 1) {
   if ($i eq 0) {
   my $p = {"tuple_int_int_field_0"=>0,
            "tuple_int_int_field_1"=>1};
@@ -128,17 +121,16 @@ foreach $i (0 .. $c - 1) {
   }
 my $max_ = 0;
 my $m = read_int_matrix(20, 20);
-foreach $j (0 .. 7) {
+foreach my $j (0 .. 7) {
   my $d = $directions->[$j];
   my $dx = $d->{"tuple_int_int_field_0"};
   my $dy = $d->{"tuple_int_int_field_1"};
-  foreach $x (0 .. 19) {
-    foreach $y (0 .. 19) {
+  foreach my $x (0 .. 19) {
+    foreach my $y (0 .. 19) {
       $max_ = max2($max_, find(4, $m, $x, $y, $dx, $dy));
       }
     }
   }
-print($max_);
-print("\n");
+print($max_, "\n");
 
 

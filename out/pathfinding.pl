@@ -1,29 +1,28 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
+  if (!defined $currentchar){ nextchar() ; }
+  my $o = $currentchar;
+  nextchar();
+  return $o;
+}
 sub readint {
-    if (!defined $currentchar){ nextchar(); }
+  if (!defined $currentchar){
+     nextchar();
+  }
   my $o = 0;
   my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  if ($currentchar eq '-') {
+    $sign = -1;
+    nextchar();
+  }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
     nextchar();
   }
   return $o * $sign;
-}
-
-sub readspaces {
+}sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub remainder {
-    my ($a, $b) = @_;
-    return 0 unless $b && $a;
-    return $a - int($a / $b) * $b;
 }
 
 sub min2{
@@ -89,9 +88,9 @@ sub pathfind{
   $x,
   $y) = @_;
   my $cache = [];
-  foreach $i (0 .. $y - 1) {
+  foreach my $i (0 .. $y - 1) {
     my $tmp = [];
-    foreach $j (0 .. $x - 1) {
+    foreach my $j (0 .. $x - 1) {
       $tmp->[$j] = -1;
       }
     $cache->[$i] = $tmp;
@@ -106,9 +105,9 @@ readspaces();
 $y = readint();
 readspaces();
 my $tab = [];
-foreach $i (0 .. $y - 1) {
+foreach my $i (0 .. $y - 1) {
   my $tab2 = [];
-  foreach $j (0 .. $x - 1) {
+  foreach my $j (0 .. $x - 1) {
     my $tmp = '\000';
     $tmp = readchar();
     $tab2->[$j] = $tmp;

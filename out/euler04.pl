@@ -1,25 +1,4 @@
 #!/usr/bin/perl
-
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
-sub readint {
-    if (!defined $currentchar){ nextchar(); }
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}
-
-sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
@@ -66,12 +45,12 @@ sub chiffre{
 }
 
 my $m = 1;
-foreach $a (0 .. 9) {
-  foreach $f (1 .. 9) {
-    foreach $d (0 .. 9) {
-      foreach $c (1 .. 9) {
-        foreach $b (0 .. 9) {
-          foreach $e (0 .. 9) {
+foreach my $a (0 .. 9) {
+  foreach my $f (1 .. 9) {
+    foreach my $d (0 .. 9) {
+      foreach my $c (1 .. 9) {
+        foreach my $b (0 .. 9) {
+          foreach my $e (0 .. 9) {
             my $mul = $a * $d + 10 * ($a * $e + $b * $d) + 100 * ($a * $f + $b * $e + $c * $d) + 1000 * ($c * $e + $b * $f) + 10000 * $c * $f;
             if (chiffre(0, $mul) eq chiffre(5, $mul) && chiffre(1, $mul) eq chiffre(4, $mul) && chiffre(2, $mul) eq chiffre(3, $mul)) {
             $m = max2($mul, $m);
@@ -84,7 +63,6 @@ foreach $a (0 .. 9) {
       }
     }
   }
-print($m);
-print("\n");
+print($m, "\n");
 
 

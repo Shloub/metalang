@@ -1,25 +1,4 @@
 #!/usr/bin/perl
-
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
-sub readint {
-    if (!defined $currentchar){ nextchar(); }
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}
-
-sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
@@ -46,10 +25,9 @@ sub h{
 }
 
 my $j = 0;
-foreach $k (0 .. 10) {
+foreach my $k (0 .. 10) {
   $j = $j + $k;
-  print($j);
-  print("\n");
+  print($j, "\n");
   }
 my $i = 4;
 while ($i < 10)
@@ -58,8 +36,6 @@ while ($i < 10)
   $i = $i + 1;
   $j = $j + $i;
 }
-print($j);
-print($i);
-print("FIN TEST\n");
+print($j, $i, "FIN TEST\n");
 
 

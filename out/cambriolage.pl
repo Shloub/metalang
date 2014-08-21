@@ -1,29 +1,22 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
 sub readint {
-    if (!defined $currentchar){ nextchar(); }
+  if (!defined $currentchar){
+     nextchar();
+  }
   my $o = 0;
   my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  if ($currentchar eq '-') {
+    $sign = -1;
+    nextchar();
+  }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
     nextchar();
   }
   return $o * $sign;
-}
-
-sub readspaces {
+}sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub remainder {
-    my ($a, $b) = @_;
-    return 0 unless $b && $a;
-    return $a - int($a / $b) * $b;
 }
 
 sub max2{
@@ -43,7 +36,7 @@ sub nbPassePartout{
   $serrures) = @_;
   my $max_ancient = 0;
   my $max_recent = 0;
-  foreach $i (0 .. $m - 1) {
+  foreach my $i (0 .. $m - 1) {
     if ($serrures->[$i]->[0] eq -1 && $serrures->[$i]->[1] > $max_ancient) {
     $max_ancient = $serrures->[$i]->[1];
     }else{
@@ -57,7 +50,7 @@ sub nbPassePartout{
     }
   my $max_ancient_pp = 0;
   my $max_recent_pp = 0;
-  foreach $i (0 .. $n - 1) {
+  foreach my $i (0 .. $n - 1) {
     my $pp = $passepartout->[$i];
     if ($pp->[0] >= $max_ancient && $pp->[1] >= $max_recent) {
     return 1;
@@ -78,10 +71,10 @@ my $n = 0;
 $n = readint();
 readspaces();
 my $passepartout = [];
-foreach $i (0 .. $n - 1) {
+foreach my $i (0 .. $n - 1) {
   my $c = 2;
   my $out0 = [];
-  foreach $j (0 .. $c - 1) {
+  foreach my $j (0 .. $c - 1) {
     my $out__ = 0;
     $out__ = readint();
     readspaces();
@@ -93,10 +86,10 @@ my $m = 0;
 $m = readint();
 readspaces();
 my $serrures = [];
-foreach $k (0 .. $m - 1) {
+foreach my $k (0 .. $m - 1) {
   my $d = 2;
   my $out1 = [];
-  foreach $l (0 .. $d - 1) {
+  foreach my $l (0 .. $d - 1) {
     my $out_ = 0;
     $out_ = readint();
     readspaces();

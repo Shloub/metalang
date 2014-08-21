@@ -1,29 +1,22 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
 sub readint {
-    if (!defined $currentchar){ nextchar(); }
+  if (!defined $currentchar){
+     nextchar();
+  }
   my $o = 0;
   my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  if ($currentchar eq '-') {
+    $sign = -1;
+    nextchar();
+  }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
     nextchar();
   }
   return $o * $sign;
-}
-
-sub readspaces {
+}sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub remainder {
-    my ($a, $b) = @_;
-    return 0 unless $b && $a;
-    return $a - int($a / $b) * $b;
 }
 
 sub pathfind_aux{
@@ -56,7 +49,7 @@ sub pathfind{
   my($tab,
   $len) = @_;
   my $cache = [];
-  foreach $i (0 .. $len - 1) {
+  foreach my $i (0 .. $len - 1) {
     $cache->[$i] = -1;
     }
   return pathfind_aux($cache, $tab, $len, 0);
@@ -66,7 +59,7 @@ my $len = 0;
 $len = readint();
 readspaces();
 my $tab = [];
-foreach $i (0 .. $len - 1) {
+foreach my $i (0 .. $len - 1) {
   my $tmp = 0;
   $tmp = readint();
   readspaces();

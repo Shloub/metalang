@@ -1,25 +1,23 @@
 #!/usr/bin/perl
-
 sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
 sub readint {
-    if (!defined $currentchar){ nextchar(); }
+  if (!defined $currentchar){
+     nextchar();
+  }
   my $o = 0;
   my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  if ($currentchar eq '-') {
+    $sign = -1;
+    nextchar();
+  }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
     nextchar();
   }
   return $o * $sign;
-}
-
-sub readspaces {
+}sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
-
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
@@ -31,7 +29,7 @@ sub remainder {
 sub read_sudoku{
   my $a = 9 * 9;
   my $out_ = [];
-  foreach $i (0 .. $a - 1) {
+  foreach my $i (0 .. $a - 1) {
     my $k = 0;
     $k = readint();
     readspaces();
@@ -44,14 +42,9 @@ sub read_sudoku{
 
 sub print_sudoku{
   my($sudoku_) = @_;
-  foreach $y (0 .. 8) {
-    foreach $x (0 .. 8) {
-      print($sudoku_->[$x
-      +
-      $y
-      *
-      9]);
-      print(" ");
+  foreach my $y (0 .. 8) {
+    foreach my $x (0 .. 8) {
+      print($sudoku_->[$x + $y * 9], " ");
       if ((remainder($x, 3)) eq 2) {
       print(" ");
       }else{
@@ -76,7 +69,7 @@ sub print_sudoku{
 
 sub sudoku_done{
   my($s) = @_;
-  foreach $i (0 .. 80) {
+  foreach my $i (0 .. 80) {
     if ($s->[$i] eq 0) {
     return 0;
     }else{
@@ -102,9 +95,9 @@ sub solve{
   }else{
   
   }
-  foreach $i (0 .. 80) {
+  foreach my $i (0 .. 80) {
     if ($sudoku_->[$i] eq 0) {
-    foreach $p (1 .. 9) {
+    foreach my $p (1 .. 9) {
       $sudoku_->[$i] = $p;
       if (solve($sudoku_)) {
       return 1;

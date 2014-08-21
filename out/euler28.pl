@@ -1,31 +1,5 @@
 #!/usr/bin/perl
 
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-    if (!defined $currentchar){ nextchar() ; }
-    my $o = $currentchar; nextchar(); return $o; }
-sub readint {
-    if (!defined $currentchar){ nextchar(); }
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') { $sign = -1; nextchar(); }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}
-
-sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub remainder {
-    my ($a, $b) = @_;
-    return 0 unless $b && $a;
-    return $a - int($a / $b) * $b;
-}
-
 #
 #
 #43 44 45 46 47 48 49
@@ -47,7 +21,7 @@ sub sumdiag{
   my $nterms = $n * 2 - 1;
   my $un = 1;
   my $sum = 1;
-  foreach $i (0 .. $nterms - 2) {
+  foreach my $i (0 .. $nterms - 2) {
     my $d = 2 * (1 + int(($i) / (4)));
     $un = $un + $d;
     # print int d print "=>" print un print " " 
