@@ -69,49 +69,35 @@ begin
    until false;
 end;
 
-function read_int() : Longint;
+type k = array of array of char;
+type l = array of char;
+function read_char_matrix(x : Longint; y : Longint) : k;
 var
-  out_ : Longint;
-begin
-  out_ := 0;
-  out_ := read_int_();
-  skip();
-  exit(out_);
-end;
-
-type a = array of char;
-function read_char_line(n : Longint) : a;
-var
-  i : Longint;
-  t : char;
-  tab : a;
-begin
-  SetLength(tab, n);
-  for i := 0 to  n - 1 do
-  begin
-    t := #95;
-    t := read_char_();
-    tab[i] := t;
-  end;
-  skip();
-  exit(tab);
-end;
-
-type b = array of a;
-function read_char_matrix(x : Longint; y : Longint) : b;
-var
-  tab : b;
+  a : l;
+  b : l;
+  c : Longint;
+  d : char;
+  tab : k;
   z : Longint;
 begin
   SetLength(tab, y);
   for z := 0 to  y - 1 do
   begin
-    tab[z] := read_char_line(x);
+    SetLength(b, x);
+    for c := 0 to  x - 1 do
+    begin
+      d := #95;
+      d := read_char_();
+      b[c] := d;
+    end;
+    skip();
+    a := b;
+    tab[z] := a;
   end;
   exit(tab);
 end;
 
-function programme_candidat(tableau : b; taille_x : Longint; taille_y : Longint) : Longint;
+function programme_candidat(tableau : k; taille_x : Longint; taille_y : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -132,12 +118,24 @@ end;
 
 
 var
-  tableau : b;
+  e : Longint;
+  f : Longint;
+  g : Longint;
+  h : Longint;
+  tableau : k;
   taille_x : Longint;
   taille_y : Longint;
 begin
-  taille_x := read_int();
-  taille_y := read_int();
+  f := 0;
+  f := read_int_();
+  skip();
+  e := f;
+  taille_x := e;
+  h := 0;
+  h := read_int_();
+  skip();
+  g := h;
+  taille_y := g;
   tableau := read_char_matrix(taille_x, taille_y);
   Write(programme_candidat(tableau, taille_x, taille_y));
   Write(''#10'');

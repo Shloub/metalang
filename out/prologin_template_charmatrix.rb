@@ -1,26 +1,16 @@
 require "scanf.rb"
-def read_int(  )
-    out_ = 0
-    out_=scanf("%d")[0];
-    scanf("%*\n");
-    return (out_);
-end
-
-def read_char_line( n )
-    tab = [];
-    for i in (0 ..  n - 1) do
-      t = "_"
-      t=scanf("%c")[0];
-      tab[i] = t;
-    end
-    scanf("%*\n");
-    return (tab);
-end
-
 def read_char_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      tab[z] = read_char_line(x);
+      b = [];
+      for c in (0 ..  x - 1) do
+        d = "_"
+        d=scanf("%c")[0];
+        b[c] = d;
+      end
+      scanf("%*\n");
+      a = b
+      tab[z] = a;
     end
     return (tab);
 end
@@ -37,8 +27,16 @@ def programme_candidat( tableau, taille_x, taille_y )
     return (out_);
 end
 
-taille_x = read_int()
-taille_y = read_int()
+f = 0
+f=scanf("%d")[0];
+scanf("%*\n");
+e = f
+taille_x = e
+h = 0
+h=scanf("%d")[0];
+scanf("%*\n");
+g = h
+taille_y = g
 tableau = read_char_matrix(taille_x, taille_y)
 printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
 

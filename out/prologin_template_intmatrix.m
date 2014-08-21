@@ -2,32 +2,25 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int read_int(){
-  int out_ = 0;
-  scanf("%d ", &out_);
-  return out_;
-}
-
-int* read_int_line(int n){
-  int *tab = malloc( n * sizeof(int));
-  {
-    int i;
-    for (i = 0 ; i < n; i++)
-    {
-      int t = 0;
-      scanf("%d ", &t);
-      tab[i] = t;
-    }
-  }
-  return tab;
-}
-
 int** read_int_matrix(int x, int y){
   int* *tab = malloc( y * sizeof(int*));
   {
     int z;
     for (z = 0 ; z < y; z++)
-      tab[z] = read_int_line(x);
+    {
+      int *b = malloc( x * sizeof(int));
+      {
+        int c;
+        for (c = 0 ; c < x; c++)
+        {
+          int d = 0;
+          scanf("%d ", &d);
+          b[c] = d;
+        }
+      }
+      int* a = b;
+      tab[z] = a;
+    }
   }
   return tab;
 }
@@ -48,8 +41,14 @@ int programme_candidat(int** tableau, int x, int y){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int taille_x = read_int();
-  int taille_y = read_int();
+  int f = 0;
+  scanf("%d ", &f);
+  int e = f;
+  int taille_x = e;
+  int h = 0;
+  scanf("%d ", &h);
+  int g = h;
+  int taille_y = g;
   int** tableau = read_int_matrix(taille_x, taille_y);
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   [pool drain];

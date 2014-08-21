@@ -7,10 +7,6 @@ def min2( a, b )
     end
 end
 
-def min3_( a, b, c )
-    return (min2(min2(a, b), c));
-end
-
 e = 2
 f = 3
 g = 4

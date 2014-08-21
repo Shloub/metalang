@@ -24,10 +24,6 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-function min4($a, $b, $c, $d){
-  return min($a, $b, $c, $d);
-}
-
 function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
   if ($posX == $x - 1 && $posY == $y - 1)
     return 0;
@@ -44,7 +40,8 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
     $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-    $out_ = 1 + min4($val1, $val2, $val3, $val4);
+    $e = min($val1, $val2, $val3, $val4);
+    $out_ = 1 + $e;
     $cache[$posY][$posX] = $out_;
     return $out_;
   }

@@ -8,37 +8,14 @@ public class pathfinding0
     return Math.min(a, b);
   }
   
-  public static int min3(int a, int b, int c)
-  {
-    return min2(min2(a, b), c);
-  }
-  
-  public static int min4(int a, int b, int c, int d)
-  {
-    return min3(min2(a, b), c, d);
-  }
-  
-  public static int read_int()
-  {
-    int out_ = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); out_ = -scanner.nextInt();
-    }else{
-    out_ = scanner.nextInt();}
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    return out_;
-  }
-  
-  public static char[] read_char_line(int n)
-  {
-    return scanner.nextLine().toCharArray();
-  }
-  
   public static char[][] read_char_matrix(int x, int y)
   {
     char[][] tab = new char[y][];
     for (int z = 0 ; z < y; z++)
-      tab[z] = read_char_line(x);
+    {
+      char[] g = scanner.nextLine().toCharArray();
+      tab[z] = g;
+    }
     return tab;
   }
   
@@ -59,7 +36,10 @@ public class pathfinding0
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int out_ = 1 + min4(val1, val2, val3, val4);
+      int k = min2(val1, val2);
+      int l = min2(min2(k, val3), val4);
+      int h = l;
+      int out_ = 1 + h;
       cache[posY][posX] = out_;
       return out_;
     }
@@ -85,8 +65,22 @@ public class pathfinding0
   
   public static void main(String args[])
   {
-    int x = read_int();
-    int y = read_int();
+    int o = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); o = -scanner.nextInt();
+    }else{
+    o = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int m = o;
+    int x = m;
+    int q = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); q = -scanner.nextInt();
+    }else{
+    q = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int p = q;
+    int y = p;
     System.out.printf("%d %d\n", x, y);
     char[][] tab = read_char_matrix(x, y);
     int result = pathfind(tab, x, y);

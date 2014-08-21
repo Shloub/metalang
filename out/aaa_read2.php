@@ -1,36 +1,29 @@
 <?php
-function read_int(){
-  return intval(trim(fgets(STDIN)));
-}
-
-function &read_int_line($n){
-  return array_map("intval", explode(" ", fgets(STDIN)));
-}
-
-function &read_char_line($n){
-  return fgets(STDIN);
-}
-
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-$len = read_int();
+$a = intval(trim(fgets(STDIN)));
+$len = $a;
 echo $len, "=len\n";
-$tab = read_int_line($len);
+$b = array_map("intval", explode(" ", fgets(STDIN)));
+$tab = $b;
 for ($i = 0 ; $i < $len; $i++)
 {
   echo $i, "=>", $tab[$i], " ";
 }
 echo "\n";
-$tab2 = read_int_line($len);
+$d = array_map("intval", explode(" ", fgets(STDIN)));
+$tab2 = $d;
 for ($i_ = 0 ; $i_ < $len; $i_++)
 {
   echo $i_, "==>", $tab2[$i_], " ";
 }
-$strlen = read_int();
+$e = intval(trim(fgets(STDIN)));
+$strlen = $e;
 echo $strlen, "=strlen\n";
-$tab4 = read_char_line($strlen);
+$f = fgets(STDIN);
+$tab4 = $f;
 for ($i3 = 0 ; $i3 < $strlen; $i3++)
 {
   $tmpc = $tab4[$i3];

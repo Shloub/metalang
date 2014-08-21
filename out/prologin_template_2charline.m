@@ -2,27 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int read_int(){
-  int out_ = 0;
-  scanf("%d ", &out_);
-  return out_;
-}
-
-char* read_char_line(int n){
-  char *tab = malloc( n * sizeof(char));
-  {
-    int i;
-    for (i = 0 ; i < n; i++)
-    {
-      char t = '_';
-      scanf("%c", &t);
-      tab[i] = t;
-    }
-  }
-  scanf(" ");
-  return tab;
-}
-
 int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2){
   int out_ = 0;
   {
@@ -48,10 +27,40 @@ int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2)
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int taille1 = read_int();
-  char* tableau1 = read_char_line(taille1);
-  int taille2 = read_int();
-  char* tableau2 = read_char_line(taille2);
+  int b = 0;
+  scanf("%d ", &b);
+  int a = b;
+  int taille1 = a;
+  char *d = malloc( taille1 * sizeof(char));
+  {
+    int e;
+    for (e = 0 ; e < taille1; e++)
+    {
+      char f = '_';
+      scanf("%c", &f);
+      d[e] = f;
+    }
+  }
+  scanf(" ");
+  char* c = d;
+  char* tableau1 = c;
+  int h = 0;
+  scanf("%d ", &h);
+  int g = h;
+  int taille2 = g;
+  char *l = malloc( taille2 * sizeof(char));
+  {
+    int m;
+    for (m = 0 ; m < taille2; m++)
+    {
+      char o = '_';
+      scanf("%c", &o);
+      l[m] = o;
+    }
+  }
+  scanf(" ");
+  char* k = l;
+  char* tableau2 = k;
   printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   [pool drain];
   return 0;

@@ -3,16 +3,6 @@ using System.Collections.Generic;
 
 public class prologin_template_2charline2
 {
-  public static int read_int()
-  {
-    return int.Parse(Console.ReadLine());
-  }
-  
-  public static char[] read_char_line(int n)
-  {
-    return Console.ReadLine().ToCharArray();
-  }
-  
   public static int programme_candidat(char[] tableau1, int taille1, char[] tableau2, int taille2)
   {
     int out_ = 0;
@@ -34,10 +24,14 @@ public class prologin_template_2charline2
   
   public static void Main(String[] args)
   {
-    int taille1 = read_int();
-    int taille2 = read_int();
-    char[] tableau1 = read_char_line(taille1);
-    char[] tableau2 = read_char_line(taille2);
+    int a = int.Parse(Console.ReadLine());
+    int taille1 = a;
+    int b = int.Parse(Console.ReadLine());
+    int taille2 = b;
+    char[] c = Console.ReadLine().ToCharArray();
+    char[] tableau1 = c;
+    char[] d = Console.ReadLine().ToCharArray();
+    char[] tableau2 = d;
     Console.Write("" + programme_candidat(tableau1, taille1, tableau2, taille2) + "\n");
   }
   

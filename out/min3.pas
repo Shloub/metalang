@@ -13,11 +13,6 @@ begin
     end;
 end;
 
-function min3_(a : Longint; b : Longint; c : Longint) : Longint;
-begin
-  exit(min2(min2(a, b), c));
-end;
-
 
 var
   ba : Longint;

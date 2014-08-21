@@ -33,37 +33,26 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun read_int ()
-(progn
-  (let ((out_ (mread-int )))
-    (mread-blank)
-    (return-from read_int out_)
-  )))
-
-(defun read_char_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_1
-              (let ((t_ (mread-char )))
-                (return-from lambda_1 t_)
-              )))
-            ))))
-  (mread-blank)
-  (return-from read_char_line tab)
-  )))
-
 (defun read_char_matrix (x y)
 (progn
   (let
    ((tab (array_init
             y
             (function (lambda (z)
-            (block lambda_2
-              (return-from lambda_2 (read_char_line x))
-            ))
+            (block lambda_1
+              (let
+               ((b (array_init
+                      x
+                      (function (lambda (c)
+                      (block lambda_2
+                        (let ((d (mread-char )))
+                          (return-from lambda_2 d)
+                        )))
+                      ))))
+              (mread-blank)
+              (let ((a b))
+                (return-from lambda_1 a)
+              ))))
             ))))
   (return-from read_char_matrix tab)
   )))
@@ -91,12 +80,18 @@
   )))
 
 (progn
-  (let ((taille_x (read_int )))
-    (let ((taille_y (read_int )))
-      (let ((tableau (read_char_matrix taille_x taille_y)))
-        (princ (programme_candidat tableau taille_x taille_y))
-        (princ "
+  (let ((f (mread-int )))
+    (mread-blank)
+    (let ((e f))
+      (let ((taille_x e))
+        (let ((h (mread-int )))
+          (mread-blank)
+          (let ((g h))
+            (let ((taille_y g))
+              (let ((tableau (read_char_matrix taille_x taille_y)))
+                (princ (programme_candidat tableau taille_x taille_y))
+                (princ "
 ")
-      ))))
+              ))))))))
 
 

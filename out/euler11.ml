@@ -1,15 +1,13 @@
 let max2 a b =
   max a b
 
-let read_int_line n =
-  let tab = Array.init n (fun _i ->
-    let t = Scanf.scanf "%d " (fun v_0 -> v_0) in
-    t) in
-  tab
-
 let read_int_matrix x y =
   let tab = Array.init y (fun _z ->
-    read_int_line x) in
+    let e = Array.init x (fun _f ->
+      let g = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      g) in
+    let d = e in
+    d) in
   tab
 
 let rec find n m x y dx dy =

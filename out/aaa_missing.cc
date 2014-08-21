@@ -1,22 +1,5 @@
 #include <iostream>
 #include <vector>
-int read_int(){
-  int out_ = 0;
-  std::cin >> out_ >> std::skipws;
-  return out_;
-}
-
-std::vector<int> * read_int_line(int n){
-  std::vector<int > *tab = new std::vector<int>( n );
-  for (int i = 0 ; i < n; i++)
-  {
-    int t = 0;
-    std::cin >> t >> std::skipws;
-    tab->at(i) = t;
-  }
-  return tab;
-}
-
 /*
   Ce test a été généré par Metalang.
 */
@@ -34,9 +17,20 @@ int result(int len, std::vector<int> * tab){
 
 
 int main(){
-  int len = read_int();
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int len = a;
   std::cout << len << "\n";
-  std::vector<int> * tab = read_int_line(len);
+  std::vector<int > *d = new std::vector<int>( len );
+  for (int e = 0 ; e < len; e++)
+  {
+    int f = 0;
+    std::cin >> f >> std::skipws;
+    d->at(e) = f;
+  }
+  std::vector<int> * c = d;
+  std::vector<int> * tab = c;
   std::cout << result(len, tab);
   return 0;
 }

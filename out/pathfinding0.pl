@@ -35,46 +35,20 @@ sub min2{
   }
 }
 
-sub min3{
-  my($a,
-  $b,
-  $c) = @_;
-  return min2(min2($a, $b), $c);
-}
-
-sub min4{
-  my($a,
-  $b,
-  $c,
-  $d) = @_;
-  return min3(min2($a, $b), $c, $d);
-}
-
-sub read_int{
-  my $out_ = 0;
-  $out_ = readint();
-  readspaces();
-  return $out_;
-}
-
-sub read_char_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = '_';
-    $t = readchar();
-    $tab->[$i] = $t;
-    }
-  readspaces();
-  return $tab;
-}
-
 sub read_char_matrix{
   my($x,
   $y) = @_;
   my $tab = [];
   foreach my $z (0 .. $y - 1) {
-    $tab->[$z] = read_char_line($x);
+    my $h = [];
+    foreach my $k (0 .. $x - 1) {
+      my $l = '_';
+      $l = readchar();
+      $h->[$k] = $l;
+      }
+    readspaces();
+    my $g = $h;
+    $tab->[$z] = $g;
     }
   return $tab;
 }
@@ -103,7 +77,10 @@ sub pathfind_aux{
   my $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
   my $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
   my $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-  my $out_ = 1 + min4($val1, $val2, $val3, $val4);
+  my $o = min2($val1, $val2);
+  my $p = min2(min2($o, $val3), $val4);
+  my $m = $p;
+  my $out_ = 1 + $m;
   $cache->[$posY]->[$posX] = $out_;
   return $out_;
   }
@@ -129,8 +106,16 @@ sub pathfind{
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
-my $x = read_int();
-my $y = read_int();
+my $r = 0;
+$r = readint();
+readspaces();
+my $q = $r;
+my $x = $q;
+my $u = 0;
+$u = readint();
+readspaces();
+my $s = $u;
+my $y = $s;
 print($x, " ", $y, "\n");
 my $tab = read_char_matrix($x, $y);
 my $result = pathfind($tab, $x, $y);

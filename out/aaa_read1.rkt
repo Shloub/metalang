@@ -1,21 +1,19 @@
 #lang racket
 (require racket/block)
 
-(define (read_char_line n)
-  ;toto
-  (list->vector (string->list (read-line)))
-)
 (define main
-  (let ([str (read_char_line 12)])
-  (let ([b 0])
-  (let ([c 11])
-  (letrec ([a (lambda (i) 
-                (if (<= i c)
+  (let ([b 12])
+  (let ([a (list->vector (string->list (read-line)))])
+  (let ([str a])
+  (let ([d 0])
+  (let ([e 11])
+  (letrec ([c (lambda (i) 
+                (if (<= i e)
                 (block
                   (display (vector-ref str i))
-                  (a (+ i 1))
+                  (c (+ i 1))
                   )
                 '()))])
-  (a b)))))
+  (c d)))))))
 )
 

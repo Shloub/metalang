@@ -15,24 +15,6 @@ func skip() {
 }
 
 
-func read_int() int{
-  var out_ int = 0
-  fmt.Fscanf(reader, "%d", &out_);
-  skip()
-  return out_
-}
-
-func read_char_line(n int) []byte{
-  var tab []byte = make([]byte, n)
-  for i := 0 ; i <= n - 1; i++ {
-    var t byte = '_'
-      fmt.Fscanf(reader, "%c", &t);
-      tab[i] = t;
-  }
-  skip()
-  return tab
-}
-
 func programme_candidat(tableau []byte, taille int) int{
   var out_ int = 0
   for i := 0 ; i <= taille - 1; i++ {
@@ -45,8 +27,20 @@ func programme_candidat(tableau []byte, taille int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var taille int = read_int()
-  var tableau []byte = read_char_line(taille)
+  var b int = 0
+  fmt.Fscanf(reader, "%d", &b);
+  skip()
+  var a int = b
+  var taille int = a
+  var d []byte = make([]byte, taille)
+  for e := 0 ; e <= taille - 1; e++ {
+    var f byte = '_'
+      fmt.Fscanf(reader, "%c", &f);
+      d[e] = f;
+  }
+  skip()
+  var c []byte = d
+  var tableau []byte = c
   fmt.Printf("%d\n", programme_candidat(tableau, taille));
 }
 

@@ -31,58 +31,61 @@ var read_int_ = function(){
             return out * sign;
         }
     }
-}
-function read_int(){
-  var out_ = 0;
-  out_=read_int_();
-  stdinsep();
-  return out_;
-}
-
-function read_int_line(n){
-  var tab = new Array(n);
-  for (var i = 0 ; i <= n - 1; i++)
-  {
-    var t = 0;
-    t=read_int_();
-    stdinsep();
-    tab[i] = t;
-  }
-  return tab;
-}
-
-function read_char_line(n){
-  var tab = new Array(n);
-  for (var i = 0 ; i <= n - 1; i++)
-  {
-    var t = '_';
-    t=read_char_();
-    tab[i] = t;
-  }
-  stdinsep();
-  return tab;
-}
-
-/*
+}/*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-var len = read_int();
+var b = 0;
+b=read_int_();
+stdinsep();
+var a = b;
+var len = a;
 util.print(len, "=len\n");
-var tab = read_int_line(len);
+var e = new Array(len);
+for (var f = 0 ; f <= len - 1; f++)
+{
+  var g = 0;
+  g=read_int_();
+  stdinsep();
+  e[f] = g;
+}
+var d = e;
+var tab = d;
 for (var i = 0 ; i <= len - 1; i++)
 {
   util.print(i, "=>", tab[i], " ");
 }
 util.print("\n");
-var tab2 = read_int_line(len);
+var k = new Array(len);
+for (var l = 0 ; l <= len - 1; l++)
+{
+  var m = 0;
+  m=read_int_();
+  stdinsep();
+  k[l] = m;
+}
+var h = k;
+var tab2 = h;
 for (var i_ = 0 ; i_ <= len - 1; i_++)
 {
   util.print(i_, "==>", tab2[i_], " ");
 }
-var strlen = read_int();
+var p = 0;
+p=read_int_();
+stdinsep();
+var o = p;
+var strlen = o;
 util.print(strlen, "=strlen\n");
-var tab4 = read_char_line(strlen);
+var r = new Array(strlen);
+for (var s = 0 ; s <= strlen - 1; s++)
+{
+  var u = '_';
+  u=read_char_();
+  r[s] = u;
+}
+stdinsep();
+var q = r;
+var tab4 = q;
 for (var i3 = 0 ; i3 <= strlen - 1; i3++)
 {
   var tmpc = tab4[i3];

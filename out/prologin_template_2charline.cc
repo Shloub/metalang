@@ -10,16 +10,6 @@ std::vector<char> *getline(){
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
-int read_int(){
-  int out_ = 0;
-  std::cin >> out_ >> std::skipws;
-  return out_;
-}
-
-std::vector<char> * read_char_line(int n){
-  return getline();
-}
-
 int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<char> * tableau2, int taille2){
   int out_ = 0;
   for (int i = 0 ; i < taille1; i++)
@@ -39,10 +29,18 @@ int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<ch
 
 
 int main(){
-  int taille1 = read_int();
-  std::vector<char> * tableau1 = read_char_line(taille1);
-  int taille2 = read_int();
-  std::vector<char> * tableau2 = read_char_line(taille2);
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int taille1 = a;
+  std::vector<char> * c = getline();
+  std::vector<char> * tableau1 = c;
+  int e = 0;
+  std::cin >> e >> std::skipws;
+  int d = e;
+  int taille2 = d;
+  std::vector<char> * f = getline();
+  std::vector<char> * tableau2 = f;
   std::cout << programme_candidat(tableau1, taille1, tableau2, taille2) << "\n";
   return 0;
 }

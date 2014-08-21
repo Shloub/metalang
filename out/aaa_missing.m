@@ -2,26 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int read_int(){
-  int out_ = 0;
-  scanf("%d ", &out_);
-  return out_;
-}
-
-int* read_int_line(int n){
-  int *tab = malloc( n * sizeof(int));
-  {
-    int i;
-    for (i = 0 ; i < n; i++)
-    {
-      int t = 0;
-      scanf("%d ", &t);
-      tab[i] = t;
-    }
-  }
-  return tab;
-}
-
 /*
   Ce test a été généré par Metalang.
 */
@@ -48,9 +28,23 @@ int result(int len, int* tab){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int len = read_int();
+  int b = 0;
+  scanf("%d ", &b);
+  int a = b;
+  int len = a;
   printf("%d\n", len);
-  int* tab = read_int_line(len);
+  int *d = malloc( len * sizeof(int));
+  {
+    int e;
+    for (e = 0 ; e < len; e++)
+    {
+      int f = 0;
+      scanf("%d ", &f);
+      d[e] = f;
+    }
+  }
+  int* c = d;
+  int* tab = c;
   printf("%d", result(len, tab));
   [pool drain];
   return 0;

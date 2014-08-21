@@ -69,35 +69,8 @@ begin
    until false;
 end;
 
-function read_int() : Longint;
-var
-  out_ : Longint;
-begin
-  out_ := 0;
-  out_ := read_int_();
-  skip();
-  exit(out_);
-end;
-
-type a = array of char;
-function read_char_line(n : Longint) : a;
-var
-  i : Longint;
-  t : char;
-  tab : a;
-begin
-  SetLength(tab, n);
-  for i := 0 to  n - 1 do
-  begin
-    t := #95;
-    t := read_char_();
-    tab[i] := t;
-  end;
-  skip();
-  exit(tab);
-end;
-
-function programme_candidat(tableau : a; taille : Longint) : Longint;
+type g = array of char;
+function programme_candidat(tableau : g; taille : Longint) : Longint;
 var
   i : Longint;
   out_ : Longint;
@@ -114,11 +87,30 @@ end;
 
 
 var
-  tableau : a;
+  a : Longint;
+  b : Longint;
+  c : g;
+  d : g;
+  e : Longint;
+  f : char;
+  tableau : g;
   taille : Longint;
 begin
-  taille := read_int();
-  tableau := read_char_line(taille);
+  b := 0;
+  b := read_int_();
+  skip();
+  a := b;
+  taille := a;
+  SetLength(d, taille);
+  for e := 0 to  taille - 1 do
+  begin
+    f := #95;
+    f := read_char_();
+    d[e] := f;
+  end;
+  skip();
+  c := d;
+  tableau := c;
   Write(programme_candidat(tableau, taille));
   Write(''#10'');
 end.

@@ -61,60 +61,67 @@ begin
    until false;
 end;
 
-function read_int() : Longint;
+type p = array of array of Longint;
+type q = array of Longint;
+function read_int_matrix(x : Longint; y : Longint) : p;
 var
-  out_ : Longint;
-begin
-  out_ := 0;
-  out_ := read_int_();
-  skip();
-  exit(out_);
-end;
-
-type a = array of Longint;
-function read_int_line(n : Longint) : a;
-var
-  i : Longint;
-  t : Longint;
-  tab : a;
-begin
-  SetLength(tab, n);
-  for i := 0 to  n - 1 do
-  begin
-    t := 0;
-    t := read_int_();
-    skip();
-    tab[i] := t;
-  end;
-  exit(tab);
-end;
-
-type b = array of a;
-function read_int_matrix(x : Longint; y : Longint) : b;
-var
-  tab : b;
+  a : q;
+  b : q;
+  c : Longint;
+  d : Longint;
+  tab : p;
   z : Longint;
 begin
   SetLength(tab, y);
   for z := 0 to  y - 1 do
   begin
-    tab[z] := read_int_line(x);
+    SetLength(b, x);
+    for c := 0 to  x - 1 do
+    begin
+      d := 0;
+      d := read_int_();
+      skip();
+      b[c] := d;
+    end;
+    a := b;
+    tab[z] := a;
   end;
   exit(tab);
 end;
 
 
 var
+  e : Longint;
+  f : Longint;
+  g : q;
+  h : q;
   i : Longint;
   j : Longint;
+  k : Longint;
+  l : Longint;
   len : Longint;
-  tab1 : a;
-  tab2 : b;
+  m : Longint;
+  o : Longint;
+  tab1 : q;
+  tab2 : p;
 begin
-  len := read_int();
+  f := 0;
+  f := read_int_();
+  skip();
+  e := f;
+  len := e;
   Write(len);
   Write('=len'#10'');
-  tab1 := read_int_line(len);
+  SetLength(h, len);
+  for k := 0 to  len - 1 do
+  begin
+    l := 0;
+    l := read_int_();
+    skip();
+    h[k] := l;
+  end;
+  g := h;
+  tab1 := g;
   for i := 0 to  len - 1 do
   begin
     Write(i);
@@ -122,7 +129,11 @@ begin
     Write(tab1[i]);
     Write(''#10'');
   end;
-  len := read_int();
+  o := 0;
+  o := read_int_();
+  skip();
+  m := o;
+  len := m;
   tab2 := read_int_matrix(len, len - 1);
   for i := 0 to  len - 2 do
   begin

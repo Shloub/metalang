@@ -7,11 +7,6 @@ public class min3
     return Math.Min(a, b);
   }
   
-  public static int min3_(int a, int b, int c)
-  {
-    return min2(min2(a, b), c);
-  }
-  
   
   public static void Main(String[] args)
   {

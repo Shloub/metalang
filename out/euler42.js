@@ -32,16 +32,14 @@ var read_int_ = function(){
         }
     }
 }
-function isqrt(c){
-  return Math.floor(Math.sqrt(c));
-}
-
 function is_triangular(n){
   /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-  var a = isqrt(n * 2);
+  var d = n * 2;
+  var b = Math.floor(Math.sqrt(d));
+  var a = b;
   return a * (a + 1) == n * 2;
 }
 

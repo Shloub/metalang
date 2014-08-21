@@ -1,12 +1,4 @@
 <?php
-function read_int(){
-  return intval(trim(fgets(STDIN)));
-}
-
-function &read_char_line($n){
-  return fgets(STDIN);
-}
-
 function programme_candidat(&$tableau1, $taille1, &$tableau2, $taille2){
   $out_ = 0;
   for ($i = 0 ; $i < $taille1; $i++)
@@ -24,9 +16,13 @@ function programme_candidat(&$tableau1, $taille1, &$tableau2, $taille2){
   return $out_;
 }
 
-$taille1 = read_int();
-$tableau1 = read_char_line($taille1);
-$taille2 = read_int();
-$tableau2 = read_char_line($taille2);
+$a = intval(trim(fgets(STDIN)));
+$taille1 = $a;
+$b = fgets(STDIN);
+$tableau1 = $b;
+$c = intval(trim(fgets(STDIN)));
+$taille2 = $c;
+$d = fgets(STDIN);
+$tableau2 = $d;
 echo programme_candidat($tableau1, $taille1, $tableau2, $taille2), "\n";
 ?>

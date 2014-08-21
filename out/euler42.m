@@ -3,16 +3,14 @@
 #include<stdlib.h>
 #include<math.h>
 
-int isqrt(int c){
-  return sqrt(c);
-}
-
 int is_triangular(int n){
   /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-  int a = isqrt(n * 2);
+  int d = n * 2;
+  int b = sqrt(d);
+  int a = b;
   return a * (a + 1) == n * 2;
 }
 

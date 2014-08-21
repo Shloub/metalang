@@ -3,27 +3,14 @@ import java.util.*;
 public class prologin_template_charmatrix
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int read_int()
-  {
-    int out_ = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); out_ = -scanner.nextInt();
-    }else{
-    out_ = scanner.nextInt();}
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    return out_;
-  }
-  
-  public static char[] read_char_line(int n)
-  {
-    return scanner.nextLine().toCharArray();
-  }
-  
   public static char[][] read_char_matrix(int x, int y)
   {
     char[][] tab = new char[y][];
     for (int z = 0 ; z < y; z++)
-      tab[z] = read_char_line(x);
+    {
+      char[] a = scanner.nextLine().toCharArray();
+      tab[z] = a;
+    }
     return tab;
   }
   
@@ -45,8 +32,22 @@ public class prologin_template_charmatrix
   
   public static void main(String args[])
   {
-    int taille_x = read_int();
-    int taille_y = read_int();
+    int c = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); c = -scanner.nextInt();
+    }else{
+    c = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int b = c;
+    int taille_x = b;
+    int e = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); e = -scanner.nextInt();
+    }else{
+    e = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int d = e;
+    int taille_y = d;
     char[][] tableau = read_char_matrix(taille_x, taille_y);
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }

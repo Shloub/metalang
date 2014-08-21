@@ -9,14 +9,6 @@ int min2(int a, int b){
     return b;
 }
 
-int min3(int a, int b, int c){
-  return min2(min2(a, b), c);
-}
-
-int min4(int a, int b, int c, int d){
-  return min3(min2(a, b), c, d);
-}
-
 int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
   if (posX == x - 1 && posY == y - 1)
     return 0;
@@ -33,7 +25,10 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int out_ = 1 + min4(val1, val2, val3, val4);
+    int h = min2(val1, val2);
+    int k = min2(min2(h, val3), val4);
+    int g = k;
+    int out_ = 1 + g;
     cache[posY][posX] = out_;
     return out_;
   }

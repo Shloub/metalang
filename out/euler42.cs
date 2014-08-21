@@ -54,18 +54,15 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static int isqrt(int c)
-  {
-    return (int)Math.Sqrt(c);
-  }
-  
   public static bool is_triangular(int n)
   {
     /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-    int a = isqrt(n * 2);
+    int d = n * 2;
+    int b = (int)Math.Sqrt(d);
+    int a = b;
     return a * (a + 1) == n * 2;
   }
   

@@ -28,18 +28,16 @@
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define (isqrt_ c)
-  ;toto
-  (integer-sqrt c)
-)
 (define (is_triangular n)
   ;toto
   ;
   ;   n = k * (k + 1) / 2
   ;	  n * 2 = k * (k + 1)
   ;   
-  (let ([a (isqrt_ (* n 2))])
-  (eq? (* a (+ a 1)) (* n 2)))
+  (let ([d (* n 2)])
+  (let ([b (integer-sqrt d)])
+  (let ([a b])
+  (eq? (* a (+ a 1)) (* n 2)))))
 )
 (define (score _)
   ;toto
@@ -49,51 +47,51 @@
        (block
          (mread-blank)
          (let ([sum 0])
-         (let ([e 1])
-         (let ([f len])
-         (letrec ([d (lambda (i sum) 
-                       (if (<= i f)
+         (let ([g 1])
+         (let ([h len])
+         (letrec ([f (lambda (i sum) 
+                       (if (<= i h)
                        ((lambda (c) 
                           (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
                           ;		print c print " " print sum print " " 
-                          (d (+ i 1) sum))) (mread-char))
-                       (let ([b (lambda (_) 
+                          (f (+ i 1) sum))) (mread-char))
+                       (let ([e (lambda (_) 
                                   '())])
                        (if (is_triangular sum)
                        1
                        0))))])
-         (d e sum)))))
+         (f g sum)))))
   )) (mread-int))
 )
 )
 (define main
-  (let ([l 1])
-  (let ([m 55])
-  (letrec ([k (lambda (i) 
-                (if (<= i m)
+  (let ([o 1])
+  (let ([p 55])
+  (letrec ([m (lambda (i) 
+                (if (<= i p)
                 (block
                   (if (is_triangular i)
                   (block
                     (map display (list i " "))
                     )
                   '())
-                  (k (+ i 1))
+                  (m (+ i 1))
                   )
                 (block
                   (display "\n")
                   (let ([sum 0])
                   ((lambda (n) 
-                     (let ([h 1])
-                     (let ([j n])
-                     (letrec ([g (lambda (i sum) 
-                                   (if (<= i j)
+                     (let ([k 1])
+                     (let ([l n])
+                     (letrec ([j (lambda (i sum) 
+                                   (if (<= i l)
                                    (let ([sum (+ sum (score 'nil))])
-                                   (g (+ i 1) sum))
+                                   (j (+ i 1) sum))
                                    (block
                                      (map display (list sum "\n"))
                                      )))])
-                     (g h sum))))) (mread-int)))
+                     (j k sum))))) (mread-int)))
                 )))])
-  (k l))))
+  (m o))))
 )
 

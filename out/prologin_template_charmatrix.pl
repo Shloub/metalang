@@ -25,31 +25,20 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_int{
-  my $out_ = 0;
-  $out_ = readint();
-  readspaces();
-  return $out_;
-}
-
-sub read_char_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = '_';
-    $t = readchar();
-    $tab->[$i] = $t;
-    }
-  readspaces();
-  return $tab;
-}
-
 sub read_char_matrix{
   my($x,
   $y) = @_;
   my $tab = [];
   foreach my $z (0 .. $y - 1) {
-    $tab->[$z] = read_char_line($x);
+    my $b = [];
+    foreach my $c (0 .. $x - 1) {
+      my $d = '_';
+      $d = readchar();
+      $b->[$c] = $d;
+      }
+    readspaces();
+    my $a = $b;
+    $tab->[$z] = $a;
     }
   return $tab;
 }
@@ -71,8 +60,16 @@ sub programme_candidat{
   return $out_;
 }
 
-my $taille_x = read_int();
-my $taille_y = read_int();
+my $f = 0;
+$f = readint();
+readspaces();
+my $e = $f;
+my $taille_x = $e;
+my $h = 0;
+$h = readint();
+readspaces();
+my $g = $h;
+my $taille_y = $g;
 my $tableau = read_char_matrix($taille_x, $taille_y);
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");
 

@@ -1,33 +1,26 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int read_int(){
-  int out_ = 0;
-  scanf("%d ", &out_);
-  return out_;
-}
-
-char* read_char_line(int n){
-  char *tab = malloc( n * sizeof(char));
-  {
-    int i;
-    for (i = 0 ; i < n; i++)
-    {
-      char t = '_';
-      scanf("%c", &t);
-      tab[i] = t;
-    }
-  }
-  scanf(" ");
-  return tab;
-}
-
 char** read_char_matrix(int x, int y){
   char* *tab = malloc( y * sizeof(char*));
   {
     int z;
     for (z = 0 ; z < y; z++)
-      tab[z] = read_char_line(x);
+    {
+      char *b = malloc( x * sizeof(char));
+      {
+        int c;
+        for (c = 0 ; c < x; c++)
+        {
+          char d = '_';
+          scanf("%c", &d);
+          b[c] = d;
+        }
+      }
+      scanf(" ");
+      char* a = b;
+      tab[z] = a;
+    }
   }
   return tab;
 }
@@ -53,8 +46,14 @@ int programme_candidat(char** tableau, int taille_x, int taille_y){
 }
 
 int main(void){
-  int taille_x = read_int();
-  int taille_y = read_int();
+  int f = 0;
+  scanf("%d ", &f);
+  int e = f;
+  int taille_x = e;
+  int h = 0;
+  scanf("%d ", &h);
+  int g = h;
+  int taille_y = g;
   char** tableau = read_char_matrix(taille_x, taille_y);
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   return 0;

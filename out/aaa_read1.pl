@@ -10,19 +10,16 @@ sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_char_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = '_';
-    $t = readchar();
-    $tab->[$i] = $t;
-    }
-  readspaces();
-  return $tab;
-}
-
-my $str = read_char_line(12);
+my $b = 12;
+my $c = [];
+foreach my $d (0 .. $b - 1) {
+  my $e = '_';
+  $e = readchar();
+  $c->[$d] = $e;
+  }
+readspaces();
+my $a = $c;
+my $str = $a;
 foreach my $i (0 .. 11) {
   print($str->[$i]);
   }

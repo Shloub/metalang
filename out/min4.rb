@@ -7,16 +7,6 @@ def min2( a, b )
     end
 end
 
-def min3( a, b, c )
-    return (min2(min2(a, b), c));
-end
-
-def min4_( a, b, c, d )
-    f = min2(a, b)
-    e = min2(min2(f, c), d)
-    return (e);
-end
-
 h = 1
 i = 2
 j = 3

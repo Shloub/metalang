@@ -19,25 +19,6 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_int{
-  my $out_ = 0;
-  $out_ = readint();
-  readspaces();
-  return $out_;
-}
-
-sub read_int_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = 0;
-    $t = readint();
-    readspaces();
-    $tab->[$i] = $t;
-    }
-  return $tab;
-}
-
 #
 #  Ce test a été généré par Metalang.
 #
@@ -62,9 +43,21 @@ sub result{
   return -1;
 }
 
-my $len = read_int();
+my $b = 0;
+$b = readint();
+readspaces();
+my $a = $b;
+my $len = $a;
 print($len, "\n");
-my $tab = read_int_line($len);
+my $d = [];
+foreach my $e (0 .. $len - 1) {
+  my $f = 0;
+  $f = readint();
+  readspaces();
+  $d->[$e] = $f;
+  }
+my $c = $d;
+my $tab = $c;
 print(result($len, $tab));
 
 

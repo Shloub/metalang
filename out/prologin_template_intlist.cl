@@ -27,28 +27,6 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun read_int ()
-(progn
-  (let ((out_ (mread-int )))
-    (mread-blank)
-    (return-from read_int out_)
-  )))
-
-(defun read_int_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_1
-              (let ((t_ (mread-int )))
-                (mread-blank)
-                (return-from lambda_1 t_)
-              )))
-            ))))
-  (return-from read_int_line tab)
-  )))
-
 (defun programme_candidat (tableau taille)
 (progn
   (let ((out_ 0))
@@ -61,11 +39,25 @@
   )))
 
 (progn
-  (let ((taille (read_int )))
-    (let ((tableau (read_int_line taille)))
-      (princ (programme_candidat tableau taille))
-      (princ "
+  (let ((b (mread-int )))
+    (mread-blank)
+    (let ((a b))
+      (let ((taille a))
+        (let
+         ((d (array_init
+                taille
+                (function (lambda (e)
+                (block lambda_1
+                  (let ((f (mread-int )))
+                    (mread-blank)
+                    (return-from lambda_1 f)
+                  )))
+                ))))
+        (let ((c d))
+          (let ((tableau c))
+            (princ (programme_candidat tableau taille))
+            (princ "
 ")
-    )))
+          )))))))
 
 

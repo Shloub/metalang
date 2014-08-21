@@ -33,28 +33,6 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun read_int ()
-(progn
-  (let ((out_ (mread-int )))
-    (mread-blank)
-    (return-from read_int out_)
-  )))
-
-(defun read_char_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_1
-              (let ((t_ (mread-char )))
-                (return-from lambda_1 t_)
-              )))
-            ))))
-  (mread-blank)
-  (return-from read_char_line tab)
-  )))
-
 (defun programme_candidat (tableau1 taille1 tableau2 taille2)
 (progn
   (let ((out_ 0))
@@ -82,13 +60,42 @@
   )))
 
 (progn
-  (let ((taille1 (read_int )))
-    (let ((taille2 (read_int )))
-      (let ((tableau1 (read_char_line taille1)))
-        (let ((tableau2 (read_char_line taille2)))
-          (princ (programme_candidat tableau1 taille1 tableau2 taille2))
-          (princ "
+  (let ((b (mread-int )))
+    (mread-blank)
+    (let ((a b))
+      (let ((taille1 a))
+        (let ((d (mread-int )))
+          (mread-blank)
+          (let ((c d))
+            (let ((taille2 c))
+              (let
+               ((f (array_init
+                      taille1
+                      (function (lambda (g)
+                      (block lambda_1
+                        (let ((h (mread-char )))
+                          (return-from lambda_1 h)
+                        )))
+                      ))))
+              (mread-blank)
+              (let ((e f))
+                (let ((tableau1 e))
+                  (let
+                   ((l (array_init
+                          taille2
+                          (function (lambda (m)
+                          (block lambda_2
+                            (let ((o (mread-char )))
+                              (return-from lambda_2 o)
+                            )))
+                          ))))
+                  (mread-blank)
+                  (let ((k l))
+                    (let ((tableau2 k))
+                      (princ
+                      (programme_candidat tableau1 taille1 tableau2 taille2))
+                      (princ "
 ")
-        )))))
+                    )))))))))))))
 
 

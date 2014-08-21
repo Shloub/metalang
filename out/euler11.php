@@ -3,14 +3,13 @@ function max2($a, $b){
   return max($a, $b);
 }
 
-function &read_int_line($n){
-  return array_map("intval", explode(" ", fgets(STDIN)));
-}
-
 function &read_int_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
-    $tab[$z] = read_int_line($x);
+  {
+    $d = array_map("intval", explode(" ", fgets(STDIN)));
+    $tab[$z] = $d;
+  }
   return $tab;
 }
 

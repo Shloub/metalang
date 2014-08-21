@@ -10,49 +10,51 @@ std::vector<char> *getline(){
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
-int read_int(){
-  int out_ = 0;
-  std::cin >> out_ >> std::skipws;
-  return out_;
-}
-
-std::vector<int> * read_int_line(int n){
-  std::vector<int > *tab = new std::vector<int>( n );
-  for (int i = 0 ; i < n; i++)
-  {
-    int t = 0;
-    std::cin >> t >> std::skipws;
-    tab->at(i) = t;
-  }
-  return tab;
-}
-
-std::vector<char> * read_char_line(int n){
-  return getline();
-}
-
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
 
 int main(){
-  int len = read_int();
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int len = a;
   std::cout << len << "=len\n";
-  std::vector<int> * tab = read_int_line(len);
+  std::vector<int > *e = new std::vector<int>( len );
+  for (int f = 0 ; f < len; f++)
+  {
+    int g = 0;
+    std::cin >> g >> std::skipws;
+    e->at(f) = g;
+  }
+  std::vector<int> * d = e;
+  std::vector<int> * tab = d;
   for (int i = 0 ; i < len; i++)
   {
     std::cout << i << "=>" << tab->at(i) << " ";
   }
   std::cout << "\n";
-  std::vector<int> * tab2 = read_int_line(len);
+  std::vector<int > *k = new std::vector<int>( len );
+  for (int l = 0 ; l < len; l++)
+  {
+    int m = 0;
+    std::cin >> m >> std::skipws;
+    k->at(l) = m;
+  }
+  std::vector<int> * h = k;
+  std::vector<int> * tab2 = h;
   for (int i_ = 0 ; i_ < len; i_++)
   {
     std::cout << i_ << "==>" << tab2->at(i_) << " ";
   }
-  int strlen = read_int();
+  int p = 0;
+  std::cin >> p >> std::skipws;
+  int o = p;
+  int strlen = o;
   std::cout << strlen << "=strlen\n";
-  std::vector<char> * tab4 = read_char_line(strlen);
+  std::vector<char> * q = getline();
+  std::vector<char> * tab4 = q;
   for (int i3 = 0 ; i3 < strlen; i3++)
   {
     char tmpc = tab4->at(i3);

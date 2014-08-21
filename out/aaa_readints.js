@@ -26,40 +26,49 @@ var read_int_ = function(){
         }
     }
 }
-function read_int(){
-  var out_ = 0;
-  out_=read_int_();
-  stdinsep();
-  return out_;
-}
-
-function read_int_line(n){
-  var tab = new Array(n);
-  for (var i = 0 ; i <= n - 1; i++)
+function read_int_matrix(x, y){
+  var tab = new Array(y);
+  for (var z = 0 ; z <= y - 1; z++)
   {
-    var t = 0;
-    t=read_int_();
-    stdinsep();
-    tab[i] = t;
+    var b = new Array(x);
+    for (var c = 0 ; c <= x - 1; c++)
+    {
+      var d = 0;
+      d=read_int_();
+      stdinsep();
+      b[c] = d;
+    }
+    var a = b;
+    tab[z] = a;
   }
   return tab;
 }
 
-function read_int_matrix(x, y){
-  var tab = new Array(y);
-  for (var z = 0 ; z <= y - 1; z++)
-    tab[z] = read_int_line(x);
-  return tab;
-}
-
-var len = read_int();
+var f = 0;
+f=read_int_();
+stdinsep();
+var e = f;
+var len = e;
 util.print(len, "=len\n");
-var tab1 = read_int_line(len);
+var h = new Array(len);
+for (var k = 0 ; k <= len - 1; k++)
+{
+  var l = 0;
+  l=read_int_();
+  stdinsep();
+  h[k] = l;
+}
+var g = h;
+var tab1 = g;
 for (var i = 0 ; i <= len - 1; i++)
 {
   util.print(i, "=>", tab1[i], "\n");
 }
-len = read_int();
+var o = 0;
+o=read_int_();
+stdinsep();
+var m = o;
+len = m;
 var tab2 = read_int_matrix(len, len - 1);
 for (var i = 0 ; i <= len - 2; i++)
 {

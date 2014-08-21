@@ -9,39 +9,28 @@ module Array = struct
     )
 end
 
-let read_int () =
-  (Scanf.scanf "%d " (fun x -> x))
-let read_char_line n =
-  let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%c"
-  (fun  t -> let g = t in
-  ((), g))) ()) in
-  (
-    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    tab
-    )
-  
 let programme_candidat tableau1 taille1 tableau2 taille2 =
   let out_ = 0 in
-  let e = 0 in
-  let f = (taille1 - 1) in
-  let rec d i out_ =
-    (if (i <= f)
+  let r = 0 in
+  let s = (taille1 - 1) in
+  let rec q i out_ =
+    (if (i <= s)
      then let out_ = (out_ + ((int_of_char (tableau1.(i))) * i)) in
      (
        (Printf.printf "%c" tableau1.(i));
-       (d (i + 1) out_)
+       (q (i + 1) out_)
        )
      
      else (
             (Printf.printf "--\n" );
-            let b = 0 in
-            let c = (taille2 - 1) in
-            let rec a j out_ =
-              (if (j <= c)
+            let o = 0 in
+            let p = (taille2 - 1) in
+            let rec m j out_ =
+              (if (j <= p)
                then let out_ = (out_ + ((int_of_char (tableau2.(j))) * (j * 100))) in
                (
                  (Printf.printf "%c" tableau2.(j));
-                 (a (j + 1) out_)
+                 (m (j + 1) out_)
                  )
                
                else (
@@ -49,17 +38,35 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
                       out_
                       )
                ) in
-              (a b out_)
+              (m o out_)
             )
      ) in
-    (d e out_)
+    (q r out_)
 let main =
-  let taille1 = (read_int ()) in
-  let taille2 = (read_int ()) in
-  let tableau1 = (read_char_line taille1) in
-  let tableau2 = (read_char_line taille2) in
+  let a = (Scanf.scanf "%d " (fun x -> x)) in
+  let taille1 = a in
+  let b = (Scanf.scanf "%d " (fun x -> x)) in
+  let taille2 = b in
+  let d = (Array.init_withenv taille1 (fun  e () -> Scanf.scanf "%c"
+  (fun  f -> let u = f in
+  ((), u))) ()) in
   (
-    (Printf.printf "%d\n" (programme_candidat tableau1 taille1 tableau2 taille2))
+    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+    let c = d in
+    let tableau1 = c in
+    let h = (Array.init_withenv taille2 (fun  k () -> Scanf.scanf "%c"
+    (fun  l -> let v = l in
+    ((), v))) ()) in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      let g = h in
+      let tableau2 = g in
+      (
+        (Printf.printf "%d\n" (programme_candidat tableau1 taille1 tableau2 taille2))
+        )
+      
+      )
+    
     )
   
 

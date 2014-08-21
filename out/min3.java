@@ -8,11 +8,6 @@ public class min3
     return Math.min(a, b);
   }
   
-  public static int min3_(int a, int b, int c)
-  {
-    return min2(min2(a, b), c);
-  }
-  
   
   public static void main(String args[])
   {

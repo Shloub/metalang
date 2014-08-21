@@ -19,14 +19,11 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_int{
-  my $out_ = 0;
-  $out_ = readint();
-  readspaces();
-  return $out_;
-}
-
-my $len = read_int();
+my $b = 0;
+$b = readint();
+readspaces();
+my $a = $b;
+my $len = $a;
 print($len, "\n");
 
 
