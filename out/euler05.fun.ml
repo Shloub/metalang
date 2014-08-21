@@ -10,10 +10,7 @@ module Array = struct
 end
 
 let max2 a b =
-  let p () = () in
-  (if (a > b)
-   then a
-   else b)
+  (max a b)
 let primesfactors n =
   let c = (n + 1) in
   let tab = (Array.init_withenv c (fun  i () -> let f = 0 in
@@ -39,42 +36,41 @@ let primesfactors n =
 let main =
   let lim = 20 in
   let e = (lim + 1) in
-  let o = (Array.init_withenv e (fun  m () -> let q = 0 in
-  ((), q)) ()) in
-  let bc = 1 in
-  let bd = lim in
-  let rec y i =
-    (if (i <= bd)
+  let o = (Array.init_withenv e (fun  m () -> let p = 0 in
+  ((), p)) ()) in
+  let bb = 1 in
+  let bc = lim in
+  let rec x i =
+    (if (i <= bc)
      then let t = (primesfactors i) in
-     let ba = 1 in
-     let bb = i in
-     let rec z j =
-       (if (j <= bb)
+     let z = 1 in
+     let ba = i in
+     let rec y j =
+       (if (j <= ba)
         then (
                o.(j) <- (max2 o.(j) t.(j));
-               (z (j + 1))
+               (y (j + 1))
                )
         
-        else (y (i + 1))) in
-       (z ba)
+        else (x (i + 1))) in
+       (y z)
      else let product = 1 in
-     let w = 1 in
-     let x = lim in
-     let rec r k product =
-       (if (k <= x)
-        then let u = 1 in
-        let v = o.(k) in
-        let rec s l product =
-          (if (l <= v)
+     let v = 1 in
+     let w = lim in
+     let rec q k product =
+       (if (k <= w)
+        then let s = 1 in
+        let u = o.(k) in
+        let rec r l product =
+          (if (l <= u)
            then let product = (product * k) in
-           (s (l + 1) product)
-           else (r (k + 1) product)) in
-          (s u product)
+           (r (l + 1) product)
+           else (q (k + 1) product)) in
+          (r s product)
         else (
-               (Printf.printf "%d" product);
-               (Printf.printf "%s" "\n")
+               (Printf.printf "%d\n" product)
                )
         ) in
-       (r w product)) in
-    (y bc)
+       (q v product)) in
+    (x bb)
 

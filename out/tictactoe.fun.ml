@@ -13,7 +13,7 @@ type gamestate = {mutable cases : int array array; mutable firstToPlay : bool; m
 type move = {mutable x : int; mutable y : int;}
 let print_state g =
   (
-    (Printf.printf "%s" "\n|");
+    (Printf.printf "\n|" );
     let bj = 0 in
     let bk = 2 in
     let rec bf y =
@@ -24,27 +24,27 @@ let print_state g =
          (if (x <= bi)
           then (
                  (if (g.cases.(x).(y) = 0)
-                  then (Printf.printf "%s" " ")
+                  then (Printf.printf " ")
                   else (
                          (if (g.cases.(x).(y) = 1)
-                          then (Printf.printf "%s" "O")
-                          else (Printf.printf "%s" "X"));
+                          then (Printf.printf "O")
+                          else (Printf.printf "X"));
                          ()
                          )
                   );
-                 (Printf.printf "%s" "|");
+                 (Printf.printf "|" );
                  (bg (x + 1))
                  )
           
           else (
                  (if (y <> 2)
-                  then (Printf.printf "%s" "\n|-|-|-|\n|")
+                  then (Printf.printf "\n|-|-|-|\n|")
                   else ());
                  (bf (y + 1))
                  )
           ) in
          (bg bh)
-       else (Printf.printf "%s" "\n")) in
+       else (Printf.printf "\n")) in
       (bf bj)
     )
   
@@ -216,12 +216,7 @@ let play g =
                                    (apply_move_xy x y g);
                                    let currentNote = (minmax g) in
                                    (
-                                     (Printf.printf "%d" x);
-                                     (Printf.printf "%s" ", ");
-                                     (Printf.printf "%d" y);
-                                     (Printf.printf "%s" ", ");
-                                     (Printf.printf "%d" currentNote);
-                                     (Printf.printf "%s" "\n");
+                                     (Printf.printf "%d, %d, %d\n" x y currentNote);
                                      (cancel_move_xy x y g);
                                      let minNote = (if (currentNote < minNote)
                                                     then let minNote = currentNote in
@@ -242,9 +237,7 @@ let play g =
         else (e (x + 1) minNote)) in
        (f h minNote)
      else (
-            (Printf.printf "%d" minMove.x);
-            (Printf.printf "%d" minMove.y);
-            (Printf.printf "%s" "\n");
+            (Printf.printf "%d%d\n" minMove.x minMove.y);
             minMove
             )
      ) in
@@ -304,8 +297,7 @@ let main =
           
           else (
                  (print_state state);
-                 (Printf.printf "%d" state.note);
-                 (Printf.printf "%s" "\n");
+                 (Printf.printf "%d\n" state.note);
                  (bl (i + 1))
                  )
           ) in

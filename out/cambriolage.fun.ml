@@ -10,10 +10,7 @@ module Array = struct
 end
 
 let max2 a b =
-  let r () = () in
-  (if (a > b)
-   then a
-   else b)
+  (max a b)
 let nbPassePartout n passepartout m serrures =
   let max_ancient = 0 in
   let max_recent = 0 in
@@ -56,12 +53,12 @@ let main =
                let out0 = (Array.init_withenv c (fun  j () -> Scanf.scanf "%d"
                (fun  out__ -> (
                                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                let t = out__ in
-                                ((), t)
+                                let s = out__ in
+                                ((), s)
                                 )
                )) ()) in
-               let s = out0 in
-               ((), s)) ()) in
+               let r = out0 in
+               ((), r)) ()) in
                Scanf.scanf "%d"
                (fun  m -> (
                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
@@ -69,12 +66,12 @@ let main =
                             let out1 = (Array.init_withenv d (fun  l () -> Scanf.scanf "%d"
                             (fun  out_ -> (
                                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                            let v = out_ in
-                                            ((), v)
+                                            let u = out_ in
+                                            ((), u)
                                             )
                             )) ()) in
-                            let u = out1 in
-                            ((), u)) ()) in
+                            let t = out1 in
+                            ((), t)) ()) in
                             (Printf.printf "%d" (nbPassePartout n passepartout m serrures))
                             )
                )

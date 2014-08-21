@@ -1,3 +1,3 @@
 let main =
-  (Printf.printf "%s" "Hello World")
+  (Printf.printf "Hello World")
 

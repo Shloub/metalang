@@ -47,10 +47,7 @@ let main =
                                                     (max_, maxi)
                                                     else (max_, maxi)))
      else (
-            (Printf.printf "%d" max_);
-            (Printf.printf "%s" "\n");
-            (Printf.printf "%d" maxi);
-            (Printf.printf "%s" "\n")
+            (Printf.printf "%d\n%d\n" max_ maxi)
             )
      ) in
     (g h max_ maxi)

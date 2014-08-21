@@ -18,8 +18,7 @@ let main =
                            else (a, b, b0, found)))
         else let a = (if (not found)
                       then (
-                             (Printf.printf "%d" a);
-                             (Printf.printf "%s" "\n");
+                             (Printf.printf "%d\n" a);
                              let a = 1 in
                              a
                              )

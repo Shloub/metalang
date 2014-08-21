@@ -36,21 +36,9 @@
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define (min2 a b)
-  ;toto
-  (let ([m (lambda (_) 
-             '())])
-  (if (< a b)
-  a
-  b))
-)
-(define (min3 a b c)
-  ;toto
-  (min2 (min2 a b) c)
-)
 (define (min4 a b c d)
   ;toto
-  (min3 (min2 a b) c d)
+  (min a b c d)
 )
 (define (pathfind_aux cache tab x y posX posY)
   ;toto
@@ -97,12 +85,12 @@
 (define main
   (let ([x 0])
   (let ([y 0])
-  ((lambda (r) 
-     (let ([x r])
+  ((lambda (q) 
+     (let ([x q])
      (block
        (mread-blank)
-       ((lambda (q) 
-          (let ([y q])
+       ((lambda (p) 
+          (let ([y p])
           (block
             (mread-blank)
             (let ([tab (array_init_withenv y (lambda (i) 
@@ -110,14 +98,14 @@
                                                            (lambda (j) 
                                                              (lambda (_) 
                                                              (let ([tmp (integer->char 0)])
-                                                             ((lambda (p) 
-                                                                (let ([tmp p])
-                                                                (let ([o tmp])
-                                                                (list '() o)))) (mread-char))))) '())])
+                                                             ((lambda (o) 
+                                                                (let ([tmp o])
+                                                                (let ([n tmp])
+                                                                (list '() n)))) (mread-char))))) '())])
             (block
               (mread-blank)
-              (let ([n tab2])
-              (list '() n))
+              (let ([m tab2])
+              (list '() m))
               )))) '())])
           (let ([result (pathfind tab x y)])
           (display result)))

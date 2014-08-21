@@ -82,8 +82,7 @@
                 (list month year)))
                 (list month year))))))
                 (block
-                  (display count)
-                  (display "\n")
+                  (map display (list count "\n"))
                   )))])
   (n count dayofweek month year))))))
 )

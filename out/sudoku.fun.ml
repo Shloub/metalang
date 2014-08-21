@@ -29,24 +29,23 @@ let print_sudoku sudoku_ =
      let rec n x =
        (if (x <= q)
         then (
-               (Printf.printf "%d" sudoku_.((x + (y * 9))));
-               (Printf.printf "%s" " ");
+               (Printf.printf "%d " sudoku_.((x + (y * 9))));
                (if ((x mod 3) = 2)
-                then (Printf.printf "%s" " ")
+                then (Printf.printf " ")
                 else ());
                (n (x + 1))
                )
         
         else (
-               (Printf.printf "%s" "\n");
+               (Printf.printf "\n" );
                (if ((y mod 3) = 2)
-                then (Printf.printf "%s" "\n")
+                then (Printf.printf "\n")
                 else ());
                (m (y + 1))
                )
         ) in
        (n o)
-     else (Printf.printf "%s" "\n")) in
+     else (Printf.printf "\n")) in
     (m r)
 let sudoku_done s =
   let j = 0 in
@@ -98,7 +97,7 @@ let main =
             ()
             )
      
-     else (Printf.printf "%s" "no solution\n"));
+     else (Printf.printf "no solution\n"));
     ()
     )
   

@@ -61,8 +61,7 @@ let main =
                                       (month, year)
                                       else (month, year)))
      else (
-            (Printf.printf "%d" count);
-            (Printf.printf "%s" "\n")
+            (Printf.printf "%d\n" count)
             )
      ) in
     (n count dayofweek month year)

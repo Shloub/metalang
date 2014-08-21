@@ -11,11 +11,7 @@
 
 (define (max2 a b)
   ;toto
-  (let ([bi (lambda (_) 
-              '())])
-  (if (> a b)
-  a
-  b))
+  (max a b)
 )
 (define (eratostene t_ max_)
   ;toto
@@ -119,8 +115,7 @@
 )
 (define main
   (block
-    (display (find_ 500))
-    (display "\n")
+    (map display (list (find_ 500) "\n"))
     '()
     )
 )

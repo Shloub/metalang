@@ -101,13 +101,12 @@ let main =
       let rec r i =
         (if (i <= t)
          then (
-                (Printf.printf "%d" tab2.(i));
-                (Printf.printf "%s" " ");
+                (Printf.printf "%d " tab2.(i));
                 (r (i + 1))
                 )
          
          else (
-                (Printf.printf "%s" "\n");
+                (Printf.printf "\n" );
                 let tab3 = (copytab tab len) in
                 (
                   (qsort_ tab3 len 0 (len - 1));
@@ -116,12 +115,11 @@ let main =
                   let rec n i =
                     (if (i <= q)
                      then (
-                            (Printf.printf "%d" tab3.(i));
-                            (Printf.printf "%s" " ");
+                            (Printf.printf "%d " tab3.(i));
                             (n (i + 1))
                             )
                      
-                     else (Printf.printf "%s" "\n")) in
+                     else (Printf.printf "\n")) in
                     (n p)
                   )
                 

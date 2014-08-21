@@ -5,9 +5,9 @@ let f i =
 let main =
   (
     (if (f 4)
-     then (Printf.printf "%s" "true <-\n ->\n")
-     else (Printf.printf "%s" "false <-\n ->\n"));
-    (Printf.printf "%s" "small test end\n")
+     then (Printf.printf "true <-\n ->\n")
+     else (Printf.printf "false <-\n ->\n"));
+    (Printf.printf "small test end\n" )
     )
   
 

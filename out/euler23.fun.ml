@@ -153,9 +153,7 @@ let main =
                               else sum) in
               (bl (o + 1) sum)
               else (
-                     (Printf.printf "%s" "\n");
-                     (Printf.printf "%d" sum);
-                     (Printf.printf "%s" "\n")
+                     (Printf.printf "\n%d\n" sum)
                      )
               ) in
              (bl bm sum)) in

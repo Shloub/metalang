@@ -8,68 +8,18 @@
         (cadr o)
       )
     )))))
-(define last-char 0)
-(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
-(next-char)
-(define mread-char (lambda ()
-  (let ([ out last-char])
-    (block
-      (next-char)
-      out
-    ))))
-(define mread-int (lambda ()
-  (if (eq? #\- last-char)
-  (block
-    (next-char) (- 0 (mread-int)))
-    (letrec ([w (lambda (out)
-      (if (eof-object? last-char)
-        out
-        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
-          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
-            (block
-              (next-char)
-              (w out)
-          ))
-        out
-      )))]) (w 0)))))
-(define mread-blank (lambda ()
-  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
-))
 
-(define (min2 a b)
-  ;toto
-  (let ([p (lambda (_) 
-             '())])
-  (if (< a b)
-  a
-  b))
-)
-(define (min3 a b c)
-  ;toto
-  (min2 (min2 a b) c)
-)
 (define (min4 a b c d)
   ;toto
-  (min3 (min2 a b) c d)
+  (min a b c d)
 )
 (define (read_int _)
   ;toto
-  ((lambda (out_) 
-     (block
-       (mread-blank)
-       out_
-       )) (mread-int))
+  (string->number (read-line))
 )
 (define (read_char_line n)
   ;toto
-  (let ([tab (array_init_withenv n (lambda (i) 
-                                     (lambda (_) ((lambda (t_) 
-                                                    (let ([o t_])
-                                                    (list '() o))) (mread-char)))) '())])
-(block
-  (mread-blank)
-  tab
-  ))
+  (list->vector (string->list (read-line)))
 )
 (define (read_char_matrix x y)
   ;toto
@@ -130,10 +80,7 @@
   (let ([x (read_int 'nil)])
   (let ([y (read_int 'nil)])
   (block
-    (display x)
-    (display " ")
-    (display y)
-    (display "\n")
+    (map display (list x " " y "\n"))
     (let ([tab (read_char_matrix x y)])
     (let ([result (pathfind tab x y)])
     (display result)))

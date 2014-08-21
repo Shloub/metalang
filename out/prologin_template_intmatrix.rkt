@@ -8,46 +8,14 @@
         (cadr o)
       )
     )))))
-(define last-char 0)
-(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
-(next-char)
-(define mread-int (lambda ()
-  (if (eq? #\- last-char)
-  (block
-    (next-char) (- 0 (mread-int)))
-    (letrec ([w (lambda (out)
-      (if (eof-object? last-char)
-        out
-        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
-          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
-            (block
-              (next-char)
-              (w out)
-          ))
-        out
-      )))]) (w 0)))))
-(define mread-blank (lambda ()
-  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
-))
 
 (define (read_int _)
   ;toto
-  ((lambda (out_) 
-     (block
-       (mread-blank)
-       out_
-       )) (mread-int))
+  (string->number (read-line))
 )
 (define (read_int_line n)
   ;toto
-  (let ([tab (array_init_withenv n (lambda (i) 
-                                     (lambda (_) ((lambda (t_) 
-                                                    (block
-                                                      (mread-blank)
-                                                      (let ([h t_])
-                                                      (list '() h))
-                                                      )) (mread-int)))) '())])
-tab)
+  (list->vector (map string->number (regexp-split " " (read-line))))
 )
 (define (read_int_matrix x y)
   ;toto
@@ -79,8 +47,7 @@ tab)
   (let ([taille_y (read_int 'nil)])
   (let ([tableau (read_int_matrix taille_x taille_y)])
   (block
-    (display (programme_candidat tableau taille_x taille_y))
-    (display "\n")
+    (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
     ))))
 )
 

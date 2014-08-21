@@ -58,10 +58,7 @@ let main =
                    else l) in
      (z (k + 1) l)
      else (
-            (Printf.printf "%d" l);
-            (Printf.printf "%s" " == ");
-            (Printf.printf "%d" nprimes);
-            (Printf.printf "%s" "\n");
+            (Printf.printf "%d == %d\n" l nprimes);
             let canbe = (Array.init_withenv maximumprimes (fun  i_ () -> let h = false in
             ((), h)) ()) in
             let x = 0 in
@@ -90,8 +87,7 @@ let main =
                   (
                     (if ((m2 < maximumprimes) && (not canbe.(m2)))
                      then (
-                            (Printf.printf "%d" m2);
-                            (Printf.printf "%s" "\n")
+                            (Printf.printf "%d\n" m2)
                             )
                      
                      else ());

@@ -39,8 +39,7 @@ let main =
   let t = (Array.init_withenv n (fun  i () -> let f = 2 in
   ((), f)) ()) in
   (
-    (Printf.printf "%d" (find 3 t 1 n));
-    (Printf.printf "%s" "\n")
+    (Printf.printf "%d\n" (find 3 t 1 n))
     )
   
 

@@ -10,12 +10,7 @@ module Array = struct
 end
 
 let read_int () =
-  Scanf.scanf "%d"
-  (fun  out_ -> (
-                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                  out_
-                  )
-  )
+  (Scanf.scanf "%d " (fun x -> x))
 let read_int_line n =
   let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
   (fun  t -> (
@@ -32,18 +27,14 @@ let read_int_matrix x y =
 let main =
   let len = (read_int ()) in
   (
-    (Printf.printf "%d" len);
-    (Printf.printf "%s" "=len\n");
+    (Printf.printf "%d=len\n" len);
     let tab1 = (read_int_line len) in
     let l = 0 in
     let m = (len - 1) in
     let rec k i =
       (if (i <= m)
        then (
-              (Printf.printf "%d" i);
-              (Printf.printf "%s" "=>");
-              (Printf.printf "%d" tab1.(i));
-              (Printf.printf "%s" "\n");
+              (Printf.printf "%d=>%d\n" i tab1.(i));
               (k (i + 1))
               )
        
@@ -58,13 +49,12 @@ let main =
           let rec d j =
             (if (j <= f)
              then (
-                    (Printf.printf "%d" tab2.(i).(j));
-                    (Printf.printf "%s" " ");
+                    (Printf.printf "%d " tab2.(i).(j));
                     (d (j + 1))
                     )
              
              else (
-                    (Printf.printf "%s" "\n");
+                    (Printf.printf "\n" );
                     (c (i + 1))
                     )
              ) in

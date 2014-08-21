@@ -74,8 +74,7 @@
                 (block
                   (if (is_triangular i)
                   (block
-                    (display i)
-                    (display " ")
+                    (map display (list i " "))
                     )
                   '())
                   (k (+ i 1))
@@ -91,8 +90,7 @@
                                    (let ([sum (+ sum (score 'nil))])
                                    (g (+ i 1) sum))
                                    (block
-                                     (display sum)
-                                     (display "\n")
+                                     (map display (list sum "\n"))
                                      )))])
                      (g h sum))))) (mread-int)))
                 )))])

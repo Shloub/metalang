@@ -10,15 +10,9 @@ module Array = struct
 end
 
 let max2 a b =
-  let dt () = () in
-  (if (a > b)
-   then a
-   else b)
+  (max a b)
 let min2 a b =
-  let ds () = () in
-  (if (a < b)
-   then a
-   else b)
+  (min a b)
 type bigint = {mutable bigint_sign : bool; mutable bigint_len : int; mutable bigint_chiffres : int array;}
 let read_bigint len =
   let chiffres = (Array.init_withenv len (fun  j () -> Scanf.scanf "%c"
@@ -358,9 +352,9 @@ let euler48 () =
      let sum = (bigint_premiers_chiffres sum 10) in
      (be (i + 1) sum)
      else (
-            (Printf.printf "%s" "euler 48 = ");
+            (Printf.printf "euler 48 = " );
             (print_bigint sum);
-            (Printf.printf "%s" "\n")
+            (Printf.printf "\n" )
             )
      ) in
     (be bf sum)
@@ -444,88 +438,79 @@ let euler29 () =
     (s found n)
 let main =
   (
-    (Printf.printf "%d" (euler29 ()));
-    (Printf.printf "%s" "\n");
+    (Printf.printf "%d\n" (euler29 ()));
     let sum = (read_bigint 50) in
-    let dv = 2 in
-    let dw = 100 in
-    let rec du i sum =
-      (if (i <= dw)
+    let dt = 2 in
+    let du = 100 in
+    let rec ds i sum =
+      (if (i <= du)
        then (
               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
               let tmp = (read_bigint 50) in
               let sum = (add_bigint sum tmp) in
-              (du (i + 1) sum)
+              (ds (i + 1) sum)
               )
        
        else (
-              (Printf.printf "%s" "euler13 = ");
+              (Printf.printf "euler13 = " );
               (print_bigint sum);
-              (Printf.printf "%s" "\n");
-              (Printf.printf "%s" "euler25 = ");
-              (Printf.printf "%d" (euler25 ()));
-              (Printf.printf "%s" "\n");
-              (Printf.printf "%s" "euler16 = ");
-              (Printf.printf "%d" (euler16 ()));
-              (Printf.printf "%s" "\n");
+              (Printf.printf "\neuler25 = %d\neuler16 = %d\n" (euler25 ()) (euler16 ()));
               (euler48 ());
-              (Printf.printf "%s" "euler20 = ");
-              (Printf.printf "%d" (euler20 ()));
-              (Printf.printf "%s" "\n");
+              (Printf.printf "euler20 = %d\n" (euler20 ()));
               let a = (bigint_of_int 999999) in
               let b = (bigint_of_int 9951263) in
               (
                 (print_bigint a);
-                (Printf.printf "%s" ">>1=");
+                (Printf.printf ">>1=" );
                 (print_bigint (bigint_shift a (- 1)));
-                (Printf.printf "%s" "\n");
+                (Printf.printf "\n" );
                 (print_bigint a);
-                (Printf.printf "%s" "*");
+                (Printf.printf "*" );
                 (print_bigint b);
-                (Printf.printf "%s" "=");
+                (Printf.printf "=" );
                 (print_bigint (mul_bigint a b));
-                (Printf.printf "%s" "\n");
+                (Printf.printf "\n" );
                 (print_bigint a);
-                (Printf.printf "%s" "*");
+                (Printf.printf "*" );
                 (print_bigint b);
-                (Printf.printf "%s" "=");
+                (Printf.printf "=" );
                 (print_bigint (mul_bigint_cp a b));
-                (Printf.printf "%s" "\n");
+                (Printf.printf "\n" );
                 (print_bigint a);
-                (Printf.printf "%s" "+");
+                (Printf.printf "+" );
                 (print_bigint b);
-                (Printf.printf "%s" "=");
+                (Printf.printf "=" );
                 (print_bigint (add_bigint a b));
-                (Printf.printf "%s" "\n");
+                (Printf.printf "\n" );
                 (print_bigint b);
-                (Printf.printf "%s" "-");
+                (Printf.printf "-" );
                 (print_bigint a);
-                (Printf.printf "%s" "=");
+                (Printf.printf "=" );
                 (print_bigint (sub_bigint b a));
-                (Printf.printf "%s" "\n");
+                (Printf.printf "\n" );
                 (print_bigint a);
-                (Printf.printf "%s" "-");
+                (Printf.printf "-" );
                 (print_bigint b);
-                (Printf.printf "%s" "=");
+                (Printf.printf "=" );
                 (print_bigint (sub_bigint a b));
-                (Printf.printf "%s" "\n");
+                (Printf.printf "\n" );
                 (print_bigint a);
-                (Printf.printf "%s" ">");
+                (Printf.printf ">" );
                 (print_bigint b);
-                (Printf.printf "%s" "=");
+                (Printf.printf "=" );
                 let m = (bigint_gt a b) in
                 (
                   (if m
-                   then (Printf.printf "%s" "True")
-                   else (Printf.printf "%s" "False"));
-                  (Printf.printf "%s" "\n")
+                   then (Printf.printf "True")
+                   else (Printf.printf "False"));
+                  (Printf.printf "\n" )
                   )
                 
                 )
               
               )
        ) in
-      (du dv sum)
+      (ds dt sum)
     )
   
 

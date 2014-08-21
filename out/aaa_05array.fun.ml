@@ -24,16 +24,16 @@ let main =
   let d = a.(0) in
   (
     (if d
-     then (Printf.printf "%s" "True")
-     else (Printf.printf "%s" "False"));
-    (Printf.printf "%s" "\n");
+     then (Printf.printf "True")
+     else (Printf.printf "False"));
+    (Printf.printf "\n" );
     (g (id a) 0);
     let e = a.(0) in
     (
       (if e
-       then (Printf.printf "%s" "True")
-       else (Printf.printf "%s" "False"));
-      (Printf.printf "%s" "\n")
+       then (Printf.printf "True")
+       else (Printf.printf "False"));
+      (Printf.printf "\n" )
       )
     
     )

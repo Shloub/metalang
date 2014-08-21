@@ -10,21 +10,13 @@ module Array = struct
 end
 
 let min2 a b =
-  let p () = () in
-  (if (a < b)
-   then a
-   else b)
+  (min a b)
 let min3 a b c =
   (min2 (min2 a b) c)
 let min4 a b c d =
   (min3 (min2 a b) c d)
 let read_int () =
-  Scanf.scanf "%d"
-  (fun  out_ -> (
-                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                  out_
-                  )
-  )
+  (Scanf.scanf "%d " (fun x -> x))
 let read_char_line n =
   let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%c"
   (fun  t -> let o = t in
@@ -74,7 +66,7 @@ let pathfind tab x y =
     )
   ) ()) in
   (
-    (Printf.printf "%s" "\n");
+    (Printf.printf "\n" );
     let e = tmp in
     ((), e)
     )
@@ -84,10 +76,7 @@ let main =
   let x = (read_int ()) in
   let y = (read_int ()) in
   (
-    (Printf.printf "%d" x);
-    (Printf.printf "%s" " ");
-    (Printf.printf "%d" y);
-    (Printf.printf "%s" "\n");
+    (Printf.printf "%d %d\n" x y);
     let tab = (read_char_matrix x y) in
     let result = (pathfind tab x y) in
     (Printf.printf "%d" result)

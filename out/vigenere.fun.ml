@@ -63,7 +63,7 @@ let main =
                                                         (j (i + 1))
                                                         )
                                                  
-                                                 else (Printf.printf "%s" "\n")) in
+                                                 else (Printf.printf "\n")) in
                                                 (j k)
                                               )
                                             

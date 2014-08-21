@@ -168,9 +168,7 @@
                                                               sum)])
                                                               (bl (+ o 1) sum))
                                                               (block
-                                                                (display "\n")
-                                                                (display sum)
-                                                                (display "\n")
+                                                                (map display (list "\n" sum "\n"))
                                                                 )))])
                                                (bl bm sum))))))])
                                 (bo bs))))))])

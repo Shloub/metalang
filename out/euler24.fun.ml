@@ -63,7 +63,7 @@ let show lim nth =
                (c (m + 1))
                )
         
-        else (Printf.printf "%s" "\n")) in
+        else (Printf.printf "\n")) in
        (c d)) in
     (f p nth)
 let main =

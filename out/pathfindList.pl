@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+
+sub nextchar{ sysread STDIN, $currentchar, 1; }
+sub readchar{
+    if (!defined $currentchar){ nextchar() ; }
+    my $o = $currentchar; nextchar(); return $o; }
+sub readint {
+    if (!defined $currentchar){ nextchar(); }
+  my $o = 0;
+  my $sign = 1;
+  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  while ($currentchar =~ /\d/){
+    $o = $o * 10 + $currentchar;
+    nextchar();
+  }
+  return $o * $sign;
+}
+
+sub readspaces {
+  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
+}
+
+sub remainder {
+    my ($a, $b) = @_;
+    return 0 unless $b && $a;
+    return $a - int($a / $b) * $b;
+}
+
+sub pathfind_aux{
+  my($cache,
+  $tab,
+  $len,
+  $pos) = @_;
+  if ($pos >= $len - 1) {
+  return 0;
+  }else{
+  if ($cache->[$pos] ne -1) {
+  return $cache->[$pos];
+  }else{
+  $cache->[$pos] = $len * 2;
+  my $posval = pathfind_aux($cache, $tab, $len, $tab->[$pos]);
+  my $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
+  my $out_ = 0;
+  if ($posval < $oneval) {
+  $out_ = 1 + $posval;
+  }else{
+  $out_ = 1 + $oneval;
+  }
+  $cache->[$pos] = $out_;
+  return $out_;
+  }
+  }
+}
+
+sub pathfind{
+  my($tab,
+  $len) = @_;
+  my $cache = [];
+  foreach $i (0 .. $len - 1) {
+    $cache->[$i] = -1;
+    }
+  return pathfind_aux($cache, $tab, $len, 0);
+}
+
+my $len = 0;
+$len = readint();
+readspaces();
+my $tab = [];
+foreach $i (0 .. $len - 1) {
+  my $tmp = 0;
+  $tmp = readint();
+  readspaces();
+  $tab->[$i] = $tmp;
+  }
+my $result = pathfind($tab, $len);
+print($result);
+
+

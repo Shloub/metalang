@@ -19,14 +19,7 @@
                               (block
                                 (if (and (eq? cc a2b2) (> c a))
                                 (block
-                                  (display a)
-                                  (display "\n")
-                                  (display b)
-                                  (display "\n")
-                                  (display c)
-                                  (display "\n")
-                                  (display (* (* a b) c))
-                                  (display "\n")
+                                  (map display (list a "\n" b "\n" c "\n" (* (* a b) c) "\n"))
                                   )
                                 '())
                                 (e (+ b 1))

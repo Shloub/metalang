@@ -45,8 +45,7 @@ let main =
   ((), f)) ()) in
   (
     t.(1) <- 0;
-    (Printf.printf "%d" (eratostene t n));
-    (Printf.printf "%s" "\n")
+    (Printf.printf "%d\n" (eratostene t n))
     )
   
 

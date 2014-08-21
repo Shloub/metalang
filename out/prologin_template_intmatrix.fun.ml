@@ -10,12 +10,7 @@ module Array = struct
 end
 
 let read_int () =
-  Scanf.scanf "%d"
-  (fun  out_ -> (
-                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                  out_
-                  )
-  )
+  (Scanf.scanf "%d " (fun x -> x))
 let read_int_line n =
   let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
   (fun  t -> (
@@ -50,8 +45,7 @@ let main =
   let taille_y = (read_int ()) in
   let tableau = (read_int_matrix taille_x taille_y) in
   (
-    (Printf.printf "%d" (programme_candidat tableau taille_x taille_y));
-    (Printf.printf "%s" "\n")
+    (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
     )
   
 

@@ -42,8 +42,7 @@ let main =
                             t.(1).blah <- f;
                             let titi = (result t 4) in
                             (
-                              (Printf.printf "%d" titi);
-                              (Printf.printf "%d" t.(2).blah)
+                              (Printf.printf "%d%d" titi t.(2).blah)
                               )
                             
                             )

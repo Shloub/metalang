@@ -10,10 +10,7 @@ module Array = struct
 end
 
 let max2 a b =
-  let h () = () in
-  (if (a > b)
-   then a
-   else b)
+  (max a b)
 let read_int_line n =
   let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
   (fun  t -> (
@@ -37,60 +34,59 @@ let rec find n m x y dx dy =
     else (m.(y).(x) * (find (n - 1) m (x + dx) (y + dy) dx dy))))
 let main =
   let c = 8 in
-  let directions = (Array.init_withenv c (fun  i () -> let l k = ((), k) in
+  let directions = (Array.init_withenv c (fun  i () -> let k h = ((), h) in
   (if (i = 0)
-   then let k = (0, 1) in
-   ((), k)
-   else let o () = (l ()) in
+   then let h = (0, 1) in
+   ((), h)
+   else let l () = (k ()) in
    (if (i = 1)
-    then let k = (1, 0) in
-    ((), k)
-    else let p () = (o ()) in
+    then let h = (1, 0) in
+    ((), h)
+    else let o () = (l ()) in
     (if (i = 2)
-     then let k = (0, (- 1)) in
-     ((), k)
-     else let q () = (p ()) in
+     then let h = (0, (- 1)) in
+     ((), h)
+     else let p () = (o ()) in
      (if (i = 3)
-      then let k = ((- 1), 0) in
-      ((), k)
-      else let r () = (q ()) in
+      then let h = ((- 1), 0) in
+      ((), h)
+      else let q () = (p ()) in
       (if (i = 4)
-       then let k = (1, 1) in
-       ((), k)
-       else let s () = (r ()) in
+       then let h = (1, 1) in
+       ((), h)
+       else let r () = (q ()) in
        (if (i = 5)
-        then let k = (1, (- 1)) in
-        ((), k)
-        else let u () = (s ()) in
+        then let h = (1, (- 1)) in
+        ((), h)
+        else let s () = (r ()) in
         (if (i = 6)
-         then let k = ((- 1), 1) in
-         ((), k)
-         else let k = ((- 1), (- 1)) in
-         ((), k))))))))) ()) in
+         then let h = ((- 1), 1) in
+         ((), h)
+         else let h = ((- 1), (- 1)) in
+         ((), h))))))))) ()) in
   let max_ = 0 in
   let m = (read_int_matrix 20 20) in
-  let bf = 0 in
-  let bg = 7 in
-  let rec v j max_ =
-    (if (j <= bg)
-     then ((fun  (dx, dy) -> let bd = 0 in
-     let be = 19 in
-     let rec w x max_ =
-       (if (x <= be)
-        then let bb = 0 in
-        let bc = 19 in
-        let rec ba y max_ =
-          (if (y <= bc)
+  let be = 0 in
+  let bf = 7 in
+  let rec u j max_ =
+    (if (j <= bf)
+     then ((fun  (dx, dy) -> let bc = 0 in
+     let bd = 19 in
+     let rec v x max_ =
+       (if (x <= bd)
+        then let ba = 0 in
+        let bb = 19 in
+        let rec w y max_ =
+          (if (y <= bb)
            then let max_ = (max2 max_ (find 4 m x y dx dy)) in
-           (ba (y + 1) max_)
-           else (w (x + 1) max_)) in
-          (ba bb max_)
-        else (v (j + 1) max_)) in
-       (w bd max_)) directions.(j))
+           (w (y + 1) max_)
+           else (v (x + 1) max_)) in
+          (w ba max_)
+        else (u (j + 1) max_)) in
+       (v bc max_)) directions.(j))
      else (
-            (Printf.printf "%d" max_);
-            (Printf.printf "%s" "\n")
+            (Printf.printf "%d\n" max_)
             )
      ) in
-    (v bf max_)
+    (u be max_)
 

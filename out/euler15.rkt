@@ -54,8 +54,7 @@
                                             (letrec ([d (lambda (k) 
                                                           (if (<= k f)
                                                           (block
-                                                            (display (vector-ref (vector-ref tab m) k))
-                                                            (display " ")
+                                                            (map display (list (vector-ref (vector-ref tab m) k) " "))
                                                             (d (+ k 1))
                                                             )
                                                           (block
@@ -64,8 +63,7 @@
                                                             )))])
                                             (d e))))
                                             (block
-                                              (display (vector-ref (vector-ref tab 0) 0))
-                                              (display "\n")
+                                              (map display (list (vector-ref (vector-ref tab 0) 0) "\n"))
                                               )))])
                               (c g))))))])
                 (s x))))))])

@@ -48,8 +48,8 @@ let main =
                                    let a = (devine_ nombre tab len) in
                                    (
                                      (if a
-                                      then (Printf.printf "%s" "True")
-                                      else (Printf.printf "%s" "False"));
+                                      then (Printf.printf "True")
+                                      else (Printf.printf "False"));
                                      ()
                                      )
                                    

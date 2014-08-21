@@ -52,10 +52,7 @@
                 (list m mi)))
                 (list m mi))))
                 (block
-                  (display mi)
-                  (display "\n")
-                  (display m)
-                  (display "\n")
+                  (map display (list mi "\n" m "\n"))
                   )))])
   (l n m mi))))))))
 )

@@ -39,8 +39,7 @@ let main =
      then (
             (if (is_triangular i)
              then (
-                    (Printf.printf "%d" i);
-                    (Printf.printf "%s" " ")
+                    (Printf.printf "%d " i)
                     )
              
              else ());
@@ -48,7 +47,7 @@ let main =
             )
      
      else (
-            (Printf.printf "%s" "\n");
+            (Printf.printf "\n" );
             let sum = 0 in
             Scanf.scanf "%d"
             (fun  n -> let h = 1 in
@@ -58,8 +57,7 @@ let main =
                then let sum = (sum + (score ())) in
                (g (i + 1) sum)
                else (
-                      (Printf.printf "%d" sum);
-                      (Printf.printf "%s" "\n")
+                      (Printf.printf "%d\n" sum)
                       )
                ) in
               (g h sum))

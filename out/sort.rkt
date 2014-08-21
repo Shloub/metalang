@@ -129,8 +129,7 @@
        (letrec ([r (lambda (i) 
                      (if (<= i u)
                      (block
-                       (display (vector-ref tab2 i))
-                       (display " ")
+                       (map display (list (vector-ref tab2 i) " "))
                        (r (+ i 1))
                        )
                      (block
@@ -143,8 +142,7 @@
                          (letrec ([n (lambda (i) 
                                        (if (<= i q)
                                        (block
-                                         (display (vector-ref tab3 i))
-                                         (display " ")
+                                         (map display (list (vector-ref tab3 i) " "))
                                          (n (+ i 1))
                                          )
                                        (display "\n")))])

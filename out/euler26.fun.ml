@@ -48,10 +48,7 @@ let main =
                                           (m, mi)
                                           else (m, mi)))
      else (
-            (Printf.printf "%d" mi);
-            (Printf.printf "%s" "\n");
-            (Printf.printf "%d" m);
-            (Printf.printf "%s" "\n")
+            (Printf.printf "%d\n%d\n" mi m)
             )
      ) in
     (l n m mi)

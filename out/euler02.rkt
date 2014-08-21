@@ -16,8 +16,7 @@
                 (let ([b (+ b c)])
                 (e a b sum)))))
                 (block
-                  (display sum)
-                  (display "\n")
+                  (map display (list sum "\n"))
                   )))])
   (e a b sum)))))
 )

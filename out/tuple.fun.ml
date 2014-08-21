@@ -3,10 +3,7 @@ let f tuple_ =
 let main =
   let t = (f (0, 1)) in
   ((fun  (a, b) -> (
-                     (Printf.printf "%d" a);
-                     (Printf.printf "%s" " -- ");
-                     (Printf.printf "%d" b);
-                     (Printf.printf "%s" "--\n")
+                     (Printf.printf "%d -- %d--\n" a b)
                      )
   ) t)
 

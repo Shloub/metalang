@@ -57,10 +57,7 @@
                 (list max_ maxi)))
                 (list max_ maxi))))
                 (block
-                  (display max_)
-                  (display "\n")
-                  (display maxi)
-                  (display "\n")
+                  (map display (list max_ "\n" maxi "\n"))
                   )))])
   (g h max_ maxi))))))))
 )

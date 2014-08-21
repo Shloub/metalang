@@ -10,10 +10,7 @@ module Array = struct
 end
 
 let max2 a b =
-  let bi () = () in
-  (if (a > b)
-   then a
-   else b)
+  (max a b)
 let eratostene t max_ =
   let n = 0 in
   let bg = 2 in
@@ -110,8 +107,7 @@ let find ndiv2 =
     (v w l)
 let main =
   (
-    (Printf.printf "%d" (find 500));
-    (Printf.printf "%s" "\n");
+    (Printf.printf "%d\n" (find 500));
     ()
     )
   

@@ -13,8 +13,7 @@
                            sum)])
                 (a (+ i 1) sum))
                 (block
-                  (display sum)
-                  (display "\n")
+                  (map display (list sum "\n"))
                   )))])
   (a b sum)))))
 )

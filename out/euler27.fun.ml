@@ -81,10 +81,7 @@ let main =
                    else l) in
      (bb (k + 1) l)
      else (
-            (Printf.printf "%d" l);
-            (Printf.printf "%s" " == ");
-            (Printf.printf "%d" nprimes);
-            (Printf.printf "%s" "\n");
+            (Printf.printf "%d == %d\n" l nprimes);
             let ma = 0 in
             let mb = 0 in
             let z = 3 in
@@ -117,14 +114,7 @@ let main =
                  (w x ma max_ mb result)
                else (ma, max_, mb, result)))
                else (
-                      (Printf.printf "%d" ma);
-                      (Printf.printf "%s" " ");
-                      (Printf.printf "%d" mb);
-                      (Printf.printf "%s" "\n");
-                      (Printf.printf "%d" max_);
-                      (Printf.printf "%s" "\n");
-                      (Printf.printf "%d" result);
-                      (Printf.printf "%s" "\n")
+                      (Printf.printf "%d %d\n%d\n%d\n" ma mb max_ result)
                       )
                ) in
               (v z ma max_ mb result)

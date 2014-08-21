@@ -5,8 +5,7 @@ let g i =
    else j)
 let h i =
   (
-    (Printf.printf "%d" i);
-    (Printf.printf "%s" "\n")
+    (Printf.printf "%d\n" i)
     )
   
 let main =

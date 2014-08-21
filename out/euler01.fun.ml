@@ -10,8 +10,7 @@ let main =
                      else sum) in
      (a (i + 1) sum)
      else (
-            (Printf.printf "%d" sum);
-            (Printf.printf "%s" "\n")
+            (Printf.printf "%d\n" sum)
             )
      ) in
     (a b sum)

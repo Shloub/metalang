@@ -11,8 +11,7 @@
 (define (h i)
   ;toto
   (block
-    (display i)
-    (display "\n")
+    (map display (list i "\n"))
     )
 )
 (define main

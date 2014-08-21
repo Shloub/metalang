@@ -10,10 +10,7 @@
   (let ([t_ (f (list 0 1))])
   ((lambda (internal_env) (apply (lambda (a b) 
                                         (block
-                                          (display a)
-                                          (display " -- ")
-                                          (display b)
-                                          (display "--\n")
+                                          (map display (list a " -- " b "--\n"))
                                           )) internal_env)) t_))
 )
 

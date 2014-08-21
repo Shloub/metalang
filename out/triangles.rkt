@@ -92,8 +92,7 @@
                                             (let ([g tab2])
                                             (list '() g)))))) '())])
      (block
-       (display (find_ len tab))
-       (display "\n")
+       (map display (list (find_ len tab) "\n"))
        (let ([r 0])
        (let ([s (- len 1)])
        (letrec ([n (lambda (k) 
@@ -103,8 +102,7 @@
                      (letrec ([o (lambda (l) 
                                    (if (<= l q)
                                    (block
-                                     (display (vector-ref (vector-ref tab k) l))
-                                     (display " ")
+                                     (map display (list (vector-ref (vector-ref tab k) l) " "))
                                      (o (+ l 1))
                                      )
                                    (block

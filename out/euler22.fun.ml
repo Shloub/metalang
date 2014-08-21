@@ -29,8 +29,7 @@ let main =
      then let sum = (sum + (i * (score ()))) in
      (e (i + 1) sum)
      else (
-            (Printf.printf "%d" sum);
-            (Printf.printf "%s" "\n")
+            (Printf.printf "%d\n" sum)
             )
      ) in
     (e f sum))

@@ -10,8 +10,7 @@
   (let ([a 0])
   (block
     (foo a)
-    (display a)
-    (display "\n")
+    (map display (list a "\n"))
     ))
 )
 

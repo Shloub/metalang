@@ -53,20 +53,18 @@ let main =
            let rec d k =
              (if (k <= f)
               then (
-                     (Printf.printf "%d" tab.(m).(k));
-                     (Printf.printf "%s" " ");
+                     (Printf.printf "%d " tab.(m).(k));
                      (d (k + 1))
                      )
               
               else (
-                     (Printf.printf "%s" "\n");
+                     (Printf.printf "\n" );
                      (c (m + 1))
                      )
               ) in
              (d e)
            else (
-                  (Printf.printf "%d" tab.(0).(0));
-                  (Printf.printf "%s" "\n")
+                  (Printf.printf "%d\n" tab.(0).(0))
                   )
            ) in
           (c g)) in

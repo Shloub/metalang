@@ -45,8 +45,7 @@
                                     (lambda (_) (let ([f 2])
                                                 (list '() f)))) '())])
   (block
-    (display (find_ 3 t_ 1 n))
-    (display "\n")
+    (map display (list (find_ 3 t_ 1 n) "\n"))
     )))
 )
 

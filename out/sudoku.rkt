@@ -53,8 +53,7 @@
                 (letrec ([n (lambda (x) 
                               (if (<= x q)
                               (block
-                                (display (vector-ref sudoku_ (+ x (* y 9))))
-                                (display " ")
+                                (map display (list (vector-ref sudoku_ (+ x (* y 9))) " "))
                                 (if (eq? (remainder x 3) 2)
                                 (display " ")
                                 '())

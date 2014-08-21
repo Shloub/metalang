@@ -60,8 +60,7 @@ let main =
     let g = tab2 in
     ((), g)) ()) in
     (
-      (Printf.printf "%d" (find len tab));
-      (Printf.printf "%s" "\n");
+      (Printf.printf "%d\n" (find len tab));
       let r = 0 in
       let s = (len - 1) in
       let rec n k =
@@ -71,13 +70,12 @@ let main =
          let rec o l =
            (if (l <= q)
             then (
-                   (Printf.printf "%d" tab.(k).(l));
-                   (Printf.printf "%s" " ");
+                   (Printf.printf "%d " tab.(k).(l));
                    (o (l + 1))
                    )
             
             else (
-                   (Printf.printf "%s" "\n");
+                   (Printf.printf "\n" );
                    (n (k + 1))
                    )
             ) in

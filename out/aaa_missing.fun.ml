@@ -10,12 +10,7 @@ module Array = struct
 end
 
 let read_int () =
-  Scanf.scanf "%d"
-  (fun  out_ -> (
-                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                  out_
-                  )
-  )
+  (Scanf.scanf "%d " (fun x -> x))
 let read_int_line n =
   let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
   (fun  t -> (
@@ -50,8 +45,7 @@ let result len tab =
 let main =
   let len = (read_int ()) in
   (
-    (Printf.printf "%d" len);
-    (Printf.printf "%s" "\n");
+    (Printf.printf "%d\n" len);
     let tab = (read_int_line len) in
     (Printf.printf "%d" (result len tab))
     )

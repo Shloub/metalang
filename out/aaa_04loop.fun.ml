@@ -19,8 +19,7 @@ let main =
     (if (k <= g)
      then let j = (j + k) in
      (
-       (Printf.printf "%d" j);
-       (Printf.printf "%s" "\n");
+       (Printf.printf "%d\n" j);
        (e (k + 1) j)
        )
      
@@ -35,9 +34,7 @@ let main =
                )
         
         else (
-               (Printf.printf "%d" j);
-               (Printf.printf "%d" i);
-               (Printf.printf "%s" "FIN TEST\n")
+               (Printf.printf "%d%dFIN TEST\n" j i)
                )
         ) in
        (d i j)) in

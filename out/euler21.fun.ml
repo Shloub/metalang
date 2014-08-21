@@ -106,10 +106,7 @@ let main =
                    else l) in
      (bh (k + 1) l)
      else (
-            (Printf.printf "%d" l);
-            (Printf.printf "%s" " == ");
-            (Printf.printf "%d" nprimes);
-            (Printf.printf "%s" "\n");
+            (Printf.printf "%d == %d\n" l nprimes);
             let sum = 0 in
             let bf = 2 in
             let bg = 1000 in
@@ -120,10 +117,7 @@ let main =
                           then let othersum = ((sumdiv nprimes primes other) - other) in
                           let sum = (if (othersum = n)
                                      then (
-                                            (Printf.printf "%d" other);
-                                            (Printf.printf "%s" " & ");
-                                            (Printf.printf "%d" n);
-                                            (Printf.printf "%s" "\n");
+                                            (Printf.printf "%d & %d\n" other n);
                                             let sum = (sum + (other + n)) in
                                             sum
                                             )
@@ -133,9 +127,7 @@ let main =
                           else sum) in
                (be (n + 1) sum)
                else (
-                      (Printf.printf "%s" "\n");
-                      (Printf.printf "%d" sum);
-                      (Printf.printf "%s" "\n")
+                      (Printf.printf "\n%d\n" sum)
                       )
                ) in
               (be bf sum)

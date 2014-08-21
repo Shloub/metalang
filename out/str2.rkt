@@ -3,8 +3,7 @@
 
 (define main
   (block
-    (display "ma petite chaine")
-    (display " en or")
+    (map display (list "ma petite chaine" " en or"))
     '()
     )
 )

@@ -24,8 +24,7 @@
                 (if (<= k g)
                 (let ([j (+ j k)])
                 (block
-                  (display j)
-                  (display "\n")
+                  (map display (list j "\n"))
                   (e (+ k 1) j)
                   ))
                 (let ([i 4])
@@ -38,9 +37,7 @@
                                 (d i j)))
                                 )
                               (block
-                                (display j)
-                                (display i)
-                                (display "FIN TEST\n")
+                                (map display (list j i "FIN TEST\n"))
                                 )))])
                 (d i j)))))])
   (e f j)))))

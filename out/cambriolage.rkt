@@ -32,11 +32,7 @@
 
 (define (max2 a b)
   ;toto
-  (let ([r (lambda (_) 
-             '())])
-  (if (> a b)
-  a
-  b))
+  (max a b)
 )
 (define (nbPassePartout n passepartout m serrures)
   ;toto
@@ -87,11 +83,11 @@
                                                                  (lambda (out__) 
                                                                    (block
                                                                     (mread-blank)
-                                                                    (let ([u out__])
-                                                                    (list '() u))
+                                                                    (let ([s out__])
+                                                                    (list '() s))
                                                                     )) (mread-int)))) '())])
-                                                   (let ([s out0])
-                                                   (list '() s)))))) '())])
+                                                   (let ([r out0])
+                                                   (list '() r)))))) '())])
   ((lambda (m) 
      (block
        (mread-blank)
@@ -103,11 +99,11 @@
                                                              (lambda (out_) 
                                                                (block
                                                                  (mread-blank)
-                                                                 (let ([w out_])
-                                                                 (list '() w))
+                                                                 (let ([v out_])
+                                                                 (list '() v))
                                                                  )) (mread-int)))) '())])
-                                               (let ([v out1])
-                                               (list '() v)))))) '())])
+                                               (let ([u out1])
+                                               (list '() u)))))) '())])
   (display (nbPassePartout n passepartout m serrures)))
 )) (mread-int)))
 )) (mread-int))

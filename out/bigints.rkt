@@ -23,19 +23,11 @@
 
 (define (max2 a b)
   ;toto
-  (let ([dt (lambda (_) 
-              '())])
-  (if (> a b)
-  a
-  b))
+  (max a b)
 )
 (define (min2 a b)
   ;toto
-  (let ([ds (lambda (_) 
-              '())])
-  (if (< a b)
-  a
-  b))
+  (min a b)
 )
 (struct bigint ([bigint_chiffres #:mutable] [bigint_len #:mutable] [bigint_sign #:mutable]))
 (define (read_bigint len)
@@ -521,33 +513,24 @@
 )
 (define main
   (block
-    (display (euler29 'nil))
-    (display "\n")
+    (map display (list (euler29 'nil) "\n"))
     (let ([sum (read_bigint 50)])
-    (let ([dv 2])
-    (let ([dw 100])
-    (letrec ([du (lambda (i sum) 
-                   (if (<= i dw)
+    (let ([dt 2])
+    (let ([du 100])
+    (letrec ([ds (lambda (i sum) 
+                   (if (<= i du)
                    (block
                      (mread-blank)
                      (let ([tmp (read_bigint 50)])
                      (let ([sum (add_bigint sum tmp)])
-                     (du (+ i 1) sum)))
+                     (ds (+ i 1) sum)))
                      )
                    (block
                      (display "euler13 = ")
                      (print_bigint sum)
-                     (display "\n")
-                     (display "euler25 = ")
-                     (display (euler25 'nil))
-                     (display "\n")
-                     (display "euler16 = ")
-                     (display (euler16 'nil))
-                     (display "\n")
+                     (map display (list "\n" "euler25 = " (euler25 'nil) "\n" "euler16 = " (euler16 'nil) "\n"))
                      (euler48 'nil)
-                     (display "euler20 = ")
-                     (display (euler20 'nil))
-                     (display "\n")
+                     (map display (list "euler20 = " (euler20 'nil) "\n"))
                      (let ([a (bigint_of_int 999999)])
                      (let ([b (bigint_of_int 9951263)])
                      (block
@@ -598,7 +581,7 @@
                          ))
                        )))
                      )))])
-    (du dv sum)))))
+    (ds dt sum)))))
   )
 )
 

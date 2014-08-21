@@ -13,34 +13,25 @@ let main =
   Scanf.scanf "%d"
   (fun  len -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                 (Printf.printf "%d" len);
-                 (Printf.printf "%s" "=len\n");
+                 (Printf.printf "%d=len\n" len);
                  let len = (len * 2) in
                  (
-                   (Printf.printf "%s" "len*2=");
-                   (Printf.printf "%d" len);
-                   (Printf.printf "%s" "\n");
+                   (Printf.printf "len*2=%d\n" len);
                    let len = (len / 2) in
                    let tab = (Array.init_withenv len (fun  i () -> Scanf.scanf "%d"
                    (fun  tmpi1 -> (
                                     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                    (Printf.printf "%d" i);
-                                    (Printf.printf "%s" "=>");
-                                    (Printf.printf "%d" tmpi1);
-                                    (Printf.printf "%s" " ");
+                                    (Printf.printf "%d=>%d " i tmpi1);
                                     let a = tmpi1 in
                                     ((), a)
                                     )
                    )) ()) in
                    (
-                     (Printf.printf "%s" "\n");
+                     (Printf.printf "\n" );
                      let tab2 = (Array.init_withenv len (fun  i_ () -> Scanf.scanf "%d"
                      (fun  tmpi2 -> (
                                       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                      (Printf.printf "%d" i_);
-                                      (Printf.printf "%s" "==>");
-                                      (Printf.printf "%d" tmpi2);
-                                      (Printf.printf "%s" " ");
+                                      (Printf.printf "%d==>%d " i_ tmpi2);
                                       let b = tmpi2 in
                                       ((), b)
                                       )
@@ -48,15 +39,11 @@ let main =
                      Scanf.scanf "%d"
                      (fun  strlen -> (
                                        (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                       (Printf.printf "%d" strlen);
-                                       (Printf.printf "%s" "=strlen\n");
+                                       (Printf.printf "%d=strlen\n" strlen);
                                        let tab4 = (Array.init_withenv strlen (fun  toto () -> Scanf.scanf "%c"
                                        (fun  tmpc -> let c = (int_of_char (tmpc)) in
                                        (
-                                         (Printf.printf "%c" tmpc);
-                                         (Printf.printf "%s" ":");
-                                         (Printf.printf "%d" c);
-                                         (Printf.printf "%s" " ");
+                                         (Printf.printf "%c:%d " tmpc c);
                                          let c = (if (tmpc <> ' ')
                                                   then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
                                                   c

@@ -10,10 +10,7 @@ module Array = struct
 end
 
 let min2 a b =
-  let m () = () in
-  (if (a < b)
-   then a
-   else b)
+  (min a b)
 let min3 a b c =
   (min2 (min2 a b) c)
 let min4 a b c d =
@@ -55,22 +52,22 @@ let main =
   let x = 0 in
   let y = 0 in
   Scanf.scanf "%d"
-  (fun  r -> let x = r in
+  (fun  q -> let x = q in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     Scanf.scanf "%d"
-    (fun  q -> let y = q in
+    (fun  p -> let y = p in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       let tab = (Array.init_withenv y (fun  i () -> let tab2 = (Array.init_withenv x (fun  j () -> let tmp = '\000' in
       Scanf.scanf "%c"
-      (fun  p -> let tmp = p in
-      let o = tmp in
-      ((), o))) ()) in
+      (fun  o -> let tmp = o in
+      let n = tmp in
+      ((), n))) ()) in
       (
         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-        let n = tab2 in
-        ((), n)
+        let m = tab2 in
+        ((), m)
         )
       ) ()) in
       let result = (pathfind tab x y) in

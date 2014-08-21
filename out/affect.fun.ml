@@ -60,8 +60,7 @@ let main =
                                          Scanf.scanf "%d"
                                          (fun  c -> (
                                                       t2.blah <- c;
-                                                      (Printf.printf "%d" (result t t2));
-                                                      (Printf.printf "%d" t.blah)
+                                                      (Printf.printf "%d%d" (result t t2) t.blah)
                                                       )
                                          )
                                          )

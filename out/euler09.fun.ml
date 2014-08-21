@@ -16,14 +16,7 @@ let main =
         (
           (if ((cc = a2b2) && (c > a))
            then (
-                  (Printf.printf "%d" a);
-                  (Printf.printf "%s" "\n");
-                  (Printf.printf "%d" b);
-                  (Printf.printf "%s" "\n");
-                  (Printf.printf "%d" c);
-                  (Printf.printf "%s" "\n");
-                  (Printf.printf "%d" ((a * b) * c));
-                  (Printf.printf "%s" "\n")
+                  (Printf.printf "%d\n%d\n%d\n%d\n" a b c ((a * b) * c))
                   )
            
            else ());

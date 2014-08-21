@@ -82,8 +82,7 @@
                  ((lambda (c) 
                     (block
                       (set-toto-blah! t2 c)
-                      (display (result t__ t2))
-                      (display (toto-blah t__))
+                      (map display (list (result t__ t2) (toto-blah t__)))
                       )) (mread-int))
                )) (mread-int))
        )) (mread-int))

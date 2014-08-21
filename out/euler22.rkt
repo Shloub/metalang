@@ -59,8 +59,7 @@
                    (let ([sum (+ sum (* i (score 'nil)))])
                    (e (+ i 1) sum))
                    (block
-                     (display sum)
-                     (display "\n")
+                     (map display (list sum "\n"))
                      )))])
      (e f sum))))) (mread-int)))
 )

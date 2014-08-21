@@ -60,10 +60,7 @@
                          l)])
                 (z (+ k 1) l))
                 (block
-                  (display l)
-                  (display " == ")
-                  (display nprimes)
-                  (display "\n")
+                  (map display (list l " == " nprimes "\n"))
                   (let ([canbe (array_init_withenv maximumprimes (lambda (i_) 
                                                                    (lambda (_) 
                                                                    (let ([h #f])
@@ -93,8 +90,7 @@
                                               (block
                                                 (if (and (< m2 maximumprimes) (not (vector-ref canbe m2)))
                                                 (block
-                                                  (display m2)
-                                                  (display "\n")
+                                                  (map display (list m2 "\n"))
                                                   )
                                                 '())
                                                 (p (+ m 1))

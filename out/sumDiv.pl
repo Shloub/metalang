@@ -1,0 +1,84 @@
+#!/usr/bin/perl
+
+sub nextchar{ sysread STDIN, $currentchar, 1; }
+sub readchar{
+    if (!defined $currentchar){ nextchar() ; }
+    my $o = $currentchar; nextchar(); return $o; }
+sub readint {
+    if (!defined $currentchar){ nextchar(); }
+  my $o = 0;
+  my $sign = 1;
+  if ($currentchar eq '-') { $sign = -1; nextchar(); }
+  while ($currentchar =~ /\d/){
+    $o = $o * 10 + $currentchar;
+    nextchar();
+  }
+  return $o * $sign;
+}
+
+sub readspaces {
+  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
+}
+
+sub remainder {
+    my ($a, $b) = @_;
+    return 0 unless $b && $a;
+    return $a - int($a / $b) * $b;
+}
+
+sub foo{
+  my $a = 0;
+  # test 
+  
+  $a = $a + 1;
+  # test 2 
+  
+}
+
+sub foo2{
+  
+}
+
+sub foo3{
+  if (1 eq 1) {
+  
+  }else{
+  
+  }
+}
+
+sub sumdiv{
+  my($n) = @_;
+  # On désire renvoyer la somme des diviseurs 
+  
+  my $out_ = 0;
+  # On déclare un entier qui contiendra la somme 
+  
+  foreach $i (1 .. $n) {
+    # La boucle : i est le diviseur potentiel
+    
+    if ((remainder($n, $i)) eq 0) {
+    # Si i divise 
+    
+    $out_ = $out_ + $i;
+    # On incrémente 
+    
+    }else{
+    # nop 
+    
+    }
+    }
+  return $out_;
+  #On renvoie out
+  
+}
+
+# Programme principal 
+
+my $n = 0;
+$n = readint();
+# Lecture de l'entier 
+
+print(sumdiv($n));
+
+

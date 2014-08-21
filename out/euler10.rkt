@@ -47,8 +47,7 @@
                                                 (list '() f)))) '())])
   (block
     (vector-set! t_ 1 0)
-    (display (eratostene t_ n))
-    (display "\n")
+    (map display (list (eratostene t_ n) "\n"))
     )))
 )
 

@@ -23,8 +23,7 @@
                               (list a b b0 found)))
                               (let ([a (if (not found)
                                        (block
-                                         (display a)
-                                         (display "\n")
+                                         (map display (list a "\n"))
                                          (let ([a 1])
                                          a)
                                          )
