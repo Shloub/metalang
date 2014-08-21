@@ -1,6 +1,3 @@
-def min3_( a, b, c ):
-    return min(a, b, c);
-
 e = 2;
 f = 3;
 g = 4;

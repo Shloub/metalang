@@ -1,39 +1,38 @@
-let read_int () =
-  Scanf.scanf "%d " (fun x -> x)
-
-let read_int_line n =
-  let tab = Array.init n (fun _i ->
-    let t = Scanf.scanf "%d " (fun v_0 -> v_0) in
-    t) in
-  tab
-
-let read_char_line n =
-  let tab = Array.init n (fun _i ->
-    let t = Scanf.scanf "%c" (fun v_0 -> v_0) in
-    t) in
-  Scanf.scanf " " (fun () -> ());
-  tab
-
 (*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 *)
 let () =
 begin
-  let len = (read_int ()) in
+  let a = Scanf.scanf "%d " (fun x -> x) in
+  let len = a in
   Printf.printf "%d=len\n" len;
-  let tab = read_int_line len in
+  let d = Array.init len (fun _e ->
+    let f = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    f) in
+  let b = d in
+  let tab = b in
   for i = 0 to len - 1 do
     Printf.printf "%d=>%d " i tab.(i)
   done;
   Printf.printf "\n";
-  let tab2 = read_int_line len in
+  let h = Array.init len (fun _k ->
+    let l = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    l) in
+  let g = h in
+  let tab2 = g in
   for i_ = 0 to len - 1 do
     Printf.printf "%d==>%d " i_ tab2.(i_)
   done;
-  let strlen = (read_int ()) in
+  let m = Scanf.scanf "%d " (fun x -> x) in
+  let strlen = m in
   Printf.printf "%d=strlen\n" strlen;
-  let tab4 = read_char_line strlen in
+  let p = Array.init strlen (fun _q ->
+    let r = Scanf.scanf "%c" (fun v_0 -> v_0) in
+    r) in
+  Scanf.scanf " " (fun () -> ());
+  let o = p in
+  let tab4 = o in
   for i3 = 0 to strlen - 1 do
     let tmpc = tab4.(i3) in
     let c = ref( int_of_char (tmpc) ) in

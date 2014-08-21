@@ -32,10 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-function min4(a, b, c, d){
-  return Math.min(a, b, c, d);
-}
-
 function pathfind_aux(cache, tab, x, y, posX, posY){
   if (posX == x - 1 && posY == y - 1)
     return 0;
@@ -52,7 +48,8 @@ function pathfind_aux(cache, tab, x, y, posX, posY){
     var val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     var val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     var val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    var out_ = 1 + min4(val1, val2, val3, val4);
+    var e = Math.min(val1, val2, val3, val4);
+    var out_ = 1 + e;
     cache[posY][posX] = out_;
     return out_;
   }

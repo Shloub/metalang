@@ -1,37 +1,43 @@
 require "scanf.rb"
-def read_int(  )
-    out_ = 0
-    out_=scanf("%d")[0];
-    scanf("%*\n");
-    return (out_);
-end
-
-def read_int_line( n )
-    tab = [];
-    for i in (0 ..  n - 1) do
-      t = 0
-      t=scanf("%d")[0];
-      scanf("%*\n");
-      tab[i] = t;
-    end
-    return (tab);
-end
-
 def read_int_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      tab[z] = read_int_line(x);
+      b = [];
+      for c in (0 ..  x - 1) do
+        d = 0
+        d=scanf("%d")[0];
+        scanf("%*\n");
+        b[c] = d;
+      end
+      a = b
+      tab[z] = a;
     end
     return (tab);
 end
 
-len = read_int()
+f = 0
+f=scanf("%d")[0];
+scanf("%*\n");
+e = f
+len = e
 printf "%d=len\n", len
-tab1 = read_int_line(len)
+h = [];
+for k in (0 ..  len - 1) do
+  l = 0
+  l=scanf("%d")[0];
+  scanf("%*\n");
+  h[k] = l;
+end
+g = h
+tab1 = g
 for i in (0 ..  len - 1) do
   printf "%d=>%d\n", i, tab1[i]
 end
-len = read_int();
+o = 0
+o=scanf("%d")[0];
+scanf("%*\n");
+m = o
+len = m;
 tab2 = read_int_matrix(len, len - 1)
 for i in (0 ..  len - 2) do
   for j in (0 ..  len - 1) do

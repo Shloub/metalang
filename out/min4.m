@@ -9,16 +9,6 @@ int min2(int a, int b){
     return b;
 }
 
-int min3(int a, int b, int c){
-  return min2(min2(a, b), c);
-}
-
-int min4_(int a, int b, int c, int d){
-  int f = min2(a, b);
-  int e = min2(min2(f, c), d);
-  return e;
-}
-
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int h = 1;

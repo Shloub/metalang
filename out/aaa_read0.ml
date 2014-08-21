@@ -1,9 +1,7 @@
-let read_int () =
-  Scanf.scanf "%d " (fun x -> x)
-
 let () =
 begin
-  let len = (read_int ()) in
+  let a = Scanf.scanf "%d " (fun x -> x) in
+  let len = a in
   Printf.printf "%d\n" len
 end
  

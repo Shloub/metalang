@@ -26,29 +26,6 @@
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
-
-(defun read_int ()
-(progn
-  (let ((out_ (mread-int )))
-    (mread-blank)
-    (return-from read_int out_)
-  )))
-
-(defun read_int_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_1
-              (let ((t_ (mread-int )))
-                (mread-blank)
-                (return-from lambda_1 t_)
-              )))
-            ))))
-  (return-from read_int_line tab)
-  )))
-
 #|
   Ce test a été généré par Metalang.
 |#
@@ -58,8 +35,8 @@
    ((tab2 (array_init
              len
              (function (lambda (i)
-             (block lambda_2
-               (return-from lambda_2 nil)
+             (block lambda_1
+               (return-from lambda_1 nil)
              ))
              ))))
   (do
@@ -78,12 +55,26 @@
   )))
 
 (progn
-  (let ((len (read_int )))
-    (princ len)
-    (princ "
+  (let ((b (mread-int )))
+    (mread-blank)
+    (let ((a b))
+      (let ((len a))
+        (princ len)
+        (princ "
 ")
-    (let ((tab (read_int_line len)))
-      (princ (result len tab))
-    )))
+        (let
+         ((d (array_init
+                len
+                (function (lambda (e)
+                (block lambda_2
+                  (let ((f (mread-int )))
+                    (mread-blank)
+                    (return-from lambda_2 f)
+                  )))
+                ))))
+        (let ((c d))
+          (let ((tab c))
+            (princ (result len tab))
+          )))))))
 
 

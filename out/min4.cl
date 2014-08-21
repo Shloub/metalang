@@ -1,31 +1,9 @@
 
-(si::use-fast-links nil)
-(defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))
-(defun remainder (a b) (- a (* b (truncate a b))))
-
-(defun min2 (a b)
-(if
-  (< a b)
-  (return-from min2 a)
-  (return-from min2 b)))
-
-(defun min3 (a b c)
-(return-from min3 (min2 (min2 a b) c)))
-
-(defun min4_ (a b c d)
-(progn
-  (let ((f (min2 a b)))
-    (let ((e (min2 (min2 f c) d)))
-      (return-from min4_ e)
-    ))))
+(si::use-fast-links nil)(defun min2 (a b)
+                         (if
+                           (< a b)
+                           (return-from min2 a)
+                           (return-from min2 b)))
 
 (progn
   (let ((h 1))
@@ -426,4 +404,5 @@
                                                                     "
 ")
                                                                     )))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+
 

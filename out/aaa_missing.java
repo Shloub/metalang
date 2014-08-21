@@ -3,33 +3,6 @@ import java.util.*;
 public class aaa_missing
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int read_int()
-  {
-    int out_ = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); out_ = -scanner.nextInt();
-    }else{
-    out_ = scanner.nextInt();}
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    return out_;
-  }
-  
-  public static int[] read_int_line(int n)
-  {
-    int[] tab = new int[n];
-    for (int i = 0 ; i < n; i++)
-    {
-      int t = 0;
-      if (scanner.hasNext("^-")){
-      scanner.next("^-"); t = -scanner.nextInt();
-      }else{
-      t = scanner.nextInt();}
-      scanner.findWithinHorizon("[\n\r ]*", 1);
-      tab[i] = t;
-    }
-    return tab;
-  }
-  
   /*
   Ce test a été généré par Metalang.
 */
@@ -49,9 +22,28 @@ public class aaa_missing
   
   public static void main(String args[])
   {
-    int len = read_int();
+    int b = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int a = b;
+    int len = a;
     System.out.printf("%d\n", len);
-    int[] tab = read_int_line(len);
+    int[] d = new int[len];
+    for (int e = 0 ; e < len; e++)
+    {
+      int f = 0;
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); f = -scanner.nextInt();
+      }else{
+      f = scanner.nextInt();}
+      scanner.findWithinHorizon("[\n\r ]*", 1);
+      d[e] = f;
+    }
+    int[] c = d;
+    int[] tab = c;
     System.out.printf("%d", result(len, tab));
   }
   

@@ -1,9 +1,6 @@
 let min2 a b =
   min a b
 
-let min3_ a b c =
-  min2 (min2 a b) c
-
 let () =
 begin
   let e = 2 in

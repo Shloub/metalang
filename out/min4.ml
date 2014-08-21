@@ -1,14 +1,6 @@
 let min2 a b =
   min a b
 
-let min3 a b c =
-  min2 (min2 a b) c
-
-let min4_ a b c d =
-  let f = min2 a b in
-  let e = min2 (min2 f c) d in
-  e
-
 let () =
 begin
   let h = 1 in

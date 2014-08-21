@@ -1,16 +1,8 @@
-def min4( a, b, c, d ):
-    return min(a, b, c, d);
-
-def read_int(  ):
-    return int(input());
-
-def read_char_line( n ):
-    return list(input());
-
 def read_char_matrix( x, y ):
     tab = [None] * y
     for z in range(0, y):
-      tab[z] = read_char_line(x);
+      e = list(input());
+      tab[z] = e;
     return tab;
 
 def pathfind_aux( cache, tab, x, y, posX, posY ):
@@ -28,7 +20,8 @@ def pathfind_aux( cache, tab, x, y, posX, posY ):
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      out_ = 1 + min4(val1, val2, val3, val4);
+      f = min(val1, val2, val3, val4);
+      out_ = 1 + f;
       cache[posY][posX] = out_;
       return out_;
 
@@ -43,8 +36,10 @@ def pathfind( tab, x, y ):
       cache[i] = tmp;
     return pathfind_aux(cache, tab, x, y, 0, 0);
 
-x = read_int();
-y = read_int();
+g = int(input());
+x = g;
+h = int(input());
+y = h;
 print("%d %d\n" % ( x, y ), end='')
 tab = read_char_matrix(x, y);
 result = pathfind(tab, x, y);

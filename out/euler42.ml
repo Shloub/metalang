@@ -1,12 +1,11 @@
-let isqrt c =
-  (int_of_float (sqrt (float_of_int ( c))))
-
 let is_triangular n =
   (*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    *)
-  let a = isqrt (n * 2) in
+  let d = n * 2 in
+  let b = (int_of_float (sqrt (float_of_int ( d)))) in
+  let a = b in
   a * (a + 1) = n * 2
 
 let score () =

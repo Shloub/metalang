@@ -30,56 +30,57 @@ sub remainder {
     return $a - int($a / $b) * $b;
 }
 
-sub read_int{
-  my $out_ = 0;
-  $out_ = readint();
-  readspaces();
-  return $out_;
-}
-
-sub read_int_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = 0;
-    $t = readint();
-    readspaces();
-    $tab->[$i] = $t;
-    }
-  return $tab;
-}
-
-sub read_char_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = '_';
-    $t = readchar();
-    $tab->[$i] = $t;
-    }
-  readspaces();
-  return $tab;
-}
-
 #
 #Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 #read int, read char et skip
 #
 
-my $len = read_int();
+my $b = 0;
+$b = readint();
+readspaces();
+my $a = $b;
+my $len = $a;
 print($len, "=len\n");
-my $tab = read_int_line($len);
+my $e = [];
+foreach my $f (0 .. $len - 1) {
+  my $g = 0;
+  $g = readint();
+  readspaces();
+  $e->[$f] = $g;
+  }
+my $d = $e;
+my $tab = $d;
 foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tab->[$i], " ");
   }
 print("\n");
-my $tab2 = read_int_line($len);
+my $k = [];
+foreach my $l (0 .. $len - 1) {
+  my $m = 0;
+  $m = readint();
+  readspaces();
+  $k->[$l] = $m;
+  }
+my $h = $k;
+my $tab2 = $h;
 foreach my $i_ (0 .. $len - 1) {
   print($i_, "==>", $tab2->[$i_], " ");
   }
-my $strlen = read_int();
+my $p = 0;
+$p = readint();
+readspaces();
+my $o = $p;
+my $strlen = $o;
 print($strlen, "=strlen\n");
-my $tab4 = read_char_line($strlen);
+my $r = [];
+foreach my $s (0 .. $strlen - 1) {
+  my $u = '_';
+  $u = readchar();
+  $r->[$s] = $u;
+  }
+readspaces();
+my $q = $r;
+my $tab4 = $q;
 foreach my $i3 (0 .. $strlen - 1) {
   my $tmpc = $tab4->[$i3];
   my $c = ord($tmpc);

@@ -25,27 +25,7 @@ var read_int_ = function(){
             return out * sign;
         }
     }
-}
-function read_int(){
-  var out_ = 0;
-  out_=read_int_();
-  stdinsep();
-  return out_;
-}
-
-function read_int_line(n){
-  var tab = new Array(n);
-  for (var i = 0 ; i <= n - 1; i++)
-  {
-    var t = 0;
-    t=read_int_();
-    stdinsep();
-    tab[i] = t;
-  }
-  return tab;
-}
-
-/*
+}/*
   Ce test a été généré par Metalang.
 */
 function result(len, tab){
@@ -60,8 +40,21 @@ function result(len, tab){
   return -1;
 }
 
-var len = read_int();
+var b = 0;
+b=read_int_();
+stdinsep();
+var a = b;
+var len = a;
 util.print(len, "\n");
-var tab = read_int_line(len);
+var d = new Array(len);
+for (var e = 0 ; e <= len - 1; e++)
+{
+  var f = 0;
+  f=read_int_();
+  stdinsep();
+  d[e] = f;
+}
+var c = d;
+var tab = c;
 util.print(result(len, tab));
 

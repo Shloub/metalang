@@ -1,12 +1,3 @@
-let read_int () =
-  Scanf.scanf "%d " (fun x -> x)
-
-let read_int_line n =
-  let tab = Array.init n (fun _i ->
-    let t = Scanf.scanf "%d " (fun v_0 -> v_0) in
-    t) in
-  tab
-
 (*
   Ce test a été généré par Metalang.
 *)
@@ -28,9 +19,14 @@ let result len tab =
 
 let () =
 begin
-  let len = (read_int ()) in
+  let a = Scanf.scanf "%d " (fun x -> x) in
+  let len = a in
   Printf.printf "%d\n" len;
-  let tab = read_int_line len in
+  let c = Array.init len (fun _d ->
+    let e = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    e) in
+  let b = c in
+  let tab = b in
   Printf.printf "%d" (result len tab)
 end
  

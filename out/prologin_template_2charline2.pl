@@ -25,25 +25,6 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_int{
-  my $out_ = 0;
-  $out_ = readint();
-  readspaces();
-  return $out_;
-}
-
-sub read_char_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = '_';
-    $t = readchar();
-    $tab->[$i] = $t;
-    }
-  readspaces();
-  return $tab;
-}
-
 sub programme_candidat{
   my($tableau1,
   $taille1,
@@ -69,10 +50,34 @@ sub programme_candidat{
   return $out_;
 }
 
-my $taille1 = read_int();
-my $taille2 = read_int();
-my $tableau1 = read_char_line($taille1);
-my $tableau2 = read_char_line($taille2);
+my $b = 0;
+$b = readint();
+readspaces();
+my $a = $b;
+my $taille1 = $a;
+my $d = 0;
+$d = readint();
+readspaces();
+my $c = $d;
+my $taille2 = $c;
+my $f = [];
+foreach my $g (0 .. $taille1 - 1) {
+  my $h = '_';
+  $h = readchar();
+  $f->[$g] = $h;
+  }
+readspaces();
+my $e = $f;
+my $tableau1 = $e;
+my $l = [];
+foreach my $m (0 .. $taille2 - 1) {
+  my $o = '_';
+  $o = readchar();
+  $l->[$m] = $o;
+  }
+readspaces();
+my $k = $l;
+my $tableau2 = $k;
 print(programme_candidat($tableau1, $taille1, $tableau2, $taille2), "\n");
 
 

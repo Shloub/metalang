@@ -23,36 +23,18 @@ func min2(a int, b int) int{
   }
 }
 
-func min3(a int, b int, c int) int{
-  return min2(min2(a, b), c)
-}
-
-func min4(a int, b int, c int, d int) int{
-  return min3(min2(a, b), c, d)
-}
-
-func read_int() int{
-  var out_ int = 0
-  fmt.Fscanf(reader, "%d", &out_);
-  skip()
-  return out_
-}
-
-func read_char_line(n int) []byte{
-  var tab []byte = make([]byte, n)
-  for i := 0 ; i <= n - 1; i++ {
-    var t byte = '_'
-      fmt.Fscanf(reader, "%c", &t);
-      tab[i] = t;
-  }
-  skip()
-  return tab
-}
-
 func read_char_matrix(x int, y int) [][]byte{
   var tab [][]byte = make([][]byte, y)
   for z := 0 ; z <= y - 1; z++ {
-    tab[z] = read_char_line(x);
+    var h []byte = make([]byte, x)
+      for k := 0 ; k <= x - 1; k++ {
+        var l byte = '_'
+          fmt.Fscanf(reader, "%c", &l);
+          h[k] = l;
+      }
+      skip()
+      var g []byte = h
+      tab[z] = g;
   }
   return tab
 }
@@ -72,7 +54,10 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
     var val2 int = pathfind_aux(cache, tab, x, y, posX - 1, posY)
     var val3 int = pathfind_aux(cache, tab, x, y, posX, posY - 1)
     var val4 int = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-    var out_ int = 1 + min4(val1, val2, val3, val4)
+    var o int = min2(val1, val2)
+    var p int = min2(min2(o, val3), val4)
+    var m int = p
+    var out_ int = 1 + m
     cache[posY][posX] = out_;
     return out_
   }   
@@ -94,8 +79,16 @@ func pathfind(tab [][]byte, x int, y int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var x int = read_int()
-  var y int = read_int()
+  var r int = 0
+  fmt.Fscanf(reader, "%d", &r);
+  skip()
+  var q int = r
+  var x int = q
+  var u int = 0
+  fmt.Fscanf(reader, "%d", &u);
+  skip()
+  var s int = u
+  var y int = s
   fmt.Printf("%d %d\n", x, y);
   var tab [][]byte = read_char_matrix(x, y)
   var result int = pathfind(tab, x, y)

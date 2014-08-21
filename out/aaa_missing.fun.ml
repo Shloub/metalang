@@ -9,44 +9,42 @@ module Array = struct
     )
 end
 
-let read_int () =
-  (Scanf.scanf "%d " (fun x -> x))
-let read_int_line n =
-  let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%d"
-  (fun  t -> (
-               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let h = t in
-               ((), h)
-               )
-  )) ()) in
-  tab
 let result len tab =
-  let tab2 = (Array.init_withenv len (fun  i () -> let a = false in
-  ((), a)) ()) in
-  let f = 0 in
-  let g = (len - 1) in
-  let rec e i1 =
-    (if (i1 <= g)
+  let tab2 = (Array.init_withenv len (fun  i () -> let f = false in
+  ((), f)) ()) in
+  let l = 0 in
+  let m = (len - 1) in
+  let rec k i1 =
+    (if (i1 <= m)
      then (
             tab2.(tab.(i1)) <- true;
-            (e (i1 + 1))
+            (k (i1 + 1))
             )
      
-     else let c = 0 in
-     let d = (len - 1) in
-     let rec b i2 =
-       (if (i2 <= d)
+     else let h = 0 in
+     let j = (len - 1) in
+     let rec g i2 =
+       (if (i2 <= j)
         then (if (not tab2.(i2))
               then i2
-              else (b (i2 + 1)))
+              else (g (i2 + 1)))
         else (- 1)) in
-       (b c)) in
-    (e f)
+       (g h)) in
+    (k l)
 let main =
-  let len = (read_int ()) in
+  let a = (Scanf.scanf "%d " (fun x -> x)) in
+  let len = a in
   (
     (Printf.printf "%d\n" len);
-    let tab = (read_int_line len) in
+    let c = (Array.init_withenv len (fun  d () -> Scanf.scanf "%d"
+    (fun  e -> (
+                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                 let o = e in
+                 ((), o)
+                 )
+    )) ()) in
+    let b = c in
+    let tab = b in
     (Printf.printf "%d" (result len tab))
     )
   

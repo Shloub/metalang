@@ -32,103 +32,104 @@
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
-
-(defun read_int ()
-(progn
-  (let ((out_ (mread-int )))
-    (mread-blank)
-    (return-from read_int out_)
-  )))
-
-(defun read_int_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_1
-              (let ((t_ (mread-int )))
-                (mread-blank)
-                (return-from lambda_1 t_)
-              )))
-            ))))
-  (return-from read_int_line tab)
-  )))
-
-(defun read_char_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_2
-              (let ((t_ (mread-char )))
-                (return-from lambda_2 t_)
-              )))
-            ))))
-  (mread-blank)
-  (return-from read_char_line tab)
-  )))
-
 #|
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 |#
 (progn
-  (let ((len (read_int )))
-    (princ len)
-    (princ "=len
+  (let ((b (mread-int )))
+    (mread-blank)
+    (let ((a b))
+      (let ((len a))
+        (princ len)
+        (princ "=len
 ")
-    (let ((tab (read_int_line len)))
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (- len 1)))
-        (progn
-          (princ i)
-          (princ "=>")
-          (princ (aref tab i))
-          (princ " ")
-        )
-      )
-      (princ "
-")
-      (let ((tab2 (read_int_line len)))
-        (do
-          ((i_ 0 (+ 1 i_)))
-          ((> i_ (- len 1)))
-          (progn
-            (princ i_)
-            (princ "==>")
-            (princ (aref tab2 i_))
-            (princ " ")
-          )
-        )
-        (let ((strlen (read_int )))
-          (princ strlen)
-          (princ "=strlen
-")
-          (let ((tab4 (read_char_line strlen)))
-            (do
-              ((i3 0 (+ 1 i3)))
-              ((> i3 (- strlen 1)))
-              (progn
-                (let ((tmpc (aref tab4 i3)))
-                  (let ((c (char-int tmpc)))
-                    (princ tmpc)
-                    (princ ":")
-                    (princ c)
-                    (princ " ")
-                    (if
-                      (not (eq tmpc #\Space))
-                      (setq c (+ (remainder (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
-                    (setf (aref tab4 i3) (int-char c))
+        (let
+         ((e (array_init
+                len
+                (function (lambda (f)
+                (block lambda_1
+                  (let ((g (mread-int )))
+                    (mread-blank)
+                    (return-from lambda_1 g)
                   )))
-            )
+                ))))
+        (let ((d e))
+          (let ((tab d))
             (do
-              ((j 0 (+ 1 j)))
-              ((> j (- strlen 1)))
-              (princ (aref tab4 j))
+              ((i 0 (+ 1 i)))
+              ((> i (- len 1)))
+              (progn
+                (princ i)
+                (princ "=>")
+                (princ (aref tab i))
+                (princ " ")
+              )
             )
-          ))))))
+            (princ "
+")
+            (let
+             ((k (array_init
+                    len
+                    (function (lambda (l)
+                    (block lambda_2
+                      (let ((m (mread-int )))
+                        (mread-blank)
+                        (return-from lambda_2 m)
+                      )))
+                    ))))
+            (let ((h k))
+              (let ((tab2 h))
+                (do
+                  ((i_ 0 (+ 1 i_)))
+                  ((> i_ (- len 1)))
+                  (progn
+                    (princ i_)
+                    (princ "==>")
+                    (princ (aref tab2 i_))
+                    (princ " ")
+                  )
+                )
+                (let ((p (mread-int )))
+                  (mread-blank)
+                  (let ((o p))
+                    (let ((strlen o))
+                      (princ strlen)
+                      (princ "=strlen
+")
+                      (let
+                       ((r (array_init
+                              strlen
+                              (function (lambda (s)
+                              (block lambda_3
+                                (let ((u (mread-char )))
+                                  (return-from lambda_3 u)
+                                )))
+                              ))))
+                      (mread-blank)
+                      (let ((q r))
+                        (let ((tab4 q))
+                          (do
+                            ((i3 0 (+ 1 i3)))
+                            ((> i3 (- strlen 1)))
+                            (progn
+                              (let ((tmpc (aref tab4 i3)))
+                                (let ((c (char-int tmpc)))
+                                  (princ tmpc)
+                                  (princ ":")
+                                  (princ c)
+                                  (princ " ")
+                                  (if
+                                    (not (eq tmpc #\Space))
+                                    (setq c (+ (remainder (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
+                                  (setf (aref tab4 i3) (int-char c))
+                                )))
+                          )
+                          (do
+                            ((j 0 (+ 1 j)))
+                            ((> j (- strlen 1)))
+                            (princ (aref tab4 j))
+                          )
+                        ))))))))))))))))
 
 

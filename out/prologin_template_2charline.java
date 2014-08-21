@@ -3,22 +3,6 @@ import java.util.*;
 public class prologin_template_2charline
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int read_int()
-  {
-    int out_ = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); out_ = -scanner.nextInt();
-    }else{
-    out_ = scanner.nextInt();}
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    return out_;
-  }
-  
-  public static char[] read_char_line(int n)
-  {
-    return scanner.nextLine().toCharArray();
-  }
-  
   public static int programme_candidat(char[] tableau1, int taille1, char[] tableau2, int taille2)
   {
     int out_ = 0;
@@ -40,10 +24,26 @@ public class prologin_template_2charline
   
   public static void main(String args[])
   {
-    int taille1 = read_int();
-    char[] tableau1 = read_char_line(taille1);
-    int taille2 = read_int();
-    char[] tableau2 = read_char_line(taille2);
+    int b = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = -scanner.nextInt();
+    }else{
+    b = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int a = b;
+    int taille1 = a;
+    char[] c = scanner.nextLine().toCharArray();
+    char[] tableau1 = c;
+    int e = 0;
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); e = -scanner.nextInt();
+    }else{
+    e = scanner.nextInt();}
+    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int d = e;
+    int taille2 = d;
+    char[] f = scanner.nextLine().toCharArray();
+    char[] tableau2 = f;
     System.out.printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   }
   

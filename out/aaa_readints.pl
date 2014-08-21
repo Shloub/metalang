@@ -19,42 +19,47 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_int{
-  my $out_ = 0;
-  $out_ = readint();
-  readspaces();
-  return $out_;
-}
-
-sub read_int_line{
-  my($n) = @_;
-  my $tab = [];
-  foreach my $i (0 .. $n - 1) {
-    my $t = 0;
-    $t = readint();
-    readspaces();
-    $tab->[$i] = $t;
-    }
-  return $tab;
-}
-
 sub read_int_matrix{
   my($x,
   $y) = @_;
   my $tab = [];
   foreach my $z (0 .. $y - 1) {
-    $tab->[$z] = read_int_line($x);
+    my $b = [];
+    foreach my $c (0 .. $x - 1) {
+      my $d = 0;
+      $d = readint();
+      readspaces();
+      $b->[$c] = $d;
+      }
+    my $a = $b;
+    $tab->[$z] = $a;
     }
   return $tab;
 }
 
-my $len = read_int();
+my $f = 0;
+$f = readint();
+readspaces();
+my $e = $f;
+my $len = $e;
 print($len, "=len\n");
-my $tab1 = read_int_line($len);
+my $h = [];
+foreach my $k (0 .. $len - 1) {
+  my $l = 0;
+  $l = readint();
+  readspaces();
+  $h->[$k] = $l;
+  }
+my $g = $h;
+my $tab1 = $g;
 foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tab1->[$i], "\n");
   }
-$len = read_int();
+my $o = 0;
+$o = readint();
+readspaces();
+my $m = $o;
+$len = $m;
 my $tab2 = read_int_matrix($len, $len - 1);
 foreach my $i (0 .. $len - 2) {
   foreach my $j (0 .. $len - 1) {

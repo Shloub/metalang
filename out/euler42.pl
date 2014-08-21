@@ -25,11 +25,6 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub isqrt{
-  my($c) = @_;
-  return int(sqrt($c));
-}
-
 sub is_triangular{
   my($n) = @_;
   #
@@ -37,7 +32,9 @@ sub is_triangular{
   #	  n * 2 = k * (k + 1)
   #   
   
-  my $a = isqrt($n * 2);
+  my $d = $n * 2;
+  my $b = int(sqrt($d));
+  my $a = $b;
   return $a * ($a + 1) eq $n * 2;
 }
 

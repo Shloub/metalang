@@ -7,36 +7,18 @@ def min2( a, b )
     end
 end
 
-def min3( a, b, c )
-    return (min2(min2(a, b), c));
-end
-
-def min4( a, b, c, d )
-    return (min3(min2(a, b), c, d));
-end
-
-def read_int(  )
-    out_ = 0
-    out_=scanf("%d")[0];
-    scanf("%*\n");
-    return (out_);
-end
-
-def read_char_line( n )
-    tab = [];
-    for i in (0 ..  n - 1) do
-      t = "_"
-      t=scanf("%c")[0];
-      tab[i] = t;
-    end
-    scanf("%*\n");
-    return (tab);
-end
-
 def read_char_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      tab[z] = read_char_line(x);
+      h = [];
+      for k in (0 ..  x - 1) do
+        l = "_"
+        l=scanf("%c")[0];
+        h[k] = l;
+      end
+      scanf("%*\n");
+      g = h
+      tab[z] = g;
     end
     return (tab);
 end
@@ -56,7 +38,10 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      out_ = 1 + min4(val1, val2, val3, val4)
+      o = min2(val1, val2)
+      p = min2(min2(o, val3), val4)
+      m = p
+      out_ = 1 + m
       cache[posY][posX] = out_;
       return (out_);
     end
@@ -76,8 +61,16 @@ def pathfind( tab, x, y )
     return (pathfind_aux(cache, tab, x, y, 0, 0));
 end
 
-x = read_int()
-y = read_int()
+r = 0
+r=scanf("%d")[0];
+scanf("%*\n");
+q = r
+x = q
+u = 0
+u=scanf("%d")[0];
+scanf("%*\n");
+s = u
+y = s
 printf "%d %d\n", x, y
 tab = read_char_matrix(x, y)
 result = pathfind(tab, x, y)

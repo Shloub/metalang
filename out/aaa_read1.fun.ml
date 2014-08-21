@@ -9,26 +9,26 @@ module Array = struct
     )
 end
 
-let read_char_line n =
-  let tab = (Array.init_withenv n (fun  i () -> Scanf.scanf "%c"
-  (fun  t -> let a = t in
-  ((), a))) ()) in
+let main =
+  let b = 12 in
+  let c = (Array.init_withenv b (fun  d () -> Scanf.scanf "%c"
+  (fun  e -> let f = e in
+  ((), f))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    tab
+    let a = c in
+    let str = a in
+    let h = 0 in
+    let j = 11 in
+    let rec g i =
+      (if (i <= j)
+       then (
+              (Printf.printf "%c" str.(i));
+              (g (i + 1))
+              )
+       
+       else ()) in
+      (g h)
     )
   
-let main =
-  let str = (read_char_line 12) in
-  let c = 0 in
-  let d = 11 in
-  let rec b i =
-    (if (i <= d)
-     then (
-            (Printf.printf "%c" str.(i));
-            (b (i + 1))
-            )
-     
-     else ()) in
-    (b c)
 

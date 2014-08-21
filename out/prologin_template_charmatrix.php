@@ -1,16 +1,11 @@
 <?php
-function read_int(){
-  return intval(trim(fgets(STDIN)));
-}
-
-function &read_char_line($n){
-  return fgets(STDIN);
-}
-
 function &read_char_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
-    $tab[$z] = read_char_line($x);
+  {
+    $a = fgets(STDIN);
+    $tab[$z] = $a;
+  }
   return $tab;
 }
 
@@ -28,8 +23,10 @@ function programme_candidat(&$tableau, $taille_x, $taille_y){
   return $out_;
 }
 
-$taille_x = read_int();
-$taille_y = read_int();
+$b = intval(trim(fgets(STDIN)));
+$taille_x = $b;
+$c = intval(trim(fgets(STDIN)));
+$taille_y = $c;
 $tableau = read_char_matrix($taille_x, $taille_y);
 echo programme_candidat($tableau, $taille_x, $taille_y), "\n";
 ?>

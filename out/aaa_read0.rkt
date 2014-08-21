@@ -1,14 +1,11 @@
 #lang racket
 (require racket/block)
 
-(define (read_int _)
-  ;toto
-  (string->number (read-line))
-)
 (define main
-  (let ([len (read_int 'nil)])
+  (let ([a (string->number (read-line))])
+  (let ([len a])
   (block
     (map display (list len "\n"))
-    ))
+    )))
 )
 

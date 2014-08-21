@@ -14,25 +14,6 @@ func skip() {
   }
 }
 
-
-func read_int() int{
-  var out_ int = 0
-  fmt.Fscanf(reader, "%d", &out_);
-  skip()
-  return out_
-}
-
-func read_int_line(n int) []int{
-  var tab []int = make([]int, n)
-  for i := 0 ; i <= n - 1; i++ {
-    var t int = 0
-      fmt.Fscanf(reader, "%d", &t);
-      skip()
-      tab[i] = t;
-  }
-  return tab
-}
-
 /*
   Ce test a été généré par Metalang.
 */
@@ -54,9 +35,21 @@ func result(len int, tab []int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = read_int()
+  var b int = 0
+  fmt.Fscanf(reader, "%d", &b);
+  skip()
+  var a int = b
+  var len int = a
   fmt.Printf("%d\n", len);
-  var tab []int = read_int_line(len)
+  var d []int = make([]int, len)
+  for e := 0 ; e <= len - 1; e++ {
+    var f int = 0
+      fmt.Fscanf(reader, "%d", &f);
+      skip()
+      d[e] = f;
+  }
+  var c []int = d
+  var tab []int = c
   fmt.Printf("%d", result(len, tab));
 }
 

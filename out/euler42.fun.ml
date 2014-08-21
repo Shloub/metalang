@@ -1,11 +1,11 @@
-let isqrt c =
-  ((int_of_float (sqrt (float_of_int ( c)))))
 let is_triangular n =
   (* 
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
     *)
-  let a = (isqrt (n * 2)) in
+  let d = (n * 2) in
+  let b = ((int_of_float (sqrt (float_of_int ( d))))) in
+  let a = b in
   ((a * (a + 1)) = (n * 2))
 let score () =
   (
@@ -14,28 +14,28 @@ let score () =
     (fun  len -> (
                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                    let sum = 0 in
-                   let e = 1 in
-                   let f = len in
-                   let rec d i sum =
-                     (if (i <= f)
+                   let g = 1 in
+                   let h = len in
+                   let rec f i sum =
+                     (if (i <= h)
                       then Scanf.scanf "%c"
                       (fun  c -> let sum = (sum + (((int_of_char (c)) - (int_of_char ('A'))) + 1)) in
                       (* 		print c print " " print sum print " "  *)
-                      (d (i + 1) sum))
-                      else let b () = () in
+                      (f (i + 1) sum))
+                      else let e () = () in
                       (if (is_triangular sum)
                        then 1
                        else 0)) in
-                     (d e sum)
+                     (f g sum)
                    )
     )
     )
   
 let main =
-  let l = 1 in
-  let m = 55 in
-  let rec k i =
-    (if (i <= m)
+  let o = 1 in
+  let p = 55 in
+  let rec m i =
+    (if (i <= p)
      then (
             (if (is_triangular i)
              then (
@@ -43,25 +43,25 @@ let main =
                     )
              
              else ());
-            (k (i + 1))
+            (m (i + 1))
             )
      
      else (
             (Printf.printf "\n" );
             let sum = 0 in
             Scanf.scanf "%d"
-            (fun  n -> let h = 1 in
-            let j = n in
-            let rec g i sum =
-              (if (i <= j)
+            (fun  n -> let k = 1 in
+            let l = n in
+            let rec j i sum =
+              (if (i <= l)
                then let sum = (sum + (score ())) in
-               (g (i + 1) sum)
+               (j (i + 1) sum)
                else (
                       (Printf.printf "%d\n" sum)
                       )
                ) in
-              (g h sum))
+              (j k sum))
             )
      ) in
-    (k l)
+    (m o)
 

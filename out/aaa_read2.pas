@@ -69,74 +69,57 @@ begin
    until false;
 end;
 
-function read_int() : Longint;
-var
-  out_ : Longint;
-begin
-  out_ := 0;
-  out_ := read_int_();
-  skip();
-  exit(out_);
-end;
-
-type a = array of Longint;
-function read_int_line(n : Longint) : a;
-var
-  i : Longint;
-  t : Longint;
-  tab : a;
-begin
-  SetLength(tab, n);
-  for i := 0 to  n - 1 do
-  begin
-    t := 0;
-    t := read_int_();
-    skip();
-    tab[i] := t;
-  end;
-  exit(tab);
-end;
-
-type b = array of char;
-function read_char_line(n : Longint) : b;
-var
-  i : Longint;
-  t : char;
-  tab : b;
-begin
-  SetLength(tab, n);
-  for i := 0 to  n - 1 do
-  begin
-    t := #95;
-    t := read_char_();
-    tab[i] := t;
-  end;
-  skip();
-  exit(tab);
-end;
-
 {
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 }
 
 var
+  a : Longint;
+  b : Longint;
   c : Longint;
+  d : array of Longint;
+  e : array of Longint;
+  f : Longint;
+  g : Longint;
+  h : array of Longint;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
   j : Longint;
+  k : array of Longint;
+  l : Longint;
   len : Longint;
+  m : Longint;
+  o : Longint;
+  p : Longint;
+  q : array of char;
+  r : array of char;
+  s : Longint;
   strlen : Longint;
-  tab : a;
-  tab2 : a;
-  tab4 : b;
+  tab : array of Longint;
+  tab2 : array of Longint;
+  tab4 : array of char;
   tmpc : char;
+  u : char;
 begin
-  len := read_int();
+  b := 0;
+  b := read_int_();
+  skip();
+  a := b;
+  len := a;
   Write(len);
   Write('=len'#10'');
-  tab := read_int_line(len);
+  SetLength(e, len);
+  for f := 0 to  len - 1 do
+  begin
+    g := 0;
+    g := read_int_();
+    skip();
+    e[f] := g;
+  end;
+  d := e;
+  tab := d;
   for i := 0 to  len - 1 do
   begin
     Write(i);
@@ -145,7 +128,16 @@ begin
     Write(' ');
   end;
   Write(''#10'');
-  tab2 := read_int_line(len);
+  SetLength(k, len);
+  for l := 0 to  len - 1 do
+  begin
+    m := 0;
+    m := read_int_();
+    skip();
+    k[l] := m;
+  end;
+  h := k;
+  tab2 := h;
   for i_ := 0 to  len - 1 do
   begin
     Write(i_);
@@ -153,10 +145,23 @@ begin
     Write(tab2[i_]);
     Write(' ');
   end;
-  strlen := read_int();
+  p := 0;
+  p := read_int_();
+  skip();
+  o := p;
+  strlen := o;
   Write(strlen);
   Write('=strlen'#10'');
-  tab4 := read_char_line(strlen);
+  SetLength(r, strlen);
+  for s := 0 to  strlen - 1 do
+  begin
+    u := #95;
+    u := read_char_();
+    r[s] := u;
+  end;
+  skip();
+  q := r;
+  tab4 := q;
   for i3 := 0 to  strlen - 1 do
   begin
     tmpc := tab4[i3];

@@ -35,21 +35,6 @@ sub min2{
   }
 }
 
-sub min3{
-  my($a,
-  $b,
-  $c) = @_;
-  return min2(min2($a, $b), $c);
-}
-
-sub min4{
-  my($a,
-  $b,
-  $c,
-  $d) = @_;
-  return min3(min2($a, $b), $c, $d);
-}
-
 sub pathfind_aux{
   my($cache,
   $tab,
@@ -74,7 +59,10 @@ sub pathfind_aux{
   my $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
   my $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
   my $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-  my $out_ = 1 + min4($val1, $val2, $val3, $val4);
+  my $h = min2($val1, $val2);
+  my $k = min2(min2($h, $val3), $val4);
+  my $g = $k;
+  my $out_ = 1 + $g;
   $cache->[$posY]->[$posX] = $out_;
   return $out_;
   }

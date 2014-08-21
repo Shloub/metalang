@@ -1,22 +1,4 @@
 require "scanf.rb"
-def read_int(  )
-    out_ = 0
-    out_=scanf("%d")[0];
-    scanf("%*\n");
-    return (out_);
-end
-
-def read_char_line( n )
-    tab = [];
-    for i in (0 ..  n - 1) do
-      t = "_"
-      t=scanf("%c")[0];
-      tab[i] = t;
-    end
-    scanf("%*\n");
-    return (tab);
-end
-
 def programme_candidat( tableau1, taille1, tableau2, taille2 )
     out_ = 0
     for i in (0 ..  taille1 - 1) do
@@ -32,9 +14,33 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 )
     return (out_);
 end
 
-taille1 = read_int()
-taille2 = read_int()
-tableau1 = read_char_line(taille1)
-tableau2 = read_char_line(taille2)
+b = 0
+b=scanf("%d")[0];
+scanf("%*\n");
+a = b
+taille1 = a
+d = 0
+d=scanf("%d")[0];
+scanf("%*\n");
+c = d
+taille2 = c
+f = [];
+for g in (0 ..  taille1 - 1) do
+  h = "_"
+  h=scanf("%c")[0];
+  f[g] = h;
+end
+scanf("%*\n");
+e = f
+tableau1 = e
+l = [];
+for m in (0 ..  taille2 - 1) do
+  o = "_"
+  o=scanf("%c")[0];
+  l[m] = o;
+end
+scanf("%*\n");
+k = l
+tableau2 = k
 printf "%d\n", programme_candidat(tableau1, taille1, tableau2, taille2)
 

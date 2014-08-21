@@ -27,76 +27,82 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun read_int ()
-(progn
-  (let ((out_ (mread-int )))
-    (mread-blank)
-    (return-from read_int out_)
-  )))
-
-(defun read_int_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_1
-              (let ((t_ (mread-int )))
-                (mread-blank)
-                (return-from lambda_1 t_)
-              )))
-            ))))
-  (return-from read_int_line tab)
-  )))
-
 (defun read_int_matrix (x y)
 (progn
   (let
    ((tab (array_init
             y
             (function (lambda (z)
-            (block lambda_2
-              (return-from lambda_2 (read_int_line x))
-            ))
+            (block lambda_1
+              (let
+               ((b (array_init
+                      x
+                      (function (lambda (c)
+                      (block lambda_2
+                        (let ((d (mread-int )))
+                          (mread-blank)
+                          (return-from lambda_2 d)
+                        )))
+                      ))))
+              (let ((a b))
+                (return-from lambda_1 a)
+              ))))
             ))))
   (return-from read_int_matrix tab)
   )))
 
 (progn
-  (let ((len (read_int )))
-    (princ len)
-    (princ "=len
+  (let ((f (mread-int )))
+    (mread-blank)
+    (let ((e f))
+      (let ((len e))
+        (princ len)
+        (princ "=len
 ")
-    (let ((tab1 (read_int_line len)))
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (- len 1)))
-        (progn
-          (princ i)
-          (princ "=>")
-          (princ (aref tab1 i))
-          (princ "
-")
-        )
-      )
-      (setq len (read_int ))
-      (let ((tab2 (read_int_matrix len (- len 1))))
-        (do
-          ((i 0 (+ 1 i)))
-          ((> i (- len 2)))
-          (progn
+        (let
+         ((h (array_init
+                len
+                (function (lambda (k)
+                (block lambda_3
+                  (let ((l (mread-int )))
+                    (mread-blank)
+                    (return-from lambda_3 l)
+                  )))
+                ))))
+        (let ((g h))
+          (let ((tab1 g))
             (do
-              ((j 0 (+ 1 j)))
-              ((> j (- len 1)))
+              ((i 0 (+ 1 i)))
+              ((> i (- len 1)))
               (progn
-                (princ (aref (aref tab2 i) j))
-                (princ " ")
+                (princ i)
+                (princ "=>")
+                (princ (aref tab1 i))
+                (princ "
+")
               )
             )
-            (princ "
+            (let ((o (mread-int )))
+              (mread-blank)
+              (let ((m o))
+                (setq len m)
+                (let ((tab2 (read_int_matrix len (- len 1))))
+                  (do
+                    ((i 0 (+ 1 i)))
+                    ((> i (- len 2)))
+                    (progn
+                      (do
+                        ((j 0 (+ 1 j)))
+                        ((> j (- len 1)))
+                        (progn
+                          (princ (aref (aref tab2 i) j))
+                          (princ " ")
+                        )
+                      )
+                      (princ "
 ")
-          )
-        )
-      ))))
+                    )
+                  )
+                ))))))))))
 
 

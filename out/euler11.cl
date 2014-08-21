@@ -33,30 +33,26 @@
   (return-from max2 a)
   (return-from max2 b)))
 
-(defun read_int_line (n)
-(progn
-  (let
-   ((tab (array_init
-            n
-            (function (lambda (i)
-            (block lambda_1
-              (let ((t_ (mread-int )))
-                (mread-blank)
-                (return-from lambda_1 t_)
-              )))
-            ))))
-  (return-from read_int_line tab)
-  )))
-
 (defun read_int_matrix (x y)
 (progn
   (let
    ((tab (array_init
             y
             (function (lambda (z)
-            (block lambda_2
-              (return-from lambda_2 (read_int_line x))
-            ))
+            (block lambda_1
+              (let
+               ((e (array_init
+                      x
+                      (function (lambda (f)
+                      (block lambda_2
+                        (let ((g (mread-int )))
+                          (mread-blank)
+                          (return-from lambda_2 g)
+                        )))
+                      ))))
+              (let ((d e))
+                (return-from lambda_1 d)
+              ))))
             ))))
   (return-from read_int_matrix tab)
   )))
@@ -85,56 +81,56 @@
                        (if
                          (= i 0)
                          (progn
-                           (let ((p (make-tuple_int_int :tuple_int_int_field_0 0
+                           (let ((u (make-tuple_int_int :tuple_int_int_field_0 0
                                                         :tuple_int_int_field_1 1)))
-                           (return-from lambda_3 p)
+                           (return-from lambda_3 u)
                          ))
                        (if
                          (= i 1)
                          (progn
-                           (let ((o (make-tuple_int_int :tuple_int_int_field_0 1
+                           (let ((s (make-tuple_int_int :tuple_int_int_field_0 1
                                                         :tuple_int_int_field_1 0)))
-                           (return-from lambda_3 o)
+                           (return-from lambda_3 s)
                          ))
                          (if
                            (= i 2)
                            (progn
-                             (let ((l (make-tuple_int_int :tuple_int_int_field_0 0
+                             (let ((r (make-tuple_int_int :tuple_int_int_field_0 0
                                                           :tuple_int_int_field_1 (- 0 1))))
-                             (return-from lambda_3 l)
+                             (return-from lambda_3 r)
                            ))
                            (if
                              (= i 3)
                              (progn
-                               (let ((k (make-tuple_int_int :tuple_int_int_field_0 (- 0 1)
+                               (let ((q (make-tuple_int_int :tuple_int_int_field_0 (- 0 1)
                                                             :tuple_int_int_field_1 0)))
-                               (return-from lambda_3 k)
+                               (return-from lambda_3 q)
                              ))
                              (if
                                (= i 4)
                                (progn
-                                 (let ((h (make-tuple_int_int :tuple_int_int_field_0 1
+                                 (let ((p (make-tuple_int_int :tuple_int_int_field_0 1
                                                               :tuple_int_int_field_1 1)))
-                                 (return-from lambda_3 h)
+                                 (return-from lambda_3 p)
                                ))
                                (if
                                  (= i 5)
                                  (progn
-                                   (let ((g (make-tuple_int_int :tuple_int_int_field_0 1
+                                   (let ((o (make-tuple_int_int :tuple_int_int_field_0 1
                                                                 :tuple_int_int_field_1 (- 0 1))))
-                                   (return-from lambda_3 g)
+                                   (return-from lambda_3 o)
                                  ))
                                  (if
                                    (= i 6)
                                    (progn
-                                     (let ((f (make-tuple_int_int :tuple_int_int_field_0 (- 0 1)
+                                     (let ((l (make-tuple_int_int :tuple_int_int_field_0 (- 0 1)
                                                                   :tuple_int_int_field_1 1)))
-                                     (return-from lambda_3 f)
+                                     (return-from lambda_3 l)
                                    ))
                                    (progn
-                                     (let ((e (make-tuple_int_int :tuple_int_int_field_0 (- 0 1)
+                                     (let ((k (make-tuple_int_int :tuple_int_int_field_0 (- 0 1)
                                                                   :tuple_int_int_field_1 (- 0 1))))
-                                     (return-from lambda_3 e)
+                                     (return-from lambda_3 k)
                                    )))))))))
 ))
 ))))
@@ -144,9 +140,9 @@
       ((j 0 (+ 1 j)))
       ((> j 7))
       (progn
-        (let ((d (aref directions j)))
-          (let ((dx (tuple_int_int-tuple_int_int_field_0 d)))
-            (let ((dy (tuple_int_int-tuple_int_int_field_1 d)))
+        (let ((h (aref directions j)))
+          (let ((dx (tuple_int_int-tuple_int_int_field_0 h)))
+            (let ((dy (tuple_int_int-tuple_int_int_field_1 h)))
               (do
                 ((x 0 (+ 1 x)))
                 ((> x 19))

@@ -69,35 +69,8 @@ begin
    until false;
 end;
 
-function read_int() : Longint;
-var
-  out_ : Longint;
-begin
-  out_ := 0;
-  out_ := read_int_();
-  skip();
-  exit(out_);
-end;
-
-type a = array of char;
-function read_char_line(n : Longint) : a;
-var
-  i : Longint;
-  t : char;
-  tab : a;
-begin
-  SetLength(tab, n);
-  for i := 0 to  n - 1 do
-  begin
-    t := #95;
-    t := read_char_();
-    tab[i] := t;
-  end;
-  skip();
-  exit(tab);
-end;
-
-function programme_candidat(tableau1 : a; taille1 : Longint; tableau2 : a; taille2 : Longint) : Longint;
+type p = array of char;
+function programme_candidat(tableau1 : p; taille1 : Longint; tableau2 : p; taille2 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -121,15 +94,53 @@ end;
 
 
 var
-  tableau1 : a;
-  tableau2 : a;
+  a : Longint;
+  b : Longint;
+  c : Longint;
+  d : Longint;
+  e : p;
+  f : p;
+  g : Longint;
+  h : char;
+  k : p;
+  l : p;
+  m : Longint;
+  o : char;
+  tableau1 : p;
+  tableau2 : p;
   taille1 : Longint;
   taille2 : Longint;
 begin
-  taille1 := read_int();
-  taille2 := read_int();
-  tableau1 := read_char_line(taille1);
-  tableau2 := read_char_line(taille2);
+  b := 0;
+  b := read_int_();
+  skip();
+  a := b;
+  taille1 := a;
+  d := 0;
+  d := read_int_();
+  skip();
+  c := d;
+  taille2 := c;
+  SetLength(f, taille1);
+  for g := 0 to  taille1 - 1 do
+  begin
+    h := #95;
+    h := read_char_();
+    f[g] := h;
+  end;
+  skip();
+  e := f;
+  tableau1 := e;
+  SetLength(l, taille2);
+  for m := 0 to  taille2 - 1 do
+  begin
+    o := #95;
+    o := read_char_();
+    l[m] := o;
+  end;
+  skip();
+  k := l;
+  tableau2 := k;
   Write(programme_candidat(tableau1, taille1, tableau2, taille2));
   Write(''#10'');
 end.

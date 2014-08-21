@@ -13,21 +13,6 @@ begin
     end;
 end;
 
-function min3(a : Longint; b : Longint; c : Longint) : Longint;
-begin
-  exit(min2(min2(a, b), c));
-end;
-
-function min4_(a : Longint; b : Longint; c : Longint; d : Longint) : Longint;
-var
-  e : Longint;
-  f : Longint;
-begin
-  f := min2(a, b);
-  e := min2(min2(f, c), d);
-  exit(e);
-end;
-
 
 var
   ba : Longint;

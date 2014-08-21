@@ -32,25 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-function read_int(){
-  var out_ = 0;
-  out_=read_int_();
-  stdinsep();
-  return out_;
-}
-
-function read_char_line(n){
-  var tab = new Array(n);
-  for (var i = 0 ; i <= n - 1; i++)
-  {
-    var t = '_';
-    t=read_char_();
-    tab[i] = t;
-  }
-  stdinsep();
-  return tab;
-}
-
 function programme_candidat(tableau1, taille1, tableau2, taille2){
   var out_ = 0;
   for (var i = 0 ; i <= taille1 - 1; i++)
@@ -68,9 +49,35 @@ function programme_candidat(tableau1, taille1, tableau2, taille2){
   return out_;
 }
 
-var taille1 = read_int();
-var tableau1 = read_char_line(taille1);
-var taille2 = read_int();
-var tableau2 = read_char_line(taille2);
+var b = 0;
+b=read_int_();
+stdinsep();
+var a = b;
+var taille1 = a;
+var d = new Array(taille1);
+for (var e = 0 ; e <= taille1 - 1; e++)
+{
+  var f = '_';
+  f=read_char_();
+  d[e] = f;
+}
+stdinsep();
+var c = d;
+var tableau1 = c;
+var h = 0;
+h=read_int_();
+stdinsep();
+var g = h;
+var taille2 = g;
+var l = new Array(taille2);
+for (var m = 0 ; m <= taille2 - 1; m++)
+{
+  var o = '_';
+  o=read_char_();
+  l[m] = o;
+}
+stdinsep();
+var k = l;
+var tableau2 = k;
 util.print(programme_candidat(tableau1, taille1, tableau2, taille2), "\n");
 

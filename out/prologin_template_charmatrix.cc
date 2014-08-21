@@ -10,20 +10,13 @@ std::vector<char> *getline(){
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
-int read_int(){
-  int out_ = 0;
-  std::cin >> out_ >> std::skipws;
-  return out_;
-}
-
-std::vector<char> * read_char_line(int n){
-  return getline();
-}
-
 std::vector<std::vector<char> *> * read_char_matrix(int x, int y){
   std::vector<std::vector<char> * > *tab = new std::vector<std::vector<char> *>( y );
   for (int z = 0 ; z < y; z++)
-    tab->at(z) = read_char_line(x);
+  {
+    std::vector<char> * a = getline();
+    tab->at(z) = a;
+  }
   return tab;
 }
 
@@ -43,8 +36,14 @@ int programme_candidat(std::vector<std::vector<char> *> * tableau, int taille_x,
 
 
 int main(){
-  int taille_x = read_int();
-  int taille_y = read_int();
+  int c = 0;
+  std::cin >> c >> std::skipws;
+  int b = c;
+  int taille_x = b;
+  int e = 0;
+  std::cin >> e >> std::skipws;
+  int d = e;
+  int taille_y = d;
   std::vector<std::vector<char> *> * tableau = read_char_matrix(taille_x, taille_y);
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;

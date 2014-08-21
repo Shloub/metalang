@@ -10,16 +10,6 @@ std::vector<char> *getline(){
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
-int read_int(){
-  int out_ = 0;
-  std::cin >> out_ >> std::skipws;
-  return out_;
-}
-
-std::vector<char> * read_char_line(int n){
-  return getline();
-}
-
 int programme_candidat(std::vector<char> * tableau, int taille){
   int out_ = 0;
   for (int i = 0 ; i < taille; i++)
@@ -33,8 +23,12 @@ int programme_candidat(std::vector<char> * tableau, int taille){
 
 
 int main(){
-  int taille = read_int();
-  std::vector<char> * tableau = read_char_line(taille);
+  int b = 0;
+  std::cin >> b >> std::skipws;
+  int a = b;
+  int taille = a;
+  std::vector<char> * c = getline();
+  std::vector<char> * tableau = c;
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }

@@ -7,21 +7,18 @@ def max2( a, b )
     end
 end
 
-def read_int_line( n )
-    tab = [];
-    for i in (0 ..  n - 1) do
-      t = 0
-      t=scanf("%d")[0];
-      scanf("%*\n");
-      tab[i] = t;
-    end
-    return (tab);
-end
-
 def read_int_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      tab[z] = read_int_line(x);
+      e = [];
+      for f in (0 ..  x - 1) do
+        g = 0
+        g=scanf("%d")[0];
+        scanf("%*\n");
+        e[f] = g;
+      end
+      d = e
+      tab[z] = d;
     end
     return (tab);
 end

@@ -8,10 +8,6 @@ int min2(int a, int b){
     return b;
 }
 
-int min3_(int a, int b, int c){
-  return min2(min2(a, b), c);
-}
-
 int main(void){
   int e = 2;
   int f = 3;

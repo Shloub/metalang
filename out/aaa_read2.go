@@ -14,56 +14,58 @@ func skip() {
   }
 }
 
-
-func read_int() int{
-  var out_ int = 0
-  fmt.Fscanf(reader, "%d", &out_);
-  skip()
-  return out_
-}
-
-func read_int_line(n int) []int{
-  var tab []int = make([]int, n)
-  for i := 0 ; i <= n - 1; i++ {
-    var t int = 0
-      fmt.Fscanf(reader, "%d", &t);
-      skip()
-      tab[i] = t;
-  }
-  return tab
-}
-
-func read_char_line(n int) []byte{
-  var tab []byte = make([]byte, n)
-  for i := 0 ; i <= n - 1; i++ {
-    var t byte = '_'
-      fmt.Fscanf(reader, "%c", &t);
-      tab[i] = t;
-  }
-  skip()
-  return tab
-}
-
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var len int = read_int()
+  var b int = 0
+  fmt.Fscanf(reader, "%d", &b);
+  skip()
+  var a int = b
+  var len int = a
   fmt.Printf("%d=len\n", len);
-  var tab []int = read_int_line(len)
+  var e []int = make([]int, len)
+  for f := 0 ; f <= len - 1; f++ {
+    var g int = 0
+      fmt.Fscanf(reader, "%d", &g);
+      skip()
+      e[f] = g;
+  }
+  var d []int = e
+  var tab []int = d
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d ", i, tab[i]);
   }
   fmt.Printf("\n");
-  var tab2 []int = read_int_line(len)
+  var k []int = make([]int, len)
+  for l := 0 ; l <= len - 1; l++ {
+    var m int = 0
+      fmt.Fscanf(reader, "%d", &m);
+      skip()
+      k[l] = m;
+  }
+  var h []int = k
+  var tab2 []int = h
   for i_ := 0 ; i_ <= len - 1; i_++ {
     fmt.Printf("%d==>%d ", i_, tab2[i_]);
   }
-  var strlen int = read_int()
+  var p int = 0
+  fmt.Fscanf(reader, "%d", &p);
+  skip()
+  var o int = p
+  var strlen int = o
   fmt.Printf("%d=strlen\n", strlen);
-  var tab4 []byte = read_char_line(strlen)
+  var r []byte = make([]byte, strlen)
+  for s := 0 ; s <= strlen - 1; s++ {
+    var u byte = '_'
+      fmt.Fscanf(reader, "%c", &u);
+      r[s] = u;
+  }
+  skip()
+  var q []byte = r
+  var tab4 []byte = q
   for i3 := 0 ; i3 <= strlen - 1; i3++ {
     var tmpc byte = tab4[i3]
       var c int = (int)(tmpc)

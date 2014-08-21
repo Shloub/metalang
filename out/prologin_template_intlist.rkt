@@ -1,31 +1,25 @@
 #lang racket
 (require racket/block)
 
-(define (read_int _)
-  ;toto
-  (string->number (read-line))
-)
-(define (read_int_line n)
-  ;toto
-  (list->vector (map string->number (regexp-split " " (read-line))))
-)
 (define (programme_candidat tableau taille)
   ;toto
   (let ([out_ 0])
-  (let ([b 0])
-  (let ([c (- taille 1)])
-  (letrec ([a (lambda (i out_) 
-                (if (<= i c)
+  (let ([d 0])
+  (let ([e (- taille 1)])
+  (letrec ([c (lambda (i out_) 
+                (if (<= i e)
                 (let ([out_ (+ out_ (vector-ref tableau i))])
-                (a (+ i 1) out_))
+                (c (+ i 1) out_))
                 out_))])
-  (a b out_)))))
+  (c d out_)))))
 )
 (define main
-  (let ([taille (read_int 'nil)])
-  (let ([tableau (read_int_line taille)])
+  (let ([a (string->number (read-line))])
+  (let ([taille a])
+  (let ([b (list->vector (map string->number (regexp-split " " (read-line))))])
+  (let ([tableau b])
   (block
     (map display (list (programme_candidat tableau taille) "\n"))
-    )))
+    )))))
 )
 

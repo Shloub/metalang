@@ -23,10 +23,6 @@ func min2(a int, b int) int{
   }
 }
 
-func min3_(a int, b int, c int) int{
-  return min2(min2(a, b), c)
-}
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var e int = 2

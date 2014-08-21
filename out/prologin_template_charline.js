@@ -32,25 +32,6 @@ var read_int_ = function(){
         }
     }
 }
-function read_int(){
-  var out_ = 0;
-  out_=read_int_();
-  stdinsep();
-  return out_;
-}
-
-function read_char_line(n){
-  var tab = new Array(n);
-  for (var i = 0 ; i <= n - 1; i++)
-  {
-    var t = '_';
-    t=read_char_();
-    tab[i] = t;
-  }
-  stdinsep();
-  return tab;
-}
-
 function programme_candidat(tableau, taille){
   var out_ = 0;
   for (var i = 0 ; i <= taille - 1; i++)
@@ -62,7 +43,20 @@ function programme_candidat(tableau, taille){
   return out_;
 }
 
-var taille = read_int();
-var tableau = read_char_line(taille);
+var b = 0;
+b=read_int_();
+stdinsep();
+var a = b;
+var taille = a;
+var d = new Array(taille);
+for (var e = 0 ; e <= taille - 1; e++)
+{
+  var f = '_';
+  f=read_char_();
+  d[e] = f;
+}
+stdinsep();
+var c = d;
+var tableau = c;
 util.print(programme_candidat(tableau, taille), "\n");
 

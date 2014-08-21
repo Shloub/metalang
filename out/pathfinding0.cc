@@ -17,28 +17,13 @@ int min2(int a, int b){
     return b;
 }
 
-int min3(int a, int b, int c){
-  return min2(min2(a, b), c);
-}
-
-int min4(int a, int b, int c, int d){
-  return min3(min2(a, b), c, d);
-}
-
-int read_int(){
-  int out_ = 0;
-  std::cin >> out_ >> std::skipws;
-  return out_;
-}
-
-std::vector<char> * read_char_line(int n){
-  return getline();
-}
-
 std::vector<std::vector<char> *> * read_char_matrix(int x, int y){
   std::vector<std::vector<char> * > *tab = new std::vector<std::vector<char> *>( y );
   for (int z = 0 ; z < y; z++)
-    tab->at(z) = read_char_line(x);
+  {
+    std::vector<char> * g = getline();
+    tab->at(z) = g;
+  }
   return tab;
 }
 
@@ -58,7 +43,10 @@ int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vecto
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int out_ = 1 + min4(val1, val2, val3, val4);
+    int k = min2(val1, val2);
+    int l = min2(min2(k, val3), val4);
+    int h = l;
+    int out_ = 1 + h;
     cache->at(posY)->at(posX) = out_;
     return out_;
   }
@@ -82,8 +70,14 @@ int pathfind(std::vector<std::vector<char> *> * tab, int x, int y){
 
 
 int main(){
-  int x = read_int();
-  int y = read_int();
+  int o = 0;
+  std::cin >> o >> std::skipws;
+  int m = o;
+  int x = m;
+  int q = 0;
+  std::cin >> q >> std::skipws;
+  int p = q;
+  int y = p;
   std::cout << x << " " << y << "\n";
   std::vector<std::vector<char> *> * tab = read_char_matrix(x, y);
   int result = pathfind(tab, x, y);

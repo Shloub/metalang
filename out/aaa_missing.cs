@@ -3,16 +3,6 @@ using System.Collections.Generic;
 
 public class aaa_missing
 {
-  public static int read_int()
-  {
-    return int.Parse(Console.ReadLine());
-  }
-  
-  public static int[] read_int_line(int n)
-  {
-    return new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-  }
-  
   /*
   Ce test a été généré par Metalang.
 */
@@ -32,9 +22,11 @@ public class aaa_missing
   
   public static void Main(String[] args)
   {
-    int len = read_int();
+    int a = int.Parse(Console.ReadLine());
+    int len = a;
     Console.Write("" + len + "\n");
-    int[] tab = read_int_line(len);
+    int[] b = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab = b;
     Console.Write(result(len, tab));
   }
   

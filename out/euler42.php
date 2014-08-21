@@ -24,16 +24,14 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-function isqrt($c){
-  return intval(sqrt($c));
-}
-
 function is_triangular($n){
   /*
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-  $a = isqrt($n * 2);
+  $d = $n * 2;
+  $b = intval(sqrt($d));
+  $a = $b;
   return $a * ($a + 1) == $n * 2;
 }
 

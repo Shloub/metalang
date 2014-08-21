@@ -1,9 +1,3 @@
-def read_int(  ):
-    return int(input());
-
-def read_int_line( n ):
-    return list(map(int, input().split()));
-
 """
   Ce test a été généré par Metalang.
 """
@@ -18,8 +12,10 @@ def result( len, tab ):
         return i2;
     return -(1);
 
-len = read_int();
+a = int(input());
+len = a;
 print("%d\n" % ( len ), end='')
-tab = read_int_line(len);
+b = list(map(int, input().split()));
+tab = b;
 print("%d" % result(len, tab), end='')
 
