@@ -95,6 +95,7 @@ set output 'repartition.png'
 set title \"repartition des langages\"
 set style fill solid 0.25 noborder
 set boxwidth 0.75
+set grid y
 set yrange [0:*]
 set xtic rotate by -25 scale 0 font \",8\""
     exarc=0
@@ -116,7 +117,7 @@ set xtic rotate by -25 scale 0 font \",8\""
 echo "
 set size ratio -1 1,1
 plot 'stats_repartition.dat' using 2:xtic(1) notitle with boxes,\
-'' using 0:2:2 with labels center offset 0,-3  rotate by 90 notitle
+'' using 0:(\$2/2):2 with labels center offset 0,0  rotate by 90 notitle
 "
 }
 filestatsplot > stats.plot
