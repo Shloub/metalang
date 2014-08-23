@@ -19,6 +19,9 @@ macro int sqrt_(int c)
   php do "intval(sqrt($c))"
   rkt do "integer-sqrt $c"
   pl do "int(sqrt($c))"
+  c do "(int)sqrt($c)"
+  cpp do "(int)sqrt($c)"
+  objc do "(int)sqrt($c)"
   * do "sqrt($c)"
 end
 
@@ -39,6 +42,9 @@ macro char char_of_int(int c)
   cpp do "(char)($c)"
   rkt do "integer->char $c"
   pl do "chr($c)"
+  c do "(char)($c)"
+  cpp do "(char)($c)"
+  objc do "(char)($c)"
   *  do "$c"
 end
 
@@ -53,6 +59,9 @@ macro int int_of_char(char c)
   js do "$c.charCodeAt(0)"
   rkt do "char->integer $c"
   pl do "ord($c)"
+  c do "(int)($c)"
+  cpp do "(int)($c)"
+  objc do "(int)($c)"
   *  do "$c"
 end
 
