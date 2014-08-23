@@ -12,9 +12,8 @@ def max2( a, b )
 end
 
 def primesfactors( n )
-    c = n + 1
     tab = [];
-    for i in (0 ..  c - 1) do
+    for i in (0 ..  n + 1 - 1) do
       tab[i] = 0;
     end
     d = 2
@@ -31,9 +30,8 @@ def primesfactors( n )
 end
 
 lim = 20
-e = lim + 1
 o = [];
-for m in (0 ..  e - 1) do
+for m in (0 ..  lim + 1 - 1) do
   o[m] = 0;
 end
 for i in (1 ..  lim) do

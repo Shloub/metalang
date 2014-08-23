@@ -2,10 +2,9 @@
 (require racket/block)
 
 (define main
-  (let ([a (string->number (read-line))])
-  (let ([len a])
+  (let ([len (string->number (read-line))])
   (block
     (map display (list len "\n"))
-    )))
+    ))
 )
 

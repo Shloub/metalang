@@ -9,8 +9,7 @@ def is_triangular( n )
 =end
 
     d = n * 2
-    b = Math.sqrt(d).to_i
-    a = b
+    a = Math.sqrt(d).to_i
     return (a * (a + 1) == n * 2);
 end
 

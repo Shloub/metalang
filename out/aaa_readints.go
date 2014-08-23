@@ -36,8 +36,7 @@ func main() {
   var f int = 0
   fmt.Fscanf(reader, "%d", &f);
   skip()
-  var e int = f
-  var len int = e
+  var len int = f
   fmt.Printf("%d=len\n", len);
   var h []int = make([]int, len)
   for k := 0 ; k <= len - 1; k++ {
@@ -46,16 +45,14 @@ func main() {
       skip()
       h[k] = l;
   }
-  var g []int = h
-  var tab1 []int = g
+  var tab1 []int = h
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d\n", i, tab1[i]);
   }
   var o int = 0
   fmt.Fscanf(reader, "%d", &o);
   skip()
-  var m int = o
-  len = m;
+  len = o;
   var tab2 [][]int = read_int_matrix(len, len - 1)
   for i := 0 ; i <= len - 2; i++ {
     for j := 0 ; j <= len - 1; j++ {

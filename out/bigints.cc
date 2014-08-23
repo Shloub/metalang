@@ -27,7 +27,7 @@ bigint * read_bigint(int len){
   {
     char c = '_';
     std::cin >> c >> std::noskipws;
-    chiffres->at(j) = c;
+    chiffres->at(j) = (int)(c);
   }
   for (int i = 0 ; i <= (len - 1) / 2; i ++)
   {
@@ -228,9 +228,8 @@ bigint * bigint_premiers_chiffres(bigint * a, int i){
 }
 
 bigint * bigint_shift(bigint * a, int i){
-  int e = a->bigint_len + i;
-  std::vector<int > *chiffres = new std::vector<int>( e );
-  for (int k = 0 ; k < e; k++)
+  std::vector<int > *chiffres = new std::vector<int>( a->bigint_len + i );
+  for (int k = 0 ; k < a->bigint_len + i; k++)
     if (k >= i)
     chiffres->at(k) = a->bigint_chiffres->at(k - i);
   else
@@ -383,17 +382,14 @@ int euler25(){
 int euler29(){
   int maxA = 5;
   int maxB = 5;
-  int f = maxA + 1;
-  std::vector<bigint * > *a_bigint = new std::vector<bigint *>( f );
-  for (int j = 0 ; j < f; j++)
+  std::vector<bigint * > *a_bigint = new std::vector<bigint *>( maxA + 1 );
+  for (int j = 0 ; j < maxA + 1; j++)
     a_bigint->at(j) = bigint_of_int(j * j);
-  int g = maxA + 1;
-  std::vector<bigint * > *a0_bigint = new std::vector<bigint *>( g );
-  for (int j2 = 0 ; j2 < g; j2++)
+  std::vector<bigint * > *a0_bigint = new std::vector<bigint *>( maxA + 1 );
+  for (int j2 = 0 ; j2 < maxA + 1; j2++)
     a0_bigint->at(j2) = bigint_of_int(j2);
-  int h = maxA + 1;
-  std::vector<int > *b = new std::vector<int>( h );
-  for (int k = 0 ; k < h; k++)
+  std::vector<int > *b = new std::vector<int>( maxA + 1 );
+  for (int k = 0 ; k < maxA + 1; k++)
     b->at(k) = 2;
   int n = 0;
   bool found = true;

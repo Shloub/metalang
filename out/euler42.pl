@@ -33,8 +33,7 @@ sub is_triangular{
   #   
   
   my $d = $n * 2;
-  my $b = int(sqrt($d));
-  my $a = $b;
+  my $a = int(sqrt($d));
   return $a * ($a + 1) eq $n * 2;
 }
 

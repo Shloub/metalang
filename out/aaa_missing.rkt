@@ -34,13 +34,11 @@
   (g h)))))
 )
 (define main
-  (let ([a (string->number (read-line))])
-  (let ([len a])
+  (let ([len (string->number (read-line))])
   (block
     (map display (list len "\n"))
-    (let ([b (list->vector (map string->number (regexp-split " " (read-line))))])
-    (let ([tab b])
-    (display (result len tab))))
-    )))
+    (let ([tab (list->vector (map string->number (regexp-split " " (read-line))))])
+    (display (result len tab)))
+    ))
 )
 

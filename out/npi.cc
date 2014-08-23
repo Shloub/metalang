@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 bool is_number(char c){
-  return c <= '9' && c >= '0';
+  return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
 }
 
 /*
@@ -21,7 +21,7 @@ int npi_(std::vector<char> * str, int len){
     int num = 0;
     while (str->at(ptrStr) != ' ')
     {
-      num = num * 10 + str->at(ptrStr) - '0';
+      num = num * 10 + (int)(str->at(ptrStr)) - (int)('0');
       ptrStr ++;
     }
     stack->at(ptrStack) = num;

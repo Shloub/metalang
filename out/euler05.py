@@ -5,9 +5,8 @@ def max2( a, b ):
     return max(a, b);
 
 def primesfactors( n ):
-    c = n + 1;
-    tab = [None] * c
-    for i in range(0, c):
+    tab = [None] * (n + 1)
+    for i in range(0, n + 1):
       tab[i] = 0;
     d = 2;
     while (n != 1 and d * d <= n):
@@ -20,9 +19,8 @@ def primesfactors( n ):
     return tab;
 
 lim = 20;
-e = lim + 1;
-o = [None] * e
-for m in range(0, e):
+o = [None] * (lim + 1)
+for m in range(0, lim + 1):
   o[m] = 0;
 for i in range(1, 1 + lim):
   t = primesfactors(i);

@@ -109,13 +109,11 @@ sub pathfind{
 my $r = 0;
 $r = readint();
 readspaces();
-my $q = $r;
-my $x = $q;
+my $x = $r;
 my $u = 0;
 $u = readint();
 readspaces();
-my $s = $u;
-my $y = $s;
+my $y = $u;
 print($x, " ", $y, "\n");
 my $tab = read_char_matrix($x, $y);
 my $result = pathfind($tab, $x, $y);

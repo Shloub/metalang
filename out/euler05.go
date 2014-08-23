@@ -24,9 +24,8 @@ func max2(a int, b int) int{
 }
 
 func primesfactors(n int) []int{
-  var c int = n + 1
-  var tab []int = make([]int, c)
-  for i := 0 ; i <= c - 1; i++ {
+  var tab []int = make([]int, (n + 1))
+  for i := 0 ; i <= n + 1 - 1; i++ {
     tab[i] = 0;
   }
   var d int = 2
@@ -45,9 +44,8 @@ func primesfactors(n int) []int{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var lim int = 20
-  var e int = lim + 1
-  var o []int = make([]int, e)
-  for m := 0 ; m <= e - 1; m++ {
+  var o []int = make([]int, (lim + 1))
+  for m := 0 ; m <= lim + 1 - 1; m++ {
     o[m] = 0;
   }
   for i := 1 ; i <= lim; i++ {

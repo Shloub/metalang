@@ -22,8 +22,7 @@ func is_triangular(n int) bool{
 	  n * 2 = k * (k + 1)
    */
   var d int = n * 2
-  var b int = int(math.Sqrt(float64(d)))
-  var a int = b
+  var a int = int(math.Sqrt(float64(d)))
   return a * (a + 1) == n * 2
 }
 

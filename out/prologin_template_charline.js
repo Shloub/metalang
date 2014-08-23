@@ -46,8 +46,7 @@ function programme_candidat(tableau, taille){
 var b = 0;
 b=read_int_();
 stdinsep();
-var a = b;
-var taille = a;
+var taille = b;
 var d = new Array(taille);
 for (var e = 0 ; e <= taille - 1; e++)
 {
@@ -56,7 +55,6 @@ for (var e = 0 ; e <= taille - 1; e++)
   d[e] = f;
 }
 stdinsep();
-var c = d;
-var tableau = c;
+var tableau = d;
 util.print(programme_candidat(tableau, taille), "\n");
 

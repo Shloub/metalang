@@ -88,14 +88,12 @@ end;
 
 function sumdiv(nprimes : Longint; primes : e; n : Longint) : Longint;
 var
-  a : Longint;
   i : Longint;
   max_ : Longint;
   t : e;
 begin
-  a := n + 1;
-  SetLength(t, a);
-  for i := 0 to  a - 1 do
+  SetLength(t, n + 1);
+  for i := 0 to  n + 1 - 1 do
   begin
     t[i] := 0;
   end;
@@ -106,8 +104,6 @@ end;
 
 var
   abondant : array of boolean;
-  b : Longint;
-  c : Longint;
   era : e;
   i : Longint;
   j : Longint;
@@ -151,15 +147,13 @@ begin
   end;
   n := 100;
   { 28124 ça prend trop de temps mais on arrive a passer le test }
-  b := n + 1;
-  SetLength(abondant, b);
-  for p := 0 to  b - 1 do
+  SetLength(abondant, n + 1);
+  for p := 0 to  n + 1 - 1 do
   begin
     abondant[p] := false;
   end;
-  c := n + 1;
-  SetLength(summable, c);
-  for q := 0 to  c - 1 do
+  SetLength(summable, n + 1);
+  for q := 0 to  n + 1 - 1 do
   begin
     summable[q] := false;
   end;

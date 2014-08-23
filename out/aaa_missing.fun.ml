@@ -32,8 +32,7 @@ let result len tab =
        (g h)) in
     (k l)
 let main =
-  let a = (Scanf.scanf "%d " (fun x -> x)) in
-  let len = a in
+  let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d\n" len);
     let c = (Array.init_withenv len (fun  d () -> Scanf.scanf "%d"
@@ -43,8 +42,7 @@ let main =
                  ((), o)
                  )
     )) ()) in
-    let b = c in
-    let tab = b in
+    let tab = c in
     (Printf.printf "%d" (result len tab))
     )
   

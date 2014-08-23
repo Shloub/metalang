@@ -20,8 +20,7 @@ public class prologin_template_intlist
     }else{
     b = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int a = b;
-    int taille = a;
+    int taille = b;
     int[] d = new int[taille];
     for (int e = 0 ; e < taille; e++)
     {
@@ -33,8 +32,7 @@ public class prologin_template_intlist
       scanner.findWithinHorizon("[\n\r ]*", 1);
       d[e] = f;
     }
-    int[] c = d;
-    int[] tableau = c;
+    int[] tableau = d;
     System.out.printf("%d\n", programme_candidat(tableau, taille));
   }
   

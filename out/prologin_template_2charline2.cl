@@ -62,40 +62,35 @@
 (progn
   (let ((b (mread-int )))
     (mread-blank)
-    (let ((a b))
-      (let ((taille1 a))
-        (let ((d (mread-int )))
+    (let ((taille1 b))
+      (let ((d (mread-int )))
+        (mread-blank)
+        (let ((taille2 d))
+          (let
+           ((f (array_init
+                  taille1
+                  (function (lambda (g)
+                  (block lambda_1
+                    (let ((h (mread-char )))
+                      (return-from lambda_1 h)
+                    )))
+                  ))))
           (mread-blank)
-          (let ((c d))
-            (let ((taille2 c))
-              (let
-               ((f (array_init
-                      taille1
-                      (function (lambda (g)
-                      (block lambda_1
-                        (let ((h (mread-char )))
-                          (return-from lambda_1 h)
-                        )))
-                      ))))
-              (mread-blank)
-              (let ((e f))
-                (let ((tableau1 e))
-                  (let
-                   ((l (array_init
-                          taille2
-                          (function (lambda (m)
-                          (block lambda_2
-                            (let ((o (mread-char )))
-                              (return-from lambda_2 o)
-                            )))
-                          ))))
-                  (mread-blank)
-                  (let ((k l))
-                    (let ((tableau2 k))
-                      (princ
-                      (programme_candidat tableau1 taille1 tableau2 taille2))
-                      (princ "
+          (let ((tableau1 f))
+            (let
+             ((l (array_init
+                    taille2
+                    (function (lambda (m)
+                    (block lambda_2
+                      (let ((o (mread-char )))
+                        (return-from lambda_2 o)
+                      )))
+                    ))))
+            (mread-blank)
+            (let ((tableau2 l))
+              (princ (programme_candidat tableau1 taille1 tableau2 taille2))
+              (princ "
 ")
-                    )))))))))))))
+            )))))))))
 
 

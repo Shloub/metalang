@@ -8,7 +8,7 @@ int programme_candidat(char* tableau, int taille){
     int i;
     for (i = 0 ; i < taille; i++)
     {
-      out_ += tableau[i] * i;
+      out_ += (int)(tableau[i]) * i;
       printf("%c", tableau[i]);
     }
   }
@@ -20,8 +20,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int b = 0;
   scanf("%d ", &b);
-  int a = b;
-  int taille = a;
+  int taille = b;
   char *d = malloc( taille * sizeof(char));
   {
     int e;
@@ -33,8 +32,7 @@ int main(void){
     }
   }
   scanf(" ");
-  char* c = d;
-  char* tableau = c;
+  char* tableau = d;
   printf("%d\n", programme_candidat(tableau, taille));
   [pool drain];
   return 0;

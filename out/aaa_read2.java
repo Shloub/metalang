@@ -16,8 +16,7 @@ read int, read char et skip
     }else{
     b = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int a = b;
-    int len = a;
+    int len = b;
     System.out.printf("%d=len\n", len);
     int[] e = new int[len];
     for (int f = 0 ; f < len; f++)
@@ -30,8 +29,7 @@ read int, read char et skip
       scanner.findWithinHorizon("[\n\r ]*", 1);
       e[f] = g;
     }
-    int[] d = e;
-    int[] tab = d;
+    int[] tab = e;
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d=>%d ", i, tab[i]);
@@ -48,8 +46,7 @@ read int, read char et skip
       scanner.findWithinHorizon("[\n\r ]*", 1);
       k[l] = m;
     }
-    int[] h = k;
-    int[] tab2 = h;
+    int[] tab2 = k;
     for (int i_ = 0 ; i_ < len; i_++)
     {
       System.out.printf("%d==>%d ", i_, tab2[i_]);
@@ -60,11 +57,9 @@ read int, read char et skip
     }else{
     p = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int o = p;
-    int strlen = o;
+    int strlen = p;
     System.out.printf("%d=strlen\n", strlen);
-    char[] q = scanner.nextLine().toCharArray();
-    char[] tab4 = q;
+    char[] tab4 = scanner.nextLine().toCharArray();
     for (int i3 = 0 ; i3 < strlen; i3++)
     {
       char tmpc = tab4[i3];

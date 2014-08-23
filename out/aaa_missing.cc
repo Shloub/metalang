@@ -19,8 +19,7 @@ int result(int len, std::vector<int> * tab){
 int main(){
   int b = 0;
   std::cin >> b >> std::skipws;
-  int a = b;
-  int len = a;
+  int len = b;
   std::cout << len << "\n";
   std::vector<int > *d = new std::vector<int>( len );
   for (int e = 0 ; e < len; e++)
@@ -29,8 +28,7 @@ int main(){
     std::cin >> f >> std::skipws;
     d->at(e) = f;
   }
-  std::vector<int> * c = d;
-  std::vector<int> * tab = c;
+  std::vector<int> * tab = d;
   std::cout << result(len, tab);
   return 0;
 }

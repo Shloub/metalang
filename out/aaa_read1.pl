@@ -10,16 +10,14 @@ sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-my $b = 12;
 my $c = [];
-foreach my $d (0 .. $b - 1) {
+foreach my $d (0 .. 12 - 1) {
   my $e = '_';
   $e = readchar();
   $c->[$d] = $e;
   }
 readspaces();
-my $a = $c;
-my $str = $a;
+my $str = $c;
 foreach my $i (0 .. 11) {
   print($str->[$i]);
   }

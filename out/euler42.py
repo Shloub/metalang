@@ -44,8 +44,7 @@ def is_triangular( n ):
 	  n * 2 = k * (k + 1)
    """
     d = n * 2;
-    b = math.floor(math.sqrt(d));
-    a = b;
+    a = math.floor(math.sqrt(d));
     return a * (a + 1) == n * 2;
 
 def score(  ):

@@ -28,8 +28,7 @@ public class aaa_missing
     }else{
     b = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int a = b;
-    int len = a;
+    int len = b;
     System.out.printf("%d\n", len);
     int[] d = new int[len];
     for (int e = 0 ; e < len; e++)
@@ -42,8 +41,7 @@ public class aaa_missing
       scanner.findWithinHorizon("[\n\r ]*", 1);
       d[e] = f;
     }
-    int[] c = d;
-    int[] tab = c;
+    int[] tab = d;
     System.out.printf("%d", result(len, tab));
   }
   

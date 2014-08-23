@@ -53,13 +53,11 @@ sub programme_candidat{
 my $b = 0;
 $b = readint();
 readspaces();
-my $a = $b;
-my $taille1 = $a;
+my $taille1 = $b;
 my $d = 0;
 $d = readint();
 readspaces();
-my $c = $d;
-my $taille2 = $c;
+my $taille2 = $d;
 my $f = [];
 foreach my $g (0 .. $taille1 - 1) {
   my $h = '_';
@@ -67,8 +65,7 @@ foreach my $g (0 .. $taille1 - 1) {
   $f->[$g] = $h;
   }
 readspaces();
-my $e = $f;
-my $tableau1 = $e;
+my $tableau1 = $f;
 my $l = [];
 foreach my $m (0 .. $taille2 - 1) {
   my $o = '_';
@@ -76,8 +73,7 @@ foreach my $m (0 .. $taille2 - 1) {
   $l->[$m] = $o;
   }
 readspaces();
-my $k = $l;
-my $tableau2 = $k;
+my $tableau2 = $l;
 print(programme_candidat($tableau1, $taille1, $tableau2, $taille2), "\n");
 
 

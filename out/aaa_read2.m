@@ -10,8 +10,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int b = 0;
   scanf("%d ", &b);
-  int a = b;
-  int len = a;
+  int len = b;
   printf("%d=len\n", len);
   int *e = malloc( len * sizeof(int));
   {
@@ -23,8 +22,7 @@ int main(void){
       e[f] = g;
     }
   }
-  int* d = e;
-  int* tab = d;
+  int* tab = e;
   {
     int i;
     for (i = 0 ; i < len; i++)
@@ -43,8 +41,7 @@ int main(void){
       k[l] = m;
     }
   }
-  int* h = k;
-  int* tab2 = h;
+  int* tab2 = k;
   {
     int i_;
     for (i_ = 0 ; i_ < len; i_++)
@@ -54,8 +51,7 @@ int main(void){
   }
   int p = 0;
   scanf("%d ", &p);
-  int o = p;
-  int strlen = o;
+  int strlen = p;
   printf("%d=strlen\n", strlen);
   char *r = malloc( strlen * sizeof(char));
   {
@@ -68,18 +64,17 @@ int main(void){
     }
   }
   scanf(" ");
-  char* q = r;
-  char* tab4 = q;
+  char* tab4 = r;
   {
     int i3;
     for (i3 = 0 ; i3 < strlen; i3++)
     {
       char tmpc = tab4[i3];
-      int c = tmpc;
+      int c = (int)(tmpc);
       printf("%c:%d ", tmpc, c);
       if (tmpc != ' ')
-        c = ((c - 'a') + 13) % 26 + 'a';
-      tab4[i3] = c;
+        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+      tab4[i3] = (char)(c);
     }
   }
   {

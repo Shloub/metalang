@@ -8,8 +8,7 @@ int is_triangular(int n){
 	  n * 2 = k * (k + 1)
    */
   int d = n * 2;
-  int b = sqrt(d);
-  int a = b;
+  int a = (int)sqrt(d);
   return a * (a + 1) == n * 2;
 }
 
@@ -24,7 +23,7 @@ int score(){
     {
       char c = '_';
       scanf("%c", &c);
-      sum += (c - 'A') + 1;
+      sum += ((int)(c) - (int)('A')) + 1;
       /*		print c print " " print sum print " " */
     }
   }

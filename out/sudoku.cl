@@ -29,19 +29,18 @@
 #| lit un sudoku sur l'entrée standard |#
 (defun read_sudoku ()
 (progn
-  (let ((a (* 9 9)))
-    (let
-     ((out_ (array_init
-               a
-               (function (lambda (i)
-               (block lambda_1
-                 (let ((k (mread-int )))
-                   (mread-blank)
-                   (return-from lambda_1 k)
-                 )))
-               ))))
-    (return-from read_sudoku out_)
-    ))))
+  (let
+   ((out_ (array_init
+             (* 9 9)
+             (function (lambda (i)
+             (block lambda_1
+               (let ((k (mread-int )))
+                 (mread-blank)
+                 (return-from lambda_1 k)
+               )))
+             ))))
+  (return-from read_sudoku out_)
+  )))
 
 #| affiche un sudoku |#
 (defun print_sudoku (sudoku_)

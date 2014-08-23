@@ -267,9 +267,8 @@ D'ou le nom de la fonction. */
   
   public static bigint bigint_shift(bigint a, int i)
   {
-    int e = a.bigint_len + i;
-    int[] chiffres = new int[e];
-    for (int k = 0 ; k < e; k++)
+    int[] chiffres = new int[a.bigint_len + i];
+    for (int k = 0 ; k < a.bigint_len + i; k++)
       if (k >= i)
       chiffres[k] = a.bigint_chiffres[k - i];
     else
@@ -434,17 +433,14 @@ Modulo
   {
     int maxA = 5;
     int maxB = 5;
-    int f = maxA + 1;
-    bigint[] a_bigint = new bigint[f];
-    for (int j = 0 ; j < f; j++)
+    bigint[] a_bigint = new bigint[maxA + 1];
+    for (int j = 0 ; j < maxA + 1; j++)
       a_bigint[j] = bigint_of_int(j * j);
-    int g = maxA + 1;
-    bigint[] a0_bigint = new bigint[g];
-    for (int j2 = 0 ; j2 < g; j2++)
+    bigint[] a0_bigint = new bigint[maxA + 1];
+    for (int j2 = 0 ; j2 < maxA + 1; j2++)
       a0_bigint[j2] = bigint_of_int(j2);
-    int h = maxA + 1;
-    int[] b = new int[h];
-    for (int k = 0 ; k < h; k++)
+    int[] b = new int[maxA + 1];
+    for (int k = 0 ; k < maxA + 1; k++)
       b[k] = 2;
     int n = 0;
     bool found = true;

@@ -9,17 +9,14 @@ function &read_int_matrix($x, $y){
   return $tab;
 }
 
-$b = intval(trim(fgets(STDIN)));
-$len = $b;
+$len = intval(trim(fgets(STDIN)));
 echo $len, "=len\n";
-$c = array_map("intval", explode(" ", fgets(STDIN)));
-$tab1 = $c;
+$tab1 = array_map("intval", explode(" ", fgets(STDIN)));
 for ($i = 0 ; $i < $len; $i++)
 {
   echo $i, "=>", $tab1[$i], "\n";
 }
-$d = intval(trim(fgets(STDIN)));
-$len = $d;
+$len = intval(trim(fgets(STDIN)));
 $tab2 = read_int_matrix($len, $len - 1);
 for ($i = 0 ; $i <= $len - 2; $i++)
 {

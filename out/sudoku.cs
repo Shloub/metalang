@@ -52,9 +52,8 @@ public static int readInt(){
   /* lit un sudoku sur l'entrée standard */
   public static int[] read_sudoku()
   {
-    int a = 9 * 9;
-    int[] out_ = new int[a];
-    for (int i = 0 ; i < a; i++)
+    int[] out_ = new int[9 * 9];
+    for (int i = 0 ; i < 9 * 9; i++)
     {
       int k = 0;
       k = readInt();

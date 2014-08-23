@@ -67,13 +67,11 @@ function programme_candidat(tableau, taille_x, taille_y){
 var f = 0;
 f=read_int_();
 stdinsep();
-var e = f;
-var taille_x = e;
+var taille_x = f;
 var h = 0;
 h=read_int_();
 stdinsep();
-var g = h;
-var taille_y = g;
+var taille_y = h;
 var tableau = read_char_matrix(taille_x, taille_y);
 util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 

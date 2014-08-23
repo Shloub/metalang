@@ -73,12 +73,10 @@ int pathfind(std::vector<std::vector<char> *> * tab, int x, int y){
 int main(){
   int o = 0;
   std::cin >> o >> std::skipws;
-  int m = o;
-  int x = m;
+  int x = o;
   int q = 0;
   std::cin >> q >> std::skipws;
-  int p = q;
-  int y = p;
+  int y = q;
   std::cout << x << " " << y << "\n";
   std::vector<std::vector<char> *> * tab = read_char_matrix(x, y);
   int result = pathfind(tab, x, y);

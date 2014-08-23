@@ -4,8 +4,7 @@ let is_triangular n =
 	  n * 2 = k * (k + 1)
    *)
   let d = n * 2 in
-  let b = (int_of_float (sqrt (float_of_int ( d)))) in
-  let a = b in
+  let a = (int_of_float (sqrt (float_of_int ( d)))) in
   a * (a + 1) = n * 2
 
 let score () =

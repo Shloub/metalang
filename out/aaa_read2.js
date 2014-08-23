@@ -38,8 +38,7 @@ read int, read char et skip
 var b = 0;
 b=read_int_();
 stdinsep();
-var a = b;
-var len = a;
+var len = b;
 util.print(len, "=len\n");
 var e = new Array(len);
 for (var f = 0 ; f <= len - 1; f++)
@@ -49,8 +48,7 @@ for (var f = 0 ; f <= len - 1; f++)
   stdinsep();
   e[f] = g;
 }
-var d = e;
-var tab = d;
+var tab = e;
 for (var i = 0 ; i <= len - 1; i++)
 {
   util.print(i, "=>", tab[i], " ");
@@ -64,8 +62,7 @@ for (var l = 0 ; l <= len - 1; l++)
   stdinsep();
   k[l] = m;
 }
-var h = k;
-var tab2 = h;
+var tab2 = k;
 for (var i_ = 0 ; i_ <= len - 1; i_++)
 {
   util.print(i_, "==>", tab2[i_], " ");
@@ -73,8 +70,7 @@ for (var i_ = 0 ; i_ <= len - 1; i_++)
 var p = 0;
 p=read_int_();
 stdinsep();
-var o = p;
-var strlen = o;
+var strlen = p;
 util.print(strlen, "=strlen\n");
 var r = new Array(strlen);
 for (var s = 0 ; s <= strlen - 1; s++)
@@ -84,8 +80,7 @@ for (var s = 0 ; s <= strlen - 1; s++)
   r[s] = u;
 }
 stdinsep();
-var q = r;
-var tab4 = q;
+var tab4 = r;
 for (var i3 = 0 ; i3 <= strlen - 1; i3++)
 {
   var tmpc = tab4[i3];

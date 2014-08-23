@@ -13,8 +13,7 @@ read int, read char et skip
 b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
-a = b
-len = a
+len = b
 printf "%d=len\n", len
 e = [];
 for f in (0 ..  len - 1) do
@@ -23,8 +22,7 @@ for f in (0 ..  len - 1) do
   scanf("%*\n");
   e[f] = g;
 end
-d = e
-tab = d
+tab = e
 for i in (0 ..  len - 1) do
   printf "%d=>%d ", i, tab[i]
 end
@@ -36,16 +34,14 @@ for l in (0 ..  len - 1) do
   scanf("%*\n");
   k[l] = m;
 end
-h = k
-tab2 = h
+tab2 = k
 for i_ in (0 ..  len - 1) do
   printf "%d==>%d ", i_, tab2[i_]
 end
 p = 0
 p=scanf("%d")[0];
 scanf("%*\n");
-o = p
-strlen = o
+strlen = p
 printf "%d=strlen\n", strlen
 r = [];
 for s in (0 ..  strlen - 1) do
@@ -54,8 +50,7 @@ for s in (0 ..  strlen - 1) do
   r[s] = u;
 end
 scanf("%*\n");
-q = r
-tab4 = q
+tab4 = r
 for i3 in (0 ..  strlen - 1) do
   tmpc = tab4[i3]
   c = tmpc.ord

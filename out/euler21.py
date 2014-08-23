@@ -42,9 +42,8 @@ def sumdivaux( t, n, i ):
       return (out_ + 1) * o;
 
 def sumdiv( nprimes, primes, n ):
-    a = n + 1;
-    t = [None] * a
-    for i in range(0, a):
+    t = [None] * (n + 1)
+    for i in range(0, n + 1):
       t[i] = 0;
     max_ = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max_, 0);

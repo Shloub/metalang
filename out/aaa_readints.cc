@@ -21,8 +21,7 @@ std::vector<std::vector<int> *> * read_int_matrix(int x, int y){
 int main(){
   int f = 0;
   std::cin >> f >> std::skipws;
-  int e = f;
-  int len = e;
+  int len = f;
   std::cout << len << "=len\n";
   std::vector<int > *h = new std::vector<int>( len );
   for (int k = 0 ; k < len; k++)
@@ -31,16 +30,14 @@ int main(){
     std::cin >> l >> std::skipws;
     h->at(k) = l;
   }
-  std::vector<int> * g = h;
-  std::vector<int> * tab1 = g;
+  std::vector<int> * tab1 = h;
   for (int i = 0 ; i < len; i++)
   {
     std::cout << i << "=>" << tab1->at(i) << "\n";
   }
   int o = 0;
   std::cin >> o >> std::skipws;
-  int m = o;
-  len = m;
+  len = o;
   std::vector<std::vector<int> *> * tab2 = read_int_matrix(len, len - 1);
   for (int i = 0 ; i <= len - 2; i ++)
   {

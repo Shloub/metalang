@@ -69,16 +69,14 @@
 (progn
   (let ((f (mread-int )))
     (mread-blank)
-    (let ((e f))
-      (let ((taille_x e))
-        (let ((h (mread-int )))
-          (mread-blank)
-          (let ((g h))
-            (let ((taille_y g))
-              (let ((tableau (read_int_matrix taille_x taille_y)))
-                (princ (programme_candidat tableau taille_x taille_y))
-                (princ "
+    (let ((taille_x f))
+      (let ((h (mread-int )))
+        (mread-blank)
+        (let ((taille_y h))
+          (let ((tableau (read_int_matrix taille_x taille_y)))
+            (princ (programme_candidat tableau taille_x taille_y))
+            (princ "
 ")
-              ))))))))
+          ))))))
 
 

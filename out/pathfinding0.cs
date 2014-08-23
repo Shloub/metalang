@@ -65,10 +65,8 @@ public class pathfinding0
   
   public static void Main(String[] args)
   {
-    int m = int.Parse(Console.ReadLine());
-    int x = m;
-    int o = int.Parse(Console.ReadLine());
-    int y = o;
+    int x = int.Parse(Console.ReadLine());
+    int y = int.Parse(Console.ReadLine());
     Console.Write("" + x + " " + y + "\n");
     char[][] tab = read_char_matrix(x, y);
     int result = pathfind(tab, x, y);

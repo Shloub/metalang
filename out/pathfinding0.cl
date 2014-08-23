@@ -117,20 +117,18 @@
 (progn
   (let ((r (mread-int )))
     (mread-blank)
-    (let ((q r))
-      (let ((x q))
-        (let ((u (mread-int )))
-          (mread-blank)
-          (let ((s u))
-            (let ((y s))
-              (princ x)
-              (princ " ")
-              (princ y)
-              (princ "
+    (let ((x r))
+      (let ((u (mread-int )))
+        (mread-blank)
+        (let ((y u))
+          (princ x)
+          (princ " ")
+          (princ y)
+          (princ "
 ")
-              (let ((tab (read_char_matrix x y)))
-                (let ((result (pathfind tab x y)))
-                  (princ result)
-                )))))))))
+          (let ((tab (read_char_matrix x y)))
+            (let ((result (pathfind tab x y)))
+              (princ result)
+            )))))))
 
 

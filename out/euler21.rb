@@ -57,9 +57,8 @@ def sumdivaux( t, n, i )
 end
 
 def sumdiv( nprimes, primes, n )
-    a = n + 1
     t = [];
-    for i in (0 ..  a - 1) do
+    for i in (0 ..  n + 1 - 1) do
       t[i] = 0;
     end
     max_ = fillPrimesFactors(t, n, primes, nprimes)

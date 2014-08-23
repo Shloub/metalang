@@ -17,13 +17,11 @@ end
 b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
-a = b
-taille1 = a
+taille1 = b
 d = 0
 d=scanf("%d")[0];
 scanf("%*\n");
-c = d
-taille2 = c
+taille2 = d
 f = [];
 for g in (0 ..  taille1 - 1) do
   h = "_"
@@ -31,8 +29,7 @@ for g in (0 ..  taille1 - 1) do
   f[g] = h;
 end
 scanf("%*\n");
-e = f
-tableau1 = e
+tableau1 = f
 l = [];
 for m in (0 ..  taille2 - 1) do
   o = "_"
@@ -40,7 +37,6 @@ for m in (0 ..  taille2 - 1) do
   l[m] = o;
 end
 scanf("%*\n");
-k = l
-tableau2 = k
+tableau2 = l
 printf "%d\n", programme_candidat(tableau1, taille1, tableau2, taille2)
 

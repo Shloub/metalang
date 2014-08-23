@@ -91,16 +91,13 @@ end;
 
 
 var
-  e : Longint;
   f : Longint;
-  g : q;
   h : q;
   i : Longint;
   j : Longint;
   k : Longint;
   l : Longint;
   len : Longint;
-  m : Longint;
   o : Longint;
   tab1 : q;
   tab2 : p;
@@ -108,8 +105,7 @@ begin
   f := 0;
   f := read_int_();
   skip();
-  e := f;
-  len := e;
+  len := f;
   Write(len);
   Write('=len'#10'');
   SetLength(h, len);
@@ -120,8 +116,7 @@ begin
     skip();
     h[k] := l;
   end;
-  g := h;
-  tab1 := g;
+  tab1 := h;
   for i := 0 to  len - 1 do
   begin
     Write(i);
@@ -132,8 +127,7 @@ begin
   o := 0;
   o := read_int_();
   skip();
-  m := o;
-  len := m;
+  len := o;
   tab2 := read_int_matrix(len, len - 1);
   for i := 0 to  len - 2 do
   begin

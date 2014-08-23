@@ -9,7 +9,7 @@ int score(){
   {
     char c = '_';
     std::cin >> c >> std::noskipws;
-    sum += (c - 'A') + 1;
+    sum += ((int)(c) - (int)('A')) + 1;
     /*		print c print " " print sum print " " */
   }
   return sum;

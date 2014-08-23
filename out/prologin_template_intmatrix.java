@@ -43,16 +43,14 @@ public class prologin_template_intmatrix
     }else{
     f = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int e = f;
-    int taille_x = e;
+    int taille_x = f;
     int h = 0;
     if (scanner.hasNext("^-")){
     scanner.next("^-"); h = -scanner.nextInt();
     }else{
     h = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int g = h;
-    int taille_y = g;
+    int taille_y = h;
     int[][] tableau = read_int_matrix(taille_x, taille_y);
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }

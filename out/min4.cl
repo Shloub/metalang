@@ -11,87 +11,57 @@
       (let ((j 3))
         (let ((k 4))
           (let ((l (min2 h i)))
-            (let ((m (min2 (min2 l j) k)))
-              (let ((g m))
-                (princ g)
-                (princ " ")
-                (let ((o 1))
-                  (let ((p 2))
-                    (let ((q 4))
-                      (let ((r 3))
-                        (let ((s (min2 o p)))
-                          (let ((u (min2 (min2 s q) r)))
-                            (let ((n u))
-                              (princ n)
-                              (princ " ")
-                              (let ((w 1))
-                                (let ((x 3))
-                                  (let ((y 2))
-                                    (let ((z 4))
-                                      (let ((ba (min2 w x)))
-                                        (let ((bb (min2 (min2 ba y) z)))
-                                          (let ((v bb))
-                                            (princ v)
-                                            (princ " ")
-                                            (let ((bd 1))
-                                              (let ((be 3))
-                                                (let ((bf 4))
-                                                  (let ((bg 2))
-                                                    (let ((bh (min2 bd be)))
-                                                      (let ((bi (min2 (min2 bh bf) bg)))
-                                                        (let ((bc bi))
-                                                          (princ bc)
-                                                          (princ " ")
-                                                          (let ((bk 1))
-                                                            (let ((bl 4))
-                                                              (let ((bm 2))
-                                                                (let 
-                                                                  ((bn 3))
-                                                                  (let 
-                                                                    ((bo (min2 bk bl)))
-                                                                    (let 
-                                                                    ((bp (min2 (min2 bo bm) bn)))
-                                                                    (let 
-                                                                    ((bj bp))
-                                                                    (princ
-                                                                    bj)
-                                                                    (princ
-                                                                    " ")
-                                                                    (let 
-                                                                    ((br 1))
-                                                                    (let 
-                                                                    ((bs 4))
-                                                                    (let 
-                                                                    ((bt 3))
-                                                                    (let 
-                                                                    ((bu 2))
-                                                                    (let 
-                                                                    ((bv (min2 br bs)))
-                                                                    (let 
-                                                                    ((bw (min2 (min2 bv bt) bu)))
-                                                                    (let 
-                                                                    ((bq bw))
-                                                                    (princ
-                                                                    bq)
-                                                                    (princ
-                                                                    "
+            (princ (min2 (min2 l j) k))
+            (princ " ")
+            (let ((o 1))
+              (let ((p 2))
+                (let ((q 4))
+                  (let ((r 3))
+                    (let ((s (min2 o p)))
+                      (princ (min2 (min2 l j) k))
+                      (princ " ")
+                      (let ((w 1))
+                        (let ((x 3))
+                          (let ((y 2))
+                            (let ((z 4))
+                              (let ((ba (min2 w x)))
+                                (princ (min2 (min2 l j) k))
+                                (princ " ")
+                                (let ((bd 1))
+                                  (let ((be 3))
+                                    (let ((bf 4))
+                                      (let ((bg 2))
+                                        (let ((bh (min2 bd be)))
+                                          (princ (min2 (min2 l j) k))
+                                          (princ " ")
+                                          (let ((bk 1))
+                                            (let ((bl 4))
+                                              (let ((bm 2))
+                                                (let ((bn 3))
+                                                  (let ((bo (min2 bk bl)))
+                                                    (princ
+                                                    (min2 (min2 l j) k))
+                                                    (princ " ")
+                                                    (let ((br 1))
+                                                      (let ((bs 4))
+                                                        (let ((bt 3))
+                                                          (let ((bu 2))
+                                                            (let ((bv (min2 br bs)))
+                                                              (princ
+                                                              (min2 (min2 l j) k))
+                                                              (princ "
 ")
-                                                                    (let 
-                                                                    ((by 2))
-                                                                    (let 
-                                                                    ((bz 1))
-                                                                    (let 
+                                                              (let ((by 2))
+                                                                (let 
+                                                                  ((bz 1))
+                                                                  (let 
                                                                     ((ca 3))
                                                                     (let 
                                                                     ((cb 4))
                                                                     (let 
                                                                     ((cc (min2 by bz)))
-                                                                    (let 
-                                                                    ((cd (min2 (min2 cc ca) cb)))
-                                                                    (let 
-                                                                    ((bx cd))
                                                                     (princ
-                                                                    bx)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -104,12 +74,8 @@
                                                                     ((ci 3))
                                                                     (let 
                                                                     ((cj (min2 cf cg)))
-                                                                    (let 
-                                                                    ((ck (min2 (min2 cj ch) ci)))
-                                                                    (let 
-                                                                    ((ce ck))
                                                                     (princ
-                                                                    ce)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -122,12 +88,8 @@
                                                                     ((cp 4))
                                                                     (let 
                                                                     ((cq (min2 cm cn)))
-                                                                    (let 
-                                                                    ((cr (min2 (min2 cq co) cp)))
-                                                                    (let 
-                                                                    ((cl cr))
                                                                     (princ
-                                                                    cl)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -140,12 +102,8 @@
                                                                     ((cw 1))
                                                                     (let 
                                                                     ((cx (min2 ct cu)))
-                                                                    (let 
-                                                                    ((cy (min2 (min2 cx cv) cw)))
-                                                                    (let 
-                                                                    ((cs cy))
                                                                     (princ
-                                                                    cs)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -158,12 +116,8 @@
                                                                     ((dd 3))
                                                                     (let 
                                                                     ((de (min2 da db)))
-                                                                    (let 
-                                                                    ((df (min2 (min2 de dc) dd)))
-                                                                    (let 
-                                                                    ((cz df))
                                                                     (princ
-                                                                    cz)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -176,12 +130,8 @@
                                                                     ((dk 1))
                                                                     (let 
                                                                     ((dl (min2 dh di)))
-                                                                    (let 
-                                                                    ((dm (min2 (min2 dl dj) dk)))
-                                                                    (let 
-                                                                    ((dg dm))
                                                                     (princ
-                                                                    dg)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     "
 ")
@@ -195,12 +145,8 @@
                                                                     ((ds 4))
                                                                     (let 
                                                                     ((dt (min2 dp dq)))
-                                                                    (let 
-                                                                    ((du (min2 (min2 dt dr) ds)))
-                                                                    (let 
-                                                                    ((dn du))
                                                                     (princ
-                                                                    dn)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -213,12 +159,8 @@
                                                                     ((dz 2))
                                                                     (let 
                                                                     ((ea (min2 dw dx)))
-                                                                    (let 
-                                                                    ((eb (min2 (min2 ea dy) dz)))
-                                                                    (let 
-                                                                    ((dv eb))
                                                                     (princ
-                                                                    dv)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -231,12 +173,8 @@
                                                                     ((eg 4))
                                                                     (let 
                                                                     ((eh (min2 ed ee)))
-                                                                    (let 
-                                                                    ((ei (min2 (min2 eh ef) eg)))
-                                                                    (let 
-                                                                    ((ec ei))
                                                                     (princ
-                                                                    ec)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -249,12 +187,8 @@
                                                                     ((en 1))
                                                                     (let 
                                                                     ((eo (min2 ek el)))
-                                                                    (let 
-                                                                    ((ep (min2 (min2 eo em) en)))
-                                                                    (let 
-                                                                    ((ej ep))
                                                                     (princ
-                                                                    ej)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -267,12 +201,8 @@
                                                                     ((eu 2))
                                                                     (let 
                                                                     ((ev (min2 er es)))
-                                                                    (let 
-                                                                    ((ew (min2 (min2 ev et) eu)))
-                                                                    (let 
-                                                                    ((eq ew))
                                                                     (princ
-                                                                    eq)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -285,12 +215,8 @@
                                                                     ((fb 1))
                                                                     (let 
                                                                     ((fc (min2 ey ez)))
-                                                                    (let 
-                                                                    ((fd (min2 (min2 fc fa) fb)))
-                                                                    (let 
-                                                                    ((ex fd))
                                                                     (princ
-                                                                    ex)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     "
 ")
@@ -304,12 +230,8 @@
                                                                     ((fi 3))
                                                                     (let 
                                                                     ((fj (min2 ff fg)))
-                                                                    (let 
-                                                                    ((fk (min2 (min2 fj fh) fi)))
-                                                                    (let 
-                                                                    ((fe fk))
                                                                     (princ
-                                                                    fe)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -322,12 +244,8 @@
                                                                     ((fp 2))
                                                                     (let 
                                                                     ((fq (min2 fm fn)))
-                                                                    (let 
-                                                                    ((fr (min2 (min2 fq fo) fp)))
-                                                                    (let 
-                                                                    ((fl fr))
                                                                     (princ
-                                                                    fl)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -340,12 +258,8 @@
                                                                     ((fw 3))
                                                                     (let 
                                                                     ((fx (min2 ft fu)))
-                                                                    (let 
-                                                                    ((fy (min2 (min2 fx fv) fw)))
-                                                                    (let 
-                                                                    ((fs fy))
                                                                     (princ
-                                                                    fs)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -358,12 +272,8 @@
                                                                     ((gd 1))
                                                                     (let 
                                                                     ((ge (min2 ga gb)))
-                                                                    (let 
-                                                                    ((gf (min2 (min2 ge gc) gd)))
-                                                                    (let 
-                                                                    ((fz gf))
                                                                     (princ
-                                                                    fz)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -376,12 +286,8 @@
                                                                     ((gk 2))
                                                                     (let 
                                                                     ((gl (min2 gh gi)))
-                                                                    (let 
-                                                                    ((gm (min2 (min2 gl gj) gk)))
-                                                                    (let 
-                                                                    ((gg gm))
                                                                     (princ
-                                                                    gg)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     " ")
                                                                     (let 
@@ -394,15 +300,11 @@
                                                                     ((gs 1))
                                                                     (let 
                                                                     ((gt (min2 gp gq)))
-                                                                    (let 
-                                                                    ((gu (min2 (min2 gt gr) gs)))
-                                                                    (let 
-                                                                    ((gn gu))
                                                                     (princ
-                                                                    gn)
+                                                                    (min2 (min2 l j) k))
                                                                     (princ
                                                                     "
 ")
-                                                                    )))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+                                                                    )))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
 

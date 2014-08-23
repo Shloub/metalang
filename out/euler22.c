@@ -12,7 +12,7 @@ int score(){
     {
       char c = '_';
       scanf("%c", &c);
-      sum += (c - 'A') + 1;
+      sum += ((int)(c) - (int)('A')) + 1;
       /*		print c print " " print sum print " " */
     }
   }

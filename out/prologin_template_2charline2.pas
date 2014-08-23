@@ -94,15 +94,11 @@ end;
 
 
 var
-  a : Longint;
   b : Longint;
-  c : Longint;
   d : Longint;
-  e : p;
   f : p;
   g : Longint;
   h : char;
-  k : p;
   l : p;
   m : Longint;
   o : char;
@@ -114,13 +110,11 @@ begin
   b := 0;
   b := read_int_();
   skip();
-  a := b;
-  taille1 := a;
+  taille1 := b;
   d := 0;
   d := read_int_();
   skip();
-  c := d;
-  taille2 := c;
+  taille2 := d;
   SetLength(f, taille1);
   for g := 0 to  taille1 - 1 do
   begin
@@ -129,8 +123,7 @@ begin
     f[g] := h;
   end;
   skip();
-  e := f;
-  tableau1 := e;
+  tableau1 := f;
   SetLength(l, taille2);
   for m := 0 to  taille2 - 1 do
   begin
@@ -139,8 +132,7 @@ begin
     l[m] := o;
   end;
   skip();
-  k := l;
-  tableau2 := k;
+  tableau2 := l;
   Write(programme_candidat(tableau1, taille1, tableau2, taille2));
   Write(''#10'');
 end.

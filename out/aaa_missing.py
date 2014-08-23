@@ -12,10 +12,8 @@ def result( len, tab ):
         return i2;
     return -(1);
 
-a = int(input());
-len = a;
+len = int(input());
 print("%d\n" % ( len ), end='')
-b = list(map(int, input().split()));
-tab = b;
+tab = list(map(int, input().split()));
 print("%d" % result(len, tab), end='')
 

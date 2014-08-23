@@ -83,9 +83,8 @@ sub sumdiv{
   my($nprimes,
   $primes,
   $n) = @_;
-  my $a = $n + 1;
   my $t = [];
-  foreach my $i (0 .. $a - 1) {
+  foreach my $i (0 .. $n + 1 - 1) {
     $t->[$i] = 0;
     }
   my $max_ = fillPrimesFactors($t, $n, $primes, $nprimes);
@@ -114,14 +113,12 @@ foreach my $k (2 .. $maximumprimes - 1) {
 my $n = 100;
 # 28124 ça prend trop de temps mais on arrive a passer le test 
 
-my $b = $n + 1;
 my $abondant = [];
-foreach my $p (0 .. $b - 1) {
+foreach my $p (0 .. $n + 1 - 1) {
   $abondant->[$p] = 0;
   }
-my $c = $n + 1;
 my $summable = [];
-foreach my $q (0 .. $c - 1) {
+foreach my $q (0 .. $n + 1 - 1) {
   $summable->[$q] = 0;
   }
 my $sum = 0;

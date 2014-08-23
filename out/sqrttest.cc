@@ -4,23 +4,17 @@
 
 int main(){
   int b = 4;
-  int a = sqrt(b);
-  std::cout << a << " ";
+  std::cout << (int)sqrt(b) << " ";
   int e = 16;
-  int d = sqrt(e);
-  std::cout << d << " ";
+  std::cout << (int)sqrt(e) << " ";
   int g = 20;
-  int f = sqrt(g);
-  std::cout << f << " ";
+  std::cout << (int)sqrt(g) << " ";
   int i = 1000;
-  int h = sqrt(i);
-  std::cout << h << " ";
+  std::cout << (int)sqrt(i) << " ";
   int k = 500;
-  int j = sqrt(k);
-  std::cout << j << " ";
+  std::cout << (int)sqrt(k) << " ";
   int m = 10;
-  int l = sqrt(m);
-  std::cout << l << " ";
+  std::cout << (int)sqrt(m) << " ";
   return 0;
 }
 

@@ -10,8 +10,7 @@ end
 b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
-a = b
-taille = a
+taille = b
 d = [];
 for e in (0 ..  taille - 1) do
   f = 0
@@ -19,7 +18,6 @@ for e in (0 ..  taille - 1) do
   scanf("%*\n");
   d[e] = f;
 end
-c = d
-tableau = c
+tableau = d
 printf "%d\n", programme_candidat(tableau, taille)
 

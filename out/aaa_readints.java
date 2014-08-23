@@ -34,8 +34,7 @@ public class aaa_readints
     }else{
     f = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int e = f;
-    int len = e;
+    int len = f;
     System.out.printf("%d=len\n", len);
     int[] h = new int[len];
     for (int k = 0 ; k < len; k++)
@@ -48,8 +47,7 @@ public class aaa_readints
       scanner.findWithinHorizon("[\n\r ]*", 1);
       h[k] = l;
     }
-    int[] g = h;
-    int[] tab1 = g;
+    int[] tab1 = h;
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d=>%d\n", i, tab1[i]);
@@ -60,8 +58,7 @@ public class aaa_readints
     }else{
     o = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int m = o;
-    len = m;
+    len = o;
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)
     {

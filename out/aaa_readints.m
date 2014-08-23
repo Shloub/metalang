@@ -29,8 +29,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int f = 0;
   scanf("%d ", &f);
-  int e = f;
-  int len = e;
+  int len = f;
   printf("%d=len\n", len);
   int *h = malloc( len * sizeof(int));
   {
@@ -42,8 +41,7 @@ int main(void){
       h[k] = l;
     }
   }
-  int* g = h;
-  int* tab1 = g;
+  int* tab1 = h;
   {
     int i;
     for (i = 0 ; i < len; i++)
@@ -53,8 +51,7 @@ int main(void){
   }
   int o = 0;
   scanf("%d ", &o);
-  int m = o;
-  len = m;
+  len = o;
   int** tab2 = read_int_matrix(len, len - 1);
   {
     int i;

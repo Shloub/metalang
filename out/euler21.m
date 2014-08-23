@@ -68,11 +68,10 @@ int sumdivaux(int* t, int n, int i){
 }
 
 int sumdiv(int nprimes, int* primes, int n){
-  int a = n + 1;
-  int *t = malloc( a * sizeof(int));
+  int *t = malloc( (n + 1) * sizeof(int));
   {
     int i;
-    for (i = 0 ; i < a; i++)
+    for (i = 0 ; i < n + 1; i++)
       t[i] = 0;
   }
   int max_ = fillPrimesFactors(t, n, primes, nprimes);

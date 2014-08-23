@@ -92,13 +92,11 @@ function pathfind(tab, x, y){
 var m = 0;
 m=read_int_();
 stdinsep();
-var l = m;
-var x = l;
+var x = m;
 var p = 0;
 p=read_int_();
 stdinsep();
-var o = p;
-var y = o;
+var y = p;
 util.print(x, " ", y, "\n");
 var tab = read_char_matrix(x, y);
 var result = pathfind(tab, x, y);

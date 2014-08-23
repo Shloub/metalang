@@ -27,7 +27,7 @@ int programme_candidat(std::vector<std::vector<char> *> * tableau, int taille_x,
   {
     for (int j = 0 ; j < taille_x; j++)
     {
-      out_ += tableau->at(i)->at(j) * (i + j * 2);
+      out_ += (int)(tableau->at(i)->at(j)) * (i + j * 2);
       std::cout << tableau->at(i)->at(j);
     }
     std::cout << "--\n";
@@ -39,12 +39,10 @@ int programme_candidat(std::vector<std::vector<char> *> * tableau, int taille_x,
 int main(){
   int c = 0;
   std::cin >> c >> std::skipws;
-  int b = c;
-  int taille_x = b;
+  int taille_x = c;
   int e = 0;
   std::cin >> e >> std::skipws;
-  int d = e;
-  int taille_y = d;
+  int taille_y = e;
   std::vector<std::vector<char> *> * tableau = read_char_matrix(taille_x, taille_y);
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;

@@ -56,9 +56,8 @@ function sumdivaux(t, n, i){
 }
 
 function sumdiv(nprimes, primes, n){
-  var a = n + 1;
-  var t = new Array(a);
-  for (var i = 0 ; i <= a - 1; i++)
+  var t = new Array(n + 1);
+  for (var i = 0 ; i <= n + 1 - 1; i++)
     t[i] = 0;
   var max_ = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max_, 0);
@@ -81,13 +80,11 @@ for (var k = 2 ; k <= maximumprimes - 1; k++)
 }
 var n = 100;
 /* 28124 ça prend trop de temps mais on arrive a passer le test */
-var b = n + 1;
-var abondant = new Array(b);
-for (var p = 0 ; p <= b - 1; p++)
+var abondant = new Array(n + 1);
+for (var p = 0 ; p <= n + 1 - 1; p++)
   abondant[p] = 0;
-var c = n + 1;
-var summable = new Array(c);
-for (var q = 0 ; q <= c - 1; q++)
+var summable = new Array(n + 1);
+for (var q = 0 ; q <= n + 1 - 1; q++)
   summable[q] = 0;
 var sum = 0;
 for (var r = 2 ; r <= n; r++)

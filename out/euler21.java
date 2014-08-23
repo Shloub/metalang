@@ -65,9 +65,8 @@ public class euler21
   
   public static int sumdiv(int nprimes, int[] primes, int n)
   {
-    int a = n + 1;
-    int[] t = new int[a];
-    for (int i = 0 ; i < a; i++)
+    int[] t = new int[n + 1];
+    for (int i = 0 ; i < n + 1; i++)
       t[i] = 0;
     int max_ = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max_, 0);

@@ -18,22 +18,16 @@ func skip() {
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var b int = 4
-  var a int = int(math.Sqrt(float64(b)))
-  fmt.Printf("%d ", a);
+  fmt.Printf("%d ", int(math.Sqrt(float64(b))));
   var e int = 16
-  var d int = int(math.Sqrt(float64(e)))
-  fmt.Printf("%d ", d);
+  fmt.Printf("%d ", int(math.Sqrt(float64(e))));
   var g int = 20
-  var f int = int(math.Sqrt(float64(g)))
-  fmt.Printf("%d ", f);
+  fmt.Printf("%d ", int(math.Sqrt(float64(g))));
   var i int = 1000
-  var h int = int(math.Sqrt(float64(i)))
-  fmt.Printf("%d ", h);
+  fmt.Printf("%d ", int(math.Sqrt(float64(i))));
   var k int = 500
-  var j int = int(math.Sqrt(float64(k)))
-  fmt.Printf("%d ", j);
+  fmt.Printf("%d ", int(math.Sqrt(float64(k))));
   var m int = 10
-  var l int = int(math.Sqrt(float64(m)))
-  fmt.Printf("%d ", l);
+  fmt.Printf("%d ", int(math.Sqrt(float64(m))));
 }
 

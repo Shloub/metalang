@@ -22,11 +22,9 @@ public class aaa_missing
   
   public static void Main(String[] args)
   {
-    int a = int.Parse(Console.ReadLine());
-    int len = a;
+    int len = int.Parse(Console.ReadLine());
     Console.Write("" + len + "\n");
-    int[] b = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    int[] tab = b;
+    int[] tab = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     Console.Write(result(len, tab));
   }
   

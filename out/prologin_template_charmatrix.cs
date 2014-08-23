@@ -32,10 +32,8 @@ public class prologin_template_charmatrix
   
   public static void Main(String[] args)
   {
-    int b = int.Parse(Console.ReadLine());
-    int taille_x = b;
-    int c = int.Parse(Console.ReadLine());
-    int taille_y = c;
+    int taille_x = int.Parse(Console.ReadLine());
+    int taille_y = int.Parse(Console.ReadLine());
     char[][] tableau = read_char_matrix(taille_x, taille_y);
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }

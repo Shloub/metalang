@@ -29,12 +29,10 @@ int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y){
 int main(){
   int f = 0;
   std::cin >> f >> std::skipws;
-  int e = f;
-  int taille_x = e;
+  int taille_x = f;
   int h = 0;
   std::cin >> h >> std::skipws;
-  int g = h;
-  int taille_y = g;
+  int taille_y = h;
   std::vector<std::vector<int> *> * tableau = read_int_matrix(taille_x, taille_y);
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;

@@ -79,8 +79,7 @@ let rec sumdivaux t n i =
        else ((out_ + 1) * o)) in
       (f g out_ p)))
 let sumdiv nprimes primes n =
-  let a = (n + 1) in
-  let t = (Array.init_withenv a (fun  i () -> let b = 0 in
+  let t = (Array.init_withenv (n + 1) (fun  i () -> let b = 0 in
   ((), b)) ()) in
   let max_ = (fillPrimesFactors t n primes nprimes) in
   (sumdivaux t max_ 0)

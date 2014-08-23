@@ -84,18 +84,17 @@
 
 (defun sumdiv (nprimes primes n)
 (progn
-  (let ((a (+ n 1)))
-    (let
-     ((t_ (array_init
-             a
-             (function (lambda (i)
-             (block lambda_1
-               (return-from lambda_1 0)
-             ))
-             ))))
-    (let ((max_ (fillPrimesFactors t_ n primes nprimes)))
-      (return-from sumdiv (sumdivaux t_ max_ 0))
-    )))))
+  (let
+   ((t_ (array_init
+           (+ n 1)
+           (function (lambda (i)
+           (block lambda_1
+             (return-from lambda_1 0)
+           ))
+           ))))
+  (let ((max_ (fillPrimesFactors t_ n primes nprimes)))
+    (return-from sumdiv (sumdivaux t_ max_ 0))
+  ))))
 
 (progn
   (let ((maximumprimes 1001))

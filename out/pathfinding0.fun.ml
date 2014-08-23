@@ -69,10 +69,8 @@ let pathfind tab x y =
   ) ()) in
   (pathfind_aux cache tab x y 0 0)
 let main =
-  let q = (Scanf.scanf "%d " (fun x -> x)) in
-  let x = q in
-  let r = (Scanf.scanf "%d " (fun x -> x)) in
-  let y = r in
+  let x = (Scanf.scanf "%d " (fun x -> x)) in
+  let y = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d %d\n" x y);
     let tab = (read_char_matrix x y) in

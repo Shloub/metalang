@@ -19,7 +19,7 @@ int main(void){
     {
       char c = '_';
       scanf("%c", &c);
-      int d = c - '0';
+      int d = (int)(c) - (int)('0');
       i *= d;
       last[j] = d;
     }
@@ -33,7 +33,7 @@ int main(void){
     {
       char e = '_';
       scanf("%c", &e);
-      int f = e - '0';
+      int f = (int)(e) - (int)('0');
       if (f == 0)
       {
         i = 1;

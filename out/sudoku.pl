@@ -27,9 +27,8 @@ sub remainder {
 # lit un sudoku sur l'entrée standard 
 
 sub read_sudoku{
-  my $a = 9 * 9;
   my $out_ = [];
-  foreach my $i (0 .. $a - 1) {
+  foreach my $i (0 .. 9 * 9 - 1) {
     my $k = 0;
     $k = readint();
     readspaces();

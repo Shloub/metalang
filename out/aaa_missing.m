@@ -30,8 +30,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int b = 0;
   scanf("%d ", &b);
-  int a = b;
-  int len = a;
+  int len = b;
   printf("%d\n", len);
   int *d = malloc( len * sizeof(int));
   {
@@ -43,8 +42,7 @@ int main(void){
       d[e] = f;
     }
   }
-  int* c = d;
-  int* tab = c;
+  int* tab = d;
   printf("%d", result(len, tab));
   [pool drain];
   return 0;

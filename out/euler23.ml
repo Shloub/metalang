@@ -58,8 +58,7 @@ let rec sumdivaux t n i =
     end
 
 let sumdiv nprimes primes n =
-  let a = n + 1 in
-  let t = Array.init a (fun _i ->
+  let t = Array.init (n + 1) (fun _i ->
     0) in
   let max_ = fillPrimesFactors t n primes nprimes in
   sumdivaux t max_ 0
@@ -82,11 +81,9 @@ begin
   done;
   let n = 100 in
   (* 28124 ça prend trop de temps mais on arrive a passer le test *)
-  let b = n + 1 in
-  let abondant = Array.init b (fun _p ->
+  let abondant = Array.init (n + 1) (fun _p ->
     false) in
-  let c = n + 1 in
-  let summable = Array.init c (fun _q ->
+  let summable = Array.init (n + 1) (fun _q ->
     false) in
   let sum = ref( 0 ) in
   for r = 2 to n do

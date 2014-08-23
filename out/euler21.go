@@ -69,9 +69,8 @@ func sumdivaux(t []int, n int, i int) int{
 }
 
 func sumdiv(nprimes int, primes []int, n int) int{
-  var a int = n + 1
-  var t []int = make([]int, a)
-  for i := 0 ; i <= a - 1; i++ {
+  var t []int = make([]int, (n + 1))
+  for i := 0 ; i <= n + 1 - 1; i++ {
     t[i] = 0;
   }
   var max_ int = fillPrimesFactors(t, n, primes, nprimes)

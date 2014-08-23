@@ -57,9 +57,8 @@ def sumdivaux( t, n, i )
 end
 
 def sumdiv( nprimes, primes, n )
-    a = n + 1
     t = [];
-    for i in (0 ..  a - 1) do
+    for i in (0 ..  n + 1 - 1) do
       t[i] = 0;
     end
     max_ = fillPrimesFactors(t, n, primes, nprimes)
@@ -89,14 +88,12 @@ n = 100
  28124 ça prend trop de temps mais on arrive a passer le test 
 =end
 
-b = n + 1
 abondant = [];
-for p in (0 ..  b - 1) do
+for p in (0 ..  n + 1 - 1) do
   abondant[p] = false;
 end
-c = n + 1
 summable = [];
-for q in (0 ..  c - 1) do
+for q in (0 ..  n + 1 - 1) do
   summable[q] = false;
 end
 sum = 0

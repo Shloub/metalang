@@ -1,7 +1,6 @@
 (* lit un sudoku sur l'entrée standard *)
 let read_sudoku () =
-  let a = 9 * 9 in
-  let out_ = Array.init a (fun _i ->
+  let out_ = Array.init (9 * 9) (fun _i ->
     let k = Scanf.scanf "%d " (fun v_0 -> v_0) in
     k) in
   out_

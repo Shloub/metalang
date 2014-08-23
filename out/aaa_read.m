@@ -47,11 +47,11 @@ int main(void){
     {
       char tmpc = '_';
       scanf("%c", &tmpc);
-      int c = tmpc;
+      int c = (int)(tmpc);
       printf("%c:%d ", tmpc, c);
       if (tmpc != ' ')
-        c = ((c - 'a') + 13) % 26 + 'a';
-      tab4[toto] = c;
+        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
+      tab4[toto] = (char)(c);
     }
   }
   {

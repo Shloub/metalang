@@ -14,10 +14,8 @@ function result($len, &$tab){
   return -1;
 }
 
-$a = intval(trim(fgets(STDIN)));
-$len = $a;
+$len = intval(trim(fgets(STDIN)));
 echo $len, "\n";
-$b = array_map("intval", explode(" ", fgets(STDIN)));
-$tab = $b;
+$tab = array_map("intval", explode(" ", fgets(STDIN)));
 echo result($len, $tab);
 ?>

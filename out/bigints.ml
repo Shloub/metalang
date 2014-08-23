@@ -207,8 +207,7 @@ let bigint_premiers_chiffres a i =
   }
 
 let bigint_shift a i =
-  let e = a.bigint_len + i in
-  let chiffres = Array.init e (fun k ->
+  let chiffres = Array.init (a.bigint_len + i) (fun k ->
     if k >= i then
       a.bigint_chiffres.(k - i)
     else
@@ -354,14 +353,11 @@ let euler25 () =
 let euler29 () =
   let maxA = 5 in
   let maxB = 5 in
-  let f = maxA + 1 in
-  let a_bigint = Array.init f (fun j ->
+  let a_bigint = Array.init (maxA + 1) (fun j ->
     bigint_of_int (j * j)) in
-  let g = maxA + 1 in
-  let a0_bigint = Array.init g (fun j2 ->
+  let a0_bigint = Array.init (maxA + 1) (fun j2 ->
     bigint_of_int j2) in
-  let h = maxA + 1 in
-  let b = Array.init h (fun _k ->
+  let b = Array.init (maxA + 1) (fun _k ->
     2) in
   let n = ref( 0 ) in
   let found = ref( true ) in

@@ -6,9 +6,7 @@ function programme_candidat(&$tableau, $taille){
   return $out_;
 }
 
-$a = intval(trim(fgets(STDIN)));
-$taille = $a;
-$b = array_map("intval", explode(" ", fgets(STDIN)));
-$tableau = $b;
+$taille = intval(trim(fgets(STDIN)));
+$tableau = array_map("intval", explode(" ", fgets(STDIN)));
 echo programme_candidat($tableau, $taille), "\n";
 ?>

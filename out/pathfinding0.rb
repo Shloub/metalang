@@ -64,13 +64,11 @@ end
 r = 0
 r=scanf("%d")[0];
 scanf("%*\n");
-q = r
-x = q
+x = r
 u = 0
 u=scanf("%d")[0];
 scanf("%*\n");
-s = u
-y = s
+y = u
 printf "%d %d\n", x, y
 tab = read_char_matrix(x, y)
 result = pathfind(tab, x, y)

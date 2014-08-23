@@ -234,8 +234,7 @@ let bigint_premiers_chiffres a i =
      bigint_chiffres=a.bigint_chiffres}) in
     (cb len)
 let bigint_shift a i =
-  let e = (a.bigint_len + i) in
-  let chiffres = (Array.init_withenv e (fun  k () -> let bz by = ((), by) in
+  let chiffres = (Array.init_withenv (a.bigint_len + i) (fun  k () -> let bz by = ((), by) in
   (if (k >= i)
    then let by = a.bigint_chiffres.((k - i)) in
    ((), by)
@@ -380,14 +379,11 @@ let euler25 () =
 let euler29 () =
   let maxA = 5 in
   let maxB = 5 in
-  let f = (maxA + 1) in
-  let a_bigint = (Array.init_withenv f (fun  j () -> let o = (bigint_of_int (j * j)) in
+  let a_bigint = (Array.init_withenv (maxA + 1) (fun  j () -> let o = (bigint_of_int (j * j)) in
   ((), o)) ()) in
-  let g = (maxA + 1) in
-  let a0_bigint = (Array.init_withenv g (fun  j2 () -> let p = (bigint_of_int j2) in
+  let a0_bigint = (Array.init_withenv (maxA + 1) (fun  j2 () -> let p = (bigint_of_int j2) in
   ((), p)) ()) in
-  let h = (maxA + 1) in
-  let b = (Array.init_withenv h (fun  k () -> let q = 2 in
+  let b = (Array.init_withenv (maxA + 1) (fun  k () -> let q = 2 in
   ((), q)) ()) in
   let n = 0 in
   let found = true in

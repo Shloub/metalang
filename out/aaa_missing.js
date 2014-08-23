@@ -43,8 +43,7 @@ function result(len, tab){
 var b = 0;
 b=read_int_();
 stdinsep();
-var a = b;
-var len = a;
+var len = b;
 util.print(len, "\n");
 var d = new Array(len);
 for (var e = 0 ; e <= len - 1; e++)
@@ -54,7 +53,6 @@ for (var e = 0 ; e <= len - 1; e++)
   stdinsep();
   d[e] = f;
 }
-var c = d;
-var tab = c;
+var tab = d;
 util.print(result(len, tab));
 

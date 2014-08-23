@@ -12,9 +12,9 @@ int main(){
   {
     char tmpc = '_';
     std::cin >> tmpc >> std::noskipws;
-    int c = tmpc;
+    int c = (int)(tmpc);
     if (tmpc != ' ')
-      c = ((c - 'a') + 13) % 26 + 'a';
+      c = ((c - (int)('a')) + 13) % 26 + (int)('a');
     tab4->at(toto) = (char)(c);
   }
   for (int j = 0 ; j < strlen; j++)

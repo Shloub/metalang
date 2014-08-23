@@ -56,9 +56,8 @@ function sumdivaux(t, n, i){
 }
 
 function sumdiv(nprimes, primes, n){
-  var a = n + 1;
-  var t = new Array(a);
-  for (var i = 0 ; i <= a - 1; i++)
+  var t = new Array(n + 1);
+  for (var i = 0 ; i <= n + 1 - 1; i++)
     t[i] = 0;
   var max_ = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max_, 0);

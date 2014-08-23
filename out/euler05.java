@@ -10,9 +10,8 @@ public class euler05
   
   public static int[] primesfactors(int n)
   {
-    int c = n + 1;
-    int[] tab = new int[c];
-    for (int i = 0 ; i < c; i++)
+    int[] tab = new int[n + 1];
+    for (int i = 0 ; i < n + 1; i++)
       tab[i] = 0;
     int d = 2;
     while (n != 1 && d * d <= n)
@@ -31,9 +30,8 @@ public class euler05
   public static void main(String args[])
   {
     int lim = 20;
-    int e = lim + 1;
-    int[] o = new int[e];
-    for (int m = 0 ; m < e; m++)
+    int[] o = new int[lim + 1];
+    for (int m = 0 ; m < lim + 1; m++)
       o[m] = 0;
     for (int i = 1 ; i <= lim; i ++)
     {

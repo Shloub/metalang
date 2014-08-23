@@ -56,9 +56,8 @@ function sumdivaux(&$t, $n, $i){
 }
 
 function sumdiv($nprimes, &$primes, $n){
-  $a = $n + 1;
   $t = array();
-  for ($i = 0 ; $i < $a; $i++)
+  for ($i = 0 ; $i < $n + 1; $i++)
     $t[$i] = 0;
   $max_ = fillPrimesFactors($t, $n, $primes, $nprimes);
   return sumdivaux($t, $max_, 0);
@@ -81,13 +80,11 @@ for ($k = 2 ; $k < $maximumprimes; $k++)
 }
 $n = 100;
 /* 28124 ça prend trop de temps mais on arrive a passer le test */
-$b = $n + 1;
 $abondant = array();
-for ($p = 0 ; $p < $b; $p++)
+for ($p = 0 ; $p < $n + 1; $p++)
   $abondant[$p] = false;
-$c = $n + 1;
 $summable = array();
-for ($q = 0 ; $q < $c; $q++)
+for ($q = 0 ; $q < $n + 1; $q++)
   $summable[$q] = false;
 $sum = 0;
 for ($r = 2 ; $r <= $n; $r++)

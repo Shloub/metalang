@@ -10,14 +10,12 @@ module Array = struct
 end
 
 let main =
-  let b = 12 in
-  let c = (Array.init_withenv b (fun  d () -> Scanf.scanf "%c"
+  let c = (Array.init_withenv 12 (fun  d () -> Scanf.scanf "%c"
   (fun  e -> let f = e in
   ((), f))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let a = c in
-    let str = a in
+    let str = c in
     let h = 0 in
     let j = 11 in
     let rec g i =

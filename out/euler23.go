@@ -69,9 +69,8 @@ func sumdivaux(t []int, n int, i int) int{
 }
 
 func sumdiv(nprimes int, primes []int, n int) int{
-  var a int = n + 1
-  var t []int = make([]int, a)
-  for i := 0 ; i <= a - 1; i++ {
+  var t []int = make([]int, (n + 1))
+  for i := 0 ; i <= n + 1 - 1; i++ {
     t[i] = 0;
   }
   var max_ int = fillPrimesFactors(t, n, primes, nprimes)
@@ -99,14 +98,12 @@ func main() {
   }
   var n int = 100
   /* 28124 ça prend trop de temps mais on arrive a passer le test */
-  var b int = n + 1
-  var abondant []bool = make([]bool, b)
-  for p := 0 ; p <= b - 1; p++ {
+  var abondant []bool = make([]bool, (n + 1))
+  for p := 0 ; p <= n + 1 - 1; p++ {
     abondant[p] = false;
   }
-  var c int = n + 1
-  var summable []bool = make([]bool, c)
-  for q := 0 ; q <= c - 1; q++ {
+  var summable []bool = make([]bool, (n + 1))
+  for q := 0 ; q <= n + 1 - 1; q++ {
     summable[q] = false;
   }
   var sum int = 0

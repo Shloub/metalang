@@ -57,9 +57,8 @@ int sumdivaux(std::vector<int> * t, int n, int i){
 }
 
 int sumdiv(int nprimes, std::vector<int> * primes, int n){
-  int a = n + 1;
-  std::vector<int > *t = new std::vector<int>( a );
-  for (int i = 0 ; i < a; i++)
+  std::vector<int > *t = new std::vector<int>( n + 1 );
+  for (int i = 0 ; i < n + 1; i++)
     t->at(i) = 0;
   int max_ = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max_, 0);

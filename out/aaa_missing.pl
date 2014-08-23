@@ -46,8 +46,7 @@ sub result{
 my $b = 0;
 $b = readint();
 readspaces();
-my $a = $b;
-my $len = $a;
+my $len = $b;
 print($len, "\n");
 my $d = [];
 foreach my $e (0 .. $len - 1) {
@@ -56,8 +55,7 @@ foreach my $e (0 .. $len - 1) {
   readspaces();
   $d->[$e] = $f;
   }
-my $c = $d;
-my $tab = $c;
+my $tab = $d;
 print(result($len, $tab));
 
 

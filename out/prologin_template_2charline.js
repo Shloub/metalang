@@ -52,8 +52,7 @@ function programme_candidat(tableau1, taille1, tableau2, taille2){
 var b = 0;
 b=read_int_();
 stdinsep();
-var a = b;
-var taille1 = a;
+var taille1 = b;
 var d = new Array(taille1);
 for (var e = 0 ; e <= taille1 - 1; e++)
 {
@@ -62,13 +61,11 @@ for (var e = 0 ; e <= taille1 - 1; e++)
   d[e] = f;
 }
 stdinsep();
-var c = d;
-var tableau1 = c;
+var tableau1 = d;
 var h = 0;
 h=read_int_();
 stdinsep();
-var g = h;
-var taille2 = g;
+var taille2 = h;
 var l = new Array(taille2);
 for (var m = 0 ; m <= taille2 - 1; m++)
 {
@@ -77,7 +74,6 @@ for (var m = 0 ; m <= taille2 - 1; m++)
   l[m] = o;
 }
 stdinsep();
-var k = l;
-var tableau2 = k;
+var tableau2 = l;
 util.print(programme_candidat(tableau1, taille1, tableau2, taille2), "\n");
 

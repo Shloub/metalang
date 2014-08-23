@@ -2,9 +2,8 @@
 #include <vector>
 /* lit un sudoku sur l'entrée standard */
 std::vector<int> * read_sudoku(){
-  int a = 9 * 9;
-  std::vector<int > *out_ = new std::vector<int>( a );
-  for (int i = 0 ; i < a; i++)
+  std::vector<int > *out_ = new std::vector<int>( 9 * 9 );
+  for (int i = 0 ; i < 9 * 9; i++)
   {
     int k = 0;
     std::cin >> k >> std::skipws;
