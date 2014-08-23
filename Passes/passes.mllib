@@ -21,7 +21,5 @@ InternalTags
 UnTuple
 RecordExprToInstr
 DeclareTuples
-<<<<<<< HEAD
-=======
 InlineFuncs
->>>>>>> adding an inline pass
+InlineVars
