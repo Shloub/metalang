@@ -42,9 +42,8 @@ def sumdivaux( t, n, i ):
       return (out_ + 1) * o;
 
 def sumdiv( nprimes, primes, n ):
-    a = n + 1;
-    t = [None] * a
-    for i in range(0, a):
+    t = [None] * (n + 1)
+    for i in range(0, n + 1):
       t[i] = 0;
     max_ = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max_, 0);
@@ -64,13 +63,11 @@ for k in range(2, maximumprimes):
     l += 1
 n = 100;
 """ 28124 ça prend trop de temps mais on arrive a passer le test """
-b = n + 1;
-abondant = [None] * b
-for p in range(0, b):
+abondant = [None] * (n + 1)
+for p in range(0, n + 1):
   abondant[p] = False;
-c = n + 1;
-summable = [None] * c
-for q in range(0, c):
+summable = [None] * (n + 1)
+for q in range(0, n + 1):
   summable[q] = False;
 sum = 0;
 for r in range(2, 1 + n):

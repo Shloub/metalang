@@ -5,23 +5,18 @@ def mod(x, y):
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 """
-a = int(input());
-len = a;
+len = int(input());
 print("%d=len\n" % ( len ), end='')
-b = list(map(int, input().split()));
-tab = b;
+tab = list(map(int, input().split()));
 for i in range(0, len):
   print("%d=>%d " % ( i, tab[i] ), end='')
 print("")
-d = list(map(int, input().split()));
-tab2 = d;
+tab2 = list(map(int, input().split()));
 for i_ in range(0, len):
   print("%d==>%d " % ( i_, tab2[i_] ), end='')
-e = int(input());
-strlen = e;
+strlen = int(input());
 print("%d=strlen\n" % ( strlen ), end='')
-f = list(input());
-tab4 = f;
+tab4 = list(input());
 for i3 in range(0, strlen):
   tmpc = tab4[i3];
   c = ord(tmpc);

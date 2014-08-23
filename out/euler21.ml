@@ -58,8 +58,7 @@ let rec sumdivaux t n i =
     end
 
 let sumdiv nprimes primes n =
-  let a = n + 1 in
-  let t = Array.init a (fun _i ->
+  let t = Array.init (n + 1) (fun _i ->
     0) in
   let max_ = fillPrimesFactors t n primes nprimes in
   sumdivaux t max_ 0

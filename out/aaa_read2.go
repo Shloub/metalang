@@ -23,8 +23,7 @@ func main() {
   var b int = 0
   fmt.Fscanf(reader, "%d", &b);
   skip()
-  var a int = b
-  var len int = a
+  var len int = b
   fmt.Printf("%d=len\n", len);
   var e []int = make([]int, len)
   for f := 0 ; f <= len - 1; f++ {
@@ -33,8 +32,7 @@ func main() {
       skip()
       e[f] = g;
   }
-  var d []int = e
-  var tab []int = d
+  var tab []int = e
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d ", i, tab[i]);
   }
@@ -46,16 +44,14 @@ func main() {
       skip()
       k[l] = m;
   }
-  var h []int = k
-  var tab2 []int = h
+  var tab2 []int = k
   for i_ := 0 ; i_ <= len - 1; i_++ {
     fmt.Printf("%d==>%d ", i_, tab2[i_]);
   }
   var p int = 0
   fmt.Fscanf(reader, "%d", &p);
   skip()
-  var o int = p
-  var strlen int = o
+  var strlen int = p
   fmt.Printf("%d=strlen\n", strlen);
   var r []byte = make([]byte, strlen)
   for s := 0 ; s <= strlen - 1; s++ {
@@ -64,8 +60,7 @@ func main() {
       r[s] = u;
   }
   skip()
-  var q []byte = r
-  var tab4 []byte = q
+  var tab4 []byte = r
   for i3 := 0 ; i3 <= strlen - 1; i3++ {
     var tmpc byte = tab4[i3]
       var c int = (int)(tmpc)

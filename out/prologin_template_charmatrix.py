@@ -14,10 +14,8 @@ def programme_candidat( tableau, taille_x, taille_y ):
       print("--")
     return out_;
 
-b = int(input());
-taille_x = b;
-c = int(input());
-taille_y = c;
+taille_x = int(input());
+taille_y = int(input());
 tableau = read_char_matrix(taille_x, taille_y);
 print("%d\n" % ( programme_candidat(tableau, taille_x, taille_y) ), end='')
 

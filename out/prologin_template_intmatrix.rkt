@@ -36,13 +36,11 @@
   (d h out_)))))
 )
 (define main
-  (let ([b (string->number (read-line))])
-  (let ([taille_x b])
-  (let ([c (string->number (read-line))])
-  (let ([taille_y c])
+  (let ([taille_x (string->number (read-line))])
+  (let ([taille_y (string->number (read-line))])
   (let ([tableau (read_int_matrix taille_x taille_y)])
   (block
     (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
-    ))))))
+    ))))
 )
 

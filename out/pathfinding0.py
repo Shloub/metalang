@@ -36,10 +36,8 @@ def pathfind( tab, x, y ):
       cache[i] = tmp;
     return pathfind_aux(cache, tab, x, y, 0, 0);
 
-g = int(input());
-x = g;
-h = int(input());
-y = h;
+x = int(input());
+y = int(input());
 print("%d %d\n" % ( x, y ), end='')
 tab = read_char_matrix(x, y);
 result = pathfind(tab, x, y);

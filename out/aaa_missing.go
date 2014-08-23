@@ -38,8 +38,7 @@ func main() {
   var b int = 0
   fmt.Fscanf(reader, "%d", &b);
   skip()
-  var a int = b
-  var len int = a
+  var len int = b
   fmt.Printf("%d\n", len);
   var d []int = make([]int, len)
   for e := 0 ; e <= len - 1; e++ {
@@ -48,8 +47,7 @@ func main() {
       skip()
       d[e] = f;
   }
-  var c []int = d
-  var tab []int = c
+  var tab []int = d
   fmt.Printf("%d", result(len, tab));
 }
 

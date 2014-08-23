@@ -4,9 +4,8 @@ function max2(a, b){
 }
 
 function primesfactors(n){
-  var c = n + 1;
-  var tab = new Array(c);
-  for (var i = 0 ; i <= c - 1; i++)
+  var tab = new Array(n + 1);
+  for (var i = 0 ; i <= n + 1 - 1; i++)
     tab[i] = 0;
   var d = 2;
   while (n != 1 && d * d <= n)
@@ -22,9 +21,8 @@ function primesfactors(n){
 }
 
 var lim = 20;
-var e = lim + 1;
-var o = new Array(e);
-for (var m = 0 ; m <= e - 1; m++)
+var o = new Array(lim + 1);
+for (var m = 0 ; m <= lim + 1 - 1; m++)
   o[m] = 0;
 for (var i = 1 ; i <= lim; i++)
 {

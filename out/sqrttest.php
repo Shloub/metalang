@@ -1,20 +1,14 @@
 <?php
 $b = 4;
-$a = intval(sqrt($b));
-echo $a, " ";
+echo intval(sqrt($b)), " ";
 $e = 16;
-$d = intval(sqrt($e));
-echo $d, " ";
+echo intval(sqrt($e)), " ";
 $g = 20;
-$f = intval(sqrt($g));
-echo $f, " ";
+echo intval(sqrt($g)), " ";
 $i = 1000;
-$h = intval(sqrt($i));
-echo $h, " ";
+echo intval(sqrt($i)), " ";
 $k = 500;
-$j = intval(sqrt($k));
-echo $j, " ";
+echo intval(sqrt($k)), " ";
 $m = 10;
-$l = intval(sqrt($m));
-echo $l, " ";
+echo intval(sqrt($m)), " ";
 ?>

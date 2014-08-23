@@ -88,14 +88,12 @@ end;
 
 function sumdiv(nprimes : Longint; primes : b; n : Longint) : Longint;
 var
-  a : Longint;
   i : Longint;
   max_ : Longint;
   t : b;
 begin
-  a := n + 1;
-  SetLength(t, a);
-  for i := 0 to  a - 1 do
+  SetLength(t, n + 1);
+  for i := 0 to  n + 1 - 1 do
   begin
     t[i] := 0;
   end;

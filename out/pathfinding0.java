@@ -71,16 +71,14 @@ public class pathfinding0
     }else{
     o = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int m = o;
-    int x = m;
+    int x = o;
     int q = 0;
     if (scanner.hasNext("^-")){
     scanner.next("^-"); q = -scanner.nextInt();
     }else{
     q = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int p = q;
-    int y = p;
+    int y = q;
     System.out.printf("%d %d\n", x, y);
     char[][] tab = read_char_matrix(x, y);
     int result = pathfind(tab, x, y);

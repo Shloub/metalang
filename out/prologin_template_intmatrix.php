@@ -17,10 +17,8 @@ function programme_candidat(&$tableau, $x, $y){
   return $out_;
 }
 
-$b = intval(trim(fgets(STDIN)));
-$taille_x = $b;
-$c = intval(trim(fgets(STDIN)));
-$taille_y = $c;
+$taille_x = intval(trim(fgets(STDIN)));
+$taille_y = intval(trim(fgets(STDIN)));
 $tableau = read_int_matrix($taille_x, $taille_y);
 echo programme_candidat($tableau, $taille_x, $taille_y), "\n";
 ?>

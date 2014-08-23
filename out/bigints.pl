@@ -301,9 +301,8 @@ sub bigint_premiers_chiffres{
 sub bigint_shift{
   my($a,
   $i) = @_;
-  my $e = $a->{"bigint_len"} + $i;
   my $chiffres = [];
-  foreach my $k (0 .. $e - 1) {
+  foreach my $k (0 .. $a->{"bigint_len"} + $i - 1) {
     if ($k >= $i) {
     $chiffres->[$k] = $a->{"bigint_chiffres"}->[$k - $i];
     }else{
@@ -490,19 +489,16 @@ sub euler25{
 sub euler29{
   my $maxA = 5;
   my $maxB = 5;
-  my $f = $maxA + 1;
   my $a_bigint = [];
-  foreach my $j (0 .. $f - 1) {
+  foreach my $j (0 .. $maxA + 1 - 1) {
     $a_bigint->[$j] = bigint_of_int($j * $j);
     }
-  my $g = $maxA + 1;
   my $a0_bigint = [];
-  foreach my $j2 (0 .. $g - 1) {
+  foreach my $j2 (0 .. $maxA + 1 - 1) {
     $a0_bigint->[$j2] = bigint_of_int($j2);
     }
-  my $h = $maxA + 1;
   my $b = [];
-  foreach my $k (0 .. $h - 1) {
+  foreach my $k (0 .. $maxA + 1 - 1) {
     $b->[$k] = 2;
     }
   my $n = 0;

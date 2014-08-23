@@ -19,8 +19,7 @@ read int, read char et skip
 int main(){
   int b = 0;
   std::cin >> b >> std::skipws;
-  int a = b;
-  int len = a;
+  int len = b;
   std::cout << len << "=len\n";
   std::vector<int > *e = new std::vector<int>( len );
   for (int f = 0 ; f < len; f++)
@@ -29,8 +28,7 @@ int main(){
     std::cin >> g >> std::skipws;
     e->at(f) = g;
   }
-  std::vector<int> * d = e;
-  std::vector<int> * tab = d;
+  std::vector<int> * tab = e;
   for (int i = 0 ; i < len; i++)
   {
     std::cout << i << "=>" << tab->at(i) << " ";
@@ -43,26 +41,23 @@ int main(){
     std::cin >> m >> std::skipws;
     k->at(l) = m;
   }
-  std::vector<int> * h = k;
-  std::vector<int> * tab2 = h;
+  std::vector<int> * tab2 = k;
   for (int i_ = 0 ; i_ < len; i_++)
   {
     std::cout << i_ << "==>" << tab2->at(i_) << " ";
   }
   int p = 0;
   std::cin >> p >> std::skipws;
-  int o = p;
-  int strlen = o;
+  int strlen = p;
   std::cout << strlen << "=strlen\n";
-  std::vector<char> * q = getline();
-  std::vector<char> * tab4 = q;
+  std::vector<char> * tab4 = getline();
   for (int i3 = 0 ; i3 < strlen; i3++)
   {
     char tmpc = tab4->at(i3);
-    int c = tmpc;
+    int c = (int)(tmpc);
     std::cout << tmpc << ":" << c << " ";
     if (tmpc != ' ')
-      c = ((c - 'a') + 13) % 26 + 'a';
+      c = ((c - (int)('a')) + 13) % 26 + (int)('a');
     tab4->at(i3) = (char)(c);
   }
   for (int j = 0 ; j < strlen; j++)

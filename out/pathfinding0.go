@@ -82,13 +82,11 @@ func main() {
   var r int = 0
   fmt.Fscanf(reader, "%d", &r);
   skip()
-  var q int = r
-  var x int = q
+  var x int = r
   var u int = 0
   fmt.Fscanf(reader, "%d", &u);
   skip()
-  var s int = u
-  var y int = s
+  var y int = u
   fmt.Printf("%d %d\n", x, y);
   var tab [][]byte = read_char_matrix(x, y)
   var result int = pathfind(tab, x, y)

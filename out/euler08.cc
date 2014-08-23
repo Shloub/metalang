@@ -15,7 +15,7 @@ int main(){
   {
     char c = '_';
     std::cin >> c >> std::noskipws;
-    int d = c - '0';
+    int d = (int)(c) - (int)('0');
     i *= d;
     last->at(j) = d;
   }
@@ -26,7 +26,7 @@ int main(){
   {
     char e = '_';
     std::cin >> e >> std::noskipws;
-    int f = e - '0';
+    int f = (int)(e) - (int)('0');
     if (f == 0)
     {
       i = 1;

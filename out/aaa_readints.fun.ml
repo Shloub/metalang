@@ -22,8 +22,7 @@ let read_int_matrix x y =
   ((), m)) ()) in
   tab
 let main =
-  let e = (Scanf.scanf "%d " (fun x -> x)) in
-  let len = e in
+  let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d=len\n" len);
     let g = (Array.init_withenv len (fun  h () -> Scanf.scanf "%d"
@@ -33,8 +32,7 @@ let main =
                  ((), p)
                  )
     )) ()) in
-    let f = g in
-    let tab1 = f in
+    let tab1 = g in
     let bb = 0 in
     let bc = (len - 1) in
     let rec ba i =
@@ -44,8 +42,7 @@ let main =
               (ba (i + 1))
               )
        
-       else let l = (Scanf.scanf "%d " (fun x -> x)) in
-       let len = l in
+       else let len = (Scanf.scanf "%d " (fun x -> x)) in
        let tab2 = (read_int_matrix len (len - 1)) in
        let v = 0 in
        let w = (len - 2) in

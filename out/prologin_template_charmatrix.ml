@@ -21,10 +21,8 @@ let programme_candidat tableau taille_x taille_y =
 
 let () =
 begin
-  let e = Scanf.scanf "%d " (fun x -> x) in
-  let taille_x = e in
-  let f = Scanf.scanf "%d " (fun x -> x) in
-  let taille_y = f in
+  let taille_x = Scanf.scanf "%d " (fun x -> x) in
+  let taille_y = Scanf.scanf "%d " (fun x -> x) in
   let tableau = read_char_matrix taille_x taille_y in
   Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
 end

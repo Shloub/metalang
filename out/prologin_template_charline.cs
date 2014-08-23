@@ -18,10 +18,8 @@ public class prologin_template_charline
   
   public static void Main(String[] args)
   {
-    int a = int.Parse(Console.ReadLine());
-    int taille = a;
-    char[] b = Console.ReadLine().ToCharArray();
-    char[] tableau = b;
+    int taille = int.Parse(Console.ReadLine());
+    char[] tableau = Console.ReadLine().ToCharArray();
     Console.Write("" + programme_candidat(tableau, taille) + "\n");
   }
   

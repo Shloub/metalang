@@ -18,8 +18,7 @@ end
 f = 0
 f=scanf("%d")[0];
 scanf("%*\n");
-e = f
-len = e
+len = f
 printf "%d=len\n", len
 h = [];
 for k in (0 ..  len - 1) do
@@ -28,16 +27,14 @@ for k in (0 ..  len - 1) do
   scanf("%*\n");
   h[k] = l;
 end
-g = h
-tab1 = g
+tab1 = h
 for i in (0 ..  len - 1) do
   printf "%d=>%d\n", i, tab1[i]
 end
 o = 0
 o=scanf("%d")[0];
 scanf("%*\n");
-m = o
-len = m;
+len = o;
 tab2 = read_int_matrix(len, len - 1)
 for i in (0 ..  len - 2) do
   for j in (0 ..  len - 1) do

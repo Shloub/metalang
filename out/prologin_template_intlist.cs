@@ -14,10 +14,8 @@ public class prologin_template_intlist
   
   public static void Main(String[] args)
   {
-    int a = int.Parse(Console.ReadLine());
-    int taille = a;
-    int[] b = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    int[] tableau = b;
+    int taille = int.Parse(Console.ReadLine());
+    int[] tableau = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     Console.Write("" + programme_candidat(tableau, taille) + "\n");
   }
   

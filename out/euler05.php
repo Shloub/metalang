@@ -4,9 +4,8 @@ function max2($a, $b){
 }
 
 function &primesfactors($n){
-  $c = $n + 1;
   $tab = array();
-  for ($i = 0 ; $i < $c; $i++)
+  for ($i = 0 ; $i < $n + 1; $i++)
     $tab[$i] = 0;
   $d = 2;
   while ($n != 1 && $d * $d <= $n)
@@ -22,9 +21,8 @@ function &primesfactors($n){
 }
 
 $lim = 20;
-$e = $lim + 1;
 $o = array();
-for ($m = 0 ; $m < $e; $m++)
+for ($m = 0 ; $m < $lim + 1; $m++)
   $o[$m] = 0;
 for ($i = 1 ; $i <= $lim; $i++)
 {

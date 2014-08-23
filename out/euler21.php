@@ -56,9 +56,8 @@ function sumdivaux(&$t, $n, $i){
 }
 
 function sumdiv($nprimes, &$primes, $n){
-  $a = $n + 1;
   $t = array();
-  for ($i = 0 ; $i < $a; $i++)
+  for ($i = 0 ; $i < $n + 1; $i++)
     $t[$i] = 0;
   $max_ = fillPrimesFactors($t, $n, $primes, $nprimes);
   return sumdivaux($t, $max_, 0);

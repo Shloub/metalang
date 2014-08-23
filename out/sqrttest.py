@@ -1,20 +1,14 @@
 import math
 b = 4;
-a = math.floor(math.sqrt(b));
-print("%d " % ( a ), end='')
+print("%d " % ( math.floor(math.sqrt(b)) ), end='')
 e = 16;
-d = math.floor(math.sqrt(e));
-print("%d " % ( d ), end='')
+print("%d " % ( math.floor(math.sqrt(e)) ), end='')
 g = 20;
-f = math.floor(math.sqrt(g));
-print("%d " % ( f ), end='')
+print("%d " % ( math.floor(math.sqrt(g)) ), end='')
 i = 1000;
-h = math.floor(math.sqrt(i));
-print("%d " % ( h ), end='')
+print("%d " % ( math.floor(math.sqrt(i)) ), end='')
 k = 500;
-j = math.floor(math.sqrt(k));
-print("%d " % ( j ), end='')
+print("%d " % ( math.floor(math.sqrt(k)) ), end='')
 m = 10;
-l = math.floor(math.sqrt(m));
-print("%d " % ( l ), end='')
+print("%d " % ( math.floor(math.sqrt(m)) ), end='')
 

@@ -30,20 +30,16 @@ public class prologin_template_2charline
     }else{
     b = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int a = b;
-    int taille1 = a;
-    char[] c = scanner.nextLine().toCharArray();
-    char[] tableau1 = c;
+    int taille1 = b;
+    char[] tableau1 = scanner.nextLine().toCharArray();
     int e = 0;
     if (scanner.hasNext("^-")){
     scanner.next("^-"); e = -scanner.nextInt();
     }else{
     e = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int d = e;
-    int taille2 = d;
-    char[] f = scanner.nextLine().toCharArray();
-    char[] tableau2 = f;
+    int taille2 = e;
+    char[] tableau2 = scanner.nextLine().toCharArray();
     System.out.printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   }
   

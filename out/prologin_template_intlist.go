@@ -28,8 +28,7 @@ func main() {
   var b int = 0
   fmt.Fscanf(reader, "%d", &b);
   skip()
-  var a int = b
-  var taille int = a
+  var taille int = b
   var d []int = make([]int, taille)
   for e := 0 ; e <= taille - 1; e++ {
     var f int = 0
@@ -37,8 +36,7 @@ func main() {
       skip()
       d[e] = f;
   }
-  var c []int = d
-  var tableau []int = c
+  var tableau []int = d
   fmt.Printf("%d\n", programme_candidat(tableau, taille));
 }
 

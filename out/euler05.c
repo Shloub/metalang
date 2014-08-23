@@ -9,11 +9,10 @@ int max2(int a, int b){
 }
 
 int* primesfactors(int n){
-  int c = n + 1;
-  int *tab = malloc( c * sizeof(int));
+  int *tab = malloc( (n + 1) * sizeof(int));
   {
     int i;
-    for (i = 0 ; i < c; i++)
+    for (i = 0 ; i < n + 1; i++)
       tab[i] = 0;
   }
   int d = 2;
@@ -31,11 +30,10 @@ int* primesfactors(int n){
 
 int main(void){
   int lim = 20;
-  int e = lim + 1;
-  int *o = malloc( e * sizeof(int));
+  int *o = malloc( (lim + 1) * sizeof(int));
   {
     int m;
-    for (m = 0 ; m < e; m++)
+    for (m = 0 ; m < lim + 1; m++)
       o[m] = 0;
   }
   {

@@ -38,8 +38,7 @@ sub remainder {
 my $b = 0;
 $b = readint();
 readspaces();
-my $a = $b;
-my $len = $a;
+my $len = $b;
 print($len, "=len\n");
 my $e = [];
 foreach my $f (0 .. $len - 1) {
@@ -48,8 +47,7 @@ foreach my $f (0 .. $len - 1) {
   readspaces();
   $e->[$f] = $g;
   }
-my $d = $e;
-my $tab = $d;
+my $tab = $e;
 foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tab->[$i], " ");
   }
@@ -61,16 +59,14 @@ foreach my $l (0 .. $len - 1) {
   readspaces();
   $k->[$l] = $m;
   }
-my $h = $k;
-my $tab2 = $h;
+my $tab2 = $k;
 foreach my $i_ (0 .. $len - 1) {
   print($i_, "==>", $tab2->[$i_], " ");
   }
 my $p = 0;
 $p = readint();
 readspaces();
-my $o = $p;
-my $strlen = $o;
+my $strlen = $p;
 print($strlen, "=strlen\n");
 my $r = [];
 foreach my $s (0 .. $strlen - 1) {
@@ -79,8 +75,7 @@ foreach my $s (0 .. $strlen - 1) {
   $r->[$s] = $u;
   }
 readspaces();
-my $q = $r;
-my $tab4 = $q;
+my $tab4 = $r;
 foreach my $i3 (0 .. $strlen - 1) {
   my $tmpc = $tab4->[$i3];
   my $c = ord($tmpc);

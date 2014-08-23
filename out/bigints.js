@@ -237,9 +237,8 @@ function bigint_premiers_chiffres(a, i){
 }
 
 function bigint_shift(a, i){
-  var e = a.bigint_len + i;
-  var chiffres = new Array(e);
-  for (var k = 0 ; k <= e - 1; k++)
+  var chiffres = new Array(a.bigint_len + i);
+  for (var k = 0 ; k <= a.bigint_len + i - 1; k++)
     if (k >= i)
     chiffres[k] = a.bigint_chiffres[k - i];
   else
@@ -394,17 +393,14 @@ function euler25(){
 function euler29(){
   var maxA = 5;
   var maxB = 5;
-  var f = maxA + 1;
-  var a_bigint = new Array(f);
-  for (var j = 0 ; j <= f - 1; j++)
+  var a_bigint = new Array(maxA + 1);
+  for (var j = 0 ; j <= maxA + 1 - 1; j++)
     a_bigint[j] = bigint_of_int(j * j);
-  var g = maxA + 1;
-  var a0_bigint = new Array(g);
-  for (var j2 = 0 ; j2 <= g - 1; j2++)
+  var a0_bigint = new Array(maxA + 1);
+  for (var j2 = 0 ; j2 <= maxA + 1 - 1; j2++)
     a0_bigint[j2] = bigint_of_int(j2);
-  var h = maxA + 1;
-  var b = new Array(h);
-  for (var k = 0 ; k <= h - 1; k++)
+  var b = new Array(maxA + 1);
+  for (var k = 0 ; k <= maxA + 1 - 1; k++)
     b[k] = 2;
   var n = 0;
   var found = 1;

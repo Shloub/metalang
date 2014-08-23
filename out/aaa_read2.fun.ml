@@ -10,8 +10,7 @@ module Array = struct
 end
 
 let main =
-  let a = (Scanf.scanf "%d " (fun x -> x)) in
-  let len = a in
+  let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d=len\n" len);
     let d = (Array.init_withenv len (fun  e () -> Scanf.scanf "%d"
@@ -21,8 +20,7 @@ let main =
                  ((), s)
                  )
     )) ()) in
-    let b = d in
-    let tab = b in
+    let tab = d in
     let bg = 0 in
     let bh = (len - 1) in
     let rec bf i =
@@ -41,8 +39,7 @@ let main =
                            ((), u)
                            )
               )) ()) in
-              let g = h in
-              let tab2 = g in
+              let tab2 = h in
               let bd = 0 in
               let be = (len - 1) in
               let rec bc i_ =
@@ -52,8 +49,7 @@ let main =
                         (bc (i_ + 1))
                         )
                  
-                 else let m = (Scanf.scanf "%d " (fun x -> x)) in
-                 let strlen = m in
+                 else let strlen = (Scanf.scanf "%d " (fun x -> x)) in
                  (
                    (Printf.printf "%d=strlen\n" strlen);
                    let p = (Array.init_withenv strlen (fun  q () -> Scanf.scanf "%c"
@@ -61,8 +57,7 @@ let main =
                    ((), v))) ()) in
                    (
                      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                     let o = p in
-                     let tab4 = o in
+                     let tab4 = p in
                      let ba = 0 in
                      let bb = (strlen - 1) in
                      let rec z i3 =

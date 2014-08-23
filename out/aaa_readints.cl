@@ -54,55 +54,52 @@
 (progn
   (let ((f (mread-int )))
     (mread-blank)
-    (let ((e f))
-      (let ((len e))
-        (princ len)
-        (princ "=len
+    (let ((len f))
+      (princ len)
+      (princ "=len
 ")
-        (let
-         ((h (array_init
-                len
-                (function (lambda (k)
-                (block lambda_3
-                  (let ((l (mread-int )))
-                    (mread-blank)
-                    (return-from lambda_3 l)
-                  )))
-                ))))
-        (let ((g h))
-          (let ((tab1 g))
+      (let
+       ((h (array_init
+              len
+              (function (lambda (k)
+              (block lambda_3
+                (let ((l (mread-int )))
+                  (mread-blank)
+                  (return-from lambda_3 l)
+                )))
+              ))))
+      (let ((tab1 h))
+        (do
+          ((i 0 (+ 1 i)))
+          ((> i (- len 1)))
+          (progn
+            (princ i)
+            (princ "=>")
+            (princ (aref tab1 i))
+            (princ "
+")
+          )
+        )
+        (let ((o (mread-int )))
+          (mread-blank)
+          (setq len o)
+          (let ((tab2 (read_int_matrix len (- len 1))))
             (do
               ((i 0 (+ 1 i)))
-              ((> i (- len 1)))
+              ((> i (- len 2)))
               (progn
-                (princ i)
-                (princ "=>")
-                (princ (aref tab1 i))
+                (do
+                  ((j 0 (+ 1 j)))
+                  ((> j (- len 1)))
+                  (progn
+                    (princ (aref (aref tab2 i) j))
+                    (princ " ")
+                  )
+                )
                 (princ "
 ")
               )
             )
-            (let ((o (mread-int )))
-              (mread-blank)
-              (let ((m o))
-                (setq len m)
-                (let ((tab2 (read_int_matrix len (- len 1))))
-                  (do
-                    ((i 0 (+ 1 i)))
-                    ((> i (- len 2)))
-                    (progn
-                      (do
-                        ((j 0 (+ 1 j)))
-                        ((> j (- len 1)))
-                        (progn
-                          (princ (aref (aref tab2 i) j))
-                          (princ " ")
-                        )
-                      )
-                      (princ "
-")
-                    )
-                  )
-                ))))))))))
+          )))))))
 
 

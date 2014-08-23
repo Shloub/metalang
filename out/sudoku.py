@@ -37,9 +37,8 @@ def mod(x, y):
   return x - y * math.trunc(x / y)
 """ lit un sudoku sur l'entrée standard """
 def read_sudoku(  ):
-    a = 9 * 9;
-    out_ = [None] * a
-    for i in range(0, a):
+    out_ = [None] * (9 * 9)
+    for i in range(0, 9 * 9):
       k = 0;
       k=readint()
       stdinsep()

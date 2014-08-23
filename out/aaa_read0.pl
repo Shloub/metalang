@@ -22,8 +22,7 @@ sub readint {
 my $b = 0;
 $b = readint();
 readspaces();
-my $a = $b;
-my $len = $a;
+my $len = $b;
 print($len, "\n");
 
 

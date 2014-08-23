@@ -67,15 +67,13 @@
 (pathfind_aux cache tab x y 0 0))
 )
 (define main
-  (let ([g (string->number (read-line))])
-  (let ([x g])
-  (let ([h (string->number (read-line))])
-  (let ([y h])
+  (let ([x (string->number (read-line))])
+  (let ([y (string->number (read-line))])
   (block
     (map display (list x " " y "\n"))
     (let ([tab (read_char_matrix x y)])
     (let ([result (pathfind tab x y)])
     (display result)))
-    )))))
+    )))
 )
 

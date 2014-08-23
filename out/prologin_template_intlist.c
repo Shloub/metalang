@@ -14,8 +14,7 @@ int programme_candidat(int* tableau, int taille){
 int main(void){
   int b = 0;
   scanf("%d ", &b);
-  int a = b;
-  int taille = a;
+  int taille = b;
   int *d = malloc( taille * sizeof(int));
   {
     int e;
@@ -26,8 +25,7 @@ int main(void){
       d[e] = f;
     }
   }
-  int* c = d;
-  int* tableau = c;
+  int* tableau = d;
   printf("%d\n", programme_candidat(tableau, taille));
   return 0;
 }

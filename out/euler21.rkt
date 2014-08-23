@@ -88,12 +88,11 @@
 )
 (define (sumdiv nprimes primes n)
   ;toto
-  (let ([a (+ n 1)])
-  (let ([t_ (array_init_withenv a (lambda (i) 
-                                    (lambda (_) (let ([b 0])
-                                                (list '() b)))) '())])
+  (let ([t_ (array_init_withenv (+ n 1) (lambda (i) 
+                                          (lambda (_) (let ([b 0])
+                                                      (list '() b)))) '())])
   (let ([max_ (fillPrimesFactors t_ n primes nprimes)])
-  (sumdivaux t_ max_ 0))))
+  (sumdivaux t_ max_ 0)))
 )
 (define main
   (let ([maximumprimes 1001])

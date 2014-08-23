@@ -414,13 +414,11 @@ end;
 function bigint_shift(a : bigint; i : Longint) : bigint;
 var
   chiffres : array of Longint;
-  e : Longint;
   k : Longint;
   v : bigint;
 begin
-  e := a^.bigint_len + i;
-  SetLength(chiffres, e);
-  for k := 0 to  e - 1 do
+  SetLength(chiffres, a^.bigint_len + i);
+  for k := 0 to  a^.bigint_len + i - 1 do
   begin
     if k >= i
     then
@@ -663,10 +661,7 @@ var
   a0_bigint : array of bigint;
   a_bigint : array of bigint;
   b : array of Longint;
-  f : Longint;
   found : boolean;
-  g : Longint;
-  h : Longint;
   i : Longint;
   j : Longint;
   j2 : Longint;
@@ -679,21 +674,18 @@ var
 begin
   maxA := 5;
   maxB := 5;
-  f := maxA + 1;
-  SetLength(a_bigint, f);
-  for j := 0 to  f - 1 do
+  SetLength(a_bigint, maxA + 1);
+  for j := 0 to  maxA + 1 - 1 do
   begin
     a_bigint[j] := bigint_of_int(j * j);
   end;
-  g := maxA + 1;
-  SetLength(a0_bigint, g);
-  for j2 := 0 to  g - 1 do
+  SetLength(a0_bigint, maxA + 1);
+  for j2 := 0 to  maxA + 1 - 1 do
   begin
     a0_bigint[j2] := bigint_of_int(j2);
   end;
-  h := maxA + 1;
-  SetLength(b, h);
-  for k := 0 to  h - 1 do
+  SetLength(b, maxA + 1);
+  for k := 0 to  maxA + 1 - 1 do
   begin
     b[k] := 2;
   end;

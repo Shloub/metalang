@@ -16,9 +16,8 @@ func skip() {
 
 /* lit un sudoku sur l'entrée standard */
 func read_sudoku() []int{
-  var a int = 9 * 9
-  var out_ []int = make([]int, a)
-  for i := 0 ; i <= a - 1; i++ {
+  var out_ []int = make([]int, (9 * 9))
+  for i := 0 ; i <= 9 * 9 - 1; i++ {
     var k int = 0
       fmt.Fscanf(reader, "%d", &k);
       skip()

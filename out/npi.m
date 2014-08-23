@@ -3,7 +3,7 @@
 #include<stdlib.h>
 
 int is_number(char c){
-  return c <= '9' && c >= '0';
+  return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
 }
 
 /*
@@ -26,7 +26,7 @@ int npi_(char* str, int len){
     int num = 0;
     while (str[ptrStr] != ' ')
     {
-      num = num * 10 + str[ptrStr] - '0';
+      num = num * 10 + (int)(str[ptrStr]) - (int)('0');
       ptrStr ++;
     }
     stack[ptrStack] = num;

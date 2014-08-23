@@ -68,11 +68,10 @@ int sumdivaux(int* t, int n, int i){
 }
 
 int sumdiv(int nprimes, int* primes, int n){
-  int a = n + 1;
-  int *t = malloc( a * sizeof(int));
+  int *t = malloc( (n + 1) * sizeof(int));
   {
     int i;
-    for (i = 0 ; i < a; i++)
+    for (i = 0 ; i < n + 1; i++)
       t[i] = 0;
   }
   int max_ = fillPrimesFactors(t, n, primes, nprimes);
@@ -107,18 +106,16 @@ int main(void){
   }
   int n = 100;
   /* 28124 ça prend trop de temps mais on arrive a passer le test */
-  int b = n + 1;
-  int *abondant = malloc( b * sizeof(int));
+  int *abondant = malloc( (n + 1) * sizeof(int));
   {
     int p;
-    for (p = 0 ; p < b; p++)
+    for (p = 0 ; p < n + 1; p++)
       abondant[p] = 0;
   }
-  int c = n + 1;
-  int *summable = malloc( c * sizeof(int));
+  int *summable = malloc( (n + 1) * sizeof(int));
   {
     int q;
-    for (q = 0 ; q < c; q++)
+    for (q = 0 ; q < n + 1; q++)
       summable[q] = 0;
   }
   int sum = 0;

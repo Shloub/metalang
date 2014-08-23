@@ -17,17 +17,14 @@ public class aaa_readints
   
   public static void Main(String[] args)
   {
-    int b = int.Parse(Console.ReadLine());
-    int len = b;
+    int len = int.Parse(Console.ReadLine());
     Console.Write("" + len + "=len\n");
-    int[] c = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    int[] tab1 = c;
+    int[] tab1 = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     for (int i = 0 ; i < len; i++)
     {
       Console.Write("" + i + "=>" + tab1[i] + "\n");
     }
-    int d = int.Parse(Console.ReadLine());
-    len = d;
+    len = int.Parse(Console.ReadLine());
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)
     {

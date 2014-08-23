@@ -34,7 +34,7 @@ bigint * read_bigint(int len){
     {
       char c = '_';
       scanf("%c", &c);
-      chiffres[j] = c;
+      chiffres[j] = (int)(c);
     }
   }
   {
@@ -266,11 +266,10 @@ bigint * bigint_premiers_chiffres(bigint * a, int i){
 }
 
 bigint * bigint_shift(bigint * a, int i){
-  int e = a->bigint_len + i;
-  int *chiffres = malloc( e * sizeof(int));
+  int *chiffres = malloc( (a->bigint_len + i) * sizeof(int));
   {
     int k;
-    for (k = 0 ; k < e; k++)
+    for (k = 0 ; k < a->bigint_len + i; k++)
       if (k >= i)
       chiffres[k] = a->bigint_chiffres[k - i];
     else
@@ -436,25 +435,22 @@ int euler25(){
 int euler29(){
   int maxA = 5;
   int maxB = 5;
-  int f = maxA + 1;
-  bigint * *a_bigint = malloc( f * sizeof(bigint *));
+  bigint * *a_bigint = malloc( (maxA + 1) * sizeof(bigint *));
   {
     int j;
-    for (j = 0 ; j < f; j++)
+    for (j = 0 ; j < maxA + 1; j++)
       a_bigint[j] = bigint_of_int(j * j);
   }
-  int g = maxA + 1;
-  bigint * *a0_bigint = malloc( g * sizeof(bigint *));
+  bigint * *a0_bigint = malloc( (maxA + 1) * sizeof(bigint *));
   {
     int j2;
-    for (j2 = 0 ; j2 < g; j2++)
+    for (j2 = 0 ; j2 < maxA + 1; j2++)
       a0_bigint[j2] = bigint_of_int(j2);
   }
-  int h = maxA + 1;
-  int *b = malloc( h * sizeof(int));
+  int *b = malloc( (maxA + 1) * sizeof(int));
   {
     int k;
-    for (k = 0 ; k < h; k++)
+    for (k = 0 ; k < maxA + 1; k++)
       b[k] = 2;
   }
   int n = 0;

@@ -64,9 +64,8 @@ public class euler23
   
   public static int sumdiv(int nprimes, int[] primes, int n)
   {
-    int a = n + 1;
-    int[] t = new int[a];
-    for (int i = 0 ; i < a; i++)
+    int[] t = new int[n + 1];
+    for (int i = 0 ; i < n + 1; i++)
       t[i] = 0;
     int max_ = fillPrimesFactors(t, n, primes, nprimes);
     return sumdivaux(t, max_, 0);
@@ -92,13 +91,11 @@ public class euler23
     }
     int n = 100;
     /* 28124 ça prend trop de temps mais on arrive a passer le test */
-    int b = n + 1;
-    bool[] abondant = new bool[b];
-    for (int p = 0 ; p < b; p++)
+    bool[] abondant = new bool[n + 1];
+    for (int p = 0 ; p < n + 1; p++)
       abondant[p] = false;
-    int c = n + 1;
-    bool[] summable = new bool[c];
-    for (int q = 0 ; q < c; q++)
+    bool[] summable = new bool[n + 1];
+    for (int q = 0 ; q < n + 1; q++)
       summable[q] = false;
     int sum = 0;
     for (int r = 2 ; r <= n; r ++)

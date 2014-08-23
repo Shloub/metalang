@@ -118,9 +118,7 @@ end;
 
 
 var
-  e : Longint;
   f : Longint;
-  g : Longint;
   h : Longint;
   tableau : k;
   taille_x : Longint;
@@ -129,13 +127,11 @@ begin
   f := 0;
   f := read_int_();
   skip();
-  e := f;
-  taille_x := e;
+  taille_x := f;
   h := 0;
   h := read_int_();
   skip();
-  g := h;
-  taille_y := g;
+  taille_y := h;
   tableau := read_char_matrix(taille_x, taille_y);
   Write(programme_candidat(tableau, taille_x, taille_y));
   Write(''#10'');

@@ -9,19 +9,16 @@ let read_int_matrix x y =
 
 let () =
 begin
-  let e = Scanf.scanf "%d " (fun x -> x) in
-  let len = ref( e ) in
+  let len = ref( Scanf.scanf "%d " (fun x -> x) ) in
   Printf.printf "%d=len\n" (!len);
   let g = Array.init (!len) (fun _h ->
     let k = Scanf.scanf "%d " (fun v_0 -> v_0) in
     k) in
-  let f = g in
-  let tab1 = f in
+  let tab1 = g in
   for i = 0 to (!len) - 1 do
     Printf.printf "%d=>%d\n" i tab1.(i)
   done;
-  let l = Scanf.scanf "%d " (fun x -> x) in
-  len := l;
+  len := Scanf.scanf "%d " (fun x -> x);
   let tab2 = read_int_matrix (!len) ((!len) - 1) in
   for i = 0 to (!len) - 2 do
     for j = 0 to (!len) - 1 do

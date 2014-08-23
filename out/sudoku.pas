@@ -65,14 +65,12 @@ end;
 type b = array of Longint;
 function read_sudoku() : b;
 var
-  a : Longint;
   i : Longint;
   k : Longint;
   out_ : b;
 begin
-  a := 9 * 9;
-  SetLength(out_, a);
-  for i := 0 to  a - 1 do
+  SetLength(out_, 9 * 9);
+  for i := 0 to  9 * 9 - 1 do
   begin
     k := 0;
     k := read_int_();

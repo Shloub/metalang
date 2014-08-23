@@ -28,8 +28,7 @@ int result(int len, int* tab){
 int main(void){
   int b = 0;
   scanf("%d ", &b);
-  int a = b;
-  int len = a;
+  int len = b;
   printf("%d\n", len);
   int *d = malloc( len * sizeof(int));
   {
@@ -41,8 +40,7 @@ int main(void){
       d[e] = f;
     }
   }
-  int* c = d;
-  int* tab = c;
+  int* tab = d;
   printf("%d", result(len, tab));
   return 0;
 }

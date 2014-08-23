@@ -252,9 +252,8 @@ def bigint_premiers_chiffres( a, i )
 end
 
 def bigint_shift( a, i )
-    e = a["bigint_len"] + i
     chiffres = [];
-    for k in (0 ..  e - 1) do
+    for k in (0 ..  a["bigint_len"] + i - 1) do
       if k >= i then
         chiffres[k] = a["bigint_chiffres"][k - i];
       else
@@ -440,19 +439,16 @@ end
 def euler29(  )
     maxA = 5
     maxB = 5
-    f = maxA + 1
     a_bigint = [];
-    for j in (0 ..  f - 1) do
+    for j in (0 ..  maxA + 1 - 1) do
       a_bigint[j] = bigint_of_int(j * j);
     end
-    g = maxA + 1
     a0_bigint = [];
-    for j2 in (0 ..  g - 1) do
+    for j2 in (0 ..  maxA + 1 - 1) do
       a0_bigint[j2] = bigint_of_int(j2);
     end
-    h = maxA + 1
     b = [];
-    for k in (0 ..  h - 1) do
+    for k in (0 ..  maxA + 1 - 1) do
       b[k] = 2;
     end
     n = 0

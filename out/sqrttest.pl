@@ -1,22 +1,16 @@
 #!/usr/bin/perl
 
 my $b = 4;
-my $a = int(sqrt($b));
-print($a, " ");
+print(int(sqrt($b)), " ");
 my $e = 16;
-my $d = int(sqrt($e));
-print($d, " ");
+print(int(sqrt($e)), " ");
 my $g = 20;
-my $f = int(sqrt($g));
-print($f, " ");
+print(int(sqrt($g)), " ");
 my $i = 1000;
-my $h = int(sqrt($i));
-print($h, " ");
+print(int(sqrt($i)), " ");
 my $k = 500;
-my $j = int(sqrt($k));
-print($j, " ");
+print(int(sqrt($k)), " ");
 my $m = 10;
-my $l = int(sqrt($m));
-print($l, " ");
+print(int(sqrt($m)), " ");
 
 

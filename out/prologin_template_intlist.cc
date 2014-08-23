@@ -11,8 +11,7 @@ int programme_candidat(std::vector<int> * tableau, int taille){
 int main(){
   int b = 0;
   std::cin >> b >> std::skipws;
-  int a = b;
-  int taille = a;
+  int taille = b;
   std::vector<int > *d = new std::vector<int>( taille );
   for (int e = 0 ; e < taille; e++)
   {
@@ -20,8 +19,7 @@ int main(){
     std::cin >> f >> std::skipws;
     d->at(e) = f;
   }
-  std::vector<int> * c = d;
-  std::vector<int> * tableau = c;
+  std::vector<int> * tableau = d;
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }

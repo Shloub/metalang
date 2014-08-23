@@ -57,9 +57,8 @@ int sumdivaux(std::vector<int> * t, int n, int i){
 }
 
 int sumdiv(int nprimes, std::vector<int> * primes, int n){
-  int a = n + 1;
-  std::vector<int > *t = new std::vector<int>( a );
-  for (int i = 0 ; i < a; i++)
+  std::vector<int > *t = new std::vector<int>( n + 1 );
+  for (int i = 0 ; i < n + 1; i++)
     t->at(i) = 0;
   int max_ = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max_, 0);
@@ -84,13 +83,11 @@ int main(){
   }
   int n = 100;
   /* 28124 ça prend trop de temps mais on arrive a passer le test */
-  int b = n + 1;
-  std::vector<bool > *abondant = new std::vector<bool>( b );
-  for (int p = 0 ; p < b; p++)
+  std::vector<bool > *abondant = new std::vector<bool>( n + 1 );
+  for (int p = 0 ; p < n + 1; p++)
     abondant->at(p) = false;
-  int c = n + 1;
-  std::vector<bool > *summable = new std::vector<bool>( c );
-  for (int q = 0 ; q < c; q++)
+  std::vector<bool > *summable = new std::vector<bool>( n + 1 );
+  for (int q = 0 ; q < n + 1; q++)
     summable->at(q) = false;
   int sum = 0;
   for (int r = 2 ; r <= n; r ++)

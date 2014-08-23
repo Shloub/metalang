@@ -94,9 +94,7 @@ end;
 
 
 var
-  a : Longint;
   b : Longint;
-  c : g;
   d : g;
   e : Longint;
   f : Longint;
@@ -106,8 +104,7 @@ begin
   b := 0;
   b := read_int_();
   skip();
-  a := b;
-  len := a;
+  len := b;
   Write(len);
   Write(''#10'');
   SetLength(d, len);
@@ -118,8 +115,7 @@ begin
     skip();
     d[e] := f;
   end;
-  c := d;
-  tab := c;
+  tab := d;
   Write(result(len, tab));
 end.
 

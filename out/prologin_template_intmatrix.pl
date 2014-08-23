@@ -55,13 +55,11 @@ sub programme_candidat{
 my $f = 0;
 $f = readint();
 readspaces();
-my $e = $f;
-my $taille_x = $e;
+my $taille_x = $f;
 my $h = 0;
 $h = readint();
 readspaces();
-my $g = $h;
-my $taille_y = $g;
+my $taille_y = $h;
 my $tableau = read_int_matrix($taille_x, $taille_y);
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");
 

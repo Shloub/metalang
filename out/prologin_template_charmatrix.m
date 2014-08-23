@@ -36,7 +36,7 @@ int programme_candidat(char** tableau, int taille_x, int taille_y){
         int j;
         for (j = 0 ; j < taille_x; j++)
         {
-          out_ += tableau[i][j] * (i + j * 2);
+          out_ += (int)(tableau[i][j]) * (i + j * 2);
           printf("%c", tableau[i][j]);
         }
       }
@@ -50,12 +50,10 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int f = 0;
   scanf("%d ", &f);
-  int e = f;
-  int taille_x = e;
+  int taille_x = f;
   int h = 0;
   scanf("%d ", &h);
-  int g = h;
-  int taille_y = g;
+  int taille_y = h;
   char** tableau = read_char_matrix(taille_x, taille_y);
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   [pool drain];

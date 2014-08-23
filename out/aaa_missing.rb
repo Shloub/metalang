@@ -25,8 +25,7 @@ end
 b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
-a = b
-len = a
+len = b
 printf "%d\n", len
 d = [];
 for e in (0 ..  len - 1) do
@@ -35,7 +34,6 @@ for e in (0 ..  len - 1) do
   scanf("%*\n");
   d[e] = f;
 end
-c = d
-tab = c
+tab = d
 printf "%d", result(len, tab)
 

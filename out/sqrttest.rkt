@@ -3,34 +3,28 @@
 
 (define main
   (let ([b 4])
-  (let ([a (integer-sqrt b)])
   (block
-    (map display (list a " "))
+    (map display (list (integer-sqrt b) " "))
     (let ([e 16])
-    (let ([d (integer-sqrt e)])
     (block
-      (map display (list d " "))
+      (map display (list (integer-sqrt e) " "))
       (let ([g 20])
-      (let ([f (integer-sqrt g)])
       (block
-        (map display (list f " "))
+        (map display (list (integer-sqrt g) " "))
         (let ([i 1000])
-        (let ([h (integer-sqrt i)])
         (block
-          (map display (list h " "))
+          (map display (list (integer-sqrt i) " "))
           (let ([k 500])
-          (let ([j (integer-sqrt k)])
           (block
-            (map display (list j " "))
+            (map display (list (integer-sqrt k) " "))
             (let ([m 10])
-            (let ([l (integer-sqrt m)])
             (block
-              (map display (list l " "))
-              )))
-            )))
-          )))
-        )))
-      )))
-    )))
+              (map display (list (integer-sqrt m) " "))
+              ))
+            ))
+          ))
+        ))
+      ))
+    ))
 )
 

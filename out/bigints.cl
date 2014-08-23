@@ -295,23 +295,22 @@ D'ou le nom de la fonction. |#
 
 (defun bigint_shift (a i)
 (progn
-  (let ((e (+ (bigint-bigint_len a) i)))
-    (let
-     ((chiffres (array_init
-                   e
-                   (function (lambda (k)
-                   (block lambda_5
-                     (if
-                       (>= k i)
-                       (return-from lambda_5 (aref (bigint-bigint_chiffres a) (- k i)))
-                       (return-from lambda_5 0))
-                   ))
-                   ))))
-    (let ((v (make-bigint :bigint_sign (bigint-bigint_sign a)
-                          :bigint_len (+ (bigint-bigint_len a) i)
-                          :bigint_chiffres chiffres)))
-    (return-from bigint_shift v)
-    )))))
+  (let
+   ((chiffres (array_init
+                 (+ (bigint-bigint_len a) i)
+                 (function (lambda (k)
+                 (block lambda_5
+                   (if
+                     (>= k i)
+                     (return-from lambda_5 (aref (bigint-bigint_chiffres a) (- k i)))
+                     (return-from lambda_5 0))
+                 ))
+                 ))))
+  (let ((v (make-bigint :bigint_sign (bigint-bigint_sign a)
+                        :bigint_len (+ (bigint-bigint_len a) i)
+                        :bigint_chiffres chiffres)))
+  (return-from bigint_shift v)
+  ))))
 
 (defun mul_bigint (aa bb)
 (if
@@ -487,73 +486,70 @@ Modulo
 (progn
   (let ((maxA 5))
     (let ((maxB 5))
-      (let ((f (+ maxA 1)))
-        (let
-         ((a_bigint (array_init
-                       f
-                       (function (lambda (j)
-                       (block lambda_7
-                         (return-from lambda_7 (bigint_of_int (* j j)))
-                       ))
-                       ))))
-        (let ((g (+ maxA 1)))
-          (let
-           ((a0_bigint (array_init
-                          g
-                          (function (lambda (j2)
-                          (block lambda_8
-                            (return-from lambda_8 (bigint_of_int j2))
-                          ))
-                          ))))
-          (let ((h (+ maxA 1)))
-            (let
-             ((b (array_init
-                    h
-                    (function (lambda (k)
-                    (block lambda_9
-                      (return-from lambda_9 2)
-                    ))
-                    ))))
-            (let ((n 0))
-              (let ((found t))
-                (loop while found
-                do (progn
-                     (let ((min_ (aref a0_bigint 0)))
-                       (setq found nil)
-                       (do
-                         ((i 2 (+ 1 i)))
-                         ((> i maxA))
-                         (if
-                           (<= (aref b i) maxB)
-                           (if
-                             found
-                             (if
-                               (bigint_lt (aref a_bigint i) min_)
-                               (setq min_ (aref a_bigint i)))
-                             (progn
-                               (setq min_ (aref a_bigint i))
-                               (setq found t)
-                             )))
-                       )
-                       (if
-                         found
-                         (progn
-                           (setq n ( + n 1))
-                           (do
-                             ((l 2 (+ 1 l)))
-                             ((> l maxA))
-                             (if
-                               (and (bigint_eq (aref a_bigint l) min_) (<= (aref b l) maxB))
-                               (progn
-                                 (setf (aref b l) (+ (aref b l) 1))
-                                 (setf (aref a_bigint l) (mul_bigint (aref a_bigint l) (aref a0_bigint l)))
-                               ))
-                           )
-                         ))
+      (let
+       ((a_bigint (array_init
+                     (+ maxA 1)
+                     (function (lambda (j)
+                     (block lambda_7
+                       (return-from lambda_7 (bigint_of_int (* j j)))
                      ))
-                )
-                (return-from euler29 n)
-              ))))))))))))
+                     ))))
+      (let
+       ((a0_bigint (array_init
+                      (+ maxA 1)
+                      (function (lambda (j2)
+                      (block lambda_8
+                        (return-from lambda_8 (bigint_of_int j2))
+                      ))
+                      ))))
+      (let
+       ((b (array_init
+              (+ maxA 1)
+              (function (lambda (k)
+              (block lambda_9
+                (return-from lambda_9 2)
+              ))
+              ))))
+      (let ((n 0))
+        (let ((found t))
+          (loop while found
+          do (progn
+               (let ((min_ (aref a0_bigint 0)))
+                 (setq found nil)
+                 (do
+                   ((i 2 (+ 1 i)))
+                   ((> i maxA))
+                   (if
+                     (<= (aref b i) maxB)
+                     (if
+                       found
+                       (if
+                         (bigint_lt (aref a_bigint i) min_)
+                         (setq min_ (aref a_bigint i)))
+                       (progn
+                         (setq min_ (aref a_bigint i))
+                         (setq found t)
+                       )))
+                 )
+                 (if
+                   found
+                   (progn
+                     (setq n ( + n 1))
+                     (do
+                       ((l 2 (+ 1 l)))
+                       ((> l maxA))
+                       (if
+                         (and (bigint_eq (aref a_bigint l) min_) (<= (aref b l) maxB))
+                         (progn
+                           (setf (aref b l) (+ (aref b l) 1))
+                           (setf (aref a_bigint l) (mul_bigint (aref a_bigint l) (aref a0_bigint l)))
+                         ))
+                     )
+                   ))
+               ))
+          )
+          (return-from euler29 n)
+        )))))))))
 
 (progn
   (princ (euler29 ))

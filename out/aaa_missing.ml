@@ -19,14 +19,12 @@ let result len tab =
 
 let () =
 begin
-  let a = Scanf.scanf "%d " (fun x -> x) in
-  let len = a in
+  let len = Scanf.scanf "%d " (fun x -> x) in
   Printf.printf "%d\n" len;
   let c = Array.init len (fun _d ->
     let e = Scanf.scanf "%d " (fun v_0 -> v_0) in
     e) in
-  let b = c in
-  let tab = b in
+  let tab = c in
   Printf.printf "%d" (result len tab)
 end
  

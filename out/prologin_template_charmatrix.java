@@ -38,16 +38,14 @@ public class prologin_template_charmatrix
     }else{
     c = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int b = c;
-    int taille_x = b;
+    int taille_x = c;
     int e = 0;
     if (scanner.hasNext("^-")){
     scanner.next("^-"); e = -scanner.nextInt();
     }else{
     e = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int d = e;
-    int taille_y = d;
+    int taille_y = e;
     char[][] tableau = read_char_matrix(taille_x, taille_y);
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }

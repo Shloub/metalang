@@ -14,22 +14,18 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
 
 let () =
 begin
-  let a = Scanf.scanf "%d " (fun x -> x) in
-  let taille1 = a in
-  let b = Scanf.scanf "%d " (fun x -> x) in
-  let taille2 = b in
+  let taille1 = Scanf.scanf "%d " (fun x -> x) in
+  let taille2 = Scanf.scanf "%d " (fun x -> x) in
   let d = Array.init taille1 (fun _e ->
     let f = Scanf.scanf "%c" (fun v_0 -> v_0) in
     f) in
   Scanf.scanf " " (fun () -> ());
-  let c = d in
-  let tableau1 = c in
+  let tableau1 = d in
   let h = Array.init taille2 (fun _k ->
     let l = Scanf.scanf "%c" (fun v_0 -> v_0) in
     l) in
   Scanf.scanf " " (fun () -> ());
-  let g = h in
-  let tableau2 = g in
+  let tableau2 = h in
   Printf.printf "%d\n" (programme_candidat tableau1 taille1 tableau2 taille2)
 end
  

@@ -248,9 +248,8 @@ func bigint_premiers_chiffres(a * bigint, i int) * bigint{
 }
 
 func bigint_shift(a * bigint, i int) * bigint{
-  var e int = (*a).bigint_len + i
-  var chiffres []int = make([]int, e)
-  for k := 0 ; k <= e - 1; k++ {
+  var chiffres []int = make([]int, ((*a).bigint_len + i))
+  for k := 0 ; k <= (*a).bigint_len + i - 1; k++ {
     if k >= i {
         chiffres[k] = (*a).bigint_chiffres[k - i];
       } else {
@@ -406,19 +405,16 @@ func euler25() int{
 func euler29() int{
   var maxA int = 5
   var maxB int = 5
-  var f int = maxA + 1
-  var a_bigint []* bigint = make([]* bigint, f)
-  for j := 0 ; j <= f - 1; j++ {
+  var a_bigint []* bigint = make([]* bigint, (maxA + 1))
+  for j := 0 ; j <= maxA + 1 - 1; j++ {
     a_bigint[j] = bigint_of_int(j * j);
   }
-  var g int = maxA + 1
-  var a0_bigint []* bigint = make([]* bigint, g)
-  for j2 := 0 ; j2 <= g - 1; j2++ {
+  var a0_bigint []* bigint = make([]* bigint, (maxA + 1))
+  for j2 := 0 ; j2 <= maxA + 1 - 1; j2++ {
     a0_bigint[j2] = bigint_of_int(j2);
   }
-  var h int = maxA + 1
-  var b []int = make([]int, h)
-  for k := 0 ; k <= h - 1; k++ {
+  var b []int = make([]int, (maxA + 1))
+  for k := 0 ; k <= maxA + 1 - 1; k++ {
     b[k] = 2;
   }
   var n int = 0

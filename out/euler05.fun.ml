@@ -12,8 +12,7 @@ end
 let max2 a b =
   (max a b)
 let primesfactors n =
-  let c = (n + 1) in
-  let tab = (Array.init_withenv c (fun  i () -> let f = 0 in
+  let tab = (Array.init_withenv (n + 1) (fun  i () -> let f = 0 in
   ((), f)) ()) in
   let d = 2 in
   let rec h d n =
@@ -35,8 +34,7 @@ let primesfactors n =
     (h d n)
 let main =
   let lim = 20 in
-  let e = (lim + 1) in
-  let o = (Array.init_withenv e (fun  m () -> let p = 0 in
+  let o = (Array.init_withenv (lim + 1) (fun  m () -> let p = 0 in
   ((), p)) ()) in
   let bb = 1 in
   let bc = lim in

@@ -252,9 +252,8 @@ function &bigint_premiers_chiffres(&$a, $i){
 }
 
 function &bigint_shift(&$a, $i){
-  $e = $a["bigint_len"] + $i;
   $chiffres = array();
-  for ($k = 0 ; $k < $e; $k++)
+  for ($k = 0 ; $k < $a["bigint_len"] + $i; $k++)
     if ($k >= $i)
     $chiffres[$k] = $a["bigint_chiffres"][$k - $i];
   else
@@ -411,17 +410,14 @@ function euler25(){
 function euler29(){
   $maxA = 5;
   $maxB = 5;
-  $f = $maxA + 1;
   $a_bigint = array();
-  for ($j = 0 ; $j < $f; $j++)
+  for ($j = 0 ; $j < $maxA + 1; $j++)
     $a_bigint[$j] = bigint_of_int($j * $j);
-  $g = $maxA + 1;
   $a0_bigint = array();
-  for ($j2 = 0 ; $j2 < $g; $j2++)
+  for ($j2 = 0 ; $j2 < $maxA + 1; $j2++)
     $a0_bigint[$j2] = bigint_of_int($j2);
-  $h = $maxA + 1;
   $b = array();
-  for ($k = 0 ; $k < $h; $k++)
+  for ($k = 0 ; $k < $maxA + 1; $k++)
     $b[$k] = 2;
   $n = 0;
   $found = true;

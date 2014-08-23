@@ -10,13 +10,9 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 ):
     print("--")
     return out_;
 
-a = int(input());
-taille1 = a;
-b = list(input());
-tableau1 = b;
-c = int(input());
-taille2 = c;
-d = list(input());
-tableau2 = d;
+taille1 = int(input());
+tableau1 = list(input());
+taille2 = int(input());
+tableau2 = list(input());
 print("%d\n" % ( programme_candidat(tableau1, taille1, tableau2, taille2) ), end='')
 

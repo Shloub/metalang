@@ -20,12 +20,10 @@
   (c d out_)))))
 )
 (define main
-  (let ([a (string->number (read-line))])
-  (let ([taille a])
-  (let ([b (list->vector (string->list (read-line)))])
-  (let ([tableau b])
+  (let ([taille (string->number (read-line))])
+  (let ([tableau (list->vector (string->list (read-line)))])
   (block
     (map display (list (programme_candidat tableau taille) "\n"))
-    )))))
+    )))
 )
 

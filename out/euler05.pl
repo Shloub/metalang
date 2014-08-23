@@ -17,9 +17,8 @@ sub max2{
 
 sub primesfactors{
   my($n) = @_;
-  my $c = $n + 1;
   my $tab = [];
-  foreach my $i (0 .. $c - 1) {
+  foreach my $i (0 .. $n + 1 - 1) {
     $tab->[$i] = 0;
     }
   my $d = 2;
@@ -37,9 +36,8 @@ sub primesfactors{
 }
 
 my $lim = 20;
-my $e = $lim + 1;
 my $o = [];
-foreach my $m (0 .. $e - 1) {
+foreach my $m (0 .. $lim + 1 - 1) {
   $o->[$m] = 0;
   }
 foreach my $i (1 .. $lim) {

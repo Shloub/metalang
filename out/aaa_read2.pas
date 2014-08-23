@@ -75,14 +75,11 @@ read int, read char et skip
 }
 
 var
-  a : Longint;
   b : Longint;
   c : Longint;
-  d : array of Longint;
   e : array of Longint;
   f : Longint;
   g : Longint;
-  h : array of Longint;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
@@ -91,9 +88,7 @@ var
   l : Longint;
   len : Longint;
   m : Longint;
-  o : Longint;
   p : Longint;
-  q : array of char;
   r : array of char;
   s : Longint;
   strlen : Longint;
@@ -106,8 +101,7 @@ begin
   b := 0;
   b := read_int_();
   skip();
-  a := b;
-  len := a;
+  len := b;
   Write(len);
   Write('=len'#10'');
   SetLength(e, len);
@@ -118,8 +112,7 @@ begin
     skip();
     e[f] := g;
   end;
-  d := e;
-  tab := d;
+  tab := e;
   for i := 0 to  len - 1 do
   begin
     Write(i);
@@ -136,8 +129,7 @@ begin
     skip();
     k[l] := m;
   end;
-  h := k;
-  tab2 := h;
+  tab2 := k;
   for i_ := 0 to  len - 1 do
   begin
     Write(i_);
@@ -148,8 +140,7 @@ begin
   p := 0;
   p := read_int_();
   skip();
-  o := p;
-  strlen := o;
+  strlen := p;
   Write(strlen);
   Write('=strlen'#10'');
   SetLength(r, strlen);
@@ -160,8 +151,7 @@ begin
     r[s] := u;
   end;
   skip();
-  q := r;
-  tab4 := q;
+  tab4 := r;
   for i3 := 0 to  strlen - 1 do
   begin
     tmpc := tab4[i3];

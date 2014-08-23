@@ -79,8 +79,7 @@ let rec sumdivaux t n i =
        else ((out_ + 1) * o)) in
       (h m out_ p)))
 let sumdiv nprimes primes n =
-  let a = (n + 1) in
-  let t = (Array.init_withenv a (fun  i () -> let e = 0 in
+  let t = (Array.init_withenv (n + 1) (fun  i () -> let e = 0 in
   ((), e)) ()) in
   let max_ = (fillPrimesFactors t n primes nprimes) in
   (sumdivaux t max_ 0)
@@ -107,11 +106,9 @@ let main =
      (bx (k + 1) l)
      else let n = 100 in
      (*  28124 ça prend trop de temps mais on arrive a passer le test  *)
-     let b = (n + 1) in
-     let abondant = (Array.init_withenv b (fun  p () -> let bj = false in
+     let abondant = (Array.init_withenv (n + 1) (fun  p () -> let bj = false in
      ((), bj)) ()) in
-     let c = (n + 1) in
-     let summable = (Array.init_withenv c (fun  q () -> let bk = false in
+     let summable = (Array.init_withenv (n + 1) (fun  q () -> let bk = false in
      ((), bk)) ()) in
      let sum = 0 in
      let bv = 2 in

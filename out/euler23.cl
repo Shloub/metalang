@@ -84,18 +84,17 @@
 
 (defun sumdiv (nprimes primes n)
 (progn
-  (let ((a (+ n 1)))
-    (let
-     ((t_ (array_init
-             a
-             (function (lambda (i)
-             (block lambda_1
-               (return-from lambda_1 0)
-             ))
-             ))))
-    (let ((max_ (fillPrimesFactors t_ n primes nprimes)))
-      (return-from sumdiv (sumdivaux t_ max_ 0))
-    )))))
+  (let
+   ((t_ (array_init
+           (+ n 1)
+           (function (lambda (i)
+           (block lambda_1
+             (return-from lambda_1 0)
+           ))
+           ))))
+  (let ((max_ (fillPrimesFactors t_ n primes nprimes)))
+    (return-from sumdiv (sumdivaux t_ max_ 0))
+  ))))
 
 (progn
   (let ((maximumprimes 30001))
@@ -129,58 +128,56 @@
         )
         (let ((n 100))
           #| 28124 ça prend trop de temps mais on arrive a passer le test |#
-          (let ((b (+ n 1)))
-            (let
-             ((abondant (array_init
-                           b
-                           (function (lambda (p)
-                           (block lambda_4
-                             (return-from lambda_4 nil)
-                           ))
-                           ))))
-            (let ((c (+ n 1)))
-              (let
-               ((summable (array_init
-                             c
-                             (function (lambda (q)
-                             (block lambda_5
-                               (return-from lambda_5 nil)
-                             ))
-                             ))))
-              (let ((sum 0))
-                (do
-                  ((r 2 (+ 1 r)))
-                  ((> r n))
-                  (progn
-                    (let ((other (- (sumdiv nprimes primes r) r)))
-                      (if
-                        (> other r)
-                        (setf (aref abondant r) t))
-                    ))
-                )
-                (do
-                  ((i 1 (+ 1 i)))
-                  ((> i n))
-                  (do
-                    ((j 1 (+ 1 j)))
-                    ((> j n))
-                    (if
-                      (and (and (aref abondant i) (aref abondant j)) (<= (+ i j) n))
-                      (setf (aref summable (+ i j)) t))
-                    )
-                )
-                (do
-                  ((o 1 (+ 1 o)))
-                  ((> o n))
+          (let
+           ((abondant (array_init
+                         (+ n 1)
+                         (function (lambda (p)
+                         (block lambda_4
+                           (return-from lambda_4 nil)
+                         ))
+                         ))))
+          (let
+           ((summable (array_init
+                         (+ n 1)
+                         (function (lambda (q)
+                         (block lambda_5
+                           (return-from lambda_5 nil)
+                         ))
+                         ))))
+          (let ((sum 0))
+            (do
+              ((r 2 (+ 1 r)))
+              ((> r n))
+              (progn
+                (let ((other (- (sumdiv nprimes primes r) r)))
                   (if
-                    (not (aref summable o))
-                    (setq sum ( + sum o)))
+                    (> other r)
+                    (setf (aref abondant r) t))
+                ))
+            )
+            (do
+              ((i 1 (+ 1 i)))
+              ((> i n))
+              (do
+                ((j 1 (+ 1 j)))
+                ((> j n))
+                (if
+                  (and (and (aref abondant i) (aref abondant j)) (<= (+ i j) n))
+                  (setf (aref summable (+ i j)) t))
                 )
-                (princ "
+            )
+            (do
+              ((o 1 (+ 1 o)))
+              ((> o n))
+              (if
+                (not (aref summable o))
+                (setq sum ( + sum o)))
+            )
+            (princ "
 ")
-                (princ sum)
-                (princ "
+            (princ sum)
+            (princ "
 ")
-              ))))))))))))
+          ))))))))))
 
 

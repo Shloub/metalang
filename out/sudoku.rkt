@@ -32,15 +32,14 @@
 
 (define (read_sudoku _)
   ;toto
-  (let ([a (* 9 9)])
-  (let ([out_ (array_init_withenv a (lambda (i) 
-                                      (lambda (_) ((lambda (k) 
-                                                     (block
-                                                       (mread-blank)
-                                                       (let ([v k])
-                                                       (list '() v))
-                                                       )) (mread-int)))) '())])
-  out_))
+  (let ([out_ (array_init_withenv (* 9 9) (lambda (i) 
+                                            (lambda (_) ((lambda (k) 
+                                                           (block
+                                                             (mread-blank)
+                                                             (let ([v k])
+                                                             (list '() v))
+                                                             )) (mread-int)))) '())])
+out_)
 )
 (define (print_sudoku sudoku_)
   ;toto

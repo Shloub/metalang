@@ -73,7 +73,6 @@ end;
 function is_triangular(n : Longint) : boolean;
 var
   a : Longint;
-  b : Longint;
   d : Longint;
 begin
   {
@@ -81,8 +80,7 @@ begin
 	  n * 2 = k * (k + 1)
    }
   d := n * 2;
-  b := Floor(Sqrt(d));
-  a := b;
+  a := Floor(Sqrt(d));
   exit((a * (a + 1)) = (n * 2));
 end;
 

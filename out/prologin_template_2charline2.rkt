@@ -33,16 +33,12 @@
   (h k out_)))))
 )
 (define main
-  (let ([a (string->number (read-line))])
-  (let ([taille1 a])
-  (let ([b (string->number (read-line))])
-  (let ([taille2 b])
-  (let ([c (list->vector (string->list (read-line)))])
-  (let ([tableau1 c])
-  (let ([d (list->vector (string->list (read-line)))])
-  (let ([tableau2 d])
+  (let ([taille1 (string->number (read-line))])
+  (let ([taille2 (string->number (read-line))])
+  (let ([tableau1 (list->vector (string->list (read-line)))])
+  (let ([tableau2 (list->vector (string->list (read-line)))])
   (block
     (map display (list (programme_candidat tableau1 taille1 tableau2 taille2) "\n"))
-    )))))))))
+    )))))
 )
 

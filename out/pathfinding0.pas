@@ -180,10 +180,8 @@ end;
 
 
 var
-  q : Longint;
   r : Longint;
   result : Longint;
-  s : Longint;
   tab : v;
   u : Longint;
   x : Longint;
@@ -192,13 +190,11 @@ begin
   r := 0;
   r := read_int_();
   skip();
-  q := r;
-  x := q;
+  x := r;
   u := 0;
   u := read_int_();
   skip();
-  s := u;
-  y := s;
+  y := u;
   Write(x);
   Write(' ');
   Write(y);

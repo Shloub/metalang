@@ -16,14 +16,12 @@ end;
 type f = array of Longint;
 function primesfactors(n : Longint) : f;
 var
-  c : Longint;
   d : Longint;
   i : Longint;
   tab : f;
 begin
-  c := n + 1;
-  SetLength(tab, c);
-  for i := 0 to  c - 1 do
+  SetLength(tab, n + 1);
+  for i := 0 to  n + 1 - 1 do
   begin
     tab[i] := 0;
   end;
@@ -47,7 +45,6 @@ end;
 
 
 var
-  e : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -59,9 +56,8 @@ var
   t : f;
 begin
   lim := 20;
-  e := lim + 1;
-  SetLength(o, e);
-  for m := 0 to  e - 1 do
+  SetLength(o, lim + 1);
+  for m := 0 to  lim + 1 - 1 do
   begin
     o[m] := 0;
   end;

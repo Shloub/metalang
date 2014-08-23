@@ -3,8 +3,7 @@ let max2 a b =
 
 let primesfactors n =
   let n = ref n in
-  let c = (!n) + 1 in
-  let tab = Array.init c (fun _i ->
+  let tab = Array.init ((!n) + 1) (fun _i ->
     0) in
   let d = ref( 2 ) in
   while (!n) <> 1 && (!d) * (!d) <= (!n)
@@ -23,8 +22,7 @@ let primesfactors n =
 let () =
 begin
   let lim = 20 in
-  let e = lim + 1 in
-  let o = Array.init e (fun _m ->
+  let o = Array.init (lim + 1) (fun _m ->
     0) in
   for i = 1 to lim do
     let t = primesfactors i in

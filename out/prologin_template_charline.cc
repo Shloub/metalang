@@ -15,7 +15,7 @@ int programme_candidat(std::vector<char> * tableau, int taille){
   int out_ = 0;
   for (int i = 0 ; i < taille; i++)
   {
-    out_ += tableau->at(i) * i;
+    out_ += (int)(tableau->at(i)) * i;
     std::cout << tableau->at(i);
   }
   std::cout << "--\n";
@@ -26,10 +26,8 @@ int programme_candidat(std::vector<char> * tableau, int taille){
 int main(){
   int b = 0;
   std::cin >> b >> std::skipws;
-  int a = b;
-  int taille = a;
-  std::vector<char> * c = getline();
-  std::vector<char> * tableau = c;
+  int taille = b;
+  std::vector<char> * tableau = getline();
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }

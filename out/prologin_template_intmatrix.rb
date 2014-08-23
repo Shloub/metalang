@@ -28,13 +28,11 @@ end
 f = 0
 f=scanf("%d")[0];
 scanf("%*\n");
-e = f
-taille_x = e
+taille_x = f
 h = 0
 h=scanf("%d")[0];
 scanf("%*\n");
-g = h
-taille_y = g
+taille_y = h
 tableau = read_int_matrix(taille_x, taille_y)
 printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
 

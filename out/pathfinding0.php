@@ -48,10 +48,8 @@ function pathfind(&$tab, $x, $y){
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
-$g = intval(trim(fgets(STDIN)));
-$x = $g;
-$h = intval(trim(fgets(STDIN)));
-$y = $h;
+$x = intval(trim(fgets(STDIN)));
+$y = intval(trim(fgets(STDIN)));
 echo $x, " ", $y, "\n";
 $tab = read_char_matrix($x, $y);
 $result = pathfind($tab, $x, $y);

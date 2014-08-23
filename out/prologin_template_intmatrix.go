@@ -46,13 +46,11 @@ func main() {
   var f int = 0
   fmt.Fscanf(reader, "%d", &f);
   skip()
-  var e int = f
-  var taille_x int = e
+  var taille_x int = f
   var h int = 0
   fmt.Fscanf(reader, "%d", &h);
   skip()
-  var g int = h
-  var taille_y int = g
+  var taille_y int = h
   var tableau [][]int = read_int_matrix(taille_x, taille_y)
   fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }

@@ -30,8 +30,7 @@ function is_triangular($n){
 	  n * 2 = k * (k + 1)
    */
   $d = $n * 2;
-  $b = intval(sqrt($d));
-  $a = $b;
+  $a = intval(sqrt($d));
   return $a * ($a + 1) == $n * 2;
 }
 

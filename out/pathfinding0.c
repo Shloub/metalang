@@ -82,12 +82,10 @@ int pathfind(char** tab, int x, int y){
 int main(void){
   int r = 0;
   scanf("%d ", &r);
-  int q = r;
-  int x = q;
+  int x = r;
   int u = 0;
   scanf("%d ", &u);
-  int s = u;
-  int y = s;
+  int y = u;
   printf("%d %d\n", x, y);
   char** tab = read_char_matrix(x, y);
   int result = pathfind(tab, x, y);

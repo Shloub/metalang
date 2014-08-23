@@ -3,27 +3,22 @@
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-$a = intval(trim(fgets(STDIN)));
-$len = $a;
+$len = intval(trim(fgets(STDIN)));
 echo $len, "=len\n";
-$b = array_map("intval", explode(" ", fgets(STDIN)));
-$tab = $b;
+$tab = array_map("intval", explode(" ", fgets(STDIN)));
 for ($i = 0 ; $i < $len; $i++)
 {
   echo $i, "=>", $tab[$i], " ";
 }
 echo "\n";
-$d = array_map("intval", explode(" ", fgets(STDIN)));
-$tab2 = $d;
+$tab2 = array_map("intval", explode(" ", fgets(STDIN)));
 for ($i_ = 0 ; $i_ < $len; $i_++)
 {
   echo $i_, "==>", $tab2[$i_], " ";
 }
-$e = intval(trim(fgets(STDIN)));
-$strlen = $e;
+$strlen = intval(trim(fgets(STDIN)));
 echo $strlen, "=strlen\n";
-$f = fgets(STDIN);
-$tab4 = $f;
+$tab4 = fgets(STDIN);
 for ($i3 = 0 ; $i3 < $strlen; $i3++)
 {
   $tmpc = $tab4[$i3];

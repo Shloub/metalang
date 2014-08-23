@@ -1,20 +1,14 @@
 var util = require("util");
 var b = 4;
-var a = Math.floor(Math.sqrt(b));
-util.print(a, " ");
+util.print(Math.floor(Math.sqrt(b)), " ");
 var e = 16;
-var d = Math.floor(Math.sqrt(e));
-util.print(d, " ");
+util.print(Math.floor(Math.sqrt(e)), " ");
 var g = 20;
-var f = Math.floor(Math.sqrt(g));
-util.print(f, " ");
+util.print(Math.floor(Math.sqrt(g)), " ");
 var i = 1000;
-var h = Math.floor(Math.sqrt(i));
-util.print(h, " ");
+util.print(Math.floor(Math.sqrt(i)), " ");
 var k = 500;
-var j = Math.floor(Math.sqrt(k));
-util.print(j, " ");
+util.print(Math.floor(Math.sqrt(k)), " ");
 var m = 10;
-var l = Math.floor(Math.sqrt(m));
-util.print(l, " ");
+util.print(Math.floor(Math.sqrt(m)), " ");
 

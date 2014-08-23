@@ -195,9 +195,8 @@ def bigint_premiers_chiffres( a, i ):
       "bigint_chiffres":a["bigint_chiffres"]};
 
 def bigint_shift( a, i ):
-    e = a["bigint_len"] + i;
-    chiffres = [None] * e
-    for k in range(0, e):
+    chiffres = [None] * (a["bigint_len"] + i)
+    for k in range(0, a["bigint_len"] + i):
       if k >= i:
         chiffres[k] = a["bigint_chiffres"][k - i];
       else:
@@ -326,17 +325,14 @@ def euler25(  ):
 def euler29(  ):
     maxA = 5;
     maxB = 5;
-    f = maxA + 1;
-    a_bigint = [None] * f
-    for j in range(0, f):
+    a_bigint = [None] * (maxA + 1)
+    for j in range(0, maxA + 1):
       a_bigint[j] = bigint_of_int(j * j);
-    g = maxA + 1;
-    a0_bigint = [None] * g
-    for j2 in range(0, g):
+    a0_bigint = [None] * (maxA + 1)
+    for j2 in range(0, maxA + 1):
       a0_bigint[j2] = bigint_of_int(j2);
-    h = maxA + 1;
-    b = [None] * h
-    for k in range(0, h):
+    b = [None] * (maxA + 1)
+    for k in range(0, maxA + 1):
       b[k] = 2;
     n = 0;
     found = True;
