@@ -33,9 +33,8 @@ sub find{
   }
 }
 
-my $a = 1000000;
 my $m = [];
-foreach my $j (0 .. $a - 1) {
+foreach my $j (0 .. 1000000 - 1) {
   $m->[$j] = 0;
   }
 my $max_ = 0;

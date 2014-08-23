@@ -9,11 +9,10 @@ et qui produit les macros metalang correspondante
 int main(void){
   char input = ' ';
   int current_pos = 500;
-  int a = 1000;
-  int *mem = malloc( a * sizeof(int));
+  int *mem = malloc( 1000 * sizeof(int));
   {
     int i;
-    for (i = 0 ; i < a; i++)
+    for (i = 0 ; i < 1000; i++)
       mem[i] = 0;
   }
   mem[current_pos] = mem[current_pos] + 1;

@@ -21,9 +21,8 @@ function max2($a, $b){
 }
 
 $i = 1;
-$g = 5;
 $last = array();
-for ($j = 0 ; $j < $g; $j++)
+for ($j = 0 ; $j < 5; $j++)
 {
   $c = "_";
   $c = nextChar();

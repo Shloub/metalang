@@ -7,7 +7,6 @@ et qui produit les macros metalang correspondante
 }
 
 var
-  a : Longint;
   current_pos : Longint;
   i : Longint;
   input : char;
@@ -15,9 +14,8 @@ var
 begin
   input := #32;
   current_pos := 500;
-  a := 1000;
-  SetLength(mem, a);
-  for i := 0 to  a - 1 do
+  SetLength(mem, 1000);
+  for i := 0 to  1000 - 1 do
   begin
     mem[i] := 0;
   end;

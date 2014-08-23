@@ -335,40 +335,36 @@ begin
   exit(minMove);
 end;
 
-type h = array of Longint;
+type e = array of Longint;
 function init_() : gamestate;
 var
-  a : Longint;
-  b : Longint;
-  c : gamestate;
-  cases : array of h;
+  a : gamestate;
+  cases : array of e;
   i : Longint;
   j : Longint;
-  tab : h;
+  tab : e;
 begin
-  b := 3;
-  SetLength(cases, b);
-  for i := 0 to  b - 1 do
+  SetLength(cases, 3);
+  for i := 0 to  3 - 1 do
   begin
-    a := 3;
-    SetLength(tab, a);
-    for j := 0 to  a - 1 do
+    SetLength(tab, 3);
+    for j := 0 to  3 - 1 do
     begin
       tab[j] := 0;
     end;
     cases[i] := tab;
   end;
-  new(c);
-  c^.cases := cases;
-  c^.firstToPlay := true;
-  c^.note := 0;
-  c^.ended := false;
-  exit(c);
+  new(a);
+  a^.cases := cases;
+  a^.firstToPlay := true;
+  a^.note := 0;
+  a^.ended := false;
+  exit(a);
 end;
 
 function read_move() : move;
 var
-  d : move;
+  b : move;
   x : Longint;
   y : Longint;
 begin
@@ -378,30 +374,30 @@ begin
   y := 0;
   y := read_int_();
   skip();
-  new(d);
-  d^.x := x;
-  d^.y := y;
-  exit(d);
+  new(b);
+  b^.x := x;
+  b^.y := y;
+  exit(b);
 end;
 
 
 var
-  e : move;
-  f : move;
+  c : move;
+  d : move;
   i : Longint;
   state : gamestate;
 begin
   for i := 0 to  1 do
   begin
     state := init_();
-    new(e);
-    e^.x := 1;
-    e^.y := 1;
-    apply_move(e, state);
-    new(f);
-    f^.x := 0;
-    f^.y := 0;
-    apply_move(f, state);
+    new(c);
+    c^.x := 1;
+    c^.y := 1;
+    apply_move(c, state);
+    new(d);
+    d^.x := 0;
+    d^.y := 0;
+    apply_move(d, state);
     while not state^.ended do
     begin
       print_state(state);

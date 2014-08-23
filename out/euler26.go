@@ -34,9 +34,8 @@ func periode(restes []int, len int, a int, b int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var c int = 1000
-  var t []int = make([]int, c)
-  for j := 0 ; j <= c - 1; j++ {
+  var t []int = make([]int, 1000)
+  for j := 0 ; j <= 1000 - 1; j++ {
     t[j] = 0;
   }
   var m int = 0

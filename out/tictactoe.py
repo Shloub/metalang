@@ -161,12 +161,10 @@ def play( g ):
     return minMove;
 
 def init_(  ):
-    b = 3;
-    cases = [None] * b
-    for i in range(0, b):
-      a = 3;
-      tab = [None] * a
-      for j in range(0, a):
+    cases = [None] * 3
+    for i in range(0, 3):
+      tab = [None] * 3
+      for j in range(0, 3):
         tab[j] = 0;
       cases[i] = tab;
     return {

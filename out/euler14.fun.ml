@@ -10,18 +10,18 @@ module Array = struct
 end
 
 let next_ n =
-  let e () = () in
+  let d () = () in
   (if ((n mod 2) = 0)
    then (n / 2)
    else ((3 * n) + 1))
 let rec find n m =
-  let b () = () in
+  let a () = () in
   (if (n = 1)
    then 1
-   else let c () = (b ()) in
+   else let b () = (a ()) in
    (if (n >= 1000000)
     then (1 + (find (next_ n) m))
-    else let d () = (c ()) in
+    else let c () = (b ()) in
     (if (m.(n) <> 0)
      then m.(n)
      else (
@@ -30,18 +30,17 @@ let rec find n m =
             )
      )))
 let main =
-  let a = 1000000 in
-  let m = (Array.init_withenv a (fun  j () -> let f = 0 in
-  ((), f)) ()) in
+  let m = (Array.init_withenv 1000000 (fun  j () -> let e = 0 in
+  ((), e)) ()) in
   let max_ = 0 in
   let maxi = 0 in
-  let h = 1 in
-  let k = 999 in
-  let rec g i max_ maxi =
-    (if (i <= k)
+  let g = 1 in
+  let h = 999 in
+  let rec f i max_ maxi =
+    (if (i <= h)
      then (*  normalement on met 999999 mais ça dépasse les int32...  *)
      let n2 = (find i m) in
-     ((fun  (max_, maxi) -> (g (i + 1) max_ maxi)) (if (n2 > max_)
+     ((fun  (max_, maxi) -> (f (i + 1) max_ maxi)) (if (n2 > max_)
                                                     then let max_ = n2 in
                                                     let maxi = i in
                                                     (max_, maxi)
@@ -50,5 +49,5 @@ let main =
             (Printf.printf "%d\n%d\n" max_ maxi)
             )
      ) in
-    (g h max_ maxi)
+    (f g max_ maxi)
 

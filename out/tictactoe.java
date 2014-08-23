@@ -169,22 +169,20 @@ Renvoie le coup de l'IA
   
   public static gamestate init_()
   {
-    int b = 3;
-    int[][] cases = new int[b][];
-    for (int i = 0 ; i < b; i++)
+    int[][] cases = new int[3][];
+    for (int i = 0 ; i < 3; i++)
     {
-      int a = 3;
-      int[] tab = new int[a];
-      for (int j = 0 ; j < a; j++)
+      int[] tab = new int[3];
+      for (int j = 0 ; j < 3; j++)
         tab[j] = 0;
       cases[i] = tab;
     }
-    gamestate c = new gamestate();
-    c.cases = cases;
-    c.firstToPlay = true;
-    c.note = 0;
-    c.ended = false;
-    return c;
+    gamestate a = new gamestate();
+    a.cases = cases;
+    a.firstToPlay = true;
+    a.note = 0;
+    a.ended = false;
+    return a;
   }
   
   public static move read_move()
@@ -201,10 +199,10 @@ Renvoie le coup de l'IA
     }else{
     y = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    move d = new move();
-    d.x = x;
-    d.y = y;
-    return d;
+    move b = new move();
+    b.x = x;
+    b.y = y;
+    return b;
   }
   
   
@@ -213,14 +211,14 @@ Renvoie le coup de l'IA
     for (int i = 0 ; i <= 1; i ++)
     {
       gamestate state = init_();
-      move e = new move();
-      e.x = 1;
-      e.y = 1;
-      apply_move(e, state);
-      move f = new move();
-      f.x = 0;
-      f.y = 0;
-      apply_move(f, state);
+      move c = new move();
+      c.x = 1;
+      c.y = 1;
+      apply_move(c, state);
+      move d = new move();
+      d.x = 0;
+      d.y = 0;
+      apply_move(d, state);
       while (!state.ended)
       {
         print_state(state);

@@ -74,16 +74,16 @@ begin
     end;
 end;
 
-type e = array of Longint;
-type f = array of e;
-function nbPassePartout(n : Longint; passepartout : f; m : Longint; serrures : f) : Longint;
+type c = array of Longint;
+type d = array of c;
+function nbPassePartout(n : Longint; passepartout : d; m : Longint; serrures : d) : Longint;
 var
   i : Longint;
   max_ancient : Longint;
   max_ancient_pp : Longint;
   max_recent : Longint;
   max_recent_pp : Longint;
-  pp : e;
+  pp : c;
 begin
   max_ancient := 0;
   max_recent := 0;
@@ -126,20 +126,18 @@ end;
 
 
 var
-  c : Longint;
-  d : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
   l : Longint;
   m : Longint;
   n : Longint;
-  out0 : e;
-  out1 : e;
+  out0 : c;
+  out1 : c;
   out_ : Longint;
   out__ : Longint;
-  passepartout : f;
-  serrures : f;
+  passepartout : d;
+  serrures : d;
 begin
   n := 0;
   n := read_int_();
@@ -147,9 +145,8 @@ begin
   SetLength(passepartout, n);
   for i := 0 to  n - 1 do
   begin
-    c := 2;
-    SetLength(out0, c);
-    for j := 0 to  c - 1 do
+    SetLength(out0, 2);
+    for j := 0 to  2 - 1 do
     begin
       out__ := 0;
       out__ := read_int_();
@@ -164,9 +161,8 @@ begin
   SetLength(serrures, m);
   for k := 0 to  m - 1 do
   begin
-    d := 2;
-    SetLength(out1, d);
-    for l := 0 to  d - 1 do
+    SetLength(out1, 2);
+    for l := 0 to  2 - 1 do
     begin
       out_ := 0;
       out_ := read_int_();

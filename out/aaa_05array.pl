@@ -16,22 +16,21 @@ sub g{
   $t->[$index] = 0;
 }
 
-my $c = 5;
 my $a = [];
-foreach my $i (0 .. $c - 1) {
+foreach my $i (0 .. 5 - 1) {
   print($i);
   $a->[$i] = (remainder($i, 2)) eq 0;
   }
-my $d = $a->[0];
-if ($d) {
+my $c = $a->[0];
+if ($c) {
 print("True");
 }else{
 print("False");
 }
 print("\n");
 g(id($a), 0);
-my $e = $a->[0];
-if ($e) {
+my $d = $a->[0];
+if ($d) {
 print("True");
 }else{
 print("False");

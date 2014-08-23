@@ -1,3 +1,4 @@
+var util = require("util");
 function min2(a, b){
   return Math.min(a, b);
 }

@@ -45,9 +45,8 @@ function result(t, len){
   return out_;
 }
 
-var a = 4;
-var t = new Array(a);
-for (var i = 0 ; i <= a - 1; i++)
+var t = new Array(4);
+for (var i = 0 ; i <= 4 - 1; i++)
   t[i] = mktoto(i);
 t[0].bar=read_int_();
 stdinsep();

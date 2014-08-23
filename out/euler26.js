@@ -1,3 +1,4 @@
+var util = require("util");
 function periode(restes, len, a, b){
   while (a != 0)
   {
@@ -13,9 +14,8 @@ function periode(restes, len, a, b){
   return 0;
 }
 
-var c = 1000;
-var t = new Array(c);
-for (var j = 0 ; j <= c - 1; j++)
+var t = new Array(1000);
+for (var j = 0 ; j <= 1000 - 1; j++)
   t[j] = 0;
 var m = 0;
 var mi = 0;

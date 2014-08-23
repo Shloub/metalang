@@ -10,11 +10,10 @@ int max2(int a, int b){
 
 int main(void){
   int i = 1;
-  int g = 5;
-  int *last = malloc( g * sizeof(int));
+  int *last = malloc( 5 * sizeof(int));
   {
     int j;
-    for (j = 0 ; j < g; j++)
+    for (j = 0 ; j < 5; j++)
     {
       char c = '_';
       scanf("%c", &c);

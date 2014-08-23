@@ -55,21 +55,20 @@
   )))
 
 (progn
-  (let ((a 4))
-    (let
-     ((t_ (array_init
-             a
-             (function (lambda (i)
-             (block lambda_1
-               (return-from lambda_1 (mktoto i))
-             ))
-             ))))
-    (setf (toto-bar (aref t_ 0)) (mread-int ))
-    (mread-blank)
-    (setf (toto-blah (aref t_ 1)) (mread-int ))
-    (let ((titi (result t_ 4)))
-      (princ titi)
-      (princ (toto-blah (aref t_ 2)))
-    ))))
+  (let
+   ((t_ (array_init
+           4
+           (function (lambda (i)
+           (block lambda_1
+             (return-from lambda_1 (mktoto i))
+           ))
+           ))))
+  (setf (toto-bar (aref t_ 0)) (mread-int ))
+  (mread-blank)
+  (setf (toto-blah (aref t_ 1)) (mread-int ))
+  (let ((titi (result t_ 4)))
+    (princ titi)
+    (princ (toto-blah (aref t_ 2)))
+  )))
 
 

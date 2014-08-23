@@ -12,9 +12,8 @@ def find( n, m, x, y, dx, dy ):
     else:
       return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
 
-c = 8;
-directions = [None] * c
-for i in range(0, c):
+directions = [None] * 8
+for i in range(0, 8):
   if i == 0:
     directions[i] = (0, 1);
   elif i == 1:

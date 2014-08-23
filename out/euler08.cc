@@ -10,9 +10,8 @@ int max2(int a, int b){
 
 int main(){
   int i = 1;
-  int g = 5;
-  std::vector<int > *last = new std::vector<int>( g );
-  for (int j = 0 ; j < g; j++)
+  std::vector<int > *last = new std::vector<int>( 5 );
+  for (int j = 0 ; j < 5; j++)
   {
     char c = '_';
     std::cin >> c >> std::noskipws;

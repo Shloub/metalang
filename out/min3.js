@@ -1,3 +1,4 @@
+var util = require("util");
 var e = 2;
 var f = 3;
 var g = 4;

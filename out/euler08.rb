@@ -12,9 +12,8 @@ def max2( a, b )
 end
 
 i = 1
-g = 5
 last = [];
-for j in (0 ..  g - 1) do
+for j in (0 ..  5 - 1) do
   c = "_"
   c=scanf("%c")[0];
   d = c.ord - "0".ord

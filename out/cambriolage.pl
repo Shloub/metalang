@@ -72,9 +72,8 @@ $n = readint();
 readspaces();
 my $passepartout = [];
 foreach my $i (0 .. $n - 1) {
-  my $c = 2;
   my $out0 = [];
-  foreach my $j (0 .. $c - 1) {
+  foreach my $j (0 .. 2 - 1) {
     my $out__ = 0;
     $out__ = readint();
     readspaces();
@@ -87,9 +86,8 @@ $m = readint();
 readspaces();
 my $serrures = [];
 foreach my $k (0 .. $m - 1) {
-  my $d = 2;
   my $out1 = [];
-  foreach my $l (0 .. $d - 1) {
+  foreach my $l (0 .. 2 - 1) {
     my $out_ = 0;
     $out_ = readint();
     readspaces();

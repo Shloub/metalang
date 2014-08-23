@@ -1,3 +1,4 @@
+var util = require("util");
 function foo(a){
   a = 4;
 }

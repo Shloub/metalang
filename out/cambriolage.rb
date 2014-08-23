@@ -40,9 +40,8 @@ n=scanf("%d")[0];
 scanf("%*\n");
 passepartout = [];
 for i in (0 ..  n - 1) do
-  c = 2
   out0 = [];
-  for j in (0 ..  c - 1) do
+  for j in (0 ..  2 - 1) do
     out__ = 0
     out__=scanf("%d")[0];
     scanf("%*\n");
@@ -55,9 +54,8 @@ m=scanf("%d")[0];
 scanf("%*\n");
 serrures = [];
 for k in (0 ..  m - 1) do
-  d = 2
   out1 = [];
-  for l in (0 ..  d - 1) do
+  for l in (0 ..  2 - 1) do
     out_ = 0
     out_=scanf("%d")[0];
     scanf("%*\n");

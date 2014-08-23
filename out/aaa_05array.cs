@@ -15,22 +15,21 @@ public class aaa_05array
   
   public static void Main(String[] args)
   {
-    int c = 5;
-    bool[] a = new bool[c];
-    for (int i = 0 ; i < c; i++)
+    bool[] a = new bool[5];
+    for (int i = 0 ; i < 5; i++)
     {
       Console.Write(i);
       a[i] = (i % 2) == 0;
     }
-    bool d = a[0];
-    if (d)
+    bool c = a[0];
+    if (c)
       Console.Write("True");
     else
       Console.Write("False");
     Console.Write("\n");
     g(id(a), 0);
-    bool e = a[0];
-    if (e)
+    bool d = a[0];
+    if (d)
       Console.Write("True");
     else
       Console.Write("False");

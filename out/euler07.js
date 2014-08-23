@@ -1,3 +1,4 @@
+var util = require("util");
 function divisible(n, t, size){
   for (var i = 0 ; i <= size - 1; i++)
     if ((~~(n % t[i])) == 0)

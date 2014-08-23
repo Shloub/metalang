@@ -10,39 +10,38 @@ module Array = struct
 end
 
 let periode restes len a b =
-  let rec e a len =
+  let rec d a len =
     (if (a <> 0)
      then let chiffre = (a / b) in
      let reste = (a mod b) in
-     let g = 0 in
-     let h = (len - 1) in
-     let rec f i =
-       (if (i <= h)
+     let f = 0 in
+     let g = (len - 1) in
+     let rec e i =
+       (if (i <= g)
         then (if (restes.(i) = reste)
               then (len - i)
-              else (f (i + 1)))
+              else (e (i + 1)))
         else (
                restes.(len) <- reste;
                let len = (len + 1) in
                let a = (reste * 10) in
-               (e a len)
+               (d a len)
                )
         ) in
-       (f g)
+       (e f)
      else 0) in
-    (e a len)
+    (d a len)
 let main =
-  let c = 1000 in
-  let t = (Array.init_withenv c (fun  j () -> let k = 0 in
-  ((), k)) ()) in
+  let t = (Array.init_withenv 1000 (fun  j () -> let h = 0 in
+  ((), h)) ()) in
   let m = 0 in
   let mi = 0 in
-  let n = 1 in
-  let o = 1000 in
-  let rec l i m mi =
-    (if (i <= o)
+  let l = 1 in
+  let n = 1000 in
+  let rec k i m mi =
+    (if (i <= n)
      then let p = (periode t 0 1 i) in
-     ((fun  (m, mi) -> (l (i + 1) m mi)) (if (p > m)
+     ((fun  (m, mi) -> (k (i + 1) m mi)) (if (p > m)
                                           then let mi = i in
                                           let m = p in
                                           (m, mi)
@@ -51,5 +50,5 @@ let main =
             (Printf.printf "%d\n%d\n" mi m)
             )
      ) in
-    (l n m mi)
+    (k l m mi)
 

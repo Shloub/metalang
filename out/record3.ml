@@ -22,8 +22,7 @@ let result t len =
 
 let () =
 begin
-  let a = 4 in
-  let t = Array.init a (fun i ->
+  let t = Array.init 4 (fun i ->
     mktoto i) in
   Scanf.scanf "%d %d" (fun v_0 v_1 -> t.(0).bar <- v_0;
                                       t.(1).blah <- v_1);

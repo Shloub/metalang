@@ -23,11 +23,10 @@ int find(int n, int* m){
 }
 
 int main(void){
-  int a = 1000000;
-  int *m = malloc( a * sizeof(int));
+  int *m = malloc( 1000000 * sizeof(int));
   {
     int j;
-    for (j = 0 ; j < a; j++)
+    for (j = 0 ; j < 1000000; j++)
       m[j] = 0;
   }
   int max_ = 0;

@@ -190,22 +190,20 @@ func play(g * gamestate) * move{
 }
 
 func init_() * gamestate{
-  var b int = 3
-  var cases [][]int = make([][]int, b)
-  for i := 0 ; i <= b - 1; i++ {
-    var a int = 3
-      var tab []int = make([]int, a)
-      for j := 0 ; j <= a - 1; j++ {
+  var cases [][]int = make([][]int, 3)
+  for i := 0 ; i <= 3 - 1; i++ {
+    var tab []int = make([]int, 3)
+      for j := 0 ; j <= 3 - 1; j++ {
         tab[j] = 0;
       }
       cases[i] = tab;
   }
-  var c * gamestate = new (gamestate)
-  (*c).cases=cases;
-  (*c).firstToPlay=true;
-  (*c).note=0;
-  (*c).ended=false;
-  return c
+  var a * gamestate = new (gamestate)
+  (*a).cases=cases;
+  (*a).firstToPlay=true;
+  (*a).note=0;
+  (*a).ended=false;
+  return a
 }
 
 func read_move() * move{
@@ -215,24 +213,24 @@ func read_move() * move{
   var y int = 0
   fmt.Fscanf(reader, "%d", &y);
   skip()
-  var d * move = new (move)
-  (*d).x=x;
-  (*d).y=y;
-  return d
+  var b * move = new (move)
+  (*b).x=x;
+  (*b).y=y;
+  return b
 }
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
   for i := 0 ; i <= 1; i++ {
     var state * gamestate = init_()
-      var e * move = new (move)
-      (*e).x=1;
-      (*e).y=1;
-      apply_move(e, state);
-      var f * move = new (move)
-      (*f).x=0;
-      (*f).y=0;
-      apply_move(f, state);
+      var c * move = new (move)
+      (*c).x=1;
+      (*c).y=1;
+      apply_move(c, state);
+      var d * move = new (move)
+      (*d).x=0;
+      (*d).y=0;
+      apply_move(d, state);
       for !(*state).ended{
                            print_state(state);
                            apply_move(play(state), state);

@@ -17,9 +17,8 @@ def result( t, len )
     return (out_);
 end
 
-a = 4
 t = [];
-for i in (0 ..  a - 1) do
+for i in (0 ..  4 - 1) do
   t[i] = mktoto(i);
 end
 t[0]["bar"]=scanf("%d")[0];

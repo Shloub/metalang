@@ -1,3 +1,4 @@
+var util = require("util");
 var b = 4;
 var a = Math.floor(Math.sqrt(b));
 util.print(a, " ");

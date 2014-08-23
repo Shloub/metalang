@@ -40,9 +40,8 @@ int main(){
   std::vector<std::vector<int> * > *passepartout = new std::vector<std::vector<int> *>( n );
   for (int i = 0 ; i < n; i++)
   {
-    int c = 2;
-    std::vector<int > *out0 = new std::vector<int>( c );
-    for (int j = 0 ; j < c; j++)
+    std::vector<int > *out0 = new std::vector<int>( 2 );
+    for (int j = 0 ; j < 2; j++)
     {
       int out__ = 0;
       std::cin >> out__ >> std::skipws;
@@ -55,9 +54,8 @@ int main(){
   std::vector<std::vector<int> * > *serrures = new std::vector<std::vector<int> *>( m );
   for (int k = 0 ; k < m; k++)
   {
-    int d = 2;
-    std::vector<int > *out1 = new std::vector<int>( d );
-    for (int l = 0 ; l < d; l++)
+    std::vector<int > *out1 = new std::vector<int>( 2 );
+    for (int l = 0 ; l < 2; l++)
     {
       int out_ = 0;
       std::cin >> out_ >> std::skipws;

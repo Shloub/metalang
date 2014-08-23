@@ -26,9 +26,8 @@ func max2(a int, b int) int{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var i int = 1
-  var g int = 5
-  var last []int = make([]int, g)
-  for j := 0 ; j <= g - 1; j++ {
+  var last []int = make([]int, 5)
+  for j := 0 ; j <= 5 - 1; j++ {
     var c byte = '_'
       fmt.Fscanf(reader, "%c", &c);
       var d int = (int)(c) - (int)('0')

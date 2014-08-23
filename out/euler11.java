@@ -13,19 +13,19 @@ public class euler11
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
     {
-      int[] e = new int[x];
-      for (int f = 0 ; f < x; f++)
+      int[] d = new int[x];
+      for (int e = 0 ; e < x; e++)
       {
-        int g = 0;
+        int f = 0;
         if (scanner.hasNext("^-")){
-        scanner.next("^-"); g = -scanner.nextInt();
+        scanner.next("^-"); f = -scanner.nextInt();
         }else{
-        g = scanner.nextInt();}
+        f = scanner.nextInt();}
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        e[f] = g;
+        d[e] = f;
       }
-      int[] d = e;
-      tab[z] = d;
+      int[] c = d;
+      tab[z] = c;
     }
     return tab;
   }
@@ -44,72 +44,71 @@ public class euler11
   
   public static void main(String args[])
   {
-    int c = 8;
-    tuple_int_int[] directions = new tuple_int_int[c];
-    for (int i = 0 ; i < c; i++)
+    tuple_int_int[] directions = new tuple_int_int[8];
+    for (int i = 0 ; i < 8; i++)
       if (i == 0)
     {
-      tuple_int_int u = new tuple_int_int();
-      u.tuple_int_int_field_0 = 0;
-      u.tuple_int_int_field_1 = 1;
-      directions[i] = u;
+      tuple_int_int s = new tuple_int_int();
+      s.tuple_int_int_field_0 = 0;
+      s.tuple_int_int_field_1 = 1;
+      directions[i] = s;
     }
     else if (i == 1)
     {
-      tuple_int_int s = new tuple_int_int();
-      s.tuple_int_int_field_0 = 1;
-      s.tuple_int_int_field_1 = 0;
-      directions[i] = s;
+      tuple_int_int r = new tuple_int_int();
+      r.tuple_int_int_field_0 = 1;
+      r.tuple_int_int_field_1 = 0;
+      directions[i] = r;
     }
     else if (i == 2)
     {
-      tuple_int_int r = new tuple_int_int();
-      r.tuple_int_int_field_0 = 0;
-      r.tuple_int_int_field_1 = -1;
-      directions[i] = r;
+      tuple_int_int q = new tuple_int_int();
+      q.tuple_int_int_field_0 = 0;
+      q.tuple_int_int_field_1 = -1;
+      directions[i] = q;
     }
     else if (i == 3)
     {
-      tuple_int_int q = new tuple_int_int();
-      q.tuple_int_int_field_0 = -1;
-      q.tuple_int_int_field_1 = 0;
-      directions[i] = q;
+      tuple_int_int p = new tuple_int_int();
+      p.tuple_int_int_field_0 = -1;
+      p.tuple_int_int_field_1 = 0;
+      directions[i] = p;
     }
     else if (i == 4)
     {
-      tuple_int_int p = new tuple_int_int();
-      p.tuple_int_int_field_0 = 1;
-      p.tuple_int_int_field_1 = 1;
-      directions[i] = p;
+      tuple_int_int o = new tuple_int_int();
+      o.tuple_int_int_field_0 = 1;
+      o.tuple_int_int_field_1 = 1;
+      directions[i] = o;
     }
     else if (i == 5)
     {
-      tuple_int_int o = new tuple_int_int();
-      o.tuple_int_int_field_0 = 1;
-      o.tuple_int_int_field_1 = -1;
-      directions[i] = o;
+      tuple_int_int l = new tuple_int_int();
+      l.tuple_int_int_field_0 = 1;
+      l.tuple_int_int_field_1 = -1;
+      directions[i] = l;
     }
     else if (i == 6)
     {
-      tuple_int_int l = new tuple_int_int();
-      l.tuple_int_int_field_0 = -1;
-      l.tuple_int_int_field_1 = 1;
-      directions[i] = l;
+      tuple_int_int k = new tuple_int_int();
+      k.tuple_int_int_field_0 = -1;
+      k.tuple_int_int_field_1 = 1;
+      directions[i] = k;
     }
     else
     {
-      tuple_int_int k = new tuple_int_int();
-      k.tuple_int_int_field_0 = -1;
-      k.tuple_int_int_field_1 = -1;
-      directions[i] = k;
+      tuple_int_int h = new tuple_int_int();
+      h.tuple_int_int_field_0 = -1;
+      h.tuple_int_int_field_1 = -1;
+      directions[i] = h;
     }
     int max_ = 0;
     int[][] m = read_int_matrix(20, 20);
     for (int j = 0 ; j <= 7; j ++)
     {
-      tuple_int_int h = directions[j];
-      int dx = h.tuple_int_int_field_0;
-      int dy = h.tuple_int_int_field_1;
+      tuple_int_int g = directions[j];
+      int dx = g.tuple_int_int_field_0;
+      int dy = g.tuple_int_int_field_1;
       for (int x = 0 ; x <= 19; x ++)
         for (int y = 0 ; y <= 19; y ++)
           max_ = max2(max_, find(4, m, x, y, dx, dy));

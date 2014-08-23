@@ -12,9 +12,8 @@ public class euler08
   public static void main(String args[])
   {
     int i = 1;
-    int g = 5;
-    int[] last = new int[g];
-    for (int j = 0 ; j < g; j++)
+    int[] last = new int[5];
+    for (int j = 0 ; j < 5; j++)
     {
       char c = '_';
       c = scanner.findWithinHorizon(".", 1).charAt(0);

@@ -15,16 +15,23 @@
 (setf (aref t_ index) nil))
 
 (progn
-  (let ((c 5))
-    (let
-     ((a (array_init
-            c
-            (function (lambda (i)
-            (block lambda_1
-              (princ i)
-              (return-from lambda_1 (= (remainder i 2) 0))
-            ))
-            ))))
+  (let
+   ((a (array_init
+          5
+          (function (lambda (i)
+          (block lambda_1
+            (princ i)
+            (return-from lambda_1 (= (remainder i 2) 0))
+          ))
+          ))))
+  (let ((c (aref a 0)))
+    (if
+      c
+      (princ "True")
+      (princ "False"))
+    (princ "
+")
+    (g (id a) 0)
     (let ((d (aref a 0)))
       (if
         d
@@ -32,14 +39,6 @@
         (princ "False"))
       (princ "
 ")
-      (g (id a) 0)
-      (let ((e (aref a 0)))
-        (if
-          e
-          (princ "True")
-          (princ "False"))
-        (princ "
-")
-      )))))
+    ))))
 
 

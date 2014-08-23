@@ -29,9 +29,8 @@ public class euler14
   
   public static void main(String args[])
   {
-    int a = 1000000;
-    int[] m = new int[a];
-    for (int j = 0 ; j < a; j++)
+    int[] m = new int[1000000];
+    for (int j = 0 ; j < 1000000; j++)
       m[j] = 0;
     int max_ = 0;
     int maxi = 0;

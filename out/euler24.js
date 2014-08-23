@@ -1,3 +1,4 @@
+var util = require("util");
 function fact(n){
   var prod = 1;
   for (var i = 2 ; i <= n; i++)

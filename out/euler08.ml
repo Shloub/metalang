@@ -4,8 +4,7 @@ let max2 a b =
 let () =
 begin
   let i = ref( 1 ) in
-  let g = 5 in
-  let last = Array.init g (fun _j ->
+  let last = Array.init 5 (fun _j ->
     let c = Scanf.scanf "%c" (fun v_0 -> v_0) in
     let d = int_of_char (c) - int_of_char ('0') in
     i := (!i) * d;

@@ -32,15 +32,13 @@ let () =
 begin
   let n = Scanf.scanf "%d " (fun v_0 -> v_0) in
   let passepartout = Array.init n (fun _i ->
-    let c = 2 in
-    let out0 = Array.init c (fun _j ->
+    let out0 = Array.init 2 (fun _j ->
       let out__ = Scanf.scanf "%d " (fun v_0 -> v_0) in
       out__) in
     out0) in
   let m = Scanf.scanf "%d " (fun v_0 -> v_0) in
   let serrures = Array.init m (fun _k ->
-    let d = 2 in
-    let out1 = Array.init d (fun _l ->
+    let out1 = Array.init 2 (fun _l ->
       let out_ = Scanf.scanf "%d " (fun v_0 -> v_0) in
       out_) in
     out1) in

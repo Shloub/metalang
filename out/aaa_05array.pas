@@ -1,33 +1,31 @@
 program aaa_05array;
 
-type f = array of boolean;
-function id(b : f) : f;
+type e = array of boolean;
+function id(b : e) : e;
 begin
   exit(b);
 end;
 
-procedure g(t : f; index : Longint);
+procedure g(t : e; index : Longint);
 begin
   t[index] := false;
 end;
 
 
 var
-  a : f;
-  c : Longint;
+  a : e;
+  c : boolean;
   d : boolean;
-  e : boolean;
   i : Longint;
 begin
-  c := 5;
-  SetLength(a, c);
-  for i := 0 to  c - 1 do
+  SetLength(a, 5);
+  for i := 0 to  5 - 1 do
   begin
     Write(i);
     a[i] := (i Mod 2) = 0;
   end;
-  d := a[0];
-  if d
+  c := a[0];
+  if c
   then
     begin
       Write('True');
@@ -38,8 +36,8 @@ begin
     end;
   Write(''#10'');
   g(id(a), 0);
-  e := a[0];
-  if e
+  d := a[0];
+  if d
   then
     begin
       Write('True');

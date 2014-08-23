@@ -7,8 +7,8 @@ function &read_int_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
   {
-    $d = array_map("intval", explode(" ", fgets(STDIN)));
-    $tab[$z] = $d;
+    $c = array_map("intval", explode(" ", fgets(STDIN)));
+    $tab[$z] = $c;
   }
   return $tab;
 }
@@ -22,9 +22,8 @@ function find($n, &$m, $x, $y, $dx, $dy){
     return $m[$y][$x] * find($n - 1, $m, $x + $dx, $y + $dy, $dx, $dy);
 }
 
-$c = 8;
 $directions = array();
-for ($i = 0 ; $i < $c; $i++)
+for ($i = 0 ; $i < 8; $i++)
   if ($i == 0)
   $directions[$i] = array(0, 1);
 else if ($i == 1)

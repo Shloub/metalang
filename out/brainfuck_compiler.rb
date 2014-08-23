@@ -10,9 +10,8 @@ et qui produit les macros metalang correspondante
 
 input = " "
 current_pos = 500
-a = 1000
 mem = [];
-for i in (0 ..  a - 1) do
+for i in (0 ..  1000 - 1) do
   mem[i] = 0;
 end
 mem[current_pos] = mem[current_pos] + 1;

@@ -1,3 +1,4 @@
+var util = require("util");
 
 function f(tuple_){
   var c = tuple_;

@@ -58,9 +58,8 @@ func main() {
   skip()
   var passepartout [][]int = make([][]int, n)
   for i := 0 ; i <= n - 1; i++ {
-    var c int = 2
-      var out0 []int = make([]int, c)
-      for j := 0 ; j <= c - 1; j++ {
+    var out0 []int = make([]int, 2)
+      for j := 0 ; j <= 2 - 1; j++ {
         var out__ int = 0
           fmt.Fscanf(reader, "%d", &out__);
           skip()
@@ -73,9 +72,8 @@ func main() {
   skip()
   var serrures [][]int = make([][]int, m)
   for k := 0 ; k <= m - 1; k++ {
-    var d int = 2
-      var out1 []int = make([]int, d)
-      for l := 0 ; l <= d - 1; l++ {
+    var out1 []int = make([]int, 2)
+      for l := 0 ; l <= 2 - 1; l++ {
         var out_ int = 0
           fmt.Fscanf(reader, "%d", &out_);
           skip()
