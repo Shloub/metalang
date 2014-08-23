@@ -57,9 +57,11 @@ let rec process (acc:'lex acc) i =
     match Instr.unfix t0 with
     | Instr.AllocArray(
       _, _,
-      Expr.Fixed.F (_, Expr.Access (
-        Mutable.Fixed.F
-          (_, Mutable.Var _))), _)
+      Expr.Fixed.F (_,
+		    (
+		      Expr.Lief _ | Expr.Access (
+			Mutable.Fixed.F
+			  (_, Mutable.Var _)))), _)
     | Instr.Print(_, Expr.Fixed.F
       (_,
        (Expr.Access ( Mutable.Fixed.F
