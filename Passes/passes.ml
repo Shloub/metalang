@@ -50,16 +50,13 @@ module WalkInternalTags = WalkTop(InternalTags);;
 module WalkExpandUnTuple = WalkTop(ExpandUnTuple);;
 module WalkInlineFuncs0 = WalkTop(InlineFuncs);;
 module WalkInlineFuncs = struct
-
-
-
   let apply () p =
     let p = WalkInlineFuncs0.apply () p in
     {p with Prog.funs = List.filter (function
     | Prog.DeclarFun (name, t, params, instrs, {Prog.useless=true}) -> false
     | _ -> true) p.Prog.funs}
-
 end
+module WalkInlineVars = WalkTop(InlineVars);;
 
 (* TODO rentrer dans la structure du type *)
 let no_macro = function

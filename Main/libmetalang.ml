@@ -123,9 +123,10 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "expand" Passes.WalkNopend.apply
   |> typed "expend print" Passes.WalkExpandPrint.apply
   |> typed "internal tags" Passes.WalkInternalTags.apply
-  |> typed "inline" Passes.WalkInlineFuncs.apply
-(*  |> (fun (a, b) -> base_print b;
-    (a, b)) *)
+  |> typed "inline functions" Passes.WalkInlineFuncs.apply
+(*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
+(*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> snd |> Typer.process
 
 let clike_passes prog =
