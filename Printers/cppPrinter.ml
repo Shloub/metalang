@@ -74,7 +74,8 @@ class cppPrinter = object(self)
         if Tags.is_taged "use_cc_readline"
         then Format.fprintf f "std::vector<char> *getline(){
   if (std::cin.flags() & std::ios_base::skipws){
-    std::cin.ignore();
+    char c = std::cin.peek();
+    if (c == '\\n' || c == ' ') std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
   }
   std::string line;

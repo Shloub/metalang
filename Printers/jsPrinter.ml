@@ -89,9 +89,8 @@ class jsPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "%s%s%s%s%a%a@\n"
-(if need then "var util = require(\"util\");
-var fs = require(\"fs\");
+    Format.fprintf f "var util = require(\"util\");@\n%s%s%s%s%a%a@\n"
+(if need then "var fs = require(\"fs\");
 var current_char = null;
 var read_char0 = function(){
     return fs.readSync(process.stdin.fd, 1)[0];
