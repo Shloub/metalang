@@ -147,6 +147,8 @@ TMPFILES	:=\
 	$(addsuffix .ml.byte.out, $(TESTS)) \
 	$(addsuffix .pl, $(TESTS)) \
 	$(addsuffix .pl.out, $(TESTS)) \
+	$(addsuffix .rkt, $(TESTS)) \
+	$(addsuffix .rkt.out, $(TESTS)) \
 	$(addsuffix .fun.ml, $(TESTS)) \
 	$(addsuffix .fun.ml.out, $(TESTS)) \
 	$(addsuffix .fun.ml.native, $(TESTS)) \
@@ -237,84 +239,84 @@ out/%.cs : tests/prog/%.metalang metalang
 	fi
 
 out/%.pas : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang pas $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang pas $< || exit 1; \
 	fi
 
 out/%.metalang_parsed : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang metalang_parsed $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang metalang $< || exit 1; \
 	fi
 
 out/%.fun.ml : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang fun.ml $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang fun.ml $< || exit 1; \
 	fi
 
 out/%.pl : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang pl $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang pl $< || exit 1; \
 	fi
 
 out/%.ml : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang ml $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang ml $< || exit 1; \
 	fi
 
 out/%.hs : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang hs $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang hs $< || exit 1; \
 	fi
 
 out/%.rb : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang rb $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang rb $< || exit 1; \
 	fi
 
 out/%.py : tests/prog/%.metalang metalang Stdlib/stdlib.metalang 
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang py $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang py $< || exit 1; \
 	fi
 
 out/%.c : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang c $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang c $< || exit 1; \
 	fi
 
 out/%.cc : tests/prog/%.metalang metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cc $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang cc $< || exit 1; \
 	fi
 
 out/%.php : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang php $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang php $< || exit 1; \
 	fi
 
 out/%.rkt : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
-	if [ -e "$(basename $<).compiler_input" ]; then \
+	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang rkt $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang rkt $< || exit 1; \
@@ -336,53 +338,53 @@ out/%.metalang.test : out/%.metalang Stdlib/stdlib.metalang metalang
 	done;
 
 out/%.m.bin : out/%.m
-	gcc `gnustep-config --objc-flags` -lgnustep-base $(OBJCFLAGS) $< -o $@ || exit 1
-	rm out/$(basename $*).m.d || exit 0
+	@gcc `gnustep-config --objc-flags` -lgnustep-base $(OBJCFLAGS) $< -o $@ || exit 1
+	@rm out/$(basename $*).m.d || exit 0
 
 out/%.c.bin : out/%.c
-	gcc $(CFLAGS) $< -o $@ || exit 1
+	@gcc $(CFLAGS) $< -o $@ || exit 1
 
 out/%.cc.bin : out/%.cc
-	g++ $(CCFLAGS) $< -o $@ || exit 1
+	@g++ $(CCFLAGS) $< -o $@ || exit 1
 
 out/%.pas.bin : out/%.pas
-	fpc $< || exit 1
-	mv out/$(basename $*) $@
-	rm out/$(basename $*).o
+	@fpc $< || exit 1
+	@mv out/$(basename $*) $@
+	@rm out/$(basename $*).o
 
 out/%.class : out/%.java
-	javac $< || exit 1
+	@javac $< || exit 1
 
 out/%.exe : out/%.cs
-	gmcs $< || exit 1
+	@gmcs $< || exit 1
 
 out/%.fun.ml.native : out/%.fun.ml
-	ocamlopt -w +A -g out/$(basename $*).fun.ml -o out/$(basename $*).fun.ml.native || exit 1
-	rm out/$(basename $*).fun.cmx || exit 0
-	rm out/$(basename $*).fun.cmi || exit 0
-	rm out/$(basename $*).fun.o || exit 0
+	@ocamlopt -w +A -g out/$(basename $*).fun.ml -o out/$(basename $*).fun.ml.native || exit 1
+	@rm out/$(basename $*).fun.cmx || exit 0
+	@rm out/$(basename $*).fun.cmi || exit 0
+	@rm out/$(basename $*).fun.o || exit 0
 
 out/%.ml.native : out/%.ml
-	ocamlopt -w +A -g out/$(basename $*).ml -o out/$(basename $*).ml.native || exit 1
-	rm out/$(basename $*).cmx || exit 0
-	rm out/$(basename $*).cmi || exit 0
-	rm out/$(basename $*).o || exit 0
+	@ocamlopt -w +A -g out/$(basename $*).ml -o out/$(basename $*).ml.native || exit 1
+	@rm out/$(basename $*).cmx || exit 0
+	@rm out/$(basename $*).cmi || exit 0
+	@rm out/$(basename $*).o || exit 0
 
 out/%.hs.exe : out/%.hs
-	ghc out/$(basename $*).hs -o out/$(basename $*).hs.exe || exit 1
-	rm out/$(basename $*).o
-	rm out/$(basename $*).hi
+	@ghc out/$(basename $*).hs -o out/$(basename $*).hs.exe || exit 1
+	@rm out/$(basename $*).o
+	@rm out/$(basename $*).hi
 
 out/%.ml.byte : out/%.ml
-	ocamlc -w +A -g out/$(basename $*).ml -o -g out/$(basename $*).ml.byte || exit 1
-	rm out/$(basename $*).cmo || exit 0
-	rm out/$(basename $*).cmi || exit 0
+	@ocamlc -w +A -g out/$(basename $*).ml -o -g out/$(basename $*).ml.byte || exit 1
+	@rm out/$(basename $*).cmo || exit 0
+	@rm out/$(basename $*).cmi || exit 0
 
 out/%.bin.out : out/%.bin
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.eval.out : metalang
-	if [ -e "tests/prog/$(basename $*).compiler_input" ]; then \
+	@if [ -e "tests/prog/$(basename $*).compiler_input" ]; then \
 		cat "tests/prog/$(basename $*).compiler_input" tests/prog/$(basename $*).in | ./metalang -eval tests/prog/$(basename $*).metalang  > $@ || exit 1; \
 	else \
 		./metalang -eval tests/prog/$(basename $*).metalang < tests/prog/$(basename $*).in > $@ || exit 1; \
@@ -404,7 +406,7 @@ out/%.class.out : out/%.class
 	$(java) -classpath out $(basename $*) < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.js.out : out/%.js
-	@node $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	node $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.pl.out : out/%.pl
 	perl $< < tests/prog/$(basename $*).in > $@ || exit 1;
@@ -430,7 +432,7 @@ out/%.exe.out : out/%.exe
 out/%.rkt.out : out/%.rkt
 	racket $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out
+out/%.test : out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -606,7 +608,7 @@ execPL: $(EXECPLDEPS)
 	@echo "$(green)@$ OK$(reset)"
 	@echo "ok" > $@
 
-compileAll: metalang compileML compileFUNML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
+compileAll: metalang allsources compileML compileFUNML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
 	@echo "$(green)ALL COMPILATION OK$(reset)"
 	@echo "ok" > $@
 
