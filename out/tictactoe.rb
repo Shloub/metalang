@@ -199,12 +199,10 @@ def play( g )
 end
 
 def init_(  )
-    b = 3
     cases = [];
-    for i in (0 ..  b - 1) do
-      a = 3
+    for i in (0 ..  3 - 1) do
       tab = [];
-      for j in (0 ..  a - 1) do
+      for j in (0 ..  3 - 1) do
         tab[j] = 0;
       end
       cases[i] = tab;

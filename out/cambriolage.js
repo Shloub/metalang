@@ -62,9 +62,8 @@ stdinsep();
 var passepartout = new Array(n);
 for (var i = 0 ; i <= n - 1; i++)
 {
-  var c = 2;
-  var out0 = new Array(c);
-  for (var j = 0 ; j <= c - 1; j++)
+  var out0 = new Array(2);
+  for (var j = 0 ; j <= 2 - 1; j++)
   {
     var out__ = 0;
     out__=read_int_();
@@ -79,9 +78,8 @@ stdinsep();
 var serrures = new Array(m);
 for (var k = 0 ; k <= m - 1; k++)
 {
-  var d = 2;
-  var out1 = new Array(d);
-  for (var l = 0 ; l <= d - 1; l++)
+  var out1 = new Array(2);
+  for (var l = 0 ; l <= 2 - 1; l++)
   {
     var out_ = 0;
     out_=read_int_();

@@ -173,24 +173,22 @@ function &play(&$g){
 }
 
 function &init_(){
-  $b = 3;
   $cases = array();
-  for ($i = 0 ; $i < $b; $i++)
+  for ($i = 0 ; $i < 3; $i++)
   {
-    $a = 3;
     $tab = array();
-    for ($j = 0 ; $j < $a; $j++)
+    for ($j = 0 ; $j < 3; $j++)
       $tab[$j] = 0;
     $cases[$i] = $tab;
   }
-  $c = array(
+  $a = array(
     "cases"=>$cases,
     "firstToPlay"=>true,
     "note"=>0,
     "ended"=>false
   );
   
-  return $c;
+  return $a;
 }
 
 function &read_move(){
@@ -200,29 +198,29 @@ function &read_move(){
   $y = 0;
   list($y) = scan("%d");
   scantrim();
-  $d = array(
+  $b = array(
     "x"=>$x,
     "y"=>$y
   );
   
-  return $d;
+  return $b;
 }
 
 for ($i = 0 ; $i <= 1; $i++)
 {
   $state = init_();
-  $e = array(
+  $c = array(
     "x"=>1,
     "y"=>1
   );
   
-  apply_move($e, $state);
-  $f = array(
+  apply_move($c, $state);
+  $d = array(
     "x"=>0,
     "y"=>0
   );
   
-  apply_move($f, $state);
+  apply_move($d, $state);
   while (!$state["ended"])
   {
     print_state($state);

@@ -1,3 +1,4 @@
+var util = require("util");
 function next_(n){
   if ((~~(n % 2)) == 0)
     return ~~(n / 2);
@@ -19,9 +20,8 @@ function find(n, m){
   }
 }
 
-var a = 1000000;
-var m = new Array(a);
-for (var j = 0 ; j <= a - 1; j++)
+var m = new Array(1000000);
+for (var j = 0 ; j <= 1000000 - 1; j++)
   m[j] = 0;
 var max_ = 0;
 var maxi = 0;

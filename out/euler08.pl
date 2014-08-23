@@ -23,9 +23,8 @@ sub max2{
 }
 
 my $i = 1;
-my $g = 5;
 my $last = [];
-foreach my $j (0 .. $g - 1) {
+foreach my $j (0 .. 5 - 1) {
   my $c = '_';
   $c = readchar();
   my $d = ord($c) - ord('0');

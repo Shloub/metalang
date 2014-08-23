@@ -39,9 +39,8 @@ sub result{
   return $out_;
 }
 
-my $a = 4;
 my $t = [];
-foreach my $i (0 .. $a - 1) {
+foreach my $i (0 .. 4 - 1) {
   $t->[$i] = mktoto($i);
   }
 $t->[0]->{"bar"} = readint();

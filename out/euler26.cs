@@ -21,9 +21,8 @@ public class euler26
   
   public static void Main(String[] args)
   {
-    int c = 1000;
-    int[] t = new int[c];
-    for (int j = 0 ; j < c; j++)
+    int[] t = new int[1000];
+    for (int j = 0 ; j < 1000; j++)
       t[j] = 0;
     int m = 0;
     int mi = 0;

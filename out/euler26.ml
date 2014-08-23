@@ -21,8 +21,7 @@ let periode restes len a b =
 
 let () =
 begin
-  let c = 1000 in
-  let t = Array.init c (fun _j ->
+  let t = Array.init 1000 (fun _j ->
     0) in
   let m = ref( 0 ) in
   let mi = ref( 0 ) in

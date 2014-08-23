@@ -6,19 +6,18 @@ let g t index =
 
 let () =
 begin
-  let c = 5 in
-  let a = Array.init c (fun i ->
+  let a = Array.init 5 (fun i ->
     Printf.printf "%d" i;
     (i mod 2) = 0) in
-  let d = a.(0) in
-  if d then
+  let c = a.(0) in
+  if c then
     Printf.printf "True"
   else
     Printf.printf "False";
   Printf.printf "\n";
   g (id a) 0;
-  let e = a.(0) in
-  if e then
+  let d = a.(0) in
+  if d then
     Printf.printf "True"
   else
     Printf.printf "False";

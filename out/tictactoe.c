@@ -193,28 +193,26 @@ struct move * play(struct gamestate * g){
 }
 
 struct gamestate * init_(){
-  int b = 3;
-  int* *cases = malloc( b * sizeof(int*));
+  int* *cases = malloc( 3 * sizeof(int*));
   {
     int i;
-    for (i = 0 ; i < b; i++)
+    for (i = 0 ; i < 3; i++)
     {
-      int a = 3;
-      int *tab = malloc( a * sizeof(int));
+      int *tab = malloc( 3 * sizeof(int));
       {
         int j;
-        for (j = 0 ; j < a; j++)
+        for (j = 0 ; j < 3; j++)
           tab[j] = 0;
       }
       cases[i] = tab;
     }
   }
-  struct gamestate * c = malloc (sizeof(c) );
-  c->cases=cases;
-  c->firstToPlay=1;
-  c->note=0;
-  c->ended=0;
-  return c;
+  struct gamestate * a = malloc (sizeof(a) );
+  a->cases=cases;
+  a->firstToPlay=1;
+  a->note=0;
+  a->ended=0;
+  return a;
 }
 
 struct move * read_move(){
@@ -222,10 +220,10 @@ struct move * read_move(){
   scanf("%d ", &x);
   int y = 0;
   scanf("%d ", &y);
-  struct move * d = malloc (sizeof(d) );
-  d->x=x;
-  d->y=y;
-  return d;
+  struct move * b = malloc (sizeof(b) );
+  b->x=x;
+  b->y=y;
+  return b;
 }
 
 int main(void){
@@ -234,14 +232,14 @@ int main(void){
     for (i = 0 ; i <= 1; i++)
     {
       struct gamestate * state = init_();
-      struct move * e = malloc (sizeof(e) );
-      e->x=1;
-      e->y=1;
-      apply_move(e, state);
-      struct move * f = malloc (sizeof(f) );
-      f->x=0;
-      f->y=0;
-      apply_move(f, state);
+      struct move * c = malloc (sizeof(c) );
+      c->x=1;
+      c->y=1;
+      apply_move(c, state);
+      struct move * d = malloc (sizeof(d) );
+      d->x=0;
+      d->y=0;
+      apply_move(d, state);
       while (!state->ended)
       {
         print_state(state);

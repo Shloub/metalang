@@ -48,11 +48,10 @@ int main(void){
     int i;
     for (i = 0 ; i < n; i++)
     {
-      int c = 2;
-      int *out0 = malloc( c * sizeof(int));
+      int *out0 = malloc( 2 * sizeof(int));
       {
         int j;
-        for (j = 0 ; j < c; j++)
+        for (j = 0 ; j < 2; j++)
         {
           int out__ = 0;
           scanf("%d ", &out__);
@@ -69,11 +68,10 @@ int main(void){
     int k;
     for (k = 0 ; k < m; k++)
     {
-      int d = 2;
-      int *out1 = malloc( d * sizeof(int));
+      int *out1 = malloc( 2 * sizeof(int));
       {
         int l;
-        for (l = 0 ; l < d; l++)
+        for (l = 0 ; l < 2; l++)
         {
           int out_ = 0;
           scanf("%d ", &out_);

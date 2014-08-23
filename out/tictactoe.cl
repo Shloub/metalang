@@ -254,30 +254,28 @@ Renvoie le coup de l'IA
 
 (defun init_ ()
 (progn
-  (let ((b 3))
-    (let
-     ((cases (array_init
-                b
-                (function (lambda (i)
-                (block lambda_1
-                  (let ((a 3))
-                    (let
-                     ((tab (array_init
-                              a
-                              (function (lambda (j)
-                              (block lambda_2
-                                (return-from lambda_2 0)
-                              ))
-                              ))))
-                    (return-from lambda_1 tab)
-                    ))))
-                ))))
-    (let ((c (make-gamestate :cases cases
-                             :firstToPlay t
-                             :note 0
-                             :ended nil)))
-    (return-from init_ c)
-    )))))
+  (let
+   ((cases (array_init
+              3
+              (function (lambda (i)
+              (block lambda_1
+                (let
+                 ((tab (array_init
+                          3
+                          (function (lambda (j)
+                          (block lambda_2
+                            (return-from lambda_2 0)
+                          ))
+                          ))))
+                (return-from lambda_1 tab)
+                )))
+              ))))
+  (let ((a (make-gamestate :cases cases
+                           :firstToPlay t
+                           :note 0
+                           :ended nil)))
+  (return-from init_ a)
+  ))))
 
 (defun read_move ()
 (progn
@@ -285,9 +283,9 @@ Renvoie le coup de l'IA
     (mread-blank)
     (let ((y (mread-int )))
       (mread-blank)
-      (let ((d (make-move :x x
+      (let ((b (make-move :x x
                           :y y)))
-      (return-from read_move d)
+      (return-from read_move b)
     )))))
 
 (do
@@ -295,12 +293,12 @@ Renvoie le coup de l'IA
   ((> i 1))
   (progn
     (let ((state (init_ )))
-      (let ((e (make-move :x 1
+      (let ((c (make-move :x 1
                           :y 1)))
-      (apply_move e state)
-      (let ((f (make-move :x 0
+      (apply_move c state)
+      (let ((d (make-move :x 0
                           :y 0)))
-      (apply_move f state)
+      (apply_move d state)
       (loop while (not (gamestate-ended state))
       do (progn
            (print_state state)

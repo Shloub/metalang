@@ -22,9 +22,8 @@ def max2( a, b ):
     return max(a, b);
 
 i = 1;
-g = 5;
-last = [None] * g
-for j in range(0, g):
+last = [None] * 5
+for j in range(0, 5):
   c = '_';
   c=readchar()
   d = ord(c) - ord('0');

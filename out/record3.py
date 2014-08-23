@@ -47,9 +47,8 @@ def result( t, len ):
       out_ = out_ + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"];
     return out_;
 
-a = 4;
-t = [None] * a
-for i in range(0, a):
+t = [None] * 4
+for i in range(0, 4):
   t[i] = mktoto(i);
 t[0]["bar"]=readint()
 stdinsep()

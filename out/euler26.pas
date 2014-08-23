@@ -1,7 +1,7 @@
 program euler26;
 
-type d = array of Longint;
-function periode(restes : d; len : Longint; a : Longint; b : Longint) : Longint;
+type c = array of Longint;
+function periode(restes : c; len : Longint; a : Longint; b : Longint) : Longint;
 var
   chiffre : Longint;
   i : Longint;
@@ -28,17 +28,15 @@ end;
 
 
 var
-  c : Longint;
   i : Longint;
   j : Longint;
   m : Longint;
   mi : Longint;
   p : Longint;
-  t : d;
+  t : c;
 begin
-  c := 1000;
-  SetLength(t, c);
-  for j := 0 to  c - 1 do
+  SetLength(t, 1000);
+  for j := 0 to  1000 - 1 do
   begin
     t[j] := 0;
   end;

@@ -31,36 +31,35 @@
 ))
 
 (progn
-  (let ((c 1000))
-    (let
-     ((t_ (array_init
-             c
-             (function (lambda (j)
-             (block lambda_1
-               (return-from lambda_1 0)
-             ))
-             ))))
-    (let ((m 0))
-      (let ((mi 0))
-        (do
-          ((i 1 (+ 1 i)))
-          ((> i 1000))
-          (progn
-            (let ((p (periode t_ 0 1 i)))
-              (if
-                (> p m)
-                (progn
-                  (setq mi i)
-                  (setq m p)
-                ))
-            ))
-        )
-        (princ mi)
-        (princ "
+  (let
+   ((t_ (array_init
+           1000
+           (function (lambda (j)
+           (block lambda_1
+             (return-from lambda_1 0)
+           ))
+           ))))
+  (let ((m 0))
+    (let ((mi 0))
+      (do
+        ((i 1 (+ 1 i)))
+        ((> i 1000))
+        (progn
+          (let ((p (periode t_ 0 1 i)))
+            (if
+              (> p m)
+              (progn
+                (setq mi i)
+                (setq m p)
+              ))
+          ))
+      )
+      (princ mi)
+      (princ "
 ")
-        (princ m)
-        (princ "
+      (princ m)
+      (princ "
 ")
-      )))))
+    ))))
 
 

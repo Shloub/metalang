@@ -15,9 +15,8 @@ function max2(a, b){
 }
 
 var i = 1;
-var g = 5;
-var last = new Array(g);
-for (var j = 0 ; j <= g - 1; j++)
+var last = new Array(5);
+for (var j = 0 ; j <= 5 - 1; j++)
 {
   var c = '_';
   c=read_char_();

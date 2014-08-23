@@ -26,48 +26,47 @@
 
 (progn
   (let ((i 1))
-    (let ((g 5))
-      (let
-       ((last (array_init
-                 g
-                 (function (lambda (j)
-                 (block lambda_1
-                   (let ((c (mread-char )))
-                     (let ((d (- (char-int c) (char-int #\0))))
-                       (setq i ( * i d))
-                       (return-from lambda_1 d)
-                     ))))
-                 ))))
-      (let ((max_ i))
-        (let ((index 0))
-          (let ((nskipdiv 0))
-            (do
-              ((k 1 (+ 1 k)))
-              ((> k 995))
-              (progn
-                (let ((e (mread-char )))
-                  (let ((f (- (char-int e) (char-int #\0))))
-                    (if
-                      (= f 0)
-                      (progn
-                        (setq i 1)
-                        (setq nskipdiv 4)
-                      )
-                      (progn
-                        (setq i ( * i f))
-                        (if
-                          (< nskipdiv 0)
-                          (setq i ( quotient i (aref last index))))
-                        (setq nskipdiv ( - nskipdiv 1))
-                      ))
-                    (setf (aref last index) f)
-                    (setq index (remainder (+ index 1) 5))
-                    (setq max_ (max2 max_ i))
-                  )))
-            )
-            (princ max_)
-            (princ "
+    (let
+     ((last (array_init
+               5
+               (function (lambda (j)
+               (block lambda_1
+                 (let ((c (mread-char )))
+                   (let ((d (- (char-int c) (char-int #\0))))
+                     (setq i ( * i d))
+                     (return-from lambda_1 d)
+                   ))))
+               ))))
+    (let ((max_ i))
+      (let ((index 0))
+        (let ((nskipdiv 0))
+          (do
+            ((k 1 (+ 1 k)))
+            ((> k 995))
+            (progn
+              (let ((e (mread-char )))
+                (let ((f (- (char-int e) (char-int #\0))))
+                  (if
+                    (= f 0)
+                    (progn
+                      (setq i 1)
+                      (setq nskipdiv 4)
+                    )
+                    (progn
+                      (setq i ( * i f))
+                      (if
+                        (< nskipdiv 0)
+                        (setq i ( quotient i (aref last index))))
+                      (setq nskipdiv ( - nskipdiv 1))
+                    ))
+                  (setf (aref last index) f)
+                  (setq index (remainder (+ index 1) 5))
+                  (setq max_ (max2 max_ i))
+                )))
+          )
+          (princ max_)
+          (princ "
 ")
-          )))))))
+        ))))))
 
 

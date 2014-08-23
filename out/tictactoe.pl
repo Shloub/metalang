@@ -248,21 +248,19 @@ sub play{
 }
 
 sub init_{
-  my $b = 3;
   my $cases = [];
-  foreach my $i (0 .. $b - 1) {
-    my $a = 3;
+  foreach my $i (0 .. 3 - 1) {
     my $tab = [];
-    foreach my $j (0 .. $a - 1) {
+    foreach my $j (0 .. 3 - 1) {
       $tab->[$j] = 0;
       }
     $cases->[$i] = $tab;
     }
-  my $c = {"cases"=>$cases,
+  my $a = {"cases"=>$cases,
            "firstToPlay"=>1,
            "note"=>0,
            "ended"=>0};
-  return $c;
+  return $a;
 }
 
 sub read_move{
@@ -272,19 +270,19 @@ sub read_move{
   my $y = 0;
   $y = readint();
   readspaces();
-  my $d = {"x"=>$x,
+  my $b = {"x"=>$x,
            "y"=>$y};
-  return $d;
+  return $b;
 }
 
 foreach my $i (0 .. 1) {
   my $state = init_();
-  my $e = {"x"=>1,
+  my $c = {"x"=>1,
            "y"=>1};
-  apply_move($e, $state);
-  my $f = {"x"=>0,
+  apply_move($c, $state);
+  my $d = {"x"=>0,
            "y"=>0};
-  apply_move($f, $state);
+  apply_move($d, $state);
   while (!$state->{"ended"})
   {
     print_state($state);

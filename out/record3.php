@@ -37,9 +37,8 @@ function result(&$t, $len){
   return $out_;
 }
 
-$a = 4;
 $t = array();
-for ($i = 0 ; $i < $a; $i++)
+for ($i = 0 ; $i < 4; $i++)
   $t[$i] = mktoto($i);
 list($t[0]["bar"]) = scan("%d");
 scantrim();

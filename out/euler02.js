@@ -1,3 +1,4 @@
+var util = require("util");
 var a = 1;
 var b = 2;
 var sum = 0;

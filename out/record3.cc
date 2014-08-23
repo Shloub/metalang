@@ -27,9 +27,8 @@ int result(std::vector<toto *> * t, int len){
 
 
 int main(){
-  int a = 4;
-  std::vector<toto * > *t = new std::vector<toto *>( a );
-  for (int i = 0 ; i < a; i++)
+  std::vector<toto * > *t = new std::vector<toto *>( 4 );
+  for (int i = 0 ; i < 4; i++)
     t->at(i) = mktoto(i);
   std::cin >> t->at(0)->bar >> std::skipws >> t->at(1)->blah >> std::noskipws;
   int titi = result(t, 4);

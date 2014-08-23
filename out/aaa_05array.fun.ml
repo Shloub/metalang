@@ -14,23 +14,22 @@ let id b =
 let g t index =
   t.(index) <- false
 let main =
-  let c = 5 in
-  let a = (Array.init_withenv c (fun  i () -> (
+  let a = (Array.init_withenv 5 (fun  i () -> (
                                                 (Printf.printf "%d" i);
-                                                let f = ((i mod 2) = 0) in
-                                                ((), f)
+                                                let e = ((i mod 2) = 0) in
+                                                ((), e)
                                                 )
   ) ()) in
-  let d = a.(0) in
+  let c = a.(0) in
   (
-    (if d
+    (if c
      then (Printf.printf "True")
      else (Printf.printf "False"));
     (Printf.printf "\n" );
     (g (id a) 0);
-    let e = a.(0) in
+    let d = a.(0) in
     (
-      (if e
+      (if d
        then (Printf.printf "True")
        else (Printf.printf "False"));
       (Printf.printf "\n" )

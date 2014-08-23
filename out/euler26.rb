@@ -19,9 +19,8 @@ def periode( restes, len, a, b )
     return (0);
 end
 
-c = 1000
 t = [];
-for j in (0 ..  c - 1) do
+for j in (0 ..  1000 - 1) do
   t[j] = 0;
 end
 m = 0

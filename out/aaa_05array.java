@@ -16,22 +16,21 @@ public class aaa_05array
   
   public static void main(String args[])
   {
-    int c = 5;
-    boolean[] a = new boolean[c];
-    for (int i = 0 ; i < c; i++)
+    boolean[] a = new boolean[5];
+    for (int i = 0 ; i < 5; i++)
     {
       System.out.printf("%d", i);
       a[i] = (i % 2) == 0;
     }
-    boolean d = a[0];
-    if (d)
+    boolean c = a[0];
+    if (c)
       System.out.print("True");
     else
       System.out.print("False");
     System.out.print("\n");
     g(id(a), 0);
-    boolean e = a[0];
-    if (e)
+    boolean d = a[0];
+    if (d)
       System.out.print("True");
     else
       System.out.print("False");

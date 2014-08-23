@@ -40,9 +40,8 @@ func result(t []* toto, len int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var a int = 4
-  var t []* toto = make([]* toto, a)
-  for i := 0 ; i <= a - 1; i++ {
+  var t []* toto = make([]* toto, 4)
+  for i := 0 ; i <= 4 - 1; i++ {
     t[i] = mktoto(i);
   }
   fmt.Fscanf(reader, "%d", &(*t[0]).bar);

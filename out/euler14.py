@@ -18,9 +18,8 @@ def find( n, m ):
       m[n] = 1 + find(next_(n), m);
       return m[n];
 
-a = 1000000;
-m = [None] * a
-for j in range(0, a):
+m = [None] * 1000000
+for j in range(0, 1000000):
   m[j] = 0;
 max_ = 0;
 maxi = 0;

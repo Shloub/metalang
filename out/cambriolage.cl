@@ -77,19 +77,18 @@
                        n
                        (function (lambda (i)
                        (block lambda_1
-                         (let ((c 2))
-                           (let
-                            ((out0 (array_init
-                                      c
-                                      (function (lambda (j)
-                                      (block lambda_2
-                                        (let ((out__ (mread-int )))
-                                          (mread-blank)
-                                          (return-from lambda_2 out__)
-                                        )))
-                                      ))))
-                           (return-from lambda_1 out0)
-                           ))))
+                         (let
+                          ((out0 (array_init
+                                    2
+                                    (function (lambda (j)
+                                    (block lambda_2
+                                      (let ((out__ (mread-int )))
+                                        (mread-blank)
+                                        (return-from lambda_2 out__)
+                                      )))
+                                    ))))
+                         (return-from lambda_1 out0)
+                         )))
                        ))))
     (let ((m (mread-int )))
       (mread-blank)
@@ -98,19 +97,18 @@
                      m
                      (function (lambda (k)
                      (block lambda_3
-                       (let ((d 2))
-                         (let
-                          ((out1 (array_init
-                                    d
-                                    (function (lambda (l)
-                                    (block lambda_4
-                                      (let ((out_ (mread-int )))
-                                        (mread-blank)
-                                        (return-from lambda_4 out_)
-                                      )))
-                                    ))))
-                         (return-from lambda_3 out1)
-                         ))))
+                       (let
+                        ((out1 (array_init
+                                  2
+                                  (function (lambda (l)
+                                  (block lambda_4
+                                    (let ((out_ (mread-int )))
+                                      (mread-blank)
+                                      (return-from lambda_4 out_)
+                                    )))
+                                  ))))
+                       (return-from lambda_3 out1)
+                       )))
                      ))))
       (princ (nbPassePartout n passepartout m serrures))
       )))))

@@ -3,11 +3,11 @@ let max2 a b =
 
 let read_int_matrix x y =
   let tab = Array.init y (fun _z ->
-    let e = Array.init x (fun _f ->
-      let g = Scanf.scanf "%d " (fun v_0 -> v_0) in
-      g) in
-    let d = e in
-    d) in
+    let d = Array.init x (fun _e ->
+      let f = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      f) in
+    let c = d in
+    c) in
   tab
 
 let rec find n m x y dx dy =
@@ -20,8 +20,7 @@ let rec find n m x y dx dy =
 
 let () =
 begin
-  let c = 8 in
-  let directions = Array.init c (fun i ->
+  let directions = Array.init 8 (fun i ->
     if i = 0 then
       (0, 1)
     else if i = 1 then

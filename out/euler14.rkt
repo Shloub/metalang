@@ -11,7 +11,7 @@
 
 (define (next_ n)
   ;toto
-  (let ([e (lambda (_) 
+  (let ([d (lambda (_) 
              '())])
   (if (eq? (remainder n 2) 0)
   (quotient n 2)
@@ -19,16 +19,16 @@
 )
 (define (find_ n m)
   ;toto
-  (let ([b (lambda (_) 
+  (let ([a (lambda (_) 
              '())])
   (if (eq? n 1)
   1
-  (let ([c (lambda (_) 
-             (b 'nil))])
+  (let ([b (lambda (_) 
+             (a 'nil))])
   (if (>= n 1000000)
   (+ 1 (find_ (next_ n) m))
-  (let ([d (lambda (_) 
-             (c 'nil))])
+  (let ([c (lambda (_) 
+             (b 'nil))])
   (if (not (eq? (vector-ref m n) 0))
   (vector-ref m n)
   (block
@@ -37,20 +37,19 @@
     )))))))
 )
 (define main
-  (let ([a 1000000])
-  (let ([m (array_init_withenv a (lambda (j) 
-                                   (lambda (_) (let ([f 0])
-                                               (list '() f)))) '())])
+  (let ([m (array_init_withenv 1000000 (lambda (j) 
+                                         (lambda (_) (let ([e 0])
+                                                     (list '() e)))) '())])
   (let ([max_ 0])
   (let ([maxi 0])
-  (let ([h 1])
-  (let ([k 999])
-  (letrec ([g (lambda (i max_ maxi) 
-                (if (<= i k)
+  (let ([g 1])
+  (let ([h 999])
+  (letrec ([f (lambda (i max_ maxi) 
+                (if (<= i h)
                 ; normalement on met 999999 mais ça dépasse les int32... 
                 (let ([n2 (find_ i m)])
                 ((lambda (internal_env) (apply (lambda (max_ maxi) 
-                                                      (g (+ i 1) max_ maxi)) internal_env)) 
+                                                      (f (+ i 1) max_ maxi)) internal_env)) 
                 (if (> n2 max_)
                 (let ([max_ n2])
                 (let ([maxi i])
@@ -59,6 +58,6 @@
                 (block
                   (map display (list max_ "\n" maxi "\n"))
                   )))])
-  (g h max_ maxi))))))))
+  (f g max_ maxi)))))))
 )
 

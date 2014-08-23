@@ -24,9 +24,8 @@ def find( n, m )
     end
 end
 
-a = 1000000
 m = [];
-for j in (0 ..  a - 1) do
+for j in (0 ..  1000000 - 1) do
   m[j] = 0;
 end
 max_ = 0

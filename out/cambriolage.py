@@ -62,9 +62,8 @@ n=readint()
 stdinsep()
 passepartout = [None] * n
 for i in range(0, n):
-  c = 2;
-  out0 = [None] * c
-  for j in range(0, c):
+  out0 = [None] * 2
+  for j in range(0, 2):
     out__ = 0;
     out__=readint()
     stdinsep()
@@ -75,9 +74,8 @@ m=readint()
 stdinsep()
 serrures = [None] * m
 for k in range(0, m):
-  d = 2;
-  out1 = [None] * d
-  for l in range(0, d):
+  out1 = [None] * 2
+  for l in range(0, 2):
     out_ = 0;
     out_=readint()
     stdinsep()

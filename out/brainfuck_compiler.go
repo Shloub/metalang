@@ -24,9 +24,8 @@ func main() {
   var input byte = ' '
   _ = input
   var current_pos int = 500
-  var a int = 1000
-  var mem []int = make([]int, a)
-  for i := 0 ; i <= a - 1; i++ {
+  var mem []int = make([]int, 1000)
+  for i := 0 ; i <= 1000 - 1; i++ {
     mem[i] = 0;
   }
   mem[current_pos] = mem[current_pos] + 1;

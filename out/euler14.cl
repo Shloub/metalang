@@ -31,37 +31,36 @@
       )))))
 
 (progn
-  (let ((a 1000000))
-    (let
-     ((m (array_init
-            a
-            (function (lambda (j)
-            (block lambda_1
-              (return-from lambda_1 0)
-            ))
-            ))))
-    (let ((max_ 0))
-      (let ((maxi 0))
-        (do
-          ((i 1 (+ 1 i)))
-          ((> i 999))
-          (progn
-            #| normalement on met 999999 mais ça dépasse les int32... |#
-            (let ((n2 (find_ i m)))
-              (if
-                (> n2 max_)
-                (progn
-                  (setq max_ n2)
-                  (setq maxi i)
-                ))
-            ))
-        )
-        (princ max_)
-        (princ "
+  (let
+   ((m (array_init
+          1000000
+          (function (lambda (j)
+          (block lambda_1
+            (return-from lambda_1 0)
+          ))
+          ))))
+  (let ((max_ 0))
+    (let ((maxi 0))
+      (do
+        ((i 1 (+ 1 i)))
+        ((> i 999))
+        (progn
+          #| normalement on met 999999 mais ça dépasse les int32... |#
+          (let ((n2 (find_ i m)))
+            (if
+              (> n2 max_)
+              (progn
+                (setq max_ n2)
+                (setq maxi i)
+              ))
+          ))
+      )
+      (princ max_)
+      (princ "
 ")
-        (princ maxi)
-        (princ "
+      (princ maxi)
+      (princ "
 ")
-      )))))
+    ))))
 
 

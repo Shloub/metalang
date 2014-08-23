@@ -53,9 +53,8 @@ scantrim();
 $passepartout = array();
 for ($i = 0 ; $i < $n; $i++)
 {
-  $c = 2;
   $out0 = array();
-  for ($j = 0 ; $j < $c; $j++)
+  for ($j = 0 ; $j < 2; $j++)
   {
     $out__ = 0;
     list($out__) = scan("%d");
@@ -70,9 +69,8 @@ scantrim();
 $serrures = array();
 for ($k = 0 ; $k < $m; $k++)
 {
-  $d = 2;
   $out1 = array();
-  for ($l = 0 ; $l < $d; $l++)
+  for ($l = 0 ; $l < 2; $l++)
   {
     $out_ = 0;
     list($out_) = scan("%d");

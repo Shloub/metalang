@@ -2,7 +2,8 @@
 #include <vector>
 std::vector<char> *getline(){
   if (std::cin.flags() & std::ios_base::skipws){
-    std::cin.ignore();
+    char c = std::cin.peek();
+    if (c == '\n' || c == ' ') std::cin.ignore();
     std::cin.unsetf(std::ios::skipws);
   }
   std::string line;

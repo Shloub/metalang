@@ -80,8 +80,8 @@ begin
   exit(t);
 end;
 
-type b = array of toto;
-function result(t : b; len : Longint) : Longint;
+type a = array of toto;
+function result(t : a; len : Longint) : Longint;
 var
   j : Longint;
   out_ : Longint;
@@ -97,14 +97,12 @@ end;
 
 
 var
-  a : Longint;
   i : Longint;
-  t : b;
+  t : a;
   titi : Longint;
 begin
-  a := 4;
-  SetLength(t, a);
-  for i := 0 to  a - 1 do
+  SetLength(t, 4);
+  for i := 0 to  4 - 1 do
   begin
     t[i] := mktoto(i);
   end;

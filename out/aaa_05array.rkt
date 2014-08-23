@@ -18,27 +18,26 @@
   (vector-set! t_ index #f)
 )
 (define main
-  (let ([c 5])
-  (let ([a (array_init_withenv c (lambda (i) 
+  (let ([a (array_init_withenv 5 (lambda (i) 
                                    (lambda (_) (block
                                                  (display i)
-                                                 (let ([f (eq? (remainder i 2) 0)])
-                                                 (list '() f))
+                                                 (let ([e (eq? (remainder i 2) 0)])
+                                                 (list '() e))
                                                  ))) '())])
-  (let ([d (vector-ref a 0)])
+  (let ([c (vector-ref a 0)])
   (block
-    (if d
+    (if c
     (display "True")
     (display "False"))
     (display "\n")
     (g (id a) 0)
-    (let ([e (vector-ref a 0)])
+    (let ([d (vector-ref a 0)])
     (block
-      (if e
+      (if d
       (display "True")
       (display "False"))
       (display "\n")
       ))
-    ))))
+    )))
 )
 

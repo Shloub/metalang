@@ -38,9 +38,8 @@ func find(n int, m []int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var a int = 1000000
-  var m []int = make([]int, a)
-  for j := 0 ; j <= a - 1; j++ {
+  var m []int = make([]int, 1000000)
+  for j := 0 ; j <= 1000000 - 1; j++ {
     m[j] = 0;
   }
   var max_ int = 0

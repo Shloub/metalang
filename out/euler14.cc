@@ -23,9 +23,8 @@ int find(int n, std::vector<int> * m){
 
 
 int main(){
-  int a = 1000000;
-  std::vector<int > *m = new std::vector<int>( a );
-  for (int j = 0 ; j < a; j++)
+  std::vector<int > *m = new std::vector<int>( 1000000 );
+  for (int j = 0 ; j < 1000000; j++)
     m->at(j) = 0;
   int max_ = 0;
   int maxi = 0;

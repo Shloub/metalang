@@ -14,9 +14,8 @@ function periode(&$restes, $len, $a, $b){
   return 0;
 }
 
-$c = 1000;
 $t = array();
-for ($j = 0 ; $j < $c; $j++)
+for ($j = 0 ; $j < 1000; $j++)
   $t[$j] = 0;
 $m = 0;
 $mi = 0;

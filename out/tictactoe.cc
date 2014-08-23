@@ -167,22 +167,20 @@ move * play(gamestate * g){
 }
 
 gamestate * init_(){
-  int b = 3;
-  std::vector<std::vector<int> * > *cases = new std::vector<std::vector<int> *>( b );
-  for (int i = 0 ; i < b; i++)
+  std::vector<std::vector<int> * > *cases = new std::vector<std::vector<int> *>( 3 );
+  for (int i = 0 ; i < 3; i++)
   {
-    int a = 3;
-    std::vector<int > *tab = new std::vector<int>( a );
-    for (int j = 0 ; j < a; j++)
+    std::vector<int > *tab = new std::vector<int>( 3 );
+    for (int j = 0 ; j < 3; j++)
       tab->at(j) = 0;
     cases->at(i) = tab;
   }
-  gamestate * c = new gamestate();
-  c->cases=cases;
-  c->firstToPlay=true;
-  c->note=0;
-  c->ended=false;
-  return c;
+  gamestate * a = new gamestate();
+  a->cases=cases;
+  a->firstToPlay=true;
+  a->note=0;
+  a->ended=false;
+  return a;
 }
 
 move * read_move(){
@@ -190,10 +188,10 @@ move * read_move(){
   std::cin >> x >> std::skipws;
   int y = 0;
   std::cin >> y >> std::skipws;
-  move * d = new move();
-  d->x=x;
-  d->y=y;
-  return d;
+  move * b = new move();
+  b->x=x;
+  b->y=y;
+  return b;
 }
 
 
@@ -201,14 +199,14 @@ int main(){
   for (int i = 0 ; i <= 1; i ++)
   {
     gamestate * state = init_();
-    move * e = new move();
-    e->x=1;
-    e->y=1;
-    apply_move(e, state);
-    move * f = new move();
-    f->x=0;
-    f->y=0;
-    apply_move(f, state);
+    move * c = new move();
+    c->x=1;
+    c->y=1;
+    apply_move(c, state);
+    move * d = new move();
+    d->x=0;
+    d->y=0;
+    apply_move(d, state);
     while (!state->ended)
     {
       print_state(state);

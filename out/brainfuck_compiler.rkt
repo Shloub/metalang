@@ -12,10 +12,9 @@
 (define main
   (let ([input #\Space])
   (let ([current_pos 500])
-  (let ([a 1000])
-  (let ([mem_ (array_init_withenv a (lambda (i) 
-                                      (lambda (_) (let ([b 0])
-                                                  (list '() b)))) '())])
+  (let ([mem_ (array_init_withenv 1000 (lambda (i) 
+                                         (lambda (_) (let ([a 0])
+                                                     (list '() a)))) '())])
   (block
     (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
     (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
@@ -76,7 +75,7 @@
       (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
       (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
       (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
-      (letrec ([d (lambda (current_pos) 
+      (letrec ([c (lambda (current_pos) 
                     (if (not (eq? (vector-ref mem_ current_pos) 0))
                     (block
                       (vector-set! mem_ current_pos (- (vector-ref mem_ current_pos) 1))
@@ -85,12 +84,12 @@
                         (vector-set! mem_ current_pos (+ (vector-ref mem_ current_pos) 1))
                         (display (integer->char (vector-ref mem_ current_pos)))
                         (let ([current_pos (+ current_pos 1)])
-                        (d current_pos))
+                        (c current_pos))
                         ))
                       )
                     '()))])
-      (d current_pos))
+      (c current_pos))
     ))
-  )))))
+  ))))
 )
 

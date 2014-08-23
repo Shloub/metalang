@@ -45,7 +45,6 @@ var
   d : Longint;
   e : char;
   f : Longint;
-  g : Longint;
   i : Longint;
   index : Longint;
   j : Longint;
@@ -55,9 +54,8 @@ var
   nskipdiv : Longint;
 begin
   i := 1;
-  g := 5;
-  SetLength(last, g);
-  for j := 0 to  g - 1 do
+  SetLength(last, 5);
+  for j := 0 to  5 - 1 do
   begin
     c := #95;
     c := read_char_();

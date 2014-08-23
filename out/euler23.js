@@ -1,3 +1,4 @@
+var util = require("util");
 function eratostene(t, max_){
   var n = 0;
   for (var i = 2 ; i <= max_ - 1; i++)

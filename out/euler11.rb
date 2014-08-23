@@ -10,15 +10,15 @@ end
 def read_int_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      e = [];
-      for f in (0 ..  x - 1) do
-        g = 0
-        g=scanf("%d")[0];
+      d = [];
+      for e in (0 ..  x - 1) do
+        f = 0
+        f=scanf("%d")[0];
         scanf("%*\n");
-        e[f] = g;
+        d[e] = f;
       end
-      d = e
-      tab[z] = d;
+      c = d
+      tab[z] = c;
     end
     return (tab);
 end
@@ -33,9 +33,8 @@ def find( n, m, x, y, dx, dy )
     end
 end
 
-c = 8
 directions = [];
-for i in (0 ..  c - 1) do
+for i in (0 ..  8 - 1) do
   if i == 0 then
     directions[i] = [0, 1];
   elsif i == 1 then

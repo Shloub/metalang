@@ -28,9 +28,8 @@ sub periode{
   return 0;
 }
 
-my $c = 1000;
 my $t = [];
-foreach my $j (0 .. $c - 1) {
+foreach my $j (0 .. 1000 - 1) {
   $t->[$j] = 0;
   }
 my $m = 0;

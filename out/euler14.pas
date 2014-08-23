@@ -13,8 +13,8 @@ begin
     end;
 end;
 
-type b = array of Longint;
-function find(n : Longint; m : b) : Longint;
+type a = array of Longint;
+function find(n : Longint; m : a) : Longint;
 begin
   if n = 1 then
     begin
@@ -38,17 +38,15 @@ end;
 
 
 var
-  a : Longint;
   i : Longint;
   j : Longint;
-  m : b;
+  m : a;
   max_ : Longint;
   maxi : Longint;
   n2 : Longint;
 begin
-  a := 1000000;
-  SetLength(m, a);
-  for j := 0 to  a - 1 do
+  SetLength(m, 1000000);
+  for j := 0 to  1000000 - 1 do
   begin
     m[j] := 0;
   end;

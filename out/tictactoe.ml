@@ -156,10 +156,8 @@ let play g =
   minMove
 
 let init_ () =
-  let b = 3 in
-  let cases = Array.init b (fun _i ->
-    let a = 3 in
-    let tab = Array.init a (fun _j ->
+  let cases = Array.init 3 (fun _i ->
+    let tab = Array.init 3 (fun _j ->
       0) in
     tab) in
   {

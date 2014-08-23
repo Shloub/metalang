@@ -181,23 +181,21 @@ function play(g){
 }
 
 function init_(){
-  var b = 3;
-  var cases = new Array(b);
-  for (var i = 0 ; i <= b - 1; i++)
+  var cases = new Array(3);
+  for (var i = 0 ; i <= 3 - 1; i++)
   {
-    var a = 3;
-    var tab = new Array(a);
-    for (var j = 0 ; j <= a - 1; j++)
+    var tab = new Array(3);
+    for (var j = 0 ; j <= 3 - 1; j++)
       tab[j] = 0;
     cases[i] = tab;
   }
-  var c = {
+  var a = {
     cases : cases,
     firstToPlay : 1,
     note : 0,
     ended : 0
   };
-  return c;
+  return a;
 }
 
 function read_move(){
@@ -207,26 +205,26 @@ function read_move(){
   var y = 0;
   y=read_int_();
   stdinsep();
-  var d = {
+  var b = {
     x : x,
     y : y
   };
-  return d;
+  return b;
 }
 
 for (var i = 0 ; i <= 1; i++)
 {
   var state = init_();
-  var e = {
+  var c = {
     x : 1,
     y : 1
   };
-  apply_move(e, state);
-  var f = {
+  apply_move(c, state);
+  var d = {
     x : 0,
     y : 0
   };
-  apply_move(f, state);
+  apply_move(d, state);
   while (!state.ended)
   {
     print_state(state);
