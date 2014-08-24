@@ -40,6 +40,7 @@ type 'a acc = unit
 let init_acc () = ()
 
 
+
 type info = {
   instruction: Utils.instr;
   expression : Utils.expr option;
@@ -47,7 +48,11 @@ type info = {
   declaration:bool;
   dad : Utils.instr option;
 }
-type infos = info list StringMap.t
+
+type infos = {
+  infos : info list StringMap.t;
+  linenumbers : int IntMap.t;
+}
 
 let addinfos acc name info =
   let info = match StringMap.find_opt name acc with
@@ -157,11 +162,11 @@ let can_map_name e =
   end
   | _ -> false
 
-let rec map_instrs infos = function
+let rec map_instrs (infos:infos) = function
   | [] -> []
   | hd::tl -> match Instr.unfix hd with
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
-      begin match StringMap.find_opt name infos with
+      begin match StringMap.find_opt name infos.infos with
       | Some [item1; item2] ->
 	let item1, item2 = if item1.declaration then item1, item2 else item2, item1 in
 	if item2.affected then
@@ -183,8 +188,16 @@ let rec map_instrs infos = function
       end
     | _ -> hd :: (map_instrs infos tl)
 
+let getlines instrs =
+  fst @$ List.fold_left (fun acc i ->
+    Instr.Writer.Deep.fold (fun (acc, n) i ->
+      let acc = IntMap.add (Instr.Fixed.annot i) n acc in
+      acc, n+1
+    ) acc i
+  ) (IntMap.empty, 0) instrs
+
 let map_instrs instrs =
-  let infos = getinfos instrs in
+  let infos = { infos = getinfos instrs ; linenumbers = getlines instrs } in
   map_instrs infos instrs
 
 let process () (i:Utils.t_fun) = match i with
