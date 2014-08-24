@@ -23,9 +23,7 @@ int main(){
   g->tuple_int_int_field_1=1;
   tuple_int_int * t = f(g);
   tuple_int_int * d = t;
-  int a = d->tuple_int_int_field_0;
-  int b = d->tuple_int_int_field_1;
-  std::cout << a << " -- " << b << "--\n";
+  std::cout << d->tuple_int_int_field_0 << " -- " << d->tuple_int_int_field_1 << "--\n";
   return 0;
 }
 

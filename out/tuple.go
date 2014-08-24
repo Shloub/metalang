@@ -37,8 +37,6 @@ func main() {
   (*g).tuple_int_int_field_1=1;
   var t * tuple_int_int = f(g)
   var d * tuple_int_int = t
-  var a int = (*d).tuple_int_int_field_0
-  var b int = (*d).tuple_int_int_field_1
-  fmt.Printf("%d -- %d--\n", a, b);
+  fmt.Printf("%d -- %d--\n", (*d).tuple_int_int_field_0, (*d).tuple_int_int_field_1);
 }
 

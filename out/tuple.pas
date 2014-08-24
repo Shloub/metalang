@@ -29,8 +29,6 @@ end;
 
 
 var
-  a : Longint;
-  b : Longint;
   d : tuple_int_int;
   g : tuple_int_int;
   t : tuple_int_int;
@@ -40,11 +38,9 @@ begin
   g^.tuple_int_int_field_1 := 1;
   t := f(g);
   d := t;
-  a := d^.tuple_int_int_field_0;
-  b := d^.tuple_int_int_field_1;
-  Write(a);
+  Write(d^.tuple_int_int_field_0);
   Write(' -- ');
-  Write(b);
+  Write(d^.tuple_int_int_field_1);
   Write('--'#10'');
 end.
 
