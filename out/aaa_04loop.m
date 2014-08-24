@@ -18,14 +18,12 @@ int h(int i){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int k;
   int j = 0;
+  for (k = 0 ; k <= 10; k++)
   {
-    int k;
-    for (k = 0 ; k <= 10; k++)
-    {
-      j += k;
-      printf("%d\n", j);
-    }
+    j += k;
+    printf("%d\n", j);
   }
   int i = 4;
   while (i < 10)

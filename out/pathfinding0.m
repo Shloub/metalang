@@ -10,25 +10,20 @@ int min2(int a, int b){
 }
 
 char** read_char_matrix(int x, int y){
+  int z, k;
   char* *tab = malloc( y * sizeof(char*));
+  for (z = 0 ; z < y; z++)
   {
-    int z;
-    for (z = 0 ; z < y; z++)
+    char *h = malloc( x * sizeof(char));
+    for (k = 0 ; k < x; k++)
     {
-      char *h = malloc( x * sizeof(char));
-      {
-        int k;
-        for (k = 0 ; k < x; k++)
-        {
-          char l = '_';
-          scanf("%c", &l);
-          h[k] = l;
-        }
-      }
-      scanf(" ");
-      char* g = h;
-      tab[z] = g;
+      char l = '_';
+      scanf("%c", &l);
+      h[k] = l;
     }
+    scanf(" ");
+    char* g = h;
+    tab[z] = g;
   }
   return tab;
 }
@@ -59,23 +54,18 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
 }
 
 int pathfind(char** tab, int x, int y){
+  int i, j;
   int* *cache = malloc( y * sizeof(int*));
+  for (i = 0 ; i < y; i++)
   {
-    int i;
-    for (i = 0 ; i < y; i++)
+    int *tmp = malloc( x * sizeof(int));
+    for (j = 0 ; j < x; j++)
     {
-      int *tmp = malloc( x * sizeof(int));
-      {
-        int j;
-        for (j = 0 ; j < x; j++)
-        {
-          printf("%c", tab[i][j]);
-          tmp[j] = -1;
-        }
-      }
-      printf("\n");
-      cache[i] = tmp;
+      printf("%c", tab[i][j]);
+      tmp[j] = -1;
     }
+    printf("\n");
+    cache[i] = tmp;
   }
   return pathfind_aux(cache, tab, x, y, 0, 0);
 }

@@ -22,24 +22,19 @@ typedef struct bigint {
 } bigint;
 
 struct bigint * read_bigint(int len){
+  int i, j;
   int *chiffres = malloc( len * sizeof(int));
+  for (j = 0 ; j < len; j++)
   {
-    int j;
-    for (j = 0 ; j < len; j++)
-    {
-      char c = '_';
-      scanf("%c", &c);
-      chiffres[j] = (int)(c);
-    }
+    char c = '_';
+    scanf("%c", &c);
+    chiffres[j] = (int)(c);
   }
+  for (i = 0 ; i <= (len - 1) / 2; i++)
   {
-    int i;
-    for (i = 0 ; i <= (len - 1) / 2; i++)
-    {
-      int tmp = chiffres[i];
-      chiffres[i] = chiffres[len - 1 - i];
-      chiffres[len - 1 - i] = tmp;
-    }
+    int tmp = chiffres[i];
+    chiffres[i] = chiffres[len - 1 - i];
+    chiffres[len - 1 - i] = tmp;
   }
   struct bigint * o = malloc (sizeof(o) );
   o->bigint_sign=1;
@@ -49,16 +44,15 @@ struct bigint * read_bigint(int len){
 }
 
 void print_bigint(struct bigint * a){
+  int i;
   if (!a->bigint_sign)
     printf("%c", '-');
-  {
-    int i;
-    for (i = 0 ; i < a->bigint_len; i++)
-      printf("%d", a->bigint_chiffres[a->bigint_len - 1 - i]);
-  }
+  for (i = 0 ; i < a->bigint_len; i++)
+    printf("%d", a->bigint_chiffres[a->bigint_len - 1 - i]);
 }
 
 int bigint_eq(struct bigint * a, struct bigint * b){
+  int i;
   /* Renvoie vrai si a = b */
   if (a->bigint_sign != b->bigint_sign)
     return 0;
@@ -66,17 +60,15 @@ int bigint_eq(struct bigint * a, struct bigint * b){
     return 0;
   else
   {
-    {
-      int i;
-      for (i = 0 ; i < a->bigint_len; i++)
-        if (a->bigint_chiffres[i] != b->bigint_chiffres[i])
-        return 0;
-    }
+    for (i = 0 ; i < a->bigint_len; i++)
+      if (a->bigint_chiffres[i] != b->bigint_chiffres[i])
+      return 0;
     return 1;
   }
 }
 
 int bigint_gt(struct bigint * a, struct bigint * b){
+  int i;
   /* Renvoie vrai si a > b */
   if (a->bigint_sign && !b->bigint_sign)
     return 1;
@@ -89,8 +81,6 @@ int bigint_gt(struct bigint * a, struct bigint * b){
     else if (a->bigint_len < b->bigint_len)
       return !a->bigint_sign;
     else
-      {
-      int i;
       for (i = 0 ; i < a->bigint_len; i++)
       {
         int j = a->bigint_len - 1 - i;
@@ -98,7 +88,6 @@ int bigint_gt(struct bigint * a, struct bigint * b){
           return a->bigint_sign;
         else if (a->bigint_chiffres[j] < b->bigint_chiffres[j])
           return !a->bigint_sign;
-      }
     }
     return 1;
   }
@@ -109,22 +98,20 @@ int bigint_lt(struct bigint * a, struct bigint * b){
 }
 
 struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b){
+  int i;
   /* Une addition ou on en a rien a faire des signes */
   int len = max2(a->bigint_len, b->bigint_len) + 1;
   int retenue = 0;
   int *chiffres = malloc( len * sizeof(int));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      int tmp = retenue;
-      if (i < a->bigint_len)
-        tmp += a->bigint_chiffres[i];
-      if (i < b->bigint_len)
-        tmp += b->bigint_chiffres[i];
-      retenue = tmp / 10;
-      chiffres[i] = tmp % 10;
-    }
+    int tmp = retenue;
+    if (i < a->bigint_len)
+      tmp += a->bigint_chiffres[i];
+    if (i < b->bigint_len)
+      tmp += b->bigint_chiffres[i];
+    retenue = tmp / 10;
+    chiffres[i] = tmp % 10;
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
@@ -136,28 +123,26 @@ struct bigint * add_bigint_positif(struct bigint * a, struct bigint * b){
 }
 
 struct bigint * sub_bigint_positif(struct bigint * a, struct bigint * b){
+  int i;
   /* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
 */
   int len = a->bigint_len;
   int retenue = 0;
   int *chiffres = malloc( len * sizeof(int));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
+    int tmp = retenue + a->bigint_chiffres[i];
+    if (i < b->bigint_len)
+      tmp -= b->bigint_chiffres[i];
+    if (tmp < 0)
     {
-      int tmp = retenue + a->bigint_chiffres[i];
-      if (i < b->bigint_len)
-        tmp -= b->bigint_chiffres[i];
-      if (tmp < 0)
-      {
-        tmp += 10;
-        retenue = -1;
-      }
-      else
-        retenue = 0;
-      chiffres[i] = tmp;
+      tmp += 10;
+      retenue = -1;
     }
+    else
+      retenue = 0;
+    chiffres[i] = tmp;
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
@@ -207,41 +192,30 @@ struct bigint * sub_bigint(struct bigint * a, struct bigint * b){
 }
 
 struct bigint * mul_bigint_cp(struct bigint * a, struct bigint * b){
+  int l, i, j, k;
   /* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   int len = a->bigint_len + b->bigint_len + 1;
   int *chiffres = malloc( len * sizeof(int));
+  for (k = 0 ; k < len; k++)
+    chiffres[k] = 0;
+  for (i = 0 ; i < a->bigint_len; i++)
   {
-    int k;
-    for (k = 0 ; k < len; k++)
-      chiffres[k] = 0;
-  }
-  {
-    int i;
-    for (i = 0 ; i < a->bigint_len; i++)
+    int retenue = 0;
+    for (j = 0 ; j < b->bigint_len; j++)
     {
-      int retenue = 0;
-      {
-        int j;
-        for (j = 0 ; j < b->bigint_len; j++)
-        {
-          chiffres[i + j] = chiffres[i + j] + retenue + b->bigint_chiffres[j] * a->bigint_chiffres[i];
-          retenue = chiffres[i + j] / 10;
-          chiffres[i + j] = chiffres[i + j] % 10;
-        }
-      }
-      chiffres[i + b->bigint_len] = chiffres[i + b->bigint_len] + retenue;
+      chiffres[i + j] = chiffres[i + j] + retenue + b->bigint_chiffres[j] * a->bigint_chiffres[i];
+      retenue = chiffres[i + j] / 10;
+      chiffres[i + j] = chiffres[i + j] % 10;
     }
+    chiffres[i + b->bigint_len] = chiffres[i + b->bigint_len] + retenue;
   }
   chiffres[a->bigint_len + b->bigint_len] = chiffres[a->bigint_len + b->bigint_len - 1] / 10;
   chiffres[a->bigint_len + b->bigint_len - 1] = chiffres[a->bigint_len + b->bigint_len - 1] % 10;
-  {
-    int l;
-    for (l = 0 ; l <= 2; l++)
-      if (len != 0 && chiffres[len - 1] == 0)
-      len --;
-  }
+  for (l = 0 ; l <= 2; l++)
+    if (len != 0 && chiffres[len - 1] == 0)
+    len --;
   struct bigint * s = malloc (sizeof(s) );
   s->bigint_sign=a->bigint_sign == b->bigint_sign;
   s->bigint_len=len;
@@ -261,15 +235,13 @@ struct bigint * bigint_premiers_chiffres(struct bigint * a, int i){
 }
 
 struct bigint * bigint_shift(struct bigint * a, int i){
+  int k;
   int *chiffres = malloc( (a->bigint_len + i) * sizeof(int));
-  {
-    int k;
-    for (k = 0 ; k < a->bigint_len + i; k++)
-      if (k >= i)
-      chiffres[k] = a->bigint_chiffres[k - i];
-    else
-      chiffres[k] = 0;
-  }
+  for (k = 0 ; k < a->bigint_len + i; k++)
+    if (k >= i)
+    chiffres[k] = a->bigint_chiffres[k - i];
+  else
+    chiffres[k] = 0;
   struct bigint * v = malloc (sizeof(v) );
   v->bigint_sign=a->bigint_sign;
   v->bigint_len=a->bigint_len + i;
@@ -315,22 +287,17 @@ int log10(int a){
 }
 
 struct bigint * bigint_of_int(int i){
+  int k, j;
   int size = log10(i);
   if (i == 0)
     size = 0;
   int *t = malloc( size * sizeof(int));
+  for (j = 0 ; j < size; j++)
+    t[j] = 0;
+  for (k = 0 ; k < size; k++)
   {
-    int j;
-    for (j = 0 ; j < size; j++)
-      t[j] = 0;
-  }
-  {
-    int k;
-    for (k = 0 ; k < size; k++)
-    {
-      t[k] = i % 10;
-      i /= 10;
-    }
+    t[k] = i % 10;
+    i /= 10;
   }
   struct bigint * w = malloc (sizeof(w) );
   w->bigint_sign=1;
@@ -351,12 +318,10 @@ struct bigint * fact_bigint(struct bigint * a){
 }
 
 int sum_chiffres_bigint(struct bigint * a){
+  int i;
   int out_ = 0;
-  {
-    int i;
-    for (i = 0 ; i < a->bigint_len; i++)
-      out_ += a->bigint_chiffres[i];
-  }
+  for (i = 0 ; i < a->bigint_len; i++)
+    out_ += a->bigint_chiffres[i];
   return out_;
 }
 
@@ -388,17 +353,15 @@ struct bigint * bigint_exp_10chiffres(struct bigint * a, int b){
 }
 
 void euler48(){
+  int i;
   struct bigint * sum = bigint_of_int(0);
+  for (i = 1 ; i <= 100; i++)
   {
-    int i;
-    for (i = 1 ; i <= 100; i++)
-    {
-      /* 1000 normalement */
-      struct bigint * ib = bigint_of_int(i);
-      struct bigint * ibeib = bigint_exp_10chiffres(ib, i);
-      sum = add_bigint(sum, ibeib);
-      sum = bigint_premiers_chiffres(sum, 10);
-    }
+    /* 1000 normalement */
+    struct bigint * ib = bigint_of_int(i);
+    struct bigint * ibeib = bigint_exp_10chiffres(ib, i);
+    sum = add_bigint(sum, ibeib);
+    sum = bigint_premiers_chiffres(sum, 10);
   }
   printf("euler 48 = ");
   print_bigint(sum);
@@ -428,60 +391,46 @@ int euler25(){
 }
 
 int euler29(){
+  int l, i, k, j2, j;
   int maxA = 5;
   int maxB = 5;
   struct bigint * *a_bigint = malloc( (maxA + 1) * sizeof(struct bigint *));
-  {
-    int j;
-    for (j = 0 ; j < maxA + 1; j++)
-      a_bigint[j] = bigint_of_int(j * j);
-  }
+  for (j = 0 ; j < maxA + 1; j++)
+    a_bigint[j] = bigint_of_int(j * j);
   struct bigint * *a0_bigint = malloc( (maxA + 1) * sizeof(struct bigint *));
-  {
-    int j2;
-    for (j2 = 0 ; j2 < maxA + 1; j2++)
-      a0_bigint[j2] = bigint_of_int(j2);
-  }
+  for (j2 = 0 ; j2 < maxA + 1; j2++)
+    a0_bigint[j2] = bigint_of_int(j2);
   int *b = malloc( (maxA + 1) * sizeof(int));
-  {
-    int k;
-    for (k = 0 ; k < maxA + 1; k++)
-      b[k] = 2;
-  }
+  for (k = 0 ; k < maxA + 1; k++)
+    b[k] = 2;
   int n = 0;
   int found = 1;
   while (found)
   {
     struct bigint * min_ = a0_bigint[0];
     found = 0;
+    for (i = 2 ; i <= maxA; i++)
+      if (b[i] <= maxB)
     {
-      int i;
-      for (i = 2 ; i <= maxA; i++)
-        if (b[i] <= maxB)
+      if (found)
       {
-        if (found)
-        {
-          if (bigint_lt(a_bigint[i], min_))
-            min_ = a_bigint[i];
-        }
-        else
-        {
+        if (bigint_lt(a_bigint[i], min_))
           min_ = a_bigint[i];
-          found = 1;
-        }
+      }
+      else
+      {
+        min_ = a_bigint[i];
+        found = 1;
       }
     }
     if (found)
     {
       n ++;
+      for (l = 2 ; l <= maxA; l++)
+        if (bigint_eq(a_bigint[l], min_) && b[l] <= maxB)
       {
-        int l;
-        for (l = 2 ; l <= maxA; l++)
-          if (bigint_eq(a_bigint[l], min_) && b[l] <= maxB)
-        {
-          b[l] = b[l] + 1;
-          a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
-        }
+        b[l] = b[l] + 1;
+        a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
       }
     }
   }
@@ -489,16 +438,14 @@ int euler29(){
 }
 
 int main(void){
+  int i;
   printf("%d\n", euler29());
   struct bigint * sum = read_bigint(50);
+  for (i = 2 ; i <= 100; i++)
   {
-    int i;
-    for (i = 2 ; i <= 100; i++)
-    {
-      scanf(" ");
-      struct bigint * tmp = read_bigint(50);
-      sum = add_bigint(sum, tmp);
-    }
+    scanf(" ");
+    struct bigint * tmp = read_bigint(50);
+    sum = add_bigint(sum, tmp);
   }
   printf("euler13 = ");
   print_bigint(sum);

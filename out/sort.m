@@ -3,29 +3,22 @@
 #include<stdlib.h>
 
 int* copytab(int* tab, int len){
+  int i;
   int *o = malloc( len * sizeof(int));
-  {
-    int i;
-    for (i = 0 ; i < len; i++)
-      o[i] = tab[i];
-  }
+  for (i = 0 ; i < len; i++)
+    o[i] = tab[i];
   return o;
 }
 
 void bubblesort(int* tab, int len){
+  int i, j;
+  for (i = 0 ; i < len; i++)
+    for (j = i + 1 ; j < len; j++)
+      if (tab[i] > tab[j])
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-      {
-      int j;
-      for (j = i + 1 ; j < len; j++)
-        if (tab[i] > tab[j])
-      {
-        int tmp = tab[i];
-        tab[i] = tab[j];
-        tab[j] = tmp;
-      }
-    }
+    int tmp = tab[i];
+    tab[i] = tab[j];
+    tab[j] = tmp;
   }
 }
 
@@ -65,36 +58,28 @@ void qsort_(int* tab, int len, int i, int j){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i, i_;
   int len = 2;
   scanf("%d ", &len);
   int *tab = malloc( len * sizeof(int));
+  for (i_ = 0 ; i_ < len; i_++)
   {
-    int i_;
-    for (i_ = 0 ; i_ < len; i_++)
-    {
-      int tmp = 0;
-      scanf("%d ", &tmp);
-      tab[i_] = tmp;
-    }
+    int tmp = 0;
+    scanf("%d ", &tmp);
+    tab[i_] = tmp;
   }
   int* tab2 = copytab(tab, len);
   bubblesort(tab2, len);
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      printf("%d ", tab2[i]);
-    }
+    printf("%d ", tab2[i]);
   }
   printf("\n");
   int* tab3 = copytab(tab, len);
   qsort_(tab3, len, 0, len - 1);
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      printf("%d ", tab3[i]);
-    }
+    printf("%d ", tab3[i]);
   }
   printf("\n");
   [pool drain];

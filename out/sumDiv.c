@@ -20,24 +20,22 @@ void foo3(){
 }
 
 int sumdiv(int n){
+  int i;
   /* On désire renvoyer la somme des diviseurs */
   int out_ = 0;
   /* On déclare un entier qui contiendra la somme */
+  for (i = 1 ; i <= n; i++)
   {
-    int i;
-    for (i = 1 ; i <= n; i++)
+    /* La boucle : i est le diviseur potentiel*/
+    if ((n % i) == 0)
     {
-      /* La boucle : i est le diviseur potentiel*/
-      if ((n % i) == 0)
-      {
-        /* Si i divise */
-        out_ += i;
-        /* On incrémente */
-      }
-      else
-      {
-        /* nop */
-      }
+      /* Si i divise */
+      out_ += i;
+      /* On incrémente */
+    }
+    else
+    {
+      /* nop */
     }
   }
   return out_;

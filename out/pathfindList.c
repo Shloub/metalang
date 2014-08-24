@@ -22,27 +22,23 @@ int pathfind_aux(int* cache, int* tab, int len, int pos){
 }
 
 int pathfind(int* tab, int len){
+  int i;
   int *cache = malloc( len * sizeof(int));
-  {
-    int i;
-    for (i = 0 ; i < len; i++)
-      cache[i] = -1;
-  }
+  for (i = 0 ; i < len; i++)
+    cache[i] = -1;
   return pathfind_aux(cache, tab, len, 0);
 }
 
 int main(void){
+  int i;
   int len = 0;
   scanf("%d ", &len);
   int *tab = malloc( len * sizeof(int));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      int tmp = 0;
-      scanf("%d ", &tmp);
-      tab[i] = tmp;
-    }
+    int tmp = 0;
+    scanf("%d ", &tmp);
+    tab[i] = tmp;
   }
   int result = pathfind(tab, len);
   printf("%d", result);

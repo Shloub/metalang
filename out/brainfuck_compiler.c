@@ -7,14 +7,12 @@ C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compila
 et qui produit les macros metalang correspondante
 */
 int main(void){
+  int i;
   char input = ' ';
   int current_pos = 500;
   int *mem = malloc( 1000 * sizeof(int));
-  {
-    int i;
-    for (i = 0 ; i < 1000; i++)
-      mem[i] = 0;
-  }
+  for (i = 0 ; i < 1000; i++)
+    mem[i] = 0;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;
   mem[current_pos] = mem[current_pos] + 1;

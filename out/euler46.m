@@ -3,22 +3,20 @@
 #include<stdlib.h>
 
 int eratostene(int* t, int max_){
+  int i;
   int n = 0;
+  for (i = 2 ; i < max_; i++)
+    if (t[i] == i)
   {
-    int i;
-    for (i = 2 ; i < max_; i++)
-      if (t[i] == i)
+    n ++;
+    int j = i * i;
+    if (j / i == i)
     {
-      n ++;
-      int j = i * i;
-      if (j / i == i)
+      /* overflow test */
+      while (j < max_ && j > 0)
       {
-        /* overflow test */
-        while (j < max_ && j > 0)
-        {
-          t[j] = 0;
-          j += i;
-        }
+        t[j] = 0;
+        j += i;
       }
     }
   }
@@ -27,59 +25,39 @@ int eratostene(int* t, int max_){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int m, i, j, i_, k, o, j_;
   int maximumprimes = 6000;
   int *era = malloc( maximumprimes * sizeof(int));
-  {
-    int j_;
-    for (j_ = 0 ; j_ < maximumprimes; j_++)
-      era[j_] = j_;
-  }
+  for (j_ = 0 ; j_ < maximumprimes; j_++)
+    era[j_] = j_;
   int nprimes = eratostene(era, maximumprimes);
   int *primes = malloc( nprimes * sizeof(int));
-  {
-    int o;
-    for (o = 0 ; o < nprimes; o++)
-      primes[o] = 0;
-  }
+  for (o = 0 ; o < nprimes; o++)
+    primes[o] = 0;
   int l = 0;
+  for (k = 2 ; k < maximumprimes; k++)
+    if (era[k] == k)
   {
-    int k;
-    for (k = 2 ; k < maximumprimes; k++)
-      if (era[k] == k)
-    {
-      primes[l] = k;
-      l ++;
-    }
+    primes[l] = k;
+    l ++;
   }
   printf("%d == %d\n", l, nprimes);
   int *canbe = malloc( maximumprimes * sizeof(int));
-  {
-    int i_;
-    for (i_ = 0 ; i_ < maximumprimes; i_++)
-      canbe[i_] = 0;
-  }
-  {
-    int i;
-    for (i = 0 ; i < nprimes; i++)
-      {
-      int j;
-      for (j = 0 ; j < maximumprimes; j++)
-      {
-        int n = primes[i] + 2 * j * j;
-        if (n < maximumprimes)
-          canbe[n] = 1;
-      }
-    }
-  }
-  {
-    int m;
-    for (m = 1 ; m <= maximumprimes; m++)
+  for (i_ = 0 ; i_ < maximumprimes; i_++)
+    canbe[i_] = 0;
+  for (i = 0 ; i < nprimes; i++)
+    for (j = 0 ; j < maximumprimes; j++)
     {
-      int m2 = m * 2 + 1;
-      if (m2 < maximumprimes && !canbe[m2])
-      {
-        printf("%d\n", m2);
-      }
+      int n = primes[i] + 2 * j * j;
+      if (n < maximumprimes)
+        canbe[n] = 1;
+  }
+  for (m = 1 ; m <= maximumprimes; m++)
+  {
+    int m2 = m * 2 + 1;
+    if (m2 < maximumprimes && !canbe[m2])
+    {
+      printf("%d\n", m2);
     }
   }
   [pool drain];

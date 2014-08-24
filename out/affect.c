@@ -27,6 +27,7 @@ struct toto * mktoto2(int v1){
 }
 
 int result(struct toto * t_, struct toto * t2_){
+  int j, i;
   struct toto * t = t_;
   struct toto * t2 = t2_;
   struct toto * t3 = malloc (sizeof(t3) );
@@ -39,17 +40,11 @@ int result(struct toto * t_, struct toto * t2_){
   t->blah ++;
   int len = 1;
   int *cache0 = malloc( len * sizeof(int));
-  {
-    int i;
-    for (i = 0 ; i < len; i++)
-      cache0[i] = -i;
-  }
+  for (i = 0 ; i < len; i++)
+    cache0[i] = -i;
   int *cache1 = malloc( len * sizeof(int));
-  {
-    int j;
-    for (j = 0 ; j < len; j++)
-      cache1[j] = j;
-  }
+  for (j = 0 ; j < len; j++)
+    cache1[j] = j;
   int* cache2 = cache0;
   cache0 = cache1;
   cache2 = cache0;

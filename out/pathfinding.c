@@ -34,45 +34,35 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
 }
 
 int pathfind(char** tab, int x, int y){
+  int i, j;
   int* *cache = malloc( y * sizeof(int*));
+  for (i = 0 ; i < y; i++)
   {
-    int i;
-    for (i = 0 ; i < y; i++)
-    {
-      int *tmp = malloc( x * sizeof(int));
-      {
-        int j;
-        for (j = 0 ; j < x; j++)
-          tmp[j] = -1;
-      }
-      cache[i] = tmp;
-    }
+    int *tmp = malloc( x * sizeof(int));
+    for (j = 0 ; j < x; j++)
+      tmp[j] = -1;
+    cache[i] = tmp;
   }
   return pathfind_aux(cache, tab, x, y, 0, 0);
 }
 
 int main(void){
+  int i, j;
   int x = 0;
   int y = 0;
   scanf("%d %d ", &x, &y);
   char* *tab = malloc( y * sizeof(char*));
+  for (i = 0 ; i < y; i++)
   {
-    int i;
-    for (i = 0 ; i < y; i++)
+    char *tab2 = malloc( x * sizeof(char));
+    for (j = 0 ; j < x; j++)
     {
-      char *tab2 = malloc( x * sizeof(char));
-      {
-        int j;
-        for (j = 0 ; j < x; j++)
-        {
-          char tmp = '\000';
-          scanf("%c", &tmp);
-          tab2[j] = tmp;
-        }
-      }
-      scanf(" ");
-      tab[i] = tab2;
+      char tmp = '\000';
+      scanf("%c", &tmp);
+      tab2[j] = tmp;
     }
+    scanf(" ");
+    tab[i] = tab2;
   }
   int result = pathfind(tab, x, y);
   printf("%d", result);

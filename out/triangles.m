@@ -29,61 +29,45 @@ int find0(int len, int** tab, int** cache, int x, int y){
 }
 
 int find(int len, int** tab){
+  int i, j;
   int* *tab2 = malloc( len * sizeof(int*));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      int a = i + 1;
-      int *tab3 = malloc( a * sizeof(int));
-      {
-        int j;
-        for (j = 0 ; j < a; j++)
-          tab3[j] = 0;
-      }
-      tab2[i] = tab3;
-    }
+    int a = i + 1;
+    int *tab3 = malloc( a * sizeof(int));
+    for (j = 0 ; j < a; j++)
+      tab3[j] = 0;
+    tab2[i] = tab3;
   }
   return find0(len, tab, tab2, 0, 0);
 }
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int k, l, i, j;
   int len = 0;
   scanf("%d ", &len);
   int* *tab = malloc( len * sizeof(int*));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
+    int b = i + 1;
+    int *tab2 = malloc( b * sizeof(int));
+    for (j = 0 ; j < b; j++)
     {
-      int b = i + 1;
-      int *tab2 = malloc( b * sizeof(int));
-      {
-        int j;
-        for (j = 0 ; j < b; j++)
-        {
-          int tmp = 0;
-          scanf("%d ", &tmp);
-          tab2[j] = tmp;
-        }
-      }
-      tab[i] = tab2;
+      int tmp = 0;
+      scanf("%d ", &tmp);
+      tab2[j] = tmp;
     }
+    tab[i] = tab2;
   }
   printf("%d\n", find(len, tab));
+  for (k = 0 ; k < len; k++)
   {
-    int k;
-    for (k = 0 ; k < len; k++)
+    for (l = 0 ; l <= k; l++)
     {
-      {
-        int l;
-        for (l = 0 ; l <= k; l++)
-        {
-          printf("%d ", tab[k][l]);
-        }
-      }
-      printf("\n");
+      printf("%d ", tab[k][l]);
     }
+    printf("\n");
   }
   [pool drain];
   return 0;

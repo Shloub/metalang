@@ -2,45 +2,35 @@
 #include<stdlib.h>
 
 char** read_char_matrix(int x, int y){
+  int z, c;
   char* *tab = malloc( y * sizeof(char*));
+  for (z = 0 ; z < y; z++)
   {
-    int z;
-    for (z = 0 ; z < y; z++)
+    char *b = malloc( x * sizeof(char));
+    for (c = 0 ; c < x; c++)
     {
-      char *b = malloc( x * sizeof(char));
-      {
-        int c;
-        for (c = 0 ; c < x; c++)
-        {
-          char d = '_';
-          scanf("%c", &d);
-          b[c] = d;
-        }
-      }
-      scanf(" ");
-      char* a = b;
-      tab[z] = a;
+      char d = '_';
+      scanf("%c", &d);
+      b[c] = d;
     }
+    scanf(" ");
+    char* a = b;
+    tab[z] = a;
   }
   return tab;
 }
 
 int programme_candidat(char** tableau, int taille_x, int taille_y){
+  int i, j;
   int out_ = 0;
+  for (i = 0 ; i < taille_y; i++)
   {
-    int i;
-    for (i = 0 ; i < taille_y; i++)
+    for (j = 0 ; j < taille_x; j++)
     {
-      {
-        int j;
-        for (j = 0 ; j < taille_x; j++)
-        {
-          out_ += (int)(tableau[i][j]) * (i + j * 2);
-          printf("%c", tableau[i][j]);
-        }
-      }
-      printf("--\n");
+      out_ += (int)(tableau[i][j]) * (i + j * 2);
+      printf("%c", tableau[i][j]);
     }
+    printf("--\n");
   }
   return out_;
 }

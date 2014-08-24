@@ -35,17 +35,15 @@ int plus_petit_(int* tab, int len){
 }
 
 int main(void){
+  int i;
   int len = 0;
   scanf("%d ", &len);
   int *tab = malloc( len * sizeof(int));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      int tmp = 0;
-      scanf("%d ", &tmp);
-      tab[i] = tmp;
-    }
+    int tmp = 0;
+    scanf("%d ", &tmp);
+    tab[i] = tmp;
   }
   printf("%d", plus_petit_(tab, len));
   return 0;

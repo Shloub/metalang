@@ -22,17 +22,15 @@ int montagnes_(int* tab, int len){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i;
   int len = 0;
   scanf("%d ", &len);
   int *tab = malloc( len * sizeof(int));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      int x = 0;
-      scanf("%d ", &x);
-      tab[i] = x;
-    }
+    int x = 0;
+    scanf("%d ", &x);
+    tab[i] = x;
   }
   printf("%d", montagnes_(tab, len));
   [pool drain];

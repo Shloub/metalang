@@ -12,14 +12,12 @@ void g(int* t, int index){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i;
   int *a = malloc( 5 * sizeof(int));
+  for (i = 0 ; i < 5; i++)
   {
-    int i;
-    for (i = 0 ; i < 5; i++)
-    {
-      printf("%d", i);
-      a[i] = (i % 2) == 0;
-    }
+    printf("%d", i);
+    a[i] = (i % 2) == 0;
   }
   int c = a[0];
   if (c)

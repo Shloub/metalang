@@ -25,25 +25,20 @@ int find(int n, int* m){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i, j;
   int *m = malloc( 1000000 * sizeof(int));
-  {
-    int j;
-    for (j = 0 ; j < 1000000; j++)
-      m[j] = 0;
-  }
+  for (j = 0 ; j < 1000000; j++)
+    m[j] = 0;
   int max_ = 0;
   int maxi = 0;
+  for (i = 1 ; i <= 999; i++)
   {
-    int i;
-    for (i = 1 ; i <= 999; i++)
+    /* normalement on met 999999 mais ça dépasse les int32... */
+    int n2 = find(i, m);
+    if (n2 > max_)
     {
-      /* normalement on met 999999 mais ça dépasse les int32... */
-      int n2 = find(i, m);
-      if (n2 > max_)
-      {
-        max_ = n2;
-        maxi = i;
-      }
+      max_ = n2;
+      maxi = i;
     }
   }
   printf("%d\n%d\n", max_, maxi);
