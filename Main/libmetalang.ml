@@ -124,9 +124,9 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "expend print" Passes.WalkExpandPrint.apply
   |> typed "internal tags" Passes.WalkInternalTags.apply
   |> typed "inline functions" Passes.WalkInlineFuncs.apply
-(*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
-(*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> snd |> Typer.process
 
 let clike_passes prog =
@@ -140,6 +140,8 @@ let clike_passes prog =
     a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
   |> snd |> Typer.process
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -151,6 +153,8 @@ let php_passes prog =
     a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
   |> snd |> Typer.process
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -159,6 +163,8 @@ let php_passes prog =
 let python_passes prog =
   prog |> default_passes
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -166,6 +172,8 @@ let python_passes prog =
 
 let common_lisp_passes prog =
   prog |> default_passes
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
   |> (fun (a, prog) ->
     let tuples, prog = DeclareTuples.apply a prog in
     let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog
@@ -181,6 +189,8 @@ let common_lisp_passes prog =
 
 let ocaml_passes prog =
   prog |> default_passes
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -188,6 +198,8 @@ let ocaml_passes prog =
 
 let fun_passes config prog =
   prog |> default_passes
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
