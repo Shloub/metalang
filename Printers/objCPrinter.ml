@@ -49,7 +49,9 @@ class objCPrinter = object(self)
       (print_option self#main) prog.Prog.main
 
   method main f main =
-    Format.fprintf f "@[<v 2>int main(void){@\nNSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];@\n%a@\n[pool drain];@\nreturn 0;@]@\n}" self#instructions main
+    let li_for = self#collect_for main in
+    Format.fprintf f "@[<v 2>int main(void){@\nNSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];@\n%a%a@\n[pool drain];@\nreturn 0;@]@\n}"
+      self#declare_for li_for self#instructions main
 
   method ptype f t =
     match Type.unfix t with

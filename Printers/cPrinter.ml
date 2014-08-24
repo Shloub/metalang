@@ -106,9 +106,7 @@ class cPrinter = object(self)
       self#ptype type_
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "{@\n@[<v 2>  int %a;@\n%a@]@\n}"
-      self#binding varname
-      self#forloop_content (varname, expr1, expr2, li)
+      self#forloop_content f (varname, expr1, expr2, li)
 
   method forloop_content f (varname, expr1, expr2, li) =
     let default () =
@@ -131,7 +129,9 @@ class cPrinter = object(self)
     | _ -> default ()
 
   method main f main =
-    Format.fprintf f "@[<v 2>int main(void){@\n%a@\nreturn 0;@]@\n}" self#instructions main
+    let li_for = self#collect_for main in
+    Format.fprintf f "@[<v 2>int main(void){@\n%a%a@\nreturn 0;@]@\n}"
+      self#declare_for li_for self#instructions main
 
   method bloc f li = match li with
   | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
@@ -253,9 +253,27 @@ class cPrinter = object(self)
         baseprinter#ptype t
         baseprinter#binding name
 
+  method collect_for instrs =
+    let collect acc i =
+      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
+      | Instr.Loop (i, _, _, _) -> if List.mem i acc then acc else i::acc
+      | _ -> acc
+      ) acc i
+    in
+    List.fold_left collect [] instrs
+
+  method declare_for f li =
+    if li <> [] then
+      Format.fprintf f "int %a;@\n"
+        (print_list self#binding
+           (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)
+        ) li
+
   method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"
+    let li_for = self#collect_for instrs in
+    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
+      self#declare_for li_for
       self#instructions instrs
 
   method return f e =

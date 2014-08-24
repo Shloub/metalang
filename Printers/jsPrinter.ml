@@ -38,6 +38,8 @@ class jsPrinter = object(self)
 
   method lang () = "js"
 
+  method declare_for f li = ()
+
   method decl_type f name t = ()
 
   method hasSelfAffect = function
