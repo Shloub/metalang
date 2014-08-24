@@ -43,15 +43,13 @@ sub result{
   return -1;
 }
 
-my $b = 0;
-$b = readint();
+my $b = readint();
 readspaces();
 my $len = $b;
 print($len, "\n");
 my $d = [];
 foreach my $e (0 .. $len - 1) {
-  my $f = 0;
-  $f = readint();
+  my $f = readint();
   readspaces();
   $d->[$e] = $f;
   }

@@ -50,16 +50,13 @@ sub devine_{
   return 1;
 }
 
-my $nombre = 0;
-$nombre = readint();
+my $nombre = readint();
 readspaces();
-my $len = 0;
-$len = readint();
+my $len = readint();
 readspaces();
 my $tab = [];
 foreach my $i (0 .. $len - 1) {
-  my $tmp = 0;
-  $tmp = readint();
+  my $tmp = readint();
   readspaces();
   $tab->[$i] = $tmp;
   }

@@ -42,8 +42,7 @@ sub read_char_matrix{
   foreach my $z (0 .. $y - 1) {
     my $h = [];
     foreach my $k (0 .. $x - 1) {
-      my $l = '_';
-      $l = readchar();
+      my $l = readchar();
       $h->[$k] = $l;
       }
     readspaces();
@@ -106,12 +105,10 @@ sub pathfind{
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
-my $r = 0;
-$r = readint();
+my $r = readint();
 readspaces();
 my $x = $r;
-my $u = 0;
-$u = readint();
+my $u = readint();
 readspaces();
 my $y = $u;
 print($x, " ", $y, "\n");

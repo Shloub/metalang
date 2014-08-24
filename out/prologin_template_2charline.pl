@@ -50,26 +50,22 @@ sub programme_candidat{
   return $out_;
 }
 
-my $b = 0;
-$b = readint();
+my $b = readint();
 readspaces();
 my $taille1 = $b;
 my $d = [];
 foreach my $e (0 .. $taille1 - 1) {
-  my $f = '_';
-  $f = readchar();
+  my $f = readchar();
   $d->[$e] = $f;
   }
 readspaces();
 my $tableau1 = $d;
-my $h = 0;
-$h = readint();
+my $h = readint();
 readspaces();
 my $taille2 = $h;
 my $l = [];
 foreach my $m (0 .. $taille2 - 1) {
-  my $o = '_';
-  $o = readchar();
+  my $o = readchar();
   $l->[$m] = $o;
   }
 readspaces();

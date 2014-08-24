@@ -67,29 +67,25 @@ sub nbPassePartout{
   }
 }
 
-my $n = 0;
-$n = readint();
+my $n = readint();
 readspaces();
 my $passepartout = [];
 foreach my $i (0 .. $n - 1) {
   my $out0 = [];
   foreach my $j (0 .. 2 - 1) {
-    my $out__ = 0;
-    $out__ = readint();
+    my $out__ = readint();
     readspaces();
     $out0->[$j] = $out__;
     }
   $passepartout->[$i] = $out0;
   }
-my $m = 0;
-$m = readint();
+my $m = readint();
 readspaces();
 my $serrures = [];
 foreach my $k (0 .. $m - 1) {
   my $out1 = [];
   foreach my $l (0 .. 2 - 1) {
-    my $out_ = 0;
-    $out_ = readint();
+    my $out_ = readint();
     readspaces();
     $out1->[$l] = $out_;
     }

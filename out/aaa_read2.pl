@@ -35,15 +35,13 @@ sub remainder {
 #read int, read char et skip
 #
 
-my $b = 0;
-$b = readint();
+my $b = readint();
 readspaces();
 my $len = $b;
 print($len, "=len\n");
 my $e = [];
 foreach my $f (0 .. $len - 1) {
-  my $g = 0;
-  $g = readint();
+  my $g = readint();
   readspaces();
   $e->[$f] = $g;
   }
@@ -54,8 +52,7 @@ foreach my $i (0 .. $len - 1) {
 print("\n");
 my $k = [];
 foreach my $l (0 .. $len - 1) {
-  my $m = 0;
-  $m = readint();
+  my $m = readint();
   readspaces();
   $k->[$l] = $m;
   }
@@ -63,15 +60,13 @@ my $tab2 = $k;
 foreach my $i_ (0 .. $len - 1) {
   print($i_, "==>", $tab2->[$i_], " ");
   }
-my $p = 0;
-$p = readint();
+my $p = readint();
 readspaces();
 my $strlen = $p;
 print($strlen, "=strlen\n");
 my $r = [];
 foreach my $s (0 .. $strlen - 1) {
-  my $u = '_';
-  $u = readchar();
+  my $u = readchar();
   $r->[$s] = $u;
   }
 readspaces();

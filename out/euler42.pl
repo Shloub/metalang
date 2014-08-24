@@ -39,13 +39,11 @@ sub is_triangular{
 
 sub score{
   readspaces();
-  my $len = 0;
-  $len = readint();
+  my $len = readint();
   readspaces();
   my $sum = 0;
   foreach my $i (1 .. $len) {
-    my $c = '_';
-    $c = readchar();
+    my $c = readchar();
     $sum = $sum + (ord($c) - ord('A'))
     +
     1;
@@ -68,8 +66,7 @@ foreach my $i (1 .. 55) {
   }
 print("\n");
 my $sum = 0;
-my $n = 0;
-$n = readint();
+my $n = readint();
 foreach my $i (1 .. $n) {
   $sum = $sum + score();
   }

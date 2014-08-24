@@ -36,8 +36,7 @@ sub read_int_matrix{
   foreach my $z (0 .. $y - 1) {
     my $d = [];
     foreach my $e (0 .. $x - 1) {
-      my $f = 0;
-      $f = readint();
+      my $f = readint();
       readspaces();
       $d->[$e] = $f;
       }
@@ -65,47 +64,30 @@ sub find{
   }
 }
 
-
 my $directions = [];
 foreach my $i (0 .. 8 - 1) {
   if ($i eq 0) {
-  my $s = {"tuple_int_int_field_0"=>0,
-           "tuple_int_int_field_1"=>1};
-  $directions->[$i] = $s;
+  $directions->[$i] = [0, 1];
   }else{
   if ($i eq 1) {
-  my $r = {"tuple_int_int_field_0"=>1,
-           "tuple_int_int_field_1"=>0};
-  $directions->[$i] = $r;
+  $directions->[$i] = [1, 0];
   }else{
   if ($i eq 2) {
-  my $q = {"tuple_int_int_field_0"=>0,
-           "tuple_int_int_field_1"=>-1};
-  $directions->[$i] = $q;
+  $directions->[$i] = [0, -1];
   }else{
   if ($i eq 3) {
-  my $p = {"tuple_int_int_field_0"=>-1,
-           "tuple_int_int_field_1"=>0};
-  $directions->[$i] = $p;
+  $directions->[$i] = [-1, 0];
   }else{
   if ($i eq 4) {
-  my $o = {"tuple_int_int_field_0"=>1,
-           "tuple_int_int_field_1"=>1};
-  $directions->[$i] = $o;
+  $directions->[$i] = [1, 1];
   }else{
   if ($i eq 5) {
-  my $l = {"tuple_int_int_field_0"=>1,
-           "tuple_int_int_field_1"=>-1};
-  $directions->[$i] = $l;
+  $directions->[$i] = [1, -1];
   }else{
   if ($i eq 6) {
-  my $k = {"tuple_int_int_field_0"=>-1,
-           "tuple_int_int_field_1"=>1};
-  $directions->[$i] = $k;
+  $directions->[$i] = [-1, 1];
   }else{
-  my $h = {"tuple_int_int_field_0"=>-1,
-           "tuple_int_int_field_1"=>-1};
-  $directions->[$i] = $h;
+  $directions->[$i] = [-1, -1];
   }
   }
   }
@@ -117,9 +99,7 @@ foreach my $i (0 .. 8 - 1) {
 my $max_ = 0;
 my $m = read_int_matrix(20, 20);
 foreach my $j (0 .. 7) {
-  my $g = $directions->[$j];
-  my $dx = $g->{"tuple_int_int_field_0"};
-  my $dy = $g->{"tuple_int_int_field_1"};
+  my ($dx, $dy) = @{ $directions->[$j] };
   foreach my $x (0 .. 19) {
     foreach my $y (0 .. 19) {
       $max_ = max2($max_, find(4, $m, $x, $y, $dx, $dy));

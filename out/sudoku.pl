@@ -29,8 +29,7 @@ sub remainder {
 sub read_sudoku{
   my $out_ = [];
   foreach my $i (0 .. 9 * 9 - 1) {
-    my $k = 0;
-    $k = readint();
+    my $k = readint();
     readspaces();
     $out_->[$i] = $k;
     }
