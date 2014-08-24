@@ -17,7 +17,5 @@ var g = {
 };
 var t = f(g);
 var d = t;
-var a = d.tuple_int_int_field_0;
-var b = d.tuple_int_int_field_1;
-util.print(a, " -- ", b, "--\n");
+util.print(d.tuple_int_int_field_0, " -- ", d.tuple_int_int_field_1, "--\n");
 

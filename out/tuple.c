@@ -22,9 +22,7 @@ int main(void){
   g->tuple_int_int_field_1=1;
   struct tuple_int_int * t = f(g);
   struct tuple_int_int * d = t;
-  int a = d->tuple_int_int_field_0;
-  int b = d->tuple_int_int_field_1;
-  printf("%d -- %d--\n", a, b);
+  printf("%d -- %d--\n", d->tuple_int_int_field_0, d->tuple_int_int_field_1);
   return 0;
 }
 
