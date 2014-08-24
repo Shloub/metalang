@@ -25,8 +25,7 @@ sub max2{
 my $i = 1;
 my $last = [];
 foreach my $j (0 .. 5 - 1) {
-  my $c = '_';
-  $c = readchar();
+  my $c = readchar();
   my $d = ord($c) - ord('0');
   $i = $i * $d;
   $last->[$j] = $d;
@@ -35,8 +34,7 @@ my $max_ = $i;
 my $index = 0;
 my $nskipdiv = 0;
 foreach my $k (1 .. 995) {
-  my $e = '_';
-  $e = readchar();
+  my $e = readchar();
   my $f = ord($e) - ord('0');
   if ($f eq 0) {
   $i = 1;

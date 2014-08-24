@@ -12,8 +12,7 @@ sub readspaces {
 
 my $c = [];
 foreach my $d (0 .. 12 - 1) {
-  my $e = '_';
-  $e = readchar();
+  my $e = readchar();
   $c->[$d] = $e;
   }
 readspaces();

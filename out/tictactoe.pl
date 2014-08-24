@@ -221,8 +221,8 @@ sub minmax{
 
 sub play{
   my($g) = @_;
-  my $minMove = {"x"=>0,
-                 "y"=>0};
+  my $minMove = {"x" => 0,
+                 "y" => 0};
   my $minNote = 10000;
   foreach my $x (0 .. 2) {
     foreach my $y (0 .. 2) {
@@ -256,33 +256,27 @@ sub init_{
       }
     $cases->[$i] = $tab;
     }
-  my $a = {"cases"=>$cases,
-           "firstToPlay"=>1,
-           "note"=>0,
-           "ended"=>0};
-  return $a;
+  return {"cases" => $cases,
+          "firstToPlay" => 1,
+          "note" => 0,
+          "ended" => 0};
 }
 
 sub read_move{
-  my $x = 0;
-  $x = readint();
+  my $x = readint();
   readspaces();
-  my $y = 0;
-  $y = readint();
+  my $y = readint();
   readspaces();
-  my $b = {"x"=>$x,
-           "y"=>$y};
-  return $b;
+  return {"x" => $x,
+          "y" => $y};
 }
 
 foreach my $i (0 .. 1) {
   my $state = init_();
-  my $c = {"x"=>1,
-           "y"=>1};
-  apply_move($c, $state);
-  my $d = {"x"=>0,
-           "y"=>0};
-  apply_move($d, $state);
+  apply_move({"x" => 1,
+              "y" => 1}, $state);
+  apply_move({"x" => 0,
+              "y" => 0}, $state);
   while (!$state->{"ended"})
   {
     print_state($state);

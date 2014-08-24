@@ -20,8 +20,8 @@ sub readint {
 sub cons{
   my($list,
   $i) = @_;
-  my $out_ = {"head"=>$i,
-              "tail"=>$list};
+  my $out_ = {"head" => $i,
+              "tail" => $list};
   return $out_;
 }
 
@@ -32,8 +32,8 @@ sub rev2{
   if ($torev eq $empty) {
   return $acc;
   }else{
-  my $acc2 = {"head"=>$torev->{"head"},
-              "tail"=>$acc};
+  my $acc2 = {"head" => $torev->{"head"},
+              "tail" => $acc};
   return rev2($empty, $acc, $torev->{"tail"});
   }
 }

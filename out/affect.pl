@@ -26,17 +26,17 @@ sub readint {
 
 sub mktoto{
   my($v1) = @_;
-  my $t = {"foo"=>$v1,
-           "bar"=>$v1,
-           "blah"=>$v1};
+  my $t = {"foo" => $v1,
+           "bar" => $v1,
+           "blah" => $v1};
   return $t;
 }
 
 sub mktoto2{
   my($v1) = @_;
-  my $t = {"foo"=>$v1 + 3,
-           "bar"=>$v1 + 2,
-           "blah"=>$v1 + 1};
+  my $t = {"foo" => $v1 + 3,
+           "bar" => $v1 + 2,
+           "blah" => $v1 + 1};
   return $t;
 }
 
@@ -45,9 +45,9 @@ sub result{
   $t2_) = @_;
   my $t = $t_;
   my $t2 = $t2_;
-  my $t3 = {"foo"=>0,
-            "bar"=>0,
-            "blah"=>0};
+  my $t3 = {"foo" => 0,
+            "bar" => 0,
+            "blah" => 0};
   $t3 = $t2;
   $t = $t2;
   $t2 = $t3;

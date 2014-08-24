@@ -29,14 +29,12 @@ sub programme_candidat{
   return $out_;
 }
 
-my $b = 0;
-$b = readint();
+my $b = readint();
 readspaces();
 my $taille = $b;
 my $d = [];
 foreach my $e (0 .. $taille - 1) {
-  my $f = 0;
-  $f = readint();
+  my $f = readint();
   readspaces();
   $d->[$e] = $f;
   }

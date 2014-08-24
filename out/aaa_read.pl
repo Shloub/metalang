@@ -35,8 +35,7 @@ sub remainder {
 #read int, read char et skip
 #
 
-my $len = 0;
-$len = readint();
+my $len = readint();
 readspaces();
 print($len, "=len\n");
 $len = $len * 2;
@@ -44,8 +43,7 @@ print("len*2=", $len, "\n");
 $len = int(($len) / (2));
 my $tab = [];
 foreach my $i (0 .. $len - 1) {
-  my $tmpi1 = 0;
-  $tmpi1 = readint();
+  my $tmpi1 = readint();
   readspaces();
   print($i, "=>", $tmpi1, " ");
   $tab->[$i] = $tmpi1;
@@ -53,20 +51,17 @@ foreach my $i (0 .. $len - 1) {
 print("\n");
 my $tab2 = [];
 foreach my $i_ (0 .. $len - 1) {
-  my $tmpi2 = 0;
-  $tmpi2 = readint();
+  my $tmpi2 = readint();
   readspaces();
   print($i_, "==>", $tmpi2, " ");
   $tab2->[$i_] = $tmpi2;
   }
-my $strlen = 0;
-$strlen = readint();
+my $strlen = readint();
 readspaces();
 print($strlen, "=strlen\n");
 my $tab4 = [];
 foreach my $toto (0 .. $strlen - 1) {
-  my $tmpc = '_';
-  $tmpc = readchar();
+  my $tmpc = readchar();
   my $c = ord($tmpc);
   print($tmpc, ":", $c, " ");
   if ($tmpc ne ' ') {

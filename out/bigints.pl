@@ -40,8 +40,7 @@ sub read_bigint{
   my($len) = @_;
   my $chiffres = [];
   foreach my $j (0 .. $len - 1) {
-    my $c = '_';
-    $c = readchar();
+    my $c = readchar();
     $chiffres->[$j] = ord($c);
     }
   foreach my $i (0 .. int(($len - 1) / (2))) {
@@ -49,10 +48,9 @@ sub read_bigint{
     $chiffres->[$i] = $chiffres->[$len - 1 - $i];
     $chiffres->[$len - 1 - $i] = $tmp;
     }
-  my $o = {"bigint_sign"=>1,
-           "bigint_len"=>$len,
-           "bigint_chiffres"=>$chiffres};
-  return $o;
+  return {"bigint_sign" => 1,
+          "bigint_len" => $len,
+          "bigint_chiffres" => $chiffres};
 }
 
 sub print_bigint{
@@ -163,10 +161,9 @@ sub add_bigint_positif{
   {
     $len = $len - 1;
   }
-  my $p = {"bigint_sign"=>1,
-           "bigint_len"=>$len,
-           "bigint_chiffres"=>$chiffres};
-  return $p;
+  return {"bigint_sign" => 1,
+          "bigint_len" => $len,
+          "bigint_chiffres" => $chiffres};
 }
 
 sub sub_bigint_positif{
@@ -198,18 +195,16 @@ sub sub_bigint_positif{
   {
     $len = $len - 1;
   }
-  my $q = {"bigint_sign"=>1,
-           "bigint_len"=>$len,
-           "bigint_chiffres"=>$chiffres};
-  return $q;
+  return {"bigint_sign" => 1,
+          "bigint_len" => $len,
+          "bigint_chiffres" => $chiffres};
 }
 
 sub neg_bigint{
   my($a) = @_;
-  my $r = {"bigint_sign"=>!$a->{"bigint_sign"},
-           "bigint_len"=>$a->{"bigint_len"},
-           "bigint_chiffres"=>$a->{"bigint_chiffres"}};
-  return $r;
+  return {"bigint_sign" => !$a->{"bigint_sign"},
+          "bigint_len" => $a->{"bigint_len"},
+          "bigint_chiffres" => $a->{"bigint_chiffres"}};
 }
 
 sub add_bigint{
@@ -278,10 +273,9 @@ sub mul_bigint_cp{
     
     }
     }
-  my $s = {"bigint_sign"=>$a->{"bigint_sign"} eq $b->{"bigint_sign"},
-           "bigint_len"=>$len,
-           "bigint_chiffres"=>$chiffres};
-  return $s;
+  return {"bigint_sign" => $a->{"bigint_sign"} eq $b->{"bigint_sign"},
+          "bigint_len" => $len,
+          "bigint_chiffres" => $chiffres};
 }
 
 sub bigint_premiers_chiffres{
@@ -292,10 +286,9 @@ sub bigint_premiers_chiffres{
   {
     $len = $len - 1;
   }
-  my $u = {"bigint_sign"=>$a->{"bigint_sign"},
-           "bigint_len"=>$len,
-           "bigint_chiffres"=>$a->{"bigint_chiffres"}};
-  return $u;
+  return {"bigint_sign" => $a->{"bigint_sign"},
+          "bigint_len" => $len,
+          "bigint_chiffres" => $a->{"bigint_chiffres"}};
 }
 
 sub bigint_shift{
@@ -309,10 +302,9 @@ sub bigint_shift{
     $chiffres->[$k] = 0;
     }
     }
-  my $v = {"bigint_sign"=>$a->{"bigint_sign"},
-           "bigint_len"=>$a->{"bigint_len"} + $i,
-           "bigint_chiffres"=>$chiffres};
-  return $v;
+  return {"bigint_sign" => $a->{"bigint_sign"},
+          "bigint_len" => $a->{"bigint_len"} + $i,
+          "bigint_chiffres" => $chiffres};
 }
 
 sub mul_bigint{
@@ -381,10 +373,9 @@ sub bigint_of_int{
     $t->[$k] = remainder($i, 10);
     $i = int(($i) / (10));
     }
-  my $w = {"bigint_sign"=>1,
-           "bigint_len"=>$size,
-           "bigint_chiffres"=>$t};
-  return $w;
+  return {"bigint_sign" => 1,
+          "bigint_len" => $size,
+          "bigint_chiffres" => $t};
 }
 
 sub fact_bigint{

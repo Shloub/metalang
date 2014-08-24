@@ -32,8 +32,7 @@ sub read_char_matrix{
   foreach my $z (0 .. $y - 1) {
     my $b = [];
     foreach my $c (0 .. $x - 1) {
-      my $d = '_';
-      $d = readchar();
+      my $d = readchar();
       $b->[$c] = $d;
       }
     readspaces();
@@ -60,12 +59,10 @@ sub programme_candidat{
   return $out_;
 }
 
-my $f = 0;
-$f = readint();
+my $f = readint();
 readspaces();
 my $taille_x = $f;
-my $h = 0;
-$h = readint();
+my $h = readint();
 readspaces();
 my $taille_y = $h;
 my $tableau = read_char_matrix($taille_x, $taille_y);

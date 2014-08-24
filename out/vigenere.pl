@@ -66,23 +66,19 @@ sub crypte{
     }
 }
 
-my $taille_cle = 0;
-$taille_cle = readint();
+my $taille_cle = readint();
 readspaces();
 my $cle = [];
 foreach my $index (0 .. $taille_cle - 1) {
-  my $out_ = '_';
-  $out_ = readchar();
+  my $out_ = readchar();
   $cle->[$index] = $out_;
   }
 readspaces();
-my $taille = 0;
-$taille = readint();
+my $taille = readint();
 readspaces();
 my $message = [];
 foreach my $index2 (0 .. $taille - 1) {
-  my $out2 = '_';
-  $out2 = readchar();
+  my $out2 = readchar();
   $message->[$index2] = $out2;
   }
 crypte($taille_cle, $cle, $taille, $message);
