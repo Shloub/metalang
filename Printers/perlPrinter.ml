@@ -163,6 +163,10 @@ Format.fprintf f "print(%a);" self#expr expr
       self#expr expr2
       self#instructions li
 
+  method read_decl f t v = match Type.unfix t with
+  | Type.Char -> Format.fprintf f "my %a = readchar();" self#binding v
+  | Type.Integer ->  Format.fprintf f "my %a = readint();" self#binding v
+
   method read f t mutable_ = match Type.unfix t with
   | Type.Char -> Format.fprintf f "%a = readchar();" self#mutable_ mutable_
   | Type.Integer ->  Format.fprintf f "%a = readint();" self#mutable_ mutable_
@@ -176,6 +180,39 @@ Format.fprintf f "print(%a);" self#expr expr
 	Format.fprintf f "%S=>@[<h>%a@]" fieldname self#expr expr)
 	  (fun f pa a pb b -> Format.fprintf f "%a,@\n%a" pa a pb b)
       ) el
+
+  method record f li =
+    Format.fprintf f "{%a}"
+      (self#def_fields "") li
+
+  method field f field =
+    Format.fprintf f "%S" field
+
+  method tuple f li =
+    Format.fprintf f "[%a]"
+      (print_list self#expr
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) li
+
+  method def_fields name f li =
+    Format.fprintf f "@[<h>%a@]"
+      (print_list
+         (fun f (fieldname, expr) ->
+           Format.fprintf f "%a => %a"
+             self#field fieldname
+             self#expr expr
+         )
+         (fun t f1 e1 f2 e2 ->
+           Format.fprintf t
+             "%a,@\n%a" f1 e1 f2 e2))
+      li
+
+  method untuple f li e =
+    Format.fprintf f "my (%a) = @@{ %a };"
+      (print_list self#binding
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) (List.map snd li)
+      self#expr e
 
   method selfAssoc f m e2 op = match op with
   | Expr.Mod ->

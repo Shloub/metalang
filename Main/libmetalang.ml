@@ -147,6 +147,16 @@ let clike_passes prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
 
+let perl_passes prog =
+  prog |> default_passes
+  |> snd |> Typer.process
+  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
+  |> snd |> Typer.process
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
+
 let php_passes prog =
   prog |> default_passes
   |> (fun (a, b) ->
@@ -240,7 +250,7 @@ let languages, printers =
     "go",   clike_passes => new GoPrinter.goPrinter ;
     "cl",   common_lisp_passes  => new CommonLispPrinter.commonLispPrinter ;
     "rkt",  fun_passes {Makelet.curry=false} => new RacketPrinter.racketPrinter ;
-    "pl", clike_passes => new PerlPrinter.perlPrinter ;
+    "pl",   perl_passes => new PerlPrinter.perlPrinter ;
     "metalang_parsed", no_passes => new Printer.printer ;
   ] in
   let langs : string list = List.map fst ls in
