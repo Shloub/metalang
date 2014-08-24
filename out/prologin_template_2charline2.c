@@ -2,29 +2,25 @@
 #include<stdlib.h>
 
 int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2){
+  int j, i;
   int out_ = 0;
+  for (i = 0 ; i < taille1; i++)
   {
-    int i;
-    for (i = 0 ; i < taille1; i++)
-    {
-      out_ += (int)(tableau1[i]) * i;
-      printf("%c", tableau1[i]);
-    }
+    out_ += (int)(tableau1[i]) * i;
+    printf("%c", tableau1[i]);
   }
   printf("--\n");
+  for (j = 0 ; j < taille2; j++)
   {
-    int j;
-    for (j = 0 ; j < taille2; j++)
-    {
-      out_ += (int)(tableau2[j]) * j * 100;
-      printf("%c", tableau2[j]);
-    }
+    out_ += (int)(tableau2[j]) * j * 100;
+    printf("%c", tableau2[j]);
   }
   printf("--\n");
   return out_;
 }
 
 int main(void){
+  int m, g;
   int b = 0;
   scanf("%d ", &b);
   int taille1 = b;
@@ -32,26 +28,20 @@ int main(void){
   scanf("%d ", &d);
   int taille2 = d;
   char *f = malloc( taille1 * sizeof(char));
+  for (g = 0 ; g < taille1; g++)
   {
-    int g;
-    for (g = 0 ; g < taille1; g++)
-    {
-      char h = '_';
-      scanf("%c", &h);
-      f[g] = h;
-    }
+    char h = '_';
+    scanf("%c", &h);
+    f[g] = h;
   }
   scanf(" ");
   char* tableau1 = f;
   char *l = malloc( taille2 * sizeof(char));
+  for (m = 0 ; m < taille2; m++)
   {
-    int m;
-    for (m = 0 ; m < taille2; m++)
-    {
-      char o = '_';
-      scanf("%c", &o);
-      l[m] = o;
-    }
+    char o = '_';
+    scanf("%c", &o);
+    l[m] = o;
   }
   scanf(" ");
   char* tableau2 = l;

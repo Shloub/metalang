@@ -29,74 +29,61 @@ Tictactoe : un tictactoe avec une IA
 
 /* On affiche l'état */
 void print_state(gamestate * g){
+  int y, x;
   printf("\n|");
+  for (y = 0 ; y <= 2; y++)
   {
-    int y;
-    for (y = 0 ; y <= 2; y++)
+    for (x = 0 ; x <= 2; x++)
     {
-      {
-        int x;
-        for (x = 0 ; x <= 2; x++)
-        {
-          if (g->cases[x][y] == 0)
-            printf(" ");
-          else if (g->cases[x][y] == 1)
-            printf("O");
-          else
-            printf("X");
-          printf("|");
-        }
-      }
-      if (y != 2)
-        printf("\n|-|-|-|\n|");
+      if (g->cases[x][y] == 0)
+        printf(" ");
+      else if (g->cases[x][y] == 1)
+        printf("O");
+      else
+        printf("X");
+      printf("|");
     }
+    if (y != 2)
+      printf("\n|-|-|-|\n|");
   }
   printf("\n");
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
 void eval_(gamestate * g){
+  int y, x;
   int win = 0;
   int freecase = 0;
+  for (y = 0 ; y <= 2; y++)
   {
-    int y;
-    for (y = 0 ; y <= 2; y++)
+    int col = -1;
+    int lin = -1;
+    for (x = 0 ; x <= 2; x++)
     {
-      int col = -1;
-      int lin = -1;
-      {
-        int x;
-        for (x = 0 ; x <= 2; x++)
-        {
-          if (g->cases[x][y] == 0)
-            freecase ++;
-          int colv = g->cases[x][y];
-          int linv = g->cases[y][x];
-          if (col == -1 && colv != 0)
-            col = colv;
-          else if (colv != col)
-            col = -2;
-          if (lin == -1 && linv != 0)
-            lin = linv;
-          else if (linv != lin)
-            lin = -2;
-        }
-      }
-      if (col >= 0)
-        win = col;
-      else if (lin >= 0)
-        win = lin;
+      if (g->cases[x][y] == 0)
+        freecase ++;
+      int colv = g->cases[x][y];
+      int linv = g->cases[y][x];
+      if (col == -1 && colv != 0)
+        col = colv;
+      else if (colv != col)
+        col = -2;
+      if (lin == -1 && linv != 0)
+        lin = linv;
+      else if (linv != lin)
+        lin = -2;
     }
+    if (col >= 0)
+      win = col;
+    else if (lin >= 0)
+      win = lin;
   }
+  for (x = 1 ; x <= 2; x++)
   {
-    int x;
-    for (x = 1 ; x <= 2; x++)
-    {
-      if (g->cases[0][0] == x && g->cases[1][1] == x && g->cases[2][2] == x)
-        win = x;
-      if (g->cases[0][2] == x && g->cases[1][1] == x && g->cases[2][0] == x)
-        win = x;
-    }
+    if (g->cases[0][0] == x && g->cases[1][1] == x && g->cases[2][2] == x)
+      win = x;
+    if (g->cases[0][2] == x && g->cases[1][1] == x && g->cases[2][0] == x)
+      win = x;
   }
   g->ended = win != 0 || freecase == 0;
   if (win == 1)
@@ -142,28 +129,23 @@ int can_move(move * m, gamestate * g){
 Un minimax classique, renvoie la note du plateau
 */
 int minmax(gamestate * g){
+  int x, y;
   eval_(g);
   if (g->ended)
     return g->note;
   int maxNote = -10000;
   if (!g->firstToPlay)
     maxNote = 10000;
+  for (x = 0 ; x <= 2; x++)
+    for (y = 0 ; y <= 2; y++)
+      if (can_move_xy(x, y, g))
   {
-    int x;
-    for (x = 0 ; x <= 2; x++)
-      {
-      int y;
-      for (y = 0 ; y <= 2; y++)
-        if (can_move_xy(x, y, g))
-      {
-        apply_move_xy(x, y, g);
-        int currentNote = minmax(g);
-        cancel_move_xy(x, y, g);
-        /* Minimum ou Maximum selon le coté ou l'on joue*/
-        if ((currentNote > maxNote) == g->firstToPlay)
-          maxNote = currentNote;
-      }
-    }
+    apply_move_xy(x, y, g);
+    int currentNote = minmax(g);
+    cancel_move_xy(x, y, g);
+    /* Minimum ou Maximum selon le coté ou l'on joue*/
+    if ((currentNote > maxNote) == g->firstToPlay)
+      maxNote = currentNote;
   }
   return maxNote;
 }
@@ -172,29 +154,24 @@ int minmax(gamestate * g){
 Renvoie le coup de l'IA
 */
 move * play(gamestate * g){
+  int x, y;
   move * minMove = [move alloc];
   minMove->x=0;
   minMove->y=0;
   int minNote = 10000;
+  for (x = 0 ; x <= 2; x++)
+    for (y = 0 ; y <= 2; y++)
+      if (can_move_xy(x, y, g))
   {
-    int x;
-    for (x = 0 ; x <= 2; x++)
-      {
-      int y;
-      for (y = 0 ; y <= 2; y++)
-        if (can_move_xy(x, y, g))
-      {
-        apply_move_xy(x, y, g);
-        int currentNote = minmax(g);
-        printf("%d, %d, %d\n", x, y, currentNote);
-        cancel_move_xy(x, y, g);
-        if (currentNote < minNote)
-        {
-          minNote = currentNote;
-          minMove->x = x;
-          minMove->y = y;
-        }
-      }
+    apply_move_xy(x, y, g);
+    int currentNote = minmax(g);
+    printf("%d, %d, %d\n", x, y, currentNote);
+    cancel_move_xy(x, y, g);
+    if (currentNote < minNote)
+    {
+      minNote = currentNote;
+      minMove->x = x;
+      minMove->y = y;
     }
   }
   printf("%d%d\n", minMove->x, minMove->y);
@@ -202,19 +179,14 @@ move * play(gamestate * g){
 }
 
 gamestate * init_(){
+  int i, j;
   int* *cases = malloc( 3 * sizeof(int*));
+  for (i = 0 ; i < 3; i++)
   {
-    int i;
-    for (i = 0 ; i < 3; i++)
-    {
-      int *tab = malloc( 3 * sizeof(int));
-      {
-        int j;
-        for (j = 0 ; j < 3; j++)
-          tab[j] = 0;
-      }
-      cases[i] = tab;
-    }
+    int *tab = malloc( 3 * sizeof(int));
+    for (j = 0 ; j < 3; j++)
+      tab[j] = 0;
+    cases[i] = tab;
   }
   gamestate * a = [gamestate alloc];
   a->cases=cases;
@@ -237,34 +209,32 @@ move * read_move(){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i;
+  for (i = 0 ; i <= 1; i++)
   {
-    int i;
-    for (i = 0 ; i <= 1; i++)
+    gamestate * state = init_();
+    move * c = [move alloc];
+    c->x=1;
+    c->y=1;
+    apply_move(c, state);
+    move * d = [move alloc];
+    d->x=0;
+    d->y=0;
+    apply_move(d, state);
+    while (!state->ended)
     {
-      gamestate * state = init_();
-      move * c = [move alloc];
-      c->x=1;
-      c->y=1;
-      apply_move(c, state);
-      move * d = [move alloc];
-      d->x=0;
-      d->y=0;
-      apply_move(d, state);
-      while (!state->ended)
+      print_state(state);
+      apply_move(play(state), state);
+      eval_(state);
+      print_state(state);
+      if (!state->ended)
       {
-        print_state(state);
         apply_move(play(state), state);
         eval_(state);
-        print_state(state);
-        if (!state->ended)
-        {
-          apply_move(play(state), state);
-          eval_(state);
-        }
       }
-      print_state(state);
-      printf("%d\n", state->note);
     }
+    print_state(state);
+    printf("%d\n", state->note);
   }
   [pool drain];
   return 0;

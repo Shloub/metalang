@@ -10,12 +10,10 @@ int is_number(char c){
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
 int npi_(char* str, int len){
+  int i;
   int *stack = malloc( len * sizeof(int));
-  {
-    int i;
-    for (i = 0 ; i < len; i++)
-      stack[i] = 0;
-  }
+  for (i = 0 ; i < len; i++)
+    stack[i] = 0;
   int ptrStack = 0;
   int ptrStr = 0;
   while (ptrStr < len)
@@ -43,17 +41,15 @@ int npi_(char* str, int len){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i;
   int len = 0;
   scanf("%d ", &len);
   char *tab = malloc( len * sizeof(char));
+  for (i = 0 ; i < len; i++)
   {
-    int i;
-    for (i = 0 ; i < len; i++)
-    {
-      char tmp = '\000';
-      scanf("%c", &tmp);
-      tab[i] = tmp;
-    }
+    char tmp = '\000';
+    scanf("%c", &tmp);
+    tab[i] = tmp;
   }
   int result = npi_(tab, len);
   printf("%d", result);

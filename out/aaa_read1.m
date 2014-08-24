@@ -4,23 +4,18 @@
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i, d;
   char *c = malloc( 12 * sizeof(char));
+  for (d = 0 ; d < 12; d++)
   {
-    int d;
-    for (d = 0 ; d < 12; d++)
-    {
-      char e = '_';
-      scanf("%c", &e);
-      c[d] = e;
-    }
+    char e = '_';
+    scanf("%c", &e);
+    c[d] = e;
   }
   scanf(" ");
   char* str = c;
-  {
-    int i;
-    for (i = 0 ; i <= 11; i++)
-      printf("%c", str[i]);
-  }
+  for (i = 0 ; i <= 11; i++)
+    printf("%c", str[i]);
   [pool drain];
   return 0;
 }

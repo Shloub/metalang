@@ -28,29 +28,21 @@ int pgcd(int a, int b){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+  int i, j, k;
   int top = 1;
   int bottom = 1;
+  for (i = 1 ; i <= 9; i++)
+    for (j = 1 ; j <= 9; j++)
+      for (k = 1 ; k <= 9; k++)
+        if (i != j && j != k)
   {
-    int i;
-    for (i = 1 ; i <= 9; i++)
-      {
-      int j;
-      for (j = 1 ; j <= 9; j++)
-        {
-        int k;
-        for (k = 1 ; k <= 9; k++)
-          if (i != j && j != k)
-        {
-          int a = i * 10 + j;
-          int b = j * 10 + k;
-          if (a * k == i * b)
-          {
-            printf("%d/%d\n", a, b);
-            top *= a;
-            bottom *= b;
-          }
-        }
-      }
+    int a = i * 10 + j;
+    int b = j * 10 + k;
+    if (a * k == i * b)
+    {
+      printf("%d/%d\n", a, b);
+      top *= a;
+      bottom *= b;
     }
   }
   printf("%d/%d\n", top, bottom);
