@@ -40,6 +40,8 @@ class cppPrinter = object(self)
 
   method lang () = "cpp"
 
+  method declare_for f li = ()
+
   method ptype f t =
     match Type.unfix t with
     | Type.Integer -> Format.fprintf f "int"

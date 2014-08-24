@@ -38,6 +38,7 @@ open CPrinter
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+  method declare_for f li = ()
 
   method tuple f li =
     Format.fprintf f "array(%a)"
