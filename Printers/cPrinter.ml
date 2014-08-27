@@ -129,9 +129,11 @@ class cPrinter = object(self)
     | _ -> default ()
 
   method main f main =
-    let li_for = self#collect_for main in
-    Format.fprintf f "@[<v 2>int main(void){@\n%a%a@\nreturn 0;@]@\n}"
-      self#declare_for li_for self#instructions main
+    let li_fori, li_forc = self#collect_for main in
+    Format.fprintf f "@[<v 2>int main(void){@\n%a%a%a@\nreturn 0;@]@\n}"
+      (self#declare_for "int") li_fori
+      (self#declare_for "char") li_forc
+      self#instructions main
 
   method bloc f li = match li with
   | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
@@ -192,6 +194,11 @@ class cPrinter = object(self)
              Format.fprintf f "%a][%a" f1 e1 f2 e2
            ))
         indexes
+
+  method read_decl f t v =
+    Format.fprintf f "@[scanf(\"%a\", &%a);@]"
+      self#format_type t
+      self#binding v
 
   method read f t m =
     Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#mutable_ m
@@ -255,25 +262,33 @@ class cPrinter = object(self)
 
   method collect_for instrs =
     let collect acc i =
-      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
-      | Instr.Loop (i, _, _, _) -> if List.mem i acc then acc else i::acc
-      | _ -> acc
+      Instr.Writer.Deep.fold (fun (acci, accc) i -> match Instr.unfix i with
+      | Instr.DeclRead (ty, i, _) ->
+        begin match Type.unfix ty with
+        | Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
+        | Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
+        | _ -> assert false
+        end
+      | Instr.Loop (i, _, _, _) -> let acci = if List.mem i acci then acci else i::acci in acci, accc
+      | _ -> (acci, accc)
       ) acc i
     in
-    List.fold_left collect [] instrs
+    List.fold_left collect ([], []) instrs
 
-  method declare_for f li =
+  method declare_for s f li =
     if li <> [] then
-      Format.fprintf f "int %a;@\n"
+      Format.fprintf f "%s %a;@\n"
+        s
         (print_list self#binding
            (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)
         ) li
 
   method print_fun f funname t li instrs =
-    let li_for = self#collect_for instrs in
-    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a%a@]@\n}@\n"
+    let li_fori, li_forc = self#collect_for instrs in
+    Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a%a%a@]@\n}@\n"
       self#print_proto (funname, t, li)
-      self#declare_for li_for
+      (self#declare_for "int") li_fori
+      (self#declare_for "char") li_forc
       self#instructions instrs
 
   method return f e =
@@ -306,6 +321,10 @@ class cPrinter = object(self)
     let format, variables =
       List.fold_left (fun (format, variables) i -> match Instr.unfix i with
       | Instr.StdinSep -> (format ^ " ", variables)
+      | Instr.DeclRead (t, var, _) ->
+        let mutable_ = Mutable.var var in
+        let addons = format_type t in
+        (format ^ addons, mutable_::variables)
       | Instr.Read (t, mutable_) ->
         let addons = format_type t in
         (format ^ addons, mutable_::variables)

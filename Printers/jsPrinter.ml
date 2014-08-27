@@ -38,7 +38,7 @@ class jsPrinter = object(self)
 
   method lang () = "js"
 
-  method declare_for f li = ()
+  method declare_for s f li = ()
 
   method decl_type f name t = ()
 
@@ -199,6 +199,18 @@ var read_int_ = function(){
     | Type.Char ->
       Format.fprintf f "@[%a=read_char_();@]"
         self#mutable_ mutable_
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
+      (Type.type_t_to_string t)
+    ))
+
+  method read_decl f t v =
+    match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[%a=read_int_();@]"
+        self#binding v
+    | Type.Char ->
+      Format.fprintf f "@[%a=read_char_();@]"
+        self#binding v
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
       (Type.type_t_to_string t)
     ))

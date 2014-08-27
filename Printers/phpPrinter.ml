@@ -38,7 +38,7 @@ open CPrinter
 class phpPrinter = object(self)
   inherit cPrinter as super
 
-  method declare_for f li = ()
+  method declare_for s f li = ()
 
   method tuple f li =
     Format.fprintf f "array(%a)"
@@ -86,6 +86,16 @@ class phpPrinter = object(self)
     | _ ->
       Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
         self#mutable_ m
+        self#format_type t
+
+  method read_decl f t v =
+    match Type.unfix t with
+    | Type.Char ->
+      Format.fprintf f "@[%a = nextChar();@]"
+        self#binding v
+    | _ ->
+      Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
+        self#binding v
         self#format_type t
 
 

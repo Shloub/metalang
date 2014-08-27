@@ -142,7 +142,6 @@ let clike_passes prog =
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
   (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
@@ -165,7 +164,6 @@ let php_passes prog =
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
   (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
@@ -175,7 +173,6 @@ let python_passes prog =
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
   (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> typed "expand read decl" Passes.WalkExpandReadDecl.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads

@@ -146,10 +146,20 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")){@]@\n@[<h>scanner.next(\"^-\"); %a = -scanner.nextInt();@]@\n@[<h>}else{@]@\n@[<h>%a = scanner.nextInt();}@]"
         self#mutable_ m
         self#mutable_ m
-    | Type.String -> (* TODO configure Scanner, read int and do it*)
-      Format.fprintf f "TODO" (* TODO *)
     | Type.Char -> Format.fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
       self#mutable_ m
+    | _ -> failwith("unsuported read")
+
+  method read_decl f t v =
+    match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[<h>%a %a; if (scanner.hasNext(\"^-\")){@]@\n@[<h>scanner.next(\"^-\"); %a = scanner.nextInt();@]@\n@[<h>} else {@]@\n@[<h>%a = scanner.nextInt();@]@\n}"
+        self#ptype t
+        self#binding v
+        self#binding v
+        self#binding v
+    | Type.Char -> Format.fprintf f "@[<h>char %a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
+      self#binding v
     | _ -> failwith("unsuported read")
 
   method multi_print f format exprs =

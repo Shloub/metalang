@@ -175,8 +175,15 @@ func skip() {
 
   method stdin_sep f = Format.fprintf f "@[skip()@]"
 
+  method read_decl f t v =
+    Format.fprintf f "@[var %a %a@\nfmt.Fscanf(reader, \"%a\", &%a)@]"
+      self#binding v
+      self#ptype t
+      self#format_type t
+      self#binding v
+
   method read f t m =
-    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a);@]" self#format_type t self#mutable_ m
+    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a)@]" self#format_type t self#mutable_ m
 
   method if_ f e ifcase elsecase =
     match elsecase with

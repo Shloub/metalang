@@ -9,7 +9,6 @@ ReadAnalysis
 NoPend
 RemoveTags
 AllocArrayExpend
-ExpandReadDecl
 ExpandPrint
 CollectCalls
 CollectTypes

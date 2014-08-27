@@ -40,7 +40,19 @@ class cppPrinter = object(self)
 
   method lang () = "cpp"
 
-  method declare_for f li = ()
+  method collect_for instrs =
+    let collect acc i =
+      Instr.Writer.Deep.fold (fun (acci, accc) i -> match Instr.unfix i with
+      | Instr.DeclRead (ty, i, _) ->
+        begin match Type.unfix ty with
+        | Type.Integer ->  let acci = if List.mem i acci then acci else i::acci in acci, accc
+        | Type.Char ->  let accc = if List.mem i accc then accc else i::accc in acci, accc
+        | _ -> assert false
+        end
+      | _ -> (acci, accc)
+      ) acc i
+    in
+    List.fold_left collect ([], []) instrs
 
   method ptype f t =
     match Type.unfix t with
@@ -98,7 +110,11 @@ class cppPrinter = object(self)
       self#expr len
 
   method main f main =
-    Format.fprintf f "@[<v 2>int main(){@\n%a@\nreturn 0;@]@\n}" self#instructions main
+    let li_fori, li_forc = self#collect_for main in
+    Format.fprintf f "@[<v 2>int main(){@\n%a%a%a@\nreturn 0;@]@\n}"
+      (self#declare_for "int") li_fori
+      (self#declare_for "char") li_forc
+      self#instructions main
 
   method allocrecord f name t el =
     match Type.unfix t with
@@ -195,6 +211,9 @@ class cppPrinter = object(self)
     let skipfirst, variables =
       List.fold_left (fun (skipfirst, variables) i -> match Instr.unfix i with
       | Instr.Read (t, mutable_) -> skipfirst, (t, mutable_, false)::variables
+      | Instr.DeclRead (t, var, _) ->
+        let mutable_ = Mutable.var var in
+        skipfirst, (t, mutable_, false)::variables
       | Instr.StdinSep -> begin match variables with
         | (t, m, s)::tl -> skipfirst, (t, m, true)::tl
         | [] -> true, []

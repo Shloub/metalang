@@ -113,6 +113,18 @@ class pyPrinter = object(self)
       (Type.type_t_to_string t)
     ))
 
+  method read_decl f t v =
+    match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[%a=readint()@]"
+        self#binding v
+    | Type.Char ->
+      Format.fprintf f "@[%a=readchar()@]"
+        self#binding v
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
+      (Type.type_t_to_string t)
+    ))
+
   method stdin_sep f = Format.fprintf f "@[stdinsep()@]"
 
   method main f main = self#instructions f main

@@ -162,29 +162,115 @@ let can_map_name e =
   end
   | _ -> false
 
+let rec all_variables_mut acc m =
+  Mutable.Writer.Deep.fold (fun acc m ->
+    match Mutable.unfix m with
+    | Mutable.Var i -> if List.mem i acc then acc else i::acc
+    | Mutable.Array (m, li) -> List.fold_left all_variables_expr acc li
+    | _ -> acc
+  ) acc m
+and all_variables_expr acc e =
+  Expr.Writer.Deep.fold (fun acc e ->
+    match Expr.unfix e with
+    | Expr.Access m -> all_variables_mut acc m
+    | _ -> acc
+  ) acc e
+
+let all_variables e = all_variables_expr [] e
+
+let rec no_affectation li ilimit name =
+  match li with
+  | [] -> true
+  | hd::tl -> if hd = ilimit then true else
+      (no_affectation tl ilimit name) &&
+        (match Instr.unfix hd with
+        | Instr.Affect (m, _)
+        | Instr.Read (_, m) ->
+          let m = name_of_mut m in
+          m <> name
+        | _ -> true
+        )
+
+let is_readvar i = match Instr.unfix i with
+  | Instr.Read (_, m) -> begin match Mutable.unfix m with
+    | Mutable.Var _ -> true
+    | _ -> false
+  end
+  | _ -> false
+
+let is_affect_copyvar i name = match Instr.unfix i with
+  | Instr.Affect (_, e) -> begin match Expr.unfix e with
+    | Expr.Access m -> begin match Mutable.unfix m with
+      | Mutable.Var v -> v = name
+      | _ -> false
+    end
+    | _ -> false
+  end
+  | _ -> false
+
+let is_declare_copyvar i name = match Instr.unfix i with
+  | Instr.Declare (_, _, e, _) -> begin match Expr.unfix e with
+    | Expr.Access m -> begin match Mutable.unfix m with
+      | Mutable.Var v -> v = name
+      | _ -> false
+    end
+    | _ -> false
+  end
+  | _ -> false
+
+let affected_mutable i = match Instr.unfix i with
+  | Instr.Affect (m, _) -> m
+  | _ -> assert false
+
+let name_declared i = match Instr.unfix i with
+  | Instr.Declare (v,_, _, _) -> v
+  | _ -> assert false
+
+let remove_instruction li i =
+List.filter ((<>) i) li
+
 let rec map_instrs (infos:infos) = function
   | [] -> []
   | hd::tl -> match Instr.unfix hd with
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
       begin match StringMap.find_opt name infos.infos with
-      | Some [item1; item2] ->
-	let item1, item2 = if item1.declaration then item1, item2 else item2, item1 in
-	if item2.affected then
-	  hd :: (map_instrs infos tl)
-	else begin match item1, item2 with
-	| ({instruction=_; expression=None; affected=false; declaration=true; dad=_},
-	   {instruction=_; expression=Some e2; affected=false; declaration=false; dad=_}) ->
-	  if can_map_name e2 then
-	    let tl = replace_expression e2 e tl in
-	    map_instrs infos tl
-	  else hd :: (map_instrs infos tl)
-	| _ ->
-	  hd :: (map_instrs infos tl)
-	end
+
+      | Some [
+
+        {instruction=i3; expression=_; affected=false; declaration=false; dad=dad3};
+        {instruction=i2; expression=_; affected=true; declaration=false; dad=dad2};
+        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}
+      ] when is_readvar i2 && (is_affect_copyvar i3 name ||
+                                 is_declare_copyvar i3 name
+      )-> (* TODO checker l'ordre *)
+        let tl = remove_instruction tl i2 in
+        let tl = remove_instruction tl i3 in
+        let tl = map_instrs infos tl in
+        if is_affect_copyvar i3 name then (Instr.read ty (affected_mutable i3))::tl
+        else
+          let name = name_declared i3 in
+          (Instr.declare name ty e Instr.default_declaration_option)
+          ::(Instr.read ty (Mutable.var name))
+          ::tl
+      | Some [item2; item1] ->
+	      if item2.affected then
+	        hd :: (map_instrs infos tl)
+	      else begin match item1, item2 with
+	      | ({instruction=_; expression=None; affected=false; declaration=true; dad=dad1},
+	         {instruction=i2; expression=Some e2; affected=false; declaration=false; dad=dad2}) when dad1 = dad2 &&
+                                                                                       (* pas d'affectation pour aucune des variables de la déclaration *)
+                                                                                            List.forall (no_affectation tl i2) (all_variables e) ->
+	        if can_map_name e2 then
+	          let tl = replace_expression e2 e tl in
+	          map_instrs infos tl
+	        else hd :: (map_instrs infos tl)
+	      | _ ->
+	        hd :: (map_instrs infos tl)
+	      end
       | Some li ->
-	hd :: (map_instrs infos tl)
+	      hd :: (map_instrs infos tl)
       | None ->
-	hd :: (map_instrs infos tl)
+	      hd :: (map_instrs infos tl)
       end
     | _ -> hd :: (map_instrs infos tl)
 

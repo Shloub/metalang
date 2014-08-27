@@ -98,6 +98,16 @@ end
         self#mutable_ mutable_
     | _ -> assert false (* types non gérés *)
 
+  method read_decl f t v =
+    match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[%a=scanf(\"%%d\")[0];@]"
+        self#binding v
+    | Type.Char ->
+      Format.fprintf f "@[%a=scanf(\"%%c\")[0];@]"
+        self#binding v
+    | _ -> assert false (* types non gérés *)
+
   method stdin_sep f = Format.fprintf f "@[scanf(\"%%*\\n\");@]"
 
   method declaration f var t e =
