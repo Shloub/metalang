@@ -25,8 +25,7 @@ func read_char_matrix(x int, y int) [][]byte{
           b[c] = d;
       }
       skip()
-      var a []byte = b
-      tab[z] = a;
+      tab[z] = b;
   }
   return tab
 }

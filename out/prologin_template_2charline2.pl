@@ -58,15 +58,13 @@ readspaces();
 my $taille2 = $d;
 my $f = [];
 foreach my $g (0 .. $taille1 - 1) {
-  my $h = readchar();
-  $f->[$g] = $h;
+  $f->[$g] = readchar();
   }
 readspaces();
 my $tableau1 = $f;
 my $l = [];
 foreach my $m (0 .. $taille2 - 1) {
-  my $o = readchar();
-  $l->[$m] = $o;
+  $l->[$m] = readchar();
   }
 readspaces();
 my $tableau2 = $l;

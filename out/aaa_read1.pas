@@ -46,15 +46,13 @@ end;
 var
   c : array of char;
   d : Longint;
-  e : char;
   i : Longint;
   str : array of char;
 begin
   SetLength(c, 12);
   for d := 0 to  12 - 1 do
   begin
-    e := read_char_();
-    c[d] := e;
+    c[d] := read_char_();
   end;
   skip();
   str := c;

@@ -78,9 +78,8 @@ sub find{
     }
     }
   foreach my $n (1 .. 10000) {
-    my $c = $n + 2;
     my $primesFactors = [];
-    foreach my $m (0 .. $c - 1) {
+    foreach my $m (0 .. $n + 2 - 1) {
       $primesFactors->[$m] = 0;
       }
     my $max_ = max2(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));

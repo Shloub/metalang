@@ -54,8 +54,7 @@ let find ndiv2 =
       end
   done;
   for n = 1 to 10000 do
-    let c = n + 2 in
-    let primesFactors = Array.init c (fun _m ->
+    let primesFactors = Array.init (n + 2) (fun _m ->
       0) in
     let max_ = max2 (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes) in
     primesFactors.(2) <- primesFactors.(2) - 1;

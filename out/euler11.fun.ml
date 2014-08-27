@@ -19,8 +19,7 @@ let read_int_matrix x y =
                ((), l)
                )
   )) ()) in
-  let c = d in
-  let k = c in
+  let k = d in
   ((), k)) ()) in
   tab
 let rec find n m x y dx dy =

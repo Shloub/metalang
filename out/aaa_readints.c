@@ -12,30 +12,27 @@ int** read_int_matrix(int x, int y){
       scanf("%d ", &d);
       b[c] = d;
     }
-    int* a = b;
-    tab[z] = a;
+    tab[z] = b;
   }
   return tab;
 }
 
 int main(void){
-  int j, o, i, k, l, f;
+  int j, i, k, f;
   scanf("%d ", &f);
   int len = f;
   printf("%d=len\n", len);
   int *h = malloc( len * sizeof(int));
   for (k = 0 ; k < len; k++)
   {
-    scanf("%d ", &l);
-    h[k] = l;
+    scanf("%d ", &h[k]);
   }
   int* tab1 = h;
   for (i = 0 ; i < len; i++)
   {
     printf("%d=>%d\n", i, tab1[i]);
   }
-  scanf("%d ", &o);
-  len = o;
+  scanf("%d ", &len);
   int** tab2 = read_int_matrix(len, len - 1);
   for (i = 0 ; i <= len - 2; i++)
   {

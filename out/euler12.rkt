@@ -85,8 +85,7 @@
                 (let ([u 10000])
                 (letrec ([g (lambda (n) 
                               (if (<= n u)
-                              (let ([c (+ n 2)])
-                              (let ([primesFactors (array_init_withenv c 
+                              (let ([primesFactors (array_init_withenv (+ n 2) 
                               (lambda (m) 
                                 (lambda (_) (let ([h 0])
                                             (list '() h)))) '())])
@@ -108,7 +107,7 @@
                                               ; print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
                                               (g (+ n 1)))))])
                                 (p q ndivs)))))
-                              ))))
+                              )))
                   0))])
                 (g s))))))])
   (v w l)))))))))

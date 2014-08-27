@@ -90,7 +90,6 @@ var
   b : Longint;
   d : g;
   e : Longint;
-  f : char;
   tableau : g;
   taille : Longint;
 begin
@@ -100,8 +99,7 @@ begin
   SetLength(d, taille);
   for e := 0 to  taille - 1 do
   begin
-    f := read_char_();
-    d[e] := f;
+    d[e] := read_char_();
   end;
   skip();
   tableau := d;

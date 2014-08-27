@@ -33,8 +33,7 @@ func read_int_matrix(x int, y int) [][]int{
           skip()
           d[e] = f;
       }
-      var c []int = d
-      tab[z] = c;
+      tab[z] = d;
   }
   return tab
 }

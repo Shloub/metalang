@@ -21,10 +21,7 @@ int min2(int a, int b){
 std::vector<std::vector<char> *> * read_char_matrix(int x, int y){
   std::vector<std::vector<char> * > *tab = new std::vector<std::vector<char> *>( y );
   for (int z = 0 ; z < y; z++)
-  {
-    std::vector<char> * g = getline();
-    tab->at(z) = g;
-  }
+    tab->at(z) = getline();
   return tab;
 }
 

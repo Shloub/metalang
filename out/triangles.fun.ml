@@ -35,8 +35,7 @@ let rec find0 len tab cache x y =
           then cache.(y).(x)
           else (f ()))))
 let find len tab =
-  let tab2 = (Array.init_withenv len (fun  i () -> let a = (i + 1) in
-  let tab3 = (Array.init_withenv a (fun  j () -> let d = 0 in
+  let tab2 = (Array.init_withenv len (fun  i () -> let tab3 = (Array.init_withenv (i + 1) (fun  j () -> let d = 0 in
   ((), d)) ()) in
   let c = tab3 in
   ((), c)) ()) in
@@ -47,8 +46,7 @@ let main =
   (fun  t -> let len = t in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let tab = (Array.init_withenv len (fun  i () -> let b = (i + 1) in
-    let tab2 = (Array.init_withenv b (fun  j () -> let tmp = 0 in
+    let tab = (Array.init_withenv len (fun  i () -> let tab2 = (Array.init_withenv (i + 1) (fun  j () -> let tmp = 0 in
     Scanf.scanf "%d"
     (fun  m -> let tmp = m in
     (

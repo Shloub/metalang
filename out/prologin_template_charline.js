@@ -48,10 +48,7 @@ stdinsep();
 var taille = b;
 var d = new Array(taille);
 for (var e = 0 ; e <= taille - 1; e++)
-{
-  f=read_char_();
-  d[e] = f;
-}
+  d[e]=read_char_();
 stdinsep();
 var tableau = d;
 util.print(programme_candidat(tableau, taille), "\n");

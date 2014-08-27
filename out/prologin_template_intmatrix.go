@@ -25,8 +25,7 @@ func read_int_matrix(x int, y int) [][]int{
           skip()
           b[c] = d;
       }
-      var a []int = b
-      tab[z] = a;
+      tab[z] = b;
   }
   return tab
 }

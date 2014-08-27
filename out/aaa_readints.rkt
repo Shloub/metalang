@@ -12,9 +12,8 @@
 (define (read_int_matrix x y)
   ;toto
   (let ([tab (array_init_withenv y (lambda (z) 
-                                     (lambda (_) (let ([a (list->vector (map string->number (regexp-split " " (read-line))))])
-                                                 (let ([e a])
-                                                 (list '() e))))) '())])
+                                     (lambda (_) (let ([e (list->vector (map string->number (regexp-split " " (read-line))))])
+                                                 (list '() e)))) '())])
   tab)
 )
 (define main

@@ -52,9 +52,8 @@ function find($ndiv2){
   }
   for ($n = 1 ; $n <= 10000; $n++)
   {
-    $c = $n + 2;
     $primesFactors = array();
-    for ($m = 0 ; $m < $c; $m++)
+    for ($m = 0 ; $m < $n + 2; $m++)
       $primesFactors[$m] = 0;
     $max_ = max2(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
     $primesFactors[2] --;

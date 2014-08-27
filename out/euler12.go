@@ -71,9 +71,8 @@ func find(ndiv2 int) int{
       }
   }
   for n := 1 ; n <= 10000; n++ {
-    var c int = n + 2
-      var primesFactors []int = make([]int, c)
-      for m := 0 ; m <= c - 1; m++ {
+    var primesFactors []int = make([]int, (n + 2))
+      for m := 0 ; m <= n + 2 - 1; m++ {
         primesFactors[m] = 0;
       }
       var max_ int = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))

@@ -65,17 +65,16 @@ on le retrouve ici : http://projecteuler.net/problem=18
              len
              (function (lambda (i)
              (block lambda_1
-               (let ((a (+ i 1)))
-                 (let
-                  ((tab3 (array_init
-                            a
-                            (function (lambda (j)
-                            (block lambda_2
-                              (return-from lambda_2 0)
-                            ))
-                            ))))
-                 (return-from lambda_1 tab3)
-                 ))))
+               (let
+                ((tab3 (array_init
+                          (+ i 1)
+                          (function (lambda (j)
+                          (block lambda_2
+                            (return-from lambda_2 0)
+                          ))
+                          ))))
+               (return-from lambda_1 tab3)
+               )))
              ))))
   (return-from find_ (find0 len tab tab2 0 0))
   )))
@@ -89,20 +88,19 @@ on le retrouve ici : http://projecteuler.net/problem=18
               len
               (function (lambda (i)
               (block lambda_3
-                (let ((b (+ i 1)))
-                  (let
-                   ((tab2 (array_init
-                             b
-                             (function (lambda (j)
-                             (block lambda_4
-                               (let ((tmp 0))
-                                 (setq tmp (mread-int ))
-                                 (mread-blank)
-                                 (return-from lambda_4 tmp)
-                               )))
-                             ))))
-                  (return-from lambda_3 tab2)
-                  ))))
+                (let
+                 ((tab2 (array_init
+                           (+ i 1)
+                           (function (lambda (j)
+                           (block lambda_4
+                             (let ((tmp 0))
+                               (setq tmp (mread-int ))
+                               (mread-blank)
+                               (return-from lambda_4 tmp)
+                             )))
+                           ))))
+                (return-from lambda_3 tab2)
+                )))
               ))))
     (princ (find_ len tab))
     (princ "

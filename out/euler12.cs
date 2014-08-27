@@ -59,9 +59,8 @@ public class euler12
     }
     for (int n = 1 ; n <= 10000; n ++)
     {
-      int c = n + 2;
-      int[] primesFactors = new int[c];
-      for (int m = 0 ; m < c; m++)
+      int[] primesFactors = new int[n + 2];
+      for (int m = 0 ; m < n + 2; m++)
         primesFactors[m] = 0;
       int max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
       primesFactors[2] --;

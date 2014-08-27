@@ -3,8 +3,7 @@ let read_int_matrix x y =
     let b = Array.init x (fun _c ->
       let d = Scanf.scanf "%d " (fun v_0 -> v_0) in
       d) in
-    let a = b in
-    a) in
+    b) in
   tab
 
 let () =

@@ -22,8 +22,7 @@ char** read_char_matrix(int x, int y){
       h[k] = l;
     }
     scanf(" ");
-    char* g = h;
-    tab[z] = g;
+    tab[z] = h;
   }
   return tab;
 }

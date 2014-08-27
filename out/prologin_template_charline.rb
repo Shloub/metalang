@@ -14,8 +14,7 @@ scanf("%*\n");
 taille = b
 d = [];
 for e in (0 ..  taille - 1) do
-  f=scanf("%c")[0];
-  d[e] = f;
+  d[e]=scanf("%c")[0];
 end
 scanf("%*\n");
 tableau = d

@@ -73,7 +73,6 @@ type k = array of array of char;
 type l = array of char;
 function read_char_matrix(x : Longint; y : Longint) : k;
 var
-  a : l;
   b : l;
   c : Longint;
   d : char;
@@ -90,8 +89,7 @@ begin
       b[c] := d;
     end;
     skip();
-    a := b;
-    tab[z] := a;
+    tab[z] := b;
   end;
   exit(tab);
 end;

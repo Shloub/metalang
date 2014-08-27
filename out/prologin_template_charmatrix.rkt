@@ -12,9 +12,8 @@
 (define (read_char_matrix x y)
   ;toto
   (let ([tab (array_init_withenv y (lambda (z) 
-                                     (lambda (_) (let ([a (list->vector (string->list (read-line)))])
-                                                 (let ([l a])
-                                                 (list '() l))))) '())])
+                                     (lambda (_) (let ([l (list->vector (string->list (read-line)))])
+                                                 (list '() l)))) '())])
   tab)
 )
 (define (programme_candidat tableau taille_x taille_y)

@@ -7,10 +7,7 @@ public class aaa_readints
   {
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
-    {
-      int[] a = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-      tab[z] = a;
-    }
+      tab[z] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     return tab;
   }
   

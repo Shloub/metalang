@@ -12,10 +12,7 @@ public class pathfinding0
   {
     char[][] tab = new char[y][];
     for (int z = 0 ; z < y; z++)
-    {
-      char[] g = Console.ReadLine().ToCharArray();
-      tab[z] = g;
-    }
+      tab[z] = Console.ReadLine().ToCharArray();
     return tab;
   }
   

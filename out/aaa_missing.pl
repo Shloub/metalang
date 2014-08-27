@@ -49,9 +49,8 @@ my $len = $b;
 print($len, "\n");
 my $d = [];
 foreach my $e (0 .. $len - 1) {
-  my $f = readint();
+  $d->[$e] = readint();
   readspaces();
-  $d->[$e] = $f;
   }
 my $tab = $d;
 print(result($len, $tab));

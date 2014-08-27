@@ -32,9 +32,8 @@ int find(int len, int** tab){
   int* *tab2 = malloc( len * sizeof(int*));
   for (i = 0 ; i < len; i++)
   {
-    int a = i + 1;
-    int *tab3 = malloc( a * sizeof(int));
-    for (j = 0 ; j < a; j++)
+    int *tab3 = malloc( (i + 1) * sizeof(int));
+    for (j = 0 ; j < i + 1; j++)
       tab3[j] = 0;
     tab2[i] = tab3;
   }
@@ -48,9 +47,8 @@ int main(void){
   int* *tab = malloc( len * sizeof(int*));
   for (i = 0 ; i < len; i++)
   {
-    int b = i + 1;
-    int *tab2 = malloc( b * sizeof(int));
-    for (j = 0 ; j < b; j++)
+    int *tab2 = malloc( (i + 1) * sizeof(int));
+    for (j = 0 ; j < i + 1; j++)
     {
       int tmp = 0;
       scanf("%d ", &tmp);

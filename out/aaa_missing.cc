@@ -17,15 +17,14 @@ int result(int len, std::vector<int> * tab){
 
 
 int main(){
-  int f, b;
+  int b;
   std::cin >> b >> std::skipws;
   int len = b;
   std::cout << len << "\n";
   std::vector<int > *d = new std::vector<int>( len );
   for (int e = 0 ; e < len; e++)
   {
-    std::cin >> f >> std::skipws;
-    d->at(e) = f;
+    std::cin >> d->at(e) >> std::skipws;
   }
   std::vector<int> * tab = d;
   std::cout << result(len, tab);

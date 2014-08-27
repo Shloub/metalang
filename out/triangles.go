@@ -45,9 +45,8 @@ func find0(len int, tab [][]int, cache [][]int, x int, y int) int{
 func find(len int, tab [][]int) int{
   var tab2 [][]int = make([][]int, len)
   for i := 0 ; i <= len - 1; i++ {
-    var a int = i + 1
-      var tab3 []int = make([]int, a)
-      for j := 0 ; j <= a - 1; j++ {
+    var tab3 []int = make([]int, (i + 1))
+      for j := 0 ; j <= i + 1 - 1; j++ {
         tab3[j] = 0;
       }
       tab2[i] = tab3;
@@ -62,9 +61,8 @@ func main() {
   skip()
   var tab [][]int = make([][]int, len)
   for i := 0 ; i <= len - 1; i++ {
-    var b int = i + 1
-      var tab2 []int = make([]int, b)
-      for j := 0 ; j <= b - 1; j++ {
+    var tab2 []int = make([]int, (i + 1))
+      for j := 0 ; j <= i + 1 - 1; j++ {
         var tmp int = 0
           fmt.Fscanf(reader, "%d", &tmp)
           skip()

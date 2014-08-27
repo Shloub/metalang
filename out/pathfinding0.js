@@ -43,8 +43,7 @@ function read_char_matrix(x, y){
       f[g] = h;
     }
     stdinsep();
-    var e = f;
-    tab[z] = e;
+    tab[z] = f;
   }
   return tab;
 }

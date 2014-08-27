@@ -20,15 +20,14 @@ int result(int len, int* tab){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int e, f, b;
+  int e, b;
   scanf("%d ", &b);
   int len = b;
   printf("%d\n", len);
   int *d = malloc( len * sizeof(int));
   for (e = 0 ; e < len; e++)
   {
-    scanf("%d ", &f);
-    d[e] = f;
+    scanf("%d ", &d[e]);
   }
   int* tab = d;
   printf("%d", result(len, tab));

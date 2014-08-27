@@ -38,9 +38,8 @@ end
 def find( len, tab )
     tab2 = [];
     for i in (0 ..  len - 1) do
-      a = i + 1
       tab3 = [];
-      for j in (0 ..  a - 1) do
+      for j in (0 ..  i + 1 - 1) do
         tab3[j] = 0;
       end
       tab2[i] = tab3;
@@ -53,9 +52,8 @@ len=scanf("%d")[0];
 scanf("%*\n");
 tab = [];
 for i in (0 ..  len - 1) do
-  b = i + 1
   tab2 = [];
-  for j in (0 ..  b - 1) do
+  for j in (0 ..  i + 1 - 1) do
     tmp = 0
     tmp=scanf("%d")[0];
     scanf("%*\n");

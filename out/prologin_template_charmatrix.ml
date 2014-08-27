@@ -4,8 +4,7 @@ let read_char_matrix x y =
       let d = Scanf.scanf "%c" (fun v_0 -> v_0) in
       d) in
     Scanf.scanf " " (fun () -> ());
-    let a = b in
-    a) in
+    b) in
   tab
 
 let programme_candidat tableau taille_x taille_y =

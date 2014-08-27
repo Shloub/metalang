@@ -14,10 +14,7 @@ std::vector<char> *getline(){
 std::vector<std::vector<char> *> * read_char_matrix(int x, int y){
   std::vector<std::vector<char> * > *tab = new std::vector<std::vector<char> *>( y );
   for (int z = 0 ; z < y; z++)
-  {
-    std::vector<char> * a = getline();
-    tab->at(z) = a;
-  }
+    tab->at(z) = getline();
   return tab;
 }
 

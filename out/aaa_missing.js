@@ -47,9 +47,8 @@ util.print(len, "\n");
 var d = new Array(len);
 for (var e = 0 ; e <= len - 1; e++)
 {
-  f=read_int_();
+  d[e]=read_int_();
   stdinsep();
-  d[e] = f;
 }
 var tab = d;
 util.print(result(len, tab));

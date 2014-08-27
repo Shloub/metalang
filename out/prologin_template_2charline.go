@@ -38,9 +38,7 @@ func main() {
   var taille1 int = b
   var d []byte = make([]byte, taille1)
   for e := 0 ; e <= taille1 - 1; e++ {
-    var f byte
-    fmt.Fscanf(reader, "%c", &f)
-      d[e] = f;
+    fmt.Fscanf(reader, "%c", &d[e])
   }
   skip()
   var tableau1 []byte = d
@@ -50,9 +48,7 @@ func main() {
   var taille2 int = h
   var l []byte = make([]byte, taille2)
   for m := 0 ; m <= taille2 - 1; m++ {
-    var o byte
-    fmt.Fscanf(reader, "%c", &o)
-      l[m] = o;
+    fmt.Fscanf(reader, "%c", &l[m])
   }
   skip()
   var tableau2 []byte = l

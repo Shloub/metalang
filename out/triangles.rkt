@@ -61,13 +61,12 @@
 (define (find_ len tab)
   ;toto
   (let ([tab2 (array_init_withenv len (lambda (i) 
-                                        (lambda (_) (let ([a (+ i 1)])
-                                                    (let ([tab3 (array_init_withenv a 
+                                        (lambda (_) (let ([tab3 (array_init_withenv (+ i 1) 
                                                     (lambda (j) 
                                                       (lambda (_) (let ([d 0])
                                                                   (list '() d)))) '())])
-                                                    (let ([c tab3])
-                                                    (list '() c)))))) '())])
+                                        (let ([c tab3])
+                                        (list '() c))))) '())])
 (find0 len tab tab2 0 0))
 )
 (define main
@@ -77,8 +76,7 @@
      (block
        (mread-blank)
        (let ([tab (array_init_withenv len (lambda (i) 
-                                            (lambda (_) (let ([b (+ i 1)])
-                                                        (let ([tab2 (array_init_withenv b 
+                                            (lambda (_) (let ([tab2 (array_init_withenv (+ i 1) 
                                                         (lambda (j) 
                                                           (lambda (_) 
                                                           (let ([tmp 0])
@@ -89,8 +87,8 @@
                                                                (let ([h tmp])
                                                                (list '() h))
                                                                ))) (mread-int))))) '())])
-                                            (let ([g tab2])
-                                            (list '() g)))))) '())])
+       (let ([g tab2])
+       (list '() g))))) '())])
      (block
        (map display (list (find_ len tab) "\n"))
        (let ([r 0])

@@ -59,9 +59,8 @@ def find( ndiv2 )
       end
     end
     for n in (1 ..  10000) do
-      c = n + 2
       primesFactors = [];
-      for m in (0 ..  c - 1) do
+      for m in (0 ..  n + 2 - 1) do
         primesFactors[m] = 0;
       end
       max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))

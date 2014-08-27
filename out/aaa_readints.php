@@ -2,10 +2,7 @@
 function &read_int_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
-  {
-    $a = array_map("intval", explode(" ", fgets(STDIN)));
-    $tab[$z] = $a;
-  }
+    $tab[$z] = array_map("intval", explode(" ", fgets(STDIN)));
   return $tab;
 }
 

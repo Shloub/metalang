@@ -22,15 +22,13 @@ scanf("%*\n");
 taille2 = d
 f = [];
 for g in (0 ..  taille1 - 1) do
-  h=scanf("%c")[0];
-  f[g] = h;
+  f[g]=scanf("%c")[0];
 end
 scanf("%*\n");
 tableau1 = f
 l = [];
 for m in (0 ..  taille2 - 1) do
-  o=scanf("%c")[0];
-  l[m] = o;
+  l[m]=scanf("%c")[0];
 end
 scanf("%*\n");
 tableau2 = l

@@ -5,13 +5,9 @@
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i, d;
-  char e;
   char *c = malloc( 12 * sizeof(char));
   for (d = 0 ; d < 12; d++)
-  {
-    scanf("%c", &e);
-    c[d] = e;
-  }
+    scanf("%c", &c[d]);
   scanf(" ");
   char* str = c;
   for (i = 0 ; i <= 11; i++)

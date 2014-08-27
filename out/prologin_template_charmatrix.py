@@ -1,8 +1,7 @@
 def read_char_matrix( x, y ):
     tab = [None] * y
     for z in range(0, y):
-      a = list(input());
-      tab[z] = a;
+      tab[z] = list(input());
     return tab;
 
 def programme_candidat( tableau, taille_x, taille_y ):

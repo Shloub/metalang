@@ -12,10 +12,7 @@ public class euler11
   {
     int[][] tab = new int[y][];
     for (int z = 0 ; z < y; z++)
-    {
-      int[] c = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-      tab[z] = c;
-    }
+      tab[z] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     return tab;
   }
   

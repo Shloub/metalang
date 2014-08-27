@@ -33,13 +33,11 @@ public class aaa_missing
     int[] d = new int[len];
     for (int e = 0 ; e < len; e++)
     {
-      int f; if (scanner.hasNext("^-")){
-      scanner.next("^-"); f = scanner.nextInt();
-      } else {
-      f = scanner.nextInt();
-      }
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); d[e] = -scanner.nextInt();
+      }else{
+      d[e] = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      d[e] = f;
     }
     int[] tab = d;
     System.out.printf("%d", result(len, tab));

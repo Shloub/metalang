@@ -60,9 +60,8 @@ def find0( len, tab, cache, x, y ):
 def find( len, tab ):
     tab2 = [None] * len
     for i in range(0, len):
-      a = i + 1;
-      tab3 = [None] * a
-      for j in range(0, a):
+      tab3 = [None] * (i + 1)
+      for j in range(0, i + 1):
         tab3[j] = 0;
       tab2[i] = tab3;
     return find0(len, tab, tab2, 0, 0);
@@ -72,9 +71,8 @@ len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  b = i + 1;
-  tab2 = [None] * b
-  for j in range(0, b):
+  tab2 = [None] * (i + 1)
+  for j in range(0, i + 1):
     tmp = 0;
     tmp=readint()
     stdinsep()

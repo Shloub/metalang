@@ -28,9 +28,8 @@ len = b
 printf "%d\n", len
 d = [];
 for e in (0 ..  len - 1) do
-  f=scanf("%d")[0];
+  d[e]=scanf("%d")[0];
   scanf("%*\n");
-  d[e] = f;
 end
 tab = d
 printf "%d", result(len, tab)

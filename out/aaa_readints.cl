@@ -44,9 +44,8 @@
                           (return-from lambda_2 d)
                         )))
                       ))))
-              (let ((a b))
-                (return-from lambda_1 a)
-              ))))
+              (return-from lambda_1 b)
+              )))
             ))))
   (return-from read_int_matrix tab)
   )))
@@ -80,26 +79,25 @@
 ")
           )
         )
-        (let ((o (mread-int )))
-          (mread-blank)
-          (setq len o)
-          (let ((tab2 (read_int_matrix len (- len 1))))
-            (do
-              ((i 0 (+ 1 i)))
-              ((> i (- len 2)))
-              (progn
-                (do
-                  ((j 0 (+ 1 j)))
-                  ((> j (- len 1)))
-                  (progn
-                    (princ (aref (aref tab2 i) j))
-                    (princ " ")
-                  )
+        (setq len (mread-int ))
+        (mread-blank)
+        (let ((tab2 (read_int_matrix len (- len 1))))
+          (do
+            ((i 0 (+ 1 i)))
+            ((> i (- len 2)))
+            (progn
+              (do
+                ((j 0 (+ 1 j)))
+                ((> j (- len 1)))
+                (progn
+                  (princ (aref (aref tab2 i) j))
+                  (princ " ")
                 )
-                (princ "
-")
               )
+              (princ "
+")
             )
-          )))))))
+          )
+        ))))))
 
 

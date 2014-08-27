@@ -8,8 +8,7 @@ def read_int_matrix( x, y )
         scanf("%*\n");
         b[c] = d;
       end
-      a = b
-      tab[z] = a;
+      tab[z] = b;
     end
     return (tab);
 end

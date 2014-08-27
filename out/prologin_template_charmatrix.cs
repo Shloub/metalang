@@ -7,10 +7,7 @@ public class prologin_template_charmatrix
   {
     char[][] tab = new char[y][];
     for (int z = 0 ; z < y; z++)
-    {
-      char[] a = Console.ReadLine().ToCharArray();
-      tab[z] = a;
-    }
+      tab[z] = Console.ReadLine().ToCharArray();
     return tab;
   }
   

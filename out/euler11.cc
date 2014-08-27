@@ -18,8 +18,7 @@ std::vector<std::vector<int> *> * read_int_matrix(int x, int y){
       std::cin >> f >> std::skipws;
       d->at(e) = f;
     }
-    std::vector<int> * c = d;
-    tab->at(z) = c;
+    tab->at(z) = d;
   }
   return tab;
 }

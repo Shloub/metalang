@@ -62,7 +62,6 @@ end;
 
 function find(ndiv2 : Longint) : Longint;
 var
-  c : Longint;
   era : e;
   i : Longint;
   j : Longint;
@@ -102,9 +101,8 @@ begin
   end;
   for n := 1 to  10000 do
   begin
-    c := n + 2;
-    SetLength(primesFactors, c);
-    for m := 0 to  c - 1 do
+    SetLength(primesFactors, n + 2);
+    for m := 0 to  n + 2 - 1 do
     begin
       primesFactors[m] := 0;
     end;
