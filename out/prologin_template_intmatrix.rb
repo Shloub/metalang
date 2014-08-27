@@ -4,7 +4,6 @@ def read_int_matrix( x, y )
     for z in (0 ..  y - 1) do
       b = [];
       for c in (0 ..  x - 1) do
-        d = 0
         d=scanf("%d")[0];
         scanf("%*\n");
         b[c] = d;
@@ -25,11 +24,9 @@ def programme_candidat( tableau, x, y )
     return (out_);
 end
 
-f = 0
 f=scanf("%d")[0];
 scanf("%*\n");
 taille_x = f
-h = 0
 h=scanf("%d")[0];
 scanf("%*\n");
 taille_y = h

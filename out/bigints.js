@@ -28,7 +28,6 @@ function read_bigint(len){
   var chiffres = new Array(len);
   for (var j = 0 ; j <= len - 1; j++)
   {
-    var c = '_';
     c=read_char_();
     chiffres[j] = c.charCodeAt(0);
   }

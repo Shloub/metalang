@@ -60,14 +60,12 @@ Ce test effectue un rot13 sur une chaine lue en entrée
   
   public static void Main(String[] args)
   {
-    int strlen = 0;
-    strlen = readInt();
+    int strlen = readInt();
     stdin_sep();
     char[] tab4 = new char[strlen];
     for (int toto = 0 ; toto < strlen; toto++)
     {
-      char tmpc = '_';
-      tmpc = readChar();
+      char tmpc = readChar();
       int c = tmpc;
       if (tmpc != (char)32)
         c = ((c - 'a') + 13) % 26 + 'a';

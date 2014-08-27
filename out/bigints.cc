@@ -22,10 +22,10 @@ public:
 };
 
 bigint * read_bigint(int len){
+  char c;
   std::vector<int > *chiffres = new std::vector<int>( len );
   for (int j = 0 ; j < len; j++)
   {
-    char c = '_';
     std::cin >> c >> std::noskipws;
     chiffres->at(j) = (int)(c);
   }

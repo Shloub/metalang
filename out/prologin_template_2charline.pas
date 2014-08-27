@@ -107,27 +107,23 @@ var
   taille1 : Longint;
   taille2 : Longint;
 begin
-  b := 0;
   b := read_int_();
   skip();
   taille1 := b;
   SetLength(d, taille1);
   for e := 0 to  taille1 - 1 do
   begin
-    f := #95;
     f := read_char_();
     d[e] := f;
   end;
   skip();
   tableau1 := d;
-  h := 0;
   h := read_int_();
   skip();
   taille2 := h;
   SetLength(l, taille2);
   for m := 0 to  taille2 - 1 do
   begin
-    o := #95;
     o := read_char_();
     l[m] := o;
   end;

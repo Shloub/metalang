@@ -47,7 +47,6 @@ function nbPassePartout($n, &$passepartout, $m, &$serrures){
     return 0;
 }
 
-$n = 0;
 list($n) = scan("%d");
 scantrim();
 $passepartout = array();
@@ -56,14 +55,12 @@ for ($i = 0 ; $i < $n; $i++)
   $out0 = array();
   for ($j = 0 ; $j < 2; $j++)
   {
-    $out__ = 0;
     list($out__) = scan("%d");
     scantrim();
     $out0[$j] = $out__;
   }
   $passepartout[$i] = $out0;
 }
-$m = 0;
 list($m) = scan("%d");
 scantrim();
 $serrures = array();
@@ -72,7 +69,6 @@ for ($k = 0 ; $k < $m; $k++)
   $out1 = array();
   for ($l = 0 ; $l < 2; $l++)
   {
-    $out_ = 0;
     list($out_) = scan("%d");
     scantrim();
     $out1[$l] = $out_;

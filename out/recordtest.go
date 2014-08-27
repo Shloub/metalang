@@ -25,9 +25,9 @@ func main() {
   var param * toto = new (toto)
   (*param).foo=0;
   (*param).bar=0;
-  fmt.Fscanf(reader, "%d", &(*param).bar);
+  fmt.Fscanf(reader, "%d", &(*param).bar)
   skip()
-  fmt.Fscanf(reader, "%d", &(*param).foo);
+  fmt.Fscanf(reader, "%d", &(*param).foo)
   fmt.Printf("%d", (*param).bar + (*param).foo * (*param).bar);
 }
 

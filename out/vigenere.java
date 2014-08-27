@@ -36,31 +36,29 @@ public class vigenere
   
   public static void main(String args[])
   {
-    int taille_cle = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); taille_cle = -scanner.nextInt();
-    }else{
-    taille_cle = scanner.nextInt();}
+    int taille_cle; if (scanner.hasNext("^-")){
+    scanner.next("^-"); taille_cle = scanner.nextInt();
+    } else {
+    taille_cle = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] cle = new char[taille_cle];
     for (int index = 0 ; index < taille_cle; index++)
     {
-      char out_ = '_';
-      out_ = scanner.findWithinHorizon(".", 1).charAt(0);
+      char out_ = scanner.findWithinHorizon(".", 1).charAt(0);
       cle[index] = out_;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); taille = -scanner.nextInt();
-    }else{
-    taille = scanner.nextInt();}
+    int taille; if (scanner.hasNext("^-")){
+    scanner.next("^-"); taille = scanner.nextInt();
+    } else {
+    taille = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] message = new char[taille];
     for (int index2 = 0 ; index2 < taille; index2++)
     {
-      char out2 = '_';
-      out2 = scanner.findWithinHorizon(".", 1).charAt(0);
+      char out2 = scanner.findWithinHorizon(".", 1).charAt(0);
       message[index2] = out2;
     }
     crypte(taille_cle, cle, taille, message);

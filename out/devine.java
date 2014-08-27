@@ -24,26 +24,26 @@ public class devine
   
   public static void main(String args[])
   {
-    int nombre = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); nombre = -scanner.nextInt();
-    }else{
-    nombre = scanner.nextInt();}
+    int nombre; if (scanner.hasNext("^-")){
+    scanner.next("^-"); nombre = scanner.nextInt();
+    } else {
+    nombre = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int len = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); len = -scanner.nextInt();
-    }else{
-    len = scanner.nextInt();}
+    int len; if (scanner.hasNext("^-")){
+    scanner.next("^-"); len = scanner.nextInt();
+    } else {
+    len = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
-      int tmp = 0;
-      if (scanner.hasNext("^-")){
-      scanner.next("^-"); tmp = -scanner.nextInt();
-      }else{
-      tmp = scanner.nextInt();}
+      int tmp; if (scanner.hasNext("^-")){
+      scanner.next("^-"); tmp = scanner.nextInt();
+      } else {
+      tmp = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tmp;
     }

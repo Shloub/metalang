@@ -28,8 +28,8 @@ func main() {
   var i int = 1
   var last []int = make([]int, 5)
   for j := 0 ; j <= 5 - 1; j++ {
-    var c byte = '_'
-      fmt.Fscanf(reader, "%c", &c);
+    var c byte
+    fmt.Fscanf(reader, "%c", &c)
       var d int = (int)(c) - (int)('0')
       i *= d;
       last[j] = d;
@@ -38,8 +38,8 @@ func main() {
   var index int = 0
   var nskipdiv int = 0
   for k := 1 ; k <= 995; k++ {
-    var e byte = '_'
-      fmt.Fscanf(reader, "%c", &e);
+    var e byte
+    fmt.Fscanf(reader, "%c", &e)
       var f int = (int)(e) - (int)('0')
       if f == 0 {
         i = 1;

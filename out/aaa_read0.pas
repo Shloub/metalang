@@ -66,7 +66,6 @@ var
   b : Longint;
   len : Longint;
 begin
-  b := 0;
   b := read_int_();
   skip();
   len := b;

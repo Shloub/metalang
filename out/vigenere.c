@@ -30,23 +30,19 @@ void crypte(int taille_cle, char* cle, int taille, char* message){
 }
 
 int main(void){
-  int i, index2, index;
-  int taille_cle = 0;
+  int i, index2, taille, index, taille_cle;
+  char out2, out_;
   scanf("%d ", &taille_cle);
   char *cle = malloc( taille_cle * sizeof(char));
   for (index = 0 ; index < taille_cle; index++)
   {
-    char out_ = '_';
     scanf("%c", &out_);
     cle[index] = out_;
   }
-  scanf(" ");
-  int taille = 0;
-  scanf("%d ", &taille);
+  scanf(" %d ", &taille);
   char *message = malloc( taille * sizeof(char));
   for (index2 = 0 ; index2 < taille; index2++)
   {
-    char out2 = '_';
     scanf("%c", &out2);
     message[index2] = out2;
   }

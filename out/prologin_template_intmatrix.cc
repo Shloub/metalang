@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
 std::vector<std::vector<int> *> * read_int_matrix(int x, int y){
+  int d;
   std::vector<std::vector<int> * > *tab = new std::vector<std::vector<int> *>( y );
   for (int z = 0 ; z < y; z++)
   {
     std::vector<int > *b = new std::vector<int>( x );
     for (int c = 0 ; c < x; c++)
     {
-      int d = 0;
       std::cin >> d >> std::skipws;
       b->at(c) = d;
     }
@@ -27,10 +27,9 @@ int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y){
 
 
 int main(){
-  int f = 0;
+  int h, f;
   std::cin >> f >> std::skipws;
   int taille_x = f;
-  int h = 0;
   std::cin >> h >> std::skipws;
   int taille_y = h;
   std::vector<std::vector<int> *> * tableau = read_int_matrix(taille_x, taille_y);

@@ -71,13 +71,13 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   var t * toto = mktoto(4)
   var t2 * toto = mktoto(5)
-  fmt.Fscanf(reader, "%d", &(*t).bar);
+  fmt.Fscanf(reader, "%d", &(*t).bar)
   skip()
-  fmt.Fscanf(reader, "%d", &(*t).blah);
+  fmt.Fscanf(reader, "%d", &(*t).blah)
   skip()
-  fmt.Fscanf(reader, "%d", &(*t2).bar);
+  fmt.Fscanf(reader, "%d", &(*t2).bar)
   skip()
-  fmt.Fscanf(reader, "%d", &(*t2).blah);
+  fmt.Fscanf(reader, "%d", &(*t2).blah)
   fmt.Printf("%d%d", result(t, t2), (*t).blah);
 }
 

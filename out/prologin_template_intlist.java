@@ -14,21 +14,21 @@ public class prologin_template_intlist
   
   public static void main(String args[])
   {
-    int b = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = -scanner.nextInt();
-    }else{
-    b = scanner.nextInt();}
+    int b; if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = scanner.nextInt();
+    } else {
+    b = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille = b;
     int[] d = new int[taille];
     for (int e = 0 ; e < taille; e++)
     {
-      int f = 0;
-      if (scanner.hasNext("^-")){
-      scanner.next("^-"); f = -scanner.nextInt();
-      }else{
-      f = scanner.nextInt();}
+      int f; if (scanner.hasNext("^-")){
+      scanner.next("^-"); f = scanner.nextInt();
+      } else {
+      f = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
       d[e] = f;
     }

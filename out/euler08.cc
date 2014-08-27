@@ -9,11 +9,11 @@ int max2(int a, int b){
 
 
 int main(){
+  char e, c;
   int i = 1;
   std::vector<int > *last = new std::vector<int>( 5 );
   for (int j = 0 ; j < 5; j++)
   {
-    char c = '_';
     std::cin >> c >> std::noskipws;
     int d = (int)(c) - (int)('0');
     i *= d;
@@ -24,7 +24,6 @@ int main(){
   int nskipdiv = 0;
   for (int k = 1 ; k <= 995; k ++)
   {
-    char e = '_';
     std::cin >> e >> std::noskipws;
     int f = (int)(e) - (int)('0');
     if (f == 0)

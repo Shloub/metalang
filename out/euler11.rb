@@ -12,7 +12,6 @@ def read_int_matrix( x, y )
     for z in (0 ..  y - 1) do
       d = [];
       for e in (0 ..  x - 1) do
-        f = 0
         f=scanf("%d")[0];
         scanf("%*\n");
         d[e] = f;

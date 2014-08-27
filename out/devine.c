@@ -20,15 +20,11 @@ int devine_(int nombre, int* tab, int len){
 }
 
 int main(void){
-  int i;
-  int nombre = 0;
-  scanf("%d ", &nombre);
-  int len = 0;
-  scanf("%d ", &len);
+  int i, tmp, len, nombre;
+  scanf("%d %d ", &nombre, &len);
   int *tab = malloc( len * sizeof(int));
   for (i = 0 ; i < len; i++)
   {
-    int tmp = 0;
     scanf("%d ", &tmp);
     tab[i] = tmp;
   }

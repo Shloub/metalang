@@ -1,13 +1,12 @@
 #include <iostream>
 #include <vector>
 int score(){
-  std::cin >> std::skipws;
-  int len = 0;
-  std::cin >> len >> std::skipws;
+  int len;
+  char c;
+  std::cin >> std::skipws >> len;
   int sum = 0;
   for (int i = 1 ; i <= len; i ++)
   {
-    char c = '_';
     std::cin >> c >> std::noskipws;
     sum += ((int)(c) - (int)('A')) + 1;
     /*		print c print " " print sum print " " */
@@ -17,8 +16,8 @@ int score(){
 
 
 int main(){
+  int n;
   int sum = 0;
-  int n = 0;
   std::cin >> n >> std::noskipws;
   for (int i = 1 ; i <= n; i ++)
     sum += i * score();

@@ -14,7 +14,6 @@ end
 i = 1
 last = [];
 for j in (0 ..  5 - 1) do
-  c = "_"
   c=scanf("%c")[0];
   d = c.ord - "0".ord
   i *= d
@@ -24,7 +23,6 @@ max_ = i
 index = 0
 nskipdiv = 0
 for k in (1 ..  995) do
-  e = "_"
   e=scanf("%c")[0];
   f = e.ord - "0".ord
   if f == 0 then

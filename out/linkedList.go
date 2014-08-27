@@ -46,7 +46,7 @@ func test(empty * intlist) {
   var list * intlist = empty
   var i int = -1
   for i != 0{
-              fmt.Fscanf(reader, "%d", &i);
+              fmt.Fscanf(reader, "%d", &i)
               if i != 0 {
                 list = cons(list, i);
               }

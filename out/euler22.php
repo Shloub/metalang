@@ -26,13 +26,11 @@ function nextChar(){
 }
 function score(){
   scantrim();
-  $len = 0;
   list($len) = scan("%d");
   scantrim();
   $sum = 0;
   for ($i = 1 ; $i <= $len; $i++)
   {
-    $c = "_";
     $c = nextChar();
     $sum += (ord($c) - ord("A")) + 1;
     /*		print c print " " print sum print " " */
@@ -41,7 +39,6 @@ function score(){
 }
 
 $sum = 0;
-$n = 0;
 list($n) = scan("%d");
 for ($i = 1 ; $i <= $n; $i++)
   $sum += $i * score();

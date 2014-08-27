@@ -68,12 +68,12 @@ func qsort_(tab []int, len int, i int, j int) {
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var len int = 2
-  fmt.Fscanf(reader, "%d", &len);
+  fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
   for i_ := 0 ; i_ <= len - 1; i_++ {
     var tmp int = 0
-      fmt.Fscanf(reader, "%d", &tmp);
+      fmt.Fscanf(reader, "%d", &tmp)
       skip()
       tab[i_] = tmp;
   }

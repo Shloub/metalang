@@ -87,25 +87,21 @@ public static int readInt(){
   
   public static void Main(String[] args)
   {
-    int taille_cle = 0;
-    taille_cle = readInt();
+    int taille_cle = readInt();
     stdin_sep();
     char[] cle = new char[taille_cle];
     for (int index = 0 ; index < taille_cle; index++)
     {
-      char out_ = '_';
-      out_ = readChar();
+      char out_ = readChar();
       cle[index] = out_;
     }
     stdin_sep();
-    int taille = 0;
-    taille = readInt();
+    int taille = readInt();
     stdin_sep();
     char[] message = new char[taille];
     for (int index2 = 0 ; index2 < taille; index2++)
     {
-      char out2 = '_';
-      out2 = readChar();
+      char out2 = readChar();
       message[index2] = out2;
     }
     crypte(taille_cle, cle, taille, message);

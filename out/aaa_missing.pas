@@ -101,7 +101,6 @@ var
   len : Longint;
   tab : g;
 begin
-  b := 0;
   b := read_int_();
   skip();
   len := b;
@@ -110,7 +109,6 @@ begin
   SetLength(d, len);
   for e := 0 to  len - 1 do
   begin
-    f := 0;
     f := read_int_();
     skip();
     d[e] := f;

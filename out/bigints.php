@@ -37,7 +37,6 @@ function &read_bigint($len){
   $chiffres = array();
   for ($j = 0 ; $j < $len; $j++)
   {
-    $c = "_";
     $c = nextChar();
     $chiffres[$j] = ord($c);
   }

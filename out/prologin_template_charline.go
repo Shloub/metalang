@@ -27,14 +27,14 @@ func programme_candidat(tableau []byte, taille int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var b int = 0
-  fmt.Fscanf(reader, "%d", &b);
+  var b int
+  fmt.Fscanf(reader, "%d", &b)
   skip()
   var taille int = b
   var d []byte = make([]byte, taille)
   for e := 0 ; e <= taille - 1; e++ {
-    var f byte = '_'
-      fmt.Fscanf(reader, "%c", &f);
+    var f byte
+    fmt.Fscanf(reader, "%c", &f)
       d[e] = f;
   }
   skip()

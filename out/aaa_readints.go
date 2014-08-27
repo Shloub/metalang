@@ -20,8 +20,8 @@ func read_int_matrix(x int, y int) [][]int{
   for z := 0 ; z <= y - 1; z++ {
     var b []int = make([]int, x)
       for c := 0 ; c <= x - 1; c++ {
-        var d int = 0
-          fmt.Fscanf(reader, "%d", &d);
+        var d int
+        fmt.Fscanf(reader, "%d", &d)
           skip()
           b[c] = d;
       }
@@ -33,15 +33,15 @@ func read_int_matrix(x int, y int) [][]int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var f int = 0
-  fmt.Fscanf(reader, "%d", &f);
+  var f int
+  fmt.Fscanf(reader, "%d", &f)
   skip()
   var len int = f
   fmt.Printf("%d=len\n", len);
   var h []int = make([]int, len)
   for k := 0 ; k <= len - 1; k++ {
-    var l int = 0
-      fmt.Fscanf(reader, "%d", &l);
+    var l int
+    fmt.Fscanf(reader, "%d", &l)
       skip()
       h[k] = l;
   }
@@ -49,8 +49,8 @@ func main() {
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d\n", i, tab1[i]);
   }
-  var o int = 0
-  fmt.Fscanf(reader, "%d", &o);
+  var o int
+  fmt.Fscanf(reader, "%d", &o)
   skip()
   len = o;
   var tab2 [][]int = read_int_matrix(len, len - 1)

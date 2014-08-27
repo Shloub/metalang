@@ -207,11 +207,11 @@ func init_() * gamestate{
 }
 
 func read_move() * move{
-  var x int = 0
-  fmt.Fscanf(reader, "%d", &x);
+  var x int
+  fmt.Fscanf(reader, "%d", &x)
   skip()
-  var y int = 0
-  fmt.Fscanf(reader, "%d", &y);
+  var y int
+  fmt.Fscanf(reader, "%d", &y)
   skip()
   var b * move = new (move)
   (*b).x=x;

@@ -37,8 +37,7 @@ public static char readChar(){
     int[] last = new int[5];
     for (int j = 0 ; j < 5; j++)
     {
-      char c = '_';
-      c = readChar();
+      char c = readChar();
       int d = c - '0';
       i *= d;
       last[j] = d;
@@ -48,8 +47,7 @@ public static char readChar(){
     int nskipdiv = 0;
     for (int k = 1 ; k <= 995; k ++)
     {
-      char e = '_';
-      e = readChar();
+      char e = readChar();
       int f = e - '0';
       if (f == 0)
       {

@@ -2,7 +2,7 @@
 #include <vector>
 
 int main(){
-  int b = 0;
+  int b;
   std::cin >> b >> std::skipws;
   int len = b;
   std::cout << len << "\n";

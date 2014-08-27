@@ -40,7 +40,6 @@ function result(len, tab){
   return -1;
 }
 
-var b = 0;
 b=read_int_();
 stdinsep();
 var len = b;
@@ -48,7 +47,6 @@ util.print(len, "\n");
 var d = new Array(len);
 for (var e = 0 ; e <= len - 1; e++)
 {
-  var f = 0;
   f=read_int_();
   stdinsep();
   d[e] = f;

@@ -215,10 +215,8 @@ def init_(  )
 end
 
 def read_move(  )
-    x = 0
     x=scanf("%d")[0];
     scanf("%*\n");
-    y = 0
     y=scanf("%d")[0];
     scanf("%*\n");
     return ({

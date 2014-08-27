@@ -98,7 +98,6 @@ var
   tmpc : char;
   u : char;
 begin
-  b := 0;
   b := read_int_();
   skip();
   len := b;
@@ -107,7 +106,6 @@ begin
   SetLength(e, len);
   for f := 0 to  len - 1 do
   begin
-    g := 0;
     g := read_int_();
     skip();
     e[f] := g;
@@ -124,7 +122,6 @@ begin
   SetLength(k, len);
   for l := 0 to  len - 1 do
   begin
-    m := 0;
     m := read_int_();
     skip();
     k[l] := m;
@@ -137,7 +134,6 @@ begin
     Write(tab2[i_]);
     Write(' ');
   end;
-  p := 0;
   p := read_int_();
   skip();
   strlen := p;
@@ -146,7 +142,6 @@ begin
   SetLength(r, strlen);
   for s := 0 to  strlen - 1 do
   begin
-    u := #95;
     u := read_char_();
     r[s] := u;
   end;

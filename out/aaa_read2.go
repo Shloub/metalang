@@ -20,15 +20,15 @@ read int, read char et skip
 */
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var b int = 0
-  fmt.Fscanf(reader, "%d", &b);
+  var b int
+  fmt.Fscanf(reader, "%d", &b)
   skip()
   var len int = b
   fmt.Printf("%d=len\n", len);
   var e []int = make([]int, len)
   for f := 0 ; f <= len - 1; f++ {
-    var g int = 0
-      fmt.Fscanf(reader, "%d", &g);
+    var g int
+    fmt.Fscanf(reader, "%d", &g)
       skip()
       e[f] = g;
   }
@@ -39,8 +39,8 @@ func main() {
   fmt.Printf("\n");
   var k []int = make([]int, len)
   for l := 0 ; l <= len - 1; l++ {
-    var m int = 0
-      fmt.Fscanf(reader, "%d", &m);
+    var m int
+    fmt.Fscanf(reader, "%d", &m)
       skip()
       k[l] = m;
   }
@@ -48,15 +48,15 @@ func main() {
   for i_ := 0 ; i_ <= len - 1; i_++ {
     fmt.Printf("%d==>%d ", i_, tab2[i_]);
   }
-  var p int = 0
-  fmt.Fscanf(reader, "%d", &p);
+  var p int
+  fmt.Fscanf(reader, "%d", &p)
   skip()
   var strlen int = p
   fmt.Printf("%d=strlen\n", strlen);
   var r []byte = make([]byte, strlen)
   for s := 0 ; s <= strlen - 1; s++ {
-    var u byte = '_'
-      fmt.Fscanf(reader, "%c", &u);
+    var u byte
+    fmt.Fscanf(reader, "%c", &u)
       r[s] = u;
   }
   skip()

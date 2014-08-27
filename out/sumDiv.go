@@ -54,7 +54,7 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   /* Programme principal */
   var n int = 0
-  fmt.Fscanf(reader, "%d", &n);
+  fmt.Fscanf(reader, "%d", &n)
   /* Lecture de l'entier */
   fmt.Printf("%d", sumdiv(n));
 }

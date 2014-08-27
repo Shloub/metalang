@@ -5,13 +5,12 @@
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
 int main(void){
-  int j, toto;
-  int strlen = 0;
+  int j, toto, strlen;
+  char tmpc;
   scanf("%d ", &strlen);
   char *tab4 = malloc( strlen * sizeof(char));
   for (toto = 0 ; toto < strlen; toto++)
   {
-    char tmpc = '_';
     scanf("%c", &tmpc);
     int c = (int)(tmpc);
     if (tmpc != ' ')

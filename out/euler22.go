@@ -17,13 +17,13 @@ func skip() {
 
 func score() int{
   skip()
-  var len int = 0
-  fmt.Fscanf(reader, "%d", &len);
+  var len int
+  fmt.Fscanf(reader, "%d", &len)
   skip()
   var sum int = 0
   for i := 1 ; i <= len; i++ {
-    var c byte = '_'
-      fmt.Fscanf(reader, "%c", &c);
+    var c byte
+    fmt.Fscanf(reader, "%c", &c)
       sum += ((int)(c) - (int)('A')) + 1;
       /*		print c print " " print sum print " " */
   }
@@ -33,8 +33,8 @@ func score() int{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var sum int = 0
-  var n int = 0
-  fmt.Fscanf(reader, "%d", &n);
+  var n int
+  fmt.Fscanf(reader, "%d", &n)
   for i := 1 ; i <= n; i++ {
     sum += i * score();
   }

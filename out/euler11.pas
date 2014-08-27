@@ -91,7 +91,6 @@ begin
     SetLength(d, x);
     for e := 0 to  x - 1 do
     begin
-      f := 0;
       f := read_int_();
       skip();
       d[e] := f;

@@ -59,24 +59,20 @@ function crypte(taille_cle, cle, taille, message){
   }
 }
 
-var taille_cle = 0;
 taille_cle=read_int_();
 stdinsep();
 var cle = new Array(taille_cle);
 for (var index = 0 ; index <= taille_cle - 1; index++)
 {
-  var out_ = '_';
   out_=read_char_();
   cle[index] = out_;
 }
 stdinsep();
-var taille = 0;
 taille=read_int_();
 stdinsep();
 var message = new Array(taille);
 for (var index2 = 0 ; index2 <= taille - 1; index2++)
 {
-  var out2 = '_';
   out2=read_char_();
   message[index2] = out2;
 }

@@ -57,26 +57,22 @@ def nbPassePartout( n, passepartout, m, serrures ):
     else:
       return 0;
 
-n = 0;
 n=readint()
 stdinsep()
 passepartout = [None] * n
 for i in range(0, n):
   out0 = [None] * 2
   for j in range(0, 2):
-    out__ = 0;
     out__=readint()
     stdinsep()
     out0[j] = out__;
   passepartout[i] = out0;
-m = 0;
 m=readint()
 stdinsep()
 serrures = [None] * m
 for k in range(0, m):
   out1 = [None] * 2
   for l in range(0, 2):
-    out_ = 0;
     out_=readint()
     stdinsep()
     out1[l] = out_;

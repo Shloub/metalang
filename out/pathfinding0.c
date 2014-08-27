@@ -10,13 +10,13 @@ int min2(int a, int b){
 
 char** read_char_matrix(int x, int y){
   int z, k;
+  char l;
   char* *tab = malloc( y * sizeof(char*));
   for (z = 0 ; z < y; z++)
   {
     char *h = malloc( x * sizeof(char));
     for (k = 0 ; k < x; k++)
     {
-      char l = '_';
       scanf("%c", &l);
       h[k] = l;
     }
@@ -70,10 +70,9 @@ int pathfind(char** tab, int x, int y){
 }
 
 int main(void){
-  int r = 0;
+  int u, r;
   scanf("%d ", &r);
   int x = r;
-  int u = 0;
   scanf("%d ", &u);
   int y = u;
   printf("%d %d\n", x, y);

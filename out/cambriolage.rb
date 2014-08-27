@@ -35,28 +35,24 @@ def nbPassePartout( n, passepartout, m, serrures )
     end
 end
 
-n = 0
 n=scanf("%d")[0];
 scanf("%*\n");
 passepartout = [];
 for i in (0 ..  n - 1) do
   out0 = [];
   for j in (0 ..  2 - 1) do
-    out__ = 0
     out__=scanf("%d")[0];
     scanf("%*\n");
     out0[j] = out__;
   end
   passepartout[i] = out0;
 end
-m = 0
 m=scanf("%d")[0];
 scanf("%*\n");
 serrures = [];
 for k in (0 ..  m - 1) do
   out1 = [];
   for l in (0 ..  2 - 1) do
-    out_ = 0
     out_=scanf("%d")[0];
     scanf("%*\n");
     out1[l] = out_;

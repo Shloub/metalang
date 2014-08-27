@@ -39,19 +39,16 @@ def readint():
 
 def score(  ):
     stdinsep()
-    len = 0;
     len=readint()
     stdinsep()
     sum = 0;
     for i in range(1, 1 + len):
-      c = '_';
       c=readchar()
       sum += (ord(c) - ord('A')) + 1
       """		print c print " " print sum print " " """
     return sum;
 
 sum = 0;
-n = 0;
 n=readint()
 for i in range(1, 1 + n):
   sum += i * score()

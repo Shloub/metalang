@@ -31,9 +31,9 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   var a int = 0
   var b int = 0
-  fmt.Fscanf(reader, "%d", &a);
+  fmt.Fscanf(reader, "%d", &a)
   skip()
-  fmt.Fscanf(reader, "%d", &b);
+  fmt.Fscanf(reader, "%d", &b)
   fmt.Printf("%d", exp_(a, b));
 }
 

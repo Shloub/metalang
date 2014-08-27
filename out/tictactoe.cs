@@ -233,11 +233,9 @@ Renvoie le coup de l'IA
   
   public static move read_move()
   {
-    int x = 0;
-    x = readInt();
+    int x = readInt();
     stdin_sep();
-    int y = 0;
-    y = readInt();
+    int y = readInt();
     stdin_sep();
     move b = new move();
     b.x = x;

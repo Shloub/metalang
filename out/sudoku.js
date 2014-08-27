@@ -30,7 +30,6 @@ function read_sudoku(){
   var out_ = new Array(9 * 9);
   for (var i = 0 ; i <= 9 * 9 - 1; i++)
   {
-    var k = 0;
     k=read_int_();
     stdinsep();
     out_[i] = k;

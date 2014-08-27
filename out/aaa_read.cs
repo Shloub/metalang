@@ -61,8 +61,7 @@ read int, read char et skip
   
   public static void Main(String[] args)
   {
-    int len = 0;
-    len = readInt();
+    int len = readInt();
     stdin_sep();
     Console.Write("" + len + "=len\n");
     len *= 2;
@@ -71,8 +70,7 @@ read int, read char et skip
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
-      int tmpi1 = 0;
-      tmpi1 = readInt();
+      int tmpi1 = readInt();
       stdin_sep();
       Console.Write("" + i + "=>" + tmpi1 + " ");
       tab[i] = tmpi1;
@@ -81,21 +79,18 @@ read int, read char et skip
     int[] tab2 = new int[len];
     for (int i_ = 0 ; i_ < len; i_++)
     {
-      int tmpi2 = 0;
-      tmpi2 = readInt();
+      int tmpi2 = readInt();
       stdin_sep();
       Console.Write("" + i_ + "==>" + tmpi2 + " ");
       tab2[i_] = tmpi2;
     }
-    int strlen = 0;
-    strlen = readInt();
+    int strlen = readInt();
     stdin_sep();
     Console.Write("" + strlen + "=strlen\n");
     char[] tab4 = new char[strlen];
     for (int toto = 0 ; toto < strlen; toto++)
     {
-      char tmpc = '_';
-      tmpc = readChar();
+      char tmpc = readChar();
       int c = tmpc;
       Console.Write("" + tmpc + ":" + c + " ");
       if (tmpc != (char)32)

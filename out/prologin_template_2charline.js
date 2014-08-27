@@ -49,27 +49,23 @@ function programme_candidat(tableau1, taille1, tableau2, taille2){
   return out_;
 }
 
-var b = 0;
 b=read_int_();
 stdinsep();
 var taille1 = b;
 var d = new Array(taille1);
 for (var e = 0 ; e <= taille1 - 1; e++)
 {
-  var f = '_';
   f=read_char_();
   d[e] = f;
 }
 stdinsep();
 var tableau1 = d;
-var h = 0;
 h=read_int_();
 stdinsep();
 var taille2 = h;
 var l = new Array(taille2);
 for (var m = 0 ; m <= taille2 - 1; m++)
 {
-  var o = '_';
   o=read_char_();
   l[m] = o;
 }

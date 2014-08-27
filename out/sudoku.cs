@@ -55,8 +55,7 @@ public static int readInt(){
     int[] out_ = new int[9 * 9];
     for (int i = 0 ; i < 9 * 9; i++)
     {
-      int k = 0;
-      k = readInt();
+      int k = readInt();
       stdin_sep();
       out_[i] = k;
     }

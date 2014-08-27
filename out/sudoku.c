@@ -3,11 +3,10 @@
 
 /* lit un sudoku sur l'entrée standard */
 int* read_sudoku(){
-  int i;
+  int i, k;
   int *out_ = malloc( (9 * 9) * sizeof(int));
   for (i = 0 ; i < 9 * 9; i++)
   {
-    int k = 0;
     scanf("%d ", &k);
     out_[i] = k;
   }

@@ -77,13 +77,11 @@ var
   sum : Longint;
 begin
   skip();
-  len := 0;
   len := read_int_();
   skip();
   sum := 0;
   for i := 1 to  len do
   begin
-    c := #95;
     c := read_char_();
     sum := sum + (ord(c) - ord(#65)) + 1;
     {		print c print " " print sum print " " }
@@ -98,7 +96,6 @@ var
   sum : Longint;
 begin
   sum := 0;
-  n := 0;
   n := read_int_();
   for i := 1 to  n do
   begin

@@ -107,18 +107,15 @@ var
   taille1 : Longint;
   taille2 : Longint;
 begin
-  b := 0;
   b := read_int_();
   skip();
   taille1 := b;
-  d := 0;
   d := read_int_();
   skip();
   taille2 := d;
   SetLength(f, taille1);
   for g := 0 to  taille1 - 1 do
   begin
-    h := #95;
     h := read_char_();
     f[g] := h;
   end;
@@ -127,7 +124,6 @@ begin
   SetLength(l, taille2);
   for m := 0 to  taille2 - 1 do
   begin
-    o := #95;
     o := read_char_();
     l[m] := o;
   end;

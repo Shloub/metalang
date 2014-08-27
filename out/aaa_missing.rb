@@ -22,14 +22,12 @@ def result( len, tab )
     return (-1);
 end
 
-b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
 len = b
 printf "%d\n", len
 d = [];
 for e in (0 ..  len - 1) do
-  f = 0
   f=scanf("%d")[0];
   scanf("%*\n");
   d[e] = f;

@@ -39,7 +39,6 @@ function read_char_matrix(x, y){
     var f = new Array(x);
     for (var g = 0 ; g <= x - 1; g++)
     {
-      var h = '_';
       h=read_char_();
       f[g] = h;
     }
@@ -89,11 +88,9 @@ function pathfind(tab, x, y){
   return pathfind_aux(cache, tab, x, y, 0, 0);
 }
 
-var m = 0;
 m=read_int_();
 stdinsep();
 var x = m;
-var p = 0;
 p=read_int_();
 stdinsep();
 var y = p;

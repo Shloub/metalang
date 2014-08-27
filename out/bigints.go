@@ -41,8 +41,8 @@ type bigint struct {
 func read_bigint(len int) * bigint{
   var chiffres []int = make([]int, len)
   for j := 0 ; j <= len - 1; j++ {
-    var c byte = '_'
-      fmt.Fscanf(reader, "%c", &c);
+    var c byte
+    fmt.Fscanf(reader, "%c", &c)
       chiffres[j] = (int)(c);
   }
   for i := 0 ; i <= (len - 1) / 2; i++ {

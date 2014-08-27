@@ -35,7 +35,6 @@ var read_int_ = function(){
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-var b = 0;
 b=read_int_();
 stdinsep();
 var len = b;
@@ -43,7 +42,6 @@ util.print(len, "=len\n");
 var e = new Array(len);
 for (var f = 0 ; f <= len - 1; f++)
 {
-  var g = 0;
   g=read_int_();
   stdinsep();
   e[f] = g;
@@ -57,7 +55,6 @@ util.print("\n");
 var k = new Array(len);
 for (var l = 0 ; l <= len - 1; l++)
 {
-  var m = 0;
   m=read_int_();
   stdinsep();
   k[l] = m;
@@ -67,7 +64,6 @@ for (var i_ = 0 ; i_ <= len - 1; i_++)
 {
   util.print(i_, "==>", tab2[i_], " ");
 }
-var p = 0;
 p=read_int_();
 stdinsep();
 var strlen = p;
@@ -75,7 +71,6 @@ util.print(strlen, "=strlen\n");
 var r = new Array(strlen);
 for (var s = 0 ; s <= strlen - 1; s++)
 {
-  var u = '_';
   u=read_char_();
   r[s] = u;
 }

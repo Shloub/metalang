@@ -192,10 +192,8 @@ function &init_(){
 }
 
 function &read_move(){
-  $x = 0;
   list($x) = scan("%d");
   scantrim();
-  $y = 0;
   list($y) = scan("%d");
   scantrim();
   $b = array(

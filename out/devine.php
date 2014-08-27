@@ -34,16 +34,13 @@ function devine_($nombre, &$tab, $len){
   return true;
 }
 
-$nombre = 0;
 list($nombre) = scan("%d");
 scantrim();
-$len = 0;
 list($len) = scan("%d");
 scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = 0;
   list($tmp) = scan("%d");
   scantrim();
   $tab[$i] = $tmp;

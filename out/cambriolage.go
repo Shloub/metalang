@@ -53,29 +53,29 @@ func nbPassePartout(n int, passepartout [][]int, m int, serrures [][]int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var n int = 0
-  fmt.Fscanf(reader, "%d", &n);
+  var n int
+  fmt.Fscanf(reader, "%d", &n)
   skip()
   var passepartout [][]int = make([][]int, n)
   for i := 0 ; i <= n - 1; i++ {
     var out0 []int = make([]int, 2)
       for j := 0 ; j <= 2 - 1; j++ {
-        var out__ int = 0
-          fmt.Fscanf(reader, "%d", &out__);
+        var out__ int
+        fmt.Fscanf(reader, "%d", &out__)
           skip()
           out0[j] = out__;
       }
       passepartout[i] = out0;
   }
-  var m int = 0
-  fmt.Fscanf(reader, "%d", &m);
+  var m int
+  fmt.Fscanf(reader, "%d", &m)
   skip()
   var serrures [][]int = make([][]int, m)
   for k := 0 ; k <= m - 1; k++ {
     var out1 []int = make([]int, 2)
       for l := 0 ; l <= 2 - 1; l++ {
-        var out_ int = 0
-          fmt.Fscanf(reader, "%d", &out_);
+        var out_ int
+        fmt.Fscanf(reader, "%d", &out_)
           skip()
           out1[l] = out_;
       }

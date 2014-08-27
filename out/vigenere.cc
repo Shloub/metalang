@@ -29,22 +29,19 @@ void crypte(int taille_cle, std::vector<char> * cle, int taille, std::vector<cha
 
 
 int main(){
-  int taille_cle = 0;
+  int taille, taille_cle;
+  char out2, out_;
   std::cin >> taille_cle >> std::skipws;
   std::vector<char > *cle = new std::vector<char>( taille_cle );
   for (int index = 0 ; index < taille_cle; index++)
   {
-    char out_ = '_';
     std::cin >> out_ >> std::noskipws;
     cle->at(index) = out_;
   }
-  std::cin >> std::skipws;
-  int taille = 0;
-  std::cin >> taille >> std::skipws;
+  std::cin >> std::skipws >> taille;
   std::vector<char > *message = new std::vector<char>( taille );
   for (int index2 = 0 ; index2 < taille; index2++)
   {
-    char out2 = '_';
     std::cin >> out2 >> std::noskipws;
     message->at(index2) = out2;
   }

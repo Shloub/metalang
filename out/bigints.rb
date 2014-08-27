@@ -23,7 +23,6 @@ end
 def read_bigint( len )
     chiffres = [];
     for j in (0 ..  len - 1) do
-      c = "_"
       c=scanf("%c")[0];
       chiffres[j] = c.ord;
     end

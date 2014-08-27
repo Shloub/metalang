@@ -22,22 +22,22 @@ public class aaa_missing
   
   public static void main(String args[])
   {
-    int b = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = -scanner.nextInt();
-    }else{
-    b = scanner.nextInt();}
+    int b; if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = scanner.nextInt();
+    } else {
+    b = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len = b;
     System.out.printf("%d\n", len);
     int[] d = new int[len];
     for (int e = 0 ; e < len; e++)
     {
-      int f = 0;
-      if (scanner.hasNext("^-")){
-      scanner.next("^-"); f = -scanner.nextInt();
-      }else{
-      f = scanner.nextInt();}
+      int f; if (scanner.hasNext("^-")){
+      scanner.next("^-"); f = scanner.nextInt();
+      } else {
+      f = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
       d[e] = f;
     }

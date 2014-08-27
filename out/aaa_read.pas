@@ -89,7 +89,6 @@ var
   tmpi2 : Longint;
   toto : Longint;
 begin
-  len := 0;
   len := read_int_();
   skip();
   Write(len);
@@ -102,7 +101,6 @@ begin
   SetLength(tab, len);
   for i := 0 to  len - 1 do
   begin
-    tmpi1 := 0;
     tmpi1 := read_int_();
     skip();
     Write(i);
@@ -115,7 +113,6 @@ begin
   SetLength(tab2, len);
   for i_ := 0 to  len - 1 do
   begin
-    tmpi2 := 0;
     tmpi2 := read_int_();
     skip();
     Write(i_);
@@ -124,7 +121,6 @@ begin
     Write(' ');
     tab2[i_] := tmpi2;
   end;
-  strlen := 0;
   strlen := read_int_();
   skip();
   Write(strlen);
@@ -132,7 +128,6 @@ begin
   SetLength(tab4, strlen);
   for toto := 0 to  strlen - 1 do
   begin
-    tmpc := #95;
     tmpc := read_char_();
     c := ord(tmpc);
     Write(tmpc);

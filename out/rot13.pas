@@ -81,13 +81,11 @@ var
   tmpc : char;
   toto : Longint;
 begin
-  strlen := 0;
   strlen := read_int_();
   skip();
   SetLength(tab4, strlen);
   for toto := 0 to  strlen - 1 do
   begin
-    tmpc := #95;
     tmpc := read_char_();
     c := ord(tmpc);
     if tmpc <> #32

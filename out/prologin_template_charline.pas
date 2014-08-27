@@ -94,14 +94,12 @@ var
   tableau : g;
   taille : Longint;
 begin
-  b := 0;
   b := read_int_();
   skip();
   taille := b;
   SetLength(d, taille);
   for e := 0 to  taille - 1 do
   begin
-    f := #95;
     f := read_char_();
     d[e] := f;
   end;

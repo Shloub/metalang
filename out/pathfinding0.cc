@@ -71,10 +71,9 @@ int pathfind(std::vector<std::vector<char> *> * tab, int x, int y){
 
 
 int main(){
-  int o = 0;
+  int q, o;
   std::cin >> o >> std::skipws;
   int x = o;
-  int q = 0;
   std::cin >> q >> std::skipws;
   int y = q;
   std::cout << x << " " << y << "\n";

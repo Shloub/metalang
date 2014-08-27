@@ -52,8 +52,7 @@ public static void stdin_sep(){
     int[] chiffres = new int[len];
     for (int j = 0 ; j < len; j++)
     {
-      char c = '_';
-      c = readChar();
+      char c = readChar();
       chiffres[j] = c;
     }
     for (int i = 0 ; i <= (len - 1) / 2; i ++)

@@ -37,10 +37,9 @@ int programme_candidat(std::vector<std::vector<char> *> * tableau, int taille_x,
 
 
 int main(){
-  int c = 0;
+  int e, c;
   std::cin >> c >> std::skipws;
   int taille_x = c;
-  int e = 0;
   std::cin >> e >> std::skipws;
   int taille_y = e;
   std::vector<std::vector<char> *> * tableau = read_char_matrix(taille_x, taille_y);

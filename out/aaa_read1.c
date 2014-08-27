@@ -3,10 +3,10 @@
 
 int main(void){
   int i, d;
+  char e;
   char *c = malloc( 12 * sizeof(char));
   for (d = 0 ; d < 12; d++)
   {
-    char e = '_';
     scanf("%c", &e);
     c[d] = e;
   }

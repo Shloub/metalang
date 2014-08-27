@@ -63,16 +63,16 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   var x int = 0
   var y int = 0
-  fmt.Fscanf(reader, "%d", &x);
+  fmt.Fscanf(reader, "%d", &x)
   skip()
-  fmt.Fscanf(reader, "%d", &y);
+  fmt.Fscanf(reader, "%d", &y)
   skip()
   var tab [][]byte = make([][]byte, y)
   for i := 0 ; i <= y - 1; i++ {
     var tab2 []byte = make([]byte, x)
       for j := 0 ; j <= x - 1; j++ {
         var tmp byte = '\000'
-          fmt.Fscanf(reader, "%c", &tmp);
+          fmt.Fscanf(reader, "%c", &tmp)
           tab2[j] = tmp;
       }
       skip()

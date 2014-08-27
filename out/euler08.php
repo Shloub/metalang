@@ -24,7 +24,6 @@ $i = 1;
 $last = array();
 for ($j = 0 ; $j < 5; $j++)
 {
-  $c = "_";
   $c = nextChar();
   $d = ord($c) - ord("0");
   $i *= $d;
@@ -35,7 +34,6 @@ $index = 0;
 $nskipdiv = 0;
 for ($k = 1 ; $k <= 995; $k++)
 {
-  $e = "_";
   $e = nextChar();
   $f = ord($e) - ord("0");
   if ($f == 0)

@@ -29,22 +29,18 @@ def crypte( taille_cle, cle, taille, message )
     end
 end
 
-taille_cle = 0
 taille_cle=scanf("%d")[0];
 scanf("%*\n");
 cle = [];
 for index in (0 ..  taille_cle - 1) do
-  out_ = "_"
   out_=scanf("%c")[0];
   cle[index] = out_;
 end
 scanf("%*\n");
-taille = 0
 taille=scanf("%d")[0];
 scanf("%*\n");
 message = [];
 for index2 in (0 ..  taille - 1) do
-  out2 = "_"
   out2=scanf("%c")[0];
   message[index2] = out2;
 end

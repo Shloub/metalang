@@ -37,12 +37,12 @@ func montagnes_(tab []int, len int) int{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var len int = 0
-  fmt.Fscanf(reader, "%d", &len);
+  fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
   for i := 0 ; i <= len - 1; i++ {
     var x int = 0
-      fmt.Fscanf(reader, "%d", &x);
+      fmt.Fscanf(reader, "%d", &x)
       skip()
       tab[i] = x;
   }

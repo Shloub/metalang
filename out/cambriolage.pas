@@ -139,7 +139,6 @@ var
   passepartout : d;
   serrures : d;
 begin
-  n := 0;
   n := read_int_();
   skip();
   SetLength(passepartout, n);
@@ -148,14 +147,12 @@ begin
     SetLength(out0, 2);
     for j := 0 to  2 - 1 do
     begin
-      out__ := 0;
       out__ := read_int_();
       skip();
       out0[j] := out__;
     end;
     passepartout[i] := out0;
   end;
-  m := 0;
   m := read_int_();
   skip();
   SetLength(serrures, m);
@@ -164,7 +161,6 @@ begin
     SetLength(out1, 2);
     for l := 0 to  2 - 1 do
     begin
-      out_ := 0;
       out_ := read_int_();
       skip();
       out1[l] := out_;

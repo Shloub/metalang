@@ -10,14 +10,12 @@ read int, read char et skip
 
 =end
 
-b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
 len = b
 printf "%d=len\n", len
 e = [];
 for f in (0 ..  len - 1) do
-  g = 0
   g=scanf("%d")[0];
   scanf("%*\n");
   e[f] = g;
@@ -29,7 +27,6 @@ end
 print "\n";
 k = [];
 for l in (0 ..  len - 1) do
-  m = 0
   m=scanf("%d")[0];
   scanf("%*\n");
   k[l] = m;
@@ -38,14 +35,12 @@ tab2 = k
 for i_ in (0 ..  len - 1) do
   printf "%d==>%d ", i_, tab2[i_]
 end
-p = 0
 p=scanf("%d")[0];
 scanf("%*\n");
 strlen = p
 printf "%d=strlen\n", strlen
 r = [];
 for s in (0 ..  strlen - 1) do
-  u = "_"
   u=scanf("%c")[0];
   r[s] = u;
 end
