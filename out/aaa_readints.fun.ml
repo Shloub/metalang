@@ -17,8 +17,7 @@ let read_int_matrix x y =
                ((), o)
                )
   )) ()) in
-  let a = b in
-  let m = a in
+  let m = b in
   ((), m)) ()) in
   tab
 let main =

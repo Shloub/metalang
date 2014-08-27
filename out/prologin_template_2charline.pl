@@ -55,8 +55,7 @@ readspaces();
 my $taille1 = $b;
 my $d = [];
 foreach my $e (0 .. $taille1 - 1) {
-  my $f = readchar();
-  $d->[$e] = $f;
+  $d->[$e] = readchar();
   }
 readspaces();
 my $tableau1 = $d;
@@ -65,8 +64,7 @@ readspaces();
 my $taille2 = $h;
 my $l = [];
 foreach my $m (0 .. $taille2 - 1) {
-  my $o = readchar();
-  $l->[$m] = $o;
+  $l->[$m] = readchar();
   }
 readspaces();
 my $tableau2 = $l;

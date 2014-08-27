@@ -16,8 +16,7 @@ def read_char_matrix( x, y )
         h[k] = l;
       end
       scanf("%*\n");
-      g = h
-      tab[z] = g;
+      tab[z] = h;
     end
     return (tab);
 end

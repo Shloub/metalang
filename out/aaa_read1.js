@@ -17,10 +17,7 @@ var stdinsep = function(){
 }
 var c = new Array(12);
 for (var d = 0 ; d <= 12 - 1; d++)
-{
-  e=read_char_();
-  c[d] = e;
-}
+  c[d]=read_char_();
 stdinsep();
 var str = c;
 for (var i = 0 ; i <= 11; i++)

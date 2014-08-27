@@ -93,30 +93,29 @@
           ((n 1 (+ 1 n)))
           ((> n 10000))
           (progn
-            (let ((c (+ n 2)))
-              (let
-               ((primesFactors (array_init
-                                  c
-                                  (function (lambda (m)
-                                  (block lambda_3
-                                    (return-from lambda_3 0)
-                                  ))
-                                  ))))
-              (let ((max_ (max2 (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))))
-                (setf (aref primesFactors 2) ( - (aref primesFactors 2) 1))
-                (let ((ndivs 1))
-                  (do
-                    ((i 0 (+ 1 i)))
-                    ((> i max_))
-                    (if
-                      (not (= (aref primesFactors i) 0))
-                      (setq ndivs ( * ndivs (+ 1 (aref primesFactors i)))))
-                  )
+            (let
+             ((primesFactors (array_init
+                                (+ n 2)
+                                (function (lambda (m)
+                                (block lambda_3
+                                  (return-from lambda_3 0)
+                                ))
+                                ))))
+            (let ((max_ (max2 (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))))
+              (setf (aref primesFactors 2) ( - (aref primesFactors 2) 1))
+              (let ((ndivs 1))
+                (do
+                  ((i 0 (+ 1 i)))
+                  ((> i max_))
                   (if
-                    (> ndivs ndiv2)
-                    (return-from find_ (quotient (* n (+ n 1)) 2)))
-                  #| print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" |#
-                )))))
+                    (not (= (aref primesFactors i) 0))
+                    (setq ndivs ( * ndivs (+ 1 (aref primesFactors i)))))
+                )
+                (if
+                  (> ndivs ndiv2)
+                  (return-from find_ (quotient (* n (+ n 1)) 2)))
+                #| print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" |#
+              ))))
         )
         (return-from find_ 0)
       )))))))

@@ -24,8 +24,7 @@ public class euler11
         scanner.findWithinHorizon("[\n\r ]*", 1);
         d[e] = f;
       }
-      int[] c = d;
-      tab[z] = c;
+      tab[z] = d;
     }
     return tab;
   }

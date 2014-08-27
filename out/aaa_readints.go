@@ -25,8 +25,7 @@ func read_int_matrix(x int, y int) [][]int{
           skip()
           b[c] = d;
       }
-      var a []int = b
-      tab[z] = a;
+      tab[z] = b;
   }
   return tab
 }
@@ -40,19 +39,15 @@ func main() {
   fmt.Printf("%d=len\n", len);
   var h []int = make([]int, len)
   for k := 0 ; k <= len - 1; k++ {
-    var l int
-    fmt.Fscanf(reader, "%d", &l)
+    fmt.Fscanf(reader, "%d", &h[k])
       skip()
-      h[k] = l;
   }
   var tab1 []int = h
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d\n", i, tab1[i]);
   }
-  var o int
-  fmt.Fscanf(reader, "%d", &o)
+  fmt.Fscanf(reader, "%d", &len)
   skip()
-  len = o;
   var tab2 [][]int = read_int_matrix(len, len - 1)
   for i := 0 ; i <= len - 2; i++ {
     for j := 0 ; j <= len - 1; j++ {

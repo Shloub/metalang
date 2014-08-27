@@ -65,7 +65,6 @@ type p = array of array of Longint;
 type q = array of Longint;
 function read_int_matrix(x : Longint; y : Longint) : p;
 var
-  a : q;
   b : q;
   c : Longint;
   d : Longint;
@@ -82,8 +81,7 @@ begin
       skip();
       b[c] := d;
     end;
-    a := b;
-    tab[z] := a;
+    tab[z] := b;
   end;
   exit(tab);
 end;
@@ -95,9 +93,7 @@ var
   i : Longint;
   j : Longint;
   k : Longint;
-  l : Longint;
   len : Longint;
-  o : Longint;
   tab1 : q;
   tab2 : p;
 begin
@@ -109,9 +105,8 @@ begin
   SetLength(h, len);
   for k := 0 to  len - 1 do
   begin
-    l := read_int_();
+    h[k] := read_int_();
     skip();
-    h[k] := l;
   end;
   tab1 := h;
   for i := 0 to  len - 1 do
@@ -121,9 +116,8 @@ begin
     Write(tab1[i]);
     Write(''#10'');
   end;
-  o := read_int_();
+  len := read_int_();
   skip();
-  len := o;
   tab2 := read_int_matrix(len, len - 1);
   for i := 0 to  len - 2 do
   begin

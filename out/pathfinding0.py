@@ -1,8 +1,7 @@
 def read_char_matrix( x, y ):
     tab = [None] * y
     for z in range(0, y):
-      e = list(input());
-      tab[z] = e;
+      tab[z] = list(input());
     return tab;
 
 def pathfind_aux( cache, tab, x, y, posX, posY ):

@@ -97,11 +97,9 @@ var
   b : Longint;
   d : p;
   e : Longint;
-  f : char;
   h : Longint;
   l : p;
   m : Longint;
-  o : char;
   tableau1 : p;
   tableau2 : p;
   taille1 : Longint;
@@ -113,8 +111,7 @@ begin
   SetLength(d, taille1);
   for e := 0 to  taille1 - 1 do
   begin
-    f := read_char_();
-    d[e] := f;
+    d[e] := read_char_();
   end;
   skip();
   tableau1 := d;
@@ -124,8 +121,7 @@ begin
   SetLength(l, taille2);
   for m := 0 to  taille2 - 1 do
   begin
-    o := read_char_();
-    l[m] := o;
+    l[m] := read_char_();
   end;
   skip();
   tableau2 := l;

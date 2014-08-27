@@ -13,8 +13,7 @@ int** read_int_matrix(int x, int y){
       scanf("%d ", &d);
       b[c] = d;
     }
-    int* a = b;
-    tab[z] = a;
+    tab[z] = b;
   }
   return tab;
 }

@@ -56,9 +56,8 @@ int find(int ndiv2){
   }
   for (int n = 1 ; n <= 10000; n ++)
   {
-    int c = n + 2;
-    std::vector<int > *primesFactors = new std::vector<int>( c );
-    for (int m = 0 ; m < c; m++)
+    std::vector<int > *primesFactors = new std::vector<int>( n + 2 );
+    for (int m = 0 ; m < n + 2; m++)
       primesFactors->at(m) = 0;
     int max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors->at(2) --;

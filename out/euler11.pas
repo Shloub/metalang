@@ -78,7 +78,6 @@ type u = array of array of Longint;
 type v = array of Longint;
 function read_int_matrix(x : Longint; y : Longint) : u;
 var
-  c : v;
   d : v;
   e : Longint;
   f : Longint;
@@ -95,8 +94,7 @@ begin
       skip();
       d[e] := f;
     end;
-    c := d;
-    tab[z] := c;
+    tab[z] := d;
   end;
   exit(tab);
 end;

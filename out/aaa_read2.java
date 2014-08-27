@@ -21,13 +21,11 @@ read int, read char et skip
     int[] e = new int[len];
     for (int f = 0 ; f < len; f++)
     {
-      int g; if (scanner.hasNext("^-")){
-      scanner.next("^-"); g = scanner.nextInt();
-      } else {
-      g = scanner.nextInt();
-      }
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); e[f] = -scanner.nextInt();
+      }else{
+      e[f] = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      e[f] = g;
     }
     int[] tab = e;
     for (int i = 0 ; i < len; i++)
@@ -38,13 +36,11 @@ read int, read char et skip
     int[] k = new int[len];
     for (int l = 0 ; l < len; l++)
     {
-      int m; if (scanner.hasNext("^-")){
-      scanner.next("^-"); m = scanner.nextInt();
-      } else {
-      m = scanner.nextInt();
-      }
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); k[l] = -scanner.nextInt();
+      }else{
+      k[l] = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      k[l] = m;
     }
     int[] tab2 = k;
     for (int i_ = 0 ; i_ < len; i_++)

@@ -46,8 +46,7 @@ sub read_char_matrix{
       $h->[$k] = $l;
       }
     readspaces();
-    my $g = $h;
-    $tab->[$z] = $g;
+    $tab->[$z] = $h;
     }
   return $tab;
 }

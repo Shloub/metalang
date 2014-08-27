@@ -28,8 +28,7 @@ let rec find0 len tab cache x y =
 
 let find len tab =
   let tab2 = Array.init len (fun i ->
-    let a = i + 1 in
-    let tab3 = Array.init a (fun _j ->
+    let tab3 = Array.init (i + 1) (fun _j ->
       0) in
     tab3) in
   find0 len tab tab2 0 0
@@ -39,8 +38,7 @@ begin
   let len = ref( 0 ) in
   Scanf.scanf "%d " (fun v_0 -> len := v_0);
   let tab = Array.init (!len) (fun i ->
-    let b = i + 1 in
-    let tab2 = Array.init b (fun _j ->
+    let tab2 = Array.init (i + 1) (fun _j ->
       let tmp = ref( 0 ) in
       Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
       (!tmp)) in

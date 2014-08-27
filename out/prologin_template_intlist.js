@@ -39,9 +39,8 @@ var taille = b;
 var d = new Array(taille);
 for (var e = 0 ; e <= taille - 1; e++)
 {
-  f=read_int_();
+  d[e]=read_int_();
   stdinsep();
-  d[e] = f;
 }
 var tableau = d;
 util.print(programme_candidat(tableau, taille), "\n");

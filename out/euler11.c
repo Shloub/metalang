@@ -19,8 +19,7 @@ int** read_int_matrix(int x, int y){
       scanf("%d ", &f);
       d[e] = f;
     }
-    int* c = d;
-    tab[z] = c;
+    tab[z] = d;
   }
   return tab;
 }

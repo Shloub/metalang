@@ -35,9 +35,8 @@ on le retrouve ici : http://projecteuler.net/problem=18
     int[][] tab2 = new int[len][];
     for (int i = 0 ; i < len; i++)
     {
-      int a = i + 1;
-      int[] tab3 = new int[a];
-      for (int j = 0 ; j < a; j++)
+      int[] tab3 = new int[i + 1];
+      for (int j = 0 ; j < i + 1; j++)
         tab3[j] = 0;
       tab2[i] = tab3;
     }
@@ -56,9 +55,8 @@ on le retrouve ici : http://projecteuler.net/problem=18
     int[][] tab = new int[len][];
     for (int i = 0 ; i < len; i++)
     {
-      int b = i + 1;
-      int[] tab2 = new int[b];
-      for (int j = 0 ; j < b; j++)
+      int[] tab2 = new int[i + 1];
+      for (int j = 0 ; j < i + 1; j++)
       {
         int tmp = 0;
         if (scanner.hasNext("^-")){

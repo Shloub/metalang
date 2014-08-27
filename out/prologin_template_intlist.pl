@@ -34,9 +34,8 @@ readspaces();
 my $taille = $b;
 my $d = [];
 foreach my $e (0 .. $taille - 1) {
-  my $f = readint();
+  $d->[$e] = readint();
   readspaces();
-  $d->[$e] = $f;
   }
 my $tableau = $d;
 print(programme_candidat($tableau, $taille), "\n");

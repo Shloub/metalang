@@ -108,7 +108,6 @@ end;
 type d = array of Longint;
 function find(len : Longint; tab : c) : Longint;
 var
-  a : Longint;
   i : Longint;
   j : Longint;
   tab2 : c;
@@ -117,9 +116,8 @@ begin
   SetLength(tab2, len);
   for i := 0 to  len - 1 do
   begin
-    a := i + 1;
-    SetLength(tab3, a);
-    for j := 0 to  a - 1 do
+    SetLength(tab3, i + 1);
+    for j := 0 to  i + 1 - 1 do
     begin
       tab3[j] := 0;
     end;
@@ -130,7 +128,6 @@ end;
 
 
 var
-  b : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -146,9 +143,8 @@ begin
   SetLength(tab, len);
   for i := 0 to  len - 1 do
   begin
-    b := i + 1;
-    SetLength(tab2, b);
-    for j := 0 to  b - 1 do
+    SetLength(tab2, i + 1);
+    for j := 0 to  i + 1 - 1 do
     begin
       tmp := 0;
       tmp := read_int_();

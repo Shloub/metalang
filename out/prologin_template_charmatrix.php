@@ -2,10 +2,7 @@
 function &read_char_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
-  {
-    $a = fgets(STDIN);
-    $tab[$z] = $a;
-  }
+    $tab[$z] = fgets(STDIN);
   return $tab;
 }
 

@@ -65,9 +65,8 @@ sub find{
   $tab) = @_;
   my $tab2 = [];
   foreach my $i (0 .. $len - 1) {
-    my $a = $i + 1;
     my $tab3 = [];
-    foreach my $j (0 .. $a - 1) {
+    foreach my $j (0 .. $i + 1 - 1) {
       $tab3->[$j] = 0;
       }
     $tab2->[$i] = $tab3;
@@ -80,9 +79,8 @@ $len = readint();
 readspaces();
 my $tab = [];
 foreach my $i (0 .. $len - 1) {
-  my $b = $i + 1;
   my $tab2 = [];
-  foreach my $j (0 .. $b - 1) {
+  foreach my $j (0 .. $i + 1 - 1) {
     my $tmp = 0;
     $tmp = readint();
     readspaces();

@@ -7,8 +7,7 @@ let read_char_matrix x y =
       let l = Scanf.scanf "%c" (fun v_0 -> v_0) in
       l) in
     Scanf.scanf " " (fun () -> ());
-    let g = h in
-    g) in
+    h) in
   tab
 
 let rec pathfind_aux cache tab x y posX posY =

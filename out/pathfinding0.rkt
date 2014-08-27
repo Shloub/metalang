@@ -12,9 +12,8 @@
 (define (read_char_matrix x y)
   ;toto
   (let ([tab (array_init_withenv y (lambda (z) 
-                                     (lambda (_) (let ([e (list->vector (string->list (read-line)))])
-                                                 (let ([r e])
-                                                 (list '() r))))) '())])
+                                     (lambda (_) (let ([r (list->vector (string->list (read-line)))])
+                                                 (list '() r)))) '())])
   tab)
 )
 (define (pathfind_aux cache tab x y posX posY)

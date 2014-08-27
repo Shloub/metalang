@@ -65,7 +65,6 @@ type k = array of array of Longint;
 type l = array of Longint;
 function read_int_matrix(x : Longint; y : Longint) : k;
 var
-  a : l;
   b : l;
   c : Longint;
   d : Longint;
@@ -82,8 +81,7 @@ begin
       skip();
       b[c] := d;
     end;
-    a := b;
-    tab[z] := a;
+    tab[z] := b;
   end;
   exit(tab);
 end;

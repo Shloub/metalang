@@ -41,9 +41,8 @@ my $len = $b;
 print($len, "=len\n");
 my $e = [];
 foreach my $f (0 .. $len - 1) {
-  my $g = readint();
+  $e->[$f] = readint();
   readspaces();
-  $e->[$f] = $g;
   }
 my $tab = $e;
 foreach my $i (0 .. $len - 1) {
@@ -52,9 +51,8 @@ foreach my $i (0 .. $len - 1) {
 print("\n");
 my $k = [];
 foreach my $l (0 .. $len - 1) {
-  my $m = readint();
+  $k->[$l] = readint();
   readspaces();
-  $k->[$l] = $m;
   }
 my $tab2 = $k;
 foreach my $i_ (0 .. $len - 1) {
@@ -66,8 +64,7 @@ my $strlen = $p;
 print($strlen, "=strlen\n");
 my $r = [];
 foreach my $s (0 .. $strlen - 1) {
-  my $u = readchar();
-  $r->[$s] = $u;
+  $r->[$s] = readchar();
   }
 readspaces();
 my $tab4 = $r;

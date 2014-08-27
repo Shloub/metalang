@@ -46,9 +46,8 @@ function find($len, &$tab){
   $tab2 = array();
   for ($i = 0 ; $i < $len; $i++)
   {
-    $a = $i + 1;
     $tab3 = array();
-    for ($j = 0 ; $j < $a; $j++)
+    for ($j = 0 ; $j < $i + 1; $j++)
       $tab3[$j] = 0;
     $tab2[$i] = $tab3;
   }
@@ -61,9 +60,8 @@ scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $b = $i + 1;
   $tab2 = array();
-  for ($j = 0 ; $j < $b; $j++)
+  for ($j = 0 ; $j < $i + 1; $j++)
   {
     $tmp = 0;
     list($tmp) = scan("%d");

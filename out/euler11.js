@@ -41,8 +41,7 @@ function read_int_matrix(x, y){
       stdinsep();
       d[e] = f;
     }
-    var c = d;
-    tab[z] = c;
+    tab[z] = d;
   }
   return tab;
 }

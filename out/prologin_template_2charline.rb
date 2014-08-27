@@ -19,8 +19,7 @@ scanf("%*\n");
 taille1 = b
 d = [];
 for e in (0 ..  taille1 - 1) do
-  f=scanf("%c")[0];
-  d[e] = f;
+  d[e]=scanf("%c")[0];
 end
 scanf("%*\n");
 tableau1 = d
@@ -29,8 +28,7 @@ scanf("%*\n");
 taille2 = h
 l = [];
 for m in (0 ..  taille2 - 1) do
-  o=scanf("%c")[0];
-  l[m] = o;
+  l[m]=scanf("%c")[0];
 end
 scanf("%*\n");
 tableau2 = l

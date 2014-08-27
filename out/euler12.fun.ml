@@ -79,8 +79,7 @@ let find ndiv2 =
      let u = 10000 in
      let rec g n =
        (if (n <= u)
-        then let c = (n + 2) in
-        let primesFactors = (Array.init_withenv c (fun  m () -> let h = 0 in
+        then let primesFactors = (Array.init_withenv (n + 2) (fun  m () -> let h = 0 in
         ((), h)) ()) in
         let max_ = (max2 (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)) in
         (

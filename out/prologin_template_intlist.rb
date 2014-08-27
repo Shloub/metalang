@@ -12,9 +12,8 @@ scanf("%*\n");
 taille = b
 d = [];
 for e in (0 ..  taille - 1) do
-  f=scanf("%d")[0];
+  d[e]=scanf("%d")[0];
   scanf("%*\n");
-  d[e] = f;
 end
 tableau = d
 printf "%d\n", programme_candidat(tableau, taille)

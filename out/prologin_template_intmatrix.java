@@ -19,8 +19,7 @@ public class prologin_template_intmatrix
         scanner.findWithinHorizon("[\n\r ]*", 1);
         b[c] = d;
       }
-      int[] a = b;
-      tab[z] = a;
+      tab[z] = b;
     }
     return tab;
   }

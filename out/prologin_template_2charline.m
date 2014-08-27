@@ -23,25 +23,18 @@ int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2)
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int m, h, e, b;
-  char o, f;
   scanf("%d ", &b);
   int taille1 = b;
   char *d = malloc( taille1 * sizeof(char));
   for (e = 0 ; e < taille1; e++)
-  {
-    scanf("%c", &f);
-    d[e] = f;
-  }
+    scanf("%c", &d[e]);
   scanf(" ");
   char* tableau1 = d;
   scanf("%d ", &h);
   int taille2 = h;
   char *l = malloc( taille2 * sizeof(char));
   for (m = 0 ; m < taille2; m++)
-  {
-    scanf("%c", &o);
-    l[m] = o;
-  }
+    scanf("%c", &l[m]);
   scanf(" ");
   char* tableau2 = l;
   printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));

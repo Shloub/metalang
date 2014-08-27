@@ -30,9 +30,8 @@ int find(int len, std::vector<std::vector<int> *> * tab){
   std::vector<std::vector<int> * > *tab2 = new std::vector<std::vector<int> *>( len );
   for (int i = 0 ; i < len; i++)
   {
-    int a = i + 1;
-    std::vector<int > *tab3 = new std::vector<int>( a );
-    for (int j = 0 ; j < a; j++)
+    std::vector<int > *tab3 = new std::vector<int>( i + 1 );
+    for (int j = 0 ; j < i + 1; j++)
       tab3->at(j) = 0;
     tab2->at(i) = tab3;
   }
@@ -46,9 +45,8 @@ int main(){
   std::vector<std::vector<int> * > *tab = new std::vector<std::vector<int> *>( len );
   for (int i = 0 ; i < len; i++)
   {
-    int b = i + 1;
-    std::vector<int > *tab2 = new std::vector<int>( b );
-    for (int j = 0 ; j < b; j++)
+    std::vector<int > *tab2 = new std::vector<int>( i + 1 );
+    for (int j = 0 ; j < i + 1; j++)
     {
       int tmp = 0;
       std::cin >> tmp >> std::skipws;

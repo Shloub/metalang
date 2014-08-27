@@ -52,9 +52,8 @@ function find(ndiv2){
   }
   for (var n = 1 ; n <= 10000; n++)
   {
-    var c = n + 2;
-    var primesFactors = new Array(c);
-    for (var m = 0 ; m <= c - 1; m++)
+    var primesFactors = new Array(n + 2);
+    for (var m = 0 ; m <= n + 2 - 1; m++)
       primesFactors[m] = 0;
     var max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] --;

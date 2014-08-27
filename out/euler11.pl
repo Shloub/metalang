@@ -40,8 +40,7 @@ sub read_int_matrix{
       readspaces();
       $d->[$e] = $f;
       }
-    my $c = $d;
-    $tab->[$z] = $c;
+    $tab->[$z] = $d;
     }
   return $tab;
 }

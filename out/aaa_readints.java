@@ -19,8 +19,7 @@ public class aaa_readints
         scanner.findWithinHorizon("[\n\r ]*", 1);
         b[c] = d;
       }
-      int[] a = b;
-      tab[z] = a;
+      tab[z] = b;
     }
     return tab;
   }
@@ -39,26 +38,22 @@ public class aaa_readints
     int[] h = new int[len];
     for (int k = 0 ; k < len; k++)
     {
-      int l; if (scanner.hasNext("^-")){
-      scanner.next("^-"); l = scanner.nextInt();
-      } else {
-      l = scanner.nextInt();
-      }
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); h[k] = -scanner.nextInt();
+      }else{
+      h[k] = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      h[k] = l;
     }
     int[] tab1 = h;
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d=>%d\n", i, tab1[i]);
     }
-    int o; if (scanner.hasNext("^-")){
-    scanner.next("^-"); o = scanner.nextInt();
-    } else {
-    o = scanner.nextInt();
-    }
+    if (scanner.hasNext("^-")){
+    scanner.next("^-"); len = -scanner.nextInt();
+    }else{
+    len = scanner.nextInt();}
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    len = o;
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)
     {

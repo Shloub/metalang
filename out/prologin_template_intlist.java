@@ -24,13 +24,11 @@ public class prologin_template_intlist
     int[] d = new int[taille];
     for (int e = 0 ; e < taille; e++)
     {
-      int f; if (scanner.hasNext("^-")){
-      scanner.next("^-"); f = scanner.nextInt();
-      } else {
-      f = scanner.nextInt();
-      }
+      if (scanner.hasNext("^-")){
+      scanner.next("^-"); d[e] = -scanner.nextInt();
+      }else{
+      d[e] = scanner.nextInt();}
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      d[e] = f;
     }
     int[] tableau = d;
     System.out.printf("%d\n", programme_candidat(tableau, taille));

@@ -42,9 +42,8 @@ util.print(len, "=len\n");
 var e = new Array(len);
 for (var f = 0 ; f <= len - 1; f++)
 {
-  g=read_int_();
+  e[f]=read_int_();
   stdinsep();
-  e[f] = g;
 }
 var tab = e;
 for (var i = 0 ; i <= len - 1; i++)
@@ -55,9 +54,8 @@ util.print("\n");
 var k = new Array(len);
 for (var l = 0 ; l <= len - 1; l++)
 {
-  m=read_int_();
+  k[l]=read_int_();
   stdinsep();
-  k[l] = m;
 }
 var tab2 = k;
 for (var i_ = 0 ; i_ <= len - 1; i_++)
@@ -70,10 +68,7 @@ var strlen = p;
 util.print(strlen, "=strlen\n");
 var r = new Array(strlen);
 for (var s = 0 ; s <= strlen - 1; s++)
-{
-  u=read_char_();
-  r[s] = u;
-}
+  r[s]=read_char_();
 stdinsep();
 var tab4 = r;
 for (var i3 = 0 ; i3 <= strlen - 1; i3++)

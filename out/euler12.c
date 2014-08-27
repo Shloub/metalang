@@ -60,9 +60,8 @@ int find(int ndiv2){
   }
   for (n = 1 ; n <= 10000; n++)
   {
-    int c = n + 2;
-    int *primesFactors = malloc( c * sizeof(int));
-    for (m = 0 ; m < c; m++)
+    int *primesFactors = malloc( (n + 2) * sizeof(int));
+    for (m = 0 ; m < n + 2; m++)
       primesFactors[m] = 0;
     int max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] --;

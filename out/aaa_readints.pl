@@ -30,8 +30,7 @@ sub read_int_matrix{
       readspaces();
       $b->[$c] = $d;
       }
-    my $a = $b;
-    $tab->[$z] = $a;
+    $tab->[$z] = $b;
     }
   return $tab;
 }
@@ -42,17 +41,15 @@ my $len = $f;
 print($len, "=len\n");
 my $h = [];
 foreach my $k (0 .. $len - 1) {
-  my $l = readint();
+  $h->[$k] = readint();
   readspaces();
-  $h->[$k] = $l;
   }
 my $tab1 = $h;
 foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tab1->[$i], "\n");
   }
-my $o = readint();
+$len = readint();
 readspaces();
-$len = $o;
 my $tab2 = read_int_matrix($len, $len - 1);
 foreach my $i (0 .. $len - 2) {
   foreach my $j (0 .. $len - 1) {

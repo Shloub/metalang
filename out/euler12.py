@@ -40,9 +40,8 @@ def find( ndiv2 ):
         primes[l] = k;
         l += 1
     for n in range(1, 1 + 10000):
-      c = n + 2;
-      primesFactors = [None] * c
-      for m in range(0, c):
+      primesFactors = [None] * (n + 2)
+      for m in range(0, n + 2):
         primesFactors[m] = 0;
       max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
       primesFactors[2] -= 1

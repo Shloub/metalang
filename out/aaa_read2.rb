@@ -16,9 +16,8 @@ len = b
 printf "%d=len\n", len
 e = [];
 for f in (0 ..  len - 1) do
-  g=scanf("%d")[0];
+  e[f]=scanf("%d")[0];
   scanf("%*\n");
-  e[f] = g;
 end
 tab = e
 for i in (0 ..  len - 1) do
@@ -27,9 +26,8 @@ end
 print "\n";
 k = [];
 for l in (0 ..  len - 1) do
-  m=scanf("%d")[0];
+  k[l]=scanf("%d")[0];
   scanf("%*\n");
-  k[l] = m;
 end
 tab2 = k
 for i_ in (0 ..  len - 1) do
@@ -41,8 +39,7 @@ strlen = p
 printf "%d=strlen\n", strlen
 r = [];
 for s in (0 ..  strlen - 1) do
-  u=scanf("%c")[0];
-  r[s] = u;
+  r[s]=scanf("%c")[0];
 end
 scanf("%*\n");
 tab4 = r

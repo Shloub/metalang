@@ -79,7 +79,6 @@ var
   c : Longint;
   e : array of Longint;
   f : Longint;
-  g : Longint;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
@@ -87,7 +86,6 @@ var
   k : array of Longint;
   l : Longint;
   len : Longint;
-  m : Longint;
   p : Longint;
   r : array of char;
   s : Longint;
@@ -96,7 +94,6 @@ var
   tab2 : array of Longint;
   tab4 : array of char;
   tmpc : char;
-  u : char;
 begin
   b := read_int_();
   skip();
@@ -106,9 +103,8 @@ begin
   SetLength(e, len);
   for f := 0 to  len - 1 do
   begin
-    g := read_int_();
+    e[f] := read_int_();
     skip();
-    e[f] := g;
   end;
   tab := e;
   for i := 0 to  len - 1 do
@@ -122,9 +118,8 @@ begin
   SetLength(k, len);
   for l := 0 to  len - 1 do
   begin
-    m := read_int_();
+    k[l] := read_int_();
     skip();
-    k[l] := m;
   end;
   tab2 := k;
   for i_ := 0 to  len - 1 do
@@ -142,8 +137,7 @@ begin
   SetLength(r, strlen);
   for s := 0 to  strlen - 1 do
   begin
-    u := read_char_();
-    r[s] := u;
+    r[s] := read_char_();
   end;
   skip();
   tab4 := r;

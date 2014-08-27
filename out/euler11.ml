@@ -6,8 +6,7 @@ let read_int_matrix x y =
     let d = Array.init x (fun _e ->
       let f = Scanf.scanf "%d " (fun v_0 -> v_0) in
       f) in
-    let c = d in
-    c) in
+    d) in
   tab
 
 let rec find n m x y dx dy =

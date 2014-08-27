@@ -37,8 +37,7 @@ function read_int_matrix(x, y){
       stdinsep();
       b[c] = d;
     }
-    var a = b;
-    tab[z] = a;
+    tab[z] = b;
   }
   return tab;
 }
@@ -50,18 +49,16 @@ util.print(len, "=len\n");
 var h = new Array(len);
 for (var k = 0 ; k <= len - 1; k++)
 {
-  l=read_int_();
+  h[k]=read_int_();
   stdinsep();
-  h[k] = l;
 }
 var tab1 = h;
 for (var i = 0 ; i <= len - 1; i++)
 {
   util.print(i, "=>", tab1[i], "\n");
 }
-o=read_int_();
+len=read_int_();
 stdinsep();
-len = o;
 var tab2 = read_int_matrix(len, len - 1);
 for (var i = 0 ; i <= len - 2; i++)
 {

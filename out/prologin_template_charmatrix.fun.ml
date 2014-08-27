@@ -15,8 +15,7 @@ let read_char_matrix x y =
   ((), q))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let a = b in
-    let p = a in
+    let p = b in
     ((), p)
     )
   ) ()) in

@@ -17,8 +17,7 @@ let read_int_matrix x y =
                ((), q)
                )
   )) ()) in
-  let a = b in
-  let p = a in
+  let p = b in
   ((), p)) ()) in
   tab
 let programme_candidat tableau x y =

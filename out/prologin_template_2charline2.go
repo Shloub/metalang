@@ -42,17 +42,13 @@ func main() {
   var taille2 int = d
   var f []byte = make([]byte, taille1)
   for g := 0 ; g <= taille1 - 1; g++ {
-    var h byte
-    fmt.Fscanf(reader, "%c", &h)
-      f[g] = h;
+    fmt.Fscanf(reader, "%c", &f[g])
   }
   skip()
   var tableau1 []byte = f
   var l []byte = make([]byte, taille2)
   for m := 0 ; m <= taille2 - 1; m++ {
-    var o byte
-    fmt.Fscanf(reader, "%c", &o)
-      l[m] = o;
+    fmt.Fscanf(reader, "%c", &l[m])
   }
   skip()
   var tableau2 []byte = l
