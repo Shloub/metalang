@@ -166,6 +166,17 @@ public static int readInt(){
       self#mutable_ m
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
+  method read_decl f t v =
+    match Type.unfix t with
+    | Type.Integer ->
+      Format.fprintf f "@[<h>%a %a = readInt();@]"
+        self#ptype t
+        self#binding v
+    | Type.Char -> Format.fprintf f "@[<h>%a %a = readChar();@]"
+        self#ptype t
+        self#binding v
+    | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
+
 
   method decl_type f name t =
     match (Type.unfix t) with

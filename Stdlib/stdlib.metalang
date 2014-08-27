@@ -241,7 +241,7 @@ then
     return native_expand_read_int()
     }
   else
-    return { def read int out skip; return out }
+    return { def inline read int out skip; return out }
 	end
 end
 
@@ -263,7 +263,7 @@ def lexems expand_read_int_line(lexems a)
     else
     return {
       def array<int> tab[${a}] with i do
-      	def read int t skip
+      	def inline read int t skip
 				return t
       end
       return tab
@@ -296,7 +296,7 @@ def lexems expand_read_char_line(lexems a)
     else
     return {
       def array<char> tab[${a}] with i do
-      	def read char t;
+      	def inline read char t;
 				return t;
       end
 			skip

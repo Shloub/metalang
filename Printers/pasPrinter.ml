@@ -282,6 +282,7 @@ class pasPrinter = object(self)
            match Instr.Fixed.unfix i with
            | Instr.Loop (b, _, _, _) ->
              BindingMap.add b Type.integer bindings
+           | Instr.DeclRead (t, b, _)
            | Instr.Declare (b, t, _, _) ->
              BindingMap.add b t bindings
            | Instr.AllocArray (b, t, _, _) ->
@@ -336,6 +337,7 @@ class pasPrinter = object(self)
   method stdin_sep f =
     Format.fprintf f "@[<h>skip();@]"
 
+
   method read f t m = match Type.unfix t with
   | Type.Integer ->
     Format.fprintf f "@[<h>%a := read_int_();@]"
@@ -343,6 +345,15 @@ class pasPrinter = object(self)
   | Type.Char ->
     Format.fprintf f "@[<h>%a := read_char_();@]"
       self#mutable_ m
+  | _ -> assert false (* type non géré*)
+
+  method read_decl f t v = match Type.unfix t with
+  | Type.Integer ->
+    Format.fprintf f "@[<h>%a := read_int_();@]"
+      self#binding v
+  | Type.Char ->
+    Format.fprintf f "@[<h>%a := read_char_();@]"
+      self#binding v
   | _ -> assert false (* type non géré*)
 
   method print f t expr =
