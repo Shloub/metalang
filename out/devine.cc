@@ -19,14 +19,11 @@ bool devine_(int nombre, std::vector<int> * tab, int len){
 
 
 int main(){
-  int nombre = 0;
-  std::cin >> nombre >> std::skipws;
-  int len = 0;
-  std::cin >> len >> std::skipws;
+  int tmp, len, nombre;
+  std::cin >> nombre >> std::skipws >> len;
   std::vector<int > *tab = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
   {
-    int tmp = 0;
     std::cin >> tmp >> std::skipws;
     tab->at(i) = tmp;
   }

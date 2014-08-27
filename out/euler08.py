@@ -24,7 +24,6 @@ def max2( a, b ):
 i = 1;
 last = [None] * 5
 for j in range(0, 5):
-  c = '_';
   c=readchar()
   d = ord(c) - ord('0');
   i *= d
@@ -33,7 +32,6 @@ max_ = i;
 index = 0;
 nskipdiv = 0;
 for k in range(1, 1 + 995):
-  e = '_';
   e=readchar()
   f = ord(e) - ord('0');
   if f == 0:

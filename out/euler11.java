@@ -16,11 +16,11 @@ public class euler11
       int[] d = new int[x];
       for (int e = 0 ; e < x; e++)
       {
-        int f = 0;
-        if (scanner.hasNext("^-")){
-        scanner.next("^-"); f = -scanner.nextInt();
-        }else{
-        f = scanner.nextInt();}
+        int f; if (scanner.hasNext("^-")){
+        scanner.next("^-"); f = scanner.nextInt();
+        } else {
+        f = scanner.nextInt();
+        }
         scanner.findWithinHorizon("[\n\r ]*", 1);
         d[e] = f;
       }

@@ -24,19 +24,19 @@ public class prologin_template_2charline
   
   public static void main(String args[])
   {
-    int b = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = -scanner.nextInt();
-    }else{
-    b = scanner.nextInt();}
+    int b; if (scanner.hasNext("^-")){
+    scanner.next("^-"); b = scanner.nextInt();
+    } else {
+    b = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille1 = b;
     char[] tableau1 = scanner.nextLine().toCharArray();
-    int e = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); e = -scanner.nextInt();
-    }else{
-    e = scanner.nextInt();}
+    int e; if (scanner.hasNext("^-")){
+    scanner.next("^-"); e = scanner.nextInt();
+    } else {
+    e = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille2 = e;
     char[] tableau2 = scanner.nextLine().toCharArray();

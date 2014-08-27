@@ -33,7 +33,6 @@ function read_int_matrix(x, y){
     var b = new Array(x);
     for (var c = 0 ; c <= x - 1; c++)
     {
-      var d = 0;
       d=read_int_();
       stdinsep();
       b[c] = d;
@@ -52,11 +51,9 @@ function programme_candidat(tableau, x, y){
   return out_;
 }
 
-var f = 0;
 f=read_int_();
 stdinsep();
 var taille_x = f;
-var h = 0;
 h=read_int_();
 stdinsep();
 var taille_y = h;

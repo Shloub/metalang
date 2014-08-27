@@ -127,24 +127,20 @@ var
   taille : Longint;
   taille_cle : Longint;
 begin
-  taille_cle := 0;
   taille_cle := read_int_();
   skip();
   SetLength(cle, taille_cle);
   for index := 0 to  taille_cle - 1 do
   begin
-    out_ := #95;
     out_ := read_char_();
     cle[index] := out_;
   end;
   skip();
-  taille := 0;
   taille := read_int_();
   skip();
   SetLength(message, taille);
   for index2 := 0 to  taille - 1 do
   begin
-    out2 := #95;
     out2 := read_char_();
     message[index2] := out2;
   end;

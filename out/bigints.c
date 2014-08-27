@@ -23,10 +23,10 @@ typedef struct bigint {
 
 struct bigint * read_bigint(int len){
   int i, j;
+  char c;
   int *chiffres = malloc( len * sizeof(int));
   for (j = 0 ; j < len; j++)
   {
-    char c = '_';
     scanf("%c", &c);
     chiffres[j] = (int)(c);
   }

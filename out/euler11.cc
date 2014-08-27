@@ -8,13 +8,13 @@ int max2(int a, int b){
 }
 
 std::vector<std::vector<int> *> * read_int_matrix(int x, int y){
+  int f;
   std::vector<std::vector<int> * > *tab = new std::vector<std::vector<int> *>( y );
   for (int z = 0 ; z < y; z++)
   {
     std::vector<int > *d = new std::vector<int>( x );
     for (int e = 0 ; e < x; e++)
     {
-      int f = 0;
       std::cin >> f >> std::skipws;
       d->at(e) = f;
     }

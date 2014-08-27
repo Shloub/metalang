@@ -53,7 +53,6 @@ begin
   SetLength(c, 12);
   for d := 0 to  12 - 1 do
   begin
-    e := #95;
     e := read_char_();
     c[d] := e;
   end;

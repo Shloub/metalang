@@ -78,7 +78,6 @@ begin
     SetLength(b, x);
     for c := 0 to  x - 1 do
     begin
-      d := 0;
       d := read_int_();
       skip();
       b[c] := d;
@@ -114,11 +113,9 @@ var
   taille_x : Longint;
   taille_y : Longint;
 begin
-  f := 0;
   f := read_int_();
   skip();
   taille_x := f;
-  h := 0;
   h := read_int_();
   skip();
   taille_y := h;

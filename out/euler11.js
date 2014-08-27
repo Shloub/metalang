@@ -37,7 +37,6 @@ function read_int_matrix(x, y){
     var d = new Array(x);
     for (var e = 0 ; e <= x - 1; e++)
     {
-      var f = 0;
       f=read_int_();
       stdinsep();
       d[e] = f;

@@ -34,13 +34,11 @@ var read_int_ = function(){
 }/*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
-var strlen = 0;
 strlen=read_int_();
 stdinsep();
 var tab4 = new Array(strlen);
 for (var toto = 0 ; toto <= strlen - 1; toto++)
 {
-  var tmpc = '_';
   tmpc=read_char_();
   var c = tmpc.charCodeAt(0);
   if (tmpc != ' ')

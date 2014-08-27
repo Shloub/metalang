@@ -4,7 +4,7 @@
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int b = 0;
+  int b;
   scanf("%d ", &b);
   int len = b;
   printf("%d\n", len);

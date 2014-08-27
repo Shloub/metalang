@@ -1,7 +1,6 @@
 require "scanf.rb"
 c = [];
 for d in (0 ..  12 - 1) do
-  e = "_"
   e=scanf("%c")[0];
   c[d] = e;
 end

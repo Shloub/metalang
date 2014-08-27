@@ -56,7 +56,6 @@ function nbPassePartout(n, passepartout, m, serrures){
     return 0;
 }
 
-var n = 0;
 n=read_int_();
 stdinsep();
 var passepartout = new Array(n);
@@ -65,14 +64,12 @@ for (var i = 0 ; i <= n - 1; i++)
   var out0 = new Array(2);
   for (var j = 0 ; j <= 2 - 1; j++)
   {
-    var out__ = 0;
     out__=read_int_();
     stdinsep();
     out0[j] = out__;
   }
   passepartout[i] = out0;
 }
-var m = 0;
 m=read_int_();
 stdinsep();
 var serrures = new Array(m);
@@ -81,7 +78,6 @@ for (var k = 0 ; k <= m - 1; k++)
   var out1 = new Array(2);
   for (var l = 0 ; l <= 2 - 1; l++)
   {
-    var out_ = 0;
     out_=read_int_();
     stdinsep();
     out1[l] = out_;

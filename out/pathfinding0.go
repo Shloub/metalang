@@ -28,8 +28,8 @@ func read_char_matrix(x int, y int) [][]byte{
   for z := 0 ; z <= y - 1; z++ {
     var h []byte = make([]byte, x)
       for k := 0 ; k <= x - 1; k++ {
-        var l byte = '_'
-          fmt.Fscanf(reader, "%c", &l);
+        var l byte
+        fmt.Fscanf(reader, "%c", &l)
           h[k] = l;
       }
       skip()
@@ -79,12 +79,12 @@ func pathfind(tab [][]byte, x int, y int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var r int = 0
-  fmt.Fscanf(reader, "%d", &r);
+  var r int
+  fmt.Fscanf(reader, "%d", &r)
   skip()
   var x int = r
-  var u int = 0
-  fmt.Fscanf(reader, "%d", &u);
+  var u int
+  fmt.Fscanf(reader, "%d", &u)
   skip()
   var y int = u
   fmt.Printf("%d %d\n", x, y);

@@ -199,10 +199,8 @@ function init_(){
 }
 
 function read_move(){
-  var x = 0;
   x=read_int_();
   stdinsep();
-  var y = 0;
   y=read_int_();
   stdinsep();
   var b = {

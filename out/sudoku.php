@@ -21,7 +21,6 @@ function &read_sudoku(){
   $out_ = array();
   for ($i = 0 ; $i < 9 * 9; $i++)
   {
-    $k = 0;
     list($k) = scan("%d");
     scantrim();
     $out_[$i] = $k;

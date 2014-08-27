@@ -11,11 +11,11 @@ public class prologin_template_intmatrix
       int[] b = new int[x];
       for (int c = 0 ; c < x; c++)
       {
-        int d = 0;
-        if (scanner.hasNext("^-")){
-        scanner.next("^-"); d = -scanner.nextInt();
-        }else{
-        d = scanner.nextInt();}
+        int d; if (scanner.hasNext("^-")){
+        scanner.next("^-"); d = scanner.nextInt();
+        } else {
+        d = scanner.nextInt();
+        }
         scanner.findWithinHorizon("[\n\r ]*", 1);
         b[c] = d;
       }
@@ -37,18 +37,18 @@ public class prologin_template_intmatrix
   
   public static void main(String args[])
   {
-    int f = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); f = -scanner.nextInt();
-    }else{
-    f = scanner.nextInt();}
+    int f; if (scanner.hasNext("^-")){
+    scanner.next("^-"); f = scanner.nextInt();
+    } else {
+    f = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_x = f;
-    int h = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); h = -scanner.nextInt();
-    }else{
-    h = scanner.nextInt();}
+    int h; if (scanner.hasNext("^-")){
+    scanner.next("^-"); h = scanner.nextInt();
+    } else {
+    h = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_y = h;
     int[][] tableau = read_int_matrix(taille_x, taille_y);

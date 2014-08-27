@@ -368,10 +368,8 @@ var
   x : Longint;
   y : Longint;
 begin
-  x := 0;
   x := read_int_();
   skip();
-  y := 0;
   y := read_int_();
   skip();
   new(b);

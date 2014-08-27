@@ -18,8 +18,8 @@ func skip() {
 func read_sudoku() []int{
   var out_ []int = make([]int, (9 * 9))
   for i := 0 ; i <= 9 * 9 - 1; i++ {
-    var k int = 0
-      fmt.Fscanf(reader, "%d", &k);
+    var k int
+    fmt.Fscanf(reader, "%d", &k)
       skip()
       out_[i] = k;
   }

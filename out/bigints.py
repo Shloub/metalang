@@ -35,7 +35,6 @@ def min2( a, b ):
 def read_bigint( len ):
     chiffres = [None] * len
     for j in range(0, len):
-      c = '_';
       c=readchar()
       chiffres[j] = ord(c);
     for i in range(0, 1 + math.trunc((len - 1) / 2)):

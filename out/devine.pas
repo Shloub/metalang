@@ -105,16 +105,13 @@ var
   tab : b;
   tmp : Longint;
 begin
-  nombre := 0;
   nombre := read_int_();
   skip();
-  len := 0;
   len := read_int_();
   skip();
   SetLength(tab, len);
   for i := 0 to  len - 1 do
   begin
-    tmp := 0;
     tmp := read_int_();
     skip();
     tab[i] := tmp;

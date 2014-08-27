@@ -47,15 +47,12 @@ def devine_( nombre, tab, len ):
         return False;
     return True;
 
-nombre = 0;
 nombre=readint()
 stdinsep()
-len = 0;
 len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  tmp = 0;
   tmp=readint()
   stdinsep()
   tab[i] = tmp;

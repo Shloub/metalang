@@ -26,13 +26,11 @@ function nextChar(){
 }/*
 Ce test effectue un rot13 sur une chaine lue en entrée
 */
-$strlen = 0;
 list($strlen) = scan("%d");
 scantrim();
 $tab4 = array();
 for ($toto = 0 ; $toto < $strlen; $toto++)
 {
-  $tmpc = "_";
   $tmpc = nextChar();
   $c = ord($tmpc);
   if ($tmpc != " ")

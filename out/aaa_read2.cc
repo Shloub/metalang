@@ -17,14 +17,13 @@ read int, read char et skip
 */
 
 int main(){
-  int b = 0;
+  int p, m, g, b;
   std::cin >> b >> std::skipws;
   int len = b;
   std::cout << len << "=len\n";
   std::vector<int > *e = new std::vector<int>( len );
   for (int f = 0 ; f < len; f++)
   {
-    int g = 0;
     std::cin >> g >> std::skipws;
     e->at(f) = g;
   }
@@ -37,7 +36,6 @@ int main(){
   std::vector<int > *k = new std::vector<int>( len );
   for (int l = 0 ; l < len; l++)
   {
-    int m = 0;
     std::cin >> m >> std::skipws;
     k->at(l) = m;
   }
@@ -46,7 +44,6 @@ int main(){
   {
     std::cout << i_ << "==>" << tab2->at(i_) << " ";
   }
-  int p = 0;
   std::cin >> p >> std::skipws;
   int strlen = p;
   std::cout << strlen << "=strlen\n";

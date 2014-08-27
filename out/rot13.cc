@@ -5,12 +5,12 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 */
 
 int main(){
-  int strlen = 0;
+  int strlen;
+  char tmpc;
   std::cin >> strlen >> std::skipws;
   std::vector<char > *tab4 = new std::vector<char>( strlen );
   for (int toto = 0 ; toto < strlen; toto++)
   {
-    char tmpc = '_';
     std::cin >> tmpc >> std::noskipws;
     int c = (int)(tmpc);
     if (tmpc != ' ')

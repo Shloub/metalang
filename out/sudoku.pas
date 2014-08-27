@@ -72,7 +72,6 @@ begin
   SetLength(out_, 9 * 9);
   for i := 0 to  9 * 9 - 1 do
   begin
-    k := 0;
     k := read_int_();
     skip();
     out_[i] := k;

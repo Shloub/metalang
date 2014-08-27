@@ -99,7 +99,6 @@ begin
     SetLength(h, x);
     for k := 0 to  x - 1 do
     begin
-      l := #95;
       l := read_char_();
       h[k] := l;
     end;
@@ -187,11 +186,9 @@ var
   x : Longint;
   y : Longint;
 begin
-  r := 0;
   r := read_int_();
   skip();
   x := r;
-  u := 0;
   u := read_int_();
   skip();
   y := u;

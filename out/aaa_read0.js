@@ -26,7 +26,6 @@ var read_int_ = function(){
         }
     }
 }
-var b = 0;
 b=read_int_();
 stdinsep();
 var len = b;

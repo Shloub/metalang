@@ -10,14 +10,13 @@ int max2(int a, int b){
 }
 
 int** read_int_matrix(int x, int y){
-  int z, e;
+  int z, e, f;
   int* *tab = malloc( y * sizeof(int*));
   for (z = 0 ; z < y; z++)
   {
     int *d = malloc( x * sizeof(int));
     for (e = 0 ; e < x; e++)
     {
-      int f = 0;
       scanf("%d ", &f);
       d[e] = f;
     }

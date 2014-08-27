@@ -42,12 +42,10 @@ def mod(x, y):
 """
 Ce test effectue un rot13 sur une chaine lue en entrée
 """
-strlen = 0;
 strlen=readint()
 stdinsep()
 tab4 = [None] * strlen
 for toto in range(0, strlen):
-  tmpc = '_';
   tmpc=readchar()
   c = ord(tmpc);
   if tmpc != ' ':

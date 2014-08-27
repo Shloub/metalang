@@ -33,14 +33,12 @@ function programme_candidat(tableau, taille){
   return out_;
 }
 
-var b = 0;
 b=read_int_();
 stdinsep();
 var taille = b;
 var d = new Array(taille);
 for (var e = 0 ; e <= taille - 1; e++)
 {
-  var f = 0;
   f=read_int_();
   stdinsep();
   d[e] = f;

@@ -18,8 +18,8 @@ func main() {
   reader = bufio.NewReader(os.Stdin)
   var c []byte = make([]byte, 12)
   for d := 0 ; d <= 12 - 1; d++ {
-    var e byte = '_'
-      fmt.Fscanf(reader, "%c", &e);
+    var e byte
+    fmt.Fscanf(reader, "%c", &e)
       c[d] = e;
   }
   skip()

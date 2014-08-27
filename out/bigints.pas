@@ -88,7 +88,6 @@ begin
   SetLength(chiffres, len);
   for j := 0 to  len - 1 do
   begin
-    c := #95;
     c := read_char_();
     chiffres[j] := ord(c);
   end;

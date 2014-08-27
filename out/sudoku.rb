@@ -10,7 +10,6 @@ end
 def read_sudoku(  )
     out_ = [];
     for i in (0 ..  9 * 9 - 1) do
-      k = 0
       k=scanf("%d")[0];
       scanf("%*\n");
       out_[i] = k;

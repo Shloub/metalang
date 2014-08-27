@@ -57,7 +57,6 @@ begin
   SetLength(last, 5);
   for j := 0 to  5 - 1 do
   begin
-    c := #95;
     c := read_char_();
     d := ord(c) - ord(#48);
     i := i * d;
@@ -68,7 +67,6 @@ begin
   nskipdiv := 0;
   for k := 1 to  995 do
   begin
-    e := #95;
     e := read_char_();
     f := ord(e) - ord(#48);
     if f = 0

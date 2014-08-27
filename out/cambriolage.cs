@@ -84,8 +84,7 @@ public static int readInt(){
   
   public static void Main(String[] args)
   {
-    int n = 0;
-    n = readInt();
+    int n = readInt();
     stdin_sep();
     int[][] passepartout = new int[n][];
     for (int i = 0 ; i < n; i++)
@@ -93,15 +92,13 @@ public static int readInt(){
       int[] out0 = new int[2];
       for (int j = 0 ; j < 2; j++)
       {
-        int out__ = 0;
-        out__ = readInt();
+        int out__ = readInt();
         stdin_sep();
         out0[j] = out__;
       }
       passepartout[i] = out0;
     }
-    int m = 0;
-    m = readInt();
+    int m = readInt();
     stdin_sep();
     int[][] serrures = new int[m][];
     for (int k = 0 ; k < m; k++)
@@ -109,8 +106,7 @@ public static int readInt(){
       int[] out1 = new int[2];
       for (int l = 0 ; l < 2; l++)
       {
-        int out_ = 0;
-        out_ = readInt();
+        int out_ = readInt();
         stdin_sep();
         out1[l] = out_;
       }

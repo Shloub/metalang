@@ -34,13 +34,11 @@ var read_int_ = function(){
 }
 function score(){
   stdinsep();
-  var len = 0;
   len=read_int_();
   stdinsep();
   var sum = 0;
   for (var i = 1 ; i <= len; i++)
   {
-    var c = '_';
     c=read_char_();
     sum += (c.charCodeAt(0) - 'A'.charCodeAt(0)) + 1;
     /*		print c print " " print sum print " " */
@@ -49,7 +47,6 @@ function score(){
 }
 
 var sum = 0;
-var n = 0;
 n=read_int_();
 for (var i = 1 ; i <= n; i++)
   sum += i * score();

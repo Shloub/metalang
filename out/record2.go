@@ -37,9 +37,9 @@ func result(t * toto) int{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var t * toto = mktoto(4)
-  fmt.Fscanf(reader, "%d", &(*t).bar);
+  fmt.Fscanf(reader, "%d", &(*t).bar)
   skip()
-  fmt.Fscanf(reader, "%d", &(*t).blah);
+  fmt.Fscanf(reader, "%d", &(*t).blah)
   fmt.Printf("%d", result(t));
 }
 

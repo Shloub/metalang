@@ -174,10 +174,8 @@ def init_(  ):
       "ended":False};
 
 def read_move(  ):
-    x = 0;
     x=readint()
     stdinsep()
-    y = 0;
     y=readint()
     stdinsep()
     return {

@@ -38,11 +38,11 @@ public class cambriolage
   
   public static void main(String args[])
   {
-    int n = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); n = -scanner.nextInt();
-    }else{
-    n = scanner.nextInt();}
+    int n; if (scanner.hasNext("^-")){
+    scanner.next("^-"); n = scanner.nextInt();
+    } else {
+    n = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[][] passepartout = new int[n][];
     for (int i = 0 ; i < n; i++)
@@ -50,21 +50,21 @@ public class cambriolage
       int[] out0 = new int[2];
       for (int j = 0 ; j < 2; j++)
       {
-        int out__ = 0;
-        if (scanner.hasNext("^-")){
-        scanner.next("^-"); out__ = -scanner.nextInt();
-        }else{
-        out__ = scanner.nextInt();}
+        int out__; if (scanner.hasNext("^-")){
+        scanner.next("^-"); out__ = scanner.nextInt();
+        } else {
+        out__ = scanner.nextInt();
+        }
         scanner.findWithinHorizon("[\n\r ]*", 1);
         out0[j] = out__;
       }
       passepartout[i] = out0;
     }
-    int m = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); m = -scanner.nextInt();
-    }else{
-    m = scanner.nextInt();}
+    int m; if (scanner.hasNext("^-")){
+    scanner.next("^-"); m = scanner.nextInt();
+    } else {
+    m = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[][] serrures = new int[m][];
     for (int k = 0 ; k < m; k++)
@@ -72,11 +72,11 @@ public class cambriolage
       int[] out1 = new int[2];
       for (int l = 0 ; l < 2; l++)
       {
-        int out_ = 0;
-        if (scanner.hasNext("^-")){
-        scanner.next("^-"); out_ = -scanner.nextInt();
-        }else{
-        out_ = scanner.nextInt();}
+        int out_; if (scanner.hasNext("^-")){
+        scanner.next("^-"); out_ = scanner.nextInt();
+        } else {
+        out_ = scanner.nextInt();
+        }
         scanner.findWithinHorizon("[\n\r ]*", 1);
         out1[l] = out_;
       }

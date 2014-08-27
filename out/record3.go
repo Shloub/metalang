@@ -44,9 +44,9 @@ func main() {
   for i := 0 ; i <= 4 - 1; i++ {
     t[i] = mktoto(i);
   }
-  fmt.Fscanf(reader, "%d", &(*t[0]).bar);
+  fmt.Fscanf(reader, "%d", &(*t[0]).bar)
   skip()
-  fmt.Fscanf(reader, "%d", &(*t[1]).blah);
+  fmt.Fscanf(reader, "%d", &(*t[1]).blah)
   var titi int = result(t, 4)
   fmt.Printf("%d%d", titi, (*t[2]).blah);
 }

@@ -4,13 +4,13 @@
 
 char** read_char_matrix(int x, int y){
   int z, c;
+  char d;
   char* *tab = malloc( y * sizeof(char*));
   for (z = 0 ; z < y; z++)
   {
     char *b = malloc( x * sizeof(char));
     for (c = 0 ; c < x; c++)
     {
-      char d = '_';
       scanf("%c", &d);
       b[c] = d;
     }
@@ -38,10 +38,9 @@ int programme_candidat(char** tableau, int taille_x, int taille_y){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int f = 0;
+  int h, f;
   scanf("%d ", &f);
   int taille_x = f;
-  int h = 0;
   scanf("%d ", &h);
   int taille_y = h;
   char** tableau = read_char_matrix(taille_x, taille_y);

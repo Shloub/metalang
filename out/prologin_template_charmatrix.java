@@ -32,18 +32,18 @@ public class prologin_template_charmatrix
   
   public static void main(String args[])
   {
-    int c = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); c = -scanner.nextInt();
-    }else{
-    c = scanner.nextInt();}
+    int c; if (scanner.hasNext("^-")){
+    scanner.next("^-"); c = scanner.nextInt();
+    } else {
+    c = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_x = c;
-    int e = 0;
-    if (scanner.hasNext("^-")){
-    scanner.next("^-"); e = -scanner.nextInt();
-    }else{
-    e = scanner.nextInt();}
+    int e; if (scanner.hasNext("^-")){
+    scanner.next("^-"); e = scanner.nextInt();
+    } else {
+    e = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_y = e;
     char[][] tableau = read_char_matrix(taille_x, taille_y);

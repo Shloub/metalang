@@ -2,14 +2,13 @@
 #include<stdlib.h>
 
 int** read_int_matrix(int x, int y){
-  int z, c;
+  int z, c, d;
   int* *tab = malloc( y * sizeof(int*));
   for (z = 0 ; z < y; z++)
   {
     int *b = malloc( x * sizeof(int));
     for (c = 0 ; c < x; c++)
     {
-      int d = 0;
       scanf("%d ", &d);
       b[c] = d;
     }
@@ -29,10 +28,9 @@ int programme_candidat(int** tableau, int x, int y){
 }
 
 int main(void){
-  int f = 0;
+  int h, f;
   scanf("%d ", &f);
   int taille_x = f;
-  int h = 0;
   scanf("%d ", &h);
   int taille_y = h;
   int** tableau = read_int_matrix(taille_x, taille_y);

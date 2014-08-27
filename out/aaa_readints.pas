@@ -78,7 +78,6 @@ begin
     SetLength(b, x);
     for c := 0 to  x - 1 do
     begin
-      d := 0;
       d := read_int_();
       skip();
       b[c] := d;
@@ -102,7 +101,6 @@ var
   tab1 : q;
   tab2 : p;
 begin
-  f := 0;
   f := read_int_();
   skip();
   len := f;
@@ -111,7 +109,6 @@ begin
   SetLength(h, len);
   for k := 0 to  len - 1 do
   begin
-    l := 0;
     l := read_int_();
     skip();
     h[k] := l;
@@ -124,7 +121,6 @@ begin
     Write(tab1[i]);
     Write(''#10'');
   end;
-  o := 0;
   o := read_int_();
   skip();
   len := o;

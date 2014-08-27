@@ -43,16 +43,13 @@ function devine_(nombre, tab, len){
   return 1;
 }
 
-var nombre = 0;
 nombre=read_int_();
 stdinsep();
-var len = 0;
 len=read_int_();
 stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  var tmp = 0;
   tmp=read_int_();
   stdinsep();
   tab[i] = tmp;

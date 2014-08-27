@@ -18,15 +18,13 @@ int result(int len, int* tab){
 }
 
 int main(void){
-  int e;
-  int b = 0;
+  int e, f, b;
   scanf("%d ", &b);
   int len = b;
   printf("%d\n", len);
   int *d = malloc( len * sizeof(int));
   for (e = 0 ; e < len; e++)
   {
-    int f = 0;
     scanf("%d ", &f);
     d[e] = f;
   }

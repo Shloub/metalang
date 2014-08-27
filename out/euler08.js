@@ -18,7 +18,6 @@ var i = 1;
 var last = new Array(5);
 for (var j = 0 ; j <= 5 - 1; j++)
 {
-  var c = '_';
   c=read_char_();
   var d = c.charCodeAt(0) - '0'.charCodeAt(0);
   i *= d;
@@ -29,7 +28,6 @@ var index = 0;
 var nskipdiv = 0;
 for (var k = 1 ; k <= 995; k++)
 {
-  var e = '_';
   e=read_char_();
   var f = e.charCodeAt(0) - '0'.charCodeAt(0);
   if (f == 0)

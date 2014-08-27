@@ -10,11 +10,11 @@ int max2(int a, int b){
 
 int main(void){
   int k, j;
+  char e, c;
   int i = 1;
   int *last = malloc( 5 * sizeof(int));
   for (j = 0 ; j < 5; j++)
   {
-    char c = '_';
     scanf("%c", &c);
     int d = (int)(c) - (int)('0');
     i *= d;
@@ -25,7 +25,6 @@ int main(void){
   int nskipdiv = 0;
   for (k = 1 ; k <= 995; k++)
   {
-    char e = '_';
     scanf("%c", &e);
     int f = (int)(e) - (int)('0');
     if (f == 0)

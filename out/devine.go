@@ -37,16 +37,16 @@ func devine_(nombre int, tab []int, len int) bool{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var nombre int = 0
-  fmt.Fscanf(reader, "%d", &nombre);
+  var nombre int
+  fmt.Fscanf(reader, "%d", &nombre)
   skip()
-  var len int = 0
-  fmt.Fscanf(reader, "%d", &len);
+  var len int
+  fmt.Fscanf(reader, "%d", &len)
   skip()
   var tab []int = make([]int, len)
   for i := 0 ; i <= len - 1; i++ {
-    var tmp int = 0
-      fmt.Fscanf(reader, "%d", &tmp);
+    var tmp int
+    fmt.Fscanf(reader, "%d", &tmp)
       skip()
       tab[i] = tmp;
   }

@@ -19,13 +19,13 @@ Ce test effectue un rot13 sur une chaine lue en entrée
 */
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var strlen int = 0
-  fmt.Fscanf(reader, "%d", &strlen);
+  var strlen int
+  fmt.Fscanf(reader, "%d", &strlen)
   skip()
   var tab4 []byte = make([]byte, strlen)
   for toto := 0 ; toto <= strlen - 1; toto++ {
-    var tmpc byte = '_'
-      fmt.Fscanf(reader, "%c", &tmpc);
+    var tmpc byte
+    fmt.Fscanf(reader, "%c", &tmpc)
       var c int = (int)(tmpc)
       if tmpc != ' ' {
         c = ((c - (int)('a')) + 13) % 26 + (int)('a');

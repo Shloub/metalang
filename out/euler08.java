@@ -15,8 +15,7 @@ public class euler08
     int[] last = new int[5];
     for (int j = 0 ; j < 5; j++)
     {
-      char c = '_';
-      c = scanner.findWithinHorizon(".", 1).charAt(0);
+      char c = scanner.findWithinHorizon(".", 1).charAt(0);
       int d = c - '0';
       i *= d;
       last[j] = d;
@@ -26,8 +25,7 @@ public class euler08
     int nskipdiv = 0;
     for (int k = 1 ; k <= 995; k ++)
     {
-      char e = '_';
-      e = scanner.findWithinHorizon(".", 1).charAt(0);
+      char e = scanner.findWithinHorizon(".", 1).charAt(0);
       int f = e - '0';
       if (f == 0)
       {

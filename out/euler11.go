@@ -28,8 +28,8 @@ func read_int_matrix(x int, y int) [][]int{
   for z := 0 ; z <= y - 1; z++ {
     var d []int = make([]int, x)
       for e := 0 ; e <= x - 1; e++ {
-        var f int = 0
-          fmt.Fscanf(reader, "%d", &f);
+        var f int
+        fmt.Fscanf(reader, "%d", &f)
           skip()
           d[e] = f;
       }

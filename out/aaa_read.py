@@ -43,7 +43,6 @@ def mod(x, y):
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 """
-len = 0;
 len=readint()
 stdinsep()
 print("%d=len\n" % ( len ), end='')
@@ -52,7 +51,6 @@ print("len*2=%d\n" % ( len ), end='')
 len = math.trunc(len / 2)
 tab = [None] * len
 for i in range(0, len):
-  tmpi1 = 0;
   tmpi1=readint()
   stdinsep()
   print("%d=>%d " % ( i, tmpi1 ), end='')
@@ -60,18 +58,15 @@ for i in range(0, len):
 print("")
 tab2 = [None] * len
 for i_ in range(0, len):
-  tmpi2 = 0;
   tmpi2=readint()
   stdinsep()
   print("%d==>%d " % ( i_, tmpi2 ), end='')
   tab2[i_] = tmpi2;
-strlen = 0;
 strlen=readint()
 stdinsep()
 print("%d=strlen\n" % ( strlen ), end='')
 tab4 = [None] * strlen
 for toto in range(0, strlen):
-  tmpc = '_';
   tmpc=readchar()
   c = ord(tmpc);
   print("%c:%d " % ( tmpc, c ), end='')

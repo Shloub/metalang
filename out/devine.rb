@@ -19,15 +19,12 @@ def devine_( nombre, tab, len )
     return (true);
 end
 
-nombre = 0
 nombre=scanf("%d")[0];
 scanf("%*\n");
-len = 0
 len=scanf("%d")[0];
 scanf("%*\n");
 tab = [];
 for i in (0 ..  len - 1) do
-  tmp = 0
   tmp=scanf("%d")[0];
   scanf("%*\n");
   tab[i] = tmp;

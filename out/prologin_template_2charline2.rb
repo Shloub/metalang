@@ -14,17 +14,14 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 )
     return (out_);
 end
 
-b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
 taille1 = b
-d = 0
 d=scanf("%d")[0];
 scanf("%*\n");
 taille2 = d
 f = [];
 for g in (0 ..  taille1 - 1) do
-  h = "_"
   h=scanf("%c")[0];
   f[g] = h;
 end
@@ -32,7 +29,6 @@ scanf("%*\n");
 tableau1 = f
 l = [];
 for m in (0 ..  taille2 - 1) do
-  o = "_"
   o=scanf("%c")[0];
   l[m] = o;
 end

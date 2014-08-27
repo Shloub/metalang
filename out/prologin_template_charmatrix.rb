@@ -4,7 +4,6 @@ def read_char_matrix( x, y )
     for z in (0 ..  y - 1) do
       b = [];
       for c in (0 ..  x - 1) do
-        d = "_"
         d=scanf("%c")[0];
         b[c] = d;
       end
@@ -27,11 +26,9 @@ def programme_candidat( tableau, taille_x, taille_y )
     return (out_);
 end
 
-f = 0
 f=scanf("%d")[0];
 scanf("%*\n");
 taille_x = f
-h = 0
 h=scanf("%d")[0];
 scanf("%*\n");
 taille_y = h

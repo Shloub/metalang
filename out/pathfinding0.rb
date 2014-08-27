@@ -12,7 +12,6 @@ def read_char_matrix( x, y )
     for z in (0 ..  y - 1) do
       h = [];
       for k in (0 ..  x - 1) do
-        l = "_"
         l=scanf("%c")[0];
         h[k] = l;
       end
@@ -61,11 +60,9 @@ def pathfind( tab, x, y )
     return (pathfind_aux(cache, tab, x, y, 0, 0));
 end
 
-r = 0
 r=scanf("%d")[0];
 scanf("%*\n");
 x = r
-u = 0
 u=scanf("%d")[0];
 scanf("%*\n");
 y = u

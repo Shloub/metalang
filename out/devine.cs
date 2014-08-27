@@ -70,17 +70,14 @@ public static int readInt(){
   
   public static void Main(String[] args)
   {
-    int nombre = 0;
-    nombre = readInt();
+    int nombre = readInt();
     stdin_sep();
-    int len = 0;
-    len = readInt();
+    int len = readInt();
     stdin_sep();
     int[] tab = new int[len];
     for (int i = 0 ; i < len; i++)
     {
-      int tmp = 0;
-      tmp = readInt();
+      int tmp = readInt();
       stdin_sep();
       tab[i] = tmp;
     }

@@ -197,10 +197,8 @@ gamestate * init_(){
 }
 
 move * read_move(){
-  int x = 0;
-  scanf("%d ", &x);
-  int y = 0;
-  scanf("%d ", &y);
+  int y, x;
+  scanf("%d %d ", &x, &y);
   move * b = [move alloc];
   b->x=x;
   b->y=y;

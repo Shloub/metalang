@@ -43,23 +43,23 @@ func crypte(taille_cle int, cle []byte, taille int, message []byte) {
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var taille_cle int = 0
-  fmt.Fscanf(reader, "%d", &taille_cle);
+  var taille_cle int
+  fmt.Fscanf(reader, "%d", &taille_cle)
   skip()
   var cle []byte = make([]byte, taille_cle)
   for index := 0 ; index <= taille_cle - 1; index++ {
-    var out_ byte = '_'
-      fmt.Fscanf(reader, "%c", &out_);
+    var out_ byte
+    fmt.Fscanf(reader, "%c", &out_)
       cle[index] = out_;
   }
   skip()
-  var taille int = 0
-  fmt.Fscanf(reader, "%d", &taille);
+  var taille int
+  fmt.Fscanf(reader, "%d", &taille)
   skip()
   var message []byte = make([]byte, taille)
   for index2 := 0 ; index2 <= taille - 1; index2++ {
-    var out2 byte = '_'
-      fmt.Fscanf(reader, "%c", &out2);
+    var out2 byte
+    fmt.Fscanf(reader, "%c", &out2)
       message[index2] = out2;
   }
   crypte(taille_cle, cle, taille, message);

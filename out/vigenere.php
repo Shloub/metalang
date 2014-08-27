@@ -51,24 +51,20 @@ function crypte($taille_cle, &$cle, $taille, &$message){
   }
 }
 
-$taille_cle = 0;
 list($taille_cle) = scan("%d");
 scantrim();
 $cle = array();
 for ($index = 0 ; $index < $taille_cle; $index++)
 {
-  $out_ = "_";
   $out_ = nextChar();
   $cle[$index] = $out_;
 }
 scantrim();
-$taille = 0;
 list($taille) = scan("%d");
 scantrim();
 $message = array();
 for ($index2 = 0 ; $index2 < $taille; $index2++)
 {
-  $out2 = "_";
   $out2 = nextChar();
   $message[$index2] = $out2;
 }

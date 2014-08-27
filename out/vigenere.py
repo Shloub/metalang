@@ -60,21 +60,17 @@ def crypte( taille_cle, cle, taille, message ):
         new_ = mod(addon + lettre, 26);
         message[i] = of_position_alphabet(new_);
 
-taille_cle = 0;
 taille_cle=readint()
 stdinsep()
 cle = [None] * taille_cle
 for index in range(0, taille_cle):
-  out_ = '_';
   out_=readchar()
   cle[index] = out_;
 stdinsep()
-taille = 0;
 taille=readint()
 stdinsep()
 message = [None] * taille
 for index2 in range(0, taille):
-  out2 = '_';
   out2=readchar()
   message[index2] = out2;
 crypte(taille_cle, cle, taille, message);

@@ -9,13 +9,11 @@ def programme_candidat( tableau, taille )
     return (out_);
 end
 
-b = 0
 b=scanf("%d")[0];
 scanf("%*\n");
 taille = b
 d = [];
 for e in (0 ..  taille - 1) do
-  f = "_"
   f=scanf("%c")[0];
   d[e] = f;
 end

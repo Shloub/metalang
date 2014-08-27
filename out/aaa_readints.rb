@@ -4,7 +4,6 @@ def read_int_matrix( x, y )
     for z in (0 ..  y - 1) do
       b = [];
       for c in (0 ..  x - 1) do
-        d = 0
         d=scanf("%d")[0];
         scanf("%*\n");
         b[c] = d;
@@ -15,14 +14,12 @@ def read_int_matrix( x, y )
     return (tab);
 end
 
-f = 0
 f=scanf("%d")[0];
 scanf("%*\n");
 len = f
 printf "%d=len\n", len
 h = [];
 for k in (0 ..  len - 1) do
-  l = 0
   l=scanf("%d")[0];
   scanf("%*\n");
   h[k] = l;
@@ -31,7 +28,6 @@ tab1 = h
 for i in (0 ..  len - 1) do
   printf "%d=>%d\n", i, tab1[i]
 end
-o = 0
 o=scanf("%d")[0];
 scanf("%*\n");
 len = o;

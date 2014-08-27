@@ -9,13 +9,12 @@ int programme_candidat(std::vector<int> * tableau, int taille){
 
 
 int main(){
-  int b = 0;
+  int f, b;
   std::cin >> b >> std::skipws;
   int taille = b;
   std::vector<int > *d = new std::vector<int>( taille );
   for (int e = 0 ; e < taille; e++)
   {
-    int f = 0;
     std::cin >> f >> std::skipws;
     d->at(e) = f;
   }

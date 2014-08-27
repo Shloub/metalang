@@ -39,7 +39,6 @@ def mod(x, y):
 def read_sudoku(  ):
     out_ = [None] * (9 * 9)
     for i in range(0, 9 * 9):
-      k = 0;
       k=readint()
       stdinsep()
       out_[i] = k;
