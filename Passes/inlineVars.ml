@@ -232,26 +232,19 @@ List.filter ((<>) i) li
 let rec map_instrs (infos:infos) = function
   | [] -> []
   | hd::tl -> match Instr.unfix hd with
+    | Instr.DeclRead (ty, name, { Instr.useless = true } ) ->
+      begin match StringMap.find_opt name infos.infos with
+      | Some [
+        {instruction=i2; expression=_; affected=false; declaration=false; dad=dad2};
+        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
+          when is_affect_copyvar i2 name
+            ->
+        let tl = map_instrs infos @$ remove_instruction tl i2 in
+        (Instr.read ty @$ affected_mutable i2)::tl
+      | _ -> hd :: (map_instrs infos tl)
+	    end
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
       begin match StringMap.find_opt name infos.infos with
-
-      | Some [
-
-        {instruction=i3; expression=_; affected=false; declaration=false; dad=dad3};
-        {instruction=i2; expression=_; affected=true; declaration=false; dad=dad2};
-        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}
-      ] when is_readvar i2 && (is_affect_copyvar i3 name ||
-                                 is_declare_copyvar i3 name
-      )-> (* TODO checker l'ordre *)
-        let tl = remove_instruction tl i2 in
-        let tl = remove_instruction tl i3 in
-        let tl = map_instrs infos tl in
-        if is_affect_copyvar i3 name then (Instr.read ty (affected_mutable i3))::tl
-        else
-          let name = name_declared i3 in
-          (Instr.declare name ty e Instr.default_declaration_option)
-          ::(Instr.read ty (Mutable.var name))
-          ::tl
       | Some [item2; item1] ->
 	      if item2.affected then
 	        hd :: (map_instrs infos tl)
@@ -284,7 +277,14 @@ let getlines instrs =
 
 let map_instrs instrs =
   let infos = { infos = getinfos instrs ; linenumbers = getlines instrs } in
-  map_instrs infos instrs
+  let instrs = map_instrs infos instrs in
+  let instrs = List.map (fun i ->
+    let a = Instr.Fixed.annot i in
+    let i = Instr.map_bloc (map_instrs infos) @$ Instr.unfix i in
+    Instr.fixa a i
+  ) instrs in
+  instrs
+
 
 let process () (i:Utils.t_fun) = match i with
   | Prog.DeclarFun (name, ty, params, instrs, opt ) ->
