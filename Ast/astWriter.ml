@@ -79,14 +79,9 @@ module F (T : SigAst) = struct
       in f acc t
 
     let fold f0 acc t =
-      let rec f acc t =
-        let acc, t = T.foldmap f acc t in
-        (f0 acc t), t
-      in
-      let (acc, t) =
-        T.foldmap f acc t in
-      let (acc, t) = f acc t
-      in acc
+      let f acc t = f0 acc t, t in
+      fst @$ foldmap f acc t
+
 
     let iter f t = fold (fun () t -> f t) () t
 
@@ -100,15 +95,11 @@ module F (T : SigAst) = struct
         ) false t
       with Found -> true
 
-    let map f0 m =
-      let rec f () m =
-        let (), m = T.foldmap f () m in
-        (), f0 m
-      in
-      let ((), m) =
-        T.foldmap f () m in
-      let (_, m) = f () m
-      in m
+    let map f0 t =
+      let f () t = (), f0 t in
+      snd @$ foldmap f () t
+
+
   end
 
   (**
