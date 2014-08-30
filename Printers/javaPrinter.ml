@@ -143,7 +143,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method read f t m =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")){@]@\n@[<h>scanner.next(\"^-\"); %a = -scanner.nextInt();@]@\n@[<h>}else{@]@\n@[<h>%a = scanner.nextInt();}@]"
+      Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")){@\n  scanner.next(\"^-\");@\n  %a = -scanner.nextInt();@\n}else{@\n  %a = scanner.nextInt();@\n}@]"
         self#mutable_ m
         self#mutable_ m
     | Type.Char -> Format.fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
@@ -153,7 +153,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method read_decl f t v =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[<h>%a %a; if (scanner.hasNext(\"^-\")){@]@\n@[<h>scanner.next(\"^-\"); %a = scanner.nextInt();@]@\n@[<h>} else {@]@\n@[<h>%a = scanner.nextInt();@]@\n}"
+      Format.fprintf f "@[<h>%a %a;@\nif (scanner.hasNext(\"^-\")){@\n  scanner.next(\"^-\");@\n  %a = scanner.nextInt();@\n} else {@\n  %a = scanner.nextInt();@\n}@]"
         self#ptype t
         self#binding v
         self#binding v
