@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 
 func min2(a int, b int) int{
   if a < b {

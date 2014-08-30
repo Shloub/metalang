@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func is_leap(year int) bool{
   return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0)
 }
@@ -53,23 +38,22 @@ func ndayinmonth(month int, year int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var month int = 0
   var year int = 1901
   var dayofweek int = 1
   /* 01-01-1901 : mardi */
   var count int = 0
   for year != 2001{
-                    var ndays int = ndayinmonth(month, year)
-                    dayofweek = (dayofweek + ndays) % 7;
-                    month ++;
-                    if month == 12 {
-                      month = 0;
-                        year ++;
-                    }
-                    if (dayofweek % 7) == 6 {
-                      count ++;
-                    }
+    var ndays int = ndayinmonth(month, year)
+    dayofweek = (dayofweek + ndays) % 7;
+    month ++;
+    if month == 12 {
+      month = 0;
+        year ++;
+    }
+    if (dayofweek % 7) == 6 {
+      count ++;
+    }
   }
   fmt.Printf("%d\n", count);
 }

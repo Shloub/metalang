@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func max2(a int, b int) int{
   if a > b {
     return a
@@ -30,19 +15,18 @@ func primesfactors(n int) []int{
   }
   var d int = 2
   for n != 1 && d * d <= n{
-                            if (n % d) == 0 {
-                              tab[d] = tab[d] + 1;
-                                n /= d;
-                            } else {
-                              d ++;
-                            }
+    if (n % d) == 0 {
+      tab[d] = tab[d] + 1;
+        n /= d;
+    } else {
+      d ++;
+    }
   }
   tab[n] = tab[n] + 1;
   return tab
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var lim int = 20
   var o []int = make([]int, (lim + 1))
   for m := 0 ; m <= lim + 1 - 1; m++ {

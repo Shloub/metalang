@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 
 func is_number(c byte) bool{
   return (int)(c) <= (int)('9') && (int)(c) >= (int)('0')
@@ -30,21 +29,21 @@ func npi_(str []byte, len int) int{
   var ptrStack int = 0
   var ptrStr int = 0
   for ptrStr < len{
-                    if str[ptrStr] == ' ' {
-                      ptrStr ++;
-                    } else if is_number(str[ptrStr]) {
-                      var num int = 0
-                        for str[ptrStr] != ' '{
-                                                num = num * 10 + (int)(str[ptrStr]) - (int)('0');
-                                                ptrStr ++;
-                        }
-                        stack[ptrStack] = num;
-                        ptrStack ++;
-                    } else if str[ptrStr] == '+' {
-                      stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
-                        ptrStack --;
-                        ptrStr ++;
-                    }  
+    if str[ptrStr] == ' ' {
+      ptrStr ++;
+    } else if is_number(str[ptrStr]) {
+      var num int = 0
+        for str[ptrStr] != ' '{
+          num = num * 10 + (int)(str[ptrStr]) - (int)('0');
+          ptrStr ++;
+        }
+        stack[ptrStack] = num;
+        ptrStack ++;
+    } else if str[ptrStr] == '+' {
+      stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+        ptrStack --;
+        ptrStr ++;
+    }  
   }
   return stack[0]
 }

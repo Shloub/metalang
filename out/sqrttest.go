@@ -1,22 +1,7 @@
 package main
-import "math";
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
+import "math"
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var b int = 4
   fmt.Printf("%d ", int(math.Sqrt(float64(b))));
   var e int = 16

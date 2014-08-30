@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func max2(a int, b int) int{
   if a > b {
     return a
@@ -50,7 +35,6 @@ func chiffre(c int, m int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var m int = 1
   for a := 0 ; a <= 9; a++ {
     for f := 1 ; f <= 9; f++ {

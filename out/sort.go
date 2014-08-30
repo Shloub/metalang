@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 
 func copytab(tab []int, len int) []int{
   var o []int = make([]int, len)
@@ -41,24 +40,24 @@ func qsort_(tab []int, len int, i int, j int) {
       var j0 int = j
       /* pivot : tab[0] */
       for i != j{
-                  if tab[i] > tab[j] {
-                    if i == j - 1 {
-                        /* on inverse simplement*/
-                          var tmp int = tab[i]
-                          tab[i] = tab[j];
-                          tab[j] = tmp;
-                          i ++;
-                      } else {
-                        /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
-                        var tmp int = tab[i]
-                        tab[i] = tab[j];
-                        tab[j] = tab[i + 1];
-                        tab[i + 1] = tmp;
-                        i ++;
-                      }
-                  } else {
-                    j --;
-                  }
+        if tab[i] > tab[j] {
+          if i == j - 1 {
+              /* on inverse simplement*/
+                var tmp int = tab[i]
+                tab[i] = tab[j];
+                tab[j] = tmp;
+                i ++;
+            } else {
+              /* on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] */
+              var tmp int = tab[i]
+              tab[i] = tab[j];
+              tab[j] = tab[i + 1];
+              tab[i + 1] = tmp;
+              i ++;
+            }
+        } else {
+          j --;
+        }
       }
       qsort_(tab, len, i0, i - 1);
       qsort_(tab, len, i + 1, j0);

@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 /*
 Tictactoe : un tictactoe avec une IA
 */
@@ -167,8 +166,8 @@ Renvoie le coup de l'IA
 */
 func play(g * gamestate) * move{
   var minMove * move = new (move)
-  (*minMove).x=0;
-  (*minMove).y=0;
+  (*minMove).x=0
+  (*minMove).y=0
   var minNote int = 10000
   for x := 0 ; x <= 2; x++ {
     for y := 0 ; y <= 2; y++ {
@@ -199,10 +198,10 @@ func init_() * gamestate{
       cases[i] = tab;
   }
   var a * gamestate = new (gamestate)
-  (*a).cases=cases;
-  (*a).firstToPlay=true;
-  (*a).note=0;
-  (*a).ended=false;
+  (*a).cases=cases
+  (*a).firstToPlay=true
+  (*a).note=0
+  (*a).ended=false
   return a
 }
 
@@ -214,8 +213,8 @@ func read_move() * move{
   fmt.Fscanf(reader, "%d", &y)
   skip()
   var b * move = new (move)
-  (*b).x=x;
-  (*b).y=y;
+  (*b).x=x
+  (*b).y=y
   return b
 }
 
@@ -224,22 +223,22 @@ func main() {
   for i := 0 ; i <= 1; i++ {
     var state * gamestate = init_()
       var c * move = new (move)
-      (*c).x=1;
-      (*c).y=1;
+      (*c).x=1
+      (*c).y=1
       apply_move(c, state);
       var d * move = new (move)
-      (*d).x=0;
-      (*d).y=0;
+      (*d).x=0
+      (*d).y=0
       apply_move(d, state);
       for !(*state).ended{
-                           print_state(state);
-                           apply_move(play(state), state);
-                           eval_(state);
-                           print_state(state);
-                           if !(*state).ended {
-                             apply_move(play(state), state);
-                               eval_(state);
-                           }
+        print_state(state);
+        apply_move(play(state), state);
+        eval_(state);
+        print_state(state);
+        if !(*state).ended {
+          apply_move(play(state), state);
+            eval_(state);
+        }
       }
       print_state(state);
       fmt.Printf("%d\n", (*state).note);

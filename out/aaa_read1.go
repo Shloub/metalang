@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var c []byte = make([]byte, 12)

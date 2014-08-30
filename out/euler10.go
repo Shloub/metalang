@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func eratostene(t []int, max_ int) int{
   var sum int = 0
   for i := 2 ; i <= max_ - 1; i++ {
@@ -26,8 +11,8 @@ func eratostene(t []int, max_ int) int{
 			*/
           if j / i == i {
             for j < max_ && j > 0{
-                                   t[j] = 0;
-                                   j += i;
+                t[j] = 0;
+                j += i;
               }
           }
       }
@@ -36,7 +21,6 @@ func eratostene(t []int, max_ int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var n int = 100000
   /* normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages */
   var t []int = make([]int, n)

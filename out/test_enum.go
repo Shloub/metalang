@@ -6,7 +6,7 @@ const (
   Blah foo_t = iota
 );
 func main() {
-var foo_val foo_t = Foo
-_ = foo_val
+  var foo_val foo_t = Foo
+  _ = foo_val
 }
 

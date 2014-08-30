@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func max2(a int, b int) int{
   if a > b {
     return a
@@ -30,8 +15,8 @@ func eratostene(t []int, max_ int) int{
         var j int = i * i
           n ++;
           for j < max_ && j > 0{
-                                 t[j] = 0;
-                                 j += i;
+            t[j] = 0;
+            j += i;
           }
       }
   }
@@ -42,8 +27,8 @@ func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   for i := 0 ; i <= nprimes - 1; i++ {
     var d int = primes[i]
       for (n % d) == 0{
-                        t[d] = t[d] + 1;
-                        n /= d;
+        t[d] = t[d] + 1;
+        n /= d;
       }
       if n == 1 {
         return primes[i]
@@ -92,7 +77,6 @@ func find(ndiv2 int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   fmt.Printf("%d\n", find(500));
 }
 

@@ -6,7 +6,7 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
@@ -14,22 +14,21 @@ func skip() {
   }
 }
 
-
 func montagnes_(tab []int, len int) int{
   var max_ int = 1
   var j int = 1
   var i int = len - 2
   for i >= 0{
-              var x int = tab[i]
-              for j >= 0 && x > tab[len - j]{
-                                              j --;
-              }
-              j ++;
-              tab[len - j] = x;
-              if j > max_ {
-                max_ = j;
-              }
-              i --;
+    var x int = tab[i]
+    for j >= 0 && x > tab[len - j]{
+      j --;
+    }
+    j ++;
+    tab[len - j] = x;
+    if j > max_ {
+      max_ = j;
+    }
+    i --;
   }
   return max_
 }

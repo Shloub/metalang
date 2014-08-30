@@ -3,18 +3,6 @@ import "fmt"
 import "os"
 import "bufio"
 var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func max2(a int, b int) int{
   if a > b {
     return a

@@ -26,6 +26,6 @@ func is_pair(i int) bool{
 }
 
 func main() {
-
+  
 }
 

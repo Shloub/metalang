@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
@@ -26,17 +25,17 @@ type toto struct {
 
 func mktoto(v1 int) * toto{
   var t * toto = new (toto)
-  (*t).foo=v1;
-  (*t).bar=v1;
-  (*t).blah=v1;
+  (*t).foo=v1
+  (*t).bar=v1
+  (*t).blah=v1
   return t
 }
 
 func mktoto2(v1 int) * toto{
   var t * toto = new (toto)
-  (*t).foo=v1 + 3;
-  (*t).bar=v1 + 2;
-  (*t).blah=v1 + 1;
+  (*t).foo=v1 + 3
+  (*t).bar=v1 + 2
+  (*t).blah=v1 + 1
   return t
 }
 
@@ -44,9 +43,9 @@ func result(t_ * toto, t2_ * toto) int{
   var t * toto = t_
   var t2 * toto = t2_
   var t3 * toto = new (toto)
-  (*t3).foo=0;
-  (*t3).bar=0;
-  (*t3).blah=0;
+  (*t3).foo=0
+  (*t3).bar=0
+  (*t3).blah=0
   t3 = t2;
   t = t2;
   t2 = t3;

@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func eratostene(t []int, max_ int) int{
   var n int = 0
   for i := 2 ; i <= max_ - 1; i++ {
@@ -22,8 +7,8 @@ func eratostene(t []int, max_ int) int{
         n ++;
           var j int = i * i
           for j < max_ && j > 0{
-                                 t[j] = 0;
-                                 j += i;
+            t[j] = 0;
+            j += i;
           }
       }
   }
@@ -36,10 +21,10 @@ func isPrime(n int, primes []int, len int) bool{
     n = -n;
   }
   for primes[i] * primes[i] < n{
-                                 if (n % primes[i]) == 0 {
-                                   return false
-                                 }
-                                 i ++;
+    if (n % primes[i]) == 0 {
+      return false
+    }
+    i ++;
   }
   return true
 }
@@ -55,7 +40,6 @@ func test(a int, b int, primes []int, len int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var maximumprimes int = 1000
   var era []int = make([]int, maximumprimes)
   for j := 0 ; j <= maximumprimes - 1; j++ {

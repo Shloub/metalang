@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func eratostene(t []int, max_ int) int{
   var n int = 0
   for i := 2 ; i <= max_ - 1; i++ {
@@ -22,8 +7,8 @@ func eratostene(t []int, max_ int) int{
         n ++;
           var j int = i * i
           for j < max_ && j > 0{
-                                 t[j] = 0;
-                                 j += i;
+            t[j] = 0;
+            j += i;
           }
       }
   }
@@ -34,8 +19,8 @@ func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
   for i := 0 ; i <= nprimes - 1; i++ {
     var d int = primes[i]
       for (n % d) == 0{
-                        t[d] = t[d] + 1;
-                        n /= d;
+        t[d] = t[d] + 1;
+        n /= d;
       }
       if n == 1 {
         return primes[i]
@@ -46,7 +31,7 @@ func fillPrimesFactors(t []int, n int, primes []int, nprimes int) int{
 
 func sumdivaux2(t []int, n int, i int) int{
   for i < n && t[i] == 0{
-                          i ++;
+    i ++;
   }
   return i
 }
@@ -78,7 +63,6 @@ func sumdiv(nprimes int, primes []int, n int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var maximumprimes int = 1001
   var era []int = make([]int, maximumprimes)
   for j := 0 ; j <= maximumprimes - 1; j++ {

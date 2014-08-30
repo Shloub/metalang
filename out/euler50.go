@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func min2(a int, b int) int{
   if a < b {
     return a
@@ -32,8 +17,8 @@ func eratostene(t []int, max_ int) int{
           if j / i == i {
             /* overflow test */
               for j < max_ && j > 0{
-                                     t[j] = 0;
-                                     j += i;
+                t[j] = 0;
+                j += i;
               }
           }
       }
@@ -42,7 +27,6 @@ func eratostene(t []int, max_ int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var maximumprimes int = 1000001
   var era []int = make([]int, maximumprimes)
   for j := 0 ; j <= maximumprimes - 1; j++ {
@@ -71,22 +55,22 @@ func main() {
   var len int = 1
   var resp int = 1
   for process{
-               process = false;
-               for i := 0 ; i <= stop; i++ {
-                 if i + len < nprimes {
-                     sum[i] = sum[i] + primes[i + len];
-                       if maximumprimes > sum[i] {
-                         process = true;
-                           if era[sum[i]] == sum[i] {
-                             maxl = len;
-                               resp = sum[i];
-                           }
-                       } else {
-                         stop = min2(stop, i);
-                       }
-                   }
-               }
-               len ++;
+    process = false;
+    for i := 0 ; i <= stop; i++ {
+      if i + len < nprimes {
+          sum[i] = sum[i] + primes[i + len];
+            if maximumprimes > sum[i] {
+              process = true;
+                if era[sum[i]] == sum[i] {
+                  maxl = len;
+                    resp = sum[i];
+                }
+            } else {
+              stop = min2(stop, i);
+            }
+        }
+    }
+    len ++;
   }
   fmt.Printf("%d\n%d\n", resp, maxl);
 }

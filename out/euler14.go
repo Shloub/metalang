@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func next_(n int) int{
   if (n % 2) == 0 {
     return n / 2
@@ -37,7 +22,6 @@ func find(n int, m []int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var m []int = make([]int, 1000000)
   for j := 0 ; j <= 1000000 - 1; j++ {
     m[j] = 0;

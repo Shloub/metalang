@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 
 func max2(a int, b int) int{
   if a > b {
@@ -60,43 +59,43 @@ func main() {
   for i := 0 ; i <= 8 - 1; i++ {
     if i == 0 {
         var s * tuple_int_int = new (tuple_int_int)
-          (*s).tuple_int_int_field_0=0;
-          (*s).tuple_int_int_field_1=1;
+          (*s).tuple_int_int_field_0=0
+          (*s).tuple_int_int_field_1=1
           directions[i] = s;
       } else if i == 1 {
         var r * tuple_int_int = new (tuple_int_int)
-          (*r).tuple_int_int_field_0=1;
-          (*r).tuple_int_int_field_1=0;
+          (*r).tuple_int_int_field_0=1
+          (*r).tuple_int_int_field_1=0
           directions[i] = r;
       } else if i == 2 {
         var q * tuple_int_int = new (tuple_int_int)
-          (*q).tuple_int_int_field_0=0;
-          (*q).tuple_int_int_field_1=-1;
+          (*q).tuple_int_int_field_0=0
+          (*q).tuple_int_int_field_1=-1
           directions[i] = q;
       } else if i == 3 {
         var p * tuple_int_int = new (tuple_int_int)
-          (*p).tuple_int_int_field_0=-1;
-          (*p).tuple_int_int_field_1=0;
+          (*p).tuple_int_int_field_0=-1
+          (*p).tuple_int_int_field_1=0
           directions[i] = p;
       } else if i == 4 {
         var o * tuple_int_int = new (tuple_int_int)
-          (*o).tuple_int_int_field_0=1;
-          (*o).tuple_int_int_field_1=1;
+          (*o).tuple_int_int_field_0=1
+          (*o).tuple_int_int_field_1=1
           directions[i] = o;
       } else if i == 5 {
         var l * tuple_int_int = new (tuple_int_int)
-          (*l).tuple_int_int_field_0=1;
-          (*l).tuple_int_int_field_1=-1;
+          (*l).tuple_int_int_field_0=1
+          (*l).tuple_int_int_field_1=-1
           directions[i] = l;
       } else if i == 6 {
         var k * tuple_int_int = new (tuple_int_int)
-          (*k).tuple_int_int_field_0=-1;
-          (*k).tuple_int_int_field_1=1;
+          (*k).tuple_int_int_field_0=-1
+          (*k).tuple_int_int_field_1=1
           directions[i] = k;
       } else {
         var h * tuple_int_int = new (tuple_int_int)
-        (*h).tuple_int_int_field_0=-1;
-        (*h).tuple_int_int_field_1=-1;
+        (*h).tuple_int_int_field_0=-1
+        (*h).tuple_int_int_field_1=-1
         directions[i] = h;
       }      
   }

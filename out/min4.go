@@ -1,20 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func min2(a int, b int) int{
   if a < b {
     return a
@@ -24,7 +9,6 @@ func min2(a int, b int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   var h int = 1
   var i int = 2
   var j int = 3

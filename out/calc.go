@@ -1,19 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
 /*
 La suite de fibonaci
 */
@@ -32,7 +18,6 @@ func fibo(a int, b int, i int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   fmt.Printf("%d", fibo(1, 2, 4));
 }
 

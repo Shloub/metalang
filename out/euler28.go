@@ -1,19 +1,5 @@
 package main
 import "fmt"
-import "os"
-import "bufio"
-var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
 /*
 
 43 44 45 46 47 48 49
@@ -43,7 +29,6 @@ func sumdiag(n int) int{
 }
 
 func main() {
-  reader = bufio.NewReader(os.Stdin)
   fmt.Printf("%d", sumdiag(1001));
 }
 

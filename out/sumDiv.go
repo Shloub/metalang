@@ -3,18 +3,6 @@ import "fmt"
 import "os"
 import "bufio"
 var reader *bufio.Reader
-
-func skip() {
-  var c byte
-  fmt.Fscanf(reader, "%c", &c);
-  if c == '\n' || c == ' ' {
-    skip()
-  } else {
-    reader.UnreadByte()
-  }
-}
-
-
 func foo() {
   var a int = 0
   /* test */

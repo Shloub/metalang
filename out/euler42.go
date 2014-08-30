@@ -1,20 +1,19 @@
 package main
-import "math";
 import "fmt"
+import "math"
 import "os"
 import "bufio"
 var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 
 func is_triangular(n int) bool{
   /*

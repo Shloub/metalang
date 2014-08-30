@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 
 func go_(tab []int, a int, b int) int{
   var m int = (a + b) / 2
@@ -27,14 +26,14 @@ func go_(tab []int, a int, b int) int{
   var i int = a
   var j int = b
   for i < j{
-             var e int = tab[i]
-             if e < m {
-               i ++;
-             } else {
-               j --;
-               tab[i] = tab[j];
-               tab[j] = e;
-             }
+    var e int = tab[i]
+    if e < m {
+      i ++;
+    } else {
+      j --;
+      tab[i] = tab[j];
+      tab[j] = e;
+    }
   }
   if i < m {
     return go_(tab, a, m)

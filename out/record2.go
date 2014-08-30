@@ -6,14 +6,13 @@ var reader *bufio.Reader
 
 func skip() {
   var c byte
-  fmt.Fscanf(reader, "%c", &c);
+  fmt.Fscanf(reader, "%c", &c)
   if c == '\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 
 type toto struct {
   foo int;
@@ -23,9 +22,9 @@ type toto struct {
 
 func mktoto(v1 int) * toto{
   var t * toto = new (toto)
-  (*t).foo=v1;
-  (*t).bar=0;
-  (*t).blah=0;
+  (*t).foo=v1
+  (*t).bar=0
+  (*t).blah=0
   return t
 }
 
