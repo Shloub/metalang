@@ -78,7 +78,7 @@ macro int native_macro_max2(int a, int b)
   php do "max($a, $b)"
   py do "max($a, $b)"
   rkt do "max $a $b"
-  * do "ERROR"
+  * do "max($a, $b)"
 end
 
 def lexems macro_max2(lexems a, lexems b)
@@ -109,7 +109,7 @@ macro int native_macro_min2(int a, int b)
   php do "min($a, $b)"
   py do "min($a, $b)"
   rkt do "min $a $b"
-  * do "ERROR"
+  * do "min($a, $b)"
 end
 
 macro int native_macro_min3(int a, int b, int c)
@@ -117,7 +117,7 @@ macro int native_macro_min3(int a, int b, int c)
   php do "min($a, $b, $c)"
   py do "min($a, $b, $c)"
   rkt do "min $a $b $c"
-  * do "ERROR"
+  * do "min($a, $b, $c)"
 end
 
 macro int native_macro_min4(int a, int b, int c, int d)
@@ -125,7 +125,7 @@ macro int native_macro_min4(int a, int b, int c, int d)
   php do "min($a, $b, $c, $d)"
   py do "min($a, $b, $c, $d)"
   rkt do "min $a $b $c $d"
-  * do "ERROR"
+  * do "min($a, $b, $c, $d)"
 end
 
 def lexems macro_min2(lexems a, lexems b)

@@ -68,6 +68,8 @@ let rec name_of_mut mut = match Mutable.unfix mut with
 let rec getinfos_expr instr dad infos e =
   let getinfos infos e =
     match Expr.unfix e with
+    | Expr.Call (name, li) ->
+      infos
     | Expr.Access mut ->
       let infos = getinfos_mut instr dad infos mut in
       let name = name_of_mut mut in
@@ -148,9 +150,17 @@ let getinfos instrs =
   let infos = StringMap.empty in
   getinfos infos None instrs
 
-let replace_expression e e2 li =
-  List.map (fun i -> Instr.map_expr (fun e3 ->
-    if Expr.Fixed.annot e = Expr.Fixed.annot e3 then e2 else e3) i ) li
+let replace_name name e li =
+  List.map (fun i -> Instr.map_expr (fun e2 -> Expr.Writer.Deep.map
+    (fun e2 -> match Expr.unfix e2 with
+    | Expr.Access m ->
+      begin match Mutable.unfix m with
+      | Mutable.Var v -> if v = name then e else e2
+      | _ -> if name_of_mut m = name then assert false
+        else e2
+      end
+    | _ -> e2
+    ) e2 ) i ) li
 
 let can_map_name e =
   match Expr.unfix e with
@@ -254,7 +264,7 @@ let rec map_instrs (infos:infos) = function
                                                                                        (* pas d'affectation pour aucune des variables de la déclaration *)
                                                                                             List.forall (no_affectation tl i2) (all_variables e) ->
 	        if can_map_name e2 then
-	          let tl = replace_expression e2 e tl in
+	          let tl = replace_name name e tl in
 	          map_instrs infos tl
 	        else hd :: (map_instrs infos tl)
 	      | _ ->
@@ -283,6 +293,10 @@ let map_instrs instrs =
     let i = Instr.map_bloc (map_instrs infos) @$ Instr.unfix i in
     Instr.fixa a i
   ) instrs in
+  instrs
+
+let map_instrs instrs =
+  let instrs = map_instrs instrs in
   instrs
 
 
