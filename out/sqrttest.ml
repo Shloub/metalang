@@ -1,16 +1,5 @@
 let () =
 begin
-  let b = 4 in
-  Printf.printf "%d " ((int_of_float (sqrt (float_of_int ( b)))));
-  let e = 16 in
-  Printf.printf "%d " ((int_of_float (sqrt (float_of_int ( e)))));
-  let g = 20 in
-  Printf.printf "%d " ((int_of_float (sqrt (float_of_int ( g)))));
-  let i = 1000 in
-  Printf.printf "%d " ((int_of_float (sqrt (float_of_int ( i)))));
-  let k = 500 in
-  Printf.printf "%d " ((int_of_float (sqrt (float_of_int ( k)))));
-  let m = 10 in
-  Printf.printf "%d " ((int_of_float (sqrt (float_of_int ( m)))))
+  Printf.printf "%d %d %d %d %d %d " ((int_of_float (sqrt (float_of_int ( 4))))) ((int_of_float (sqrt (float_of_int ( 16))))) ((int_of_float (sqrt (float_of_int ( 20))))) ((int_of_float (sqrt (float_of_int ( 1000))))) ((int_of_float (sqrt (float_of_int ( 500))))) ((int_of_float (sqrt (float_of_int ( 10)))))
 end
  

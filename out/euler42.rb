@@ -8,8 +8,7 @@ def is_triangular( n )
    
 =end
 
-    d = n * 2
-    a = Math.sqrt(d).to_i
+    a = Math.sqrt(n * 2).to_i
     return (a * (a + 1) == n * 2);
 end
 

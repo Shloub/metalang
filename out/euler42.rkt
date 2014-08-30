@@ -34,9 +34,8 @@
   ;   n = k * (k + 1) / 2
   ;	  n * 2 = k * (k + 1)
   ;   
-  (let ([d (* n 2)])
-  (let ([a (integer-sqrt d)])
-  (eq? (* a (+ a 1)) (* n 2))))
+  (let ([a (integer-sqrt (* n 2))])
+  (eq? (* a (+ a 1)) (* n 2)))
 )
 (define (score _)
   ;toto

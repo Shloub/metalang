@@ -37,8 +37,7 @@ function is_triangular(n){
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-  var d = n * 2;
-  var a = Math.floor(Math.sqrt(d));
+  var a = Math.floor(Math.sqrt(n * 2));
   return a * (a + 1) == n * 2;
 }
 

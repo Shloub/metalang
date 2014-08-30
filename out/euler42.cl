@@ -31,10 +31,9 @@
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    |#
-  (let ((d (* n 2)))
-    (let ((a (isqrt d)))
-      (return-from is_triangular (= (* a (+ a 1)) (* n 2)))
-    ))))
+  (let ((a (isqrt (* n 2))))
+    (return-from is_triangular (= (* a (+ a 1)) (* n 2)))
+  )))
 
 (defun score ()
 (progn

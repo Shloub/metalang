@@ -5,18 +5,7 @@
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int b = 4;
-  printf("%d ", (int)sqrt(b));
-  int e = 16;
-  printf("%d ", (int)sqrt(e));
-  int g = 20;
-  printf("%d ", (int)sqrt(g));
-  int i = 1000;
-  printf("%d ", (int)sqrt(i));
-  int k = 500;
-  printf("%d ", (int)sqrt(k));
-  int m = 10;
-  printf("%d ", (int)sqrt(m));
+  printf("%d %d %d %d %d %d ", (int)sqrt(4), (int)sqrt(16), (int)sqrt(20), (int)sqrt(1000), (int)sqrt(500), (int)sqrt(10));
   [pool drain];
   return 0;
 }

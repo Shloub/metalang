@@ -9,8 +9,7 @@ public class euler42
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    */
-    int d = n * 2;
-    int a = (int)Math.sqrt(d);
+    int a = (int)Math.sqrt(n * 2);
     return a * (a + 1) == n * 2;
   }
   

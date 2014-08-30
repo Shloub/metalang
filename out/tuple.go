@@ -8,11 +8,9 @@ type tuple_int_int struct {
 
 func f(tuple_ * tuple_int_int) * tuple_int_int{
   var c * tuple_int_int = tuple_
-  var a int = (*c).tuple_int_int_field_0
-  var b int = (*c).tuple_int_int_field_1
   var e * tuple_int_int = new (tuple_int_int)
-  (*e).tuple_int_int_field_0=a + 1
-  (*e).tuple_int_int_field_1=b + 1
+  (*e).tuple_int_int_field_0=(*c).tuple_int_int_field_0 + 1
+  (*e).tuple_int_int_field_1=(*c).tuple_int_int_field_1 + 1
   return e
 }
 

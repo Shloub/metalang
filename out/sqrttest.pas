@@ -2,31 +2,18 @@ program sqrttest;
 Uses math;
 
 
-var
-  b : Longint;
-  e : Longint;
-  g : Longint;
-  i : Longint;
-  k : Longint;
-  m : Longint;
 begin
-  b := 4;
-  Write(Floor(Sqrt(b)));
+  Write(Floor(Sqrt(4)));
   Write(' ');
-  e := 16;
-  Write(Floor(Sqrt(e)));
+  Write(Floor(Sqrt(16)));
   Write(' ');
-  g := 20;
-  Write(Floor(Sqrt(g)));
+  Write(Floor(Sqrt(20)));
   Write(' ');
-  i := 1000;
-  Write(Floor(Sqrt(i)));
+  Write(Floor(Sqrt(1000)));
   Write(' ');
-  k := 500;
-  Write(Floor(Sqrt(k)));
+  Write(Floor(Sqrt(500)));
   Write(' ');
-  m := 10;
-  Write(Floor(Sqrt(m)));
+  Write(Floor(Sqrt(10)));
   Write(' ');
 end.
 

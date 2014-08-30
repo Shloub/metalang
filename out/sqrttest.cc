@@ -3,18 +3,7 @@
 #include<cmath>
 
 int main(){
-  int b = 4;
-  std::cout << (int)sqrt(b) << " ";
-  int e = 16;
-  std::cout << (int)sqrt(e) << " ";
-  int g = 20;
-  std::cout << (int)sqrt(g) << " ";
-  int i = 1000;
-  std::cout << (int)sqrt(i) << " ";
-  int k = 500;
-  std::cout << (int)sqrt(k) << " ";
-  int m = 10;
-  std::cout << (int)sqrt(m) << " ";
+  std::cout << (int)sqrt(4) << " " << (int)sqrt(16) << " " << (int)sqrt(20) << " " << (int)sqrt(1000) << " " << (int)sqrt(500) << " " << (int)sqrt(10) << " ";
   return 0;
 }
 

@@ -10,29 +10,6 @@ sub min2{
   }
 }
 
-my $e = 2;
-my $f = 3;
-my $g = 4;
-print(min2(min2($e, $f), $g), " ");
-my $i = 2;
-my $j = 4;
-my $k = 3;
-print(min2(min2($i, $j), $k), " ");
-my $m = 3;
-my $n = 2;
-my $o = 4;
-print(min2(min2($m, $n), $o), " ");
-my $q = 3;
-my $r = 4;
-my $s = 2;
-print(min2(min2($q, $r), $s), " ");
-my $u = 4;
-my $v = 2;
-my $w = 3;
-print(min2(min2($u, $v), $w), " ");
-my $y = 4;
-my $z = 3;
-my $ba = 2;
-print(min2(min2($y, $z), $ba), "\n");
+print(min2(min2(2, 3), 4), " ", min2(min2(2, 4), 3), " ", min2(min2(3, 2), 4), " ", min2(min2(3, 4), 2), " ", min2(min2(4, 2), 3), " ", min2(min2(4, 3), 2), "\n");
 
 

@@ -9,19 +9,15 @@ type
 
 function f(tuple_ : tuple_int_int) : tuple_int_int;
 var
-  a : Longint;
-  b : Longint;
   c : tuple_int_int;
   e : tuple_int_int;
 begin
   c := tuple_;
-  a := c^.tuple_int_int_field_0;
-  b := c^.tuple_int_int_field_1;
   new(e);
-  e^.tuple_int_int_field_0 := a
+  e^.tuple_int_int_field_0 := c^.tuple_int_int_field_0
   +
   1;
-  e^.tuple_int_int_field_1 := b
+  e^.tuple_int_int_field_1 := c^.tuple_int_int_field_1
   +
   1;
   exit(e);

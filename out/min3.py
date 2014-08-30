@@ -1,25 +1,2 @@
-e = 2;
-f = 3;
-g = 4;
-print("%d " % ( min(e, f, g) ), end='')
-i = 2;
-j = 4;
-k = 3;
-print("%d " % ( min(i, j, k) ), end='')
-m = 3;
-n = 2;
-o = 4;
-print("%d " % ( min(m, n, o) ), end='')
-q = 3;
-r = 4;
-s = 2;
-print("%d " % ( min(q, r, s) ), end='')
-u = 4;
-v = 2;
-w = 3;
-print("%d " % ( min(u, v, w) ), end='')
-y = 4;
-z = 3;
-ba = 2;
-print("%d\n" % ( min(y, z, ba) ), end='')
+print("%d %d %d %d %d %d\n" % ( min(2, 3, 4), min(2, 4, 3), min(3, 2, 4), min(3, 4, 2), min(4, 2, 3), min(4, 3, 2) ), end='')
 

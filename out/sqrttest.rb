@@ -1,14 +1,3 @@
 require "scanf.rb"
-b = 4
-printf "%d ", Math.sqrt(b).to_i
-e = 16
-printf "%d ", Math.sqrt(e).to_i
-g = 20
-printf "%d ", Math.sqrt(g).to_i
-i = 1000
-printf "%d ", Math.sqrt(i).to_i
-k = 500
-printf "%d ", Math.sqrt(k).to_i
-m = 10
-printf "%d ", Math.sqrt(m).to_i
+printf "%d %d %d %d %d %d ", Math.sqrt(4).to_i, Math.sqrt(16).to_i, Math.sqrt(20).to_i, Math.sqrt(1000).to_i, Math.sqrt(500).to_i, Math.sqrt(10).to_i
 

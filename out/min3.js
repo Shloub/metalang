@@ -1,26 +1,3 @@
 var util = require("util");
-var e = 2;
-var f = 3;
-var g = 4;
-util.print(Math.min(e, f, g), " ");
-var i = 2;
-var j = 4;
-var k = 3;
-util.print(Math.min(i, j, k), " ");
-var m = 3;
-var n = 2;
-var o = 4;
-util.print(Math.min(m, n, o), " ");
-var q = 3;
-var r = 4;
-var s = 2;
-util.print(Math.min(q, r, s), " ");
-var u = 4;
-var v = 2;
-var w = 3;
-util.print(Math.min(u, v, w), " ");
-var y = 4;
-var z = 3;
-var ba = 2;
-util.print(Math.min(y, z, ba), "\n");
+util.print(Math.min(2, 3, 4), " ", Math.min(2, 4, 3), " ", Math.min(3, 2, 4), " ", Math.min(3, 4, 2), " ", Math.min(4, 2, 3), " ", Math.min(4, 3, 2), "\n");
 

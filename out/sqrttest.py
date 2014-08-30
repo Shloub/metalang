@@ -1,14 +1,3 @@
 import math
-b = 4;
-print("%d " % ( math.floor(math.sqrt(b)) ), end='')
-e = 16;
-print("%d " % ( math.floor(math.sqrt(e)) ), end='')
-g = 20;
-print("%d " % ( math.floor(math.sqrt(g)) ), end='')
-i = 1000;
-print("%d " % ( math.floor(math.sqrt(i)) ), end='')
-k = 500;
-print("%d " % ( math.floor(math.sqrt(k)) ), end='')
-m = 10;
-print("%d " % ( math.floor(math.sqrt(m)) ), end='')
+print("%d %d %d %d %d %d " % ( math.floor(math.sqrt(4)), math.floor(math.sqrt(16)), math.floor(math.sqrt(20)), math.floor(math.sqrt(1000)), math.floor(math.sqrt(500)), math.floor(math.sqrt(10)) ), end='')
 

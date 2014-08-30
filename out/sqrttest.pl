@@ -1,16 +1,5 @@
 #!/usr/bin/perl
 
-my $b = 4;
-print(int(sqrt($b)), " ");
-my $e = 16;
-print(int(sqrt($e)), " ");
-my $g = 20;
-print(int(sqrt($g)), " ");
-my $i = 1000;
-print(int(sqrt($i)), " ");
-my $k = 500;
-print(int(sqrt($k)), " ");
-my $m = 10;
-print(int(sqrt($m)), " ");
+print(int(sqrt(4)), " ", int(sqrt(16)), " ", int(sqrt(20)), " ", int(sqrt(1000)), " ", int(sqrt(500)), " ", int(sqrt(10)), " ");
 
 

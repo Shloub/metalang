@@ -14,55 +14,18 @@ begin
 end;
 
 
-var
-  ba : Longint;
-  e : Longint;
-  f : Longint;
-  g : Longint;
-  i : Longint;
-  j : Longint;
-  k : Longint;
-  m : Longint;
-  n : Longint;
-  o : Longint;
-  q : Longint;
-  r : Longint;
-  s : Longint;
-  u : Longint;
-  v : Longint;
-  w : Longint;
-  y : Longint;
-  z : Longint;
 begin
-  e := 2;
-  f := 3;
-  g := 4;
-  Write(min2(min2(e, f), g));
+  Write(min2(min2(2, 3), 4));
   Write(' ');
-  i := 2;
-  j := 4;
-  k := 3;
-  Write(min2(min2(i, j), k));
+  Write(min2(min2(2, 4), 3));
   Write(' ');
-  m := 3;
-  n := 2;
-  o := 4;
-  Write(min2(min2(m, n), o));
+  Write(min2(min2(3, 2), 4));
   Write(' ');
-  q := 3;
-  r := 4;
-  s := 2;
-  Write(min2(min2(q, r), s));
+  Write(min2(min2(3, 4), 2));
   Write(' ');
-  u := 4;
-  v := 2;
-  w := 3;
-  Write(min2(min2(u, v), w));
+  Write(min2(min2(4, 2), 3));
   Write(' ');
-  y := 4;
-  z := 3;
-  ba := 2;
-  Write(min2(min2(y, z), ba));
+  Write(min2(min2(4, 3), 2));
   Write(''#10'');
 end.
 

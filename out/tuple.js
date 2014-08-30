@@ -2,11 +2,9 @@ var util = require("util");
 
 function f(tuple_){
   var c = tuple_;
-  var a = c.tuple_int_int_field_0;
-  var b = c.tuple_int_int_field_1;
   var e = {
-    tuple_int_int_field_0 : a + 1,
-    tuple_int_int_field_1 : b + 1
+    tuple_int_int_field_0 : c.tuple_int_int_field_0 + 1,
+    tuple_int_int_field_1 : c.tuple_int_int_field_1 + 1
   };
   return e;
 }
