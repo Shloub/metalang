@@ -63,18 +63,22 @@ public class sort
   {
     int len = 2;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); len = -scanner.nextInt();
+      scanner.next("^-");
+      len = -scanner.nextInt();
     }else{
-    len = scanner.nextInt();}
+      len = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[] tab = new int[len];
     for (int i_ = 0 ; i_ < len; i_++)
     {
       int tmp = 0;
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); tmp = -scanner.nextInt();
+        scanner.next("^-");
+        tmp = -scanner.nextInt();
       }else{
-      tmp = scanner.nextInt();}
+        tmp = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i_] = tmp;
     }

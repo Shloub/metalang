@@ -29,17 +29,21 @@ public class prologin_template_charmatrix
   
   public static void main(String args[])
   {
-    int c; if (scanner.hasNext("^-")){
-    scanner.next("^-"); c = scanner.nextInt();
+    int c;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      c = scanner.nextInt();
     } else {
-    c = scanner.nextInt();
+      c = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_x = c;
-    int e; if (scanner.hasNext("^-")){
-    scanner.next("^-"); e = scanner.nextInt();
+    int e;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      e = scanner.nextInt();
     } else {
-    e = scanner.nextInt();
+      e = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_y = e;

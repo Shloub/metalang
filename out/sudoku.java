@@ -9,10 +9,12 @@ public class sudoku
     int[] out_ = new int[9 * 9];
     for (int i = 0 ; i < 9 * 9; i++)
     {
-      int k; if (scanner.hasNext("^-")){
-      scanner.next("^-"); k = scanner.nextInt();
+      int k;
+      if (scanner.hasNext("^-")){
+        scanner.next("^-");
+        k = scanner.nextInt();
       } else {
-      k = scanner.nextInt();
+        k = scanner.nextInt();
       }
       scanner.findWithinHorizon("[\n\r ]*", 1);
       out_[i] = k;

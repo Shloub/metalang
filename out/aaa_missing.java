@@ -22,10 +22,12 @@ public class aaa_missing
   
   public static void main(String args[])
   {
-    int b; if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = scanner.nextInt();
+    int b;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      b = scanner.nextInt();
     } else {
-    b = scanner.nextInt();
+      b = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len = b;
@@ -34,9 +36,11 @@ public class aaa_missing
     for (int e = 0 ; e < len; e++)
     {
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); d[e] = -scanner.nextInt();
+        scanner.next("^-");
+        d[e] = -scanner.nextInt();
       }else{
-      d[e] = scanner.nextInt();}
+        d[e] = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
     int[] tab = d;

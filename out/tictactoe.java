@@ -187,16 +187,20 @@ Renvoie le coup de l'IA
   
   public static move read_move()
   {
-    int x; if (scanner.hasNext("^-")){
-    scanner.next("^-"); x = scanner.nextInt();
+    int x;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      x = scanner.nextInt();
     } else {
-    x = scanner.nextInt();
+      x = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int y; if (scanner.hasNext("^-")){
-    scanner.next("^-"); y = scanner.nextInt();
+    int y;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      y = scanner.nextInt();
     } else {
-    y = scanner.nextInt();
+      y = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     move b = new move();

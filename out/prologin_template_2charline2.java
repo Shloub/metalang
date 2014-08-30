@@ -24,17 +24,21 @@ public class prologin_template_2charline2
   
   public static void main(String args[])
   {
-    int b; if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = scanner.nextInt();
+    int b;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      b = scanner.nextInt();
     } else {
-    b = scanner.nextInt();
+      b = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille1 = b;
-    int d; if (scanner.hasNext("^-")){
-    scanner.next("^-"); d = scanner.nextInt();
+    int d;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      d = scanner.nextInt();
     } else {
-    d = scanner.nextInt();
+      d = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille2 = d;

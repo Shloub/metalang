@@ -46,9 +46,11 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
   {
     int len = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); len = -scanner.nextInt();
+      scanner.next("^-");
+      len = -scanner.nextInt();
     }else{
-    len = scanner.nextInt();}
+      len = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab = new char[len];
     for (int i = 0 ; i < len; i++)

@@ -10,10 +10,12 @@ read int, read char et skip
   
   public static void main(String args[])
   {
-    int b; if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = scanner.nextInt();
+    int b;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      b = scanner.nextInt();
     } else {
-    b = scanner.nextInt();
+      b = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len = b;
@@ -22,9 +24,11 @@ read int, read char et skip
     for (int f = 0 ; f < len; f++)
     {
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); e[f] = -scanner.nextInt();
+        scanner.next("^-");
+        e[f] = -scanner.nextInt();
       }else{
-      e[f] = scanner.nextInt();}
+        e[f] = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
     int[] tab = e;
@@ -37,9 +41,11 @@ read int, read char et skip
     for (int l = 0 ; l < len; l++)
     {
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); k[l] = -scanner.nextInt();
+        scanner.next("^-");
+        k[l] = -scanner.nextInt();
       }else{
-      k[l] = scanner.nextInt();}
+        k[l] = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
     int[] tab2 = k;
@@ -47,10 +53,12 @@ read int, read char et skip
     {
       System.out.printf("%d==>%d ", i_, tab2[i_]);
     }
-    int p; if (scanner.hasNext("^-")){
-    scanner.next("^-"); p = scanner.nextInt();
+    int p;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      p = scanner.nextInt();
     } else {
-    p = scanner.nextInt();
+      p = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int strlen = p;

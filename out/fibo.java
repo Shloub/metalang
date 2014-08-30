@@ -28,19 +28,25 @@ La suite de fibonaci
     int b = 0;
     int i = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); a = -scanner.nextInt();
+      scanner.next("^-");
+      a = -scanner.nextInt();
     }else{
-    a = scanner.nextInt();}
+      a = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = -scanner.nextInt();
+      scanner.next("^-");
+      b = -scanner.nextInt();
     }else{
-    b = scanner.nextInt();}
+      b = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); i = -scanner.nextInt();
+      scanner.next("^-");
+      i = -scanner.nextInt();
     }else{
-    i = scanner.nextInt();}
+      i = scanner.nextInt();
+    }
     System.out.printf("%d", fibo_(a, b, i));
   }
   

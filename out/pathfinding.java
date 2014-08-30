@@ -53,14 +53,18 @@ public class pathfinding
     int x = 0;
     int y = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); x = -scanner.nextInt();
+      scanner.next("^-");
+      x = -scanner.nextInt();
     }else{
-    x = scanner.nextInt();}
+      x = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); y = -scanner.nextInt();
+      scanner.next("^-");
+      y = -scanner.nextInt();
     }else{
-    y = scanner.nextInt();}
+      y = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[][] tab = new char[y][];
     for (int i = 0 ; i < y; i++)

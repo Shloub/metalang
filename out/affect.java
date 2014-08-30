@@ -56,24 +56,32 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     toto t = mktoto(4);
     toto t2 = mktoto(5);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t.bar = -scanner.nextInt();
+      scanner.next("^-");
+      t.bar = -scanner.nextInt();
     }else{
-    t.bar = scanner.nextInt();}
+      t.bar = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t.blah = -scanner.nextInt();
+      scanner.next("^-");
+      t.blah = -scanner.nextInt();
     }else{
-    t.blah = scanner.nextInt();}
+      t.blah = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t2.bar = -scanner.nextInt();
+      scanner.next("^-");
+      t2.bar = -scanner.nextInt();
     }else{
-    t2.bar = scanner.nextInt();}
+      t2.bar = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t2.blah = -scanner.nextInt();
+      scanner.next("^-");
+      t2.blah = -scanner.nextInt();
     }else{
-    t2.blah = scanner.nextInt();}
+      t2.blah = scanner.nextInt();
+    }
     System.out.printf("%d%d", result(t, t2), t.blah);
   }
   

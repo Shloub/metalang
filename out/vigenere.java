@@ -36,10 +36,12 @@ public class vigenere
   
   public static void main(String args[])
   {
-    int taille_cle; if (scanner.hasNext("^-")){
-    scanner.next("^-"); taille_cle = scanner.nextInt();
+    int taille_cle;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      taille_cle = scanner.nextInt();
     } else {
-    taille_cle = scanner.nextInt();
+      taille_cle = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] cle = new char[taille_cle];
@@ -49,10 +51,12 @@ public class vigenere
       cle[index] = out_;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille; if (scanner.hasNext("^-")){
-    scanner.next("^-"); taille = scanner.nextInt();
+    int taille;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      taille = scanner.nextInt();
     } else {
-    taille = scanner.nextInt();
+      taille = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] message = new char[taille];

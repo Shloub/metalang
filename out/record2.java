@@ -24,14 +24,18 @@ public class record2
   {
     toto t = mktoto(4);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t.bar = -scanner.nextInt();
+      scanner.next("^-");
+      t.bar = -scanner.nextInt();
     }else{
-    t.bar = scanner.nextInt();}
+      t.bar = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t.blah = -scanner.nextInt();
+      scanner.next("^-");
+      t.blah = -scanner.nextInt();
     }else{
-    t.blah = scanner.nextInt();}
+      t.blah = scanner.nextInt();
+    }
     System.out.printf("%d", result(t));
   }
   

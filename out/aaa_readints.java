@@ -11,10 +11,12 @@ public class aaa_readints
       int[] b = new int[x];
       for (int c = 0 ; c < x; c++)
       {
-        int d; if (scanner.hasNext("^-")){
-        scanner.next("^-"); d = scanner.nextInt();
+        int d;
+        if (scanner.hasNext("^-")){
+          scanner.next("^-");
+          d = scanner.nextInt();
         } else {
-        d = scanner.nextInt();
+          d = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
         b[c] = d;
@@ -27,10 +29,12 @@ public class aaa_readints
   
   public static void main(String args[])
   {
-    int f; if (scanner.hasNext("^-")){
-    scanner.next("^-"); f = scanner.nextInt();
+    int f;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      f = scanner.nextInt();
     } else {
-    f = scanner.nextInt();
+      f = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len = f;
@@ -39,9 +43,11 @@ public class aaa_readints
     for (int k = 0 ; k < len; k++)
     {
       if (scanner.hasNext("^-")){
-      scanner.next("^-"); h[k] = -scanner.nextInt();
+        scanner.next("^-");
+        h[k] = -scanner.nextInt();
       }else{
-      h[k] = scanner.nextInt();}
+        h[k] = scanner.nextInt();
+      }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
     int[] tab1 = h;
@@ -50,9 +56,11 @@ public class aaa_readints
       System.out.printf("%d=>%d\n", i, tab1[i]);
     }
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); len = -scanner.nextInt();
+      scanner.next("^-");
+      len = -scanner.nextInt();
     }else{
-    len = scanner.nextInt();}
+      len = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int[][] tab2 = read_int_matrix(len, len - 1);
     for (int i = 0 ; i <= len - 2; i ++)

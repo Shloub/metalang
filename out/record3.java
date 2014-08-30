@@ -31,14 +31,18 @@ public class record3
     for (int i = 0 ; i < 4; i++)
       t[i] = mktoto(i);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t[0].bar = -scanner.nextInt();
+      scanner.next("^-");
+      t[0].bar = -scanner.nextInt();
     }else{
-    t[0].bar = scanner.nextInt();}
+      t[0].bar = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); t[1].blah = -scanner.nextInt();
+      scanner.next("^-");
+      t[1].blah = -scanner.nextInt();
     }else{
-    t[1].blah = scanner.nextInt();}
+      t[1].blah = scanner.nextInt();
+    }
     int titi = result(t, 4);
     System.out.printf("%d%d", titi, t[2].blah);
   }

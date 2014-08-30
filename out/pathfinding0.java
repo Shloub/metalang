@@ -62,17 +62,21 @@ public class pathfinding0
   
   public static void main(String args[])
   {
-    int o; if (scanner.hasNext("^-")){
-    scanner.next("^-"); o = scanner.nextInt();
+    int o;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      o = scanner.nextInt();
     } else {
-    o = scanner.nextInt();
+      o = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int x = o;
-    int q; if (scanner.hasNext("^-")){
-    scanner.next("^-"); q = scanner.nextInt();
+    int q;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      q = scanner.nextInt();
     } else {
-    q = scanner.nextInt();
+      q = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int y = q;

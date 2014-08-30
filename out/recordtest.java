@@ -11,14 +11,18 @@ public class recordtest
     param.foo = 0;
     param.bar = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); param.bar = -scanner.nextInt();
+      scanner.next("^-");
+      param.bar = -scanner.nextInt();
     }else{
-    param.bar = scanner.nextInt();}
+      param.bar = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); param.foo = -scanner.nextInt();
+      scanner.next("^-");
+      param.foo = -scanner.nextInt();
     }else{
-    param.foo = scanner.nextInt();}
+      param.foo = scanner.nextInt();
+    }
     System.out.printf("%d", param.bar + param.foo * param.bar);
   }
   

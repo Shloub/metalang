@@ -11,10 +11,12 @@ public class prologin_template_intmatrix
       int[] b = new int[x];
       for (int c = 0 ; c < x; c++)
       {
-        int d; if (scanner.hasNext("^-")){
-        scanner.next("^-"); d = scanner.nextInt();
+        int d;
+        if (scanner.hasNext("^-")){
+          scanner.next("^-");
+          d = scanner.nextInt();
         } else {
-        d = scanner.nextInt();
+          d = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
         b[c] = d;
@@ -36,17 +38,21 @@ public class prologin_template_intmatrix
   
   public static void main(String args[])
   {
-    int f; if (scanner.hasNext("^-")){
-    scanner.next("^-"); f = scanner.nextInt();
+    int f;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      f = scanner.nextInt();
     } else {
-    f = scanner.nextInt();
+      f = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_x = f;
-    int h; if (scanner.hasNext("^-")){
-    scanner.next("^-"); h = scanner.nextInt();
+    int h;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      h = scanner.nextInt();
     } else {
-    h = scanner.nextInt();
+      h = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_y = h;

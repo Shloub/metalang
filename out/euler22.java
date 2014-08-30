@@ -6,10 +6,12 @@ public class euler22
   public static int score()
   {
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int len; if (scanner.hasNext("^-")){
-    scanner.next("^-"); len = scanner.nextInt();
+    int len;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      len = scanner.nextInt();
     } else {
-    len = scanner.nextInt();
+      len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int sum = 0;
@@ -26,10 +28,12 @@ public class euler22
   public static void main(String args[])
   {
     int sum = 0;
-    int n; if (scanner.hasNext("^-")){
-    scanner.next("^-"); n = scanner.nextInt();
+    int n;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      n = scanner.nextInt();
     } else {
-    n = scanner.nextInt();
+      n = scanner.nextInt();
     }
     for (int i = 1 ; i <= n; i ++)
       sum += i * score();

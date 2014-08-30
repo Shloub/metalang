@@ -17,9 +17,11 @@ public class countchar
   {
     int len = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); len = -scanner.nextInt();
+      scanner.next("^-");
+      len = -scanner.nextInt();
     }else{
-    len = scanner.nextInt();}
+      len = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char tofind = '\000';
     tofind = scanner.findWithinHorizon(".", 1).charAt(0);

@@ -9,10 +9,12 @@ Ce test effectue un rot13 sur une chaine lue en entrée
   
   public static void main(String args[])
   {
-    int strlen; if (scanner.hasNext("^-")){
-    scanner.next("^-"); strlen = scanner.nextInt();
+    int strlen;
+    if (scanner.hasNext("^-")){
+      scanner.next("^-");
+      strlen = scanner.nextInt();
     } else {
-    strlen = scanner.nextInt();
+      strlen = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab4 = new char[strlen];

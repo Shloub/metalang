@@ -22,14 +22,18 @@ public class dichoexp
     int a = 0;
     int b = 0;
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); a = -scanner.nextInt();
+      scanner.next("^-");
+      a = -scanner.nextInt();
     }else{
-    a = scanner.nextInt();}
+      a = scanner.nextInt();
+    }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     if (scanner.hasNext("^-")){
-    scanner.next("^-"); b = -scanner.nextInt();
+      scanner.next("^-");
+      b = -scanner.nextInt();
     }else{
-    b = scanner.nextInt();}
+      b = scanner.nextInt();
+    }
     System.out.printf("%d", exp_(a, b));
   }
   
