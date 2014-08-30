@@ -20,37 +20,40 @@ class goPrinter = object(self)
   val mutable reader = false
   method prog f prog =
     let need li = List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
-      | Instr.Read _ -> true
       | Instr.Print _ -> true
-      | Instr.DeclRead _ -> true
       | _ -> acc) false) li in
     let need_prog_item = function
       | Prog.DeclarFun (var, t, li, instrs, _) ->
         need instrs
       | _ -> false
     in
-    let need = (match prog.Prog.main with
+    let need_print = (match prog.Prog.main with
       | Some s -> need s
       | None -> false) || List.exists need_prog_item prog.Prog.funs
     in
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
     reader <- need;
     Format.fprintf f
-      "package main@\n%a%a%a%a"
+      "package main@\n%a%a%a%a%a%a"
+      (fun f () -> if need || need_print then Format.fprintf f "import \"fmt\"@\n") ()
       (fun f () ->
         if Tags.is_taged "use_math"
-        then Format.fprintf f "import \"math\";@\n"
+        then Format.fprintf f "import \"math\"@\n"
       ) ()
-      (fun f () -> if need then Format.fprintf f "import \"fmt\"@\nimport \"os\"@\nimport \"bufio\"@\nvar reader *bufio.Reader@\n
+      (fun f () -> if need then Format.fprintf f "import \"os\"@\nimport \"bufio\"@\nvar reader *bufio.Reader@\n") ()
+(fun f () -> if need_stdinsep then Format.fprintf f "
 func skip() {
   var c byte
-  fmt.Fscanf(reader, \"%%c\", &c);
+  fmt.Fscanf(reader, \"%%c\", &c)
   if c == '\\n' || c == ' ' {
     skip()
   } else {
     reader.UnreadByte()
   }
 }
-
 ") ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -63,7 +66,7 @@ func skip() {
     (if reader then
         Format.fprintf f "func main() {@\n  reader = bufio.NewReader(os.Stdin)@\n  @[<v>%a@]@\n}@\n"
      else
-        Format.fprintf f "func main() {@\n@[<v>%a@]@\n}@\n")
+        Format.fprintf f "func main() {@\n  @[<v>%a@]@\n}@\n")
       self#instructions main
 
   method declaration f var t e =
@@ -102,7 +105,7 @@ func skip() {
   method def_fields name f li =
     print_list
       (fun f (fieldname, expr) ->
-        Format.fprintf f "@[<h>(*%a).%a=%a;@]"
+        Format.fprintf f "@[<h>(*%a).%a=%a@]"
           self#binding name
           self#field fieldname
           self#expr expr
@@ -203,7 +206,7 @@ func skip() {
         self#instructions elsecase
 
   method whileloop f expr li =
-    Format.fprintf f "@[<h>for %a@]%a" self#expr expr self#bloc li
+    Format.fprintf f "@[<h>for %a@]{@\n  @[<v>%a@]@\n}" self#expr expr self#instructions li
 
   method decl_type f name t =
     match (Type.unfix t) with
