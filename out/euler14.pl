@@ -19,17 +19,13 @@ sub find{
   $m) = @_;
   if ($n eq 1) {
   return 1;
-  }else{
-  if ($n >= 1000000) {
+  }elsif ($n >= 1000000) {
   return 1 + find(next_($n), $m);
-  }else{
-  if ($m->[$n] ne 0) {
+  }elsif ($m->[$n] ne 0) {
   return $m->[$n];
   }else{
   $m->[$n] = 1 + find(next_($n), $m);
   return $m->[$n];
-  }
-  }
   }
 }
 
@@ -46,8 +42,6 @@ foreach my $i (1 .. 999) {
   if ($n2 > $max_) {
   $max_ = $n2;
   $maxi = $i;
-  }else{
-  
   }
   }
 print($max_, "\n", $maxi, "\n");

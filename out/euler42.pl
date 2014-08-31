@@ -59,8 +59,6 @@ sub score{
 foreach my $i (1 .. 55) {
   if (is_triangular($i)) {
   print($i, " ");
-  }else{
-  
   }
   }
 print("\n");

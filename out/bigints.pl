@@ -57,8 +57,6 @@ sub print_bigint{
   my($a) = @_;
   if (!$a->{"bigint_sign"}) {
   print('-');
-  }else{
-  
   }
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     print($a->{"bigint_chiffres"}->[$a->{"bigint_len"}
@@ -76,19 +74,15 @@ sub bigint_eq{
   
   if ($a->{"bigint_sign"} ne $b->{"bigint_sign"}) {
   return 0;
-  }else{
-  if ($a->{"bigint_len"} ne $b->{"bigint_len"}) {
+  }elsif ($a->{"bigint_len"} ne $b->{"bigint_len"}) {
   return 0;
   }else{
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     if ($a->{"bigint_chiffres"}->[$i] ne $b->{"bigint_chiffres"}->[$i]) {
     return 0;
-    }else{
-    
     }
     }
   return 1;
-  }
   }
 }
 
@@ -99,32 +93,24 @@ sub bigint_gt{
   
   if ($a->{"bigint_sign"} && !$b->{"bigint_sign"}) {
   return 1;
-  }else{
-  if (!$a->{"bigint_sign"} && $b->{"bigint_sign"}) {
+  }elsif (!$a->{"bigint_sign"} && $b->{"bigint_sign"}) {
   return 0;
   }else{
   if ($a->{"bigint_len"} > $b->{"bigint_len"}) {
   return $a->{"bigint_sign"};
-  }else{
-  if ($a->{"bigint_len"} < $b->{"bigint_len"}) {
+  }elsif ($a->{"bigint_len"} < $b->{"bigint_len"}) {
   return !$a->{"bigint_sign"};
   }else{
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     my $j = $a->{"bigint_len"} - 1 - $i;
     if ($a->{"bigint_chiffres"}->[$j] > $b->{"bigint_chiffres"}->[$j]) {
     return $a->{"bigint_sign"};
-    }else{
-    if ($a->{"bigint_chiffres"}->[$j] < $b->{"bigint_chiffres"}->[$j]) {
+    }elsif ($a->{"bigint_chiffres"}->[$j] < $b->{"bigint_chiffres"}->[$j]) {
     return !$a->{"bigint_sign"};
-    }else{
-    
     }
     }
-    }
-  }
   }
   return 1;
-  }
   }
 }
 
@@ -146,13 +132,9 @@ sub add_bigint_positif{
     my $tmp = $retenue;
     if ($i < $a->{"bigint_len"}) {
     $tmp = $tmp + $a->{"bigint_chiffres"}->[$i];
-    }else{
-    
     }
     if ($i < $b->{"bigint_len"}) {
     $tmp = $tmp + $b->{"bigint_chiffres"}->[$i];
-    }else{
-    
     }
     $retenue = int(($tmp) / (10));
     $chiffres->[$i] = remainder($tmp, 10);
@@ -180,8 +162,6 @@ sub sub_bigint_positif{
     my $tmp = $retenue + $a->{"bigint_chiffres"}->[$i];
     if ($i < $b->{"bigint_len"}) {
     $tmp = $tmp - $b->{"bigint_chiffres"}->[$i];
-    }else{
-    
     }
     if ($tmp < 0) {
     $tmp = $tmp + 10;
@@ -216,8 +196,7 @@ sub add_bigint{
   }else{
   return neg_bigint(add_bigint_positif($a, $b));
   }
-  }else{
-  if ($a->{"bigint_sign"}) {
+  }elsif ($a->{"bigint_sign"}) {
   # a positif, b negatif 
   
   if (bigint_gt($a, neg_bigint($b))) {
@@ -232,7 +211,6 @@ sub add_bigint{
   return neg_bigint(sub_bigint_positif($a, $b));
   }else{
   return sub_bigint_positif($b, $a);
-  }
   }
   }
 }
@@ -269,8 +247,6 @@ sub mul_bigint_cp{
   foreach my $l (0 .. 2) {
     if ($len ne 0 && $chiffres->[$len - 1] eq 0) {
     $len = $len - 1;
-    }else{
-    
     }
     }
   return {"bigint_sign" => $a->{"bigint_sign"} eq $b->{"bigint_sign"},
@@ -312,16 +288,10 @@ sub mul_bigint{
   $bb) = @_;
   if ($aa->{"bigint_len"} eq 0) {
   return $aa;
-  }else{
-  if ($bb->{"bigint_len"} eq 0) {
+  }elsif ($bb->{"bigint_len"} eq 0) {
   return $bb;
-  }else{
-  if ($aa->{"bigint_len"} < 3 || $bb->{"bigint_len"} < 3) {
+  }elsif ($aa->{"bigint_len"} < 3 || $bb->{"bigint_len"} < 3) {
   return mul_bigint_cp($aa, $bb);
-  }else{
-  
-  }
-  }
   }
   # Algorithme de Karatsuba 
   
@@ -362,8 +332,6 @@ sub bigint_of_int{
   my $size = log10($i);
   if ($i eq 0) {
   $size = 0;
-  }else{
-  
   }
   my $t = [];
   foreach my $j (0 .. $size - 1) {
@@ -414,12 +382,10 @@ sub bigint_exp{
   $b) = @_;
   if ($b eq 1) {
   return $a;
-  }else{
-  if ((remainder($b, 2)) eq 0) {
+  }elsif ((remainder($b, 2)) eq 0) {
   return bigint_exp(mul_bigint($a, $a), int(($b) / (2)));
   }else{
   return mul_bigint($a, bigint_exp($a, $b - 1));
-  }
   }
 }
 
@@ -429,12 +395,10 @@ sub bigint_exp_10chiffres{
   $a = bigint_premiers_chiffres($a, 10);
   if ($b eq 1) {
   return $a;
-  }else{
-  if ((remainder($b, 2)) eq 0) {
+  }elsif ((remainder($b, 2)) eq 0) {
   return bigint_exp_10chiffres(mul_bigint($a, $a), int(($b) / (2)));
   }else{
   return mul_bigint($a, bigint_exp_10chiffres($a, $b - 1));
-  }
   }
 }
 
@@ -503,15 +467,11 @@ sub euler29{
       if ($found) {
       if (bigint_lt($a_bigint->[$i], $min_)) {
       $min_ = $a_bigint->[$i];
-      }else{
-      
       }
       }else{
       $min_ = $a_bigint->[$i];
       $found = 1;
       }
-      }else{
-      
       }
       }
     if ($found) {
@@ -520,12 +480,8 @@ sub euler29{
       if (bigint_eq($a_bigint->[$l], $min_) && $b->[$l] <= $maxB) {
       $b->[$l] = $b->[$l] + 1;
       $a_bigint->[$l] = mul_bigint($a_bigint->[$l], $a0_bigint->[$l]);
-      }else{
-      
       }
       }
-    }else{
-    
     }
   }
   return $n;

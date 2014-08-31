@@ -18,11 +18,7 @@ sub eratostene{
       $t->[$j] = 0;
       $j = $j + $i;
     }
-    }else{
-    
     }
-    }else{
-    
     }
     }
   return $sum;

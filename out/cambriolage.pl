@@ -39,13 +39,9 @@ sub nbPassePartout{
   foreach my $i (0 .. $m - 1) {
     if ($serrures->[$i]->[0] eq -1 && $serrures->[$i]->[1] > $max_ancient) {
     $max_ancient = $serrures->[$i]->[1];
-    }else{
-    
     }
     if ($serrures->[$i]->[0] eq 1 && $serrures->[$i]->[1] > $max_recent) {
     $max_recent = $serrures->[$i]->[1];
-    }else{
-    
     }
     }
   my $max_ancient_pp = 0;
@@ -54,8 +50,6 @@ sub nbPassePartout{
     my $pp = $passepartout->[$i];
     if ($pp->[0] >= $max_ancient && $pp->[1] >= $max_recent) {
     return 1;
-    }else{
-    
     }
     $max_ancient_pp = max2($max_ancient_pp, $pp->[0]);
     $max_recent_pp = max2($max_recent_pp, $pp->[1]);

@@ -18,8 +18,6 @@ sub eratostene{
       $t->[$j] = 0;
       $j = $j + $i;
     }
-    }else{
-    
     }
     }
   return $n;
@@ -39,8 +37,6 @@ sub fillPrimesFactors{
     }
     if ($n eq 1) {
     return $primes->[$i];
-    }else{
-    
     }
     }
   return $n;
@@ -63,8 +59,7 @@ sub sumdivaux{
   $i) = @_;
   if ($i > $n) {
   return 1;
-  }else{
-  if ($t->[$i] eq 0) {
+  }elsif ($t->[$i] eq 0) {
   return sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
   }else{
   my $o = sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
@@ -75,7 +70,6 @@ sub sumdivaux{
     $p = $p * $i;
     }
   return ($out_ + 1) * $o;
-  }
   }
 }
 
@@ -106,8 +100,6 @@ foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
   $primes->[$l] = $k;
   $l = $l + 1;
-  }else{
-  
   }
   }
 my $n = 100;
@@ -126,24 +118,18 @@ foreach my $r (2 .. $n) {
   my $other = sumdiv($nprimes, $primes, $r) - $r;
   if ($other > $r) {
   $abondant->[$r] = 1;
-  }else{
-  
   }
   }
 foreach my $i (1 .. $n) {
   foreach my $j (1 .. $n) {
     if ($abondant->[$i] && $abondant->[$j] && $i + $j <= $n) {
     $summable->[$i + $j] = 1;
-    }else{
-    
     }
     }
   }
 foreach my $o (1 .. $n) {
   if (!$summable->[$o]) {
   $sum = $sum + $o;
-  }else{
-  
   }
   }
 print("\n", $sum, "\n");

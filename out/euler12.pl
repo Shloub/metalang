@@ -28,8 +28,6 @@ sub eratostene{
       $t->[$j] = 0;
       $j = $j + $i;
     }
-    }else{
-    
     }
     }
   return $n;
@@ -49,8 +47,6 @@ sub fillPrimesFactors{
     }
     if ($n eq 1) {
     return $primes->[$i];
-    }else{
-    
     }
     }
   return $n;
@@ -73,8 +69,6 @@ sub find{
     if ($era->[$k] eq $k) {
     $primes->[$l] = $k;
     $l = $l + 1;
-    }else{
-    
     }
     }
   foreach my $n (1 .. 10000) {
@@ -90,14 +84,10 @@ sub find{
       $ndivs = $ndivs * 1
       +
       $primesFactors->[$i];
-      }else{
-      
       }
       }
     if ($ndivs > $ndiv2) {
     return int(($n * ($n + 1)) / (2));
-    }else{
-    
     }
     # print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
     

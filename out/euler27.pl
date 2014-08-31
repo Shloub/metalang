@@ -18,8 +18,6 @@ sub eratostene{
       $t->[$j] = 0;
       $j = $j + $i;
     }
-    }else{
-    
     }
     }
   return $n;
@@ -32,15 +30,11 @@ sub isPrime{
   my $i = 0;
   if ($n < 0) {
   $n = -$n;
-  }else{
-  
   }
   while ($primes->[$i] * $primes->[$i] < $n)
   {
     if ((remainder($n, $primes->[$i])) eq 0) {
     return 0;
-    }else{
-    
     }
     $i = $i + 1;
   }
@@ -56,8 +50,6 @@ sub test{
     my $j = $n * $n + $a * $n + $b;
     if (!isPrime($j, $primes, $len)) {
     return $n;
-    }else{
-    
     }
     }
   return 200;
@@ -80,8 +72,6 @@ foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
   $primes->[$l] = $k;
   $l = $l + 1;
-  }else{
-  
   }
   }
 print($l, " == ", $nprimes, "\n");
@@ -97,20 +87,14 @@ foreach my $b (3 .. 999) {
     $result = $a * $b;
     $ma = $a;
     $mb = $b;
-    }else{
-    
     }
     if ($n2 > $max_) {
     $max_ = $n2;
     $result = -$a * $b;
     $ma = $a;
     $mb = -$b;
-    }else{
-    
     }
     }
-  }else{
-  
   }
   }
 print($ma, " ", $mb, "\n", $max_, "\n", $result, "\n");

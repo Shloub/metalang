@@ -12,8 +12,6 @@ sub divisible{
   foreach my $i (0 .. $size - 1) {
     if ((remainder($n, $t->[$i])) eq 0) {
     return 1;
-    }else{
-    
     }
     }
   return 0;

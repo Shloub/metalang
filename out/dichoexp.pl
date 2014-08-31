@@ -29,8 +29,6 @@ sub exp_{
   $b) = @_;
   if ($b eq 0) {
   return 1;
-  }else{
-  
   }
   if ((remainder($b, 2)) eq 0) {
   my $o = exp_($a, int(($b) / (2)));

@@ -50,11 +50,7 @@ foreach my $i (1 .. 9) {
       print($a, "/", $b, "\n");
       $top = $top * $a;
       $bottom = $bottom * $b;
-      }else{
-      
       }
-      }else{
-      
       }
       }
     }

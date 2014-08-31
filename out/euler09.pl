@@ -11,8 +11,6 @@ foreach my $a (1 .. 1000) {
     my $cc = $c * $c;
     if ($cc eq $a2b2 && $c > $a) {
     print($a, "\n", $b, "\n", $c, "\n", $a * $b * $c, "\n");
-    }else{
-    
     }
     }
   }

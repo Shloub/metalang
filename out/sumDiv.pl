@@ -37,8 +37,6 @@ sub foo2{
 sub foo3{
   if (1 eq 1) {
   
-  }else{
-  
   }
 }
 

@@ -28,23 +28,15 @@ sub devine_{
   foreach my $i (2 .. $len - 1) {
     if ($tab->[$i] > $max_ || $tab->[$i] < $min_) {
     return 0;
-    }else{
-    
     }
     if ($tab->[$i] < $nombre) {
     $min_ = $tab->[$i];
-    }else{
-    
     }
     if ($tab->[$i] > $nombre) {
     $max_ = $tab->[$i];
-    }else{
-    
     }
     if ($tab->[$i] eq $nombre && $len ne $i + 1) {
     return 0;
-    }else{
-    
     }
     }
   return 1;

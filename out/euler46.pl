@@ -16,11 +16,7 @@ sub eratostene{
       $t->[$j] = 0;
       $j = $j + $i;
     }
-    }else{
-    
     }
-    }else{
-    
     }
     }
   return $n;
@@ -41,8 +37,6 @@ foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
   $primes->[$l] = $k;
   $l = $l + 1;
-  }else{
-  
   }
   }
 print($l, " == ", $nprimes, "\n");
@@ -55,8 +49,6 @@ foreach my $i (0 .. $nprimes - 1) {
     my $n = $primes->[$i] + 2 * $j * $j;
     if ($n < $maximumprimes) {
     $canbe->[$n] = 1;
-    }else{
-    
     }
     }
   }
@@ -64,8 +56,6 @@ foreach my $m (1 .. $maximumprimes) {
   my $m2 = $m * 2 + 1;
   if ($m2 < $maximumprimes && !$canbe->[$m2]) {
   print($m2, "\n");
-  }else{
-  
   }
   }
 

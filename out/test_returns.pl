@@ -13,30 +13,20 @@ sub is_pair{
   if ($i eq 0) {
   $j = 4;
   return 1;
-  }else{
-  
   }
   $j = 3;
   if ($i eq 2) {
   $j = 4;
   return 1;
-  }else{
-  
   }
   $j = 5;
-  }else{
-  
   }
   $j = 6;
   if ($i < 20) {
   if ($i eq 22) {
   $j = 0;
-  }else{
-  
   }
   $j = 8;
-  }else{
-  
   }
   return (remainder($i, 2)) eq 0;
 }

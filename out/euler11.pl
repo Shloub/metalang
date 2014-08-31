@@ -54,12 +54,10 @@ sub find{
   $dy) = @_;
   if ($x < 0 || $x eq 20 || $y < 0 || $y eq 20) {
   return -1;
-  }else{
-  if ($n eq 0) {
+  }elsif ($n eq 0) {
   return 1;
   }else{
   return $m->[$y]->[$x] * find($n - 1, $m, $x + $dx, $y + $dy, $dx, $dy);
-  }
   }
 }
 
@@ -67,32 +65,20 @@ my $directions = [];
 foreach my $i (0 .. 8 - 1) {
   if ($i eq 0) {
   $directions->[$i] = [0, 1];
-  }else{
-  if ($i eq 1) {
+  }elsif ($i eq 1) {
   $directions->[$i] = [1, 0];
-  }else{
-  if ($i eq 2) {
+  }elsif ($i eq 2) {
   $directions->[$i] = [0, -1];
-  }else{
-  if ($i eq 3) {
+  }elsif ($i eq 3) {
   $directions->[$i] = [-1, 0];
-  }else{
-  if ($i eq 4) {
+  }elsif ($i eq 4) {
   $directions->[$i] = [1, 1];
-  }else{
-  if ($i eq 5) {
+  }elsif ($i eq 5) {
   $directions->[$i] = [1, -1];
-  }else{
-  if ($i eq 6) {
+  }elsif ($i eq 6) {
   $directions->[$i] = [-1, 1];
   }else{
   $directions->[$i] = [-1, -1];
-  }
-  }
-  }
-  }
-  }
-  }
   }
   }
 my $max_ = 0;

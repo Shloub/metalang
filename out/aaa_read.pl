@@ -66,8 +66,6 @@ foreach my $toto (0 .. $strlen - 1) {
   print($tmpc, ":", $c, " ");
   if ($tmpc ne ' ') {
   $c = remainder(($c - ord('a')) + 13, 26) + ord('a');
-  }else{
-  
   }
   $tab4->[$toto] = chr($c);
   }

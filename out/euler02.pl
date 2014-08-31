@@ -12,8 +12,6 @@ while ($a < 4000000)
 {
   if ((remainder($a, 2)) eq 0) {
   $sum = $sum + $a;
-  }else{
-  
   }
   my $c = $a;
   $a = $b;

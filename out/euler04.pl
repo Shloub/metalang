@@ -54,8 +54,6 @@ foreach my $a (0 .. 9) {
             my $mul = $a * $d + 10 * ($a * $e + $b * $d) + 100 * ($a * $f + $b * $e + $c * $d) + 1000 * ($c * $e + $b * $f) + 10000 * $c * $f;
             if (chiffre(0, $mul) eq chiffre(5, $mul) && chiffre(1, $mul) eq chiffre(4, $mul) && chiffre(2, $mul) eq chiffre(3, $mul)) {
             $m = max2($mul, $m);
-            }else{
-            
             }
             }
           }

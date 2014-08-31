@@ -53,8 +53,6 @@ sub test{
     $i = readint();
     if ($i ne 0) {
     $list = cons($list, $i);
-    }else{
-    
     }
   }
 }

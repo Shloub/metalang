@@ -35,12 +35,10 @@ sub position_alphabet{
   my $i = ord($c);
   if ($i <= ord('Z') && $i >= ord('A')) {
   return $i - ord('A');
-  }else{
-  if ($i <= ord('z') && $i >= ord('a')) {
+  }elsif ($i <= ord('z') && $i >= ord('a')) {
   return $i - ord('a');
   }else{
   return -1;
-  }
   }
 }
 
@@ -60,8 +58,6 @@ sub crypte{
     my $addon = position_alphabet($cle->[remainder($i, $taille_cle)]);
     my $new_ = remainder($addon + $lettre, 26);
     $message->[$i] = of_position_alphabet($new_);
-    }else{
-    
     }
     }
 }

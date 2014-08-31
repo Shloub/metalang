@@ -28,13 +28,9 @@ sub summax{
     $current = $current + $lst->[$i];
     if ($current < 0) {
     $current = 0;
-    }else{
-    
     }
     if ($max_ < $current) {
     $max_ = $current;
-    }else{
-    
     }
     }
   return $max_;

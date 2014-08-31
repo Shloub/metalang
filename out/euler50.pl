@@ -26,11 +26,7 @@ sub eratostene{
       $t->[$j] = 0;
       $j = $j + $i;
     }
-    }else{
-    
     }
-    }else{
-    
     }
     }
   return $n;
@@ -51,8 +47,6 @@ foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
   $primes->[$l] = $k;
   $l = $l + 1;
-  }else{
-  
   }
   }
 print($l, " == ", $nprimes, "\n");
@@ -76,14 +70,10 @@ while ($process)
     if ($era->[$sum->[$i]] eq $sum->[$i]) {
     $maxl = $len;
     $resp = $sum->[$i];
-    }else{
-    
     }
     }else{
     $stop = min2($stop, $i);
     }
-    }else{
-    
     }
     }
   $len = $len + 1;

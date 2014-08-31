@@ -38,8 +38,6 @@ sub bubblesort{
       my $tmp = $tab->[$i];
       $tab->[$i] = $tab->[$j];
       $tab->[$j] = $tmp;
-      }else{
-      
       }
       }
     }
@@ -80,8 +78,6 @@ sub qsort_{
   }
   qsort_($tab, $len, $i0, $i - 1);
   qsort_($tab, $len, $i + 1, $j0);
-  }else{
-  
   }
 }
 

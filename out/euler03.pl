@@ -19,16 +19,12 @@ while ($a ne 1)
     $b0 = $b;
     $b = $a;
     $found = 1;
-    }else{
-    
     }
     $b = $b + 1;
   }
   if (!$found) {
   print($a, "\n");
   $a = 1;
-  }else{
-  
   }
 }
 

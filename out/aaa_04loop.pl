@@ -16,8 +16,6 @@ sub h{
   {
     if ((remainder($i, $j)) eq 5) {
     return 1;
-    }else{
-    
     }
     $j = $j + 1;
   }

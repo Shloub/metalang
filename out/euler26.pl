@@ -17,8 +17,6 @@ sub periode{
     foreach my $i (0 .. $len - 1) {
       if ($restes->[$i] eq $reste) {
       return $len - $i;
-      }else{
-      
       }
       }
     $restes->[$len] = $reste;
@@ -39,8 +37,6 @@ foreach my $i (1 .. 1000) {
   if ($p > $m) {
   $mi = $i;
   $m = $p;
-  }else{
-  
   }
   }
 print($mi, "\n", $m, "\n");

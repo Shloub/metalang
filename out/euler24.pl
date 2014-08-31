@@ -34,20 +34,14 @@ sub show{
       if ($nchiffre eq 0) {
       print($l);
       $pris->[$l] = 1;
-      }else{
-      
       }
       $nchiffre = $nchiffre - 1;
-      }else{
-      
       }
       }
     }
   foreach my $m (0 .. $lim - 1) {
     if (!$pris->[$m]) {
     print($m);
-    }else{
-    
     }
     }
   print("\n");

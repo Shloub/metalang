@@ -60,14 +60,11 @@ sub pathfind_aux{
   $posY) = @_;
   if ($posX eq $x - 1 && $posY eq $y - 1) {
   return 0;
-  }else{
-  if ($posX < 0 || $posY < 0 || $posX >= $x || $posY >= $y) {
+  }elsif ($posX < 0 || $posY < 0 || $posX >= $x || $posY >= $y) {
   return $x * $y * 10;
-  }else{
-  if ($tab->[$posY]->[$posX] eq '#') {
+  }elsif ($tab->[$posY]->[$posX] eq '#') {
   return $x * $y * 10;
-  }else{
-  if ($cache->[$posY]->[$posX] ne -1) {
+  }elsif ($cache->[$posY]->[$posX] ne -1) {
   return $cache->[$posY]->[$posX];
   }else{
   $cache->[$posY]->[$posX] = $x * $y * 10;
@@ -81,9 +78,6 @@ sub pathfind_aux{
   my $out_ = 1 + $m;
   $cache->[$posY]->[$posX] = $out_;
   return $out_;
-  }
-  }
-  }
   }
 }
 

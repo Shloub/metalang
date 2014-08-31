@@ -43,8 +43,6 @@ foreach my $k (1 .. 995) {
   $i = $i * $f;
   if ($nskipdiv < 0) {
   $i = int(($i) / ($last->[$index]));
-  }else{
-  
   }
   $nskipdiv = $nskipdiv - 1;
   }

@@ -26,8 +26,7 @@ sub pathfind_aux{
   $pos) = @_;
   if ($pos >= $len - 1) {
   return 0;
-  }else{
-  if ($cache->[$pos] ne -1) {
+  }elsif ($cache->[$pos] ne -1) {
   return $cache->[$pos];
   }else{
   $cache->[$pos] = $len * 2;
@@ -41,7 +40,6 @@ sub pathfind_aux{
   }
   $cache->[$pos] = $out_;
   return $out_;
-  }
   }
 }
 

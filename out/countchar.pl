@@ -33,8 +33,6 @@ sub nth{
   foreach my $i (0 .. $len - 1) {
     if ($tab->[$i] eq $tofind) {
     $out_ = $out_ + 1;
-    }else{
-    
     }
     }
   return $out_;

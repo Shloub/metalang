@@ -47,8 +47,7 @@ sub npi_{
   {
     if ($str->[$ptrStr] eq ' ') {
     $ptrStr = $ptrStr + 1;
-    }else{
-    if (is_number($str->[$ptrStr])) {
+    }elsif (is_number($str->[$ptrStr])) {
     my $num = 0;
     while ($str->[$ptrStr] ne ' ')
     {
@@ -57,15 +56,10 @@ sub npi_{
     }
     $stack->[$ptrStack] = $num;
     $ptrStack = $ptrStack + 1;
-    }else{
-    if ($str->[$ptrStr] eq '+') {
+    }elsif ($str->[$ptrStr] eq '+') {
     $stack->[$ptrStack - 2] = $stack->[$ptrStack - 2] + $stack->[$ptrStack - 1];
     $ptrStack = $ptrStack - 1;
     $ptrStr = $ptrStr + 1;
-    }else{
-    
-    }
-    }
     }
   }
   return $stack->[0];

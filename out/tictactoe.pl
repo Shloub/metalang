@@ -38,19 +38,15 @@ sub print_state{
     foreach my $x (0 .. 2) {
       if ($g->{"cases"}->[$x]->[$y] eq 0) {
       print(" ");
-      }else{
-      if ($g->{"cases"}->[$x]->[$y] eq 1) {
+      }elsif ($g->{"cases"}->[$x]->[$y] eq 1) {
       print("O");
       }else{
       print("X");
-      }
       }
       print("|");
       }
     if ($y ne 2) {
     print("\n|-|-|-|\n|");
-    }else{
-    
     }
     }
   print("\n");
@@ -68,61 +64,41 @@ sub eval_{
     foreach my $x (0 .. 2) {
       if ($g->{"cases"}->[$x]->[$y] eq 0) {
       $freecase = $freecase + 1;
-      }else{
-      
       }
       my $colv = $g->{"cases"}->[$x]->[$y];
       my $linv = $g->{"cases"}->[$y]->[$x];
       if ($col eq -1 && $colv ne 0) {
       $col = $colv;
-      }else{
-      if ($colv ne $col) {
+      }elsif ($colv ne $col) {
       $col = -2;
-      }else{
-      
-      }
       }
       if ($lin eq -1 && $linv ne 0) {
       $lin = $linv;
-      }else{
-      if ($linv ne $lin) {
+      }elsif ($linv ne $lin) {
       $lin = -2;
-      }else{
-      
-      }
       }
       }
     if ($col >= 0) {
     $win = $col;
-    }else{
-    if ($lin >= 0) {
+    }elsif ($lin >= 0) {
     $win = $lin;
-    }else{
-    
-    }
     }
     }
   foreach my $x (1 .. 2) {
     if ($g->{"cases"}->[0]->[0] eq $x && $g->{"cases"}->[1]->[1] eq $x && $g->{"cases"}->[2]->[2] eq $x) {
     $win = $x;
-    }else{
-    
     }
     if ($g->{"cases"}->[0]->[2] eq $x && $g->{"cases"}->[1]->[1] eq $x && $g->{"cases"}->[2]->[0] eq $x) {
     $win = $x;
-    }else{
-    
     }
     }
   $g->{"ended"} = $win ne 0 || $freecase eq 0;
   if ($win eq 1) {
   $g->{"note"} = 1000;
-  }else{
-  if ($win eq 2) {
+  }elsif ($win eq 2) {
   $g->{"note"} = -1000;
   }else{
   $g->{"note"} = 0;
-  }
   }
 }
 
@@ -135,8 +111,6 @@ sub apply_move_xy{
   my $player = 2;
   if ($g->{"firstToPlay"}) {
   $player = 1;
-  }else{
-  
   }
   $g->{"cases"}->[$x]->[$y] = $player;
   $g->{"firstToPlay"} = !$g->{"firstToPlay"};
@@ -185,14 +159,10 @@ sub minmax{
   eval_($g);
   if ($g->{"ended"}) {
   return $g->{"note"};
-  }else{
-  
   }
   my $maxNote = -10000;
   if (!$g->{"firstToPlay"}) {
   $maxNote = 10000;
-  }else{
-  
   }
   foreach my $x (0 .. 2) {
     foreach my $y (0 .. 2) {
@@ -204,11 +174,7 @@ sub minmax{
       
       if (($currentNote > $maxNote) eq $g->{"firstToPlay"}) {
       $maxNote = $currentNote;
-      }else{
-      
       }
-      }else{
-      
       }
       }
     }
@@ -235,11 +201,7 @@ sub play{
       $minNote = $currentNote;
       $minMove->{"x"} = $x;
       $minMove->{"y"} = $y;
-      }else{
-      
       }
-      }else{
-      
       }
       }
     }
@@ -286,8 +248,6 @@ foreach my $i (0 .. 1) {
     if (!$state->{"ended"}) {
     apply_move(play($state), $state);
     eval_($state);
-    }else{
-    
     }
   }
   print_state($state);

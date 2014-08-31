@@ -15,56 +15,32 @@ sub ndayinmonth{
   $year) = @_;
   if ($month eq 0) {
   return 31;
-  }else{
-  if ($month eq 1) {
+  }elsif ($month eq 1) {
   if (is_leap($year)) {
   return 29;
   }else{
   return 28;
   }
-  }else{
-  if ($month eq 2) {
+  }elsif ($month eq 2) {
   return 31;
-  }else{
-  if ($month eq 3) {
+  }elsif ($month eq 3) {
   return 30;
-  }else{
-  if ($month eq 4) {
+  }elsif ($month eq 4) {
   return 31;
-  }else{
-  if ($month eq 5) {
+  }elsif ($month eq 5) {
   return 30;
-  }else{
-  if ($month eq 6) {
+  }elsif ($month eq 6) {
   return 31;
-  }else{
-  if ($month eq 7) {
+  }elsif ($month eq 7) {
   return 31;
-  }else{
-  if ($month eq 8) {
+  }elsif ($month eq 8) {
   return 30;
-  }else{
-  if ($month eq 9) {
+  }elsif ($month eq 9) {
   return 31;
-  }else{
-  if ($month eq 10) {
+  }elsif ($month eq 10) {
   return 30;
-  }else{
-  if ($month eq 11) {
+  }elsif ($month eq 11) {
   return 31;
-  }else{
-  
-  }
-  }
-  }
-  }
-  }
-  }
-  }
-  }
-  }
-  }
-  }
   }
   return 0;
 }
@@ -83,13 +59,9 @@ while ($year ne 2001)
   if ($month eq 12) {
   $month = 0;
   $year = $year + 1;
-  }else{
-  
   }
   if ((remainder($dayofweek, 7)) eq 6) {
   $count = $count + 1;
-  }else{
-  
   }
 }
 print($count, "\n");

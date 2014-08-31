@@ -37,16 +37,10 @@ sub find0{
   
   if ($y eq $len - 1) {
   return $tab->[$y]->[$x];
-  }else{
-  if ($x > $y) {
+  }elsif ($x > $y) {
   return -10000;
-  }else{
-  if ($cache->[$y]->[$x] ne 0) {
+  }elsif ($cache->[$y]->[$x] ne 0) {
   return $cache->[$y]->[$x];
-  }else{
-  
-  }
-  }
   }
   my $result = 0;
   my $out0 = find0($len, $tab, $cache, $x, $y + 1);
