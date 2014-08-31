@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int max2(int a, int b){
+int max2_(int a, int b){
   if (a > b)
     return a;
   else
@@ -63,7 +63,7 @@ int find(int ndiv2){
     int *primesFactors = malloc( (n + 2) * sizeof(int));
     for (m = 0 ; m < n + 2; m++)
       primesFactors[m] = 0;
-    int max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    int max_ = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] --;
     int ndivs = 1;
     for (i = 0 ; i <= max_; i++)

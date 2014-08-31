@@ -1,6 +1,6 @@
 program euler50;
 
-function min2(a : Longint; b : Longint) : Longint;
+function min2_(a : Longint; b : Longint) : Longint;
 begin
   if a < b
   then
@@ -13,8 +13,8 @@ begin
     end;
 end;
 
-type c = array of Longint;
-function eratostene(t : c; max_ : Longint) : Longint;
+type d = array of Longint;
+function eratostene(t : d; max_ : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -45,7 +45,8 @@ end;
 
 
 var
-  era : c;
+  c : Longint;
+  era : d;
   i : Longint;
   i_ : Longint;
   j : Longint;
@@ -56,11 +57,11 @@ var
   maxl : Longint;
   nprimes : Longint;
   o : Longint;
-  primes : c;
+  primes : d;
   process : boolean;
   resp : Longint;
   stop : Longint;
-  sum : c;
+  sum : d;
 begin
   maximumprimes := 1000001;
   SetLength(era, maximumprimes);
@@ -120,7 +121,8 @@ begin
             end
           else
             begin
-              stop := min2(stop, i);
+              c := min2_(stop, i);
+              stop := c;
             end;
         end;
     end;

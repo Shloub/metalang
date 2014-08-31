@@ -3,20 +3,10 @@ import java.util.*;
 public class euler33
 {
   
-  public static int max2(int a, int b)
-  {
-    return Math.max(a, b);
-  }
-  
-  public static int min2(int a, int b)
-  {
-    return Math.min(a, b);
-  }
-  
   public static int pgcd(int a, int b)
   {
-    int c = min2(a, b);
-    int d = max2(a, b);
+    int c = Math.min(a, b);
+    int d = Math.max(a, b);
     int reste = d % c;
     if (reste == 0)
       return c;

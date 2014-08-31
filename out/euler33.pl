@@ -5,7 +5,7 @@ sub remainder {
     return $a - int($a / $b) * $b;
 }
 
-sub max2{
+sub max2_{
   my($a,
   $b) = @_;
   if ($a > $b) {
@@ -15,7 +15,7 @@ sub max2{
   }
 }
 
-sub min2{
+sub min2_{
   my($a,
   $b) = @_;
   if ($a < $b) {
@@ -28,8 +28,8 @@ sub min2{
 sub pgcd{
   my($a,
   $b) = @_;
-  my $c = min2($a, $b);
-  my $d = max2($a, $b);
+  my $c = min2_($a, $b);
+  my $d = max2_($a, $b);
   my $reste = remainder($d, $c);
   if ($reste eq 0) {
     return $c;

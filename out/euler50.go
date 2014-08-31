@@ -1,6 +1,6 @@
 package main
 import "fmt"
-func min2(a int, b int) int{
+func min2_(a int, b int) int{
   if a < b {
     return a
   } else {
@@ -66,7 +66,8 @@ func main() {
                     resp = sum[i];
                 }
             } else {
-              stop = min2(stop, i);
+              var c int = min2_(stop, i)
+              stop = c;
             }
         }
     }

@@ -24,15 +24,6 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-function max2($a, $b){
-  return max($a, $b);
-}
-
-function min2($a, $b){
-  return min($a, $b);
-}
-
-
 function &read_bigint($len){
   $chiffres = array();
   for ($j = 0 ; $j < $len; $j++)
@@ -46,13 +37,13 @@ function &read_bigint($len){
     $chiffres[$i] = $chiffres[$len - 1 - $i];
     $chiffres[$len - 1 - $i] = $tmp;
   }
-  $o = array(
+  $x = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $o;
+  return $x;
 }
 
 function print_bigint(&$a){
@@ -108,7 +99,7 @@ function bigint_lt(&$a, &$b){
 
 function &add_bigint_positif(&$a, &$b){
   /* Une addition ou on en a rien a faire des signes */
-  $len = max2($a["bigint_len"], $b["bigint_len"]) + 1;
+  $len = max($a["bigint_len"], $b["bigint_len"]) + 1;
   $retenue = 0;
   $chiffres = array();
   for ($i = 0 ; $i < $len; $i++)
@@ -123,13 +114,13 @@ function &add_bigint_positif(&$a, &$b){
   }
   while ($len > 0 && $chiffres[$len - 1] == 0)
     $len --;
-  $p = array(
+  $y = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $p;
+  return $y;
 }
 
 function &sub_bigint_positif(&$a, &$b){
@@ -155,23 +146,23 @@ Pré-requis : a > b
   }
   while ($len > 0 && $chiffres[$len - 1] == 0)
     $len --;
-  $q = array(
+  $z = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $q;
+  return $z;
 }
 
 function &neg_bigint(&$a){
-  $r = array(
+  $ba = array(
     "bigint_sign"=>!$a["bigint_sign"],
     "bigint_len"=>$a["bigint_len"],
     "bigint_chiffres"=>$a["bigint_chiffres"]
   );
   
-  return $r;
+  return $ba;
 }
 
 function &add_bigint(&$a, &$b){
@@ -228,26 +219,26 @@ D'ou le nom de la fonction. */
   for ($l = 0 ; $l <= 2; $l++)
     if ($len != 0 && $chiffres[$len - 1] == 0)
     $len --;
-  $s = array(
+  $bc = array(
     "bigint_sign"=>$a["bigint_sign"] == $b["bigint_sign"],
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $s;
+  return $bc;
 }
 
 function &bigint_premiers_chiffres(&$a, $i){
-  $len = min2($i, $a["bigint_len"]);
+  $len = min($i, $a["bigint_len"]);
   while ($len != 0 && $a["bigint_chiffres"][$len - 1] == 0)
     $len --;
-  $u = array(
+  $be = array(
     "bigint_sign"=>$a["bigint_sign"],
     "bigint_len"=>$len,
     "bigint_chiffres"=>$a["bigint_chiffres"]
   );
   
-  return $u;
+  return $be;
 }
 
 function &bigint_shift(&$a, $i){
@@ -257,13 +248,13 @@ function &bigint_shift(&$a, $i){
     $chiffres[$k] = $a["bigint_chiffres"][$k - $i];
   else
     $chiffres[$k] = 0;
-  $v = array(
+  $bf = array(
     "bigint_sign"=>$a["bigint_sign"],
     "bigint_len"=>$a["bigint_len"] + $i,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $v;
+  return $bf;
 }
 
 function &mul_bigint(&$aa, &$bb){
@@ -274,7 +265,7 @@ function &mul_bigint(&$aa, &$bb){
   else if ($aa["bigint_len"] < 3 || $bb["bigint_len"] < 3)
     return mul_bigint_cp($aa, $bb);
   /* Algorithme de Karatsuba */
-  $split = intval(min2($aa["bigint_len"], $bb["bigint_len"]) / 2);
+  $split = intval(min($aa["bigint_len"], $bb["bigint_len"]) / 2);
   $a = bigint_shift($aa, -$split);
   $b = bigint_premiers_chiffres($aa, $split);
   $c = bigint_shift($bb, -$split);
@@ -315,13 +306,13 @@ function &bigint_of_int($i){
     $t[$k] = $i % 10;
     $i = intval($i / 10);
   }
-  $w = array(
+  $bg = array(
     "bigint_sign"=>true,
     "bigint_len"=>$size,
     "bigint_chiffres"=>$t
   );
   
-  return $w;
+  return $bg;
 }
 
 function &fact_bigint(&$a){

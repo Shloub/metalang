@@ -3,23 +3,6 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def max2( a, b )
-    if a > b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
-def min2( a, b )
-    if a < b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
-
 def read_bigint( len )
     chiffres = [];
     for j in (0 ..  len - 1) do
@@ -105,7 +88,7 @@ def add_bigint_positif( a, b )
  Une addition ou on en a rien a faire des signes 
 =end
 
-    len = max2(a["bigint_len"], b["bigint_len"]) + 1
+    len = [a["bigint_len"], b["bigint_len"]].max + 1
     retenue = 0
     chiffres = [];
     for i in (0 ..  len - 1) do
@@ -240,7 +223,7 @@ D'ou le nom de la fonction.
 end
 
 def bigint_premiers_chiffres( a, i )
-    len = min2(i, a["bigint_len"])
+    len = [i, a["bigint_len"]].min
     while len != 0 && a["bigint_chiffres"][len - 1] == 0 do
       len -= 1
     end
@@ -278,7 +261,7 @@ def mul_bigint( aa, bb )
  Algorithme de Karatsuba 
 =end
 
-    split = (min2(aa["bigint_len"], bb["bigint_len"]).to_f / 2).to_i
+    split = ([aa["bigint_len"], bb["bigint_len"]].min.to_f / 2).to_i
     a = bigint_shift(aa, -split)
     b = bigint_premiers_chiffres(aa, split)
     c = bigint_shift(bb, -split)

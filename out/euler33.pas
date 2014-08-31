@@ -1,6 +1,6 @@
 program euler33;
 
-function max2(a : Longint; b : Longint) : Longint;
+function max2_(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -13,7 +13,7 @@ begin
     end;
 end;
 
-function min2(a : Longint; b : Longint) : Longint;
+function min2_(a : Longint; b : Longint) : Longint;
 begin
   if a < b
   then
@@ -32,8 +32,8 @@ var
   d : Longint;
   reste : Longint;
 begin
-  c := min2(a, b);
-  d := max2(a, b);
+  c := min2_(a, b);
+  d := max2_(a, b);
   reste := d Mod c;
   if reste = 0
   then

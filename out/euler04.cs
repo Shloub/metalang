@@ -2,11 +2,6 @@ using System;
 
 public class euler04
 {
-  public static int max2(int a, int b)
-  {
-    return Math.Max(a, b);
-  }
-  
   /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -46,7 +41,10 @@ c * f * 10000
               {
                 int mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
                 if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
-                  m = max2(mul, m);
+                {
+                  int g = Math.Max(mul, m);
+                  m = g;
+                }
     }
     Console.Write("" + m + "\n");
   }

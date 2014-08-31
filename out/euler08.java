@@ -3,11 +3,6 @@ import java.util.*;
 public class euler08
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int max2(int a, int b)
-  {
-    return Math.max(a, b);
-  }
-  
   
   public static void main(String args[])
   {
@@ -41,7 +36,7 @@ public class euler08
       }
       last[index] = f;
       index = (index + 1) % 5;
-      max_ = max2(max_, i);
+      max_ = Math.max(max_, i);
     }
     System.out.printf("%d\n", max_);
   }

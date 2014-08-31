@@ -1,6 +1,6 @@
 program euler04;
 
-function max2(a : Longint; b : Longint) : Longint;
+function max2_(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -52,6 +52,7 @@ var
   d : Longint;
   e : Longint;
   f : Longint;
+  g : Longint;
   m : Longint;
   mul : Longint;
 begin
@@ -72,7 +73,8 @@ begin
               if (chiffre(0, mul) = chiffre(5, mul)) and (chiffre(1, mul) = chiffre(4, mul)) and (chiffre(2, mul) = chiffre(3, mul))
               then
                 begin
-                  m := max2(mul, m);
+                  g := max2_(mul, m);
+                  m := g;
                 end;
             end;
           end;

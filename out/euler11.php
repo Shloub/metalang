@@ -1,8 +1,4 @@
 <?php
-function max2($a, $b){
-  return max($a, $b);
-}
-
 function &read_int_matrix($x, $y){
   $tab = array();
   for ($z = 0 ; $z < $y; $z++)
@@ -44,7 +40,11 @@ for ($j = 0 ; $j <= 7; $j++)
   list($dx, $dy) = $directions[$j];
   for ($x = 0 ; $x <= 19; $x++)
     for ($y = 0 ; $y <= 19; $y++)
-      $max_ = max2($max_, find(4, $m, $x, $y, $dx, $dy));
+    {
+      $e = find(4, $m, $x, $y, $dx, $dy);
+      $d = max($max_, $e);
+      $max_ = $d;
+  }
 }
 echo $max_, "\n";
 ?>

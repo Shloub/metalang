@@ -2,11 +2,6 @@ using System;
 
 public class euler50
 {
-  public static int min2(int a, int b)
-  {
-    return Math.Min(a, b);
-  }
-  
   public static int eratostene(int[] t, int max_)
   {
     int n = 0;
@@ -72,7 +67,10 @@ public class euler50
           }
         }
         else
-          stop = min2(stop, i);
+        {
+          int c = Math.Min(stop, i);
+          stop = c;
+        }
       }
       len ++;
     }

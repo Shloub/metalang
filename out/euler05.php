@@ -1,8 +1,4 @@
 <?php
-function max2($a, $b){
-  return max($a, $b);
-}
-
 function &primesfactors($n){
   $tab = array();
   for ($i = 0 ; $i < $n + 1; $i++)
@@ -28,7 +24,12 @@ for ($i = 1 ; $i <= $lim; $i++)
 {
   $t = primesfactors($i);
   for ($j = 1 ; $j <= $i; $j++)
-    $o[$j] = max2($o[$j], $t[$j]);
+  {
+    $g = $o[$j];
+    $h = $t[$j];
+    $f = max($g, $h);
+    $o[$j] = $f;
+  }
 }
 $product = 1;
 for ($k = 1 ; $k <= $lim; $k++)

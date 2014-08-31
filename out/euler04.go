@@ -1,6 +1,6 @@
 package main
 import "fmt"
-func max2(a int, b int) int{
+func max2_(a int, b int) int{
   if a > b {
     return a
   } else {
@@ -44,7 +44,8 @@ func main() {
                     for e := 0 ; e <= 9; e++ {
                         var mul int = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
                           if chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul) {
-                            m = max2(mul, m);
+                            var g int = max2_(mul, m)
+                              m = g;
                           }
                       }
                   }

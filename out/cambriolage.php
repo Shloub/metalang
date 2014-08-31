@@ -17,10 +17,6 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-function max2($a, $b){
-  return max($a, $b);
-}
-
 function nbPassePartout($n, &$passepartout, $m, &$serrures){
   $max_ancient = 0;
   $max_recent = 0;
@@ -38,8 +34,8 @@ function nbPassePartout($n, &$passepartout, $m, &$serrures){
     $pp = $passepartout[$i];
     if ($pp[0] >= $max_ancient && $pp[1] >= $max_recent)
       return 1;
-    $max_ancient_pp = max2($max_ancient_pp, $pp[0]);
-    $max_recent_pp = max2($max_recent_pp, $pp[1]);
+    $max_ancient_pp = max($max_ancient_pp, $pp[0]);
+    $max_recent_pp = max($max_recent_pp, $pp[1]);
   }
   if ($max_ancient_pp >= $max_ancient && $max_recent_pp >= $max_recent)
     return 2;

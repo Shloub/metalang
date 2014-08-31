@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int min2(int a, int b){
+int min2_(int a, int b){
   if (a < b)
     return a;
   else
@@ -24,10 +24,12 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int h = min2(val1, val2);
-    int k = min2(min2(h, val3), val4);
-    int g = k;
-    int out_ = 1 + g;
+    int n = min2_(val1, val2);
+    int o = min2_(n, val3);
+    int p = min2_(o, val4);
+    int q = p;
+    int m = q;
+    int out_ = 1 + m;
     cache[posY][posX] = out_;
     return out_;
   }

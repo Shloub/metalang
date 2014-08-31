@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int max2(int a, int b){
+int max2_(int a, int b){
   if (a > b)
     return a;
   else
@@ -27,8 +27,8 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
     int* pp = passepartout[i];
     if (pp[0] >= max_ancient && pp[1] >= max_recent)
       return 1;
-    max_ancient_pp = max2(max_ancient_pp, pp[0]);
-    max_recent_pp = max2(max_recent_pp, pp[1]);
+    max_ancient_pp = max2_(max_ancient_pp, pp[0]);
+    max_recent_pp = max2_(max_recent_pp, pp[1]);
   }
   if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
     return 2;

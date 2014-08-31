@@ -1,6 +1,3 @@
-let max2 a b =
-  max a b
-
 let read_int_matrix x y =
   let tab = Array.init y (fun _z ->
     let d = Array.init x (fun _e ->
@@ -42,7 +39,9 @@ begin
     let (dx, dy) = directions.(j) in
     for x = 0 to 19 do
       for y = 0 to 19 do
-        max_ := max2 (!max_) (find 4 m x y dx dy)
+        let h = find 4 m x y dx dy in
+        let g = (max ((!max_)) (h)) in
+        max_ := g
       done
     done
   done;

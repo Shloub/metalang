@@ -1,15 +1,9 @@
 import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
-def max2( a, b ):
-    return max(a, b);
-
-def min2( a, b ):
-    return min(a, b);
-
 def pgcd( a, b ):
-    c = min2(a, b);
-    d = max2(a, b);
+    c = min(a, b);
+    d = max(a, b);
     reste = mod(d, c);
     if reste == 0:
       return c;

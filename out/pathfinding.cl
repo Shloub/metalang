@@ -33,11 +33,11 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun min2 (a b)
+(defun min2_ (a b)
 (if
   (< a b)
-  (return-from min2 a)
-  (return-from min2 b)))
+  (return-from min2_ a)
+  (return-from min2_ b)))
 
 (defun pathfind_aux (cache tab x y posX posY)
 (if
@@ -58,13 +58,15 @@
             (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
               (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
                 (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
-                  (let ((h (min2 val1 val2)))
-                    (let ((k (min2 (min2 h val3) val4)))
-                      (let ((g k))
-                        (let ((out_ (+ 1 g)))
-                          (setf (aref (aref cache posY) posX) out_)
-                          (return-from pathfind_aux out_)
-                        ))))))))))))))
+                  (let ((n (min2_ val1 val2)))
+                    (let ((o (min2_ n val3)))
+                      (let ((p (min2_ o val4)))
+                        (let ((q p))
+                          (let ((m q))
+                            (let ((out_ (+ 1 m)))
+                              (setf (aref (aref cache posY) posX) out_)
+                              (return-from pathfind_aux out_)
+                            ))))))))))))))))
 
 (defun pathfind (tab x y)
 (progn

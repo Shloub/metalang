@@ -3,11 +3,6 @@ import java.util.*;
 public class euler12
 {
   
-  public static int max2(int a, int b)
-  {
-    return Math.max(a, b);
-  }
-  
   public static int eratostene(int[] t, int max_)
   {
     int n = 0;
@@ -63,7 +58,7 @@ public class euler12
       int[] primesFactors = new int[n + 2];
       for (int m = 0 ; m < n + 2; m++)
         primesFactors[m] = 0;
-      int max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+      int max_ = Math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
       primesFactors[2] --;
       int ndivs = 1;
       for (int i = 0 ; i <= max_; i ++)

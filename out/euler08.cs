@@ -25,11 +25,6 @@ public static char readChar(){
   consommeChar();
   return out_;
 }
-  public static int max2(int a, int b)
-  {
-    return Math.Max(a, b);
-  }
-  
   
   public static void Main(String[] args)
   {
@@ -63,7 +58,7 @@ public static char readChar(){
       }
       last[index] = f;
       index = (index + 1) % 5;
-      max_ = max2(max_, i);
+      max_ = Math.Max(max_, i);
     }
     Console.Write("" + max_ + "\n");
   }

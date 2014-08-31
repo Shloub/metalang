@@ -18,10 +18,6 @@
       out
     ))))
 
-(define (max2 a b)
-  ;toto
-  (max a b)
-)
 (define main
   (let ([i 1])
   (let ([last (array_init_withenv 5 (lambda (j) 
@@ -29,23 +25,23 @@
                                         ((lambda (c) 
                                            (let ([d (- (char->integer c) (char->integer #\0))])
                                            (let ([i (* i d)])
-                                           (let ([g d])
-                                           (list i g))))) (mread-char)))) i)])
+                                           (let ([h d])
+                                           (list i h))))) (mread-char)))) i)])
 (let ([max_ i])
 (let ([index 0])
 (let ([nskipdiv 0])
-(let ([l 1])
-(let ([m 995])
-(letrec ([h (lambda (k i index max_ nskipdiv) 
-              (if (<= k m)
+(let ([m 1])
+(let ([n 995])
+(letrec ([l (lambda (k i index max_ nskipdiv) 
+              (if (<= k n)
               ((lambda (e) 
                  (let ([f (- (char->integer e) (char->integer #\0))])
                  ((lambda (internal_env) (apply (lambda (i nskipdiv) 
                                                        (block
                                                          (vector-set! last index f)
                                                          (let ([index (remainder (+ index 1) 5)])
-                                                         (let ([max_ (max2 max_ i)])
-                                                         (h (+ k 1) i index max_ nskipdiv)))
+                                                         (let ([max_ (max max_ i)])
+                                                         (l (+ k 1) i index max_ nskipdiv)))
                                                          )) internal_env)) 
                  (if (eq? f 0)
                  (let ([i 1])
@@ -61,6 +57,6 @@
               (block
                 (map display (list max_ "\n"))
                 )))])
-(h l i index max_ nskipdiv)))))))))
+(l m i index max_ nskipdiv)))))))))
 )
 

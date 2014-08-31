@@ -1,22 +1,14 @@
 require "scanf.rb"
-def min2( a, b )
-    if a < b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 def read_char_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
-      h = [];
-      for k in (0 ..  x - 1) do
-        l=scanf("%c")[0];
-        h[k] = l;
+      f = [];
+      for g in (0 ..  x - 1) do
+        h=scanf("%c")[0];
+        f[g] = h;
       end
       scanf("%*\n");
-      tab[z] = h;
+      tab[z] = f;
     end
     return (tab);
 end
@@ -36,10 +28,8 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      o = min2(val1, val2)
-      p = min2(min2(o, val3), val4)
-      m = p
-      out_ = 1 + m
+      k = [val1, val2, val3, val4].min
+      out_ = 1 + k
       cache[posY][posX] = out_;
       return (out_);
     end
@@ -59,12 +49,12 @@ def pathfind( tab, x, y )
     return (pathfind_aux(cache, tab, x, y, 0, 0));
 end
 
-r=scanf("%d")[0];
+m=scanf("%d")[0];
 scanf("%*\n");
-x = r
-u=scanf("%d")[0];
+x = m
+p=scanf("%d")[0];
 scanf("%*\n");
-y = u
+y = p
 printf "%d %d\n", x, y
 tab = read_char_matrix(x, y)
 result = pathfind(tab, x, y)

@@ -1,6 +1,6 @@
 package main
 import "fmt"
-func max2(a int, b int) int{
+func max2_(a int, b int) int{
   if a > b {
     return a
   } else {
@@ -35,7 +35,10 @@ func main() {
   for i := 1 ; i <= lim; i++ {
     var t []int = primesfactors(i)
       for j := 1 ; j <= i; j++ {
-        o[j] = max2(o[j], t[j]);
+        var g int = o[j]
+          var h int = t[j]
+          var f int = max2_(g, h)
+          o[j] = f;
       }
   }
   var product int = 1

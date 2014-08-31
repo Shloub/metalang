@@ -1,11 +1,3 @@
 require "scanf.rb"
-def min2( a, b )
-    if a < b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
-printf "%d %d %d %d %d %d\n", min2(min2(2, 3), 4), min2(min2(2, 4), 3), min2(min2(3, 2), 4), min2(min2(3, 4), 2), min2(min2(4, 2), 3), min2(min2(4, 3), 2)
+printf "%d %d %d %d %d %d\n", [2, 3, 4].min, [2, 4, 3].min, [3, 2, 4].min, [3, 4, 2].min, [4, 2, 3].min, [4, 3, 2].min
 

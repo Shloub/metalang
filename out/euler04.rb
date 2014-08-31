@@ -3,15 +3,6 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def max2( a, b )
-    if a > b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
-
 =begin
 
 
@@ -50,7 +41,8 @@ for a in (0 ..  9) do
           for e in (0 ..  9) do
             mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
             if chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul) then
-              m = max2(mul, m);
+              g = [mul, m].max
+              m = g;
             end
           end
         end

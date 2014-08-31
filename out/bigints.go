@@ -14,7 +14,7 @@ func skip() {
   }
 }
 
-func max2(a int, b int) int{
+func max2_(a int, b int) int{
   if a > b {
     return a
   } else {
@@ -22,7 +22,7 @@ func max2(a int, b int) int{
   }
 }
 
-func min2(a int, b int) int{
+func min2_(a int, b int) int{
   if a < b {
     return a
   } else {
@@ -49,11 +49,11 @@ func read_bigint(len int) * bigint{
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
   }
-  var o * bigint = new (bigint)
-  (*o).bigint_sign=true
-  (*o).bigint_len=len
-  (*o).bigint_chiffres=chiffres
-  return o
+  var x * bigint = new (bigint)
+  (*x).bigint_sign=true
+  (*x).bigint_len=len
+  (*x).bigint_chiffres=chiffres
+  return x
 }
 
 func print_bigint(a * bigint) {
@@ -112,7 +112,7 @@ func bigint_lt(a * bigint, b * bigint) bool{
 
 func add_bigint_positif(a * bigint, b * bigint) * bigint{
   /* Une addition ou on en a rien a faire des signes */
-  var len int = max2((*a).bigint_len, (*b).bigint_len) + 1
+  var len int = max2_((*a).bigint_len, (*b).bigint_len) + 1
   var retenue int = 0
   var chiffres []int = make([]int, len)
   for i := 0 ; i <= len - 1; i++ {
@@ -129,11 +129,11 @@ func add_bigint_positif(a * bigint, b * bigint) * bigint{
   for len > 0 && chiffres[len - 1] == 0{
     len --;
   }
-  var p * bigint = new (bigint)
-  (*p).bigint_sign=true
-  (*p).bigint_len=len
-  (*p).bigint_chiffres=chiffres
-  return p
+  var y * bigint = new (bigint)
+  (*y).bigint_sign=true
+  (*y).bigint_len=len
+  (*y).bigint_chiffres=chiffres
+  return y
 }
 
 func sub_bigint_positif(a * bigint, b * bigint) * bigint{
@@ -159,19 +159,19 @@ Pré-requis : a > b
   for len > 0 && chiffres[len - 1] == 0{
     len --;
   }
-  var q * bigint = new (bigint)
-  (*q).bigint_sign=true
-  (*q).bigint_len=len
-  (*q).bigint_chiffres=chiffres
-  return q
+  var z * bigint = new (bigint)
+  (*z).bigint_sign=true
+  (*z).bigint_len=len
+  (*z).bigint_chiffres=chiffres
+  return z
 }
 
 func neg_bigint(a * bigint) * bigint{
-  var r * bigint = new (bigint)
-  (*r).bigint_sign=!(*a).bigint_sign
-  (*r).bigint_len=(*a).bigint_len
-  (*r).bigint_chiffres=(*a).bigint_chiffres
-  return r
+  var ba * bigint = new (bigint)
+  (*ba).bigint_sign=!(*a).bigint_sign
+  (*ba).bigint_len=(*a).bigint_len
+  (*ba).bigint_chiffres=(*a).bigint_chiffres
+  return ba
 }
 
 func add_bigint(a * bigint, b * bigint) * bigint{
@@ -227,23 +227,23 @@ D'ou le nom de la fonction. */
         len --;
       }
   }
-  var s * bigint = new (bigint)
-  (*s).bigint_sign=(*a).bigint_sign == (*b).bigint_sign
-  (*s).bigint_len=len
-  (*s).bigint_chiffres=chiffres
-  return s
+  var bc * bigint = new (bigint)
+  (*bc).bigint_sign=(*a).bigint_sign == (*b).bigint_sign
+  (*bc).bigint_len=len
+  (*bc).bigint_chiffres=chiffres
+  return bc
 }
 
 func bigint_premiers_chiffres(a * bigint, i int) * bigint{
-  var len int = min2(i, (*a).bigint_len)
+  var len int = min2_(i, (*a).bigint_len)
   for len != 0 && (*a).bigint_chiffres[len - 1] == 0{
     len --;
   }
-  var u * bigint = new (bigint)
-  (*u).bigint_sign=(*a).bigint_sign
-  (*u).bigint_len=len
-  (*u).bigint_chiffres=(*a).bigint_chiffres
-  return u
+  var be * bigint = new (bigint)
+  (*be).bigint_sign=(*a).bigint_sign
+  (*be).bigint_len=len
+  (*be).bigint_chiffres=(*a).bigint_chiffres
+  return be
 }
 
 func bigint_shift(a * bigint, i int) * bigint{
@@ -255,11 +255,11 @@ func bigint_shift(a * bigint, i int) * bigint{
         chiffres[k] = 0;
       }
   }
-  var v * bigint = new (bigint)
-  (*v).bigint_sign=(*a).bigint_sign
-  (*v).bigint_len=(*a).bigint_len + i
-  (*v).bigint_chiffres=chiffres
-  return v
+  var bf * bigint = new (bigint)
+  (*bf).bigint_sign=(*a).bigint_sign
+  (*bf).bigint_len=(*a).bigint_len + i
+  (*bf).bigint_chiffres=chiffres
+  return bf
 }
 
 func mul_bigint(aa * bigint, bb * bigint) * bigint{
@@ -271,7 +271,7 @@ func mul_bigint(aa * bigint, bb * bigint) * bigint{
     return mul_bigint_cp(aa, bb)
   }  
   /* Algorithme de Karatsuba */
-  var split int = min2((*aa).bigint_len, (*bb).bigint_len) / 2
+  var split int = min2_((*aa).bigint_len, (*bb).bigint_len) / 2
   var a * bigint = bigint_shift(aa, -split)
   var b * bigint = bigint_premiers_chiffres(aa, split)
   var c * bigint = bigint_shift(bb, -split)
@@ -312,11 +312,11 @@ func bigint_of_int(i int) * bigint{
     t[k] = i % 10;
       i /= 10;
   }
-  var w * bigint = new (bigint)
-  (*w).bigint_sign=true
-  (*w).bigint_len=size
-  (*w).bigint_chiffres=t
-  return w
+  var bg * bigint = new (bigint)
+  (*bg).bigint_sign=true
+  (*bg).bigint_len=size
+  (*bg).bigint_chiffres=t
+  return bg
 }
 
 func fact_bigint(a * bigint) * bigint{

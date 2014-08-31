@@ -16,10 +16,6 @@ function nextChar(){
   $stdin = substr($stdin, 1);
   return $out;
 }
-function max2($a, $b){
-  return max($a, $b);
-}
-
 $i = 1;
 $last = array();
 for ($j = 0 ; $j < 5; $j++)
@@ -50,7 +46,7 @@ for ($k = 1 ; $k <= 995; $k++)
   }
   $last[$index] = $f;
   $index = ($index + 1) % 5;
-  $max_ = max2($max_, $i);
+  $max_ = max($max_, $i);
 }
 echo $max_, "\n";
 ?>

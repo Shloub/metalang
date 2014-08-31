@@ -1,8 +1,4 @@
 var util = require("util");
-function min2(a, b){
-  return Math.min(a, b);
-}
-
 function eratostene(t, max_){
   var n = 0;
   for (var i = 2 ; i <= max_ - 1; i++)
@@ -64,7 +60,10 @@ while (process)
       }
     }
     else
-      stop = min2(stop, i);
+    {
+      var c = Math.min(stop, i);
+      stop = c;
+    }
   }
   len ++;
 }

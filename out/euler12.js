@@ -1,8 +1,4 @@
 var util = require("util");
-function max2(a, b){
-  return Math.max(a, b);
-}
-
 function eratostene(t, max_){
   var n = 0;
   for (var i = 2 ; i <= max_ - 1; i++)
@@ -55,7 +51,7 @@ function find(ndiv2){
     var primesFactors = new Array(n + 2);
     for (var m = 0 ; m <= n + 2 - 1; m++)
       primesFactors[m] = 0;
-    var max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    var max_ = Math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] --;
     var ndivs = 1;
     for (var i = 0 ; i <= max_; i++)

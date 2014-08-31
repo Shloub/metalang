@@ -21,17 +21,17 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun max2 (a b)
+(defun max2_ (a b)
 (if
   (> a b)
-  (return-from max2 a)
-  (return-from max2 b)))
+  (return-from max2_ a)
+  (return-from max2_ b)))
 
-(defun min2 (a b)
+(defun min2_ (a b)
 (if
   (< a b)
-  (return-from min2 a)
-  (return-from min2 b)))
+  (return-from min2_ a)
+  (return-from min2_ b)))
 
 (defstruct (bigint (:type list) :named)
   bigint_sign
@@ -59,10 +59,10 @@
         (setf (aref chiffres (- (- len 1) i)) tmp)
       ))
   )
-  (let ((o (make-bigint :bigint_sign t
+  (let ((x (make-bigint :bigint_sign t
                         :bigint_len len
                         :bigint_chiffres chiffres)))
-  (return-from read_bigint o)
+  (return-from read_bigint x)
   ))))
 
 (defun print_bigint (a)
@@ -138,7 +138,7 @@
 (defun add_bigint_positif (a b)
 (progn
   #| Une addition ou on en a rien a faire des signes |#
-  (let ((len (+ (max2 (bigint-bigint_len a) (bigint-bigint_len b)) 1)))
+  (let ((len (+ (max2_ (bigint-bigint_len a) (bigint-bigint_len b)) 1)))
     (let ((retenue 0))
       (let
        ((chiffres (array_init
@@ -159,10 +159,10 @@
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((p (make-bigint :bigint_sign t
+      (let ((y (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from add_bigint_positif p)
+      (return-from add_bigint_positif y)
       ))))))
 
 (defun sub_bigint_positif (a b)
@@ -194,18 +194,18 @@ Pré-requis : a > b
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((q (make-bigint :bigint_sign t
+      (let ((z (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from sub_bigint_positif q)
+      (return-from sub_bigint_positif z)
       ))))))
 
 (defun neg_bigint (a)
 (progn
-  (let ((r (make-bigint :bigint_sign (not (bigint-bigint_sign a))
-                        :bigint_len (bigint-bigint_len a)
-                        :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from neg_bigint r)
+  (let ((ba (make-bigint :bigint_sign (not (bigint-bigint_sign a))
+                         :bigint_len (bigint-bigint_len a)
+                         :bigint_chiffres (bigint-bigint_chiffres a))))
+  (return-from neg_bigint ba)
 )))
 
 (defun add_bigint (a b)
@@ -275,22 +275,22 @@ D'ou le nom de la fonction. |#
         (and (not (= len 0)) (= (aref chiffres (- len 1)) 0))
         (setq len ( - len 1)))
     )
-    (let ((s (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
-                          :bigint_len len
-                          :bigint_chiffres chiffres)))
-    (return-from mul_bigint_cp s)
+    (let ((bc (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
+                           :bigint_len len
+                           :bigint_chiffres chiffres)))
+    (return-from mul_bigint_cp bc)
     )))))
 
 (defun bigint_premiers_chiffres (a i)
 (progn
-  (let ((len (min2 i (bigint-bigint_len a))))
+  (let ((len (min2_ i (bigint-bigint_len a))))
     (loop while (and (not (= len 0)) (= (aref (bigint-bigint_chiffres a) (- len 1)) 0))
     do (setq len ( - len 1))
     )
-    (let ((u (make-bigint :bigint_sign (bigint-bigint_sign a)
-                          :bigint_len len
-                          :bigint_chiffres (bigint-bigint_chiffres a))))
-    (return-from bigint_premiers_chiffres u)
+    (let ((be (make-bigint :bigint_sign (bigint-bigint_sign a)
+                           :bigint_len len
+                           :bigint_chiffres (bigint-bigint_chiffres a))))
+    (return-from bigint_premiers_chiffres be)
   ))))
 
 (defun bigint_shift (a i)
@@ -306,10 +306,10 @@ D'ou le nom de la fonction. |#
                      (return-from lambda_5 0))
                  ))
                  ))))
-  (let ((v (make-bigint :bigint_sign (bigint-bigint_sign a)
-                        :bigint_len (+ (bigint-bigint_len a) i)
-                        :bigint_chiffres chiffres)))
-  (return-from bigint_shift v)
+  (let ((bf (make-bigint :bigint_sign (bigint-bigint_sign a)
+                         :bigint_len (+ (bigint-bigint_len a) i)
+                         :bigint_chiffres chiffres)))
+  (return-from bigint_shift bf)
   ))))
 
 (defun mul_bigint (aa bb)
@@ -324,7 +324,7 @@ D'ou le nom de la fonction. |#
       (return-from mul_bigint (mul_bigint_cp aa bb))
       (progn
         #| Algorithme de Karatsuba |#
-        (let ((split (quotient (min2 (bigint-bigint_len aa) (bigint-bigint_len bb)) 2)))
+        (let ((split (quotient (min2_ (bigint-bigint_len aa) (bigint-bigint_len bb)) 2)))
           (let ((a (bigint_shift aa (- 0 split))))
             (let ((b (bigint_premiers_chiffres aa split)))
               (let ((c (bigint_shift bb (- 0 split))))
@@ -377,10 +377,10 @@ Modulo
         (setq i ( quotient i 10))
       )
     )
-    (let ((w (make-bigint :bigint_sign t
-                          :bigint_len size
-                          :bigint_chiffres t_)))
-    (return-from bigint_of_int w)
+    (let ((bg (make-bigint :bigint_sign t
+                           :bigint_len size
+                           :bigint_chiffres t_)))
+    (return-from bigint_of_int bg)
     )))))
 
 (defun fact_bigint (a)

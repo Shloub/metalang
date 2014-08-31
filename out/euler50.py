@@ -1,7 +1,4 @@
 import math
-def min2( a, b ):
-    return min(a, b);
-
 def eratostene( t, max_ ):
     n = 0;
     for i in range(2, max_):
@@ -48,7 +45,8 @@ while (process):
           maxl = len;
           resp = sum[i];
       else:
-        stop = min2(stop, i);
+        c = min(stop, i);
+        stop = c;
   len += 1
 print("%d\n%d\n" % ( resp, maxl ), end='')
 

@@ -17,7 +17,7 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub max2{
+sub max2_{
   my($a,
   $b) = @_;
   if ($a > $b) {
@@ -49,8 +49,8 @@ sub nbPassePartout{
     if ($pp->[0] >= $max_ancient && $pp->[1] >= $max_recent) {
       return 1;
     }
-    $max_ancient_pp = max2($max_ancient_pp, $pp->[0]);
-    $max_recent_pp = max2($max_recent_pp, $pp->[1]);
+    $max_ancient_pp = max2_($max_ancient_pp, $pp->[0]);
+    $max_recent_pp = max2_($max_recent_pp, $pp->[1]);
     }
   if ($max_ancient_pp >= $max_ancient && $max_recent_pp >= $max_recent) {
     return 2;

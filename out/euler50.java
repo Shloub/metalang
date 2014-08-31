@@ -3,11 +3,6 @@ import java.util.*;
 public class euler50
 {
   
-  public static int min2(int a, int b)
-  {
-    return Math.min(a, b);
-  }
-  
   public static int eratostene(int[] t, int max_)
   {
     int n = 0;
@@ -73,7 +68,10 @@ public class euler50
           }
         }
         else
-          stop = min2(stop, i);
+        {
+          int c = Math.min(stop, i);
+          stop = c;
+        }
       }
       len ++;
     }

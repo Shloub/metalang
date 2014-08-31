@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int min2(int a, int b){
+int min2_(int a, int b){
   if (a < b)
     return a;
   else
@@ -72,7 +72,10 @@ int main(void){
         }
       }
       else
-        stop = min2(stop, i);
+      {
+        int c = min2_(stop, i);
+        stop = c;
+      }
     }
     len ++;
   }

@@ -1,6 +1,6 @@
 program euler12;
 
-function max2(a : Longint; b : Longint) : Longint;
+function max2_(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -13,8 +13,8 @@ begin
     end;
 end;
 
-type e = array of Longint;
-function eratostene(t : e; max_ : Longint) : Longint;
+type h = array of Longint;
+function eratostene(t : h; max_ : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -38,7 +38,7 @@ begin
   exit(n);
 end;
 
-function fillPrimesFactors(t : e; n : Longint; primes : e; nprimes : Longint) : Longint;
+function fillPrimesFactors(t : h; n : Longint; primes : h; nprimes : Longint) : Longint;
 var
   d : Longint;
   i : Longint;
@@ -62,7 +62,7 @@ end;
 
 function find(ndiv2 : Longint) : Longint;
 var
-  era : e;
+  era : h;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -74,8 +74,8 @@ var
   ndivs : Longint;
   nprimes : Longint;
   o : Longint;
-  primes : e;
-  primesFactors : e;
+  primes : h;
+  primesFactors : h;
 begin
   maximumprimes := 110;
   SetLength(era, maximumprimes);
@@ -106,7 +106,7 @@ begin
     begin
       primesFactors[m] := 0;
     end;
-    max_ := max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    max_ := max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] := primesFactors[2] - 1;
     ndivs := 1;
     for i := 0 to  max_ do

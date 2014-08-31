@@ -27,11 +27,11 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun max2 (a b)
+(defun max2_ (a b)
 (if
   (> a b)
-  (return-from max2 a)
-  (return-from max2 b)))
+  (return-from max2_ a)
+  (return-from max2_ b)))
 
 (defun nbPassePartout (n passepartout m serrures)
 (progn
@@ -59,8 +59,8 @@
                 (if
                   (and (>= (aref pp 0) max_ancient) (>= (aref pp 1) max_recent))
                   (return-from nbPassePartout 1))
-                (setq max_ancient_pp (max2 max_ancient_pp (aref pp 0)))
-                (setq max_recent_pp (max2 max_recent_pp (aref pp 1)))
+                (setq max_ancient_pp (max2_ max_ancient_pp (aref pp 0)))
+                (setq max_recent_pp (max2_ max_recent_pp (aref pp 1)))
               ))
           )
           (if

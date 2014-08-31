@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-int max2(int a, int b){
+int max2_(int a, int b){
   if (a > b)
     return a;
   else
     return b;
 }
 
-int min2(int a, int b){
+int min2_(int a, int b){
   if (a < b)
     return a;
   else
@@ -35,11 +35,11 @@ bigint * read_bigint(int len){
     chiffres->at(i) = chiffres->at(len - 1 - i);
     chiffres->at(len - 1 - i) = tmp;
   }
-  bigint * o = new bigint();
-  o->bigint_sign=true;
-  o->bigint_len=len;
-  o->bigint_chiffres=chiffres;
-  return o;
+  bigint * x = new bigint();
+  x->bigint_sign=true;
+  x->bigint_len=len;
+  x->bigint_chiffres=chiffres;
+  return x;
 }
 
 void print_bigint(bigint * a){
@@ -95,7 +95,7 @@ bool bigint_lt(bigint * a, bigint * b){
 
 bigint * add_bigint_positif(bigint * a, bigint * b){
   /* Une addition ou on en a rien a faire des signes */
-  int len = max2(a->bigint_len, b->bigint_len) + 1;
+  int len = max2_(a->bigint_len, b->bigint_len) + 1;
   int retenue = 0;
   std::vector<int > *chiffres = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
@@ -110,11 +110,11 @@ bigint * add_bigint_positif(bigint * a, bigint * b){
   }
   while (len > 0 && chiffres->at(len - 1) == 0)
     len --;
-  bigint * p = new bigint();
-  p->bigint_sign=true;
-  p->bigint_len=len;
-  p->bigint_chiffres=chiffres;
-  return p;
+  bigint * y = new bigint();
+  y->bigint_sign=true;
+  y->bigint_len=len;
+  y->bigint_chiffres=chiffres;
+  return y;
 }
 
 bigint * sub_bigint_positif(bigint * a, bigint * b){
@@ -140,19 +140,19 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres->at(len - 1) == 0)
     len --;
-  bigint * q = new bigint();
-  q->bigint_sign=true;
-  q->bigint_len=len;
-  q->bigint_chiffres=chiffres;
-  return q;
+  bigint * z = new bigint();
+  z->bigint_sign=true;
+  z->bigint_len=len;
+  z->bigint_chiffres=chiffres;
+  return z;
 }
 
 bigint * neg_bigint(bigint * a){
-  bigint * r = new bigint();
-  r->bigint_sign=!a->bigint_sign;
-  r->bigint_len=a->bigint_len;
-  r->bigint_chiffres=a->bigint_chiffres;
-  return r;
+  bigint * ba = new bigint();
+  ba->bigint_sign=!a->bigint_sign;
+  ba->bigint_len=a->bigint_len;
+  ba->bigint_chiffres=a->bigint_chiffres;
+  return ba;
 }
 
 bigint * add_bigint(bigint * a, bigint * b){
@@ -209,22 +209,22 @@ D'ou le nom de la fonction. */
   for (int l = 0 ; l <= 2; l ++)
     if (len != 0 && chiffres->at(len - 1) == 0)
     len --;
-  bigint * s = new bigint();
-  s->bigint_sign=a->bigint_sign == b->bigint_sign;
-  s->bigint_len=len;
-  s->bigint_chiffres=chiffres;
-  return s;
+  bigint * bc = new bigint();
+  bc->bigint_sign=a->bigint_sign == b->bigint_sign;
+  bc->bigint_len=len;
+  bc->bigint_chiffres=chiffres;
+  return bc;
 }
 
 bigint * bigint_premiers_chiffres(bigint * a, int i){
-  int len = min2(i, a->bigint_len);
+  int len = min2_(i, a->bigint_len);
   while (len != 0 && a->bigint_chiffres->at(len - 1) == 0)
     len --;
-  bigint * u = new bigint();
-  u->bigint_sign=a->bigint_sign;
-  u->bigint_len=len;
-  u->bigint_chiffres=a->bigint_chiffres;
-  return u;
+  bigint * be = new bigint();
+  be->bigint_sign=a->bigint_sign;
+  be->bigint_len=len;
+  be->bigint_chiffres=a->bigint_chiffres;
+  return be;
 }
 
 bigint * bigint_shift(bigint * a, int i){
@@ -234,11 +234,11 @@ bigint * bigint_shift(bigint * a, int i){
     chiffres->at(k) = a->bigint_chiffres->at(k - i);
   else
     chiffres->at(k) = 0;
-  bigint * v = new bigint();
-  v->bigint_sign=a->bigint_sign;
-  v->bigint_len=a->bigint_len + i;
-  v->bigint_chiffres=chiffres;
-  return v;
+  bigint * bf = new bigint();
+  bf->bigint_sign=a->bigint_sign;
+  bf->bigint_len=a->bigint_len + i;
+  bf->bigint_chiffres=chiffres;
+  return bf;
 }
 
 bigint * mul_bigint(bigint * aa, bigint * bb){
@@ -249,7 +249,7 @@ bigint * mul_bigint(bigint * aa, bigint * bb){
   else if (aa->bigint_len < 3 || bb->bigint_len < 3)
     return mul_bigint_cp(aa, bb);
   /* Algorithme de Karatsuba */
-  int split = min2(aa->bigint_len, bb->bigint_len) / 2;
+  int split = min2_(aa->bigint_len, bb->bigint_len) / 2;
   bigint * a = bigint_shift(aa, -split);
   bigint * b = bigint_premiers_chiffres(aa, split);
   bigint * c = bigint_shift(bb, -split);
@@ -290,11 +290,11 @@ bigint * bigint_of_int(int i){
     t->at(k) = i % 10;
     i /= 10;
   }
-  bigint * w = new bigint();
-  w->bigint_sign=true;
-  w->bigint_len=size;
-  w->bigint_chiffres=t;
-  return w;
+  bigint * bg = new bigint();
+  bg->bigint_sign=true;
+  bg->bigint_len=size;
+  bg->bigint_chiffres=t;
+  return bg;
 }
 
 bigint * fact_bigint(bigint * a){

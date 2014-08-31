@@ -1,22 +1,22 @@
 
 (si::use-fast-links nil)
 (defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun max2 (a b)
+(defun max2_ (a b)
 (if
   (> a b)
-  (return-from max2 a)
-  (return-from max2 b)))
+  (return-from max2_ a)
+  (return-from max2_ b)))
 
-(defun min2 (a b)
+(defun min2_ (a b)
 (if
   (< a b)
-  (return-from min2 a)
-  (return-from min2 b)))
+  (return-from min2_ a)
+  (return-from min2_ b)))
 
 (defun pgcd (a b)
 (progn
-  (let ((c (min2 a b)))
-    (let ((d (max2 a b)))
+  (let ((c (min2_ a b)))
+    (let ((d (max2_ a b)))
       (let ((reste (remainder d c)))
         (if
           (= reste 0)

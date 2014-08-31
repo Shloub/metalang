@@ -1,6 +1,6 @@
 program euler05;
 
-function max2(a : Longint; b : Longint) : Longint;
+function max2_(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -13,12 +13,12 @@ begin
     end;
 end;
 
-type f = array of Longint;
-function primesfactors(n : Longint) : f;
+type p = array of Longint;
+function primesfactors(n : Longint) : p;
 var
   d : Longint;
   i : Longint;
-  tab : f;
+  tab : p;
 begin
   SetLength(tab, n + 1);
   for i := 0 to  n + 1 - 1 do
@@ -45,15 +45,18 @@ end;
 
 
 var
+  f : Longint;
+  g : Longint;
+  h : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
   l : Longint;
   lim : Longint;
   m : Longint;
-  o : f;
+  o : p;
   product : Longint;
-  t : f;
+  t : p;
 begin
   lim := 20;
   SetLength(o, lim + 1);
@@ -66,7 +69,10 @@ begin
     t := primesfactors(i);
     for j := 1 to  i do
     begin
-      o[j] := max2(o[j], t[j]);
+      g := o[j];
+      h := t[j];
+      f := max2_(g, h);
+      o[j] := f;
     end;
   end;
   product := 1;

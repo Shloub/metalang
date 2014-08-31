@@ -26,10 +26,6 @@ function read_int_(){
     }
   }
 }
-function max2(a, b){
-  return Math.max(a, b);
-}
-
 function read_int_matrix(x, y){
   var tab = new Array(y);
   for (var z = 0 ; z <= y - 1; z++)
@@ -60,78 +56,82 @@ var directions = new Array(8);
 for (var i = 0 ; i <= 8 - 1; i++)
   if (i == 0)
 {
-  var s = {
+  var v = {
     tuple_int_int_field_0 : 0,
     tuple_int_int_field_1 : 1
   };
-  directions[i] = s;
+  directions[i] = v;
 }
 else if (i == 1)
 {
-  var r = {
+  var u = {
     tuple_int_int_field_0 : 1,
+    tuple_int_int_field_1 : 0
+  };
+  directions[i] = u;
+}
+else if (i == 2)
+{
+  var s = {
+    tuple_int_int_field_0 : 0,
+    tuple_int_int_field_1 : -1
+  };
+  directions[i] = s;
+}
+else if (i == 3)
+{
+  var r = {
+    tuple_int_int_field_0 : -1,
     tuple_int_int_field_1 : 0
   };
   directions[i] = r;
 }
-else if (i == 2)
+else if (i == 4)
 {
   var q = {
-    tuple_int_int_field_0 : 0,
-    tuple_int_int_field_1 : -1
+    tuple_int_int_field_0 : 1,
+    tuple_int_int_field_1 : 1
   };
   directions[i] = q;
 }
-else if (i == 3)
+else if (i == 5)
 {
   var p = {
-    tuple_int_int_field_0 : -1,
-    tuple_int_int_field_1 : 0
+    tuple_int_int_field_0 : 1,
+    tuple_int_int_field_1 : -1
   };
   directions[i] = p;
 }
-else if (i == 4)
+else if (i == 6)
 {
   var o = {
-    tuple_int_int_field_0 : 1,
+    tuple_int_int_field_0 : -1,
     tuple_int_int_field_1 : 1
   };
   directions[i] = o;
 }
-else if (i == 5)
+else
 {
   var l = {
-    tuple_int_int_field_0 : 1,
+    tuple_int_int_field_0 : -1,
     tuple_int_int_field_1 : -1
   };
   directions[i] = l;
-}
-else if (i == 6)
-{
-  var k = {
-    tuple_int_int_field_0 : -1,
-    tuple_int_int_field_1 : 1
-  };
-  directions[i] = k;
-}
-else
-{
-  var h = {
-    tuple_int_int_field_0 : -1,
-    tuple_int_int_field_1 : -1
-  };
-  directions[i] = h;
 }
 var max_ = 0;
 var m = read_int_matrix(20, 20);
 for (var j = 0 ; j <= 7; j++)
 {
-  var g = directions[j];
-  var dx = g.tuple_int_int_field_0;
-  var dy = g.tuple_int_int_field_1;
+  var k = directions[j];
+  var dx = k.tuple_int_int_field_0;
+  var dy = k.tuple_int_int_field_1;
   for (var x = 0 ; x <= 19; x++)
     for (var y = 0 ; y <= 19; y++)
-      max_ = max2(max_, find(4, m, x, y, dx, dy));
+    {
+      var h = find(4, m, x, y, dx, dy);
+      var g = Math.max(max_, h);
+      max_ = g;
+  }
 }
 util.print(max_, "\n");
 

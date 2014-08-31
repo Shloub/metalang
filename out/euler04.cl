@@ -1,11 +1,11 @@
 
 (si::use-fast-links nil)
 (defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun max2 (a b)
+(defun max2_ (a b)
 (if
   (> a b)
-  (return-from max2 a)
-  (return-from max2 b)))
+  (return-from max2_ a)
+  (return-from max2_ b)))
 
 #|
 
@@ -55,7 +55,10 @@ c * f * 10000
                   (let ((mul (+ (+ (+ (+ (* a d) (* 10 (+ (* a e) (* b d)))) (* 100 (+ (+ (* a f) (* b e)) (* c d)))) (* 1000 (+ (* c e) (* b f)))) (* (* 10000 c) f))))
                     (if
                       (and (and (= (chiffre 0 mul) (chiffre 5 mul)) (= (chiffre 1 mul) (chiffre 4 mul))) (= (chiffre 2 mul) (chiffre 3 mul)))
-                      (setq m (max2 mul m)))
+                      (progn
+                        (let ((g (max2_ mul m)))
+                          (setq m g)
+                        )))
                   ))
                 )
               )

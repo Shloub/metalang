@@ -25,13 +25,6 @@ def stdinsep():
 def mod(x, y):
   return x - y * math.trunc(x / y)
 
-def max2( a, b ):
-    return max(a, b);
-
-def min2( a, b ):
-    return min(a, b);
-
-
 def read_bigint( len ):
     chiffres = [None] * len
     for j in range(0, len):
@@ -89,7 +82,7 @@ def bigint_lt( a, b ):
 
 def add_bigint_positif( a, b ):
     """ Une addition ou on en a rien a faire des signes """
-    len = max2(a["bigint_len"], b["bigint_len"]) + 1;
+    len = max(a["bigint_len"], b["bigint_len"]) + 1;
     retenue = 0;
     chiffres = [None] * len
     for i in range(0, len):
@@ -185,7 +178,7 @@ D'ou le nom de la fonction. """
       "bigint_chiffres":chiffres};
 
 def bigint_premiers_chiffres( a, i ):
-    len = min2(i, a["bigint_len"]);
+    len = min(i, a["bigint_len"]);
     while (len != 0 and a["bigint_chiffres"][len - 1] == 0):
       len -= 1
     return {
@@ -213,7 +206,7 @@ def mul_bigint( aa, bb ):
     elif aa["bigint_len"] < 3 or bb["bigint_len"] < 3:
       return mul_bigint_cp(aa, bb);
     """ Algorithme de Karatsuba """
-    split = math.trunc(min2(aa["bigint_len"], bb["bigint_len"]) / 2);
+    split = math.trunc(min(aa["bigint_len"], bb["bigint_len"]) / 2);
     a = bigint_shift(aa, -(split));
     b = bigint_premiers_chiffres(aa, split);
     c = bigint_shift(bb, -(split));

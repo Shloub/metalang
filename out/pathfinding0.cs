@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 public class pathfinding0
 {
-  public static int min2(int a, int b)
-  {
-    return Math.Min(a, b);
-  }
-  
   public static char[][] read_char_matrix(int x, int y)
   {
     char[][] tab = new char[y][];
@@ -33,10 +28,12 @@ public class pathfinding0
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int k = min2(val1, val2);
-      int l = min2(min2(k, val3), val4);
-      int h = l;
-      int out_ = 1 + h;
+      int p = Math.Min(val1, val2);
+      int q = Math.Min(p, val3);
+      int r = Math.Min(q, val4);
+      int s = r;
+      int o = s;
+      int out_ = 1 + o;
       cache[posY][posX] = out_;
       return out_;
     }

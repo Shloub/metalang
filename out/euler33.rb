@@ -3,25 +3,9 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def max2( a, b )
-    if a > b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
-def min2( a, b )
-    if a < b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 def pgcd( a, b )
-    c = min2(a, b)
-    d = max2(a, b)
+    c = [a, b].min
+    d = [a, b].max
     reste = mod(d, c)
     if reste == 0 then
       return (c);

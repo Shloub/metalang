@@ -11,7 +11,7 @@ std::vector<char> *getline(){
   std::vector<char> *c = new std::vector<char>(line.begin(), line.end());
   return c;
 }
-int min2(int a, int b){
+int min2_(int a, int b){
   if (a < b)
     return a;
   else
@@ -41,10 +41,12 @@ int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vecto
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int k = min2(val1, val2);
-    int l = min2(min2(k, val3), val4);
-    int h = l;
-    int out_ = 1 + h;
+    int p = min2_(val1, val2);
+    int q = min2_(p, val3);
+    int r = min2_(q, val4);
+    int s = r;
+    int o = s;
+    int out_ = 1 + o;
     cache->at(posY)->at(posX) = out_;
     return out_;
   }
@@ -68,11 +70,11 @@ int pathfind(std::vector<std::vector<char> *> * tab, int x, int y){
 
 
 int main(){
-  int q, o;
-  std::cin >> o >> std::skipws;
-  int x = o;
-  std::cin >> q >> std::skipws;
-  int y = q;
+  int w, u;
+  std::cin >> u >> std::skipws;
+  int x = u;
+  std::cin >> w >> std::skipws;
+  int y = w;
   std::cout << x << " " << y << "\n";
   std::vector<std::vector<char> *> * tab = read_char_matrix(x, y);
   int result = pathfind(tab, x, y);

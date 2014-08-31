@@ -12,7 +12,7 @@ sub remainder {
     return $a - int($a / $b) * $b;
 }
 
-sub max2{
+sub max2_{
   my($a,
   $b) = @_;
   if ($a > $b) {
@@ -48,7 +48,7 @@ foreach my $k (1 .. 995) {
   }
   $last->[$index] = $f;
   $index = remainder($index + 1, 5);
-  $max_ = max2($max_, $i);
+  $max_ = max2_($max_, $i);
   }
 print($max_, "\n");
 

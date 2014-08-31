@@ -9,11 +9,11 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
-(defun min2 (a b)
+(defun min2_ (a b)
 (if
   (< a b)
-  (return-from min2 a)
-  (return-from min2 b)))
+  (return-from min2_ a)
+  (return-from min2_ b)))
 
 (defun eratostene (t_ max_)
 (progn
@@ -111,7 +111,10 @@
                                      (setq resp (aref sum i))
                                    ))
                                )
-                               (setq stop (min2 stop i)))
+                               (progn
+                                 (let ((c (min2_ stop i)))
+                                   (setq stop c)
+                                 )))
                            ))
                        )
                        (setq len ( + len 1))

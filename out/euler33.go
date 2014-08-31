@@ -1,6 +1,6 @@
 package main
 import "fmt"
-func max2(a int, b int) int{
+func max2_(a int, b int) int{
   if a > b {
     return a
   } else {
@@ -8,7 +8,7 @@ func max2(a int, b int) int{
   }
 }
 
-func min2(a int, b int) int{
+func min2_(a int, b int) int{
   if a < b {
     return a
   } else {
@@ -17,8 +17,8 @@ func min2(a int, b int) int{
 }
 
 func pgcd(a int, b int) int{
-  var c int = min2(a, b)
-  var d int = max2(a, b)
+  var c int = min2_(a, b)
+  var d int = max2_(a, b)
   var reste int = d % c
   if reste == 0 {
     return c

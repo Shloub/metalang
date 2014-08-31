@@ -69,7 +69,7 @@ begin
    until false;
 end;
 
-function min2(a : Longint; b : Longint) : Longint;
+function min2_(a : Longint; b : Longint) : Longint;
 begin
   if a < b
   then
@@ -82,42 +82,44 @@ begin
     end;
 end;
 
-type v = array of array of char;
-type w = array of char;
-function read_char_matrix(x : Longint; y : Longint) : v;
+type be = array of array of char;
+type bf = array of char;
+function read_char_matrix(x : Longint; y : Longint) : be;
 var
-  h : w;
-  k : Longint;
-  l : char;
-  tab : v;
+  o : bf;
+  p : Longint;
+  q : char;
+  tab : be;
   z : Longint;
 begin
   SetLength(tab, y);
   for z := 0 to  y - 1 do
   begin
-    SetLength(h, x);
-    for k := 0 to  x - 1 do
+    SetLength(o, x);
+    for p := 0 to  x - 1 do
     begin
-      l := read_char_();
-      h[k] := l;
+      q := read_char_();
+      o[p] := q;
     end;
     skip();
-    tab[z] := h;
+    tab[z] := o;
   end;
   exit(tab);
 end;
 
-type ba = array of array of Longint;
-function pathfind_aux(cache : ba; tab : v; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
+type bg = array of array of Longint;
+function pathfind_aux(cache : bg; tab : be; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
-  m : Longint;
-  o : Longint;
   out_ : Longint;
-  p : Longint;
+  r : Longint;
+  s : Longint;
+  u : Longint;
+  v : Longint;
   val1 : Longint;
   val2 : Longint;
   val3 : Longint;
   val4 : Longint;
+  w : Longint;
 begin
   if (posX = (x - 1)) and (posY = (y - 1)) then
     begin
@@ -143,22 +145,24 @@ begin
       val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY);
       val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1);
       val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      o := min2(val1, val2);
-      p := min2(min2(o, val3), val4);
-      m := p;
-      out_ := 1 + m;
+      s := min2_(val1, val2);
+      u := min2_(s, val3);
+      v := min2_(u, val4);
+      w := v;
+      r := w;
+      out_ := 1 + r;
       cache[posY][posX] := out_;
       exit(out_);
     end;;;;
 end;
 
-type bb = array of Longint;
-function pathfind(tab : v; x : Longint; y : Longint) : Longint;
+type bh = array of Longint;
+function pathfind(tab : be; x : Longint; y : Longint) : Longint;
 var
-  cache : ba;
+  cache : bg;
   i : Longint;
   j : Longint;
-  tmp : bb;
+  tmp : bh;
 begin
   SetLength(cache, y);
   for i := 0 to  y - 1 do
@@ -177,19 +181,19 @@ end;
 
 
 var
-  r : Longint;
+  bb : Longint;
+  bd : Longint;
   result : Longint;
-  tab : v;
-  u : Longint;
+  tab : be;
   x : Longint;
   y : Longint;
 begin
-  r := read_int_();
+  bb := read_int_();
   skip();
-  x := r;
-  u := read_int_();
+  x := bb;
+  bd := read_int_();
   skip();
-  y := u;
+  y := bd;
   Write(x);
   Write(' ');
   Write(y);

@@ -23,7 +23,7 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub min2{
+sub min2_{
   my($a,
   $b) = @_;
   if ($a < $b) {
@@ -54,10 +54,12 @@ sub pathfind_aux{
     my $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     my $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     my $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-    my $h = min2($val1, $val2);
-    my $k = min2(min2($h, $val3), $val4);
-    my $g = $k;
-    my $out_ = 1 + $g;
+    my $n = min2_($val1, $val2);
+    my $o = min2_($n, $val3);
+    my $p = min2_($o, $val4);
+    my $q = $p;
+    my $m = $q;
+    my $out_ = 1 + $m;
     $cache->[$posY]->[$posX] = $out_;
     return $out_;
   }

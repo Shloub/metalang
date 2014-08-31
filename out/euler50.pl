@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-sub min2{
+sub min2_{
   my($a,
   $b) = @_;
   if ($a < $b) {
@@ -72,7 +72,8 @@ while ($process)
           $resp = $sum->[$i];
         }
       }else{
-        $stop = min2($stop, $i);
+        my $c = min2_($stop, $i);
+        $stop = $c;
       }
     }
     }

@@ -3,14 +3,6 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def max2( a, b )
-    if a > b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 i = 1
 last = [];
 for j in (0 ..  5 - 1) do
@@ -37,7 +29,7 @@ for k in (1 ..  995) do
   end
   last[index] = f;
   index = mod(index + 1, 5);
-  max_ = max2(max_, i);
+  max_ = [max_, i].max;
 end
 printf "%d\n", max_
 

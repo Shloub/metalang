@@ -1,6 +1,3 @@
-def max2( a, b ):
-    return max(a, b);
-
 def read_int_matrix( x, y ):
     return [list(map(int, input().split())) for i in range(y)];
 
@@ -36,6 +33,8 @@ for j in range(0, 1 + 7):
   (dx, dy) = directions[j]
   for x in range(0, 1 + 19):
     for y in range(0, 1 + 19):
-      max_ = max2(max_, find(4, m, x, y, dx, dy));
+      d = find(4, m, x, y, dx, dy);
+      c = max(max_, d);
+      max_ = c;
 print("%d\n" % ( max_ ), end='')
 

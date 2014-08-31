@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int max2(int a, int b){
+int max2_(int a, int b){
   if (a > b)
     return a;
   else
@@ -41,7 +41,7 @@ int main(void){
     }
     last[index] = f;
     index = (index + 1) % 5;
-    max_ = max2(max_, i);
+    max_ = max2_(max_, i);
   }
   printf("%d\n", max_);
   return 0;

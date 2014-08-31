@@ -3,11 +3,6 @@ import java.util.*;
 public class euler05
 {
   
-  public static int max2(int a, int b)
-  {
-    return Math.max(a, b);
-  }
-  
   public static int[] primesfactors(int n)
   {
     int[] tab = new int[n + 1];
@@ -37,7 +32,12 @@ public class euler05
     {
       int[] t = primesfactors(i);
       for (int j = 1 ; j <= i; j ++)
-        o[j] = max2(o[j], t[j]);
+      {
+        int g = o[j];
+        int h = t[j];
+        int f = Math.max(g, h);
+        o[j] = f;
+      }
     }
     int product = 1;
     for (int k = 1 ; k <= lim; k ++)

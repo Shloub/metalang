@@ -3,16 +3,6 @@ import java.util.*;
 public class bigints
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int max2(int a, int b)
-  {
-    return Math.max(a, b);
-  }
-  
-  public static int min2(int a, int b)
-  {
-    return Math.min(a, b);
-  }
-  
   static class bigint {public boolean bigint_sign;public int bigint_len;public int[] bigint_chiffres;}
   public static bigint read_bigint(int len)
   {
@@ -28,11 +18,11 @@ public class bigints
       chiffres[i] = chiffres[len - 1 - i];
       chiffres[len - 1 - i] = tmp;
     }
-    bigint o = new bigint();
-    o.bigint_sign = true;
-    o.bigint_len = len;
-    o.bigint_chiffres = chiffres;
-    return o;
+    bigint x = new bigint();
+    x.bigint_sign = true;
+    x.bigint_len = len;
+    x.bigint_chiffres = chiffres;
+    return x;
   }
   
   public static void print_bigint(bigint a)
@@ -93,7 +83,7 @@ public class bigints
   public static bigint add_bigint_positif(bigint a, bigint b)
   {
     /* Une addition ou on en a rien a faire des signes */
-    int len = max2(a.bigint_len, b.bigint_len) + 1;
+    int len = Math.max(a.bigint_len, b.bigint_len) + 1;
     int retenue = 0;
     int[] chiffres = new int[len];
     for (int i = 0 ; i < len; i++)
@@ -108,11 +98,11 @@ public class bigints
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint p = new bigint();
-    p.bigint_sign = true;
-    p.bigint_len = len;
-    p.bigint_chiffres = chiffres;
-    return p;
+    bigint y = new bigint();
+    y.bigint_sign = true;
+    y.bigint_len = len;
+    y.bigint_chiffres = chiffres;
+    return y;
   }
   
   public static bigint sub_bigint_positif(bigint a, bigint b)
@@ -139,20 +129,20 @@ Pré-requis : a > b
     }
     while (len > 0 && chiffres[len - 1] == 0)
       len --;
-    bigint q = new bigint();
-    q.bigint_sign = true;
-    q.bigint_len = len;
-    q.bigint_chiffres = chiffres;
-    return q;
+    bigint z = new bigint();
+    z.bigint_sign = true;
+    z.bigint_len = len;
+    z.bigint_chiffres = chiffres;
+    return z;
   }
   
   public static bigint neg_bigint(bigint a)
   {
-    bigint r = new bigint();
-    r.bigint_sign = !a.bigint_sign;
-    r.bigint_len = a.bigint_len;
-    r.bigint_chiffres = a.bigint_chiffres;
-    return r;
+    bigint ba = new bigint();
+    ba.bigint_sign = !a.bigint_sign;
+    ba.bigint_len = a.bigint_len;
+    ba.bigint_chiffres = a.bigint_chiffres;
+    return ba;
   }
   
   public static bigint add_bigint(bigint a, bigint b)
@@ -212,23 +202,23 @@ D'ou le nom de la fonction. */
     for (int l = 0 ; l <= 2; l ++)
       if (len != 0 && chiffres[len - 1] == 0)
       len --;
-    bigint s = new bigint();
-    s.bigint_sign = a.bigint_sign == b.bigint_sign;
-    s.bigint_len = len;
-    s.bigint_chiffres = chiffres;
-    return s;
+    bigint bc = new bigint();
+    bc.bigint_sign = a.bigint_sign == b.bigint_sign;
+    bc.bigint_len = len;
+    bc.bigint_chiffres = chiffres;
+    return bc;
   }
   
   public static bigint bigint_premiers_chiffres(bigint a, int i)
   {
-    int len = min2(i, a.bigint_len);
+    int len = Math.min(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres[len - 1] == 0)
       len --;
-    bigint u = new bigint();
-    u.bigint_sign = a.bigint_sign;
-    u.bigint_len = len;
-    u.bigint_chiffres = a.bigint_chiffres;
-    return u;
+    bigint be = new bigint();
+    be.bigint_sign = a.bigint_sign;
+    be.bigint_len = len;
+    be.bigint_chiffres = a.bigint_chiffres;
+    return be;
   }
   
   public static bigint bigint_shift(bigint a, int i)
@@ -239,11 +229,11 @@ D'ou le nom de la fonction. */
       chiffres[k] = a.bigint_chiffres[k - i];
     else
       chiffres[k] = 0;
-    bigint v = new bigint();
-    v.bigint_sign = a.bigint_sign;
-    v.bigint_len = a.bigint_len + i;
-    v.bigint_chiffres = chiffres;
-    return v;
+    bigint bf = new bigint();
+    bf.bigint_sign = a.bigint_sign;
+    bf.bigint_len = a.bigint_len + i;
+    bf.bigint_chiffres = chiffres;
+    return bf;
   }
   
   public static bigint mul_bigint(bigint aa, bigint bb)
@@ -255,7 +245,7 @@ D'ou le nom de la fonction. */
     else if (aa.bigint_len < 3 || bb.bigint_len < 3)
       return mul_bigint_cp(aa, bb);
     /* Algorithme de Karatsuba */
-    int split = min2(aa.bigint_len, bb.bigint_len) / 2;
+    int split = Math.min(aa.bigint_len, bb.bigint_len) / 2;
     bigint a = bigint_shift(aa, -split);
     bigint b = bigint_premiers_chiffres(aa, split);
     bigint c = bigint_shift(bb, -split);
@@ -298,11 +288,11 @@ Modulo
       t[k] = i % 10;
       i /= 10;
     }
-    bigint w = new bigint();
-    w.bigint_sign = true;
-    w.bigint_len = size;
-    w.bigint_chiffres = t;
-    return w;
+    bigint bg = new bigint();
+    bg.bigint_sign = true;
+    bg.bigint_len = size;
+    bg.bigint_chiffres = t;
+    return bg;
   }
   
   public static bigint fact_bigint(bigint a)

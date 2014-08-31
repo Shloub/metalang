@@ -26,7 +26,7 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function max2(a : Longint; b : Longint) : Longint;
+function max2_(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -87,7 +87,7 @@ begin
       end;
     last[index] := f;
     index := (index + 1) Mod 5;
-    max_ := max2(max_, i);
+    max_ := max2_(max_, i);
   end;
   Write(max_);
   Write(''#10'');

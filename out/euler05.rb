@@ -3,14 +3,6 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def max2( a, b )
-    if a > b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 def primesfactors( n )
     tab = [];
     for i in (0 ..  n + 1 - 1) do
@@ -37,7 +29,10 @@ end
 for i in (1 ..  lim) do
   t = primesfactors(i)
   for j in (1 ..  i) do
-    o[j] = max2(o[j], t[j]);
+    g = o[j]
+    h = t[j]
+    f = [g, h].max
+    o[j] = f;
   end
 end
 product = 1

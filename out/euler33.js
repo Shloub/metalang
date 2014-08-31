@@ -1,15 +1,7 @@
 var util = require("util");
-function max2(a, b){
-  return Math.max(a, b);
-}
-
-function min2(a, b){
-  return Math.min(a, b);
-}
-
 function pgcd(a, b){
-  var c = min2(a, b);
-  var d = max2(a, b);
+  var c = Math.min(a, b);
+  var d = Math.max(a, b);
   var reste = ~~(d % c);
   if (reste == 0)
     return c;

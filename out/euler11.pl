@@ -17,7 +17,7 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub max2{
+sub max2_{
   my($a,
   $b) = @_;
   if ($a > $b) {
@@ -85,7 +85,9 @@ foreach my $j (0 .. 7) {
   my ($dx, $dy) = @{ $directions->[$j] };
   foreach my $x (0 .. 19) {
     foreach my $y (0 .. 19) {
-      $max_ = max2($max_, find(4, $m, $x, $y, $dx, $dy));
+      my $h = find(4, $m, $x, $y, $dx, $dy);
+      my $g = max2_($max_, $h);
+      $max_ = $g;
       }
     }
   }

@@ -10,10 +10,6 @@ function read_char_(){
     current_char = read_char0();
     return out;
 }
-function max2(a, b){
-  return Math.max(a, b);
-}
-
 var i = 1;
 var last = new Array(5);
 for (var j = 0 ; j <= 5 - 1; j++)
@@ -44,7 +40,7 @@ for (var k = 1 ; k <= 995; k++)
   }
   last[index] = f;
   index = ~~((index + 1) % 5);
-  max_ = max2(max_, i);
+  max_ = Math.max(max_, i);
 }
 util.print(max_, "\n");
 

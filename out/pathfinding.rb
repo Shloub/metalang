@@ -1,12 +1,4 @@
 require "scanf.rb"
-def min2( a, b )
-    if a < b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 def pathfind_aux( cache, tab, x, y, posX, posY )
     if posX == x - 1 && posY == y - 1 then
       return (0);
@@ -22,10 +14,8 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      h = min2(val1, val2)
-      k = min2(min2(h, val3), val4)
-      g = k
-      out_ = 1 + g
+      e = [val1, val2, val3, val4].min
+      out_ = 1 + e
       cache[posY][posX] = out_;
       return (out_);
     end

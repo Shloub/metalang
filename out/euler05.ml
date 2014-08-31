@@ -1,6 +1,3 @@
-let max2 a b =
-  max a b
-
 let primesfactors n =
   let n = ref n in
   let tab = Array.init ((!n) + 1) (fun _i ->
@@ -27,7 +24,10 @@ begin
   for i = 1 to lim do
     let t = primesfactors i in
     for j = 1 to i do
-      o.(j) <- max2 o.(j) t.(j)
+      let g = o.(j) in
+      let h = t.(j) in
+      let f = (max (g) (h)) in
+      o.(j) <- f
     done
   done;
   let product = ref( 1 ) in

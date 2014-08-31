@@ -1,15 +1,7 @@
 <?php
-function max2($a, $b){
-  return max($a, $b);
-}
-
-function min2($a, $b){
-  return min($a, $b);
-}
-
 function pgcd($a, $b){
-  $c = min2($a, $b);
-  $d = max2($a, $b);
+  $c = min($a, $b);
+  $d = max($a, $b);
   $reste = $d % $c;
   if ($reste == 0)
     return $c;

@@ -1,12 +1,4 @@
 require "scanf.rb"
-def min2( a, b )
-    if a < b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 def eratostene( t, max_ )
     n = 0
     for i in (2 ..  max_ - 1) do
@@ -68,7 +60,8 @@ while process do
           resp = sum[i];
         end
       else
-        stop = min2(stop, i);
+        c = [stop, i].min
+        stop = c;
       end
     end
   end

@@ -3,7 +3,7 @@ import "fmt"
 import "os"
 import "bufio"
 var reader *bufio.Reader
-func max2(a int, b int) int{
+func max2_(a int, b int) int{
   if a > b {
     return a
   } else {
@@ -41,7 +41,7 @@ func main() {
       }
       last[index] = f;
       index = (index + 1) % 5;
-      max_ = max2(max_, i);
+      max_ = max2_(max_, i);
   }
   fmt.Printf("%d\n", max_);
 }

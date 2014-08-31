@@ -1,12 +1,4 @@
 require "scanf.rb"
-def max2( a, b )
-    if a > b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 def nbPassePartout( n, passepartout, m, serrures )
     max_ancient = 0
     max_recent = 0
@@ -25,8 +17,8 @@ def nbPassePartout( n, passepartout, m, serrures )
       if pp[0] >= max_ancient && pp[1] >= max_recent then
         return (1);
       end
-      max_ancient_pp = max2(max_ancient_pp, pp[0]);
-      max_recent_pp = max2(max_recent_pp, pp[1]);
+      max_ancient_pp = [max_ancient_pp, pp[0]].max;
+      max_recent_pp = [max_recent_pp, pp[1]].max;
     end
     if max_ancient_pp >= max_ancient && max_recent_pp >= max_recent then
       return (2);

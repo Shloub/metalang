@@ -54,11 +54,6 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static int min2(int a, int b)
-  {
-    return Math.Min(a, b);
-  }
-  
   public static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
@@ -76,10 +71,12 @@ public static int readInt(){
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int h = min2(val1, val2);
-      int k = min2(min2(h, val3), val4);
-      int g = k;
-      int out_ = 1 + g;
+      int n = Math.Min(val1, val2);
+      int o = Math.Min(n, val3);
+      int p = Math.Min(o, val4);
+      int q = p;
+      int m = q;
+      int out_ = 1 + m;
       cache[posY][posX] = out_;
       return out_;
     }

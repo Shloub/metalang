@@ -18,9 +18,6 @@ def readchar():
 def mod(x, y):
   return x - y * math.trunc(x / y)
 
-def max2( a, b ):
-    return max(a, b);
-
 i = 1;
 last = [None] * 5
 for j in range(0, 5):
@@ -44,6 +41,6 @@ for k in range(1, 1 + 995):
     nskipdiv -= 1
   last[index] = f;
   index = mod(index + 1, 5);
-  max_ = max2(max_, i);
+  max_ = max(max_, i);
 print("%d\n" % ( max_ ), end='')
 

@@ -1,6 +1,6 @@
 package main
 import "fmt"
-func max2(a int, b int) int{
+func max2_(a int, b int) int{
   if a > b {
     return a
   } else {
@@ -60,7 +60,7 @@ func find(ndiv2 int) int{
       for m := 0 ; m <= n + 2 - 1; m++ {
         primesFactors[m] = 0;
       }
-      var max_ int = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
+      var max_ int = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
       primesFactors[2] --;
       var ndivs int = 1
       for i := 0 ; i <= max_; i++ {

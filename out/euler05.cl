@@ -9,11 +9,11 @@
         out
     ))
 (defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun max2 (a b)
+(defun max2_ (a b)
 (if
   (> a b)
-  (return-from max2 a)
-  (return-from max2 b)))
+  (return-from max2_ a)
+  (return-from max2_ b)))
 
 (defun primesfactors (n)
 (progn
@@ -57,7 +57,12 @@
           (do
             ((j 1 (+ 1 j)))
             ((> j i))
-            (setf (aref o j) (max2 (aref o j) (aref t_ j)))
+            (progn
+              (let ((g (aref o j)))
+                (let ((h (aref t_ j)))
+                  (let ((f (max2_ g h)))
+                    (setf (aref o j) f)
+                  ))))
           )
         ))
     )

@@ -14,7 +14,7 @@ func skip() {
   }
 }
 
-func min2(a int, b int) int{
+func min2_(a int, b int) int{
   if a < b {
     return a
   } else {
@@ -37,10 +37,12 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
     var val2 int = pathfind_aux(cache, tab, x, y, posX - 1, posY)
     var val3 int = pathfind_aux(cache, tab, x, y, posX, posY - 1)
     var val4 int = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-    var h int = min2(val1, val2)
-    var k int = min2(min2(h, val3), val4)
-    var g int = k
-    var out_ int = 1 + g
+    var n int = min2_(val1, val2)
+    var o int = min2_(n, val3)
+    var p int = min2_(o, val4)
+    var q int = p
+    var m int = q
+    var out_ int = 1 + m
     cache[posY][posX] = out_;
     return out_
   }   

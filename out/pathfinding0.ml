@@ -1,13 +1,10 @@
-let min2 a b =
-  min a b
-
 let read_char_matrix x y =
   let tab = Array.init y (fun _z ->
-    let h = Array.init x (fun _k ->
-      let l = Scanf.scanf "%c" (fun v_0 -> v_0) in
-      l) in
+    let o = Array.init x (fun _p ->
+      let q = Scanf.scanf "%c" (fun v_0 -> v_0) in
+      q) in
     Scanf.scanf " " (fun () -> ());
-    h) in
+    o) in
   tab
 
 let rec pathfind_aux cache tab x y posX posY =
@@ -26,10 +23,12 @@ let rec pathfind_aux cache tab x y posX posY =
       let val2 = pathfind_aux cache tab x y (posX - 1) posY in
       let val3 = pathfind_aux cache tab x y posX (posY - 1) in
       let val4 = pathfind_aux cache tab x y posX (posY + 1) in
-      let o = min2 val1 val2 in
-      let p = min2 (min2 o val3) val4 in
-      let m = p in
-      let out_ = 1 + m in
+      let s = (min (val1) (val2)) in
+      let u = (min (s) (val3)) in
+      let v = (min (u) (val4)) in
+      let w = v in
+      let r = w in
+      let out_ = 1 + r in
       cache.(posY).(posX) <- out_;
       out_
     end

@@ -1,8 +1,4 @@
 var util = require("util");
-function max2(a, b){
-  return Math.max(a, b);
-}
-
 function primesfactors(n){
   var tab = new Array(n + 1);
   for (var i = 0 ; i <= n + 1 - 1; i++)
@@ -28,7 +24,12 @@ for (var i = 1 ; i <= lim; i++)
 {
   var t = primesfactors(i);
   for (var j = 1 ; j <= i; j++)
-    o[j] = max2(o[j], t[j]);
+  {
+    var g = o[j];
+    var h = t[j];
+    var f = Math.max(g, h);
+    o[j] = f;
+  }
 }
 var product = 1;
 for (var k = 1 ; k <= lim; k++)

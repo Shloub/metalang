@@ -18,11 +18,11 @@
       out
     )))
 
-(defun max2 (a b)
+(defun max2_ (a b)
 (if
   (> a b)
-  (return-from max2 a)
-  (return-from max2 b)))
+  (return-from max2_ a)
+  (return-from max2_ b)))
 
 (progn
   (let ((i 1))
@@ -61,7 +61,7 @@
                     ))
                   (setf (aref last index) f)
                   (setq index (remainder (+ index 1) 5))
-                  (setq max_ (max2 max_ i))
+                  (setq max_ (max2_ max_ i))
                 )))
           )
           (princ max_)

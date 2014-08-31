@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int max2(int a, int b){
+int max2_(int a, int b){
   if (a > b)
     return a;
   else
@@ -38,7 +38,12 @@ int main(void){
   {
     int* t = primesfactors(i);
     for (j = 1 ; j <= i; j++)
-      o[j] = max2(o[j], t[j]);
+    {
+      int g = o[j];
+      int h = t[j];
+      int f = max2_(g, h);
+      o[j] = f;
+    }
   }
   int product = 1;
   for (k = 1 ; k <= lim; k++)

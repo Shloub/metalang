@@ -3,11 +3,6 @@ import java.util.*;
 public class cambriolage
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int max2(int a, int b)
-  {
-    return Math.max(a, b);
-  }
-  
   public static int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)
   {
     int max_ancient = 0;
@@ -26,8 +21,8 @@ public class cambriolage
       int[] pp = passepartout[i];
       if (pp[0] >= max_ancient && pp[1] >= max_recent)
         return 1;
-      max_ancient_pp = max2(max_ancient_pp, pp[0]);
-      max_recent_pp = max2(max_recent_pp, pp[1]);
+      max_ancient_pp = Math.max(max_ancient_pp, pp[0]);
+      max_recent_pp = Math.max(max_recent_pp, pp[1]);
     }
     if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
       return 2;

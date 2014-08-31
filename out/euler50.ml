@@ -1,6 +1,3 @@
-let min2 a b =
-  min a b
-
 let eratostene t max_ =
   let n = ref( 0 ) in
   for i = 2 to max_ - 1 do
@@ -62,7 +59,10 @@ begin
                   end
               end
             else
-              stop := min2 (!stop) i
+              begin
+                let c = (min ((!stop)) (i)) in
+                stop := c
+              end
           end
       done;
       len := (!len) + 1

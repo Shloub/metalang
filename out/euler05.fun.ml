@@ -9,15 +9,13 @@ module Array = struct
     )
 end
 
-let max2 a b =
-  (max a b)
 let primesfactors n =
-  let tab = (Array.init_withenv (n + 1) (fun  i () -> let f = 0 in
-  ((), f)) ()) in
+  let tab = (Array.init_withenv (n + 1) (fun  i () -> let p = 0 in
+  ((), p)) ()) in
   let d = 2 in
-  let rec h d n =
+  let rec r d n =
     (if ((n <> 1) && ((d * d) <= n))
-     then ((fun  (d, n) -> (h d n)) (if ((n mod d) = 0)
+     then ((fun  (d, n) -> (r d n)) (if ((n mod d) = 0)
                                      then (
                                             tab.(d) <- (tab.(d) + 1);
                                             let n = (n / d) in
@@ -31,44 +29,47 @@ let primesfactors n =
             tab
             )
      ) in
-    (h d n)
+    (r d n)
 let main =
   let lim = 20 in
-  let o = (Array.init_withenv (lim + 1) (fun  m () -> let p = 0 in
-  ((), p)) ()) in
-  let bb = 1 in
-  let bc = lim in
-  let rec x i =
-    (if (i <= bc)
+  let o = (Array.init_withenv (lim + 1) (fun  m () -> let s = 0 in
+  ((), s)) ()) in
+  let be = 1 in
+  let bf = lim in
+  let rec ba i =
+    (if (i <= bf)
      then let t = (primesfactors i) in
-     let z = 1 in
-     let ba = i in
-     let rec y j =
-       (if (j <= ba)
-        then (
-               o.(j) <- (max2 o.(j) t.(j));
-               (y (j + 1))
-               )
+     let bc = 1 in
+     let bd = i in
+     let rec bb j =
+       (if (j <= bd)
+        then let g = o.(j) in
+        let h = t.(j) in
+        let f = ((max (g) (h))) in
+        (
+          o.(j) <- f;
+          (bb (j + 1))
+          )
         
-        else (x (i + 1))) in
-       (y z)
+        else (ba (i + 1))) in
+       (bb bc)
      else let product = 1 in
-     let v = 1 in
-     let w = lim in
-     let rec q k product =
-       (if (k <= w)
-        then let s = 1 in
-        let u = o.(k) in
-        let rec r l product =
-          (if (l <= u)
+     let y = 1 in
+     let z = lim in
+     let rec u k product =
+       (if (k <= z)
+        then let w = 1 in
+        let x = o.(k) in
+        let rec v l product =
+          (if (l <= x)
            then let product = (product * k) in
-           (r (l + 1) product)
-           else (q (k + 1) product)) in
-          (r s product)
+           (v (l + 1) product)
+           else (u (k + 1) product)) in
+          (v w product)
         else (
                (Printf.printf "%d\n" product)
                )
         ) in
-       (q v product)) in
-    (x bb)
+       (u y product)) in
+    (ba be)
 

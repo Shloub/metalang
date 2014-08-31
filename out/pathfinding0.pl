@@ -23,7 +23,7 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub min2{
+sub min2_{
   my($a,
   $b) = @_;
   if ($a < $b) {
@@ -38,13 +38,13 @@ sub read_char_matrix{
   $y) = @_;
   my $tab = [];
   foreach my $z (0 .. $y - 1) {
-    my $h = [];
-    foreach my $k (0 .. $x - 1) {
-      my $l = readchar();
-      $h->[$k] = $l;
+    my $o = [];
+    foreach my $p (0 .. $x - 1) {
+      my $q = readchar();
+      $o->[$p] = $q;
       }
     readspaces();
-    $tab->[$z] = $h;
+    $tab->[$z] = $o;
     }
   return $tab;
 }
@@ -70,10 +70,12 @@ sub pathfind_aux{
     my $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     my $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     my $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-    my $o = min2($val1, $val2);
-    my $p = min2(min2($o, $val3), $val4);
-    my $m = $p;
-    my $out_ = 1 + $m;
+    my $s = min2_($val1, $val2);
+    my $u = min2_($s, $val3);
+    my $v = min2_($u, $val4);
+    my $w = $v;
+    my $r = $w;
+    my $out_ = 1 + $r;
     $cache->[$posY]->[$posX] = $out_;
     return $out_;
   }
@@ -96,12 +98,12 @@ sub pathfind{
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
-my $r = readint();
+my $bb = readint();
 readspaces();
-my $x = $r;
-my $u = readint();
+my $x = $bb;
+my $bd = readint();
 readspaces();
-my $y = $u;
+my $y = $bd;
 print($x, " ", $y, "\n");
 my $tab = read_char_matrix($x, $y);
 my $result = pathfind($tab, $x, $y);

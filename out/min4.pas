@@ -1,6 +1,6 @@
 program min4;
 
-function min2(a : Longint; b : Longint) : Longint;
+function min2_(a : Longint; b : Longint) : Longint;
 begin
   if a < b
   then
@@ -15,53 +15,53 @@ end;
 
 
 begin
-  Write(min2(min2(min2(1, 2), 3), 4));
+  Write(min2_(min2_(min2_(1, 2), 3), 4));
   Write(' ');
-  Write(min2(min2(min2(1, 2), 4), 3));
+  Write(min2_(min2_(min2_(1, 2), 4), 3));
   Write(' ');
-  Write(min2(min2(min2(1, 3), 2), 4));
+  Write(min2_(min2_(min2_(1, 3), 2), 4));
   Write(' ');
-  Write(min2(min2(min2(1, 3), 4), 2));
+  Write(min2_(min2_(min2_(1, 3), 4), 2));
   Write(' ');
-  Write(min2(min2(min2(1, 4), 2), 3));
+  Write(min2_(min2_(min2_(1, 4), 2), 3));
   Write(' ');
-  Write(min2(min2(min2(1, 4), 3), 2));
+  Write(min2_(min2_(min2_(1, 4), 3), 2));
   Write(''#10'');
-  Write(min2(min2(min2(2, 1), 3), 4));
+  Write(min2_(min2_(min2_(2, 1), 3), 4));
   Write(' ');
-  Write(min2(min2(min2(2, 1), 4), 3));
+  Write(min2_(min2_(min2_(2, 1), 4), 3));
   Write(' ');
-  Write(min2(min2(min2(2, 3), 1), 4));
+  Write(min2_(min2_(min2_(2, 3), 1), 4));
   Write(' ');
-  Write(min2(min2(min2(2, 3), 4), 1));
+  Write(min2_(min2_(min2_(2, 3), 4), 1));
   Write(' ');
-  Write(min2(min2(min2(2, 4), 1), 3));
+  Write(min2_(min2_(min2_(2, 4), 1), 3));
   Write(' ');
-  Write(min2(min2(min2(2, 4), 3), 1));
+  Write(min2_(min2_(min2_(2, 4), 3), 1));
   Write(''#10'');
-  Write(min2(min2(min2(3, 1), 2), 4));
+  Write(min2_(min2_(min2_(3, 1), 2), 4));
   Write(' ');
-  Write(min2(min2(min2(3, 1), 4), 2));
+  Write(min2_(min2_(min2_(3, 1), 4), 2));
   Write(' ');
-  Write(min2(min2(min2(3, 2), 1), 4));
+  Write(min2_(min2_(min2_(3, 2), 1), 4));
   Write(' ');
-  Write(min2(min2(min2(3, 2), 4), 1));
+  Write(min2_(min2_(min2_(3, 2), 4), 1));
   Write(' ');
-  Write(min2(min2(min2(3, 4), 1), 2));
+  Write(min2_(min2_(min2_(3, 4), 1), 2));
   Write(' ');
-  Write(min2(min2(min2(3, 4), 2), 1));
+  Write(min2_(min2_(min2_(3, 4), 2), 1));
   Write(''#10'');
-  Write(min2(min2(min2(4, 1), 2), 3));
+  Write(min2_(min2_(min2_(4, 1), 2), 3));
   Write(' ');
-  Write(min2(min2(min2(4, 1), 3), 2));
+  Write(min2_(min2_(min2_(4, 1), 3), 2));
   Write(' ');
-  Write(min2(min2(min2(4, 2), 1), 3));
+  Write(min2_(min2_(min2_(4, 2), 1), 3));
   Write(' ');
-  Write(min2(min2(min2(4, 2), 3), 1));
+  Write(min2_(min2_(min2_(4, 2), 3), 1));
   Write(' ');
-  Write(min2(min2(min2(4, 3), 1), 2));
+  Write(min2_(min2_(min2_(4, 3), 1), 2));
   Write(' ');
-  Write(min2(min2(min2(4, 3), 2), 1));
+  Write(min2_(min2_(min2_(4, 3), 2), 1));
   Write(''#10'');
 end.
 

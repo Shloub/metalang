@@ -5,7 +5,7 @@ sub remainder {
     return $a - int($a / $b) * $b;
 }
 
-sub max2{
+sub max2_{
   my($a,
   $b) = @_;
   if ($a > $b) {
@@ -43,7 +43,10 @@ foreach my $m (0 .. $lim + 1 - 1) {
 foreach my $i (1 .. $lim) {
   my $t = primesfactors($i);
   foreach my $j (1 .. $i) {
-    $o->[$j] = max2($o->[$j], $t->[$j]);
+    my $g = $o->[$j];
+    my $h = $t->[$j];
+    my $f = max2_($g, $h);
+    $o->[$j] = $f;
     }
   }
 my $product = 1;

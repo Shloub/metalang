@@ -1,8 +1,4 @@
 var util = require("util");
-function max2(a, b){
-  return Math.max(a, b);
-}
-
 /*
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -38,7 +34,10 @@ for (var a = 0 ; a <= 9; a++)
           {
             var mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
             if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
-              m = max2(mul, m);
+            {
+              var g = Math.max(mul, m);
+              m = g;
+            }
 }
 util.print(m, "\n");
 

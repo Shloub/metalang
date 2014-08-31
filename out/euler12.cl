@@ -9,11 +9,11 @@
         out
     ))
 (defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun max2 (a b)
+(defun max2_ (a b)
 (if
   (> a b)
-  (return-from max2 a)
-  (return-from max2 b)))
+  (return-from max2_ a)
+  (return-from max2_ b)))
 
 (defun eratostene (t_ max_)
 (progn
@@ -101,7 +101,7 @@
                                   (return-from lambda_3 0)
                                 ))
                                 ))))
-            (let ((max_ (max2 (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))))
+            (let ((max_ (max2_ (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))))
               (setf (aref primesFactors 2) ( - (aref primesFactors 2) 1))
               (let ((ndivs 1))
                 (do

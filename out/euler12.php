@@ -1,8 +1,4 @@
 <?php
-function max2($a, $b){
-  return max($a, $b);
-}
-
 function eratostene(&$t, $max_){
   $n = 0;
   for ($i = 2 ; $i < $max_; $i++)
@@ -55,7 +51,7 @@ function find($ndiv2){
     $primesFactors = array();
     for ($m = 0 ; $m < $n + 2; $m++)
       $primesFactors[$m] = 0;
-    $max_ = max2(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
+    $max_ = max(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
     $primesFactors[2] --;
     $ndivs = 1;
     for ($i = 0 ; $i <= $max_; $i++)

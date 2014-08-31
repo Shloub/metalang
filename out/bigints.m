@@ -2,14 +2,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int max2(int a, int b){
+int max2_(int a, int b){
   if (a > b)
     return a;
   else
     return b;
 }
 
-int min2(int a, int b){
+int min2_(int a, int b){
   if (a < b)
     return a;
   else
@@ -41,11 +41,11 @@ bigint * read_bigint(int len){
     chiffres[i] = chiffres[len - 1 - i];
     chiffres[len - 1 - i] = tmp;
   }
-  bigint * o = [bigint alloc];
-  o->bigint_sign=1;
-  o->bigint_len=len;
-  o->bigint_chiffres=chiffres;
-  return o;
+  bigint * x = [bigint alloc];
+  x->bigint_sign=1;
+  x->bigint_len=len;
+  x->bigint_chiffres=chiffres;
+  return x;
 }
 
 void print_bigint(bigint * a){
@@ -105,7 +105,7 @@ int bigint_lt(bigint * a, bigint * b){
 bigint * add_bigint_positif(bigint * a, bigint * b){
   int i;
   /* Une addition ou on en a rien a faire des signes */
-  int len = max2(a->bigint_len, b->bigint_len) + 1;
+  int len = max2_(a->bigint_len, b->bigint_len) + 1;
   int retenue = 0;
   int *chiffres = malloc( len * sizeof(int));
   for (i = 0 ; i < len; i++)
@@ -120,11 +120,11 @@ bigint * add_bigint_positif(bigint * a, bigint * b){
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  bigint * p = [bigint alloc];
-  p->bigint_sign=1;
-  p->bigint_len=len;
-  p->bigint_chiffres=chiffres;
-  return p;
+  bigint * y = [bigint alloc];
+  y->bigint_sign=1;
+  y->bigint_len=len;
+  y->bigint_chiffres=chiffres;
+  return y;
 }
 
 bigint * sub_bigint_positif(bigint * a, bigint * b){
@@ -151,19 +151,19 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  bigint * q = [bigint alloc];
-  q->bigint_sign=1;
-  q->bigint_len=len;
-  q->bigint_chiffres=chiffres;
-  return q;
+  bigint * z = [bigint alloc];
+  z->bigint_sign=1;
+  z->bigint_len=len;
+  z->bigint_chiffres=chiffres;
+  return z;
 }
 
 bigint * neg_bigint(bigint * a){
-  bigint * r = [bigint alloc];
-  r->bigint_sign=!a->bigint_sign;
-  r->bigint_len=a->bigint_len;
-  r->bigint_chiffres=a->bigint_chiffres;
-  return r;
+  bigint * ba = [bigint alloc];
+  ba->bigint_sign=!a->bigint_sign;
+  ba->bigint_len=a->bigint_len;
+  ba->bigint_chiffres=a->bigint_chiffres;
+  return ba;
 }
 
 bigint * add_bigint(bigint * a, bigint * b){
@@ -221,22 +221,22 @@ D'ou le nom de la fonction. */
   for (l = 0 ; l <= 2; l++)
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
-  bigint * s = [bigint alloc];
-  s->bigint_sign=a->bigint_sign == b->bigint_sign;
-  s->bigint_len=len;
-  s->bigint_chiffres=chiffres;
-  return s;
+  bigint * bc = [bigint alloc];
+  bc->bigint_sign=a->bigint_sign == b->bigint_sign;
+  bc->bigint_len=len;
+  bc->bigint_chiffres=chiffres;
+  return bc;
 }
 
 bigint * bigint_premiers_chiffres(bigint * a, int i){
-  int len = min2(i, a->bigint_len);
+  int len = min2_(i, a->bigint_len);
   while (len != 0 && a->bigint_chiffres[len - 1] == 0)
     len --;
-  bigint * u = [bigint alloc];
-  u->bigint_sign=a->bigint_sign;
-  u->bigint_len=len;
-  u->bigint_chiffres=a->bigint_chiffres;
-  return u;
+  bigint * be = [bigint alloc];
+  be->bigint_sign=a->bigint_sign;
+  be->bigint_len=len;
+  be->bigint_chiffres=a->bigint_chiffres;
+  return be;
 }
 
 bigint * bigint_shift(bigint * a, int i){
@@ -247,11 +247,11 @@ bigint * bigint_shift(bigint * a, int i){
     chiffres[k] = a->bigint_chiffres[k - i];
   else
     chiffres[k] = 0;
-  bigint * v = [bigint alloc];
-  v->bigint_sign=a->bigint_sign;
-  v->bigint_len=a->bigint_len + i;
-  v->bigint_chiffres=chiffres;
-  return v;
+  bigint * bf = [bigint alloc];
+  bf->bigint_sign=a->bigint_sign;
+  bf->bigint_len=a->bigint_len + i;
+  bf->bigint_chiffres=chiffres;
+  return bf;
 }
 
 bigint * mul_bigint(bigint * aa, bigint * bb){
@@ -262,7 +262,7 @@ bigint * mul_bigint(bigint * aa, bigint * bb){
   else if (aa->bigint_len < 3 || bb->bigint_len < 3)
     return mul_bigint_cp(aa, bb);
   /* Algorithme de Karatsuba */
-  int split = min2(aa->bigint_len, bb->bigint_len) / 2;
+  int split = min2_(aa->bigint_len, bb->bigint_len) / 2;
   bigint * a = bigint_shift(aa, -split);
   bigint * b = bigint_premiers_chiffres(aa, split);
   bigint * c = bigint_shift(bb, -split);
@@ -304,11 +304,11 @@ bigint * bigint_of_int(int i){
     t[k] = i % 10;
     i /= 10;
   }
-  bigint * w = [bigint alloc];
-  w->bigint_sign=1;
-  w->bigint_len=size;
-  w->bigint_chiffres=t;
-  return w;
+  bigint * bg = [bigint alloc];
+  bg->bigint_sign=1;
+  bg->bigint_len=size;
+  bg->bigint_chiffres=t;
+  return bg;
 }
 
 bigint * fact_bigint(bigint * a){

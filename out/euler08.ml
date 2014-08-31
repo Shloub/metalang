@@ -1,6 +1,3 @@
-let max2 a b =
-  max a b
-
 let () =
 begin
   let i = ref( 1 ) in
@@ -29,7 +26,7 @@ begin
       end;
     last.((!index)) <- f;
     index := ((!index) + 1) mod 5;
-    max_ := max2 (!max_) (!i)
+    max_ := (max ((!max_)) ((!i)))
   done;
   Printf.printf "%d\n" (!max_)
 end

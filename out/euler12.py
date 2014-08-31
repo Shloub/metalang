@@ -1,9 +1,6 @@
 import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
-def max2( a, b ):
-    return max(a, b);
-
 def eratostene( t, max_ ):
     n = 0;
     for i in range(2, max_):
@@ -43,7 +40,7 @@ def find( ndiv2 ):
       primesFactors = [None] * (n + 2)
       for m in range(0, n + 2):
         primesFactors[m] = 0;
-      max_ = max2(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+      max_ = max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
       primesFactors[2] -= 1
       ndivs = 1;
       for i in range(0, 1 + max_):

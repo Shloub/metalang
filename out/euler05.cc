@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int max2(int a, int b){
+int max2_(int a, int b){
   if (a > b)
     return a;
   else
@@ -34,7 +34,12 @@ int main(){
   {
     std::vector<int> * t = primesfactors(i);
     for (int j = 1 ; j <= i; j ++)
-      o->at(j) = max2(o->at(j), t->at(j));
+    {
+      int g = o->at(j);
+      int h = t->at(j);
+      int f = max2_(g, h);
+      o->at(j) = f;
+    }
   }
   int product = 1;
   for (int k = 1 ; k <= lim; k ++)

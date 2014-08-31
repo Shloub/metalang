@@ -61,7 +61,7 @@ begin
    until false;
 end;
 
-function max2(a : Longint; b : Longint) : Longint;
+function max2_(a : Longint; b : Longint) : Longint;
 begin
   if a > b
   then
@@ -74,16 +74,16 @@ begin
     end;
 end;
 
-type c = array of Longint;
-type d = array of c;
-function nbPassePartout(n : Longint; passepartout : d; m : Longint; serrures : d) : Longint;
+type g = array of Longint;
+type h = array of g;
+function nbPassePartout(n : Longint; passepartout : h; m : Longint; serrures : h) : Longint;
 var
   i : Longint;
   max_ancient : Longint;
   max_ancient_pp : Longint;
   max_recent : Longint;
   max_recent_pp : Longint;
-  pp : c;
+  pp : g;
 begin
   max_ancient := 0;
   max_recent := 0;
@@ -110,8 +110,8 @@ begin
       begin
         exit(1);
       end;
-    max_ancient_pp := max2(max_ancient_pp, pp[0]);
-    max_recent_pp := max2(max_recent_pp, pp[1]);
+    max_ancient_pp := max2_(max_ancient_pp, pp[0]);
+    max_recent_pp := max2_(max_recent_pp, pp[1]);
   end;
   if (max_ancient_pp >= max_ancient) and (max_recent_pp >= max_recent)
   then
@@ -132,12 +132,12 @@ var
   l : Longint;
   m : Longint;
   n : Longint;
-  out0 : c;
-  out1 : c;
+  out0 : g;
+  out1 : g;
   out_ : Longint;
   out__ : Longint;
-  passepartout : d;
-  serrures : d;
+  passepartout : h;
+  serrures : h;
 begin
   n := read_int_();
   skip();

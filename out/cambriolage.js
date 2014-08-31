@@ -26,10 +26,6 @@ function read_int_(){
     }
   }
 }
-function max2(a, b){
-  return Math.max(a, b);
-}
-
 function nbPassePartout(n, passepartout, m, serrures){
   var max_ancient = 0;
   var max_recent = 0;
@@ -47,8 +43,8 @@ function nbPassePartout(n, passepartout, m, serrures){
     var pp = passepartout[i];
     if (pp[0] >= max_ancient && pp[1] >= max_recent)
       return 1;
-    max_ancient_pp = max2(max_ancient_pp, pp[0]);
-    max_recent_pp = max2(max_recent_pp, pp[1]);
+    max_ancient_pp = Math.max(max_ancient_pp, pp[0]);
+    max_recent_pp = Math.max(max_recent_pp, pp[1]);
   }
   if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
     return 2;

@@ -1,12 +1,4 @@
 require "scanf.rb"
-def max2( a, b )
-    if a > b then
-      return (a);
-    else
-      return (b);
-    end
-end
-
 def read_int_matrix( x, y )
     tab = [];
     for z in (0 ..  y - 1) do
@@ -57,7 +49,9 @@ for j in (0 ..  7) do
   (dx, dy) = directions[j]
   for x in (0 ..  19) do
     for y in (0 ..  19) do
-      max_ = max2(max_, find(4, m, x, y, dx, dy));
+      h = find(4, m, x, y, dx, dy)
+      g = [max_, h].max
+      max_ = g;
     end
   end
 end

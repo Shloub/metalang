@@ -3,11 +3,6 @@ import java.util.*;
 public class pathfinding0
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int min2(int a, int b)
-  {
-    return Math.min(a, b);
-  }
-  
   public static char[][] read_char_matrix(int x, int y)
   {
     char[][] tab = new char[y][];
@@ -33,10 +28,12 @@ public class pathfinding0
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int k = min2(val1, val2);
-      int l = min2(min2(k, val3), val4);
-      int h = l;
-      int out_ = 1 + h;
+      int p = Math.min(val1, val2);
+      int q = Math.min(p, val3);
+      int r = Math.min(q, val4);
+      int s = r;
+      int o = s;
+      int out_ = 1 + o;
       cache[posY][posX] = out_;
       return out_;
     }
@@ -62,24 +59,24 @@ public class pathfinding0
   
   public static void main(String args[])
   {
-    int o;
+    int u;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      o = scanner.nextInt();
+      u = scanner.nextInt();
     } else {
-      o = scanner.nextInt();
+      u = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int x = o;
-    int q;
+    int x = u;
+    int w;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      q = scanner.nextInt();
+      w = scanner.nextInt();
     } else {
-      q = scanner.nextInt();
+      w = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int y = q;
+    int y = w;
     System.out.printf("%d %d\n", x, y);
     char[][] tab = read_char_matrix(x, y);
     int result = pathfind(tab, x, y);

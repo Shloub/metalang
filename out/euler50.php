@@ -1,8 +1,4 @@
 <?php
-function min2($a, $b){
-  return min($a, $b);
-}
-
 function eratostene(&$t, $max_){
   $n = 0;
   for ($i = 2 ; $i < $max_; $i++)
@@ -64,7 +60,10 @@ while ($process)
       }
     }
     else
-      $stop = min2($stop, $i);
+    {
+      $c = min($stop, $i);
+      $stop = $c;
+    }
   }
   $len ++;
 }

@@ -33,11 +33,11 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun min2 (a b)
+(defun min2_ (a b)
 (if
   (< a b)
-  (return-from min2 a)
-  (return-from min2 b)))
+  (return-from min2_ a)
+  (return-from min2_ b)))
 
 (defun read_char_matrix (x y)
 (progn
@@ -47,16 +47,16 @@
             (function (lambda (z)
             (block lambda_1
               (let
-               ((h (array_init
+               ((o (array_init
                       x
-                      (function (lambda (k)
+                      (function (lambda (p)
                       (block lambda_2
-                        (let ((l (mread-char )))
-                          (return-from lambda_2 l)
+                        (let ((q (mread-char )))
+                          (return-from lambda_2 q)
                         )))
                       ))))
               (mread-blank)
-              (return-from lambda_1 h)
+              (return-from lambda_1 o)
               )))
             ))))
   (return-from read_char_matrix tab)
@@ -81,13 +81,15 @@
             (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
               (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
                 (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
-                  (let ((o (min2 val1 val2)))
-                    (let ((p (min2 (min2 o val3) val4)))
-                      (let ((m p))
-                        (let ((out_ (+ 1 m)))
-                          (setf (aref (aref cache posY) posX) out_)
-                          (return-from pathfind_aux out_)
-                        ))))))))))))))
+                  (let ((s (min2_ val1 val2)))
+                    (let ((u (min2_ s val3)))
+                      (let ((v (min2_ u val4)))
+                        (let ((w v))
+                          (let ((r w))
+                            (let ((out_ (+ 1 r)))
+                              (setf (aref (aref cache posY) posX) out_)
+                              (return-from pathfind_aux out_)
+                            ))))))))))))))))
 
 (defun pathfind (tab x y)
 (progn
@@ -114,12 +116,12 @@
   )))
 
 (progn
-  (let ((r (mread-int )))
+  (let ((bb (mread-int )))
     (mread-blank)
-    (let ((x r))
-      (let ((u (mread-int )))
+    (let ((x bb))
+      (let ((bd (mread-int )))
         (mread-blank)
-        (let ((y u))
+        (let ((y bd))
           (princ x)
           (princ " ")
           (princ y)
