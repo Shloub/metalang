@@ -116,7 +116,7 @@ Format.fprintf f "print(%a);" self#expr expr
       (fun f () ->
 	if need_readchar then Format.fprintf f
 	  "sub readchar{
-  if (!defined $currentchar){ nextchar() ; }
+  nextchar() if (!defined $currentchar);
   my $o = $currentchar;
   nextchar();
   return $o;
@@ -125,9 +125,7 @@ Format.fprintf f "print(%a);" self#expr expr
       (fun f () ->
 	if need_readint then Format.fprintf f
 	  "sub readint {
-  if (!defined $currentchar){
-     nextchar();
-  }
+  nextchar() if (!defined $currentchar);
   my $o = 0;
   my $sign = 1;
   if ($currentchar eq '-') {
