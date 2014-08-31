@@ -14,33 +14,33 @@ sub ndayinmonth{
   my($month,
   $year) = @_;
   if ($month eq 0) {
-  return 31;
+    return 31;
   }elsif ($month eq 1) {
-  if (is_leap($year)) {
-  return 29;
-  }else{
-  return 28;
-  }
+    if (is_leap($year)) {
+      return 29;
+    }else{
+      return 28;
+    }
   }elsif ($month eq 2) {
-  return 31;
+    return 31;
   }elsif ($month eq 3) {
-  return 30;
+    return 30;
   }elsif ($month eq 4) {
-  return 31;
+    return 31;
   }elsif ($month eq 5) {
-  return 30;
+    return 30;
   }elsif ($month eq 6) {
-  return 31;
+    return 31;
   }elsif ($month eq 7) {
-  return 31;
+    return 31;
   }elsif ($month eq 8) {
-  return 30;
+    return 30;
   }elsif ($month eq 9) {
-  return 31;
+    return 31;
   }elsif ($month eq 10) {
-  return 30;
+    return 30;
   }elsif ($month eq 11) {
-  return 31;
+    return 31;
   }
   return 0;
 }
@@ -57,11 +57,11 @@ while ($year ne 2001)
   $dayofweek = remainder($dayofweek + $ndays, 7);
   $month = $month + 1;
   if ($month eq 12) {
-  $month = 0;
-  $year = $year + 1;
+    $month = 0;
+    $year = $year + 1;
   }
   if ((remainder($dayofweek, 7)) eq 6) {
-  $count = $count + 1;
+    $count = $count + 1;
   }
 }
 print($count, "\n");

@@ -46,20 +46,20 @@ sub npi_{
   while ($ptrStr < $len)
   {
     if ($str->[$ptrStr] eq ' ') {
-    $ptrStr = $ptrStr + 1;
-    }elsif (is_number($str->[$ptrStr])) {
-    my $num = 0;
-    while ($str->[$ptrStr] ne ' ')
-    {
-      $num = $num * 10 + ord($str->[$ptrStr]) - ord('0');
       $ptrStr = $ptrStr + 1;
-    }
-    $stack->[$ptrStack] = $num;
-    $ptrStack = $ptrStack + 1;
+    }elsif (is_number($str->[$ptrStr])) {
+      my $num = 0;
+      while ($str->[$ptrStr] ne ' ')
+      {
+        $num = $num * 10 + ord($str->[$ptrStr]) - ord('0');
+        $ptrStr = $ptrStr + 1;
+      }
+      $stack->[$ptrStack] = $num;
+      $ptrStack = $ptrStack + 1;
     }elsif ($str->[$ptrStr] eq '+') {
-    $stack->[$ptrStack - 2] = $stack->[$ptrStack - 2] + $stack->[$ptrStack - 1];
-    $ptrStack = $ptrStack - 1;
-    $ptrStr = $ptrStr + 1;
+      $stack->[$ptrStack - 2] = $stack->[$ptrStack - 2] + $stack->[$ptrStack - 1];
+      $ptrStack = $ptrStack - 1;
+      $ptrStr = $ptrStr + 1;
     }
   }
   return $stack->[0];

@@ -36,7 +36,7 @@ sub foo2{
 
 sub foo3{
   if (1 eq 1) {
-  
+    
   }
 }
 
@@ -51,14 +51,14 @@ sub sumdiv{
     # La boucle : i est le diviseur potentiel
     
     if ((remainder($n, $i)) eq 0) {
-    # Si i divise 
-    
-    $out_ = $out_ + $i;
-    # On incrémente 
-    
+      # Si i divise 
+      
+      $out_ = $out_ + $i;
+      # On incrémente 
+      
     }else{
-    # nop 
-    
+      # nop 
+      
     }
     }
   return $out_;

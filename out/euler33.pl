@@ -9,9 +9,9 @@ sub max2{
   my($a,
   $b) = @_;
   if ($a > $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 
@@ -19,9 +19,9 @@ sub min2{
   my($a,
   $b) = @_;
   if ($a < $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 
@@ -32,9 +32,9 @@ sub pgcd{
   my $d = max2($a, $b);
   my $reste = remainder($d, $c);
   if ($reste eq 0) {
-  return $c;
+    return $c;
   }else{
-  return pgcd($c, $reste);
+    return pgcd($c, $reste);
   }
 }
 
@@ -44,13 +44,13 @@ foreach my $i (1 .. 9) {
   foreach my $j (1 .. 9) {
     foreach my $k (1 .. 9) {
       if ($i ne $j && $j ne $k) {
-      my $a = $i * 10 + $j;
-      my $b = $j * 10 + $k;
-      if ($a * $k eq $i * $b) {
-      print($a, "/", $b, "\n");
-      $top = $top * $a;
-      $bottom = $bottom * $b;
-      }
+        my $a = $i * 10 + $j;
+        my $b = $j * 10 + $k;
+        if ($a * $k eq $i * $b) {
+          print($a, "/", $b, "\n");
+          $top = $top * $a;
+          $bottom = $bottom * $b;
+        }
       }
       }
     }

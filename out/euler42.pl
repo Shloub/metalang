@@ -50,15 +50,15 @@ sub score{
     
     }
   if (is_triangular($sum)) {
-  return 1;
+    return 1;
   }else{
-  return 0;
+    return 0;
   }
 }
 
 foreach my $i (1 .. 55) {
   if (is_triangular($i)) {
-  print($i, " ");
+    print($i, " ");
   }
   }
 print("\n");

@@ -6,17 +6,17 @@ sub eratostene{
   my $n = 0;
   foreach my $i (2 .. $max_ - 1) {
     if ($t->[$i] eq $i) {
-    $n = $n + 1;
-    my $j = $i * $i;
-    if (int(($j) / ($i)) eq $i) {
-    # overflow test 
-    
-    while ($j < $max_ && $j > 0)
-    {
-      $t->[$j] = 0;
-      $j = $j + $i;
-    }
-    }
+      $n = $n + 1;
+      my $j = $i * $i;
+      if (int(($j) / ($i)) eq $i) {
+        # overflow test 
+        
+        while ($j < $max_ && $j > 0)
+        {
+          $t->[$j] = 0;
+          $j = $j + $i;
+        }
+      }
     }
     }
   return $n;
@@ -35,8 +35,8 @@ foreach my $o (0 .. $nprimes - 1) {
 my $l = 0;
 foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
-  $primes->[$l] = $k;
-  $l = $l + 1;
+    $primes->[$l] = $k;
+    $l = $l + 1;
   }
   }
 print($l, " == ", $nprimes, "\n");
@@ -48,14 +48,14 @@ foreach my $i (0 .. $nprimes - 1) {
   foreach my $j (0 .. $maximumprimes - 1) {
     my $n = $primes->[$i] + 2 * $j * $j;
     if ($n < $maximumprimes) {
-    $canbe->[$n] = 1;
+      $canbe->[$n] = 1;
     }
     }
   }
 foreach my $m (1 .. $maximumprimes) {
   my $m2 = $m * 2 + 1;
   if ($m2 < $maximumprimes && !$canbe->[$m2]) {
-  print($m2, "\n");
+    print($m2, "\n");
   }
   }
 

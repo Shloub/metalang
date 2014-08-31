@@ -32,7 +32,7 @@ sub nth{
   my $out_ = 0;
   foreach my $i (0 .. $len - 1) {
     if ($tab->[$i] eq $tofind) {
-    $out_ = $out_ + 1;
+      $out_ = $out_ + 1;
     }
     }
   return $out_;

@@ -27,10 +27,10 @@ sub summax{
   foreach my $i (0 .. $len - 1) {
     $current = $current + $lst->[$i];
     if ($current < 0) {
-    $current = 0;
+      $current = 0;
     }
     if ($max_ < $current) {
-    $max_ = $current;
+      $max_ = $current;
     }
     }
   return $max_;

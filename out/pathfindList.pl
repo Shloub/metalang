@@ -25,21 +25,21 @@ sub pathfind_aux{
   $len,
   $pos) = @_;
   if ($pos >= $len - 1) {
-  return 0;
+    return 0;
   }elsif ($cache->[$pos] ne -1) {
-  return $cache->[$pos];
+    return $cache->[$pos];
   }else{
-  $cache->[$pos] = $len * 2;
-  my $posval = pathfind_aux($cache, $tab, $len, $tab->[$pos]);
-  my $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
-  my $out_ = 0;
-  if ($posval < $oneval) {
-  $out_ = 1 + $posval;
-  }else{
-  $out_ = 1 + $oneval;
-  }
-  $cache->[$pos] = $out_;
-  return $out_;
+    $cache->[$pos] = $len * 2;
+    my $posval = pathfind_aux($cache, $tab, $len, $tab->[$pos]);
+    my $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
+    my $out_ = 0;
+    if ($posval < $oneval) {
+      $out_ = 1 + $posval;
+    }else{
+      $out_ = 1 + $oneval;
+    }
+    $cache->[$pos] = $out_;
+    return $out_;
   }
 }
 

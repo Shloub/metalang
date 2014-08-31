@@ -31,17 +31,17 @@ sub show{
     $nth = remainder($nth, $n);
     foreach my $l (0 .. $lim - 1) {
       if (!$pris->[$l]) {
-      if ($nchiffre eq 0) {
-      print($l);
-      $pris->[$l] = 1;
-      }
-      $nchiffre = $nchiffre - 1;
+        if ($nchiffre eq 0) {
+          print($l);
+          $pris->[$l] = 1;
+        }
+        $nchiffre = $nchiffre - 1;
       }
       }
     }
   foreach my $m (0 .. $lim - 1) {
     if (!$pris->[$m]) {
-    print($m);
+      print($m);
     }
     }
   print("\n");

@@ -35,9 +35,9 @@ sub bubblesort{
   foreach my $i (0 .. $len - 1) {
     foreach my $j ($i + 1 .. $len - 1) {
       if ($tab->[$i] > $tab->[$j]) {
-      my $tmp = $tab->[$i];
-      $tab->[$i] = $tab->[$j];
-      $tab->[$j] = $tmp;
+        my $tmp = $tab->[$i];
+        $tab->[$i] = $tab->[$j];
+        $tab->[$j] = $tmp;
       }
       }
     }
@@ -49,35 +49,35 @@ sub qsort_{
   $i,
   $j) = @_;
   if ($i < $j) {
-  my $i0 = $i;
-  my $j0 = $j;
-  # pivot : tab[0] 
-  
-  while ($i ne $j)
-  {
-    if ($tab->[$i] > $tab->[$j]) {
-    if ($i eq $j - 1) {
-    # on inverse simplement
+    my $i0 = $i;
+    my $j0 = $j;
+    # pivot : tab[0] 
     
-    my $tmp = $tab->[$i];
-    $tab->[$i] = $tab->[$j];
-    $tab->[$j] = $tmp;
-    $i = $i + 1;
-    }else{
-    # on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
-    
-    my $tmp = $tab->[$i];
-    $tab->[$i] = $tab->[$j];
-    $tab->[$j] = $tab->[$i + 1];
-    $tab->[$i + 1] = $tmp;
-    $i = $i + 1;
+    while ($i ne $j)
+    {
+      if ($tab->[$i] > $tab->[$j]) {
+        if ($i eq $j - 1) {
+          # on inverse simplement
+          
+          my $tmp = $tab->[$i];
+          $tab->[$i] = $tab->[$j];
+          $tab->[$j] = $tmp;
+          $i = $i + 1;
+        }else{
+          # on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
+          
+          my $tmp = $tab->[$i];
+          $tab->[$i] = $tab->[$j];
+          $tab->[$j] = $tab->[$i + 1];
+          $tab->[$i + 1] = $tmp;
+          $i = $i + 1;
+        }
+      }else{
+        $j = $j - 1;
+      }
     }
-    }else{
-    $j = $j - 1;
-    }
-  }
-  qsort_($tab, $len, $i0, $i - 1);
-  qsort_($tab, $len, $i + 1, $j0);
+    qsort_($tab, $len, $i0, $i - 1);
+    qsort_($tab, $len, $i + 1, $j0);
   }
 }
 

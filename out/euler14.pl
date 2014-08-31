@@ -8,9 +8,9 @@ sub remainder {
 sub next_{
   my($n) = @_;
   if ((remainder($n, 2)) eq 0) {
-  return int(($n) / (2));
+    return int(($n) / (2));
   }else{
-  return 3 * $n + 1;
+    return 3 * $n + 1;
   }
 }
 
@@ -18,14 +18,14 @@ sub find{
   my($n,
   $m) = @_;
   if ($n eq 1) {
-  return 1;
+    return 1;
   }elsif ($n >= 1000000) {
-  return 1 + find(next_($n), $m);
+    return 1 + find(next_($n), $m);
   }elsif ($m->[$n] ne 0) {
-  return $m->[$n];
+    return $m->[$n];
   }else{
-  $m->[$n] = 1 + find(next_($n), $m);
-  return $m->[$n];
+    $m->[$n] = 1 + find(next_($n), $m);
+    return $m->[$n];
   }
 }
 
@@ -40,8 +40,8 @@ foreach my $i (1 .. 999) {
   
   my $n2 = find($i, $m);
   if ($n2 > $max_) {
-  $max_ = $n2;
-  $maxi = $i;
+    $max_ = $n2;
+    $maxi = $i;
   }
   }
 print($max_, "\n", $maxi, "\n");

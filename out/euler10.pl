@@ -6,19 +6,19 @@ sub eratostene{
   my $sum = 0;
   foreach my $i (2 .. $max_ - 1) {
     if ($t->[$i] eq $i) {
-    $sum = $sum + $i;
-    my $j = $i * $i;
-    #
-    #			detect overflow
-    #			
-    
-    if (int(($j) / ($i)) eq $i) {
-    while ($j < $max_ && $j > 0)
-    {
-      $t->[$j] = 0;
-      $j = $j + $i;
-    }
-    }
+      $sum = $sum + $i;
+      my $j = $i * $i;
+      #
+      #			detect overflow
+      #			
+      
+      if (int(($j) / ($i)) eq $i) {
+        while ($j < $max_ && $j > 0)
+        {
+          $t->[$j] = 0;
+          $j = $j + $i;
+        }
+      }
     }
     }
   return $sum;

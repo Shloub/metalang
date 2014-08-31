@@ -11,13 +11,13 @@ sub eratostene{
   my $n = 0;
   foreach my $i (2 .. $max_ - 1) {
     if ($t->[$i] eq $i) {
-    $n = $n + 1;
-    my $j = $i * $i;
-    while ($j < $max_ && $j > 0)
-    {
-      $t->[$j] = 0;
-      $j = $j + $i;
-    }
+      $n = $n + 1;
+      my $j = $i * $i;
+      while ($j < $max_ && $j > 0)
+      {
+        $t->[$j] = 0;
+        $j = $j + $i;
+      }
     }
     }
   return $n;
@@ -29,12 +29,12 @@ sub isPrime{
   $len) = @_;
   my $i = 0;
   if ($n < 0) {
-  $n = -$n;
+    $n = -$n;
   }
   while ($primes->[$i] * $primes->[$i] < $n)
   {
     if ((remainder($n, $primes->[$i])) eq 0) {
-    return 0;
+      return 0;
     }
     $i = $i + 1;
   }
@@ -49,7 +49,7 @@ sub test{
   foreach my $n (0 .. 200) {
     my $j = $n * $n + $a * $n + $b;
     if (!isPrime($j, $primes, $len)) {
-    return $n;
+      return $n;
     }
     }
   return 200;
@@ -70,8 +70,8 @@ foreach my $o (0 .. $nprimes - 1) {
 my $l = 0;
 foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
-  $primes->[$l] = $k;
-  $l = $l + 1;
+    $primes->[$l] = $k;
+    $l = $l + 1;
   }
   }
 print($l, " == ", $nprimes, "\n");
@@ -79,22 +79,22 @@ my $ma = 0;
 my $mb = 0;
 foreach my $b (3 .. 999) {
   if ($era->[$b] eq $b) {
-  foreach my $a (-999 .. 999) {
-    my $n1 = test($a, $b, $primes, $nprimes);
-    my $n2 = test($a, -$b, $primes, $nprimes);
-    if ($n1 > $max_) {
-    $max_ = $n1;
-    $result = $a * $b;
-    $ma = $a;
-    $mb = $b;
-    }
-    if ($n2 > $max_) {
-    $max_ = $n2;
-    $result = -$a * $b;
-    $ma = $a;
-    $mb = -$b;
-    }
-    }
+    foreach my $a (-999 .. 999) {
+      my $n1 = test($a, $b, $primes, $nprimes);
+      my $n2 = test($a, -$b, $primes, $nprimes);
+      if ($n1 > $max_) {
+        $max_ = $n1;
+        $result = $a * $b;
+        $ma = $a;
+        $mb = $b;
+      }
+      if ($n2 > $max_) {
+        $max_ = $n2;
+        $result = -$a * $b;
+        $ma = $a;
+        $mb = -$b;
+      }
+      }
   }
   }
 print($ma, " ", $mb, "\n", $max_, "\n", $result, "\n");

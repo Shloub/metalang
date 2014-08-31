@@ -9,9 +9,9 @@ sub max2{
   my($a,
   $b) = @_;
   if ($a > $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 
@@ -25,10 +25,10 @@ sub primesfactors{
   while ($n ne 1 && $d * $d <= $n)
   {
     if ((remainder($n, $d)) eq 0) {
-    $tab->[$d] = $tab->[$d] + 1;
-    $n = int(($n) / ($d));
+      $tab->[$d] = $tab->[$d] + 1;
+      $n = int(($n) / ($d));
     }else{
-    $d = $d + 1;
+      $d = $d + 1;
     }
   }
   $tab->[$n] = $tab->[$n] + 1;

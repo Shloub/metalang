@@ -9,9 +9,9 @@ sub max2{
   my($a,
   $b) = @_;
   if ($a > $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 
@@ -21,13 +21,13 @@ sub eratostene{
   my $n = 0;
   foreach my $i (2 .. $max_ - 1) {
     if ($t->[$i] eq $i) {
-    my $j = $i * $i;
-    $n = $n + 1;
-    while ($j < $max_ && $j > 0)
-    {
-      $t->[$j] = 0;
-      $j = $j + $i;
-    }
+      my $j = $i * $i;
+      $n = $n + 1;
+      while ($j < $max_ && $j > 0)
+      {
+        $t->[$j] = 0;
+        $j = $j + $i;
+      }
     }
     }
   return $n;
@@ -46,7 +46,7 @@ sub fillPrimesFactors{
       $n = int(($n) / ($d));
     }
     if ($n eq 1) {
-    return $primes->[$i];
+      return $primes->[$i];
     }
     }
   return $n;
@@ -67,8 +67,8 @@ sub find{
   my $l = 0;
   foreach my $k (2 .. $maximumprimes - 1) {
     if ($era->[$k] eq $k) {
-    $primes->[$l] = $k;
-    $l = $l + 1;
+      $primes->[$l] = $k;
+      $l = $l + 1;
     }
     }
   foreach my $n (1 .. 10000) {
@@ -81,13 +81,13 @@ sub find{
     my $ndivs = 1;
     foreach my $i (0 .. $max_) {
       if ($primesFactors->[$i] ne 0) {
-      $ndivs = $ndivs * 1
-      +
-      $primesFactors->[$i];
+        $ndivs = $ndivs * 1
+        +
+        $primesFactors->[$i];
       }
       }
     if ($ndivs > $ndiv2) {
-    return int(($n * ($n + 1)) / (2));
+      return int(($n * ($n + 1)) / (2));
     }
     # print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
     

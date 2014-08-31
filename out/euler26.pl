@@ -16,7 +16,7 @@ sub periode{
     my $reste = remainder($a, $b);
     foreach my $i (0 .. $len - 1) {
       if ($restes->[$i] eq $reste) {
-      return $len - $i;
+        return $len - $i;
       }
       }
     $restes->[$len] = $reste;
@@ -35,8 +35,8 @@ my $mi = 0;
 foreach my $i (1 .. 1000) {
   my $p = periode($t, 0, 1, $i);
   if ($p > $m) {
-  $mi = $i;
-  $m = $p;
+    $mi = $i;
+    $m = $p;
   }
   }
 print($mi, "\n", $m, "\n");

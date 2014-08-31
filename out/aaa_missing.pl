@@ -35,7 +35,7 @@ sub result{
     }
   foreach my $i2 (0 .. $len - 1) {
     if (!$tab2->[$i2]) {
-    return $i2;
+      return $i2;
     }
     }
   return -1;

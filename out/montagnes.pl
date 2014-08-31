@@ -35,7 +35,7 @@ sub montagnes_{
     $j = $j + 1;
     $tab->[$len - $j] = $x;
     if ($j > $max_) {
-    $max_ = $j;
+      $max_ = $j;
     }
     $i = $i - 1;
   }

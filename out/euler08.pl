@@ -16,9 +16,9 @@ sub max2{
   my($a,
   $b) = @_;
   if ($a > $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 
@@ -37,14 +37,14 @@ foreach my $k (1 .. 995) {
   my $e = readchar();
   my $f = ord($e) - ord('0');
   if ($f eq 0) {
-  $i = 1;
-  $nskipdiv = 4;
+    $i = 1;
+    $nskipdiv = 4;
   }else{
-  $i = $i * $f;
-  if ($nskipdiv < 0) {
-  $i = int(($i) / ($last->[$index]));
-  }
-  $nskipdiv = $nskipdiv - 1;
+    $i = $i * $f;
+    if ($nskipdiv < 0) {
+      $i = int(($i) / ($last->[$index]));
+    }
+    $nskipdiv = $nskipdiv - 1;
   }
   $last->[$index] = $f;
   $index = remainder($index + 1, 5);

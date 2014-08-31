@@ -23,17 +23,17 @@ foreach my $i (0 .. 5 - 1) {
   }
 my $c = $a->[0];
 if ($c) {
-print("True");
+  print("True");
 }else{
-print("False");
+  print("False");
 }
 print("\n");
 g(id($a), 0);
 my $d = $a->[0];
 if ($d) {
-print("True");
+  print("True");
 }else{
-print("False");
+  print("False");
 }
 print("\n");
 

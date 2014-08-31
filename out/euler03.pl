@@ -15,16 +15,16 @@ while ($a ne 1)
   while ($b * $b < $a)
   {
     if ((remainder($a, $b)) eq 0) {
-    $a = int(($a) / ($b));
-    $b0 = $b;
-    $b = $a;
-    $found = 1;
+      $a = int(($a) / ($b));
+      $b0 = $b;
+      $b = $a;
+      $found = 1;
     }
     $b = $b + 1;
   }
   if (!$found) {
-  print($a, "\n");
-  $a = 1;
+    print($a, "\n");
+    $a = 1;
   }
 }
 

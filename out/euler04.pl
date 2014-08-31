@@ -9,9 +9,9 @@ sub max2{
   my($a,
   $b) = @_;
   if ($a > $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 
@@ -38,9 +38,9 @@ sub chiffre{
   my($c,
   $m) = @_;
   if ($c eq 0) {
-  return remainder($m, 10);
+    return remainder($m, 10);
   }else{
-  return chiffre($c - 1, int(($m) / (10)));
+    return chiffre($c - 1, int(($m) / (10)));
   }
 }
 
@@ -53,7 +53,7 @@ foreach my $a (0 .. 9) {
           foreach my $e (0 .. 9) {
             my $mul = $a * $d + 10 * ($a * $e + $b * $d) + 100 * ($a * $f + $b * $e + $c * $d) + 1000 * ($c * $e + $b * $f) + 10000 * $c * $f;
             if (chiffre(0, $mul) eq chiffre(5, $mul) && chiffre(1, $mul) eq chiffre(4, $mul) && chiffre(2, $mul) eq chiffre(3, $mul)) {
-            $m = max2($mul, $m);
+              $m = max2($mul, $m);
             }
             }
           }

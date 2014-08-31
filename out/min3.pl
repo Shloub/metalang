@@ -4,9 +4,9 @@ sub min2{
   my($a,
   $b) = @_;
   if ($a < $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 

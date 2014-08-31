@@ -4,9 +4,9 @@ sub min2{
   my($a,
   $b) = @_;
   if ($a < $b) {
-  return $a;
+    return $a;
   }else{
-  return $b;
+    return $b;
   }
 }
 
@@ -16,17 +16,17 @@ sub eratostene{
   my $n = 0;
   foreach my $i (2 .. $max_ - 1) {
     if ($t->[$i] eq $i) {
-    $n = $n + 1;
-    my $j = $i * $i;
-    if (int(($j) / ($i)) eq $i) {
-    # overflow test 
-    
-    while ($j < $max_ && $j > 0)
-    {
-      $t->[$j] = 0;
-      $j = $j + $i;
-    }
-    }
+      $n = $n + 1;
+      my $j = $i * $i;
+      if (int(($j) / ($i)) eq $i) {
+        # overflow test 
+        
+        while ($j < $max_ && $j > 0)
+        {
+          $t->[$j] = 0;
+          $j = $j + $i;
+        }
+      }
     }
     }
   return $n;
@@ -45,8 +45,8 @@ foreach my $o (0 .. $nprimes - 1) {
 my $l = 0;
 foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
-  $primes->[$l] = $k;
-  $l = $l + 1;
+    $primes->[$l] = $k;
+    $l = $l + 1;
   }
   }
 print($l, " == ", $nprimes, "\n");
@@ -64,16 +64,16 @@ while ($process)
   $process = 0;
   foreach my $i (0 .. $stop) {
     if ($i + $len < $nprimes) {
-    $sum->[$i] = $sum->[$i] + $primes->[$i + $len];
-    if ($maximumprimes > $sum->[$i]) {
-    $process = 1;
-    if ($era->[$sum->[$i]] eq $sum->[$i]) {
-    $maxl = $len;
-    $resp = $sum->[$i];
-    }
-    }else{
-    $stop = min2($stop, $i);
-    }
+      $sum->[$i] = $sum->[$i] + $primes->[$i + $len];
+      if ($maximumprimes > $sum->[$i]) {
+        $process = 1;
+        if ($era->[$sum->[$i]] eq $sum->[$i]) {
+          $maxl = $len;
+          $resp = $sum->[$i];
+        }
+      }else{
+        $stop = min2($stop, $i);
+      }
     }
     }
   $len = $len + 1;

@@ -36,19 +36,19 @@ sub find0{
   #	
   
   if ($y eq $len - 1) {
-  return $tab->[$y]->[$x];
+    return $tab->[$y]->[$x];
   }elsif ($x > $y) {
-  return -10000;
+    return -10000;
   }elsif ($cache->[$y]->[$x] ne 0) {
-  return $cache->[$y]->[$x];
+    return $cache->[$y]->[$x];
   }
   my $result = 0;
   my $out0 = find0($len, $tab, $cache, $x, $y + 1);
   my $out1 = find0($len, $tab, $cache, $x + 1, $y + 1);
   if ($out0 > $out1) {
-  $result = $out0 + $tab->[$y]->[$x];
+    $result = $out0 + $tab->[$y]->[$x];
   }else{
-  $result = $out1 + $tab->[$y]->[$x];
+    $result = $out1 + $tab->[$y]->[$x];
   }
   $cache->[$y]->[$x] = $result;
   return $result;

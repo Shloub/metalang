@@ -30,11 +30,11 @@ sub rev2{
   $acc,
   $torev) = @_;
   if ($torev eq $empty) {
-  return $acc;
+    return $acc;
   }else{
-  my $acc2 = {"head" => $torev->{"head"},
-              "tail" => $acc};
-  return rev2($empty, $acc, $torev->{"tail"});
+    my $acc2 = {"head" => $torev->{"head"},
+                "tail" => $acc};
+    return rev2($empty, $acc, $torev->{"tail"});
   }
 }
 
@@ -52,7 +52,7 @@ sub test{
   {
     $i = readint();
     if ($i ne 0) {
-    $list = cons($list, $i);
+      $list = cons($list, $i);
     }
   }
 }

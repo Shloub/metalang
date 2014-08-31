@@ -11,7 +11,7 @@ sub divisible{
   $size) = @_;
   foreach my $i (0 .. $size - 1) {
     if ((remainder($n, $t->[$i])) eq 0) {
-    return 1;
+      return 1;
     }
     }
   return 0;
@@ -25,11 +25,11 @@ sub find{
   while ($used ne $nth)
   {
     if (divisible($n, $t, $used)) {
-    $n = $n + 1;
+      $n = $n + 1;
     }else{
-    $t->[$used] = $n;
-    $n = $n + 1;
-    $used = $used + 1;
+      $t->[$used] = $n;
+      $n = $n + 1;
+      $used = $used + 1;
     }
   }
   return $t->[$used - 1];

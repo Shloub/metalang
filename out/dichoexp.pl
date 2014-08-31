@@ -28,13 +28,13 @@ sub exp_{
   my($a,
   $b) = @_;
   if ($b eq 0) {
-  return 1;
+    return 1;
   }
   if ((remainder($b, 2)) eq 0) {
-  my $o = exp_($a, int(($b) / (2)));
-  return $o * $o;
+    my $o = exp_($a, int(($b) / (2)));
+    return $o * $o;
   }else{
-  return $a * exp_($a, $b - 1);
+    return $a * exp_($a, $b - 1);
   }
 }
 

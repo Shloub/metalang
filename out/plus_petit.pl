@@ -25,11 +25,11 @@ sub go_{
   $b) = @_;
   my $m = int(($a + $b) / (2));
   if ($a eq $m) {
-  if ($tab->[$a] eq $m) {
-  return $b;
-  }else{
-  return $a;
-  }
+    if ($tab->[$a] eq $m) {
+      return $b;
+    }else{
+      return $a;
+    }
   }
   my $i = $a;
   my $j = $b;
@@ -37,17 +37,17 @@ sub go_{
   {
     my $e = $tab->[$i];
     if ($e < $m) {
-    $i = $i + 1;
+      $i = $i + 1;
     }else{
-    $j = $j - 1;
-    $tab->[$i] = $tab->[$j];
-    $tab->[$j] = $e;
+      $j = $j - 1;
+      $tab->[$i] = $tab->[$j];
+      $tab->[$j] = $e;
     }
   }
   if ($i < $m) {
-  return go_($tab, $a, $m);
+    return go_($tab, $a, $m);
   }else{
-  return go_($tab, $m, $b);
+    return go_($tab, $m, $b);
   }
 }
 

@@ -27,16 +27,16 @@ sub devine_{
   my $max_ = $tab->[1];
   foreach my $i (2 .. $len - 1) {
     if ($tab->[$i] > $max_ || $tab->[$i] < $min_) {
-    return 0;
+      return 0;
     }
     if ($tab->[$i] < $nombre) {
-    $min_ = $tab->[$i];
+      $min_ = $tab->[$i];
     }
     if ($tab->[$i] > $nombre) {
-    $max_ = $tab->[$i];
+      $max_ = $tab->[$i];
     }
     if ($tab->[$i] eq $nombre && $len ne $i + 1) {
-    return 0;
+      return 0;
     }
     }
   return 1;
@@ -54,9 +54,9 @@ foreach my $i (0 .. $len - 1) {
   }
 my $a = devine_($nombre, $tab, $len);
 if ($a) {
-print("True");
+  print("True");
 }else{
-print("False");
+  print("False");
 }
 
 
