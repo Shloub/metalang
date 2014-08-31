@@ -79,7 +79,7 @@ macro int native_macro_max2(int a, int b)
   py do "max($a, $b)"
   pl do "max($a, $b)"
   rkt do "max $a $b"
-  clisp do "max $a $b"
+  clisp do "(max $a $b)"
   ruby do "[$a, $b].max"
   * do "max($a, $b)"
 end
@@ -120,6 +120,7 @@ macro int native_macro_min2(int a, int b)
   php do "min($a, $b)"
   py do "min($a, $b)"
   rkt do "min $a $b"
+  clisp do "(min $a $b)"
   ruby do "[$a, $b].min"
   pl do "min($a, $b)"
   * do "min($a, $b)"
@@ -130,7 +131,7 @@ macro int native_macro_min3(int a, int b, int c)
   php do "min($a, $b, $c)"
   py do "min($a, $b, $c)"
   rkt do "min $a $b $c"
-  clisp do "min $a $b $c"
+  clisp do "(min $a $b $c)"
   ruby do "[$a, $b, $c].min"
   pl do "min($a, $b, $c)"
   * do "min($a, $b, $c)"
@@ -141,7 +142,7 @@ macro int native_macro_min4(int a, int b, int c, int d)
   php do "min($a, $b, $c, $d)"
   py do "min($a, $b, $c, $d)"
   rkt do "min $a $b $c $d"
-  clisp do "min $a $b $c $d"
+  clisp do "(min $a $b $c $d)"
   ruby do "[$a, $b, $c, $d].min"
   pl do "min($a, $b, $c, $d)"
   * do "min($a, $b, $c, $d)"
@@ -365,7 +366,7 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
    end
 end
 
-def array<array<int>> read_int_matrix(int x, int y)
+def inline array<array<int>> read_int_matrix(int x, int y)
     ${expand_read_int_matrix( {x}, {y} )}
 end
 
@@ -378,6 +379,6 @@ def lexems expand_read_char_matrix(lexems x, lexems y)
   }
 end
 
-def array<array<char>> read_char_matrix(int x, int y)
+def inline array<array<char>> read_char_matrix(int x, int y)
     ${expand_read_char_matrix( {x}, {y} )}
 end
