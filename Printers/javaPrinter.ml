@@ -88,10 +88,11 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     Format.fprintf f "%s.%s" t e
 
   method prog f prog =
+    let reader = Tags.is_taged "use_cc_readline" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
     Format.fprintf f
       "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@\n%a@]@\n}@\n"
       prog.Prog.progname
-      self#print_scanner ()
+      (if reader then self#print_scanner else fun f () -> ()) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
