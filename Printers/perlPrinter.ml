@@ -53,10 +53,22 @@ class perlPrinter = object(self)
 
   method if_ f e ifcase elsecase =
     match elsecase with
-    | [] ->
-      Format.fprintf f "@[<h>if@ (%a)@] {@\n%a@\n}"
+    | [] -> (*begin match ifcase with
+      | [item] ->
+        Format.fprintf f "%a if (%a);" 
+          self#instr item
+          self#expr e
+      | _ ->*)
+        Format.fprintf f "@[<h>if@ (%a)@] {@\n%a@\n}"
+          self#expr e
+          self#instructions ifcase
+(*end*)
+    | [Instr.Fixed.F (_, Instr.If (e2, if2, els2))] ->
+
+      Format.fprintf f "@[<h>if@ (%a)@] {@\n%a@\n}els%a"
         self#expr e
         self#instructions ifcase
+        (fun f () -> self#if_ f e2 if2 els2) ()
     | _ ->
       Format.fprintf f "@[<h>if@ (%a)@] {@\n%a@\n}else{@\n%a@\n}"
         self#expr e
