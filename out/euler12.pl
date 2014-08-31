@@ -1,18 +1,9 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
     return $a - int($a / $b) * $b;
-}
-
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
 }
 
 sub eratostene{
@@ -76,7 +67,7 @@ sub find{
     foreach my $m (0 .. $n + 2 - 1) {
       $primesFactors->[$m] = 0;
       }
-    my $max_ = max2_(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
+    my $max_ = max(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
     $primesFactors->[2] = $primesFactors->[2] - 1;
     my $ndivs = 1;
     foreach my $i (0 .. $max_) {

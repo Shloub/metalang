@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
@@ -23,16 +24,6 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub min2_{
-  my($a,
-  $b) = @_;
-  if ($a < $b) {
-    return $a;
-  }else{
-    return $b;
-  }
-}
-
 sub pathfind_aux{
   my($cache,
   $tab,
@@ -54,12 +45,8 @@ sub pathfind_aux{
     my $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     my $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     my $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-    my $n = min2_($val1, $val2);
-    my $o = min2_($n, $val3);
-    my $p = min2_($o, $val4);
-    my $q = $p;
-    my $m = $q;
-    my $out_ = 1 + $m;
+    my $e = min($val1, $val2, $val3, $val4);
+    my $out_ = 1 + $e;
     $cache->[$posY]->[$posX] = $out_;
     return $out_;
   }

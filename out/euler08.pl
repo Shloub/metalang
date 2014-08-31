@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
@@ -10,16 +11,6 @@ sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
     return $a - int($a / $b) * $b;
-}
-
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
 }
 
 my $i = 1;
@@ -48,7 +39,7 @@ foreach my $k (1 .. 995) {
   }
   $last->[$index] = $f;
   $index = remainder($index + 1, 5);
-  $max_ = max2_($max_, $i);
+  $max_ = max($max_, $i);
   }
 print($max_, "\n");
 

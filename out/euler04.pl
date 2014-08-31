@@ -1,18 +1,9 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
     return $a - int($a / $b) * $b;
-}
-
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
 }
 
 #
@@ -53,7 +44,7 @@ foreach my $a (0 .. 9) {
           foreach my $e (0 .. 9) {
             my $mul = $a * $d + 10 * ($a * $e + $b * $d) + 100 * ($a * $f + $b * $e + $c * $d) + 1000 * ($c * $e + $b * $f) + 10000 * $c * $f;
             if (chiffre(0, $mul) eq chiffre(5, $mul) && chiffre(1, $mul) eq chiffre(4, $mul) && chiffre(2, $mul) eq chiffre(3, $mul)) {
-              my $g = max2_($mul, $m);
+              my $g = max($mul, $m);
               $m = $g;
             }
             }

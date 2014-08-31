@@ -1,35 +1,16 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
     return $a - int($a / $b) * $b;
 }
 
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
-}
-
-sub min2_{
-  my($a,
-  $b) = @_;
-  if ($a < $b) {
-    return $a;
-  }else{
-    return $b;
-  }
-}
-
 sub pgcd{
   my($a,
   $b) = @_;
-  my $c = min2_($a, $b);
-  my $d = max2_($a, $b);
+  my $c = min($a, $b);
+  my $d = max($a, $b);
   my $reste = remainder($d, $c);
   if ($reste eq 0) {
     return $c;

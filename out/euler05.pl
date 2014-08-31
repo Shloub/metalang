@@ -1,18 +1,9 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
     return $a - int($a / $b) * $b;
-}
-
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
 }
 
 sub primesfactors{
@@ -45,7 +36,7 @@ foreach my $i (1 .. $lim) {
   foreach my $j (1 .. $i) {
     my $g = $o->[$j];
     my $h = $t->[$j];
-    my $f = max2_($g, $h);
+    my $f = max($g, $h);
     $o->[$j] = $f;
     }
   }

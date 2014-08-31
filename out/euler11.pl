@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readint {
   nextchar() if (!defined $currentchar);
@@ -15,16 +16,6 @@ sub readint {
   return $o * $sign;
 }sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
 }
 
 sub read_int_matrix{
@@ -86,7 +77,7 @@ foreach my $j (0 .. 7) {
   foreach my $x (0 .. 19) {
     foreach my $y (0 .. 19) {
       my $h = find(4, $m, $x, $y, $dx, $dy);
-      my $g = max2_($max_, $h);
+      my $g = max($max_, $h);
       $max_ = $g;
       }
     }

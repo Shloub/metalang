@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
@@ -13,26 +14,6 @@ sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
     return $a - int($a / $b) * $b;
-}
-
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
-}
-
-sub min2_{
-  my($a,
-  $b) = @_;
-  if ($a < $b) {
-    return $a;
-  }else{
-    return $b;
-  }
 }
 
 
@@ -125,7 +106,7 @@ sub add_bigint_positif{
   $b) = @_;
   # Une addition ou on en a rien a faire des signes 
   
-  my $len = max2_($a->{"bigint_len"}, $b->{"bigint_len"}) + 1;
+  my $len = max($a->{"bigint_len"}, $b->{"bigint_len"}) + 1;
   my $retenue = 0;
   my $chiffres = [];
   foreach my $i (0 .. $len - 1) {
@@ -257,7 +238,7 @@ sub mul_bigint_cp{
 sub bigint_premiers_chiffres{
   my($a,
   $i) = @_;
-  my $len = min2_($i, $a->{"bigint_len"});
+  my $len = min($i, $a->{"bigint_len"});
   while ($len ne 0 && $a->{"bigint_chiffres"}->[$len - 1] eq 0)
   {
     $len = $len - 1;
@@ -295,7 +276,7 @@ sub mul_bigint{
   }
   # Algorithme de Karatsuba 
   
-  my $split = int((min2_($aa->{"bigint_len"}, $bb->{"bigint_len"})) / (2));
+  my $split = int((min($aa->{"bigint_len"}, $bb->{"bigint_len"})) / (2));
   my $a = bigint_shift($aa, -$split);
   my $b = bigint_premiers_chiffres($aa, $split);
   my $c = bigint_shift($bb, -$split);

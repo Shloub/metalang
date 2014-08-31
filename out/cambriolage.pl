@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use List::Util qw(min max);
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readint {
   nextchar() if (!defined $currentchar);
@@ -15,16 +16,6 @@ sub readint {
   return $o * $sign;
 }sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
-
-sub max2_{
-  my($a,
-  $b) = @_;
-  if ($a > $b) {
-    return $a;
-  }else{
-    return $b;
-  }
 }
 
 sub nbPassePartout{
@@ -49,8 +40,8 @@ sub nbPassePartout{
     if ($pp->[0] >= $max_ancient && $pp->[1] >= $max_recent) {
       return 1;
     }
-    $max_ancient_pp = max2_($max_ancient_pp, $pp->[0]);
-    $max_recent_pp = max2_($max_recent_pp, $pp->[1]);
+    $max_ancient_pp = max($max_ancient_pp, $pp->[0]);
+    $max_recent_pp = max($max_recent_pp, $pp->[1]);
     }
   if ($max_ancient_pp >= $max_ancient && $max_recent_pp >= $max_recent) {
     return 2;

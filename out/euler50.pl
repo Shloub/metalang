@@ -1,14 +1,5 @@
 #!/usr/bin/perl
-
-sub min2_{
-  my($a,
-  $b) = @_;
-  if ($a < $b) {
-    return $a;
-  }else{
-    return $b;
-  }
-}
+use List::Util qw(min max);
 
 sub eratostene{
   my($t,
@@ -72,7 +63,7 @@ while ($process)
           $resp = $sum->[$i];
         }
       }else{
-        my $c = min2_($stop, $i);
+        my $c = min($stop, $i);
         $stop = $c;
       }
     }
