@@ -297,6 +297,9 @@ let map_instrs instrs =
 
 let map_instrs instrs =
   let instrs = map_instrs instrs in
+  let instrs = map_instrs instrs in
+  let instrs = map_instrs instrs in
+  let instrs = map_instrs instrs in
   instrs
 
 
