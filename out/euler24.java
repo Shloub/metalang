@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler24
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static int fact(int n)
   {
     int prod = 1;

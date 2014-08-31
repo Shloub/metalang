@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
-  if (!defined $currentchar){ nextchar() ; }
+  nextchar() if (!defined $currentchar);
   my $o = $currentchar;
   nextchar();
   return $o;

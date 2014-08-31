@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler03
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   
   public static void main(String args[])
   {

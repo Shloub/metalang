@@ -2,7 +2,7 @@ import java.util.*;
 
 public class test_returns
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static boolean is_pair(int i)
   {
     int j = 1;

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class aaa_05array
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static boolean[] id(boolean[] b)
   {
     return b;

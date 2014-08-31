@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler05
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static int max2(int a, int b)
   {
     return Math.max(a, b);

@@ -2,7 +2,7 @@ import java.util.*;
 
 public class aaa_04loop
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static boolean h(int i)
   {
     /*  for j = i - 2 to i + 2 do

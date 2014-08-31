@@ -2,7 +2,7 @@ import java.util.*;
 
 public class brainfuck_compiler
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   /*
 Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation

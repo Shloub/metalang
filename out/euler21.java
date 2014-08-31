@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler21
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static int eratostene(int[] t, int max_)
   {
     int n = 0;

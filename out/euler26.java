@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler26
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static int periode(int[] restes, int len, int a, int b)
   {
     while (a != 0)

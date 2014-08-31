@@ -2,7 +2,7 @@ import java.util.*;
 
 public class aaa_02if
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static boolean f(int i)
   {
     if (i == 0)

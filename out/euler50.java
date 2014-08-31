@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler50
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static int min2(int a, int b)
   {
     return Math.min(a, b);

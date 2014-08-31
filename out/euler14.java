@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler14
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static int next_(int n)
   {
     if ((n % 2) == 0)

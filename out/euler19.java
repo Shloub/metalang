@@ -2,7 +2,7 @@ import java.util.*;
 
 public class euler19
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static boolean is_leap(int year)
   {
     return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0);

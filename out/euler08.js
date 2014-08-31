@@ -1,10 +1,10 @@
 var util = require("util");
 var fs = require("fs");
 var current_char = null;
-var read_char0 = function(){
+function read_char0(){
     return fs.readSync(process.stdin.fd, 1)[0];
 }
-var read_char_ = function(){
+function read_char_(){
     if (current_char == null) current_char = read_char0();
     var out = current_char;
     current_char = read_char0();

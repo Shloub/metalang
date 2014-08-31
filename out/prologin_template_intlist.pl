@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readint {
-  if (!defined $currentchar){
-     nextchar();
-  }
+  nextchar() if (!defined $currentchar);
   my $o = 0;
   my $sign = 1;
   if ($currentchar eq '-') {

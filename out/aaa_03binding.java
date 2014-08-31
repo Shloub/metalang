@@ -2,7 +2,7 @@ import java.util.*;
 
 public class aaa_03binding
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   public static int g(int i)
   {
     int j = i * 4;

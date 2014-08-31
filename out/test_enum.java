@@ -2,7 +2,7 @@ import java.util.*;
 
 public class test_enum
 {
-  static Scanner scanner = new Scanner(System.in);
+  
   enum foo_t { 
     Foo,
      Bar,
