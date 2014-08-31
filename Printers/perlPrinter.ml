@@ -109,7 +109,10 @@ Format.fprintf f "print(%a);" self#expr expr
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "#!/usr/bin/perl@\n%a%a%a%a%a@\n%a%a@\n@\n"
+    Format.fprintf f "#!/usr/bin/perl@\n%a%a%a%a%a%a@\n%a%a@\n@\n"
+(fun f () ->
+  if Tags.is_taged "perl_use_list_min" then Format.fprintf f "use List::Util qw(min max);@\n"
+) ()
       (fun f () ->
 	if need then Format.fprintf f "sub nextchar{ sysread STDIN, $currentchar, 1; }
 ") ()

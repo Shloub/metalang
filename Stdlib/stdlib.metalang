@@ -77,7 +77,9 @@ macro int native_macro_max2(int a, int b)
   csharp do "Math.Max($a, $b)"
   php do "max($a, $b)"
   py do "max($a, $b)"
+  pl do "max($a, $b)"
   rkt do "max $a $b"
+  clisp do "max $a $b"
   ruby do "[$a, $b].max"
   * do "max($a, $b)"
 end
@@ -95,9 +97,12 @@ def lexems macro_max2(lexems a, lexems b)
   current_language() == LANG_Ml ||
   current_language() == LANG_Fun_ml ||
   current_language() == LANG_Py ||
+  current_language() == LANG_Pl ||
   current_language() == LANG_Rb
   then
-    return { return native_macro_max2( ${a}, ${b}) }
+    return { 
+    tag perl_use_list_min
+    return native_macro_max2( ${a}, ${b}) }
   else
     return  { return max2_(${a}, ${b}) }
   end
@@ -116,6 +121,7 @@ macro int native_macro_min2(int a, int b)
   py do "min($a, $b)"
   rkt do "min $a $b"
   ruby do "[$a, $b].min"
+  pl do "min($a, $b)"
   * do "min($a, $b)"
 end
 
@@ -124,7 +130,9 @@ macro int native_macro_min3(int a, int b, int c)
   php do "min($a, $b, $c)"
   py do "min($a, $b, $c)"
   rkt do "min $a $b $c"
+  clisp do "min $a $b $c"
   ruby do "[$a, $b, $c].min"
+  pl do "min($a, $b, $c)"
   * do "min($a, $b, $c)"
 end
 
@@ -133,7 +141,9 @@ macro int native_macro_min4(int a, int b, int c, int d)
   php do "min($a, $b, $c, $d)"
   py do "min($a, $b, $c, $d)"
   rkt do "min $a $b $c $d"
+  clisp do "min $a $b $c $d"
   ruby do "[$a, $b, $c, $d].min"
+  pl do "min($a, $b, $c, $d)"
   * do "min($a, $b, $c, $d)"
 end
 
@@ -150,9 +160,13 @@ def lexems macro_min2(lexems a, lexems b)
   current_language() == LANG_Fun_ml ||
   current_language() == LANG_Py ||
   current_language() == LANG_Rkt ||
-  current_language() == LANG_Rb
+  current_language() == LANG_Cl ||
+  current_language() == LANG_Rb ||
+  current_language() == LANG_Pl
   then
-    return { return native_macro_min2( ${a}, ${b}) }
+    return { 
+    tag perl_use_list_min
+    return native_macro_min2( ${a}, ${b}) }
   else
     return  { return min2_(${a}, ${b})}
   end
@@ -167,9 +181,12 @@ def lexems macro_min3(lexems a, lexems b, lexems c)
   current_language() == LANG_Php ||
   current_language() == LANG_Py ||
   current_language() == LANG_Rkt ||
-  current_language() == LANG_Rb
+  current_language() == LANG_Cl ||
+  current_language() == LANG_Rb ||
+  current_language() == LANG_Pl ||
+  current_language() == LANG_Pl
   then
-    return { return native_macro_min3( ${a}, ${b}, ${c}) }
+    return { tag perl_use_list_min return native_macro_min3( ${a}, ${b}, ${c}) }
   else
     return { return min2(min2( ${a}, ${b}), ${c}) }
   end
@@ -183,10 +200,12 @@ def lexems macro_min4(lexems a, lexems b, lexems c, lexems d)
   if current_language() == LANG_Js ||
   current_language() == LANG_Php ||
   current_language() == LANG_Py  ||
-  current_language() == LANG_Rkt||
-  current_language() == LANG_Rb
+  current_language() == LANG_Rkt ||
+  current_language() == LANG_Cl ||
+  current_language() == LANG_Rb ||
+  current_language() == LANG_Pl
   then
-    return { return native_macro_min4( ${a}, ${b}, ${c}, ${d}) }
+    return { tag perl_use_list_min return native_macro_min4( ${a}, ${b}, ${c}, ${d}) }
   else
     return { 	return min3(min2(a, b), c, d) }
   end
