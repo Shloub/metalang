@@ -52,10 +52,16 @@ class perlPrinter = object(self)
   method main f main = self#instructions f main
 
   method if_ f e ifcase elsecase =
-    Format.fprintf f "@[<h>if@ (%a)@] {@\n%a@\n}else{@\n%a@\n}"
-      self#expr e
-      self#instructions ifcase
-      self#instructions elsecase
+    match elsecase with
+    | [] ->
+      Format.fprintf f "@[<h>if@ (%a)@] {@\n%a@\n}"
+        self#expr e
+        self#instructions ifcase
+    | _ ->
+      Format.fprintf f "@[<h>if@ (%a)@] {@\n%a@\n}else{@\n%a@\n}"
+        self#expr e
+        self#instructions ifcase
+        self#instructions elsecase
 
   method print f t expr =
 Format.fprintf f "print(%a);" self#expr expr
