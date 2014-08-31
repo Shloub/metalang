@@ -217,21 +217,21 @@ out/%.go : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	 ./metalang -quiet -o out -lang go $< || exit 1; \
 	fi
 
-out/%.java : tests/prog/%.metalang metalang
+out/%.java : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang java $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang java $< || exit 1; \
 	fi
 
-out/%.js : tests/prog/%.metalang metalang
+out/%.js : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang js $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang js $< || exit 1; \
 	fi
 
-out/%.cs : tests/prog/%.metalang metalang
+out/%.cs : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cs $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -245,42 +245,42 @@ out/%.pas : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	 ./metalang -quiet -o out -lang pas $< || exit 1; \
 	fi
 
-out/%.metalang_parsed : tests/prog/%.metalang metalang
+out/%.metalang_parsed : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang metalang_parsed $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang metalang $< || exit 1; \
 	fi
 
-out/%.fun.ml : tests/prog/%.metalang metalang
+out/%.fun.ml : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang fun.ml $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang fun.ml $< || exit 1; \
 	fi
 
-out/%.pl : tests/prog/%.metalang metalang
+out/%.pl : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang pl $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang pl $< || exit 1; \
 	fi
 
-out/%.ml : tests/prog/%.metalang metalang
+out/%.ml : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang ml $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang ml $< || exit 1; \
 	fi
 
-out/%.hs : tests/prog/%.metalang metalang
+out/%.hs : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang hs $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang hs $< || exit 1; \
 	fi
 
-out/%.rb : tests/prog/%.metalang metalang
+out/%.rb : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang rb $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
@@ -294,14 +294,14 @@ out/%.py : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	 ./metalang -quiet -o out -lang py $< || exit 1; \
 	fi
 
-out/%.c : tests/prog/%.metalang metalang
+out/%.c : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang c $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang c $< || exit 1; \
 	fi
 
-out/%.cc : tests/prog/%.metalang metalang
+out/%.cc : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	@if [ -e "$(basename $<).compiler_input" ]; then \
 	./metalang -o out -lang cc $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
