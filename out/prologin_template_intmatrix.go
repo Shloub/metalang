@@ -14,21 +14,6 @@ func skip() {
   }
 }
 
-func read_int_matrix(x int, y int) [][]int{
-  var tab [][]int = make([][]int, y)
-  for z := 0 ; z <= y - 1; z++ {
-    var b []int = make([]int, x)
-      for c := 0 ; c <= x - 1; c++ {
-        var d int
-        fmt.Fscanf(reader, "%d", &d)
-          skip()
-          b[c] = d;
-      }
-      tab[z] = b;
-  }
-  return tab
-}
-
 func programme_candidat(tableau [][]int, x int, y int) int{
   var out_ int = 0
   for i := 0 ; i <= y - 1; i++ {
@@ -49,7 +34,18 @@ func main() {
   fmt.Fscanf(reader, "%d", &h)
   skip()
   var taille_y int = h
-  var tableau [][]int = read_int_matrix(taille_x, taille_y)
+  var l [][]int = make([][]int, taille_y)
+  for m := 0 ; m <= taille_y - 1; m++ {
+    var o []int = make([]int, taille_x)
+      for p := 0 ; p <= taille_x - 1; p++ {
+        var q int
+        fmt.Fscanf(reader, "%d", &q)
+          skip()
+          o[p] = q;
+      }
+      l[m] = o;
+  }
+  var tableau [][]int = l
   fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }
 

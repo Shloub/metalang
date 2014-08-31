@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 public class aaa_readints
 {
-  public static int[][] read_int_matrix(int x, int y)
-  {
-    int[][] tab = new int[y][];
-    for (int z = 0 ; z < y; z++)
-      tab[z] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    return tab;
-  }
-  
   
   public static void Main(String[] args)
   {
@@ -22,7 +14,10 @@ public class aaa_readints
       Console.Write("" + i + "=>" + tab1[i] + "\n");
     }
     len = int.Parse(Console.ReadLine());
-    int[][] tab2 = read_int_matrix(len, len - 1);
+    int[][] g = new int[len - 1][];
+    for (int h = 0 ; h < len - 1; h++)
+      g[h] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[][] tab2 = g;
     for (int i = 0 ; i <= len - 2; i ++)
     {
       for (int j = 0 ; j < len; j++)

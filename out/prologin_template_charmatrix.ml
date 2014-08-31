@@ -1,12 +1,3 @@
-let read_char_matrix x y =
-  let tab = Array.init y (fun _z ->
-    let b = Array.init x (fun _c ->
-      let d = Scanf.scanf "%c" (fun v_0 -> v_0) in
-      d) in
-    Scanf.scanf " " (fun () -> ());
-    b) in
-  tab
-
 let programme_candidat tableau taille_x taille_y =
   let out_ = ref( 0 ) in
   for i = 0 to taille_y - 1 do
@@ -22,7 +13,13 @@ let () =
 begin
   let taille_x = Scanf.scanf "%d " (fun x -> x) in
   let taille_y = Scanf.scanf "%d " (fun x -> x) in
-  let tableau = read_char_matrix taille_x taille_y in
+  let h = Array.init taille_y (fun _k ->
+    let l = Array.init taille_x (fun _m ->
+      let o = Scanf.scanf "%c" (fun v_0 -> v_0) in
+      o) in
+    Scanf.scanf " " (fun () -> ());
+    l) in
+  let tableau = h in
   Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
 end
  

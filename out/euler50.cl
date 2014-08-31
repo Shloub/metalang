@@ -9,12 +9,6 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
-(defun min2_ (a b)
-(if
-  (< a b)
-  (return-from min2_ a)
-  (return-from min2_ b)))
-
 (defun eratostene (t_ max_)
 (progn
   (let ((n 0))
@@ -112,7 +106,7 @@
                                    ))
                                )
                                (progn
-                                 (let ((c (min2_ stop i)))
+                                 (let ((c (min stop i)))
                                    (setq stop c)
                                  )))
                            ))

@@ -17,22 +17,6 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_int_matrix{
-  my($x,
-  $y) = @_;
-  my $tab = [];
-  foreach my $z (0 .. $y - 1) {
-    my $b = [];
-    foreach my $c (0 .. $x - 1) {
-      my $d = readint();
-      readspaces();
-      $b->[$c] = $d;
-      }
-    $tab->[$z] = $b;
-    }
-  return $tab;
-}
-
 my $f = readint();
 readspaces();
 my $len = $f;
@@ -48,7 +32,17 @@ foreach my $i (0 .. $len - 1) {
   }
 $len = readint();
 readspaces();
-my $tab2 = read_int_matrix($len, $len - 1);
+my $r = [];
+foreach my $s (0 .. $len - 1 - 1) {
+  my $u = [];
+  foreach my $v (0 .. $len - 1) {
+    my $w = readint();
+    readspaces();
+    $u->[$v] = $w;
+    }
+  $r->[$s] = $u;
+  }
+my $tab2 = $r;
 foreach my $i (0 .. $len - 2) {
   foreach my $j (0 .. $len - 1) {
     print($tab2->[$i]->[$j], " ");

@@ -3,14 +3,6 @@ import java.util.*;
 public class prologin_template_charmatrix
 {
   static Scanner scanner = new Scanner(System.in);
-  public static char[][] read_char_matrix(int x, int y)
-  {
-    char[][] tab = new char[y][];
-    for (int z = 0 ; z < y; z++)
-      tab[z] = scanner.nextLine().toCharArray();
-    return tab;
-  }
-  
   public static int programme_candidat(char[][] tableau, int taille_x, int taille_y)
   {
     int out_ = 0;
@@ -47,7 +39,10 @@ public class prologin_template_charmatrix
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_y = e;
-    char[][] tableau = read_char_matrix(taille_x, taille_y);
+    char[][] g = new char[taille_y][];
+    for (int h = 0 ; h < taille_y; h++)
+      g[h] = scanner.nextLine().toCharArray();
+    char[][] tableau = g;
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   

@@ -27,29 +27,6 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun read_int_matrix (x y)
-(progn
-  (let
-   ((tab (array_init
-            y
-            (function (lambda (z)
-            (block lambda_1
-              (let
-               ((b (array_init
-                      x
-                      (function (lambda (c)
-                      (block lambda_2
-                        (let ((d (mread-int )))
-                          (mread-blank)
-                          (return-from lambda_2 d)
-                        )))
-                      ))))
-              (return-from lambda_1 b)
-              )))
-            ))))
-  (return-from read_int_matrix tab)
-  )))
-
 (defun programme_candidat (tableau x y)
 (progn
   (let ((out_ 0))
@@ -72,10 +49,28 @@
       (let ((h (mread-int )))
         (mread-blank)
         (let ((taille_y h))
-          (let ((tableau (read_int_matrix taille_x taille_y)))
+          (let
+           ((l (array_init
+                  taille_y
+                  (function (lambda (m)
+                  (block lambda_1
+                    (let
+                     ((o (array_init
+                            taille_x
+                            (function (lambda (p)
+                            (block lambda_2
+                              (let ((q (mread-int )))
+                                (mread-blank)
+                                (return-from lambda_2 q)
+                              )))
+                            ))))
+                    (return-from lambda_1 o)
+                    )))
+                  ))))
+          (let ((tableau l))
             (princ (programme_candidat tableau taille_x taille_y))
             (princ "
 ")
-          ))))))
+          )))))))
 
 

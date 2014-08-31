@@ -22,21 +22,6 @@ func min2_(a int, b int) int{
   }
 }
 
-func read_char_matrix(x int, y int) [][]byte{
-  var tab [][]byte = make([][]byte, y)
-  for z := 0 ; z <= y - 1; z++ {
-    var o []byte = make([]byte, x)
-      for p := 0 ; p <= x - 1; p++ {
-        var q byte
-        fmt.Fscanf(reader, "%c", &q)
-          o[p] = q;
-      }
-      skip()
-      tab[z] = o;
-  }
-  return tab
-}
-
 func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int) int{
   if posX == x - 1 && posY == y - 1 {
     return 0
@@ -88,7 +73,18 @@ func main() {
   skip()
   var y int = bd
   fmt.Printf("%d %d\n", x, y);
-  var tab [][]byte = read_char_matrix(x, y)
+  var bf [][]byte = make([][]byte, y)
+  for bg := 0 ; bg <= y - 1; bg++ {
+    var bh []byte = make([]byte, x)
+      for bi := 0 ; bi <= x - 1; bi++ {
+        var bj byte
+        fmt.Fscanf(reader, "%c", &bj)
+          bh[bi] = bj;
+      }
+      skip()
+      bf[bg] = bh;
+  }
+  var tab [][]byte = bf
   var result int = pathfind(tab, x, y)
   fmt.Printf("%d", result);
 }

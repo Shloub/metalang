@@ -26,22 +26,6 @@ function read_int_(){
     }
   }
 }
-function read_int_matrix(x, y){
-  var tab = new Array(y);
-  for (var z = 0 ; z <= y - 1; z++)
-  {
-    var b = new Array(x);
-    for (var c = 0 ; c <= x - 1; c++)
-    {
-      d=read_int_();
-      stdinsep();
-      b[c] = d;
-    }
-    tab[z] = b;
-  }
-  return tab;
-}
-
 f=read_int_();
 stdinsep();
 var len = f;
@@ -59,7 +43,19 @@ for (var i = 0 ; i <= len - 1; i++)
 }
 len=read_int_();
 stdinsep();
-var tab2 = read_int_matrix(len, len - 1);
+var r = new Array(len - 1);
+for (var s = 0 ; s <= len - 1 - 1; s++)
+{
+  var u = new Array(len);
+  for (var v = 0 ; v <= len - 1; v++)
+  {
+    w=read_int_();
+    stdinsep();
+    u[v] = w;
+  }
+  r[s] = u;
+}
+var tab2 = r;
 for (var i = 0 ; i <= len - 2; i++)
 {
   for (var j = 0 ; j <= len - 1; j++)

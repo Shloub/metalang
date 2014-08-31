@@ -9,17 +9,6 @@ module Array = struct
     )
 end
 
-let read_int_matrix x y =
-  let tab = (Array.init_withenv y (fun  z () -> let b = (Array.init_withenv x (fun  c () -> Scanf.scanf "%d"
-  (fun  d -> (
-               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let o = d in
-               ((), o)
-               )
-  )) ()) in
-  let m = b in
-  ((), m)) ()) in
-  tab
 let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
@@ -27,44 +16,53 @@ let main =
     let g = (Array.init_withenv len (fun  h () -> Scanf.scanf "%d"
     (fun  k -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                 let p = k in
-                 ((), p)
+                 let w = k in
+                 ((), w)
                  )
     )) ()) in
     let tab1 = g in
-    let bb = 0 in
-    let bc = (len - 1) in
-    let rec ba i =
-      (if (i <= bc)
+    let bj = 0 in
+    let bk = (len - 1) in
+    let rec bi i =
+      (if (i <= bk)
        then (
               (Printf.printf "%d=>%d\n" i tab1.(i));
-              (ba (i + 1))
+              (bi (i + 1))
               )
        
        else let len = (Scanf.scanf "%d " (fun x -> x)) in
-       let tab2 = (read_int_matrix len (len - 1)) in
-       let v = 0 in
-       let w = (len - 2) in
-       let rec q i =
-         (if (i <= w)
-          then let s = 0 in
-          let u = (len - 1) in
-          let rec r j =
-            (if (j <= u)
+       let p = (Array.init_withenv (len - 1) (fun  q () -> let r = (Array.init_withenv len (fun  s () -> Scanf.scanf "%d"
+       (fun  u -> (
+                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                    let bb = u in
+                    ((), bb)
+                    )
+       )) ()) in
+       let ba = r in
+       ((), ba)) ()) in
+       let tab2 = p in
+       let bg = 0 in
+       let bh = (len - 2) in
+       let rec bc i =
+         (if (i <= bh)
+          then let be = 0 in
+          let bf = (len - 1) in
+          let rec bd j =
+            (if (j <= bf)
              then (
                     (Printf.printf "%d " tab2.(i).(j));
-                    (r (j + 1))
+                    (bd (j + 1))
                     )
              
              else (
                     (Printf.printf "\n" );
-                    (q (i + 1))
+                    (bc (i + 1))
                     )
              ) in
-            (r s)
+            (bd be)
           else ()) in
-         (q v)) in
-      (ba bb)
+         (bc bg)) in
+      (bi bj)
     )
   
 

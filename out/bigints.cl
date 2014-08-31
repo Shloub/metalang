@@ -27,12 +27,6 @@
   (return-from max2_ a)
   (return-from max2_ b)))
 
-(defun min2_ (a b)
-(if
-  (< a b)
-  (return-from min2_ a)
-  (return-from min2_ b)))
-
 (defstruct (bigint (:type list) :named)
   bigint_sign
   bigint_len
@@ -283,7 +277,7 @@ D'ou le nom de la fonction. |#
 
 (defun bigint_premiers_chiffres (a i)
 (progn
-  (let ((len (min2_ i (bigint-bigint_len a))))
+  (let ((len (min i (bigint-bigint_len a))))
     (loop while (and (not (= len 0)) (= (aref (bigint-bigint_chiffres a) (- len 1)) 0))
     do (setq len ( - len 1))
     )
@@ -324,7 +318,7 @@ D'ou le nom de la fonction. |#
       (return-from mul_bigint (mul_bigint_cp aa bb))
       (progn
         #| Algorithme de Karatsuba |#
-        (let ((split (quotient (min2_ (bigint-bigint_len aa) (bigint-bigint_len bb)) 2)))
+        (let ((split (quotient (min (bigint-bigint_len aa) (bigint-bigint_len bb)) 2)))
           (let ((a (bigint_shift aa (- 0 split))))
             (let ((b (bigint_premiers_chiffres aa split)))
               (let ((c (bigint_shift bb (- 0 split))))

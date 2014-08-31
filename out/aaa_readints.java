@@ -3,29 +3,6 @@ import java.util.*;
 public class aaa_readints
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int[][] read_int_matrix(int x, int y)
-  {
-    int[][] tab = new int[y][];
-    for (int z = 0 ; z < y; z++)
-    {
-      int[] b = new int[x];
-      for (int c = 0 ; c < x; c++)
-      {
-        int d;
-        if (scanner.hasNext("^-")){
-          scanner.next("^-");
-          d = scanner.nextInt();
-        } else {
-          d = scanner.nextInt();
-        }
-        scanner.findWithinHorizon("[\n\r ]*", 1);
-        b[c] = d;
-      }
-      tab[z] = b;
-    }
-    return tab;
-  }
-  
   
   public static void main(String args[])
   {
@@ -62,7 +39,25 @@ public class aaa_readints
       len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int[][] tab2 = read_int_matrix(len, len - 1);
+    int[][] r = new int[len - 1][];
+    for (int s = 0 ; s < len - 1; s++)
+    {
+      int[] u = new int[len];
+      for (int v = 0 ; v < len; v++)
+      {
+        int w;
+        if (scanner.hasNext("^-")){
+          scanner.next("^-");
+          w = scanner.nextInt();
+        } else {
+          w = scanner.nextInt();
+        }
+        scanner.findWithinHorizon("[\n\r ]*", 1);
+        u[v] = w;
+      }
+      r[s] = u;
+    }
+    int[][] tab2 = r;
     for (int i = 0 ; i <= len - 2; i ++)
     {
       for (int j = 0 ; j < len; j++)

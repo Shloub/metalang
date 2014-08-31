@@ -61,32 +61,8 @@ begin
    until false;
 end;
 
-type k = array of array of Longint;
-type l = array of Longint;
-function read_int_matrix(x : Longint; y : Longint) : k;
-var
-  b : l;
-  c : Longint;
-  d : Longint;
-  tab : k;
-  z : Longint;
-begin
-  SetLength(tab, y);
-  for z := 0 to  y - 1 do
-  begin
-    SetLength(b, x);
-    for c := 0 to  x - 1 do
-    begin
-      d := read_int_();
-      skip();
-      b[c] := d;
-    end;
-    tab[z] := b;
-  end;
-  exit(tab);
-end;
-
-function programme_candidat(tableau : k; x : Longint; y : Longint) : Longint;
+type s = array of array of Longint;
+function programme_candidat(tableau : s; x : Longint; y : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -107,7 +83,12 @@ end;
 var
   f : Longint;
   h : Longint;
-  tableau : k;
+  l : s;
+  m : Longint;
+  o : array of Longint;
+  p : Longint;
+  q : Longint;
+  tableau : s;
   taille_x : Longint;
   taille_y : Longint;
 begin
@@ -117,7 +98,19 @@ begin
   h := read_int_();
   skip();
   taille_y := h;
-  tableau := read_int_matrix(taille_x, taille_y);
+  SetLength(l, taille_y);
+  for m := 0 to  taille_y - 1 do
+  begin
+    SetLength(o, taille_x);
+    for p := 0 to  taille_x - 1 do
+    begin
+      q := read_int_();
+      skip();
+      o[p] := q;
+    end;
+    l[m] := o;
+  end;
+  tableau := l;
   Write(programme_candidat(tableau, taille_x, taille_y));
   Write(''#10'');
 end.

@@ -82,33 +82,9 @@ begin
     end;
 end;
 
-type be = array of array of char;
-type bf = array of char;
-function read_char_matrix(x : Longint; y : Longint) : be;
-var
-  o : bf;
-  p : Longint;
-  q : char;
-  tab : be;
-  z : Longint;
-begin
-  SetLength(tab, y);
-  for z := 0 to  y - 1 do
-  begin
-    SetLength(o, x);
-    for p := 0 to  x - 1 do
-    begin
-      q := read_char_();
-      o[p] := q;
-    end;
-    skip();
-    tab[z] := o;
-  end;
-  exit(tab);
-end;
-
-type bg = array of array of Longint;
-function pathfind_aux(cache : bg; tab : be; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
+type bl = array of array of Longint;
+type bm = array of array of char;
+function pathfind_aux(cache : bl; tab : bm; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
   out_ : Longint;
   r : Longint;
@@ -156,13 +132,13 @@ begin
     end;;;;
 end;
 
-type bh = array of Longint;
-function pathfind(tab : be; x : Longint; y : Longint) : Longint;
+type bn = array of Longint;
+function pathfind(tab : bm; x : Longint; y : Longint) : Longint;
 var
-  cache : bg;
+  cache : bl;
   i : Longint;
   j : Longint;
-  tmp : bh;
+  tmp : bn;
 begin
   SetLength(cache, y);
   for i := 0 to  y - 1 do
@@ -183,8 +159,13 @@ end;
 var
   bb : Longint;
   bd : Longint;
+  bf : bm;
+  bg : Longint;
+  bh : array of char;
+  bi : Longint;
+  bj : char;
   result : Longint;
-  tab : be;
+  tab : bm;
   x : Longint;
   y : Longint;
 begin
@@ -198,7 +179,19 @@ begin
   Write(' ');
   Write(y);
   Write(''#10'');
-  tab := read_char_matrix(x, y);
+  SetLength(bf, y);
+  for bg := 0 to  y - 1 do
+  begin
+    SetLength(bh, x);
+    for bi := 0 to  x - 1 do
+    begin
+      bj := read_char_();
+      bh[bi] := bj;
+    end;
+    skip();
+    bf[bg] := bh;
+  end;
+  tab := bf;
   result := pathfind(tab, x, y);
   Write(result);
 end.

@@ -1,11 +1,4 @@
 <?php
-function &read_int_matrix($x, $y){
-  $tab = array();
-  for ($z = 0 ; $z < $y; $z++)
-    $tab[$z] = array_map("intval", explode(" ", fgets(STDIN)));
-  return $tab;
-}
-
 function find($n, &$m, $x, $y, $dx, $dy){
   if ($x < 0 || $x == 20 || $y < 0 || $y == 20)
     return -1;
@@ -34,16 +27,20 @@ else if ($i == 6)
 else
   $directions[$i] = array(-1, -1);
 $max_ = 0;
-$m = read_int_matrix(20, 20);
+$e = 20;
+$g = array();
+for ($h = 0 ; $h < 20; $h++)
+  $g[$h] = array_map("intval", explode(" ", fgets(STDIN)));
+$m = $g;
 for ($j = 0 ; $j <= 7; $j++)
 {
   list($dx, $dy) = $directions[$j];
   for ($x = 0 ; $x <= 19; $x++)
     for ($y = 0 ; $y <= 19; $y++)
     {
-      $e = find(4, $m, $x, $y, $dx, $dy);
-      $d = max($max_, $e);
-      $max_ = $d;
+      $o = find(4, $m, $x, $y, $dx, $dy);
+      $l = max($max_, $o);
+      $max_ = $l;
   }
 }
 echo $max_, "\n";

@@ -13,22 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
-func read_int_matrix(x int, y int) [][]int{
-  var tab [][]int = make([][]int, y)
-  for z := 0 ; z <= y - 1; z++ {
-    var b []int = make([]int, x)
-      for c := 0 ; c <= x - 1; c++ {
-        var d int
-        fmt.Fscanf(reader, "%d", &d)
-          skip()
-          b[c] = d;
-      }
-      tab[z] = b;
-  }
-  return tab
-}
-
 func main() {
   reader = bufio.NewReader(os.Stdin)
   var f int
@@ -47,7 +31,18 @@ func main() {
   }
   fmt.Fscanf(reader, "%d", &len)
   skip()
-  var tab2 [][]int = read_int_matrix(len, len - 1)
+  var r [][]int = make([][]int, (len - 1))
+  for s := 0 ; s <= len - 1 - 1; s++ {
+    var u []int = make([]int, len)
+      for v := 0 ; v <= len - 1; v++ {
+        var w int
+        fmt.Fscanf(reader, "%d", &w)
+          skip()
+          u[v] = w;
+      }
+      r[s] = u;
+  }
+  var tab2 [][]int = r
   for i := 0 ; i <= len - 2; i++ {
     for j := 0 ; j <= len - 1; j++ {
         fmt.Printf("%d ", tab2[i][j]);

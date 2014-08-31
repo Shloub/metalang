@@ -7,15 +7,9 @@
   (return-from max2_ a)
   (return-from max2_ b)))
 
-(defun min2_ (a b)
-(if
-  (< a b)
-  (return-from min2_ a)
-  (return-from min2_ b)))
-
 (defun pgcd (a b)
 (progn
-  (let ((c (min2_ a b)))
+  (let ((c (min a b)))
     (let ((d (max2_ a b)))
       (let ((reste (remainder d c)))
         (if

@@ -1,9 +1,3 @@
-def read_char_matrix( x, y ):
-    tab = [None] * y
-    for z in range(0, y):
-      tab[z] = list(input());
-    return tab;
-
 def pathfind_aux( cache, tab, x, y, posX, posY ):
     if posX == x - 1 and posY == y - 1:
       return 0;
@@ -38,7 +32,10 @@ def pathfind( tab, x, y ):
 x = int(input());
 y = int(input());
 print("%d %d\n" % ( x, y ), end='')
-tab = read_char_matrix(x, y);
+l = [None] * y
+for m in range(0, y):
+  l[m] = list(input());
+tab = l;
 result = pathfind(tab, x, y);
 print("%d" % result, end='')
 

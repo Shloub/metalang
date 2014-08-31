@@ -24,22 +24,6 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_char_matrix{
-  my($x,
-  $y) = @_;
-  my $tab = [];
-  foreach my $z (0 .. $y - 1) {
-    my $f = [];
-    foreach my $g (0 .. $x - 1) {
-      my $h = readchar();
-      $f->[$g] = $h;
-      }
-    readspaces();
-    $tab->[$z] = $f;
-    }
-  return $tab;
-}
-
 sub pathfind_aux{
   my($cache,
   $tab,
@@ -92,7 +76,17 @@ my $p = readint();
 readspaces();
 my $y = $p;
 print($x, " ", $y, "\n");
-my $tab = read_char_matrix($x, $y);
+my $r = [];
+foreach my $s (0 .. $y - 1) {
+  my $u = [];
+  foreach my $v (0 .. $x - 1) {
+    my $w = readchar();
+    $u->[$v] = $w;
+    }
+  readspaces();
+  $r->[$s] = $u;
+  }
+my $tab = $r;
 my $result = pathfind($tab, $x, $y);
 print($result);
 

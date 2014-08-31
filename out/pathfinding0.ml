@@ -1,12 +1,3 @@
-let read_char_matrix x y =
-  let tab = Array.init y (fun _z ->
-    let o = Array.init x (fun _p ->
-      let q = Scanf.scanf "%c" (fun v_0 -> v_0) in
-      q) in
-    Scanf.scanf " " (fun () -> ());
-    o) in
-  tab
-
 let rec pathfind_aux cache tab x y posX posY =
   if posX = x - 1 && posY = y - 1 then
     0
@@ -47,7 +38,13 @@ begin
   let x = Scanf.scanf "%d " (fun x -> x) in
   let y = Scanf.scanf "%d " (fun x -> x) in
   Printf.printf "%d %d\n" x y;
-  let tab = read_char_matrix x y in
+  let bd = Array.init y (fun _be ->
+    let bf = Array.init x (fun _bg ->
+      let bh = Scanf.scanf "%c" (fun v_0 -> v_0) in
+      bh) in
+    Scanf.scanf " " (fun () -> ());
+    bf) in
+  let tab = bd in
   let result = pathfind tab x y in
   Printf.printf "%d" result
 end

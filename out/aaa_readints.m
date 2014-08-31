@@ -2,25 +2,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int** read_int_matrix(int x, int y){
-  int z, c, d;
-  int* *tab = malloc( y * sizeof(int*));
-  for (z = 0 ; z < y; z++)
-  {
-    int *b = malloc( x * sizeof(int));
-    for (c = 0 ; c < x; c++)
-    {
-      scanf("%d ", &d);
-      b[c] = d;
-    }
-    tab[z] = b;
-  }
-  return tab;
-}
-
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int j, i, k, f;
+  int j, s, v, w, i, k, f;
   scanf("%d ", &f);
   int len = f;
   printf("%d=len\n", len);
@@ -35,7 +19,18 @@ int main(void){
     printf("%d=>%d\n", i, tab1[i]);
   }
   scanf("%d ", &len);
-  int** tab2 = read_int_matrix(len, len - 1);
+  int* *r = malloc( (len - 1) * sizeof(int*));
+  for (s = 0 ; s < len - 1; s++)
+  {
+    int *u = malloc( len * sizeof(int));
+    for (v = 0 ; v < len; v++)
+    {
+      scanf("%d ", &w);
+      u[v] = w;
+    }
+    r[s] = u;
+  }
+  int** tab2 = r;
   for (i = 0 ; i <= len - 2; i++)
   {
     for (j = 0 ; j < len; j++)

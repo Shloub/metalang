@@ -18,13 +18,6 @@ int min2_(int a, int b){
     return b;
 }
 
-std::vector<std::vector<char> *> * read_char_matrix(int x, int y){
-  std::vector<std::vector<char> * > *tab = new std::vector<std::vector<char> *>( y );
-  for (int z = 0 ; z < y; z++)
-    tab->at(z) = getline();
-  return tab;
-}
-
 int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vector<char> *> * tab, int x, int y, int posX, int posY){
   if (posX == x - 1 && posY == y - 1)
     return 0;
@@ -76,7 +69,10 @@ int main(){
   std::cin >> w >> std::skipws;
   int y = w;
   std::cout << x << " " << y << "\n";
-  std::vector<std::vector<char> *> * tab = read_char_matrix(x, y);
+  std::vector<std::vector<char> * > *bb = new std::vector<std::vector<char> *>( y );
+  for (int bc = 0 ; bc < y; bc++)
+    bb->at(bc) = getline();
+  std::vector<std::vector<char> *> * tab = bb;
   int result = pathfind(tab, x, y);
   std::cout << result;
   return 0;

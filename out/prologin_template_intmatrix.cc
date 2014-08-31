@@ -1,21 +1,5 @@
 #include <iostream>
 #include <vector>
-std::vector<std::vector<int> *> * read_int_matrix(int x, int y){
-  int d;
-  std::vector<std::vector<int> * > *tab = new std::vector<std::vector<int> *>( y );
-  for (int z = 0 ; z < y; z++)
-  {
-    std::vector<int > *b = new std::vector<int>( x );
-    for (int c = 0 ; c < x; c++)
-    {
-      std::cin >> d >> std::skipws;
-      b->at(c) = d;
-    }
-    tab->at(z) = b;
-  }
-  return tab;
-}
-
 int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y){
   int out_ = 0;
   for (int i = 0 ; i < y; i++)
@@ -26,12 +10,23 @@ int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y){
 
 
 int main(){
-  int h, f;
+  int q, h, f;
   std::cin >> f >> std::skipws;
   int taille_x = f;
   std::cin >> h >> std::skipws;
   int taille_y = h;
-  std::vector<std::vector<int> *> * tableau = read_int_matrix(taille_x, taille_y);
+  std::vector<std::vector<int> * > *l = new std::vector<std::vector<int> *>( taille_y );
+  for (int m = 0 ; m < taille_y; m++)
+  {
+    std::vector<int > *o = new std::vector<int>( taille_x );
+    for (int p = 0 ; p < taille_x; p++)
+    {
+      std::cin >> q >> std::skipws;
+      o->at(p) = q;
+    }
+    l->at(m) = o;
+  }
+  std::vector<std::vector<int> *> * tableau = l;
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;
 }

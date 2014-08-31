@@ -1,11 +1,3 @@
-let read_int_matrix x y =
-  let tab = Array.init y (fun _z ->
-    let d = Array.init x (fun _e ->
-      let f = Scanf.scanf "%d " (fun v_0 -> v_0) in
-      f) in
-    d) in
-  tab
-
 let rec find n m x y dx dy =
   if x < 0 or x = 20 or y < 0 or y = 20 then
     -1
@@ -34,14 +26,20 @@ begin
     else
       (-1, -1)) in
   let max_ = ref( 0 ) in
-  let m = read_int_matrix 20 20 in
+  let h = 20 in
+  let l = Array.init 20 (fun _o ->
+    let p = Array.init h (fun _q ->
+      let r = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      r) in
+    p) in
+  let m = l in
   for j = 0 to 7 do
     let (dx, dy) = directions.(j) in
     for x = 0 to 19 do
       for y = 0 to 19 do
-        let h = find 4 m x y dx dy in
-        let g = (max ((!max_)) (h)) in
-        max_ := g
+        let v = find 4 m x y dx dy in
+        let u = (max ((!max_)) (v)) in
+        max_ := u
       done
     done
   done;

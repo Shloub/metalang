@@ -1,18 +1,4 @@
 require "scanf.rb"
-def read_int_matrix( x, y )
-    tab = [];
-    for z in (0 ..  y - 1) do
-      d = [];
-      for e in (0 ..  x - 1) do
-        f=scanf("%d")[0];
-        scanf("%*\n");
-        d[e] = f;
-      end
-      tab[z] = d;
-    end
-    return (tab);
-end
-
 def find( n, m, x, y, dx, dy )
     if x < 0 || x == 20 || y < 0 || y == 20 then
       return (-1);
@@ -44,14 +30,25 @@ for i in (0 ..  8 - 1) do
   end
 end
 max_ = 0
-m = read_int_matrix(20, 20)
+h = 20
+l = [];
+for o in (0 ..  20 - 1) do
+  p = [];
+  for q in (0 ..  h - 1) do
+    r=scanf("%d")[0];
+    scanf("%*\n");
+    p[q] = r;
+  end
+  l[o] = p;
+end
+m = l
 for j in (0 ..  7) do
   (dx, dy) = directions[j]
   for x in (0 ..  19) do
     for y in (0 ..  19) do
-      h = find(4, m, x, y, dx, dy)
-      g = [max_, h].max
-      max_ = g;
+      v = find(4, m, x, y, dx, dy)
+      u = [max_, v].max
+      max_ = u;
     end
   end
 end

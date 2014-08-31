@@ -27,29 +27,6 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun read_int_matrix (x y)
-(progn
-  (let
-   ((tab (array_init
-            y
-            (function (lambda (z)
-            (block lambda_1
-              (let
-               ((b (array_init
-                      x
-                      (function (lambda (c)
-                      (block lambda_2
-                        (let ((d (mread-int )))
-                          (mread-blank)
-                          (return-from lambda_2 d)
-                        )))
-                      ))))
-              (return-from lambda_1 b)
-              )))
-            ))))
-  (return-from read_int_matrix tab)
-  )))
-
 (progn
   (let ((f (mread-int )))
     (mread-blank)
@@ -61,10 +38,10 @@
        ((h (array_init
               len
               (function (lambda (k)
-              (block lambda_3
+              (block lambda_1
                 (let ((l (mread-int )))
                   (mread-blank)
-                  (return-from lambda_3 l)
+                  (return-from lambda_1 l)
                 )))
               ))))
       (let ((tab1 h))
@@ -81,7 +58,25 @@
         )
         (setq len (mread-int ))
         (mread-blank)
-        (let ((tab2 (read_int_matrix len (- len 1))))
+        (let
+         ((r (array_init
+                (- len 1)
+                (function (lambda (s)
+                (block lambda_2
+                  (let
+                   ((u (array_init
+                          len
+                          (function (lambda (v)
+                          (block lambda_3
+                            (let ((w (mread-int )))
+                              (mread-blank)
+                              (return-from lambda_3 w)
+                            )))
+                          ))))
+                  (return-from lambda_2 u)
+                  )))
+                ))))
+        (let ((tab2 r))
           (do
             ((i 0 (+ 1 i)))
             ((> i (- len 2)))
@@ -98,6 +93,6 @@
 ")
             )
           )
-        ))))))
+        )))))))
 
 

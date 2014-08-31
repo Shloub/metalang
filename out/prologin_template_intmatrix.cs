@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 public class prologin_template_intmatrix
 {
-  public static int[][] read_int_matrix(int x, int y)
-  {
-    int[][] tab = new int[y][];
-    for (int z = 0 ; z < y; z++)
-      tab[z] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    return tab;
-  }
-  
   public static int programme_candidat(int[][] tableau, int x, int y)
   {
     int out_ = 0;
@@ -25,7 +17,10 @@ public class prologin_template_intmatrix
   {
     int taille_x = int.Parse(Console.ReadLine());
     int taille_y = int.Parse(Console.ReadLine());
-    int[][] tableau = read_int_matrix(taille_x, taille_y);
+    int[][] e = new int[taille_y][];
+    for (int f = 0 ; f < taille_y; f++)
+      e[f] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[][] tableau = e;
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }
   

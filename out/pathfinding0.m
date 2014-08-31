@@ -9,24 +9,6 @@ int min2_(int a, int b){
     return b;
 }
 
-char** read_char_matrix(int x, int y){
-  int z, p;
-  char q;
-  char* *tab = malloc( y * sizeof(char*));
-  for (z = 0 ; z < y; z++)
-  {
-    char *o = malloc( x * sizeof(char));
-    for (p = 0 ; p < x; p++)
-    {
-      scanf("%c", &q);
-      o[p] = q;
-    }
-    scanf(" ");
-    tab[z] = o;
-  }
-  return tab;
-}
-
 int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
   if (posX == x - 1 && posY == y - 1)
     return 0;
@@ -73,13 +55,26 @@ int pathfind(char** tab, int x, int y){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int bd, bb;
+  int bg, bi, bd, bb;
+  char bj;
   scanf("%d ", &bb);
   int x = bb;
   scanf("%d ", &bd);
   int y = bd;
   printf("%d %d\n", x, y);
-  char** tab = read_char_matrix(x, y);
+  char* *bf = malloc( y * sizeof(char*));
+  for (bg = 0 ; bg < y; bg++)
+  {
+    char *bh = malloc( x * sizeof(char));
+    for (bi = 0 ; bi < x; bi++)
+    {
+      scanf("%c", &bj);
+      bh[bi] = bj;
+    }
+    scanf(" ");
+    bf[bg] = bh;
+  }
+  char** tab = bf;
   int result = pathfind(tab, x, y);
   printf("%d", result);
   [pool drain];

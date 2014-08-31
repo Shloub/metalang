@@ -74,32 +74,8 @@ begin
     end;
 end;
 
-type w = array of array of Longint;
-type ba = array of Longint;
-function read_int_matrix(x : Longint; y : Longint) : w;
-var
-  d : ba;
-  e : Longint;
-  f : Longint;
-  tab : w;
-  z : Longint;
-begin
-  SetLength(tab, y);
-  for z := 0 to  y - 1 do
-  begin
-    SetLength(d, x);
-    for e := 0 to  x - 1 do
-    begin
-      f := read_int_();
-      skip();
-      d[e] := f;
-    end;
-    tab[z] := d;
-  end;
-  exit(tab);
-end;
-
-function find(n : Longint; m : w; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;
+type bi = array of array of Longint;
+function find(n : Longint; m : bi; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;
 begin
   if (x < 0) or (x = 20) or (y < 0) or (y = 20) then
     begin
@@ -125,24 +101,30 @@ type
 
 
 var
+  ba : tuple_int_int;
+  bb : tuple_int_int;
+  bc : tuple_int_int;
+  bd : tuple_int_int;
+  be : tuple_int_int;
+  bf : tuple_int_int;
+  bg : tuple_int_int;
+  bh : tuple_int_int;
   directions : array of tuple_int_int;
   dx : Longint;
   dy : Longint;
-  g : Longint;
   h : Longint;
   i : Longint;
   j : Longint;
-  k : tuple_int_int;
-  l : tuple_int_int;
-  m : w;
+  l : bi;
+  m : bi;
   max_ : Longint;
-  o : tuple_int_int;
-  p : tuple_int_int;
-  q : tuple_int_int;
-  r : tuple_int_int;
-  s : tuple_int_int;
-  u : tuple_int_int;
-  v : tuple_int_int;
+  o : Longint;
+  p : array of Longint;
+  q : Longint;
+  r : Longint;
+  u : Longint;
+  v : Longint;
+  w : tuple_int_int;
   x : Longint;
   y : Longint;
 begin
@@ -151,76 +133,89 @@ begin
   begin
     if i = 0 then
       begin
-        new(v);
-        v^.tuple_int_int_field_0 := 0;
-        v^.tuple_int_int_field_1 := 1;
-        directions[i] := v;
+        new(bh);
+        bh^.tuple_int_int_field_0 := 0;
+        bh^.tuple_int_int_field_1 := 1;
+        directions[i] := bh;
       end
     else if i = 1 then
       begin
-        new(u);
-        u^.tuple_int_int_field_0 := 1;
-        u^.tuple_int_int_field_1 := 0;
-        directions[i] := u;
+        new(bg);
+        bg^.tuple_int_int_field_0 := 1;
+        bg^.tuple_int_int_field_1 := 0;
+        directions[i] := bg;
       end
     else if i = 2 then
       begin
-        new(s);
-        s^.tuple_int_int_field_0 := 0;
-        s^.tuple_int_int_field_1 := -1;
-        directions[i] := s;
+        new(bf);
+        bf^.tuple_int_int_field_0 := 0;
+        bf^.tuple_int_int_field_1 := -1;
+        directions[i] := bf;
       end
     else if i = 3 then
       begin
-        new(r);
-        r^.tuple_int_int_field_0 := -1;
-        r^.tuple_int_int_field_1 := 0;
-        directions[i] := r;
+        new(be);
+        be^.tuple_int_int_field_0 := -1;
+        be^.tuple_int_int_field_1 := 0;
+        directions[i] := be;
       end
     else if i = 4 then
       begin
-        new(q);
-        q^.tuple_int_int_field_0 := 1;
-        q^.tuple_int_int_field_1 := 1;
-        directions[i] := q;
+        new(bd);
+        bd^.tuple_int_int_field_0 := 1;
+        bd^.tuple_int_int_field_1 := 1;
+        directions[i] := bd;
       end
     else if i = 5 then
       begin
-        new(p);
-        p^.tuple_int_int_field_0 := 1;
-        p^.tuple_int_int_field_1 := -1;
-        directions[i] := p;
+        new(bc);
+        bc^.tuple_int_int_field_0 := 1;
+        bc^.tuple_int_int_field_1 := -1;
+        directions[i] := bc;
       end
     else if i = 6
     then
       begin
-        new(o);
-        o^.tuple_int_int_field_0 := -1;
-        o^.tuple_int_int_field_1 := 1;
-        directions[i] := o;
+        new(bb);
+        bb^.tuple_int_int_field_0 := -1;
+        bb^.tuple_int_int_field_1 := 1;
+        directions[i] := bb;
       end
     else
       begin
-        new(l);
-        l^.tuple_int_int_field_0 := -1;
-        l^.tuple_int_int_field_1 := -1;
-        directions[i] := l;
+        new(ba);
+        ba^.tuple_int_int_field_0 := -1;
+        ba^.tuple_int_int_field_1 := -1;
+        directions[i] := ba;
       end;;;;;;;
   end;
   max_ := 0;
-  m := read_int_matrix(20, 20);
+  h := 20;
+  SetLength(l, 20);
+  for o := 0 to  20 - 1 do
+  begin
+    SetLength(p, h);
+    for q := 0 to  h - 1 do
+    begin
+      r := read_int_();
+      skip();
+      p[q] := r;
+    end;
+    l[o] := p;
+  end;
+  m := l;
   for j := 0 to  7 do
   begin
-    k := directions[j];
-    dx := k^.tuple_int_int_field_0;
-    dy := k^.tuple_int_int_field_1;
+    w := directions[j];
+    dx := w^.tuple_int_int_field_0;
+    dy := w^.tuple_int_int_field_1;
     for x := 0 to  19 do
     begin
       for y := 0 to  19 do
       begin
-        h := find(4, m, x, y, dx, dy);
-        g := max2_(max_, h);
-        max_ := g;
+        v := find(4, m, x, y, dx, dy);
+        u := max2_(max_, v);
+        max_ := u;
       end;
     end;
   end;

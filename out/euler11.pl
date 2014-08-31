@@ -18,22 +18,6 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub read_int_matrix{
-  my($x,
-  $y) = @_;
-  my $tab = [];
-  foreach my $z (0 .. $y - 1) {
-    my $d = [];
-    foreach my $e (0 .. $x - 1) {
-      my $f = readint();
-      readspaces();
-      $d->[$e] = $f;
-      }
-    $tab->[$z] = $d;
-    }
-  return $tab;
-}
-
 sub find{
   my($n,
   $m,
@@ -71,14 +55,25 @@ foreach my $i (0 .. 8 - 1) {
   }
   }
 my $max_ = 0;
-my $m = read_int_matrix(20, 20);
+my $h = 20;
+my $l = [];
+foreach my $o (0 .. 20 - 1) {
+  my $p = [];
+  foreach my $q (0 .. $h - 1) {
+    my $r = readint();
+    readspaces();
+    $p->[$q] = $r;
+    }
+  $l->[$o] = $p;
+  }
+my $m = $l;
 foreach my $j (0 .. 7) {
   my ($dx, $dy) = @{ $directions->[$j] };
   foreach my $x (0 .. 19) {
     foreach my $y (0 .. 19) {
-      my $h = find(4, $m, $x, $y, $dx, $dy);
-      my $g = max($max_, $h);
-      $max_ = $g;
+      my $v = find(4, $m, $x, $y, $dx, $dy);
+      my $u = max($max_, $v);
+      $max_ = $u;
       }
     }
   }

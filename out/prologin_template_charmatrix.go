@@ -14,21 +14,6 @@ func skip() {
   }
 }
 
-func read_char_matrix(x int, y int) [][]byte{
-  var tab [][]byte = make([][]byte, y)
-  for z := 0 ; z <= y - 1; z++ {
-    var b []byte = make([]byte, x)
-      for c := 0 ; c <= x - 1; c++ {
-        var d byte
-        fmt.Fscanf(reader, "%c", &d)
-          b[c] = d;
-      }
-      skip()
-      tab[z] = b;
-  }
-  return tab
-}
-
 func programme_candidat(tableau [][]byte, taille_x int, taille_y int) int{
   var out_ int = 0
   for i := 0 ; i <= taille_y - 1; i++ {
@@ -51,7 +36,18 @@ func main() {
   fmt.Fscanf(reader, "%d", &h)
   skip()
   var taille_y int = h
-  var tableau [][]byte = read_char_matrix(taille_x, taille_y)
+  var l [][]byte = make([][]byte, taille_y)
+  for m := 0 ; m <= taille_y - 1; m++ {
+    var o []byte = make([]byte, taille_x)
+      for p := 0 ; p <= taille_x - 1; p++ {
+        var q byte
+        fmt.Fscanf(reader, "%c", &q)
+          o[p] = q;
+      }
+      skip()
+      l[m] = o;
+  }
+  var tableau [][]byte = l
   fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }
 

@@ -2,24 +2,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-char** read_char_matrix(int x, int y){
-  int z, c;
-  char d;
-  char* *tab = malloc( y * sizeof(char*));
-  for (z = 0 ; z < y; z++)
-  {
-    char *b = malloc( x * sizeof(char));
-    for (c = 0 ; c < x; c++)
-    {
-      scanf("%c", &d);
-      b[c] = d;
-    }
-    scanf(" ");
-    tab[z] = b;
-  }
-  return tab;
-}
-
 int programme_candidat(char** tableau, int taille_x, int taille_y){
   int i, j;
   int out_ = 0;
@@ -37,12 +19,25 @@ int programme_candidat(char** tableau, int taille_x, int taille_y){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int h, f;
+  int m, p, h, f;
+  char q;
   scanf("%d ", &f);
   int taille_x = f;
   scanf("%d ", &h);
   int taille_y = h;
-  char** tableau = read_char_matrix(taille_x, taille_y);
+  char* *l = malloc( taille_y * sizeof(char*));
+  for (m = 0 ; m < taille_y; m++)
+  {
+    char *o = malloc( taille_x * sizeof(char));
+    for (p = 0 ; p < taille_x; p++)
+    {
+      scanf("%c", &q);
+      o[p] = q;
+    }
+    scanf(" ");
+    l[m] = o;
+  }
+  char** tableau = l;
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   [pool drain];
   return 0;

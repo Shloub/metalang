@@ -1,6 +1,3 @@
-def read_int_matrix( x, y ):
-    return [list(map(int, input().split())) for i in range(y)];
-
 def programme_candidat( tableau, x, y ):
     out_ = 0;
     for i in range(0, y):
@@ -10,6 +7,6 @@ def programme_candidat( tableau, x, y ):
 
 taille_x = int(input());
 taille_y = int(input());
-tableau = read_int_matrix(taille_x, taille_y);
+tableau = [list(map(int, input().split())) for i in range(taille_y)];
 print("%d\n" % ( programme_candidat(tableau, taille_x, taille_y) ), end='')
 

@@ -9,37 +9,35 @@ module Array = struct
     )
 end
 
-let read_int_matrix x y =
-  let tab = (Array.init_withenv y (fun  z () -> let b = (Array.init_withenv x (fun  c () -> Scanf.scanf "%d"
-  (fun  d -> (
-               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let q = d in
-               ((), q)
-               )
-  )) ()) in
-  let p = b in
-  ((), p)) ()) in
-  tab
 let programme_candidat tableau x y =
   let out_ = 0 in
-  let m = 0 in
-  let o = (y - 1) in
-  let rec g i out_ =
-    (if (i <= o)
-     then let k = 0 in
-     let l = (x - 1) in
-     let rec h j out_ =
-       (if (j <= l)
+  let v = 0 in
+  let w = (y - 1) in
+  let rec q i out_ =
+    (if (i <= w)
+     then let s = 0 in
+     let u = (x - 1) in
+     let rec r j out_ =
+       (if (j <= u)
         then let out_ = (out_ + (tableau.(i).(j) * ((i * 2) + j))) in
-        (h (j + 1) out_)
-        else (g (i + 1) out_)) in
-       (h k out_)
+        (r (j + 1) out_)
+        else (q (i + 1) out_)) in
+       (r s out_)
      else out_) in
-    (g m out_)
+    (q v out_)
 let main =
   let taille_x = (Scanf.scanf "%d " (fun x -> x)) in
   let taille_y = (Scanf.scanf "%d " (fun x -> x)) in
-  let tableau = (read_int_matrix taille_x taille_y) in
+  let h = (Array.init_withenv taille_y (fun  k () -> let l = (Array.init_withenv taille_x (fun  m () -> Scanf.scanf "%d"
+  (fun  o -> (
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               let bb = o in
+               ((), bb)
+               )
+  )) ()) in
+  let ba = l in
+  ((), ba)) ()) in
+  let tableau = h in
   (
     (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
     )

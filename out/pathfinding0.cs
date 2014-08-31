@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 public class pathfinding0
 {
-  public static char[][] read_char_matrix(int x, int y)
-  {
-    char[][] tab = new char[y][];
-    for (int z = 0 ; z < y; z++)
-      tab[z] = Console.ReadLine().ToCharArray();
-    return tab;
-  }
-  
   public static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
@@ -62,7 +54,10 @@ public class pathfinding0
     int x = int.Parse(Console.ReadLine());
     int y = int.Parse(Console.ReadLine());
     Console.Write("" + x + " " + y + "\n");
-    char[][] tab = read_char_matrix(x, y);
+    char[][] w = new char[y][];
+    for (int ba = 0 ; ba < y; ba++)
+      w[ba] = Console.ReadLine().ToCharArray();
+    char[][] tab = w;
     int result = pathfind(tab, x, y);
     Console.Write(result);
   }

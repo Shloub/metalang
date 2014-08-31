@@ -1,11 +1,4 @@
 <?php
-function &read_char_matrix($x, $y){
-  $tab = array();
-  for ($z = 0 ; $z < $y; $z++)
-    $tab[$z] = fgets(STDIN);
-  return $tab;
-}
-
 function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
   if ($posX == $x - 1 && $posY == $y - 1)
     return 0;
@@ -48,7 +41,10 @@ function pathfind(&$tab, $x, $y){
 $x = intval(trim(fgets(STDIN)));
 $y = intval(trim(fgets(STDIN)));
 echo $x, " ", $y, "\n";
-$tab = read_char_matrix($x, $y);
+$l = array();
+for ($m = 0 ; $m < $y; $m++)
+  $l[$m] = fgets(STDIN);
+$tab = $l;
 $result = pathfind($tab, $x, $y);
 echo $result;
 ?>

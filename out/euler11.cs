@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 public class euler11
 {
-  public static int[][] read_int_matrix(int x, int y)
-  {
-    int[][] tab = new int[y][];
-    for (int z = 0 ; z < y; z++)
-      tab[z] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    return tab;
-  }
-  
   public static int find(int n, int[][] m, int x, int y, int dx, int dy)
   {
     if (x < 0 || x == 20 || y < 0 || y == 20)
@@ -29,73 +21,77 @@ public class euler11
     for (int i = 0 ; i < 8; i++)
       if (i == 0)
     {
-      tuple_int_int r = new tuple_int_int();
-      r.tuple_int_int_field_0 = 0;
-      r.tuple_int_int_field_1 = 1;
-      directions[i] = r;
+      tuple_int_int ba = new tuple_int_int();
+      ba.tuple_int_int_field_0 = 0;
+      ba.tuple_int_int_field_1 = 1;
+      directions[i] = ba;
     }
     else if (i == 1)
     {
-      tuple_int_int q = new tuple_int_int();
-      q.tuple_int_int_field_0 = 1;
-      q.tuple_int_int_field_1 = 0;
-      directions[i] = q;
+      tuple_int_int w = new tuple_int_int();
+      w.tuple_int_int_field_0 = 1;
+      w.tuple_int_int_field_1 = 0;
+      directions[i] = w;
     }
     else if (i == 2)
     {
-      tuple_int_int p = new tuple_int_int();
-      p.tuple_int_int_field_0 = 0;
-      p.tuple_int_int_field_1 = -1;
-      directions[i] = p;
+      tuple_int_int v = new tuple_int_int();
+      v.tuple_int_int_field_0 = 0;
+      v.tuple_int_int_field_1 = -1;
+      directions[i] = v;
     }
     else if (i == 3)
     {
-      tuple_int_int o = new tuple_int_int();
-      o.tuple_int_int_field_0 = -1;
-      o.tuple_int_int_field_1 = 0;
-      directions[i] = o;
+      tuple_int_int u = new tuple_int_int();
+      u.tuple_int_int_field_0 = -1;
+      u.tuple_int_int_field_1 = 0;
+      directions[i] = u;
     }
     else if (i == 4)
     {
-      tuple_int_int l = new tuple_int_int();
-      l.tuple_int_int_field_0 = 1;
-      l.tuple_int_int_field_1 = 1;
-      directions[i] = l;
+      tuple_int_int t = new tuple_int_int();
+      t.tuple_int_int_field_0 = 1;
+      t.tuple_int_int_field_1 = 1;
+      directions[i] = t;
     }
     else if (i == 5)
     {
-      tuple_int_int k = new tuple_int_int();
-      k.tuple_int_int_field_0 = 1;
-      k.tuple_int_int_field_1 = -1;
-      directions[i] = k;
+      tuple_int_int s = new tuple_int_int();
+      s.tuple_int_int_field_0 = 1;
+      s.tuple_int_int_field_1 = -1;
+      directions[i] = s;
     }
     else if (i == 6)
     {
-      tuple_int_int h = new tuple_int_int();
-      h.tuple_int_int_field_0 = -1;
-      h.tuple_int_int_field_1 = 1;
-      directions[i] = h;
+      tuple_int_int r = new tuple_int_int();
+      r.tuple_int_int_field_0 = -1;
+      r.tuple_int_int_field_1 = 1;
+      directions[i] = r;
     }
     else
     {
-      tuple_int_int g = new tuple_int_int();
-      g.tuple_int_int_field_0 = -1;
-      g.tuple_int_int_field_1 = -1;
-      directions[i] = g;
+      tuple_int_int q = new tuple_int_int();
+      q.tuple_int_int_field_0 = -1;
+      q.tuple_int_int_field_1 = -1;
+      directions[i] = q;
     }
     int max_ = 0;
-    int[][] m = read_int_matrix(20, 20);
+    int e = 20;
+    int[][] g = new int[20][];
+    for (int h = 0 ; h < 20; h++)
+      g[h] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[][] m = g;
     for (int j = 0 ; j <= 7; j ++)
     {
-      tuple_int_int f = directions[j];
-      int dx = f.tuple_int_int_field_0;
-      int dy = f.tuple_int_int_field_1;
+      tuple_int_int p = directions[j];
+      int dx = p.tuple_int_int_field_0;
+      int dy = p.tuple_int_int_field_1;
       for (int x = 0 ; x <= 19; x ++)
         for (int y = 0 ; y <= 19; y ++)
         {
-          int e = find(4, m, x, y, dx, dy);
-          int d = Math.Max(max_, e);
-          max_ = d;
+          int o = find(4, m, x, y, dx, dy);
+          int l = Math.Max(max_, o);
+          max_ = l;
       }
     }
     Console.Write("" + max_ + "\n");

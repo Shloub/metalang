@@ -69,32 +69,8 @@ begin
    until false;
 end;
 
-type k = array of array of char;
-type l = array of char;
-function read_char_matrix(x : Longint; y : Longint) : k;
-var
-  b : l;
-  c : Longint;
-  d : char;
-  tab : k;
-  z : Longint;
-begin
-  SetLength(tab, y);
-  for z := 0 to  y - 1 do
-  begin
-    SetLength(b, x);
-    for c := 0 to  x - 1 do
-    begin
-      d := read_char_();
-      b[c] := d;
-    end;
-    skip();
-    tab[z] := b;
-  end;
-  exit(tab);
-end;
-
-function programme_candidat(tableau : k; taille_x : Longint; taille_y : Longint) : Longint;
+type s = array of array of char;
+function programme_candidat(tableau : s; taille_x : Longint; taille_y : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -117,7 +93,12 @@ end;
 var
   f : Longint;
   h : Longint;
-  tableau : k;
+  l : s;
+  m : Longint;
+  o : array of char;
+  p : Longint;
+  q : char;
+  tableau : s;
   taille_x : Longint;
   taille_y : Longint;
 begin
@@ -127,7 +108,19 @@ begin
   h := read_int_();
   skip();
   taille_y := h;
-  tableau := read_char_matrix(taille_x, taille_y);
+  SetLength(l, taille_y);
+  for m := 0 to  taille_y - 1 do
+  begin
+    SetLength(o, taille_x);
+    for p := 0 to  taille_x - 1 do
+    begin
+      q := read_char_();
+      o[p] := q;
+    end;
+    skip();
+    l[m] := o;
+  end;
+  tableau := l;
   Write(programme_candidat(tableau, taille_x, taille_y));
   Write(''#10'');
 end.

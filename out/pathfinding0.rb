@@ -1,18 +1,4 @@
 require "scanf.rb"
-def read_char_matrix( x, y )
-    tab = [];
-    for z in (0 ..  y - 1) do
-      f = [];
-      for g in (0 ..  x - 1) do
-        h=scanf("%c")[0];
-        f[g] = h;
-      end
-      scanf("%*\n");
-      tab[z] = f;
-    end
-    return (tab);
-end
-
 def pathfind_aux( cache, tab, x, y, posX, posY )
     if posX == x - 1 && posY == y - 1 then
       return (0);
@@ -56,7 +42,17 @@ p=scanf("%d")[0];
 scanf("%*\n");
 y = p
 printf "%d %d\n", x, y
-tab = read_char_matrix(x, y)
+r = [];
+for s in (0 ..  y - 1) do
+  u = [];
+  for v in (0 ..  x - 1) do
+    w=scanf("%c")[0];
+    u[v] = w;
+  end
+  scanf("%*\n");
+  r[s] = u;
+end
+tab = r
 result = pathfind(tab, x, y)
 printf "%d", result
 

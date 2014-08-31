@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 public class prologin_template_charmatrix
 {
-  public static char[][] read_char_matrix(int x, int y)
-  {
-    char[][] tab = new char[y][];
-    for (int z = 0 ; z < y; z++)
-      tab[z] = Console.ReadLine().ToCharArray();
-    return tab;
-  }
-  
   public static int programme_candidat(char[][] tableau, int taille_x, int taille_y)
   {
     int out_ = 0;
@@ -31,7 +23,10 @@ public class prologin_template_charmatrix
   {
     int taille_x = int.Parse(Console.ReadLine());
     int taille_y = int.Parse(Console.ReadLine());
-    char[][] tableau = read_char_matrix(taille_x, taille_y);
+    char[][] e = new char[taille_y][];
+    for (int f = 0 ; f < taille_y; f++)
+      e[f] = Console.ReadLine().ToCharArray();
+    char[][] tableau = e;
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }
   

@@ -3,14 +3,6 @@ import java.util.*;
 public class pathfinding0
 {
   static Scanner scanner = new Scanner(System.in);
-  public static char[][] read_char_matrix(int x, int y)
-  {
-    char[][] tab = new char[y][];
-    for (int z = 0 ; z < y; z++)
-      tab[z] = scanner.nextLine().toCharArray();
-    return tab;
-  }
-  
   public static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
@@ -78,7 +70,10 @@ public class pathfinding0
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int y = w;
     System.out.printf("%d %d\n", x, y);
-    char[][] tab = read_char_matrix(x, y);
+    char[][] bb = new char[y][];
+    for (int bc = 0 ; bc < y; bc++)
+      bb[bc] = scanner.nextLine().toCharArray();
+    char[][] tab = bb;
     int result = pathfind(tab, x, y);
     System.out.printf("%d", result);
   }

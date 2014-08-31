@@ -1,11 +1,3 @@
-let read_int_matrix x y =
-  let tab = Array.init y (fun _z ->
-    let b = Array.init x (fun _c ->
-      let d = Scanf.scanf "%d " (fun v_0 -> v_0) in
-      d) in
-    b) in
-  tab
-
 let programme_candidat tableau x y =
   let out_ = ref( 0 ) in
   for i = 0 to y - 1 do
@@ -19,7 +11,12 @@ let () =
 begin
   let taille_x = Scanf.scanf "%d " (fun x -> x) in
   let taille_y = Scanf.scanf "%d " (fun x -> x) in
-  let tableau = read_int_matrix taille_x taille_y in
+  let h = Array.init taille_y (fun _k ->
+    let l = Array.init taille_x (fun _m ->
+      let o = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      o) in
+    l) in
+  let tableau = h in
   Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
 end
  

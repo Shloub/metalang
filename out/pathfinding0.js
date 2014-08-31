@@ -32,22 +32,6 @@ function read_int_(){
     }
   }
 }
-function read_char_matrix(x, y){
-  var tab = new Array(y);
-  for (var z = 0 ; z <= y - 1; z++)
-  {
-    var f = new Array(x);
-    for (var g = 0 ; g <= x - 1; g++)
-    {
-      h=read_char_();
-      f[g] = h;
-    }
-    stdinsep();
-    tab[z] = f;
-  }
-  return tab;
-}
-
 function pathfind_aux(cache, tab, x, y, posX, posY){
   if (posX == x - 1 && posY == y - 1)
     return 0;
@@ -94,7 +78,19 @@ p=read_int_();
 stdinsep();
 var y = p;
 util.print(x, " ", y, "\n");
-var tab = read_char_matrix(x, y);
+var r = new Array(y);
+for (var s = 0 ; s <= y - 1; s++)
+{
+  var u = new Array(x);
+  for (var v = 0 ; v <= x - 1; v++)
+  {
+    w=read_char_();
+    u[v] = w;
+  }
+  stdinsep();
+  r[s] = u;
+}
+var tab = r;
 var result = pathfind(tab, x, y);
 util.print(result);
 
