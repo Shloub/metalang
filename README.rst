@@ -3,7 +3,16 @@ Metalang
 
 C'est quoi ?
 ----------------
-Metalang est un langage de programmation. Il permet d'écrire une fois un code et d'obtenir le même programme dans plusieurs autres langages (C, C++, python, javascript, ocaml, php, go, java, C#)
+Metalang est un langage de programmation. Il permet d'écrire une fois un code et d'obtenir le même programme dans plusieurs autres langages (voir plus bas)
+
+Hello World
+----------------
+
+Voici le programme helloworld.metalang ::
+
+  main
+	  print "Hello World"
+  end
 
 Quick start
 ----------------
@@ -12,12 +21,70 @@ Quick start
 * taper ::
 
   make metalang
-  ./metalang tests/prog/npi.metalang
+  ./metalang tests/prog/aaa_01hello.metalang
 
-* on voit alors apparaitre des implémentations d'une calculette en notation polonaise inversée dans les langages C# ocaml python c++ java php ruby C go
+* Le hello world apparait alors dans les différents langages.
 
-Il me manque un compilateur
+Pour lancer metalang en mode évaluateur ::
+
+  ./metalang -eval fichier.metalang
+
+Pour générer uniquement une langue ::
+
+  ./metalang -lang lang1,lang2,...
+
+Les langues possibles sont : c,m,pas,cc,cs,java,js,ml,fun.ml,hs,php,rb,py,go,cl,rkt,pl,metalang_parsed
+metalang_parsed correspond au fichier metalang tel qu'il a été parsé.
+fun.ml correspond à une version fonctionelle, en ocaml, du code metalang.
+
+L'option -o vous permet de choisir le dossier de destination. Comme nous générons plusieurs fichiers, on ne peut pas choisir le nom des fichiers générés.
+
+pour afficher l'aide ::
+
+  ./metalang -help
+
+pour afficher la version ::
+
+  ./metalang -version
+
+
+
+Backends
 ----------------
+Langages cibles :
+
+* C
+* Objective-C
+* Pascal
+* C++
+* java
+* C#
+* common lisp
+* scheme (racket)
+* ocaml
+* perl
+* python
+* ruby
+* php
+* javascript
+* Go (Version 1.1 minimum, sinon on a des soucis avec leur test qui vérifie si chaque fonction renvoie bien.)
+
+Nous avons testé :
+
+* la compilation objective-C avec gcc `gnustep-config --objc-flags` -lgnustep-base
+* La compilation C avec gcc
+* La compilation C++ avec g++
+* La compilation pascal avec fpc
+* La compilation java avec l'open jdk 1.7
+* La compilation C# avec mono : gmcs
+* La compilation ocaml avec ocaml 3.12
+* Le javascript avec nodeJS
+* La compilation go avec go 1.1 (ne fonctionne pas sous go 1.0)
+* Le common lisp avec gcl 2.6.7
+* Le ruby avec ruby 1.9
+* le python avec python 3
+* le scheme avec racket 5.2.1
+
 Pour installer go 1.1 ::
 
   hg clone -u release https://code.google.com/p/go
@@ -35,12 +102,12 @@ Pour installer nodejs ::
 
 Les autres compilateurs devraient être packagé sur votre distribution de linux.
 
-Note : La version de python utilisée est python3
-
-Le lisp généré est du common lisp
-
 Modes
 ----------------
+
+Pour vous permettre une édition plus confortable, nous fournissons quelques modes pour vos éditeurs préférés :
+
+
 Le dossier tools contient des outils comme le mode emacs et un mode vim, pour l'installer,
 il faut ajouter ces lignes dans son .emacs::
   (setq auto-mode-alist (cons '("\\.metalang$" . metalang-mode) auto-mode-alist))
@@ -53,39 +120,8 @@ Vous trouverez de nombreux exemples de programmes dans le dossier
 tests/progs le plus notable est probablement le tictactoe avec une IA.
 En tapant make testCompare, on peut lancer ces tests, et comparer les résultats dans les différents langages
 
-La documentation se trouve sur le site http://eelte.megami.fr/metalang
-
-
-But du projet:
-----------------
-Ce projet à été fait pour le concours prologin http://www.prologin.org
-L'idée est de générer des lecteurs printers pour beaucoup de langages Ce projet devrait servir pour les demies finales de prologin, pour générer les codes à compléter pour les candidats.
-On peut imaginer pousser le concept beaucoup plus loin, mais le but principal reste la génération de codes lisibles par des humains, dans le but de présenter des squelettes de codes ou des codes lisibles, pour les candidats de prologin.
-
-Le choix s'est porté vers un langage impératif, ce qui facilite la génération de codes lisibles dans les langages les plus utilisés.
-
-Ce langage impératif est typé, pour pouvoir compiler vers des langages typés assez facilement, éviter les erreurs, et offrir un code lisible plus facilement en sortie.
-
-La syntaxe ne contient pas toutes les instructions de controles de flux, (break et continue n'existent pas) de cette manière, on a plus de facilités à générer du code lisible dans tout les langages cibles.
-
-On a aussi un typer pour ne pas être obligé de déclarer les types (ça reste évidement typé statiquement)
-Un evaluateur, qui sert, soit pour évaluer directement du code metalang, soit pour évaluer des macros.
-
-Langages cibles :
-* C
-* C++
-* java
-* C#
-* ocaml
-* python
-* ruby
-* php
-* javascript
-* Go (Version 1.1 minimum, sinon on a des soucis avec leur test qui vérifie si chaque fonction renvoie bien.)
-
 HOWTO Metalang
 ----------------
-
 
 Dans le cadre du concours prologin, on a besoin d'écrire des codes à compléter. Ces codes lisent des entrées, et appellent une fonction "vide" que le candidat devra remplir.
 
@@ -114,10 +150,38 @@ Pour éviter ce problème, on a deux fonctions alternatives dans la lib standard
 
 En metalang, on ne peut pas savoir quelle est la taille d'une ligne, donc on ne peut pas parser une ligne et récupérer un tableau d'entier de taille variable. On ne peut pas non plus le faire pour une chaine de caractères.
 
-L'exemple tests/progs/aaa_read_ints.metalang montre comment parser des entiers correctement.
-L'exemple tests/progs/npi.metalang montre comment parser des chars
+Les exemples suivant présentent du code du même type que deux des codes à compléter pour les demies finales :
+
+* tests/prog/prologin_template_2charline2.metalang
+* tests/prog/prologin_template_charmatrix.metalang
+* tests/prog/prologin_template_2charline.metalang
+* tests/prog/prologin_template_intlist.metalang
+* tests/prog/prologin_template_charline.metalang
+* tests/prog/prologin_template_intmatrix.metalang
+
 
 Normalement, avec cet outil, vous avez les moyens de faire des codes à compléter. N'oubliez pas de tester vos codes générés.
+
+Types simples manipulables
+----------------
+
+Les types simples que metalang gère sont les entiers (notés int), les booleans (notés bool) les chars et les chaines de caractères (notés string).
+Il n'existe pratiquement aucune fonction pour manipuler les chaines de caractères. Elles n'existent que pour l'instruction print.
+Le type int représente des entiers, leur taille n'est pas définie. En C ils font 32 bits, en ocaml 31 bits, en python ce sont des bigints.
+Le type char représente un caractère.
+
+Il n'existe pas de type float en metalang.
+Les conversions automatiques entre deux types ne sont pas possibles en metalang. Pour convertir un char en int, il faut utiliser la fonction int_of_char.
+
+Null n'existe pas en metalang.
+
+Commentaires
+----------------
+
+Il existe deux types de commentaires :
+
+* Les commentaires sont compris entre /* et */ sont retranscrits dans les codes générés.
+* après le caractère #, la fin de la ligne est ignorée. Ces commentaires là ne sont pas retranscrits dans les codes générés.
 
 Declaration de variables
 ----------------
@@ -174,20 +238,6 @@ Pour définir un enum ::
 
 Ensuite, le type a pour nom @foo_t et on utilise Foo, Bar Blah comme des valeurs
 
-Types
-----------------
-
-Les différents types manipulables en metalang sont :
-
-* int
-* string
-* chars
-* tableaux
-* struct
-* enums
-
-Aucun de ces types n'est nullable. Il est donc difficile de faire des structures de données complexes 
-
 Fonctions
 ----------------
 
@@ -200,6 +250,14 @@ Pour définir une fonction ::
     ...
   end
 
+Pour renvoyer une valeur ::
+
+  return valeur
+
+Une fonction qui renvoie quelque chose doit forcément avoir un return dans chaque chemin d'execution (comme en java).
+
+Il est impossible de mettre un return dans une fonction qui renvoie void.
+
 Boucles
 ----------------
 
@@ -208,6 +266,17 @@ Les boucles for ont pour syntaxe ::
   for variable = debut to fin do
     ...
   end
+
+L'incrémentation ne peut pas être définie. Elle est toujours égale à 1.
+Attention : la boucle for déclare une nouvelle variable.
+
+Les boucles while ont pour syntaxe ::
+
+  while condition do
+    ...
+  end
+
+Les instructions break et continue n'existent pas en metalang. Cependant, vous pouvez utiliser return à l'interieur de ces boucles.
 
 If Then Else
 ----------------
@@ -218,6 +287,8 @@ La syntaxe est ::
     ...
   elsif ... then
     ...
+  else
+    ...
   end
 
 Print
@@ -227,4 +298,27 @@ L'instruction print vous permet d'écrire sur la sortie standard::
 
   print "foo"
   def x = 42
-  print x
+  print x print "\n"
+
+
+Librairie Standard
+----------------
+
+La librairie standard comprend les fonctions suivantes :
+
+* int isqrt(int)
+* char char_of_int(int)
+* int int_of_char(char)
+* bool is_number(char)
+* int max2(int, int)
+* int min2(int, int)
+* int min3(int, int, int)
+* int min4(int, int, int, int)
+* int pgcd(int, int)
+* int read_int()
+* array<int> read_int_line(int len)
+* array<char> read_char_line(int len)
+* array<array<char>> read_char_matrix(int x, int y)
+* array<array<int>> read_int_matrix(int x, int y)
+
+Elles sont définies dans le fichier Stdlib/stdlib.metalang.
