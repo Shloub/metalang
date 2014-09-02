@@ -5,6 +5,10 @@ C'est quoi ?
 ----------------
 Metalang est un langage de programmation. Il permet d'écrire une fois un code et d'obtenir le même programme dans plusieurs autres langages (voir plus bas)
 
+Le blog du projet se trouve ici : A [eelte.megami.fr](http://eelte.megami.fr).
+
+Ce langage a été conçu pour ce A [concours](http://prologin.org).
+
 Hello World
 ----------------
 
@@ -16,14 +20,12 @@ Voici le programme helloworld.metalang ::
 
 Quick start
 ----------------
-* ouvrir une console
-* aller dans le dossier metalang
-* taper ::
+ouvrir une console, aller dans le dossier metalang, taper ::
 
   make metalang
   ./metalang tests/prog/aaa_01hello.metalang
 
-* Le hello world apparait alors dans les différents langages.
+Le hello world apparait alors dans les différents langages.
 
 Pour lancer metalang en mode évaluateur ::
 
@@ -33,7 +35,7 @@ Pour générer uniquement une langue ::
 
   ./metalang -lang lang1,lang2,...
 
-Les langues possibles sont : c,m,pas,cc,cs,java,js,ml,fun.ml,hs,php,rb,py,go,cl,rkt,pl,metalang_parsed
+Les langues possibles sont : c, m, pas, cc, cs, java, js, ml, fun.ml, hs, php, rb, py, go, cl, rkt, pl, metalang_parsed
 metalang_parsed correspond au fichier metalang tel qu'il a été parsé.
 fun.ml correspond à une version fonctionelle, en ocaml, du code metalang.
 
@@ -172,6 +174,7 @@ Le type char représente un caractère.
 
 Il n'existe pas de type float en metalang.
 Les conversions automatiques entre deux types ne sont pas possibles en metalang. Pour convertir un char en int, il faut utiliser la fonction int_of_char.
+Attention toutefois : dans certains langages les chars sont signés, alors que dans d'autres ils sont non signés.
 
 Null n'existe pas en metalang.
 
@@ -194,6 +197,15 @@ On est pas obligé de définir le type : une passe de typage s'arrangera pour l'
 
   def x = 42
 
+Lorsque l'on veut déclarer une variable et lire sa valeur depuis l'entrée standard en même temps, on peut taper ::
+
+  def read int x
+
+ou encore ::
+
+  def read x
+
+Il faut noter que dans certains langages, une valeur par défault leur sera attribuée (en C par exemple)
 
 Declaration de tableaux
 ----------------
@@ -304,7 +316,31 @@ L'instruction print vous permet d'écrire sur la sortie standard::
 Librairie Standard
 ----------------
 
-La librairie standard comprend les fonctions suivantes :
+La librairie standard contient un enum ::
+
+  enum @target_language
+    LANG_C
+    LANG_Cc
+    LANG_Cl
+    LANG_Cs
+    LANG_Fun_ml
+    LANG_Go
+    LANG_Hs
+    LANG_Java
+    LANG_Js
+    LANG_M
+    LANG_Ml
+    LANG_Pas
+    LANG_Php
+    LANG_Pl
+    LANG_Py
+    LANG_Rb
+    LANG_Rkt
+    LANG_Metalang_parsed
+  end
+
+
+Elle comprend aussi les fonctions suivantes :
 
 * int isqrt(int)
 * char char_of_int(int)
@@ -320,5 +356,99 @@ La librairie standard comprend les fonctions suivantes :
 * array<char> read_char_line(int len)
 * array<array<char>> read_char_matrix(int x, int y)
 * array<array<int>> read_int_matrix(int x, int y)
+* @target_language current_language ()
 
 Elles sont définies dans le fichier Stdlib/stdlib.metalang.
+
+Les fonctions définies dans la librairie standard ne seront compilées que si elles sont utilisées.
+
+Couples & tuples
+----------------
+
+Les couples existent en metalang, ils ne sont cependant pas recommandés : leur utilisation produit du code assez illisible pour la plupart des backends.
+Pour la plupart des langages, ils sont compilés vers des structures.
+
+Le type s'écrit (a, b) (exemple : (int, int) )
+Les valeurs de types tuples s'écrivent aussi (a, b) (exemple : (1, 2) )
+
+Un exemple se trouve ici : tests/prog/tuple.metalang
+
+Leur utilisation n'a pas été très testée. Il est possible que cette fonctionalité ne soit pas très stable.
+
+inline
+----------------
+
+Le mot clé inline se place lors d'une définition de variables ou de fonction.
+Il indique que l'on peut inliner la fonction et la variable.
+
+Pour inliner une fonction, il faut qu'elle n'ai qu'un seul return et qu'il soit terminal.
+Si une fonction est marquée inline et qu'elle n'est pas prévue pour, alors une erreur se produira.
+
+Si une variable est marquée inline et que le compilateur ne trouve pas de méthode pour la supprimer, alors elle restera et aucune erreur ne sera levée.
+
+Exemple ::
+
+  def inline toto = b
+  a = toto
+
+Le code ci-dessus sera compilé vers ::
+
+  a = b
+
+
+Macros
+----------------
+
+Les macros metalang sont utilisées pour écrire des primitives.
+
+La librairie standard regorge d'exemples ::
+
+  macro type fonction_name(parametres)
+    langage1 do "chaine1"
+    langage2 do "chaine2"
+    ** do "chaine3"
+  end
+
+les noms de langages sont définis par la méthode lang définie dans les printers.
+
+les chaines sont inserées dans les fichiers générés, après un remplacement de : $parametre1 par le code qui correspond.
+
+Lorsque l'on écrit une macro, il faut faire attention au parenthésage et aux conversions automatiques de types (entre int et float par exemple.)
+
+
+Lexems
+----------------
+
+Cette notion est une notion de préprocessing avancée.
+
+Il existe un autre type en metalang : lexems. Ce type représente une liste de "mots" metalang.
+Pour en créer une, il suffit de faire taper du code entre des accolades ::
+
+  def lexems i = { x = x + 1 }
+
+Il existe deux façons d'utiliser la variable i : l'une d'entre elle consiste à l'inserrer dans un autre lexems ::
+
+  def lexems j = { ${i} ${i} }
+
+Cet exemple là permet de duppliquer le code compris dans i.
+
+L'autre façon d'utiliser une valeur de type lexems est de faire "sortir" ce code. Il sera ensuite parsé et inserré dans le le flux d'instructions ::
+
+  ${i}
+
+L'exemple le plus simple se trouve dans le fichier tests/prog/loop_unroll.metalang
+On trouve un exemple plus complexe dans tests/prog/sudoku.metalang. On y génère une expression qui détermine si un sudoku est valide ou non.
+
+Générer un code différent par langage
+----------------
+
+Pour faire ceci, il faut utiliser des macros et des lexems.
+On trouve un exemple de ceci dans la librairie standard pour min3 par exemple : en C on utilise la fonction metalang min2, alors qu'en python min permet de prendre trois valeurs pour un seul appel de fonction.
+
+Pour tester si on compile bien dans un langage précis, on peut utiliser la fonction current_language ::
+
+  if current_language() == LANG_Java then
+    ...
+  end
+
+Cette méthode est utilisée aussi pour minimiser les lectures sur l'entrée standard.
