@@ -208,6 +208,7 @@ sig
     ('a -> char -> 'a * 'b) -> string -> 'a -> 'a * 'b list
   val unescape : string -> string
   val replace : string -> string -> string -> string
+  val chararray : string -> char array
 end
 
 (** {2 Collections} *)

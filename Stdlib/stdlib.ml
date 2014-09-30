@@ -306,6 +306,11 @@ module String = struct
     let b = Str.global_replace (Str.regexp_string "\\") "\\\\\\\\" b in
     (*    Format.printf "replace %S %S %S\n%!" a b c; *)
     Str.global_replace (Str.regexp_string a) b c
+
+  let chararray s =
+    let len = length s in
+    Array.init len (String.get s)
+
 end
 
 (** {2 Collections} *)
