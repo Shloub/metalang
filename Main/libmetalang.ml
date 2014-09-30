@@ -234,6 +234,7 @@ let languages, printers =
     "c",    clike_passes => new CPrinter.cPrinter ;
     "m",    clike_passes => new ObjCPrinter.objCPrinter ;
     "pas",  clike_passes => new PasPrinter.pasPrinter ;
+    "adb",  clike_passes => new AdaPrinter.adaPrinter ;
     "cc",   clike_passes => new CppPrinter.cppPrinter ;
     "cs",   clike_passes => new CsharpPrinter.csharpPrinter ;
     "java", clike_passes => new JavaPrinter.javaPrinter ;
@@ -399,6 +400,7 @@ let colore string =
 let stdlib_string lang = Printf.sprintf "
 
 enum @target_language
+  LANG_Adb
   LANG_C
   LANG_Cc
   LANG_Cl

@@ -12,10 +12,10 @@ macro int sqrt_(int c)
   csharp do "(int)Math.Sqrt($c)"
   py do "math.floor(math.sqrt($c))"
   ruby do "Math.sqrt($c).to_i"
-	pas do "Floor(Sqrt($c))"
+  pas do "Floor(Sqrt($c))"
   java do "(int)Math.sqrt($c)"
   clisp do "(isqrt $c)"
-	go do "int(math.Sqrt(float64($c)))"
+  go do "int(math.Sqrt(float64($c)))"
   php do "intval(sqrt($c))"
   rkt do "integer-sqrt $c"
   pl do "int(sqrt($c))"
@@ -45,6 +45,7 @@ macro char char_of_int(int c)
   c do "(char)($c)"
   cpp do "(char)($c)"
   objc do "(char)($c)"
+  ada do "character'Pos($c)"
   *  do "$c"
 end
 
@@ -62,6 +63,7 @@ macro int int_of_char(char c)
   c do "(int)($c)"
   cpp do "(int)($c)"
   objc do "(int)($c)"
+  ada do "character'Val($c)"
   *  do "$c"
 end
 

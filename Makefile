@@ -180,6 +180,9 @@ TMPFILES	:=\
 	$(addsuffix .pas, $(TESTS)) \
 	$(addsuffix .pas.bin, $(TESTS)) \
 	$(addsuffix .pas.bin.out, $(TESTS)) \
+	$(addsuffix .adb, $(TESTS)) \
+	$(addsuffix .adb.bin, $(TESTS)) \
+	$(addsuffix .adb.bin.out, $(TESTS)) \
 	$(addsuffix .test, $(TESTS)) \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)) \
 	$(addsuffix .outs, $(TESTS)) \
@@ -243,6 +246,13 @@ out/%.pas : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	./metalang -o out -lang pas $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang pas $< || exit 1; \
+	fi
+
+out/%.adb : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang adb $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang adb $< || exit 1; \
 	fi
 
 out/%.metalang_parsed : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
@@ -352,6 +362,11 @@ out/%.pas.bin : out/%.pas
 	@mv out/$(basename $*) $@
 	@rm out/$(basename $*).o
 
+out/%.adb.bin : out/%.adb
+	@gnatmake $< -o $@ || exit 1
+	@rm $(basename $*).o
+	@rm $(basename $*).ali
+
 out/%.class : out/%.java
 	@javac $< || exit 1
 
@@ -458,11 +473,23 @@ out/%.test_rkt_ml : out/%.rkt.out out/%.fun.ml.out
 	fi; \
 	done; \
 	cp $< $@ ;\
-	echo "$(green)OK $(basename $*)$(reset)";
-
-testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
 
 out/%.test_pl_ml : out/%.pl.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+	echo "$(green)OK $(basename $*)$(reset)";
+
+out/%.test_adb_ml : out/%.adb.bin.out out/%.ml.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -479,6 +506,8 @@ out/%.test_pl_ml : out/%.pl.out out/%.ml.out
 testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
 
 testPerl : $(addsuffix .test_pl_ml, $(TESTS))
+
+testAda : $(addsuffix .test_adb_ml, $(TESTS))
 
 %.sources: $(addsuffix .%, $(TESTS))
 	@echo "$(green)$@ OK$(reset) $*"
@@ -525,6 +554,16 @@ compilePAS: $(COMPILEPASDEPS)
 
 EXECPASDEPS := $(addsuffix .pas.bin.out, $(TESTS))
 execPAS: $(EXECPASDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+COMPILEADADEPS := $(addsuffix .adb.bin, $(TESTS))
+compileADA: $(COMPILEADADEPS)
+	@echo "$(green)ADA COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
+EXECADADEPS := $(addsuffix .adb.bin.out, $(TESTS))
+execADA: $(EXECADADEPS)
 	@echo "$(green)@$ OK$(reset)"
 	@echo "ok" > $@
 
@@ -608,7 +647,7 @@ execPL: $(EXECPLDEPS)
 	@echo "$(green)@$ OK$(reset)"
 	@echo "ok" > $@
 
-compileAll: metalang allsources compileML compileFUNML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
+compileAll: metalang allsources compilePAS compileADA compileML compileFUNML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
 	@echo "$(green)ALL COMPILATION OK$(reset)"
 	@echo "ok" > $@
 

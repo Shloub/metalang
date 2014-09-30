@@ -46,6 +46,8 @@ class pasPrinter = object(self)
   method comment f str =
     Format.fprintf f "{%s}" str
 
+  method baseBinop f op a b = super#binop f op a b
+
   method binop f op a b =
     let print_op op f a =
       match op with
@@ -167,21 +169,20 @@ class pasPrinter = object(self)
       | Type.Enum _ -> Format.fprintf f "an enum"
       | Type.Lexems | Type.Auto -> assert false
 
-  method print_proto f (funname, t, li) =
-    match Type.unfix t with
-    | Type.Void ->
-      Format.fprintf f "@[<h>procedure %a(%a);@]"
-        self#funname funname
-        (print_list
-           (fun t (binding, type_) ->
-             Format.fprintf t "%a : %a"
-               self#binding binding
-               self#ptype type_
-           )
-           (fun t f1 e1 f2 e2 -> Format.fprintf t
-             "%a;@ %a" f1 e1 f2 e2)
-        ) li
-    | _ ->
+  method decl_procedure f funname li =
+    Format.fprintf f "@[<h>procedure %a(%a);@]"
+      self#funname funname
+      (print_list
+         (fun t (binding, type_) ->
+           Format.fprintf t "%a : %a"
+             self#binding binding
+             self#ptype type_
+         )
+         (fun t f1 e1 f2 e2 -> Format.fprintf t
+           "%a;@ %a" f1 e1 f2 e2)
+      ) li
+
+  method decl_function f funname t li =
       Format.fprintf f "@[<h>function %a(%a) : %a;@]"
         self#funname funname
         (print_list
@@ -195,6 +196,11 @@ class pasPrinter = object(self)
         ) li
         self#ptype t
 
+  method print_proto f (funname, t, li) =
+    match Type.unfix t with
+    | Type.Void -> self#decl_procedure f funname li
+    | _ -> self#decl_function f funname t li
+
   method print_body f instrs =
     Format.fprintf f "%a@\nbegin@\n@[<v 2>  %a@]@\nend"
       self#declarevars instrs
@@ -202,9 +208,9 @@ class pasPrinter = object(self)
 
   method print_fun f funname t li instrs =
     let () = current_function <- funname in
-    self#declare_type f t;
+    declared_types <- self#declare_type declared_types f t;
     self#declare_types f instrs;
-    List.iter (fun (_, t) -> self#declare_type f t) li;
+    declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
     Format.fprintf f "%a%a;@\n"
       self#print_proto (funname, t, li)
       self#print_body instrs
@@ -226,34 +232,33 @@ class pasPrinter = object(self)
         self#bloc ifcase
         self#bloc elsecase
 
-  method declare_type f t =
-    match Type.unfix t with
-    | Type.Array _ ->
-      begin
-        match TypeMap.find_opt t declared_types with
-        | Some _ -> ()
-        | None ->
-          let name : string = Fresh.fresh () in
-          Format.fprintf f "type %s = %a;@\n" name self#ptype t;
-          declared_types <- TypeMap.add t name declared_types
-      end
-    | _ -> ()
+  method declare_type declared_types f t =
+    Type.Writer.Deep.fold (fun declared_types t ->
+      match Type.unfix t with
+      | Type.Array _ ->
+	begin
+          match TypeMap.find_opt t declared_types with
+          | Some _ -> declared_types
+          | None ->
+            let name : string = Fresh.fresh () in
+            Format.fprintf f "type %s = %a;@\n" name self#ptype t;
+            TypeMap.add t name declared_types
+	end
+      | _ -> declared_types
+    ) declared_types t
 
   method declare_types f instrs =
-    List.fold_left
+    declared_types <- List.fold_left
       (Instr.Writer.Deep.fold
-         (fun () i ->
+         (fun declared_types i ->
            match Instr.Fixed.unfix i with
-           | Instr.Declare (b, t, _, _) ->
-             self#declare_type f t
-           | Instr.AllocArray (b, t, _, _) ->
-             self#declare_type f t
-           | Instr.AllocRecord (b, t, _) ->
-             self#declare_type f t
-           | _ -> ()
+           | Instr.Declare (_, t, _, _) -> self#declare_type declared_types f t
+           | Instr.AllocArray (_, t, _, _) -> self#declare_type declared_types f (Type.array t)
+           | Instr.AllocRecord (_, t, _) -> self#declare_type declared_types f t
+           | _ -> declared_types
          )
       )
-      ()
+      declared_types
       instrs
 
 
