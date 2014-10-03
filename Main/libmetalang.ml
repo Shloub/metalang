@@ -70,7 +70,14 @@ let keywords lang=
 let conf_rename lang prog =
   Fresh.fresh_init prog ;
   Rename.clear ();
-  Rename.add prog.Prog.progname ;
+  if lang = "adb" then begin
+    BindingSet.iter (fun name ->
+      if '_' = String.get name ((String.length name) - 1) then
+	Rename.add name;
+    ) !Fresh.bindings
+  end;
+  List.iter Rename.add (keywords lang);
+
   List.iter Rename.add (keywords lang);
   List.iter Fresh.add (keywords lang)
 
@@ -224,11 +231,13 @@ let languages, printers =
         pa prog
       in
       begin
+	Format.pp_set_margin out 80;
+	Format.pp_set_max_indent out 80;
         pr#setTyperEnv typerEnv;
         pr#prog out processed
-      end
-
-    )
+      end)
+      
+      
   in
   let ls = [
     "c",    clike_passes => new CPrinter.cPrinter ;

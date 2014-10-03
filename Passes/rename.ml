@@ -41,11 +41,13 @@ type 'a acc = varname BindingMap.t
 
 let map = ref BindingMap.empty;;
 
-let rec new_name n =
-  let n2 = (n ^ "_") in
+let rec new_name i n =
+  let n2 = (n ^ (string_of_int i)) in
   if BindingSet.mem n2 !Fresh.bindings then
-    new_name n2
+    new_name (i+1) n2
   else n2
+
+let new_name n = new_name 0 n
 
 let add name =
   map := BindingMap.add name (new_name name) !map

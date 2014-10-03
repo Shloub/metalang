@@ -137,27 +137,27 @@ class printer = object(self)
   method string f i = Format.fprintf f "%S" i (* TODO faire mieux *)
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>def %a@ %a@ =@ %a@]"
+    Format.fprintf f "@[<hov>def %a@ %a@ =@ %a@]"
       self#ptype t
       self#binding var
       self#expr e
 
   method affect f mutable_ (expr : 'lex Expr.t) =
-    Format.fprintf f "@[<h>%a@ =@ %a;@]" self#mutable_ mutable_ self#expr expr
+    Format.fprintf f "@[<hov>%a@ =@ %a;@]" self#mutable_ mutable_ self#expr expr
 
-  method bloc f li = Format.fprintf f "@[<v 2>do@\n%a@]@\nend"
+  method bloc f li = Format.fprintf f "@[<vov 2>do@\n%a@]@\nend"
     (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
       "%a@\n%a" f1 e1 f2 e2)) li
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<h>for@ %a=%a@ to@ %a@\n@]%a"
+    Format.fprintf f "@[<hov>for@ %a=%a@ to@ %a@\n@]%a"
       self#binding varname
       self#expr expr1
       self#expr expr2
       self#bloc li
 
   method whileloop f expr li =
-    Format.fprintf f "@[<h>while %a@]@\n%a"
+    Format.fprintf f "@[<hov>while %a@]@\n%a"
       self#expr expr
       self#bloc li
 
@@ -166,12 +166,12 @@ class printer = object(self)
     Format.fprintf f "/*%s*/" str
 
   method return f e =
-    Format.fprintf f "@[<h>return@ %a@]" self#expr e
+    Format.fprintf f "@[<hov>return@ %a@]" self#expr e
 
   method ptype f (t:Type.t) =
     match Type.unfix t with
     | Type.Tuple li ->
-      Format.fprintf f "@[<h>(%a)@]"
+      Format.fprintf f "@[<hov>(%a)@]"
         (print_list self#ptype
            (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
         ) li
@@ -185,7 +185,7 @@ class printer = object(self)
     | Type.Named n -> Format.fprintf f "@@%s" n
     | Type.Lexems -> Format.fprintf f "lexems"
     | Type.Struct li ->
-      Format.fprintf f "record@\n @[<v>%a@]@\nend"
+      Format.fprintf f "record@\n @[<hov>%a@]@\nend"
         (print_list
            (fun t (name, type_) ->
              Format.fprintf t "%a : %a;" self#binding name self#ptype type_
@@ -202,14 +202,14 @@ class printer = object(self)
         ) li
 
   method allocarray f binding type_ len =
-    Format.fprintf f "@[<h>def array<%a> %a[%a]"
+    Format.fprintf f "@[<hov>def array<%a> %a[%a]"
       self#ptype type_
       self#binding binding
       self#expr len
 
 
   method allocarray_lambda f binding type_ len binding2 lambda =
-    Format.fprintf f "@[<h>def array<%a>%a[%a] with %a do@\n@[<v 2>  %a@]@\nend@]"
+    Format.fprintf f "@[<hov>def array<%a>%a[%a] with %a do@\n@[<v 2>  %a@]@\nend@]"
       self#ptype type_
       self#binding binding
       self#expr len
@@ -260,7 +260,7 @@ class printer = object(self)
         (fun e ->
           let b = Buffer.create 1 in
           let fb = Format.formatter_of_buffer b in
-          Format.fprintf fb "@[<h>%a@]%!" self#expr e;
+          Format.fprintf fb "@[<hov>%a@]%!" self#expr e;
           Buffer.contents b
         ) li in
       let expanded = List.fold_left
@@ -278,7 +278,7 @@ class printer = object(self)
     | None ->
       Format.fprintf
         f
-        "@[<h>%a(%a);@]"
+        "@[<hov>%a(%a);@]"
         self#funname var
         (print_list
            self#expr
@@ -304,10 +304,10 @@ class printer = object(self)
         ) li
 
   method stdin_sep f =
-    Format.fprintf f "@[skip@]"
+    Format.fprintf f "skip"
 
   method def_fields name f li =
-    Format.fprintf f "@[<h>%a@]"
+    Format.fprintf f "@[<hov>%a@]"
       (print_list
          (fun f (fieldname, expr) ->
            Format.fprintf f "%a = %a"
@@ -328,25 +328,25 @@ class printer = object(self)
   method selfAssoc f m e2 = function
   | Expr.Add -> begin match Expr.unfix e2 with
     | Expr.Lief (Expr.Integer 1) ->
-      Format.fprintf f "@[<h>%a ++;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a ++;@]" self#mutable_ m
     | _ ->
-      Format.fprintf f "@[<h>%a += %a;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a += %a;@]" self#mutable_ m
         self#expr e2
   end
   | Expr.Sub ->
     begin match Expr.unfix e2 with
     | Expr.Lief (Expr.Integer 1) ->
-      Format.fprintf f "@[<h>%a --;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a --;@]" self#mutable_ m
     | _ ->
-      Format.fprintf f "@[<h>%a -= %a;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a -= %a;@]" self#mutable_ m
         self#expr e2
     end
   | Expr.Mul ->
-    Format.fprintf f "@[<h>%a *= %a;@]" self#mutable_ m self#expr e2
+    Format.fprintf f "@[<hov>%a *= %a;@]" self#mutable_ m self#expr e2
   | Expr.Div ->
-    Format.fprintf f "@[<h>%a /= %a;@]" self#mutable_ m self#expr e2
+    Format.fprintf f "@[<hov>%a /= %a;@]" self#mutable_ m self#expr e2
   | Expr.Mod ->
-    Format.fprintf f "@[<h>%a %%= %a;@]" self#mutable_ m self#expr e2
+    Format.fprintf f "@[<hov>%a %%= %a;@]" self#mutable_ m self#expr e2
   | _ -> assert false
 
   method hasSelfAffect op = true
@@ -430,16 +430,16 @@ class printer = object(self)
   method if_ f e ifcase elsecase =
     match elsecase with
     | [] ->
-      Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v2>  %a@]@\nend"
+      Format.fprintf f "@[<hov>if@ %a@]@\nthen@\n@[<v2>  %a@]@\nend"
         self#expr e
         self#instructions ifcase
     | [Instr.Fixed.F (_, Instr.If (condition, instrs1, instrs2) ) as instr] ->
-      Format.fprintf f "@[<h>if@ %a@] then@\n@[<v 2>  %a@]@\nels%a"
+      Format.fprintf f "@[<hov>if@ %a@] then@\n@[<v 2>  %a@]@\nels%a"
         self#expr e
         self#instructions ifcase
         self#instr instr
     | _ ->
-      Format.fprintf f "@[<h>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]@\nend"
+      Format.fprintf f "@[<hov>if@ %a@]@\nthen@\n@[<v 2>  %a@]@\nelse@\n@[<v 2>  %a@]@\nend"
         self#expr e
         self#instructions ifcase
         self#instructions elsecase
@@ -483,7 +483,7 @@ class printer = object(self)
   | _ -> false
 
   method printp f e =
-    Format.fprintf f "@[<h 2>(%a)@]" self#expr e
+    Format.fprintf f "@[<hov 2>(%a)@]" self#expr e
 
   method chf op side f x = match (Expr.unfix x) with
   | Expr.BinOp (_, op2, _) ->
@@ -521,7 +521,7 @@ class printer = object(self)
   | _ -> self#expr f x
 
   method binop f op a b =
-    Format.fprintf f "%a@ %a@ %a"
+    Format.fprintf f "%a %a@;%a"
       (self#chf op Left) a
       self#print_op op
       (self#chf op Right) b
@@ -586,7 +586,7 @@ class printer = object(self)
 
 
   method print_fun f funname t li instrs =
-    Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\nend@\n"
+    Format.fprintf f "@[<hov>%a@]@\n@[<v 2>  %a@]@\nend@\n"
       self#print_proto (funname, t, li)
       self#instructions instrs
 

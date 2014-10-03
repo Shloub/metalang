@@ -252,12 +252,12 @@ class pasPrinter = object(self)
       (Instr.Writer.Deep.fold
          (fun declared_types i ->
            match Instr.Fixed.unfix i with
-           | Instr.Declare (_, t, _, _) -> self#declare_type declared_types f t
+           | Instr.Declare (_, t, _, _)    -> self#declare_type declared_types f t
+	   | Instr.DeclRead (t, _, _)      -> self#declare_type declared_types f t
            | Instr.AllocArray (_, t, _, _) -> self#declare_type declared_types f (Type.array t)
-           | Instr.AllocRecord (_, t, _) -> self#declare_type declared_types f t
+           | Instr.AllocRecord (_, t, _)   -> self#declare_type declared_types f t
            | _ -> declared_types
-         )
-      )
+	 ))
       declared_types
       instrs
 
@@ -457,8 +457,8 @@ end;
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-
   method main f main =
+    self#declare_types f main;
     self#print_body f main
 
   method affect f mutable_ (expr : Utils.expr) =
