@@ -1,12 +1,12 @@
 require "scanf.rb"
 def nth( tab, tofind, len )
-    out_ = 0
+    out0 = 0
     for i in (0 ..  len - 1) do
       if tab[i] == tofind then
-        out_ += 1
+        out0 += 1
       end
     end
-    return (out_);
+    return (out0);
 end
 
 len = 0

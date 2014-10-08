@@ -27,29 +27,29 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun devine_ (nombre tab len)
+(defun devine0 (nombre tab len)
 (progn
-  (let ((min_ (aref tab 0)))
-    (let ((max_ (aref tab 1)))
+  (let ((min0 (aref tab 0)))
+    (let ((max0 (aref tab 1)))
       (do
         ((i 2 (+ 1 i)))
         ((> i (- len 1)))
         (progn
           (if
-            (or (> (aref tab i) max_) (< (aref tab i) min_))
-            (return-from devine_ nil))
+            (or (> (aref tab i) max0) (< (aref tab i) min0))
+            (return-from devine0 nil))
           (if
             (< (aref tab i) nombre)
-            (setq min_ (aref tab i)))
+            (setq min0 (aref tab i)))
           (if
             (> (aref tab i) nombre)
-            (setq max_ (aref tab i)))
+            (setq max0 (aref tab i)))
           (if
             (and (= (aref tab i) nombre) (not (= len (+ i 1))))
-            (return-from devine_ nil))
+            (return-from devine0 nil))
         )
       )
-      (return-from devine_ t)
+      (return-from devine0 t)
     ))))
 
 (progn
@@ -67,7 +67,7 @@
                     (return-from lambda_1 tmp)
                   )))
                 ))))
-      (let ((a (devine_ nombre tab len)))
+      (let ((a (devine0 nombre tab len)))
         (if
           a
           (princ "True")

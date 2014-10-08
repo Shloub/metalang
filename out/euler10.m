@@ -2,10 +2,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int eratostene(int* t, int max_){
+int eratostene(int* t, int max0){
   int i;
   int sum = 0;
-  for (i = 2 ; i < max_; i++)
+  for (i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
     sum += i;
@@ -14,7 +14,7 @@ int eratostene(int* t, int max_){
 			detect overflow
 			*/
     if (j / i == i)
-      while (j < max_ && j > 0)
+      while (j < max0 && j > 0)
     {
       t[j] = 0;
       j += i;

@@ -3,13 +3,13 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def eratostene( t, max_ )
+def eratostene( t, max0 )
     n = 0
-    for i in (2 ..  max_ - 1) do
+    for i in (2 ..  max0 - 1) do
       if t[i] == i then
         n += 1
         j = i * i
-        while j < max_ && j > 0 do
+        while j < max0 && j > 0 do
           t[j] = 0;
           j += i
         end
@@ -46,13 +46,13 @@ def sumdivaux( t, n, i )
       return (sumdivaux(t, n, sumdivaux2(t, n, i + 1)));
     else
       o = sumdivaux(t, n, sumdivaux2(t, n, i + 1))
-      out_ = 0
+      out0 = 0
       p = i
       for j in (1 ..  t[i]) do
-        out_ += p
+        out0 += p
         p *= i
       end
-      return ((out_ + 1) * o);
+      return ((out0 + 1) * o);
     end
 end
 
@@ -61,8 +61,8 @@ def sumdiv( nprimes, primes, n )
     for i in (0 ..  n + 1 - 1) do
       t[i] = 0;
     end
-    max_ = fillPrimesFactors(t, n, primes, nprimes)
-    return (sumdivaux(t, max_, 0));
+    max0 = fillPrimesFactors(t, n, primes, nprimes)
+    return (sumdivaux(t, max0, 0));
 end
 
 maximumprimes = 30001

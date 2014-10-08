@@ -74,8 +74,9 @@ begin
     end;
 end;
 
-type bi = array of array of Longint;
-function find(n : Longint; m : bi; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;
+type bi = array of Longint;
+type bj = array of array of Longint;
+function find(n : Longint; m : bj; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;
 begin
   if (x < 0) or (x = 20) or (y < 0) or (y = 20) then
     begin
@@ -99,6 +100,7 @@ type
       tuple_int_int_field_1 : Longint;
     end;
 
+type bk = array of tuple_int_int;
 
 var
   ba : tuple_int_int;
@@ -109,17 +111,17 @@ var
   bf : tuple_int_int;
   bg : tuple_int_int;
   bh : tuple_int_int;
-  directions : array of tuple_int_int;
+  directions : bk;
   dx : Longint;
   dy : Longint;
   h : Longint;
   i : Longint;
   j : Longint;
-  l : bi;
-  m : bi;
-  max_ : Longint;
+  l : bj;
+  m : bj;
+  max0 : Longint;
   o : Longint;
-  p : array of Longint;
+  p : bi;
   q : Longint;
   r : Longint;
   u : Longint;
@@ -189,7 +191,7 @@ begin
         directions[i] := ba;
       end;;;;;;;
   end;
-  max_ := 0;
+  max0 := 0;
   h := 20;
   SetLength(l, 20);
   for o := 0 to  20 - 1 do
@@ -214,12 +216,12 @@ begin
       for y := 0 to  19 do
       begin
         v := find(4, m, x, y, dx, dy);
-        u := max2_(max_, v);
-        max_ := u;
+        u := max2_(max0, v);
+        max0 := u;
       end;
     end;
   end;
-  Write(max_);
+  Write(max0);
   Write(''#10'');
 end.
 

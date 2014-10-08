@@ -12,10 +12,10 @@
 @end
 
 intlist * cons(intlist * list, int i){
-  intlist * out_ = [intlist alloc];
-  out_->head=i;
-  out_->tail=list;
-  return out_;
+  intlist * out0 = [intlist alloc];
+  out0->head=i;
+  out0->tail=list;
+  return out0;
 }
 
 intlist * rev2(intlist * empty, intlist * acc, intlist * torev){

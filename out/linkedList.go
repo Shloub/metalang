@@ -10,10 +10,10 @@ type intlist struct {
 }
 
 func cons(list * intlist, i int) * intlist{
-  var out_ * intlist = new (intlist)
-  (*out_).head=i
-  (*out_).tail=list
-  return out_
+  var out0 * intlist = new (intlist)
+  (*out0).head=i
+  (*out0).tail=list
+  return out0
 }
 
 func rev2(empty * intlist, acc * intlist, torev * intlist) * intlist{

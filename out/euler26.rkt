@@ -33,7 +33,7 @@
 (d a len))
 )
 (define main
-  (let ([t_ (array_init_withenv 1000 (lambda (j) 
+  (let ([t0 (array_init_withenv 1000 (lambda (j) 
                                        (lambda (_) (let ([h 0])
                                                    (list '() h)))) '())])
   (let ([m 0])
@@ -42,7 +42,7 @@
   (let ([n 1000])
   (letrec ([k (lambda (i m mi) 
                 (if (<= i n)
-                (let ([p (periode t_ 0 1 i)])
+                (let ([p (periode t0 0 1 i)])
                 ((lambda (internal_env) (apply (lambda (m mi) 
                                                       (k (+ i 1) m mi)) internal_env)) 
                 (if (> p m)

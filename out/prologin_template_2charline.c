@@ -3,20 +3,20 @@
 
 int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2){
   int j, i;
-  int out_ = 0;
+  int out0 = 0;
   for (i = 0 ; i < taille1; i++)
   {
-    out_ += (int)(tableau1[i]) * i;
+    out0 += (int)(tableau1[i]) * i;
     printf("%c", tableau1[i]);
   }
   printf("--\n");
   for (j = 0 ; j < taille2; j++)
   {
-    out_ += (int)(tableau2[j]) * j * 100;
+    out0 += (int)(tableau2[j]) * j * 100;
     printf("%c", tableau2[j]);
   }
   printf("--\n");
-  return out_;
+  return out0;
 }
 
 int main(void){

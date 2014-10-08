@@ -28,24 +28,21 @@ sub programme_candidat{
   $taille1,
   $tableau2,
   $taille2) = @_;
-  my $out_ = 0;
+  my $out0 = 0;
   foreach my $i (0 .. $taille1 - 1) {
-    $out_ = $out_ + ord($tableau1->[$i])
-    *
+    $out0 = $out0 + ord($tableau1->[$i]) *
     $i;
     print($tableau1->[$i]);
     }
   print("--\n");
   foreach my $j (0 .. $taille2 - 1) {
-    $out_ = $out_ + ord($tableau2->[$j])
-    *
-    $j
-    *
+    $out0 = $out0 + ord($tableau2->[$j]) *
+    $j *
     100;
     print($tableau2->[$j]);
     }
   print("--\n");
-  return $out_;
+  return $out0;
 }
 
 my $b = readint();

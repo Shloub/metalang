@@ -20,17 +20,17 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun exp_ (a b)
+(defun exp0 (a b)
 (if
   (= b 0)
-  (return-from exp_ 1)
+  (return-from exp0 1)
   (if
     (= (remainder b 2) 0)
     (progn
-      (let ((o (exp_ a (quotient b 2))))
-        (return-from exp_ (* o o))
+      (let ((o (exp0 a (quotient b 2))))
+        (return-from exp0 (* o o))
       ))
-    (return-from exp_ (* a (exp_ a (- b 1)))))))
+    (return-from exp0 (* a (exp0 a (- b 1)))))))
 
 (progn
   (let ((a 0))
@@ -38,7 +38,7 @@
       (setq a (mread-int ))
       (mread-blank)
       (setq b (mread-int ))
-      (princ (exp_ a b))
+      (princ (exp0 a b))
     )))
 
 

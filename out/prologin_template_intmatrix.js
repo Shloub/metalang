@@ -27,11 +27,11 @@ function read_int_(){
   }
 }
 function programme_candidat(tableau, x, y){
-  var out_ = 0;
+  var out0 = 0;
   for (var i = 0 ; i <= y - 1; i++)
     for (var j = 0 ; j <= x - 1; j++)
-      out_ += tableau[i][j] * (i * 2 + j);
-  return out_;
+      out0 += tableau[i][j] * (i * 2 + j);
+  return out0;
 }
 
 f=read_int_();

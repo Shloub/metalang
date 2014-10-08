@@ -3,16 +3,16 @@ use List::Util qw(min max);
 
 sub eratostene{
   my($t,
-  $max_) = @_;
+  $max0) = @_;
   my $n = 0;
-  foreach my $i (2 .. $max_ - 1) {
+  foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
       $n = $n + 1;
       my $j = $i * $i;
       if (int(($j) / ($i)) eq $i) {
         # overflow test 
         
-        while ($j < $max_ && $j > 0)
+        while ($j < $max0 && $j > 0)
         {
           $t->[$j] = 0;
           $j = $j + $i;

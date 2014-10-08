@@ -48,9 +48,9 @@ let main =
   (fun  n -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                let passepartout = (Array.init_withenv n (fun  i () -> let out0 = (Array.init_withenv 2 (fun  j () -> Scanf.scanf "%d"
-               (fun  out__ -> (
+               (fun  out01 -> (
                                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                let u = out__ in
+                                let u = out01 in
                                 ((), u)
                                 )
                )) ()) in

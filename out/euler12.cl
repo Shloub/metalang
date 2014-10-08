@@ -15,20 +15,20 @@
   (return-from max2_ a)
   (return-from max2_ b)))
 
-(defun eratostene (t_ max_)
+(defun eratostene (t0 max0)
 (progn
   (let ((n 0))
     (do
       ((i 2 (+ 1 i)))
-      ((> i (- max_ 1)))
+      ((> i (- max0 1)))
       (if
-        (= (aref t_ i) i)
+        (= (aref t0 i) i)
         (progn
           (let ((j (* i i)))
             (setq n ( + n 1))
-            (loop while (and (< j max_) (> j 0))
+            (loop while (and (< j max0) (> j 0))
             do (progn
-                 (setf (aref t_ j) 0)
+                 (setf (aref t0 j) 0)
                  (setq j ( + j i))
                  )
             )
@@ -37,7 +37,7 @@
     (return-from eratostene n)
   )))
 
-(defun fillPrimesFactors (t_ n primes nprimes)
+(defun fillPrimesFactors (t0 n primes nprimes)
 (progn
   (do
     ((i 0 (+ 1 i)))
@@ -46,7 +46,7 @@
       (let ((d (aref primes i)))
         (loop while (= (remainder n d) 0)
         do (progn
-             (setf (aref t_ d) (+ (aref t_ d) 1))
+             (setf (aref t0 d) (+ (aref t0 d) 1))
              (setq n ( quotient n d))
              )
         )
@@ -58,7 +58,7 @@
   (return-from fillPrimesFactors n)
 ))
 
-(defun find_ (ndiv2)
+(defun find0 (ndiv2)
 (progn
   (let ((maximumprimes 110))
     (let
@@ -101,27 +101,27 @@
                                   (return-from lambda_3 0)
                                 ))
                                 ))))
-            (let ((max_ (max2_ (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))))
+            (let ((max0 (max2_ (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))))
               (setf (aref primesFactors 2) ( - (aref primesFactors 2) 1))
               (let ((ndivs 1))
                 (do
                   ((i 0 (+ 1 i)))
-                  ((> i max_))
+                  ((> i max0))
                   (if
                     (not (= (aref primesFactors i) 0))
                     (setq ndivs ( * ndivs (+ 1 (aref primesFactors i)))))
                 )
                 (if
                   (> ndivs ndiv2)
-                  (return-from find_ (quotient (* n (+ n 1)) 2)))
+                  (return-from find0 (quotient (* n (+ n 1)) 2)))
                 #| print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" |#
               ))))
         )
-        (return-from find_ 0)
+        (return-from find0 0)
       )))))))
 
 (progn
-  (princ (find_ 500))
+  (princ (find0 500))
   (princ "
 ")
 )

@@ -33,17 +33,17 @@ function read_int_(){
   }
 }
 function programme_candidat(tableau, taille_x, taille_y){
-  var out_ = 0;
+  var out0 = 0;
   for (var i = 0 ; i <= taille_y - 1; i++)
   {
     for (var j = 0 ; j <= taille_x - 1; j++)
     {
-      out_ += tableau[i][j].charCodeAt(0) * (i + j * 2);
+      out0 += tableau[i][j].charCodeAt(0) * (i + j * 2);
       util.print(tableau[i][j]);
     }
     util.print("--\n");
   }
-  return out_;
+  return out0;
 }
 
 f=read_int_();

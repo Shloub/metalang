@@ -3,13 +3,13 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def eratostene( t, max_ )
+def eratostene( t, max0 )
     n = 0
-    for i in (2 ..  max_ - 1) do
+    for i in (2 ..  max0 - 1) do
       if t[i] == i then
         j = i * i
         n += 1
-        while j < max_ && j > 0 do
+        while j < max0 && j > 0 do
           t[j] = 0;
           j += i
         end
@@ -55,10 +55,10 @@ def find( ndiv2 )
       for m in (0 ..  n + 2 - 1) do
         primesFactors[m] = 0;
       end
-      max_ = [fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes)].max
+      max0 = [fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes)].max
       primesFactors[2] -= 1
       ndivs = 1
-      for i in (0 ..  max_) do
+      for i in (0 ..  max0) do
         if primesFactors[i] != 0 then
           ndivs *= 1 + primesFactors[i]
         end

@@ -2,18 +2,18 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int devine_(int nombre, int* tab, int len){
+int devine0(int nombre, int* tab, int len){
   int i;
-  int min_ = tab[0];
-  int max_ = tab[1];
+  int min0 = tab[0];
+  int max0 = tab[1];
   for (i = 2 ; i < len; i++)
   {
-    if (tab[i] > max_ || tab[i] < min_)
+    if (tab[i] > max0 || tab[i] < min0)
       return 0;
     if (tab[i] < nombre)
-      min_ = tab[i];
+      min0 = tab[i];
     if (tab[i] > nombre)
-      max_ = tab[i];
+      max0 = tab[i];
     if (tab[i] == nombre && len != i + 1)
       return 0;
   }
@@ -30,7 +30,7 @@ int main(void){
     scanf("%d ", &tmp);
     tab[i] = tmp;
   }
-  int a = devine_(nombre, tab, len);
+  int a = devine0(nombre, tab, len);
   if (a)
     printf("True");
   else

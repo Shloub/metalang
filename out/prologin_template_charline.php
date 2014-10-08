@@ -1,13 +1,13 @@
 <?php
 function programme_candidat(&$tableau, $taille){
-  $out_ = 0;
+  $out0 = 0;
   for ($i = 0 ; $i < $taille; $i++)
   {
-    $out_ += ord($tableau[$i]) * $i;
+    $out0 += ord($tableau[$i]) * $i;
     echo $tableau[$i];
   }
   echo "--\n";
-  return $out_;
+  return $out0;
 }
 
 $taille = intval(trim(fgets(STDIN)));

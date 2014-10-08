@@ -38,7 +38,7 @@ let bubblesort tab len =
        (d e)
      else ()) in
     (c g)
-let rec qsort_ tab len i j =
+let rec qsort0 tab len i j =
   ((fun  (i, j) -> ()) (if (i < j)
                         then let i0 = i in
                         let j0 = j in
@@ -71,8 +71,8 @@ let rec qsort_ tab len i j =
                                                            else let j = (j - 1) in
                                                            (i, j)))
                            else (
-                                  (qsort_ tab len i0 (i - 1));
-                                  (qsort_ tab len (i + 1) j0);
+                                  (qsort0 tab len i0 (i - 1));
+                                  (qsort0 tab len (i + 1) j0);
                                   (i, j)
                                   )
                            ) in
@@ -109,7 +109,7 @@ let main =
                 (Printf.printf "\n" );
                 let tab3 = (copytab tab len) in
                 (
-                  (qsort_ tab3 len 0 (len - 1));
+                  (qsort0 tab3 len 0 (len - 1));
                   let p = 0 in
                   let q = (len - 1) in
                   let rec n i =

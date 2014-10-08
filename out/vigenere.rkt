@@ -63,8 +63,8 @@
                 (block
                   (if (not (eq? lettre (- 1)))
                   (let ([addon (position_alphabet (vector-ref cle (remainder i taille_cle)))])
-                  (let ([new_ (remainder (+ addon lettre) 26)])
-                  (vector-set! message i (of_position_alphabet new_))))
+                  (let ([new0 (remainder (+ addon lettre) 26)])
+                  (vector-set! message i (of_position_alphabet new0))))
                   '())
                   (a (+ i 1))
                   ))
@@ -76,8 +76,8 @@
      (block
        (mread-blank)
        (let ([cle (array_init_withenv taille_cle (lambda (index) 
-                                                   (lambda (_) ((lambda (out_) 
-                                                                  (let ([g out_])
+                                                   (lambda (_) ((lambda (out0) 
+                                                                  (let ([g out0])
                                                                   (list '() g))) (mread-char)))) '())])
      (block
        (mread-blank)

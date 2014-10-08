@@ -1,13 +1,13 @@
 import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
-def eratostene( t, max_ ):
+def eratostene( t, max0 ):
     n = 0;
-    for i in range(2, max_):
+    for i in range(2, max0):
       if t[i] == i:
         n += 1
         j = i * i;
-        while (j < max_ and j > 0):
+        while (j < max0 and j > 0):
           t[j] = 0;
           j += i
     return n;
@@ -34,19 +34,19 @@ def sumdivaux( t, n, i ):
       return sumdivaux(t, n, sumdivaux2(t, n, i + 1));
     else:
       o = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
-      out_ = 0;
+      out0 = 0;
       p = i;
       for j in range(1, 1 + t[i]):
-        out_ += p
+        out0 += p
         p *= i
-      return (out_ + 1) * o;
+      return (out0 + 1) * o;
 
 def sumdiv( nprimes, primes, n ):
     t = [None] * (n + 1)
     for i in range(0, n + 1):
       t[i] = 0;
-    max_ = fillPrimesFactors(t, n, primes, nprimes);
-    return sumdivaux(t, max_, 0);
+    max0 = fillPrimesFactors(t, n, primes, nprimes);
+    return sumdivaux(t, max0, 0);
 
 maximumprimes = 1001;
 era = [None] * maximumprimes

@@ -1,12 +1,12 @@
 <?php
-function eratostene(&$t, $max_){
+function eratostene(&$t, $max0){
   $n = 0;
-  for ($i = 2 ; $i < $max_; $i++)
+  for ($i = 2 ; $i < $max0; $i++)
     if ($t[$i] == $i)
   {
     $n ++;
     $j = $i * $i;
-    while ($j < $max_ && $j > 0)
+    while ($j < $max0 && $j > 0)
     {
       $t[$j] = 0;
       $j += $i;
@@ -44,14 +44,14 @@ function sumdivaux(&$t, $n, $i){
   else
   {
     $o = sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
-    $out_ = 0;
+    $out0 = 0;
     $p = $i;
     for ($j = 1 ; $j <= $t[$i]; $j++)
     {
-      $out_ += $p;
+      $out0 += $p;
       $p *= $i;
     }
-    return ($out_ + 1) * $o;
+    return ($out0 + 1) * $o;
   }
 }
 
@@ -59,8 +59,8 @@ function sumdiv($nprimes, &$primes, $n){
   $t = array();
   for ($i = 0 ; $i < $n + 1; $i++)
     $t[$i] = 0;
-  $max_ = fillPrimesFactors($t, $n, $primes, $nprimes);
-  return sumdivaux($t, $max_, 0);
+  $max0 = fillPrimesFactors($t, $n, $primes, $nprimes);
+  return sumdivaux($t, $max0, 0);
 }
 
 $maximumprimes = 1001;

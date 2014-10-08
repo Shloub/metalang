@@ -1,13 +1,13 @@
-let rec exp_ a b =
+let rec exp0 a b =
   if b = 0 then
     1
   else if (b mod 2) = 0 then
     begin
-      let o = exp_ a (b / 2) in
+      let o = exp0 a (b / 2) in
       o * o
     end
   else
-    a * exp_ a (b - 1)
+    a * exp0 a (b - 1)
 
 let () =
 begin
@@ -15,6 +15,6 @@ begin
   let b = ref( 0 ) in
   Scanf.scanf "%d %d" (fun v_0 v_1 -> a := v_0;
                                       b := v_1);
-  Printf.printf "%d" (exp_ (!a) (!b))
+  Printf.printf "%d" (exp0 (!a) (!b))
 end
  

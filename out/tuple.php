@@ -1,6 +1,6 @@
 <?php
-function f($tuple_){
-  list($a, $b) = $tuple_;
+function f($tuple0){
+  list($a, $b) = $tuple0;
   return array($a + 1, $b + 1);
 }
 

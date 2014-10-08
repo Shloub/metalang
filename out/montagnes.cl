@@ -27,9 +27,9 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun montagnes_ (tab len)
+(defun montagnes0 (tab len)
 (progn
-  (let ((max_ 1))
+  (let ((max0 1))
     (let ((j 1))
       (let ((i (- len 2)))
         (loop while (>= i 0)
@@ -41,12 +41,12 @@
                (setq j ( + j 1))
                (setf (aref tab (- len j)) x)
                (if
-                 (> j max_)
-                 (setq max_ j))
+                 (> j max0)
+                 (setq max0 j))
                (setq i ( - i 1))
              ))
         )
-        (return-from montagnes_ max_)
+        (return-from montagnes0 max0)
       )))))
 
 (progn
@@ -64,7 +64,7 @@
                   (return-from lambda_1 x)
                 )))
               ))))
-    (princ (montagnes_ tab len))
+    (princ (montagnes0 tab len))
     )))
 
 

@@ -14,21 +14,21 @@ begin
 end;
 
 type h = array of Longint;
-function eratostene(t : h; max_ : Longint) : Longint;
+function eratostene(t : h; max0 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
   n : Longint;
 begin
   n := 0;
-  for i := 2 to  max_ - 1 do
+  for i := 2 to  max0 - 1 do
   begin
     if t[i] = i
     then
       begin
         j := i * i;
         n := n + 1;
-        while (j < max_) and (j > 0) do
+        while (j < max0) and (j > 0) do
         begin
           t[j] := 0;
           j := j + i;
@@ -68,7 +68,7 @@ var
   k : Longint;
   l : Longint;
   m : Longint;
-  max_ : Longint;
+  max0 : Longint;
   maximumprimes : Longint;
   n : Longint;
   ndivs : Longint;
@@ -106,10 +106,10 @@ begin
     begin
       primesFactors[m] := 0;
     end;
-    max_ := max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    max0 := max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] := primesFactors[2] - 1;
     ndivs := 1;
-    for i := 0 to  max_ do
+    for i := 0 to  max0 do
     begin
       if primesFactors[i] <> 0
       then

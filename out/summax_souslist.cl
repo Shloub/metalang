@@ -30,7 +30,7 @@
 (defun summax (lst len)
 (progn
   (let ((current 0))
-    (let ((max_ 0))
+    (let ((max0 0))
       (do
         ((i 0 (+ 1 i)))
         ((> i (- len 1)))
@@ -40,11 +40,11 @@
             (< current 0)
             (setq current 0))
           (if
-            (< max_ current)
-            (setq max_ current))
+            (< max0 current)
+            (setq max0 current))
         )
       )
-      (return-from summax max_)
+      (return-from summax max0)
     ))))
 
 (progn

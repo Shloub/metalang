@@ -1,10 +1,10 @@
 require "scanf.rb"
 def programme_candidat( tableau, taille )
-    out_ = 0
+    out0 = 0
     for i in (0 ..  taille - 1) do
-      out_ += tableau[i]
+      out0 += tableau[i]
     end
-    return (out_);
+    return (out0);
 end
 
 b=scanf("%d")[0];

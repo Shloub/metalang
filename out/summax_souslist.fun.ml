@@ -11,23 +11,23 @@ end
 
 let summax lst len =
   let current = 0 in
-  let max_ = 0 in
+  let max0 = 0 in
   let b = 0 in
   let c = (len - 1) in
-  let rec a i current max_ =
+  let rec a i current max0 =
     (if (i <= c)
      then let current = (current + lst.(i)) in
      let current = (if (current < 0)
                     then let current = 0 in
                     current
                     else current) in
-     let max_ = (if (max_ < current)
-                 then let max_ = current in
-                 max_
-                 else max_) in
-     (a (i + 1) current max_)
-     else max_) in
-    (a b current max_)
+     let max0 = (if (max0 < current)
+                 then let max0 = current in
+                 max0
+                 else max0) in
+     (a (i + 1) current max0)
+     else max0) in
+    (a b current max0)
 let main =
   let len = 0 in
   Scanf.scanf "%d"

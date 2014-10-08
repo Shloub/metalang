@@ -208,14 +208,18 @@ D'ou le nom de la fonction. */
     $retenue = 0;
     for ($j = 0 ; $j < $b["bigint_len"]; $j++)
     {
-      $chiffres[$i + $j] = $chiffres[$i + $j] + $retenue + $b["bigint_chiffres"][$j] * $a["bigint_chiffres"][$i];
+      $chiffres[$i + $j] = $chiffres[$i + $j] + $retenue +
+      $b["bigint_chiffres"][$j] * $a["bigint_chiffres"][$i];
       $retenue = intval($chiffres[$i + $j] / 10);
       $chiffres[$i + $j] = $chiffres[$i + $j] % 10;
     }
-    $chiffres[$i + $b["bigint_len"]] = $chiffres[$i + $b["bigint_len"]] + $retenue;
+    $chiffres[$i + $b["bigint_len"]] = $chiffres[$i + $b["bigint_len"]] +
+    $retenue;
   }
-  $chiffres[$a["bigint_len"] + $b["bigint_len"]] = intval($chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] / 10);
-  $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] = $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] % 10;
+  $chiffres[$a["bigint_len"] + $b["bigint_len"]] =
+  intval($chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] / 10);
+  $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] =
+  $chiffres[$a["bigint_len"] + $b["bigint_len"] - 1] % 10;
   for ($l = 0 ; $l <= 2; $l++)
     if ($len != 0 && $chiffres[$len - 1] == 0)
     $len --;
@@ -284,18 +288,18 @@ function &mul_bigint(&$aa, &$bb){
 Division,
 Modulo
 */
-function log10_($a){
-  $out_ = 1;
+function log100($a){
+  $out0 = 1;
   while ($a >= 10)
   {
     $a = intval($a / 10);
-    $out_ ++;
+    $out0 ++;
   }
-  return $out_;
+  return $out0;
 }
 
 function &bigint_of_int($i){
-  $size = log10_($i);
+  $size = log100($i);
   if ($i == 0)
     $size = 0;
   $t = array();
@@ -317,20 +321,20 @@ function &bigint_of_int($i){
 
 function &fact_bigint(&$a){
   $one = bigint_of_int(1);
-  $out_ = $one;
+  $out0 = $one;
   while (!bigint_eq($a, $one))
   {
-    $out_ = mul_bigint($a, $out_);
+    $out0 = mul_bigint($a, $out0);
     $a = sub_bigint($a, $one);
   }
-  return $out_;
+  return $out0;
 }
 
 function sum_chiffres_bigint(&$a){
-  $out_ = 0;
+  $out0 = 0;
   for ($i = 0 ; $i < $a["bigint_len"]; $i++)
-    $out_ += $a["bigint_chiffres"][$i];
-  return $out_;
+    $out0 += $a["bigint_chiffres"][$i];
+  return $out0;
 }
 
 /* http://projecteuler.net/problem=20 */
@@ -413,19 +417,19 @@ function euler29(){
   $found = true;
   while ($found)
   {
-    $min_ = $a0_bigint[0];
+    $min0 = $a0_bigint[0];
     $found = false;
     for ($i = 2 ; $i <= $maxA; $i++)
       if ($b[$i] <= $maxB)
     {
       if ($found)
       {
-        if (bigint_lt($a_bigint[$i], $min_))
-          $min_ = $a_bigint[$i];
+        if (bigint_lt($a_bigint[$i], $min0))
+          $min0 = $a_bigint[$i];
       }
       else
       {
-        $min_ = $a_bigint[$i];
+        $min0 = $a_bigint[$i];
         $found = true;
       }
     }
@@ -433,7 +437,7 @@ function euler29(){
     {
       $n ++;
       for ($l = 2 ; $l <= $maxA; $l++)
-        if (bigint_eq($a_bigint[$l], $min_) && $b[$l] <= $maxB)
+        if (bigint_eq($a_bigint[$l], $min0) && $b[$l] <= $maxB)
       {
         $b[$l] = $b[$l] + 1;
         $a_bigint[$l] = mul_bigint($a_bigint[$l], $a0_bigint[$l]);

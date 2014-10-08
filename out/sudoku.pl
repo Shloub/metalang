@@ -25,22 +25,22 @@ sub remainder {
 # lit un sudoku sur l'entrée standard 
 
 sub read_sudoku{
-  my $out_ = [];
+  my $out0 = [];
   foreach my $i (0 .. 9 * 9 - 1) {
     my $k = readint();
     readspaces();
-    $out_->[$i] = $k;
+    $out0->[$i] = $k;
     }
-  return $out_;
+  return $out0;
 }
 
 # affiche un sudoku 
 
 sub print_sudoku{
-  my($sudoku_) = @_;
+  my($sudoku0) = @_;
   foreach my $y (0 .. 8) {
     foreach my $x (0 .. 8) {
-      print($sudoku_->[$x + $y * 9], " ");
+      print($sudoku0->[$x + $y * 9], " ");
       if ((remainder($x, 3)) eq 2) {
         print(" ");
       }
@@ -74,32 +74,2945 @@ sub sudoku_done{
 # résout le sudoku
 
 sub solve{
-  my($sudoku_) = @_;
-  if (0 || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[9]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[18]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[18]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[27]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[27]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[27]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[36]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[36]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[36]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[36]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[45]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[45]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[45]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[45]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[45]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[54]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[54]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[54]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[54]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[54]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[54]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[63]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[63]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[63]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[63]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[63]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[63]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[63]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[72]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[72]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[72]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[72]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[72]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[72]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[72]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[72]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[10]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[19]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[19]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[28]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[28]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[28]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[37]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[37]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[37]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[37]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[46]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[46]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[46]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[46]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[46]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[55]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[55]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[55]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[55]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[55]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[55]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[64]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[64]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[64]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[64]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[64]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[64]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[64]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[73]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[73]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[73]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[73]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[73]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[73]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[73]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[73]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[11]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[20]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[20]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[29]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[29]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[29]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[38]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[38]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[38]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[38]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[47]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[47]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[47]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[47]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[47]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[56]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[56]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[56]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[56]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[56]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[56]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[65]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[65]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[65]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[65]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[65]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[65]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[65]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[74]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[74]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[74]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[74]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[74]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[74]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[74]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[74]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[12]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[21]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[21]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[30]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[30]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[30]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[39]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[39]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[39]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[39]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[48]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[48]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[48]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[48]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[48]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[57]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[57]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[57]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[57]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[57]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[57]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[66]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[66]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[66]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[66]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[66]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[66]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[66]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[75]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[75]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[75]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[75]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[75]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[75]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[75]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[75]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[13]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[22]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[22]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[31]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[31]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[31]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[40]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[40]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[40]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[40]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[49]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[49]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[49]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[49]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[49]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[58]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[58]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[58]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[58]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[58]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[58]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[67]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[67]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[67]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[67]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[67]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[67]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[67]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[76]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[76]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[76]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[76]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[76]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[76]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[76]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[76]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[14]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[23]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[23]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[32]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[32]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[32]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[41]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[41]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[41]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[41]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[50]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[50]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[50]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[50]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[50]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[59]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[59]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[59]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[59]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[59]) || ($sudoku_->[50] ne 0 && $sudoku_->[50] eq $sudoku_->[59]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[68]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[68]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[68]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[68]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[68]) || ($sudoku_->[50] ne 0 && $sudoku_->[50] eq $sudoku_->[68]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[68]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[77]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[77]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[77]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[77]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[77]) || ($sudoku_->[50] ne 0 && $sudoku_->[50] eq $sudoku_->[77]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[77]) || ($sudoku_->[68] ne 0 && $sudoku_->[68] eq $sudoku_->[77]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[15]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[24]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[24]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[33]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[33]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[33]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[42]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[42]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[42]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[42]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[51]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[51]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[51]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[51]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[51]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[60]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[60]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[60]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[60]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[60]) || ($sudoku_->[51] ne 0 && $sudoku_->[51] eq $sudoku_->[60]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[69]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[69]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[69]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[69]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[69]) || ($sudoku_->[51] ne 0 && $sudoku_->[51] eq $sudoku_->[69]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[69]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[78]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[78]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[78]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[78]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[78]) || ($sudoku_->[51] ne 0 && $sudoku_->[51] eq $sudoku_->[78]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[78]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[78]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[16]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[25]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[25]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[34]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[34]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[34]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[43]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[43]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[43]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[43]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[52]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[52]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[52]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[52]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[52]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[61]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[61]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[61]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[61]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[61]) || ($sudoku_->[52] ne 0 && $sudoku_->[52] eq $sudoku_->[61]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[70]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[70]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[70]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[70]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[70]) || ($sudoku_->[52] ne 0 && $sudoku_->[52] eq $sudoku_->[70]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[70]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[79]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[79]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[79]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[79]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[79]) || ($sudoku_->[52] ne 0 && $sudoku_->[52] eq $sudoku_->[79]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[79]) || ($sudoku_->[70] ne 0 && $sudoku_->[70] eq $sudoku_->[79]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[17]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[26]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[26]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[35]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[35]) || ($sudoku_->[26] ne 0 && $sudoku_->[26] eq $sudoku_->[35]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[44]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[44]) || ($sudoku_->[26] ne 0 && $sudoku_->[26] eq $sudoku_->[44]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[44]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[53]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[53]) || ($sudoku_->[26] ne 0 && $sudoku_->[26] eq $sudoku_->[53]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[53]) || ($sudoku_->[44] ne 0 && $sudoku_->[44] eq $sudoku_->[53]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[62]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[62]) || ($sudoku_->[26] ne 0 && $sudoku_->[26] eq $sudoku_->[62]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[62]) || ($sudoku_->[44] ne 0 && $sudoku_->[44] eq $sudoku_->[62]) || ($sudoku_->[53] ne 0 && $sudoku_->[53] eq $sudoku_->[62]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[71]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[71]) || ($sudoku_->[26] ne 0 && $sudoku_->[26] eq $sudoku_->[71]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[71]) || ($sudoku_->[44] ne 0 && $sudoku_->[44] eq $sudoku_->[71]) || ($sudoku_->[53] ne 0 && $sudoku_->[53] eq $sudoku_->[71]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[71]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[80]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[80]) || ($sudoku_->[26] ne 0 && $sudoku_->[26] eq $sudoku_->[80]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[80]) || ($sudoku_->[44] ne 0 && $sudoku_->[44] eq $sudoku_->[80]) || ($sudoku_->[53] ne 0 && $sudoku_->[53] eq $sudoku_->[80]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[80]) || ($sudoku_->[71] ne 0 && $sudoku_->[71] eq $sudoku_->[80]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[1]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[2]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[2]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[3]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[3]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[3]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[4]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[4]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[4]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[4]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[5]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[5]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[5]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[5]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[5]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[6]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[6]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[6]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[6]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[6]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[6]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[7]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[7]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[7]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[7]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[7]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[7]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[7]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[8]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[8]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[8]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[8]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[8]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[8]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[8]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[8]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[10]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[11]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[11]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[12]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[12]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[12]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[13]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[13]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[13]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[13]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[14]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[14]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[14]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[14]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[14]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[15]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[15]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[15]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[15]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[15]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[15]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[16]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[16]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[16]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[16]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[16]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[16]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[16]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[17]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[17]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[17]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[17]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[17]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[17]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[17]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[17]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[19]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[20]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[20]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[21]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[21]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[21]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[22]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[22]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[22]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[22]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[23]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[23]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[23]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[23]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[23]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[24]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[24]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[24]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[24]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[24]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[24]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[25]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[25]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[25]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[25]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[25]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[25]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[25]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[26]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[26]) || ($sudoku_->[20] ne 0 && $sudoku_->[20] eq $sudoku_->[26]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[26]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[26]) || ($sudoku_->[23] ne 0 && $sudoku_->[23] eq $sudoku_->[26]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[26]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[26]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[28]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[29]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[29]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[30]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[30]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[30]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[31]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[31]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[31]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[31]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[32]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[32]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[32]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[32]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[32]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[33]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[33]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[33]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[33]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[33]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[33]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[34]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[34]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[34]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[34]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[34]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[34]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[34]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[35]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[35]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[35]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[35]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[35]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[35]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[35]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[35]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[37]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[38]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[38]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[39]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[39]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[39]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[40]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[40]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[40]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[40]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[41]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[41]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[41]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[41]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[41]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[42]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[42]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[42]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[42]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[42]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[42]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[43]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[43]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[43]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[43]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[43]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[43]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[43]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[44]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[44]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[44]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[44]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[44]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[44]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[44]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[44]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[46]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[47]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[47]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[48]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[48]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[48]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[49]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[49]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[49]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[49]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[50]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[50]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[50]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[50]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[50]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[51]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[51]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[51]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[51]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[51]) || ($sudoku_->[50] ne 0 && $sudoku_->[50] eq $sudoku_->[51]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[52]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[52]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[52]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[52]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[52]) || ($sudoku_->[50] ne 0 && $sudoku_->[50] eq $sudoku_->[52]) || ($sudoku_->[51] ne 0 && $sudoku_->[51] eq $sudoku_->[52]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[53]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[53]) || ($sudoku_->[47] ne 0 && $sudoku_->[47] eq $sudoku_->[53]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[53]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[53]) || ($sudoku_->[50] ne 0 && $sudoku_->[50] eq $sudoku_->[53]) || ($sudoku_->[51] ne 0 && $sudoku_->[51] eq $sudoku_->[53]) || ($sudoku_->[52] ne 0 && $sudoku_->[52] eq $sudoku_->[53]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[55]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[56]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[56]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[57]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[57]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[57]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[58]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[58]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[58]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[58]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[59]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[59]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[59]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[59]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[59]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[60]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[60]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[60]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[60]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[60]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[60]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[61]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[61]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[61]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[61]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[61]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[61]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[61]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[62]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[62]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[62]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[62]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[62]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[62]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[62]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[62]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[64]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[65]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[65]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[66]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[66]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[66]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[67]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[67]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[67]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[67]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[68]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[68]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[68]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[68]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[68]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[69]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[69]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[69]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[69]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[69]) || ($sudoku_->[68] ne 0 && $sudoku_->[68] eq $sudoku_->[69]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[70]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[70]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[70]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[70]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[70]) || ($sudoku_->[68] ne 0 && $sudoku_->[68] eq $sudoku_->[70]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[70]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[71]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[71]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[71]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[71]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[71]) || ($sudoku_->[68] ne 0 && $sudoku_->[68] eq $sudoku_->[71]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[71]) || ($sudoku_->[70] ne 0 && $sudoku_->[70] eq $sudoku_->[71]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[73]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[74]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[74]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[75]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[75]) || ($sudoku_->[74] ne 0 && $sudoku_->[74] eq $sudoku_->[75]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[76]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[76]) || ($sudoku_->[74] ne 0 && $sudoku_->[74] eq $sudoku_->[76]) || ($sudoku_->[75] ne 0 && $sudoku_->[75] eq $sudoku_->[76]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[77]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[77]) || ($sudoku_->[74] ne 0 && $sudoku_->[74] eq $sudoku_->[77]) || ($sudoku_->[75] ne 0 && $sudoku_->[75] eq $sudoku_->[77]) || ($sudoku_->[76] ne 0 && $sudoku_->[76] eq $sudoku_->[77]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[78]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[78]) || ($sudoku_->[74] ne 0 && $sudoku_->[74] eq $sudoku_->[78]) || ($sudoku_->[75] ne 0 && $sudoku_->[75] eq $sudoku_->[78]) || ($sudoku_->[76] ne 0 && $sudoku_->[76] eq $sudoku_->[78]) || ($sudoku_->[77] ne 0 && $sudoku_->[77] eq $sudoku_->[78]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[79]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[79]) || ($sudoku_->[74] ne 0 && $sudoku_->[74] eq $sudoku_->[79]) || ($sudoku_->[75] ne 0 && $sudoku_->[75] eq $sudoku_->[79]) || ($sudoku_->[76] ne 0 && $sudoku_->[76] eq $sudoku_->[79]) || ($sudoku_->[77] ne 0 && $sudoku_->[77] eq $sudoku_->[79]) || ($sudoku_->[78] ne 0 && $sudoku_->[78] eq $sudoku_->[79]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[80]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[80]) || ($sudoku_->[74] ne 0 && $sudoku_->[74] eq $sudoku_->[80]) || ($sudoku_->[75] ne 0 && $sudoku_->[75] eq $sudoku_->[80]) || ($sudoku_->[76] ne 0 && $sudoku_->[76] eq $sudoku_->[80]) || ($sudoku_->[77] ne 0 && $sudoku_->[77] eq $sudoku_->[80]) || ($sudoku_->[78] ne 0 && $sudoku_->[78] eq $sudoku_->[80]) || ($sudoku_->[79] ne 0 && $sudoku_->[79] eq $sudoku_->[80]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[1]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[2]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[2]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[9]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[9]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[9]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[10]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[10]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[10]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[10]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[11]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[11]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[11]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[11]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[11]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[18]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[18]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[18]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[18]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[18]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[18]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[19]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[19]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[19]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[19]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[19]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[19]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[19]) || ($sudoku_->[0] ne 0 && $sudoku_->[0] eq $sudoku_->[20]) || ($sudoku_->[1] ne 0 && $sudoku_->[1] eq $sudoku_->[20]) || ($sudoku_->[2] ne 0 && $sudoku_->[2] eq $sudoku_->[20]) || ($sudoku_->[9] ne 0 && $sudoku_->[9] eq $sudoku_->[20]) || ($sudoku_->[10] ne 0 && $sudoku_->[10] eq $sudoku_->[20]) || ($sudoku_->[11] ne 0 && $sudoku_->[11] eq $sudoku_->[20]) || ($sudoku_->[18] ne 0 && $sudoku_->[18] eq $sudoku_->[20]) || ($sudoku_->[19] ne 0 && $sudoku_->[19] eq $sudoku_->[20]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[28]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[29]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[29]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[36]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[36]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[36]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[37]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[37]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[37]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[37]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[38]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[38]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[38]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[38]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[38]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[45]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[45]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[45]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[45]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[45]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[45]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[46]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[46]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[46]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[46]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[46]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[46]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[46]) || ($sudoku_->[27] ne 0 && $sudoku_->[27] eq $sudoku_->[47]) || ($sudoku_->[28] ne 0 && $sudoku_->[28] eq $sudoku_->[47]) || ($sudoku_->[29] ne 0 && $sudoku_->[29] eq $sudoku_->[47]) || ($sudoku_->[36] ne 0 && $sudoku_->[36] eq $sudoku_->[47]) || ($sudoku_->[37] ne 0 && $sudoku_->[37] eq $sudoku_->[47]) || ($sudoku_->[38] ne 0 && $sudoku_->[38] eq $sudoku_->[47]) || ($sudoku_->[45] ne 0 && $sudoku_->[45] eq $sudoku_->[47]) || ($sudoku_->[46] ne 0 && $sudoku_->[46] eq $sudoku_->[47]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[55]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[56]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[56]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[63]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[63]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[63]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[64]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[64]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[64]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[64]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[65]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[65]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[65]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[65]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[65]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[72]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[72]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[72]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[72]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[72]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[72]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[73]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[73]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[73]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[73]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[73]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[73]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[73]) || ($sudoku_->[54] ne 0 && $sudoku_->[54] eq $sudoku_->[74]) || ($sudoku_->[55] ne 0 && $sudoku_->[55] eq $sudoku_->[74]) || ($sudoku_->[56] ne 0 && $sudoku_->[56] eq $sudoku_->[74]) || ($sudoku_->[63] ne 0 && $sudoku_->[63] eq $sudoku_->[74]) || ($sudoku_->[64] ne 0 && $sudoku_->[64] eq $sudoku_->[74]) || ($sudoku_->[65] ne 0 && $sudoku_->[65] eq $sudoku_->[74]) || ($sudoku_->[72] ne 0 && $sudoku_->[72] eq $sudoku_->[74]) || ($sudoku_->[73] ne 0 && $sudoku_->[73] eq $sudoku_->[74]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[4]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[5]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[5]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[12]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[12]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[12]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[13]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[13]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[13]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[13]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[14]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[14]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[14]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[14]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[14]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[21]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[21]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[21]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[21]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[21]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[21]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[22]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[22]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[22]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[22]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[22]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[22]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[22]) || ($sudoku_->[3] ne 0 && $sudoku_->[3] eq $sudoku_->[23]) || ($sudoku_->[4] ne 0 && $sudoku_->[4] eq $sudoku_->[23]) || ($sudoku_->[5] ne 0 && $sudoku_->[5] eq $sudoku_->[23]) || ($sudoku_->[12] ne 0 && $sudoku_->[12] eq $sudoku_->[23]) || ($sudoku_->[13] ne 0 && $sudoku_->[13] eq $sudoku_->[23]) || ($sudoku_->[14] ne 0 && $sudoku_->[14] eq $sudoku_->[23]) || ($sudoku_->[21] ne 0 && $sudoku_->[21] eq $sudoku_->[23]) || ($sudoku_->[22] ne 0 && $sudoku_->[22] eq $sudoku_->[23]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[31]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[32]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[32]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[39]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[39]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[39]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[40]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[40]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[40]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[40]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[41]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[41]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[41]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[41]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[41]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[48]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[48]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[48]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[48]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[48]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[48]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[49]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[49]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[49]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[49]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[49]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[49]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[49]) || ($sudoku_->[30] ne 0 && $sudoku_->[30] eq $sudoku_->[50]) || ($sudoku_->[31] ne 0 && $sudoku_->[31] eq $sudoku_->[50]) || ($sudoku_->[32] ne 0 && $sudoku_->[32] eq $sudoku_->[50]) || ($sudoku_->[39] ne 0 && $sudoku_->[39] eq $sudoku_->[50]) || ($sudoku_->[40] ne 0 && $sudoku_->[40] eq $sudoku_->[50]) || ($sudoku_->[41] ne 0 && $sudoku_->[41] eq $sudoku_->[50]) || ($sudoku_->[48] ne 0 && $sudoku_->[48] eq $sudoku_->[50]) || ($sudoku_->[49] ne 0 && $sudoku_->[49] eq $sudoku_->[50]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[58]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[59]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[59]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[66]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[66]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[66]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[67]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[67]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[67]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[67]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[68]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[68]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[68]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[68]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[68]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[75]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[75]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[75]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[75]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[75]) || ($sudoku_->[68] ne 0 && $sudoku_->[68] eq $sudoku_->[75]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[76]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[76]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[76]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[76]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[76]) || ($sudoku_->[68] ne 0 && $sudoku_->[68] eq $sudoku_->[76]) || ($sudoku_->[75] ne 0 && $sudoku_->[75] eq $sudoku_->[76]) || ($sudoku_->[57] ne 0 && $sudoku_->[57] eq $sudoku_->[77]) || ($sudoku_->[58] ne 0 && $sudoku_->[58] eq $sudoku_->[77]) || ($sudoku_->[59] ne 0 && $sudoku_->[59] eq $sudoku_->[77]) || ($sudoku_->[66] ne 0 && $sudoku_->[66] eq $sudoku_->[77]) || ($sudoku_->[67] ne 0 && $sudoku_->[67] eq $sudoku_->[77]) || ($sudoku_->[68] ne 0 && $sudoku_->[68] eq $sudoku_->[77]) || ($sudoku_->[75] ne 0 && $sudoku_->[75] eq $sudoku_->[77]) || ($sudoku_->[76] ne 0 && $sudoku_->[76] eq $sudoku_->[77]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[7]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[8]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[8]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[15]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[15]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[15]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[16]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[16]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[16]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[16]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[17]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[17]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[17]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[17]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[17]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[24]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[24]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[24]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[24]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[24]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[24]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[25]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[25]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[25]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[25]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[25]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[25]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[25]) || ($sudoku_->[6] ne 0 && $sudoku_->[6] eq $sudoku_->[26]) || ($sudoku_->[7] ne 0 && $sudoku_->[7] eq $sudoku_->[26]) || ($sudoku_->[8] ne 0 && $sudoku_->[8] eq $sudoku_->[26]) || ($sudoku_->[15] ne 0 && $sudoku_->[15] eq $sudoku_->[26]) || ($sudoku_->[16] ne 0 && $sudoku_->[16] eq $sudoku_->[26]) || ($sudoku_->[17] ne 0 && $sudoku_->[17] eq $sudoku_->[26]) || ($sudoku_->[24] ne 0 && $sudoku_->[24] eq $sudoku_->[26]) || ($sudoku_->[25] ne 0 && $sudoku_->[25] eq $sudoku_->[26]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[34]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[35]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[35]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[42]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[42]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[42]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[43]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[43]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[43]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[43]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[44]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[44]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[44]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[44]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[44]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[51]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[51]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[51]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[51]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[51]) || ($sudoku_->[44] ne 0 && $sudoku_->[44] eq $sudoku_->[51]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[52]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[52]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[52]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[52]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[52]) || ($sudoku_->[44] ne 0 && $sudoku_->[44] eq $sudoku_->[52]) || ($sudoku_->[51] ne 0 && $sudoku_->[51] eq $sudoku_->[52]) || ($sudoku_->[33] ne 0 && $sudoku_->[33] eq $sudoku_->[53]) || ($sudoku_->[34] ne 0 && $sudoku_->[34] eq $sudoku_->[53]) || ($sudoku_->[35] ne 0 && $sudoku_->[35] eq $sudoku_->[53]) || ($sudoku_->[42] ne 0 && $sudoku_->[42] eq $sudoku_->[53]) || ($sudoku_->[43] ne 0 && $sudoku_->[43] eq $sudoku_->[53]) || ($sudoku_->[44] ne 0 && $sudoku_->[44] eq $sudoku_->[53]) || ($sudoku_->[51] ne 0 && $sudoku_->[51] eq $sudoku_->[53]) || ($sudoku_->[52] ne 0 && $sudoku_->[52] eq $sudoku_->[53]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[61]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[62]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[62]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[69]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[69]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[69]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[70]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[70]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[70]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[70]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[71]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[71]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[71]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[71]) || ($sudoku_->[70] ne 0 && $sudoku_->[70] eq $sudoku_->[71]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[78]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[78]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[78]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[78]) || ($sudoku_->[70] ne 0 && $sudoku_->[70] eq $sudoku_->[78]) || ($sudoku_->[71] ne 0 && $sudoku_->[71] eq $sudoku_->[78]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[79]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[79]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[79]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[79]) || ($sudoku_->[70] ne 0 && $sudoku_->[70] eq $sudoku_->[79]) || ($sudoku_->[71] ne 0 && $sudoku_->[71] eq $sudoku_->[79]) || ($sudoku_->[78] ne 0 && $sudoku_->[78] eq $sudoku_->[79]) || ($sudoku_->[60] ne 0 && $sudoku_->[60] eq $sudoku_->[80]) || ($sudoku_->[61] ne 0 && $sudoku_->[61] eq $sudoku_->[80]) || ($sudoku_->[62] ne 0 && $sudoku_->[62] eq $sudoku_->[80]) || ($sudoku_->[69] ne 0 && $sudoku_->[69] eq $sudoku_->[80]) || ($sudoku_->[70] ne 0 && $sudoku_->[70] eq $sudoku_->[80]) || ($sudoku_->[71] ne 0 && $sudoku_->[71] eq $sudoku_->[80]) || ($sudoku_->[78] ne 0 && $sudoku_->[78] eq $sudoku_->[80]) || ($sudoku_->[79] ne 0 && $sudoku_->[79] eq $sudoku_->[80])) {
+  my($sudoku0) = @_;
+  if (0 || ($sudoku0->[0] ne 0 && $sudoku0->[0] eq $sudoku0->[9]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[27]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[27]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[27]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[36]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[36]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[36]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[36]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[54]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[54]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[54]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[54]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[54]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[54]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[10]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[28]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[28]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[28]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[29]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[29]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[29]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[12]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[30]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[30]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[30]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[50] ne
+                                                                    0 &&
+                                                                    $sudoku0->[50] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[50] ne
+                                                                    0 &&
+                                                                    $sudoku0->[50] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[50] ne
+                                                                    0 &&
+                                                                    $sudoku0->[50] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[68] ne
+                                                                    0 &&
+                                                                    $sudoku0->[68] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[51] ne
+                                                                    0 &&
+                                                                    $sudoku0->[51] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[51] ne
+                                                                    0 &&
+                                                                    $sudoku0->[51] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[51] ne
+                                                                    0 &&
+                                                                    $sudoku0->[51] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[52] ne
+                                                                    0 &&
+                                                                    $sudoku0->[52] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[52] ne
+                                                                    0 &&
+                                                                    $sudoku0->[52] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[52] ne
+                                                                    0 &&
+                                                                    $sudoku0->[52] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[70] ne
+                                                                    0 &&
+                                                                    $sudoku0->[70] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[26] ne
+                                                                    0 &&
+                                                                    $sudoku0->[26] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[26] ne
+                                                                    0 &&
+                                                                    $sudoku0->[26] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[26] ne
+                                                                    0 &&
+                                                                    $sudoku0->[26] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[44] ne
+                                                                    0 &&
+                                                                    $sudoku0->[44] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[26] ne
+                                                                    0 &&
+                                                                    $sudoku0->[26] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[44] ne
+                                                                    0 &&
+                                                                    $sudoku0->[44] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[53] ne
+                                                                    0 &&
+                                                                    $sudoku0->[53] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[26] ne
+                                                                    0 &&
+                                                                    $sudoku0->[26] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[44] ne
+                                                                    0 &&
+                                                                    $sudoku0->[44] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[53] ne
+                                                                    0 &&
+                                                                    $sudoku0->[53] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[26] ne
+                                                                    0 &&
+                                                                    $sudoku0->[26] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[44] ne
+                                                                    0 &&
+                                                                    $sudoku0->[44] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[53] ne
+                                                                    0 &&
+                                                                    $sudoku0->[53] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[71] ne
+                                                                    0 &&
+                                                                    $sudoku0->[71] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[1]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[2]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[2]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[3]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[3]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[3]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[4]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[4]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[4]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[4]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[5]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[5]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[5]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[5]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[5]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[6]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[6]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[6]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[6]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[6]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[6]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[10]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[12]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[12]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[12]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[20] ne
+                                                                    0 &&
+                                                                    $sudoku0->[20] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[23] ne
+                                                                    0 &&
+                                                                    $sudoku0->[23] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[28]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[29]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[29]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[30]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[30]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[30]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[33]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[50] ne
+                                                                    0 &&
+                                                                    $sudoku0->[50] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[50] ne
+                                                                    0 &&
+                                                                    $sudoku0->[50] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[51] ne
+                                                                    0 &&
+                                                                    $sudoku0->[51] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[47] ne
+                                                                    0 &&
+                                                                    $sudoku0->[47] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[50] ne
+                                                                    0 &&
+                                                                    $sudoku0->[50] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[51] ne
+                                                                    0 &&
+                                                                    $sudoku0->[51] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[52] ne
+                                                                    0 &&
+                                                                    $sudoku0->[52] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[57]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[60]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[68] ne
+                                                                    0 &&
+                                                                    $sudoku0->[68] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[68] ne
+                                                                    0 &&
+                                                                    $sudoku0->[68] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[68] ne
+                                                                    0 &&
+                                                                    $sudoku0->[68] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[70] ne
+                                                                    0 &&
+                                                                    $sudoku0->[70] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[74] ne
+                                                                    0 &&
+                                                                    $sudoku0->[74] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[74] ne
+                                                                    0 &&
+                                                                    $sudoku0->[74] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[75] ne
+                                                                    0 &&
+                                                                    $sudoku0->[75] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[74] ne
+                                                                    0 &&
+                                                                    $sudoku0->[74] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[75] ne
+                                                                    0 &&
+                                                                    $sudoku0->[75] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[76] ne
+                                                                    0 &&
+                                                                    $sudoku0->[76] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[74] ne
+                                                                    0 &&
+                                                                    $sudoku0->[74] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[75] ne
+                                                                    0 &&
+                                                                    $sudoku0->[75] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[76] ne
+                                                                    0 &&
+                                                                    $sudoku0->[76] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[77] ne
+                                                                    0 &&
+                                                                    $sudoku0->[77] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[74] ne
+                                                                    0 &&
+                                                                    $sudoku0->[74] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[75] ne
+                                                                    0 &&
+                                                                    $sudoku0->[75] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[76] ne
+                                                                    0 &&
+                                                                    $sudoku0->[76] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[77] ne
+                                                                    0 &&
+                                                                    $sudoku0->[77] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[78] ne
+                                                                    0 &&
+                                                                    $sudoku0->[78] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[74] ne
+                                                                    0 &&
+                                                                    $sudoku0->[74] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[75] ne
+                                                                    0 &&
+                                                                    $sudoku0->[75] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[76] ne
+                                                                    0 &&
+                                                                    $sudoku0->[76] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[77] ne
+                                                                    0 &&
+                                                                    $sudoku0->[77] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[78] ne
+                                                                    0 &&
+                                                                    $sudoku0->[78] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[79] ne
+                                                                    0 &&
+                                                                    $sudoku0->[79] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[1]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[2]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[2]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[9]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[9]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[9]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[10]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[10]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[10]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[10]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[11]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[18]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[19]) || ($sudoku0->[0] ne
+                                                                    0 &&
+                                                                    $sudoku0->[0] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[1] ne
+                                                                    0 &&
+                                                                    $sudoku0->[1] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[2] ne
+                                                                    0 &&
+                                                                    $sudoku0->[2] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[9] ne
+                                                                    0 &&
+                                                                    $sudoku0->[9] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[10] ne
+                                                                    0 &&
+                                                                    $sudoku0->[10] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[11] ne
+                                                                    0 &&
+                                                                    $sudoku0->[11] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[18] ne
+                                                                    0 &&
+                                                                    $sudoku0->[18] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[19] ne
+                                                                    0 &&
+                                                                    $sudoku0->[19] eq
+                                                                    $sudoku0->[20]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[28]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[29]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[29]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[36]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[36]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[36]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[37]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[38]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[45]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[46]) || ($sudoku0->[27] ne
+                                                                    0 &&
+                                                                    $sudoku0->[27] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[28] ne
+                                                                    0 &&
+                                                                    $sudoku0->[28] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[29] ne
+                                                                    0 &&
+                                                                    $sudoku0->[29] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[36] ne
+                                                                    0 &&
+                                                                    $sudoku0->[36] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[37] ne
+                                                                    0 &&
+                                                                    $sudoku0->[37] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[38] ne
+                                                                    0 &&
+                                                                    $sudoku0->[38] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[45] ne
+                                                                    0 &&
+                                                                    $sudoku0->[45] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[46] ne
+                                                                    0 &&
+                                                                    $sudoku0->[46] eq
+                                                                    $sudoku0->[47]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[55]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[56]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[63]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[64]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[65]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[72]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[73]) || ($sudoku0->[54] ne
+                                                                    0 &&
+                                                                    $sudoku0->[54] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[55] ne
+                                                                    0 &&
+                                                                    $sudoku0->[55] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[56] ne
+                                                                    0 &&
+                                                                    $sudoku0->[56] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[63] ne
+                                                                    0 &&
+                                                                    $sudoku0->[63] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[64] ne
+                                                                    0 &&
+                                                                    $sudoku0->[64] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[65] ne
+                                                                    0 &&
+                                                                    $sudoku0->[65] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[72] ne
+                                                                    0 &&
+                                                                    $sudoku0->[72] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[73] ne
+                                                                    0 &&
+                                                                    $sudoku0->[73] eq
+                                                                    $sudoku0->[74]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[4]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[5]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[5]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[12]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[12]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[12]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[13]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[14]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[21]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[22]) || ($sudoku0->[3] ne
+                                                                    0 &&
+                                                                    $sudoku0->[3] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[4] ne
+                                                                    0 &&
+                                                                    $sudoku0->[4] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[5] ne
+                                                                    0 &&
+                                                                    $sudoku0->[5] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[12] ne
+                                                                    0 &&
+                                                                    $sudoku0->[12] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[13] ne
+                                                                    0 &&
+                                                                    $sudoku0->[13] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[14] ne
+                                                                    0 &&
+                                                                    $sudoku0->[14] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[21] ne
+                                                                    0 &&
+                                                                    $sudoku0->[21] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[22] ne
+                                                                    0 &&
+                                                                    $sudoku0->[22] eq
+                                                                    $sudoku0->[23]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[31]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[32]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[39]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[40]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[41]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[48]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[49]) || ($sudoku0->[30] ne
+                                                                    0 &&
+                                                                    $sudoku0->[30] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[31] ne
+                                                                    0 &&
+                                                                    $sudoku0->[31] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[32] ne
+                                                                    0 &&
+                                                                    $sudoku0->[32] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[39] ne
+                                                                    0 &&
+                                                                    $sudoku0->[39] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[40] ne
+                                                                    0 &&
+                                                                    $sudoku0->[40] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[41] ne
+                                                                    0 &&
+                                                                    $sudoku0->[41] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[48] ne
+                                                                    0 &&
+                                                                    $sudoku0->[48] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[49] ne
+                                                                    0 &&
+                                                                    $sudoku0->[49] eq
+                                                                    $sudoku0->[50]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[58]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[59]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[66]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[67]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[68]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[68] ne
+                                                                    0 &&
+                                                                    $sudoku0->[68] eq
+                                                                    $sudoku0->[75]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[68] ne
+                                                                    0 &&
+                                                                    $sudoku0->[68] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[75] ne
+                                                                    0 &&
+                                                                    $sudoku0->[75] eq
+                                                                    $sudoku0->[76]) || ($sudoku0->[57] ne
+                                                                    0 &&
+                                                                    $sudoku0->[57] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[58] ne
+                                                                    0 &&
+                                                                    $sudoku0->[58] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[59] ne
+                                                                    0 &&
+                                                                    $sudoku0->[59] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[66] ne
+                                                                    0 &&
+                                                                    $sudoku0->[66] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[67] ne
+                                                                    0 &&
+                                                                    $sudoku0->[67] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[68] ne
+                                                                    0 &&
+                                                                    $sudoku0->[68] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[75] ne
+                                                                    0 &&
+                                                                    $sudoku0->[75] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[76] ne
+                                                                    0 &&
+                                                                    $sudoku0->[76] eq
+                                                                    $sudoku0->[77]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[7]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[8]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[15]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[16]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[17]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[24]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[25]) || ($sudoku0->[6] ne
+                                                                    0 &&
+                                                                    $sudoku0->[6] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[7] ne
+                                                                    0 &&
+                                                                    $sudoku0->[7] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[8] ne
+                                                                    0 &&
+                                                                    $sudoku0->[8] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[15] ne
+                                                                    0 &&
+                                                                    $sudoku0->[15] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[16] ne
+                                                                    0 &&
+                                                                    $sudoku0->[16] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[17] ne
+                                                                    0 &&
+                                                                    $sudoku0->[17] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[24] ne
+                                                                    0 &&
+                                                                    $sudoku0->[24] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[25] ne
+                                                                    0 &&
+                                                                    $sudoku0->[25] eq
+                                                                    $sudoku0->[26]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[34]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[35]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[42]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[43]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[44]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[44] ne
+                                                                    0 &&
+                                                                    $sudoku0->[44] eq
+                                                                    $sudoku0->[51]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[44] ne
+                                                                    0 &&
+                                                                    $sudoku0->[44] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[51] ne
+                                                                    0 &&
+                                                                    $sudoku0->[51] eq
+                                                                    $sudoku0->[52]) || ($sudoku0->[33] ne
+                                                                    0 &&
+                                                                    $sudoku0->[33] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[34] ne
+                                                                    0 &&
+                                                                    $sudoku0->[34] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[35] ne
+                                                                    0 &&
+                                                                    $sudoku0->[35] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[42] ne
+                                                                    0 &&
+                                                                    $sudoku0->[42] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[43] ne
+                                                                    0 &&
+                                                                    $sudoku0->[43] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[44] ne
+                                                                    0 &&
+                                                                    $sudoku0->[44] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[51] ne
+                                                                    0 &&
+                                                                    $sudoku0->[51] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[52] ne
+                                                                    0 &&
+                                                                    $sudoku0->[52] eq
+                                                                    $sudoku0->[53]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[61]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[62]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[69]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[70]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[70] ne
+                                                                    0 &&
+                                                                    $sudoku0->[70] eq
+                                                                    $sudoku0->[71]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[70] ne
+                                                                    0 &&
+                                                                    $sudoku0->[70] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[71] ne
+                                                                    0 &&
+                                                                    $sudoku0->[71] eq
+                                                                    $sudoku0->[78]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[70] ne
+                                                                    0 &&
+                                                                    $sudoku0->[70] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[71] ne
+                                                                    0 &&
+                                                                    $sudoku0->[71] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[78] ne
+                                                                    0 &&
+                                                                    $sudoku0->[78] eq
+                                                                    $sudoku0->[79]) || ($sudoku0->[60] ne
+                                                                    0 &&
+                                                                    $sudoku0->[60] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[61] ne
+                                                                    0 &&
+                                                                    $sudoku0->[61] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[62] ne
+                                                                    0 &&
+                                                                    $sudoku0->[62] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[69] ne
+                                                                    0 &&
+                                                                    $sudoku0->[69] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[70] ne
+                                                                    0 &&
+                                                                    $sudoku0->[70] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[71] ne
+                                                                    0 &&
+                                                                    $sudoku0->[71] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[78] ne
+                                                                    0 &&
+                                                                    $sudoku0->[78] eq
+                                                                    $sudoku0->[80]) || ($sudoku0->[79] ne
+                                                                    0 &&
+                                                                    $sudoku0->[79] eq
+                                                                    $sudoku0->[80])) {
     return 0;
   }
-  if (sudoku_done($sudoku_)) {
+  if (sudoku_done($sudoku0)) {
     return 1;
   }
   foreach my $i (0 .. 80) {
-    if ($sudoku_->[$i] eq 0) {
+    if ($sudoku0->[$i] eq 0) {
       foreach my $p (1 .. 9) {
-        $sudoku_->[$i] = $p;
-        if (solve($sudoku_)) {
+        $sudoku0->[$i] = $p;
+        if (solve($sudoku0)) {
           return 1;
         }
         }
-      $sudoku_->[$i] = 0;
+      $sudoku0->[$i] = 0;
       return 0;
     }
     }
   return 0;
 }
 
-my $sudoku_ = read_sudoku();
-print_sudoku($sudoku_);
-if (solve($sudoku_)) {
-  print_sudoku($sudoku_);
+my $sudoku0 = read_sudoku();
+print_sudoku($sudoku0);
+if (solve($sudoku0)) {
+  print_sudoku($sudoku0);
 }else{
   print("no solution\n");
 }

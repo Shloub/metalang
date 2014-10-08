@@ -13,6 +13,8 @@ begin
   exit(prod);
 end;
 
+type a = array of Longint;
+type b = array of boolean;
 procedure show(lim : Longint; nth : Longint);
 var
   i : Longint;
@@ -22,8 +24,8 @@ var
   m : Longint;
   n : Longint;
   nchiffre : Longint;
-  pris : array of boolean;
-  t : array of Longint;
+  pris : b;
+  t : a;
 begin
   SetLength(t, lim);
   for i := 0 to  lim - 1 do

@@ -1,5 +1,7 @@
 program euler15;
 
+type a = array of Longint;
+type b = array of array of Longint;
 
 var
   i : Longint;
@@ -12,8 +14,8 @@ var
   p : Longint;
   q : Longint;
   r : Longint;
-  tab : array of array of Longint;
-  tab2 : array of Longint;
+  tab : b;
+  tab2 : a;
 begin
   n := 10;
   { normalement on doit mettre 20 mais là on se tape un overflow }

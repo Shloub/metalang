@@ -19,9 +19,9 @@ let rec pathfind_aux cache tab x y posX posY =
       let v = (min (u) (val4)) in
       let w = v in
       let r = w in
-      let out_ = 1 + r in
-      cache.(posY).(posX) <- out_;
-      out_
+      let out0 = 1 + r in
+      cache.(posY).(posX) <- out0;
+      out0
     end
 
 let pathfind tab x y =

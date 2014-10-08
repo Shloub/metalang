@@ -61,19 +61,21 @@ begin
    until false;
 end;
 
+type bb = array of Longint;
+type bc = array of array of Longint;
 
 var
   f : Longint;
-  h : array of Longint;
+  h : bb;
   i : Longint;
   j : Longint;
   k : Longint;
   len : Longint;
-  r : array of array of Longint;
+  r : bc;
   s : Longint;
-  tab1 : array of Longint;
-  tab2 : array of array of Longint;
-  u : array of Longint;
+  tab1 : bb;
+  tab2 : bc;
+  u : bb;
   v : Longint;
   w : Longint;
 begin

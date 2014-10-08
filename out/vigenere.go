@@ -34,8 +34,8 @@ func crypte(taille_cle int, cle []byte, taille int, message []byte) {
     var lettre int = position_alphabet(message[i])
       if lettre != -1 {
         var addon int = position_alphabet(cle[i % taille_cle])
-          var new_ int = (addon + lettre) % 26
-          message[i] = of_position_alphabet(new_);
+          var new0 int = (addon + lettre) % 26
+          message[i] = of_position_alphabet(new0);
       }
   }
 }
@@ -47,9 +47,9 @@ func main() {
   skip()
   var cle []byte = make([]byte, taille_cle)
   for index := 0 ; index <= taille_cle - 1; index++ {
-    var out_ byte
-    fmt.Fscanf(reader, "%c", &out_)
-      cle[index] = out_;
+    var out0 byte
+    fmt.Fscanf(reader, "%c", &out0)
+      cle[index] = out0;
   }
   skip()
   var taille int

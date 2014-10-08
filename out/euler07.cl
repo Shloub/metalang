@@ -8,44 +8,44 @@
         (setq i (+ 1 i ))))
         out
     ))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun divisible (n t_ size)
+(defun divisible (n t0 size)
 (progn
   (do
     ((i 0 (+ 1 i)))
     ((> i (- size 1)))
     (if
-      (= (remainder n (aref t_ i)) 0)
+      (= (remainder n (aref t0 i)) 0)
       (return-from divisible t))
   )
   (return-from divisible nil)
 ))
 
-(defun find_ (n t_ used nth_)
+(defun find0 (n t0 used nth0)
 (progn
-  (loop while (not (= used nth_))
+  (loop while (not (= used nth0))
   do (if
-       (divisible n t_ used)
+       (divisible n t0 used)
        (setq n ( + n 1))
        (progn
-         (setf (aref t_ used) n)
+         (setf (aref t0 used) n)
          (setq n ( + n 1))
          (setq used ( + used 1))
        ))
   )
-  (return-from find_ (aref t_ (- used 1)))
+  (return-from find0 (aref t0 (- used 1)))
 ))
 
 (progn
   (let ((n 10001))
     (let
-     ((t_ (array_init
+     ((t0 (array_init
              n
              (function (lambda (i)
              (block lambda_1
                (return-from lambda_1 2)
              ))
              ))))
-    (princ (find_ 3 t_ 1 n))
+    (princ (find0 3 t0 1 n))
     (princ "
 ")
     )))

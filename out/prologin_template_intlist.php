@@ -1,9 +1,9 @@
 <?php
 function programme_candidat(&$tableau, $taille){
-  $out_ = 0;
+  $out0 = 0;
   for ($i = 0 ; $i < $taille; $i++)
-    $out_ += $tableau[$i];
-  return $out_;
+    $out0 += $tableau[$i];
+  return $out0;
 }
 
 $taille = intval(trim(fgets(STDIN)));

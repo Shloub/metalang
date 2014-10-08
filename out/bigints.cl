@@ -67,8 +67,7 @@
   (do
     ((i 0 (+ 1 i)))
     ((> i (- (bigint-bigint_len a) 1)))
-    (princ
-    (aref (bigint-bigint_chiffres a) (- (- (bigint-bigint_len a) 1) i)))
+    (princ (aref (bigint-bigint_chiffres a) (- (- (bigint-bigint_len a) 1) i)))
   )
 ))
 
@@ -339,14 +338,14 @@ Modulo
 |#
 (defun log10 (a)
 (progn
-  (let ((out_ 1))
+  (let ((out0 1))
     (loop while (>= a 10)
     do (progn
          (setq a ( quotient a 10))
-         (setq out_ ( + out_ 1))
+         (setq out0 ( + out0 1))
          )
     )
-    (return-from log10 out_)
+    (return-from log10 out0)
   )))
 
 (defun bigint_of_int (i)
@@ -356,7 +355,7 @@ Modulo
       (= i 0)
       (setq size 0))
     (let
-     ((t_ (array_init
+     ((t0 (array_init
              size
              (function (lambda (j)
              (block lambda_6
@@ -367,38 +366,38 @@ Modulo
       ((k 0 (+ 1 k)))
       ((> k (- size 1)))
       (progn
-        (setf (aref t_ k) (remainder i 10))
+        (setf (aref t0 k) (remainder i 10))
         (setq i ( quotient i 10))
       )
     )
     (let ((bg (make-bigint :bigint_sign t
                            :bigint_len size
-                           :bigint_chiffres t_)))
+                           :bigint_chiffres t0)))
     (return-from bigint_of_int bg)
     )))))
 
 (defun fact_bigint (a)
 (progn
   (let ((one (bigint_of_int 1)))
-    (let ((out_ one))
+    (let ((out0 one))
       (loop while (not (bigint_eq a one))
       do (progn
-           (setq out_ (mul_bigint a out_))
+           (setq out0 (mul_bigint a out0))
            (setq a (sub_bigint a one))
            )
       )
-      (return-from fact_bigint out_)
+      (return-from fact_bigint out0)
     ))))
 
 (defun sum_chiffres_bigint (a)
 (progn
-  (let ((out_ 0))
+  (let ((out0 0))
     (do
       ((i 0 (+ 1 i)))
       ((> i (- (bigint-bigint_len a) 1)))
-      (setq out_ ( + out_ (aref (bigint-bigint_chiffres a) i)))
+      (setq out0 ( + out0 (aref (bigint-bigint_chiffres a) i)))
     )
-    (return-from sum_chiffres_bigint out_)
+    (return-from sum_chiffres_bigint out0)
   )))
 
 #| http://projecteuler.net/problem=20 |#
@@ -508,7 +507,7 @@ Modulo
         (let ((found t))
           (loop while found
           do (progn
-               (let ((min_ (aref a0_bigint 0)))
+               (let ((min0 (aref a0_bigint 0)))
                  (setq found nil)
                  (do
                    ((i 2 (+ 1 i)))
@@ -518,10 +517,10 @@ Modulo
                      (if
                        found
                        (if
-                         (bigint_lt (aref a_bigint i) min_)
-                         (setq min_ (aref a_bigint i)))
+                         (bigint_lt (aref a_bigint i) min0)
+                         (setq min0 (aref a_bigint i)))
                        (progn
-                         (setq min_ (aref a_bigint i))
+                         (setq min0 (aref a_bigint i))
                          (setq found t)
                        )))
                  )
@@ -533,7 +532,7 @@ Modulo
                        ((l 2 (+ 1 l)))
                        ((> l maxA))
                        (if
-                         (and (bigint_eq (aref a_bigint l) min_) (<= (aref b l) maxB))
+                         (and (bigint_eq (aref a_bigint l) min0) (<= (aref b l) maxB))
                          (progn
                            (setf (aref b l) (+ (aref b l) 1))
                            (setf (aref a_bigint l) (mul_bigint (aref a_bigint l) (aref a0_bigint l)))

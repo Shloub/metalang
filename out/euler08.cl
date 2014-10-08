@@ -37,7 +37,7 @@
                      (return-from lambda_1 d)
                    ))))
                ))))
-    (let ((max_ i))
+    (let ((max0 i))
       (let ((index 0))
         (let ((nskipdiv 0))
           (do
@@ -61,10 +61,10 @@
                     ))
                   (setf (aref last index) f)
                   (setq index (remainder (+ index 1) 5))
-                  (setq max_ (max2_ max_ i))
+                  (setq max0 (max2_ max0 i))
                 )))
           )
-          (princ max_)
+          (princ max0)
           (princ "
 ")
         ))))))

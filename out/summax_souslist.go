@@ -16,17 +16,17 @@ func skip() {
 
 func summax(lst []int, len int) int{
   var current int = 0
-  var max_ int = 0
+  var max0 int = 0
   for i := 0 ; i <= len - 1; i++ {
     current += lst[i];
       if current < 0 {
         current = 0;
       }
-      if max_ < current {
-        max_ = current;
+      if max0 < current {
+        max0 = current;
       }
   }
-  return max_
+  return max0
 }
 
 func main() {

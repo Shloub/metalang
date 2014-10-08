@@ -15,11 +15,11 @@ func skip() {
 }
 
 func programme_candidat(tableau []int, taille int) int{
-  var out_ int = 0
+  var out0 int = 0
   for i := 0 ; i <= taille - 1; i++ {
-    out_ += tableau[i];
+    out0 += tableau[i];
   }
-  return out_
+  return out0
 }
 
 func main() {

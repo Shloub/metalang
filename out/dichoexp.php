@@ -17,16 +17,16 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-function exp_($a, $b){
+function exp0($a, $b){
   if ($b == 0)
     return 1;
   if (($b % 2) == 0)
   {
-    $o = exp_($a, intval($b / 2));
+    $o = exp0($a, intval($b / 2));
     return $o * $o;
   }
   else
-    return $a * exp_($a, $b - 1);
+    return $a * exp0($a, $b - 1);
 }
 
 $a = 0;
@@ -34,5 +34,5 @@ $b = 0;
 list($a) = scan("%d");
 scantrim();
 list($b) = scan("%d");
-echo exp_($a, $b);
+echo exp0($a, $b);
 ?>

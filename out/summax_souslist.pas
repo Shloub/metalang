@@ -66,10 +66,10 @@ function summax(lst : a; len : Longint) : Longint;
 var
   current : Longint;
   i : Longint;
-  max_ : Longint;
+  max0 : Longint;
 begin
   current := 0;
-  max_ := 0;
+  max0 := 0;
   for i := 0 to  len - 1 do
   begin
     current := current + lst[i];
@@ -78,13 +78,13 @@ begin
       begin
         current := 0;
       end;
-    if max_ < current
+    if max0 < current
     then
       begin
-        max_ := current;
+        max0 := current;
       end;
   end;
-  exit(max_);
+  exit(max0);
 end;
 
 

@@ -19,7 +19,7 @@ int main(){
     i *= d;
     last->at(j) = d;
   }
-  int max_ = i;
+  int max0 = i;
   int index = 0;
   int nskipdiv = 0;
   for (int k = 1 ; k <= 995; k ++)
@@ -40,9 +40,9 @@ int main(){
     }
     last->at(index) = f;
     index = (index + 1) % 5;
-    max_ = max2_(max_, i);
+    max0 = max2_(max0, i);
   }
-  std::cout << max_ << "\n";
+  std::cout << max0 << "\n";
   return 0;
 }
 

@@ -17,7 +17,7 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub go_{
+sub go0{
   my($tab,
   $a,
   $b) = @_;
@@ -43,16 +43,16 @@ sub go_{
     }
   }
   if ($i < $m) {
-    return go_($tab, $a, $m);
+    return go0($tab, $a, $m);
   }else{
-    return go_($tab, $m, $b);
+    return go0($tab, $m, $b);
   }
 }
 
-sub plus_petit_{
+sub plus_petit0{
   my($tab,
   $len) = @_;
-  return go_($tab, 0, $len);
+  return go0($tab, 0, $len);
 }
 
 my $len = 0;
@@ -65,6 +65,6 @@ foreach my $i (0 .. $len - 1) {
   readspaces();
   $tab->[$i] = $tmp;
   }
-print(plus_petit_($tab, $len));
+print(plus_petit0($tab, $len));
 
 

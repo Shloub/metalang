@@ -3,34 +3,34 @@
 
 (define (programme_candidat tableau1 taille1 tableau2 taille2)
   ;toto
-  (let ([out_ 0])
+  (let ([out0 0])
   (let ([k 0])
   (let ([l (- taille1 1)])
-  (letrec ([h (lambda (i out_) 
+  (letrec ([h (lambda (i out0) 
                 (if (<= i l)
-                (let ([out_ (+ out_ (* (char->integer (vector-ref tableau1 i)) i))])
+                (let ([out0 (+ out0 (* (char->integer (vector-ref tableau1 i)) i))])
                 (block
                   (display (vector-ref tableau1 i))
-                  (h (+ i 1) out_)
+                  (h (+ i 1) out0)
                   ))
                 (block
                   (display "--\n")
                   (let ([f 0])
                   (let ([g (- taille2 1)])
-                  (letrec ([e (lambda (j out_) 
+                  (letrec ([e (lambda (j out0) 
                                 (if (<= j g)
-                                (let ([out_ (+ out_ (* (char->integer (vector-ref tableau2 j)) (* j 100)))])
+                                (let ([out0 (+ out0 (* (char->integer (vector-ref tableau2 j)) (* j 100)))])
                                 (block
                                   (display (vector-ref tableau2 j))
-                                  (e (+ j 1) out_)
+                                  (e (+ j 1) out0)
                                   ))
                                 (block
                                   (display "--\n")
-                                  out_
+                                  out0
                                   )))])
-                  (e f out_))))
+                  (e f out0))))
                 )))])
-  (h k out_)))))
+  (h k out0)))))
 )
 (define main
   (let ([taille1 (string->number (read-line))])

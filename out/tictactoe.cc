@@ -41,7 +41,7 @@ void print_state(gamestate * g){
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-void eval_(gamestate * g){
+void eval0(gamestate * g){
   int win = 0;
   int freecase = 0;
   for (int y = 0 ; y <= 2; y ++)
@@ -119,7 +119,7 @@ bool can_move(move * m, gamestate * g){
 Un minimax classique, renvoie la note du plateau
 */
 int minmax(gamestate * g){
-  eval_(g);
+  eval0(g);
   if (g->ended)
     return g->note;
   int maxNote = -10000;
@@ -166,7 +166,7 @@ move * play(gamestate * g){
   return minMove;
 }
 
-gamestate * init_(){
+gamestate * init0(){
   std::vector<std::vector<int> * > *cases = new std::vector<std::vector<int> *>( 3 );
   for (int i = 0 ; i < 3; i++)
   {
@@ -196,7 +196,7 @@ move * read_move(){
 int main(){
   for (int i = 0 ; i <= 1; i ++)
   {
-    gamestate * state = init_();
+    gamestate * state = init0();
     move * c = new move();
     c->x=1;
     c->y=1;
@@ -209,12 +209,12 @@ int main(){
     {
       print_state(state);
       apply_move(play(state), state);
-      eval_(state);
+      eval0(state);
       print_state(state);
       if (!state->ended)
       {
         apply_move(play(state), state);
-        eval_(state);
+        eval0(state);
       }
     }
     print_state(state);

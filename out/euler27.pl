@@ -7,13 +7,13 @@ sub remainder {
 
 sub eratostene{
   my($t,
-  $max_) = @_;
+  $max0) = @_;
   my $n = 0;
-  foreach my $i (2 .. $max_ - 1) {
+  foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
       $n = $n + 1;
       my $j = $i * $i;
-      while ($j < $max_ && $j > 0)
+      while ($j < $max0 && $j > 0)
       {
         $t->[$j] = 0;
         $j = $j + $i;
@@ -61,7 +61,7 @@ foreach my $j (0 .. $maximumprimes - 1) {
   $era->[$j] = $j;
   }
 my $result = 0;
-my $max_ = 0;
+my $max0 = 0;
 my $nprimes = eratostene($era, $maximumprimes);
 my $primes = [];
 foreach my $o (0 .. $nprimes - 1) {
@@ -82,14 +82,14 @@ foreach my $b (3 .. 999) {
     foreach my $a (-999 .. 999) {
       my $n1 = test($a, $b, $primes, $nprimes);
       my $n2 = test($a, -$b, $primes, $nprimes);
-      if ($n1 > $max_) {
-        $max_ = $n1;
+      if ($n1 > $max0) {
+        $max0 = $n1;
         $result = $a * $b;
         $ma = $a;
         $mb = $b;
       }
-      if ($n2 > $max_) {
-        $max_ = $n2;
+      if ($n2 > $max0) {
+        $max0 = $n2;
         $result = -$a * $b;
         $ma = $a;
         $mb = -$b;
@@ -97,6 +97,6 @@ foreach my $b (3 .. 999) {
       }
   }
   }
-print($ma, " ", $mb, "\n", $max_, "\n", $result, "\n");
+print($ma, " ", $mb, "\n", $max0, "\n", $result, "\n");
 
 

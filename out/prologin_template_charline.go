@@ -15,13 +15,13 @@ func skip() {
 }
 
 func programme_candidat(tableau []byte, taille int) int{
-  var out_ int = 0
+  var out0 int = 0
   for i := 0 ; i <= taille - 1; i++ {
-    out_ += (int)(tableau[i]) * i;
+    out0 += (int)(tableau[i]) * i;
       fmt.Printf("%c", tableau[i]);
   }
   fmt.Printf("--\n");
-  return out_
+  return out0
 }
 
 func main() {

@@ -17,17 +17,17 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-function devine_($nombre, &$tab, $len){
-  $min_ = $tab[0];
-  $max_ = $tab[1];
+function devine0($nombre, &$tab, $len){
+  $min0 = $tab[0];
+  $max0 = $tab[1];
   for ($i = 2 ; $i < $len; $i++)
   {
-    if ($tab[$i] > $max_ || $tab[$i] < $min_)
+    if ($tab[$i] > $max0 || $tab[$i] < $min0)
       return false;
     if ($tab[$i] < $nombre)
-      $min_ = $tab[$i];
+      $min0 = $tab[$i];
     if ($tab[$i] > $nombre)
-      $max_ = $tab[$i];
+      $max0 = $tab[$i];
     if ($tab[$i] == $nombre && $len != $i + 1)
       return false;
   }
@@ -45,7 +45,7 @@ for ($i = 0 ; $i < $len; $i++)
   scantrim();
   $tab[$i] = $tmp;
 }
-$a = devine_($nombre, $tab, $len);
+$a = devine0($nombre, $tab, $len);
 if ($a)
   echo "True";
 else

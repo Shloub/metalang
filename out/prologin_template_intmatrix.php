@@ -1,10 +1,10 @@
 <?php
 function programme_candidat(&$tableau, $x, $y){
-  $out_ = 0;
+  $out0 = 0;
   for ($i = 0 ; $i < $y; $i++)
     for ($j = 0 ; $j < $x; $j++)
-      $out_ += $tableau[$i][$j] * ($i * 2 + $j);
-  return $out_;
+      $out0 += $tableau[$i][$j] * ($i * 2 + $j);
+  return $out0;
 }
 
 $taille_x = intval(trim(fgets(STDIN)));

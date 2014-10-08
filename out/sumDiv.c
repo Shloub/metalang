@@ -22,7 +22,7 @@ void foo3(){
 int sumdiv(int n){
   int i;
   /* On désire renvoyer la somme des diviseurs */
-  int out_ = 0;
+  int out0 = 0;
   /* On déclare un entier qui contiendra la somme */
   for (i = 1 ; i <= n; i++)
   {
@@ -30,7 +30,7 @@ int sumdiv(int n){
     if ((n % i) == 0)
     {
       /* Si i divise */
-      out_ += i;
+      out0 += i;
       /* On incrémente */
     }
     else
@@ -38,7 +38,7 @@ int sumdiv(int n){
       /* nop */
     }
   }
-  return out_;
+  return out0;
   /*On renvoie out*/
 }
 

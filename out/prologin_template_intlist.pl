@@ -20,11 +20,11 @@ sub readint {
 sub programme_candidat{
   my($tableau,
   $taille) = @_;
-  my $out_ = 0;
+  my $out0 = 0;
   foreach my $i (0 .. $taille - 1) {
-    $out_ = $out_ + $tableau->[$i];
+    $out0 = $out0 + $tableau->[$i];
     }
-  return $out_;
+  return $out0;
 }
 
 my $b = readint();

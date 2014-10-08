@@ -73,26 +73,28 @@ end;
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 }
+type v = array of Longint;
+type w = array of char;
 
 var
   b : Longint;
   c : Longint;
-  e : array of Longint;
+  e : v;
   f : Longint;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
   j : Longint;
-  k : array of Longint;
+  k : v;
   l : Longint;
   len : Longint;
   p : Longint;
-  r : array of char;
+  r : w;
   s : Longint;
   strlen : Longint;
-  tab : array of Longint;
-  tab2 : array of Longint;
-  tab4 : array of char;
+  tab : v;
+  tab2 : v;
+  tab4 : w;
   tmpc : char;
 begin
   b := read_int_();

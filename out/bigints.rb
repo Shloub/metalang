@@ -289,12 +289,12 @@ Modulo
 =end
 
 def log10( a )
-    out_ = 1
+    out0 = 1
     while a >= 10 do
       a = (a.to_f / 10).to_i
-      out_ += 1
+      out0 += 1
     end
-    return (out_);
+    return (out0);
 end
 
 def bigint_of_int( i )
@@ -318,20 +318,20 @@ end
 
 def fact_bigint( a )
     one = bigint_of_int(1)
-    out_ = one
+    out0 = one
     while not(bigint_eq(a, one)) do
-      out_ = mul_bigint(a, out_);
+      out0 = mul_bigint(a, out0);
       a = sub_bigint(a, one);
     end
-    return (out_);
+    return (out0);
 end
 
 def sum_chiffres_bigint( a )
-    out_ = 0
+    out0 = 0
     for i in (0 ..  a["bigint_len"] - 1) do
-      out_ += a["bigint_chiffres"][i]
+      out0 += a["bigint_chiffres"][i]
     end
-    return (out_);
+    return (out0);
 end
 
 
@@ -436,16 +436,16 @@ def euler29(  )
     n = 0
     found = true
     while found do
-      min_ = a0_bigint[0]
+      min0 = a0_bigint[0]
       found = false;
       for i in (2 ..  maxA) do
         if b[i] <= maxB then
           if found then
-            if bigint_lt(a_bigint[i], min_) then
-              min_ = a_bigint[i];
+            if bigint_lt(a_bigint[i], min0) then
+              min0 = a_bigint[i];
             end
           else
-            min_ = a_bigint[i];
+            min0 = a_bigint[i];
             found = true;
           end
         end
@@ -453,7 +453,7 @@ def euler29(  )
       if found then
         n += 1
         for l in (2 ..  maxA) do
-          if bigint_eq(a_bigint[l], min_) && b[l] <= maxB then
+          if bigint_eq(a_bigint[l], min0) && b[l] <= maxB then
             b[l] = b[l] + 1;
             a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
           end

@@ -214,14 +214,17 @@ D'ou le nom de la fonction. */
   for i := 0 ; i <= (*a).bigint_len - 1; i++ {
     var retenue int = 0
       for j := 0 ; j <= (*b).bigint_len - 1; j++ {
-        chiffres[i + j] = chiffres[i + j] + retenue + (*b).bigint_chiffres[j] * (*a).bigint_chiffres[i];
+        chiffres[i + j] = chiffres[i + j] + retenue + (*b).bigint_chiffres[j] *
+        (*a).bigint_chiffres[i];
           retenue = chiffres[i + j] / 10;
           chiffres[i + j] = chiffres[i + j] % 10;
       }
       chiffres[i + (*b).bigint_len] = chiffres[i + (*b).bigint_len] + retenue;
   }
-  chiffres[(*a).bigint_len + (*b).bigint_len] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] / 10;
-  chiffres[(*a).bigint_len + (*b).bigint_len - 1] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] % 10;
+  chiffres[(*a).bigint_len + (*b).bigint_len] = chiffres[(*a).bigint_len +
+  (*b).bigint_len - 1] / 10;
+  chiffres[(*a).bigint_len + (*b).bigint_len - 1] = chiffres[(*a).bigint_len +
+  (*b).bigint_len - 1] % 10;
   for l := 0 ; l <= 2; l++ {
     if len != 0 && chiffres[len - 1] == 0 {
         len --;
@@ -291,12 +294,12 @@ Division,
 Modulo
 */
 func log10(a int) int{
-  var out_ int = 1
+  var out0 int = 1
   for a >= 10{
     a /= 10;
-    out_ ++;
+    out0 ++;
   }
-  return out_
+  return out0
 }
 
 func bigint_of_int(i int) * bigint{
@@ -321,20 +324,20 @@ func bigint_of_int(i int) * bigint{
 
 func fact_bigint(a * bigint) * bigint{
   var one * bigint = bigint_of_int(1)
-  var out_ * bigint = one
+  var out0 * bigint = one
   for !bigint_eq(a, one){
-    out_ = mul_bigint(a, out_);
+    out0 = mul_bigint(a, out0);
     a = sub_bigint(a, one);
   }
-  return out_
+  return out0
 }
 
 func sum_chiffres_bigint(a * bigint) int{
-  var out_ int = 0
+  var out0 int = 0
   for i := 0 ; i <= (*a).bigint_len - 1; i++ {
-    out_ += (*a).bigint_chiffres[i];
+    out0 += (*a).bigint_chiffres[i];
   }
-  return out_
+  return out0
 }
 
 /* http://projecteuler.net/problem=20 */
@@ -419,16 +422,16 @@ func euler29() int{
   var n int = 0
   var found bool = true
   for found{
-    var min_ * bigint = a0_bigint[0]
+    var min0 * bigint = a0_bigint[0]
     found = false;
     for i := 2 ; i <= maxA; i++ {
       if b[i] <= maxB {
           if found {
-              if bigint_lt(a_bigint[i], min_) {
-                  min_ = a_bigint[i];
+              if bigint_lt(a_bigint[i], min0) {
+                  min0 = a_bigint[i];
                 }
             } else {
-              min_ = a_bigint[i];
+              min0 = a_bigint[i];
               found = true;
             }
         }
@@ -436,7 +439,7 @@ func euler29() int{
     if found {
       n ++;
         for l := 2 ; l <= maxA; l++ {
-          if bigint_eq(a_bigint[l], min_) && b[l] <= maxB {
+          if bigint_eq(a_bigint[l], min0) && b[l] <= maxB {
               b[l] = b[l] + 1;
                 a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
             }

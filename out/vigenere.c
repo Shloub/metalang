@@ -23,21 +23,21 @@ void crypte(int taille_cle, char* cle, int taille, char* message){
     if (lettre != -1)
     {
       int addon = position_alphabet(cle[i % taille_cle]);
-      int new_ = (addon + lettre) % 26;
-      message[i] = of_position_alphabet(new_);
+      int new0 = (addon + lettre) % 26;
+      message[i] = of_position_alphabet(new0);
     }
   }
 }
 
 int main(void){
   int i, index2, taille, index, taille_cle;
-  char out2, out_;
+  char out2, out0;
   scanf("%d ", &taille_cle);
   char *cle = malloc( taille_cle * sizeof(char));
   for (index = 0 ; index < taille_cle; index++)
   {
-    scanf("%c", &out_);
-    cle[index] = out_;
+    scanf("%c", &out0);
+    cle[index] = out0;
   }
   scanf(" %d ", &taille);
   char *message = malloc( taille * sizeof(char));

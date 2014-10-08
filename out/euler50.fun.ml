@@ -9,10 +9,10 @@ module Array = struct
     )
 end
 
-let eratostene t max_ =
+let eratostene t max0 =
   let n = 0 in
   let g = 2 in
-  let h = (max_ - 1) in
+  let h = (max0 - 1) in
   let rec d i n =
     (if (i <= h)
      then let n = (if (t.(i) = i)
@@ -21,7 +21,7 @@ let eratostene t max_ =
                    let j = (if ((j / i) = i)
                             then (*  overflow test  *)
                             let rec f j =
-                              (if ((j < max_) && (j > 0))
+                              (if ((j < max0) && (j > 0))
                                then (
                                       t.(j) <- 0;
                                       let j = (j + i) in

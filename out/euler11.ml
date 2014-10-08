@@ -25,7 +25,7 @@ begin
       (-1, 1)
     else
       (-1, -1)) in
-  let max_ = ref( 0 ) in
+  let max0 = ref( 0 ) in
   let h = 20 in
   let l = Array.init 20 (fun _o ->
     let p = Array.init h (fun _q ->
@@ -38,11 +38,11 @@ begin
     for x = 0 to 19 do
       for y = 0 to 19 do
         let v = find 4 m x y dx dy in
-        let u = (max ((!max_)) (v)) in
-        max_ := u
+        let u = (max ((!max0)) (v)) in
+        max0 := u
       done
     done
   done;
-  Printf.printf "%d\n" (!max_)
+  Printf.printf "%d\n" (!max0)
 end
  

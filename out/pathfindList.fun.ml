@@ -20,15 +20,15 @@ let rec pathfind_aux cache tab len pos =
            cache.(pos) <- (len * 2);
            let posval = (pathfind_aux cache tab len tab.(pos)) in
            let oneval = (pathfind_aux cache tab len (pos + 1)) in
-           let out_ = 0 in
-           let out_ = (if (posval < oneval)
-                       then let out_ = (1 + posval) in
-                       out_
-                       else let out_ = (1 + oneval) in
-                       out_) in
+           let out0 = 0 in
+           let out0 = (if (posval < oneval)
+                       then let out0 = (1 + posval) in
+                       out0
+                       else let out0 = (1 + oneval) in
+                       out0) in
            (
-             cache.(pos) <- out_;
-             out_
+             cache.(pos) <- out0;
+             out0
              )
            
            )

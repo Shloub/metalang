@@ -49,9 +49,9 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static int montagnes_(int[] tab, int len)
+  public static int montagnes0(int[] tab, int len)
   {
-    int max_ = 1;
+    int max0 = 1;
     int j = 1;
     int i = len - 2;
     while (i >= 0)
@@ -61,11 +61,11 @@ public static int readInt(){
         j --;
       j ++;
       tab[len - j] = x;
-      if (j > max_)
-        max_ = j;
+      if (j > max0)
+        max0 = j;
       i --;
     }
-    return max_;
+    return max0;
   }
   
   
@@ -82,7 +82,7 @@ public static int readInt(){
       stdin_sep();
       tab[i] = x;
     }
-    Console.Write(montagnes_(tab, len));
+    Console.Write(montagnes0(tab, len));
   }
   
 }

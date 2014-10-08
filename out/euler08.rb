@@ -11,7 +11,7 @@ for j in (0 ..  5 - 1) do
   i *= d
   last[j] = d;
 end
-max_ = i
+max0 = i
 index = 0
 nskipdiv = 0
 for k in (1 ..  995) do
@@ -29,7 +29,7 @@ for k in (1 ..  995) do
   end
   last[index] = f;
   index = mod(index + 1, 5);
-  max_ = [max_, i].max;
+  max0 = [max0, i].max;
 end
-printf "%d\n", max_
+printf "%d\n", max0
 

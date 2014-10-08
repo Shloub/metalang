@@ -11,7 +11,7 @@ end
 
 let is_number c =
   (((int_of_char (c)) <= (int_of_char ('9'))) && ((int_of_char (c)) >= (int_of_char ('0'))))
-let npi_ str len =
+let npi0 str len =
   let stack = (Array.init_withenv len (fun  i () -> let a = 0 in
   ((), a)) ()) in
   let ptrStack = 0 in
@@ -60,7 +60,7 @@ let main =
     (fun  h -> let tmp = h in
     let g = tmp in
     ((), g))) ()) in
-    let result = (npi_ tab len) in
+    let result = (npi0 tab len) in
     (Printf.printf "%d" result)
     )
   )

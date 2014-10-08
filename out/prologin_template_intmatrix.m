@@ -4,11 +4,11 @@
 
 int programme_candidat(int** tableau, int x, int y){
   int i, j;
-  int out_ = 0;
+  int out0 = 0;
   for (i = 0 ; i < y; i++)
     for (j = 0 ; j < x; j++)
-      out_ += tableau[i][j] * (i * 2 + j);
-  return out_;
+      out0 += tableau[i][j] * (i * 2 + j);
+  return out0;
 }
 
 int main(void){

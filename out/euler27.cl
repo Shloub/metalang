@@ -8,20 +8,20 @@
         (setq i (+ 1 i ))))
         out
     ))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun eratostene (t_ max_)
+(defun eratostene (t0 max0)
 (progn
   (let ((n 0))
     (do
       ((i 2 (+ 1 i)))
-      ((> i (- max_ 1)))
+      ((> i (- max0 1)))
       (if
-        (= (aref t_ i) i)
+        (= (aref t0 i) i)
         (progn
           (setq n ( + n 1))
           (let ((j (* i i)))
-            (loop while (and (< j max_) (> j 0))
+            (loop while (and (< j max0) (> j 0))
             do (progn
-                 (setf (aref t_ j) 0)
+                 (setf (aref t0 j) 0)
                  (setq j ( + j i))
                  )
             )
@@ -73,7 +73,7 @@
               ))
               ))))
     (let ((result 0))
-      (let ((max_ 0))
+      (let ((max0 0))
         (let ((nprimes (eratostene era maximumprimes)))
           (let
            ((primes (array_init
@@ -113,17 +113,17 @@
                         (let ((n1 (test a b primes nprimes)))
                           (let ((n2 (test a (- 0 b) primes nprimes)))
                             (if
-                              (> n1 max_)
+                              (> n1 max0)
                               (progn
-                                (setq max_ n1)
+                                (setq max0 n1)
                                 (setq result (* a b))
                                 (setq ma a)
                                 (setq mb b)
                               ))
                             (if
-                              (> n2 max_)
+                              (> n2 max0)
                               (progn
-                                (setq max_ n2)
+                                (setq max0 n2)
                                 (setq result (* (- 0 a) b))
                                 (setq ma a)
                                 (setq mb (- 0 b))
@@ -136,7 +136,7 @@
                 (princ mb)
                 (princ "
 ")
-                (princ max_)
+                (princ max0)
                 (princ "
 ")
                 (princ result)

@@ -39,7 +39,7 @@
 (defun sumdiv (n)
 (progn
   #| On désire renvoyer la somme des diviseurs |#
-  (let ((out_ 0))
+  (let ((out0 0))
     #| On déclare un entier qui contiendra la somme |#
     (do
       ((i 1 (+ 1 i)))
@@ -50,13 +50,13 @@
           (= (remainder n i) 0)
           (progn
             #| Si i divise |#
-            (setq out_ ( + out_ i))
+            (setq out0 ( + out0 i))
             #| On incrémente |#
           )
           #| nop |#)
       )
     )
-    (return-from sumdiv out_)
+    (return-from sumdiv out0)
     #|On renvoie out|#
   )))
 

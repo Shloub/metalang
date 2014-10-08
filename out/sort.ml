@@ -15,7 +15,7 @@ let bubblesort tab len =
     done
   done
 
-let rec qsort_ tab len i j =
+let rec qsort0 tab len i j =
   let i = ref i in
   let j = ref j in
   if (!i) < (!j) then
@@ -48,8 +48,8 @@ let rec qsort_ tab len i j =
           else
             j := (!j) - 1
       done;
-      qsort_ tab len i0 ((!i) - 1);
-      qsort_ tab len ((!i) + 1) j0
+      qsort0 tab len i0 ((!i) - 1);
+      qsort0 tab len ((!i) + 1) j0
     end
 
 let () =
@@ -67,7 +67,7 @@ begin
   done;
   Printf.printf "\n";
   let tab3 = copytab tab (!len) in
-  qsort_ tab3 (!len) 0 ((!len) - 1);
+  qsort0 tab3 (!len) 0 ((!len) - 1);
   for i = 0 to (!len) - 1 do
     Printf.printf "%d " tab3.(i)
   done;

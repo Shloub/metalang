@@ -48,7 +48,7 @@ let main =
          ((), bb)
          else let bb = ((- 1), (- 1)) in
          ((), bb))))))))) ()) in
-  let max_ = 0 in
+  let max0 = 0 in
   let h = 20 in
   let l = (Array.init_withenv 20 (fun  o () -> let p = (Array.init_withenv h (fun  q () -> Scanf.scanf "%d"
   (fun  r -> (
@@ -62,27 +62,27 @@ let main =
   let m = l in
   let bs = 0 in
   let bt = 7 in
-  let rec bl j max_ =
+  let rec bl j max0 =
     (if (j <= bt)
      then ((fun  (dx, dy) -> let bq = 0 in
      let br = 19 in
-     let rec bm x max_ =
+     let rec bm x max0 =
        (if (x <= br)
         then let bo = 0 in
         let bp = 19 in
-        let rec bn y max_ =
+        let rec bn y max0 =
           (if (y <= bp)
            then let v = (find 4 m x y dx dy) in
-           let u = ((max (max_) (v))) in
-           let max_ = u in
-           (bn (y + 1) max_)
-           else (bm (x + 1) max_)) in
-          (bn bo max_)
-        else (bl (j + 1) max_)) in
-       (bm bq max_)) directions.(j))
+           let u = ((max (max0) (v))) in
+           let max0 = u in
+           (bn (y + 1) max0)
+           else (bm (x + 1) max0)) in
+          (bn bo max0)
+        else (bl (j + 1) max0)) in
+       (bm bq max0)) directions.(j))
      else (
-            (Printf.printf "%d\n" max_)
+            (Printf.printf "%d\n" max0)
             )
      ) in
-    (bl bs max_)
+    (bl bs max0)
 

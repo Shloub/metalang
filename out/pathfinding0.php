@@ -16,9 +16,9 @@ function pathfind_aux(&$cache, &$tab, $x, $y, $posX, $posY){
     $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
     $f = min($val1, $val2, $val3, $val4);
-    $out_ = 1 + $f;
-    $cache[$posY][$posX] = $out_;
-    return $out_;
+    $out0 = 1 + $f;
+    $cache[$posY][$posX] = $out0;
+    return $out0;
   }
 }
 

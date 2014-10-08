@@ -33,14 +33,14 @@
   (return-from max2_ a)
   (return-from max2_ b)))
 
-(defun find_ (n m x y dx dy)
+(defun find0 (n m x y dx dy)
 (if
   (or (or (or (< x 0) (= x 20)) (< y 0)) (= y 20))
-  (return-from find_ (- 0 1))
+  (return-from find0 (- 0 1))
   (if
     (= n 0)
-    (return-from find_ 1)
-    (return-from find_ (* (aref (aref m y) x) (find_ (- n 1) m (+ x dx) (+ y dy) dx dy))))))
+    (return-from find0 1)
+    (return-from find0 (* (aref (aref m y) x) (find0 (- n 1) m (+ x dx) (+ y dy) dx dy))))))
 
 (defstruct (tuple_int_int (:type list) :named)
   tuple_int_int_field_0
@@ -109,7 +109,7 @@
                                  )))))))))
 ))
 ))))
-(let ((max_ 0))
+(let ((max0 0))
   (let ((h 20))
     (let
      ((l (array_init
@@ -144,15 +144,15 @@
                     ((y 0 (+ 1 y)))
                     ((> y 19))
                     (progn
-                      (let ((v (find_ 4 m x y dx dy)))
-                        (let ((u (max2_ max_ v)))
-                          (setq max_ u)
+                      (let ((v (find0 4 m x y dx dy)))
+                        (let ((u (max2_ max0 v)))
+                          (setq max0 u)
                         )))
                     )
                 )
               ))))
       )
-      (princ max_)
+      (princ max0)
       (princ "
 ")
     ))))))

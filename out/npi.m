@@ -9,7 +9,7 @@ int is_number(char c){
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-int npi_(char* str, int len){
+int npi0(char* str, int len){
   int i;
   int *stack = malloc( len * sizeof(int));
   for (i = 0 ; i < len; i++)
@@ -51,7 +51,7 @@ int main(void){
     scanf("%c", &tmp);
     tab[i] = tmp;
   }
-  int result = npi_(tab, len);
+  int result = npi0(tab, len);
   printf("%d", result);
   [pool drain];
   return 0;

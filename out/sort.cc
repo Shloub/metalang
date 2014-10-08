@@ -18,7 +18,7 @@ void bubblesort(std::vector<int> * tab, int len){
   }
 }
 
-void qsort_(std::vector<int> * tab, int len, int i, int j){
+void qsort0(std::vector<int> * tab, int len, int i, int j){
   if (i < j)
   {
     int i0 = i;
@@ -47,8 +47,8 @@ void qsort_(std::vector<int> * tab, int len, int i, int j){
     }
     else
       j --;
-    qsort_(tab, len, i0, i - 1);
-    qsort_(tab, len, i + 1, j0);
+    qsort0(tab, len, i0, i - 1);
+    qsort0(tab, len, i + 1, j0);
   }
 }
 
@@ -71,7 +71,7 @@ int main(){
   }
   std::cout << "\n";
   std::vector<int> * tab3 = copytab(tab, len);
-  qsort_(tab3, len, 0, len - 1);
+  qsort0(tab3, len, 0, len - 1);
   for (int i = 0 ; i < len; i++)
   {
     std::cout << tab3->at(i) << " ";

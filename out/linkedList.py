@@ -27,10 +27,10 @@ def readint():
       return out * sign
 
 def cons( list, i ):
-    out_ = {
+    out0 = {
       "head":i,
       "tail":list};
-    return out_;
+    return out0;
 
 def rev2( empty, acc, torev ):
     if torev == empty:

@@ -8,10 +8,10 @@ typedef struct intlist {
 } intlist;
 
 struct intlist * cons(struct intlist * list, int i){
-  struct intlist * out_ = malloc (sizeof(out_) );
-  out_->head=i;
-  out_->tail=list;
-  return out_;
+  struct intlist * out0 = malloc (sizeof(out0) );
+  out0->head=i;
+  out0->tail=list;
+  return out0;
 }
 
 struct intlist * rev2(struct intlist * empty, struct intlist * acc, struct intlist * torev){

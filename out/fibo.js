@@ -28,18 +28,18 @@ function read_int_(){
 }/*
 La suite de fibonaci
 */
-function fibo_(a, b, i){
-  var out_ = 0;
+function fibo0(a, b, i){
+  var out0 = 0;
   var a2 = a;
   var b2 = b;
   for (var j = 0 ; j <= i + 1; j++)
   {
-    out_ += a2;
+    out0 += a2;
     var tmp = b2;
     b2 += a2;
     a2 = tmp;
   }
-  return out_;
+  return out0;
 }
 
 var a = 0;
@@ -50,5 +50,5 @@ stdinsep();
 b=read_int_();
 stdinsep();
 i=read_int_();
-util.print(fibo_(a, b, i));
+util.print(fibo0(a, b, i));
 

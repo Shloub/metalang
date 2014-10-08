@@ -48,7 +48,7 @@ let print_state g =
       (bd bh)
     )
   
-let eval_ g =
+let eval0 g =
   let win = 0 in
   let freecase = 0 in
   let bb = 0 in
@@ -159,7 +159,7 @@ let can_move m g =
   (can_move_xy m.x m.y g)
 let rec minmax g =
   (
-    (eval_ g);
+    (eval0 g);
     (if g.ended
      then g.note
      else let maxNote = (- 10000) in
@@ -242,7 +242,7 @@ let play g =
             )
      ) in
     (c h minNote)
-let init_ () =
+let init0 () =
   let cases = (Array.init_withenv 3 (fun  i () -> let tab = (Array.init_withenv 3 (fun  j () -> let b = 0 in
   ((), b)) ()) in
   let a = tab in
@@ -269,7 +269,7 @@ let main =
   let bn = 1 in
   let rec bj i =
     (if (i <= bn)
-     then let state = (init_ ()) in
+     then let state = (init0 ()) in
      (
        (apply_move {x=1;
        y=1} state);
@@ -280,12 +280,12 @@ let main =
           then (
                  (print_state state);
                  (apply_move (play state) state);
-                 (eval_ state);
+                 (eval0 state);
                  (print_state state);
                  (if (not state.ended)
                   then (
                          (apply_move (play state) state);
-                         (eval_ state);
+                         (eval0 state);
                          ()
                          )
                   

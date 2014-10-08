@@ -28,15 +28,15 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun go_ (tab a b)
+(defun go0 (tab a b)
 (progn
   (let ((m (quotient (+ a b) 2)))
     (if
       (= a m)
       (if
         (= (aref tab a) m)
-        (return-from go_ b)
-        (return-from go_ a))
+        (return-from go0 b)
+        (return-from go0 a))
       (progn
         (let ((i a))
           (let ((j b))
@@ -55,13 +55,13 @@
             )
             (if
               (< i m)
-              (return-from go_ (go_ tab a m))
-              (return-from go_ (go_ tab m b)))
+              (return-from go0 (go0 tab a m))
+              (return-from go0 (go0 tab m b)))
           ))))
   )))
 
-(defun plus_petit_ (tab len)
-(return-from plus_petit_ (go_ tab 0 len)))
+(defun plus_petit0 (tab len)
+(return-from plus_petit0 (go0 tab 0 len)))
 
 (progn
   (let ((len 0))
@@ -78,7 +78,7 @@
                   (return-from lambda_1 tmp)
                 )))
               ))))
-    (princ (plus_petit_ tab len))
+    (princ (plus_petit0 tab len))
     )))
 
 

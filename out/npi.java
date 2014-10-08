@@ -11,7 +11,7 @@ public class npi
   /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-  public static int npi_(char[] str, int len)
+  public static int npi0(char[] str, int len)
   {
     int[] stack = new int[len];
     for (int i = 0 ; i < len; i++)
@@ -59,7 +59,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
       tmp = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = tmp;
     }
-    int result = npi_(tab, len);
+    int result = npi0(tab, len);
     System.out.printf("%d", result);
   }
   

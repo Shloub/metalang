@@ -30,14 +30,14 @@ sub pathfind_aux{
     $cache->[$pos] = $len * 2;
     my $posval = pathfind_aux($cache, $tab, $len, $tab->[$pos]);
     my $oneval = pathfind_aux($cache, $tab, $len, $pos + 1);
-    my $out_ = 0;
+    my $out0 = 0;
     if ($posval < $oneval) {
-      $out_ = 1 + $posval;
+      $out0 = 1 + $posval;
     }else{
-      $out_ = 1 + $oneval;
+      $out0 = 1 + $oneval;
     }
-    $cache->[$pos] = $out_;
-    return $out_;
+    $cache->[$pos] = $out0;
+    return $out0;
   }
 }
 

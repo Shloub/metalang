@@ -14,8 +14,8 @@ func skip() {
   }
 }
 
-func montagnes_(tab []int, len int) int{
-  var max_ int = 1
+func montagnes0(tab []int, len int) int{
+  var max0 int = 1
   var j int = 1
   var i int = len - 2
   for i >= 0{
@@ -25,12 +25,12 @@ func montagnes_(tab []int, len int) int{
     }
     j ++;
     tab[len - j] = x;
-    if j > max_ {
-      max_ = j;
+    if j > max0 {
+      max0 = j;
     }
     i --;
   }
-  return max_
+  return max0
 }
 
 func main() {
@@ -45,6 +45,6 @@ func main() {
       skip()
       tab[i] = x;
   }
-  fmt.Printf("%d", montagnes_(tab, len));
+  fmt.Printf("%d", montagnes0(tab, len));
 }
 

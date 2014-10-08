@@ -28,16 +28,16 @@ function read_int_(){
 }
 function summax(lst, len){
   var current = 0;
-  var max_ = 0;
+  var max0 = 0;
   for (var i = 0 ; i <= len - 1; i++)
   {
     current += lst[i];
     if (current < 0)
       current = 0;
-    if (max_ < current)
-      max_ = current;
+    if (max0 < current)
+      max0 = current;
   }
-  return max_;
+  return max0;
 }
 
 var len = 0;

@@ -73,18 +73,18 @@ type a = array of char;
 function nth(tab : a; tofind : char; len : Longint) : Longint;
 var
   i : Longint;
-  out_ : Longint;
+  out0 : Longint;
 begin
-  out_ := 0;
+  out0 := 0;
   for i := 0 to  len - 1 do
   begin
     if tab[i] = tofind
     then
       begin
-        out_ := out_ + 1;
+        out0 := out0 + 1;
       end;
   end;
-  exit(out_);
+  exit(out0);
 end;
 
 

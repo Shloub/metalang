@@ -30,9 +30,9 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
     int v = min2_(u, val4);
     int w = v;
     int r = w;
-    int out_ = 1 + r;
-    cache[posY][posX] = out_;
-    return out_;
+    int out0 = 1 + r;
+    cache[posY][posX] = out0;
+    return out0;
   }
 }
 

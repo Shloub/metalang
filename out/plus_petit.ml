@@ -1,4 +1,4 @@
-let rec go_ tab a b =
+let rec go0 tab a b =
   let m = (a + b) / 2 in
   if a = m then
     begin
@@ -24,13 +24,13 @@ let rec go_ tab a b =
             end
       done;
       if (!i) < m then
-        go_ tab a m
+        go0 tab a m
       else
-        go_ tab m b
+        go0 tab m b
     end
 
-let plus_petit_ tab len =
-  go_ tab 0 len
+let plus_petit0 tab len =
+  go0 tab 0 len
 
 let () =
 begin
@@ -40,6 +40,6 @@ begin
     let tmp = ref( 0 ) in
     Scanf.scanf "%d " (fun v_0 -> tmp := v_0);
     (!tmp)) in
-  Printf.printf "%d" (plus_petit_ tab (!len))
+  Printf.printf "%d" (plus_petit0 tab (!len))
 end
  

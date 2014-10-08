@@ -1,14 +1,14 @@
 program euler10;
 
 type a = array of Longint;
-function eratostene(t : a; max_ : Longint) : Longint;
+function eratostene(t : a; max0 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
   sum : Longint;
 begin
   sum := 0;
-  for i := 2 to  max_ - 1 do
+  for i := 2 to  max0 - 1 do
   begin
     if t[i] = i
     then
@@ -21,7 +21,7 @@ begin
         if (j Div i) = i
         then
           begin
-            while (j < max_) and (j > 0) do
+            while (j < max0) and (j > 0) do
             begin
               t[j] := 0;
               j := j + i;

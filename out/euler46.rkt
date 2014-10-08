@@ -9,22 +9,22 @@
       )
     )))))
 
-(define (eratostene t_ max_)
+(define (eratostene t0 max0)
   ;toto
   (let ([n 0])
   (let ([d 2])
-  (let ([e (- max_ 1)])
+  (let ([e (- max0 1)])
   (letrec ([a (lambda (i n) 
                 (if (<= i e)
-                (let ([n (if (eq? (vector-ref t_ i) i)
+                (let ([n (if (eq? (vector-ref t0 i) i)
                          (let ([n (+ n 1)])
                          (let ([j (* i i)])
                          (let ([j (if (eq? (quotient j i) i)
                                   ; overflow test 
                                   (letrec ([c (lambda (j) 
-                                                (if (and (< j max_) (> j 0))
+                                                (if (and (< j max0) (> j 0))
                                                 (block
-                                                  (vector-set! t_ j 0)
+                                                  (vector-set! t0 j 0)
                                                   (let ([j (+ j i)])
                                                   (c j))
                                                   )

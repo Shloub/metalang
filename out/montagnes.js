@@ -26,8 +26,8 @@ function read_int_(){
     }
   }
 }
-function montagnes_(tab, len){
-  var max_ = 1;
+function montagnes0(tab, len){
+  var max0 = 1;
   var j = 1;
   var i = len - 2;
   while (i >= 0)
@@ -37,11 +37,11 @@ function montagnes_(tab, len){
       j --;
     j ++;
     tab[len - j] = x;
-    if (j > max_)
-      max_ = j;
+    if (j > max0)
+      max0 = j;
     i --;
   }
-  return max_;
+  return max0;
 }
 
 var len = 0;
@@ -55,5 +55,5 @@ for (var i = 0 ; i <= len - 1; i++)
   stdinsep();
   tab[i] = x;
 }
-util.print(montagnes_(tab, len));
+util.print(montagnes0(tab, len));
 

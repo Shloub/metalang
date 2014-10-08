@@ -22,7 +22,7 @@ int main(void){
     i *= d;
     last[j] = d;
   }
-  int max_ = i;
+  int max0 = i;
   int index = 0;
   int nskipdiv = 0;
   for (k = 1 ; k <= 995; k++)
@@ -43,9 +43,9 @@ int main(void){
     }
     last[index] = f;
     index = (index + 1) % 5;
-    max_ = max2_(max_, i);
+    max0 = max2_(max0, i);
   }
-  printf("%d\n", max_);
+  printf("%d\n", max0);
   [pool drain];
   return 0;
 }

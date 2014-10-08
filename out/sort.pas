@@ -96,7 +96,7 @@ begin
   end;
 end;
 
-procedure qsort_(tab : a; len : Longint; i : Longint; j : Longint);
+procedure qsort0(tab : a; len : Longint; i : Longint; j : Longint);
 var
   i0 : Longint;
   j0 : Longint;
@@ -137,8 +137,8 @@ begin
             j := j - 1;
           end;
       end;
-      qsort_(tab, len, i0, i - 1);
-      qsort_(tab, len, i + 1, j0);
+      qsort0(tab, len, i0, i - 1);
+      qsort0(tab, len, i + 1, j0);
     end;
 end;
 
@@ -172,7 +172,7 @@ begin
   end;
   Write(''#10'');
   tab3 := copytab(tab, len);
-  qsort_(tab3, len, 0, len - 1);
+  qsort0(tab3, len, 0, len - 1);
   for i := 0 to  len - 1 do
   begin
     Write(tab3[i]);

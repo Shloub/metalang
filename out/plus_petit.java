@@ -3,7 +3,7 @@ import java.util.*;
 public class plus_petit
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int go_(int[] tab, int a, int b)
+  public static int go0(int[] tab, int a, int b)
   {
     int m = (a + b) / 2;
     if (a == m)
@@ -28,14 +28,14 @@ public class plus_petit
       }
     }
     if (i < m)
-      return go_(tab, a, m);
+      return go0(tab, a, m);
     else
-      return go_(tab, m, b);
+      return go0(tab, m, b);
   }
   
-  public static int plus_petit_(int[] tab, int len)
+  public static int plus_petit0(int[] tab, int len)
   {
-    return go_(tab, 0, len);
+    return go0(tab, 0, len);
   }
   
   
@@ -62,7 +62,7 @@ public class plus_petit
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tmp;
     }
-    System.out.printf("%d", plus_petit_(tab, len));
+    System.out.printf("%d", plus_petit0(tab, len));
   }
   
 }

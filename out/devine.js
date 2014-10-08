@@ -26,17 +26,17 @@ function read_int_(){
     }
   }
 }
-function devine_(nombre, tab, len){
-  var min_ = tab[0];
-  var max_ = tab[1];
+function devine0(nombre, tab, len){
+  var min0 = tab[0];
+  var max0 = tab[1];
   for (var i = 2 ; i <= len - 1; i++)
   {
-    if (tab[i] > max_ || tab[i] < min_)
+    if (tab[i] > max0 || tab[i] < min0)
       return 0;
     if (tab[i] < nombre)
-      min_ = tab[i];
+      min0 = tab[i];
     if (tab[i] > nombre)
-      max_ = tab[i];
+      max0 = tab[i];
     if (tab[i] == nombre && len != i + 1)
       return 0;
   }
@@ -54,7 +54,7 @@ for (var i = 0 ; i <= len - 1; i++)
   stdinsep();
   tab[i] = tmp;
 }
-var a = devine_(nombre, tab, len);
+var a = devine0(nombre, tab, len);
 if (a)
   util.print("True");
 else

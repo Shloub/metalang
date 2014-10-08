@@ -27,17 +27,16 @@ sub programme_candidat{
   my($tableau,
   $taille_x,
   $taille_y) = @_;
-  my $out_ = 0;
+  my $out0 = 0;
   foreach my $i (0 .. $taille_y - 1) {
     foreach my $j (0 .. $taille_x - 1) {
-      $out_ = $out_ + ord($tableau->[$i]->[$j])
-      *
+      $out0 = $out0 + ord($tableau->[$i]->[$j]) *
       ($i + $j * 2);
       print($tableau->[$i]->[$j]);
       }
     print("--\n");
     }
-  return $out_;
+  return $out0;
 }
 
 my $f = readint();

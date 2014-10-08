@@ -50,7 +50,7 @@ void print_state(gamestate * g){
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-void eval_(gamestate * g){
+void eval0(gamestate * g){
   int y, x;
   int win = 0;
   int freecase = 0;
@@ -130,7 +130,7 @@ Un minimax classique, renvoie la note du plateau
 */
 int minmax(gamestate * g){
   int x, y;
-  eval_(g);
+  eval0(g);
   if (g->ended)
     return g->note;
   int maxNote = -10000;
@@ -178,7 +178,7 @@ move * play(gamestate * g){
   return minMove;
 }
 
-gamestate * init_(){
+gamestate * init0(){
   int i, j;
   int* *cases = malloc( 3 * sizeof(int*));
   for (i = 0 ; i < 3; i++)
@@ -210,7 +210,7 @@ int main(void){
   int i;
   for (i = 0 ; i <= 1; i++)
   {
-    gamestate * state = init_();
+    gamestate * state = init0();
     move * c = [move alloc];
     c->x=1;
     c->y=1;
@@ -223,12 +223,12 @@ int main(void){
     {
       print_state(state);
       apply_move(play(state), state);
-      eval_(state);
+      eval0(state);
       print_state(state);
       if (!state->ended)
       {
         apply_move(play(state), state);
-        eval_(state);
+        eval0(state);
       }
     }
     print_state(state);

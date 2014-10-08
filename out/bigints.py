@@ -225,11 +225,11 @@ Division,
 Modulo
 """
 def log10( a ):
-    out_ = 1;
+    out0 = 1;
     while (a >= 10):
       a = math.trunc(a / 10)
-      out_ += 1
-    return out_;
+      out0 += 1
+    return out0;
 
 def bigint_of_int( i ):
     size = log10(i);
@@ -248,17 +248,17 @@ def bigint_of_int( i ):
 
 def fact_bigint( a ):
     one = bigint_of_int(1);
-    out_ = one;
+    out0 = one;
     while (not (bigint_eq(a, one))):
-      out_ = mul_bigint(a, out_);
+      out0 = mul_bigint(a, out0);
       a = sub_bigint(a, one);
-    return out_;
+    return out0;
 
 def sum_chiffres_bigint( a ):
-    out_ = 0;
+    out0 = 0;
     for i in range(0, a["bigint_len"]):
-      out_ += a["bigint_chiffres"][i]
-    return out_;
+      out0 += a["bigint_chiffres"][i]
+    return out0;
 
 """ http://projecteuler.net/problem=20 """
 def euler20(  ):
@@ -329,20 +329,20 @@ def euler29(  ):
     n = 0;
     found = True;
     while (found):
-      min_ = a0_bigint[0];
+      min0 = a0_bigint[0];
       found = False;
       for i in range(2, 1 + maxA):
         if b[i] <= maxB:
           if found:
-            if bigint_lt(a_bigint[i], min_):
-              min_ = a_bigint[i];
+            if bigint_lt(a_bigint[i], min0):
+              min0 = a_bigint[i];
           else:
-            min_ = a_bigint[i];
+            min0 = a_bigint[i];
             found = True;
       if found:
         n += 1
         for l in range(2, 1 + maxA):
-          if bigint_eq(a_bigint[l], min_) and b[l] <= maxB:
+          if bigint_eq(a_bigint[l], min0) and b[l] <= maxB:
             b[l] = b[l] + 1;
             a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
     return n;

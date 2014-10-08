@@ -198,14 +198,18 @@ D'ou le nom de la fonction. */
     int retenue = 0;
     for (int j = 0 ; j < b->bigint_len; j++)
     {
-      chiffres->at(i + j) = chiffres->at(i + j) + retenue + b->bigint_chiffres->at(j) * a->bigint_chiffres->at(i);
+      chiffres->at(i + j) = chiffres->at(i + j) + retenue +
+      b->bigint_chiffres->at(j) * a->bigint_chiffres->at(i);
       retenue = chiffres->at(i + j) / 10;
       chiffres->at(i + j) = chiffres->at(i + j) % 10;
     }
-    chiffres->at(i + b->bigint_len) = chiffres->at(i + b->bigint_len) + retenue;
+    chiffres->at(i + b->bigint_len) = chiffres->at(i + b->bigint_len) +
+    retenue;
   }
-  chiffres->at(a->bigint_len + b->bigint_len) = chiffres->at(a->bigint_len + b->bigint_len - 1) / 10;
-  chiffres->at(a->bigint_len + b->bigint_len - 1) = chiffres->at(a->bigint_len + b->bigint_len - 1) % 10;
+  chiffres->at(a->bigint_len + b->bigint_len) =
+  chiffres->at(a->bigint_len + b->bigint_len - 1) / 10;
+  chiffres->at(a->bigint_len + b->bigint_len - 1) =
+  chiffres->at(a->bigint_len + b->bigint_len - 1) % 10;
   for (int l = 0 ; l <= 2; l ++)
     if (len != 0 && chiffres->at(len - 1) == 0)
     len --;
@@ -269,13 +273,13 @@ Division,
 Modulo
 */
 int log10(int a){
-  int out_ = 1;
+  int out0 = 1;
   while (a >= 10)
   {
     a /= 10;
-    out_ ++;
+    out0 ++;
   }
-  return out_;
+  return out0;
 }
 
 bigint * bigint_of_int(int i){
@@ -299,20 +303,20 @@ bigint * bigint_of_int(int i){
 
 bigint * fact_bigint(bigint * a){
   bigint * one = bigint_of_int(1);
-  bigint * out_ = one;
+  bigint * out0 = one;
   while (!bigint_eq(a, one))
   {
-    out_ = mul_bigint(a, out_);
+    out0 = mul_bigint(a, out0);
     a = sub_bigint(a, one);
   }
-  return out_;
+  return out0;
 }
 
 int sum_chiffres_bigint(bigint * a){
-  int out_ = 0;
+  int out0 = 0;
   for (int i = 0 ; i < a->bigint_len; i++)
-    out_ += a->bigint_chiffres->at(i);
-  return out_;
+    out0 += a->bigint_chiffres->at(i);
+  return out0;
 }
 
 /* http://projecteuler.net/problem=20 */
@@ -395,19 +399,19 @@ int euler29(){
   bool found = true;
   while (found)
   {
-    bigint * min_ = a0_bigint->at(0);
+    bigint * min0 = a0_bigint->at(0);
     found = false;
     for (int i = 2 ; i <= maxA; i ++)
       if (b->at(i) <= maxB)
     {
       if (found)
       {
-        if (bigint_lt(a_bigint->at(i), min_))
-          min_ = a_bigint->at(i);
+        if (bigint_lt(a_bigint->at(i), min0))
+          min0 = a_bigint->at(i);
       }
       else
       {
-        min_ = a_bigint->at(i);
+        min0 = a_bigint->at(i);
         found = true;
       }
     }
@@ -415,7 +419,7 @@ int euler29(){
     {
       n ++;
       for (int l = 2 ; l <= maxA; l ++)
-        if (bigint_eq(a_bigint->at(l), min_) && b->at(l) <= maxB)
+        if (bigint_eq(a_bigint->at(l), min0) && b->at(l) <= maxB)
       {
         b->at(l) = b->at(l) + 1;
         a_bigint->at(l) = mul_bigint(a_bigint->at(l), a0_bigint->at(l));

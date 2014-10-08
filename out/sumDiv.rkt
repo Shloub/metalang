@@ -43,23 +43,23 @@
 (define (sumdiv n)
   ;toto
   ; On désire renvoyer la somme des diviseurs 
-  (let ([out_ 0])
+  (let ([out0 0])
   ; On déclare un entier qui contiendra la somme 
   (let ([c 1])
   (let ([d n])
-  (letrec ([b (lambda (i out_) 
+  (letrec ([b (lambda (i out0) 
                 (if (<= i d)
                 ; La boucle : i est le diviseur potentiel
-                (let ([out_ (if (eq? (remainder n i) 0)
+                (let ([out0 (if (eq? (remainder n i) 0)
                             ; Si i divise 
-                            (let ([out_ (+ out_ i)])
+                            (let ([out0 (+ out0 i)])
                             ; On incrémente 
-                            out_)
+                            out0)
                             ; nop 
-                            out_)])
-                (b (+ i 1) out_))
-                out_))])
-  (b c out_)))))
+                            out0)])
+                (b (+ i 1) out0))
+                out0))])
+  (b c out0)))))
 )
 (define main
   ; Programme principal 

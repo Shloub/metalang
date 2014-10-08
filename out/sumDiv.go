@@ -22,19 +22,19 @@ func foo3() {
 
 func sumdiv(n int) int{
   /* On désire renvoyer la somme des diviseurs */
-  var out_ int = 0
+  var out0 int = 0
   /* On déclare un entier qui contiendra la somme */
   for i := 1 ; i <= n; i++ {
     /* La boucle : i est le diviseur potentiel*/
       if (n % i) == 0 {
         /* Si i divise */
-          out_ += i;
+          out0 += i;
           /* On incrémente */
       } else {
         /* nop */
       }
   }
-  return out_
+  return out0
   /*On renvoie out*/
 }
 

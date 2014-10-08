@@ -9,25 +9,25 @@
         out
     ))
 (defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun next_ (n)
+(defun next0 (n)
 (if
   (= (remainder n 2) 0)
-  (return-from next_ (quotient n 2))
-  (return-from next_ (+ (* 3 n) 1))))
+  (return-from next0 (quotient n 2))
+  (return-from next0 (+ (* 3 n) 1))))
 
-(defun find_ (n m)
+(defun find0 (n m)
 (if
   (= n 1)
-  (return-from find_ 1)
+  (return-from find0 1)
   (if
     (>= n 1000000)
-    (return-from find_ (+ 1 (find_ (next_ n) m)))
+    (return-from find0 (+ 1 (find0 (next0 n) m)))
     (if
       (not (= (aref m n) 0))
-      (return-from find_ (aref m n))
+      (return-from find0 (aref m n))
       (progn
-        (setf (aref m n) (+ 1 (find_ (next_ n) m)))
-        (return-from find_ (aref m n))
+        (setf (aref m n) (+ 1 (find0 (next0 n) m)))
+        (return-from find0 (aref m n))
       )))))
 
 (progn
@@ -39,23 +39,23 @@
             (return-from lambda_1 0)
           ))
           ))))
-  (let ((max_ 0))
+  (let ((max0 0))
     (let ((maxi 0))
       (do
         ((i 1 (+ 1 i)))
         ((> i 999))
         (progn
           #| normalement on met 999999 mais ça dépasse les int32... |#
-          (let ((n2 (find_ i m)))
+          (let ((n2 (find0 i m)))
             (if
-              (> n2 max_)
+              (> n2 max0)
               (progn
-                (setq max_ n2)
+                (setq max0 n2)
                 (setq maxi i)
               ))
           ))
       )
-      (princ max_)
+      (princ max0)
       (princ "
 ")
       (princ maxi)

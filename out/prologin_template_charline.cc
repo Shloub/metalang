@@ -12,14 +12,14 @@ std::vector<char> *getline(){
   return c;
 }
 int programme_candidat(std::vector<char> * tableau, int taille){
-  int out_ = 0;
+  int out0 = 0;
   for (int i = 0 ; i < taille; i++)
   {
-    out_ += (int)(tableau->at(i)) * i;
+    out0 += (int)(tableau->at(i)) * i;
     std::cout << tableau->at(i);
   }
   std::cout << "--\n";
-  return out_;
+  return out0;
 }
 
 

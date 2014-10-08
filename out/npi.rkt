@@ -40,7 +40,7 @@
   ;toto
   (and (<= (char->integer c) (char->integer #\9)) (>= (char->integer c) (char->integer #\0)))
 )
-(define (npi_ str len)
+(define (npi0 str len)
   ;toto
   (let ([stack (array_init_withenv len (lambda (i) 
                                          (lambda (_) (let ([a 0])
@@ -94,7 +94,7 @@
                                                            (let ([tmp h])
                                                            (let ([g tmp])
                                                            (list '() g)))) (mread-char))))) '())])
-     (let ([result (npi_ tab len)])
+     (let ([result (npi0 tab len)])
      (display result)))
      ))) (mread-int)))
 )

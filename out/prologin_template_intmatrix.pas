@@ -61,34 +61,35 @@ begin
    until false;
 end;
 
-type s = array of array of Longint;
-function programme_candidat(tableau : s; x : Longint; y : Longint) : Longint;
+type s = array of Longint;
+type u = array of array of Longint;
+function programme_candidat(tableau : u; x : Longint; y : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
-  out_ : Longint;
+  out0 : Longint;
 begin
-  out_ := 0;
+  out0 := 0;
   for i := 0 to  y - 1 do
   begin
     for j := 0 to  x - 1 do
     begin
-      out_ := out_ + tableau[i][j] * (i * 2 + j);
+      out0 := out0 + tableau[i][j] * (i * 2 + j);
     end;
   end;
-  exit(out_);
+  exit(out0);
 end;
 
 
 var
   f : Longint;
   h : Longint;
-  l : s;
+  l : u;
   m : Longint;
-  o : array of Longint;
+  o : s;
   p : Longint;
   q : Longint;
-  tableau : s;
+  tableau : u;
   taille_x : Longint;
   taille_y : Longint;
 begin

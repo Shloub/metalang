@@ -1,14 +1,14 @@
 require "scanf.rb"
 def programme_candidat( tableau, taille_x, taille_y )
-    out_ = 0
+    out0 = 0
     for i in (0 ..  taille_y - 1) do
       for j in (0 ..  taille_x - 1) do
-        out_ += tableau[i][j].ord * (i + j * 2)
+        out0 += tableau[i][j].ord * (i + j * 2)
         printf "%c", tableau[i][j]
       end
       print "--\n";
     end
-    return (out_);
+    return (out0);
 end
 
 f=scanf("%d")[0];

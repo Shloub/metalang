@@ -9,20 +9,20 @@
       )
     )))))
 
-(define (eratostene t_ max_)
+(define (eratostene t0 max0)
   ;toto
   (let ([n 0])
   (let ([bj 2])
-  (let ([bk (- max_ 1)])
+  (let ([bk (- max0 1)])
   (letrec ([bg (lambda (i n) 
                  (if (<= i bk)
-                 (let ([n (if (eq? (vector-ref t_ i) i)
+                 (let ([n (if (eq? (vector-ref t0 i) i)
                           (let ([j (* i i)])
                           (let ([n (+ n 1)])
                           (letrec ([bi (lambda (j) 
-                                         (if (and (< j max_) (> j 0))
+                                         (if (and (< j max0) (> j 0))
                                          (block
-                                           (vector-set! t_ j 0)
+                                           (vector-set! t0 j 0)
                                            (let ([j (+ j i)])
                                            (bi j))
                                            )
@@ -33,7 +33,7 @@
                  n))])
   (bg bj n)))))
 )
-(define (fillPrimesFactors t_ n primes nprimes)
+(define (fillPrimesFactors t0 n primes nprimes)
   ;toto
   (let ([be 0])
   (let ([bf (- nprimes 1)])
@@ -43,7 +43,7 @@
                  (letrec ([bd (lambda (n) 
                                 (if (eq? (remainder n d) 0)
                                 (block
-                                  (vector-set! t_ d (+ (vector-ref t_ d) 1))
+                                  (vector-set! t0 d (+ (vector-ref t0 d) 1))
                                   (let ([n (quotient n d)])
                                   (bd n))
                                   )
@@ -54,7 +54,7 @@
                  n))])
   (bb be n))))
 )
-(define (find_ ndiv2)
+(define (find0 ndiv2)
   ;toto
   (let ([maximumprimes 110])
   (let ([era (array_init_withenv maximumprimes (lambda (j) 
@@ -85,12 +85,12 @@
                               (lambda (m) 
                                 (lambda (_) (let ([r 0])
                                             (list '() r)))) '())])
-                              (let ([max_ (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))])
+                              (let ([max0 (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))])
                               (block
                                 (vector-set! primesFactors 2 (- (vector-ref primesFactors 2) 1))
                                 (let ([ndivs 1])
                                 (let ([u 0])
-                                (let ([v max_])
+                                (let ([v max0])
                                 (letrec ([s (lambda (i ndivs) 
                                               (if (<= i v)
                                               (let ([ndivs (if (not (eq? (vector-ref primesFactors i) 0))
@@ -110,7 +110,7 @@
 )
 (define main
   (block
-    (map display (list (find_ 500) "\n"))
+    (map display (list (find0 500) "\n"))
     '()
     )
 )

@@ -35,16 +35,16 @@ def readint():
 """
 La suite de fibonaci
 """
-def fibo_( a, b, i ):
-    out_ = 0;
+def fibo0( a, b, i ):
+    out0 = 0;
     a2 = a;
     b2 = b;
     for j in range(0, 1 + i + 1):
-      out_ += a2
+      out0 += a2
       tmp = b2;
       b2 += a2
       a2 = tmp;
-    return out_;
+    return out0;
 
 a = 0;
 b = 0;
@@ -54,5 +54,5 @@ stdinsep()
 b=readint()
 stdinsep()
 i=readint()
-print("%d" % fibo_(a, b, i), end='')
+print("%d" % fibo0(a, b, i), end='')
 

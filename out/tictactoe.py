@@ -56,7 +56,7 @@ def print_state( g ):
     print("")
 
 """ On dit qui gagne (info stoquées dans g.ended et g.note ) """
-def eval_( g ):
+def eval0( g ):
     win = 0;
     freecase = 0;
     for y in range(0, 1 + 2):
@@ -121,7 +121,7 @@ def can_move( m, g ):
 Un minimax classique, renvoie la note du plateau
 """
 def minmax( g ):
-    eval_(g);
+    eval0(g);
     if g["ended"]:
       return g["note"];
     maxNote = -(10000);
@@ -160,7 +160,7 @@ def play( g ):
     print("%d%d\n" % ( minMove["x"], minMove["y"] ), end='')
     return minMove;
 
-def init_(  ):
+def init0(  ):
     cases = [None] * 3
     for i in range(0, 3):
       tab = [None] * 3
@@ -183,7 +183,7 @@ def read_move(  ):
       "y":y};
 
 for i in range(0, 1 + 1):
-  state = init_();
+  state = init0();
   apply_move({
     "x":1,
     "y":1}, state);
@@ -193,11 +193,11 @@ for i in range(0, 1 + 1):
   while (not (state["ended"])):
     print_state(state);
     apply_move(play(state), state);
-    eval_(state);
+    eval0(state);
     print_state(state);
     if not (state["ended"]):
       apply_move(play(state), state);
-      eval_(state);
+      eval0(state);
   print_state(state);
   print("%d\n" % ( state["note"] ), end='')
 

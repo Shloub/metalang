@@ -58,7 +58,7 @@
   (vector-ref (vector-ref cache y) x)
   (f 'nil))))))
 )
-(define (find_ len tab)
+(define (find01 len tab)
   ;toto
   (let ([tab2 (array_init_withenv len (lambda (i) 
                                         (lambda (_) (let ([tab3 (array_init_withenv (+ i 1) 
@@ -90,7 +90,7 @@
        (let ([g tab2])
        (list '() g))))) '())])
      (block
-       (map display (list (find_ len tab) "\n"))
+       (map display (list (find01 len tab) "\n"))
        (let ([r 0])
        (let ([s (- len 1)])
        (letrec ([n (lambda (k) 

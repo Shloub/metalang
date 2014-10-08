@@ -44,7 +44,7 @@ function bubblesort(tab, len){
   }
 }
 
-function qsort_(tab, len, i, j){
+function qsort0(tab, len, i, j){
   if (i < j)
   {
     var i0 = i;
@@ -73,8 +73,8 @@ function qsort_(tab, len, i, j){
     }
     else
       j --;
-    qsort_(tab, len, i0, i - 1);
-    qsort_(tab, len, i + 1, j0);
+    qsort0(tab, len, i0, i - 1);
+    qsort0(tab, len, i + 1, j0);
   }
 }
 
@@ -97,7 +97,7 @@ for (var i = 0 ; i <= len - 1; i++)
 }
 util.print("\n");
 var tab3 = copytab(tab, len);
-qsort_(tab3, len, 0, len - 1);
+qsort0(tab3, len, 0, len - 1);
 for (var i = 0 ; i <= len - 1; i++)
 {
   util.print(tab3[i], " ");

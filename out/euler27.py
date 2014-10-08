@@ -1,13 +1,13 @@
 import math
 def mod(x, y):
   return x - y * math.trunc(x / y)
-def eratostene( t, max_ ):
+def eratostene( t, max0 ):
     n = 0;
-    for i in range(2, max_):
+    for i in range(2, max0):
       if t[i] == i:
         n += 1
         j = i * i;
-        while (j < max_ and j > 0):
+        while (j < max0 and j > 0):
           t[j] = 0;
           j += i
     return n;
@@ -34,7 +34,7 @@ era = [None] * maximumprimes
 for j in range(0, maximumprimes):
   era[j] = j;
 result = 0;
-max_ = 0;
+max0 = 0;
 nprimes = eratostene(era, maximumprimes);
 primes = [None] * nprimes
 for o in range(0, nprimes):
@@ -52,15 +52,15 @@ for b in range(3, 1 + 999):
     for a in range(-(999), 1 + 999):
       n1 = test(a, b, primes, nprimes);
       n2 = test(a, -(b), primes, nprimes);
-      if n1 > max_:
-        max_ = n1;
+      if n1 > max0:
+        max0 = n1;
         result = a * b;
         ma = a;
         mb = b;
-      if n2 > max_:
-        max_ = n2;
+      if n2 > max0:
+        max0 = n2;
         result = -(a) * b;
         ma = a;
         mb = -(b);
-print("%d %d\n%d\n%d\n" % ( ma, mb, max_, result ), end='')
+print("%d %d\n%d\n%d\n" % ( ma, mb, max0, result ), end='')
 

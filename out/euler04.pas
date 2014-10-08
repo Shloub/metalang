@@ -69,8 +69,14 @@ begin
           begin
             for e := 0 to  9 do
             begin
-              mul := a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
-              if (chiffre(0, mul) = chiffre(5, mul)) and (chiffre(1, mul) = chiffre(4, mul)) and (chiffre(2, mul) = chiffre(3, mul))
+              mul := a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c *
+                                                            d) + 1000 * (c * e
+                                                                    + b * f) + 10000 * c * f;
+              if (chiffre(0, mul) = chiffre(5, mul)) and (chiffre(1, mul) =
+                                                           chiffre(4, mul)) and (chiffre(2,
+                                                                    mul) =
+                                                                    chiffre(3,
+                                                                    mul))
               then
                 begin
                   g := max2_(mul, m);

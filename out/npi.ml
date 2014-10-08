@@ -4,7 +4,7 @@ let is_number c =
 (*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 *)
-let npi_ str len =
+let npi0 str len =
   let stack = Array.init len (fun _i ->
     0) in
   let ptrStack = ref( 0 ) in
@@ -41,7 +41,7 @@ begin
     let tmp = ref( '\000' ) in
     Scanf.scanf "%c" (fun v_0 -> tmp := v_0);
     (!tmp)) in
-  let result = npi_ tab (!len) in
+  let result = npi0 tab (!len) in
   Printf.printf "%d" result
 end
  

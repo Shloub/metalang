@@ -54,8 +54,8 @@ sub crypte{
     my $lettre = position_alphabet($message->[$i]);
     if ($lettre ne -1) {
       my $addon = position_alphabet($cle->[remainder($i, $taille_cle)]);
-      my $new_ = remainder($addon + $lettre, 26);
-      $message->[$i] = of_position_alphabet($new_);
+      my $new0 = remainder($addon + $lettre, 26);
+      $message->[$i] = of_position_alphabet($new0);
     }
     }
 }
@@ -64,8 +64,8 @@ my $taille_cle = readint();
 readspaces();
 my $cle = [];
 foreach my $index (0 .. $taille_cle - 1) {
-  my $out_ = readchar();
-  $cle->[$index] = $out_;
+  my $out0 = readchar();
+  $cle->[$index] = $out0;
   }
 readspaces();
 my $taille = readint();

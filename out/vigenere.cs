@@ -78,8 +78,8 @@ public static int readInt(){
       if (lettre != -1)
       {
         int addon = position_alphabet(cle[i % taille_cle]);
-        int new_ = (addon + lettre) % 26;
-        message[i] = of_position_alphabet(new_);
+        int new0 = (addon + lettre) % 26;
+        message[i] = of_position_alphabet(new0);
       }
     }
   }
@@ -92,8 +92,8 @@ public static int readInt(){
     char[] cle = new char[taille_cle];
     for (int index = 0 ; index < taille_cle; index++)
     {
-      char out_ = readChar();
-      cle[index] = out_;
+      char out0 = readChar();
+      cle[index] = out0;
     }
     stdin_sep();
     int taille = readInt();

@@ -8,14 +8,14 @@ def pathfind_aux( cache, tab, len, pos )
       cache[pos] = len * 2;
       posval = pathfind_aux(cache, tab, len, tab[pos])
       oneval = pathfind_aux(cache, tab, len, pos + 1)
-      out_ = 0
+      out0 = 0
       if posval < oneval then
-        out_ = 1 + posval;
+        out0 = 1 + posval;
       else
-        out_ = 1 + oneval;
+        out0 = 1 + oneval;
       end
-      cache[pos] = out_;
-      return (out_);
+      cache[pos] = out0;
+      return (out0);
     end
 end
 

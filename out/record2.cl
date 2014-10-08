@@ -26,24 +26,24 @@
 
 (defun mktoto (v1)
 (progn
-  (let ((t_ (make-toto :foo v1
+  (let ((t0 (make-toto :foo v1
                        :bar 0
                        :blah 0)))
-  (return-from mktoto t_)
+  (return-from mktoto t0)
 )))
 
-(defun result (t_)
+(defun result (t0)
 (progn
-  (setf (toto-blah t_) ( + (toto-blah t_) 1))
-  (return-from result (+ (+ (toto-foo t_) (* (toto-blah t_) (toto-bar t_))) (* (toto-bar t_) (toto-foo t_))))
+  (setf (toto-blah t0) ( + (toto-blah t0) 1))
+  (return-from result (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))
 ))
 
 (progn
-  (let ((t_ (mktoto 4)))
-    (setf (toto-bar t_) (mread-int ))
+  (let ((t0 (mktoto 4)))
+    (setf (toto-bar t0) (mread-int ))
     (mread-blank)
-    (setf (toto-blah t_) (mread-int ))
-    (princ (result t_))
+    (setf (toto-blah t0) (mread-int ))
+    (princ (result t0))
   ))
 
 

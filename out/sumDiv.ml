@@ -15,14 +15,14 @@ let foo3 () =
 
 let sumdiv n =
   (* On désire renvoyer la somme des diviseurs *)
-  let out_ = ref( 0 ) in
+  let out0 = ref( 0 ) in
   (* On déclare un entier qui contiendra la somme *)
   for i = 1 to n do
     (* La boucle : i est le diviseur potentiel*)
     if (n mod i) = 0 then
       begin
         (* Si i divise *)
-        out_ := (!out_) + i
+        out0 := (!out0) + i
         (* On incrémente *)
       end
     else
@@ -30,7 +30,7 @@ let sumdiv n =
         (* nop *) ()
       end
   done;
-  (!out_)
+  (!out0)
   (*On renvoie out*)
 
 let () =

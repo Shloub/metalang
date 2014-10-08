@@ -60,9 +60,9 @@ for (var i = 0 ; i <= n - 1; i++)
   var out0 = new Array(2);
   for (var j = 0 ; j <= 2 - 1; j++)
   {
-    out__=read_int_();
+    out01=read_int_();
     stdinsep();
-    out0[j] = out__;
+    out0[j] = out01;
   }
   passepartout[i] = out0;
 }

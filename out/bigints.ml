@@ -243,13 +243,13 @@ Modulo
 *)
 let log10 a =
   let a = ref a in
-  let out_ = ref( 1 ) in
+  let out0 = ref( 1 ) in
   while (!a) >= 10
   do
       a := (!a) / 10;
-      out_ := (!out_) + 1
+      out0 := (!out0) + 1
   done;
-  (!out_)
+  (!out0)
 
 let bigint_of_int i =
   let i = ref i in
@@ -271,20 +271,20 @@ let bigint_of_int i =
 let fact_bigint a =
   let a = ref a in
   let one = bigint_of_int 1 in
-  let out_ = ref( one ) in
+  let out0 = ref( one ) in
   while not (bigint_eq (!a) one)
   do
-      out_ := mul_bigint (!a) (!out_);
+      out0 := mul_bigint (!a) (!out0);
       a := sub_bigint (!a) one
   done;
-  (!out_)
+  (!out0)
 
 let sum_chiffres_bigint a =
-  let out_ = ref( 0 ) in
+  let out0 = ref( 0 ) in
   for i = 0 to a.bigint_len - 1 do
-    out_ := (!out_) + a.bigint_chiffres.(i)
+    out0 := (!out0) + a.bigint_chiffres.(i)
   done;
-  (!out_)
+  (!out0)
 
 (* http://projecteuler.net/problem=20 *)
 let euler20 () =
@@ -357,19 +357,19 @@ let euler29 () =
   let found = ref( true ) in
   while (!found)
   do
-      let min_ = ref( a0_bigint.(0) ) in
+      let min0 = ref( a0_bigint.(0) ) in
       found := false;
       for i = 2 to maxA do
         if b.(i) <= maxB then
           begin
             if (!found) then
               begin
-                if bigint_lt a_bigint.(i) (!min_) then
-                  min_ := a_bigint.(i)
+                if bigint_lt a_bigint.(i) (!min0) then
+                  min0 := a_bigint.(i)
               end
             else
               begin
-                min_ := a_bigint.(i);
+                min0 := a_bigint.(i);
                 found := true
               end
           end
@@ -378,7 +378,7 @@ let euler29 () =
         begin
           n := (!n) + 1;
           for l = 2 to maxA do
-            if bigint_eq a_bigint.(l) (!min_) && b.(l) <= maxB then
+            if bigint_eq a_bigint.(l) (!min0) && b.(l) <= maxB then
               begin
                 b.(l) <- b.(l) + 1;
                 a_bigint.(l) <- mul_bigint a_bigint.(l) a0_bigint.(l)

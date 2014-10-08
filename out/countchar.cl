@@ -33,17 +33,17 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(defun nth_ (tab tofind len)
+(defun nth0 (tab tofind len)
 (progn
-  (let ((out_ 0))
+  (let ((out0 0))
     (do
       ((i 0 (+ 1 i)))
       ((> i (- len 1)))
       (if
         (eq (aref tab i) tofind)
-        (setq out_ ( + out_ 1)))
+        (setq out0 ( + out0 1)))
     )
-    (return-from nth_ out_)
+    (return-from nth0 out0)
   )))
 
 (progn
@@ -63,7 +63,7 @@
                     (return-from lambda_1 tmp)
                   )))
                 ))))
-      (let ((result (nth_ tab tofind len)))
+      (let ((result (nth0 tab tofind len)))
         (princ result)
       )))))
 

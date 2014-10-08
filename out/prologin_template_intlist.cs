@@ -5,10 +5,10 @@ public class prologin_template_intlist
 {
   public static int programme_candidat(int[] tableau, int taille)
   {
-    int out_ = 0;
+    int out0 = 0;
     for (int i = 0 ; i < taille; i++)
-      out_ += tableau[i];
-    return out_;
+      out0 += tableau[i];
+    return out0;
   }
   
   

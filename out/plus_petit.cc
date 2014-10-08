@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-int go_(std::vector<int> * tab, int a, int b){
+int go0(std::vector<int> * tab, int a, int b){
   int m = (a + b) / 2;
   if (a == m)
   {
@@ -24,13 +24,13 @@ int go_(std::vector<int> * tab, int a, int b){
     }
   }
   if (i < m)
-    return go_(tab, a, m);
+    return go0(tab, a, m);
   else
-    return go_(tab, m, b);
+    return go0(tab, m, b);
 }
 
-int plus_petit_(std::vector<int> * tab, int len){
-  return go_(tab, 0, len);
+int plus_petit0(std::vector<int> * tab, int len){
+  return go0(tab, 0, len);
 }
 
 
@@ -44,7 +44,7 @@ int main(){
     std::cin >> tmp >> std::skipws;
     tab->at(i) = tmp;
   }
-  std::cout << plus_petit_(tab, len);
+  std::cout << plus_petit0(tab, len);
   return 0;
 }
 

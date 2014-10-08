@@ -10,38 +10,38 @@ module Array = struct
 end
 
 let programme_candidat tableau1 taille1 tableau2 taille2 =
-  let out_ = 0 in
+  let out0 = 0 in
   let r = 0 in
   let s = (taille1 - 1) in
-  let rec q i out_ =
+  let rec q i out0 =
     (if (i <= s)
-     then let out_ = (out_ + ((int_of_char (tableau1.(i))) * i)) in
+     then let out0 = (out0 + ((int_of_char (tableau1.(i))) * i)) in
      (
        (Printf.printf "%c" tableau1.(i));
-       (q (i + 1) out_)
+       (q (i + 1) out0)
        )
      
      else (
             (Printf.printf "--\n" );
             let o = 0 in
             let p = (taille2 - 1) in
-            let rec m j out_ =
+            let rec m j out0 =
               (if (j <= p)
-               then let out_ = (out_ + ((int_of_char (tableau2.(j))) * (j * 100))) in
+               then let out0 = (out0 + ((int_of_char (tableau2.(j))) * (j * 100))) in
                (
                  (Printf.printf "%c" tableau2.(j));
-                 (m (j + 1) out_)
+                 (m (j + 1) out0)
                  )
                
                else (
                       (Printf.printf "--\n" );
-                      out_
+                      out0
                       )
                ) in
-              (m o out_)
+              (m o out0)
             )
      ) in
-    (q r out_)
+    (q r out0)
 let main =
   let taille1 = (Scanf.scanf "%d " (fun x -> x)) in
   let taille2 = (Scanf.scanf "%d " (fun x -> x)) in

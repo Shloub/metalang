@@ -29,7 +29,7 @@ for i in (0 ..  8 - 1) do
     directions[i] = [-1, -1];
   end
 end
-max_ = 0
+max0 = 0
 h = 20
 l = [];
 for o in (0 ..  20 - 1) do
@@ -47,10 +47,10 @@ for j in (0 ..  7) do
   for x in (0 ..  19) do
     for y in (0 ..  19) do
       v = find(4, m, x, y, dx, dy)
-      u = [max_, v].max
-      max_ = u;
+      u = [max0, v].max
+      max0 = u;
     end
   end
 end
-printf "%d\n", max_
+printf "%d\n", max0
 

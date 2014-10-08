@@ -1,12 +1,12 @@
 var util = require("util");
-function eratostene(t, max_){
+function eratostene(t, max0){
   var n = 0;
-  for (var i = 2 ; i <= max_ - 1; i++)
+  for (var i = 2 ; i <= max0 - 1; i++)
     if (t[i] == i)
   {
     n ++;
     var j = i * i;
-    while (j < max_ && j > 0)
+    while (j < max0 && j > 0)
     {
       t[j] = 0;
       j += i;
@@ -44,14 +44,14 @@ function sumdivaux(t, n, i){
   else
   {
     var o = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
-    var out_ = 0;
+    var out0 = 0;
     var p = i;
     for (var j = 1 ; j <= t[i]; j++)
     {
-      out_ += p;
+      out0 += p;
       p *= i;
     }
-    return (out_ + 1) * o;
+    return (out0 + 1) * o;
   }
 }
 
@@ -59,8 +59,8 @@ function sumdiv(nprimes, primes, n){
   var t = new Array(n + 1);
   for (var i = 0 ; i <= n + 1 - 1; i++)
     t[i] = 0;
-  var max_ = fillPrimesFactors(t, n, primes, nprimes);
-  return sumdivaux(t, max_, 0);
+  var max0 = fillPrimesFactors(t, n, primes, nprimes);
+  return sumdivaux(t, max0, 0);
 }
 
 var maximumprimes = 30001;

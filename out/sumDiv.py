@@ -44,17 +44,17 @@ def foo3(  ):
 
 def sumdiv( n ):
     """ On désire renvoyer la somme des diviseurs """
-    out_ = 0;
+    out0 = 0;
     """ On déclare un entier qui contiendra la somme """
     for i in range(1, 1 + n):
       """ La boucle : i est le diviseur potentiel"""
       if (mod(n, i)) == 0:
         """ Si i divise """
-        out_ += i
+        out0 += i
         """ On incrémente """
       else:
         """ nop """
-    return out_;
+    return out0;
     """On renvoie out"""
 
 """ Programme principal """

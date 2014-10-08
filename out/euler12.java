@@ -3,15 +3,15 @@ import java.util.*;
 public class euler12
 {
   
-  public static int eratostene(int[] t, int max_)
+  public static int eratostene(int[] t, int max0)
   {
     int n = 0;
-    for (int i = 2 ; i < max_; i++)
+    for (int i = 2 ; i < max0; i++)
       if (t[i] == i)
     {
       int j = i * i;
       n ++;
-      while (j < max_ && j > 0)
+      while (j < max0 && j > 0)
       {
         t[j] = 0;
         j += i;
@@ -58,10 +58,10 @@ public class euler12
       int[] primesFactors = new int[n + 2];
       for (int m = 0 ; m < n + 2; m++)
         primesFactors[m] = 0;
-      int max_ = Math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+      int max0 = Math.max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
       primesFactors[2] --;
       int ndivs = 1;
-      for (int i = 0 ; i <= max_; i ++)
+      for (int i = 0 ; i <= max0; i ++)
         if (primesFactors[i] != 0)
         ndivs *= 1 + primesFactors[i];
       if (ndivs > ndiv2)

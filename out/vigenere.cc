@@ -21,8 +21,8 @@ void crypte(int taille_cle, std::vector<char> * cle, int taille, std::vector<cha
     if (lettre != -1)
     {
       int addon = position_alphabet(cle->at(i % taille_cle));
-      int new_ = (addon + lettre) % 26;
-      message->at(i) = of_position_alphabet(new_);
+      int new0 = (addon + lettre) % 26;
+      message->at(i) = of_position_alphabet(new0);
     }
   }
 }
@@ -30,13 +30,13 @@ void crypte(int taille_cle, std::vector<char> * cle, int taille, std::vector<cha
 
 int main(){
   int taille, taille_cle;
-  char out2, out_;
+  char out2, out0;
   std::cin >> taille_cle >> std::skipws;
   std::vector<char > *cle = new std::vector<char>( taille_cle );
   for (int index = 0 ; index < taille_cle; index++)
   {
-    std::cin >> out_ >> std::noskipws;
-    cle->at(index) = out_;
+    std::cin >> out0 >> std::noskipws;
+    cle->at(index) = out0;
   }
   std::cin >> std::skipws >> taille;
   std::vector<char > *message = new std::vector<char>( taille );

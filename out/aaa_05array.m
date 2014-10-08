@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int* id_(int* b){
+int* id0(int* b){
   return b;
 }
 
@@ -25,7 +25,7 @@ int main(void){
   else
     printf("False");
   printf("\n");
-  g(id_(a), 0);
+  g(id0(a), 0);
   int d = a[0];
   if (d)
     printf("True");

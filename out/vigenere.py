@@ -57,15 +57,15 @@ def crypte( taille_cle, cle, taille, message ):
       lettre = position_alphabet(message[i]);
       if lettre != -(1):
         addon = position_alphabet(cle[mod(i, taille_cle)]);
-        new_ = mod(addon + lettre, 26);
-        message[i] = of_position_alphabet(new_);
+        new0 = mod(addon + lettre, 26);
+        message[i] = of_position_alphabet(new0);
 
 taille_cle=readint()
 stdinsep()
 cle = [None] * taille_cle
 for index in range(0, taille_cle):
-  out_=readchar()
-  cle[index] = out_;
+  out0=readchar()
+  cle[index] = out0;
 stdinsep()
 taille=readint()
 stdinsep()

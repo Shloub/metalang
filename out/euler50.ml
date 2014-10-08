@@ -1,6 +1,6 @@
-let eratostene t max_ =
+let eratostene t max0 =
   let n = ref( 0 ) in
-  for i = 2 to max_ - 1 do
+  for i = 2 to max0 - 1 do
     if t.(i) = i then
       begin
         n := (!n) + 1;
@@ -8,7 +8,7 @@ let eratostene t max_ =
         if (!j) / i = i then
           begin
             (* overflow test *)
-            while (!j) < max_ && (!j) > 0
+            while (!j) < max0 && (!j) > 0
             do
                 t.((!j)) <- 0;
                 j := (!j) + i

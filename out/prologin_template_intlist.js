@@ -27,10 +27,10 @@ function read_int_(){
   }
 }
 function programme_candidat(tableau, taille){
-  var out_ = 0;
+  var out0 = 0;
   for (var i = 0 ; i <= taille - 1; i++)
-    out_ += tableau[i];
-  return out_;
+    out0 += tableau[i];
+  return out0;
 }
 
 b=read_int_();

@@ -8,13 +8,13 @@ func max2_(a int, b int) int{
   }
 }
 
-func eratostene(t []int, max_ int) int{
+func eratostene(t []int, max0 int) int{
   var n int = 0
-  for i := 2 ; i <= max_ - 1; i++ {
+  for i := 2 ; i <= max0 - 1; i++ {
     if t[i] == i {
         var j int = i * i
           n ++;
-          for j < max_ && j > 0{
+          for j < max0 && j > 0{
             t[j] = 0;
             j += i;
           }
@@ -60,10 +60,10 @@ func find(ndiv2 int) int{
       for m := 0 ; m <= n + 2 - 1; m++ {
         primesFactors[m] = 0;
       }
-      var max_ int = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
+      var max0 int = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
       primesFactors[2] --;
       var ndivs int = 1
-      for i := 0 ; i <= max_; i++ {
+      for i := 0 ; i <= max0; i++ {
         if primesFactors[i] != 0 {
             ndivs *= 1 + primesFactors[i];
           }

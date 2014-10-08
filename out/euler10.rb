@@ -1,7 +1,7 @@
 require "scanf.rb"
-def eratostene( t, max_ )
+def eratostene( t, max0 )
     sum = 0
-    for i in (2 ..  max_ - 1) do
+    for i in (2 ..  max0 - 1) do
       if t[i] == i then
         sum += i
         j = i * i
@@ -13,7 +13,7 @@ def eratostene( t, max_ )
 =end
 
         if (j.to_f / i).to_i == i then
-          while j < max_ && j > 0 do
+          while j < max0 && j > 0 do
             t[j] = 0;
             j += i
           end

@@ -1,11 +1,11 @@
-let eratostene t max_ =
+let eratostene t max0 =
   let n = ref( 0 ) in
-  for i = 2 to max_ - 1 do
+  for i = 2 to max0 - 1 do
     if t.(i) = i then
       begin
         let j = ref( i * i ) in
         n := (!n) + 1;
-        while (!j) < max_ && (!j) > 0
+        while (!j) < max0 && (!j) > 0
         do
             t.((!j)) <- 0;
             j := (!j) + i
@@ -53,10 +53,10 @@ let find ndiv2 =
   for n = 1 to 10000 do
     let primesFactors = Array.init (n + 2) (fun _m ->
       0) in
-    let max_ = (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)) in
+    let max0 = (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (n + 1) primes nprimes)) in
     primesFactors.(2) <- primesFactors.(2) - 1;
     let ndivs = ref( 1 ) in
-    for i = 0 to max_ do
+    for i = 0 to max0 do
       if primesFactors.(i) <> 0 then
         ndivs := (!ndivs) * (1 + primesFactors.(i))
     done;

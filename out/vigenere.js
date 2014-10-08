@@ -53,8 +53,8 @@ function crypte(taille_cle, cle, taille, message){
     if (lettre != -1)
     {
       var addon = position_alphabet(cle[~~(i % taille_cle)]);
-      var new_ = ~~((addon + lettre) % 26);
-      message[i] = of_position_alphabet(new_);
+      var new0 = ~~((addon + lettre) % 26);
+      message[i] = of_position_alphabet(new0);
     }
   }
 }
@@ -64,8 +64,8 @@ stdinsep();
 var cle = new Array(taille_cle);
 for (var index = 0 ; index <= taille_cle - 1; index++)
 {
-  out_=read_char_();
-  cle[index] = out_;
+  out0=read_char_();
+  cle[index] = out0;
 }
 stdinsep();
 taille=read_int_();

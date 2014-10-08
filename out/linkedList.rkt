@@ -20,10 +20,10 @@
       )))]) (w 0)))))
 
 (struct intlist ([head #:mutable] [tail #:mutable]))
-(define (cons_ list i)
+(define (cons0 list i)
   ;toto
-  (let ([out_ (intlist i list)])
-  out_)
+  (let ([out0 (intlist i list)])
+  out0)
 )
 (define (rev2 empty acc torev)
   ;toto
@@ -47,7 +47,7 @@
                 ((lambda (c) 
                    (let ([i c])
                    (let ([list (if (not (eq? i 0))
-                               (let ([list (cons_ list i)])
+                               (let ([list (cons0 list i)])
                                list)
                                list)])
                    (b i list)))) (mread-int))

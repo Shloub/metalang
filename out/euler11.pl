@@ -54,7 +54,7 @@ foreach my $i (0 .. 8 - 1) {
     $directions->[$i] = [-1, -1];
   }
   }
-my $max_ = 0;
+my $max0 = 0;
 my $h = 20;
 my $l = [];
 foreach my $o (0 .. 20 - 1) {
@@ -72,11 +72,11 @@ foreach my $j (0 .. 7) {
   foreach my $x (0 .. 19) {
     foreach my $y (0 .. 19) {
       my $v = find(4, $m, $x, $y, $dx, $dy);
-      my $u = max($max_, $v);
-      $max_ = $u;
+      my $u = max($max0, $v);
+      $max0 = $u;
       }
     }
   }
-print($max_, "\n");
+print($max0, "\n");
 
 

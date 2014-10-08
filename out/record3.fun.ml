@@ -16,19 +16,19 @@ let mktoto v1 =
   blah=0} in
   t
 let result t len =
-  let out_ = 0 in
+  let out0 = 0 in
   let b = 0 in
   let c = (len - 1) in
-  let rec a j out_ =
+  let rec a j out0 =
     (if (j <= c)
      then (
             t.(j).blah <- (t.(j).blah + 1);
-            let out_ = (((out_ + t.(j).foo) + (t.(j).blah * t.(j).bar)) + (t.(j).bar * t.(j).foo)) in
-            (a (j + 1) out_)
+            let out0 = (((out0 + t.(j).foo) + (t.(j).blah * t.(j).bar)) + (t.(j).bar * t.(j).foo)) in
+            (a (j + 1) out0)
             )
      
-     else out_) in
-    (a b out_)
+     else out0) in
+    (a b out0)
 let main =
   let t = (Array.init_withenv 4 (fun  i () -> let d = (mktoto i) in
   ((), d)) ()) in

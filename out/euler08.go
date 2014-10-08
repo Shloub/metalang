@@ -22,7 +22,7 @@ func main() {
       i *= d;
       last[j] = d;
   }
-  var max_ int = i
+  var max0 int = i
   var index int = 0
   var nskipdiv int = 0
   for k := 1 ; k <= 995; k++ {
@@ -41,8 +41,8 @@ func main() {
       }
       last[index] = f;
       index = (index + 1) % 5;
-      max_ = max2_(max_, i);
+      max0 = max2_(max0, i);
   }
-  fmt.Printf("%d\n", max_);
+  fmt.Printf("%d\n", max0);
 }
 

@@ -5,12 +5,13 @@ Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 et qui produit les macros metalang correspondante
 }
+type a = array of Longint;
 
 var
   current_pos : Longint;
   i : Longint;
   input : char;
-  mem : array of Longint;
+  mem : a;
 begin
   input := #32;
   current_pos := 500;

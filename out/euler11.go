@@ -84,7 +84,7 @@ func main() {
         directions[i] = ba;
       }      
   }
-  var max_ int = 0
+  var max0 int = 0
   var h int = 20
   var l [][]int = make([][]int, 20)
   for o := 0 ; o <= 20 - 1; o++ {
@@ -105,11 +105,11 @@ func main() {
       for x := 0 ; x <= 19; x++ {
         for y := 0 ; y <= 19; y++ {
             var v int = find(4, m, x, y, dx, dy)
-              var u int = max2_(max_, v)
-              max_ = u;
+              var u int = max2_(max0, v)
+              max0 = u;
           }
       }
   }
-  fmt.Printf("%d\n", max_);
+  fmt.Printf("%d\n", max0);
 }
 

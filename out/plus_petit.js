@@ -26,7 +26,7 @@ function read_int_(){
     }
   }
 }
-function go_(tab, a, b){
+function go0(tab, a, b){
   var m = ~~((a + b) / 2);
   if (a == m)
   {
@@ -50,13 +50,13 @@ function go_(tab, a, b){
     }
   }
   if (i < m)
-    return go_(tab, a, m);
+    return go0(tab, a, m);
   else
-    return go_(tab, m, b);
+    return go0(tab, m, b);
 }
 
-function plus_petit_(tab, len){
-  return go_(tab, 0, len);
+function plus_petit0(tab, len){
+  return go0(tab, 0, len);
 }
 
 var len = 0;
@@ -70,5 +70,5 @@ for (var i = 0 ; i <= len - 1; i++)
   stdinsep();
   tab[i] = tmp;
 }
-util.print(plus_petit_(tab, len));
+util.print(plus_petit0(tab, len));
 

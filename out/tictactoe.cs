@@ -79,7 +79,7 @@ Tictactoe : un tictactoe avec une IA
   }
   
   /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-  public static void eval_(gamestate g)
+  public static void eval0(gamestate g)
   {
     int win = 0;
     int freecase = 0;
@@ -165,7 +165,7 @@ Un minimax classique, renvoie la note du plateau
 */
   public static int minmax(gamestate g)
   {
-    eval_(g);
+    eval0(g);
     if (g.ended)
       return g.note;
     int maxNote = -10000;
@@ -213,7 +213,7 @@ Renvoie le coup de l'IA
     return minMove;
   }
   
-  public static gamestate init_()
+  public static gamestate init0()
   {
     int[][] cases = new int[3][];
     for (int i = 0 ; i < 3; i++)
@@ -248,7 +248,7 @@ Renvoie le coup de l'IA
   {
     for (int i = 0 ; i <= 1; i ++)
     {
-      gamestate state = init_();
+      gamestate state = init0();
       move c = new move();
       c.x = 1;
       c.y = 1;
@@ -261,12 +261,12 @@ Renvoie le coup de l'IA
       {
         print_state(state);
         apply_move(play(state), state);
-        eval_(state);
+        eval0(state);
         print_state(state);
         if (!state.ended)
         {
           apply_move(play(state), state);
-          eval_(state);
+          eval0(state);
         }
       }
       print_state(state);

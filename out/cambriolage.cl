@@ -82,9 +82,9 @@
                                     2
                                     (function (lambda (j)
                                     (block lambda_2
-                                      (let ((out__ (mread-int )))
+                                      (let ((out01 (mread-int )))
                                         (mread-blank)
-                                        (return-from lambda_2 out__)
+                                        (return-from lambda_2 out01)
                                       )))
                                     ))))
                          (return-from lambda_1 out0)

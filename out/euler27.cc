@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-int eratostene(std::vector<int> * t, int max_){
+int eratostene(std::vector<int> * t, int max0){
   int n = 0;
-  for (int i = 2 ; i < max_; i++)
+  for (int i = 2 ; i < max0; i++)
     if (t->at(i) == i)
   {
     n ++;
     int j = i * i;
-    while (j < max_ && j > 0)
+    while (j < max0 && j > 0)
     {
       t->at(j) = 0;
       j += i;
@@ -46,7 +46,7 @@ int main(){
   for (int j = 0 ; j < maximumprimes; j++)
     era->at(j) = j;
   int result = 0;
-  int max_ = 0;
+  int max0 = 0;
   int nprimes = eratostene(era, maximumprimes);
   std::vector<int > *primes = new std::vector<int>( nprimes );
   for (int o = 0 ; o < nprimes; o++)
@@ -67,22 +67,22 @@ int main(){
     {
       int n1 = test(a, b, primes, nprimes);
       int n2 = test(a, -b, primes, nprimes);
-      if (n1 > max_)
+      if (n1 > max0)
       {
-        max_ = n1;
+        max0 = n1;
         result = a * b;
         ma = a;
         mb = b;
       }
-      if (n2 > max_)
+      if (n2 > max0)
       {
-        max_ = n2;
+        max0 = n2;
         result = -a * b;
         ma = a;
         mb = -b;
       }
   }
-  std::cout << ma << " " << mb << "\n" << max_ << "\n" << result << "\n";
+  std::cout << ma << " " << mb << "\n" << max0 << "\n" << result << "\n";
   return 0;
 }
 

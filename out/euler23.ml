@@ -1,11 +1,11 @@
-let eratostene t max_ =
+let eratostene t max0 =
   let n = ref( 0 ) in
-  for i = 2 to max_ - 1 do
+  for i = 2 to max0 - 1 do
     if t.(i) = i then
       begin
         n := (!n) + 1;
         let j = ref( i * i ) in
-        while (!j) < max_ && (!j) > 0
+        while (!j) < max0 && (!j) > 0
         do
             t.((!j)) <- 0;
             j := (!j) + i
@@ -48,20 +48,20 @@ let rec sumdivaux t n i =
   else
     begin
       let o = sumdivaux t n (sumdivaux2 t n (i + 1)) in
-      let out_ = ref( 0 ) in
+      let out0 = ref( 0 ) in
       let p = ref( i ) in
       for _j = 1 to t.(i) do
-        out_ := (!out_) + (!p);
+        out0 := (!out0) + (!p);
         p := (!p) * i
       done;
-      ((!out_) + 1) * o
+      ((!out0) + 1) * o
     end
 
 let sumdiv nprimes primes n =
   let t = Array.init (n + 1) (fun _i ->
     0) in
-  let max_ = fillPrimesFactors t n primes nprimes in
-  sumdivaux t max_ 0
+  let max0 = fillPrimesFactors t n primes nprimes in
+  sumdivaux t max0 0
 
 let () =
 begin

@@ -53,9 +53,9 @@
               (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
                 (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
                   (let ((k (min val1 val2 val3 val4)))
-                    (let ((out_ (+ 1 k)))
-                      (setf (aref (aref cache posY) posX) out_)
-                      (return-from pathfind_aux out_)
+                    (let ((out0 (+ 1 k)))
+                      (setf (aref (aref cache posY) posX) out0)
+                      (return-from pathfind_aux out0)
                     ))))))))))))
 
 (defun pathfind (tab x y)

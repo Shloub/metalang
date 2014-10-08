@@ -100,7 +100,7 @@ var
   addon : Longint;
   i : Longint;
   lettre : Longint;
-  new_ : Longint;
+  new0 : Longint;
 begin
   for i := 0 to  taille - 1 do
   begin
@@ -109,8 +109,8 @@ begin
     then
       begin
         addon := position_alphabet(cle[i Mod taille_cle]);
-        new_ := (addon + lettre) Mod 26;
-        message[i] := of_position_alphabet(new_);
+        new0 := (addon + lettre) Mod 26;
+        message[i] := of_position_alphabet(new0);
       end;
   end;
 end;
@@ -122,8 +122,8 @@ var
   index : Longint;
   index2 : Longint;
   message : a;
+  out0 : char;
   out2 : char;
-  out_ : char;
   taille : Longint;
   taille_cle : Longint;
 begin
@@ -132,8 +132,8 @@ begin
   SetLength(cle, taille_cle);
   for index := 0 to  taille_cle - 1 do
   begin
-    out_ := read_char_();
-    cle[index] := out_;
+    out0 := read_char_();
+    cle[index] := out0;
   end;
   skip();
   taille := read_int_();

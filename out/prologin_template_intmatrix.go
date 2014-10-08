@@ -15,13 +15,13 @@ func skip() {
 }
 
 func programme_candidat(tableau [][]int, x int, y int) int{
-  var out_ int = 0
+  var out0 int = 0
   for i := 0 ; i <= y - 1; i++ {
     for j := 0 ; j <= x - 1; j++ {
-        out_ += tableau[i][j] * (i * 2 + j);
+        out0 += tableau[i][j] * (i * 2 + j);
       }
   }
-  return out_
+  return out0
 }
 
 func main() {

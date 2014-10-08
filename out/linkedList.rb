@@ -1,10 +1,10 @@
 require "scanf.rb"
 
 def cons( list, i )
-    out_ = {
+    out0 = {
       "head" => i,
       "tail" => list}
-    return (out_);
+    return (out0);
 end
 
 def rev2( empty, acc, torev )

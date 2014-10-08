@@ -54,12 +54,12 @@ type
 
 function cons(list : intlist; i : Longint) : intlist;
 var
-  out_ : intlist;
+  out0 : intlist;
 begin
-  new(out_);
-  out_^.head := i;
-  out_^.tail := list;
-  exit(out_);
+  new(out0);
+  out0^.head := i;
+  out0^.tail := list;
+  exit(out0);
 end;
 
 function rev2(empty : intlist; acc : intlist; torev : intlist) : intlist;

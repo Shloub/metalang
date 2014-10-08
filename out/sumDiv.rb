@@ -34,7 +34,7 @@ def sumdiv( n )
  On désire renvoyer la somme des diviseurs 
 =end
 
-    out_ = 0
+    out0 = 0
     
 =begin
  On déclare un entier qui contiendra la somme 
@@ -52,7 +52,7 @@ def sumdiv( n )
  Si i divise 
 =end
 
-        out_ += i
+        out0 += i
         
 =begin
  On incrémente 
@@ -66,7 +66,7 @@ def sumdiv( n )
 
       end
     end
-    return (out_);
+    return (out0);
     
 =begin
 On renvoie out

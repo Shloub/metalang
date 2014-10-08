@@ -31,7 +31,7 @@ function is_number($c){
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-function npi_(&$str, $len){
+function npi0(&$str, $len){
   $stack = array();
   for ($i = 0 ; $i < $len; $i++)
     $stack[$i] = 0;
@@ -70,6 +70,6 @@ for ($i = 0 ; $i < $len; $i++)
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }
-$result = npi_($tab, $len);
+$result = npi0($tab, $len);
 echo $result;
 ?>

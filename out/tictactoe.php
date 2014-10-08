@@ -45,7 +45,7 @@ function print_state(&$g){
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-function eval_(&$g){
+function eval0(&$g){
   $win = 0;
   $freecase = 0;
   for ($y = 0 ; $y <= 2; $y++)
@@ -123,7 +123,7 @@ function can_move(&$m, &$g){
 Un minimax classique, renvoie la note du plateau
 */
 function minmax(&$g){
-  eval_($g);
+  eval0($g);
   if ($g["ended"])
     return $g["note"];
   $maxNote = -10000;
@@ -172,7 +172,7 @@ function &play(&$g){
   return $minMove;
 }
 
-function &init_(){
+function &init0(){
   $cases = array();
   for ($i = 0 ; $i < 3; $i++)
   {
@@ -206,7 +206,7 @@ function &read_move(){
 
 for ($i = 0 ; $i <= 1; $i++)
 {
-  $state = init_();
+  $state = init0();
   $c = array(
     "x"=>1,
     "y"=>1
@@ -223,12 +223,12 @@ for ($i = 0 ; $i <= 1; $i++)
   {
     print_state($state);
     apply_move(play($state), $state);
-    eval_($state);
+    eval0($state);
     print_state($state);
     if (!$state["ended"])
     {
       apply_move(play($state), $state);
-      eval_($state);
+      eval0($state);
     }
   }
   print_state($state);

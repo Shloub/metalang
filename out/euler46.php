@@ -1,7 +1,7 @@
 <?php
-function eratostene(&$t, $max_){
+function eratostene(&$t, $max0){
   $n = 0;
-  for ($i = 2 ; $i < $max_; $i++)
+  for ($i = 2 ; $i < $max0; $i++)
     if ($t[$i] == $i)
   {
     $n ++;
@@ -9,7 +9,7 @@ function eratostene(&$t, $max_){
     if (intval($j / $i) == $i)
     {
       /* overflow test */
-      while ($j < $max_ && $j > 0)
+      while ($j < $max0 && $j > 0)
       {
         $t[$j] = 0;
         $j += $i;

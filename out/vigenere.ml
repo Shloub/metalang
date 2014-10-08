@@ -16,8 +16,8 @@ let crypte taille_cle cle taille message =
     if lettre <> -1 then
       begin
         let addon = position_alphabet cle.(i mod taille_cle) in
-        let new_ = (addon + lettre) mod 26 in
-        message.(i) <- of_position_alphabet new_
+        let new0 = (addon + lettre) mod 26 in
+        message.(i) <- of_position_alphabet new0
       end
   done
 
@@ -25,8 +25,8 @@ let () =
 begin
   let taille_cle = Scanf.scanf "%d " (fun v_0 -> v_0) in
   let cle = Array.init taille_cle (fun _index ->
-    let out_ = Scanf.scanf "%c" (fun v_0 -> v_0) in
-    out_) in
+    let out0 = Scanf.scanf "%c" (fun v_0 -> v_0) in
+    out0) in
   let taille = Scanf.scanf " %d " (fun v_0 -> v_0) in
   let message = Array.init taille (fun _index2 ->
     let out2 = Scanf.scanf "%c" (fun v_0 -> v_0) in

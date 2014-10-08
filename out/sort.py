@@ -47,7 +47,7 @@ def bubblesort( tab, len ):
           tab[i] = tab[j];
           tab[j] = tmp;
 
-def qsort_( tab, len, i, j ):
+def qsort0( tab, len, i, j ):
     if i < j:
       i0 = i;
       j0 = j;
@@ -69,8 +69,8 @@ def qsort_( tab, len, i, j ):
             i += 1
         else:
           j -= 1
-      qsort_(tab, len, i0, i - 1);
-      qsort_(tab, len, i + 1, j0);
+      qsort0(tab, len, i0, i - 1);
+      qsort0(tab, len, i + 1, j0);
 
 len = 2;
 len=readint()
@@ -87,7 +87,7 @@ for i in range(0, len):
   print("%d " % ( tab2[i] ), end='')
 print("")
 tab3 = copytab(tab, len);
-qsort_(tab3, len, 0, len - 1);
+qsort0(tab3, len, 0, len - 1);
 for i in range(0, len):
   print("%d " % ( tab3[i] ), end='')
 print("")

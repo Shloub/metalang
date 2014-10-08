@@ -3,18 +3,18 @@
 /*
 La suite de fibonaci
 */
-int fibo_(int a, int b, int i){
-  int out_ = 0;
+int fibo0(int a, int b, int i){
+  int out0 = 0;
   int a2 = a;
   int b2 = b;
   for (int j = 0 ; j <= i + 1; j ++)
   {
-    out_ += a2;
+    out0 += a2;
     int tmp = b2;
     b2 += a2;
     a2 = tmp;
   }
-  return out_;
+  return out0;
 }
 
 
@@ -23,7 +23,7 @@ int main(){
   int b = 0;
   int i = 0;
   std::cin >> a >> std::skipws >> b >> i >> std::noskipws;
-  std::cout << fibo_(a, b, i);
+  std::cout << fibo0(a, b, i);
   return 0;
 }
 

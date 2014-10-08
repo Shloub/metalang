@@ -7,9 +7,9 @@ int min2_(int a, int b){
     return b;
 }
 
-int eratostene(std::vector<int> * t, int max_){
+int eratostene(std::vector<int> * t, int max0){
   int n = 0;
-  for (int i = 2 ; i < max_; i++)
+  for (int i = 2 ; i < max0; i++)
     if (t->at(i) == i)
   {
     n ++;
@@ -17,7 +17,7 @@ int eratostene(std::vector<int> * t, int max_){
     if (j / i == i)
     {
       /* overflow test */
-      while (j < max_ && j > 0)
+      while (j < max0 && j > 0)
       {
         t->at(j) = 0;
         j += i;

@@ -1,11 +1,11 @@
 let programme_candidat tableau x y =
-  let out_ = ref( 0 ) in
+  let out0 = ref( 0 ) in
   for i = 0 to y - 1 do
     for j = 0 to x - 1 do
-      out_ := (!out_) + tableau.(i).(j) * (i * 2 + j)
+      out0 := (!out0) + tableau.(i).(j) * (i * 2 + j)
     done
   done;
-  (!out_)
+  (!out0)
 
 let () =
 begin

@@ -38,13 +38,13 @@
       (setf (aref cache pos) (* len 2))
       (let ((posval (pathfind_aux cache tab len (aref tab pos))))
         (let ((oneval (pathfind_aux cache tab len (+ pos 1))))
-          (let ((out_ 0))
+          (let ((out0 0))
             (if
               (< posval oneval)
-              (setq out_ (+ 1 posval))
-              (setq out_ (+ 1 oneval)))
-            (setf (aref cache pos) out_)
-            (return-from pathfind_aux out_)
+              (setq out0 (+ 1 posval))
+              (setq out0 (+ 1 oneval)))
+            (setf (aref cache pos) out0)
+            (return-from pathfind_aux out0)
           )))))))
 
 (defun pathfind (tab len)

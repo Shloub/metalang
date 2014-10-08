@@ -4,11 +4,11 @@ type intlist = {
 };;
 
 let cons list i =
-  let out_ = {
+  let out0 = {
     head=i;
     tail=list;
   } in
-  out_
+  out0
 
 let rec rev2 empty acc torev =
   if torev = empty then

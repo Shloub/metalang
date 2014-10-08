@@ -14,7 +14,7 @@ func skip() {
   }
 }
 
-func go_(tab []int, a int, b int) int{
+func go0(tab []int, a int, b int) int{
   var m int = (a + b) / 2
   if a == m {
     if tab[a] == m {
@@ -36,14 +36,14 @@ func go_(tab []int, a int, b int) int{
     }
   }
   if i < m {
-    return go_(tab, a, m)
+    return go0(tab, a, m)
   } else {
-    return go_(tab, m, b)
+    return go0(tab, m, b)
   }
 }
 
-func plus_petit_(tab []int, len int) int{
-  return go_(tab, 0, len)
+func plus_petit0(tab []int, len int) int{
+  return go0(tab, 0, len)
 }
 
 func main() {
@@ -58,6 +58,6 @@ func main() {
       skip()
       tab[i] = tmp;
   }
-  fmt.Printf("%d", plus_petit_(tab, len));
+  fmt.Printf("%d", plus_petit0(tab, len));
 }
 

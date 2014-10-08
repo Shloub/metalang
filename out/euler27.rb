@@ -3,13 +3,13 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def eratostene( t, max_ )
+def eratostene( t, max0 )
     n = 0
-    for i in (2 ..  max_ - 1) do
+    for i in (2 ..  max0 - 1) do
       if t[i] == i then
         n += 1
         j = i * i
-        while j < max_ && j > 0 do
+        while j < max0 && j > 0 do
           t[j] = 0;
           j += i
         end
@@ -48,7 +48,7 @@ for j in (0 ..  maximumprimes - 1) do
   era[j] = j;
 end
 result = 0
-max_ = 0
+max0 = 0
 nprimes = eratostene(era, maximumprimes)
 primes = [];
 for o in (0 ..  nprimes - 1) do
@@ -69,14 +69,14 @@ for b in (3 ..  999) do
     for a in (-999 ..  999) do
       n1 = test(a, b, primes, nprimes)
       n2 = test(a, -b, primes, nprimes)
-      if n1 > max_ then
-        max_ = n1;
+      if n1 > max0 then
+        max0 = n1;
         result = a * b;
         ma = a;
         mb = b;
       end
-      if n2 > max_ then
-        max_ = n2;
+      if n2 > max0 then
+        max0 = n2;
         result = -a * b;
         ma = a;
         mb = -b;
@@ -84,5 +84,5 @@ for b in (3 ..  999) do
     end
   end
 end
-printf "%d %d\n%d\n%d\n", ma, mb, max_, result
+printf "%d %d\n%d\n%d\n", ma, mb, max0, result
 

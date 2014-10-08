@@ -26,7 +26,7 @@ else if ($i == 6)
   $directions[$i] = array(-1, 1);
 else
   $directions[$i] = array(-1, -1);
-$max_ = 0;
+$max0 = 0;
 $e = 20;
 $g = array();
 for ($h = 0 ; $h < 20; $h++)
@@ -39,9 +39,9 @@ for ($j = 0 ; $j <= 7; $j++)
     for ($y = 0 ; $y <= 19; $y++)
     {
       $o = find(4, $m, $x, $y, $dx, $dy);
-      $l = max($max_, $o);
-      $max_ = $l;
+      $l = max($max0, $o);
+      $max0 = $l;
   }
 }
-echo $max_, "\n";
+echo $max0, "\n";
 ?>

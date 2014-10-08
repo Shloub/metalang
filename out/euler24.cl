@@ -20,10 +20,10 @@
     (return-from fact prod)
   )))
 
-(defun show (lim nth_)
+(defun show (lim nth0)
 (progn
   (let
-   ((t_ (array_init
+   ((t0 (array_init
            lim
            (function (lambda (i)
            (block lambda_1
@@ -43,8 +43,8 @@
     ((> k (- lim 1)))
     (progn
       (let ((n (fact (- lim k))))
-        (let ((nchiffre (quotient nth_ n)))
-          (setq nth_ ( remainder nth_ n))
+        (let ((nchiffre (quotient nth0 n)))
+          (setq nth0 ( remainder nth0 n))
           (do
             ((l 0 (+ 1 l)))
             ((> l (- lim 1)))

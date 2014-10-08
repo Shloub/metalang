@@ -36,19 +36,19 @@ def readint():
 def mod(x, y):
   return x - y * math.trunc(x / y)
 
-def exp_( a, b ):
+def exp0( a, b ):
     if b == 0:
       return 1;
     if (mod(b, 2)) == 0:
-      o = exp_(a, math.trunc(b / 2));
+      o = exp0(a, math.trunc(b / 2));
       return o * o;
     else:
-      return a * exp_(a, b - 1);
+      return a * exp0(a, b - 1);
 
 a = 0;
 b = 0;
 a=readint()
 stdinsep()
 b=readint()
-print("%d" % exp_(a, b), end='')
+print("%d" % exp0(a, b), end='')
 

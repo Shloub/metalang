@@ -34,7 +34,7 @@ let print_state g =
   Printf.printf "\n"
 
 (* On dit qui gagne (info stoquées dans g.ended et g.note ) *)
-let eval_ g =
+let eval0 g =
   let win = ref( 0 ) in
   let freecase = ref( 0 ) in
   for y = 0 to 2 do
@@ -102,7 +102,7 @@ let can_move m g =
 Un minimax classique, renvoie la note du plateau
 *)
 let rec minmax g =
-  eval_ g;
+  eval0 g;
   if g.ended then
     g.note
   else
@@ -155,7 +155,7 @@ let play g =
   Printf.printf "%d%d\n" minMove.x minMove.y;
   minMove
 
-let init_ () =
+let init0 () =
   let cases = Array.init 3 (fun _i ->
     let tab = Array.init 3 (fun _j ->
       0) in
@@ -177,7 +177,7 @@ let read_move () =
 let () =
 begin
   for _i = 0 to 1 do
-    let state = (init_ ()) in
+    let state = (init0 ()) in
     apply_move {
       x=1;
       y=1;
@@ -190,12 +190,12 @@ begin
     do
         print_state state;
         apply_move (play state) state;
-        eval_ state;
+        eval0 state;
         print_state state;
         if not state.ended then
           begin
             apply_move (play state) state;
-            eval_ state
+            eval0 state
           end
     done;
     print_state state;

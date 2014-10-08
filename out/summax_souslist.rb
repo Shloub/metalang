@@ -1,17 +1,17 @@
 require "scanf.rb"
 def summax( lst, len )
     current = 0
-    max_ = 0
+    max0 = 0
     for i in (0 ..  len - 1) do
       current += lst[i]
       if current < 0 then
         current = 0;
       end
-      if max_ < current then
-        max_ = current;
+      if max0 < current then
+        max0 = current;
       end
     end
-    return (max_);
+    return (max0);
 end
 
 len = 0

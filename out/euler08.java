@@ -15,7 +15,7 @@ public class euler08
       i *= d;
       last[j] = d;
     }
-    int max_ = i;
+    int max0 = i;
     int index = 0;
     int nskipdiv = 0;
     for (int k = 1 ; k <= 995; k ++)
@@ -36,9 +36,9 @@ public class euler08
       }
       last[index] = f;
       index = (index + 1) % 5;
-      max_ = Math.max(max_, i);
+      max0 = Math.max(max0, i);
     }
-    System.out.printf("%d\n", max_);
+    System.out.printf("%d\n", max0);
   }
   
 }

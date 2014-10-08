@@ -9,12 +9,12 @@ def mktoto( v1 )
 end
 
 def result( t, len )
-    out_ = 0
+    out0 = 0
     for j in (0 ..  len - 1) do
       t[j]["blah"] = t[j]["blah"] + 1;
-      out_ = out_ + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"];
+      out0 = out0 + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"];
     end
-    return (out_);
+    return (out0);
 end
 
 t = [];

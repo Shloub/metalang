@@ -27,13 +27,13 @@ sub nth{
   my($tab,
   $tofind,
   $len) = @_;
-  my $out_ = 0;
+  my $out0 = 0;
   foreach my $i (0 .. $len - 1) {
     if ($tab->[$i] eq $tofind) {
-      $out_ = $out_ + 1;
+      $out0 = $out0 + 1;
     }
     }
-  return $out_;
+  return $out0;
 }
 
 my $len = 0;

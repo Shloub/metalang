@@ -23,14 +23,14 @@ func pathfind_aux(cache []int, tab []int, len int, pos int) int{
     cache[pos] = len * 2;
     var posval int = pathfind_aux(cache, tab, len, tab[pos])
     var oneval int = pathfind_aux(cache, tab, len, pos + 1)
-    var out_ int = 0
+    var out0 int = 0
     if posval < oneval {
-      out_ = 1 + posval;
+      out0 = 1 + posval;
     } else {
-      out_ = 1 + oneval;
+      out0 = 1 + oneval;
     }
-    cache[pos] = out_;
-    return out_
+    cache[pos] = out0;
+    return out0
   } 
 }
 

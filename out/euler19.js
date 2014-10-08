@@ -1,6 +1,7 @@
 var util = require("util");
 function is_leap(year){
-  return (~~(year % 400)) == 0 || ((~~(year % 100)) != 0 && (~~(year % 4)) == 0);
+  return (~~(year % 400)) == 0 || ((~~(year % 100)) != 0 && (~~(year % 4)) ==
+                                    0);
 }
 
 function ndayinmonth(month, year){

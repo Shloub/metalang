@@ -19,7 +19,7 @@ for (var j = 0 ; j <= 5 - 1; j++)
   i *= d;
   last[j] = d;
 }
-var max_ = i;
+var max0 = i;
 var index = 0;
 var nskipdiv = 0;
 for (var k = 1 ; k <= 995; k++)
@@ -40,7 +40,7 @@ for (var k = 1 ; k <= 995; k++)
   }
   last[index] = f;
   index = ~~((index + 1) % 5);
-  max_ = Math.max(max_, i);
+  max0 = Math.max(max0, i);
 }
-util.print(max_, "\n");
+util.print(max0, "\n");
 

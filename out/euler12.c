@@ -8,15 +8,15 @@ int max2_(int a, int b){
     return b;
 }
 
-int eratostene(int* t, int max_){
+int eratostene(int* t, int max0){
   int i;
   int n = 0;
-  for (i = 2 ; i < max_; i++)
+  for (i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
     int j = i * i;
     n ++;
-    while (j < max_ && j > 0)
+    while (j < max0 && j > 0)
     {
       t[j] = 0;
       j += i;
@@ -63,10 +63,10 @@ int find(int ndiv2){
     int *primesFactors = malloc( (n + 2) * sizeof(int));
     for (m = 0 ; m < n + 2; m++)
       primesFactors[m] = 0;
-    int max_ = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] --;
     int ndivs = 1;
-    for (i = 0 ; i <= max_; i++)
+    for (i = 0 ; i <= max0; i++)
       if (primesFactors[i] != 0)
       ndivs *= 1 + primesFactors[i];
     if (ndivs > ndiv2)

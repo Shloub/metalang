@@ -23,7 +23,7 @@ public class sort
     }
   }
   
-  public static void qsort_(int[] tab, int len, int i, int j)
+  public static void qsort0(int[] tab, int len, int i, int j)
   {
     if (i < j)
     {
@@ -53,8 +53,8 @@ public class sort
       }
       else
         j --;
-      qsort_(tab, len, i0, i - 1);
-      qsort_(tab, len, i + 1, j0);
+      qsort0(tab, len, i0, i - 1);
+      qsort0(tab, len, i + 1, j0);
     }
   }
   
@@ -90,7 +90,7 @@ public class sort
     }
     System.out.print("\n");
     int[] tab3 = copytab(tab, len);
-    qsort_(tab3, len, 0, len - 1);
+    qsort0(tab3, len, 0, len - 1);
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d ", tab3[i]);

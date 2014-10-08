@@ -3,10 +3,10 @@
 
 int programme_candidat(int* tableau, int taille){
   int i;
-  int out_ = 0;
+  int out0 = 0;
   for (i = 0 ; i < taille; i++)
-    out_ += tableau[i];
-  return out_;
+    out0 += tableau[i];
+  return out0;
 }
 
 int main(void){

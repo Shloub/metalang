@@ -39,6 +39,7 @@ begin
     end;
 end;
 
+type h = array of Longint;
 
 var
   c : char;
@@ -49,8 +50,8 @@ var
   index : Longint;
   j : Longint;
   k : Longint;
-  last : array of Longint;
-  max_ : Longint;
+  last : h;
+  max0 : Longint;
   nskipdiv : Longint;
 begin
   i := 1;
@@ -62,7 +63,7 @@ begin
     i := i * d;
     last[j] := d;
   end;
-  max_ := i;
+  max0 := i;
   index := 0;
   nskipdiv := 0;
   for k := 1 to  995 do
@@ -87,9 +88,9 @@ begin
       end;
     last[index] := f;
     index := (index + 1) Mod 5;
-    max_ := max2_(max_, i);
+    max0 := max2_(max0, i);
   end;
-  Write(max_);
+  Write(max0);
   Write(''#10'');
 end.
 

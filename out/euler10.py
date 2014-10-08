@@ -1,7 +1,7 @@
 import math
-def eratostene( t, max_ ):
+def eratostene( t, max0 ):
     sum = 0;
-    for i in range(2, max_):
+    for i in range(2, max0):
       if t[i] == i:
         sum += i
         j = i * i;
@@ -9,7 +9,7 @@ def eratostene( t, max_ ):
 			detect overflow
 			"""
         if math.trunc(j / i) == i:
-          while (j < max_ and j > 0):
+          while (j < max0 and j > 0):
             t[j] = 0;
             j += i
     return sum;

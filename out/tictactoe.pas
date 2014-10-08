@@ -118,7 +118,7 @@ begin
 end;
 
 { On dit qui gagne (info stoquées dans g.ended et g.note ) }
-procedure eval_(g : gamestate);
+procedure eval0(g : gamestate);
 var
   col : Longint;
   colv : Longint;
@@ -254,7 +254,7 @@ var
   x : Longint;
   y : Longint;
 begin
-  eval_(g);
+  eval0(g);
   if g^.ended
   then
     begin
@@ -336,10 +336,11 @@ begin
 end;
 
 type e = array of Longint;
-function init_() : gamestate;
+type f = array of array of Longint;
+function init0() : gamestate;
 var
   a : gamestate;
-  cases : array of e;
+  cases : f;
   i : Longint;
   j : Longint;
   tab : e;
@@ -387,7 +388,7 @@ var
 begin
   for i := 0 to  1 do
   begin
-    state := init_();
+    state := init0();
     new(c);
     c^.x := 1;
     c^.y := 1;
@@ -400,13 +401,13 @@ begin
     begin
       print_state(state);
       apply_move(play(state), state);
-      eval_(state);
+      eval0(state);
       print_state(state);
       if not state^.ended
       then
         begin
           apply_move(play(state), state);
-          eval_(state);
+          eval0(state);
         end;
     end;
     print_state(state);

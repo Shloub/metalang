@@ -17,7 +17,7 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-function go_(&$tab, $a, $b){
+function go0(&$tab, $a, $b){
   $m = intval(($a + $b) / 2);
   if ($a == $m)
   {
@@ -41,13 +41,13 @@ function go_(&$tab, $a, $b){
     }
   }
   if ($i < $m)
-    return go_($tab, $a, $m);
+    return go0($tab, $a, $m);
   else
-    return go_($tab, $m, $b);
+    return go0($tab, $m, $b);
 }
 
-function plus_petit_(&$tab, $len){
-  return go_($tab, 0, $len);
+function plus_petit0(&$tab, $len){
+  return go0($tab, 0, $len);
 }
 
 $len = 0;
@@ -61,5 +61,5 @@ for ($i = 0 ; $i < $len; $i++)
   scantrim();
   $tab[$i] = $tmp;
 }
-echo plus_petit_($tab, $len);
+echo plus_petit0($tab, $len);
 ?>

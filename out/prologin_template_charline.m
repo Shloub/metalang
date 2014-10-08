@@ -4,14 +4,14 @@
 
 int programme_candidat(char* tableau, int taille){
   int i;
-  int out_ = 0;
+  int out0 = 0;
   for (i = 0 ; i < taille; i++)
   {
-    out_ += (int)(tableau[i]) * i;
+    out0 += (int)(tableau[i]) * i;
     printf("%c", tableau[i]);
   }
   printf("--\n");
-  return out_;
+  return out0;
 }
 
 int main(void){

@@ -58,7 +58,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
               )))))))
 ))
 
-(defun find_ (len tab)
+(defun find01 (len tab)
 (progn
   (let
    ((tab2 (array_init
@@ -76,7 +76,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
                (return-from lambda_1 tab3)
                )))
              ))))
-  (return-from find_ (find0 len tab tab2 0 0))
+  (return-from find01 (find0 len tab tab2 0 0))
   )))
 
 (progn
@@ -102,7 +102,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
                 (return-from lambda_3 tab2)
                 )))
               ))))
-    (princ (find_ len tab))
+    (princ (find01 len tab))
     (princ "
 ")
     (do

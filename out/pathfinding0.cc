@@ -39,9 +39,9 @@ int pathfind_aux(std::vector<std::vector<int> *> * cache, std::vector<std::vecto
     int r = min2_(q, val4);
     int s = r;
     int o = s;
-    int out_ = 1 + o;
-    cache->at(posY)->at(posX) = out_;
-    return out_;
+    int out0 = 1 + o;
+    cache->at(posY)->at(posX) = out0;
+    return out0;
   }
 }
 

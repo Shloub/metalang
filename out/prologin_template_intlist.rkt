@@ -3,15 +3,15 @@
 
 (define (programme_candidat tableau taille)
   ;toto
-  (let ([out_ 0])
+  (let ([out0 0])
   (let ([d 0])
   (let ([e (- taille 1)])
-  (letrec ([c (lambda (i out_) 
+  (letrec ([c (lambda (i out0) 
                 (if (<= i e)
-                (let ([out_ (+ out_ (vector-ref tableau i))])
-                (c (+ i 1) out_))
-                out_))])
-  (c d out_)))))
+                (let ([out0 (+ out0 (vector-ref tableau i))])
+                (c (+ i 1) out0))
+                out0))])
+  (c d out0)))))
 )
 (define main
   (let ([taille (string->number (read-line))])

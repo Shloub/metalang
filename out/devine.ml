@@ -1,16 +1,16 @@
 exception Found_1 of bool
 
-let devine_ nombre tab len =
+let devine0 nombre tab len =
   try
-  let min_ = ref( tab.(0) ) in
-  let max_ = ref( tab.(1) ) in
+  let min0 = ref( tab.(0) ) in
+  let max0 = ref( tab.(1) ) in
   for i = 2 to len - 1 do
-    if tab.(i) > (!max_) or tab.(i) < (!min_) then
+    if tab.(i) > (!max0) or tab.(i) < (!min0) then
       raise (Found_1(false));
     if tab.(i) < nombre then
-      min_ := tab.(i);
+      min0 := tab.(i);
     if tab.(i) > nombre then
-      max_ := tab.(i);
+      max0 := tab.(i);
     if tab.(i) = nombre && len <> i + 1 then
       raise (Found_1(false))
   done;
@@ -23,7 +23,7 @@ begin
   let tab = Array.init len (fun _i ->
     let tmp = Scanf.scanf "%d " (fun v_0 -> v_0) in
     tmp) in
-  let a = devine_ nombre tab len in
+  let a = devine0 nombre tab len in
   if a then
     Printf.printf "True"
   else

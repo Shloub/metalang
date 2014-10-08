@@ -13,9 +13,9 @@
   ;toto
   b
 )
-(define (g t_ index)
+(define (g t0 index)
   ;toto
-  (vector-set! t_ index #f)
+  (vector-set! t0 index #f)
 )
 (define main
   (let ([a (array_init_withenv 5 (lambda (i) 

@@ -30,8 +30,7 @@ sub score{
   my $sum = 0;
   foreach my $i (1 .. $len) {
     my $c = readchar();
-    $sum = $sum + (ord($c) - ord('A'))
-    +
+    $sum = $sum + (ord($c) - ord('A')) +
     1;
     #		print c print " " print sum print " " 
     
@@ -42,8 +41,7 @@ sub score{
 my $sum = 0;
 my $n = readint();
 foreach my $i (1 .. $n) {
-  $sum = $sum + $i
-  *
+  $sum = $sum + $i *
   score();
   }
 print($sum, "\n");

@@ -33,16 +33,16 @@ def readint():
     else:
       return out * sign
 
-def devine_( nombre, tab, len ):
-    min_ = tab[0];
-    max_ = tab[1];
+def devine0( nombre, tab, len ):
+    min0 = tab[0];
+    max0 = tab[1];
     for i in range(2, len):
-      if tab[i] > max_ or tab[i] < min_:
+      if tab[i] > max0 or tab[i] < min0:
         return False;
       if tab[i] < nombre:
-        min_ = tab[i];
+        min0 = tab[i];
       if tab[i] > nombre:
-        max_ = tab[i];
+        max0 = tab[i];
       if tab[i] == nombre and len != i + 1:
         return False;
     return True;
@@ -56,7 +56,7 @@ for i in range(0, len):
   tmp=readint()
   stdinsep()
   tab[i] = tmp;
-a = devine_(nombre, tab, len);
+a = devine0(nombre, tab, len);
 if a:
   print( "True", end='')
 else:

@@ -28,13 +28,14 @@ function &mktoto($v1){
 }
 
 function result(&$t, $len){
-  $out_ = 0;
+  $out0 = 0;
   for ($j = 0 ; $j < $len; $j++)
   {
     $t[$j]["blah"] = $t[$j]["blah"] + 1;
-    $out_ = $out_ + $t[$j]["foo"] + $t[$j]["blah"] * $t[$j]["bar"] + $t[$j]["bar"] * $t[$j]["foo"];
+    $out0 = $out0 + $t[$j]["foo"] + $t[$j]["blah"] * $t[$j]["bar"] +
+    $t[$j]["bar"] * $t[$j]["foo"];
   }
-  return $out_;
+  return $out0;
 }
 
 $t = array();

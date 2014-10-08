@@ -133,9 +133,9 @@ var
   m : Longint;
   n : Longint;
   out0 : g;
+  out01 : Longint;
   out1 : g;
   out_ : Longint;
-  out__ : Longint;
   passepartout : h;
   serrures : h;
 begin
@@ -147,9 +147,9 @@ begin
     SetLength(out0, 2);
     for j := 0 to  2 - 1 do
     begin
-      out__ := read_int_();
+      out01 := read_int_();
       skip();
-      out0[j] := out__;
+      out0[j] := out01;
     end;
     passepartout[i] := out0;
   end;

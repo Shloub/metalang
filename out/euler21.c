@@ -1,15 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int eratostene(int* t, int max_){
+int eratostene(int* t, int max0){
   int i;
   int n = 0;
-  for (i = 2 ; i < max_; i++)
+  for (i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
     n ++;
     int j = i * i;
-    while (j < max_ && j > 0)
+    while (j < max0 && j > 0)
     {
       t[j] = 0;
       j += i;
@@ -49,14 +49,14 @@ int sumdivaux(int* t, int n, int i){
   else
   {
     int o = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
-    int out_ = 0;
+    int out0 = 0;
     int p = i;
     for (j = 1 ; j <= t[i]; j++)
     {
-      out_ += p;
+      out0 += p;
       p *= i;
     }
-    return (out_ + 1) * o;
+    return (out0 + 1) * o;
   }
 }
 
@@ -65,8 +65,8 @@ int sumdiv(int nprimes, int* primes, int n){
   int *t = malloc( (n + 1) * sizeof(int));
   for (i = 0 ; i < n + 1; i++)
     t[i] = 0;
-  int max_ = fillPrimesFactors(t, n, primes, nprimes);
-  return sumdivaux(t, max_, 0);
+  int max0 = fillPrimesFactors(t, n, primes, nprimes);
+  return sumdivaux(t, max0, 0);
 }
 
 int main(void){

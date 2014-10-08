@@ -22,11 +22,11 @@ function read_int_(){
   }
 }
 function cons(list, i){
-  var out_ = {
+  var out0 = {
     head : i,
     tail : list
   };
-  return out_;
+  return out0;
 }
 
 function rev2(empty, acc, torev){

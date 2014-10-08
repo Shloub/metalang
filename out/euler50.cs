@@ -2,10 +2,10 @@ using System;
 
 public class euler50
 {
-  public static int eratostene(int[] t, int max_)
+  public static int eratostene(int[] t, int max0)
   {
     int n = 0;
-    for (int i = 2 ; i < max_; i++)
+    for (int i = 2 ; i < max0; i++)
       if (t[i] == i)
     {
       n ++;
@@ -13,7 +13,7 @@ public class euler50
       if (j / i == i)
       {
         /* overflow test */
-        while (j < max_ && j > 0)
+        while (j < max0 && j > 0)
         {
           t[j] = 0;
           j += i;

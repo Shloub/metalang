@@ -75,7 +75,7 @@ public class euler11
       ba.tuple_int_int_field_1 = -1;
       directions[i] = ba;
     }
-    int max_ = 0;
+    int max0 = 0;
     int h = 20;
     int[][] l = new int[20][];
     for (int o = 0 ; o < 20; o++)
@@ -105,11 +105,11 @@ public class euler11
         for (int y = 0 ; y <= 19; y ++)
         {
           int v = find(4, m, x, y, dx, dy);
-          int u = Math.max(max_, v);
-          max_ = u;
+          int u = Math.max(max0, v);
+          max0 = u;
       }
     }
-    System.out.printf("%d\n", max_);
+    System.out.printf("%d\n", max0);
   }
   
 }

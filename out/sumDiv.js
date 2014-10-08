@@ -41,7 +41,7 @@ function foo3(){
 
 function sumdiv(n){
   /* On désire renvoyer la somme des diviseurs */
-  var out_ = 0;
+  var out0 = 0;
   /* On déclare un entier qui contiendra la somme */
   for (var i = 1 ; i <= n; i++)
   {
@@ -49,7 +49,7 @@ function sumdiv(n){
     if ((~~(n % i)) == 0)
     {
       /* Si i divise */
-      out_ += i;
+      out0 += i;
       /* On incrémente */
     }
     else
@@ -57,7 +57,7 @@ function sumdiv(n){
       /* nop */
     }
   }
-  return out_;
+  return out0;
   /*On renvoie out*/
 }
 

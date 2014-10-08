@@ -87,9 +87,9 @@ public static int readInt(){
       int[] out0 = new int[2];
       for (int j = 0 ; j < 2; j++)
       {
-        int out__ = readInt();
+        int out01 = readInt();
         stdin_sep();
-        out0[j] = out__;
+        out0[j] = out01;
       }
       passepartout[i] = out0;
     }

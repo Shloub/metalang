@@ -54,7 +54,7 @@ func print_state(g * gamestate) {
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-func eval_(g * gamestate) {
+func eval0(g * gamestate) {
   var win int = 0
   var freecase int = 0
   for y := 0 ; y <= 2; y++ {
@@ -137,7 +137,7 @@ func can_move(m * move, g * gamestate) bool{
 Un minimax classique, renvoie la note du plateau
 */
 func minmax(g * gamestate) int{
-  eval_(g);
+  eval0(g);
   if (*g).ended {
     return (*g).note
   }
@@ -188,7 +188,7 @@ func play(g * gamestate) * move{
   return minMove
 }
 
-func init_() * gamestate{
+func init0() * gamestate{
   var cases [][]int = make([][]int, 3)
   for i := 0 ; i <= 3 - 1; i++ {
     var tab []int = make([]int, 3)
@@ -221,7 +221,7 @@ func read_move() * move{
 func main() {
   reader = bufio.NewReader(os.Stdin)
   for i := 0 ; i <= 1; i++ {
-    var state * gamestate = init_()
+    var state * gamestate = init0()
       var c * move = new (move)
       (*c).x=1
       (*c).y=1
@@ -233,11 +233,11 @@ func main() {
       for !(*state).ended{
         print_state(state);
         apply_move(play(state), state);
-        eval_(state);
+        eval0(state);
         print_state(state);
         if !(*state).ended {
           apply_move(play(state), state);
-            eval_(state);
+            eval0(state);
         }
       }
       print_state(state);

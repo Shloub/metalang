@@ -1,12 +1,12 @@
 var util = require("util");
-function eratostene(t, max_){
+function eratostene(t, max0){
   var n = 0;
-  for (var i = 2 ; i <= max_ - 1; i++)
+  for (var i = 2 ; i <= max0 - 1; i++)
     if (t[i] == i)
   {
     n ++;
     var j = i * i;
-    while (j < max_ && j > 0)
+    while (j < max0 && j > 0)
     {
       t[j] = 0;
       j += i;
@@ -43,7 +43,7 @@ var era = new Array(maximumprimes);
 for (var j = 0 ; j <= maximumprimes - 1; j++)
   era[j] = j;
 var result = 0;
-var max_ = 0;
+var max0 = 0;
 var nprimes = eratostene(era, maximumprimes);
 var primes = new Array(nprimes);
 for (var o = 0 ; o <= nprimes - 1; o++)
@@ -64,20 +64,20 @@ for (var b = 3 ; b <= 999; b++)
   {
     var n1 = test(a, b, primes, nprimes);
     var n2 = test(a, -b, primes, nprimes);
-    if (n1 > max_)
+    if (n1 > max0)
     {
-      max_ = n1;
+      max0 = n1;
       result = a * b;
       ma = a;
       mb = b;
     }
-    if (n2 > max_)
+    if (n2 > max0)
     {
-      max_ = n2;
+      max0 = n2;
       result = -a * b;
       ma = a;
       mb = -b;
     }
 }
-util.print(ma, " ", mb, "\n", max_, "\n", result, "\n");
+util.print(ma, " ", mb, "\n", max0, "\n", result, "\n");
 

@@ -9,17 +9,17 @@ module Array = struct
     )
 end
 
-let eratostene t max_ =
+let eratostene t max0 =
   let n = 0 in
   let bf = 2 in
-  let bg = (max_ - 1) in
+  let bg = (max0 - 1) in
   let rec bc i n =
     (if (i <= bg)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
                    let j = (i * i) in
                    let rec be j =
-                     (if ((j < max_) && (j > 0))
+                     (if ((j < max0) && (j > 0))
                       then (
                              t.(j) <- 0;
                              let j = (j + i) in
@@ -67,22 +67,22 @@ let rec sumdivaux t n i =
    (if (t.(i) = 0)
     then (sumdivaux t n (sumdivaux2 t n (i + 1)))
     else let o = (sumdivaux t n (sumdivaux2 t n (i + 1))) in
-    let out_ = 0 in
+    let out0 = 0 in
     let p = i in
     let m = 1 in
     let u = t.(i) in
-    let rec h j out_ p =
+    let rec h j out0 p =
       (if (j <= u)
-       then let out_ = (out_ + p) in
+       then let out0 = (out0 + p) in
        let p = (p * i) in
-       (h (j + 1) out_ p)
-       else ((out_ + 1) * o)) in
-      (h m out_ p)))
+       (h (j + 1) out0 p)
+       else ((out0 + 1) * o)) in
+      (h m out0 p)))
 let sumdiv nprimes primes n =
   let t = (Array.init_withenv (n + 1) (fun  i () -> let e = 0 in
   ((), e)) ()) in
-  let max_ = (fillPrimesFactors t n primes nprimes) in
-  (sumdivaux t max_ 0)
+  let max0 = (fillPrimesFactors t n primes nprimes) in
+  (sumdivaux t max0 0)
 let main =
   let maximumprimes = 30001 in
   let era = (Array.init_withenv maximumprimes (fun  s () -> let bh = s in

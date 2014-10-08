@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 sub f{
-  my($tuple_) = @_;
-  my ($a, $b) = @{ $tuple_ };
+  my($tuple0) = @_;
+  my ($a, $b) = @{ $tuple0 };
   return [$a + 1, $b + 1];
 }
 

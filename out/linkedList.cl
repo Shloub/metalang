@@ -20,11 +20,11 @@
   tail
   )
 
-(defun cons_ (list i)
+(defun cons0 (list i)
 (progn
-  (let ((out_ (make-intlist :head i
+  (let ((out0 (make-intlist :head i
                             :tail list)))
-  (return-from cons_ out_)
+  (return-from cons0 out0)
 )))
 
 (defun rev2 (empty acc torev)
@@ -49,7 +49,7 @@
            (setq i (mread-int ))
            (if
              (not (= i 0))
-             (setq list (cons_ list i)))
+             (setq list (cons0 list i)))
            )
       )
     ))))

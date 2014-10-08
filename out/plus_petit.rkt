@@ -30,7 +30,7 @@
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define (go_ tab a b)
+(define (go0 tab a b)
   ;toto
   (let ([m (quotient (+ a b) 2)])
   (if (eq? a m)
@@ -54,8 +54,8 @@
                            (let ([c (lambda (_) 
                                       '())])
                            (if (< i m)
-                           (go_ tab a m)
-                           (go_ tab m b)))))])
+                           (go0 tab a m)
+                           (go0 tab m b)))))])
              (f i j)))))])
   (if (eq? (vector-ref tab a) m)
   b
@@ -79,13 +79,13 @@
               (let ([c (lambda (_) 
                          '())])
               (if (< i m)
-              (go_ tab a m)
-              (go_ tab m b)))))])
+              (go0 tab a m)
+              (go0 tab m b)))))])
 (f i j))))))
 )
-(define (plus_petit_ tab len)
+(define (plus_petit0 tab len)
   ;toto
-  (go_ tab 0 len)
+  (go0 tab 0 len)
 )
 (define main
   (let ([len 0])
@@ -102,7 +102,7 @@
                                                              (let ([h tmp])
                                                              (list '() h))
                                                              ))) (mread-int))))) '())])
-     (display (plus_petit_ tab len)))
+     (display (plus_petit0 tab len)))
      ))) (mread-int)))
 )
 

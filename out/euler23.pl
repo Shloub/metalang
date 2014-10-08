@@ -7,13 +7,13 @@ sub remainder {
 
 sub eratostene{
   my($t,
-  $max_) = @_;
+  $max0) = @_;
   my $n = 0;
-  foreach my $i (2 .. $max_ - 1) {
+  foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
       $n = $n + 1;
       my $j = $i * $i;
-      while ($j < $max_ && $j > 0)
+      while ($j < $max0 && $j > 0)
       {
         $t->[$j] = 0;
         $j = $j + $i;
@@ -63,13 +63,13 @@ sub sumdivaux{
     return sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
   }else{
     my $o = sumdivaux($t, $n, sumdivaux2($t, $n, $i + 1));
-    my $out_ = 0;
+    my $out0 = 0;
     my $p = $i;
     foreach my $j (1 .. $t->[$i]) {
-      $out_ = $out_ + $p;
+      $out0 = $out0 + $p;
       $p = $p * $i;
       }
-    return ($out_ + 1) * $o;
+    return ($out0 + 1) * $o;
   }
 }
 
@@ -81,8 +81,8 @@ sub sumdiv{
   foreach my $i (0 .. $n + 1 - 1) {
     $t->[$i] = 0;
     }
-  my $max_ = fillPrimesFactors($t, $n, $primes, $nprimes);
-  return sumdivaux($t, $max_, 0);
+  my $max0 = fillPrimesFactors($t, $n, $primes, $nprimes);
+  return sumdivaux($t, $max0, 0);
 }
 
 my $maximumprimes = 30001;

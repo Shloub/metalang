@@ -22,17 +22,17 @@ sub remainder {
     return $a - int($a / $b) * $b;
 }
 
-sub exp_{
+sub exp0{
   my($a,
   $b) = @_;
   if ($b eq 0) {
     return 1;
   }
   if ((remainder($b, 2)) eq 0) {
-    my $o = exp_($a, int(($b) / (2)));
+    my $o = exp0($a, int(($b) / (2)));
     return $o * $o;
   }else{
-    return $a * exp_($a, $b - 1);
+    return $a * exp0($a, $b - 1);
   }
 }
 
@@ -41,6 +41,6 @@ my $b = 0;
 $a = readint();
 readspaces();
 $b = readint();
-print(exp_($a, $b));
+print(exp0($a, $b));
 
 

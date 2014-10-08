@@ -65,7 +65,7 @@ type a = array of Longint;
 function pathfind_aux(cache : a; tab : a; len : Longint; pos : Longint) : Longint;
 var
   oneval : Longint;
-  out_ : Longint;
+  out0 : Longint;
   posval : Longint;
 begin
   if pos >= (len - 1) then
@@ -82,18 +82,18 @@ begin
       cache[pos] := len * 2;
       posval := pathfind_aux(cache, tab, len, tab[pos]);
       oneval := pathfind_aux(cache, tab, len, pos + 1);
-      out_ := 0;
+      out0 := 0;
       if posval < oneval
       then
         begin
-          out_ := 1 + posval;
+          out0 := 1 + posval;
         end
       else
         begin
-          out_ := 1 + oneval;
+          out0 := 1 + oneval;
         end;
-      cache[pos] := out_;
-      exit(out_);
+      cache[pos] := out0;
+      exit(out0);
     end;;
 end;
 

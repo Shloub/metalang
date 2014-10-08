@@ -9,10 +9,10 @@ module Array = struct
     )
 end
 
-let eratostene t max_ =
+let eratostene t max0 =
   let sum = 0 in
   let d = 2 in
-  let e = (max_ - 1) in
+  let e = (max0 - 1) in
   let rec a i sum =
     (if (i <= e)
      then let sum = (if (t.(i) = i)
@@ -23,7 +23,7 @@ let eratostene t max_ =
 			 *)
                      let j = (if ((j / i) = i)
                               then let rec c j =
-                                     (if ((j < max_) && (j > 0))
+                                     (if ((j < max0) && (j > 0))
                                       then (
                                              t.(j) <- 0;
                                              let j = (j + i) in

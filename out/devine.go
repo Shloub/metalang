@@ -14,18 +14,18 @@ func skip() {
   }
 }
 
-func devine_(nombre int, tab []int, len int) bool{
-  var min_ int = tab[0]
-  var max_ int = tab[1]
+func devine0(nombre int, tab []int, len int) bool{
+  var min0 int = tab[0]
+  var max0 int = tab[1]
   for i := 2 ; i <= len - 1; i++ {
-    if tab[i] > max_ || tab[i] < min_ {
+    if tab[i] > max0 || tab[i] < min0 {
         return false
       }
       if tab[i] < nombre {
-        min_ = tab[i];
+        min0 = tab[i];
       }
       if tab[i] > nombre {
-        max_ = tab[i];
+        max0 = tab[i];
       }
       if tab[i] == nombre && len != i + 1 {
         return false
@@ -49,7 +49,7 @@ func main() {
       skip()
       tab[i] = tmp;
   }
-  var a bool = devine_(nombre, tab, len)
+  var a bool = devine0(nombre, tab, len)
   if a {
     fmt.Printf("True");
   } else {

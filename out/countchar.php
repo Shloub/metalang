@@ -25,11 +25,11 @@ function nextChar(){
   return $out;
 }
 function nth(&$tab, $tofind, $len){
-  $out_ = 0;
+  $out0 = 0;
   for ($i = 0 ; $i < $len; $i++)
     if ($tab[$i] == $tofind)
-    $out_ ++;
-  return $out_;
+    $out0 ++;
+  return $out0;
 }
 
 $len = 0;

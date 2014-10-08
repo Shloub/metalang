@@ -9,14 +9,14 @@
         out
     ))
 (defun quotient (a b) (truncate a b))
-(defun eratostene (t_ max_)
+(defun eratostene (t0 max0)
 (progn
   (let ((n 0))
     (do
       ((i 2 (+ 1 i)))
-      ((> i (- max_ 1)))
+      ((> i (- max0 1)))
       (if
-        (= (aref t_ i) i)
+        (= (aref t0 i) i)
         (progn
           (setq n ( + n 1))
           (let ((j (* i i)))
@@ -24,9 +24,9 @@
               (= (quotient j i) i)
               (progn
                 #| overflow test |#
-                (loop while (and (< j max_) (> j 0))
+                (loop while (and (< j max0) (> j 0))
                 do (progn
-                     (setf (aref t_ j) 0)
+                     (setf (aref t0 j) 0)
                      (setq j ( + j i))
                      )
                 )

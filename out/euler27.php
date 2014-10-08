@@ -1,12 +1,12 @@
 <?php
-function eratostene(&$t, $max_){
+function eratostene(&$t, $max0){
   $n = 0;
-  for ($i = 2 ; $i < $max_; $i++)
+  for ($i = 2 ; $i < $max0; $i++)
     if ($t[$i] == $i)
   {
     $n ++;
     $j = $i * $i;
-    while ($j < $max_ && $j > 0)
+    while ($j < $max0 && $j > 0)
     {
       $t[$j] = 0;
       $j += $i;
@@ -43,7 +43,7 @@ $era = array();
 for ($j = 0 ; $j < $maximumprimes; $j++)
   $era[$j] = $j;
 $result = 0;
-$max_ = 0;
+$max0 = 0;
 $nprimes = eratostene($era, $maximumprimes);
 $primes = array();
 for ($o = 0 ; $o < $nprimes; $o++)
@@ -64,20 +64,20 @@ for ($b = 3 ; $b <= 999; $b++)
   {
     $n1 = test($a, $b, $primes, $nprimes);
     $n2 = test($a, -$b, $primes, $nprimes);
-    if ($n1 > $max_)
+    if ($n1 > $max0)
     {
-      $max_ = $n1;
+      $max0 = $n1;
       $result = $a * $b;
       $ma = $a;
       $mb = $b;
     }
-    if ($n2 > $max_)
+    if ($n2 > $max0)
     {
-      $max_ = $n2;
+      $max0 = $n2;
       $result = -$a * $b;
       $ma = $a;
       $mb = -$b;
     }
 }
-echo $ma, " ", $mb, "\n", $max_, "\n", $result, "\n";
+echo $ma, " ", $mb, "\n", $max0, "\n", $result, "\n";
 ?>

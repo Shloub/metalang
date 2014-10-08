@@ -1,6 +1,6 @@
 require "scanf.rb"
-def montagnes_( tab, len )
-    max_ = 1
+def montagnes0( tab, len )
+    max0 = 1
     j = 1
     i = len - 2
     while i >= 0 do
@@ -10,12 +10,12 @@ def montagnes_( tab, len )
       end
       j += 1
       tab[len - j] = x;
-      if j > max_ then
-        max_ = j;
+      if j > max0 then
+        max0 = j;
       end
       i -= 1
     end
-    return (max_);
+    return (max0);
 end
 
 len = 0
@@ -28,5 +28,5 @@ for i in (0 ..  len - 1) do
   scanf("%*\n");
   tab[i] = x;
 end
-printf "%d", montagnes_(tab, len)
+printf "%d", montagnes0(tab, len)
 

@@ -1,7 +1,7 @@
 require "scanf.rb"
-def eratostene( t, max_ )
+def eratostene( t, max0 )
     n = 0
-    for i in (2 ..  max_ - 1) do
+    for i in (2 ..  max0 - 1) do
       if t[i] == i then
         n += 1
         j = i * i
@@ -11,7 +11,7 @@ def eratostene( t, max_ )
  overflow test 
 =end
 
-          while j < max_ && j > 0 do
+          while j < max0 && j > 0 do
             t[j] = 0;
             j += i
           end

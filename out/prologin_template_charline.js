@@ -33,14 +33,14 @@ function read_int_(){
   }
 }
 function programme_candidat(tableau, taille){
-  var out_ = 0;
+  var out0 = 0;
   for (var i = 0 ; i <= taille - 1; i++)
   {
-    out_ += tableau[i].charCodeAt(0) * i;
+    out0 += tableau[i].charCodeAt(0) * i;
     util.print(tableau[i]);
   }
   util.print("--\n");
-  return out_;
+  return out0;
 }
 
 b=read_int_();

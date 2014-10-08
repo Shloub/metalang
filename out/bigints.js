@@ -195,14 +195,17 @@ D'ou le nom de la fonction. */
     var retenue = 0;
     for (var j = 0 ; j <= b.bigint_len - 1; j++)
     {
-      chiffres[i + j] = chiffres[i + j] + retenue + b.bigint_chiffres[j] * a.bigint_chiffres[i];
+      chiffres[i + j] = chiffres[i + j] + retenue + b.bigint_chiffres[j] *
+      a.bigint_chiffres[i];
       retenue = ~~(chiffres[i + j] / 10);
       chiffres[i + j] = ~~(chiffres[i + j] % 10);
     }
     chiffres[i + b.bigint_len] = chiffres[i + b.bigint_len] + retenue;
   }
-  chiffres[a.bigint_len + b.bigint_len] = ~~(chiffres[a.bigint_len + b.bigint_len - 1] / 10);
-  chiffres[a.bigint_len + b.bigint_len - 1] = ~~(chiffres[a.bigint_len + b.bigint_len - 1] % 10);
+  chiffres[a.bigint_len + b.bigint_len] = ~~(chiffres[a.bigint_len +
+  b.bigint_len - 1] / 10);
+  chiffres[a.bigint_len + b.bigint_len - 1] = ~~(chiffres[a.bigint_len +
+  b.bigint_len - 1] % 10);
   for (var l = 0 ; l <= 2; l++)
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
@@ -269,13 +272,13 @@ Division,
 Modulo
 */
 function log10(a){
-  var out_ = 1;
+  var out0 = 1;
   while (a >= 10)
   {
     a = ~~(a / 10);
-    out_ ++;
+    out0 ++;
   }
-  return out_;
+  return out0;
 }
 
 function bigint_of_int(i){
@@ -300,20 +303,20 @@ function bigint_of_int(i){
 
 function fact_bigint(a){
   var one = bigint_of_int(1);
-  var out_ = one;
+  var out0 = one;
   while (!bigint_eq(a, one))
   {
-    out_ = mul_bigint(a, out_);
+    out0 = mul_bigint(a, out0);
     a = sub_bigint(a, one);
   }
-  return out_;
+  return out0;
 }
 
 function sum_chiffres_bigint(a){
-  var out_ = 0;
+  var out0 = 0;
   for (var i = 0 ; i <= a.bigint_len - 1; i++)
-    out_ += a.bigint_chiffres[i];
-  return out_;
+    out0 += a.bigint_chiffres[i];
+  return out0;
 }
 
 /* http://projecteuler.net/problem=20 */
@@ -396,19 +399,19 @@ function euler29(){
   var found = 1;
   while (found)
   {
-    var min_ = a0_bigint[0];
+    var min0 = a0_bigint[0];
     found = 0;
     for (var i = 2 ; i <= maxA; i++)
       if (b[i] <= maxB)
     {
       if (found)
       {
-        if (bigint_lt(a_bigint[i], min_))
-          min_ = a_bigint[i];
+        if (bigint_lt(a_bigint[i], min0))
+          min0 = a_bigint[i];
       }
       else
       {
-        min_ = a_bigint[i];
+        min0 = a_bigint[i];
         found = 1;
       }
     }
@@ -416,7 +419,7 @@ function euler29(){
     {
       n ++;
       for (var l = 2 ; l <= maxA; l++)
-        if (bigint_eq(a_bigint[l], min_) && b[l] <= maxB)
+        if (bigint_eq(a_bigint[l], min0) && b[l] <= maxB)
       {
         b[l] = b[l] + 1;
         a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);

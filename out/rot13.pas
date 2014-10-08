@@ -72,12 +72,13 @@ end;
 {
 Ce test effectue un rot13 sur une chaine lue en entrée
 }
+type a = array of char;
 
 var
   c : Longint;
   j : Longint;
   strlen : Longint;
-  tab4 : array of char;
+  tab4 : a;
   tmpc : char;
   toto : Longint;
 begin

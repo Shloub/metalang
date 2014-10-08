@@ -3,21 +3,21 @@
 
 (define (programme_candidat tableau taille)
   ;toto
-  (let ([out_ 0])
+  (let ([out0 0])
   (let ([d 0])
   (let ([e (- taille 1)])
-  (letrec ([c (lambda (i out_) 
+  (letrec ([c (lambda (i out0) 
                 (if (<= i e)
-                (let ([out_ (+ out_ (* (char->integer (vector-ref tableau i)) i))])
+                (let ([out0 (+ out0 (* (char->integer (vector-ref tableau i)) i))])
                 (block
                   (display (vector-ref tableau i))
-                  (c (+ i 1) out_)
+                  (c (+ i 1) out0)
                   ))
                 (block
                   (display "--\n")
-                  out_
+                  out0
                   )))])
-  (c d out_)))))
+  (c d out0)))))
 )
 (define main
   (let ([taille (string->number (read-line))])

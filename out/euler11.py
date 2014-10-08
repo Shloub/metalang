@@ -24,7 +24,7 @@ for i in range(0, 8):
     directions[i] = (-(1), 1);
   else:
     directions[i] = (-(1), -(1));
-max_ = 0;
+max0 = 0;
 d = 20;
 m = [list(map(int, input().split())) for i in range(20)];
 for j in range(0, 1 + 7):
@@ -32,7 +32,7 @@ for j in range(0, 1 + 7):
   for x in range(0, 1 + 19):
     for y in range(0, 1 + 19):
       g = find(4, m, x, y, dx, dy);
-      f = max(max_, g);
-      max_ = f;
-print("%d\n" % ( max_ ), end='')
+      f = max(max0, g);
+      max0 = f;
+print("%d\n" % ( max0 ), end='')
 

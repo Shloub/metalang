@@ -3,7 +3,7 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 
-def next_( n )
+def next0( n )
     if (mod(n, 2)) == 0 then
       return ((n.to_f / 2).to_i);
     else
@@ -15,11 +15,11 @@ def find( n, m )
     if n == 1 then
       return (1);
     elsif n >= 1000000 then
-      return (1 + find(next_(n), m));
+      return (1 + find(next0(n), m));
     elsif m[n] != 0 then
       return (m[n]);
     else
-      m[n] = 1 + find(next_(n), m);
+      m[n] = 1 + find(next0(n), m);
       return (m[n]);
     end
 end
@@ -28,7 +28,7 @@ m = [];
 for j in (0 ..  1000000 - 1) do
   m[j] = 0;
 end
-max_ = 0
+max0 = 0
 maxi = 0
 for i in (1 ..  999) do
   
@@ -37,10 +37,10 @@ for i in (1 ..  999) do
 =end
 
   n2 = find(i, m)
-  if n2 > max_ then
-    max_ = n2;
+  if n2 > max0 then
+    max0 = n2;
     maxi = i;
   end
 end
-printf "%d\n%d\n", max_, maxi
+printf "%d\n%d\n", max0, maxi
 

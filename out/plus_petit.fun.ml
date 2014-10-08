@@ -9,7 +9,7 @@ module Array = struct
     )
 end
 
-let rec go_ tab a b =
+let rec go0 tab a b =
   let m = ((a + b) / 2) in
   (if (a = m)
    then let g () = let i = a in
@@ -29,8 +29,8 @@ let rec go_ tab a b =
                                  ))
       else let c () = () in
       (if (i < m)
-       then (go_ tab a m)
-       else (go_ tab m b))) in
+       then (go0 tab a m)
+       else (go0 tab m b))) in
      (f i j) in
    (if (tab.(a) = m)
     then b
@@ -52,11 +52,11 @@ let rec go_ tab a b =
                                  ))
       else let c () = () in
       (if (i < m)
-       then (go_ tab a m)
-       else (go_ tab m b))) in
+       then (go0 tab a m)
+       else (go0 tab m b))) in
      (f i j))
-let plus_petit_ tab len =
-  (go_ tab 0 len)
+let plus_petit0 tab len =
+  (go0 tab 0 len)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
@@ -72,7 +72,7 @@ let main =
       ((), h)
       )
     )) ()) in
-    (Printf.printf "%d" (plus_petit_ tab len))
+    (Printf.printf "%d" (plus_petit0 tab len))
     )
   )
 

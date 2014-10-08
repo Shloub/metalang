@@ -52,7 +52,7 @@ sub print_state{
 
 # On dit qui gagne (info stoquées dans g.ended et g.note ) 
 
-sub eval_{
+sub eval0{
   my($g) = @_;
   my $win = 0;
   my $freecase = 0;
@@ -154,7 +154,7 @@ sub can_move{
 
 sub minmax{
   my($g) = @_;
-  eval_($g);
+  eval0($g);
   if ($g->{"ended"}) {
     return $g->{"note"};
   }
@@ -207,7 +207,7 @@ sub play{
   return $minMove;
 }
 
-sub init_{
+sub init0{
   my $cases = [];
   foreach my $i (0 .. 3 - 1) {
     my $tab = [];
@@ -232,7 +232,7 @@ sub read_move{
 }
 
 foreach my $i (0 .. 1) {
-  my $state = init_();
+  my $state = init0();
   apply_move({"x" => 1,
               "y" => 1}, $state);
   apply_move({"x" => 0,
@@ -241,11 +241,11 @@ foreach my $i (0 .. 1) {
   {
     print_state($state);
     apply_move(play($state), $state);
-    eval_($state);
+    eval0($state);
     print_state($state);
     if (!$state->{"ended"}) {
       apply_move(play($state), $state);
-      eval_($state);
+      eval0($state);
     }
   }
   print_state($state);

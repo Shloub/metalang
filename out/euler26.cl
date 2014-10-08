@@ -32,7 +32,7 @@
 
 (progn
   (let
-   ((t_ (array_init
+   ((t0 (array_init
            1000
            (function (lambda (j)
            (block lambda_1
@@ -45,7 +45,7 @@
         ((i 1 (+ 1 i)))
         ((> i 1000))
         (progn
-          (let ((p (periode t_ 0 1 i)))
+          (let ((p (periode t0 0 1 i)))
             (if
               (> p m)
               (progn

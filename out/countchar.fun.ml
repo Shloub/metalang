@@ -10,18 +10,18 @@ module Array = struct
 end
 
 let nth tab tofind len =
-  let out_ = 0 in
+  let out0 = 0 in
   let b = 0 in
   let c = (len - 1) in
-  let rec a i out_ =
+  let rec a i out0 =
     (if (i <= c)
-     then let out_ = (if (tab.(i) = tofind)
-                      then let out_ = (out_ + 1) in
-                      out_
-                      else out_) in
-     (a (i + 1) out_)
-     else out_) in
-    (a b out_)
+     then let out0 = (if (tab.(i) = tofind)
+                      then let out0 = (out0 + 1) in
+                      out0
+                      else out0) in
+     (a (i + 1) out0)
+     else out0) in
+    (a b out0)
 let main =
   let len = 0 in
   Scanf.scanf "%d"

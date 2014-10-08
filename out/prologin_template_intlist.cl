@@ -29,13 +29,13 @@
 
 (defun programme_candidat (tableau taille)
 (progn
-  (let ((out_ 0))
+  (let ((out0 0))
     (do
       ((i 0 (+ 1 i)))
       ((> i (- taille 1)))
-      (setq out_ ( + out_ (aref tableau i)))
+      (setq out0 ( + out0 (aref tableau i)))
     )
-    (return-from programme_candidat out_)
+    (return-from programme_candidat out0)
   )))
 
 (progn

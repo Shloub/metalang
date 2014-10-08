@@ -45,8 +45,8 @@ function crypte($taille_cle, &$cle, $taille, &$message){
     if ($lettre != -1)
     {
       $addon = position_alphabet($cle[$i % $taille_cle]);
-      $new_ = ($addon + $lettre) % 26;
-      $message[$i] = of_position_alphabet($new_);
+      $new0 = ($addon + $lettre) % 26;
+      $message[$i] = of_position_alphabet($new0);
     }
   }
 }
@@ -56,8 +56,8 @@ scantrim();
 $cle = array();
 for ($index = 0 ; $index < $taille_cle; $index++)
 {
-  $out_ = nextChar();
-  $cle[$index] = $out_;
+  $out0 = nextChar();
+  $cle[$index] = $out0;
 }
 scantrim();
 list($taille) = scan("%d");

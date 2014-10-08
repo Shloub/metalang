@@ -23,8 +23,8 @@ def crypte( taille_cle, cle, taille, message )
       lettre = position_alphabet(message[i])
       if lettre != -1 then
         addon = position_alphabet(cle[mod(i, taille_cle)])
-        new_ = mod(addon + lettre, 26)
-        message[i] = of_position_alphabet(new_);
+        new0 = mod(addon + lettre, 26)
+        message[i] = of_position_alphabet(new0);
       end
     end
 end
@@ -33,8 +33,8 @@ taille_cle=scanf("%d")[0];
 scanf("%*\n");
 cle = [];
 for index in (0 ..  taille_cle - 1) do
-  out_=scanf("%c")[0];
-  cle[index] = out_;
+  out0=scanf("%c")[0];
+  cle[index] = out0;
 end
 scanf("%*\n");
 taille=scanf("%d")[0];

@@ -1,12 +1,12 @@
 package main
 import "fmt"
-func eratostene(t []int, max_ int) int{
+func eratostene(t []int, max0 int) int{
   var n int = 0
-  for i := 2 ; i <= max_ - 1; i++ {
+  for i := 2 ; i <= max0 - 1; i++ {
     if t[i] == i {
         n ++;
           var j int = i * i
-          for j < max_ && j > 0{
+          for j < max0 && j > 0{
             t[j] = 0;
             j += i;
           }
@@ -43,13 +43,13 @@ func sumdivaux(t []int, n int, i int) int{
     return sumdivaux(t, n, sumdivaux2(t, n, i + 1))
   } else {
     var o int = sumdivaux(t, n, sumdivaux2(t, n, i + 1))
-    var out_ int = 0
+    var out0 int = 0
     var p int = i
     for j := 1 ; j <= t[i]; j++ {
-      out_ += p;
+      out0 += p;
         p *= i;
     }
-    return (out_ + 1) * o
+    return (out0 + 1) * o
   } 
 }
 
@@ -58,8 +58,8 @@ func sumdiv(nprimes int, primes []int, n int) int{
   for i := 0 ; i <= n + 1 - 1; i++ {
     t[i] = 0;
   }
-  var max_ int = fillPrimesFactors(t, n, primes, nprimes)
-  return sumdivaux(t, max_, 0)
+  var max0 int = fillPrimesFactors(t, n, primes, nprimes)
+  return sumdivaux(t, max0, 0)
 }
 
 func main() {

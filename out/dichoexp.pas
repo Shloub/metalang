@@ -61,7 +61,7 @@ begin
    until false;
 end;
 
-function exp_(a : Longint; b : Longint) : Longint;
+function exp0(a : Longint; b : Longint) : Longint;
 var
   o : Longint;
 begin
@@ -73,12 +73,12 @@ begin
   if (b Mod 2) = 0
   then
     begin
-      o := exp_(a, b Div 2);
+      o := exp0(a, b Div 2);
       exit(o * o);
     end
   else
     begin
-      exit(a * exp_(a, b - 1));
+      exit(a * exp0(a, b - 1));
     end;
 end;
 
@@ -92,7 +92,7 @@ begin
   a := read_int_();
   skip();
   b := read_int_();
-  Write(exp_(a, b));
+  Write(exp0(a, b));
 end.
 
 

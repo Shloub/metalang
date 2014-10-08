@@ -1,6 +1,6 @@
-let eratostene t max_ =
+let eratostene t max0 =
   let sum = ref( 0 ) in
-  for i = 2 to max_ - 1 do
+  for i = 2 to max0 - 1 do
     if t.(i) = i then
       begin
         sum := (!sum) + i;
@@ -9,7 +9,7 @@ let eratostene t max_ =
 			detect overflow
 			*)
         if (!j) / i = i then
-          while (!j) < max_ && (!j) > 0
+          while (!j) < max0 && (!j) > 0
           do
               t.((!j)) <- 0;
               j := (!j) + i

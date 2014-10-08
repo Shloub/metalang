@@ -9,28 +9,28 @@ module Array = struct
     )
 end
 
-let devine_ nombre tab len =
-  let min_ = tab.(0) in
-  let max_ = tab.(1) in
+let devine0 nombre tab len =
+  let min0 = tab.(0) in
+  let max0 = tab.(1) in
   let c = 2 in
   let d = (len - 1) in
-  let rec b i max_ min_ =
+  let rec b i max0 min0 =
     (if (i <= d)
-     then (if ((tab.(i) > max_) || (tab.(i) < min_))
+     then (if ((tab.(i) > max0) || (tab.(i) < min0))
            then false
-           else let min_ = (if (tab.(i) < nombre)
-                            then let min_ = tab.(i) in
-                            min_
-                            else min_) in
-           let max_ = (if (tab.(i) > nombre)
-                       then let max_ = tab.(i) in
-                       max_
-                       else max_) in
+           else let min0 = (if (tab.(i) < nombre)
+                            then let min0 = tab.(i) in
+                            min0
+                            else min0) in
+           let max0 = (if (tab.(i) > nombre)
+                       then let max0 = tab.(i) in
+                       max0
+                       else max0) in
            (if ((tab.(i) = nombre) && (len <> (i + 1)))
             then false
-            else (b (i + 1) max_ min_)))
+            else (b (i + 1) max0 min0)))
      else true) in
-    (b c max_ min_)
+    (b c max0 min0)
 let main =
   Scanf.scanf "%d"
   (fun  nombre -> (
@@ -45,7 +45,7 @@ let main =
                                                   ((), e)
                                                   )
                                    )) ()) in
-                                   let a = (devine_ nombre tab len) in
+                                   let a = (devine0 nombre tab len) in
                                    (
                                      (if a
                                       then (Printf.printf "True")

@@ -78,7 +78,7 @@ Tictactoe : un tictactoe avec une IA
 ))
 
 #| On dit qui gagne (info stoquées dans g.ended et g.note ) |#
-(defun eval_ (g)
+(defun eval0 (g)
 (progn
   (let ((win 0))
     (let ((freecase 0))
@@ -176,7 +176,7 @@ Un minimax classique, renvoie la note du plateau
 |#
 (defun minmax (g)
 (progn
-  (eval_ g)
+  (eval0 g)
   (if
     (gamestate-ended g)
     (return-from minmax (gamestate-note g))
@@ -252,7 +252,7 @@ Renvoie le coup de l'IA
     (return-from play minMove)
   ))))
 
-(defun init_ ()
+(defun init0 ()
 (progn
   (let
    ((cases (array_init
@@ -274,7 +274,7 @@ Renvoie le coup de l'IA
                            :firstToPlay t
                            :note 0
                            :ended nil)))
-  (return-from init_ a)
+  (return-from init0 a)
   ))))
 
 (defun read_move ()
@@ -292,7 +292,7 @@ Renvoie le coup de l'IA
   ((i 0 (+ 1 i)))
   ((> i 1))
   (progn
-    (let ((state (init_ )))
+    (let ((state (init0 )))
       (let ((c (make-move :x 1
                           :y 1)))
       (apply_move c state)
@@ -303,13 +303,13 @@ Renvoie le coup de l'IA
       do (progn
            (print_state state)
            (apply_move (play state) state)
-           (eval_ state)
+           (eval0 state)
            (print_state state)
            (if
              (not (gamestate-ended state))
              (progn
                (apply_move (play state) state)
-               (eval_ state)
+               (eval0 state)
              ))
            )
       )

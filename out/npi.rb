@@ -10,7 +10,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 
 =end
 
-def npi_( str, len )
+def npi0( str, len )
     stack = [];
     for i in (0 ..  len - 1) do
       stack[i] = 0;
@@ -46,6 +46,6 @@ for i in (0 ..  len - 1) do
   tmp=scanf("%c")[0];
   tab[i] = tmp;
 end
-result = npi_(tab, len)
+result = npi0(tab, len)
 printf "%d", result
 

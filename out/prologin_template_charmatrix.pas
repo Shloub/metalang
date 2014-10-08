@@ -69,36 +69,37 @@ begin
    until false;
 end;
 
-type s = array of array of char;
-function programme_candidat(tableau : s; taille_x : Longint; taille_y : Longint) : Longint;
+type s = array of char;
+type u = array of array of char;
+function programme_candidat(tableau : u; taille_x : Longint; taille_y : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
-  out_ : Longint;
+  out0 : Longint;
 begin
-  out_ := 0;
+  out0 := 0;
   for i := 0 to  taille_y - 1 do
   begin
     for j := 0 to  taille_x - 1 do
     begin
-      out_ := out_ + ord(tableau[i][j]) * (i + j * 2);
+      out0 := out0 + ord(tableau[i][j]) * (i + j * 2);
       Write(tableau[i][j]);
     end;
     Write('--'#10'');
   end;
-  exit(out_);
+  exit(out0);
 end;
 
 
 var
   f : Longint;
   h : Longint;
-  l : s;
+  l : u;
   m : Longint;
-  o : array of char;
+  o : s;
   p : Longint;
   q : char;
-  tableau : s;
+  tableau : u;
   taille_x : Longint;
   taille_y : Longint;
 begin

@@ -4,11 +4,11 @@
 
 int nth(char* tab, char tofind, int len){
   int i;
-  int out_ = 0;
+  int out0 = 0;
   for (i = 0 ; i < len; i++)
     if (tab[i] == tofind)
-    out_ ++;
-  return out_;
+    out0 ++;
+  return out0;
 }
 
 int main(void){

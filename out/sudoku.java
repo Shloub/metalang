@@ -6,7 +6,7 @@ public class sudoku
   /* lit un sudoku sur l'entrée standard */
   public static int[] read_sudoku()
   {
-    int[] out_ = new int[9 * 9];
+    int[] out0 = new int[9 * 9];
     for (int i = 0 ; i < 9 * 9; i++)
     {
       int k;
@@ -17,19 +17,19 @@ public class sudoku
         k = scanner.nextInt();
       }
       scanner.findWithinHorizon("[\n\r ]*", 1);
-      out_[i] = k;
+      out0[i] = k;
     }
-    return out_;
+    return out0;
   }
   
   /* affiche un sudoku */
-  public static void print_sudoku(int[] sudoku_)
+  public static void print_sudoku(int[] sudoku0)
   {
     for (int y = 0 ; y <= 8; y ++)
     {
       for (int x = 0 ; x <= 8; x ++)
       {
-        System.out.printf("%d ", sudoku_[x + y * 9]);
+        System.out.printf("%d ", sudoku0[x + y * 9]);
         if ((x % 3) == 2)
           System.out.print(" ");
       }
@@ -53,22 +53,2935 @@ public class sudoku
   
   /* dit si il y a une erreur dans le sudoku */
   /* résout le sudoku*/
-  public static boolean solve(int[] sudoku_)
+  public static boolean solve(int[] sudoku0)
   {
-    if (false || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[9]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[18]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[18]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[27]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[27]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[27]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[36]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[36]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[36]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[36]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[45]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[45]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[45]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[45]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[45]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[54]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[54]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[54]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[54]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[54]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[54]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[63]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[63]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[63]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[63]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[63]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[63]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[63]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[72]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[72]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[72]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[72]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[72]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[72]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[72]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[72]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[10]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[19]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[19]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[28]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[28]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[28]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[37]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[37]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[37]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[37]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[46]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[46]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[46]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[46]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[46]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[55]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[55]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[55]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[55]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[55]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[55]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[64]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[64]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[64]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[64]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[64]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[64]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[64]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[73]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[73]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[73]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[73]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[73]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[73]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[73]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[73]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[11]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[20]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[20]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[29]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[29]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[29]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[38]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[38]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[38]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[38]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[47]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[47]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[47]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[47]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[47]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[56]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[56]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[56]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[56]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[56]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[56]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[65]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[65]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[65]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[65]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[65]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[65]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[65]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[74]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[74]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[74]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[74]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[74]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[74]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[74]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[74]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[12]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[21]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[21]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[30]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[30]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[30]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[39]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[39]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[39]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[39]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[48]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[48]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[48]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[48]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[48]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[57]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[57]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[57]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[57]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[57]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[57]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[66]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[66]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[66]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[66]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[66]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[66]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[66]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[75]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[75]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[75]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[75]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[75]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[75]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[75]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[75]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[13]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[22]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[22]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[31]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[31]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[31]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[40]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[40]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[40]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[40]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[49]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[49]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[49]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[49]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[49]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[58]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[58]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[58]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[58]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[58]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[58]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[67]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[67]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[67]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[67]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[67]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[67]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[67]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[76]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[76]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[76]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[76]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[76]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[76]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[76]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[76]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[14]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[23]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[23]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[32]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[32]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[32]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[41]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[41]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[41]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[41]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[50]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[50]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[50]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[50]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[50]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[59]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[59]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[59]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[59]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[59]) || (sudoku_[50] != 0 && sudoku_[50] == sudoku_[59]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[68]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[68]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[68]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[68]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[68]) || (sudoku_[50] != 0 && sudoku_[50] == sudoku_[68]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[68]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[77]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[77]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[77]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[77]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[77]) || (sudoku_[50] != 0 && sudoku_[50] == sudoku_[77]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[77]) || (sudoku_[68] != 0 && sudoku_[68] == sudoku_[77]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[15]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[24]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[24]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[33]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[33]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[33]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[42]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[42]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[42]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[42]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[51]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[51]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[51]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[51]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[51]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[60]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[60]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[60]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[60]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[60]) || (sudoku_[51] != 0 && sudoku_[51] == sudoku_[60]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[69]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[69]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[69]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[69]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[69]) || (sudoku_[51] != 0 && sudoku_[51] == sudoku_[69]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[69]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[78]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[78]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[78]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[78]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[78]) || (sudoku_[51] != 0 && sudoku_[51] == sudoku_[78]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[78]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[78]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[16]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[25]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[25]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[34]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[34]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[34]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[43]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[43]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[43]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[43]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[52]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[52]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[52]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[52]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[52]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[61]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[61]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[61]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[61]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[61]) || (sudoku_[52] != 0 && sudoku_[52] == sudoku_[61]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[70]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[70]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[70]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[70]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[70]) || (sudoku_[52] != 0 && sudoku_[52] == sudoku_[70]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[70]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[79]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[79]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[79]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[79]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[79]) || (sudoku_[52] != 0 && sudoku_[52] == sudoku_[79]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[79]) || (sudoku_[70] != 0 && sudoku_[70] == sudoku_[79]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[17]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[26]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[26]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[35]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[35]) || (sudoku_[26] != 0 && sudoku_[26] == sudoku_[35]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[44]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[44]) || (sudoku_[26] != 0 && sudoku_[26] == sudoku_[44]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[44]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[53]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[53]) || (sudoku_[26] != 0 && sudoku_[26] == sudoku_[53]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[53]) || (sudoku_[44] != 0 && sudoku_[44] == sudoku_[53]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[62]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[62]) || (sudoku_[26] != 0 && sudoku_[26] == sudoku_[62]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[62]) || (sudoku_[44] != 0 && sudoku_[44] == sudoku_[62]) || (sudoku_[53] != 0 && sudoku_[53] == sudoku_[62]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[71]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[71]) || (sudoku_[26] != 0 && sudoku_[26] == sudoku_[71]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[71]) || (sudoku_[44] != 0 && sudoku_[44] == sudoku_[71]) || (sudoku_[53] != 0 && sudoku_[53] == sudoku_[71]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[71]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[80]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[80]) || (sudoku_[26] != 0 && sudoku_[26] == sudoku_[80]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[80]) || (sudoku_[44] != 0 && sudoku_[44] == sudoku_[80]) || (sudoku_[53] != 0 && sudoku_[53] == sudoku_[80]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[80]) || (sudoku_[71] != 0 && sudoku_[71] == sudoku_[80]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[1]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[2]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[2]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[3]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[3]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[3]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[4]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[4]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[4]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[4]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[5]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[5]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[5]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[5]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[5]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[6]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[6]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[6]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[6]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[6]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[6]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[7]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[7]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[7]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[7]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[7]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[7]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[7]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[8]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[8]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[8]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[8]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[8]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[8]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[8]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[8]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[10]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[11]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[11]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[12]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[12]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[12]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[13]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[13]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[13]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[13]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[14]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[14]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[14]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[14]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[14]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[15]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[15]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[15]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[15]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[15]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[15]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[16]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[16]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[16]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[16]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[16]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[16]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[16]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[17]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[17]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[17]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[17]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[17]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[17]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[17]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[17]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[19]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[20]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[20]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[21]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[21]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[21]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[22]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[22]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[22]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[22]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[23]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[23]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[23]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[23]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[23]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[24]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[24]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[24]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[24]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[24]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[24]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[25]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[25]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[25]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[25]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[25]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[25]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[25]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[26]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[26]) || (sudoku_[20] != 0 && sudoku_[20] == sudoku_[26]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[26]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[26]) || (sudoku_[23] != 0 && sudoku_[23] == sudoku_[26]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[26]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[26]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[28]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[29]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[29]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[30]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[30]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[30]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[31]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[31]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[31]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[31]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[32]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[32]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[32]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[32]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[32]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[33]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[33]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[33]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[33]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[33]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[33]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[34]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[34]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[34]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[34]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[34]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[34]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[34]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[35]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[35]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[35]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[35]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[35]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[35]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[35]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[35]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[37]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[38]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[38]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[39]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[39]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[39]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[40]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[40]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[40]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[40]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[41]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[41]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[41]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[41]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[41]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[42]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[42]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[42]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[42]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[42]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[42]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[43]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[43]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[43]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[43]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[43]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[43]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[43]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[44]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[44]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[44]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[44]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[44]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[44]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[44]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[44]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[46]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[47]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[47]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[48]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[48]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[48]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[49]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[49]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[49]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[49]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[50]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[50]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[50]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[50]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[50]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[51]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[51]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[51]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[51]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[51]) || (sudoku_[50] != 0 && sudoku_[50] == sudoku_[51]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[52]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[52]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[52]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[52]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[52]) || (sudoku_[50] != 0 && sudoku_[50] == sudoku_[52]) || (sudoku_[51] != 0 && sudoku_[51] == sudoku_[52]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[53]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[53]) || (sudoku_[47] != 0 && sudoku_[47] == sudoku_[53]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[53]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[53]) || (sudoku_[50] != 0 && sudoku_[50] == sudoku_[53]) || (sudoku_[51] != 0 && sudoku_[51] == sudoku_[53]) || (sudoku_[52] != 0 && sudoku_[52] == sudoku_[53]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[55]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[56]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[56]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[57]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[57]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[57]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[58]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[58]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[58]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[58]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[59]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[59]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[59]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[59]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[59]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[60]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[60]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[60]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[60]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[60]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[60]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[61]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[61]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[61]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[61]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[61]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[61]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[61]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[62]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[62]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[62]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[62]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[62]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[62]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[62]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[62]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[64]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[65]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[65]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[66]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[66]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[66]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[67]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[67]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[67]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[67]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[68]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[68]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[68]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[68]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[68]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[69]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[69]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[69]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[69]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[69]) || (sudoku_[68] != 0 && sudoku_[68] == sudoku_[69]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[70]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[70]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[70]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[70]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[70]) || (sudoku_[68] != 0 && sudoku_[68] == sudoku_[70]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[70]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[71]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[71]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[71]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[71]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[71]) || (sudoku_[68] != 0 && sudoku_[68] == sudoku_[71]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[71]) || (sudoku_[70] != 0 && sudoku_[70] == sudoku_[71]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[73]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[74]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[74]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[75]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[75]) || (sudoku_[74] != 0 && sudoku_[74] == sudoku_[75]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[76]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[76]) || (sudoku_[74] != 0 && sudoku_[74] == sudoku_[76]) || (sudoku_[75] != 0 && sudoku_[75] == sudoku_[76]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[77]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[77]) || (sudoku_[74] != 0 && sudoku_[74] == sudoku_[77]) || (sudoku_[75] != 0 && sudoku_[75] == sudoku_[77]) || (sudoku_[76] != 0 && sudoku_[76] == sudoku_[77]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[78]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[78]) || (sudoku_[74] != 0 && sudoku_[74] == sudoku_[78]) || (sudoku_[75] != 0 && sudoku_[75] == sudoku_[78]) || (sudoku_[76] != 0 && sudoku_[76] == sudoku_[78]) || (sudoku_[77] != 0 && sudoku_[77] == sudoku_[78]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[79]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[79]) || (sudoku_[74] != 0 && sudoku_[74] == sudoku_[79]) || (sudoku_[75] != 0 && sudoku_[75] == sudoku_[79]) || (sudoku_[76] != 0 && sudoku_[76] == sudoku_[79]) || (sudoku_[77] != 0 && sudoku_[77] == sudoku_[79]) || (sudoku_[78] != 0 && sudoku_[78] == sudoku_[79]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[80]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[80]) || (sudoku_[74] != 0 && sudoku_[74] == sudoku_[80]) || (sudoku_[75] != 0 && sudoku_[75] == sudoku_[80]) || (sudoku_[76] != 0 && sudoku_[76] == sudoku_[80]) || (sudoku_[77] != 0 && sudoku_[77] == sudoku_[80]) || (sudoku_[78] != 0 && sudoku_[78] == sudoku_[80]) || (sudoku_[79] != 0 && sudoku_[79] == sudoku_[80]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[1]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[2]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[2]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[9]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[9]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[9]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[10]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[10]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[10]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[10]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[11]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[11]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[11]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[11]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[11]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[18]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[18]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[18]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[18]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[18]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[18]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[19]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[19]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[19]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[19]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[19]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[19]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[19]) || (sudoku_[0] != 0 && sudoku_[0] == sudoku_[20]) || (sudoku_[1] != 0 && sudoku_[1] == sudoku_[20]) || (sudoku_[2] != 0 && sudoku_[2] == sudoku_[20]) || (sudoku_[9] != 0 && sudoku_[9] == sudoku_[20]) || (sudoku_[10] != 0 && sudoku_[10] == sudoku_[20]) || (sudoku_[11] != 0 && sudoku_[11] == sudoku_[20]) || (sudoku_[18] != 0 && sudoku_[18] == sudoku_[20]) || (sudoku_[19] != 0 && sudoku_[19] == sudoku_[20]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[28]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[29]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[29]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[36]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[36]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[36]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[37]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[37]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[37]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[37]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[38]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[38]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[38]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[38]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[38]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[45]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[45]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[45]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[45]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[45]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[45]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[46]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[46]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[46]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[46]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[46]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[46]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[46]) || (sudoku_[27] != 0 && sudoku_[27] == sudoku_[47]) || (sudoku_[28] != 0 && sudoku_[28] == sudoku_[47]) || (sudoku_[29] != 0 && sudoku_[29] == sudoku_[47]) || (sudoku_[36] != 0 && sudoku_[36] == sudoku_[47]) || (sudoku_[37] != 0 && sudoku_[37] == sudoku_[47]) || (sudoku_[38] != 0 && sudoku_[38] == sudoku_[47]) || (sudoku_[45] != 0 && sudoku_[45] == sudoku_[47]) || (sudoku_[46] != 0 && sudoku_[46] == sudoku_[47]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[55]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[56]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[56]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[63]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[63]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[63]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[64]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[64]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[64]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[64]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[65]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[65]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[65]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[65]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[65]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[72]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[72]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[72]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[72]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[72]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[72]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[73]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[73]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[73]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[73]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[73]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[73]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[73]) || (sudoku_[54] != 0 && sudoku_[54] == sudoku_[74]) || (sudoku_[55] != 0 && sudoku_[55] == sudoku_[74]) || (sudoku_[56] != 0 && sudoku_[56] == sudoku_[74]) || (sudoku_[63] != 0 && sudoku_[63] == sudoku_[74]) || (sudoku_[64] != 0 && sudoku_[64] == sudoku_[74]) || (sudoku_[65] != 0 && sudoku_[65] == sudoku_[74]) || (sudoku_[72] != 0 && sudoku_[72] == sudoku_[74]) || (sudoku_[73] != 0 && sudoku_[73] == sudoku_[74]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[4]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[5]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[5]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[12]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[12]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[12]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[13]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[13]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[13]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[13]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[14]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[14]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[14]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[14]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[14]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[21]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[21]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[21]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[21]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[21]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[21]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[22]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[22]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[22]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[22]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[22]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[22]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[22]) || (sudoku_[3] != 0 && sudoku_[3] == sudoku_[23]) || (sudoku_[4] != 0 && sudoku_[4] == sudoku_[23]) || (sudoku_[5] != 0 && sudoku_[5] == sudoku_[23]) || (sudoku_[12] != 0 && sudoku_[12] == sudoku_[23]) || (sudoku_[13] != 0 && sudoku_[13] == sudoku_[23]) || (sudoku_[14] != 0 && sudoku_[14] == sudoku_[23]) || (sudoku_[21] != 0 && sudoku_[21] == sudoku_[23]) || (sudoku_[22] != 0 && sudoku_[22] == sudoku_[23]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[31]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[32]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[32]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[39]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[39]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[39]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[40]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[40]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[40]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[40]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[41]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[41]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[41]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[41]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[41]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[48]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[48]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[48]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[48]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[48]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[48]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[49]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[49]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[49]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[49]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[49]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[49]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[49]) || (sudoku_[30] != 0 && sudoku_[30] == sudoku_[50]) || (sudoku_[31] != 0 && sudoku_[31] == sudoku_[50]) || (sudoku_[32] != 0 && sudoku_[32] == sudoku_[50]) || (sudoku_[39] != 0 && sudoku_[39] == sudoku_[50]) || (sudoku_[40] != 0 && sudoku_[40] == sudoku_[50]) || (sudoku_[41] != 0 && sudoku_[41] == sudoku_[50]) || (sudoku_[48] != 0 && sudoku_[48] == sudoku_[50]) || (sudoku_[49] != 0 && sudoku_[49] == sudoku_[50]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[58]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[59]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[59]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[66]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[66]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[66]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[67]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[67]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[67]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[67]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[68]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[68]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[68]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[68]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[68]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[75]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[75]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[75]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[75]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[75]) || (sudoku_[68] != 0 && sudoku_[68] == sudoku_[75]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[76]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[76]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[76]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[76]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[76]) || (sudoku_[68] != 0 && sudoku_[68] == sudoku_[76]) || (sudoku_[75] != 0 && sudoku_[75] == sudoku_[76]) || (sudoku_[57] != 0 && sudoku_[57] == sudoku_[77]) || (sudoku_[58] != 0 && sudoku_[58] == sudoku_[77]) || (sudoku_[59] != 0 && sudoku_[59] == sudoku_[77]) || (sudoku_[66] != 0 && sudoku_[66] == sudoku_[77]) || (sudoku_[67] != 0 && sudoku_[67] == sudoku_[77]) || (sudoku_[68] != 0 && sudoku_[68] == sudoku_[77]) || (sudoku_[75] != 0 && sudoku_[75] == sudoku_[77]) || (sudoku_[76] != 0 && sudoku_[76] == sudoku_[77]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[7]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[8]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[8]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[15]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[15]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[15]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[16]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[16]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[16]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[16]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[17]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[17]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[17]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[17]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[17]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[24]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[24]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[24]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[24]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[24]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[24]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[25]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[25]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[25]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[25]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[25]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[25]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[25]) || (sudoku_[6] != 0 && sudoku_[6] == sudoku_[26]) || (sudoku_[7] != 0 && sudoku_[7] == sudoku_[26]) || (sudoku_[8] != 0 && sudoku_[8] == sudoku_[26]) || (sudoku_[15] != 0 && sudoku_[15] == sudoku_[26]) || (sudoku_[16] != 0 && sudoku_[16] == sudoku_[26]) || (sudoku_[17] != 0 && sudoku_[17] == sudoku_[26]) || (sudoku_[24] != 0 && sudoku_[24] == sudoku_[26]) || (sudoku_[25] != 0 && sudoku_[25] == sudoku_[26]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[34]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[35]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[35]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[42]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[42]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[42]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[43]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[43]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[43]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[43]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[44]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[44]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[44]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[44]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[44]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[51]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[51]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[51]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[51]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[51]) || (sudoku_[44] != 0 && sudoku_[44] == sudoku_[51]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[52]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[52]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[52]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[52]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[52]) || (sudoku_[44] != 0 && sudoku_[44] == sudoku_[52]) || (sudoku_[51] != 0 && sudoku_[51] == sudoku_[52]) || (sudoku_[33] != 0 && sudoku_[33] == sudoku_[53]) || (sudoku_[34] != 0 && sudoku_[34] == sudoku_[53]) || (sudoku_[35] != 0 && sudoku_[35] == sudoku_[53]) || (sudoku_[42] != 0 && sudoku_[42] == sudoku_[53]) || (sudoku_[43] != 0 && sudoku_[43] == sudoku_[53]) || (sudoku_[44] != 0 && sudoku_[44] == sudoku_[53]) || (sudoku_[51] != 0 && sudoku_[51] == sudoku_[53]) || (sudoku_[52] != 0 && sudoku_[52] == sudoku_[53]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[61]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[62]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[62]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[69]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[69]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[69]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[70]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[70]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[70]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[70]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[71]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[71]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[71]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[71]) || (sudoku_[70] != 0 && sudoku_[70] == sudoku_[71]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[78]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[78]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[78]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[78]) || (sudoku_[70] != 0 && sudoku_[70] == sudoku_[78]) || (sudoku_[71] != 0 && sudoku_[71] == sudoku_[78]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[79]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[79]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[79]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[79]) || (sudoku_[70] != 0 && sudoku_[70] == sudoku_[79]) || (sudoku_[71] != 0 && sudoku_[71] == sudoku_[79]) || (sudoku_[78] != 0 && sudoku_[78] == sudoku_[79]) || (sudoku_[60] != 0 && sudoku_[60] == sudoku_[80]) || (sudoku_[61] != 0 && sudoku_[61] == sudoku_[80]) || (sudoku_[62] != 0 && sudoku_[62] == sudoku_[80]) || (sudoku_[69] != 0 && sudoku_[69] == sudoku_[80]) || (sudoku_[70] != 0 && sudoku_[70] == sudoku_[80]) || (sudoku_[71] != 0 && sudoku_[71] == sudoku_[80]) || (sudoku_[78] != 0 && sudoku_[78] == sudoku_[80]) || (sudoku_[79] != 0 && sudoku_[79] == sudoku_[80]))
+    if (false || (sudoku0[0] != 0 && sudoku0[0] == sudoku0[9]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[18]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[18]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[27]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[27]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[27]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[36]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[36]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[36]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[36]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[45]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[45]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[45]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[45]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[45]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[54]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[54]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[54]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[54]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[54]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[54]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[63]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[63]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[63]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[63]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[63]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[63]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[63]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[72]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[72]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[72]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[72]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[72]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[72]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[72]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[72]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[10]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[19]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[19]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[28]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[28]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[28]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[37]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[37]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[37]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[37]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[46]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[46]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[46]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[46]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[46]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[55]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[55]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[55]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[55]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[55]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[55]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[64]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[64]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[64]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[64]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[64]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[64]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[64]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[73]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[73]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[73]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[73]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[73]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[73]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[73]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[73]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[11]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[20]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[20]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[29]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[29]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[29]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[38]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[38]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[38]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[38]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[47]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[47]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[47]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[47]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[47]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[56]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[56]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[56]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[56]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[56]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[56]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[65]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[65]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[65]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[65]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[65]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[65]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[65]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[74]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[74]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[74]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[74]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[74]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[74]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[74]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[74]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[12]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[21]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[21]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[30]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[30]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[30]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[39]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[39]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[39]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[39]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[48]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[48]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[48]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[48]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[48]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[57]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[57]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[57]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[57]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[57]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[57]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[66]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[66]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[66]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[66]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[66]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[66]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[66]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[75]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[75]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[75]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[75]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[75]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[75]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[75]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[75]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[13]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[22]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[22]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[31]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[31]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[31]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[40]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[40]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[40]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[40]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[49]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[49]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[49]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[49]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[49]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[58]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[58]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[58]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[58]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[58]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[58]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[67]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[67]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[67]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[67]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[67]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[67]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[67]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[76]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[76]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[76]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[76]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[76]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[76]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[76]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[76]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[14]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[23]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[23]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[32]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[32]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[32]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[41]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[41]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[41]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[41]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[50]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[50]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[50]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[50]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[50]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[59]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[59]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[59]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[59]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[59]) || (sudoku0[50] !=
+                                                                    0 &&
+                                                                    sudoku0[50] ==
+                                                                    sudoku0[59]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[68]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[68]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[68]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[68]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[68]) || (sudoku0[50] !=
+                                                                    0 &&
+                                                                    sudoku0[50] ==
+                                                                    sudoku0[68]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[68]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[77]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[77]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[77]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[77]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[77]) || (sudoku0[50] !=
+                                                                    0 &&
+                                                                    sudoku0[50] ==
+                                                                    sudoku0[77]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[77]) || (sudoku0[68] !=
+                                                                    0 &&
+                                                                    sudoku0[68] ==
+                                                                    sudoku0[77]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[15]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[24]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[24]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[33]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[33]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[33]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[42]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[42]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[42]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[42]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[51]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[51]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[51]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[51]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[51]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[60]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[60]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[60]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[60]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[60]) || (sudoku0[51] !=
+                                                                    0 &&
+                                                                    sudoku0[51] ==
+                                                                    sudoku0[60]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[69]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[69]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[69]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[69]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[69]) || (sudoku0[51] !=
+                                                                    0 &&
+                                                                    sudoku0[51] ==
+                                                                    sudoku0[69]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[69]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[78]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[78]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[78]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[78]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[78]) || (sudoku0[51] !=
+                                                                    0 &&
+                                                                    sudoku0[51] ==
+                                                                    sudoku0[78]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[78]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[78]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[16]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[25]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[25]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[34]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[34]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[34]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[43]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[43]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[43]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[43]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[52]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[52]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[52]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[52]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[52]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[61]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[61]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[61]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[61]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[61]) || (sudoku0[52] !=
+                                                                    0 &&
+                                                                    sudoku0[52] ==
+                                                                    sudoku0[61]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[70]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[70]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[70]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[70]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[70]) || (sudoku0[52] !=
+                                                                    0 &&
+                                                                    sudoku0[52] ==
+                                                                    sudoku0[70]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[70]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[79]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[79]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[79]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[79]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[79]) || (sudoku0[52] !=
+                                                                    0 &&
+                                                                    sudoku0[52] ==
+                                                                    sudoku0[79]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[79]) || (sudoku0[70] !=
+                                                                    0 &&
+                                                                    sudoku0[70] ==
+                                                                    sudoku0[79]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[17]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[26]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[26]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[35]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[35]) || (sudoku0[26] !=
+                                                                    0 &&
+                                                                    sudoku0[26] ==
+                                                                    sudoku0[35]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[44]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[44]) || (sudoku0[26] !=
+                                                                    0 &&
+                                                                    sudoku0[26] ==
+                                                                    sudoku0[44]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[44]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[53]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[53]) || (sudoku0[26] !=
+                                                                    0 &&
+                                                                    sudoku0[26] ==
+                                                                    sudoku0[53]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[53]) || (sudoku0[44] !=
+                                                                    0 &&
+                                                                    sudoku0[44] ==
+                                                                    sudoku0[53]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[62]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[62]) || (sudoku0[26] !=
+                                                                    0 &&
+                                                                    sudoku0[26] ==
+                                                                    sudoku0[62]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[62]) || (sudoku0[44] !=
+                                                                    0 &&
+                                                                    sudoku0[44] ==
+                                                                    sudoku0[62]) || (sudoku0[53] !=
+                                                                    0 &&
+                                                                    sudoku0[53] ==
+                                                                    sudoku0[62]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[71]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[71]) || (sudoku0[26] !=
+                                                                    0 &&
+                                                                    sudoku0[26] ==
+                                                                    sudoku0[71]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[71]) || (sudoku0[44] !=
+                                                                    0 &&
+                                                                    sudoku0[44] ==
+                                                                    sudoku0[71]) || (sudoku0[53] !=
+                                                                    0 &&
+                                                                    sudoku0[53] ==
+                                                                    sudoku0[71]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[71]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[80]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[80]) || (sudoku0[26] !=
+                                                                    0 &&
+                                                                    sudoku0[26] ==
+                                                                    sudoku0[80]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[80]) || (sudoku0[44] !=
+                                                                    0 &&
+                                                                    sudoku0[44] ==
+                                                                    sudoku0[80]) || (sudoku0[53] !=
+                                                                    0 &&
+                                                                    sudoku0[53] ==
+                                                                    sudoku0[80]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[80]) || (sudoku0[71] !=
+                                                                    0 &&
+                                                                    sudoku0[71] ==
+                                                                    sudoku0[80]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[1]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[2]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[2]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[3]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[3]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[3]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[4]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[4]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[4]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[4]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[5]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[5]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[5]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[5]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[5]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[6]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[6]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[6]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[6]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[6]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[6]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[7]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[7]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[7]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[7]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[7]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[7]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[7]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[8]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[8]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[8]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[8]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[8]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[8]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[8]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[8]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[10]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[11]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[11]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[12]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[12]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[12]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[13]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[13]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[13]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[13]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[14]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[14]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[14]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[14]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[14]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[15]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[15]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[15]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[15]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[15]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[15]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[16]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[16]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[16]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[16]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[16]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[16]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[16]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[17]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[17]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[17]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[17]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[17]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[17]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[17]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[17]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[19]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[20]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[20]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[21]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[21]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[21]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[22]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[22]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[22]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[22]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[23]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[23]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[23]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[23]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[23]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[24]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[24]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[24]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[24]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[24]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[24]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[25]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[25]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[25]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[25]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[25]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[25]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[25]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[26]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[26]) || (sudoku0[20] !=
+                                                                    0 &&
+                                                                    sudoku0[20] ==
+                                                                    sudoku0[26]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[26]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[26]) || (sudoku0[23] !=
+                                                                    0 &&
+                                                                    sudoku0[23] ==
+                                                                    sudoku0[26]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[26]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[26]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[28]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[29]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[29]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[30]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[30]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[30]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[31]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[31]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[31]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[31]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[32]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[32]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[32]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[32]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[32]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[33]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[33]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[33]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[33]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[33]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[33]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[34]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[34]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[34]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[34]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[34]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[34]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[34]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[35]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[35]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[35]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[35]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[35]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[35]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[35]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[35]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[37]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[38]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[38]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[39]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[39]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[39]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[40]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[40]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[40]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[40]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[41]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[41]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[41]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[41]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[41]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[42]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[42]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[42]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[42]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[42]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[42]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[43]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[43]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[43]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[43]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[43]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[43]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[43]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[44]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[44]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[44]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[44]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[44]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[44]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[44]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[44]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[46]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[47]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[47]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[48]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[48]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[48]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[49]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[49]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[49]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[49]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[50]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[50]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[50]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[50]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[50]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[51]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[51]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[51]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[51]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[51]) || (sudoku0[50] !=
+                                                                    0 &&
+                                                                    sudoku0[50] ==
+                                                                    sudoku0[51]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[52]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[52]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[52]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[52]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[52]) || (sudoku0[50] !=
+                                                                    0 &&
+                                                                    sudoku0[50] ==
+                                                                    sudoku0[52]) || (sudoku0[51] !=
+                                                                    0 &&
+                                                                    sudoku0[51] ==
+                                                                    sudoku0[52]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[53]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[53]) || (sudoku0[47] !=
+                                                                    0 &&
+                                                                    sudoku0[47] ==
+                                                                    sudoku0[53]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[53]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[53]) || (sudoku0[50] !=
+                                                                    0 &&
+                                                                    sudoku0[50] ==
+                                                                    sudoku0[53]) || (sudoku0[51] !=
+                                                                    0 &&
+                                                                    sudoku0[51] ==
+                                                                    sudoku0[53]) || (sudoku0[52] !=
+                                                                    0 &&
+                                                                    sudoku0[52] ==
+                                                                    sudoku0[53]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[55]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[56]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[56]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[57]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[57]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[57]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[58]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[58]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[58]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[58]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[59]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[59]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[59]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[59]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[59]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[60]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[60]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[60]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[60]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[60]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[60]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[61]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[61]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[61]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[61]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[61]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[61]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[61]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[62]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[62]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[62]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[62]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[62]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[62]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[62]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[62]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[64]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[65]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[65]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[66]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[66]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[66]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[67]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[67]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[67]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[67]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[68]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[68]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[68]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[68]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[68]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[69]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[69]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[69]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[69]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[69]) || (sudoku0[68] !=
+                                                                    0 &&
+                                                                    sudoku0[68] ==
+                                                                    sudoku0[69]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[70]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[70]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[70]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[70]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[70]) || (sudoku0[68] !=
+                                                                    0 &&
+                                                                    sudoku0[68] ==
+                                                                    sudoku0[70]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[70]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[71]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[71]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[71]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[71]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[71]) || (sudoku0[68] !=
+                                                                    0 &&
+                                                                    sudoku0[68] ==
+                                                                    sudoku0[71]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[71]) || (sudoku0[70] !=
+                                                                    0 &&
+                                                                    sudoku0[70] ==
+                                                                    sudoku0[71]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[73]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[74]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[74]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[75]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[75]) || (sudoku0[74] !=
+                                                                    0 &&
+                                                                    sudoku0[74] ==
+                                                                    sudoku0[75]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[76]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[76]) || (sudoku0[74] !=
+                                                                    0 &&
+                                                                    sudoku0[74] ==
+                                                                    sudoku0[76]) || (sudoku0[75] !=
+                                                                    0 &&
+                                                                    sudoku0[75] ==
+                                                                    sudoku0[76]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[77]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[77]) || (sudoku0[74] !=
+                                                                    0 &&
+                                                                    sudoku0[74] ==
+                                                                    sudoku0[77]) || (sudoku0[75] !=
+                                                                    0 &&
+                                                                    sudoku0[75] ==
+                                                                    sudoku0[77]) || (sudoku0[76] !=
+                                                                    0 &&
+                                                                    sudoku0[76] ==
+                                                                    sudoku0[77]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[78]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[78]) || (sudoku0[74] !=
+                                                                    0 &&
+                                                                    sudoku0[74] ==
+                                                                    sudoku0[78]) || (sudoku0[75] !=
+                                                                    0 &&
+                                                                    sudoku0[75] ==
+                                                                    sudoku0[78]) || (sudoku0[76] !=
+                                                                    0 &&
+                                                                    sudoku0[76] ==
+                                                                    sudoku0[78]) || (sudoku0[77] !=
+                                                                    0 &&
+                                                                    sudoku0[77] ==
+                                                                    sudoku0[78]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[79]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[79]) || (sudoku0[74] !=
+                                                                    0 &&
+                                                                    sudoku0[74] ==
+                                                                    sudoku0[79]) || (sudoku0[75] !=
+                                                                    0 &&
+                                                                    sudoku0[75] ==
+                                                                    sudoku0[79]) || (sudoku0[76] !=
+                                                                    0 &&
+                                                                    sudoku0[76] ==
+                                                                    sudoku0[79]) || (sudoku0[77] !=
+                                                                    0 &&
+                                                                    sudoku0[77] ==
+                                                                    sudoku0[79]) || (sudoku0[78] !=
+                                                                    0 &&
+                                                                    sudoku0[78] ==
+                                                                    sudoku0[79]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[80]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[80]) || (sudoku0[74] !=
+                                                                    0 &&
+                                                                    sudoku0[74] ==
+                                                                    sudoku0[80]) || (sudoku0[75] !=
+                                                                    0 &&
+                                                                    sudoku0[75] ==
+                                                                    sudoku0[80]) || (sudoku0[76] !=
+                                                                    0 &&
+                                                                    sudoku0[76] ==
+                                                                    sudoku0[80]) || (sudoku0[77] !=
+                                                                    0 &&
+                                                                    sudoku0[77] ==
+                                                                    sudoku0[80]) || (sudoku0[78] !=
+                                                                    0 &&
+                                                                    sudoku0[78] ==
+                                                                    sudoku0[80]) || (sudoku0[79] !=
+                                                                    0 &&
+                                                                    sudoku0[79] ==
+                                                                    sudoku0[80]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[1]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[2]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[2]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[9]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[9]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[9]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[10]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[10]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[10]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[10]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[11]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[11]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[11]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[11]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[11]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[18]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[18]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[18]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[18]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[18]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[18]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[19]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[19]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[19]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[19]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[19]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[19]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[19]) || (sudoku0[0] !=
+                                                                    0 &&
+                                                                    sudoku0[0] ==
+                                                                    sudoku0[20]) || (sudoku0[1] !=
+                                                                    0 &&
+                                                                    sudoku0[1] ==
+                                                                    sudoku0[20]) || (sudoku0[2] !=
+                                                                    0 &&
+                                                                    sudoku0[2] ==
+                                                                    sudoku0[20]) || (sudoku0[9] !=
+                                                                    0 &&
+                                                                    sudoku0[9] ==
+                                                                    sudoku0[20]) || (sudoku0[10] !=
+                                                                    0 &&
+                                                                    sudoku0[10] ==
+                                                                    sudoku0[20]) || (sudoku0[11] !=
+                                                                    0 &&
+                                                                    sudoku0[11] ==
+                                                                    sudoku0[20]) || (sudoku0[18] !=
+                                                                    0 &&
+                                                                    sudoku0[18] ==
+                                                                    sudoku0[20]) || (sudoku0[19] !=
+                                                                    0 &&
+                                                                    sudoku0[19] ==
+                                                                    sudoku0[20]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[28]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[29]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[29]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[36]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[36]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[36]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[37]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[37]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[37]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[37]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[38]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[38]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[38]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[38]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[38]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[45]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[45]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[45]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[45]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[45]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[45]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[46]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[46]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[46]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[46]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[46]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[46]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[46]) || (sudoku0[27] !=
+                                                                    0 &&
+                                                                    sudoku0[27] ==
+                                                                    sudoku0[47]) || (sudoku0[28] !=
+                                                                    0 &&
+                                                                    sudoku0[28] ==
+                                                                    sudoku0[47]) || (sudoku0[29] !=
+                                                                    0 &&
+                                                                    sudoku0[29] ==
+                                                                    sudoku0[47]) || (sudoku0[36] !=
+                                                                    0 &&
+                                                                    sudoku0[36] ==
+                                                                    sudoku0[47]) || (sudoku0[37] !=
+                                                                    0 &&
+                                                                    sudoku0[37] ==
+                                                                    sudoku0[47]) || (sudoku0[38] !=
+                                                                    0 &&
+                                                                    sudoku0[38] ==
+                                                                    sudoku0[47]) || (sudoku0[45] !=
+                                                                    0 &&
+                                                                    sudoku0[45] ==
+                                                                    sudoku0[47]) || (sudoku0[46] !=
+                                                                    0 &&
+                                                                    sudoku0[46] ==
+                                                                    sudoku0[47]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[55]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[56]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[56]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[63]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[63]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[63]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[64]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[64]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[64]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[64]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[65]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[65]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[65]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[65]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[65]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[72]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[72]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[72]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[72]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[72]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[72]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[73]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[73]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[73]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[73]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[73]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[73]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[73]) || (sudoku0[54] !=
+                                                                    0 &&
+                                                                    sudoku0[54] ==
+                                                                    sudoku0[74]) || (sudoku0[55] !=
+                                                                    0 &&
+                                                                    sudoku0[55] ==
+                                                                    sudoku0[74]) || (sudoku0[56] !=
+                                                                    0 &&
+                                                                    sudoku0[56] ==
+                                                                    sudoku0[74]) || (sudoku0[63] !=
+                                                                    0 &&
+                                                                    sudoku0[63] ==
+                                                                    sudoku0[74]) || (sudoku0[64] !=
+                                                                    0 &&
+                                                                    sudoku0[64] ==
+                                                                    sudoku0[74]) || (sudoku0[65] !=
+                                                                    0 &&
+                                                                    sudoku0[65] ==
+                                                                    sudoku0[74]) || (sudoku0[72] !=
+                                                                    0 &&
+                                                                    sudoku0[72] ==
+                                                                    sudoku0[74]) || (sudoku0[73] !=
+                                                                    0 &&
+                                                                    sudoku0[73] ==
+                                                                    sudoku0[74]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[4]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[5]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[5]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[12]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[12]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[12]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[13]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[13]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[13]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[13]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[14]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[14]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[14]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[14]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[14]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[21]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[21]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[21]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[21]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[21]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[21]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[22]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[22]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[22]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[22]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[22]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[22]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[22]) || (sudoku0[3] !=
+                                                                    0 &&
+                                                                    sudoku0[3] ==
+                                                                    sudoku0[23]) || (sudoku0[4] !=
+                                                                    0 &&
+                                                                    sudoku0[4] ==
+                                                                    sudoku0[23]) || (sudoku0[5] !=
+                                                                    0 &&
+                                                                    sudoku0[5] ==
+                                                                    sudoku0[23]) || (sudoku0[12] !=
+                                                                    0 &&
+                                                                    sudoku0[12] ==
+                                                                    sudoku0[23]) || (sudoku0[13] !=
+                                                                    0 &&
+                                                                    sudoku0[13] ==
+                                                                    sudoku0[23]) || (sudoku0[14] !=
+                                                                    0 &&
+                                                                    sudoku0[14] ==
+                                                                    sudoku0[23]) || (sudoku0[21] !=
+                                                                    0 &&
+                                                                    sudoku0[21] ==
+                                                                    sudoku0[23]) || (sudoku0[22] !=
+                                                                    0 &&
+                                                                    sudoku0[22] ==
+                                                                    sudoku0[23]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[31]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[32]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[32]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[39]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[39]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[39]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[40]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[40]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[40]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[40]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[41]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[41]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[41]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[41]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[41]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[48]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[48]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[48]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[48]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[48]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[48]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[49]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[49]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[49]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[49]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[49]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[49]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[49]) || (sudoku0[30] !=
+                                                                    0 &&
+                                                                    sudoku0[30] ==
+                                                                    sudoku0[50]) || (sudoku0[31] !=
+                                                                    0 &&
+                                                                    sudoku0[31] ==
+                                                                    sudoku0[50]) || (sudoku0[32] !=
+                                                                    0 &&
+                                                                    sudoku0[32] ==
+                                                                    sudoku0[50]) || (sudoku0[39] !=
+                                                                    0 &&
+                                                                    sudoku0[39] ==
+                                                                    sudoku0[50]) || (sudoku0[40] !=
+                                                                    0 &&
+                                                                    sudoku0[40] ==
+                                                                    sudoku0[50]) || (sudoku0[41] !=
+                                                                    0 &&
+                                                                    sudoku0[41] ==
+                                                                    sudoku0[50]) || (sudoku0[48] !=
+                                                                    0 &&
+                                                                    sudoku0[48] ==
+                                                                    sudoku0[50]) || (sudoku0[49] !=
+                                                                    0 &&
+                                                                    sudoku0[49] ==
+                                                                    sudoku0[50]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[58]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[59]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[59]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[66]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[66]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[66]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[67]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[67]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[67]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[67]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[68]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[68]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[68]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[68]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[68]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[75]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[75]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[75]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[75]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[75]) || (sudoku0[68] !=
+                                                                    0 &&
+                                                                    sudoku0[68] ==
+                                                                    sudoku0[75]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[76]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[76]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[76]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[76]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[76]) || (sudoku0[68] !=
+                                                                    0 &&
+                                                                    sudoku0[68] ==
+                                                                    sudoku0[76]) || (sudoku0[75] !=
+                                                                    0 &&
+                                                                    sudoku0[75] ==
+                                                                    sudoku0[76]) || (sudoku0[57] !=
+                                                                    0 &&
+                                                                    sudoku0[57] ==
+                                                                    sudoku0[77]) || (sudoku0[58] !=
+                                                                    0 &&
+                                                                    sudoku0[58] ==
+                                                                    sudoku0[77]) || (sudoku0[59] !=
+                                                                    0 &&
+                                                                    sudoku0[59] ==
+                                                                    sudoku0[77]) || (sudoku0[66] !=
+                                                                    0 &&
+                                                                    sudoku0[66] ==
+                                                                    sudoku0[77]) || (sudoku0[67] !=
+                                                                    0 &&
+                                                                    sudoku0[67] ==
+                                                                    sudoku0[77]) || (sudoku0[68] !=
+                                                                    0 &&
+                                                                    sudoku0[68] ==
+                                                                    sudoku0[77]) || (sudoku0[75] !=
+                                                                    0 &&
+                                                                    sudoku0[75] ==
+                                                                    sudoku0[77]) || (sudoku0[76] !=
+                                                                    0 &&
+                                                                    sudoku0[76] ==
+                                                                    sudoku0[77]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[7]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[8]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[8]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[15]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[15]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[15]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[16]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[16]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[16]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[16]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[17]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[17]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[17]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[17]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[17]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[24]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[24]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[24]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[24]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[24]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[24]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[25]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[25]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[25]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[25]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[25]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[25]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[25]) || (sudoku0[6] !=
+                                                                    0 &&
+                                                                    sudoku0[6] ==
+                                                                    sudoku0[26]) || (sudoku0[7] !=
+                                                                    0 &&
+                                                                    sudoku0[7] ==
+                                                                    sudoku0[26]) || (sudoku0[8] !=
+                                                                    0 &&
+                                                                    sudoku0[8] ==
+                                                                    sudoku0[26]) || (sudoku0[15] !=
+                                                                    0 &&
+                                                                    sudoku0[15] ==
+                                                                    sudoku0[26]) || (sudoku0[16] !=
+                                                                    0 &&
+                                                                    sudoku0[16] ==
+                                                                    sudoku0[26]) || (sudoku0[17] !=
+                                                                    0 &&
+                                                                    sudoku0[17] ==
+                                                                    sudoku0[26]) || (sudoku0[24] !=
+                                                                    0 &&
+                                                                    sudoku0[24] ==
+                                                                    sudoku0[26]) || (sudoku0[25] !=
+                                                                    0 &&
+                                                                    sudoku0[25] ==
+                                                                    sudoku0[26]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[34]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[35]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[35]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[42]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[42]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[42]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[43]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[43]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[43]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[43]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[44]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[44]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[44]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[44]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[44]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[51]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[51]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[51]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[51]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[51]) || (sudoku0[44] !=
+                                                                    0 &&
+                                                                    sudoku0[44] ==
+                                                                    sudoku0[51]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[52]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[52]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[52]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[52]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[52]) || (sudoku0[44] !=
+                                                                    0 &&
+                                                                    sudoku0[44] ==
+                                                                    sudoku0[52]) || (sudoku0[51] !=
+                                                                    0 &&
+                                                                    sudoku0[51] ==
+                                                                    sudoku0[52]) || (sudoku0[33] !=
+                                                                    0 &&
+                                                                    sudoku0[33] ==
+                                                                    sudoku0[53]) || (sudoku0[34] !=
+                                                                    0 &&
+                                                                    sudoku0[34] ==
+                                                                    sudoku0[53]) || (sudoku0[35] !=
+                                                                    0 &&
+                                                                    sudoku0[35] ==
+                                                                    sudoku0[53]) || (sudoku0[42] !=
+                                                                    0 &&
+                                                                    sudoku0[42] ==
+                                                                    sudoku0[53]) || (sudoku0[43] !=
+                                                                    0 &&
+                                                                    sudoku0[43] ==
+                                                                    sudoku0[53]) || (sudoku0[44] !=
+                                                                    0 &&
+                                                                    sudoku0[44] ==
+                                                                    sudoku0[53]) || (sudoku0[51] !=
+                                                                    0 &&
+                                                                    sudoku0[51] ==
+                                                                    sudoku0[53]) || (sudoku0[52] !=
+                                                                    0 &&
+                                                                    sudoku0[52] ==
+                                                                    sudoku0[53]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[61]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[62]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[62]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[69]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[69]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[69]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[70]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[70]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[70]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[70]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[71]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[71]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[71]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[71]) || (sudoku0[70] !=
+                                                                    0 &&
+                                                                    sudoku0[70] ==
+                                                                    sudoku0[71]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[78]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[78]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[78]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[78]) || (sudoku0[70] !=
+                                                                    0 &&
+                                                                    sudoku0[70] ==
+                                                                    sudoku0[78]) || (sudoku0[71] !=
+                                                                    0 &&
+                                                                    sudoku0[71] ==
+                                                                    sudoku0[78]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[79]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[79]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[79]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[79]) || (sudoku0[70] !=
+                                                                    0 &&
+                                                                    sudoku0[70] ==
+                                                                    sudoku0[79]) || (sudoku0[71] !=
+                                                                    0 &&
+                                                                    sudoku0[71] ==
+                                                                    sudoku0[79]) || (sudoku0[78] !=
+                                                                    0 &&
+                                                                    sudoku0[78] ==
+                                                                    sudoku0[79]) || (sudoku0[60] !=
+                                                                    0 &&
+                                                                    sudoku0[60] ==
+                                                                    sudoku0[80]) || (sudoku0[61] !=
+                                                                    0 &&
+                                                                    sudoku0[61] ==
+                                                                    sudoku0[80]) || (sudoku0[62] !=
+                                                                    0 &&
+                                                                    sudoku0[62] ==
+                                                                    sudoku0[80]) || (sudoku0[69] !=
+                                                                    0 &&
+                                                                    sudoku0[69] ==
+                                                                    sudoku0[80]) || (sudoku0[70] !=
+                                                                    0 &&
+                                                                    sudoku0[70] ==
+                                                                    sudoku0[80]) || (sudoku0[71] !=
+                                                                    0 &&
+                                                                    sudoku0[71] ==
+                                                                    sudoku0[80]) || (sudoku0[78] !=
+                                                                    0 &&
+                                                                    sudoku0[78] ==
+                                                                    sudoku0[80]) || (sudoku0[79] !=
+                                                                    0 &&
+                                                                    sudoku0[79] ==
+                                                                    sudoku0[80]))
       return false;
-    if (sudoku_done(sudoku_))
+    if (sudoku_done(sudoku0))
       return true;
     for (int i = 0 ; i <= 80; i ++)
-      if (sudoku_[i] == 0)
+      if (sudoku0[i] == 0)
     {
       for (int p = 1 ; p <= 9; p ++)
       {
-        sudoku_[i] = p;
-        if (solve(sudoku_))
+        sudoku0[i] = p;
+        if (solve(sudoku0))
           return true;
       }
-      sudoku_[i] = 0;
+      sudoku0[i] = 0;
       return false;
     }
     return false;
@@ -77,10 +2990,10 @@ public class sudoku
   
   public static void main(String args[])
   {
-    int[] sudoku_ = read_sudoku();
-    print_sudoku(sudoku_);
-    if (solve(sudoku_))
-      print_sudoku(sudoku_);
+    int[] sudoku0 = read_sudoku();
+    print_sudoku(sudoku0);
+    if (solve(sudoku0))
+      print_sudoku(sudoku0);
     else
       System.out.print("no solution\n");
   }

@@ -21,7 +21,7 @@ func is_number(c byte) bool{
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-func npi_(str []byte, len int) int{
+func npi0(str []byte, len int) int{
   var stack []int = make([]int, len)
   for i := 0 ; i <= len - 1; i++ {
     stack[i] = 0;
@@ -59,7 +59,7 @@ func main() {
       fmt.Fscanf(reader, "%c", &tmp)
       tab[i] = tmp;
   }
-  var result int = npi_(tab, len)
+  var result int = npi0(tab, len)
   fmt.Printf("%d", result);
 }
 

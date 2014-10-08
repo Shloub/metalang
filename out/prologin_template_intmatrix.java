@@ -5,11 +5,11 @@ public class prologin_template_intmatrix
   static Scanner scanner = new Scanner(System.in);
   public static int programme_candidat(int[][] tableau, int x, int y)
   {
-    int out_ = 0;
+    int out0 = 0;
     for (int i = 0 ; i < y; i++)
       for (int j = 0 ; j < x; j++)
-        out_ += tableau[i][j] * (i * 2 + j);
-    return out_;
+        out0 += tableau[i][j] * (i * 2 + j);
+    return out0;
   }
   
   

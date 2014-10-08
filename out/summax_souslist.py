@@ -35,14 +35,14 @@ def readint():
 
 def summax( lst, len ):
     current = 0;
-    max_ = 0;
+    max0 = 0;
     for i in range(0, len):
       current += lst[i]
       if current < 0:
         current = 0;
-      if max_ < current:
-        max_ = current;
-    return max_;
+      if max0 < current:
+        max0 = current;
+    return max0;
 
 len = 0;
 len=readint()

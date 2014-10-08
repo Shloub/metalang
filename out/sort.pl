@@ -41,7 +41,7 @@ sub bubblesort{
     }
 }
 
-sub qsort_{
+sub qsort0{
   my($tab,
   $len,
   $i,
@@ -74,8 +74,8 @@ sub qsort_{
         $j = $j - 1;
       }
     }
-    qsort_($tab, $len, $i0, $i - 1);
-    qsort_($tab, $len, $i + 1, $j0);
+    qsort0($tab, $len, $i0, $i - 1);
+    qsort0($tab, $len, $i + 1, $j0);
   }
 }
 
@@ -96,7 +96,7 @@ foreach my $i (0 .. $len - 1) {
   }
 print("\n");
 my $tab3 = copytab($tab, $len);
-qsort_($tab3, $len, 0, $len - 1);
+qsort0($tab3, $len, 0, $len - 1);
 foreach my $i (0 .. $len - 1) {
   print($tab3->[$i], " ");
   }

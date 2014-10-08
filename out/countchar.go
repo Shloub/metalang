@@ -15,13 +15,13 @@ func skip() {
 }
 
 func nth(tab []byte, tofind byte, len int) int{
-  var out_ int = 0
+  var out0 int = 0
   for i := 0 ; i <= len - 1; i++ {
     if tab[i] == tofind {
-        out_ ++;
+        out0 ++;
       }
   }
-  return out_
+  return out0
 }
 
 func main() {

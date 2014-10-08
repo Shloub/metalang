@@ -82,11 +82,13 @@ begin
     end;
 end;
 
-type bl = array of array of Longint;
-type bm = array of array of char;
-function pathfind_aux(cache : bl; tab : bm; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
+type bl = array of Longint;
+type bm = array of array of Longint;
+type bn = array of char;
+type bo = array of array of char;
+function pathfind_aux(cache : bm; tab : bo; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
-  out_ : Longint;
+  out0 : Longint;
   r : Longint;
   s : Longint;
   u : Longint;
@@ -126,19 +128,18 @@ begin
       v := min2_(u, val4);
       w := v;
       r := w;
-      out_ := 1 + r;
-      cache[posY][posX] := out_;
-      exit(out_);
+      out0 := 1 + r;
+      cache[posY][posX] := out0;
+      exit(out0);
     end;;;;
 end;
 
-type bn = array of Longint;
-function pathfind(tab : bm; x : Longint; y : Longint) : Longint;
+function pathfind(tab : bo; x : Longint; y : Longint) : Longint;
 var
-  cache : bl;
+  cache : bm;
   i : Longint;
   j : Longint;
-  tmp : bn;
+  tmp : bl;
 begin
   SetLength(cache, y);
   for i := 0 to  y - 1 do
@@ -159,13 +160,13 @@ end;
 var
   bb : Longint;
   bd : Longint;
-  bf : bm;
+  bf : bo;
   bg : Longint;
-  bh : array of char;
+  bh : bn;
   bi : Longint;
   bj : char;
   result : Longint;
-  tab : bm;
+  tab : bo;
   x : Longint;
   y : Longint;
 begin

@@ -1,5 +1,5 @@
 <?php
-function next_($n){
+function next0($n){
   if (($n % 2) == 0)
     return intval($n / 2);
   else
@@ -10,12 +10,12 @@ function find($n, &$m){
   if ($n == 1)
     return 1;
   else if ($n >= 1000000)
-    return 1 + find(next_($n), $m);
+    return 1 + find(next0($n), $m);
   else if ($m[$n] != 0)
     return $m[$n];
   else
   {
-    $m[$n] = 1 + find(next_($n), $m);
+    $m[$n] = 1 + find(next0($n), $m);
     return $m[$n];
   }
 }
@@ -23,17 +23,17 @@ function find($n, &$m){
 $m = array();
 for ($j = 0 ; $j < 1000000; $j++)
   $m[$j] = 0;
-$max_ = 0;
+$max0 = 0;
 $maxi = 0;
 for ($i = 1 ; $i <= 999; $i++)
 {
   /* normalement on met 999999 mais ça dépasse les int32... */
   $n2 = find($i, $m);
-  if ($n2 > $max_)
+  if ($n2 > $max0)
   {
-    $max_ = $n2;
+    $max0 = $n2;
     $maxi = $i;
   }
 }
-echo $max_, "\n", $maxi, "\n";
+echo $max0, "\n", $maxi, "\n";
 ?>

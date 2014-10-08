@@ -12,13 +12,13 @@ int pathfind_aux(int* cache, int* tab, int len, int pos){
     cache[pos] = len * 2;
     int posval = pathfind_aux(cache, tab, len, tab[pos]);
     int oneval = pathfind_aux(cache, tab, len, pos + 1);
-    int out_ = 0;
+    int out0 = 0;
     if (posval < oneval)
-      out_ = 1 + posval;
+      out0 = 1 + posval;
     else
-      out_ = 1 + oneval;
-    cache[pos] = out_;
-    return out_;
+      out0 = 1 + oneval;
+    cache[pos] = out0;
+    return out0;
   }
 }
 

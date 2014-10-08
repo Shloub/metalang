@@ -56,9 +56,9 @@ my $passepartout = [];
 foreach my $i (0 .. $n - 1) {
   my $out0 = [];
   foreach my $j (0 .. 2 - 1) {
-    my $out__ = readint();
+    my $out01 = readint();
     readspaces();
-    $out0->[$j] = $out__;
+    $out0->[$j] = $out01;
     }
   $passepartout->[$i] = $out0;
   }

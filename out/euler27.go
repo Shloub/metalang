@@ -1,12 +1,12 @@
 package main
 import "fmt"
-func eratostene(t []int, max_ int) int{
+func eratostene(t []int, max0 int) int{
   var n int = 0
-  for i := 2 ; i <= max_ - 1; i++ {
+  for i := 2 ; i <= max0 - 1; i++ {
     if t[i] == i {
         n ++;
           var j int = i * i
-          for j < max_ && j > 0{
+          for j < max0 && j > 0{
             t[j] = 0;
             j += i;
           }
@@ -46,7 +46,7 @@ func main() {
     era[j] = j;
   }
   var result int = 0
-  var max_ int = 0
+  var max0 int = 0
   var nprimes int = eratostene(era, maximumprimes)
   var primes []int = make([]int, nprimes)
   for o := 0 ; o <= nprimes - 1; o++ {
@@ -67,14 +67,14 @@ func main() {
         for a := -999 ; a <= 999; a++ {
             var n1 int = test(a, b, primes, nprimes)
               var n2 int = test(a, -b, primes, nprimes)
-              if n1 > max_ {
-                max_ = n1;
+              if n1 > max0 {
+                max0 = n1;
                   result = a * b;
                   ma = a;
                   mb = b;
               }
-              if n2 > max_ {
-                max_ = n2;
+              if n2 > max0 {
+                max0 = n2;
                   result = -a * b;
                   ma = a;
                   mb = -b;
@@ -82,6 +82,6 @@ func main() {
           }
       }
   }
-  fmt.Printf("%d %d\n%d\n%d\n", ma, mb, max_, result);
+  fmt.Printf("%d %d\n%d\n%d\n", ma, mb, max0, result);
 }
 

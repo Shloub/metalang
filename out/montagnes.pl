@@ -17,10 +17,10 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub montagnes_{
+sub montagnes0{
   my($tab,
   $len) = @_;
-  my $max_ = 1;
+  my $max0 = 1;
   my $j = 1;
   my $i = $len - 2;
   while ($i >= 0)
@@ -32,12 +32,12 @@ sub montagnes_{
     }
     $j = $j + 1;
     $tab->[$len - $j] = $x;
-    if ($j > $max_) {
-      $max_ = $j;
+    if ($j > $max0) {
+      $max0 = $j;
     }
     $i = $i - 1;
   }
-  return $max_;
+  return $max0;
 }
 
 my $len = 0;
@@ -50,6 +50,6 @@ foreach my $i (0 .. $len - 1) {
   readspaces();
   $tab->[$i] = $x;
   }
-print(montagnes_($tab, $len));
+print(montagnes0($tab, $len));
 
 

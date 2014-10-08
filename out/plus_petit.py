@@ -34,7 +34,7 @@ def readint():
     else:
       return out * sign
 
-def go_( tab, a, b ):
+def go0( tab, a, b ):
     m = math.trunc((a + b) / 2);
     if a == m:
       if tab[a] == m:
@@ -52,12 +52,12 @@ def go_( tab, a, b ):
         tab[i] = tab[j];
         tab[j] = e;
     if i < m:
-      return go_(tab, a, m);
+      return go0(tab, a, m);
     else:
-      return go_(tab, m, b);
+      return go0(tab, m, b);
 
-def plus_petit_( tab, len ):
-    return go_(tab, 0, len);
+def plus_petit0( tab, len ):
+    return go0(tab, 0, len);
 
 len = 0;
 len=readint()
@@ -68,5 +68,5 @@ for i in range(0, len):
   tmp=readint()
   stdinsep()
   tab[i] = tmp;
-print("%d" % plus_petit_(tab, len), end='')
+print("%d" % plus_petit0(tab, len), end='')
 

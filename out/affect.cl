@@ -37,31 +37,31 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 
 (defun mktoto (v1)
 (progn
-  (let ((t__ (make-toto :foo v1
-                        :bar v1
-                        :blah v1)))
-  (return-from mktoto t__)
+  (let ((t0 (make-toto :foo v1
+                       :bar v1
+                       :blah v1)))
+  (return-from mktoto t0)
 )))
 
 (defun mktoto2 (v1)
 (progn
-  (let ((t__ (make-toto :foo (+ v1 3)
-                        :bar (+ v1 2)
-                        :blah (+ v1 1))))
-  (return-from mktoto2 t__)
+  (let ((t0 (make-toto :foo (+ v1 3)
+                       :bar (+ v1 2)
+                       :blah (+ v1 1))))
+  (return-from mktoto2 t0)
 )))
 
 (defun result (t_ t2_)
 (progn
-  (let ((t__ t_))
+  (let ((t0 t_))
     (let ((t2 t2_))
       (let ((t3 (make-toto :foo 0
                            :bar 0
                            :blah 0)))
       (setq t3 t2)
-      (setq t__ t2)
+      (setq t0 t2)
       (setq t2 t3)
-      (setf (toto-blah t__) ( + (toto-blah t__) 1))
+      (setf (toto-blah t0) ( + (toto-blah t0) 1))
       (let ((len 1))
         (let
          ((cache0 (array_init
@@ -82,21 +82,21 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
         (let ((cache2 cache0))
           (setq cache0 cache1)
           (setq cache2 cache0)
-          (return-from result (+ (+ (toto-foo t__) (* (toto-blah t__) (toto-bar t__))) (* (toto-bar t__) (toto-foo t__))))
+          (return-from result (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))
         )))))))))
 
 (progn
-  (let ((t__ (mktoto 4)))
+  (let ((t0 (mktoto 4)))
     (let ((t2 (mktoto 5)))
-      (setf (toto-bar t__) (mread-int ))
+      (setf (toto-bar t0) (mread-int ))
       (mread-blank)
-      (setf (toto-blah t__) (mread-int ))
+      (setf (toto-blah t0) (mread-int ))
       (mread-blank)
       (setf (toto-bar t2) (mread-int ))
       (mread-blank)
       (setf (toto-blah t2) (mread-int ))
-      (princ (result t__ t2))
-      (princ (toto-blah t__))
+      (princ (result t0 t2))
+      (princ (toto-blah t0))
     )))
 
 

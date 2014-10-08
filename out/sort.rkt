@@ -62,7 +62,7 @@
                 '()))])
   (c g))))
 )
-(define (qsort_ tab len i j)
+(define (qsort0 tab len i j)
   ;toto
   ((lambda (internal_env) (apply (lambda (i j) 
                                         '()) internal_env)) (if (< i j)
@@ -99,8 +99,8 @@
                                                                 (let ([j (- j 1)])
                                                                 (list i j))))
                                                                 (block
-                                                                  (qsort_ tab len i0 (- i 1))
-                                                                  (qsort_ tab len (+ i 1) j0)
+                                                                  (qsort0 tab len i0 (- i 1))
+                                                                  (qsort0 tab len (+ i 1) j0)
                                                                   (list i j)
                                                                   )))])
                                                             (b i j))))
@@ -136,7 +136,7 @@
                        (display "\n")
                        (let ([tab3 (copytab tab len)])
                        (block
-                         (qsort_ tab3 len 0 (- len 1))
+                         (qsort0 tab3 len 0 (- len 1))
                          (let ([p 0])
                          (let ([q (- len 1)])
                          (letrec ([n (lambda (i) 

@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
 int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y){
-  int out_ = 0;
+  int out0 = 0;
   for (int i = 0 ; i < y; i++)
     for (int j = 0 ; j < x; j++)
-      out_ += tableau->at(i)->at(j) * (i * 2 + j);
-  return out_;
+      out0 += tableau->at(i)->at(j) * (i * 2 + j);
+  return out0;
 }
 
 

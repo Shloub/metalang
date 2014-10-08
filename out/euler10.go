@@ -1,8 +1,8 @@
 package main
 import "fmt"
-func eratostene(t []int, max_ int) int{
+func eratostene(t []int, max0 int) int{
   var sum int = 0
-  for i := 2 ; i <= max_ - 1; i++ {
+  for i := 2 ; i <= max0 - 1; i++ {
     if t[i] == i {
         sum += i;
           var j int = i * i
@@ -10,7 +10,7 @@ func eratostene(t []int, max_ int) int{
 			detect overflow
 			*/
           if j / i == i {
-            for j < max_ && j > 0{
+            for j < max0 && j > 0{
                 t[j] = 0;
                 j += i;
               }

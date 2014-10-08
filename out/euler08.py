@@ -25,7 +25,7 @@ for j in range(0, 5):
   d = ord(c) - ord('0');
   i *= d
   last[j] = d;
-max_ = i;
+max0 = i;
 index = 0;
 nskipdiv = 0;
 for k in range(1, 1 + 995):
@@ -41,6 +41,6 @@ for k in range(1, 1 + 995):
     nskipdiv -= 1
   last[index] = f;
   index = mod(index + 1, 5);
-  max_ = max(max_, i);
-print("%d\n" % ( max_ ), end='')
+  max0 = max(max0, i);
+print("%d\n" % ( max0 ), end='')
 

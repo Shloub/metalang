@@ -75,11 +75,12 @@ public class euler11
       q.tuple_int_int_field_1 = -1;
       directions[i] = q;
     }
-    int max_ = 0;
+    int max0 = 0;
     int e = 20;
     int[][] g = new int[20][];
     for (int h = 0 ; h < 20; h++)
-      g[h] = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+      g[h] =
+      new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
     int[][] m = g;
     for (int j = 0 ; j <= 7; j ++)
     {
@@ -90,11 +91,11 @@ public class euler11
         for (int y = 0 ; y <= 19; y ++)
         {
           int o = find(4, m, x, y, dx, dy);
-          int l = Math.Max(max_, o);
-          max_ = l;
+          int l = Math.Max(max0, o);
+          max0 = l;
       }
     }
-    Console.Write("" + max_ + "\n");
+    Console.Write("" + max0 + "\n");
   }
   
 }

@@ -3,18 +3,18 @@ import java.util.*;
 public class devine
 {
   static Scanner scanner = new Scanner(System.in);
-  public static boolean devine_(int nombre, int[] tab, int len)
+  public static boolean devine0(int nombre, int[] tab, int len)
   {
-    int min_ = tab[0];
-    int max_ = tab[1];
+    int min0 = tab[0];
+    int max0 = tab[1];
     for (int i = 2 ; i < len; i++)
     {
-      if (tab[i] > max_ || tab[i] < min_)
+      if (tab[i] > max0 || tab[i] < min0)
         return false;
       if (tab[i] < nombre)
-        min_ = tab[i];
+        min0 = tab[i];
       if (tab[i] > nombre)
-        max_ = tab[i];
+        max0 = tab[i];
       if (tab[i] == nombre && len != i + 1)
         return false;
     }
@@ -53,7 +53,7 @@ public class devine
       scanner.findWithinHorizon("[\n\r ]*", 1);
       tab[i] = tmp;
     }
-    boolean a = devine_(nombre, tab, len);
+    boolean a = devine0(nombre, tab, len);
     if (a)
       System.out.print("True");
     else

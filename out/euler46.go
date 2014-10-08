@@ -1,14 +1,14 @@
 package main
 import "fmt"
-func eratostene(t []int, max_ int) int{
+func eratostene(t []int, max0 int) int{
   var n int = 0
-  for i := 2 ; i <= max_ - 1; i++ {
+  for i := 2 ; i <= max0 - 1; i++ {
     if t[i] == i {
         n ++;
           var j int = i * i
           if j / i == i {
             /* overflow test */
-              for j < max_ && j > 0{
+              for j < max0 && j > 0{
                 t[j] = 0;
                 j += i;
               }

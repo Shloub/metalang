@@ -9,20 +9,20 @@
         out
     ))
 (defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
-(defun eratostene (t_ max_)
+(defun eratostene (t0 max0)
 (progn
   (let ((n 0))
     (do
       ((i 2 (+ 1 i)))
-      ((> i (- max_ 1)))
+      ((> i (- max0 1)))
       (if
-        (= (aref t_ i) i)
+        (= (aref t0 i) i)
         (progn
           (setq n ( + n 1))
           (let ((j (* i i)))
-            (loop while (and (< j max_) (> j 0))
+            (loop while (and (< j max0) (> j 0))
             do (progn
-                 (setf (aref t_ j) 0)
+                 (setf (aref t0 j) 0)
                  (setq j ( + j i))
                  )
             )
@@ -31,7 +31,7 @@
     (return-from eratostene n)
   )))
 
-(defun fillPrimesFactors (t_ n primes nprimes)
+(defun fillPrimesFactors (t0 n primes nprimes)
 (progn
   (do
     ((i 0 (+ 1 i)))
@@ -40,7 +40,7 @@
       (let ((d (aref primes i)))
         (loop while (= (remainder n d) 0)
         do (progn
-             (setf (aref t_ d) (+ (aref t_ d) 1))
+             (setf (aref t0 d) (+ (aref t0 d) 1))
              (setq n ( quotient n d))
              )
         )
@@ -52,48 +52,48 @@
   (return-from fillPrimesFactors n)
 ))
 
-(defun sumdivaux2 (t_ n i)
+(defun sumdivaux2 (t0 n i)
 (progn
-  (loop while (and (< i n) (= (aref t_ i) 0))
+  (loop while (and (< i n) (= (aref t0 i) 0))
   do (setq i ( + i 1))
   )
   (return-from sumdivaux2 i)
 ))
 
-(defun sumdivaux (t_ n i)
+(defun sumdivaux (t0 n i)
 (if
   (> i n)
   (return-from sumdivaux 1)
   (if
-    (= (aref t_ i) 0)
-    (return-from sumdivaux (sumdivaux t_ n (sumdivaux2 t_ n (+ i 1))))
+    (= (aref t0 i) 0)
+    (return-from sumdivaux (sumdivaux t0 n (sumdivaux2 t0 n (+ i 1))))
     (progn
-      (let ((o (sumdivaux t_ n (sumdivaux2 t_ n (+ i 1)))))
-        (let ((out_ 0))
+      (let ((o (sumdivaux t0 n (sumdivaux2 t0 n (+ i 1)))))
+        (let ((out0 0))
           (let ((p i))
             (do
               ((j 1 (+ 1 j)))
-              ((> j (aref t_ i)))
+              ((> j (aref t0 i)))
               (progn
-                (setq out_ ( + out_ p))
+                (setq out0 ( + out0 p))
                 (setq p ( * p i))
               )
             )
-            (return-from sumdivaux (* (+ out_ 1) o))
+            (return-from sumdivaux (* (+ out0 1) o))
           )))))))
 
 (defun sumdiv (nprimes primes n)
 (progn
   (let
-   ((t_ (array_init
+   ((t0 (array_init
            (+ n 1)
            (function (lambda (i)
            (block lambda_1
              (return-from lambda_1 0)
            ))
            ))))
-  (let ((max_ (fillPrimesFactors t_ n primes nprimes)))
-    (return-from sumdiv (sumdivaux t_ max_ 0))
+  (let ((max0 (fillPrimesFactors t0 n primes nprimes)))
+    (return-from sumdiv (sumdivaux t0 max0 0))
   ))))
 
 (progn
@@ -110,7 +110,7 @@
       (let
        ((primes (array_init
                    nprimes
-                   (function (lambda (t_)
+                   (function (lambda (t0)
                    (block lambda_3
                      (return-from lambda_3 0)
                    ))

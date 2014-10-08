@@ -32,7 +32,7 @@ sub is_number{
 #Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 #
 
-sub npi_{
+sub npi0{
   my($str,
   $len) = @_;
   my $stack = [];
@@ -55,7 +55,8 @@ sub npi_{
       $stack->[$ptrStack] = $num;
       $ptrStack = $ptrStack + 1;
     }elsif ($str->[$ptrStr] eq '+') {
-      $stack->[$ptrStack - 2] = $stack->[$ptrStack - 2] + $stack->[$ptrStack - 1];
+      $stack->[$ptrStack - 2] = $stack->[$ptrStack - 2] + $stack->[$ptrStack -
+      1];
       $ptrStack = $ptrStack - 1;
       $ptrStr = $ptrStr + 1;
     }
@@ -72,7 +73,7 @@ foreach my $i (0 .. $len - 1) {
   $tmp = readchar();
   $tab->[$i] = $tmp;
   }
-my $result = npi_($tab, $len);
+my $result = npi0($tab, $len);
 print($result);
 
 

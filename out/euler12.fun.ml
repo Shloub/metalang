@@ -9,17 +9,17 @@ module Array = struct
     )
 end
 
-let eratostene t max_ =
+let eratostene t max0 =
   let n = 0 in
   let bj = 2 in
-  let bk = (max_ - 1) in
+  let bk = (max0 - 1) in
   let rec bg i n =
     (if (i <= bk)
      then let n = (if (t.(i) = i)
                    then let j = (i * i) in
                    let n = (n + 1) in
                    let rec bi j =
-                     (if ((j < max_) && (j > 0))
+                     (if ((j < max0) && (j > 0))
                       then (
                              t.(j) <- 0;
                              let j = (j + i) in
@@ -79,12 +79,12 @@ let find ndiv2 =
        (if (n <= x)
         then let primesFactors = (Array.init_withenv (n + 2) (fun  m () -> let r = 0 in
         ((), r)) ()) in
-        let max_ = ((max ((fillPrimesFactors primesFactors n primes nprimes)) ((fillPrimesFactors primesFactors (n + 1) primes nprimes)))) in
+        let max0 = ((max ((fillPrimesFactors primesFactors n primes nprimes)) ((fillPrimesFactors primesFactors (n + 1) primes nprimes)))) in
         (
           primesFactors.(2) <- (primesFactors.(2) - 1);
           let ndivs = 1 in
           let u = 0 in
-          let v = max_ in
+          let v = max0 in
           let rec s i ndivs =
             (if (i <= v)
              then let ndivs = (if (primesFactors.(i) <> 0)

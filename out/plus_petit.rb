@@ -1,5 +1,5 @@
 require "scanf.rb"
-def go_( tab, a, b )
+def go0( tab, a, b )
     m = ((a + b).to_f / 2).to_i
     if a == m then
       if tab[a] == m then
@@ -21,14 +21,14 @@ def go_( tab, a, b )
       end
     end
     if i < m then
-      return (go_(tab, a, m));
+      return (go0(tab, a, m));
     else
-      return (go_(tab, m, b));
+      return (go0(tab, m, b));
     end
 end
 
-def plus_petit_( tab, len )
-    return (go_(tab, 0, len));
+def plus_petit0( tab, len )
+    return (go0(tab, 0, len));
 end
 
 len = 0
@@ -41,5 +41,5 @@ for i in (0 ..  len - 1) do
   scanf("%*\n");
   tab[i] = tmp;
 end
-printf "%d", plus_petit_(tab, len)
+printf "%d", plus_petit0(tab, len)
 

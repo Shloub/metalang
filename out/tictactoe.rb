@@ -48,7 +48,7 @@ end
  On dit qui gagne (info stoquées dans g.ended et g.note ) 
 =end
 
-def eval_( g )
+def eval0( g )
     win = 0
     freecase = 0
     for y in (0 ..  2) do
@@ -139,7 +139,7 @@ Un minimax classique, renvoie la note du plateau
 =end
 
 def minmax( g )
-    eval_(g);
+    eval0(g);
     if g["ended"] then
       return (g["note"]);
     end
@@ -198,7 +198,7 @@ def play( g )
     return (minMove);
 end
 
-def init_(  )
+def init0(  )
     cases = [];
     for i in (0 ..  3 - 1) do
       tab = [];
@@ -225,7 +225,7 @@ def read_move(  )
 end
 
 for i in (0 ..  1) do
-  state = init_()
+  state = init0()
   apply_move({
     "x" => 1,
     "y" => 1}, state);
@@ -235,11 +235,11 @@ for i in (0 ..  1) do
   while not(state["ended"]) do
     print_state(state);
     apply_move(play(state), state);
-    eval_(state);
+    eval0(state);
     print_state(state);
     if not(state["ended"]) then
       apply_move(play(state), state);
-      eval_(state);
+      eval0(state);
     end
   end
   print_state(state);

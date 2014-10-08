@@ -2,15 +2,15 @@ using System;
 
 public class euler27
 {
-  public static int eratostene(int[] t, int max_)
+  public static int eratostene(int[] t, int max0)
   {
     int n = 0;
-    for (int i = 2 ; i < max_; i++)
+    for (int i = 2 ; i < max0; i++)
       if (t[i] == i)
     {
       n ++;
       int j = i * i;
-      while (j < max_ && j > 0)
+      while (j < max0 && j > 0)
       {
         t[j] = 0;
         j += i;
@@ -52,7 +52,7 @@ public class euler27
     for (int j = 0 ; j < maximumprimes; j++)
       era[j] = j;
     int result = 0;
-    int max_ = 0;
+    int max0 = 0;
     int nprimes = eratostene(era, maximumprimes);
     int[] primes = new int[nprimes];
     for (int o = 0 ; o < nprimes; o++)
@@ -73,22 +73,22 @@ public class euler27
       {
         int n1 = test(a, b, primes, nprimes);
         int n2 = test(a, -b, primes, nprimes);
-        if (n1 > max_)
+        if (n1 > max0)
         {
-          max_ = n1;
+          max0 = n1;
           result = a * b;
           ma = a;
           mb = b;
         }
-        if (n2 > max_)
+        if (n2 > max0)
         {
-          max_ = n2;
+          max0 = n2;
           result = -a * b;
           ma = a;
           mb = -b;
         }
     }
-    Console.Write("" + ma + " " + mb + "\n" + max_ + "\n" + result + "\n");
+    Console.Write("" + ma + " " + mb + "\n" + max0 + "\n" + result + "\n");
   }
   
 }

@@ -10,12 +10,12 @@ function scan($format){
   return $out;
 }
 function &cons(&$list, $i){
-  $out_ = array(
+  $out0 = array(
     "head"=>$i,
     "tail"=>$list
   );
   
-  return $out_;
+  return $out0;
 }
 
 function &rev2(&$empty, &$acc, &$torev){

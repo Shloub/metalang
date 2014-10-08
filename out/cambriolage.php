@@ -51,9 +51,9 @@ for ($i = 0 ; $i < $n; $i++)
   $out0 = array();
   for ($j = 0 ; $j < 2; $j++)
   {
-    list($out__) = scan("%d");
+    list($out01) = scan("%d");
     scantrim();
-    $out0[$j] = $out__;
+    $out0[$j] = $out01;
   }
   $passepartout[$i] = $out0;
 }

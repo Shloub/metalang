@@ -21,17 +21,17 @@ sub summax{
   my($lst,
   $len) = @_;
   my $current = 0;
-  my $max_ = 0;
+  my $max0 = 0;
   foreach my $i (0 .. $len - 1) {
     $current = $current + $lst->[$i];
     if ($current < 0) {
       $current = 0;
     }
-    if ($max_ < $current) {
-      $max_ = $current;
+    if ($max0 < $current) {
+      $max0 = $current;
     }
     }
-  return $max_;
+  return $max0;
 }
 
 my $len = 0;

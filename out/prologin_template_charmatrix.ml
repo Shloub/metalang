@@ -1,13 +1,13 @@
 let programme_candidat tableau taille_x taille_y =
-  let out_ = ref( 0 ) in
+  let out0 = ref( 0 ) in
   for i = 0 to taille_y - 1 do
     for j = 0 to taille_x - 1 do
-      out_ := (!out_) + int_of_char (tableau.(i).(j)) * (i + j * 2);
+      out0 := (!out0) + int_of_char (tableau.(i).(j)) * (i + j * 2);
       Printf.printf "%c" tableau.(i).(j)
     done;
     Printf.printf "--\n"
   done;
-  (!out_)
+  (!out0)
 
 let () =
 begin

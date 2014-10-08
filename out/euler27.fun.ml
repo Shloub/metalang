@@ -9,17 +9,17 @@ module Array = struct
     )
 end
 
-let eratostene t max_ =
+let eratostene t max0 =
   let n = 0 in
   let q = 2 in
-  let r = (max_ - 1) in
+  let r = (max0 - 1) in
   let rec h i n =
     (if (i <= r)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
                    let j = (i * i) in
                    let rec p j =
-                     (if ((j < max_) && (j > 0))
+                     (if ((j < max0) && (j > 0))
                       then (
                              t.(j) <- 0;
                              let j = (j + i) in
@@ -62,7 +62,7 @@ let main =
   let era = (Array.init_withenv maximumprimes (fun  j () -> let s = j in
   ((), s)) ()) in
   let result = 0 in
-  let max_ = 0 in
+  let max0 = 0 in
   let nprimes = (eratostene era maximumprimes) in
   let primes = (Array.init_withenv nprimes (fun  o () -> let u = 0 in
   ((), u)) ()) in
@@ -86,38 +86,38 @@ let main =
             let mb = 0 in
             let z = 3 in
             let ba = 999 in
-            let rec v b ma max_ mb result =
+            let rec v b ma max0 mb result =
               (if (b <= ba)
-               then ((fun  (ma, max_, mb, result) -> (v (b + 1) ma max_ mb result)) (
+               then ((fun  (ma, max0, mb, result) -> (v (b + 1) ma max0 mb result)) (
                if (era.(b) = b)
                then let x = (- 999) in
                let y = 999 in
-               let rec w a ma max_ mb result =
+               let rec w a ma max0 mb result =
                  (if (a <= y)
                   then let n1 = (test a b primes nprimes) in
                   let n2 = (test a (- b) primes nprimes) in
-                  ((fun  (ma, max_, mb, result) -> ((fun  (ma, max_, mb, result) -> (w (a + 1) ma max_ mb result)) (
-                  if (n2 > max_)
-                  then let max_ = n2 in
+                  ((fun  (ma, max0, mb, result) -> ((fun  (ma, max0, mb, result) -> (w (a + 1) ma max0 mb result)) (
+                  if (n2 > max0)
+                  then let max0 = n2 in
                   let result = ((- a) * b) in
                   let ma = a in
                   let mb = (- b) in
-                  (ma, max_, mb, result)
-                  else (ma, max_, mb, result)))) (if (n1 > max_)
-                                                  then let max_ = n1 in
+                  (ma, max0, mb, result)
+                  else (ma, max0, mb, result)))) (if (n1 > max0)
+                                                  then let max0 = n1 in
                                                   let result = (a * b) in
                                                   let ma = a in
                                                   let mb = b in
-                                                  (ma, max_, mb, result)
-                                                  else (ma, max_, mb, result)))
-                  else (ma, max_, mb, result)) in
-                 (w x ma max_ mb result)
-               else (ma, max_, mb, result)))
+                                                  (ma, max0, mb, result)
+                                                  else (ma, max0, mb, result)))
+                  else (ma, max0, mb, result)) in
+                 (w x ma max0 mb result)
+               else (ma, max0, mb, result)))
                else (
-                      (Printf.printf "%d %d\n%d\n%d\n" ma mb max_ result)
+                      (Printf.printf "%d %d\n%d\n%d\n" ma mb max0 result)
                       )
                ) in
-              (v z ma max_ mb result)
+              (v z ma max0 mb result)
             )
      ) in
     (bb bc l)

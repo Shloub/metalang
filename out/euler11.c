@@ -82,7 +82,7 @@ int main(void){
     ba->tuple_int_int_field_1=-1;
     directions[i] = ba;
   }
-  int max_ = 0;
+  int max0 = 0;
   int h = 20;
   int* *l = malloc( 20 * sizeof(int*));
   for (o = 0 ; o < 20; o++)
@@ -105,11 +105,11 @@ int main(void){
       for (y = 0 ; y <= 19; y++)
       {
         int v = find(4, m, x, y, dx, dy);
-        int u = max2_(max_, v);
-        max_ = u;
+        int u = max2_(max0, v);
+        max0 = u;
     }
   }
-  printf("%d\n", max_);
+  printf("%d\n", max0);
   return 0;
 }
 

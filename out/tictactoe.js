@@ -54,7 +54,7 @@ function print_state(g){
 }
 
 /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-function eval_(g){
+function eval0(g){
   var win = 0;
   var freecase = 0;
   for (var y = 0 ; y <= 2; y++)
@@ -132,7 +132,7 @@ function can_move(m, g){
 Un minimax classique, renvoie la note du plateau
 */
 function minmax(g){
-  eval_(g);
+  eval0(g);
   if (g.ended)
     return g.note;
   var maxNote = -10000;
@@ -180,7 +180,7 @@ function play(g){
   return minMove;
 }
 
-function init_(){
+function init0(){
   var cases = new Array(3);
   for (var i = 0 ; i <= 3 - 1; i++)
   {
@@ -212,7 +212,7 @@ function read_move(){
 
 for (var i = 0 ; i <= 1; i++)
 {
-  var state = init_();
+  var state = init0();
   var c = {
     x : 1,
     y : 1
@@ -227,12 +227,12 @@ for (var i = 0 ; i <= 1; i++)
   {
     print_state(state);
     apply_move(play(state), state);
-    eval_(state);
+    eval0(state);
     print_state(state);
     if (!state.ended)
     {
       apply_move(play(state), state);
-      eval_(state);
+      eval0(state);
     }
   }
   print_state(state);

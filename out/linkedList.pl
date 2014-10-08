@@ -18,9 +18,9 @@ sub readint {
 sub cons{
   my($list,
   $i) = @_;
-  my $out_ = {"head" => $i,
+  my $out0 = {"head" => $i,
               "tail" => $list};
-  return $out_;
+  return $out0;
 }
 
 sub rev2{

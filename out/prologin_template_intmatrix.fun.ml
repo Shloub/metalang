@@ -10,21 +10,21 @@ module Array = struct
 end
 
 let programme_candidat tableau x y =
-  let out_ = 0 in
+  let out0 = 0 in
   let v = 0 in
   let w = (y - 1) in
-  let rec q i out_ =
+  let rec q i out0 =
     (if (i <= w)
      then let s = 0 in
      let u = (x - 1) in
-     let rec r j out_ =
+     let rec r j out0 =
        (if (j <= u)
-        then let out_ = (out_ + (tableau.(i).(j) * ((i * 2) + j))) in
-        (r (j + 1) out_)
-        else (q (i + 1) out_)) in
-       (r s out_)
-     else out_) in
-    (q v out_)
+        then let out0 = (out0 + (tableau.(i).(j) * ((i * 2) + j))) in
+        (r (j + 1) out0)
+        else (q (i + 1) out0)) in
+       (r s out0)
+     else out0) in
+    (q v out0)
 let main =
   let taille_x = (Scanf.scanf "%d " (fun x -> x)) in
   let taille_y = (Scanf.scanf "%d " (fun x -> x)) in

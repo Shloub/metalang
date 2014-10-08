@@ -58,8 +58,8 @@
         (not (= lettre (- 0 1)))
         (progn
           (let ((addon (position_alphabet (aref cle (remainder i taille_cle)))))
-            (let ((new_ (remainder (+ addon lettre) 26)))
-              (setf (aref message i) (of_position_alphabet new_))
+            (let ((new0 (remainder (+ addon lettre) 26)))
+              (setf (aref message i) (of_position_alphabet new0))
             ))))
     ))
   ))
@@ -72,8 +72,8 @@
               taille_cle
               (function (lambda (index)
               (block lambda_1
-                (let ((out_ (mread-char )))
-                  (return-from lambda_1 out_)
+                (let ((out0 (mread-char )))
+                  (return-from lambda_1 out0)
                 )))
               ))))
     (mread-blank)

@@ -44,15 +44,15 @@
     (vector-set! cache pos (* len 2))
     (let ([posval (pathfind_aux cache tab len (vector-ref tab pos))])
     (let ([oneval (pathfind_aux cache tab len (+ pos 1))])
-    (let ([out_ 0])
-    (let ([out_ (if (< posval oneval)
-                (let ([out_ (+ 1 posval)])
-                out_)
-                (let ([out_ (+ 1 oneval)])
-                out_))])
+    (let ([out0 0])
+    (let ([out0 (if (< posval oneval)
+                (let ([out0 (+ 1 posval)])
+                out0)
+                (let ([out0 (+ 1 oneval)])
+                out0))])
     (block
-      (vector-set! cache pos out_)
-      out_
+      (vector-set! cache pos out0)
+      out0
       )))))
     )))))
 )

@@ -17,8 +17,8 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-function montagnes_(&$tab, $len){
-  $max_ = 1;
+function montagnes0(&$tab, $len){
+  $max0 = 1;
   $j = 1;
   $i = $len - 2;
   while ($i >= 0)
@@ -28,11 +28,11 @@ function montagnes_(&$tab, $len){
       $j --;
     $j ++;
     $tab[$len - $j] = $x;
-    if ($j > $max_)
-      $max_ = $j;
+    if ($j > $max0)
+      $max0 = $j;
     $i --;
   }
-  return $max_;
+  return $max0;
 }
 
 $len = 0;
@@ -46,5 +46,5 @@ for ($i = 0 ; $i < $len; $i++)
   scantrim();
   $tab[$i] = $x;
 }
-echo montagnes_($tab, $len);
+echo montagnes0($tab, $len);
 ?>

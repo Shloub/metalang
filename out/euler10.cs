@@ -2,10 +2,10 @@ using System;
 
 public class euler10
 {
-  public static int eratostene(int[] t, int max_)
+  public static int eratostene(int[] t, int max0)
   {
     int sum = 0;
-    for (int i = 2 ; i < max_; i++)
+    for (int i = 2 ; i < max0; i++)
       if (t[i] == i)
     {
       sum += i;
@@ -14,7 +14,7 @@ public class euler10
 			detect overflow
 			*/
       if (j / i == i)
-        while (j < max_ && j > 0)
+        while (j < max0 && j > 0)
       {
         t[j] = 0;
         j += i;

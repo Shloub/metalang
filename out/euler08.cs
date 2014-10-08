@@ -37,7 +37,7 @@ public static char readChar(){
       i *= d;
       last[j] = d;
     }
-    int max_ = i;
+    int max0 = i;
     int index = 0;
     int nskipdiv = 0;
     for (int k = 1 ; k <= 995; k ++)
@@ -58,9 +58,9 @@ public static char readChar(){
       }
       last[index] = f;
       index = (index + 1) % 5;
-      max_ = Math.Max(max_, i);
+      max0 = Math.Max(max0, i);
     }
-    Console.Write("" + max_ + "\n");
+    Console.Write("" + max0 + "\n");
   }
   
 }

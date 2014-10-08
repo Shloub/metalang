@@ -1,16 +1,16 @@
 require "scanf.rb"
-def devine_( nombre, tab, len )
-    min_ = tab[0]
-    max_ = tab[1]
+def devine0( nombre, tab, len )
+    min0 = tab[0]
+    max0 = tab[1]
     for i in (2 ..  len - 1) do
-      if tab[i] > max_ || tab[i] < min_ then
+      if tab[i] > max0 || tab[i] < min0 then
         return (false);
       end
       if tab[i] < nombre then
-        min_ = tab[i];
+        min0 = tab[i];
       end
       if tab[i] > nombre then
-        max_ = tab[i];
+        max0 = tab[i];
       end
       if tab[i] == nombre && len != i + 1 then
         return (false);
@@ -29,7 +29,7 @@ for i in (0 ..  len - 1) do
   scanf("%*\n");
   tab[i] = tmp;
 end
-a = devine_(nombre, tab, len)
+a = devine0(nombre, tab, len)
 if a then
   print "True";
 else

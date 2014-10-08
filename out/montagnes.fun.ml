@@ -9,11 +9,11 @@ module Array = struct
     )
 end
 
-let montagnes_ tab len =
-  let max_ = 1 in
+let montagnes0 tab len =
+  let max0 = 1 in
   let j = 1 in
   let i = (len - 2) in
-  let rec b i j max_ =
+  let rec b i j max0 =
     (if (i >= 0)
      then let x = tab.(i) in
      let rec d j =
@@ -23,17 +23,17 @@ let montagnes_ tab len =
         else let j = (j + 1) in
         (
           tab.((len - j)) <- x;
-          let max_ = (if (j > max_)
-                      then let max_ = j in
-                      max_
-                      else max_) in
+          let max0 = (if (j > max0)
+                      then let max0 = j in
+                      max0
+                      else max0) in
           let i = (i - 1) in
-          (b i j max_)
+          (b i j max0)
           )
         ) in
        (d j)
-     else max_) in
-    (b i j max_)
+     else max0) in
+    (b i j max0)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
@@ -49,7 +49,7 @@ let main =
       ((), e)
       )
     )) ()) in
-    (Printf.printf "%d" (montagnes_ tab len))
+    (Printf.printf "%d" (montagnes0 tab len))
     )
   )
 

@@ -62,7 +62,7 @@ begin
 end;
 
 type c = array of Longint;
-function go_(tab : c; a : Longint; b : Longint) : Longint;
+function go0(tab : c; a : Longint; b : Longint) : Longint;
 var
   e : Longint;
   i : Longint;
@@ -103,17 +103,17 @@ begin
   if i < m
   then
     begin
-      exit(go_(tab, a, m));
+      exit(go0(tab, a, m));
     end
   else
     begin
-      exit(go_(tab, m, b));
+      exit(go0(tab, m, b));
     end;
 end;
 
-function plus_petit_(tab : c; len : Longint) : Longint;
+function plus_petit0(tab : c; len : Longint) : Longint;
 begin
-  exit(go_(tab, 0, len));
+  exit(go0(tab, 0, len));
 end;
 
 
@@ -134,7 +134,7 @@ begin
     skip();
     tab[i] := tmp;
   end;
-  Write(plus_petit_(tab, len));
+  Write(plus_petit0(tab, len));
 end.
 
 

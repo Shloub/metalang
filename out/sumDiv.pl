@@ -42,7 +42,7 @@ sub sumdiv{
   my($n) = @_;
   # On désire renvoyer la somme des diviseurs 
   
-  my $out_ = 0;
+  my $out0 = 0;
   # On déclare un entier qui contiendra la somme 
   
   foreach my $i (1 .. $n) {
@@ -51,7 +51,7 @@ sub sumdiv{
     if ((remainder($n, $i)) eq 0) {
       # Si i divise 
       
-      $out_ = $out_ + $i;
+      $out0 = $out0 + $i;
       # On incrémente 
       
     }else{
@@ -59,7 +59,7 @@ sub sumdiv{
       
     }
     }
-  return $out_;
+  return $out0;
   #On renvoie out
   
 }

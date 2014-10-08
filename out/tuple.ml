@@ -1,5 +1,5 @@
-let f tuple_ =
-  let (a, b) = tuple_ in
+let f tuple0 =
+  let (a, b) = tuple0 in
   (a + 1, b + 1)
 
 let () =

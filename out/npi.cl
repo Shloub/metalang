@@ -39,7 +39,7 @@
 #|
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 |#
-(defun npi_ (str len)
+(defun npi0 (str len)
 (progn
   (let
    ((stack (array_init
@@ -76,7 +76,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
                  (setq ptrStr ( + ptrStr 1))
                ))))
       )
-      (return-from npi_ (aref stack 0))
+      (return-from npi0 (aref stack 0))
     )))))
 
 (progn
@@ -93,7 +93,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
                   (return-from lambda_2 tmp)
                 )))
               ))))
-    (let ((result (npi_ tab len)))
+    (let ((result (npi0 tab len)))
       (princ result)
     ))))
 

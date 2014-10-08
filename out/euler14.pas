@@ -1,6 +1,6 @@
 program euler14;
 
-function next_(n : Longint) : Longint;
+function next0(n : Longint) : Longint;
 begin
   if (n Mod 2) = 0
   then
@@ -22,7 +22,7 @@ begin
     end
   else if n >= 1000000 then
     begin
-      exit(1 + find(next_(n), m));
+      exit(1 + find(next0(n), m));
     end
   else if m[n] <> 0
   then
@@ -31,7 +31,7 @@ begin
     end
   else
     begin
-      m[n] := 1 + find(next_(n), m);
+      m[n] := 1 + find(next0(n), m);
       exit(m[n]);
     end;;;
 end;
@@ -41,7 +41,7 @@ var
   i : Longint;
   j : Longint;
   m : a;
-  max_ : Longint;
+  max0 : Longint;
   maxi : Longint;
   n2 : Longint;
 begin
@@ -50,20 +50,20 @@ begin
   begin
     m[j] := 0;
   end;
-  max_ := 0;
+  max0 := 0;
   maxi := 0;
   for i := 1 to  999 do
   begin
     { normalement on met 999999 mais ça dépasse les int32... }
     n2 := find(i, m);
-    if n2 > max_
+    if n2 > max0
     then
       begin
-        max_ := n2;
+        max0 := n2;
         maxi := i;
       end;
   end;
-  Write(max_);
+  Write(max0);
   Write(''#10'');
   Write(maxi);
   Write(''#10'');

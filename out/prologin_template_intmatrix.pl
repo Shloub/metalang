@@ -21,15 +21,14 @@ sub programme_candidat{
   my($tableau,
   $x,
   $y) = @_;
-  my $out_ = 0;
+  my $out0 = 0;
   foreach my $i (0 .. $y - 1) {
     foreach my $j (0 .. $x - 1) {
-      $out_ = $out_ + $tableau->[$i]->[$j]
-      *
+      $out0 = $out0 + $tableau->[$i]->[$j] *
       ($i * 2 + $j);
       }
     }
-  return $out_;
+  return $out0;
 }
 
 my $f = readint();

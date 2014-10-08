@@ -38,7 +38,7 @@ int nbPassePartout(int n, int** passepartout, int m, int** serrures){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int k, l, out_, m, i, j, out__, n;
+  int k, l, out_, m, i, j, out01, n;
   scanf("%d ", &n);
   int* *passepartout = malloc( n * sizeof(int*));
   for (i = 0 ; i < n; i++)
@@ -46,8 +46,8 @@ int main(void){
     int *out0 = malloc( 2 * sizeof(int));
     for (j = 0 ; j < 2; j++)
     {
-      scanf("%d ", &out__);
-      out0[j] = out__;
+      scanf("%d ", &out01);
+      out0[j] = out01;
     }
     passepartout[i] = out0;
   }

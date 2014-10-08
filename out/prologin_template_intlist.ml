@@ -1,9 +1,9 @@
 let programme_candidat tableau taille =
-  let out_ = ref( 0 ) in
+  let out0 = ref( 0 ) in
   for i = 0 to taille - 1 do
-    out_ := (!out_) + tableau.(i)
+    out0 := (!out0) + tableau.(i)
   done;
-  (!out_)
+  (!out0)
 
 let () =
 begin

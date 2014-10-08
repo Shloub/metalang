@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-int montagnes_(std::vector<int> * tab, int len){
-  int max_ = 1;
+int montagnes0(std::vector<int> * tab, int len){
+  int max0 = 1;
   int j = 1;
   int i = len - 2;
   while (i >= 0)
@@ -11,11 +11,11 @@ int montagnes_(std::vector<int> * tab, int len){
       j --;
     j ++;
     tab->at(len - j) = x;
-    if (j > max_)
-      max_ = j;
+    if (j > max0)
+      max0 = j;
     i --;
   }
-  return max_;
+  return max0;
 }
 
 
@@ -29,7 +29,7 @@ int main(){
     std::cin >> x >> std::skipws;
     tab->at(i) = x;
   }
-  std::cout << montagnes_(tab, len);
+  std::cout << montagnes0(tab, len);
   return 0;
 }
 

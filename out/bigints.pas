@@ -76,10 +76,11 @@ type
       bigint_chiffres : array of Longint;
     end;
 
+type bh = array of Longint;
 function read_bigint(len : Longint) : bigint;
 var
   c : char;
-  chiffres : array of Longint;
+  chiffres : bh;
   i : Longint;
   j : Longint;
   tmp : Longint;
@@ -200,7 +201,7 @@ end;
 
 function add_bigint_positif(a : bigint; b : bigint) : bigint;
 var
-  chiffres : array of Longint;
+  chiffres : bh;
   i : Longint;
   len : Longint;
   retenue : Longint;
@@ -240,7 +241,7 @@ end;
 
 function sub_bigint_positif(a : bigint; b : bigint) : bigint;
 var
-  chiffres : array of Longint;
+  chiffres : bh;
   i : Longint;
   len : Longint;
   retenue : Longint;
@@ -346,7 +347,7 @@ end;
 function mul_bigint_cp(a : bigint; b : bigint) : bigint;
 var
   bc : bigint;
-  chiffres : array of Longint;
+  chiffres : bh;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -413,7 +414,7 @@ end;
 function bigint_shift(a : bigint; i : Longint) : bigint;
 var
   bf : bigint;
-  chiffres : array of Longint;
+  chiffres : bh;
   k : Longint;
 begin
   SetLength(chiffres, a^.bigint_len + i);
@@ -487,15 +488,15 @@ Modulo
 }
 function log10(a : Longint) : Longint;
 var
-  out_ : Longint;
+  out0 : Longint;
 begin
-  out_ := 1;
+  out0 := 1;
   while a >= 10 do
   begin
     a := a Div 10;
-    out_ := out_ + 1;
+    out0 := out0 + 1;
   end;
-  exit(out_);
+  exit(out0);
 end;
 
 function bigint_of_int(i : Longint) : bigint;
@@ -504,7 +505,7 @@ var
   j : Longint;
   k : Longint;
   size : Longint;
-  t : array of Longint;
+  t : bh;
 begin
   size := log10(i);
   if i = 0
@@ -532,29 +533,29 @@ end;
 function fact_bigint(a : bigint) : bigint;
 var
   one : bigint;
-  out_ : bigint;
+  out0 : bigint;
 begin
   one := bigint_of_int(1);
-  out_ := one;
+  out0 := one;
   while not bigint_eq(a, one) do
   begin
-    out_ := mul_bigint(a, out_);
+    out0 := mul_bigint(a, out0);
     a := sub_bigint(a, one);
   end;
-  exit(out_);
+  exit(out0);
 end;
 
 function sum_chiffres_bigint(a : bigint) : Longint;
 var
   i : Longint;
-  out_ : Longint;
+  out0 : Longint;
 begin
-  out_ := 0;
+  out0 := 0;
   for i := 0 to  a^.bigint_len - 1 do
   begin
-    out_ := out_ + a^.bigint_chiffres[i];
+    out0 := out0 + a^.bigint_chiffres[i];
   end;
-  exit(out_);
+  exit(out0);
 end;
 
 { http://projecteuler.net/problem=20 }
@@ -655,11 +656,12 @@ begin
   exit(i);
 end;
 
+type bi = array of bigint;
 function euler29() : Longint;
 var
-  a0_bigint : array of bigint;
-  a_bigint : array of bigint;
-  b : array of Longint;
+  a0_bigint : bi;
+  a_bigint : bi;
+  b : bh;
   found : boolean;
   i : Longint;
   j : Longint;
@@ -668,7 +670,7 @@ var
   l : Longint;
   maxA : Longint;
   maxB : Longint;
-  min_ : bigint;
+  min0 : bigint;
   n : Longint;
 begin
   maxA := 5;
@@ -692,7 +694,7 @@ begin
   found := true;
   while found do
   begin
-    min_ := a0_bigint[0];
+    min0 := a0_bigint[0];
     found := false;
     for i := 2 to  maxA do
     begin
@@ -702,15 +704,15 @@ begin
           if found
           then
             begin
-              if bigint_lt(a_bigint[i], min_)
+              if bigint_lt(a_bigint[i], min0)
               then
                 begin
-                  min_ := a_bigint[i];
+                  min0 := a_bigint[i];
                 end;
             end
           else
             begin
-              min_ := a_bigint[i];
+              min0 := a_bigint[i];
               found := true;
             end;
         end;
@@ -721,7 +723,7 @@ begin
         n := n + 1;
         for l := 2 to  maxA do
         begin
-          if bigint_eq(a_bigint[l], min_) and (b[l] <= maxB)
+          if bigint_eq(a_bigint[l], min0) and (b[l] <= maxB)
           then
             begin
               b[l] := b[l] + 1;

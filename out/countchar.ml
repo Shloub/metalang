@@ -1,10 +1,10 @@
 let nth tab tofind len =
-  let out_ = ref( 0 ) in
+  let out0 = ref( 0 ) in
   for i = 0 to len - 1 do
     if tab.(i) = tofind then
-      out_ := (!out_) + 1
+      out0 := (!out0) + 1
   done;
-  (!out_)
+  (!out0)
 
 let () =
 begin

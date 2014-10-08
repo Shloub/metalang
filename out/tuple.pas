@@ -7,12 +7,12 @@ type
       tuple_int_int_field_1 : Longint;
     end;
 
-function f(tuple_ : tuple_int_int) : tuple_int_int;
+function f(tuple0 : tuple_int_int) : tuple_int_int;
 var
   c : tuple_int_int;
   e : tuple_int_int;
 begin
-  c := tuple_;
+  c := tuple0;
   new(e);
   e^.tuple_int_int_field_0 := c^.tuple_int_int_field_0
   +

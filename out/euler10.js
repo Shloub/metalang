@@ -1,7 +1,7 @@
 var util = require("util");
-function eratostene(t, max_){
+function eratostene(t, max0){
   var sum = 0;
-  for (var i = 2 ; i <= max_ - 1; i++)
+  for (var i = 2 ; i <= max0 - 1; i++)
     if (t[i] == i)
   {
     sum += i;
@@ -10,7 +10,7 @@ function eratostene(t, max_){
 			detect overflow
 			*/
     if (~~(j / i) == i)
-      while (j < max_ && j > 0)
+      while (j < max0 && j > 0)
     {
       t[j] = 0;
       j += i;

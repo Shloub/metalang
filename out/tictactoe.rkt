@@ -67,7 +67,7 @@
     (be bi))))
 )
 )
-(define (eval_ g)
+(define (eval0 g)
   ;toto
   (let ([win 0])
   (let ([freecase 0])
@@ -187,7 +187,7 @@
 (define (minmax g)
   ;toto
   (block
-    (eval_ g)
+    (eval0 g)
     (if (gamestate-ended g)
     (gamestate-note g)
     (let ([maxNote (- 10000)])
@@ -265,7 +265,7 @@
                   )))])
   (c h minNote))))))
 )
-(define (init_ _)
+(define (init0 _)
   ;toto
   (let ([cases (array_init_withenv 3 (lambda (i) 
                                        (lambda (_) (let ([tab (array_init_withenv 3 
@@ -293,7 +293,7 @@
   (let ([bo 1])
   (letrec ([bk (lambda (i) 
                  (if (<= i bo)
-                 (let ([state (init_ 'nil)])
+                 (let ([state (init0 'nil)])
                  (block
                    (apply_move (move 1 1) state)
                    (apply_move (move 0 0) state)
@@ -302,12 +302,12 @@
                                   (block
                                     (print_state state)
                                     (apply_move (play state) state)
-                                    (eval_ state)
+                                    (eval0 state)
                                     (print_state state)
                                     (if (not (gamestate-ended state))
                                     (block
                                       (apply_move (play state) state)
-                                      (eval_ state)
+                                      (eval0 state)
                                       '()
                                       )
                                     '())

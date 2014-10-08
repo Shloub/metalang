@@ -6,8 +6,8 @@ typedef struct tuple_int_int {
   int tuple_int_int_field_1;
 } tuple_int_int;
 
-struct tuple_int_int * f(struct tuple_int_int * tuple_){
-  struct tuple_int_int * c = tuple_;
+struct tuple_int_int * f(struct tuple_int_int * tuple0){
+  struct tuple_int_int * c = tuple0;
   struct tuple_int_int * e = malloc (sizeof(e) );
   e->tuple_int_int_field_0=c->tuple_int_int_field_0 + 1;
   e->tuple_int_int_field_1=c->tuple_int_int_field_1 + 1;

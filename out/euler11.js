@@ -102,7 +102,7 @@ else
   };
   directions[i] = ba;
 }
-var max_ = 0;
+var max0 = 0;
 var h = 20;
 var l = new Array(20);
 for (var o = 0 ; o <= 20 - 1; o++)
@@ -126,9 +126,9 @@ for (var j = 0 ; j <= 7; j++)
     for (var y = 0 ; y <= 19; y++)
     {
       var v = find(4, m, x, y, dx, dy);
-      var u = Math.max(max_, v);
-      max_ = u;
+      var u = Math.max(max0, v);
+      max0 = u;
   }
 }
-util.print(max_, "\n");
+util.print(max0, "\n");
 

@@ -53,13 +53,13 @@
       ((i 1 (+ 1 i)))
       ((> i lim))
       (progn
-        (let ((t_ (primesfactors i)))
+        (let ((t0 (primesfactors i)))
           (do
             ((j 1 (+ 1 j)))
             ((> j i))
             (progn
               (let ((g (aref o j)))
-                (let ((h (aref t_ j)))
+                (let ((h (aref t0 j)))
                   (let ((f (max2_ g h)))
                     (setf (aref o j) f)
                   ))))

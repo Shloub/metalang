@@ -7,7 +7,7 @@ bool is_number(char c){
 /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-int npi_(std::vector<char> * str, int len){
+int npi0(std::vector<char> * str, int len){
   std::vector<int > *stack = new std::vector<int>( len );
   for (int i = 0 ; i < len; i++)
     stack->at(i) = 0;
@@ -47,7 +47,7 @@ int main(){
     std::cin >> tmp >> std::noskipws;
     tab->at(i) = tmp;
   }
-  int result = npi_(tab, len);
+  int result = npi0(tab, len);
   std::cout << result;
   return 0;
 }

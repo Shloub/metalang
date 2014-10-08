@@ -1,14 +1,14 @@
 let summax lst len =
   let current = ref( 0 ) in
-  let max_ = ref( 0 ) in
+  let max0 = ref( 0 ) in
   for i = 0 to len - 1 do
     current := (!current) + lst.(i);
     if (!current) < 0 then
       current := 0;
-    if (!max_) < (!current) then
-      max_ := (!current)
+    if (!max0) < (!current) then
+      max0 := (!current)
   done;
-  (!max_)
+  (!max0)
 
 let () =
 begin

@@ -33,10 +33,10 @@ let rec pathfind_aux cache tab x y posX posY =
              let p = ((min (o) (val4))) in
              let q = p in
              let m = q in
-             let out_ = (1 + m) in
+             let out0 = (1 + m) in
              (
-               cache.(posY).(posX) <- out_;
-               out_
+               cache.(posY).(posX) <- out0;
+               out0
                )
              
              )

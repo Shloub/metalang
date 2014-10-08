@@ -17,21 +17,21 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-sub devine_{
+sub devine0{
   my($nombre,
   $tab,
   $len) = @_;
-  my $min_ = $tab->[0];
-  my $max_ = $tab->[1];
+  my $min0 = $tab->[0];
+  my $max0 = $tab->[1];
   foreach my $i (2 .. $len - 1) {
-    if ($tab->[$i] > $max_ || $tab->[$i] < $min_) {
+    if ($tab->[$i] > $max0 || $tab->[$i] < $min0) {
       return 0;
     }
     if ($tab->[$i] < $nombre) {
-      $min_ = $tab->[$i];
+      $min0 = $tab->[$i];
     }
     if ($tab->[$i] > $nombre) {
-      $max_ = $tab->[$i];
+      $max0 = $tab->[$i];
     }
     if ($tab->[$i] eq $nombre && $len ne $i + 1) {
       return 0;
@@ -50,7 +50,7 @@ foreach my $i (0 .. $len - 1) {
   readspaces();
   $tab->[$i] = $tmp;
   }
-my $a = devine_($nombre, $tab, $len);
+my $a = devine0($nombre, $tab, $len);
 if ($a) {
   print("True");
 }else{

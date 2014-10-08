@@ -33,9 +33,9 @@ passepartout = [];
 for i in (0 ..  n - 1) do
   out0 = [];
   for j in (0 ..  2 - 1) do
-    out__=scanf("%d")[0];
+    out01=scanf("%d")[0];
     scanf("%*\n");
-    out0[j] = out__;
+    out0[j] = out01;
   end
   passepartout[i] = out0;
 end

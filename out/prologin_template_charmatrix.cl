@@ -35,7 +35,7 @@
 
 (defun programme_candidat (tableau taille_x taille_y)
 (progn
-  (let ((out_ 0))
+  (let ((out0 0))
     (do
       ((i 0 (+ 1 i)))
       ((> i (- taille_y 1)))
@@ -44,7 +44,7 @@
           ((j 0 (+ 1 j)))
           ((> j (- taille_x 1)))
           (progn
-            (setq out_ ( + out_ (* (char-int (aref (aref tableau i) j)) (+ i (* j 2)))))
+            (setq out0 ( + out0 (* (char-int (aref (aref tableau i) j)) (+ i (* j 2)))))
             (princ (aref (aref tableau i) j))
           )
         )
@@ -52,7 +52,7 @@
 ")
       )
     )
-    (return-from programme_candidat out_)
+    (return-from programme_candidat out0)
   )))
 
 (progn

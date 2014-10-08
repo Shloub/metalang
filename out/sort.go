@@ -34,7 +34,7 @@ func bubblesort(tab []int, len int) {
   }
 }
 
-func qsort_(tab []int, len int, i int, j int) {
+func qsort0(tab []int, len int, i int, j int) {
   if i < j {
     var i0 int = i
       var j0 int = j
@@ -59,8 +59,8 @@ func qsort_(tab []int, len int, i int, j int) {
           j --;
         }
       }
-      qsort_(tab, len, i0, i - 1);
-      qsort_(tab, len, i + 1, j0);
+      qsort0(tab, len, i0, i - 1);
+      qsort0(tab, len, i + 1, j0);
   }
 }
 
@@ -83,7 +83,7 @@ func main() {
   }
   fmt.Printf("\n");
   var tab3 []int = copytab(tab, len)
-  qsort_(tab3, len, 0, len - 1);
+  qsort0(tab3, len, 0, len - 1);
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d ", tab3[i]);
   }

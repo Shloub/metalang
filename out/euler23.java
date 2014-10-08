@@ -3,15 +3,15 @@ import java.util.*;
 public class euler23
 {
   
-  public static int eratostene(int[] t, int max_)
+  public static int eratostene(int[] t, int max0)
   {
     int n = 0;
-    for (int i = 2 ; i < max_; i++)
+    for (int i = 2 ; i < max0; i++)
       if (t[i] == i)
     {
       n ++;
       int j = i * i;
-      while (j < max_ && j > 0)
+      while (j < max0 && j > 0)
       {
         t[j] = 0;
         j += i;
@@ -52,14 +52,14 @@ public class euler23
     else
     {
       int o = sumdivaux(t, n, sumdivaux2(t, n, i + 1));
-      int out_ = 0;
+      int out0 = 0;
       int p = i;
       for (int j = 1 ; j <= t[i]; j ++)
       {
-        out_ += p;
+        out0 += p;
         p *= i;
       }
-      return (out_ + 1) * o;
+      return (out0 + 1) * o;
     }
   }
   
@@ -68,8 +68,8 @@ public class euler23
     int[] t = new int[n + 1];
     for (int i = 0 ; i < n + 1; i++)
       t[i] = 0;
-    int max_ = fillPrimesFactors(t, n, primes, nprimes);
-    return sumdivaux(t, max_, 0);
+    int max0 = fillPrimesFactors(t, n, primes, nprimes);
+    return sumdivaux(t, max0, 0);
   }
   
   

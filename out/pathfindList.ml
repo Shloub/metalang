@@ -8,13 +8,13 @@ let rec pathfind_aux cache tab len pos =
       cache.(pos) <- len * 2;
       let posval = pathfind_aux cache tab len tab.(pos) in
       let oneval = pathfind_aux cache tab len (pos + 1) in
-      let out_ = ref( 0 ) in
+      let out0 = ref( 0 ) in
       if posval < oneval then
-        out_ := 1 + posval
+        out0 := 1 + posval
       else
-        out_ := 1 + oneval;
-      cache.(pos) <- (!out_);
-      (!out_)
+        out0 := 1 + oneval;
+      cache.(pos) <- (!out0);
+      (!out0)
     end
 
 let pathfind tab len =

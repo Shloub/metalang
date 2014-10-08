@@ -1,15 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int eratostene(int* t, int max_){
+int eratostene(int* t, int max0){
   int i;
   int n = 0;
-  for (i = 2 ; i < max_; i++)
+  for (i = 2 ; i < max0; i++)
     if (t[i] == i)
   {
     n ++;
     int j = i * i;
-    while (j < max_ && j > 0)
+    while (j < max0 && j > 0)
     {
       t[j] = 0;
       j += i;
@@ -49,7 +49,7 @@ int main(void){
   for (j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   int result = 0;
-  int max_ = 0;
+  int max0 = 0;
   int nprimes = eratostene(era, maximumprimes);
   int *primes = malloc( nprimes * sizeof(int));
   for (o = 0 ; o < nprimes; o++)
@@ -70,22 +70,22 @@ int main(void){
     {
       int n1 = test(a, b, primes, nprimes);
       int n2 = test(a, -b, primes, nprimes);
-      if (n1 > max_)
+      if (n1 > max0)
       {
-        max_ = n1;
+        max0 = n1;
         result = a * b;
         ma = a;
         mb = b;
       }
-      if (n2 > max_)
+      if (n2 > max0)
       {
-        max_ = n2;
+        max0 = n2;
         result = -a * b;
         ma = a;
         mb = -b;
       }
   }
-  printf("%d %d\n%d\n%d\n", ma, mb, max_, result);
+  printf("%d %d\n%d\n%d\n", ma, mb, max0, result);
   return 0;
 }
 

@@ -6,7 +6,7 @@ begin
     let d = int_of_char (c) - int_of_char ('0') in
     i := (!i) * d;
     d) in
-  let max_ = ref( (!i) ) in
+  let max0 = ref( (!i) ) in
   let index = ref( 0 ) in
   let nskipdiv = ref( 0 ) in
   for _k = 1 to 995 do
@@ -26,8 +26,8 @@ begin
       end;
     last.((!index)) <- f;
     index := ((!index) + 1) mod 5;
-    max_ := (max ((!max_)) ((!i)))
+    max0 := (max ((!max0)) ((!i)))
   done;
-  Printf.printf "%d\n" (!max_)
+  Printf.printf "%d\n" (!max0)
 end
  

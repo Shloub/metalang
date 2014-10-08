@@ -60,9 +60,9 @@ passepartout = [None] * n
 for i in range(0, n):
   out0 = [None] * 2
   for j in range(0, 2):
-    out__=readint()
+    out01=readint()
     stdinsep()
-    out0[j] = out__;
+    out0[j] = out01;
   passepartout[i] = out0;
 m=readint()
 stdinsep()

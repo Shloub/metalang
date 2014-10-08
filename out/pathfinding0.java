@@ -25,9 +25,9 @@ public class pathfinding0
       int r = Math.min(q, val4);
       int s = r;
       int o = s;
-      int out_ = 1 + o;
-      cache[posY][posX] = out_;
-      return out_;
+      int out0 = 1 + o;
+      cache[posY][posX] = out0;
+      return out0;
     }
   }
   

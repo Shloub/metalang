@@ -27,8 +27,8 @@ public class vigenere
       if (lettre != -1)
       {
         int addon = position_alphabet(cle[i % taille_cle]);
-        int new_ = (addon + lettre) % 26;
-        message[i] = of_position_alphabet(new_);
+        int new0 = (addon + lettre) % 26;
+        message[i] = of_position_alphabet(new0);
       }
     }
   }
@@ -47,8 +47,8 @@ public class vigenere
     char[] cle = new char[taille_cle];
     for (int index = 0 ; index < taille_cle; index++)
     {
-      char out_ = scanner.findWithinHorizon(".", 1).charAt(0);
-      cle[index] = out_;
+      char out0 = scanner.findWithinHorizon(".", 1).charAt(0);
+      cle[index] = out0;
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille;

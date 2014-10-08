@@ -41,10 +41,10 @@ public static int readInt(){
   public class intlist {public int head;public intlist tail;}
   public static intlist cons(intlist list, int i)
   {
-    intlist out_ = new intlist();
-    out_.head = i;
-    out_.tail = list;
-    return out_;
+    intlist out0 = new intlist();
+    out0.head = i;
+    out0.tail = list;
+    return out0;
   }
   
   public static intlist rev2(intlist empty, intlist acc, intlist torev)

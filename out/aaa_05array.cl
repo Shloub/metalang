@@ -11,8 +11,8 @@
 (defun id (b)
 (return-from id b))
 
-(defun g (t_ index)
-(setf (aref t_ index) nil))
+(defun g (t0 index)
+(setf (aref t0 index) nil))
 
 (progn
   (let

@@ -8,13 +8,13 @@ sub remainder {
 
 sub eratostene{
   my($t,
-  $max_) = @_;
+  $max0) = @_;
   my $n = 0;
-  foreach my $i (2 .. $max_ - 1) {
+  foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
       my $j = $i * $i;
       $n = $n + 1;
-      while ($j < $max_ && $j > 0)
+      while ($j < $max0 && $j > 0)
       {
         $t->[$j] = 0;
         $j = $j + $i;
@@ -67,13 +67,12 @@ sub find{
     foreach my $m (0 .. $n + 2 - 1) {
       $primesFactors->[$m] = 0;
       }
-    my $max_ = max(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
+    my $max0 = max(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
     $primesFactors->[2] = $primesFactors->[2] - 1;
     my $ndivs = 1;
-    foreach my $i (0 .. $max_) {
+    foreach my $i (0 .. $max0) {
       if ($primesFactors->[$i] ne 0) {
-        $ndivs = $ndivs * 1
-        +
+        $ndivs = $ndivs * 1 +
         $primesFactors->[$i];
       }
       }

@@ -72,10 +72,10 @@ end;
 function sumdiv(n : Longint) : Longint;
 var
   i : Longint;
-  out_ : Longint;
+  out0 : Longint;
 begin
   { On désire renvoyer la somme des diviseurs }
-  out_ := 0;
+  out0 := 0;
   { On déclare un entier qui contiendra la somme }
   for i := 1 to  n do
   begin
@@ -84,7 +84,7 @@ begin
     then
       begin
         { Si i divise }
-        out_ := out_ + i;
+        out0 := out0 + i;
         { On incrémente }
       end
     else
@@ -92,7 +92,7 @@ begin
         { nop }
       end;
   end;
-  exit(out_);
+  exit(out0);
   {On renvoie out}
 end;
 

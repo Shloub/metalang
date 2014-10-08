@@ -62,17 +62,17 @@ begin
 end;
 
 type b = array of Longint;
-function devine_(nombre : Longint; tab : b; len : Longint) : boolean;
+function devine0(nombre : Longint; tab : b; len : Longint) : boolean;
 var
   i : Longint;
-  max_ : Longint;
-  min_ : Longint;
+  max0 : Longint;
+  min0 : Longint;
 begin
-  min_ := tab[0];
-  max_ := tab[1];
+  min0 := tab[0];
+  max0 := tab[1];
   for i := 2 to  len - 1 do
   begin
-    if (tab[i] > max_) or (tab[i] < min_)
+    if (tab[i] > max0) or (tab[i] < min0)
     then
       begin
         exit(false);
@@ -80,12 +80,12 @@ begin
     if tab[i] < nombre
     then
       begin
-        min_ := tab[i];
+        min0 := tab[i];
       end;
     if tab[i] > nombre
     then
       begin
-        max_ := tab[i];
+        max0 := tab[i];
       end;
     if (tab[i] = nombre) and (len <> (i + 1))
     then
@@ -116,7 +116,7 @@ begin
     skip();
     tab[i] := tmp;
   end;
-  a := devine_(nombre, tab, len);
+  a := devine0(nombre, tab, len);
   if a
   then
     begin

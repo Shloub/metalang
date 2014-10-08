@@ -1,9 +1,9 @@
 def programme_candidat( tableau, x, y ):
-    out_ = 0;
+    out0 = 0;
     for i in range(0, y):
       for j in range(0, x):
-        out_ += tableau[i][j] * (i * 2 + j)
-    return out_;
+        out0 += tableau[i][j] * (i * 2 + j)
+    return out0;
 
 taille_x = int(input());
 taille_y = int(input());

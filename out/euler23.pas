@@ -1,21 +1,21 @@
 program euler23;
 
 type e = array of Longint;
-function eratostene(t : e; max_ : Longint) : Longint;
+function eratostene(t : e; max0 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
   n : Longint;
 begin
   n := 0;
-  for i := 2 to  max_ - 1 do
+  for i := 2 to  max0 - 1 do
   begin
     if t[i] = i
     then
       begin
         n := n + 1;
         j := i * i;
-        while (j < max_) and (j > 0) do
+        while (j < max0) and (j > 0) do
         begin
           t[j] := 0;
           j := j + i;
@@ -60,7 +60,7 @@ function sumdivaux(t : e; n : Longint; i : Longint) : Longint;
 var
   j : Longint;
   o : Longint;
-  out_ : Longint;
+  out0 : Longint;
   p : Longint;
 begin
   if i > n then
@@ -75,21 +75,21 @@ begin
   else
     begin
       o := sumdivaux(t, n, sumdivaux2(t, n, i + 1));
-      out_ := 0;
+      out0 := 0;
       p := i;
       for j := 1 to  t[i] do
       begin
-        out_ := out_ + p;
+        out0 := out0 + p;
         p := p * i;
       end;
-      exit((out_ + 1) * o);
+      exit((out0 + 1) * o);
     end;;
 end;
 
 function sumdiv(nprimes : Longint; primes : e; n : Longint) : Longint;
 var
   i : Longint;
-  max_ : Longint;
+  max0 : Longint;
   t : e;
 begin
   SetLength(t, n + 1);
@@ -97,13 +97,14 @@ begin
   begin
     t[i] := 0;
   end;
-  max_ := fillPrimesFactors(t, n, primes, nprimes);
-  exit(sumdivaux(t, max_, 0));
+  max0 := fillPrimesFactors(t, n, primes, nprimes);
+  exit(sumdivaux(t, max0, 0));
 end;
 
+type f = array of boolean;
 
 var
-  abondant : array of boolean;
+  abondant : f;
   era : e;
   i : Longint;
   j : Longint;
@@ -120,7 +121,7 @@ var
   r : Longint;
   s : Longint;
   sum : Longint;
-  summable : array of boolean;
+  summable : f;
   t : Longint;
 begin
   maximumprimes := 30001;

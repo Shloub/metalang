@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 int programme_candidat(std::vector<int> * tableau, int taille){
-  int out_ = 0;
+  int out0 = 0;
   for (int i = 0 ; i < taille; i++)
-    out_ += tableau->at(i);
-  return out_;
+    out0 += tableau->at(i);
+  return out0;
 }
 
 

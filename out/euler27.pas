@@ -1,21 +1,21 @@
 program euler27;
 
 type c = array of Longint;
-function eratostene(t : c; max_ : Longint) : Longint;
+function eratostene(t : c; max0 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
   n : Longint;
 begin
   n := 0;
-  for i := 2 to  max_ - 1 do
+  for i := 2 to  max0 - 1 do
   begin
     if t[i] = i
     then
       begin
         n := n + 1;
         j := i * i;
-        while (j < max_) and (j > 0) do
+        while (j < max0) and (j > 0) do
         begin
           t[j] := 0;
           j := j + i;
@@ -73,7 +73,7 @@ var
   k : Longint;
   l : Longint;
   ma : Longint;
-  max_ : Longint;
+  max0 : Longint;
   maximumprimes : Longint;
   mb : Longint;
   n1 : Longint;
@@ -90,7 +90,7 @@ begin
     era[j] := j;
   end;
   result := 0;
-  max_ := 0;
+  max0 := 0;
   nprimes := eratostene(era, maximumprimes);
   SetLength(primes, nprimes);
   for o := 0 to  nprimes - 1 do
@@ -122,18 +122,18 @@ begin
         begin
           n1 := test(a, b, primes, nprimes);
           n2 := test(a, -b, primes, nprimes);
-          if n1 > max_
+          if n1 > max0
           then
             begin
-              max_ := n1;
+              max0 := n1;
               result := a * b;
               ma := a;
               mb := b;
             end;
-          if n2 > max_
+          if n2 > max0
           then
             begin
-              max_ := n2;
+              max0 := n2;
               result := -a * b;
               ma := a;
               mb := -b;
@@ -145,7 +145,7 @@ begin
   Write(' ');
   Write(mb);
   Write(''#10'');
-  Write(max_);
+  Write(max0);
   Write(''#10'');
   Write(result);
   Write(''#10'');

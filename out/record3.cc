@@ -16,13 +16,14 @@ toto * mktoto(int v1){
 }
 
 int result(std::vector<toto *> * t, int len){
-  int out_ = 0;
+  int out0 = 0;
   for (int j = 0 ; j < len; j++)
   {
     t->at(j)->blah = t->at(j)->blah + 1;
-    out_ = out_ + t->at(j)->foo + t->at(j)->blah * t->at(j)->bar + t->at(j)->bar * t->at(j)->foo;
+    out0 = out0 + t->at(j)->foo + t->at(j)->blah * t->at(j)->bar +
+    t->at(j)->bar * t->at(j)->foo;
   }
-  return out_;
+  return out0;
 }
 
 

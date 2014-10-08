@@ -1,8 +1,8 @@
 type intlist = {mutable head : int; mutable tail : intlist;}
 let cons list i =
-  let out_ = {head=i;
+  let out0 = {head=i;
   tail=list} in
-  out_
+  out0
 let rec rev2 empty acc torev =
   let d () = () in
   (if (torev = empty)

@@ -49,9 +49,9 @@ function pathfind_aux(cache, tab, x, y, posX, posY){
     var val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     var val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
     var e = Math.min(val1, val2, val3, val4);
-    var out_ = 1 + e;
-    cache[posY][posX] = out_;
-    return out_;
+    var out0 = 1 + e;
+    cache[posY][posX] = out0;
+    return out0;
   }
 }
 

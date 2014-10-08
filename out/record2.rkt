@@ -25,26 +25,26 @@
 (struct toto ([bar #:mutable] [blah #:mutable] [foo #:mutable]))
 (define (mktoto v1)
   ;toto
-  (let ([t_ (toto 0 0 v1)])
-  t_)
+  (let ([t0 (toto 0 0 v1)])
+  t0)
 )
-(define (result t_)
+(define (result t0)
   ;toto
   (block
-    (set-toto-blah! t_ (+ (toto-blah t_) 1))
-    (+ (+ (toto-foo t_) (* (toto-blah t_) (toto-bar t_))) (* (toto-bar t_) (toto-foo t_)))
+    (set-toto-blah! t0 (+ (toto-blah t0) 1))
+    (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0)))
     )
 )
 (define main
-  (let ([t_ (mktoto 4)])
+  (let ([t0 (mktoto 4)])
   ((lambda (b) 
      (block
-       (set-toto-bar! t_ b)
+       (set-toto-bar! t0 b)
        (mread-blank)
        ((lambda (a) 
           (block
-            (set-toto-blah! t_ a)
-            (display (result t_))
+            (set-toto-blah! t0 a)
+            (display (result t0))
             )) (mread-int))
      )) (mread-int)))
 )

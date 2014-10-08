@@ -64,25 +64,25 @@ end;
 {
 La suite de fibonaci
 }
-function fibo_(a : Longint; b : Longint; i : Longint) : Longint;
+function fibo0(a : Longint; b : Longint; i : Longint) : Longint;
 var
   a2 : Longint;
   b2 : Longint;
   j : Longint;
-  out_ : Longint;
+  out0 : Longint;
   tmp : Longint;
 begin
-  out_ := 0;
+  out0 := 0;
   a2 := a;
   b2 := b;
   for j := 0 to  i + 1 do
   begin
-    out_ := out_ + a2;
+    out0 := out0 + a2;
     tmp := b2;
     b2 := b2 + a2;
     a2 := tmp;
   end;
-  exit(out_);
+  exit(out0);
 end;
 
 
@@ -99,7 +99,7 @@ begin
   b := read_int_();
   skip();
   i := read_int_();
-  Write(fibo_(a, b, i));
+  Write(fibo0(a, b, i));
 end.
 
 

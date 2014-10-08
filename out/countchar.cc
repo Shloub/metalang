@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
 int nth(std::vector<char> * tab, char tofind, int len){
-  int out_ = 0;
+  int out0 = 0;
   for (int i = 0 ; i < len; i++)
     if (tab->at(i) == tofind)
-    out_ ++;
-  return out_;
+    out0 ++;
+  return out0;
 }
 
 

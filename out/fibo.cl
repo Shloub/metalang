@@ -21,22 +21,22 @@
 #|
 La suite de fibonaci
 |#
-(defun fibo_ (a b i)
+(defun fibo0 (a b i)
 (progn
-  (let ((out_ 0))
+  (let ((out0 0))
     (let ((a2 a))
       (let ((b2 b))
         (do
           ((j 0 (+ 1 j)))
           ((> j (+ i 1)))
           (progn
-            (setq out_ ( + out_ a2))
+            (setq out0 ( + out0 a2))
             (let ((tmp b2))
               (setq b2 ( + b2 a2))
               (setq a2 tmp)
             ))
         )
-        (return-from fibo_ out_)
+        (return-from fibo0 out0)
       )))))
 
 (progn
@@ -48,7 +48,7 @@ La suite de fibonaci
         (setq b (mread-int ))
         (mread-blank)
         (setq i (mread-int ))
-        (princ (fibo_ a b i))
+        (princ (fibo0 a b i))
       ))))
 
 

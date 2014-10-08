@@ -19,7 +19,7 @@ def bubblesort( tab, len )
     end
 end
 
-def qsort_( tab, len, i, j )
+def qsort0( tab, len, i, j )
     if i < j then
       i0 = i
       j0 = j
@@ -56,8 +56,8 @@ def qsort_( tab, len, i, j )
           j -= 1
         end
       end
-      qsort_(tab, len, i0, i - 1);
-      qsort_(tab, len, i + 1, j0);
+      qsort0(tab, len, i0, i - 1);
+      qsort0(tab, len, i + 1, j0);
     end
 end
 
@@ -78,7 +78,7 @@ for i in (0 ..  len - 1) do
 end
 print "\n";
 tab3 = copytab(tab, len)
-qsort_(tab3, len, 0, len - 1);
+qsort0(tab3, len, 0, len - 1);
 for i in (0 ..  len - 1) do
   printf "%d ", tab3[i]
 end

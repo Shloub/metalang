@@ -25,7 +25,7 @@ for ($j = 0 ; $j < 5; $j++)
   $i *= $d;
   $last[$j] = $d;
 }
-$max_ = $i;
+$max0 = $i;
 $index = 0;
 $nskipdiv = 0;
 for ($k = 1 ; $k <= 995; $k++)
@@ -46,7 +46,7 @@ for ($k = 1 ; $k <= 995; $k++)
   }
   $last[$index] = $f;
   $index = ($index + 1) % 5;
-  $max_ = max($max_, $i);
+  $max0 = max($max0, $i);
 }
-echo $max_, "\n";
+echo $max0, "\n";
 ?>

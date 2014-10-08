@@ -1,5 +1,5 @@
-let montagnes_ tab len =
-  let max_ = ref( 1 ) in
+let montagnes0 tab len =
+  let max0 = ref( 1 ) in
   let j = ref( 1 ) in
   let i = ref( len - 2 ) in
   while (!i) >= 0
@@ -11,11 +11,11 @@ let montagnes_ tab len =
       done;
       j := (!j) + 1;
       tab.(len - (!j)) <- x;
-      if (!j) > (!max_) then
-        max_ := (!j);
+      if (!j) > (!max0) then
+        max0 := (!j);
       i := (!i) - 1
   done;
-  (!max_)
+  (!max0)
 
 let () =
 begin
@@ -25,6 +25,6 @@ begin
     let x = ref( 0 ) in
     Scanf.scanf "%d " (fun v_0 -> x := v_0);
     (!x)) in
-  Printf.printf "%d" (montagnes_ tab (!len))
+  Printf.printf "%d" (montagnes0 tab (!len))
 end
  

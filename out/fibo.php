@@ -19,18 +19,18 @@ if ($stdin != '' || feof(STDIN)) break;
 }/*
 La suite de fibonaci
 */
-function fibo_($a, $b, $i){
-  $out_ = 0;
+function fibo0($a, $b, $i){
+  $out0 = 0;
   $a2 = $a;
   $b2 = $b;
   for ($j = 0 ; $j <= $i + 1; $j++)
   {
-    $out_ += $a2;
+    $out0 += $a2;
     $tmp = $b2;
     $b2 += $a2;
     $a2 = $tmp;
   }
-  return $out_;
+  return $out0;
 }
 
 $a = 0;
@@ -41,5 +41,5 @@ scantrim();
 list($b) = scan("%d");
 scantrim();
 list($i) = scan("%d");
-echo fibo_($a, $b, $i);
+echo fibo0($a, $b, $i);
 ?>

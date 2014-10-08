@@ -262,14 +262,14 @@ let rec mul_bigint aa bb =
           then (mul_bigint_cp aa bb)
           else (cf ()))))
 let log10 a =
-  let out_ = 1 in
-  let rec cd a out_ =
+  let out0 = 1 in
+  let rec cd a out0 =
     (if (a >= 10)
      then let a = (a / 10) in
-     let out_ = (out_ + 1) in
-     (cd a out_)
-     else out_) in
-    (cd a out_)
+     let out0 = (out0 + 1) in
+     (cd a out0)
+     else out0) in
+    (cd a out0)
 let bigint_of_int i =
   let size = (log10 i) in
   let size = (if (i = 0)
@@ -294,24 +294,24 @@ let bigint_of_int i =
     (bz ca i)
 let fact_bigint a =
   let one = (bigint_of_int 1) in
-  let out_ = one in
-  let rec bx a out_ =
+  let out0 = one in
+  let rec bx a out0 =
     (if (not (bigint_eq a one))
-     then let out_ = (mul_bigint a out_) in
+     then let out0 = (mul_bigint a out0) in
      let a = (sub_bigint a one) in
-     (bx a out_)
-     else out_) in
-    (bx a out_)
+     (bx a out0)
+     else out0) in
+    (bx a out0)
 let sum_chiffres_bigint a =
-  let out_ = 0 in
+  let out0 = 0 in
   let bu = 0 in
   let bv = (a.bigint_len - 1) in
-  let rec bt i out_ =
+  let rec bt i out0 =
     (if (i <= bv)
-     then let out_ = (out_ + a.bigint_chiffres.(i)) in
-     (bt (i + 1) out_)
-     else out_) in
-    (bt bu out_)
+     then let out0 = (out0 + a.bigint_chiffres.(i)) in
+     (bt (i + 1) out0)
+     else out0) in
+    (bt bu out0)
 let euler20 () =
   let a = (bigint_of_int 15) in
   (*  normalement c'est 100  *)
@@ -385,25 +385,25 @@ let euler29 () =
   let found = true in
   let rec bc found n =
     (if found
-     then let min_ = a0_bigint.(0) in
+     then let min0 = a0_bigint.(0) in
      let found = false in
      let bi = 2 in
      let bj = maxA in
-     let rec bh i found min_ =
+     let rec bh i found min0 =
        (if (i <= bj)
-        then ((fun  (found, min_) -> (bh (i + 1) found min_)) (if (b.(i) <= maxB)
-                                                               then ((fun  (found, min_) -> (found, min_)) (
+        then ((fun  (found, min0) -> (bh (i + 1) found min0)) (if (b.(i) <= maxB)
+                                                               then ((fun  (found, min0) -> (found, min0)) (
                                                                if found
-                                                               then let min_ = (
-                                                               if (bigint_lt a_bigint.(i) min_)
-                                                               then let min_ = a_bigint.(i) in
-                                                               min_
-                                                               else min_) in
-                                                               (found, min_)
-                                                               else let min_ = a_bigint.(i) in
+                                                               then let min0 = (
+                                                               if (bigint_lt a_bigint.(i) min0)
+                                                               then let min0 = a_bigint.(i) in
+                                                               min0
+                                                               else min0) in
+                                                               (found, min0)
+                                                               else let min0 = a_bigint.(i) in
                                                                let found = true in
-                                                               (found, min_)))
-                                                               else (found, min_)))
+                                                               (found, min0)))
+                                                               else (found, min0)))
         else let n = (if found
                       then let n = (n + 1) in
                       let bf = 2 in
@@ -411,7 +411,7 @@ let euler29 () =
                       let rec be l =
                         (if (l <= bg)
                          then (
-                                (if ((bigint_eq a_bigint.(l) min_) && (b.(l) <= maxB))
+                                (if ((bigint_eq a_bigint.(l) min0) && (b.(l) <= maxB))
                                  then (
                                         b.(l) <- (b.(l) + 1);
                                         a_bigint.(l) <- (mul_bigint a_bigint.(l) a0_bigint.(l))
@@ -425,7 +425,7 @@ let euler29 () =
                         (be bf)
                       else n) in
         (bc found n)) in
-       (bh bi found min_)
+       (bh bi found min0)
      else n) in
     (bc found n)
 let main =

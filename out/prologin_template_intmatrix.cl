@@ -29,17 +29,17 @@
 
 (defun programme_candidat (tableau x y)
 (progn
-  (let ((out_ 0))
+  (let ((out0 0))
     (do
       ((i 0 (+ 1 i)))
       ((> i (- y 1)))
       (do
         ((j 0 (+ 1 j)))
         ((> j (- x 1)))
-        (setq out_ ( + out_ (* (aref (aref tableau i) j) (+ (* i 2) j))))
+        (setq out0 ( + out0 (* (aref (aref tableau i) j) (+ (* i 2) j))))
         )
     )
-    (return-from programme_candidat out_)
+    (return-from programme_candidat out0)
   )))
 
 (progn

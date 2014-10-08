@@ -1,19 +1,19 @@
 <?php
 function programme_candidat(&$tableau1, $taille1, &$tableau2, $taille2){
-  $out_ = 0;
+  $out0 = 0;
   for ($i = 0 ; $i < $taille1; $i++)
   {
-    $out_ += ord($tableau1[$i]) * $i;
+    $out0 += ord($tableau1[$i]) * $i;
     echo $tableau1[$i];
   }
   echo "--\n";
   for ($j = 0 ; $j < $taille2; $j++)
   {
-    $out_ += ord($tableau2[$j]) * $j * 100;
+    $out0 += ord($tableau2[$j]) * $j * 100;
     echo $tableau2[$j];
   }
   echo "--\n";
-  return $out_;
+  return $out0;
 }
 
 $taille1 = intval(trim(fgets(STDIN)));

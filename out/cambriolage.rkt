@@ -75,10 +75,10 @@
                                                    (lambda (_) (let ([out0 (array_init_withenv 2 
                                                                (lambda (j) 
                                                                  (lambda (_) (
-                                                                 (lambda (out__) 
+                                                                 (lambda (out01) 
                                                                    (block
                                                                     (mread-blank)
-                                                                    (let ([v out__])
+                                                                    (let ([v out01])
                                                                     (list '() v))
                                                                     )) (mread-int)))) '())])
        (let ([u out0])

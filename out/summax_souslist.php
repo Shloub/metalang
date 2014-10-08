@@ -19,16 +19,16 @@ if ($stdin != '' || feof(STDIN)) break;
 }
 function summax(&$lst, $len){
   $current = 0;
-  $max_ = 0;
+  $max0 = 0;
   for ($i = 0 ; $i < $len; $i++)
   {
     $current += $lst[$i];
     if ($current < 0)
       $current = 0;
-    if ($max_ < $current)
-      $max_ = $current;
+    if ($max0 < $current)
+      $max0 = $current;
   }
-  return $max_;
+  return $max0;
 }
 
 $len = 0;

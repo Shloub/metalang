@@ -10,23 +10,23 @@ module Array = struct
 end
 
 let programme_candidat tableau taille =
-  let out_ = 0 in
+  let out0 = 0 in
   let g = 0 in
   let h = (taille - 1) in
-  let rec f i out_ =
+  let rec f i out0 =
     (if (i <= h)
-     then let out_ = (out_ + ((int_of_char (tableau.(i))) * i)) in
+     then let out0 = (out0 + ((int_of_char (tableau.(i))) * i)) in
      (
        (Printf.printf "%c" tableau.(i));
-       (f (i + 1) out_)
+       (f (i + 1) out0)
        )
      
      else (
             (Printf.printf "--\n" );
-            out_
+            out0
             )
      ) in
-    (f g out_)
+    (f g out0)
 let main =
   let taille = (Scanf.scanf "%d " (fun x -> x)) in
   let c = (Array.init_withenv taille (fun  d () -> Scanf.scanf "%c"

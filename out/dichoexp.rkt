@@ -22,16 +22,16 @@
   (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
 ))
 
-(define (exp_ a b)
+(define (exp0 a b)
   ;toto
   (if (eq? b 0)
   1
   (let ([c (lambda (_) 
              '())])
   (if (eq? (remainder b 2) 0)
-  (let ([o (exp_ a (quotient b 2))])
+  (let ([o (exp0 a (quotient b 2))])
   (* o o))
-  (* a (exp_ a (- b 1))))))
+  (* a (exp0 a (- b 1))))))
 )
 (define main
   (let ([a 0])
@@ -42,7 +42,7 @@
        (mread-blank)
        ((lambda (d) 
           (let ([b d])
-          (display (exp_ a b)))) (mread-int))
+          (display (exp0 a b)))) (mread-int))
      ))) (mread-int))))
 )
 

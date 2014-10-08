@@ -62,14 +62,14 @@ begin
 end;
 
 type a = array of Longint;
-function montagnes_(tab : a; len : Longint) : Longint;
+function montagnes0(tab : a; len : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
-  max_ : Longint;
+  max0 : Longint;
   x : Longint;
 begin
-  max_ := 1;
+  max0 := 1;
   j := 1;
   i := len - 2;
   while i >= 0 do
@@ -81,14 +81,14 @@ begin
     end;
     j := j + 1;
     tab[len - j] := x;
-    if j > max_
+    if j > max0
     then
       begin
-        max_ := j;
+        max0 := j;
       end;
     i := i - 1;
   end;
-  exit(max_);
+  exit(max0);
 end;
 
 
@@ -109,7 +109,7 @@ begin
     skip();
     tab[i] := x;
   end;
-  Write(montagnes_(tab, len));
+  Write(montagnes0(tab, len));
 end.
 
 

@@ -73,16 +73,16 @@ type g = array of char;
 function programme_candidat(tableau : g; taille : Longint) : Longint;
 var
   i : Longint;
-  out_ : Longint;
+  out0 : Longint;
 begin
-  out_ := 0;
+  out0 := 0;
   for i := 0 to  taille - 1 do
   begin
-    out_ := out_ + ord(tableau[i]) * i;
+    out0 := out0 + ord(tableau[i]) * i;
     Write(tableau[i]);
   end;
   Write('--'#10'');
-  exit(out_);
+  exit(out0);
 end;
 
 

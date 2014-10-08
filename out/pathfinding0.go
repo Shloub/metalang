@@ -42,9 +42,9 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
     var v int = min2_(u, val4)
     var w int = v
     var r int = w
-    var out_ int = 1 + r
-    cache[posY][posX] = out_;
-    return out_
+    var out0 int = 1 + r
+    cache[posY][posX] = out0;
+    return out0
   }   
 }
 

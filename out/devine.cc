@@ -1,16 +1,16 @@
 #include <iostream>
 #include <vector>
-bool devine_(int nombre, std::vector<int> * tab, int len){
-  int min_ = tab->at(0);
-  int max_ = tab->at(1);
+bool devine0(int nombre, std::vector<int> * tab, int len){
+  int min0 = tab->at(0);
+  int max0 = tab->at(1);
   for (int i = 2 ; i < len; i++)
   {
-    if (tab->at(i) > max_ || tab->at(i) < min_)
+    if (tab->at(i) > max0 || tab->at(i) < min0)
       return false;
     if (tab->at(i) < nombre)
-      min_ = tab->at(i);
+      min0 = tab->at(i);
     if (tab->at(i) > nombre)
-      max_ = tab->at(i);
+      max0 = tab->at(i);
     if (tab->at(i) == nombre && len != i + 1)
       return false;
   }
@@ -27,7 +27,7 @@ int main(){
     std::cin >> tmp >> std::skipws;
     tab->at(i) = tmp;
   }
-  bool a = devine_(nombre, tab, len);
+  bool a = devine0(nombre, tab, len);
   if (a)
     std::cout << "True";
   else

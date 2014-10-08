@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int montagnes_(int* tab, int len){
-  int max_ = 1;
+int montagnes0(int* tab, int len){
+  int max0 = 1;
   int j = 1;
   int i = len - 2;
   while (i >= 0)
@@ -12,11 +12,11 @@ int montagnes_(int* tab, int len){
       j --;
     j ++;
     tab[len - j] = x;
-    if (j > max_)
-      max_ = j;
+    if (j > max0)
+      max0 = j;
     i --;
   }
-  return max_;
+  return max0;
 }
 
 int main(void){
@@ -30,7 +30,7 @@ int main(void){
     scanf("%d ", &x);
     tab[i] = x;
   }
-  printf("%d", montagnes_(tab, len));
+  printf("%d", montagnes0(tab, len));
   return 0;
 }
 
