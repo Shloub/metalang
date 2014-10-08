@@ -73,11 +73,10 @@ let conf_rename lang prog =
   if lang = "adb" then begin
     BindingSet.iter (fun name ->
       if '_' = String.get name ((String.length name) - 1) then
-	Rename.add name;
+	      Rename.add name;
     ) !Fresh.bindings
   end;
-  List.iter Rename.add (keywords lang);
-
+  Rename.add prog.Prog.progname ;
   List.iter Rename.add (keywords lang);
   List.iter Fresh.add (keywords lang)
 
@@ -224,15 +223,22 @@ let no_passes prog =
 
 module L = StringMap
 let languages, printers =
-  let ( => ) pa pr out prog
+  let ( => ) (cut, pa) pr out prog
     =
     (fun (err : ((Format.formatter -> unit) -> unit)) ->
       let typerEnv, processed  =
         pa prog
       in
       begin
-	Format.pp_set_margin out 80;
-	Format.pp_set_max_indent out 80;
+
+	      if cut then begin
+          Format.pp_set_margin out 80;
+	        Format.pp_set_max_indent out 80;
+        end
+        else begin
+          Format.pp_set_margin out 65000;
+	        Format.pp_set_max_indent out 65000;
+        end;
         pr#setTyperEnv typerEnv;
         pr#prog out processed
       end)
@@ -240,25 +246,25 @@ let languages, printers =
       
   in
   let ls = [
-    "c",    clike_passes => new CPrinter.cPrinter ;
-    "m",    clike_passes => new ObjCPrinter.objCPrinter ;
-    "pas",  clike_passes => new PasPrinter.pasPrinter ;
-    "adb",  clike_passes => new AdaPrinter.adaPrinter ;
-    "cc",   clike_passes => new CppPrinter.cppPrinter ;
-    "cs",   clike_passes => new CsharpPrinter.csharpPrinter ;
-    "java", clike_passes => new JavaPrinter.javaPrinter ;
-    "js",   clike_passes => new JsPrinter.jsPrinter ;
-    "ml",   ocaml_passes => new OcamlPrinter.camlPrinter ;
-    "fun.ml",  fun_passes {Makelet.curry=true} => new OcamlFunPrinter.camlFunPrinter ;
-    "hs",   ocaml_passes => new HaskellPrinter.haskellPrinter ;
-    "php",  php_passes => new PhpPrinter.phpPrinter ;
-    "rb",   python_passes => new RbPrinter.rbPrinter ;
-    "py",   python_passes => new PyPrinter.pyPrinter ;
-    "go",   clike_passes => new GoPrinter.goPrinter ;
-    "cl",   common_lisp_passes  => new CommonLispPrinter.commonLispPrinter ;
-    "rkt",  fun_passes {Makelet.curry=false} => new RacketPrinter.racketPrinter ;
-    "pl",   perl_passes => new PerlPrinter.perlPrinter ;
-    "metalang_parsed", no_passes => new Printer.printer ;
+    "c",       (true, clike_passes)   => new CPrinter.cPrinter ;
+    "m",       (true, clike_passes)   => new ObjCPrinter.objCPrinter ;
+    "pas",     (true, clike_passes)   => new PasPrinter.pasPrinter ;
+    "adb",     (true, clike_passes)   => new AdaPrinter.adaPrinter ;
+    "cc",      (true, clike_passes)   => new CppPrinter.cppPrinter ;
+    "cs",      (true, clike_passes)   => new CsharpPrinter.csharpPrinter ;
+    "java",    (true, clike_passes)   => new JavaPrinter.javaPrinter ;
+    "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
+    "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
+    "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
+    "hs",      (true, ocaml_passes)   => new HaskellPrinter.haskellPrinter ;
+    "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
+    "rb",      (false, python_passes) => new RbPrinter.rbPrinter ;
+    "py",      (false, python_passes) => new PyPrinter.pyPrinter ;
+    "go",      (true, clike_passes)   => new GoPrinter.goPrinter ;
+    "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
+    "rkt",     (true, fun_passes {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
+    "pl",      (true, perl_passes)       => new PerlPrinter.perlPrinter ;
+    "metalang_parsed", (true, no_passes) => new Printer.printer ;
   ] in
   let langs : string list = List.map fst ls in
   let map = L.from_list ls
