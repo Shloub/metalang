@@ -1,0 +1,57 @@
+
+main
+  def one = 3
+  def two = 3
+  def three = 5
+  def four = 4
+  def five = 4
+  def six = 3
+  def seven = 5
+  def eight = 5
+  def nine = 4
+  
+  def ten = 3
+
+  def eleven = 6
+  def twelve = 6
+  def thirteen = 8
+  def fourteen = 8
+  def fifteen = 7
+  def sixteen = 7
+  def seventeen = 9
+  def eighteen = 8
+  def nineteen = 8
+
+  def twenty = 6
+  def thirty = 6
+  def forty = 5
+  def fifty = 5
+  def sixty = 5
+  def seventy = 7
+  def eighty = 6
+  def ninety = 6
+  def hundred = 7
+  def thousand = 8
+
+print one + two + three + four + five print "\n"
+
+  def hundred_and = 10
+
+  def one_to_nine = one + two + three + four + five + six + seven + eight + nine
+  print one_to_nine print "\n"
+  def one_to_ten = one_to_nine + ten
+  def one_to_twenty = one_to_ten + eleven + twelve + thirteen + fourteen + fifteen + sixteen + seventeen + eighteen + nineteen + twenty
+  def one_to_thirty  = one_to_twenty  + twenty  * 9 + one_to_nine + thirty
+  def one_to_forty   = one_to_thirty  + thirty  * 9 + one_to_nine + forty 
+  def one_to_fifty   = one_to_forty   + forty  * 9 + one_to_nine + fifty
+  def one_to_sixty   = one_to_fifty   + fifty   * 9 + one_to_nine + sixty
+  def one_to_seventy = one_to_sixty   + sixty   * 9 + one_to_nine + seventy
+  def one_to_eighty  = one_to_seventy + seventy * 9 + one_to_nine + eighty
+  def one_to_ninety  = one_to_eighty  + eighty  * 9 + one_to_nine + ninety
+  def one_to_ninety_nine = one_to_ninety  + ninety  * 9 + one_to_nine
+
+print one_to_ninety_nine print "\n"
+
+  print 100 * one_to_nine + one_to_ninety_nine * 10  + hundred_and * 9 * 99 + hundred * 9 + one + thousand print "\n"
+
+end
