@@ -256,7 +256,7 @@ let languages, printers =
     "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
     "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
     "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
-    "hs",      (true, ocaml_passes)   => new HaskellPrinter.haskellPrinter ;
+(*    "hs",      (true, ocaml_passes)   => new HaskellPrinter.haskellPrinter ; *)
     "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
     "rb",      (false, python_passes) => new RbPrinter.rbPrinter ;
     "py",      (false, python_passes) => new PyPrinter.pyPrinter ;
@@ -264,7 +264,7 @@ let languages, printers =
     "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
     "rkt",     (true, fun_passes {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
     "pl",      (true, perl_passes)       => new PerlPrinter.perlPrinter ;
-    "metalang_parsed", (true, no_passes) => new Printer.printer ;
+(*    "metalang_parsed", (true, no_passes) => new Printer.printer ; *)
   ] in
   let langs : string list = List.map fst ls in
   let map = L.from_list ls
