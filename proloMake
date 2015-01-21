@@ -1,0 +1,72 @@
+
+%.m.out: %.m
+	gcc `gnustep-config --objc-flags` -lgnustep-base $(OBJCFLAGS) $< -o $(basename $*).m.bin || exit 1
+	rm $(basename $*).m.d || exit 0
+	./$(basename $*).m.bin < test01.in > $@
+	rm $(basename $*).m.bin
+
+%.adb.out: %.adb
+	@gnatmake $< -o $(basename $*).adb.bin || exit 1
+	@rm $(basename $*).o
+	@rm $(basename $*).ali
+	./$(basename $*).adb.bin < test01.in > $@
+	@rm $(basename $*).adb.bin
+
+%.java.out: %.java
+	@javac $<
+	@java $(basename $*) < test01.in > $@
+	@rm $(basename $*).class
+
+%.c.out: %.c
+	@gcc $< -o $(basename $*).c.bin
+	./$(basename $*).c.bin < test01.in > $@
+	rm $(basename $*).c.bin
+
+%.cc.out: %.cc
+	@g++ $< -o $(basename $*).cc.bin
+	./$(basename $*).cc.bin < test01.in > $@
+	rm $(basename $*).cc.bin
+
+%.cs.out: %.cs
+	@gmcs $<
+	@mono $(basename $*).exe < test01.in > $@
+	@rm $(basename $*).exe
+	@rm $(basename $*).o
+
+%.pas.out: %.pas
+	@fpc $<
+	./$(basename $*) < test01.in > $@
+	@rm $(basename $*)
+
+%.py.out: %.py
+	@python3 $< < test01.in > $@
+
+%.pl.out: %.pl
+	@perl $< < test01.in > $@
+
+%.php.out: %.php
+	@php $< < test01.in > $@
+
+%.rb.out: %.rb
+	@ruby $< < test01.in > $@
+
+%.fun.ml.out: %.fun.ml
+	@ocaml $< < test01.in > $@
+
+%.ml.out: %.ml
+	@ocaml $< < test01.in > $@
+
+%.go.out: %.go
+	@go run $< < test01.in > $@
+
+%.js.out: %.js
+	@node $< < test01.in > $@
+
+%.cl.out : %.cl
+	@gcl -f $< < test01.in > $@
+
+%.rkt.out : %.rkt
+	@racket $< < test01.in > $@
+
+%.metalang.out : %.metalang
+	@metalang -eval $< < test01.in > $@
