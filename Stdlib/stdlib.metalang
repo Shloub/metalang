@@ -235,6 +235,7 @@ macro array<int> native_expand_read_int_line()
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
   csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll<int>(int.Parse).ToArray()"
   rkt do "list->vector (map string->number (regexp-split \" \" (read-line)))"
+  ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   *  do "E R R O R"
 end
 
@@ -245,11 +246,13 @@ macro array<char> native_expand_read_char_line()
   java do "scanner.nextLine().toCharArray()"
   cpp do "getline()"
   rkt do "list->vector (string->list (read-line))"
+  ruby do "STDIN.readline.split(//)"
   *  do "E R R O R"
 end
 
 macro array<array<int>> py_expand_read_int_matrix(int y)
   py do "[list(map(int, input().split())) for i in range($y)]"
+  ruby do "[*1..$y].map { |l| STDIN.readline.split(\" \").map{ |x| x.to_i(10) } }"
   *  do "E R R O R"
 end
 
@@ -259,6 +262,7 @@ macro int native_expand_read_int()
   csharp do "int.Parse(Console.ReadLine())"
   ml do "Scanf.scanf \"%d \" (fun x -> x)"
   rkt do "string->number (read-line)"
+  ruby do "STDIN.readline.to_i(10)"
   *  do "E R R O R"
 end
 
@@ -272,7 +276,8 @@ then
 	elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Rkt ||
-	current_language() == LANG_Cs
+	current_language() == LANG_Cs ||
+	current_language() == LANG_Rb
 	then
     return {
     tag use_readline
@@ -292,7 +297,8 @@ def lexems expand_read_int_line(lexems a)
     if current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Cs ||
-	current_language() == LANG_Rkt
+	current_language() == LANG_Rkt ||
+	current_language() == LANG_Rb
 	  then
       return {
 			  tag use_readmacros
@@ -325,7 +331,8 @@ def lexems expand_read_char_line(lexems a)
   elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Rkt ||
-	current_language() == LANG_Cs
+	current_language() == LANG_Cs ||
+	current_language() == LANG_Rb
 	  then
       return {
       tag use_readline
@@ -349,7 +356,8 @@ def inline array<char> read_char_line(int n)
 end
 
 def lexems expand_read_int_matrix(lexems x, lexems y)
-    if current_language() == LANG_Py then
+    if current_language() == LANG_Py ||
+       current_language() == LANG_Rb then
       return {
         return py_expand_read_int_matrix( ${ y } )
       }
