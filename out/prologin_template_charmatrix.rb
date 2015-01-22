@@ -11,22 +11,12 @@ def programme_candidat( tableau, taille_x, taille_y )
     return (out0);
 end
 
-f=scanf("%d")[0];
-scanf("%*\n");
-taille_x = f
-h=scanf("%d")[0];
-scanf("%*\n");
-taille_y = h
-l = [];
-for m in (0 ..  taille_y - 1) do
-  o = [];
-  for p in (0 ..  taille_x - 1) do
-    q=scanf("%c")[0];
-    o[p] = q;
-  end
-  scanf("%*\n");
-  l[m] = o;
+taille_x = STDIN.readline.to_i(10)
+taille_y = STDIN.readline.to_i(10)
+e = [];
+for f in (0 ..  taille_y - 1) do
+  e[f] = STDIN.readline.split(//);
 end
-tableau = l
+tableau = e
 printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
 

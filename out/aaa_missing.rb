@@ -22,15 +22,8 @@ def result( len, tab )
     return (-1);
 end
 
-b=scanf("%d")[0];
-scanf("%*\n");
-len = b
+len = STDIN.readline.to_i(10)
 printf "%d\n", len
-d = [];
-for e in (0 ..  len - 1) do
-  d[e]=scanf("%d")[0];
-  scanf("%*\n");
-end
-tab = d
+tab = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
 printf "%d", result(len, tab)
 

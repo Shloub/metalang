@@ -10,39 +10,20 @@ read int, read char et skip
 
 =end
 
-b=scanf("%d")[0];
-scanf("%*\n");
-len = b
+len = STDIN.readline.to_i(10)
 printf "%d=len\n", len
-e = [];
-for f in (0 ..  len - 1) do
-  e[f]=scanf("%d")[0];
-  scanf("%*\n");
-end
-tab = e
+tab = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
 for i in (0 ..  len - 1) do
   printf "%d=>%d ", i, tab[i]
 end
 print "\n";
-k = [];
-for l in (0 ..  len - 1) do
-  k[l]=scanf("%d")[0];
-  scanf("%*\n");
-end
-tab2 = k
+tab2 = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
 for i_ in (0 ..  len - 1) do
   printf "%d==>%d ", i_, tab2[i_]
 end
-p=scanf("%d")[0];
-scanf("%*\n");
-strlen = p
+strlen = STDIN.readline.to_i(10)
 printf "%d=strlen\n", strlen
-r = [];
-for s in (0 ..  strlen - 1) do
-  r[s]=scanf("%c")[0];
-end
-scanf("%*\n");
-tab4 = r
+tab4 = STDIN.readline.split(//)
 for i3 in (0 ..  strlen - 1) do
   tmpc = tab4[i3]
   c = tmpc.ord

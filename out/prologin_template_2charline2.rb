@@ -14,23 +14,9 @@ def programme_candidat( tableau1, taille1, tableau2, taille2 )
     return (out0);
 end
 
-b=scanf("%d")[0];
-scanf("%*\n");
-taille1 = b
-d=scanf("%d")[0];
-scanf("%*\n");
-taille2 = d
-f = [];
-for g in (0 ..  taille1 - 1) do
-  f[g]=scanf("%c")[0];
-end
-scanf("%*\n");
-tableau1 = f
-l = [];
-for m in (0 ..  taille2 - 1) do
-  l[m]=scanf("%c")[0];
-end
-scanf("%*\n");
-tableau2 = l
+taille1 = STDIN.readline.to_i(10)
+taille2 = STDIN.readline.to_i(10)
+tableau1 = STDIN.readline.split(//)
+tableau2 = STDIN.readline.split(//)
 printf "%d\n", programme_candidat(tableau1, taille1, tableau2, taille2)
 

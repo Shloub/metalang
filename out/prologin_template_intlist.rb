@@ -7,14 +7,7 @@ def programme_candidat( tableau, taille )
     return (out0);
 end
 
-b=scanf("%d")[0];
-scanf("%*\n");
-taille = b
-d = [];
-for e in (0 ..  taille - 1) do
-  d[e]=scanf("%d")[0];
-  scanf("%*\n");
-end
-tableau = d
+taille = STDIN.readline.to_i(10)
+tableau = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
 printf "%d\n", programme_candidat(tableau, taille)
 

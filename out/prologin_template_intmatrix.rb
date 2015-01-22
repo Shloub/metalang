@@ -9,22 +9,8 @@ def programme_candidat( tableau, x, y )
     return (out0);
 end
 
-f=scanf("%d")[0];
-scanf("%*\n");
-taille_x = f
-h=scanf("%d")[0];
-scanf("%*\n");
-taille_y = h
-l = [];
-for m in (0 ..  taille_y - 1) do
-  o = [];
-  for p in (0 ..  taille_x - 1) do
-    q=scanf("%d")[0];
-    scanf("%*\n");
-    o[p] = q;
-  end
-  l[m] = o;
-end
-tableau = l
+taille_x = STDIN.readline.to_i(10)
+taille_y = STDIN.readline.to_i(10)
+tableau = [*1..taille_y].map { |l| STDIN.readline.split(" ").map{ |x| x.to_i(10) } }
 printf "%d\n", programme_candidat(tableau, taille_x, taille_y)
 

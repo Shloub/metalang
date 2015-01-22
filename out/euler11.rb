@@ -30,25 +30,15 @@ for i in (0 ..  8 - 1) do
   end
 end
 max0 = 0
-h = 20
-l = [];
-for o in (0 ..  20 - 1) do
-  p = [];
-  for q in (0 ..  h - 1) do
-    r=scanf("%d")[0];
-    scanf("%*\n");
-    p[q] = r;
-  end
-  l[o] = p;
-end
-m = l
+d = 20
+m = [*1..20].map { |l| STDIN.readline.split(" ").map{ |x| x.to_i(10) } }
 for j in (0 ..  7) do
   (dx, dy) = directions[j]
   for x in (0 ..  19) do
     for y in (0 ..  19) do
-      v = find(4, m, x, y, dx, dy)
-      u = [max0, v].max
-      max0 = u;
+      g = find(4, m, x, y, dx, dy)
+      f = [max0, g].max
+      max0 = f;
     end
   end
 end
