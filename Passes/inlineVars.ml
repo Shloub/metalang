@@ -65,6 +65,12 @@ let rec name_of_mut mut = match Mutable.unfix mut with
   | Mutable.Array (m, _)
   | Mutable.Dot (m, _) -> name_of_mut m
 
+
+let rec encapsule_mut mut mut_into = match Mutable.unfix mut with
+  | Mutable.Var v -> mut_into
+  | Mutable.Array (m, indexes) -> Mutable.array (encapsule_mut m mut_into) indexes
+  | Mutable.Dot (m, field) -> Mutable.dot (encapsule_mut m mut_into) field
+
 let rec getinfos_expr instr dad infos e =
   let getinfos infos e =
     match Expr.unfix e with
@@ -156,20 +162,30 @@ let replace_name name e li =
     | Expr.Access m ->
       begin match Mutable.unfix m with
       | Mutable.Var v -> if v = name then e else e2
-      | _ -> if name_of_mut m = name then assert false
+      | _ -> if name_of_mut m = name then
+          begin match Expr.unfix e with
+          | Expr.Access m2 -> Expr.access (encapsule_mut m m2)
+          | _ -> assert false
+          end
         else e2
       end
     | _ -> e2
     ) e2 ) i ) li
 
-let can_map_name e =
-  match Expr.unfix e with
-  | Expr.Access mut -> begin
-    match Mutable.unfix mut with
-    | Mutable.Var _ -> true
-    | Mutable.Array _ -> false
-    | Mutable.Dot _ -> false
-  end
+let rec can_map_mut_mut name m e =
+  match Mutable.unfix m with
+  | Mutable.Var n -> true
+  | Mutable.Array (m, _)
+  | Mutable.Dot (m, _) ->
+    begin match Expr.unfix e with
+    | Expr.Access _ -> can_map_mut_mut name m e
+    | _ -> false
+    end
+
+
+and can_map_mut name e2 e =
+  match Expr.unfix e2 with
+  | Expr.Access mut -> can_map_mut_mut name mut e
   | _ -> false
 
 let rec all_variables_mut acc m =
@@ -239,6 +255,8 @@ let name_declared i = match Instr.unfix i with
 let remove_instruction li i =
 List.filter ((<>) i) li
 
+let printer = new Printer.printer
+
 let rec map_instrs (infos:infos) = function
   | [] -> []
   | hd::tl -> match Instr.unfix hd with
@@ -255,24 +273,34 @@ let rec map_instrs (infos:infos) = function
 	    end
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
       begin match StringMap.find_opt name infos.infos with
-      | Some [item2; item1] ->
-	      if item2.affected then
-	        hd :: (map_instrs infos tl)
-	      else begin match item1, item2 with
-	      | ({instruction=_; expression=None; affected=false; declaration=true; dad=dad1},
-	         {instruction=i2; expression=Some e2; affected=false; declaration=false; dad=dad2}) when dad1 = dad2 &&
-                                                                                       (* pas d'affectation pour aucune des variables de la déclaration *)
-                                                                                            List.forall (no_affectation tl i2) (all_variables e) ->
-	        if can_map_name e2 then
-	          let tl = replace_name name e tl in
-	          map_instrs infos tl
-	        else hd :: (map_instrs infos tl)
-	      | _ ->
-	        hd :: (map_instrs infos tl)
-	      end
       | Some li ->
-	      hd :: (map_instrs infos tl)
+        let items1, items2 = List.partition (fun x -> x.declaration) li in
+        begin match items1 with
+        | [{instruction=i1; expression=None; affected=false; declaration=true; dad=dad1}] ->
+          if List.for_all (function
+        {instruction=i2; expression=Some e2; affected=false; declaration=false; dad=dad2} ->
+          dad1 = dad2 && List.forall (no_affectation tl i2) (all_variables e) && can_map_mut name e2 e
+          | _ -> false
+          ) items2 then
+            begin
+             (*ormat.printf "on va inliner la definition %a. on va fouttre %a à la place@\n"
+                printer#instr i1
+                printer#expr e; *)
+	            let tl = replace_name name e tl in
+	            map_instrs infos tl
+            end
+          else begin
+            (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n"
+              printer#instr hd
+              (List.length li)
+            ; *)
+	          hd :: (map_instrs infos tl)
+          end
+        | _ -> assert false
+        end
       | None ->
+(*          Format.printf "Aucune info pour l'inline de la déclaration %a@\n"
+            printer#instr hd; *)
 	      hd :: (map_instrs infos tl)
       end
     | _ -> hd :: (map_instrs infos tl)
