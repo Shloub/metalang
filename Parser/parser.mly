@@ -205,6 +205,12 @@ define_var :
     | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10 I.default_declaration_option
 		| _ -> failwith "expected array"
 	}
+| DEF USELESS typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
+	{ match T.unfix $3 with
+	  | T.Array x -> I.alloc_array_lambda $4 x $6 $9 $11 I.useless_declaration_option
+    | T.Auto -> I.alloc_array_lambda $4 $3 $6 $9 $11 I.useless_declaration_option
+		| _ -> failwith "expected array"
+	}
 | DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $3 I.default_declaration_option }
 | DEF READ typ IDENT { I.readdecl $3 $4 I.default_declaration_option }
 | DEF USELESS READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3)))) $4 I.useless_declaration_option }
@@ -212,7 +218,6 @@ define_var :
 | DEF LEFT_PARENS typed_varnames SET expr { I.untuple $3 $5 I.default_declaration_option }
 | DEF USELESS IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
     { I.alloc_array_lambda $3 (T.auto () |> locatt  ( Ast.location ($startpos($2), $endpos($3)))) $5 $8 $10  I.useless_declaration_option}
-(* TODO useless ?*)
 ;
 
 cond :
