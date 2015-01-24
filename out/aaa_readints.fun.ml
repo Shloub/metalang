@@ -13,14 +13,13 @@ let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d=len\n" len);
-    let g = (Array.init_withenv len (fun  h () -> Scanf.scanf "%d"
+    let tab1 = (Array.init_withenv len (fun  h () -> Scanf.scanf "%d"
     (fun  k -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                  let w = k in
                  ((), w)
                  )
     )) ()) in
-    let tab1 = g in
     let bj = 0 in
     let bk = (len - 1) in
     let rec bi i =
@@ -31,16 +30,15 @@ let main =
               )
        
        else let len = (Scanf.scanf "%d " (fun x -> x)) in
-       let p = (Array.init_withenv (len - 1) (fun  q () -> let r = (Array.init_withenv len (fun  s () -> Scanf.scanf "%d"
+       let tab2 = (Array.init_withenv (len - 1) (fun  q () -> let v = (Array.init_withenv len (fun  s () -> Scanf.scanf "%d"
        (fun  u -> (
                     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                     let bb = u in
                     ((), bb)
                     )
        )) ()) in
-       let ba = r in
+       let ba = v in
        ((), ba)) ()) in
-       let tab2 = p in
        let bg = 0 in
        let bh = (len - 2) in
        let rec bc i =

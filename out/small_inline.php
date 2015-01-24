@@ -17,11 +17,11 @@ if ($stdin != '' || feof(STDIN)) break;
   stdin_();
 }
 }
-$c = array();
+$t = array();
 for ($d = 0 ; $d < 2; $d++)
 {
-  list($c[$d]) = scan("%d");
+  list($t[$d]) = scan("%d");
   scantrim();
 }
-echo $c[0], " - ", $c[1], "\n";
+echo $t[0], " - ", $t[1], "\n";
 ?>

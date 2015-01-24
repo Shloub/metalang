@@ -76,11 +76,10 @@ public class euler11
       directions[i] = q;
     }
     int max0 = 0;
-    int[][] g = new int[20][];
+    int[][] m = new int[20][];
     for (int h = 0 ; h < 20; h++)
-      g[h] =
+      m[h] =
       new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
-    int[][] m = g;
     for (int j = 0 ; j <= 7; j ++)
     {
       tuple_int_int p = directions[j];

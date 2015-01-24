@@ -34,9 +34,8 @@ end;
   taille_y : Integer;
   taille_x : Integer;
   tableau : u_PTR;
+  r : s_PTR;
   q : Integer;
-  o : s_PTR;
-  l : u_PTR;
   h : Integer;
   f : Integer;
 begin
@@ -46,17 +45,16 @@ begin
   Get(h);
   SkipSpaces;
   taille_y := h;
-  l := new u (0..taille_y);
+  tableau := new u (0..taille_y);
   for m in integer range (0)..taille_y - (1) loop
-    o := new s (0..taille_x);
+    r := new s (0..taille_x);
     for p in integer range (0)..taille_x - (1) loop
       Get(q);
       SkipSpaces;
-      o(p) := q;
+      r(p) := q;
     end loop;
-    l(m) := o;
+    tableau(m) := r;
   end loop;
-  tableau := l;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,
   taille_x, taille_y)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");

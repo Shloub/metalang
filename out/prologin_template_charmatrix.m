@@ -28,14 +28,14 @@ int main(void){
   char* *l = malloc( taille_y * sizeof(char*));
   for (m = 0 ; m < taille_y; m++)
   {
-    char *o = malloc( taille_x * sizeof(char));
+    char *r = malloc( taille_x * sizeof(char));
     for (p = 0 ; p < taille_x; p++)
     {
       scanf("%c", &q);
-      o[p] = q;
+      r[p] = q;
     }
     scanf(" ");
-    l[m] = o;
+    l[m] = r;
   }
   char** tableau = l;
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));

@@ -84,11 +84,10 @@ end;
 var
   f : Longint;
   h : Longint;
-  l : u;
   m : Longint;
-  o : s;
   p : Longint;
   q : Longint;
+  r : s;
   tableau : u;
   taille_x : Longint;
   taille_y : Longint;
@@ -99,19 +98,18 @@ begin
   h := read_int_();
   skip();
   taille_y := h;
-  SetLength(l, taille_y);
+  SetLength(tableau, taille_y);
   for m := 0 to  taille_y - 1 do
   begin
-    SetLength(o, taille_x);
+    SetLength(r, taille_x);
     for p := 0 to  taille_x - 1 do
     begin
       q := read_int_();
       skip();
-      o[p] := q;
+      r[p] := q;
     end;
-    l[m] := o;
+    tableau[m] := r;
   end;
-  tableau := l;
   Write(programme_candidat(tableau, taille_x, taille_y));
   Write(''#10'');
 end.

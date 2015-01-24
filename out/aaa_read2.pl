@@ -37,22 +37,20 @@ my $b = readint();
 readspaces();
 my $len = $b;
 print($len, "=len\n");
-my $e = [];
+my $tab = [];
 foreach my $f (0 .. $len - 1) {
-  $e->[$f] = readint();
+  $tab->[$f] = readint();
   readspaces();
   }
-my $tab = $e;
 foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tab->[$i], " ");
   }
 print("\n");
-my $k = [];
+my $tab2 = [];
 foreach my $l (0 .. $len - 1) {
-  $k->[$l] = readint();
+  $tab2->[$l] = readint();
   readspaces();
   }
-my $tab2 = $k;
 foreach my $i_ (0 .. $len - 1) {
   print($i_, "==>", $tab2->[$i_], " ");
   }
@@ -60,12 +58,11 @@ my $p = readint();
 readspaces();
 my $strlen = $p;
 print($strlen, "=strlen\n");
-my $r = [];
+my $tab4 = [];
 foreach my $s (0 .. $strlen - 1) {
-  $r->[$s] = readchar();
+  $tab4->[$s] = readchar();
   }
 readspaces();
-my $tab4 = $r;
 foreach my $i3 (0 .. $strlen - 1) {
   my $tmpc = $tab4->[$i3];
   my $c = ord($tmpc);

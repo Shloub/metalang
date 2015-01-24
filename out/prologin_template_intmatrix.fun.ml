@@ -28,16 +28,15 @@ let programme_candidat tableau x y =
 let main =
   let taille_x = (Scanf.scanf "%d " (fun x -> x)) in
   let taille_y = (Scanf.scanf "%d " (fun x -> x)) in
-  let h = (Array.init_withenv taille_y (fun  k () -> let l = (Array.init_withenv taille_x (fun  m () -> Scanf.scanf "%d"
+  let tableau = (Array.init_withenv taille_y (fun  k () -> let p = (Array.init_withenv taille_x (fun  m () -> Scanf.scanf "%d"
   (fun  o -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                let bb = o in
                ((), bb)
                )
   )) ()) in
-  let ba = l in
+  let ba = p in
   ((), ba)) ()) in
-  let tableau = h in
   (
     (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
     )

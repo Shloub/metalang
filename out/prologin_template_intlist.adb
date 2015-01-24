@@ -29,18 +29,16 @@ end;
 
   taille : Integer;
   tableau : g_PTR;
-  d : g_PTR;
   b : Integer;
 begin
   Get(b);
   SkipSpaces;
   taille := b;
-  d := new g (0..taille);
+  tableau := new g (0..taille);
   for e in integer range (0)..taille - (1) loop
-    Get(d(e));
+    Get(tableau(e));
     SkipSpaces;
   end loop;
-  tableau := d;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,
   taille)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");

@@ -85,18 +85,17 @@ int main(){
   }
   int max0 = 0;
   int h = 20;
-  std::vector<std::vector<int> * > *l = new std::vector<std::vector<int> *>( 20 );
+  std::vector<std::vector<int> * > *m = new std::vector<std::vector<int> *>( 20 );
   for (int o = 0 ; o < 20; o++)
   {
-    std::vector<int > *p = new std::vector<int>( h );
+    std::vector<int > *s = new std::vector<int>( h );
     for (int q = 0 ; q < h; q++)
     {
       std::cin >> r >> std::skipws;
-      p->at(q) = r;
+      s->at(q) = r;
     }
-    l->at(o) = p;
+    m->at(o) = s;
   }
-  std::vector<std::vector<int> *> * m = l;
   for (int j = 0 ; j <= 7; j ++)
   {
     tuple_int_int * w = directions->at(j);

@@ -79,17 +79,14 @@ type w = array of char;
 var
   b : Longint;
   c : Longint;
-  e : v;
   f : Longint;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
   j : Longint;
-  k : v;
   l : Longint;
   len : Longint;
   p : Longint;
-  r : w;
   s : Longint;
   strlen : Longint;
   tab : v;
@@ -102,13 +99,12 @@ begin
   len := b;
   Write(len);
   Write('=len'#10'');
-  SetLength(e, len);
+  SetLength(tab, len);
   for f := 0 to  len - 1 do
   begin
-    e[f] := read_int_();
+    tab[f] := read_int_();
     skip();
   end;
-  tab := e;
   for i := 0 to  len - 1 do
   begin
     Write(i);
@@ -117,13 +113,12 @@ begin
     Write(' ');
   end;
   Write(''#10'');
-  SetLength(k, len);
+  SetLength(tab2, len);
   for l := 0 to  len - 1 do
   begin
-    k[l] := read_int_();
+    tab2[l] := read_int_();
     skip();
   end;
-  tab2 := k;
   for i_ := 0 to  len - 1 do
   begin
     Write(i_);
@@ -136,13 +131,12 @@ begin
   strlen := p;
   Write(strlen);
   Write('=strlen'#10'');
-  SetLength(r, strlen);
+  SetLength(tab4, strlen);
   for s := 0 to  strlen - 1 do
   begin
-    r[s] := read_char_();
+    tab4[s] := read_char_();
   end;
   skip();
-  tab4 := r;
   for i3 := 0 to  strlen - 1 do
   begin
     tmpc := tab4[i3];

@@ -1,8 +1,8 @@
 require "scanf.rb"
-c = [];
+t = [];
 for d in (0 ..  2 - 1) do
-  c[d]=scanf("%d")[0];
+  t[d]=scanf("%d")[0];
   scanf("%*\n");
 end
-printf "%d - %d\n", c[0], c[1]
+printf "%d - %d\n", t[0], t[1]
 

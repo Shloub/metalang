@@ -51,18 +51,16 @@ my $taille1 = $b;
 my $d = readint();
 readspaces();
 my $taille2 = $d;
-my $f = [];
+my $tableau1 = [];
 foreach my $g (0 .. $taille1 - 1) {
-  $f->[$g] = readchar();
+  $tableau1->[$g] = readchar();
   }
 readspaces();
-my $tableau1 = $f;
-my $l = [];
+my $tableau2 = [];
 foreach my $m (0 .. $taille2 - 1) {
-  $l->[$m] = readchar();
+  $tableau2->[$m] = readchar();
   }
 readspaces();
-my $tableau2 = $l;
 print(programme_candidat($tableau1, $taille1, $tableau2, $taille2), "\n");
 
 

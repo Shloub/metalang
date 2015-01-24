@@ -78,13 +78,13 @@ my $y = $p;
 print($x, " ", $y, "\n");
 my $r = [];
 foreach my $s (0 .. $y - 1) {
-  my $u = [];
+  my $ba = [];
   foreach my $v (0 .. $x - 1) {
     my $w = readchar();
-    $u->[$v] = $w;
+    $ba->[$v] = $w;
     }
   readspaces();
-  $r->[$s] = $u;
+  $r->[$s] = $ba;
   }
 my $tab = $r;
 my $result = pathfind($tab, $x, $y);

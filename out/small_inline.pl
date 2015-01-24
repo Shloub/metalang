@@ -17,11 +17,11 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-my $c = [];
+my $t = [];
 foreach my $d (0 .. 2 - 1) {
-  $c->[$d] = readint();
+  $t->[$d] = readint();
   readspaces();
   }
-print($c->[0], " - ", $c->[1], "\n");
+print($t->[0], " - ", $t->[1], "\n");
 
 

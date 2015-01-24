@@ -117,13 +117,12 @@ var
   h : Longint;
   i : Longint;
   j : Longint;
-  l : bj;
   m : bj;
   max0 : Longint;
   o : Longint;
-  p : bi;
   q : Longint;
   r : Longint;
+  s : bi;
   u : Longint;
   v : Longint;
   w : tuple_int_int;
@@ -193,19 +192,18 @@ begin
   end;
   max0 := 0;
   h := 20;
-  SetLength(l, 20);
+  SetLength(m, 20);
   for o := 0 to  20 - 1 do
   begin
-    SetLength(p, h);
+    SetLength(s, h);
     for q := 0 to  h - 1 do
     begin
       r := read_int_();
       skip();
-      p[q] := r;
+      s[q] := r;
     end;
-    l[o] := p;
+    m[o] := s;
   end;
-  m := l;
   for j := 0 to  7 do
   begin
     w := directions[j];

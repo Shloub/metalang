@@ -56,17 +56,16 @@ foreach my $i (0 .. 8 - 1) {
   }
 my $max0 = 0;
 my $h = 20;
-my $l = [];
+my $m = [];
 foreach my $o (0 .. 20 - 1) {
-  my $p = [];
+  my $s = [];
   foreach my $q (0 .. $h - 1) {
     my $r = readint();
     readspaces();
-    $p->[$q] = $r;
+    $s->[$q] = $r;
     }
-  $l->[$o] = $p;
+  $m->[$o] = $s;
   }
-my $m = $l;
 foreach my $j (0 .. 7) {
   my ($dx, $dy) = @{ $directions->[$j] };
   foreach my $x (0 .. 19) {

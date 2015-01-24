@@ -29,18 +29,18 @@
 
 (progn
   (let
-   ((c (array_init
-          2
-          (function (lambda (d)
-          (block lambda_1
-            (let ((out0 (mread-int )))
-              (mread-blank)
-              (return-from lambda_1 out0)
-            )))
-          ))))
-  (princ (aref c 0))
+   ((t0 (array_init
+           2
+           (function (lambda (d)
+           (block lambda_1
+             (let ((out0 (mread-int )))
+               (mread-blank)
+               (return-from lambda_1 out0)
+             )))
+           ))))
+  (princ (aref t0 0))
   (princ " - ")
-  (princ (aref c 1))
+  (princ (aref t0 1))
   (princ "
 ")
   ))

@@ -16,15 +16,15 @@ end;
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 
-  c : a_PTR;
+  t : a_PTR;
 begin
-  c := new a (0..(2));
+  t := new a (0..(2));
   for d in integer range (0)..(2) - (1) loop
-    Get(c(d));
+    Get(t(d));
     SkipSpaces;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(c((0))), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t((0))), Left));
   String'Write (Text_Streams.Stream (Current_Output), " - ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(c((1))), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t((1))), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
 end;

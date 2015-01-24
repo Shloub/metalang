@@ -13,12 +13,11 @@ int main(void){
   int e, b;
   scanf("%d ", &b);
   int taille = b;
-  int *d = malloc( taille * sizeof(int));
+  int *tableau = malloc( taille * sizeof(int));
   for (e = 0 ; e < taille; e++)
   {
-    scanf("%d ", &d[e]);
+    scanf("%d ", &tableau[e]);
   }
-  int* tableau = d;
   printf("%d\n", programme_candidat(tableau, taille));
   return 0;
 }

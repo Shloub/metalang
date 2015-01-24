@@ -55,15 +55,13 @@ var taille1 = b;
 d=read_int_();
 stdinsep();
 var taille2 = d;
-var f = new Array(taille1);
+var tableau1 = new Array(taille1);
 for (var g = 0 ; g <= taille1 - 1; g++)
-  f[g]=read_char_();
+  tableau1[g]=read_char_();
 stdinsep();
-var tableau1 = f;
-var l = new Array(taille2);
+var tableau2 = new Array(taille2);
 for (var m = 0 ; m <= taille2 - 1; m++)
-  l[m]=read_char_();
+  tableau2[m]=read_char_();
 stdinsep();
-var tableau2 = l;
 util.print(programme_candidat(tableau1, taille1, tableau2, taille2), "\n");
 

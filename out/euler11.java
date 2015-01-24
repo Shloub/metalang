@@ -77,10 +77,10 @@ public class euler11
     }
     int max0 = 0;
     int h = 20;
-    int[][] l = new int[20][];
+    int[][] m = new int[20][];
     for (int o = 0 ; o < 20; o++)
     {
-      int[] p = new int[h];
+      int[] s = new int[h];
       for (int q = 0 ; q < h; q++)
       {
         int r;
@@ -91,11 +91,10 @@ public class euler11
           r = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        p[q] = r;
+        s[q] = r;
       }
-      l[o] = p;
+      m[o] = s;
     }
-    int[][] m = l;
     for (int j = 0 ; j <= 7; j ++)
     {
       tuple_int_int w = directions[j];

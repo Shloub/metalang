@@ -43,19 +43,18 @@
     (mread-blank)
     (let ((taille b))
       (let
-       ((d (array_init
-              taille
-              (function (lambda (e)
-              (block lambda_1
-                (let ((f (mread-int )))
-                  (mread-blank)
-                  (return-from lambda_1 f)
-                )))
-              ))))
-      (let ((tableau d))
-        (princ (programme_candidat tableau taille))
-        (princ "
+       ((tableau (array_init
+                    taille
+                    (function (lambda (e)
+                    (block lambda_1
+                      (let ((f (mread-int )))
+                        (mread-blank)
+                        (return-from lambda_1 f)
+                      )))
+                    ))))
+      (princ (programme_candidat tableau taille))
+      (princ "
 ")
-      )))))
+      ))))
 
 

@@ -88,7 +88,6 @@ end;
 
 var
   b : Longint;
-  d : g;
   e : Longint;
   tableau : g;
   taille : Longint;
@@ -96,13 +95,12 @@ begin
   b := read_int_();
   skip();
   taille := b;
-  SetLength(d, taille);
+  SetLength(tableau, taille);
   for e := 0 to  taille - 1 do
   begin
-    d[e] := read_char_();
+    tableau[e] := read_char_();
   end;
   skip();
-  tableau := d;
   Write(programme_candidat(tableau, taille));
   Write(''#10'');
 end.

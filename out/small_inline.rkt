@@ -31,15 +31,15 @@
 ))
 
 (define main
-  (let ([c (array_init_withenv 2 (lambda (d) 
-                                   (lambda (_) ((lambda (out0) 
-                                                  (block
-                                                    (mread-blank)
-                                                    (let ([a out0])
-                                                    (list '() a))
-                                                    )) (mread-int)))) '())])
+  (let ([t0 (array_init_withenv 2 (lambda (d) 
+                                    (lambda (_) ((lambda (out0) 
+                                                   (block
+                                                     (mread-blank)
+                                                     (let ([a out0])
+                                                     (list '() a))
+                                                     )) (mread-int)))) '())])
 (block
-  (map display (list (vector-ref c 0) " - " (vector-ref c 1) "\n"))
+  (map display (list (vector-ref t0 0) " - " (vector-ref t0 1) "\n"))
   ))
 )
 

@@ -104,19 +104,18 @@ else
 }
 var max0 = 0;
 var h = 20;
-var l = new Array(20);
+var m = new Array(20);
 for (var o = 0 ; o <= 20 - 1; o++)
 {
-  var p = new Array(h);
+  var s = new Array(h);
   for (var q = 0 ; q <= h - 1; q++)
   {
     r=read_int_();
     stdinsep();
-    p[q] = r;
+    s[q] = r;
   }
-  l[o] = p;
+  m[o] = s;
 }
-var m = l;
 for (var j = 0 ; j <= 7; j++)
 {
   var w = directions[j];

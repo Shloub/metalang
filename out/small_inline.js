@@ -26,11 +26,11 @@ function read_int_(){
     }
   }
 }
-var c = new Array(2);
+var t = new Array(2);
 for (var d = 0 ; d <= 2 - 1; d++)
 {
-  c[d]=read_int_();
+  t[d]=read_int_();
   stdinsep();
 }
-util.print(c[0], " - ", c[1], "\n");
+util.print(t[0], " - ", t[1], "\n");
 

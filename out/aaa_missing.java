@@ -32,18 +32,17 @@ public class aaa_missing
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len = b;
     System.out.printf("%d\n", len);
-    int[] d = new int[len];
+    int[] tab = new int[len];
     for (int e = 0 ; e < len; e++)
     {
       if (scanner.hasNext("^-")){
         scanner.next("^-");
-        d[e] = -scanner.nextInt();
+        tab[e] = -scanner.nextInt();
       }else{
-        d[e] = scanner.nextInt();
+        tab[e] = scanner.nextInt();
       }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
-    int[] tab = d;
     System.out.printf("%d", result(len, tab));
   }
   

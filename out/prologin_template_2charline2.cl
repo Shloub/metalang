@@ -67,30 +67,28 @@
         (mread-blank)
         (let ((taille2 d))
           (let
-           ((f (array_init
-                  taille1
-                  (function (lambda (g)
-                  (block lambda_1
-                    (let ((h (mread-char )))
-                      (return-from lambda_1 h)
-                    )))
-                  ))))
+           ((tableau1 (array_init
+                         taille1
+                         (function (lambda (g)
+                         (block lambda_1
+                           (let ((h (mread-char )))
+                             (return-from lambda_1 h)
+                           )))
+                         ))))
           (mread-blank)
-          (let ((tableau1 f))
-            (let
-             ((l (array_init
-                    taille2
-                    (function (lambda (m)
-                    (block lambda_2
-                      (let ((o (mread-char )))
-                        (return-from lambda_2 o)
-                      )))
-                    ))))
-            (mread-blank)
-            (let ((tableau2 l))
-              (princ (programme_candidat tableau1 taille1 tableau2 taille2))
-              (princ "
+          (let
+           ((tableau2 (array_init
+                         taille2
+                         (function (lambda (m)
+                         (block lambda_2
+                           (let ((o (mread-char )))
+                             (return-from lambda_2 o)
+                           )))
+                         ))))
+          (mread-blank)
+          (princ (programme_candidat tableau1 taille1 tableau2 taille2))
+          (princ "
 ")
-            )))))))))
+          )))))))
 
 

@@ -36,12 +36,12 @@ let programme_candidat tableau taille_x taille_y =
 let main =
   let taille_x = (Scanf.scanf "%d " (fun x -> x)) in
   let taille_y = (Scanf.scanf "%d " (fun x -> x)) in
-  let h = (Array.init_withenv taille_y (fun  k () -> let l = (Array.init_withenv taille_x (fun  m () -> Scanf.scanf "%c"
+  let h = (Array.init_withenv taille_y (fun  k () -> let p = (Array.init_withenv taille_x (fun  m () -> Scanf.scanf "%c"
   (fun  o -> let bb = o in
   ((), bb))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let ba = l in
+    let ba = p in
     ((), ba)
     )
   ) ()) in

@@ -65,14 +65,14 @@ int main(void){
   char* *bf = malloc( y * sizeof(char*));
   for (bg = 0 ; bg < y; bg++)
   {
-    char *bh = malloc( x * sizeof(char));
+    char *bk = malloc( x * sizeof(char));
     for (bi = 0 ; bi < x; bi++)
     {
       scanf("%c", &bj);
-      bh[bi] = bj;
+      bk[bi] = bj;
     }
     scanf(" ");
-    bf[bg] = bh;
+    bf[bg] = bk;
   }
   char** tab = bf;
   int result = pathfind(tab, x, y);

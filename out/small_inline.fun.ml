@@ -10,7 +10,7 @@ module Array = struct
 end
 
 let main =
-  let c = (Array.init_withenv 2 (fun  d () -> Scanf.scanf "%d"
+  let t = (Array.init_withenv 2 (fun  d () -> Scanf.scanf "%d"
   (fun  out0 -> (
                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                   let a = out0 in
@@ -18,7 +18,7 @@ let main =
                   )
   )) ()) in
   (
-    (Printf.printf "%d - %d\n" c.(0) c.(1))
+    (Printf.printf "%d - %d\n" t.(0) t.(1))
     )
   
 

@@ -61,12 +61,12 @@ let main =
   let y = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d %d\n" x y);
-    let bd = (Array.init_withenv y (fun  be () -> let bf = (Array.init_withenv x (fun  bg () -> Scanf.scanf "%c"
+    let bd = (Array.init_withenv y (fun  be () -> let bi = (Array.init_withenv x (fun  bg () -> Scanf.scanf "%c"
     (fun  bh -> let bq = bh in
     ((), bq))) ()) in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let bp = bf in
+      let bp = bi in
       ((), bp)
       )
     ) ()) in

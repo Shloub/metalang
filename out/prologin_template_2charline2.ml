@@ -16,16 +16,14 @@ let () =
 begin
   let taille1 = Scanf.scanf "%d " (fun x -> x) in
   let taille2 = Scanf.scanf "%d " (fun x -> x) in
-  let d = Array.init taille1 (fun _e ->
+  let tableau1 = Array.init taille1 (fun _e ->
     let f = Scanf.scanf "%c" (fun v_0 -> v_0) in
     f) in
   Scanf.scanf " " (fun () -> ());
-  let tableau1 = d in
-  let h = Array.init taille2 (fun _k ->
+  let tableau2 = Array.init taille2 (fun _k ->
     let l = Scanf.scanf "%c" (fun v_0 -> v_0) in
     l) in
   Scanf.scanf " " (fun () -> ());
-  let tableau2 = h in
   Printf.printf "%d\n" (programme_candidat tableau1 taille1 tableau2 taille2)
 end
  

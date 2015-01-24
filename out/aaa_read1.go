@@ -15,12 +15,11 @@ func skip() {
 }
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var c []byte = make([]byte, 12)
+  var str []byte = make([]byte, 12)
   for d := 0 ; d <= 12 - 1; d++ {
-    fmt.Fscanf(reader, "%c", &c[d])
+    fmt.Fscanf(reader, "%c", &str[d])
   }
   skip()
-  var str []byte = c
   for i := 0 ; i <= 11; i++ {
     fmt.Printf("%c", str[i]);
   }

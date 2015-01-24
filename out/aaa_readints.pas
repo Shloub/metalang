@@ -65,17 +65,15 @@ type bb = array of Longint;
 type bc = array of array of Longint;
 
 var
+  ba : bb;
   f : Longint;
-  h : bb;
   i : Longint;
   j : Longint;
   k : Longint;
   len : Longint;
-  r : bc;
   s : Longint;
   tab1 : bb;
   tab2 : bc;
-  u : bb;
   v : Longint;
   w : Longint;
 begin
@@ -84,13 +82,12 @@ begin
   len := f;
   Write(len);
   Write('=len'#10'');
-  SetLength(h, len);
+  SetLength(tab1, len);
   for k := 0 to  len - 1 do
   begin
-    h[k] := read_int_();
+    tab1[k] := read_int_();
     skip();
   end;
-  tab1 := h;
   for i := 0 to  len - 1 do
   begin
     Write(i);
@@ -100,19 +97,18 @@ begin
   end;
   len := read_int_();
   skip();
-  SetLength(r, len - 1);
+  SetLength(tab2, len - 1);
   for s := 0 to  len - 1 - 1 do
   begin
-    SetLength(u, len);
+    SetLength(ba, len);
     for v := 0 to  len - 1 do
     begin
       w := read_int_();
       skip();
-      u[v] := w;
+      ba[v] := w;
     end;
-    r[s] := u;
+    tab2[s] := ba;
   end;
-  tab2 := r;
   for i := 0 to  len - 2 do
   begin
     for j := 0 to  len - 1 do

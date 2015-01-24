@@ -45,18 +45,16 @@ end;
 type f = array of char;
 
 var
-  c : f;
   d : Longint;
   i : Longint;
   str : f;
 begin
-  SetLength(c, 12);
+  SetLength(str, 12);
   for d := 0 to  12 - 1 do
   begin
-    c[d] := read_char_();
+    str[d] := read_char_();
   end;
   skip();
-  str := c;
   for i := 0 to  11 do
   begin
     Write(str[i]);

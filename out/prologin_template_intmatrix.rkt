@@ -30,12 +30,11 @@
 (define main
   (let ([taille_x (string->number (read-line))])
   (let ([taille_y (string->number (read-line))])
-  (let ([e (array_init_withenv taille_y (lambda (f) 
-                                          (lambda (_) (let ([q (list->vector (map string->number (regexp-split " " (read-line))))])
-                                                      (list '() q)))) '())])
-  (let ([tableau e])
+  (let ([tableau (array_init_withenv taille_y (lambda (f) 
+                                                (lambda (_) (let ([q (list->vector (map string->number (regexp-split " " (read-line))))])
+                                                            (list '() q)))) '())])
   (block
     (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
-    )))))
+    ))))
 )
 

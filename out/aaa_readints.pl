@@ -21,28 +21,26 @@ my $f = readint();
 readspaces();
 my $len = $f;
 print($len, "=len\n");
-my $h = [];
+my $tab1 = [];
 foreach my $k (0 .. $len - 1) {
-  $h->[$k] = readint();
+  $tab1->[$k] = readint();
   readspaces();
   }
-my $tab1 = $h;
 foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tab1->[$i], "\n");
   }
 $len = readint();
 readspaces();
-my $r = [];
+my $tab2 = [];
 foreach my $s (0 .. $len - 1 - 1) {
-  my $u = [];
+  my $ba = [];
   foreach my $v (0 .. $len - 1) {
     my $w = readint();
     readspaces();
-    $u->[$v] = $w;
+    $ba->[$v] = $w;
     }
-  $r->[$s] = $u;
+  $tab2->[$s] = $ba;
   }
-my $tab2 = $r;
 foreach my $i (0 .. $len - 2) {
   foreach my $j (0 .. $len - 1) {
     print($tab2->[$i]->[$j], " ");

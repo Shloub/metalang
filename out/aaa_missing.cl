@@ -62,17 +62,16 @@
       (princ "
 ")
       (let
-       ((d (array_init
-              len
-              (function (lambda (e)
-              (block lambda_2
-                (let ((f (mread-int )))
-                  (mread-blank)
-                  (return-from lambda_2 f)
-                )))
-              ))))
-      (let ((tab d))
-        (princ (result len tab))
-      )))))
+       ((tab (array_init
+                len
+                (function (lambda (e)
+                (block lambda_2
+                  (let ((f (mread-int )))
+                    (mread-blank)
+                    (return-from lambda_2 f)
+                  )))
+                ))))
+      (princ (result len tab))
+      ))))
 
 

@@ -15,18 +15,17 @@ int main(){
   int taille_x = f;
   std::cin >> h >> std::skipws;
   int taille_y = h;
-  std::vector<std::vector<int> * > *l = new std::vector<std::vector<int> *>( taille_y );
+  std::vector<std::vector<int> * > *tableau = new std::vector<std::vector<int> *>( taille_y );
   for (int m = 0 ; m < taille_y; m++)
   {
-    std::vector<int > *o = new std::vector<int>( taille_x );
+    std::vector<int > *r = new std::vector<int>( taille_x );
     for (int p = 0 ; p < taille_x; p++)
     {
       std::cin >> q >> std::skipws;
-      o->at(p) = q;
+      r->at(p) = q;
     }
-    l->at(m) = o;
+    tableau->at(m) = r;
   }
-  std::vector<std::vector<int> *> * tableau = l;
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;
 }

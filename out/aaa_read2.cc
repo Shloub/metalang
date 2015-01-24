@@ -21,23 +21,21 @@ int main(){
   std::cin >> b >> std::skipws;
   int len = b;
   std::cout << len << "=len\n";
-  std::vector<int > *e = new std::vector<int>( len );
+  std::vector<int > *tab = new std::vector<int>( len );
   for (int f = 0 ; f < len; f++)
   {
-    std::cin >> e->at(f) >> std::skipws;
+    std::cin >> tab->at(f) >> std::skipws;
   }
-  std::vector<int> * tab = e;
   for (int i = 0 ; i < len; i++)
   {
     std::cout << i << "=>" << tab->at(i) << " ";
   }
   std::cout << "\n";
-  std::vector<int > *k = new std::vector<int>( len );
+  std::vector<int > *tab2 = new std::vector<int>( len );
   for (int l = 0 ; l < len; l++)
   {
-    std::cin >> k->at(l) >> std::skipws;
+    std::cin >> tab2->at(l) >> std::skipws;
   }
-  std::vector<int> * tab2 = k;
   for (int i_ = 0 ; i_ < len; i_++)
   {
     std::cout << i_ << "==>" << tab2->at(i_) << " ";

@@ -62,10 +62,9 @@
   (let ([r (list (- 1) (- 1))])
   (list '() r)))))))))))))))))) '())])
 (let ([max0 0])
-(let ([g (array_init_withenv 20 (lambda (h) 
+(let ([m (array_init_withenv 20 (lambda (h) 
                                   (lambda (_) (let ([bd (list->vector (map string->number (regexp-split " " (read-line))))])
                                               (list '() bd)))) '())])
-(let ([m g])
 (let ([bl 0])
 (let ([bm 7])
 (letrec ([be (lambda (j max0) 
@@ -91,6 +90,6 @@
   (block
     (map display (list max0 "\n"))
     )))])
-(be bl max0))))))))
+(be bl max0)))))))
 )
 

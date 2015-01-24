@@ -39,18 +39,16 @@ func main() {
   fmt.Fscanf(reader, "%d", &d)
   skip()
   var taille2 int = d
-  var f []byte = make([]byte, taille1)
+  var tableau1 []byte = make([]byte, taille1)
   for g := 0 ; g <= taille1 - 1; g++ {
-    fmt.Fscanf(reader, "%c", &f[g])
+    fmt.Fscanf(reader, "%c", &tableau1[g])
   }
   skip()
-  var tableau1 []byte = f
-  var l []byte = make([]byte, taille2)
+  var tableau2 []byte = make([]byte, taille2)
   for m := 0 ; m <= taille2 - 1; m++ {
-    fmt.Fscanf(reader, "%c", &l[m])
+    fmt.Fscanf(reader, "%c", &tableau2[m])
   }
   skip()
-  var tableau2 []byte = l
   fmt.Printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
 }
 

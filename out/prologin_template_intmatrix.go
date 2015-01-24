@@ -34,18 +34,17 @@ func main() {
   fmt.Fscanf(reader, "%d", &h)
   skip()
   var taille_y int = h
-  var l [][]int = make([][]int, taille_y)
+  var tableau [][]int = make([][]int, taille_y)
   for m := 0 ; m <= taille_y - 1; m++ {
-    var o []int = make([]int, taille_x)
+    var r []int = make([]int, taille_x)
       for p := 0 ; p <= taille_x - 1; p++ {
         var q int
         fmt.Fscanf(reader, "%d", &q)
           skip()
-          o[p] = q;
+          r[p] = q;
       }
-      l[m] = o;
+      tableau[m] = r;
   }
-  var tableau [][]int = l
   fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
 }
 

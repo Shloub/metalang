@@ -100,16 +100,16 @@
                   (function (lambda (s)
                   (block lambda_3
                     (let
-                     ((u (array_init
-                            x
-                            (function (lambda (v)
-                            (block lambda_4
-                              (let ((w (mread-char )))
-                                (return-from lambda_4 w)
-                              )))
-                            ))))
+                     ((ba (array_init
+                             x
+                             (function (lambda (v)
+                             (block lambda_4
+                               (let ((w (mread-char )))
+                                 (return-from lambda_4 w)
+                               )))
+                             ))))
                     (mread-blank)
-                    (return-from lambda_3 u)
+                    (return-from lambda_3 ba)
                     )))
                   ))))
           (let ((tab r))

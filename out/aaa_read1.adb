@@ -17,14 +17,12 @@ type f is Array (Integer range <>) of Character;
 type f_PTR is access f;
 
   str : f_PTR;
-  c : f_PTR;
 begin
-  c := new f (0..(12));
+  str := new f (0..(12));
   for d in integer range (0)..(12) - (1) loop
-    Get(c(d));
+    Get(str(d));
   end loop;
   SkipSpaces;
-  str := c;
   for i in integer range (0)..(11) loop
     Character'Write (Text_Streams.Stream (Current_Output), str(i));
   end loop;

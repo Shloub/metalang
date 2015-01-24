@@ -52,18 +52,16 @@ function programme_candidat(tableau1, taille1, tableau2, taille2){
 b=read_int_();
 stdinsep();
 var taille1 = b;
-var d = new Array(taille1);
+var tableau1 = new Array(taille1);
 for (var e = 0 ; e <= taille1 - 1; e++)
-  d[e]=read_char_();
+  tableau1[e]=read_char_();
 stdinsep();
-var tableau1 = d;
 h=read_int_();
 stdinsep();
 var taille2 = h;
-var l = new Array(taille2);
+var tableau2 = new Array(taille2);
 for (var m = 0 ; m <= taille2 - 1; m++)
-  l[m]=read_char_();
+  tableau2[m]=read_char_();
 stdinsep();
-var tableau2 = l;
 util.print(programme_candidat(tableau1, taille1, tableau2, taille2), "\n");
 

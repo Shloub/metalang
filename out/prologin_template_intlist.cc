@@ -12,12 +12,11 @@ int main(){
   int b;
   std::cin >> b >> std::skipws;
   int taille = b;
-  std::vector<int > *d = new std::vector<int>( taille );
+  std::vector<int > *tableau = new std::vector<int>( taille );
   for (int e = 0 ; e < taille; e++)
   {
-    std::cin >> d->at(e) >> std::skipws;
+    std::cin >> tableau->at(e) >> std::skipws;
   }
-  std::vector<int> * tableau = d;
   std::cout << programme_candidat(tableau, taille) << "\n";
   return 0;
 }

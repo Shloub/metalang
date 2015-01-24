@@ -90,18 +90,17 @@ int main(void){
   }
   int max0 = 0;
   int h = 20;
-  int* *l = malloc( 20 * sizeof(int*));
+  int* *m = malloc( 20 * sizeof(int*));
   for (o = 0 ; o < 20; o++)
   {
-    int *p = malloc( h * sizeof(int));
+    int *s = malloc( h * sizeof(int));
     for (q = 0 ; q < h; q++)
     {
       scanf("%d ", &r);
-      p[q] = r;
+      s[q] = r;
     }
-    l[o] = p;
+    m[o] = s;
   }
-  int** m = l;
   for (j = 0 ; j <= 7; j++)
   {
     tuple_int_int * w = directions[j];

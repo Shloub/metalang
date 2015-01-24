@@ -22,21 +22,20 @@
 
 (progn
   (let
-   ((c (array_init
-          12
-          (function (lambda (d)
-          (block lambda_1
-            (let ((e (mread-char )))
-              (return-from lambda_1 e)
-            )))
-          ))))
+   ((str (array_init
+            12
+            (function (lambda (d)
+            (block lambda_1
+              (let ((e (mread-char )))
+                (return-from lambda_1 e)
+              )))
+            ))))
   (mread-blank)
-  (let ((str c))
-    (do
-      ((i 0 (+ 1 i)))
-      ((> i 11))
-      (princ (aref str i))
-    )
-  )))
+  (do
+    ((i 0 (+ 1 i)))
+    ((> i 11))
+    (princ (aref str i))
+  )
+  ))
 
 

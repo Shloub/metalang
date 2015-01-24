@@ -43,12 +43,11 @@ my $b = readint();
 readspaces();
 my $len = $b;
 print($len, "\n");
-my $d = [];
+my $tab = [];
 foreach my $e (0 .. $len - 1) {
-  $d->[$e] = readint();
+  $tab->[$e] = readint();
   readspaces();
   }
-my $tab = $d;
 print(result($len, $tab));
 
 

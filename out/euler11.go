@@ -86,18 +86,17 @@ func main() {
   }
   var max0 int = 0
   var h int = 20
-  var l [][]int = make([][]int, 20)
+  var m [][]int = make([][]int, 20)
   for o := 0 ; o <= 20 - 1; o++ {
-    var p []int = make([]int, h)
+    var s []int = make([]int, h)
       for q := 0 ; q <= h - 1; q++ {
         var r int
         fmt.Fscanf(reader, "%d", &r)
           skip()
-          p[q] = r;
+          s[q] = r;
       }
-      l[o] = p;
+      m[o] = s;
   }
-  var m [][]int = l
   for j := 0 ; j <= 7; j++ {
     var w * tuple_int_int = directions[j]
       var dx int = (*w).tuple_int_int_field_0

@@ -18,18 +18,17 @@ int main(void){
   int taille_x = f;
   scanf("%d ", &h);
   int taille_y = h;
-  int* *l = malloc( taille_y * sizeof(int*));
+  int* *tableau = malloc( taille_y * sizeof(int*));
   for (m = 0 ; m < taille_y; m++)
   {
-    int *o = malloc( taille_x * sizeof(int));
+    int *r = malloc( taille_x * sizeof(int));
     for (p = 0 ; p < taille_x; p++)
     {
       scanf("%d ", &q);
-      o[p] = q;
+      r[p] = q;
     }
-    l[m] = o;
+    tableau[m] = r;
   }
-  int** tableau = l;
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   [pool drain];
   return 0;

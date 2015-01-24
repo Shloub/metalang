@@ -50,16 +50,15 @@ let main =
          ((), bb))))))))) ()) in
   let max0 = 0 in
   let h = 20 in
-  let l = (Array.init_withenv 20 (fun  o () -> let p = (Array.init_withenv h (fun  q () -> Scanf.scanf "%d"
+  let m = (Array.init_withenv 20 (fun  o () -> let s = (Array.init_withenv h (fun  q () -> Scanf.scanf "%d"
   (fun  r -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                let bk = r in
                ((), bk)
                )
   )) ()) in
-  let bj = p in
+  let bj = s in
   ((), bj)) ()) in
-  let m = l in
   let bs = 0 in
   let bt = 7 in
   let rec bl j max0 =

@@ -102,8 +102,8 @@ end;
   x : Integer;
   tab : bo_PTR;
   result : Integer;
+  bk : bn_PTR;
   bj : Character;
-  bh : bn_PTR;
   bf : bo_PTR;
   bd : Integer;
   bb : Integer;
@@ -120,13 +120,13 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
   bf := new bo (0..y);
   for bg in integer range (0)..y - (1) loop
-    bh := new bn (0..x);
+    bk := new bn (0..x);
     for bi in integer range (0)..x - (1) loop
       Get(bj);
-      bh(bi) := bj;
+      bk(bi) := bj;
     end loop;
     SkipSpaces;
-    bf(bg) := bh;
+    bf(bg) := bk;
   end loop;
   tab := bf;
   result := pathfind(tab, x, y);

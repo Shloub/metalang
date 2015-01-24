@@ -81,14 +81,14 @@ util.print(x, " ", y, "\n");
 var r = new Array(y);
 for (var s = 0 ; s <= y - 1; s++)
 {
-  var u = new Array(x);
+  var ba = new Array(x);
   for (var v = 0 ; v <= x - 1; v++)
   {
     w=read_char_();
-    u[v] = w;
+    ba[v] = w;
   }
   stdinsep();
-  r[s] = u;
+  r[s] = ba;
 }
 var tab = r;
 var result = pathfind(tab, x, y);

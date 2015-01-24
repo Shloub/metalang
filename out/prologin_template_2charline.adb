@@ -38,29 +38,25 @@ end;
   taille1 : Integer;
   tableau2 : p_PTR;
   tableau1 : p_PTR;
-  l : p_PTR;
   h : Integer;
-  d : p_PTR;
   b : Integer;
 begin
   Get(b);
   SkipSpaces;
   taille1 := b;
-  d := new p (0..taille1);
+  tableau1 := new p (0..taille1);
   for e in integer range (0)..taille1 - (1) loop
-    Get(d(e));
+    Get(tableau1(e));
   end loop;
   SkipSpaces;
-  tableau1 := d;
   Get(h);
   SkipSpaces;
   taille2 := h;
-  l := new p (0..taille2);
+  tableau2 := new p (0..taille2);
   for m in integer range (0)..taille2 - (1) loop
-    Get(l(m));
+    Get(tableau2(m));
   end loop;
   SkipSpaces;
-  tableau2 := l;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau1,
   taille1, tableau2, taille2)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");

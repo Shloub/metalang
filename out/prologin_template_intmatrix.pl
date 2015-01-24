@@ -37,17 +37,16 @@ my $taille_x = $f;
 my $h = readint();
 readspaces();
 my $taille_y = $h;
-my $l = [];
+my $tableau = [];
 foreach my $m (0 .. $taille_y - 1) {
-  my $o = [];
+  my $r = [];
   foreach my $p (0 .. $taille_x - 1) {
     my $q = readint();
     readspaces();
-    $o->[$p] = $q;
+    $r->[$p] = $q;
     }
-  $l->[$m] = $o;
+  $tableau->[$m] = $r;
   }
-my $tableau = $l;
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");
 
 

@@ -52,13 +52,13 @@ public static int readInt(){
   
   public static void Main(String[] args)
   {
-    int[] c = new int[2];
+    int[] t = new int[2];
     for (int d = 0 ; d < 2; d++)
     {
-      c[d] = readInt();
+      t[d] = readInt();
       stdin_sep();
     }
-    Console.Write("" + c[0] + " - " + c[1] + "\n");
+    Console.Write("" + t[0] + " - " + t[1] + "\n");
   }
   
 }

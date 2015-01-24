@@ -25,18 +25,15 @@ int main(void){
   int m, h, e, b;
   scanf("%d ", &b);
   int taille1 = b;
-  char *d = malloc( taille1 * sizeof(char));
+  char *tableau1 = malloc( taille1 * sizeof(char));
   for (e = 0 ; e < taille1; e++)
-    scanf("%c", &d[e]);
-  scanf(" ");
-  char* tableau1 = d;
-  scanf("%d ", &h);
+    scanf("%c", &tableau1[e]);
+  scanf(" %d ", &h);
   int taille2 = h;
-  char *l = malloc( taille2 * sizeof(char));
+  char *tableau2 = malloc( taille2 * sizeof(char));
   for (m = 0 ; m < taille2; m++)
-    scanf("%c", &l[m]);
+    scanf("%c", &tableau2[m]);
   scanf(" ");
-  char* tableau2 = l;
   printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   [pool drain];
   return 0;

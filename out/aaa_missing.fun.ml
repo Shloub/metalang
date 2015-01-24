@@ -35,14 +35,13 @@ let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d\n" len);
-    let c = (Array.init_withenv len (fun  d () -> Scanf.scanf "%d"
+    let tab = (Array.init_withenv len (fun  d () -> Scanf.scanf "%d"
     (fun  e -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                  let o = e in
                  ((), o)
                  )
     )) ()) in
-    let tab = c in
     (Printf.printf "%d" (result len tab))
     )
   

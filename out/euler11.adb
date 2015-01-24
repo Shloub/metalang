@@ -54,13 +54,13 @@ end record;
 type bk is Array (Integer range <>) of tuple_int_int_PTR;
 type bk_PTR is access bk;
 
+  w : tuple_int_int_PTR;
   v : Integer;
   u : Integer;
+  s : bi_PTR;
   r : Integer;
-  p : bi_PTR;
   max0 : Integer;
   m : bj_PTR;
-  l : bj_PTR;
   h : Integer;
   dy : Integer;
   dx : Integer;
@@ -139,20 +139,20 @@ begin
   end loop;
   max0 := (0);
   h := (20);
-  l := new bj (0..(20));
+  m := new bj (0..(20));
   for o in integer range (0)..(20) - (1) loop
-    p := new bi (0..h);
+    s := new bi (0..h);
     for q in integer range (0)..h - (1) loop
       Get(r);
       SkipSpaces;
-      p(q) := r;
+      s(q) := r;
     end loop;
-    l(o) := p;
+    m(o) := s;
   end loop;
-  m := l;
   for j in integer range (0)..(7) loop
-    dx := directions(j).tuple_int_int_field_0;
-    dy := directions(j).tuple_int_int_field_1;
+    w := directions(j);
+    dx := w.tuple_int_int_field_0;
+    dy := w.tuple_int_int_field_1;
     for x in integer range (0)..(19) loop
       for y in integer range (0)..(19) loop
         v := find((4), m, x, y, dx, dy);

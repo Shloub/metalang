@@ -39,12 +39,11 @@ func main() {
   skip()
   var len int = b
   fmt.Printf("%d\n", len);
-  var d []int = make([]int, len)
+  var tab []int = make([]int, len)
   for e := 0 ; e <= len - 1; e++ {
-    fmt.Fscanf(reader, "%d", &d[e])
+    fmt.Fscanf(reader, "%d", &tab[e])
       skip()
   }
-  var tab []int = d
   fmt.Printf("%d", result(len, tab));
 }
 

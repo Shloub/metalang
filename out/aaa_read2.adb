@@ -28,11 +28,8 @@ type w_PTR is access w;
   tab2 : v_PTR;
   tab : v_PTR;
   strlen : Integer;
-  r : w_PTR;
   p : Integer;
   len : Integer;
-  k : v_PTR;
-  e : v_PTR;
   c : Integer;
   b : Integer;
 begin
@@ -41,12 +38,11 @@ begin
   len := b;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=len" & Character'Val(10) & "");
-  e := new v (0..len);
+  tab := new v (0..len);
   for f in integer range (0)..len - (1) loop
-    Get(e(f));
+    Get(tab(f));
     SkipSpaces;
   end loop;
-  tab := e;
   for i in integer range (0)..len - (1) loop
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
     String'Write (Text_Streams.Stream (Current_Output), "=>");
@@ -54,12 +50,11 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), " ");
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
-  k := new v (0..len);
+  tab2 := new v (0..len);
   for l in integer range (0)..len - (1) loop
-    Get(k(l));
+    Get(tab2(l));
     SkipSpaces;
   end loop;
-  tab2 := k;
   for i_0 in integer range (0)..len - (1) loop
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i_0), Left));
     String'Write (Text_Streams.Stream (Current_Output), "==>");
@@ -71,12 +66,11 @@ begin
   strlen := p;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(strlen), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=strlen" & Character'Val(10) & "");
-  r := new w (0..strlen);
+  tab4 := new w (0..strlen);
   for s in integer range (0)..strlen - (1) loop
-    Get(r(s));
+    Get(tab4(s));
   end loop;
   SkipSpaces;
-  tab4 := r;
   for i3 in integer range (0)..strlen - (1) loop
     tmpc := tab4(i3);
     c := Character'Pos(tmpc);

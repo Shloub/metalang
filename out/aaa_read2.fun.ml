@@ -13,14 +13,13 @@ let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d=len\n" len);
-    let d = (Array.init_withenv len (fun  e () -> Scanf.scanf "%d"
+    let tab = (Array.init_withenv len (fun  e () -> Scanf.scanf "%d"
     (fun  f -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                  let s = f in
                  ((), s)
                  )
     )) ()) in
-    let tab = d in
     let bg = 0 in
     let bh = (len - 1) in
     let rec bf i =
@@ -32,14 +31,13 @@ let main =
        
        else (
               (Printf.printf "\n" );
-              let h = (Array.init_withenv len (fun  k () -> Scanf.scanf "%d"
+              let tab2 = (Array.init_withenv len (fun  k () -> Scanf.scanf "%d"
               (fun  l -> (
                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                            let u = l in
                            ((), u)
                            )
               )) ()) in
-              let tab2 = h in
               let bd = 0 in
               let be = (len - 1) in
               let rec bc i_ =
@@ -52,12 +50,11 @@ let main =
                  else let strlen = (Scanf.scanf "%d " (fun x -> x)) in
                  (
                    (Printf.printf "%d=strlen\n" strlen);
-                   let p = (Array.init_withenv strlen (fun  q () -> Scanf.scanf "%c"
+                   let tab4 = (Array.init_withenv strlen (fun  q () -> Scanf.scanf "%c"
                    (fun  r -> let v = r in
                    ((), v))) ()) in
                    (
                      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                     let tab4 = p in
                      let ba = 0 in
                      let bb = (strlen - 1) in
                      let rec z i3 =

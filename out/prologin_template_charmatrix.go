@@ -38,14 +38,14 @@ func main() {
   var taille_y int = h
   var l [][]byte = make([][]byte, taille_y)
   for m := 0 ; m <= taille_y - 1; m++ {
-    var o []byte = make([]byte, taille_x)
+    var r []byte = make([]byte, taille_x)
       for p := 0 ; p <= taille_x - 1; p++ {
         var q byte
         fmt.Fscanf(reader, "%c", &q)
-          o[p] = q;
+          r[p] = q;
       }
       skip()
-      l[m] = o;
+      l[m] = r;
   }
   var tableau [][]byte = l
   fmt.Printf("%d\n", programme_candidat(tableau, taille_x, taille_y));

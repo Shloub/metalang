@@ -22,12 +22,11 @@ int main(void){
   scanf("%d ", &b);
   int len = b;
   printf("%d\n", len);
-  int *d = malloc( len * sizeof(int));
+  int *tab = malloc( len * sizeof(int));
   for (e = 0 ; e < len; e++)
   {
-    scanf("%d ", &d[e]);
+    scanf("%d ", &tab[e]);
   }
-  int* tab = d;
   printf("%d", result(len, tab));
   return 0;
 }

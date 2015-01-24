@@ -5,12 +5,12 @@
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int d;
-  int *c = malloc( 2 * sizeof(int));
+  int *t = malloc( 2 * sizeof(int));
   for (d = 0 ; d < 2; d++)
   {
-    scanf("%d ", &c[d]);
+    scanf("%d ", &t[d]);
   }
-  printf("%d - %d\n", c[0], c[1]);
+  printf("%d - %d\n", t[0], t[1]);
   [pool drain];
   return 0;
 }

@@ -19,25 +19,22 @@ type bc is Array (Integer range <>) of bb_PTR;
 type bc_PTR is access bc;
 
   w : Integer;
-  u : bb_PTR;
   tab2 : bc_PTR;
   tab1 : bb_PTR;
-  r : bc_PTR;
   len : Integer;
-  h : bb_PTR;
   f : Integer;
+  ba : bb_PTR;
 begin
   Get(f);
   SkipSpaces;
   len := f;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=len" & Character'Val(10) & "");
-  h := new bb (0..len);
+  tab1 := new bb (0..len);
   for k in integer range (0)..len - (1) loop
-    Get(h(k));
+    Get(tab1(k));
     SkipSpaces;
   end loop;
-  tab1 := h;
   for i in integer range (0)..len - (1) loop
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
     String'Write (Text_Streams.Stream (Current_Output), "=>");
@@ -46,17 +43,16 @@ begin
   end loop;
   Get(len);
   SkipSpaces;
-  r := new bc (0..len - (1));
+  tab2 := new bc (0..len - (1));
   for s in integer range (0)..len - (1) - (1) loop
-    u := new bb (0..len);
+    ba := new bb (0..len);
     for v in integer range (0)..len - (1) loop
       Get(w);
       SkipSpaces;
-      u(v) := w;
+      ba(v) := w;
     end loop;
-    r(s) := u;
+    tab2(s) := ba;
   end loop;
-  tab2 := r;
   for i in integer range (0)..len - (2) loop
     for j in integer range (0)..len - (1) loop
       String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab2(i)(j)), Left));

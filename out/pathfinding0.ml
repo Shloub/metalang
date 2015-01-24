@@ -39,11 +39,11 @@ begin
   let y = Scanf.scanf "%d " (fun x -> x) in
   Printf.printf "%d %d\n" x y;
   let bd = Array.init y (fun _be ->
-    let bf = Array.init x (fun _bg ->
+    let bi = Array.init x (fun _bg ->
       let bh = Scanf.scanf "%c" (fun v_0 -> v_0) in
       bh) in
     Scanf.scanf " " (fun () -> ());
-    bf) in
+    bi) in
   let tab = bd in
   let result = pathfind tab x y in
   Printf.printf "%d" result

@@ -112,12 +112,12 @@
 (let ((max0 0))
   (let ((h 20))
     (let
-     ((l (array_init
+     ((m (array_init
             20
             (function (lambda (o)
             (block lambda_2
               (let
-               ((p (array_init
+               ((s (array_init
                       h
                       (function (lambda (q)
                       (block lambda_3
@@ -126,35 +126,34 @@
                           (return-from lambda_3 r)
                         )))
                       ))))
-              (return-from lambda_2 p)
+              (return-from lambda_2 s)
               )))
             ))))
-    (let ((m l))
-      (do
-        ((j 0 (+ 1 j)))
-        ((> j 7))
-        (progn
-          (let ((w (aref directions j)))
-            (let ((dx (tuple_int_int-tuple_int_int_field_0 w)))
-              (let ((dy (tuple_int_int-tuple_int_int_field_1 w)))
+    (do
+      ((j 0 (+ 1 j)))
+      ((> j 7))
+      (progn
+        (let ((w (aref directions j)))
+          (let ((dx (tuple_int_int-tuple_int_int_field_0 w)))
+            (let ((dy (tuple_int_int-tuple_int_int_field_1 w)))
+              (do
+                ((x 0 (+ 1 x)))
+                ((> x 19))
                 (do
-                  ((x 0 (+ 1 x)))
-                  ((> x 19))
-                  (do
-                    ((y 0 (+ 1 y)))
-                    ((> y 19))
-                    (progn
-                      (let ((v (find0 4 m x y dx dy)))
-                        (let ((u (max2_ max0 v)))
-                          (setq max0 u)
-                        )))
-                    )
-                )
-              ))))
-      )
-      (princ max0)
-      (princ "
+                  ((y 0 (+ 1 y)))
+                  ((> y 19))
+                  (progn
+                    (let ((v (find0 4 m x y dx dy)))
+                      (let ((u (max2_ max0 v)))
+                        (setq max0 u)
+                      )))
+                  )
+              )
+            ))))
+    )
+    (princ max0)
+    (princ "
 ")
-    ))))))
+    )))))
 
 

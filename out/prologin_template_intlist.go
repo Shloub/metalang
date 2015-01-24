@@ -28,12 +28,11 @@ func main() {
   fmt.Fscanf(reader, "%d", &b)
   skip()
   var taille int = b
-  var d []int = make([]int, taille)
+  var tableau []int = make([]int, taille)
   for e := 0 ; e <= taille - 1; e++ {
-    fmt.Fscanf(reader, "%d", &d[e])
+    fmt.Fscanf(reader, "%d", &tableau[e])
       skip()
   }
-  var tableau []int = d
   fmt.Printf("%d\n", programme_candidat(tableau, taille));
 }
 

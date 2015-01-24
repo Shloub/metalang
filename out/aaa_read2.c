@@ -10,23 +10,21 @@ int main(void){
   scanf("%d ", &b);
   int len = b;
   printf("%d=len\n", len);
-  int *e = malloc( len * sizeof(int));
+  int *tab = malloc( len * sizeof(int));
   for (f = 0 ; f < len; f++)
   {
-    scanf("%d ", &e[f]);
+    scanf("%d ", &tab[f]);
   }
-  int* tab = e;
   for (i = 0 ; i < len; i++)
   {
     printf("%d=>%d ", i, tab[i]);
   }
   printf("\n");
-  int *k = malloc( len * sizeof(int));
+  int *tab2 = malloc( len * sizeof(int));
   for (l = 0 ; l < len; l++)
   {
-    scanf("%d ", &k[l]);
+    scanf("%d ", &tab2[l]);
   }
-  int* tab2 = k;
   for (i_ = 0 ; i_ < len; i_++)
   {
     printf("%d==>%d ", i_, tab2[i_]);
@@ -34,11 +32,10 @@ int main(void){
   scanf("%d ", &p);
   int strlen = p;
   printf("%d=strlen\n", strlen);
-  char *r = malloc( strlen * sizeof(char));
+  char *tab4 = malloc( strlen * sizeof(char));
   for (s = 0 ; s < strlen; s++)
-    scanf("%c", &r[s]);
+    scanf("%c", &tab4[s]);
   scanf(" ");
-  char* tab4 = r;
   for (i3 = 0 ; i3 < strlen; i3++)
   {
     char tmpc = tab4[i3];

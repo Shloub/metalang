@@ -14,11 +14,11 @@ begin
   let taille_x = Scanf.scanf "%d " (fun x -> x) in
   let taille_y = Scanf.scanf "%d " (fun x -> x) in
   let h = Array.init taille_y (fun _k ->
-    let l = Array.init taille_x (fun _m ->
+    let p = Array.init taille_x (fun _m ->
       let o = Scanf.scanf "%c" (fun v_0 -> v_0) in
       o) in
     Scanf.scanf " " (fun () -> ());
-    l) in
+    p) in
   let tableau = h in
   Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y)
 end

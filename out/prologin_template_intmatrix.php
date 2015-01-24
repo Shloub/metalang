@@ -9,9 +9,8 @@ function programme_candidat(&$tableau, $x, $y){
 
 $taille_x = intval(trim(fgets(STDIN)));
 $taille_y = intval(trim(fgets(STDIN)));
-$e = array();
+$tableau = array();
 for ($f = 0 ; $f < $taille_y; $f++)
-  $e[$f] = array_map("intval", explode(" ", fgets(STDIN)));
-$tableau = $e;
+  $tableau[$f] = array_map("intval", explode(" ", fgets(STDIN)));
 echo programme_candidat($tableau, $taille_x, $taille_y), "\n";
 ?>

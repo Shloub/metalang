@@ -30,12 +30,11 @@ sub programme_candidat{
 my $b = readint();
 readspaces();
 my $taille = $b;
-my $d = [];
+my $tableau = [];
 foreach my $e (0 .. $taille - 1) {
-  $d->[$e] = readint();
+  $tableau->[$e] = readint();
   readspaces();
   }
-my $tableau = $d;
 print(programme_candidat($tableau, $taille), "\n");
 
 

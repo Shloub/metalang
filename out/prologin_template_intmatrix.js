@@ -40,18 +40,17 @@ var taille_x = f;
 h=read_int_();
 stdinsep();
 var taille_y = h;
-var l = new Array(taille_y);
+var tableau = new Array(taille_y);
 for (var m = 0 ; m <= taille_y - 1; m++)
 {
-  var o = new Array(taille_x);
+  var r = new Array(taille_x);
   for (var p = 0 ; p <= taille_x - 1; p++)
   {
     q=read_int_();
     stdinsep();
-    o[p] = q;
+    r[p] = q;
   }
-  l[m] = o;
+  tableau[m] = r;
 }
-var tableau = l;
 util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 

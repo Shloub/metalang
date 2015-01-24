@@ -68,7 +68,7 @@
                   (function (lambda (m)
                   (block lambda_1
                     (let
-                     ((o (array_init
+                     ((r (array_init
                             taille_x
                             (function (lambda (p)
                             (block lambda_2
@@ -77,7 +77,7 @@
                               )))
                             ))))
                     (mread-blank)
-                    (return-from lambda_1 o)
+                    (return-from lambda_1 r)
                     )))
                   ))))
           (let ((tableau l))

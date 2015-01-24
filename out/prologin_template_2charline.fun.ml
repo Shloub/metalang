@@ -44,23 +44,18 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
     (q r out0)
 let main =
   let taille1 = (Scanf.scanf "%d " (fun x -> x)) in
-  let c = (Array.init_withenv taille1 (fun  d () -> Scanf.scanf "%c"
+  let tableau1 = (Array.init_withenv taille1 (fun  d () -> Scanf.scanf "%c"
   (fun  e -> let u = e in
   ((), u))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let tableau1 = c in
     let taille2 = (Scanf.scanf "%d " (fun x -> x)) in
-    let h = (Array.init_withenv taille2 (fun  k () -> Scanf.scanf "%c"
+    let tableau2 = (Array.init_withenv taille2 (fun  k () -> Scanf.scanf "%c"
     (fun  l -> let v = l in
     ((), v))) ()) in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let tableau2 = h in
-      (
-        (Printf.printf "%d\n" (programme_candidat tableau1 taille1 tableau2 taille2))
-        )
-      
+      (Printf.printf "%d\n" (programme_candidat tableau1 taille1 tableau2 taille2))
       )
     
     )

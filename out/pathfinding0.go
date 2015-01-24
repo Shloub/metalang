@@ -75,14 +75,14 @@ func main() {
   fmt.Printf("%d %d\n", x, y);
   var bf [][]byte = make([][]byte, y)
   for bg := 0 ; bg <= y - 1; bg++ {
-    var bh []byte = make([]byte, x)
+    var bk []byte = make([]byte, x)
       for bi := 0 ; bi <= x - 1; bi++ {
         var bj byte
         fmt.Fscanf(reader, "%c", &bj)
-          bh[bi] = bj;
+          bk[bi] = bj;
       }
       skip()
-      bf[bg] = bh;
+      bf[bg] = bk;
   }
   var tab [][]byte = bf
   var result int = pathfind(tab, x, y)

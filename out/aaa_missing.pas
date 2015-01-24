@@ -96,7 +96,6 @@ end;
 
 var
   b : Longint;
-  d : h;
   e : Longint;
   len : Longint;
   tab : h;
@@ -106,13 +105,12 @@ begin
   len := b;
   Write(len);
   Write(''#10'');
-  SetLength(d, len);
+  SetLength(tab, len);
   for e := 0 to  len - 1 do
   begin
-    d[e] := read_int_();
+    tab[e] := read_int_();
     skip();
   end;
-  tab := d;
   Write(result(len, tab));
 end.
 

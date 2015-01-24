@@ -162,9 +162,9 @@ var
   bd : Longint;
   bf : bo;
   bg : Longint;
-  bh : bn;
   bi : Longint;
   bj : char;
+  bk : bn;
   result : Longint;
   tab : bo;
   x : Longint;
@@ -183,14 +183,14 @@ begin
   SetLength(bf, y);
   for bg := 0 to  y - 1 do
   begin
-    SetLength(bh, x);
+    SetLength(bk, x);
     for bi := 0 to  x - 1 do
     begin
       bj := read_char_();
-      bh[bi] := bj;
+      bk[bi] := bj;
     end;
     skip();
-    bf[bg] := bh;
+    bf[bg] := bk;
   end;
   tab := bf;
   result := pathfind(tab, x, y);

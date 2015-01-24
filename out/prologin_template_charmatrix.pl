@@ -47,13 +47,13 @@ readspaces();
 my $taille_y = $h;
 my $l = [];
 foreach my $m (0 .. $taille_y - 1) {
-  my $o = [];
+  my $r = [];
   foreach my $p (0 .. $taille_x - 1) {
     my $q = readchar();
-    $o->[$p] = $q;
+    $r->[$p] = $q;
     }
   readspaces();
-  $l->[$m] = $o;
+  $l->[$m] = $r;
   }
 my $tableau = $l;
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");

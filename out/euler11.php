@@ -27,10 +27,9 @@ else if ($i == 6)
 else
   $directions[$i] = array(-1, -1);
 $max0 = 0;
-$g = array();
+$m = array();
 for ($h = 0 ; $h < 20; $h++)
-  $g[$h] = array_map("intval", explode(" ", fgets(STDIN)));
-$m = $g;
+  $m[$h] = array_map("intval", explode(" ", fgets(STDIN)));
 for ($j = 0 ; $j <= 7; $j++)
 {
   list($dx, $dy) = $directions[$j];

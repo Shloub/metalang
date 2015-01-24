@@ -21,12 +21,11 @@ int main(){
   std::cin >> b >> std::skipws;
   int len = b;
   std::cout << len << "\n";
-  std::vector<int > *d = new std::vector<int>( len );
+  std::vector<int > *tab = new std::vector<int>( len );
   for (int e = 0 ; e < len; e++)
   {
-    std::cin >> d->at(e) >> std::skipws;
+    std::cin >> tab->at(e) >> std::skipws;
   }
-  std::vector<int> * tab = d;
   std::cout << result(len, tab);
   return 0;
 }

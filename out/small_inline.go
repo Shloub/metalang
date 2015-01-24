@@ -15,11 +15,11 @@ func skip() {
 }
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var c []int = make([]int, 2)
+  var t []int = make([]int, 2)
   for d := 0 ; d <= 2 - 1; d++ {
-    fmt.Fscanf(reader, "%d", &c[d])
+    fmt.Fscanf(reader, "%d", &t[d])
       skip()
   }
-  fmt.Printf("%d - %d\n", c[0], c[1]);
+  fmt.Printf("%d - %d\n", t[0], t[1]);
 }
 

@@ -24,22 +24,20 @@ func main() {
   skip()
   var len int = b
   fmt.Printf("%d=len\n", len);
-  var e []int = make([]int, len)
+  var tab []int = make([]int, len)
   for f := 0 ; f <= len - 1; f++ {
-    fmt.Fscanf(reader, "%d", &e[f])
+    fmt.Fscanf(reader, "%d", &tab[f])
       skip()
   }
-  var tab []int = e
   for i := 0 ; i <= len - 1; i++ {
     fmt.Printf("%d=>%d ", i, tab[i]);
   }
   fmt.Printf("\n");
-  var k []int = make([]int, len)
+  var tab2 []int = make([]int, len)
   for l := 0 ; l <= len - 1; l++ {
-    fmt.Fscanf(reader, "%d", &k[l])
+    fmt.Fscanf(reader, "%d", &tab2[l])
       skip()
   }
-  var tab2 []int = k
   for i_ := 0 ; i_ <= len - 1; i_++ {
     fmt.Printf("%d==>%d ", i_, tab2[i_]);
   }
@@ -48,12 +46,11 @@ func main() {
   skip()
   var strlen int = p
   fmt.Printf("%d=strlen\n", strlen);
-  var r []byte = make([]byte, strlen)
+  var tab4 []byte = make([]byte, strlen)
   for s := 0 ; s <= strlen - 1; s++ {
-    fmt.Fscanf(reader, "%c", &r[s])
+    fmt.Fscanf(reader, "%c", &tab4[s])
   }
   skip()
-  var tab4 []byte = r
   for i3 := 0 ; i3 <= strlen - 1; i3++ {
     var tmpc byte = tab4[i3]
       var c int = (int)(tmpc)

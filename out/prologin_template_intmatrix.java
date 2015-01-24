@@ -33,10 +33,10 @@ public class prologin_template_intmatrix
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int taille_y = h;
-    int[][] l = new int[taille_y][];
+    int[][] tableau = new int[taille_y][];
     for (int m = 0 ; m < taille_y; m++)
     {
-      int[] o = new int[taille_x];
+      int[] r = new int[taille_x];
       for (int p = 0 ; p < taille_x; p++)
       {
         int q;
@@ -47,11 +47,10 @@ public class prologin_template_intmatrix
           q = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        o[p] = q;
+        r[p] = q;
       }
-      l[m] = o;
+      tableau[m] = r;
     }
-    int[][] tableau = l;
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   

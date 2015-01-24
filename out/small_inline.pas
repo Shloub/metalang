@@ -64,18 +64,18 @@ end;
 type a = array of Longint;
 
 var
-  c : a;
   d : Longint;
+  t : a;
 begin
-  SetLength(c, 2);
+  SetLength(t, 2);
   for d := 0 to  2 - 1 do
   begin
-    c[d] := read_int_();
+    t[d] := read_int_();
     skip();
   end;
-  Write(c[0]);
+  Write(t[0]);
   Write(' - ');
-  Write(c[1]);
+  Write(t[1]);
   Write(''#10'');
 end.
 

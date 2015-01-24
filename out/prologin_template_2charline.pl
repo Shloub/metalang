@@ -48,21 +48,19 @@ sub programme_candidat{
 my $b = readint();
 readspaces();
 my $taille1 = $b;
-my $d = [];
+my $tableau1 = [];
 foreach my $e (0 .. $taille1 - 1) {
-  $d->[$e] = readchar();
+  $tableau1->[$e] = readchar();
   }
 readspaces();
-my $tableau1 = $d;
 my $h = readint();
 readspaces();
 my $taille2 = $h;
-my $l = [];
+my $tableau2 = [];
 foreach my $m (0 .. $taille2 - 1) {
-  $l->[$m] = readchar();
+  $tableau2->[$m] = readchar();
   }
 readspaces();
-my $tableau2 = $l;
 print(programme_candidat($tableau1, $taille1, $tableau2, $taille2), "\n");
 
 

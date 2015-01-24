@@ -96,9 +96,9 @@ var
   h : Longint;
   l : u;
   m : Longint;
-  o : s;
   p : Longint;
   q : char;
+  r : s;
   tableau : u;
   taille_x : Longint;
   taille_y : Longint;
@@ -112,14 +112,14 @@ begin
   SetLength(l, taille_y);
   for m := 0 to  taille_y - 1 do
   begin
-    SetLength(o, taille_x);
+    SetLength(r, taille_x);
     for p := 0 to  taille_x - 1 do
     begin
       q := read_char_();
-      o[p] := q;
+      r[p] := q;
     end;
     skip();
-    l[m] := o;
+    l[m] := r;
   end;
   tableau := l;
   Write(programme_candidat(tableau, taille_x, taille_y));

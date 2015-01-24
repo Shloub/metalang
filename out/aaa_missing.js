@@ -44,12 +44,11 @@ b=read_int_();
 stdinsep();
 var len = b;
 util.print(len, "\n");
-var d = new Array(len);
+var tab = new Array(len);
 for (var e = 0 ; e <= len - 1; e++)
 {
-  d[e]=read_int_();
+  tab[e]=read_int_();
   stdinsep();
 }
-var tab = d;
 util.print(result(len, tab));
 

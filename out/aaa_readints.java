@@ -16,18 +16,17 @@ public class aaa_readints
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len = f;
     System.out.printf("%d=len\n", len);
-    int[] h = new int[len];
+    int[] tab1 = new int[len];
     for (int k = 0 ; k < len; k++)
     {
       if (scanner.hasNext("^-")){
         scanner.next("^-");
-        h[k] = -scanner.nextInt();
+        tab1[k] = -scanner.nextInt();
       }else{
-        h[k] = scanner.nextInt();
+        tab1[k] = scanner.nextInt();
       }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
-    int[] tab1 = h;
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d=>%d\n", i, tab1[i]);
@@ -39,10 +38,10 @@ public class aaa_readints
       len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int[][] r = new int[len - 1][];
+    int[][] tab2 = new int[len - 1][];
     for (int s = 0 ; s < len - 1; s++)
     {
-      int[] u = new int[len];
+      int[] ba = new int[len];
       for (int v = 0 ; v < len; v++)
       {
         int w;
@@ -53,11 +52,10 @@ public class aaa_readints
           w = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        u[v] = w;
+        ba[v] = w;
       }
-      r[s] = u;
+      tab2[s] = ba;
     }
-    int[][] tab2 = r;
     for (int i = 0 ; i <= len - 2; i ++)
     {
       for (int j = 0 ; j < len; j++)
