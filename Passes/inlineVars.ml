@@ -119,21 +119,21 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
   | Instr.Call (_, lie) -> List.fold_left (getinfos_expr hd dad) infos lie
   | Instr.Print (_, e)
   | Instr.Return e -> getinfos_expr hd dad infos e
-  | Instr.Untuple (li, e, opt) -> (* TODO infos ?*)
+  | Instr.Untuple (li, e, opt) ->
     let infos = getinfos_expr hd dad infos e in
     let infos = List.fold_left (fun infos (_, name) ->
       addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
     ) infos li in
     infos
-  | Instr.AllocArray (name, ty, e, None, opt) -> (* TODO infos ?*)
+  | Instr.AllocArray (name, ty, e, None, opt) ->
     let infos = getinfos_expr hd dad infos e in
     addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
-  | Instr.AllocArray (name, ty, e, Some (var, li), opt) -> (* TODO infos ?*)
+  | Instr.AllocArray (name, ty, e, Some (var, li), opt) ->
     let infos = getinfos_expr hd dad infos e in
     let infos = addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad} in
     let infos = getinfos infos (Some hd) li in
     infos
-  | Instr.AllocRecord (name, _, li, opt) -> (* TODO infos ?*)
+  | Instr.AllocRecord (name, _, li, opt) ->
     let infos = List.fold_left (getinfos_expr hd dad) infos @$ List.map snd li in
     let infos = addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad} in
     infos
@@ -182,7 +182,6 @@ let rec can_map_mut_mut name m e =
     | _ -> false
     end
 
-
 and can_map_mut name e2 e =
   match Expr.unfix e2 with
   | Expr.Access mut -> can_map_mut_mut name mut e
@@ -224,6 +223,16 @@ let is_readvar i = match Instr.unfix i with
   end
   | _ -> false
 
+let is_decl_copyvar i name = match Instr.unfix i with
+  | Instr.Declare (_, _, e, _) -> begin match Expr.unfix e with
+    | Expr.Access m -> begin match Mutable.unfix m with
+      | Mutable.Var v -> v = name
+      | _ -> false
+    end
+    | _ -> false
+  end
+  | _ -> false
+
 let is_affect_copyvar i name = match Instr.unfix i with
   | Instr.Affect (_, e) -> begin match Expr.unfix e with
     | Expr.Access m -> begin match Mutable.unfix m with
@@ -260,6 +269,25 @@ let printer = new Printer.printer
 let rec map_instrs (infos:infos) = function
   | [] -> []
   | hd::tl -> match Instr.unfix hd with
+
+
+    | Instr.AllocArray (name, ty, length, optli, { Instr.useless = true } ) ->
+      begin match StringMap.find_opt name infos.infos with
+      | Some [
+        {instruction= (Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
+        )) as i2 ; expression=_; affected=false; declaration=false; dad=dad2};
+        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}
+      ]  when is_declare_copyvar i2 name ->
+        let tl = map_instrs infos @$ remove_instruction tl i2 in
+        (Instr.alloc_array_lambda_opt name2 ty length optli useless2)::tl
+      | Some li -> (* Format.printf "%d info pour l'inline de la déclaration@\n%a@\n"
+        (List.length li)
+        printer#instr hd; *)
+        hd :: (map_instrs infos tl)
+      | None -> (* Format.printf "Aucune info pour l'inline de la déclaration@\n%a@\n"
+            printer#instr hd; *)
+        hd :: (map_instrs infos tl)
+      end
     | Instr.DeclRead (ty, name, { Instr.useless = true } ) ->
       begin match StringMap.find_opt name infos.infos with
       | Some [
@@ -289,18 +317,18 @@ let rec map_instrs (infos:infos) = function
 	            let tl = replace_name name e tl in
 	            map_instrs infos tl
             end
-          else begin
+          else begin (*
             Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n"
               printer#instr hd
               (List.length li)
-            ;
+            ; *)
 	          hd :: (map_instrs infos tl)
           end
         | _ -> assert false
         end
-      | None ->
+      | None -> (*
           Format.printf "Aucune info pour l'inline de la déclaration %a@\n"
-            printer#instr hd;
+            printer#instr hd; *)
 	      hd :: (map_instrs infos tl)
       end
     | _ -> hd :: (map_instrs infos tl)
