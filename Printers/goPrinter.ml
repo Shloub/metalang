@@ -167,7 +167,7 @@ func skip() {
 
   method bloc f li = Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>var %a@ []%a@ = make([]%a, %a)@]"
       self#binding binding
       self#ptype type_

@@ -423,7 +423,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
   | Type.Named n -> Format.fprintf f "%s" n
   | _ -> assert false
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     match TypeMap.find_opt (Type.array type_) declared_types with
     | Some s -> Format.fprintf f "@[<hov>%a := new %s (0..%a);@]"
       self#binding binding

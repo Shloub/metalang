@@ -197,7 +197,7 @@ function nextChar(){
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ =@ %a;@]" self#binding var self#expr e
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>%a@ =@ array();@]" self#binding binding
 
   method forloop f varname expr1 expr2 li =

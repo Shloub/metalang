@@ -364,7 +364,7 @@ class pasPrinter = object(self)
   method print f t expr =
     Format.fprintf f "@[<h>Write(%a);@]" self#expr expr
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>SetLength(%a, %a);@]"
       self#binding binding
       self#expr len

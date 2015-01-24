@@ -75,8 +75,13 @@ class htmlPrinter = object(self)
 
   method ptype f t = Format.fprintf f "<span class=\"type\">%a</span>" super#ptype t
 
-  method allocarray_lambda f binding type_ len binding2 lambda =
-    Format.fprintf f "@[<h><span class=\"keyword\">def</span> <span class=\"keyword\">array</span><%a>%a[%a] <span class=\"keyword\">with</span> %a <span class=\"keyword\">do</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>@]"
+  method p_option f = function
+  | { Ast.Instr.useless = true } -> Format.fprintf f "<span class=\"keyword\">useless</span> "
+  | { Ast.Instr.useless = false } -> ()
+
+  method allocarray_lambda f binding type_ len binding2 lambda useless=
+    Format.fprintf f "@[<h><span class=\"keyword\">def</span> %a <span class=\"keyword\">array</span><%a>%a[%a] <span class=\"keyword\">with</span> %a <span class=\"keyword\">do</span>@\n@[<v 2>  <div class=\"metalang_bloc_content\">%a</div>@]@\n<span class=\"keyword\">end</span>@]"
+      self#p_option useless
       self#ptype type_
       self#binding binding
       self#expr len

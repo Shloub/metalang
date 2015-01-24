@@ -552,7 +552,7 @@ class camlPrinter = object(self)
     else
       Format.fprintf f "@[<h>%a@]" self#expr e
 
-  method allocarray_lambda f binding type_ len binding2 lambda =
+  method allocarray_lambda f binding type_ len binding2 lambda _ =
     let next_sad_return =sad_returns in
     sad_returns <- contains_sad_return lambda;
     let b = BindingSet.mem binding refbindings in
@@ -582,7 +582,7 @@ class camlPrinter = object(self)
     sad_returns <- next_sad_return;
     ()
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     let b = BindingSet.mem binding refbindings in
     Format.fprintf f "@[<h>let@ %a@ %a=@ Array.make@ %a@ (Obj.magic@ 0)%a@ in@]"
       self#binding binding

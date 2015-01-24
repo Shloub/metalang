@@ -171,7 +171,7 @@ Format.fprintf f "print(%a);" self#expr expr
 	f
       lic
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>my $%s = [];@]"
       binding
 

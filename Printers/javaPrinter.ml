@@ -108,7 +108,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       Format.fprintf f "[]%a" self#suffix_type t2
     | _ -> Format.fprintf f ""
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     match Type.unfix type_ with
     | Type.Array t2 ->
       Format.fprintf f "@[<h>%a[] %a = new %a[%a]%a;@]"

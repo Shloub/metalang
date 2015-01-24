@@ -70,7 +70,7 @@ class commonLispPrinter = object(self)
   | _ -> assert false
 
 
-  method allocarray_lambda f binding type_ len binding2 lambda =
+  method allocarray_lambda f binding type_ len binding2 lambda _ =
     let () = nlet <- nlet + 1 in
     Format.fprintf f "@[<h>(let@\n ((%a@ (@[<v 2>array_init@\n%a@\n(function (lambda (%a)@\n%a)@\n@]))))"
       self#binding binding

@@ -96,7 +96,7 @@ class cPrinter = object(self)
       )
       li
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ %a@ *@ sizeof(%a));@]"
       self#ptype type_
       self#binding binding

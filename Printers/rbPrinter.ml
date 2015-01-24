@@ -200,7 +200,7 @@ end
         self#bloc ifcase
         self#bloc elsecase
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>%a@ =@ [];@]" self#binding binding
 
   method return f e = Format.fprintf f "@[<h>return@ (%a);@]" self#expr e

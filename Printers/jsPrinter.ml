@@ -153,7 +153,7 @@ function read_int_(){
       self#binding name
       (self#def_fields name) el
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>var %a@ =@ new Array(%a);@]"
       self#binding binding
       self#expr len

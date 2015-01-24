@@ -229,7 +229,7 @@ def skipchar():
   method whileloop f expr li =
     Format.fprintf f "@[<h>while (%a):@]@\n%a" self#expr expr self#bloc li
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>%a@ =@ [None] * %a@]"
       self#binding binding
       (fun f a ->

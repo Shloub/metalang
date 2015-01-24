@@ -201,15 +201,21 @@ class printer = object(self)
            (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
         ) li
 
-  method allocarray f binding type_ len =
-    Format.fprintf f "@[<hov>def array<%a> %a[%a]"
+  method p_option f = function
+  | { Ast.Instr.useless = true } -> Format.fprintf f "useless "
+  | { Ast.Instr.useless = false } -> ()
+
+  method allocarray f binding type_ len useless =
+    Format.fprintf f "@[<hov>def %aarray<%a> %a[%a]"
+      self#p_option useless
       self#ptype type_
       self#binding binding
       self#expr len
 
 
-  method allocarray_lambda f binding type_ len binding2 lambda =
-    Format.fprintf f "@[<hov>def array<%a>%a[%a] with %a do@\n@[<v 2>  %a@]@\nend@]"
+  method allocarray_lambda f binding type_ len binding2 lambda useless =
+    Format.fprintf f "@[<hov>def %a array<%a>%a[%a] with %a do@\n@[<v 2>  %a@]@\nend@]"
+      self#p_option useless
       self#ptype type_
       self#binding binding
       self#expr len
@@ -390,10 +396,10 @@ class printer = object(self)
     | Instr.Return e -> self#return f e
     | Instr.AllocRecord (name, t, el, _) ->
       self#allocrecord f name t el
-    | Instr.AllocArray (binding, type_, len, None, _) ->
-      self#allocarray f binding type_ len
-    | Instr.AllocArray (binding, type_, len, Some ( (b, l) ), _) ->
-      self#allocarray_lambda f binding type_ len b l
+    | Instr.AllocArray (binding, type_, len, None, u) ->
+      self#allocarray f binding type_ len u
+    | Instr.AllocArray (binding, type_, len, Some ( (b, l) ), u) ->
+      self#allocarray_lambda f binding type_ len b l u
     | Instr.If (e, ifcase, elsecase) ->
       self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li

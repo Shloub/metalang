@@ -102,7 +102,7 @@ class cppPrinter = object(self)
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method allocarray f binding type_ len =
+  method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>( %a );@]"
       self#ptype type_
       self#binding binding
