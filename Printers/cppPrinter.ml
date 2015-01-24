@@ -207,6 +207,9 @@ class cppPrinter = object(self)
 
   method stdin_sep f = Format.fprintf f "@[std::cin >> std::skipws;@]"
 
+  method read f t m = Format.fprintf f "@[std::cin >> %a;@]" self#mutable_ m
+  method read_decl f t v = Format.fprintf f "@[std::cin >> %a;@]" self#binding v
+
   method multiread f instrs = (* TODO, quand on a plusieurs noskip ou skip à la suite, il faut les virer*)
     let skipfirst, variables =
       List.fold_left (fun (skipfirst, variables) i -> match Instr.unfix i with
