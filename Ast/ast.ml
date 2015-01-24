@@ -623,6 +623,11 @@ module Instr = struct
     AllocRecord(binding, t, fields, opt) |> fix
   let alloc_array_lambda binding t len b e opt =
     AllocArray(binding, t, len, Some ( (b, e) ), opt ) |> fix
+
+
+  let alloc_array_lambda_opt binding t len lambda opt =
+    AllocArray(binding, t, len, lambda, opt ) |> fix
+
   let if_ e cif celse =
     If (e, cif, celse) |> fix
 
