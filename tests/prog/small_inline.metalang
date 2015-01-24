@@ -1,0 +1,9 @@
+
+main
+  def inline c[2] with d do
+    def inline read int out skip
+    return out
+  end
+  def inline t = c
+  print t[0] print " - " print t[1] print "\n"
+end
