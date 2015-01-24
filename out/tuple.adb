@@ -13,13 +13,11 @@ end record;
 
 function f(tuple0 : in tuple_int_int_PTR) return tuple_int_int_PTR is
   e : tuple_int_int_PTR;
-  c : tuple_int_int_PTR;
 begin
-  c := tuple0;
   e := new tuple_int_int;
-  e.tuple_int_int_field_0 := c.tuple_int_int_field_0 +
+  e.tuple_int_int_field_0 := tuple0.tuple_int_int_field_0 +
   (1);
-  e.tuple_int_int_field_1 := c.tuple_int_int_field_1 +
+  e.tuple_int_int_field_1 := tuple0.tuple_int_int_field_1 +
   (1);
   return e;
 end;
@@ -27,15 +25,13 @@ end;
 
   t : tuple_int_int_PTR;
   g : tuple_int_int_PTR;
-  d : tuple_int_int_PTR;
 begin
   g := new tuple_int_int;
   g.tuple_int_int_field_0 := (0);
   g.tuple_int_int_field_1 := (1);
   t := f(g);
-  d := t;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d.tuple_int_int_field_0), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t.tuple_int_int_field_0), Left));
   String'Write (Text_Streams.Stream (Current_Output), " -- ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d.tuple_int_int_field_1), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t.tuple_int_int_field_1), Left));
   String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10) & "");
 end;

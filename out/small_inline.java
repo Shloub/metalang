@@ -17,8 +17,7 @@ public class small_inline
       }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
-    int[] t = c;
-    System.out.printf("%d - %d\n", t[0], t[1]);
+    System.out.printf("%d - %d\n", c[0], c[1]);
   }
   
 }

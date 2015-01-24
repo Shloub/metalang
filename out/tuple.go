@@ -7,10 +7,9 @@ type tuple_int_int struct {
 }
 
 func f(tuple0 * tuple_int_int) * tuple_int_int{
-  var c * tuple_int_int = tuple0
   var e * tuple_int_int = new (tuple_int_int)
-  (*e).tuple_int_int_field_0=(*c).tuple_int_int_field_0 + 1
-  (*e).tuple_int_int_field_1=(*c).tuple_int_int_field_1 + 1
+  (*e).tuple_int_int_field_0=(*tuple0).tuple_int_int_field_0 + 1
+  (*e).tuple_int_int_field_1=(*tuple0).tuple_int_int_field_1 + 1
   return e
 }
 
@@ -19,7 +18,6 @@ func main() {
   (*g).tuple_int_int_field_0=0
   (*g).tuple_int_int_field_1=1
   var t * tuple_int_int = f(g)
-  var d * tuple_int_int = t
-  fmt.Printf("%d -- %d--\n", (*d).tuple_int_int_field_0, (*d).tuple_int_int_field_1);
+  fmt.Printf("%d -- %d--\n", (*t).tuple_int_int_field_0, (*t).tuple_int_int_field_1);
 }
 

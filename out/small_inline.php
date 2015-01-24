@@ -23,6 +23,5 @@ for ($d = 0 ; $d < 2; $d++)
   list($c[$d]) = scan("%d");
   scantrim();
 }
-$t = $c;
-echo $t[0], " - ", $t[1], "\n";
+echo $c[0], " - ", $c[1], "\n";
 ?>

@@ -30,7 +30,6 @@ for i in (0 ..  8 - 1) do
   end
 end
 max0 = 0
-d = 20
 m = [*1..20].map { |l| STDIN.readline.split(" ").map{ |x| x.to_i(10) } }
 for j in (0 ..  7) do
   (dx, dy) = directions[j]

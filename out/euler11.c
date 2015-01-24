@@ -98,9 +98,8 @@ int main(void){
   int** m = l;
   for (j = 0 ; j <= 7; j++)
   {
-    struct tuple_int_int * w = directions[j];
-    int dx = w->tuple_int_int_field_0;
-    int dy = w->tuple_int_int_field_1;
+    int dx = directions[j]->tuple_int_int_field_0;
+    int dy = directions[j]->tuple_int_int_field_1;
     for (x = 0 ; x <= 19; x++)
       for (y = 0 ; y <= 19; y++)
       {

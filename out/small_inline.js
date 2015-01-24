@@ -32,6 +32,5 @@ for (var d = 0 ; d <= 2 - 1; d++)
   c[d]=read_int_();
   stdinsep();
 }
-var t = c;
-util.print(t[0], " - ", t[1], "\n");
+util.print(c[0], " - ", c[1], "\n");
 

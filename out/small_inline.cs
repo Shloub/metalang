@@ -58,8 +58,7 @@ public static int readInt(){
       c[d] = readInt();
       stdin_sep();
     }
-    int[] t = c;
-    Console.Write("" + t[0] + " - " + t[1] + "\n");
+    Console.Write("" + c[0] + " - " + c[1] + "\n");
   }
   
 }

@@ -9,15 +9,13 @@ type
 
 function f(tuple0 : tuple_int_int) : tuple_int_int;
 var
-  c : tuple_int_int;
   e : tuple_int_int;
 begin
-  c := tuple0;
   new(e);
-  e^.tuple_int_int_field_0 := c^.tuple_int_int_field_0
+  e^.tuple_int_int_field_0 := tuple0^.tuple_int_int_field_0
   +
   1;
-  e^.tuple_int_int_field_1 := c^.tuple_int_int_field_1
+  e^.tuple_int_int_field_1 := tuple0^.tuple_int_int_field_1
   +
   1;
   exit(e);
@@ -25,7 +23,6 @@ end;
 
 
 var
-  d : tuple_int_int;
   g : tuple_int_int;
   t : tuple_int_int;
 begin
@@ -33,10 +30,9 @@ begin
   g^.tuple_int_int_field_0 := 0;
   g^.tuple_int_int_field_1 := 1;
   t := f(g);
-  d := t;
-  Write(d^.tuple_int_int_field_0);
+  Write(t^.tuple_int_int_field_0);
   Write(' -- ');
-  Write(d^.tuple_int_int_field_1);
+  Write(t^.tuple_int_int_field_1);
   Write('--'#10'');
 end.
 

@@ -76,7 +76,6 @@ public class euler11
       directions[i] = q;
     }
     int max0 = 0;
-    int e = 20;
     int[][] g = new int[20][];
     for (int h = 0 ; h < 20; h++)
       g[h] =
@@ -84,9 +83,8 @@ public class euler11
     int[][] m = g;
     for (int j = 0 ; j <= 7; j ++)
     {
-      tuple_int_int p = directions[j];
-      int dx = p.tuple_int_int_field_0;
-      int dy = p.tuple_int_int_field_1;
+      int dx = directions[j].tuple_int_int_field_0;
+      int dy = directions[j].tuple_int_int_field_1;
       for (int x = 0 ; x <= 19; x ++)
         for (int y = 0 ; y <= 19; y ++)
         {

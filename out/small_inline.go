@@ -20,7 +20,6 @@ func main() {
     fmt.Fscanf(reader, "%d", &c[d])
       skip()
   }
-  var t []int = c
-  fmt.Printf("%d - %d\n", t[0], t[1]);
+  fmt.Printf("%d - %d\n", c[0], c[1]);
 }
 

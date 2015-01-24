@@ -54,7 +54,6 @@ end record;
 type bk is Array (Integer range <>) of tuple_int_int_PTR;
 type bk_PTR is access bk;
 
-  w : tuple_int_int_PTR;
   v : Integer;
   u : Integer;
   r : Integer;
@@ -152,9 +151,8 @@ begin
   end loop;
   m := l;
   for j in integer range (0)..(7) loop
-    w := directions(j);
-    dx := w.tuple_int_int_field_0;
-    dy := w.tuple_int_int_field_1;
+    dx := directions(j).tuple_int_int_field_0;
+    dy := directions(j).tuple_int_int_field_1;
     for x in integer range (0)..(19) loop
       for y in integer range (0)..(19) loop
         v := find((4), m, x, y, dx, dy);

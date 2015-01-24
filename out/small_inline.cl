@@ -38,12 +38,11 @@
               (return-from lambda_1 out0)
             )))
           ))))
-  (let ((t0 c))
-    (princ (aref t0 0))
-    (princ " - ")
-    (princ (aref t0 1))
-    (princ "
+  (princ (aref c 0))
+  (princ " - ")
+  (princ (aref c 1))
+  (princ "
 ")
-  )))
+  ))
 
 

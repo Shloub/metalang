@@ -27,7 +27,6 @@ else if ($i == 6)
 else
   $directions[$i] = array(-1, -1);
 $max0 = 0;
-$e = 20;
 $g = array();
 for ($h = 0 ; $h < 20; $h++)
   $g[$h] = array_map("intval", explode(" ", fgets(STDIN)));

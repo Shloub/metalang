@@ -8,8 +8,7 @@ int main(void){
   {
     scanf("%d ", &c[d]);
   }
-  int* t = c;
-  printf("%d - %d\n", t[0], t[1]);
+  printf("%d - %d\n", c[0], c[1]);
   return 0;
 }
 

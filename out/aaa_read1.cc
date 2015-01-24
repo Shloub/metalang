@@ -13,7 +13,6 @@ std::vector<char> *getline(){
 }
 
 int main(){
-  int b = 12;
   std::vector<char> * str = getline();
   for (int i = 0 ; i <= 11; i ++)
     std::cout << str->at(i);

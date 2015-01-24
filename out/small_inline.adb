@@ -16,7 +16,6 @@ end;
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 
-  t : a_PTR;
   c : a_PTR;
 begin
   c := new a (0..(2));
@@ -24,9 +23,8 @@ begin
     Get(c(d));
     SkipSpaces;
   end loop;
-  t := c;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t((0))), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(c((0))), Left));
   String'Write (Text_Streams.Stream (Current_Output), " - ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t((1))), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(c((1))), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
 end;

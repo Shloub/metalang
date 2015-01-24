@@ -25,7 +25,6 @@ for i in range(0, 8):
   else:
     directions[i] = (-(1), -(1));
 max0 = 0;
-d = 20;
 m = [list(map(int, input().split())) for i in range(20)];
 for j in range(0, 1 + 7):
   (dx, dy) = directions[j]

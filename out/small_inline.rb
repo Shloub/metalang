@@ -4,6 +4,5 @@ for d in (0 ..  2 - 1) do
   c[d]=scanf("%d")[0];
   scanf("%*\n");
 end
-t = c
-printf "%d - %d\n", t[0], t[1]
+printf "%d - %d\n", c[0], c[1]
 

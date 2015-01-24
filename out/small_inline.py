@@ -37,6 +37,5 @@ c = [None] * 2
 for d in range(0, 2):
   c[d]=readint()
   stdinsep()
-t = c;
-print("%d - %d\n" % ( t[0], t[1] ), end='')
+print("%d - %d\n" % ( c[0], c[1] ), end='')
 

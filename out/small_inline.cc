@@ -7,8 +7,7 @@ int main(){
   {
     std::cin >> c->at(d) >> std::skipws;
   }
-  std::vector<int> * t = c;
-  std::cout << t->at(0) << " - " << t->at(1) << "\n";
+  std::cout << c->at(0) << " - " << c->at(1) << "\n";
   return 0;
 }
 

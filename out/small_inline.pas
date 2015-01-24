@@ -66,7 +66,6 @@ type a = array of Longint;
 var
   c : a;
   d : Longint;
-  t : a;
 begin
   SetLength(c, 2);
   for d := 0 to  2 - 1 do
@@ -74,10 +73,9 @@ begin
     c[d] := read_int_();
     skip();
   end;
-  t := c;
-  Write(t[0]);
+  Write(c[0]);
   Write(' - ');
-  Write(t[1]);
+  Write(c[1]);
   Write(''#10'');
 end.
 

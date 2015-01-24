@@ -22,7 +22,6 @@ foreach my $d (0 .. 2 - 1) {
   $c->[$d] = readint();
   readspaces();
   }
-my $t = $c;
-print($t->[0], " - ", $t->[1], "\n");
+print($c->[0], " - ", $c->[1], "\n");
 
 

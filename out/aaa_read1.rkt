@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define main
-  (let ([b 12])
   (let ([str (list->vector (string->list (read-line)))])
   (let ([d 0])
   (let ([e 11])
@@ -13,6 +12,6 @@
                   (c (+ i 1))
                   )
                 '()))])
-  (c d))))))
+  (c d)))))
 )
 

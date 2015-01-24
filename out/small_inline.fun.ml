@@ -17,9 +17,8 @@ let main =
                   ((), a)
                   )
   )) ()) in
-  let t = c in
   (
-    (Printf.printf "%d - %d\n" t.(0) t.(1))
+    (Printf.printf "%d - %d\n" c.(0) c.(1))
     )
   
 

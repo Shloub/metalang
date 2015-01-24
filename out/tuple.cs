@@ -5,10 +5,9 @@ public class tuple
   public class tuple_int_int {public int tuple_int_int_field_0;public int tuple_int_int_field_1;}
   public static tuple_int_int f(tuple_int_int tuple0)
   {
-    tuple_int_int c = tuple0;
     tuple_int_int e = new tuple_int_int();
-    e.tuple_int_int_field_0 = c.tuple_int_int_field_0 + 1;
-    e.tuple_int_int_field_1 = c.tuple_int_int_field_1 + 1;
+    e.tuple_int_int_field_0 = tuple0.tuple_int_int_field_0 + 1;
+    e.tuple_int_int_field_1 = tuple0.tuple_int_int_field_1 + 1;
     return e;
   }
   
@@ -19,8 +18,7 @@ public class tuple
     g.tuple_int_int_field_0 = 0;
     g.tuple_int_int_field_1 = 1;
     tuple_int_int t = f(g);
-    tuple_int_int d = t;
-    Console.Write("" + d.tuple_int_int_field_0 + " -- " + d.tuple_int_int_field_1 + "--\n");
+    Console.Write("" + t.tuple_int_int_field_0 + " -- " + t.tuple_int_int_field_1 + "--\n");
   }
   
 }

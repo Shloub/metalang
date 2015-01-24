@@ -38,9 +38,8 @@
                                                     (let ([a out0])
                                                     (list '() a))
                                                     )) (mread-int)))) '())])
-(let ([t0 c])
 (block
-  (map display (list (vector-ref t0 0) " - " (vector-ref t0 1) "\n"))
-  )))
+  (map display (list (vector-ref c 0) " - " (vector-ref c 1) "\n"))
+  ))
 )
 
