@@ -83,8 +83,9 @@ public class euler11
     int[][] m = g;
     for (int j = 0 ; j <= 7; j ++)
     {
-      int dx = directions[j].tuple_int_int_field_0;
-      int dy = directions[j].tuple_int_int_field_1;
+      tuple_int_int p = directions[j];
+      int dx = p.tuple_int_int_field_0;
+      int dy = p.tuple_int_int_field_1;
       for (int x = 0 ; x <= 19; x ++)
         for (int y = 0 ; y <= 19; y ++)
         {

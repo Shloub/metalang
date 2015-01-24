@@ -126,6 +126,7 @@ var
   r : Longint;
   u : Longint;
   v : Longint;
+  w : tuple_int_int;
   x : Longint;
   y : Longint;
 begin
@@ -207,8 +208,9 @@ begin
   m := l;
   for j := 0 to  7 do
   begin
-    dx := directions[j]^.tuple_int_int_field_0;
-    dy := directions[j]^.tuple_int_int_field_1;
+    w := directions[j];
+    dx := w^.tuple_int_int_field_0;
+    dy := w^.tuple_int_int_field_1;
     for x := 0 to  19 do
     begin
       for y := 0 to  19 do

@@ -99,8 +99,9 @@ int main(){
   std::vector<std::vector<int> *> * m = l;
   for (int j = 0 ; j <= 7; j ++)
   {
-    int dx = directions->at(j)->tuple_int_int_field_0;
-    int dy = directions->at(j)->tuple_int_int_field_1;
+    tuple_int_int * w = directions->at(j);
+    int dx = w->tuple_int_int_field_0;
+    int dy = w->tuple_int_int_field_1;
     for (int x = 0 ; x <= 19; x ++)
       for (int y = 0 ; y <= 19; y ++)
       {

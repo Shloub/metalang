@@ -119,8 +119,9 @@ for (var o = 0 ; o <= 20 - 1; o++)
 var m = l;
 for (var j = 0 ; j <= 7; j++)
 {
-  var dx = directions[j].tuple_int_int_field_0;
-  var dy = directions[j].tuple_int_int_field_1;
+  var w = directions[j];
+  var dx = w.tuple_int_int_field_0;
+  var dy = w.tuple_int_int_field_1;
   for (var x = 0 ; x <= 19; x++)
     for (var y = 0 ; y <= 19; y++)
     {

@@ -99,8 +99,9 @@ func main() {
   }
   var m [][]int = l
   for j := 0 ; j <= 7; j++ {
-    var dx int = (*directions[j]).tuple_int_int_field_0
-      var dy int = (*directions[j]).tuple_int_int_field_1
+    var w * tuple_int_int = directions[j]
+      var dx int = (*w).tuple_int_int_field_0
+      var dy int = (*w).tuple_int_int_field_1
       for x := 0 ; x <= 19; x++ {
         for y := 0 ; y <= 19; y++ {
             var v int = find(4, m, x, y, dx, dy)
