@@ -307,7 +307,7 @@ def lexems expand_read_int_line(lexems a)
       }
     else
     return {
-      def array<int> tab[${a}] with i do
+      def inline array<int> tab[${a}] with i do
       	def inline read int t skip
 				return t
       end
@@ -341,7 +341,7 @@ def lexems expand_read_char_line(lexems a)
       }
     else
     return {
-      def array<char> tab[${a}] with i do
+      def inline array<char> tab[${a}] with i do
       	def inline read char t;
 				return t;
       end
@@ -369,7 +369,7 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
 				s = {}
 			end
     return {
-      def array<array<int>> tab[${y}] with z do
+      def inline array<array<int>> tab[${y}] with z do
 				return read_int_line(x)
       end
       return tab
