@@ -49,7 +49,7 @@ let foldmapexpr tyenv acc e = match Expr.unfix e with
   | Expr.Record li ->
     let t = Typer.get_type tyenv e in
     let varname = Fresh.fresh () in
-    let ni = Instr.alloc_record varname t li in
+    let ni = Instr.alloc_record varname t li Instr.useless_declaration_option in
     let ne = Expr.access (Mutable.var varname) in
     ni::acc, ne
   | _ -> acc, e
@@ -61,8 +61,8 @@ let process tyenv acc e =
 let process_mut tyenv acc m = Mutable.foldmap_expr (process tyenv) acc m
 
 let expand tyenv i = match Instr.unfix i with
-  | Instr.Declare (n, t, (Expr.Fixed.F (_, Expr.Record li) ), _) ->
-    [Instr.alloc_record n t li]
+  | Instr.Declare (n, t, (Expr.Fixed.F (_, Expr.Record li) ), opt) ->
+    [Instr.alloc_record n t li opt]
   | Instr.Declare (n, t, e, opt) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Declare (n, t, e, opt)) ) :: instrs)
@@ -80,14 +80,14 @@ let expand tyenv i = match Instr.unfix i with
   | Instr.Return e ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Return e)  ) :: instrs)
-  | Instr.AllocArray (n, t, e, opt) ->
+  | Instr.AllocArray (n, t, e, opt, opt2) ->
     let instrs, e = process tyenv [] e in
-    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocArray (n, t, e, opt))  ) :: instrs)
-  | Instr.AllocRecord (n, t, lie) ->
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocArray (n, t, e, opt, opt2))  ) :: instrs)
+  | Instr.AllocRecord (n, t, lie, opt) ->
     let instrs, lie = List.fold_left_map (fun acc (f, e) ->
       let acc, e = process tyenv acc e
       in acc, (f, e)) [] lie in
-    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocRecord (n, t, lie))  ) :: instrs)
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocRecord (n, t, lie, opt))  ) :: instrs)
   | Instr.If (e, l1, l2) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.If (e, l1, l2))  ) :: instrs)
@@ -100,9 +100,9 @@ let expand tyenv i = match Instr.unfix i with
   | Instr.Read (t, mut) ->
     let instrs, mut = process_mut tyenv [] mut in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Read (t, mut))  ) :: instrs)
-  | Instr.Untuple(li, e) ->
+  | Instr.Untuple(li, e, opt) ->
     let instrs, e = process tyenv [] e in
-    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Untuple (li, e))  ) :: instrs)
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Untuple (li, e, opt))  ) :: instrs)
   | _ -> [i]
 
 let mapi tyenv i =

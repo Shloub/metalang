@@ -231,9 +231,9 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
            | Instr.DeclRead (t, b, _)
            | Instr.Declare (b, t, _, _) ->
              BindingMap.add b t bindings
-           | Instr.AllocArray (b, t, _, _) ->
+           | Instr.AllocArray (b, t, _, _, _) ->
              BindingMap.add b (Type.array t) bindings
-           | Instr.AllocRecord (b, t, _) ->
+           | Instr.AllocRecord (b, t, _, _) ->
              BindingMap.add b t bindings
            | _ -> bindings
          )

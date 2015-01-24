@@ -115,24 +115,24 @@ let rec rename_instr acc (instr:Utils.instr) =
   | Instr.Tag _s ->  acc, instr
   | Instr.Return e ->
     acc, Instr.Return (rename_e acc e) |> Instr.fixa annot
-  | Instr.AllocArray (name, t, e, None) ->
+  | Instr.AllocArray (name, t, e, None, opt) ->
     let e = rename_e acc e in
     let newname = Fresh.fresh () in
     let acc = StringMap.add name newname acc in
-    acc, Instr.AllocArray (newname, t, e, None) |> Instr.fixa annot
-  | Instr.AllocArray (name, t, e, Some (name2, li)) ->
+    acc, Instr.AllocArray (newname, t, e, None, opt) |> Instr.fixa annot
+  | Instr.AllocArray (name, t, e, Some (name2, li), opt) ->
     let e = rename_e acc e in
     let newname = Fresh.fresh () in
     let acc = StringMap.add name newname acc in
     let newname2 = Fresh.fresh () in
     let acc = StringMap.add name2 newname2 acc in
     let li = rename_instrs acc li in
-    acc, Instr.AllocArray (newname, t, e, Some (newname2, li)) |> Instr.fixa annot
-  | Instr.AllocRecord (name, t, fields) ->
+    acc, Instr.AllocArray (newname, t, e, Some (newname2, li), opt) |> Instr.fixa annot
+  | Instr.AllocRecord (name, t, fields, opt) ->
     let fields = List.map (fun (fieldname, expr) -> fieldname, rename_e acc expr) fields in
     let newname = Fresh.fresh () in
     let acc = StringMap.add name newname acc in
-    acc, Instr.AllocRecord (newname, t, fields) |> Instr.fixa annot
+    acc, Instr.AllocRecord (newname, t, fields, opt) |> Instr.fixa annot
   | Instr.If (e, l1, l2) ->
     let e = rename_e acc e in
     let l1 = rename_instrs acc l1 in
@@ -148,14 +148,14 @@ let rec rename_instr acc (instr:Utils.instr) =
     let newname = Fresh.fresh () in
     let acc = StringMap.add name newname acc in
     acc, Instr.DeclRead (t, newname, opt) |> Instr.fixa annot
-  | Instr.Untuple (li, e) ->
+  | Instr.Untuple (li, e, opt) ->
     let e = rename_e acc e in
     let acc, li = List.fold_left_map (fun acc (ty, name) ->
       let newname = Fresh.fresh () in
       let acc = StringMap.add name newname acc in
       acc, (ty, newname) ) acc li
     in
-    acc, Instr.Untuple (li, e) |> Instr.fixa annot
+    acc, Instr.Untuple (li, e, opt) |> Instr.fixa annot
   | Instr.StdinSep -> acc, instr
   | Instr.Unquote e -> acc, instr (* normalement, ça n'arrive pas... l'evaluation des macros devrait déjà avoir eu lieu. *)
 and rename_instrs acc instrs =
@@ -270,19 +270,19 @@ and map_instr acc instr =
   | Instr.Return e ->
     let addon, e = map_e acc e in
     List.append addon [Instr.Return e |> Instr.fixa annot]
-  | Instr.AllocArray (name, t, e, None) ->
+  | Instr.AllocArray (name, t, e, None, opt) ->
     let addon, e = map_e acc e in
-    List.append addon [Instr.AllocArray (name, t, e, None) |> Instr.fixa annot]
-  | Instr.AllocArray (name, t, e, Some (name2, li)) ->
+    List.append addon [Instr.AllocArray (name, t, e, None, opt) |> Instr.fixa annot]
+  | Instr.AllocArray (name, t, e, Some (name2, li), opt) ->
     let addon, e = map_e acc e in
     let li = map_instrs acc li in
-    List.append addon [Instr.AllocArray (name, t, e, Some (name2, li)) |> Instr.fixa annot]
-  | Instr.AllocRecord (name, t, fields) ->
+    List.append addon [Instr.AllocArray (name, t, e, Some (name2, li), opt) |> Instr.fixa annot]
+  | Instr.AllocRecord (name, t, fields, opt) ->
     let addon, fields = List.fold_left_map (fun addon0 (name, e) ->
       let addon, e = map_e acc e in
       (List.append addon0 addon), (name, e)
     ) [] fields in
-    List.append addon [Instr.AllocRecord (name, t, fields) |> Instr.fixa annot]
+    List.append addon [Instr.AllocRecord (name, t, fields, opt) |> Instr.fixa annot]
   | Instr.If (e, l1, l2) ->
     let addon, e = map_e acc e in
     let l1 = map_instrs acc l1 in
@@ -295,9 +295,9 @@ and map_instr acc instr =
     let addon, mut = map_mut acc mut in
     List.append addon [Instr.Read(t, mut) |> Instr.fixa annot]
   | Instr.DeclRead (_t, _name, _opt) -> [instr]
-  | Instr.Untuple (li, e) ->
+  | Instr.Untuple (li, e, opt) ->
     let addon, e = map_e acc e in
-    List.append addon [Instr.Untuple(li, e) |> Instr.fixa annot]
+    List.append addon [Instr.Untuple(li, e, opt) |> Instr.fixa annot]
   | Instr.StdinSep -> [instr]
   | Instr.Unquote e -> [instr] (* normalement, ça n'arrive pas... l'evaluation des macros devrait déjà avoir eu lieu. *)
 

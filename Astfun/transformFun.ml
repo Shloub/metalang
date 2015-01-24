@@ -112,7 +112,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.DeclRead (t, v, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.readin (F.Expr.fun_ [v] tl) t
-    | A.Instr.AllocRecord (v, ty, li) ->
+    | A.Instr.AllocRecord (v, ty, li, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [F.Expr.record (List.map (fun (a, b) -> b, a) li)]
     | A.Instr.Affect (m, e) ->
@@ -204,7 +204,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
            (F.Expr.apply (F.Expr.binding loop) ((F.Expr.binding from)::returnenv))
         ) in
       F.Expr.apply cont [from_; end_]
-    | A.Instr.AllocArray (name, t, e, Some (varname, li)) ->
+    | A.Instr.AllocArray (name, t, e, Some (varname, li), _) ->
       let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
       let o = Fresh.fresh () in
       let returnenv = F.Expr.tuple (List.map F.Expr.binding affected) in
@@ -215,8 +215,8 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = instrs suite contsuite  contreturn env tl in
       let next = F.Expr.fun_ [name] next in
       F.Expr.apply next [F.Expr.arraymake e content returnenv]
-    | A.Instr.AllocArray (name, t, e, None) -> assert false
-    | A.Instr.Untuple (vars, e) ->
+    | A.Instr.AllocArray (name, t, e, None, _) -> assert false
+    | A.Instr.Untuple (vars, e, _) ->
       let vars = List.map snd vars in
       let tl = instrs suite contsuite contreturn (List.append vars env) tl in
       F.Expr.apply (F.Expr.funtuple vars tl) [e]
@@ -246,11 +246,11 @@ let rec instr_to_finstr i =
   | A.Instr.Comment s -> A.Instr.Comment s
   | A.Instr.Tag s -> A.Instr.Tag s
   | A.Instr.Return e -> A.Instr.Return (f e)
-  | A.Instr.AllocArray (varname, ty, e, opt) ->
+  | A.Instr.AllocArray (varname, ty, e, opt, opt2) ->
     A.Instr.AllocArray (varname, ty, f e, Option.map (fun (name, li) ->
-      name, List.map instr_to_finstr li) opt)
-  | A.Instr.AllocRecord (varname, ty, li) ->
-    A.Instr.AllocRecord (varname, ty, List.map (fun (field, e) -> field, f e) li)
+      name, List.map instr_to_finstr li) opt, opt2)
+  | A.Instr.AllocRecord (varname, ty, li, opt) ->
+    A.Instr.AllocRecord (varname, ty, List.map (fun (field, e) -> field, f e) li, opt)
   | A.Instr.If (e, l1, l2) ->
     A.Instr.If (f e, List.map instr_to_finstr l1, List.map instr_to_finstr l2)
   | A.Instr.Call (funname, li) ->
@@ -258,7 +258,7 @@ let rec instr_to_finstr i =
   | A.Instr.Print (ty, e) -> A.Instr.Print (ty, f e)
   | A.Instr.Read (ty, mut) -> A.Instr.Read (ty, A.Mutable.map_expr f mut)
   | A.Instr.DeclRead (ty, name, opt) -> A.Instr.DeclRead (ty, name, opt)
-  | A.Instr.Untuple (li, e) -> A.Instr.Untuple (li, f e)
+  | A.Instr.Untuple (li, e, opt) -> A.Instr.Untuple (li, f e, opt)
   | A.Instr.StdinSep -> A.Instr.StdinSep
   | A.Instr.Unquote e -> A.Instr.Unquote (f e)
   in A.Instr.fixa (A.Instr.Fixed.annot i) unfixed

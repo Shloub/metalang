@@ -254,8 +254,8 @@ class pasPrinter = object(self)
            match Instr.Fixed.unfix i with
            | Instr.Declare (_, t, _, _)    -> self#declare_type declared_types f t
 	   | Instr.DeclRead (t, _, _)      -> self#declare_type declared_types f t
-           | Instr.AllocArray (_, t, _, _) -> self#declare_type declared_types f (Type.array t)
-           | Instr.AllocRecord (_, t, _)   -> self#declare_type declared_types f t
+           | Instr.AllocArray (_, t, _, _, _) -> self#declare_type declared_types f (Type.array t)
+           | Instr.AllocRecord (_, t, _, _)   -> self#declare_type declared_types f t
            | _ -> declared_types
 	 ))
       declared_types
@@ -290,9 +290,9 @@ class pasPrinter = object(self)
            | Instr.DeclRead (t, b, _)
            | Instr.Declare (b, t, _, _) ->
              BindingMap.add b t bindings
-           | Instr.AllocArray (b, t, _, _) ->
+           | Instr.AllocArray (b, t, _, _, _) ->
              BindingMap.add b (Type.array t) bindings
-           | Instr.AllocRecord (b, t, _) ->
+           | Instr.AllocRecord (b, t, _, _) ->
              BindingMap.add b t bindings
            | _ -> bindings
          )

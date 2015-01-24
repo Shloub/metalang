@@ -55,14 +55,14 @@ let fresh_init prog =
       match Instr.unfix i with
       | Instr.Declare (b, _, _, _)
       | Instr.DeclRead (_, b, _)
-      | Instr.AllocRecord(b, _, _)
-      | Instr.AllocArray (b, _, _, None)
+      | Instr.AllocRecord(b, _, _, _)
+      | Instr.AllocArray (b, _, _, None, _)
       | Instr.Loop (b, _, _, _)
         -> BindingSet.add b acc
-      | Instr.AllocArray (b1, _, _, Some (b2, _))
+      | Instr.AllocArray (b1, _, _, Some (b2, _), _)
         ->
         BindingSet.add b1 (BindingSet.add b2 acc)
-      | Instr.Untuple (li, e) ->
+      | Instr.Untuple (li, e, _) ->
         List.fold_left (fun acc (_, name) -> BindingSet.add name acc) acc li
       | _ -> acc
     ) acc i

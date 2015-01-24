@@ -60,7 +60,7 @@ let collect_sad_returns ty instrs =
     else acc
   in
   let rec f tra acc i = match Instr.unfix i with
-    | Instr.AllocArray (_binding, type_, _len, Some (_b, l)) ->
+    | Instr.AllocArray (_binding, type_, _len, Some (_b, l), _) ->
       add (tra acc i) l type_
     | _ -> tra acc i
   in List.fold_left (f (Instr.Writer.Traverse.fold f))

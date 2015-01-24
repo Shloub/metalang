@@ -93,9 +93,9 @@ let process () i =
     let instr = Instr.map g (Instr.unfix instr) |> Instr.fixa annot
     in
     match Instr.unfix instr with
-    | Instr.AllocArray (var, ty, e, Some (var2, li)) ->
+    | Instr.AllocArray (var, ty, e, Some (var2, li), opt) ->
       let li = f [] li in
-      let unfixed = Instr.alloc_array_lambda var ty e var2 li |> Instr.unfix
+      let unfixed = Instr.alloc_array_lambda var ty e var2 li opt |> Instr.unfix
       in Instr.fixa annot unfixed
     | i -> instr
   in

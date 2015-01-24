@@ -545,14 +545,14 @@ module Instr = struct
   | Comment of string
   | Tag of string
   | Return of 'expr
-  | AllocArray of varname * Type.t * 'expr * (varname * 'a list) option
-  | AllocRecord of varname * Type.t * (fieldname * 'expr) list
+  | AllocArray of varname * Type.t * 'expr * (varname * 'a list) option * declaration_option
+  | AllocRecord of varname * Type.t * (fieldname * 'expr) list * declaration_option
   | If of 'expr * 'a list * 'a list
   | Call of funname * 'expr list
   | Print of Type.t * 'expr
   | Read of Type.t * 'expr Mutable.t
   | DeclRead of Type.t * varname * declaration_option
-  | Untuple of (Type.t * varname) list * 'expr
+  | Untuple of (Type.t * varname) list * 'expr * declaration_option
   | StdinSep
   | Unquote of 'expr
 
@@ -566,19 +566,19 @@ module Instr = struct
     | If (e, cif, celse) ->
       If (e, f cif, f celse)
     | Return e -> Return e
-    | AllocArray (b, t, l, Some ((b2, li))) ->
-      AllocArray (b, t, l, Some((b2, f li)))
-    | AllocArray (a, b, c, None) ->
-      AllocArray (a, b, c, None)
-    | AllocRecord (a, b, c) ->
-      AllocRecord (a, b, c)
+    | AllocArray (b, t, l, Some ((b2, li)), opt) ->
+      AllocArray (b, t, l, Some((b2, f li)), opt)
+    | AllocArray (a, b, c, None, opt) ->
+      AllocArray (a, b, c, None, opt)
+    | AllocRecord (a, b, c, opt) ->
+      AllocRecord (a, b, c, opt)
     | Print (a, b) -> Print (a, b)
     | Read (a, b) -> Read (a, b)
     | DeclRead (a, b, opt) -> DeclRead (a, b, opt)
     | Call (a, b) -> Call (a, b)
     | StdinSep -> StdinSep
     | Unquote e -> Unquote e
-    | Untuple (lis, e) -> Untuple (lis, e)
+    | Untuple (lis, e, opt) -> Untuple (lis, e, opt)
     | Tag e -> Tag e
 
   let map f t =
@@ -616,13 +616,13 @@ module Instr = struct
   let comment s = Comment s |> fix
   let tag s = Tag s |> fix
   let return e = Return e |> fix
-  let untuple li e = Untuple (li, e) |> fix
-  let alloc_array binding t len =
-    AllocArray(binding, t, len, None) |> fix
-  let alloc_record binding t fields =
-    AllocRecord(binding, t, fields) |> fix
-  let alloc_array_lambda binding t len b e=
-    AllocArray(binding, t, len, Some ( (b, e) ) ) |> fix
+  let untuple li e opt = Untuple (li, e, opt) |> fix
+  let alloc_array binding t len opt =
+    AllocArray(binding, t, len, None, opt) |> fix
+  let alloc_record binding t fields opt =
+    AllocRecord(binding, t, fields, opt) |> fix
+  let alloc_array_lambda binding t len b e opt =
+    AllocArray(binding, t, len, Some ( (b, e) ), opt ) |> fix
   let if_ e cif celse =
     If (e, cif, celse) |> fix
 
@@ -648,11 +648,11 @@ module Instr = struct
         let acc, celse = List.fold_left_map f acc celse in
         acc, Fixed.fixa annot (If(e, cif, celse))
       | Return e -> acc, t
-      | AllocArray (_, _, _, None) -> acc, t
-      | AllocArray (b, t, l, Some (b2, li)) ->
+      | AllocArray (_, _, _, None, _) -> acc, t
+      | AllocArray (b, t, l, Some (b2, li), opt) ->
         let acc, li = List.fold_left_map f acc li in
-        acc, Fixed.fixa annot (AllocArray (b, t, l, Some (b2, li)) )
-      | AllocRecord (_, _, _) ->
+        acc, Fixed.fixa annot (AllocArray (b, t, l, Some (b2, li), opt ))
+      | AllocRecord (_, _, _, _) ->
         acc, t
       | Print _ -> acc, t
       | Read _ -> acc, t
@@ -688,16 +688,16 @@ module Instr = struct
           | Return e ->
             let acc, e = f acc e in
             acc, Return e
-          | AllocArray (v, t, e, liopt) ->
+          | AllocArray (v, t, e, liopt, opt) ->
             let acc, e = f acc e in
-            acc, AllocArray (v, t, e, liopt)
-          | AllocRecord (v, t, el) ->
+            acc, AllocArray (v, t, e, liopt, opt)
+          | AllocRecord (v, t, el, opt) ->
             let acc, el = List.fold_left_map
               (fun acc (field, e) ->
                 let acc, e = f acc e
                 in acc, (field, e))
               acc el
-            in acc, AllocRecord (v, t, el)
+            in acc, AllocRecord (v, t, el, opt)
           | If (e, li1, li2) ->
             let acc, e = f acc e in
             acc, If (e, li1, li2)
@@ -707,9 +707,9 @@ module Instr = struct
           | Print (t, e) ->
             let acc, e = f acc e in
             acc, Print (t, e)
-          | Untuple (li, e) ->
+          | Untuple (li, e, opt) ->
             let acc, e = f acc e in
-            acc, Untuple (li, e)
+            acc, Untuple (li, e, opt)
           | Read (t, m) ->
             let acc, m = Mutable.foldmap_expr f acc m in
             acc, Read (t, m)

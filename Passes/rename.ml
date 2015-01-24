@@ -93,17 +93,17 @@ let rec process_instr map i =
       Instr.While ((process_expr map e), List.map (process_instr map) li )
     | Instr.Comment s -> Instr.Comment s
     | Instr.Return e -> Instr.Return (process_expr map e)
-    | Instr.AllocArray (name, t, e, None) ->
-      Instr.AllocArray ((mapname map name), t, (process_expr map e), None)
-    | Instr.AllocArray (name, t, e, Some ((var, li))) ->
+    | Instr.AllocArray (name, t, e, None, opt) ->
+      Instr.AllocArray ((mapname map name), t, (process_expr map e), None, opt)
+    | Instr.AllocArray (name, t, e, Some ((var, li)), opt) ->
       let li2 = List.map (process_instr map) li in
-      Instr.AllocArray ((mapname map name), t, (process_expr map e), Some (( (mapname map var), li2)))
-    | Instr.AllocRecord (name, t, el) ->
+      Instr.AllocArray ((mapname map name), t, (process_expr map e), Some (( (mapname map var), li2)), opt)
+    | Instr.AllocRecord (name, t, el, opt) ->
       Instr.AllocRecord ((mapname map name), t,
                          (List.map
                             (fun (field, e) ->
                               (field, process_expr map e))
-                         ) el)
+                         ) el, opt)
     | Instr.If (e, li1, li2) ->
       Instr.If ((process_expr map e),
                 (List.map (process_instr map) li1 ),
@@ -117,8 +117,8 @@ let rec process_instr map i =
       Instr.Read (t, mapmutable map m)
     | Instr.DeclRead (t, v, opt) ->
       Instr.DeclRead (t, mapname map v, opt)
-    | Instr.Untuple (li, e)->
-      Instr.Untuple (List.map (fun (t, n) -> t, mapname map n) li, process_expr map e)
+    | Instr.Untuple (li, e, opt)->
+      Instr.Untuple (List.map (fun (t, n) -> t, mapname map n) li, process_expr map e, opt)
     | Instr.StdinSep -> Instr.StdinSep
   in Instr.Fixed.fixa (Instr.Fixed.annot i) i2
 

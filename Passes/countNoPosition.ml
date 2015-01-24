@@ -78,8 +78,8 @@ let finstr acc (i: 'a Ast.Instr.t) =
   | Instr.Loop (_, e1, e2, _) -> acc + count_expr e1 + count_expr e2
   | Instr.While (e, _) -> acc + count_expr e
   | Instr.Return e -> acc + count_expr e
-  | Instr.AllocArray (_, t, e, _) -> acc + count_type t + count_expr e
-  | Instr.AllocRecord (_, t, li) -> acc + count_type t + count_exprs (List.map snd li)
+  | Instr.AllocArray (_, t, e, _, _) -> acc + count_type t + count_expr e
+  | Instr.AllocRecord (_, t, li, _) -> acc + count_type t + count_exprs (List.map snd li)
   | Instr.If (e, _, _) -> acc + count_expr e
   | Instr.Call (_, li) ->acc + count_exprs li
   | Instr.Print (t, e) -> acc + count_type t + count_expr e

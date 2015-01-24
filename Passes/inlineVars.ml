@@ -119,21 +119,21 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
   | Instr.Call (_, lie) -> List.fold_left (getinfos_expr hd dad) infos lie
   | Instr.Print (_, e)
   | Instr.Return e -> getinfos_expr hd dad infos e
-  | Instr.Untuple (li, e) ->
+  | Instr.Untuple (li, e, opt) -> (* TODO infos ?*)
     let infos = getinfos_expr hd dad infos e in
     let infos = List.fold_left (fun infos (_, name) ->
       addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
     ) infos li in
     infos
-  | Instr.AllocArray (name, ty, e, None) ->
+  | Instr.AllocArray (name, ty, e, None, opt) -> (* TODO infos ?*)
     let infos = getinfos_expr hd dad infos e in
     addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
-  | Instr.AllocArray (name, ty, e, Some (var, li)) ->
+  | Instr.AllocArray (name, ty, e, Some (var, li), opt) -> (* TODO infos ?*)
     let infos = getinfos_expr hd dad infos e in
     let infos = addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad} in
     let infos = getinfos infos (Some hd) li in
     infos
-  | Instr.AllocRecord (name, _, li) ->
+  | Instr.AllocRecord (name, _, li, opt) -> (* TODO infos ?*)
     let infos = List.fold_left (getinfos_expr hd dad) infos @$ List.map snd li in
     let infos = addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad} in
     infos
@@ -290,17 +290,17 @@ let rec map_instrs (infos:infos) = function
 	            map_instrs infos tl
             end
           else begin
-            (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n"
+            Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n"
               printer#instr hd
               (List.length li)
-            ; *)
+            ;
 	          hd :: (map_instrs infos tl)
           end
         | _ -> assert false
         end
       | None ->
-(*          Format.printf "Aucune info pour l'inline de la déclaration %a@\n"
-            printer#instr hd; *)
+          Format.printf "Aucune info pour l'inline de la déclaration %a@\n"
+            printer#instr hd;
 	      hd :: (map_instrs infos tl)
       end
     | _ -> hd :: (map_instrs infos tl)

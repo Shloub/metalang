@@ -598,7 +598,7 @@ module EvalF (IO : EvalIO) = struct
       =
     let loc = Ast.PosMap.get (Instr.Fixed.annot instr) in
     match Instr.unfix instr with
-    | Instr.Untuple (li, e) ->
+    | Instr.Untuple (li, e, _) ->
       let li = List.map snd li in
       let e = e env in
       let env, li = List.fold_left_map add_in_env env li in
@@ -649,7 +649,7 @@ module EvalF (IO : EvalIO) = struct
     | Instr.Return e ->
       let e = e env in
       env, fun execenv -> raise (Return (eval_expr execenv e))
-    | Instr.AllocArray (var, t, e, opt) ->
+    | Instr.AllocArray (var, t, e, opt, _) ->
       let e = e env in
       begin match opt with
       | None ->
@@ -672,7 +672,7 @@ module EvalF (IO : EvalIO) = struct
           ))
         in env, f
       end
-    | Instr.AllocRecord (var, t, fields) ->
+    | Instr.AllocRecord (var, t, fields, _) ->
       let fields = List.map (fun (name, e) ->
         index_for_field env name loc, e env) fields in
       let index, fields = List.unzip fields in
@@ -771,22 +771,22 @@ module EvalF (IO : EvalIO) = struct
         Instr.While (precompile_expr e, precompile_instrs li)
       | Instr.Comment s -> Instr.Comment s
       | Instr.Return e -> Instr.Return (precompile_expr e)
-      | Instr.AllocArray (v, t, e, opt) ->
+      | Instr.AllocArray (v, t, e, opt, opt2) ->
         let opt = match opt with
           | None -> None
           | Some ((v, li)) -> Some (v, precompile_instrs li)
-        in Instr.AllocArray(v, t, precompile_expr e, opt)
-      | Instr.AllocRecord (v, t, li) ->
+        in Instr.AllocArray(v, t, precompile_expr e, opt, opt2)
+      | Instr.AllocRecord (v, t, li, opt) ->
         let li = List.map
           (fun (name, e) -> (name, precompile_expr e)) li
-        in Instr.AllocRecord (v, t, li)
+        in Instr.AllocRecord (v, t, li, opt)
       | Instr.If (e, l1, l2) ->
         Instr.If (precompile_expr e, precompile_instrs l1, precompile_instrs l2)
       | Instr.Call (name, li) -> Instr.Call (name, List.map precompile_expr li)
       | Instr.Print (t, e) -> Instr.Print (t, precompile_expr e)
       | Instr.Read (t, mut) -> Instr.Read (t, Mutable.map_expr precompile_expr mut)
       | Instr.DeclRead (t, v, opt) -> Instr.DeclRead (t, v, opt)
-      | Instr.Untuple (li, e) -> Instr.Untuple (li, precompile_expr e)
+      | Instr.Untuple (li, e, opt) -> Instr.Untuple (li, precompile_expr e, opt)
       | Instr.StdinSep -> Instr.StdinSep
       | Instr.Unquote li -> assert false
       | Instr.Tag s -> Instr.Tag s

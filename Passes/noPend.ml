@@ -61,7 +61,7 @@ let rec process (acc:'lex acc) i =
 		    (
 		      Expr.Lief _ | Expr.Access (
 			Mutable.Fixed.F
-			  (_, Mutable.Var _)))), _)
+			  (_, Mutable.Var _)))), _, _)
     | Instr.Print(_, Expr.Fixed.F
       (_,
        (Expr.Access ( Mutable.Fixed.F
@@ -83,7 +83,7 @@ let rec process (acc:'lex acc) i =
         ]
       | _ -> [t0]
       end
-    | Instr.AllocArray(b0, t, e, lambdaopt) ->
+    | Instr.AllocArray(b0, t, e, lambdaopt, opt) ->
       let annot = Instr.Fixed.annot t0 in
       let lambdaopt = match lambdaopt with
         | None -> None
@@ -98,7 +98,7 @@ let rec process (acc:'lex acc) i =
         Instr.Declare (b, Type.integer, e, Instr.useless_declaration_option) |> Instr.fixa annot;
         Instr.AllocArray(b0, t,
                          Expr.access (Mutable.var b),
-                         lambdaopt) |> Instr.fixa annot  |> locate loc;
+                         lambdaopt, opt) |> Instr.fixa annot  |> locate loc;
       ]
     | _ -> [fixed_map t0]
   and fixed_map (t:'lex Instr.t) =

@@ -95,7 +95,7 @@ let rec check_alloc_inside loc li =
 
 let check_alloc li =
   let f tra i = match Instr.unfix i with
-    | Instr.AllocArray (_, _, _, Some(_, instrs)) ->
+    | Instr.AllocArray (_, _, _, Some(_, instrs), _) ->
       let loc = Ast.PosMap.get (Instr.Fixed.annot i) in
       check_alloc_inside loc instrs
     | _ -> tra i

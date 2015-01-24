@@ -51,7 +51,7 @@ let locate loc instr =
   PosMap.add (Instr.Fixed.annot instr) loc; instr
 (* TODO positions *)
 let rec rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
-  | Instr.Untuple (li, e) ->
+  | Instr.Untuple (li, e, opt) ->
     let loc = PosMap.get (Instr.Fixed.annot i) in
     let t = Type.auto () in
     let b = fresh () in
@@ -59,9 +59,9 @@ let rec rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i w
     let t_tuple = Type.tuple (List.map fst li) in
     let access = List.mapi (fun i (t, name) ->
       let fieldname = name_of_field i t_tuple acc in
-      Instr.Declare (name, t, Expr.access (Mutable.dot vb fieldname), Instr.useless_declaration_option) |> Instr.fix |> locate loc
+      Instr.Declare (name, t, Expr.access (Mutable.dot vb fieldname), opt) |> Instr.fix |> locate loc
     ) li in
-    (Instr.Declare (b, t, e, Instr.useless_declaration_option) |> Instr.fix |> locate loc)::access
+    (Instr.Declare (b, t, e, opt) |> Instr.fix |> locate loc)::access
   | j -> [ Instr.deep_map_bloc (List.flatten @* List.map (rewrite acc)) j |> Instr.fixa (Instr.Fixed.annot i) ]
 
 type acc0 = Typer.env * DeclareTuples.acc
@@ -81,8 +81,8 @@ let mapde tyenv acc e = Expr.Writer.Deep.map (mape tyenv acc) e
 let mapi acc i =
   let i0 = match Instr.unfix i with
     | Instr.Declare (v, t, e, option) -> Instr.Declare (v, mapt t acc, e, option)
-    | Instr.AllocArray (v, t, e, opt) -> Instr.AllocArray (v, mapt t acc, e, opt)
-    | Instr.AllocRecord (v, t, li) -> Instr.AllocRecord (v, mapt t acc, li)
+    | Instr.AllocArray (v, t, e, opt, optd) -> Instr.AllocArray (v, mapt t acc, e, opt, optd)
+    | Instr.AllocRecord (v, t, li, opt) -> Instr.AllocRecord (v, mapt t acc, li, opt)
     | x -> x
   in Instr.fixa (Instr.Fixed.annot i) i0
 

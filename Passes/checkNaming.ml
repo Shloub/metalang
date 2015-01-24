@@ -171,7 +171,7 @@ let rec check_instr funname acc instr =
   | Instr.Comment _ -> acc
   | Instr.Return e ->
     let () = check_expr funname acc e in acc
-  | Instr.AllocArray (v, t, e, liopt) ->
+  | Instr.AllocArray (v, t, e, liopt, _) ->
     let () = check_expr funname acc e in
     let acc = match liopt with
       | None -> acc
@@ -180,7 +180,7 @@ let rec check_instr funname acc instr =
         let acc = add_param_in_acc funname varname acc loc in
         List.fold_left (check_instr funname) acc li
     in add_array_in_acc funname v acc loc
-  | Instr.AllocRecord (varname, t, li) ->
+  | Instr.AllocRecord (varname, t, li, _) ->
     let () = check_name funname acc varname loc in
     let () = List.iter (fun (_field, expr) ->
       check_expr funname acc expr) li
@@ -206,7 +206,7 @@ let rec check_instr funname acc instr =
   | Instr.StdinSep -> acc
   | Instr.Unquote e ->
     let () = check_expr funname acc e in acc
-  | Instr.Untuple (li, e) ->
+  | Instr.Untuple (li, e, _) ->
     let () = check_expr funname acc e in
     List.fold_left (fun acc (_, name) ->
       add_local_in_acc funname name acc loc) acc li

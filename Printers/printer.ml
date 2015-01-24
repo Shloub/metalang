@@ -388,11 +388,11 @@ class printer = object(self)
       self#whileloop f expr li
     | Instr.Comment str -> self#comment f str
     | Instr.Return e -> self#return f e
-    | Instr.AllocRecord (name, t, el) ->
+    | Instr.AllocRecord (name, t, el, _) ->
       self#allocrecord f name t el
-    | Instr.AllocArray (binding, type_, len, None) ->
+    | Instr.AllocArray (binding, type_, len, None, _) ->
       self#allocarray f binding type_ len
-    | Instr.AllocArray (binding, type_, len, Some ( (b, l) )) ->
+    | Instr.AllocArray (binding, type_, len, Some ( (b, l) ), _) ->
       self#allocarray_lambda f binding type_ len b l
     | Instr.If (e, ifcase, elsecase) ->
       self#if_ f e ifcase elsecase
@@ -401,7 +401,7 @@ class printer = object(self)
     | Instr.Read (t, mutable_) -> self#read f t mutable_
     | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
     | Instr.Print (t, expr) -> self#print f t expr
-    | Instr.Untuple (li, e) -> self#untuple f li e
+    | Instr.Untuple (li, e, _) -> self#untuple f li e
 
   method untuple f li e =
     Format.fprintf f "(%a) = %a"

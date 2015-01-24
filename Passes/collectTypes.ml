@@ -68,8 +68,8 @@ let collect_instr acc i =
   let f acc i =
     match Instr.unfix i with
     | Instr.Declare (_, ty, _, _) -> collect_type acc ty
-    | Instr.AllocRecord (_, ty, _) -> collect_type acc ty
-    | Instr.AllocArray (_, ty, _, _) -> collect_type acc ty
+    | Instr.AllocRecord (_, ty, _, _) -> collect_type acc ty
+    | Instr.AllocArray (_, ty, _, _, _) -> collect_type acc ty
     | _ -> acc
   in
   let acc = Instr.Writer.Deep.fold f acc i

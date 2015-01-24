@@ -586,7 +586,7 @@ let rec collect_contraintes_instructions env instructions
         {env with
           contraintes = (ty_ret, contrainte_expr) ::
             env.contraintes}
-      | Instr.AllocArray (var, ty, e, instrsopt) ->
+      | Instr.AllocArray (var, ty, e, instrsopt, _) ->
         let ty = expand env ty loc in
         let env, ty = ty2typeContrainte env ty loc in
         let contrainte_integer = ref (Typed (Type.integer, loc) ) in
@@ -608,7 +608,7 @@ let rec collect_contraintes_instructions env instructions
             (ref (PreTyped (Type.Array ty, loc)))
             env.locales}
         in env
-      | Instr.AllocRecord (var, ty, li) ->
+      | Instr.AllocRecord (var, ty, li, _) ->
         let ty = expand env ty loc in
         let li_type = match li with
           | (name, _) :: _ ->
@@ -680,8 +680,7 @@ let rec collect_contraintes_instructions env instructions
         {env with
           contraintes = (contrainte_ty, contrainte_expr) ::
             env.contraintes}
-
-      | Instr.Untuple (li, e) ->
+      | Instr.Untuple (li, e, _) ->
         let env, contrainte_expr = collect_contraintes_expr env e in
         let env, li_contraintes =
           List.fold_left_map (fun env (ty, variable) ->
@@ -769,19 +768,19 @@ let map_ty env prog =
     match Instr.unfix instr with
     | Instr.Declare (p1, ty, p2, opt) ->
       let ty = map_ty ty in Instr.fixa a (Instr.Declare (p1, ty, p2, opt) )
-    | Instr.AllocArray (p1, ty, p2, p3) ->
-      let ty = map_ty ty in Instr.fixa a (Instr.AllocArray (p1, ty, p2, p3) )
-    | Instr.AllocRecord (p1, ty, p2) ->
-      let ty = map_ty ty in Instr.fixa a (Instr.AllocRecord (p1, ty, p2) )
+    | Instr.AllocArray (p1, ty, p2, p3, opt) ->
+      let ty = map_ty ty in Instr.fixa a (Instr.AllocArray (p1, ty, p2, p3, opt) )
+    | Instr.AllocRecord (p1, ty, p2, opt) ->
+      let ty = map_ty ty in Instr.fixa a (Instr.AllocRecord (p1, ty, p2, opt) )
     | Instr.Print (ty, p1) ->
       let ty = map_ty ty in Instr.fixa a (Instr.Print (ty, p1) )
     | Instr.Read (ty, p1) ->
       let ty = map_ty ty in Instr.fixa a (Instr.Read (ty, p1) )
     | Instr.DeclRead (ty, p1, opt) ->
       let ty = map_ty ty in Instr.fixa a (Instr.DeclRead (ty, p1, opt) )
-    | Instr.Untuple (li, e) ->
+    | Instr.Untuple (li, e, opt) ->
       let li = List.map (fun (t, name) -> map_ty t, name) li
-      in Instr.fixa a (Instr.Untuple (li, e) )
+      in Instr.fixa a (Instr.Untuple (li, e, opt) )
     | _ -> instr
   in
   let map_instrs instrs =

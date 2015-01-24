@@ -45,7 +45,7 @@ let rec check ty loc =
 let collectDefReturn env li =
   let f () i =
     match Instr.unfix i with
-    | Instr.AllocArray (_, ty, _, _)
+    | Instr.AllocArray (_, ty, _, _, _)
     | Instr.Declare (_, ty, _, _) ->
       check ty (Ast.PosMap.get (Instr.Fixed.annot i))
     | Instr.Return e ->

@@ -72,9 +72,9 @@ let mapret tab index instructions =
      instructions
 
 let expand i = match Instr.unfix i with
-  | Instr.AllocArray (b,t, len, Some (b2, instrs)) ->
+  | Instr.AllocArray (b,t, len, Some (b2, instrs), opt) ->
     let annot = Instr.Fixed.annot i in
-    [ Instr.fixa annot (Instr.AllocArray (b, t, len, None) )
+    [ Instr.fixa annot (Instr.AllocArray (b, t, len, None, opt) )
     |> locati (PosMap.get (Instr.Fixed.annot i))
     ;
       Instr.loop b2 (Expr.integer 0)
