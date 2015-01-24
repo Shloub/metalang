@@ -1,10 +1,10 @@
 Langage & Compilateur :
   cleaner un peu la lib standard
+  ruby : utiliser [*1..n].map pour initialiser un tableau
   types abstract (pour ouvrir un fichier par exemple)
   commentaires indentation
   type option
   une lib standard avec des listes et des arbres
-  inline fonctions
 
 outils :
   un meilleur mode vim
@@ -15,9 +15,6 @@ outils :
 autres printers :
   f#
   vb.net
-  perl
-  ada
-  sql
 
 portage windows
 
