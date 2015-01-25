@@ -23,6 +23,7 @@ macro int sqrt_(int c)
   cpp do "(int)sqrt($c)"
   objc do "(int)sqrt($c)"
   ada do "Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float($c))))"
+  vb do "Int(Math.Sqrt($c))"
   * do "sqrt($c)"
 end
 
@@ -47,6 +48,7 @@ macro char char_of_int(int c)
   cpp do "(char)($c)"
   objc do "(char)($c)"
   ada do "Character'Val($c)"
+  vb do "Chr($c)"
   *  do "$c"
 end
 
@@ -65,6 +67,7 @@ macro int int_of_char(char c)
   cpp do "(int)($c)"
   objc do "(int)($c)"
   ada do "Character'Pos($c)"
+  vb do "Asc($c)"
   *  do "$c"
 end
 

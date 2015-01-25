@@ -139,44 +139,53 @@ public static int readInt(){
       (print_option self#main) prog.Prog.main
 
   method print f t expr =
-    Format.fprintf f "@[Console.Write(%a);@]" self#expr expr
+    Format.fprintf f "@[Console.Write(%a)%a@]" self#expr expr self#separator ()
 
   method main f main =
     Format.fprintf f "public static void Main(String[] args)@\n@[<v 2>{@\n%a@]@\n}@\n"
       self#instructions main
 
   method stdin_sep f  =
-    Format.fprintf f "@[stdin_sep();@]"
+    Format.fprintf f "@[stdin_sep()%a@]" self#separator ()
 
   method length f tab =
     Format.fprintf f "%a.Length" self#mutable_ tab
 
+  method concat_operator f () = Format.fprintf f "+"
+
   method multi_print f format exprs =
-      Format.fprintf f "@[<h>Console.Write(\"\" + %a);@]" (* TODO faire un truc si un des deux premier opérende est une chaine*)
+      Format.fprintf f "@[<h>Console.Write(\"\" %a %a)%a@]" (* TODO faire un truc si un des deux premier opérende est une chaine*)
+	self#concat_operator ()
         (print_list
            (fun f (t, e) ->
              if self#nop (Expr.unfix e) then self#expr f e
              else self#printp f e)
-           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a + %a" f1 e1 f2 e2)) exprs
+           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a %a %a"
+	     f1 e1
+	     self#concat_operator ()
+	     f2 e2)) exprs
+	self#separator ()
 
   method read f t m =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[<h>%a = readInt();@]"
-        self#mutable_ m
-    | Type.Char -> Format.fprintf f "@[<h>%a = readChar();@]"
-      self#mutable_ m
+      Format.fprintf f "@[<h>%a = readInt()%a@]"
+        self#mutable_ m self#separator ()
+    | Type.Char -> Format.fprintf f "@[<h>%a = readChar()%a@]"
+      self#mutable_ m self#separator ()
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
   method read_decl f t v =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[<h>%a %a = readInt();@]"
+      Format.fprintf f "@[<h>%a %a = readInt()%a@]"
         self#ptype t
         self#binding v
-    | Type.Char -> Format.fprintf f "@[<h>%a %a = readChar();@]"
+	self#separator ()
+    | Type.Char -> Format.fprintf f "@[<h>%a %a = readChar()%a@]"
         self#ptype t
         self#binding v
+      self#separator ()
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
 
@@ -187,7 +196,8 @@ public static int readInt(){
           self#binding name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
+               Format.fprintf t "public %a %a%a" self#ptype type_ self#binding name
+		 self#separator ()
              )
              (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
           ) li

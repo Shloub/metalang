@@ -164,10 +164,13 @@ TMPFILES	:=\
 	$(addsuffix .php, $(TESTS)) \
 	$(addsuffix .php.out, $(TESTS)) \
 	$(addsuffix .exe, $(TESTS)) \
+	$(addsuffix .exeVB, $(TESTS)) \
 	$(addsuffix .exe.out, $(TESTS)) \
+	$(addsuffix .exeVB.out, $(TESTS)) \
 	$(addsuffix .class, $(TESTS)) \
 	$(addsuffix .class.out, $(TESTS)) \
 	$(addsuffix .cs, $(TESTS)) \
+	$(addsuffix .vb, $(TESTS)) \
 	$(addsuffix .cl, $(TESTS)) \
 	$(addsuffix .cl.out, $(TESTS)) \
 	$(addsuffix .rb, $(TESTS)) \
@@ -239,6 +242,13 @@ out/%.cs : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	./metalang -o out -lang cs $< < "$(basename $<).compiler_input" || exit 1; \
 	else \
 	 ./metalang -quiet -o out -lang cs $< || exit 1; \
+	fi
+
+out/%.vb : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang vb $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang vb $< || exit 1; \
 	fi
 
 out/%.pas : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
@@ -373,6 +383,9 @@ out/%.class : out/%.java
 out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
+out/%.exeVB : out/%.vb
+	@vbnc2 $< -out:$@ || exit 1
+
 out/%.fun.ml.native : out/%.fun.ml
 	@ocamlopt -w +A -g out/$(basename $*).fun.ml -o out/$(basename $*).fun.ml.native || exit 1
 	@rm out/$(basename $*).fun.cmx || exit 0
@@ -444,10 +457,13 @@ out/%.rb.out : out/%.rb
 out/%.exe.out : out/%.exe
 	mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
+out/%.exeVB.out : out/%.exeVB
+	mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
+
 out/%.rkt.out : out/%.rkt
 	racket $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out
+out/%.test : out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -517,6 +533,20 @@ out/%.test_rb_ml : out/%.rb.out out/%.ml.out
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+out/%.test_vb_ml : out/%.exeVB.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
 testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
 
 testPerl : $(addsuffix .test_pl_ml, $(TESTS))
@@ -524,6 +554,8 @@ testPerl : $(addsuffix .test_pl_ml, $(TESTS))
 testAda : $(addsuffix .test_adb_ml, $(TESTS))
 
 testRuby : $(addsuffix .test_rb_ml, $(TESTS))
+
+testVB : compileVB $(addsuffix .test_vb_ml, $(TESTS))
 
 %.sources: $(addsuffix .%, $(TESTS))
 	@echo "$(green)$@ OK$(reset) $*"
@@ -608,6 +640,11 @@ compileCS: $(COMPILECSDEPS)
 	@echo "$(green)CSHARP COMPILATION OK$(reset)"
 	@echo "ok" > $@
 
+COMPILECSDEPS := $(addsuffix .exeVB, $(TESTS))
+compileVB: $(COMPILECSDEPS)
+	@echo "$(green)VB.NET COMPILATION OK$(reset)"
+	@echo "ok" > $@
+
 EXECCSDEPS := $(addsuffix .exe.out, $(TESTS))
 execCS: $(EXECCSDEPS)
 	@echo "$(green)@$ OK$(reset)"
@@ -663,7 +700,7 @@ execPL: $(EXECPLDEPS)
 	@echo "$(green)@$ OK$(reset)"
 	@echo "ok" > $@
 
-compileAll: metalang allsources compilePAS compileADA compileML compileFUNML compilePAS compileC compileCC compileCS compileJAVA compileOBJC
+compileAll: metalang allsources compilePAS compileADA compileML compileFUNML compilePAS compileC compileCC compileCS compileVB compileJAVA compileOBJC
 	@echo "$(green)ALL COMPILATION OK$(reset)"
 	@echo "ok" > $@
 

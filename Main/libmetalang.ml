@@ -65,6 +65,7 @@ let keywords lang=
   | "rkt" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
   | "php" -> "sqrt" :: "log10" :: li
   | "m" -> "log10" :: "id" :: li
+  | "vb" -> "stop" :: li
   | _ -> li
 
 let conf_rename lang prog =
@@ -252,6 +253,7 @@ let languages, printers =
     "adb",     (true, clike_passes)   => new AdaPrinter.adaPrinter ;
     "cc",      (true, clike_passes)   => new CppPrinter.cppPrinter ;
     "cs",      (true, clike_passes)   => new CsharpPrinter.csharpPrinter ;
+    "vb",      (false, clike_passes)   => new VbDotNetPrinter.vbDotNetPrinter ;
     "java",    (true, clike_passes)   => new JavaPrinter.javaPrinter ;
     "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
     "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
@@ -433,6 +435,7 @@ enum @target_language
   LANG_Py
   LANG_Rb
   LANG_Rkt
+  LANG_Vb
   LANG_Metalang_parsed
 end
 def @target_language current_language ()

@@ -134,7 +134,7 @@ class printer = object(self)
 
   method binding f i = Format.fprintf f "%s" i
   method funname f i = Format.fprintf f "%s" i
-  method string f i = Format.fprintf f "%S" i (* TODO faire mieux *)
+  method string f i = Format.fprintf f "%S" i
 
   method declaration f var t e =
     Format.fprintf f "@[<hov>def %a@ %a@ =@ %a@]"
@@ -143,7 +143,7 @@ class printer = object(self)
       self#expr e
 
   method affect f mutable_ (expr : 'lex Expr.t) =
-    Format.fprintf f "@[<hov>%a@ =@ %a;@]" self#mutable_ mutable_ self#expr expr
+    Format.fprintf f "@[<hov>%a@ =@ %a%a@]" self#mutable_ mutable_ self#expr expr self#separator ()
 
   method bloc f li = Format.fprintf f "@[<vov 2>do@\n%a@]@\nend"
     (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
@@ -284,7 +284,7 @@ class printer = object(self)
     | None ->
       Format.fprintf
         f
-        "@[<hov>%a(%a);@]"
+        "@[<hov>%a(%a)%a@]"
         self#funname var
         (print_list
            self#expr
@@ -292,6 +292,10 @@ class printer = object(self)
              Format.fprintf t "%a,@ %a" f1 e1 f2 e2
            )
         ) li
+	self#separator ()
+
+  method separator f () = Format.fprintf f ";"
+
 
   method apply f var li =
     match BindingMap.find_opt var macros with
