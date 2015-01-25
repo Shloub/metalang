@@ -4,8 +4,10 @@
 def int result(int len, array<int> tab)
   def array<bool> tab2[len] with i do return false end
   for i1 = 0 to len - 1 do
+    print tab[i1] print " "
     tab2[tab[i1]] = true
   end
+  print "\n"
   for i2 = 0 to len - 1 do
     if ! tab2[i2] then
       return i2
@@ -19,5 +21,5 @@ main
 	print len
 	print "\n"
   def array<int> tab = read_int_line(len);
-	print int result(len, tab)
+	print int result(len, tab) print "\n"
 end
