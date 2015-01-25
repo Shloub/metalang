@@ -4,8 +4,8 @@ def int eratostene(array<int> t, int max)
 	for i = 2 to max - 1 do
 		if t[i] == i then
 			n ++
+if max / i > i then
 			def j = i * i
-			if j / i == i then /* overflow test */
 				while j < max && j > 0 do
 					t[j] = 0
 					j += i
