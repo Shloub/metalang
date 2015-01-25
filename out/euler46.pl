@@ -7,10 +7,8 @@ sub eratostene{
   foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
       $n = $n + 1;
-      my $j = $i * $i;
-      if (int(($j) / ($i)) eq $i) {
-        # overflow test 
-        
+      if (int(($max0) / ($i)) > $i) {
+        my $j = $i * $i;
         while ($j < $max0 && $j > 0)
         {
           $t->[$j] = 0;

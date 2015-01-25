@@ -22,8 +22,10 @@ func result(len int, tab []int) int{
     tab2[i] = false;
   }
   for i1 := 0 ; i1 <= len - 1; i1++ {
-    tab2[tab[i1]] = true;
+    fmt.Printf("%d ", tab[i1]);
+      tab2[tab[i1]] = true;
   }
+  fmt.Printf("\n");
   for i2 := 0 ; i2 <= len - 1; i2++ {
     if !tab2[i2] {
         return i2
@@ -44,6 +46,6 @@ func main() {
     fmt.Fscanf(reader, "%d", &tab[e])
       skip()
   }
-  fmt.Printf("%d", result(len, tab));
+  fmt.Printf("%d\n", result(len, tab));
 }
 

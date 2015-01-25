@@ -17,19 +17,24 @@ let result len tab =
   let rec k i1 =
     (if (i1 <= m)
      then (
+            (Printf.printf "%d " tab.(i1));
             tab2.(tab.(i1)) <- true;
             (k (i1 + 1))
             )
      
-     else let h = 0 in
-     let j = (len - 1) in
-     let rec g i2 =
-       (if (i2 <= j)
-        then (if (not tab2.(i2))
-              then i2
-              else (g (i2 + 1)))
-        else (- 1)) in
-       (g h)) in
+     else (
+            (Printf.printf "\n" );
+            let h = 0 in
+            let j = (len - 1) in
+            let rec g i2 =
+              (if (i2 <= j)
+               then (if (not tab2.(i2))
+                     then i2
+                     else (g (i2 + 1)))
+               else (- 1)) in
+              (g h)
+            )
+     ) in
     (k l)
 let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
@@ -42,7 +47,10 @@ let main =
                  ((), o)
                  )
     )) ()) in
-    (Printf.printf "%d" (result len tab))
+    (
+      (Printf.printf "%d\n" (result len tab))
+      )
+    
     )
   
 

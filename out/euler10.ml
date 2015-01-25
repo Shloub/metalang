@@ -4,16 +4,15 @@ let eratostene t max0 =
     if t.(i) = i then
       begin
         sum := (!sum) + i;
-        let j = ref( i * i ) in
-        (*
-			detect overflow
-			*)
-        if (!j) / i = i then
-          while (!j) < max0 && (!j) > 0
-          do
-              t.((!j)) <- 0;
-              j := (!j) + i
-          done
+        if max0 / i > i then
+          begin
+            let j = ref( i * i ) in
+            while (!j) < max0 && (!j) > 0
+            do
+                t.((!j)) <- 0;
+                j := (!j) + i
+            done
+          end
       end
   done;
   (!sum)

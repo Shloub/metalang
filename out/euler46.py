@@ -4,9 +4,8 @@ def eratostene( t, max0 ):
     for i in range(2, max0):
       if t[i] == i:
         n += 1
-        j = i * i;
-        if math.trunc(j / i) == i:
-          """ overflow test """
+        if math.trunc(max0 / i) > i:
+          j = i * i;
           while (j < max0 and j > 0):
             t[j] = 0;
             j += i

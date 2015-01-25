@@ -6,15 +6,14 @@ int eratostene(std::vector<int> * t, int max0){
     if (t->at(i) == i)
   {
     sum += i;
-    int j = i * i;
-    /*
-			detect overflow
-			*/
-    if (j / i == i)
-      while (j < max0 && j > 0)
+    if (max0 / i > i)
     {
-      t->at(j) = 0;
-      j += i;
+      int j = i * i;
+      while (j < max0 && j > 0)
+      {
+        t->at(j) = 0;
+        j += i;
+      }
     }
   }
   return sum;

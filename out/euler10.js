@@ -5,15 +5,14 @@ function eratostene(t, max0){
     if (t[i] == i)
   {
     sum += i;
-    var j = i * i;
-    /*
-			detect overflow
-			*/
-    if (~~(j / i) == i)
-      while (j < max0 && j > 0)
+    if (~~(max0 / i) > i)
     {
-      t[j] = 0;
-      j += i;
+      var j = i * i;
+      while (j < max0 && j > 0)
+      {
+        t[j] = 0;
+        j += i;
+      }
     }
   }
   return sum;

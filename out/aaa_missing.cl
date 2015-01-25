@@ -42,8 +42,14 @@
   (do
     ((i1 0 (+ 1 i1)))
     ((> i1 (- len 1)))
-    (setf (aref tab2 (aref tab i1)) t)
+    (progn
+      (princ (aref tab i1))
+      (princ " ")
+      (setf (aref tab2 (aref tab i1)) t)
+    )
   )
+  (princ "
+")
   (do
     ((i2 0 (+ 1 i2)))
     ((> i2 (- len 1)))
@@ -72,6 +78,8 @@
                   )))
                 ))))
       (princ (result len tab))
+      (princ "
+")
       ))))
 
 

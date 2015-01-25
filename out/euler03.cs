@@ -8,17 +8,20 @@ public class euler03
     int maximum = 1;
     int b0 = 2;
     int a = 408464633;
+    int sqrtia = (int)Math.Sqrt(a);
     while (a != 1)
     {
       int b = b0;
       bool found = false;
-      while (b * b < a)
+      while (b <= sqrtia)
       {
         if ((a % b) == 0)
         {
           a /= b;
           b0 = b;
           b = a;
+          int e = (int)Math.Sqrt(a);
+          sqrtia = e;
           found = true;
         }
         b ++;

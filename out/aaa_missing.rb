@@ -12,8 +12,10 @@ def result( len, tab )
       tab2[i] = false;
     end
     for i1 in (0 ..  len - 1) do
+      printf "%d ", tab[i1]
       tab2[tab[i1]] = true;
     end
+    print "\n";
     for i2 in (0 ..  len - 1) do
       if not(tab2[i2]) then
         return (i2);
@@ -25,5 +27,5 @@ end
 len = STDIN.readline.to_i(10)
 printf "%d\n", len
 tab = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
-printf "%d", result(len, tab)
+printf "%d\n", result(len, tab)
 

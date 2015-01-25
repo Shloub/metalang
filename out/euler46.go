@@ -5,9 +5,8 @@ func eratostene(t []int, max0 int) int{
   for i := 2 ; i <= max0 - 1; i++ {
     if t[i] == i {
         n ++;
-          var j int = i * i
-          if j / i == i {
-            /* overflow test */
+          if max0 / i > i {
+            var j int = i * i
               for j < max0 && j > 0{
                 t[j] = 0;
                 j += i;

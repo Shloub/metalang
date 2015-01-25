@@ -14,11 +14,10 @@ begin
     then
       begin
         n := n + 1;
-        j := i * i;
-        if (j Div i) = i
+        if (max0 Div i) > i
         then
           begin
-            { overflow test }
+            j := i * i;
             while (j < max0) and (j > 0) do
             begin
               t[j] := 0;

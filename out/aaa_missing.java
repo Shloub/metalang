@@ -12,7 +12,11 @@ public class aaa_missing
     for (int i = 0 ; i < len; i++)
       tab2[i] = false;
     for (int i1 = 0 ; i1 < len; i1++)
+    {
+      System.out.printf("%d ", tab[i1]);
       tab2[tab[i1]] = true;
+    }
+    System.out.print("\n");
     for (int i2 = 0 ; i2 < len; i2++)
       if (!tab2[i2])
       return i2;
@@ -43,7 +47,7 @@ public class aaa_missing
       }
       scanner.findWithinHorizon("[\n\r ]*", 1);
     }
-    System.out.printf("%d", result(len, tab));
+    System.out.printf("%d\n", result(len, tab));
   }
   
 }

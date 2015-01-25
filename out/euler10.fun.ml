@@ -17,23 +17,23 @@ let eratostene t max0 =
     (if (i <= e)
      then let sum = (if (t.(i) = i)
                      then let sum = (sum + i) in
-                     let j = (i * i) in
-                     (* 
-			detect overflow
-			 *)
-                     let j = (if ((j / i) = i)
-                              then let rec c j =
-                                     (if ((j < max0) && (j > 0))
-                                      then (
-                                             t.(j) <- 0;
-                                             let j = (j + i) in
-                                             (c j)
-                                             )
-                                      
-                                      else j) in
-                                     (c j)
-                              else j) in
-                     sum
+                     (
+                       (if ((max0 / i) > i)
+                        then let j = (i * i) in
+                        let rec c j =
+                          (if ((j < max0) && (j > 0))
+                           then (
+                                  t.(j) <- 0;
+                                  let j = (j + i) in
+                                  (c j)
+                                  )
+                           
+                           else ()) in
+                          (c j)
+                        else ());
+                       sum
+                       )
+                     
                      else sum) in
      (a (i + 1) sum)
      else sum) in

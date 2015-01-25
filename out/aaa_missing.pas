@@ -80,8 +80,11 @@ begin
   end;
   for i1 := 0 to  len - 1 do
   begin
+    Write(tab[i1]);
+    Write(' ');
     tab2[tab[i1]] := true;
   end;
+  Write(''#10'');
   for i2 := 0 to  len - 1 do
   begin
     if not tab2[i2]
@@ -112,6 +115,7 @@ begin
     skip();
   end;
   Write(result(len, tab));
+  Write(''#10'');
 end.
 
 

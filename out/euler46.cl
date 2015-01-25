@@ -19,19 +19,18 @@
         (= (aref t0 i) i)
         (progn
           (setq n ( + n 1))
-          (let ((j (* i i)))
-            (if
-              (= (quotient j i) i)
-              (progn
-                #| overflow test |#
+          (if
+            (> (quotient max0 i) i)
+            (progn
+              (let ((j (* i i)))
                 (loop while (and (< j max0) (> j 0))
                 do (progn
                      (setf (aref t0 j) 0)
                      (setq j ( + j i))
                      )
                 )
-              ))
-          )))
+              )))
+        ))
     )
     (return-from eratostene n)
   )))

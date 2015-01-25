@@ -14,13 +14,9 @@ begin
     if t(i) = i
     then
       sum := sum + i;
-      j := i * i;
-      --
-      --			detect overflow
-      --			
-      
-      if j / i = i
+      if max0 / i > i
       then
+        j := i * i;
         while j < max0 and then j > (0) loop
           t(j) := (0);
           j := j + i;

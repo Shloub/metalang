@@ -33,7 +33,11 @@ function result(len, tab){
   for (var i = 0 ; i <= len - 1; i++)
     tab2[i] = 0;
   for (var i1 = 0 ; i1 <= len - 1; i1++)
+  {
+    util.print(tab[i1], " ");
     tab2[tab[i1]] = 1;
+  }
+  util.print("\n");
   for (var i2 = 0 ; i2 <= len - 1; i2++)
     if (!tab2[i2])
     return i2;
@@ -50,5 +54,5 @@ for (var e = 0 ; e <= len - 1; e++)
   tab[e]=read_int_();
   stdinsep();
 }
-util.print(result(len, tab));
+util.print(result(len, tab), "\n");
 

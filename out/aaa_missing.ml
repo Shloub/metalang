@@ -8,8 +8,10 @@ let result len tab =
   let tab2 = Array.init len (fun _i ->
     false) in
   for i1 = 0 to len - 1 do
+    Printf.printf "%d " tab.(i1);
     tab2.(tab.(i1)) <- true
   done;
+  Printf.printf "\n";
   for i2 = 0 to len - 1 do
     if not tab2.(i2) then
       raise (Found_1(i2))
@@ -24,6 +26,6 @@ begin
   let tab = Array.init len (fun _d ->
     let e = Scanf.scanf "%d " (fun v_0 -> v_0) in
     e) in
-  Printf.printf "%d" (result len tab)
+  Printf.printf "%d\n" (result len tab)
 end
  

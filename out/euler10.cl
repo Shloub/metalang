@@ -19,19 +19,18 @@
         (= (aref t0 i) i)
         (progn
           (setq sum ( + sum i))
-          (let ((j (* i i)))
-            #|
-			detect overflow
-			|#
-            (if
-              (= (quotient j i) i)
-              (loop while (and (< j max0) (> j 0))
+          (if
+            (> (quotient max0 i) i)
+            (progn
+              (let ((j (* i i)))
+                (loop while (and (< j max0) (> j 0))
                 do (progn
                      (setf (aref t0 j) 0)
                      (setq j ( + j i))
                      )
-                ))
-          )))
+                )
+              )))
+        ))
     )
     (return-from eratostene sum)
   )))

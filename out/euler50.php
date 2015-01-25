@@ -5,10 +5,9 @@ function eratostene(&$t, $max0){
     if ($t[$i] == $i)
   {
     $n ++;
-    $j = $i * $i;
-    if (intval($j / $i) == $i)
+    if (intval($max0 / $i) > $i)
     {
-      /* overflow test */
+      $j = $i * $i;
       while ($j < $max0 && $j > 0)
       {
         $t[$j] = 0;

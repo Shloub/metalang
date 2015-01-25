@@ -17,21 +17,23 @@ let eratostene t max0 =
     (if (i <= h)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
-                   let j = (i * i) in
-                   let j = (if ((j / i) = i)
-                            then (*  overflow test  *)
-                            let rec f j =
-                              (if ((j < max0) && (j > 0))
-                               then (
-                                      t.(j) <- 0;
-                                      let j = (j + i) in
-                                      (f j)
-                                      )
-                               
-                               else j) in
-                              (f j)
-                            else j) in
-                   n
+                   (
+                     (if ((max0 / i) > i)
+                      then let j = (i * i) in
+                      let rec f j =
+                        (if ((j < max0) && (j > 0))
+                         then (
+                                t.(j) <- 0;
+                                let j = (j + i) in
+                                (f j)
+                                )
+                         
+                         else ()) in
+                        (f j)
+                      else ());
+                     n
+                     )
+                   
                    else n) in
      (d (i + 1) n)
      else n) in

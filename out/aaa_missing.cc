@@ -8,7 +8,11 @@ int result(int len, std::vector<int> * tab){
   for (int i = 0 ; i < len; i++)
     tab2->at(i) = false;
   for (int i1 = 0 ; i1 < len; i1++)
+  {
+    std::cout << tab->at(i1) << " ";
     tab2->at(tab->at(i1)) = true;
+  }
+  std::cout << "\n";
   for (int i2 = 0 ; i2 < len; i2++)
     if (!tab2->at(i2))
     return i2;
@@ -26,7 +30,7 @@ int main(){
   {
     std::cin >> tab->at(e) >> std::skipws;
   }
-  std::cout << result(len, tab);
+  std::cout << result(len, tab) << "\n";
   return 0;
 }
 

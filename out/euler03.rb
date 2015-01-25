@@ -6,14 +6,17 @@ end
 maximum = 1
 b0 = 2
 a = 408464633
+sqrtia = Math.sqrt(a).to_i
 while a != 1 do
   b = b0
   found = false
-  while b * b < a do
+  while b <= sqrtia do
     if (mod(a, b)) == 0 then
       a = (a.to_f / b).to_i
       b0 = b;
       b = a;
+      e = Math.sqrt(a).to_i
+      sqrtia = e;
       found = true;
     end
     b += 1

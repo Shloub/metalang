@@ -14,13 +14,10 @@ begin
     then
       begin
         sum := sum + i;
-        j := i * i;
-        {
-			detect overflow
-			}
-        if (j Div i) = i
+        if (max0 Div i) > i
         then
           begin
+            j := i * i;
             while (j < max0) and (j > 0) do
             begin
               t[j] := 0;

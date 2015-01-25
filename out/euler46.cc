@@ -6,10 +6,9 @@ int eratostene(std::vector<int> * t, int max0){
     if (t->at(i) == i)
   {
     n ++;
-    int j = i * i;
-    if (j / i == i)
+    if (max0 / i > i)
     {
-      /* overflow test */
+      int j = i * i;
       while (j < max0 && j > 0)
       {
         t->at(j) = 0;

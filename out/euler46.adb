@@ -14,11 +14,9 @@ begin
     if t(i) = i
     then
       n := n + (1);
-      j := i * i;
-      if j / i = i
+      if max0 / i > i
       then
-        -- overflow test 
-        
+        j := i * i;
         while j < max0 and then j > (0) loop
           t(j) := (0);
           j := j + i;

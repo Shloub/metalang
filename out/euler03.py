@@ -4,14 +4,17 @@ def mod(x, y):
 maximum = 1;
 b0 = 2;
 a = 408464633;
+sqrtia = math.floor(math.sqrt(a));
 while (a != 1):
   b = b0;
   found = False;
-  while (b * b < a):
+  while (b <= sqrtia):
     if (mod(a, b)) == 0:
       a = math.trunc(a / b)
       b0 = b;
       b = a;
+      e = math.floor(math.sqrt(a));
+      sqrtia = e;
       found = True;
     b += 1
   if not (found):

@@ -19,18 +19,22 @@
   (letrec ([g (lambda (i1) 
                 (if (<= i1 j)
                 (block
+                  (map display (list (vector-ref tab i1) " "))
                   (vector-set! tab2 (vector-ref tab i1) #t)
                   (g (+ i1 1))
                   )
-                (let ([e 0])
-                (let ([f (- len 1)])
-                (letrec ([d (lambda (i2) 
-                              (if (<= i2 f)
-                              (if (not (vector-ref tab2 i2))
-                              i2
-                              (d (+ i2 1)))
-                              (- 1)))])
-                (d e))))))])
+                (block
+                  (display "\n")
+                  (let ([e 0])
+                  (let ([f (- len 1)])
+                  (letrec ([d (lambda (i2) 
+                                (if (<= i2 f)
+                                (if (not (vector-ref tab2 i2))
+                                i2
+                                (d (+ i2 1)))
+                                (- 1)))])
+                  (d e))))
+                )))])
   (g h)))))
 )
 (define main
@@ -38,7 +42,9 @@
   (block
     (map display (list len "\n"))
     (let ([tab (list->vector (map string->number (regexp-split " " (read-line))))])
-    (display (result len tab)))
+    (block
+      (map display (list (result len tab) "\n"))
+      ))
     ))
 )
 

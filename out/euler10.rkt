@@ -18,22 +18,21 @@
                 (if (<= i e)
                 (let ([sum (if (eq? (vector-ref t0 i) i)
                            (let ([sum (+ sum i)])
-                           (let ([j (* i i)])
-                           ;
-                           ;			detect overflow
-                           ;			
-                           (let ([j (if (eq? (quotient j i) i)
-                                    (letrec ([c (lambda (j) 
-                                                  (if (and (< j max0) (> j 0))
-                                                  (block
-                                                    (vector-set! t0 j 0)
-                                                    (let ([j (+ j i)])
-                                                    (c j))
-                                                    )
-                                                  j))])
-                                    (c j))
-                           j)])
-                           sum)))
+                           (block
+                             (if (> (quotient max0 i) i)
+                             (let ([j (* i i)])
+                             (letrec ([c (lambda (j) 
+                                           (if (and (< j max0) (> j 0))
+                                           (block
+                                             (vector-set! t0 j 0)
+                                             (let ([j (+ j i)])
+                                             (c j))
+                                             )
+                                           '()))])
+                             (c j)))
+                             '())
+                           sum
+                           ))
                 sum)])
                 (a (+ i 1) sum))
                 sum))])

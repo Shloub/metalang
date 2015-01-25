@@ -5,10 +5,9 @@ function eratostene(t, max0){
     if (t[i] == i)
   {
     n ++;
-    var j = i * i;
-    if (~~(j / i) == i)
+    if (~~(max0 / i) > i)
     {
-      /* overflow test */
+      var j = i * i;
       while (j < max0 && j > 0)
       {
         t[j] = 0;

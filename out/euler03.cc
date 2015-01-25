@@ -1,21 +1,25 @@
 #include <iostream>
 #include <vector>
+#include<cmath>
 
 int main(){
   int maximum = 1;
   int b0 = 2;
   int a = 408464633;
+  int sqrtia = (int)sqrt(a);
   while (a != 1)
   {
     int b = b0;
     bool found = false;
-    while (b * b < a)
+    while (b <= sqrtia)
     {
       if ((a % b) == 0)
       {
         a /= b;
         b0 = b;
         b = a;
+        int e = (int)sqrt(a);
+        sqrtia = e;
         found = true;
       }
       b ++;
