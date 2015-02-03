@@ -145,7 +145,7 @@ class printer = object(self)
   method affect f mutable_ (expr : 'lex Expr.t) =
     Format.fprintf f "@[<hov>%a@ =@ %a%a@]" self#mutable_ mutable_ self#expr expr self#separator ()
 
-  method bloc f li = Format.fprintf f "@[<vov 2>do@\n%a@]@\nend"
+  method bloc f li = Format.fprintf f "@[<v>do@\n%a@]@\nend"
     (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
       "%a@\n%a" f1 e1 f2 e2)) li
 
