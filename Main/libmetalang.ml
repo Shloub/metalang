@@ -153,28 +153,6 @@ let clike_passes prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
 
-let perl_passes prog =
-  prog |> default_passes
-  |> snd |> Typer.process
-  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> snd |> Typer.process
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-
-let php_passes prog =
-  prog |> default_passes
-  |> (fun (a, b) ->
-    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
-  |> snd |> Typer.process
-  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> snd |> Typer.process
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-
 let python_passes prog =
   prog |> default_passes
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
@@ -218,6 +196,18 @@ let fun_passes config prog =
   |> check_reads
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply config b)
+
+let php_passes prog =
+  prog |> default_passes
+  |> (fun (a, b) ->
+    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
+  |> snd |> Typer.process
+  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
+  |> snd |> Typer.process
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
 
 let no_passes prog =
   prog
@@ -265,7 +255,7 @@ let languages, printers =
     "go",      (true, clike_passes)   => new GoPrinter.goPrinter ;
     "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
     "rkt",     (true, fun_passes {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
-    "pl",      (true, perl_passes)       => new PerlPrinter.perlPrinter ;
+    "pl",      (true, python_passes)       => new PerlPrinter.perlPrinter ;
 (*    "metalang_parsed", (true, no_passes) => new Printer.printer ; *)
   ] in
   let langs : string list = List.map fst ls in
