@@ -280,12 +280,12 @@ let rec map_instrs (infos:infos) = function
       ]  when is_declare_copyvar i2 name ->
         let tl = map_instrs infos @$ remove_instruction tl i2 in
         (Instr.alloc_array_lambda_opt name2 ty length optli useless2)::tl
-      | Some li -> (* Format.printf "%d info pour l'inline de la déclaration@\n%a@\n"
+      | Some li -> Format.printf "%d info pour l'inline de la déclaration@\n%a@\n"
         (List.length li)
-        printer#instr hd; *)
+        printer#instr hd;
         hd :: (map_instrs infos tl)
-      | None -> (* Format.printf "Aucune info pour l'inline de la déclaration@\n%a@\n"
-            printer#instr hd; *)
+      | None -> Format.printf "Aucune info pour l'inline de la déclaration@\n%a@\n"
+            printer#instr hd;
         hd :: (map_instrs infos tl)
       end
     | Instr.DeclRead (ty, name, { Instr.useless = true } ) ->
@@ -297,7 +297,22 @@ let rec map_instrs (infos:infos) = function
             ->
         let tl = map_instrs infos @$ remove_instruction tl i2 in
         (Instr.read ty @$ affected_mutable i2)::tl
-      | _ -> hd :: (map_instrs infos tl)
+
+| Some [
+        {instruction=(Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
+        )) as i2; expression=_; affected=false; declaration=false; dad=dad2};
+        {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
+          when is_declare_copyvar i2 name
+            ->
+        let tl = map_instrs infos @$ remove_instruction tl i2 in
+        (Instr.readdecl ty name2 useless2 )::tl
+
+      | Some li ->
+        Format.printf "match non géré pour l'inline de la déclaration %a (%d infos) TOTO@\n"
+          printer#instr hd
+          (List.length li)
+        ;
+        hd :: (map_instrs infos tl)
 	    end
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
       begin match StringMap.find_opt name infos.infos with
@@ -311,24 +326,24 @@ let rec map_instrs (infos:infos) = function
           | _ -> false
           ) items2 then
             begin
-             (*ormat.printf "on va inliner la definition %a. on va fouttre %a à la place@\n"
+             Format.printf "on va inliner la definition %a. on va fouttre %a à la place@\n"
                 printer#instr i1
-                printer#expr e; *)
+                printer#expr e;
 	            let tl = replace_name name e tl in
 	            map_instrs infos tl
             end
-          else begin (*
+          else begin
             Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n"
               printer#instr hd
               (List.length li)
-            ; *)
+            ;
 	          hd :: (map_instrs infos tl)
           end
         | _ -> assert false
         end
-      | None -> (*
+      | None ->
           Format.printf "Aucune info pour l'inline de la déclaration %a@\n"
-            printer#instr hd; *)
+            printer#instr hd;
 	      hd :: (map_instrs infos tl)
       end
     | _ -> hd :: (map_instrs infos tl)
@@ -341,17 +356,23 @@ let getlines instrs =
     ) acc i
   ) (IntMap.empty, 0) instrs
 
-let map_instrs instrs =
-  let infos = { infos = getinfos instrs ; linenumbers = getlines instrs } in
+
+let rec deep_map_instrs (infos:infos) instrs =
   let instrs = map_instrs infos instrs in
   let instrs = List.map (fun i ->
     let a = Instr.Fixed.annot i in
-    let i = Instr.map_bloc (map_instrs infos) @$ Instr.unfix i in
+    let i = Instr.map_bloc (deep_map_instrs infos) @$ Instr.unfix i in
     Instr.fixa a i
   ) instrs in
   instrs
 
 let map_instrs instrs =
+  let infos = { infos = getinfos instrs ; linenumbers = getlines instrs } in
+  deep_map_instrs infos instrs
+
+let map_instrs instrs =
+  let instrs = map_instrs instrs in
+  let instrs = map_instrs instrs in
   let instrs = map_instrs instrs in
   let instrs = map_instrs instrs in
   let instrs = map_instrs instrs in
