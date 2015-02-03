@@ -276,7 +276,8 @@ let rec map_instrs (infos:infos) = function
         )) as i2 ; expression=_; affected=false; declaration=false; dad=dad2};
         {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}
       ]  when is_declare_copyvar i2 name ->
-        let _, tl = map_instrs infos @$ remove_instruction tl i2 in
+        let tl = remove_instruction tl i2 in
+      (*  Format.printf "on inline un allocArray@\n"; *)
         true, (Instr.alloc_array_lambda_opt name2 ty length optli useless2)::tl
       | Some li -> (* Format.printf "%d info pour l'inline de la déclaration@\n%a@\n" (List.length li) printer#instr hd; *)
         let b, tl = map_instrs infos tl in b, hd :: tl
@@ -291,15 +292,16 @@ let rec map_instrs (infos:infos) = function
         {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
           when is_affect_copyvar i2 name
             ->
-        let _, tl = map_instrs infos @$ remove_instruction tl i2 in
-        true, (Instr.read ty @$ affected_mutable i2)::tl
+(*        Format.printf "on inline un readDecl@\n"; *)
+              let tl = remove_instruction tl i2 in
+              true, (Instr.read ty @$ affected_mutable i2)::tl
       | Some [
         {instruction=(Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
         )) as i2; expression=_; affected=false; declaration=false; dad=dad2};
         {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
           when is_declare_copyvar i2 name
             ->
-        let _, tl = map_instrs infos @$ remove_instruction tl i2 in
+        let tl = remove_instruction tl i2 in
         true, (Instr.readdecl ty name2 useless2 )::tl
       | Some li ->
         (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos) TOTO@\n" printer#instr hd (List.length li) ; *)
@@ -315,12 +317,7 @@ let rec map_instrs (infos:infos) = function
         {instruction=i2; expression=Some e2; affected=false; declaration=false; dad=dad2} ->
           dad1 = dad2 && List.forall (no_affectation tl i2) (all_variables e) && can_map_mut name e2 e
           | _ -> false
-          ) items2 then
-            begin
-              (* Format.printf "on va inliner la definition %a. on va fouttre %a à la place@\n" printer#instr i1 printer#expr e; *)
-	            let tl = replace_name name e tl in
-	            let _, tl = map_instrs infos tl in true, tl
-            end
+          ) items2 then true, replace_name name e tl
           else begin
             (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos)@\n" printer#instr hd (List.length li) ; *)
             let b, tl = map_instrs infos tl in b, hd :: tl
