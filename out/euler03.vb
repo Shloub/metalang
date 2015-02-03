@@ -16,8 +16,7 @@ Module euler03
           a = a \ b
           b0 = b
           b = a
-          Dim e As Integer = Int(Math.Sqrt(a))
-          sqrtia = e
+          sqrtia = Int(Math.Sqrt(a))
           found = true
         End If
         b = b + 1

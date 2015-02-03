@@ -88,8 +88,7 @@ let main =
                          let resp = sum.(i) in
                          (maxl, resp)
                          else (maxl, resp)))
-                         else let c = ((min (stop) (i))) in
-                         let stop = c in
+                         else let stop = ((min (stop) (i))) in
                          (maxl, process, resp, stop)))
                          )
                   

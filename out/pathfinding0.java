@@ -20,12 +20,7 @@ public class pathfinding0
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int p = Math.min(val1, val2);
-      int q = Math.min(p, val3);
-      int r = Math.min(q, val4);
-      int s = r;
-      int o = s;
-      int out0 = 1 + o;
+      int out0 = 1 + Math.min(Math.min(Math.min(val1, val2), val3), val4);
       cache[posY][posX] = out0;
       return out0;
     }
@@ -51,24 +46,22 @@ public class pathfinding0
   
   public static void main(String args[])
   {
-    int u;
+    int x;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      u = scanner.nextInt();
+      x = scanner.nextInt();
     } else {
-      u = scanner.nextInt();
+      x = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int x = u;
-    int w;
+    int y;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      w = scanner.nextInt();
+      y = scanner.nextInt();
     } else {
-      w = scanner.nextInt();
+      y = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int y = w;
     System.out.printf("%d %d\n", x, y);
     char[][] bb = new char[y][];
     for (int bc = 0 ; bc < y; bc++)

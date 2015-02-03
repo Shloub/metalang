@@ -36,10 +36,7 @@ for (var a = 0 ; a <= 9; a++)
                                                              d) + 1000 * (c *
                                                                     e + b * f) + 10000 * c * f;
             if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
-            {
-              var g = Math.max(mul, m);
-              m = g;
-            }
+              m = Math.max(mul, m);
 }
 util.print(m, "\n");
 

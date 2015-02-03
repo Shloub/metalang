@@ -142,11 +142,7 @@
                 (do
                   ((y 0 (+ 1 y)))
                   ((> y 19))
-                  (progn
-                    (let ((v (find0 4 m x y dx dy)))
-                      (let ((u (max2_ max0 v)))
-                        (setq max0 u)
-                      )))
+                  (setq max0 (max2_ max0 (find0 4 m x y dx dy)))
                   )
               )
             ))))

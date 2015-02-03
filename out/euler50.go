@@ -65,8 +65,7 @@ func main() {
                     resp = sum[i];
                 }
             } else {
-              var c int = min2_(stop, i)
-              stop = c;
+              stop = min2_(stop, i);
             }
         }
     }

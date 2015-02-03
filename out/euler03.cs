@@ -20,8 +20,7 @@ public class euler03
           a /= b;
           b0 = b;
           b = a;
-          int e = (int)Math.Sqrt(a);
-          sqrtia = e;
+          sqrtia = (int)Math.Sqrt(a);
           found = true;
         }
         b ++;

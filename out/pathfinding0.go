@@ -37,12 +37,7 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
     var val2 int = pathfind_aux(cache, tab, x, y, posX - 1, posY)
     var val3 int = pathfind_aux(cache, tab, x, y, posX, posY - 1)
     var val4 int = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-    var s int = min2_(val1, val2)
-    var u int = min2_(s, val3)
-    var v int = min2_(u, val4)
-    var w int = v
-    var r int = w
-    var out0 int = 1 + r
+    var out0 int = 1 + min2_(min2_(min2_(val1, val2), val3), val4)
     cache[posY][posX] = out0;
     return out0
   }   
@@ -64,22 +59,18 @@ func pathfind(tab [][]byte, x int, y int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var bb int
-  fmt.Fscanf(reader, "%d", &bb)
+  var x int
+  fmt.Fscanf(reader, "%d", &x)
   skip()
-  var x int = bb
-  var bd int
-  fmt.Fscanf(reader, "%d", &bd)
+  var y int
+  fmt.Fscanf(reader, "%d", &y)
   skip()
-  var y int = bd
   fmt.Printf("%d %d\n", x, y);
   var bf [][]byte = make([][]byte, y)
   for bg := 0 ; bg <= y - 1; bg++ {
     var bk []byte = make([]byte, x)
       for bi := 0 ; bi <= x - 1; bi++ {
-        var bj byte
-        fmt.Fscanf(reader, "%c", &bj)
-          bk[bi] = bj;
+        fmt.Fscanf(reader, "%c", &bk[bi])
       }
       skip()
       bf[bg] = bk;

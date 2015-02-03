@@ -17,9 +17,8 @@ sub readint {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
-my $f = readint();
+my $len = readint();
 readspaces();
-my $len = $f;
 print($len, "=len\n");
 my $tab1 = [];
 foreach my $k (0 .. $len - 1) {
@@ -35,9 +34,8 @@ my $tab2 = [];
 foreach my $s (0 .. $len - 1 - 1) {
   my $ba = [];
   foreach my $v (0 .. $len - 1) {
-    my $w = readint();
+    $ba->[$v] = readint();
     readspaces();
-    $ba->[$v] = $w;
     }
   $tab2->[$s] = $ba;
   }

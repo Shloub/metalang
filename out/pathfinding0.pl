@@ -45,8 +45,7 @@ sub pathfind_aux{
     my $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     my $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     my $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-    my $k = min($val1, $val2, $val3, $val4);
-    my $out0 = 1 + $k;
+    my $out0 = 1 + min($val1, $val2, $val3, $val4);
     $cache->[$posY]->[$posX] = $out0;
     return $out0;
   }
@@ -69,19 +68,16 @@ sub pathfind{
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
-my $m = readint();
+my $x = readint();
 readspaces();
-my $x = $m;
-my $p = readint();
+my $y = readint();
 readspaces();
-my $y = $p;
 print($x, " ", $y, "\n");
 my $r = [];
 foreach my $s (0 .. $y - 1) {
   my $ba = [];
   foreach my $v (0 .. $x - 1) {
-    my $w = readchar();
-    $ba->[$v] = $w;
+    $ba->[$v] = readchar();
     }
   readspaces();
   $r->[$s] = $ba;

@@ -14,8 +14,7 @@ while ($a != 1)
       $a = intval($a / $b);
       $b0 = $b;
       $b = $a;
-      $e = intval(sqrt($a));
-      $sqrtia = $e;
+      $sqrtia = intval(sqrt($a));
       $found = true;
     }
     $b ++;

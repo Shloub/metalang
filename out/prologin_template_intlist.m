@@ -12,9 +12,8 @@ int programme_candidat(int* tableau, int taille){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int e, b;
-  scanf("%d ", &b);
-  int taille = b;
+  int e, taille;
+  scanf("%d ", &taille);
   int *tableau = malloc( taille * sizeof(int));
   for (e = 0 ; e < taille; e++)
   {

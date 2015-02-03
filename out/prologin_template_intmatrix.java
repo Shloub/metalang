@@ -15,39 +15,35 @@ public class prologin_template_intmatrix
   
   public static void main(String args[])
   {
-    int f;
+    int taille_x;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      f = scanner.nextInt();
+      taille_x = scanner.nextInt();
     } else {
-      f = scanner.nextInt();
+      taille_x = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille_x = f;
-    int h;
+    int taille_y;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      h = scanner.nextInt();
+      taille_y = scanner.nextInt();
     } else {
-      h = scanner.nextInt();
+      taille_y = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille_y = h;
     int[][] tableau = new int[taille_y][];
     for (int m = 0 ; m < taille_y; m++)
     {
       int[] r = new int[taille_x];
       for (int p = 0 ; p < taille_x; p++)
       {
-        int q;
         if (scanner.hasNext("^-")){
           scanner.next("^-");
-          q = scanner.nextInt();
-        } else {
-          q = scanner.nextInt();
+          r[p] = -scanner.nextInt();
+        }else{
+          r[p] = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        r[p] = q;
       }
       tableau[m] = r;
     }

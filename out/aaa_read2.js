@@ -35,9 +35,8 @@ function read_int_(){
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 */
-b=read_int_();
+len=read_int_();
 stdinsep();
-var len = b;
 util.print(len, "=len\n");
 var tab = new Array(len);
 for (var f = 0 ; f <= len - 1; f++)
@@ -60,9 +59,8 @@ for (var i_ = 0 ; i_ <= len - 1; i_++)
 {
   util.print(i_, "==>", tab2[i_], " ");
 }
-p=read_int_();
+strlen=read_int_();
 stdinsep();
-var strlen = p;
 util.print(strlen, "=strlen\n");
 var tab4 = new Array(strlen);
 for (var s = 0 ; s <= strlen - 1; s++)

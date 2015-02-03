@@ -27,11 +27,8 @@ int programme_candidat(std::vector<std::vector<char> *> * tableau, int taille_x,
 
 
 int main(){
-  int e, c;
-  std::cin >> c >> std::skipws;
-  int taille_x = c;
-  std::cin >> e >> std::skipws;
-  int taille_y = e;
+  int taille_y, taille_x;
+  std::cin >> taille_x >> std::skipws >> taille_y;
   std::vector<std::vector<char> * > *g = new std::vector<std::vector<char> *>( taille_y );
   for (int h = 0 ; h < taille_y; h++)
     g->at(h) = getline();

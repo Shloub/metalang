@@ -77,7 +77,6 @@ type v = array of Longint;
 type w = array of char;
 
 var
-  b : Longint;
   c : Longint;
   f : Longint;
   i : Longint;
@@ -86,7 +85,6 @@ var
   j : Longint;
   l : Longint;
   len : Longint;
-  p : Longint;
   s : Longint;
   strlen : Longint;
   tab : v;
@@ -94,9 +92,8 @@ var
   tab4 : w;
   tmpc : char;
 begin
-  b := read_int_();
+  len := read_int_();
   skip();
-  len := b;
   Write(len);
   Write('=len'#10'');
   SetLength(tab, len);
@@ -126,9 +123,8 @@ begin
     Write(tab2[i_]);
     Write(' ');
   end;
-  p := read_int_();
+  strlen := read_int_();
   skip();
-  strlen := p;
   Write(strlen);
   Write('=strlen'#10'');
   SetLength(tab4, strlen);

@@ -33,12 +33,11 @@
     (let ([val2 (pathfind_aux cache tab x y (- posX 1) posY)])
     (let ([val3 (pathfind_aux cache tab x y posX (- posY 1))])
     (let ([val4 (pathfind_aux cache tab x y posX (+ posY 1))])
-    (let ([f (min val1 val2 val3 val4)])
-    (let ([out0 (+ 1 f)])
+    (let ([out0 (+ 1 (min val1 val2 val3 val4))])
     (block
       (vector-set! (vector-ref cache posY) posX out0)
       out0
-      )))))))
+      ))))))
     )))))))))
 )
 (define (pathfind tab x y)

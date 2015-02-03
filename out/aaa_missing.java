@@ -26,15 +26,14 @@ public class aaa_missing
   
   public static void main(String args[])
   {
-    int b;
+    int len;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      b = scanner.nextInt();
+      len = scanner.nextInt();
     } else {
-      b = scanner.nextInt();
+      len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int len = b;
     System.out.printf("%d\n", len);
     int[] tab = new int[len];
     for (int e = 0 ; e < len; e++)

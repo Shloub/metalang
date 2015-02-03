@@ -36,12 +36,7 @@ int main(void){
   {
     int* t = primesfactors(i);
     for (j = 1 ; j <= i; j++)
-    {
-      int g = o[j];
-      int h = t[j];
-      int f = max2_(g, h);
-      o[j] = f;
-    }
+      o[j] = max2_(o[j], t[j]);
   }
   int product = 1;
   for (k = 1 ; k <= lim; k++)

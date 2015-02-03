@@ -50,22 +50,21 @@
   )))
 
 (progn
-  (let ((b (mread-int )))
+  (let ((taille (mread-int )))
     (mread-blank)
-    (let ((taille b))
-      (let
-       ((tableau (array_init
-                    taille
-                    (function (lambda (e)
-                    (block lambda_1
-                      (let ((f (mread-char )))
-                        (return-from lambda_1 f)
-                      )))
-                    ))))
-      (mread-blank)
-      (princ (programme_candidat tableau taille))
-      (princ "
+    (let
+     ((tableau (array_init
+                  taille
+                  (function (lambda (e)
+                  (block lambda_1
+                    (let ((f (mread-char )))
+                      (return-from lambda_1 f)
+                    )))
+                  ))))
+    (mread-blank)
+    (princ (programme_candidat tableau taille))
+    (princ "
 ")
-      ))))
+    )))
 
 

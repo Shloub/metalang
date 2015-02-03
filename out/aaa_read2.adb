@@ -28,14 +28,11 @@ type w_PTR is access w;
   tab2 : v_PTR;
   tab : v_PTR;
   strlen : Integer;
-  p : Integer;
   len : Integer;
   c : Integer;
-  b : Integer;
 begin
-  Get(b);
+  Get(len);
   SkipSpaces;
-  len := b;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=len" & Character'Val(10) & "");
   tab := new v (0..len);
@@ -61,9 +58,8 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab2(i_0)), Left));
     String'Write (Text_Streams.Stream (Current_Output), " ");
   end loop;
-  Get(p);
+  Get(strlen);
   SkipSpaces;
-  strlen := p;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(strlen), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=strlen" & Character'Val(10) & "");
   tab4 := new w (0..strlen);

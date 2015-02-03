@@ -30,11 +30,8 @@ int programme_candidat(std::vector<char> * tableau1, int taille1, std::vector<ch
 
 
 int main(){
-  int d, b;
-  std::cin >> b >> std::skipws;
-  int taille1 = b;
-  std::cin >> d >> std::skipws;
-  int taille2 = d;
+  int taille2, taille1;
+  std::cin >> taille1 >> std::skipws >> taille2;
   std::vector<char> * tableau1 = getline();
   std::vector<char> * tableau2 = getline();
   std::cout << programme_candidat(tableau1, taille1, tableau2, taille2) << "\n";

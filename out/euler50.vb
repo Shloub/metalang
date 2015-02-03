@@ -68,8 +68,7 @@ Module euler50
               resp = sum(i)
             End If
           Else
-            Dim c As Integer = min2_(stop0, i)
-            stop0 = c
+            stop0 = min2_(stop0, i)
           End If
         End If
       Next

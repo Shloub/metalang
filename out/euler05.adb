@@ -45,9 +45,6 @@ end;
   o : q_PTR;
   n : Integer;
   lim : Integer;
-  h : Integer;
-  g : Integer;
-  f : Integer;
 begin
   lim := (20);
   o := new q (0..lim + (1));
@@ -57,10 +54,7 @@ begin
   for i in integer range (1)..lim loop
     t := primesfactors(i);
     for j in integer range (1)..i loop
-      g := o(j);
-      h := t(j);
-      f := max2_0(g, h);
-      o(j) := f;
+      o(j) := max2_0(o(j), t(j));
     end loop;
   end loop;
   product := (1);

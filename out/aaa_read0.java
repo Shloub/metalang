@@ -6,15 +6,14 @@ public class aaa_read0
   
   public static void main(String args[])
   {
-    int b;
+    int len;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      b = scanner.nextInt();
+      len = scanner.nextInt();
     } else {
-      b = scanner.nextInt();
+      len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int len = b;
     System.out.printf("%d\n", len);
   }
   

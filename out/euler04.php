@@ -37,10 +37,7 @@ for ($a = 0 ; $a <= 9; $a++)
                                                                     $e + $b *
                                                                     $f) + 10000 * $c * $f;
             if (chiffre(0, $mul) == chiffre(5, $mul) && chiffre(1, $mul) == chiffre(4, $mul) && chiffre(2, $mul) == chiffre(3, $mul))
-            {
-              $g = max($mul, $m);
-              $m = $g;
-            }
+              $m = max($mul, $m);
 }
 echo $m, "\n";
 ?>

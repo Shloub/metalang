@@ -104,10 +104,7 @@
                                      (setq resp (aref sum i))
                                    ))
                                )
-                               (progn
-                                 (let ((c (min stop i)))
-                                   (setq stop c)
-                                 )))
+                               (setq stop (min stop i)))
                            ))
                        )
                        (setq len ( + len 1))

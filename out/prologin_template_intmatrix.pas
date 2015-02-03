@@ -82,31 +82,25 @@ end;
 
 
 var
-  f : Longint;
-  h : Longint;
   m : Longint;
   p : Longint;
-  q : Longint;
   r : s;
   tableau : u;
   taille_x : Longint;
   taille_y : Longint;
 begin
-  f := read_int_();
+  taille_x := read_int_();
   skip();
-  taille_x := f;
-  h := read_int_();
+  taille_y := read_int_();
   skip();
-  taille_y := h;
   SetLength(tableau, taille_y);
   for m := 0 to  taille_y - 1 do
   begin
     SetLength(r, taille_x);
     for p := 0 to  taille_x - 1 do
     begin
-      q := read_int_();
+      r[p] := read_int_();
       skip();
-      r[p] := q;
     end;
     tableau[m] := r;
   end;

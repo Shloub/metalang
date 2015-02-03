@@ -94,8 +94,6 @@ end;
 
 
 var
-  b : Longint;
-  d : Longint;
   g : Longint;
   m : Longint;
   tableau1 : p;
@@ -103,12 +101,10 @@ var
   taille1 : Longint;
   taille2 : Longint;
 begin
-  b := read_int_();
+  taille1 := read_int_();
   skip();
-  taille1 := b;
-  d := read_int_();
+  taille2 := read_int_();
   skip();
-  taille2 := d;
   SetLength(tableau1, taille1);
   for g := 0 to  taille1 - 1 do
   begin

@@ -35,10 +35,7 @@ begin
                                                                c * d) + 1000 * (c *
                                                                     e + b * f) + 10000 * c * f in
               if chiffre 0 mul = chiffre 5 mul && chiffre 1 mul = chiffre 4 mul && chiffre 2 mul = chiffre 3 mul then
-                begin
-                  let g = (max (mul) ((!m))) in
-                  m := g
-                end
+                m := (max (mul) ((!m)))
             done
           done
         done

@@ -24,12 +24,7 @@ for (var i = 1 ; i <= lim; i++)
 {
   var t = primesfactors(i);
   for (var j = 1 ; j <= i; j++)
-  {
-    var g = o[j];
-    var h = t[j];
-    var f = Math.max(g, h);
-    o[j] = f;
-  }
+    o[j] = Math.max(o[j], t[j]);
 }
 var product = 1;
 for (var k = 1 ; k <= lim; k++)

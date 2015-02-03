@@ -17,21 +17,14 @@ int programme_candidat(char** tableau, int taille_x, int taille_y){
 }
 
 int main(void){
-  int m, p, h, f;
-  char q;
-  scanf("%d ", &f);
-  int taille_x = f;
-  scanf("%d ", &h);
-  int taille_y = h;
+  int m, p, taille_y, taille_x;
+  scanf("%d %d ", &taille_x, &taille_y);
   char* *l = malloc( taille_y * sizeof(char*));
   for (m = 0 ; m < taille_y; m++)
   {
     char *r = malloc( taille_x * sizeof(char));
     for (p = 0 ; p < taille_x; p++)
-    {
-      scanf("%c", &q);
-      r[p] = q;
-    }
+      scanf("%c", &r[p]);
     scanf(" ");
     l[m] = r;
   }

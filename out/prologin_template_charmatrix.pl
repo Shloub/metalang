@@ -39,18 +39,15 @@ sub programme_candidat{
   return $out0;
 }
 
-my $f = readint();
+my $taille_x = readint();
 readspaces();
-my $taille_x = $f;
-my $h = readint();
+my $taille_y = readint();
 readspaces();
-my $taille_y = $h;
 my $l = [];
 foreach my $m (0 .. $taille_y - 1) {
   my $r = [];
   foreach my $p (0 .. $taille_x - 1) {
-    my $q = readchar();
-    $r->[$p] = $q;
+    $r->[$p] = readchar();
     }
   readspaces();
   $l->[$m] = $r;

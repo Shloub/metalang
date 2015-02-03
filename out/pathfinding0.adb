@@ -33,15 +33,10 @@ type bo is Array (Integer range <>) of bn_PTR;
 type bo_PTR is access bo;
 function pathfind_aux(cache : in bm_PTR; tab : in bo_PTR; x : in Integer;
 y : in Integer; posX : in Integer; posY : in Integer) return Integer is
-  w : Integer;
   val4 : Integer;
   val3 : Integer;
   val2 : Integer;
   val1 : Integer;
-  v : Integer;
-  u : Integer;
-  s : Integer;
-  r : Integer;
   out0 : Integer;
 begin
   if posX = x - (1) and then posY = y - (1)
@@ -65,12 +60,7 @@ begin
           val2 := pathfind_aux(cache, tab, x, y, posX - (1), posY);
           val3 := pathfind_aux(cache, tab, x, y, posX, posY - (1));
           val4 := pathfind_aux(cache, tab, x, y, posX, posY + (1));
-          s := min2_0(val1, val2);
-          u := min2_0(s, val3);
-          v := min2_0(u, val4);
-          w := v;
-          r := w;
-          out0 := (1) + r;
+          out0 := (1) + min2_0(min2_0(min2_0(val1, val2), val3), val4);
           cache(posY)(posX) := out0;
           return out0;
         end if;
@@ -103,17 +93,12 @@ end;
   tab : bo_PTR;
   result : Integer;
   bk : bn_PTR;
-  bj : Character;
   bf : bo_PTR;
-  bd : Integer;
-  bb : Integer;
 begin
-  Get(bb);
+  Get(x);
   SkipSpaces;
-  x := bb;
-  Get(bd);
+  Get(y);
   SkipSpaces;
-  y := bd;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(x), Left));
   String'Write (Text_Streams.Stream (Current_Output), " ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(y), Left));
@@ -122,8 +107,7 @@ begin
   for bg in integer range (0)..y - (1) loop
     bk := new bn (0..x);
     for bi in integer range (0)..x - (1) loop
-      Get(bj);
-      bk(bi) := bj;
+      Get(bk(bi));
     end loop;
     SkipSpaces;
     bf(bg) := bk;

@@ -32,12 +32,7 @@ public class euler05
     {
       int[] t = primesfactors(i);
       for (int j = 1 ; j <= i; j ++)
-      {
-        int g = o[j];
-        int h = t[j];
-        int f = Math.max(g, h);
-        o[j] = f;
-      }
+        o[j] = Math.max(o[j], t[j]);
     }
     int product = 1;
     for (int k = 1 ; k <= lim; k ++)

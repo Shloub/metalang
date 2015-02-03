@@ -127,9 +127,8 @@ End Function
     For  o As Integer  = 0 to  20 - 1
       Dim s(h) As Integer
       For  q As Integer  = 0 to  h - 1
-        Dim r As Integer = readInt()
+        s(q) = readInt()
         stdin_sep()
-        s(q) = r
       Next
       m(o) = s
       Next
@@ -139,9 +138,7 @@ End Function
         Dim dy As Integer = w.tuple_int_int_field_1
         For  x As Integer  = 0 to  19
           For  y As Integer  = 0 to  19
-            Dim v As Integer = find(4, m, x, y, dx, dy)
-            Dim u As Integer = max2_(max0, v)
-            max0 = u
+            max0 = max2_(max0, find(4, m, x, y, dx, dy))
           Next
         Next
       Next

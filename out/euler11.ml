@@ -36,9 +36,7 @@ begin
     let (dx, dy) = directions.(j) in
     for x = 0 to 19 do
       for y = 0 to 19 do
-        let v = find 4 m x y dx dy in
-        let u = (max ((!max0)) (v)) in
-        max0 := u
+        max0 := (max ((!max0)) (find 4 m x y dx dy))
       done
     done
   done;

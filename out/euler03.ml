@@ -15,8 +15,7 @@ begin
               a := (!a) / (!b);
               b0 := (!b);
               b := (!a);
-              let e = (int_of_float (sqrt (float_of_int ( (!a))))) in
-              sqrtia := e;
+              sqrtia := (int_of_float (sqrt (float_of_int ( (!a)))));
               found := true
             end;
           b := (!b) + 1

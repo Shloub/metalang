@@ -45,7 +45,6 @@ end;
 
   mul : Integer;
   m : Integer;
-  g : Integer;
 begin
   m := (1);
   for a in integer range (0)..(9) loop
@@ -61,8 +60,7 @@ begin
               mul) = chiffre((4), mul) and then chiffre((2), mul) =
               chiffre((3), mul)
               then
-                g := max2_0(mul, m);
-                m := g;
+                m := max2_0(mul, m);
               end if;
             end loop;
           end loop;

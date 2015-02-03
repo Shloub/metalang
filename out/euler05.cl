@@ -57,12 +57,7 @@
           (do
             ((j 1 (+ 1 j)))
             ((> j i))
-            (progn
-              (let ((g (aref o j)))
-                (let ((h (aref t0 j)))
-                  (let ((f (max2_ g h)))
-                    (setf (aref o j) f)
-                  ))))
+            (setf (aref o j) (max2_ (aref o j) (aref t0 j)))
           )
         ))
     )

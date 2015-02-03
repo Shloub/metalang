@@ -43,13 +43,10 @@ let main =
      let bd = i in
      let rec bb j =
        (if (j <= bd)
-        then let g = o.(j) in
-        let h = t.(j) in
-        let f = ((max (g) (h))) in
-        (
-          o.(j) <- f;
-          (bb (j + 1))
-          )
+        then (
+               o.(j) <- ((max (o.(j)) (t.(j))));
+               (bb (j + 1))
+               )
         
         else (ba (i + 1))) in
        (bb bc)

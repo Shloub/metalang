@@ -18,8 +18,7 @@ int main(void){
         a /= b;
         b0 = b;
         b = a;
-        int e = (int)sqrt(a);
-        sqrtia = e;
+        sqrtia = (int)sqrt(a);
         found = 1;
       }
       b ++;

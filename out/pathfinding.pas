@@ -88,12 +88,7 @@ type t = array of char;
 type u = array of array of char;
 function pathfind_aux(cache : s; tab : u; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
-  m : Longint;
-  n : Longint;
-  o : Longint;
   out0 : Longint;
-  p : Longint;
-  q : Longint;
   val1 : Longint;
   val2 : Longint;
   val3 : Longint;
@@ -123,12 +118,7 @@ begin
       val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY);
       val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1);
       val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      n := min2_(val1, val2);
-      o := min2_(n, val3);
-      p := min2_(o, val4);
-      q := p;
-      m := q;
-      out0 := 1 + m;
+      out0 := 1 + min2_(min2_(min2_(val1, val2), val3), val4);
       cache[posY][posX] := out0;
       exit(out0);
     end;;;;

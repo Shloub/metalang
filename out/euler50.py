@@ -44,8 +44,7 @@ while (process):
           maxl = len;
           resp = sum[i];
       else:
-        c = min(stop, i);
-        stop = c;
+        stop = min(stop, i);
   len += 1
 print("%d\n%d\n" % ( resp, maxl ), end='')
 

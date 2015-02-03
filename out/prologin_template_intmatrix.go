@@ -26,22 +26,18 @@ func programme_candidat(tableau [][]int, x int, y int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var f int
-  fmt.Fscanf(reader, "%d", &f)
+  var taille_x int
+  fmt.Fscanf(reader, "%d", &taille_x)
   skip()
-  var taille_x int = f
-  var h int
-  fmt.Fscanf(reader, "%d", &h)
+  var taille_y int
+  fmt.Fscanf(reader, "%d", &taille_y)
   skip()
-  var taille_y int = h
   var tableau [][]int = make([][]int, taille_y)
   for m := 0 ; m <= taille_y - 1; m++ {
     var r []int = make([]int, taille_x)
       for p := 0 ; p <= taille_x - 1; p++ {
-        var q int
-        fmt.Fscanf(reader, "%d", &q)
+        fmt.Fscanf(reader, "%d", &r[p])
           skip()
-          r[p] = q;
       }
       tableau[m] = r;
   }

@@ -65,9 +65,8 @@ End Function
   
   
   Sub Main()
-    Dim b As Integer = readInt()
+    Dim len As Integer = readInt()
     stdin_sep()
-    Dim len As Integer = b
     Console.Write("" & len & "=len" & Chr(10) & "")
     Dim tab(len) As Integer
     For  f As Integer  = 0 to  len - 1
@@ -92,9 +91,8 @@ End Function
       Console.Write(tab2(i_))
       Console.Write(" ")
     Next
-    Dim p As Integer = readInt()
+    Dim strlen As Integer = readInt()
     stdin_sep()
-    Dim strlen As Integer = p
     Console.Write("" & strlen & "=strlen" & Chr(10) & "")
     Dim tab4(strlen) As Char
     For  s As Integer  = 0 to  strlen - 1

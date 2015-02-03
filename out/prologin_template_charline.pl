@@ -36,9 +36,8 @@ sub programme_candidat{
   return $out0;
 }
 
-my $b = readint();
+my $taille = readint();
 readspaces();
-my $taille = $b;
 my $tableau = [];
 foreach my $e (0 .. $taille - 1) {
   $tableau->[$e] = readchar();

@@ -34,7 +34,6 @@ for a in range(0, 1 + 9):
           for e in range(0, 1 + 9):
             mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f;
             if chiffre(0, mul) == chiffre(5, mul) and chiffre(1, mul) == chiffre(4, mul) and chiffre(2, mul) == chiffre(3, mul):
-              g = max(mul, m);
-              m = g;
+              m = max(mul, m);
 print("%d\n" % ( m ), end='')
 

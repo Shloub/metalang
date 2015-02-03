@@ -19,8 +19,7 @@ while ($a ne 1)
       $a = int(($a) / ($b));
       $b0 = $b;
       $b = $a;
-      my $e = int(sqrt($a));
-      $sqrtia = $e;
+      $sqrtia = int(sqrt($a));
       $found = 1;
     }
     $b = $b + 1;

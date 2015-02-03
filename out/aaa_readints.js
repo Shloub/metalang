@@ -26,9 +26,8 @@ function read_int_(){
     }
   }
 }
-f=read_int_();
+len=read_int_();
 stdinsep();
-var len = f;
 util.print(len, "=len\n");
 var tab1 = new Array(len);
 for (var k = 0 ; k <= len - 1; k++)
@@ -48,9 +47,8 @@ for (var s = 0 ; s <= len - 1 - 1; s++)
   var ba = new Array(len);
   for (var v = 0 ; v <= len - 1; v++)
   {
-    w=read_int_();
+    ba[v]=read_int_();
     stdinsep();
-    ba[v] = w;
   }
   tab2[s] = ba;
 }

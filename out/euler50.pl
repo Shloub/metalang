@@ -61,8 +61,7 @@ while ($process)
           $resp = $sum->[$i];
         }
       }else{
-        my $c = min($stop, $i);
-        $stop = $c;
+        $stop = min($stop, $i);
       }
     }
     }

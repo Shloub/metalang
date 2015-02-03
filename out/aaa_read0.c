@@ -2,9 +2,8 @@
 #include<stdlib.h>
 
 int main(void){
-  int b;
-  scanf("%d ", &b);
-  int len = b;
+  int len;
+  scanf("%d ", &len);
   printf("%d\n", len);
   return 0;
 }

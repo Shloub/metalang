@@ -65,19 +65,16 @@ End Function
   
   
   Sub Main()
-    Dim f As Integer = readInt()
+    Dim taille_x As Integer = readInt()
     stdin_sep()
-    Dim taille_x As Integer = f
-    Dim h As Integer = readInt()
+    Dim taille_y As Integer = readInt()
     stdin_sep()
-    Dim taille_y As Integer = h
     Dim tableau(taille_y)() As Integer
     For  m As Integer  = 0 to  taille_y - 1
       Dim r(taille_x) As Integer
       For  p As Integer  = 0 to  taille_x - 1
-        Dim q As Integer = readInt()
+        r(p) = readInt()
         stdin_sep()
-        r(p) = q
       Next
       tableau(m) = r
       Next

@@ -6,15 +6,14 @@ public class aaa_readints
   
   public static void main(String args[])
   {
-    int f;
+    int len;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      f = scanner.nextInt();
+      len = scanner.nextInt();
     } else {
-      f = scanner.nextInt();
+      len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int len = f;
     System.out.printf("%d=len\n", len);
     int[] tab1 = new int[len];
     for (int k = 0 ; k < len; k++)
@@ -44,15 +43,13 @@ public class aaa_readints
       int[] ba = new int[len];
       for (int v = 0 ; v < len; v++)
       {
-        int w;
         if (scanner.hasNext("^-")){
           scanner.next("^-");
-          w = scanner.nextInt();
-        } else {
-          w = scanner.nextInt();
+          ba[v] = -scanner.nextInt();
+        }else{
+          ba[v] = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        ba[v] = w;
       }
       tab2[s] = ba;
     }

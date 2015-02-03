@@ -24,12 +24,7 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
     int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    int s = min2_(val1, val2);
-    int u = min2_(s, val3);
-    int v = min2_(u, val4);
-    int w = v;
-    int r = w;
-    int out0 = 1 + r;
+    int out0 = 1 + min2_(min2_(min2_(val1, val2), val3), val4);
     cache[posY][posX] = out0;
     return out0;
   }
@@ -53,22 +48,15 @@ int pathfind(char** tab, int x, int y){
 }
 
 int main(void){
-  int bg, bi, bd, bb;
-  char bj;
-  scanf("%d ", &bb);
-  int x = bb;
-  scanf("%d ", &bd);
-  int y = bd;
+  int bg, bi, y, x;
+  scanf("%d %d ", &x, &y);
   printf("%d %d\n", x, y);
   char* *bf = malloc( y * sizeof(char*));
   for (bg = 0 ; bg < y; bg++)
   {
     char *bk = malloc( x * sizeof(char));
     for (bi = 0 ; bi < x; bi++)
-    {
-      scanf("%c", &bj);
-      bk[bi] = bj;
-    }
+      scanf("%c", &bk[bi]);
     scanf(" ");
     bf[bg] = bk;
   }

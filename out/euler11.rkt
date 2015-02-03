@@ -79,10 +79,8 @@
                                                                     (letrec ([bg 
                                                                     (lambda (y max0) 
                                                                     (if (<= y bi)
-                                                                    (let ([o (find0 4 m x y dx dy)])
-                                                                    (let ([l (max max0 o)])
-                                                                    (let ([max0 l])
-                                                                    (bg (+ y 1) max0))))
+                                                                    (let ([max0 (max max0 (find0 4 m x y dx dy))])
+                                                                    (bg (+ y 1) max0))
                                                                     (bf (+ x 1) max0)))])
                                                                     (bg bh max0))))
                                                                     (be (+ j 1) max0)))])

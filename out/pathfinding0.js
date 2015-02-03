@@ -48,8 +48,7 @@ function pathfind_aux(cache, tab, x, y, posX, posY){
     var val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
     var val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
     var val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-    var k = Math.min(val1, val2, val3, val4);
-    var out0 = 1 + k;
+    var out0 = 1 + Math.min(val1, val2, val3, val4);
     cache[posY][posX] = out0;
     return out0;
   }
@@ -71,22 +70,17 @@ function pathfind(tab, x, y){
   return pathfind_aux(cache, tab, x, y, 0, 0);
 }
 
-m=read_int_();
+x=read_int_();
 stdinsep();
-var x = m;
-p=read_int_();
+y=read_int_();
 stdinsep();
-var y = p;
 util.print(x, " ", y, "\n");
 var r = new Array(y);
 for (var s = 0 ; s <= y - 1; s++)
 {
   var ba = new Array(x);
   for (var v = 0 ; v <= x - 1; v++)
-  {
-    w=read_char_();
-    ba[v] = w;
-  }
+    ba[v]=read_char_();
   stdinsep();
   r[s] = ba;
 }

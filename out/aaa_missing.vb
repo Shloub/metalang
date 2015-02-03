@@ -78,9 +78,8 @@ End Function
     
     
     Sub Main()
-      Dim b As Integer = readInt()
+      Dim len As Integer = readInt()
       stdin_sep()
-      Dim len As Integer = b
       Console.Write("" & len & "" & Chr(10) & "")
       Dim tab(len) As Integer
       For  e As Integer  = 0 to  len - 1

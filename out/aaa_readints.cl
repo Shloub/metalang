@@ -28,69 +28,68 @@
 ))
 
 (progn
-  (let ((f (mread-int )))
+  (let ((len (mread-int )))
     (mread-blank)
-    (let ((len f))
-      (princ len)
-      (princ "=len
+    (princ len)
+    (princ "=len
 ")
-      (let
-       ((tab1 (array_init
-                 len
-                 (function (lambda (k)
-                 (block lambda_1
-                   (let ((l (mread-int )))
-                     (mread-blank)
-                     (return-from lambda_1 l)
-                   )))
-                 ))))
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (- len 1)))
-        (progn
-          (princ i)
-          (princ "=>")
-          (princ (aref tab1 i))
-          (princ "
+    (let
+     ((tab1 (array_init
+               len
+               (function (lambda (k)
+               (block lambda_1
+                 (let ((l (mread-int )))
+                   (mread-blank)
+                   (return-from lambda_1 l)
+                 )))
+               ))))
+    (do
+      ((i 0 (+ 1 i)))
+      ((> i (- len 1)))
+      (progn
+        (princ i)
+        (princ "=>")
+        (princ (aref tab1 i))
+        (princ "
 ")
-        )
       )
-      (setq len (mread-int ))
-      (mread-blank)
-      (let
-       ((tab2 (array_init
-                 (- len 1)
-                 (function (lambda (s)
-                 (block lambda_2
-                   (let
-                    ((ba (array_init
-                            len
-                            (function (lambda (v)
-                            (block lambda_3
-                              (let ((w (mread-int )))
-                                (mread-blank)
-                                (return-from lambda_3 w)
-                              )))
-                            ))))
-                   (return-from lambda_2 ba)
-                   )))
-                 ))))
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (- len 2)))
-        (progn
-          (do
-            ((j 0 (+ 1 j)))
-            ((> j (- len 1)))
-            (progn
-              (princ (aref (aref tab2 i) j))
-              (princ " ")
-            )
+    )
+    (setq len (mread-int ))
+    (mread-blank)
+    (let
+     ((tab2 (array_init
+               (- len 1)
+               (function (lambda (s)
+               (block lambda_2
+                 (let
+                  ((ba (array_init
+                          len
+                          (function (lambda (v)
+                          (block lambda_3
+                            (let ((w (mread-int )))
+                              (mread-blank)
+                              (return-from lambda_3 w)
+                            )))
+                          ))))
+                 (return-from lambda_2 ba)
+                 )))
+               ))))
+    (do
+      ((i 0 (+ 1 i)))
+      ((> i (- len 2)))
+      (progn
+        (do
+          ((j 0 (+ 1 j)))
+          ((> j (- len 1)))
+          (progn
+            (princ (aref (aref tab2 i) j))
+            (princ " ")
           )
-          (princ "
-")
         )
+        (princ "
+")
       )
-      )))))
+    )
+    ))))
 
 

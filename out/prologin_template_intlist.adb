@@ -29,11 +29,9 @@ end;
 
   taille : Integer;
   tableau : g_PTR;
-  b : Integer;
 begin
-  Get(b);
+  Get(taille);
   SkipSpaces;
-  taille := b;
   tableau := new g (0..taille);
   for e in integer range (0)..taille - (1) loop
     Get(tableau(e));

@@ -83,15 +83,13 @@ public class euler11
       int[] s = new int[h];
       for (int q = 0 ; q < h; q++)
       {
-        int r;
         if (scanner.hasNext("^-")){
           scanner.next("^-");
-          r = scanner.nextInt();
-        } else {
-          r = scanner.nextInt();
+          s[q] = -scanner.nextInt();
+        }else{
+          s[q] = scanner.nextInt();
         }
         scanner.findWithinHorizon("[\n\r ]*", 1);
-        s[q] = r;
       }
       m[o] = s;
     }
@@ -102,11 +100,7 @@ public class euler11
       int dy = w.tuple_int_int_field_1;
       for (int x = 0 ; x <= 19; x ++)
         for (int y = 0 ; y <= 19; y ++)
-        {
-          int v = find(4, m, x, y, dx, dy);
-          int u = Math.max(max0, v);
-          max0 = u;
-      }
+          max0 = Math.max(max0, find(4, m, x, y, dx, dy));
     }
     System.out.printf("%d\n", max0);
   }

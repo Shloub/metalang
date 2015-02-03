@@ -90,10 +90,8 @@ func main() {
   for o := 0 ; o <= 20 - 1; o++ {
     var s []int = make([]int, h)
       for q := 0 ; q <= h - 1; q++ {
-        var r int
-        fmt.Fscanf(reader, "%d", &r)
+        fmt.Fscanf(reader, "%d", &s[q])
           skip()
-          s[q] = r;
       }
       m[o] = s;
   }
@@ -103,9 +101,7 @@ func main() {
       var dy int = (*w).tuple_int_int_field_1
       for x := 0 ; x <= 19; x++ {
         for y := 0 ; y <= 19; y++ {
-            var v int = find(4, m, x, y, dx, dy)
-              var u int = max2_(max0, v)
-              max0 = u;
+            max0 = max2_(max0, find(4, m, x, y, dx, dy));
           }
       }
   }

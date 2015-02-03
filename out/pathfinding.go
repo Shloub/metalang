@@ -37,12 +37,7 @@ func pathfind_aux(cache [][]int, tab [][]byte, x int, y int, posX int, posY int)
     var val2 int = pathfind_aux(cache, tab, x, y, posX - 1, posY)
     var val3 int = pathfind_aux(cache, tab, x, y, posX, posY - 1)
     var val4 int = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-    var n int = min2_(val1, val2)
-    var o int = min2_(n, val3)
-    var p int = min2_(o, val4)
-    var q int = p
-    var m int = q
-    var out0 int = 1 + m
+    var out0 int = 1 + min2_(min2_(min2_(val1, val2), val3), val4)
     cache[posY][posX] = out0;
     return out0
   }   

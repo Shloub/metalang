@@ -21,8 +21,7 @@ public class euler03
           a /= b;
           b0 = b;
           b = a;
-          int e = (int)Math.sqrt(a);
-          sqrtia = e;
+          sqrtia = (int)Math.sqrt(a);
           found = true;
         }
         b ++;

@@ -13,8 +13,7 @@ while (a != 1):
       a = math.trunc(a / b)
       b0 = b;
       b = a;
-      e = math.floor(math.sqrt(a));
-      sqrtia = e;
+      sqrtia = math.floor(math.sqrt(a));
       found = True;
     b += 1
   if not (found):

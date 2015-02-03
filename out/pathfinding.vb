@@ -81,12 +81,7 @@ End Function
       Dim val2 As Integer = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       Dim val3 As Integer = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       Dim val4 As Integer = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      Dim n As Integer = min2_(val1, val2)
-      Dim o As Integer = min2_(n, val3)
-      Dim p As Integer = min2_(o, val4)
-      Dim q As Integer = p
-      Dim m As Integer = q
-      Dim out0 As Integer = 1 + m
+      Dim out0 As Integer = 1 + min2_(min2_(min2_(val1, val2), val3), val4)
       cache(posY)(posX) = out0
       Return out0
     End If

@@ -44,7 +44,6 @@ end;
 
 
 var
-  c : Longint;
   era : d;
   i : Longint;
   i_ : Longint;
@@ -120,8 +119,7 @@ begin
             end
           else
             begin
-              c := min2_(stop, i);
-              stop := c;
+              stop := min2_(stop, i);
             end;
         end;
     end;

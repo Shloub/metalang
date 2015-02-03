@@ -37,12 +37,7 @@ y : in Integer; posX : in Integer; posY : in Integer) return Integer is
   val3 : Integer;
   val2 : Integer;
   val1 : Integer;
-  q : Integer;
-  p : Integer;
   out0 : Integer;
-  o : Integer;
-  n : Integer;
-  m : Integer;
 begin
   if posX = x - (1) and then posY = y - (1)
   then
@@ -65,12 +60,7 @@ begin
           val2 := pathfind_aux(cache, tab, x, y, posX - (1), posY);
           val3 := pathfind_aux(cache, tab, x, y, posX, posY - (1));
           val4 := pathfind_aux(cache, tab, x, y, posX, posY + (1));
-          n := min2_0(val1, val2);
-          o := min2_0(n, val3);
-          p := min2_0(o, val4);
-          q := p;
-          m := q;
-          out0 := (1) + m;
+          out0 := (1) + min2_0(min2_0(min2_0(val1, val2), val3), val4);
           cache(posY)(posX) := out0;
           return out0;
         end if;

@@ -46,11 +46,9 @@ end;
 
   tab : h_PTR;
   len : Integer;
-  b : Integer;
 begin
-  Get(b);
+  Get(len);
   SkipSpaces;
-  len := b;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
   tab := new h (0..len);

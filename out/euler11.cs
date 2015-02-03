@@ -87,11 +87,7 @@ public class euler11
       int dy = p.tuple_int_int_field_1;
       for (int x = 0 ; x <= 19; x ++)
         for (int y = 0 ; y <= 19; y ++)
-        {
-          int o = find(4, m, x, y, dx, dy);
-          int l = Math.Max(max0, o);
-          max0 = l;
-      }
+          max0 = Math.Max(max0, find(4, m, x, y, dx, dy));
     }
     Console.Write("" + max0 + "\n");
   }

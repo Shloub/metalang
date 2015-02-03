@@ -45,12 +45,10 @@ sub programme_candidat{
   return $out0;
 }
 
-my $b = readint();
+my $taille1 = readint();
 readspaces();
-my $taille1 = $b;
-my $d = readint();
+my $taille2 = readint();
 readspaces();
-my $taille2 = $d;
 my $tableau1 = [];
 foreach my $g (0 .. $taille1 - 1) {
   $tableau1->[$g] = readchar();

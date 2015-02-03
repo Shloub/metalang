@@ -55,8 +55,7 @@ while process do
           resp = sum[i];
         end
       else
-        c = [stop, i].min
-        stop = c;
+        stop = [stop, i].min;
       end
     end
   end

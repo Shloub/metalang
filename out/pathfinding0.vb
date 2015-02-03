@@ -81,12 +81,7 @@ End Function
       Dim val2 As Integer = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       Dim val3 As Integer = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       Dim val4 As Integer = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      Dim s As Integer = min2_(val1, val2)
-      Dim u As Integer = min2_(s, val3)
-      Dim v As Integer = min2_(u, val4)
-      Dim w As Integer = v
-      Dim r As Integer = w
-      Dim out0 As Integer = 1 + r
+      Dim out0 As Integer = 1 + min2_(min2_(min2_(val1, val2), val3), val4)
       cache(posY)(posX) = out0
       Return out0
     End If
@@ -108,19 +103,16 @@ End Function
     
     
     Sub Main()
-      Dim bb As Integer = readInt()
+      Dim x As Integer = readInt()
       stdin_sep()
-      Dim x As Integer = bb
-      Dim bd As Integer = readInt()
+      Dim y As Integer = readInt()
       stdin_sep()
-      Dim y As Integer = bd
       Console.Write("" & x & " " & y & "" & Chr(10) & "")
       Dim bf(y)() As Char
       For  bg As Integer  = 0 to  y - 1
         Dim bk(x) As Char
         For  bi As Integer  = 0 to  x - 1
-          Dim bj As Char = readChar()
-          bk(bi) = bj
+          bk(bi) = readChar()
         Next
         stdin_sep()
         bf(bg) = bk

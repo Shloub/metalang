@@ -55,9 +55,8 @@ Function readInt() As Integer
 End Function
   
   Sub Main()
-    Dim f As Integer = readInt()
+    Dim len As Integer = readInt()
     stdin_sep()
-    Dim len As Integer = f
     Console.Write("" & len & "=len" & Chr(10) & "")
     Dim tab1(len) As Integer
     For  k As Integer  = 0 to  len - 1
@@ -76,9 +75,8 @@ End Function
     For  s As Integer  = 0 to  len - 1 - 1
       Dim ba(len) As Integer
       For  v As Integer  = 0 to  len - 1
-        Dim w As Integer = readInt()
+        ba(v) = readInt()
         stdin_sep()
-        ba(v) = w
       Next
       tab2(s) = ba
       Next

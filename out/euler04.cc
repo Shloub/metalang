@@ -46,10 +46,7 @@ int main(){
                                                                c * d) + 1000 * (c *
                                                                     e + b * f) + 10000 * c * f;
               if (chiffre(0, mul) == chiffre(5, mul) && chiffre(1, mul) == chiffre(4, mul) && chiffre(2, mul) == chiffre(3, mul))
-              {
-                int g = max2_(mul, m);
-                m = g;
-              }
+                m = max2_(mul, m);
   }
   std::cout << m << "\n";
   return 0;

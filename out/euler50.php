@@ -59,10 +59,7 @@ while ($process)
       }
     }
     else
-    {
-      $c = min($stop, $i);
-      $stop = $c;
-    }
+      $stop = min($stop, $i);
   }
   $len ++;
 }

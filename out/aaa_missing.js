@@ -44,9 +44,8 @@ function result(len, tab){
   return -1;
 }
 
-b=read_int_();
+len=read_int_();
 stdinsep();
-var len = b;
 util.print(len, "\n");
 var tab = new Array(len);
 for (var e = 0 ; e <= len - 1; e++)

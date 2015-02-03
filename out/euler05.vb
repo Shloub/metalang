@@ -38,10 +38,7 @@ Module euler05
       For  i As Integer  = 1 to  lim
         Dim t As Integer() = primesfactors(i)
         For  j As Integer  = 1 to  i
-          Dim g As Integer = o(j)
-          Dim h As Integer = t(j)
-          Dim f As Integer = max2_(g, h)
-          o(j) = f
+          o(j) = max2_(o(j), t(j))
         Next
       Next
       Dim product As Integer = 1

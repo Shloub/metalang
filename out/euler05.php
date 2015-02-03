@@ -24,12 +24,7 @@ for ($i = 1 ; $i <= $lim; $i++)
 {
   $t = primesfactors($i);
   for ($j = 1 ; $j <= $i; $j++)
-  {
-    $g = $o[$j];
-    $h = $t[$j];
-    $f = max($g, $h);
-    $o[$j] = $f;
-  }
+    $o[$j] = max($o[$j], $t[$j]);
 }
 $product = 1;
 for ($k = 1 ; $k <= $lim; $k++)

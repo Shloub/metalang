@@ -17,9 +17,8 @@ read int, read char et skip
 */
 
 int main(){
-  int p, b;
-  std::cin >> b >> std::skipws;
-  int len = b;
+  int strlen, len;
+  std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
   std::vector<int > *tab = new std::vector<int>( len );
   for (int f = 0 ; f < len; f++)
@@ -40,8 +39,7 @@ int main(){
   {
     std::cout << i_ << "==>" << tab2->at(i_) << " ";
   }
-  std::cin >> p >> std::skipws;
-  int strlen = p;
+  std::cin >> strlen >> std::skipws;
   std::cout << strlen << "=strlen\n";
   std::vector<char> * tab4 = getline();
   for (int i3 = 0 ; i3 < strlen; i3++)

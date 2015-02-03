@@ -34,21 +34,18 @@ function programme_candidat(tableau, x, y){
   return out0;
 }
 
-f=read_int_();
+taille_x=read_int_();
 stdinsep();
-var taille_x = f;
-h=read_int_();
+taille_y=read_int_();
 stdinsep();
-var taille_y = h;
 var tableau = new Array(taille_y);
 for (var m = 0 ; m <= taille_y - 1; m++)
 {
   var r = new Array(taille_x);
   for (var p = 0 ; p <= taille_x - 1; p++)
   {
-    q=read_int_();
+    r[p]=read_int_();
     stdinsep();
-    r[p] = q;
   }
   tableau[m] = r;
 }

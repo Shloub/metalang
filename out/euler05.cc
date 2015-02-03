@@ -34,12 +34,7 @@ int main(){
   {
     std::vector<int> * t = primesfactors(i);
     for (int j = 1 ; j <= i; j ++)
-    {
-      int g = o->at(j);
-      int h = t->at(j);
-      int f = max2_(g, h);
-      o->at(j) = f;
-    }
+      o->at(j) = max2_(o->at(j), t->at(j));
   }
   int product = 1;
   for (int k = 1 ; k <= lim; k ++)

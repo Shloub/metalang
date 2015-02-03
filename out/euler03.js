@@ -14,8 +14,7 @@ while (a != 1)
       a = ~~(a / b);
       b0 = b;
       b = a;
-      var e = Math.floor(Math.sqrt(a));
-      sqrtia = e;
+      sqrtia = Math.floor(Math.sqrt(a));
       found = 1;
     }
     b ++;

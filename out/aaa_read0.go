@@ -15,10 +15,9 @@ func skip() {
 }
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var b int
-  fmt.Fscanf(reader, "%d", &b)
+  var len int
+  fmt.Fscanf(reader, "%d", &len)
   skip()
-  var len int = b
   fmt.Printf("%d\n", len);
 }
 

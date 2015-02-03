@@ -23,7 +23,7 @@ typedef struct tuple_int_int {
 } tuple_int_int;
 
 int main(void){
-  int j, x, y, o, q, r, i;
+  int j, x, y, o, q, i;
   struct tuple_int_int * *directions = malloc( 8 * sizeof(struct tuple_int_int *));
   for (i = 0 ; i < 8; i++)
     if (i == 0)
@@ -90,8 +90,7 @@ int main(void){
     int *s = malloc( h * sizeof(int));
     for (q = 0 ; q < h; q++)
     {
-      scanf("%d ", &r);
-      s[q] = r;
+      scanf("%d ", &s[q]);
     }
     m[o] = s;
   }
@@ -102,11 +101,7 @@ int main(void){
     int dy = w->tuple_int_int_field_1;
     for (x = 0 ; x <= 19; x++)
       for (y = 0 ; y <= 19; y++)
-      {
-        int v = find(4, m, x, y, dx, dy);
-        int u = max2_(max0, v);
-        max0 = u;
-    }
+        max0 = max2_(max0, find(4, m, x, y, dx, dy));
   }
   printf("%d\n", max0);
   return 0;

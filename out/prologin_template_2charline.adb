@@ -38,20 +38,16 @@ end;
   taille1 : Integer;
   tableau2 : p_PTR;
   tableau1 : p_PTR;
-  h : Integer;
-  b : Integer;
 begin
-  Get(b);
+  Get(taille1);
   SkipSpaces;
-  taille1 := b;
   tableau1 := new p (0..taille1);
   for e in integer range (0)..taille1 - (1) loop
     Get(tableau1(e));
   end loop;
   SkipSpaces;
-  Get(h);
+  Get(taille2);
   SkipSpaces;
-  taille2 := h;
   tableau2 := new p (0..taille2);
   for m in integer range (0)..taille2 - (1) loop
     Get(tableau2(m));

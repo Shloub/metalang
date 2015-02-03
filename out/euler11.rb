@@ -35,9 +35,7 @@ for j in (0 ..  7) do
   (dx, dy) = directions[j]
   for x in (0 ..  19) do
     for y in (0 ..  19) do
-      g = find(4, m, x, y, dx, dy)
-      f = [max0, g].max
-      max0 = f;
+      max0 = [max0, find(4, m, x, y, dx, dy)].max;
     end
   end
 end

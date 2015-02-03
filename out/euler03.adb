@@ -7,7 +7,6 @@ procedure euler03 is
   sqrtia : Integer;
   maximum : Integer;
   found : Boolean;
-  e : Integer;
   b0 : Integer;
   b : Integer;
   a : Integer;
@@ -25,8 +24,7 @@ begin
         a := a / b;
         b0 := b;
         b := a;
-        e := Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float(a))));
-        sqrtia := e;
+        sqrtia := Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float(a))));
         found := TRUE;
       end if;
       b := b + (1);

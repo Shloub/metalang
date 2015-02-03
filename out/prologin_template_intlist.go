@@ -24,10 +24,9 @@ func programme_candidat(tableau []int, taille int) int{
 
 func main() {
   reader = bufio.NewReader(os.Stdin)
-  var b int
-  fmt.Fscanf(reader, "%d", &b)
+  var taille int
+  fmt.Fscanf(reader, "%d", &taille)
   skip()
-  var taille int = b
   var tableau []int = make([]int, taille)
   for e := 0 ; e <= taille - 1; e++ {
     fmt.Fscanf(reader, "%d", &tableau[e])

@@ -14,8 +14,7 @@ let main =
                                   then let a = (a / b) in
                                   let b0 = b in
                                   let b = a in
-                                  let e = ((int_of_float (sqrt (float_of_int ( a))))) in
-                                  let sqrtia = e in
+                                  let sqrtia = ((int_of_float (sqrt (float_of_int ( a))))) in
                                   let found = true in
                                   (a, b, b0, found, sqrtia)
                                   else (a, b, b0, found, sqrtia)))

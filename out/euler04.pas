@@ -52,7 +52,6 @@ var
   d : Longint;
   e : Longint;
   f : Longint;
-  g : Longint;
   m : Longint;
   mul : Longint;
 begin
@@ -79,8 +78,7 @@ begin
                                                                     mul))
               then
                 begin
-                  g := max2_(mul, m);
-                  m := g;
+                  m := max2_(mul, m);
                 end;
             end;
           end;

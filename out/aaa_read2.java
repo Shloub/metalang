@@ -10,15 +10,14 @@ read int, read char et skip
   
   public static void main(String args[])
   {
-    int b;
+    int len;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      b = scanner.nextInt();
+      len = scanner.nextInt();
     } else {
-      b = scanner.nextInt();
+      len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int len = b;
     System.out.printf("%d=len\n", len);
     int[] tab = new int[len];
     for (int f = 0 ; f < len; f++)
@@ -51,15 +50,14 @@ read int, read char et skip
     {
       System.out.printf("%d==>%d ", i_, tab2[i_]);
     }
-    int p;
+    int strlen;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      p = scanner.nextInt();
+      strlen = scanner.nextInt();
     } else {
-      p = scanner.nextInt();
+      strlen = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int strlen = p;
     System.out.printf("%d=strlen\n", strlen);
     char[] tab4 = scanner.nextLine().toCharArray();
     for (int i3 = 0 ; i3 < strlen; i3++)

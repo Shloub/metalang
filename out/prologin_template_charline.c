@@ -14,9 +14,8 @@ int programme_candidat(char* tableau, int taille){
 }
 
 int main(void){
-  int e, b;
-  scanf("%d ", &b);
-  int taille = b;
+  int e, taille;
+  scanf("%d ", &taille);
   char *tableau = malloc( taille * sizeof(char));
   for (e = 0 ; e < taille; e++)
     scanf("%c", &tableau[e]);

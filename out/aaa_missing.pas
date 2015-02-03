@@ -98,14 +98,12 @@ end;
 
 
 var
-  b : Longint;
   e : Longint;
   len : Longint;
   tab : h;
 begin
-  b := read_int_();
+  len := read_int_();
   skip();
-  len := b;
   Write(len);
   Write(''#10'');
   SetLength(tab, len);

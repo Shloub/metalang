@@ -20,12 +20,7 @@ public class pathfinding0
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int p = Math.Min(val1, val2);
-      int q = Math.Min(p, val3);
-      int r = Math.Min(q, val4);
-      int s = r;
-      int o = s;
-      int out0 = 1 + o;
+      int out0 = 1 + Math.Min(Math.Min(Math.Min(val1, val2), val3), val4);
       cache[posY][posX] = out0;
       return out0;
     }

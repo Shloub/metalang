@@ -2,9 +2,8 @@
 #include <vector>
 
 int main(){
-  int w, f;
-  std::cin >> f >> std::skipws;
-  int len = f;
+  int len;
+  std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
   std::vector<int > *tab1 = new std::vector<int>( len );
   for (int k = 0 ; k < len; k++)
@@ -22,8 +21,7 @@ int main(){
     std::vector<int > *ba = new std::vector<int>( len );
     for (int v = 0 ; v < len; v++)
     {
-      std::cin >> w >> std::skipws;
-      ba->at(v) = w;
+      std::cin >> ba->at(v) >> std::skipws;
     }
     tab2->at(s) = ba;
   }

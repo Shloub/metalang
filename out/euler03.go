@@ -15,8 +15,7 @@ func main() {
         a /= b;
           b0 = b;
           b = a;
-          var e int = int(math.Sqrt(float64(a)))
-          sqrtia = e;
+          sqrtia = int(math.Sqrt(float64(a)));
           found = true;
       }
       b ++;

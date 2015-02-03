@@ -110,9 +110,8 @@ for (var o = 0 ; o <= 20 - 1; o++)
   var s = new Array(h);
   for (var q = 0 ; q <= h - 1; q++)
   {
-    r=read_int_();
+    s[q]=read_int_();
     stdinsep();
-    s[q] = r;
   }
   m[o] = s;
 }
@@ -123,11 +122,7 @@ for (var j = 0 ; j <= 7; j++)
   var dy = w.tuple_int_int_field_1;
   for (var x = 0 ; x <= 19; x++)
     for (var y = 0 ; y <= 19; y++)
-    {
-      var v = find(4, m, x, y, dx, dy);
-      var u = Math.max(max0, v);
-      max0 = u;
-  }
+      max0 = Math.max(max0, find(4, m, x, y, dx, dy));
 }
 util.print(max0, "\n");
 

@@ -89,15 +89,10 @@ type bo = array of array of char;
 function pathfind_aux(cache : bm; tab : bo; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
   out0 : Longint;
-  r : Longint;
-  s : Longint;
-  u : Longint;
-  v : Longint;
   val1 : Longint;
   val2 : Longint;
   val3 : Longint;
   val4 : Longint;
-  w : Longint;
 begin
   if (posX = (x - 1)) and (posY = (y - 1)) then
     begin
@@ -123,12 +118,7 @@ begin
       val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY);
       val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1);
       val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      s := min2_(val1, val2);
-      u := min2_(s, val3);
-      v := min2_(u, val4);
-      w := v;
-      r := w;
-      out0 := 1 + r;
+      out0 := 1 + min2_(min2_(min2_(val1, val2), val3), val4);
       cache[posY][posX] := out0;
       exit(out0);
     end;;;;
@@ -158,24 +148,19 @@ end;
 
 
 var
-  bb : Longint;
-  bd : Longint;
   bf : bo;
   bg : Longint;
   bi : Longint;
-  bj : char;
   bk : bn;
   result : Longint;
   tab : bo;
   x : Longint;
   y : Longint;
 begin
-  bb := read_int_();
+  x := read_int_();
   skip();
-  x := bb;
-  bd := read_int_();
+  y := read_int_();
   skip();
-  y := bd;
   Write(x);
   Write(' ');
   Write(y);
@@ -186,8 +171,7 @@ begin
     SetLength(bk, x);
     for bi := 0 to  x - 1 do
     begin
-      bj := read_char_();
-      bk[bi] := bj;
+      bk[bi] := read_char_();
     end;
     skip();
     bf[bg] := bk;

@@ -121,10 +121,7 @@ var
   max0 : Longint;
   o : Longint;
   q : Longint;
-  r : Longint;
   s : bi;
-  u : Longint;
-  v : Longint;
   w : tuple_int_int;
   x : Longint;
   y : Longint;
@@ -198,9 +195,8 @@ begin
     SetLength(s, h);
     for q := 0 to  h - 1 do
     begin
-      r := read_int_();
+      s[q] := read_int_();
       skip();
-      s[q] := r;
     end;
     m[o] := s;
   end;
@@ -213,9 +209,7 @@ begin
     begin
       for y := 0 to  19 do
       begin
-        v := find(4, m, x, y, dx, dy);
-        u := max2_(max0, v);
-        max0 := u;
+        max0 := max2_(max0, find(4, m, x, y, dx, dy));
       end;
     end;
   end;

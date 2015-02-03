@@ -14,15 +14,14 @@ public class prologin_template_intlist
   
   public static void main(String args[])
   {
-    int b;
+    int taille;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      b = scanner.nextInt();
+      taille = scanner.nextInt();
     } else {
-      b = scanner.nextInt();
+      taille = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille = b;
     int[] tableau = new int[taille];
     for (int e = 0 ; e < taille; e++)
     {

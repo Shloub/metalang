@@ -77,14 +77,12 @@ end;
 
 
 var
-  b : Longint;
   e : Longint;
   tableau : g;
   taille : Longint;
 begin
-  b := read_int_();
+  taille := read_int_();
   skip();
-  taille := b;
   SetLength(tableau, taille);
   for e := 0 to  taille - 1 do
   begin

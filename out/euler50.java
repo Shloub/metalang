@@ -67,10 +67,7 @@ public class euler50
           }
         }
         else
-        {
-          int c = Math.min(stop, i);
-          stop = c;
-        }
+          stop = Math.min(stop, i);
       }
       len ++;
     }

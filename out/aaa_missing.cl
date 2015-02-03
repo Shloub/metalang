@@ -61,25 +61,24 @@
   )))
 
 (progn
-  (let ((b (mread-int )))
+  (let ((len (mread-int )))
     (mread-blank)
-    (let ((len b))
-      (princ len)
-      (princ "
+    (princ len)
+    (princ "
 ")
-      (let
-       ((tab (array_init
-                len
-                (function (lambda (e)
-                (block lambda_2
-                  (let ((f (mread-int )))
-                    (mread-blank)
-                    (return-from lambda_2 f)
-                  )))
-                ))))
-      (princ (result len tab))
-      (princ "
+    (let
+     ((tab (array_init
+              len
+              (function (lambda (e)
+              (block lambda_2
+                (let ((f (mread-int )))
+                  (mread-blank)
+                  (return-from lambda_2 f)
+                )))
+              ))))
+    (princ (result len tab))
+    (princ "
 ")
-      ))))
+    )))
 
 

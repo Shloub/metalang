@@ -41,9 +41,8 @@ sub result{
   return -1;
 }
 
-my $b = readint();
+my $len = readint();
 readspaces();
-my $len = $b;
 print($len, "\n");
 my $tab = [];
 foreach my $e (0 .. $len - 1) {

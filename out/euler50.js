@@ -59,10 +59,7 @@ while (process)
       }
     }
     else
-    {
-      var c = Math.min(stop, i);
-      stop = c;
-    }
+      stop = Math.min(stop, i);
   }
   len ++;
 }

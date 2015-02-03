@@ -4,9 +4,8 @@
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int j, s, v, w, i, k, f;
-  scanf("%d ", &f);
-  int len = f;
+  int j, s, v, i, k, len;
+  scanf("%d ", &len);
   printf("%d=len\n", len);
   int *tab1 = malloc( len * sizeof(int));
   for (k = 0 ; k < len; k++)
@@ -24,8 +23,7 @@ int main(void){
     int *ba = malloc( len * sizeof(int));
     for (v = 0 ; v < len; v++)
     {
-      scanf("%d ", &w);
-      ba[v] = w;
+      scanf("%d ", &ba[v]);
     }
     tab2[s] = ba;
   }

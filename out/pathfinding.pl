@@ -45,8 +45,7 @@ sub pathfind_aux{
     my $val2 = pathfind_aux($cache, $tab, $x, $y, $posX - 1, $posY);
     my $val3 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY - 1);
     my $val4 = pathfind_aux($cache, $tab, $x, $y, $posX, $posY + 1);
-    my $e = min($val1, $val2, $val3, $val4);
-    my $out0 = 1 + $e;
+    my $out0 = 1 + min($val1, $val2, $val3, $val4);
     $cache->[$posY]->[$posX] = $out0;
     return $out0;
   }

@@ -55,10 +55,7 @@ type bk is Array (Integer range <>) of tuple_int_int_PTR;
 type bk_PTR is access bk;
 
   w : tuple_int_int_PTR;
-  v : Integer;
-  u : Integer;
   s : bi_PTR;
-  r : Integer;
   max0 : Integer;
   m : bj_PTR;
   h : Integer;
@@ -143,9 +140,8 @@ begin
   for o in integer range (0)..(20) - (1) loop
     s := new bi (0..h);
     for q in integer range (0)..h - (1) loop
-      Get(r);
+      Get(s(q));
       SkipSpaces;
-      s(q) := r;
     end loop;
     m(o) := s;
   end loop;
@@ -155,9 +151,7 @@ begin
     dy := w.tuple_int_int_field_1;
     for x in integer range (0)..(19) loop
       for y in integer range (0)..(19) loop
-        v := find((4), m, x, y, dx, dy);
-        u := max2_0(max0, v);
-        max0 := u;
+        max0 := max2_0(max0, find((4), m, x, y, dx, dy));
       end loop;
     end loop;
   end loop;

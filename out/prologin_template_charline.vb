@@ -70,9 +70,8 @@ End Function
   
   
   Sub Main()
-    Dim b As Integer = readInt()
+    Dim taille As Integer = readInt()
     stdin_sep()
-    Dim taille As Integer = b
     Dim tableau(taille) As Char
     For  e As Integer  = 0 to  taille - 1
       tableau(e) = readChar()

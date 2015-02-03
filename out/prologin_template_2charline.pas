@@ -94,27 +94,23 @@ end;
 
 
 var
-  b : Longint;
   e : Longint;
-  h : Longint;
   m : Longint;
   tableau1 : p;
   tableau2 : p;
   taille1 : Longint;
   taille2 : Longint;
 begin
-  b := read_int_();
+  taille1 := read_int_();
   skip();
-  taille1 := b;
   SetLength(tableau1, taille1);
   for e := 0 to  taille1 - 1 do
   begin
     tableau1[e] := read_char_();
   end;
   skip();
-  h := read_int_();
+  taille2 := read_int_();
   skip();
-  taille2 := h;
   SetLength(tableau2, taille2);
   for m := 0 to  taille2 - 1 do
   begin

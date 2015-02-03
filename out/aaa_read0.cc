@@ -2,9 +2,8 @@
 #include <vector>
 
 int main(){
-  int b;
-  std::cin >> b >> std::skipws;
-  int len = b;
+  int len;
+  std::cin >> len >> std::skipws;
   std::cout << len << "\n";
   return 0;
 }

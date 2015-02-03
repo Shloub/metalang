@@ -60,9 +60,8 @@ my $m = [];
 foreach my $o (0 .. 20 - 1) {
   my $s = [];
   foreach my $q (0 .. $h - 1) {
-    my $r = readint();
+    $s->[$q] = readint();
     readspaces();
-    $s->[$q] = $r;
     }
   $m->[$o] = $s;
   }
@@ -70,9 +69,7 @@ foreach my $j (0 .. 7) {
   my ($dx, $dy) = @{ $directions->[$j] };
   foreach my $x (0 .. 19) {
     foreach my $y (0 .. 19) {
-      my $v = find(4, $m, $x, $y, $dx, $dy);
-      my $u = max($max0, $v);
-      $max0 = $u;
+      $max0 = max($max0, find(4, $m, $x, $y, $dx, $dy));
       }
     }
   }

@@ -22,10 +22,7 @@ for m in range(0, lim + 1):
 for i in range(1, 1 + lim):
   t = primesfactors(i);
   for j in range(1, 1 + i):
-    g = o[j];
-    h = t[j];
-    f = max(g, h);
-    o[j] = f;
+    o[j] = max(o[j], t[j]);
 product = 1;
 for k in range(1, 1 + lim):
   for l in range(1, 1 + o[k]):

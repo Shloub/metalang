@@ -19,10 +19,9 @@
                               (let ([a (quotient a b)])
                               (let ([b0 b])
                               (let ([b a])
-                              (let ([e (integer-sqrt a)])
-                              (let ([sqrtia e])
+                              (let ([sqrtia (integer-sqrt a)])
                               (let ([found #t])
-                              (list a b b0 found sqrtia)))))))
+                              (list a b b0 found sqrtia))))))
                               (list a b b0 found sqrtia)))
                               (let ([a (if (not found)
                                        (block

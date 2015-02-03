@@ -75,12 +75,10 @@ End Function
   
   
   Sub Main()
-    Dim b As Integer = readInt()
+    Dim taille1 As Integer = readInt()
     stdin_sep()
-    Dim taille1 As Integer = b
-    Dim d As Integer = readInt()
+    Dim taille2 As Integer = readInt()
     stdin_sep()
-    Dim taille2 As Integer = d
     Dim tableau1(taille1) As Char
     For  g As Integer  = 0 to  taille1 - 1
       tableau1(g) = readChar()

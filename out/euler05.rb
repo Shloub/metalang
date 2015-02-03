@@ -29,10 +29,7 @@ end
 for i in (1 ..  lim) do
   t = primesfactors(i)
   for j in (1 ..  i) do
-    g = o[j]
-    h = t[j]
-    f = [g, h].max
-    o[j] = f;
+    o[j] = [o[j], t[j]].max;
   end
 end
 product = 1

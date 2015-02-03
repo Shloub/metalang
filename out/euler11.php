@@ -35,11 +35,7 @@ for ($j = 0 ; $j <= 7; $j++)
   list($dx, $dy) = $directions[$j];
   for ($x = 0 ; $x <= 19; $x++)
     for ($y = 0 ; $y <= 19; $y++)
-    {
-      $o = find(4, $m, $x, $y, $dx, $dy);
-      $l = max($max0, $o);
-      $max0 = $l;
-  }
+      $max0 = max($max0, find(4, $m, $x, $y, $dx, $dy));
 }
 echo $max0, "\n";
 ?>

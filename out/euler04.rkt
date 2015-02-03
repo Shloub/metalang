@@ -40,9 +40,8 @@
                                                                   (let ([mul (+ (+ (+ (+ (* a d) (* 10 (+ (* a e) (* b d)))) (* 100 (+ (+ (* a f) (* b e)) (* c d)))) (* 1000 (+ (* c e) (* b f)))) (* (* 10000 c) f))])
                                                                   (let ([m 
                                                                   (if (and (and (eq? (chiffre 0 mul) (chiffre 5 mul)) (eq? (chiffre 1 mul) (chiffre 4 mul))) (eq? (chiffre 2 mul) (chiffre 3 mul)))
-                                                                  (let ([g (max mul m)])
-                                                                  (let ([m g])
-                                                                  m))
+                                                                  (let ([m (max mul m)])
+                                                                  m)
                                                                   m)])
                                                                   (o (+ e 1) m)))
                                                                   (n (+ b 1) m)))])

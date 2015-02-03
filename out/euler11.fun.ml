@@ -71,9 +71,7 @@ let main =
         let bp = 19 in
         let rec bn y max0 =
           (if (y <= bp)
-           then let v = (find 4 m x y dx dy) in
-           let u = ((max (max0) (v))) in
-           let max0 = u in
+           then let max0 = ((max (max0) ((find 4 m x y dx dy)))) in
            (bn (y + 1) max0)
            else (bm (x + 1) max0)) in
           (bn bo max0)

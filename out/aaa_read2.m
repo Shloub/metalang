@@ -8,9 +8,8 @@ read int, read char et skip
 */
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int j, i3, s, p, i_, l, i, f, b;
-  scanf("%d ", &b);
-  int len = b;
+  int j, i3, s, strlen, i_, l, i, f, len;
+  scanf("%d ", &len);
   printf("%d=len\n", len);
   int *tab = malloc( len * sizeof(int));
   for (f = 0 ; f < len; f++)
@@ -31,8 +30,7 @@ int main(void){
   {
     printf("%d==>%d ", i_, tab2[i_]);
   }
-  scanf("%d ", &p);
-  int strlen = p;
+  scanf("%d ", &strlen);
   printf("%d=strlen\n", strlen);
   char *tab4 = malloc( strlen * sizeof(char));
   for (s = 0 ; s < strlen; s++)

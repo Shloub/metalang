@@ -63,12 +63,10 @@ end;
 
 
 var
-  b : Longint;
   len : Longint;
 begin
-  b := read_int_();
+  len := read_int_();
   skip();
-  len := b;
   Write(len);
   Write(''#10'');
 end.

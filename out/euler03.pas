@@ -6,7 +6,6 @@ var
   a : Longint;
   b : Longint;
   b0 : Longint;
-  e : Longint;
   found : boolean;
   maximum : Longint;
   sqrtia : Longint;
@@ -27,8 +26,7 @@ begin
           a := a Div b;
           b0 := b;
           b := a;
-          e := Floor(Sqrt(a));
-          sqrtia := e;
+          sqrtia := Floor(Sqrt(a));
           found := true;
         end;
       b := b + 1;

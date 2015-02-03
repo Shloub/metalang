@@ -10,19 +10,15 @@ int programme_candidat(std::vector<std::vector<int> *> * tableau, int x, int y){
 
 
 int main(){
-  int q, h, f;
-  std::cin >> f >> std::skipws;
-  int taille_x = f;
-  std::cin >> h >> std::skipws;
-  int taille_y = h;
+  int taille_y, taille_x;
+  std::cin >> taille_x >> std::skipws >> taille_y;
   std::vector<std::vector<int> * > *tableau = new std::vector<std::vector<int> *>( taille_y );
   for (int m = 0 ; m < taille_y; m++)
   {
     std::vector<int > *r = new std::vector<int>( taille_x );
     for (int p = 0 ; p < taille_x; p++)
     {
-      std::cin >> q >> std::skipws;
-      r->at(p) = q;
+      std::cin >> r->at(p) >> std::skipws;
     }
     tableau->at(m) = r;
   }

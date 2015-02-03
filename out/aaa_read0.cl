@@ -20,12 +20,11 @@
 ))
 
 (progn
-  (let ((b (mread-int )))
+  (let ((len (mread-int )))
     (mread-blank)
-    (let ((len b))
-      (princ len)
-      (princ "
+    (princ len)
+    (princ "
 ")
-    )))
+  ))
 
 

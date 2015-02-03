@@ -18,15 +18,14 @@ public class prologin_template_charline
   
   public static void main(String args[])
   {
-    int b;
+    int taille;
     if (scanner.hasNext("^-")){
       scanner.next("^-");
-      b = scanner.nextInt();
+      taille = scanner.nextInt();
     } else {
-      b = scanner.nextInt();
+      taille = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille = b;
     char[] tableau = scanner.nextLine().toCharArray();
     System.out.printf("%d\n", programme_candidat(tableau, taille));
   }

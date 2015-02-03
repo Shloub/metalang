@@ -66,7 +66,6 @@ type bc = array of array of Longint;
 
 var
   ba : bb;
-  f : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -75,11 +74,9 @@ var
   tab1 : bb;
   tab2 : bc;
   v : Longint;
-  w : Longint;
 begin
-  f := read_int_();
+  len := read_int_();
   skip();
-  len := f;
   Write(len);
   Write('=len'#10'');
   SetLength(tab1, len);
@@ -103,9 +100,8 @@ begin
     SetLength(ba, len);
     for v := 0 to  len - 1 do
     begin
-      w := read_int_();
+      ba[v] := read_int_();
       skip();
-      ba[v] := w;
     end;
     tab2[s] := ba;
   end;

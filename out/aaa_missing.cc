@@ -21,9 +21,8 @@ int result(int len, std::vector<int> * tab){
 
 
 int main(){
-  int b;
-  std::cin >> b >> std::skipws;
-  int len = b;
+  int len;
+  std::cin >> len >> std::skipws;
   std::cout << len << "\n";
   std::vector<int > *tab = new std::vector<int>( len );
   for (int e = 0 ; e < len; e++)

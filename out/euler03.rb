@@ -15,8 +15,7 @@ while a != 1 do
       a = (a.to_f / b).to_i
       b0 = b;
       b = a;
-      e = Math.sqrt(a).to_i
-      sqrtia = e;
+      sqrtia = Math.sqrt(a).to_i;
       found = true;
     end
     b += 1

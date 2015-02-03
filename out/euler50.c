@@ -71,10 +71,7 @@ int main(void){
         }
       }
       else
-      {
-        int c = min2_(stop, i);
-        stop = c;
-      }
+        stop = min2_(stop, i);
     }
     len ++;
   }

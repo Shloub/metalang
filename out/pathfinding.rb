@@ -14,8 +14,7 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      e = [val1, val2, val3, val4].min
-      out0 = 1 + e
+      out0 = 1 + [val1, val2, val3, val4].min
       cache[posY][posX] = out0;
       return (out0);
     end

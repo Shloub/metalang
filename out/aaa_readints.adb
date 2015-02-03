@@ -18,16 +18,13 @@ type bb_PTR is access bb;
 type bc is Array (Integer range <>) of bb_PTR;
 type bc_PTR is access bc;
 
-  w : Integer;
   tab2 : bc_PTR;
   tab1 : bb_PTR;
   len : Integer;
-  f : Integer;
   ba : bb_PTR;
 begin
-  Get(f);
+  Get(len);
   SkipSpaces;
-  len := f;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=len" & Character'Val(10) & "");
   tab1 := new bb (0..len);
@@ -47,9 +44,8 @@ begin
   for s in integer range (0)..len - (1) - (1) loop
     ba := new bb (0..len);
     for v in integer range (0)..len - (1) loop
-      Get(w);
+      Get(ba(v));
       SkipSpaces;
-      ba(v) := w;
     end loop;
     tab2(s) := ba;
   end loop;

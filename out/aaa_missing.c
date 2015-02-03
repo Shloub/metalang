@@ -22,9 +22,8 @@ int result(int len, int* tab){
 }
 
 int main(void){
-  int e, b;
-  scanf("%d ", &b);
-  int len = b;
+  int e, len;
+  scanf("%d ", &len);
   printf("%d\n", len);
   int *tab = malloc( len * sizeof(int));
   for (e = 0 ; e < len; e++)

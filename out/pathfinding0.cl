@@ -52,11 +52,10 @@
             (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
               (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))
                 (let ((val4 (pathfind_aux cache tab x y posX (+ posY 1))))
-                  (let ((k (min val1 val2 val3 val4)))
-                    (let ((out0 (+ 1 k)))
-                      (setf (aref (aref cache posY) posX) out0)
-                      (return-from pathfind_aux out0)
-                    ))))))))))))
+                  (let ((out0 (+ 1 (min val1 val2 val3 val4))))
+                    (setf (aref (aref cache posY) posX) out0)
+                    (return-from pathfind_aux out0)
+                  )))))))))))
 
 (defun pathfind (tab x y)
 (progn
@@ -83,38 +82,36 @@
   )))
 
 (progn
-  (let ((m (mread-int )))
+  (let ((x (mread-int )))
     (mread-blank)
-    (let ((x m))
-      (let ((p (mread-int )))
-        (mread-blank)
-        (let ((y p))
-          (princ x)
-          (princ " ")
-          (princ y)
-          (princ "
+    (let ((y (mread-int )))
+      (mread-blank)
+      (princ x)
+      (princ " ")
+      (princ y)
+      (princ "
 ")
-          (let
-           ((r (array_init
-                  y
-                  (function (lambda (s)
-                  (block lambda_3
-                    (let
-                     ((ba (array_init
-                             x
-                             (function (lambda (v)
-                             (block lambda_4
-                               (let ((w (mread-char )))
-                                 (return-from lambda_4 w)
-                               )))
-                             ))))
-                    (mread-blank)
-                    (return-from lambda_3 ba)
-                    )))
-                  ))))
-          (let ((tab r))
-            (let ((result (pathfind tab x y)))
-              (princ result)
-            ))))))))
+      (let
+       ((r (array_init
+              y
+              (function (lambda (s)
+              (block lambda_3
+                (let
+                 ((ba (array_init
+                         x
+                         (function (lambda (v)
+                         (block lambda_4
+                           (let ((w (mread-char )))
+                             (return-from lambda_4 w)
+                           )))
+                         ))))
+                (mread-blank)
+                (return-from lambda_3 ba)
+                )))
+              ))))
+      (let ((tab r))
+        (let ((result (pathfind tab x y)))
+          (princ result)
+        ))))))
 
 

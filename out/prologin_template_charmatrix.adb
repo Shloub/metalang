@@ -37,23 +37,17 @@ end;
   taille_x : Integer;
   tableau : u_PTR;
   r : s_PTR;
-  q : Character;
   l : u_PTR;
-  h : Integer;
-  f : Integer;
 begin
-  Get(f);
+  Get(taille_x);
   SkipSpaces;
-  taille_x := f;
-  Get(h);
+  Get(taille_y);
   SkipSpaces;
-  taille_y := h;
   l := new u (0..taille_y);
   for m in integer range (0)..taille_y - (1) loop
     r := new s (0..taille_x);
     for p in integer range (0)..taille_x - (1) loop
-      Get(q);
-      r(p) := q;
+      Get(r(p));
     end loop;
     SkipSpaces;
     l(m) := r;

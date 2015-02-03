@@ -20,12 +20,7 @@ public class pathfinding
       int val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       int val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       int val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      int n = Math.min(val1, val2);
-      int o = Math.min(n, val3);
-      int p = Math.min(o, val4);
-      int q = p;
-      int m = q;
-      int out0 = 1 + m;
+      int out0 = 1 + Math.min(Math.min(Math.min(val1, val2), val3), val4);
       cache[posY][posX] = out0;
       return out0;
     }

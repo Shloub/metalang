@@ -35,10 +35,7 @@ func main() {
   for i := 1 ; i <= lim; i++ {
     var t []int = primesfactors(i)
       for j := 1 ; j <= i; j++ {
-        var g int = o[j]
-          var h int = t[j]
-          var f int = max2_(g, h)
-          o[j] = f;
+        o[j] = max2_(o[j], t[j]);
       }
   }
   var product int = 1

@@ -24,7 +24,6 @@ public:
 
 
 int main(){
-  int r;
   std::vector<tuple_int_int * > *directions = new std::vector<tuple_int_int *>( 8 );
   for (int i = 0 ; i < 8; i++)
     if (i == 0)
@@ -91,8 +90,7 @@ int main(){
     std::vector<int > *s = new std::vector<int>( h );
     for (int q = 0 ; q < h; q++)
     {
-      std::cin >> r >> std::skipws;
-      s->at(q) = r;
+      std::cin >> s->at(q) >> std::skipws;
     }
     m->at(o) = s;
   }
@@ -103,11 +101,7 @@ int main(){
     int dy = w->tuple_int_int_field_1;
     for (int x = 0 ; x <= 19; x ++)
       for (int y = 0 ; y <= 19; y ++)
-      {
-        int v = find(4, m, x, y, dx, dy);
-        int u = max2_(max0, v);
-        max0 = u;
-    }
+        max0 = max2_(max0, find(4, m, x, y, dx, dy));
   }
   std::cout << max0 << "\n";
   return 0;

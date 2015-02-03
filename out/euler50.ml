@@ -58,10 +58,7 @@ begin
                   end
               end
             else
-              begin
-                let c = (min ((!stop)) (i)) in
-                stop := c
-              end
+              stop := (min ((!stop)) (i))
           end
       done;
       len := (!len) + 1

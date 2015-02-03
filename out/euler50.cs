@@ -66,10 +66,7 @@ public class euler50
           }
         }
         else
-        {
-          int c = Math.Min(stop, i);
-          stop = c;
-        }
+          stop = Math.Min(stop, i);
       }
       len ++;
     }

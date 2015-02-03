@@ -49,7 +49,6 @@ end;
   len : Integer;
   l : Integer;
   era : d_PTR;
-  c : Integer;
 begin
   maximumprimes := (1000001);
   era := new d (0..maximumprimes);
@@ -97,8 +96,7 @@ begin
             resp := sum(i);
           end if;
         else
-          c := min2_0(stop, i);
-          stop := c;
+          stop := min2_0(stop, i);
         end if;
       end if;
     end loop;

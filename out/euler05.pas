@@ -45,9 +45,6 @@ end;
 
 
 var
-  f : Longint;
-  g : Longint;
-  h : Longint;
   i : Longint;
   j : Longint;
   k : Longint;
@@ -69,10 +66,7 @@ begin
     t := primesfactors(i);
     for j := 1 to  i do
     begin
-      g := o[j];
-      h := t[j];
-      f := max2_(g, h);
-      o[j] := f;
+      o[j] := max2_(o[j], t[j]);
     end;
   end;
   product := 1;

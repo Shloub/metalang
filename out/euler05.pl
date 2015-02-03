@@ -34,10 +34,7 @@ foreach my $m (0 .. $lim + 1 - 1) {
 foreach my $i (1 .. $lim) {
   my $t = primesfactors($i);
   foreach my $j (1 .. $i) {
-    my $g = $o->[$j];
-    my $h = $t->[$j];
-    my $f = max($g, $h);
-    $o->[$j] = $f;
+    $o->[$j] = max($o->[$j], $t->[$j]);
     }
   }
 my $product = 1;
