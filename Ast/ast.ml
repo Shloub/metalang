@@ -556,6 +556,37 @@ module Instr = struct
   | StdinSep
   | Unquote of 'expr
 
+  let fold_map_bloc f acc t = match t with
+    | Declare (a, b, c, d) -> acc, Declare (a, b, c, d)
+    | Affect (var, e) -> acc, Affect (var, e)
+    | Comment s -> acc, Comment s
+    | Loop (var, e1, e2, li) ->
+      let acc, li = f acc li in
+      acc, Loop (var, e1, e2, li)
+    | While (e, li) ->
+      let acc, li = f acc li in
+      acc, While (e, li)
+    | If (e, cif, celse) ->
+      let acc, cif = f acc cif in
+      let acc, ceslse = f acc celse in
+      acc, If (e, cif, celse)
+    | Return e -> acc, Return e
+    | AllocArray (b, t, l, Some ((b2, li)), opt) ->
+      let acc, li = f acc li in
+      acc, AllocArray (b, t, l, Some((b2, li)), opt)
+    | AllocArray (a, b, c, None, opt) ->
+      acc, AllocArray (a, b, c, None, opt)
+    | AllocRecord (a, b, c, opt) ->
+      acc, AllocRecord (a, b, c, opt)
+    | Print (a, b) -> acc, Print (a, b)
+    | Read (a, b) -> acc, Read (a, b)
+    | DeclRead (a, b, opt) -> acc, DeclRead (a, b, opt)
+    | Call (a, b) -> acc, Call (a, b)
+    | StdinSep -> acc, StdinSep
+    | Unquote e -> acc, Unquote e
+    | Untuple (lis, e, opt) -> acc, Untuple (lis, e, opt)
+    | Tag e -> acc, Tag e
+
   let map_bloc f t = match t with
     | Declare (a, b, c, d) -> Declare (a, b, c, d)
     | Affect (var, e) -> Affect (var, e)
