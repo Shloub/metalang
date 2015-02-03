@@ -568,7 +568,7 @@ module Instr = struct
       acc, While (e, li)
     | If (e, cif, celse) ->
       let acc, cif = f acc cif in
-      let acc, ceslse = f acc celse in
+      let acc, celse = f acc celse in
       acc, If (e, cif, celse)
     | Return e -> acc, Return e
     | AllocArray (b, t, l, Some ((b2, li)), opt) ->
