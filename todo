@@ -1,6 +1,7 @@
 Langage & Compilateur :
+  tableau constant lors d'une initialisation
   cleaner un peu la lib standard
-  ruby : utiliser [*1..n].map pour initialiser un tableau
+  python et ruby : utiliser [*0..n].map pour initialiser un tableau
   types abstract (pour ouvrir un fichier par exemple)
   commentaires indentation
   type option
@@ -14,7 +15,8 @@ outils :
 
 autres printers :
   f#
-  vb.net
+  scala
+  LUA
 
 portage windows
 
