@@ -20,6 +20,7 @@ m=$(st "out" "*.m")
 pl=$(st "out" "*.pl")
 java=$(st "out" "*.java")
 ada=$(st "out" "*.adb")
+vb=$(st "out" "*.vb")
 
 ml=$(( $ml - $funml ))
 
@@ -38,6 +39,7 @@ rb=$(( $rb * 1000 / $metalang))
 cs=$(( $cs * 1000 / $metalang))
 m=$(( $m * 1000 / $metalang))
 pl=$(( $pl * 1000 / $metalang))
+vb=$(( $vb * 1000 / $metalang))
 java=$(( $java * 1000 / $metalang))
 ada=$(( $ada * 1000 / $metalang))
 
@@ -83,6 +85,7 @@ rb $rb
 cs $cs
 pl $pl
 ada $ada
+vb $vb
 java $java" | swap | sort | swap ) > "$file"
 
 filestatsplot(){
