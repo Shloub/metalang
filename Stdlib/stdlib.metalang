@@ -245,6 +245,7 @@ macro array<int> native_expand_read_int_line()
   vb do "Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(\" \".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))"
   rkt do "list->vector (map string->number (regexp-split \" \" (read-line)))"
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
+  pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   *  do "E R R O R"
 end
 
@@ -257,6 +258,7 @@ macro array<char> native_expand_read_char_line()
   cpp do "getline()"
   rkt do "list->vector (string->list (read-line))"
   ruby do "STDIN.readline.split(//)"
+  pl do "[split(//, <STDIN>)]"
   *  do "E R R O R"
 end
 
@@ -274,6 +276,7 @@ macro int native_expand_read_int()
   ml do "Scanf.scanf \"%d \" (fun x -> x)"
   rkt do "string->number (read-line)"
   ruby do "STDIN.readline.to_i(10)"
+  pl do "int( <STDIN> )"
   *  do "E R R O R"
 end
 
@@ -287,6 +290,7 @@ then
 	elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Rkt ||
+	current_language() == LANG_Pl ||
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Rb
@@ -310,6 +314,7 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Php ||
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
+	current_language() == LANG_Pl ||
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Rb
 	  then
@@ -344,6 +349,7 @@ def lexems expand_read_char_line(lexems a)
   elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Rkt ||
+	current_language() == LANG_Pl ||
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Rb
