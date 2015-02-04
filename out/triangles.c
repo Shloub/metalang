@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /* Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique

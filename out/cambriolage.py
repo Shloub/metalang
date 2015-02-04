@@ -34,25 +34,25 @@ def readint():
       return out * sign
 
 def nbPassePartout( n, passepartout, m, serrures ):
-    max_ancient = 0;
-    max_recent = 0;
+    max_ancient = 0
+    max_recent = 0
     for i in range(0, m):
       if serrures[i][0] == -(1) and serrures[i][1] > max_ancient:
-        max_ancient = serrures[i][1];
+        max_ancient = serrures[i][1]
       if serrures[i][0] == 1 and serrures[i][1] > max_recent:
-        max_recent = serrures[i][1];
-    max_ancient_pp = 0;
-    max_recent_pp = 0;
+        max_recent = serrures[i][1]
+    max_ancient_pp = 0
+    max_recent_pp = 0
     for i in range(0, n):
-      pp = passepartout[i];
+      pp = passepartout[i]
       if pp[0] >= max_ancient and pp[1] >= max_recent:
-        return 1;
-      max_ancient_pp = max(max_ancient_pp, pp[0]);
-      max_recent_pp = max(max_recent_pp, pp[1]);
+        return 1
+      max_ancient_pp = max(max_ancient_pp, pp[0])
+      max_recent_pp = max(max_recent_pp, pp[1])
     if max_ancient_pp >= max_ancient and max_recent_pp >= max_recent:
-      return 2;
+      return 2
     else:
-      return 0;
+      return 0
 
 n=readint()
 stdinsep()
@@ -62,8 +62,8 @@ for i in range(0, n):
   for j in range(0, 2):
     out01=readint()
     stdinsep()
-    out0[j] = out01;
-  passepartout[i] = out0;
+    out0[j] = out01
+  passepartout[i] = out0
 m=readint()
 stdinsep()
 serrures = [None] * m
@@ -72,7 +72,7 @@ for k in range(0, m):
   for l in range(0, 2):
     out_=readint()
     stdinsep()
-    out1[l] = out_;
-  serrures[k] = out1;
+    out1[l] = out_
+  serrures[k] = out1
 print("%d" % nbPassePartout(n, passepartout, m, serrures), end='')
 

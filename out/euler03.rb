@@ -13,16 +13,16 @@ while a != 1 do
   while b <= sqrtia do
     if (mod(a, b)) == 0 then
       a = (a.to_f / b).to_i
-      b0 = b;
-      b = a;
-      sqrtia = Math.sqrt(a).to_i;
-      found = true;
+      b0 = b
+      b = a
+      sqrtia = Math.sqrt(a).to_i
+      found = true
     end
     b += 1
   end
   if not(found) then
     printf "%d\n", a
-    a = 1;
+    a = 1
   end
 end
 

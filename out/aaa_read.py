@@ -54,25 +54,25 @@ for i in range(0, len):
   tmpi1=readint()
   stdinsep()
   print("%d=>%d " % ( i, tmpi1 ), end='')
-  tab[i] = tmpi1;
+  tab[i] = tmpi1
 print("")
 tab2 = [None] * len
 for i_ in range(0, len):
   tmpi2=readint()
   stdinsep()
   print("%d==>%d " % ( i_, tmpi2 ), end='')
-  tab2[i_] = tmpi2;
+  tab2[i_] = tmpi2
 strlen=readint()
 stdinsep()
 print("%d=strlen\n" % ( strlen ), end='')
 tab4 = [None] * strlen
 for toto in range(0, strlen):
   tmpc=readchar()
-  c = ord(tmpc);
+  c = ord(tmpc)
   print("%c:%d " % ( tmpc, c ), end='')
   if tmpc != ' ':
-    c = mod((c - ord('a')) + 13, 26) + ord('a');
-  tab4[toto] = c;
+    c = mod((c - ord('a')) + 13, 26) + ord('a')
+  tab4[toto] = c
 for j in range(0, strlen):
   print("%c" % tab4[j], end='')
 

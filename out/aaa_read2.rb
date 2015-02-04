@@ -29,9 +29,9 @@ for i3 in (0 ..  strlen - 1) do
   c = tmpc.ord
   printf "%c:%d ", tmpc, c
   if tmpc != " " then
-    c = mod((c - "a".ord) + 13, 26) + "a".ord;
+    c = mod((c - "a".ord) + 13, 26) + "a".ord
   end
-  tab4[i3] = c;
+  tab4[i3] = c
 end
 for j in (0 ..  strlen - 1) do
   printf "%c", tab4[j]

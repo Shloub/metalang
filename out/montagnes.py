@@ -34,28 +34,28 @@ def readint():
       return out * sign
 
 def montagnes0( tab, len ):
-    max0 = 1;
-    j = 1;
-    i = len - 2;
+    max0 = 1
+    j = 1
+    i = len - 2
     while (i >= 0):
-      x = tab[i];
+      x = tab[i]
       while (j >= 0 and x > tab[len - j]):
         j -= 1
       j += 1
-      tab[len - j] = x;
+      tab[len - j] = x
       if j > max0:
-        max0 = j;
+        max0 = j
       i -= 1
-    return max0;
+    return max0
 
-len = 0;
+len = 0
 len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  x = 0;
+  x = 0
   x=readint()
   stdinsep()
-  tab[i] = x;
+  tab[i] = x
 print("%d" % montagnes0(tab, len), end='')
 

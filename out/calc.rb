@@ -15,7 +15,7 @@ def fibo( a, b, i )
       out_ += a2
       tmp = b2
       b2 += a2
-      a2 = tmp;
+      a2 = tmp
     end
     return (out_);
 end

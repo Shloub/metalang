@@ -15,15 +15,15 @@ import math
 
 """
 def sumdiag( n ):
-    nterms = n * 2 - 1;
-    un = 1;
-    sum = 1;
+    nterms = n * 2 - 1
+    un = 1
+    sum = 1
     for i in range(0, 1 + nterms - 2):
-      d = 2 * (1 + math.trunc(i / 4));
+      d = 2 * (1 + math.trunc(i / 4))
       un += d
       """ print int d print "=>" print un print " " """
       sum += un
-    return sum;
+    return sum
 
 print("%d" % sumdiag(1001), end='')
 

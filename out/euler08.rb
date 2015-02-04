@@ -9,7 +9,7 @@ for j in (0 ..  5 - 1) do
   c=scanf("%c")[0];
   d = c.ord - "0".ord
   i *= d
-  last[j] = d;
+  last[j] = d
 end
 max0 = i
 index = 0
@@ -18,8 +18,8 @@ for k in (1 ..  995) do
   e=scanf("%c")[0];
   f = e.ord - "0".ord
   if f == 0 then
-    i = 1;
-    nskipdiv = 4;
+    i = 1
+    nskipdiv = 4
   else
     i *= f
     if nskipdiv < 0 then
@@ -27,9 +27,9 @@ for k in (1 ..  995) do
     end
     nskipdiv -= 1
   end
-  last[index] = f;
-  index = mod(index + 1, 5);
-  max0 = [max0, i].max;
+  last[index] = f
+  index = mod(index + 1, 5)
+  max0 = [max0, i].max
 end
 printf "%d\n", max0
 

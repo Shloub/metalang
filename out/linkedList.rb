@@ -28,7 +28,7 @@ def test( empty )
     while i != 0 do
       i=scanf("%d")[0];
       if i != 0 then
-        list = cons(list, i);
+        list = cons(list, i)
       end
     end
 end

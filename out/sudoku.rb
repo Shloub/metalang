@@ -12,7 +12,7 @@ def read_sudoku(  )
     for i in (0 ..  9 * 9 - 1) do
       k=scanf("%d")[0];
       scanf("%*\n");
-      out0[i] = k;
+      out0[i] = k
     end
     return (out0);
 end
@@ -82,12 +82,12 @@ def solve( sudoku0 )
     for i in (0 ..  80) do
       if sudoku0[i] == 0 then
         for p in (1 ..  9) do
-          sudoku0[i] = p;
+          sudoku0[i] = p
           if solve(sudoku0) then
             return (true);
           end
         end
-        sudoku0[i] = 0;
+        sudoku0[i] = 0
         return (false);
       end
     end
@@ -95,9 +95,9 @@ def solve( sudoku0 )
 end
 
 sudoku0 = read_sudoku()
-print_sudoku(sudoku0);
+print_sudoku(sudoku0)
 if solve(sudoku0) then
-  print_sudoku(sudoku0);
+  print_sudoku(sudoku0)
 else
   print "no solution\n";
 end

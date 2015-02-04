@@ -38,23 +38,23 @@ def readint():
       return out * sign
 
 def nth( tab, tofind, len ):
-    out0 = 0;
+    out0 = 0
     for i in range(0, len):
       if tab[i] == tofind:
         out0 += 1
-    return out0;
+    return out0
 
-len = 0;
+len = 0
 len=readint()
 stdinsep()
-tofind = '\000';
+tofind = '\000'
 tofind=readchar()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  tmp = '\000';
+  tmp = '\000'
   tmp=readchar()
-  tab[i] = tmp;
-result = nth(tab, tofind, len);
+  tab[i] = tmp
+result = nth(tab, tofind, len)
 print("%d" % result, end='')
 

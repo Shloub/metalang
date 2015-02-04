@@ -51,10 +51,10 @@ dayofweek = 1
 count = 0
 while year != 2001 do
   ndays = ndayinmonth(month, year)
-  dayofweek = mod(dayofweek + ndays, 7);
+  dayofweek = mod(dayofweek + ndays, 7)
   month += 1
   if month == 12 then
-    month = 0;
+    month = 0
     year += 1
   end
   if (mod(dayofweek, 7)) == 6 then

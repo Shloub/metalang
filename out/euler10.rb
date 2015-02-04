@@ -7,7 +7,7 @@ def eratostene( t, max0 )
         if (max0.to_f / i).to_i > i then
           j = i * i
           while j < max0 && j > 0 do
-            t[j] = 0;
+            t[j] = 0
             j += i
           end
         end
@@ -24,8 +24,8 @@ n = 100000
 
 t = [];
 for i in (0 ..  n - 1) do
-  t[i] = i;
+  t[i] = i
 end
-t[1] = 0;
+t[1] = 0
 printf "%d\n", eratostene(t, n)
 

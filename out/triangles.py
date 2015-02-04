@@ -42,42 +42,42 @@ def find0( len, tab, cache, x, y ):
 	Cette fonction est récursive
 	"""
     if y == len - 1:
-      return tab[y][x];
+      return tab[y][x]
     elif x > y:
-      return -(10000);
+      return -(10000)
     elif cache[y][x] != 0:
-      return cache[y][x];
-    result = 0;
-    out0 = find0(len, tab, cache, x, y + 1);
-    out1 = find0(len, tab, cache, x + 1, y + 1);
+      return cache[y][x]
+    result = 0
+    out0 = find0(len, tab, cache, x, y + 1)
+    out1 = find0(len, tab, cache, x + 1, y + 1)
     if out0 > out1:
-      result = out0 + tab[y][x];
+      result = out0 + tab[y][x]
     else:
-      result = out1 + tab[y][x];
-    cache[y][x] = result;
-    return result;
+      result = out1 + tab[y][x]
+    cache[y][x] = result
+    return result
 
 def find( len, tab ):
     tab2 = [None] * len
     for i in range(0, len):
       tab3 = [None] * (i + 1)
       for j in range(0, i + 1):
-        tab3[j] = 0;
-      tab2[i] = tab3;
-    return find0(len, tab, tab2, 0, 0);
+        tab3[j] = 0
+      tab2[i] = tab3
+    return find0(len, tab, tab2, 0, 0)
 
-len = 0;
+len = 0
 len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
   tab2 = [None] * (i + 1)
   for j in range(0, i + 1):
-    tmp = 0;
+    tmp = 0
     tmp=readint()
     stdinsep()
-    tab2[j] = tmp;
-  tab[i] = tab2;
+    tab2[j] = tmp
+  tab[i] = tab2
 print("%d\n" % ( find(len, tab) ), end='')
 for k in range(0, len):
   for l in range(0, 1 + k):

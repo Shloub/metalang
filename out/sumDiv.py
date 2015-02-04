@@ -30,7 +30,7 @@ def mod(x, y):
   return x - y * math.trunc(x / y)
 
 def foo(  ):
-    a = 0;
+    a = 0
     """ test """
     a += 1
     """ test 2 """
@@ -44,7 +44,7 @@ def foo3(  ):
 
 def sumdiv( n ):
     """ On désire renvoyer la somme des diviseurs """
-    out0 = 0;
+    out0 = 0
     """ On déclare un entier qui contiendra la somme """
     for i in range(1, 1 + n):
       """ La boucle : i est le diviseur potentiel"""
@@ -54,11 +54,11 @@ def sumdiv( n ):
         """ On incrémente """
       else:
         """ nop """
-    return out0;
+    return out0
     """On renvoie out"""
 
 """ Programme principal """
-n = 0;
+n = 0
 n=readint()
 """ Lecture de l'entier """
 print("%d" % sumdiv(n), end='')

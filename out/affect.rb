@@ -30,22 +30,22 @@ def result( t_, t2_ )
       "foo" => 0,
       "bar" => 0,
       "blah" => 0}
-    t3 = t2;
-    t = t2;
-    t2 = t3;
+    t3 = t2
+    t = t2
+    t2 = t3
     t["blah"] += 1
     len = 1
     cache0 = [];
     for i in (0 ..  len - 1) do
-      cache0[i] = -i;
+      cache0[i] = -i
     end
     cache1 = [];
     for j in (0 ..  len - 1) do
-      cache1[j] = j;
+      cache1[j] = j
     end
     cache2 = cache0
-    cache0 = cache1;
-    cache2 = cache0;
+    cache0 = cache1
+    cache2 = cache0
     return (t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"]);
 end
 

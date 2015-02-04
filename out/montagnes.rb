@@ -9,9 +9,9 @@ def montagnes0( tab, len )
         j -= 1
       end
       j += 1
-      tab[len - j] = x;
+      tab[len - j] = x
       if j > max0 then
-        max0 = j;
+        max0 = j
       end
       i -= 1
     end
@@ -26,7 +26,7 @@ for i in (0 ..  len - 1) do
   x = 0
   x=scanf("%d")[0];
   scanf("%*\n");
-  tab[i] = x;
+  tab[i] = x
 end
 printf "%d", montagnes0(tab, len)
 

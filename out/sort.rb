@@ -2,7 +2,7 @@ require "scanf.rb"
 def copytab( tab, len )
     o = [];
     for i in (0 ..  len - 1) do
-      o[i] = tab[i];
+      o[i] = tab[i]
     end
     return (o);
 end
@@ -12,8 +12,8 @@ def bubblesort( tab, len )
       for j in (i + 1 ..  len - 1) do
         if tab[i] > tab[j] then
           tmp = tab[i]
-          tab[i] = tab[j];
-          tab[j] = tmp;
+          tab[i] = tab[j]
+          tab[j] = tmp
         end
       end
     end
@@ -37,8 +37,8 @@ def qsort0( tab, len, i, j )
 =end
 
             tmp = tab[i]
-            tab[i] = tab[j];
-            tab[j] = tmp;
+            tab[i] = tab[j]
+            tab[j] = tmp
             i += 1
           else
             
@@ -47,17 +47,17 @@ def qsort0( tab, len, i, j )
 =end
 
             tmp = tab[i]
-            tab[i] = tab[j];
-            tab[j] = tab[i + 1];
-            tab[i + 1] = tmp;
+            tab[i] = tab[j]
+            tab[j] = tab[i + 1]
+            tab[i + 1] = tmp
             i += 1
           end
         else
           j -= 1
         end
       end
-      qsort0(tab, len, i0, i - 1);
-      qsort0(tab, len, i + 1, j0);
+      qsort0(tab, len, i0, i - 1)
+      qsort0(tab, len, i + 1, j0)
     end
 end
 
@@ -69,16 +69,16 @@ for i_ in (0 ..  len - 1) do
   tmp = 0
   tmp=scanf("%d")[0];
   scanf("%*\n");
-  tab[i_] = tmp;
+  tab[i_] = tmp
 end
 tab2 = copytab(tab, len)
-bubblesort(tab2, len);
+bubblesort(tab2, len)
 for i in (0 ..  len - 1) do
   printf "%d ", tab2[i]
 end
 print "\n";
 tab3 = copytab(tab, len)
-qsort0(tab3, len, 0, len - 1);
+qsort0(tab3, len, 0, len - 1)
 for i in (0 ..  len - 1) do
   printf "%d ", tab3[i]
 end

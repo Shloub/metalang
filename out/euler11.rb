@@ -12,21 +12,21 @@ end
 directions = [];
 for i in (0 ..  8 - 1) do
   if i == 0 then
-    directions[i] = [0, 1];
+    directions[i] = [0, 1]
   elsif i == 1 then
-    directions[i] = [1, 0];
+    directions[i] = [1, 0]
   elsif i == 2 then
-    directions[i] = [0, -1];
+    directions[i] = [0, -1]
   elsif i == 3 then
-    directions[i] = [-1, 0];
+    directions[i] = [-1, 0]
   elsif i == 4 then
-    directions[i] = [1, 1];
+    directions[i] = [1, 1]
   elsif i == 5 then
-    directions[i] = [1, -1];
+    directions[i] = [1, -1]
   elsif i == 6 then
-    directions[i] = [-1, 1];
+    directions[i] = [-1, 1]
   else
-    directions[i] = [-1, -1];
+    directions[i] = [-1, -1]
   end
 end
 max0 = 0
@@ -35,7 +35,7 @@ for j in (0 ..  7) do
   (dx, dy) = directions[j]
   for x in (0 ..  19) do
     for y in (0 ..  19) do
-      max0 = [max0, find(4, m, x, y, dx, dy)].max;
+      max0 = [max0, find(4, m, x, y, dx, dy)].max
     end
   end
 end

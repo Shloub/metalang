@@ -16,8 +16,8 @@ def go0( tab, a, b )
         i += 1
       else
         j -= 1
-        tab[i] = tab[j];
-        tab[j] = e;
+        tab[i] = tab[j]
+        tab[j] = e
       end
     end
     if i < m then
@@ -39,7 +39,7 @@ for i in (0 ..  len - 1) do
   tmp = 0
   tmp=scanf("%d")[0];
   scanf("%*\n");
-  tab[i] = tmp;
+  tab[i] = tmp
 end
 printf "%d", plus_petit0(tab, len)
 

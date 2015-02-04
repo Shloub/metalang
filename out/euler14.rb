@@ -19,14 +19,14 @@ def find( n, m )
     elsif m[n] != 0 then
       return (m[n]);
     else
-      m[n] = 1 + find(next0(n), m);
+      m[n] = 1 + find(next0(n), m)
       return (m[n]);
     end
 end
 
 m = [];
 for j in (0 ..  1000000 - 1) do
-  m[j] = 0;
+  m[j] = 0
 end
 max0 = 0
 maxi = 0
@@ -38,8 +38,8 @@ for i in (1 ..  999) do
 
   n2 = find(i, m)
   if n2 > max0 then
-    max0 = n2;
-    maxi = i;
+    max0 = n2
+    maxi = i
   end
 end
 printf "%d\n%d\n", max0, maxi

@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct tuple_int_int {
   int tuple_int_int_field_0;

@@ -7,7 +7,7 @@ def eratostene( t, max0 )
         if (max0.to_f / i).to_i > i then
           j = i * i
           while j < max0 && j > 0 do
-            t[j] = 0;
+            t[j] = 0
             j += i
           end
         end
@@ -19,24 +19,24 @@ end
 maximumprimes = 1000001
 era = [];
 for j in (0 ..  maximumprimes - 1) do
-  era[j] = j;
+  era[j] = j
 end
 nprimes = eratostene(era, maximumprimes)
 primes = [];
 for o in (0 ..  nprimes - 1) do
-  primes[o] = 0;
+  primes[o] = 0
 end
 l = 0
 for k in (2 ..  maximumprimes - 1) do
   if era[k] == k then
-    primes[l] = k;
+    primes[l] = k
     l += 1
   end
 end
 printf "%d == %d\n", l, nprimes
 sum = [];
 for i_ in (0 ..  nprimes - 1) do
-  sum[i_] = primes[i_];
+  sum[i_] = primes[i_]
 end
 maxl = 0
 process = true
@@ -44,18 +44,18 @@ stop = maximumprimes - 1
 len = 1
 resp = 1
 while process do
-  process = false;
+  process = false
   for i in (0 ..  stop) do
     if i + len < nprimes then
-      sum[i] = sum[i] + primes[i + len];
+      sum[i] = sum[i] + primes[i + len]
       if maximumprimes > sum[i] then
-        process = true;
+        process = true
         if era[sum[i]] == sum[i] then
-          maxl = len;
-          resp = sum[i];
+          maxl = len
+          resp = sum[i]
         end
       else
-        stop = [stop, i].min;
+        stop = [stop, i].min
       end
     end
   end

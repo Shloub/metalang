@@ -5,18 +5,18 @@ def h( i ):
     """  for j = i - 2 to i + 2 do
     if i % j == 5 then return true end
   end """
-    j = i - 2;
+    j = i - 2
     while (j <= i + 2):
       if (mod(i, j)) == 5:
-        return True;
+        return True
       j += 1
-    return False;
+    return False
 
-j = 0;
+j = 0
 for k in range(0, 1 + 10):
   j += k
   print("%d\n" % ( j ), end='')
-i = 4;
+i = 4
 while (i < 10):
   print("%d" % i, end='')
   i += 1

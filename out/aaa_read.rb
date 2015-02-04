@@ -21,7 +21,7 @@ for i in (0 ..  len - 1) do
   tmpi1=scanf("%d")[0];
   scanf("%*\n");
   printf "%d=>%d ", i, tmpi1
-  tab[i] = tmpi1;
+  tab[i] = tmpi1
 end
 print "\n";
 tab2 = [];
@@ -29,7 +29,7 @@ for i_ in (0 ..  len - 1) do
   tmpi2=scanf("%d")[0];
   scanf("%*\n");
   printf "%d==>%d ", i_, tmpi2
-  tab2[i_] = tmpi2;
+  tab2[i_] = tmpi2
 end
 strlen=scanf("%d")[0];
 scanf("%*\n");
@@ -40,9 +40,9 @@ for toto in (0 ..  strlen - 1) do
   c = tmpc.ord
   printf "%c:%d ", tmpc, c
   if tmpc != " " then
-    c = mod((c - "a".ord) + 13, 26) + "a".ord;
+    c = mod((c - "a".ord) + 13, 26) + "a".ord
   end
-  tab4[toto] = c;
+  tab4[toto] = c
 end
 for j in (0 ..  strlen - 1) do
   printf "%c", tab4[j]

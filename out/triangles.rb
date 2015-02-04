@@ -27,11 +27,11 @@ def find0( len, tab, cache, x, y )
     out0 = find0(len, tab, cache, x, y + 1)
     out1 = find0(len, tab, cache, x + 1, y + 1)
     if out0 > out1 then
-      result = out0 + tab[y][x];
+      result = out0 + tab[y][x]
     else
-      result = out1 + tab[y][x];
+      result = out1 + tab[y][x]
     end
-    cache[y][x] = result;
+    cache[y][x] = result
     return (result);
 end
 
@@ -40,9 +40,9 @@ def find( len, tab )
     for i in (0 ..  len - 1) do
       tab3 = [];
       for j in (0 ..  i + 1 - 1) do
-        tab3[j] = 0;
+        tab3[j] = 0
       end
-      tab2[i] = tab3;
+      tab2[i] = tab3
     end
     return (find0(len, tab, tab2, 0, 0));
 end
@@ -57,9 +57,9 @@ for i in (0 ..  len - 1) do
     tmp = 0
     tmp=scanf("%d")[0];
     scanf("%*\n");
-    tab2[j] = tmp;
+    tab2[j] = tmp
   end
-  tab[i] = tab2;
+  tab[i] = tab2
 end
 printf "%d\n", find(len, tab)
 for k in (0 ..  len - 1) do

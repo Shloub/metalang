@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement

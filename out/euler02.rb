@@ -11,7 +11,7 @@ while a < 4000000 do
     sum += a
   end
   c = a
-  a = b;
+  a = b
   b += c
 end
 printf "%d\n", sum

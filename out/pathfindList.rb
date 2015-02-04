@@ -5,16 +5,16 @@ def pathfind_aux( cache, tab, len, pos )
     elsif cache[pos] != -1 then
       return (cache[pos]);
     else
-      cache[pos] = len * 2;
+      cache[pos] = len * 2
       posval = pathfind_aux(cache, tab, len, tab[pos])
       oneval = pathfind_aux(cache, tab, len, pos + 1)
       out0 = 0
       if posval < oneval then
-        out0 = 1 + posval;
+        out0 = 1 + posval
       else
-        out0 = 1 + oneval;
+        out0 = 1 + oneval
       end
-      cache[pos] = out0;
+      cache[pos] = out0
       return (out0);
     end
 end
@@ -22,7 +22,7 @@ end
 def pathfind( tab, len )
     cache = [];
     for i in (0 ..  len - 1) do
-      cache[i] = -1;
+      cache[i] = -1
     end
     return (pathfind_aux(cache, tab, len, 0));
 end
@@ -35,7 +35,7 @@ for i in (0 ..  len - 1) do
   tmp = 0
   tmp=scanf("%d")[0];
   scanf("%*\n");
-  tab[i] = tmp;
+  tab[i] = tmp
 end
 result = pathfind(tab, len)
 printf "%d", result

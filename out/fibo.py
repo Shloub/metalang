@@ -36,19 +36,19 @@ def readint():
 La suite de fibonaci
 """
 def fibo0( a, b, i ):
-    out0 = 0;
-    a2 = a;
-    b2 = b;
+    out0 = 0
+    a2 = a
+    b2 = b
     for j in range(0, 1 + i + 1):
       out0 += a2
-      tmp = b2;
+      tmp = b2
       b2 += a2
-      a2 = tmp;
-    return out0;
+      a2 = tmp
+    return out0
 
-a = 0;
-b = 0;
-i = 0;
+a = 0
+b = 0
+i = 0
 a=readint()
 stdinsep()
 b=readint()

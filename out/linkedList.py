@@ -29,28 +29,28 @@ def readint():
 def cons( list, i ):
     out0 = {
       "head":i,
-      "tail":list};
-    return out0;
+      "tail":list}
+    return out0
 
 def rev2( empty, acc, torev ):
     if torev == empty:
-      return acc;
+      return acc
     else:
       acc2 = {
         "head":torev["head"],
-        "tail":acc};
-      return rev2(empty, acc, torev["tail"]);
+        "tail":acc}
+      return rev2(empty, acc, torev["tail"])
 
 def rev( empty, torev ):
-    return rev2(empty, empty, torev);
+    return rev2(empty, empty, torev)
 
 def test( empty ):
-    list = empty;
-    i = -(1);
+    list = empty
+    i = -(1)
     while (i != 0):
       i=readint()
       if i != 0:
-        list = cons(list, i);
+        list = cons(list, i)
 
 
 

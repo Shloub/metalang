@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int pathfind_aux(int* cache, int* tab, int len, int pos){
   if (pos >= len - 1)

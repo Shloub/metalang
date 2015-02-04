@@ -35,38 +35,38 @@ def readint():
       return out * sign
 
 def go0( tab, a, b ):
-    m = math.trunc((a + b) / 2);
+    m = math.trunc((a + b) / 2)
     if a == m:
       if tab[a] == m:
-        return b;
+        return b
       else:
-        return a;
-    i = a;
-    j = b;
+        return a
+    i = a
+    j = b
     while (i < j):
-      e = tab[i];
+      e = tab[i]
       if e < m:
         i += 1
       else:
         j -= 1
-        tab[i] = tab[j];
-        tab[j] = e;
+        tab[i] = tab[j]
+        tab[j] = e
     if i < m:
-      return go0(tab, a, m);
+      return go0(tab, a, m)
     else:
-      return go0(tab, m, b);
+      return go0(tab, m, b)
 
 def plus_petit0( tab, len ):
-    return go0(tab, 0, len);
+    return go0(tab, 0, len)
 
-len = 0;
+len = 0
 len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  tmp = 0;
+  tmp = 0
   tmp=readint()
   stdinsep()
-  tab[i] = tmp;
+  tab[i] = tmp
 print("%d" % plus_petit0(tab, len), end='')
 

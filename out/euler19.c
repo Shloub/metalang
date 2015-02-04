@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int is_leap(int year){
   return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0);

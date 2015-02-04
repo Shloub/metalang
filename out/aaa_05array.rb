@@ -8,13 +8,13 @@ def id( b )
 end
 
 def g( t, index )
-    t[index] = false;
+    t[index] = false
 end
 
 a = [];
 for i in (0 ..  5 - 1) do
   printf "%d", i
-  a[i] = (mod(i, 2)) == 0;
+  a[i] = (mod(i, 2)) == 0
 end
 c = a[0]
 if c then
@@ -23,7 +23,7 @@ else
   print "False";
 end
 print "\n";
-g(id(a), 0);
+g(id(a), 0)
 d = a[0]
 if d then
   print "True";

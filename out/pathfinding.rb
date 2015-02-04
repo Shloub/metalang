@@ -9,13 +9,13 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
     elsif cache[posY][posX] != -1 then
       return (cache[posY][posX]);
     else
-      cache[posY][posX] = x * y * 10;
+      cache[posY][posX] = x * y * 10
       val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY)
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
       out0 = 1 + [val1, val2, val3, val4].min
-      cache[posY][posX] = out0;
+      cache[posY][posX] = out0
       return (out0);
     end
 end
@@ -25,9 +25,9 @@ def pathfind( tab, x, y )
     for i in (0 ..  y - 1) do
       tmp = [];
       for j in (0 ..  x - 1) do
-        tmp[j] = -1;
+        tmp[j] = -1
       end
-      cache[i] = tmp;
+      cache[i] = tmp
     end
     return (pathfind_aux(cache, tab, x, y, 0, 0));
 end
@@ -44,10 +44,10 @@ for i in (0 ..  y - 1) do
   for j in (0 ..  x - 1) do
     tmp = "\000"
     tmp=scanf("%c")[0];
-    tab2[j] = tmp;
+    tab2[j] = tmp
   end
   scanf("%*\n");
-  tab[i] = tab2;
+  tab[i] = tab2
 end
 result = pathfind(tab, x, y)
 printf "%d", result

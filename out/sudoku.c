@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /* lit un sudoku sur l'entrée standard */
 int* read_sudoku(){

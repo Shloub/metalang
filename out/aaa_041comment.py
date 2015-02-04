@@ -1,4 +1,4 @@
-i = 4;
+i = 4
 """while i < 10 do """
 print("%d" % i, end='')
 i += 1

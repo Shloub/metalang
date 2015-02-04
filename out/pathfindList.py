@@ -35,36 +35,36 @@ def readint():
 
 def pathfind_aux( cache, tab, len, pos ):
     if pos >= len - 1:
-      return 0;
+      return 0
     elif cache[pos] != -(1):
-      return cache[pos];
+      return cache[pos]
     else:
-      cache[pos] = len * 2;
-      posval = pathfind_aux(cache, tab, len, tab[pos]);
-      oneval = pathfind_aux(cache, tab, len, pos + 1);
-      out0 = 0;
+      cache[pos] = len * 2
+      posval = pathfind_aux(cache, tab, len, tab[pos])
+      oneval = pathfind_aux(cache, tab, len, pos + 1)
+      out0 = 0
       if posval < oneval:
-        out0 = 1 + posval;
+        out0 = 1 + posval
       else:
-        out0 = 1 + oneval;
-      cache[pos] = out0;
-      return out0;
+        out0 = 1 + oneval
+      cache[pos] = out0
+      return out0
 
 def pathfind( tab, len ):
     cache = [None] * len
     for i in range(0, len):
-      cache[i] = -(1);
-    return pathfind_aux(cache, tab, len, 0);
+      cache[i] = -(1)
+    return pathfind_aux(cache, tab, len, 0)
 
-len = 0;
+len = 0
 len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  tmp = 0;
+  tmp = 0
   tmp=readint()
   stdinsep()
-  tab[i] = tmp;
-result = pathfind(tab, len);
+  tab[i] = tmp
+result = pathfind(tab, len)
 print("%d" % result, end='')
 

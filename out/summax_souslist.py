@@ -34,25 +34,25 @@ def readint():
       return out * sign
 
 def summax( lst, len ):
-    current = 0;
-    max0 = 0;
+    current = 0
+    max0 = 0
     for i in range(0, len):
       current += lst[i]
       if current < 0:
-        current = 0;
+        current = 0
       if max0 < current:
-        max0 = current;
-    return max0;
+        max0 = current
+    return max0
 
-len = 0;
+len = 0
 len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  tmp = 0;
+  tmp = 0
   tmp=readint()
   stdinsep()
-  tab[i] = tmp;
-result = summax(tab, len);
+  tab[i] = tmp
+result = summax(tab, len)
 print("%d" % result, end='')
 

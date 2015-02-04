@@ -10,7 +10,7 @@ def eratostene( t, max0 )
         n += 1
         j = i * i
         while j < max0 && j > 0 do
-          t[j] = 0;
+          t[j] = 0
           j += i
         end
       end
@@ -22,7 +22,7 @@ def fillPrimesFactors( t, n, primes, nprimes )
     for i in (0 ..  nprimes - 1) do
       d = primes[i]
       while (mod(n, d)) == 0 do
-        t[d] = t[d] + 1;
+        t[d] = t[d] + 1
         n = (n.to_f / d).to_i
       end
       if n == 1 then
@@ -59,7 +59,7 @@ end
 def sumdiv( nprimes, primes, n )
     t = [];
     for i in (0 ..  n + 1 - 1) do
-      t[i] = 0;
+      t[i] = 0
     end
     max0 = fillPrimesFactors(t, n, primes, nprimes)
     return (sumdivaux(t, max0, 0));
@@ -68,17 +68,17 @@ end
 maximumprimes = 30001
 era = [];
 for s in (0 ..  maximumprimes - 1) do
-  era[s] = s;
+  era[s] = s
 end
 nprimes = eratostene(era, maximumprimes)
 primes = [];
 for t in (0 ..  nprimes - 1) do
-  primes[t] = 0;
+  primes[t] = 0
 end
 l = 0
 for k in (2 ..  maximumprimes - 1) do
   if era[k] == k then
-    primes[l] = k;
+    primes[l] = k
     l += 1
   end
 end
@@ -90,23 +90,23 @@ n = 100
 
 abondant = [];
 for p in (0 ..  n + 1 - 1) do
-  abondant[p] = false;
+  abondant[p] = false
 end
 summable = [];
 for q in (0 ..  n + 1 - 1) do
-  summable[q] = false;
+  summable[q] = false
 end
 sum = 0
 for r in (2 ..  n) do
   other = sumdiv(nprimes, primes, r) - r
   if other > r then
-    abondant[r] = true;
+    abondant[r] = true
   end
 end
 for i in (1 ..  n) do
   for j in (1 ..  n) do
     if abondant[i] && abondant[j] && i + j <= n then
-      summable[i + j] = true;
+      summable[i + j] = true
     end
   end
 end

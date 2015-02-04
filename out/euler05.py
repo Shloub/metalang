@@ -4,26 +4,26 @@ def mod(x, y):
 def primesfactors( n ):
     tab = [None] * (n + 1)
     for i in range(0, n + 1):
-      tab[i] = 0;
-    d = 2;
+      tab[i] = 0
+    d = 2
     while (n != 1 and d * d <= n):
       if (mod(n, d)) == 0:
-        tab[d] = tab[d] + 1;
+        tab[d] = tab[d] + 1
         n = math.trunc(n / d)
       else:
         d += 1
-    tab[n] = tab[n] + 1;
-    return tab;
+    tab[n] = tab[n] + 1
+    return tab
 
-lim = 20;
+lim = 20
 o = [None] * (lim + 1)
 for m in range(0, lim + 1):
-  o[m] = 0;
+  o[m] = 0
 for i in range(1, 1 + lim):
-  t = primesfactors(i);
+  t = primesfactors(i)
   for j in range(1, 1 + i):
-    o[j] = max(o[j], t[j]);
-product = 1;
+    o[j] = max(o[j], t[j])
+product = 1
 for k in range(1, 1 + lim):
   for l in range(1, 1 + o[k]):
     product *= k

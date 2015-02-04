@@ -7,12 +7,12 @@ def read_bigint( len )
     chiffres = [];
     for j in (0 ..  len - 1) do
       c=scanf("%c")[0];
-      chiffres[j] = c.ord;
+      chiffres[j] = c.ord
     end
     for i in (0 ..  ((len - 1).to_f / 2).to_i) do
       tmp = chiffres[i]
-      chiffres[i] = chiffres[len - 1 - i];
-      chiffres[len - 1 - i] = tmp;
+      chiffres[i] = chiffres[len - 1 - i]
+      chiffres[len - 1 - i] = tmp
     end
     return ({
       "bigint_sign" => true,
@@ -99,8 +99,8 @@ def add_bigint_positif( a, b )
       if i < b["bigint_len"] then
         tmp += b["bigint_chiffres"][i]
       end
-      retenue = (tmp.to_f / 10).to_i;
-      chiffres[i] = mod(tmp, 10);
+      retenue = (tmp.to_f / 10).to_i
+      chiffres[i] = mod(tmp, 10)
     end
     while len > 0 && chiffres[len - 1] == 0 do
       len -= 1
@@ -129,11 +129,11 @@ Pré-requis : a > b
       end
       if tmp < 0 then
         tmp += 10
-        retenue = -1;
+        retenue = -1
       else
-        retenue = 0;
+        retenue = 0
       end
-      chiffres[i] = tmp;
+      chiffres[i] = tmp
     end
     while len > 0 && chiffres[len - 1] == 0 do
       len -= 1
@@ -198,19 +198,19 @@ D'ou le nom de la fonction.
     len = a["bigint_len"] + b["bigint_len"] + 1
     chiffres = [];
     for k in (0 ..  len - 1) do
-      chiffres[k] = 0;
+      chiffres[k] = 0
     end
     for i in (0 ..  a["bigint_len"] - 1) do
       retenue = 0
       for j in (0 ..  b["bigint_len"] - 1) do
-        chiffres[i + j] = chiffres[i + j] + retenue + b["bigint_chiffres"][j] * a["bigint_chiffres"][i];
-        retenue = (chiffres[i + j].to_f / 10).to_i;
-        chiffres[i + j] = mod(chiffres[i + j], 10);
+        chiffres[i + j] = chiffres[i + j] + retenue + b["bigint_chiffres"][j] * a["bigint_chiffres"][i]
+        retenue = (chiffres[i + j].to_f / 10).to_i
+        chiffres[i + j] = mod(chiffres[i + j], 10)
       end
-      chiffres[i + b["bigint_len"]] = chiffres[i + b["bigint_len"]] + retenue;
+      chiffres[i + b["bigint_len"]] = chiffres[i + b["bigint_len"]] + retenue
     end
-    chiffres[a["bigint_len"] + b["bigint_len"]] = (chiffres[a["bigint_len"] + b["bigint_len"] - 1].to_f / 10).to_i;
-    chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10);
+    chiffres[a["bigint_len"] + b["bigint_len"]] = (chiffres[a["bigint_len"] + b["bigint_len"] - 1].to_f / 10).to_i
+    chiffres[a["bigint_len"] + b["bigint_len"] - 1] = mod(chiffres[a["bigint_len"] + b["bigint_len"] - 1], 10)
     for l in (0 ..  2) do
       if len != 0 && chiffres[len - 1] == 0 then
         len -= 1
@@ -237,9 +237,9 @@ def bigint_shift( a, i )
     chiffres = [];
     for k in (0 ..  a["bigint_len"] + i - 1) do
       if k >= i then
-        chiffres[k] = a["bigint_chiffres"][k - i];
+        chiffres[k] = a["bigint_chiffres"][k - i]
       else
-        chiffres[k] = 0;
+        chiffres[k] = 0
       end
     end
     return ({
@@ -300,14 +300,14 @@ end
 def bigint_of_int( i )
     size = log10(i)
     if i == 0 then
-      size = 0;
+      size = 0
     end
     t = [];
     for j in (0 ..  size - 1) do
-      t[j] = 0;
+      t[j] = 0
     end
     for k in (0 ..  size - 1) do
-      t[k] = mod(i, 10);
+      t[k] = mod(i, 10)
       i = (i.to_f / 10).to_i
     end
     return ({
@@ -320,8 +320,8 @@ def fact_bigint( a )
     one = bigint_of_int(1)
     out0 = one
     while not(bigint_eq(a, one)) do
-      out0 = mul_bigint(a, out0);
-      a = sub_bigint(a, one);
+      out0 = mul_bigint(a, out0)
+      a = sub_bigint(a, one)
     end
     return (out0);
 end
@@ -346,7 +346,7 @@ def euler20(  )
  normalement c'est 100 
 =end
 
-    a = fact_bigint(a);
+    a = fact_bigint(a)
     return (sum_chiffres_bigint(a));
 end
 
@@ -361,7 +361,7 @@ def bigint_exp( a, b )
 end
 
 def bigint_exp_10chiffres( a, b )
-    a = bigint_premiers_chiffres(a, 10);
+    a = bigint_premiers_chiffres(a, 10)
     if b == 1 then
       return (a);
     elsif (mod(b, 2)) == 0 then
@@ -381,17 +381,17 @@ def euler48(  )
 
       ib = bigint_of_int(i)
       ibeib = bigint_exp_10chiffres(ib, i)
-      sum = add_bigint(sum, ibeib);
-      sum = bigint_premiers_chiffres(sum, 10);
+      sum = add_bigint(sum, ibeib)
+      sum = bigint_premiers_chiffres(sum, 10)
     end
     print "euler 48 = ";
-    print_bigint(sum);
+    print_bigint(sum)
     print "\n";
 end
 
 def euler16(  )
     a = bigint_of_int(2)
-    a = bigint_exp(a, 100);
+    a = bigint_exp(a, 100)
     
 =begin
  1000 normalement 
@@ -411,8 +411,8 @@ def euler25(  )
 =end
 
       c = add_bigint(a, b)
-      a = b;
-      b = c;
+      a = b
+      b = c
       i += 1
     end
     return (i);
@@ -423,30 +423,30 @@ def euler29(  )
     maxB = 5
     a_bigint = [];
     for j in (0 ..  maxA + 1 - 1) do
-      a_bigint[j] = bigint_of_int(j * j);
+      a_bigint[j] = bigint_of_int(j * j)
     end
     a0_bigint = [];
     for j2 in (0 ..  maxA + 1 - 1) do
-      a0_bigint[j2] = bigint_of_int(j2);
+      a0_bigint[j2] = bigint_of_int(j2)
     end
     b = [];
     for k in (0 ..  maxA + 1 - 1) do
-      b[k] = 2;
+      b[k] = 2
     end
     n = 0
     found = true
     while found do
       min0 = a0_bigint[0]
-      found = false;
+      found = false
       for i in (2 ..  maxA) do
         if b[i] <= maxB then
           if found then
             if bigint_lt(a_bigint[i], min0) then
-              min0 = a_bigint[i];
+              min0 = a_bigint[i]
             end
           else
-            min0 = a_bigint[i];
-            found = true;
+            min0 = a_bigint[i]
+            found = true
           end
         end
       end
@@ -454,8 +454,8 @@ def euler29(  )
         n += 1
         for l in (2 ..  maxA) do
           if bigint_eq(a_bigint[l], min0) && b[l] <= maxB then
-            b[l] = b[l] + 1;
-            a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l]);
+            b[l] = b[l] + 1
+            a_bigint[l] = mul_bigint(a_bigint[l], a0_bigint[l])
           end
         end
       end
@@ -468,52 +468,52 @@ sum = read_bigint(50)
 for i in (2 ..  100) do
   scanf("%*\n");
   tmp = read_bigint(50)
-  sum = add_bigint(sum, tmp);
+  sum = add_bigint(sum, tmp)
 end
 print "euler13 = ";
-print_bigint(sum);
+print_bigint(sum)
 printf "\neuler25 = %d\neuler16 = %d\n", euler25(), euler16()
-euler48();
+euler48()
 printf "euler20 = %d\n", euler20()
 a = bigint_of_int(999999)
 b = bigint_of_int(9951263)
-print_bigint(a);
+print_bigint(a)
 print ">>1=";
-print_bigint(bigint_shift(a, -1));
+print_bigint(bigint_shift(a, -1))
 print "\n";
-print_bigint(a);
+print_bigint(a)
 print "*";
-print_bigint(b);
+print_bigint(b)
 print "=";
-print_bigint(mul_bigint(a, b));
+print_bigint(mul_bigint(a, b))
 print "\n";
-print_bigint(a);
+print_bigint(a)
 print "*";
-print_bigint(b);
+print_bigint(b)
 print "=";
-print_bigint(mul_bigint_cp(a, b));
+print_bigint(mul_bigint_cp(a, b))
 print "\n";
-print_bigint(a);
+print_bigint(a)
 print "+";
-print_bigint(b);
+print_bigint(b)
 print "=";
-print_bigint(add_bigint(a, b));
+print_bigint(add_bigint(a, b))
 print "\n";
-print_bigint(b);
+print_bigint(b)
 print "-";
-print_bigint(a);
+print_bigint(a)
 print "=";
-print_bigint(sub_bigint(b, a));
+print_bigint(sub_bigint(b, a))
 print "\n";
-print_bigint(a);
+print_bigint(a)
 print "-";
-print_bigint(b);
+print_bigint(b)
 print "=";
-print_bigint(sub_bigint(a, b));
+print_bigint(sub_bigint(a, b))
 print "\n";
-print_bigint(a);
+print_bigint(a)
 print ">";
-print_bigint(b);
+print_bigint(b)
 print "=";
 m = bigint_gt(a, b)
 if m then

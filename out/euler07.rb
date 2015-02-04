@@ -17,7 +17,7 @@ def find( n, t, used, nth )
       if divisible(n, t, used) then
         n += 1
       else
-        t[used] = n;
+        t[used] = n
         n += 1
         used += 1
       end
@@ -28,7 +28,7 @@ end
 n = 10001
 t = [];
 for i in (0 ..  n - 1) do
-  t[i] = 2;
+  t[i] = 2
 end
 printf "%d\n", find(3, t, 1, n)
 

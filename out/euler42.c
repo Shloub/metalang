@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 int is_triangular(int n){
   /*

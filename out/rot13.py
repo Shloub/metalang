@@ -47,10 +47,10 @@ stdinsep()
 tab4 = [None] * strlen
 for toto in range(0, strlen):
   tmpc=readchar()
-  c = ord(tmpc);
+  c = ord(tmpc)
   if tmpc != ' ':
-    c = mod((c - ord('a')) + 13, 26) + ord('a');
-  tab4[toto] = c;
+    c = mod((c - ord('a')) + 13, 26) + ord('a')
+  tab4[toto] = c
 for j in range(0, strlen):
   print("%c" % tab4[j], end='')
 

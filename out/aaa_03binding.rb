@@ -15,7 +15,7 @@ def h( i )
     printf "%d\n", i
 end
 
-h(14);
+h(14)
 a = 4
 b = 5
 printf "%d", a + b
@@ -24,8 +24,8 @@ printf "%d", a + b
  main 
 =end
 
-h(15);
-a = 2;
-b = 1;
+h(15)
+a = 2
+b = 1
 printf "%d", a + b
 

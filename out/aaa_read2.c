@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien

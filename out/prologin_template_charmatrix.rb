@@ -15,7 +15,7 @@ taille_x = STDIN.readline.to_i(10)
 taille_y = STDIN.readline.to_i(10)
 e = [];
 for f in (0 ..  taille_y - 1) do
-  e[f] = STDIN.readline.split(//);
+  e[f] = STDIN.readline.split(//)
 end
 tableau = e
 printf "%d\n", programme_candidat(tableau, taille_x, taille_y)

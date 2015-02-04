@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2){
   int j, i;

@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int go0(int* tab, int a, int b){
   int m = (a + b) / 2;

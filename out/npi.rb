@@ -13,7 +13,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 def npi0( str, len )
     stack = [];
     for i in (0 ..  len - 1) do
-      stack[i] = 0;
+      stack[i] = 0
     end
     ptrStack = 0
     ptrStr = 0
@@ -23,13 +23,13 @@ def npi0( str, len )
       elsif is_number(str[ptrStr]) then
         num = 0
         while str[ptrStr] != " " do
-          num = num * 10 + str[ptrStr].ord - "0".ord;
+          num = num * 10 + str[ptrStr].ord - "0".ord
           ptrStr += 1
         end
-        stack[ptrStack] = num;
+        stack[ptrStack] = num
         ptrStack += 1
       elsif str[ptrStr] == "+" then
-        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1];
+        stack[ptrStack - 2] = stack[ptrStack - 2] + stack[ptrStack - 1]
         ptrStack -= 1
         ptrStr += 1
       end
@@ -44,7 +44,7 @@ tab = [];
 for i in (0 ..  len - 1) do
   tmp = "\000"
   tmp=scanf("%c")[0];
-  tab[i] = tmp;
+  tab[i] = tmp
 end
 result = npi0(tab, len)
 printf "%d", result

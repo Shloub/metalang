@@ -12,24 +12,24 @@ def periode( restes, len, a, b )
           return (len - i);
         end
       end
-      restes[len] = reste;
+      restes[len] = reste
       len += 1
-      a = reste * 10;
+      a = reste * 10
     end
     return (0);
 end
 
 t = [];
 for j in (0 ..  1000 - 1) do
-  t[j] = 0;
+  t[j] = 0
 end
 m = 0
 mi = 0
 for i in (1 ..  1000) do
   p = periode(t, 0, 1, i)
   if p > m then
-    mi = i;
-    m = p;
+    mi = i
+    m = p
   end
 end
 printf "%d\n%d\n", mi, m

@@ -16,9 +16,9 @@ for toto in (0 ..  strlen - 1) do
   tmpc=scanf("%c")[0];
   c = tmpc.ord
   if tmpc != " " then
-    c = mod((c - "a".ord) + 13, 26) + "a".ord;
+    c = mod((c - "a".ord) + 13, 26) + "a".ord
   end
-  tab4[toto] = c;
+  tab4[toto] = c
 end
 for j in (0 ..  strlen - 1) do
   printf "%c", tab4[j]

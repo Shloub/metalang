@@ -9,13 +9,13 @@ def pathfind_aux( cache, tab, x, y, posX, posY )
     elsif cache[posY][posX] != -1 then
       return (cache[posY][posX]);
     else
-      cache[posY][posX] = x * y * 10;
+      cache[posY][posX] = x * y * 10
       val1 = pathfind_aux(cache, tab, x, y, posX + 1, posY)
       val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
       out0 = 1 + [val1, val2, val3, val4].min
-      cache[posY][posX] = out0;
+      cache[posY][posX] = out0
       return (out0);
     end
 end
@@ -26,10 +26,10 @@ def pathfind( tab, x, y )
       tmp = [];
       for j in (0 ..  x - 1) do
         printf "%c", tab[i][j]
-        tmp[j] = -1;
+        tmp[j] = -1
       end
       print "\n";
-      cache[i] = tmp;
+      cache[i] = tmp
     end
     return (pathfind_aux(cache, tab, x, y, 0, 0));
 end
@@ -39,7 +39,7 @@ y = STDIN.readline.to_i(10)
 printf "%d %d\n", x, y
 l = [];
 for m in (0 ..  y - 1) do
-  l[m] = STDIN.readline.split(//);
+  l[m] = STDIN.readline.split(//)
 end
 tab = l
 result = pathfind(tab, x, y)

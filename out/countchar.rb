@@ -19,7 +19,7 @@ tab = [];
 for i in (0 ..  len - 1) do
   tmp = "\000"
   tmp=scanf("%c")[0];
-  tab[i] = tmp;
+  tab[i] = tmp
 end
 result = nth(tab, tofind, len)
 printf "%d", result

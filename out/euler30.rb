@@ -13,7 +13,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
 
 p = [];
 for i in (0 ..  10 - 1) do
-  p[i] = i * i * i * i * i;
+  p[i] = i * i * i * i * i
 end
 sum = 0
 for a in (0 ..  9) do

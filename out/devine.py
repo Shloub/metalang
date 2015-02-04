@@ -34,18 +34,18 @@ def readint():
       return out * sign
 
 def devine0( nombre, tab, len ):
-    min0 = tab[0];
-    max0 = tab[1];
+    min0 = tab[0]
+    max0 = tab[1]
     for i in range(2, len):
       if tab[i] > max0 or tab[i] < min0:
-        return False;
+        return False
       if tab[i] < nombre:
-        min0 = tab[i];
+        min0 = tab[i]
       if tab[i] > nombre:
-        max0 = tab[i];
+        max0 = tab[i]
       if tab[i] == nombre and len != i + 1:
-        return False;
-    return True;
+        return False
+    return True
 
 nombre=readint()
 stdinsep()
@@ -55,8 +55,8 @@ tab = [None] * len
 for i in range(0, len):
   tmp=readint()
   stdinsep()
-  tab[i] = tmp;
-a = devine0(nombre, tab, len);
+  tab[i] = tmp
+a = devine0(nombre, tab, len)
 if a:
   print( "True", end='')
 else:

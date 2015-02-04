@@ -40,41 +40,41 @@ def mktoto( v1 ):
     t = {
       "foo":v1,
       "bar":v1,
-      "blah":v1};
-    return t;
+      "blah":v1}
+    return t
 
 def mktoto2( v1 ):
     t = {
       "foo":v1 + 3,
       "bar":v1 + 2,
-      "blah":v1 + 1};
-    return t;
+      "blah":v1 + 1}
+    return t
 
 def result( t_, t2_ ):
-    t = t_;
-    t2 = t2_;
+    t = t_
+    t2 = t2_
     t3 = {
       "foo":0,
       "bar":0,
-      "blah":0};
-    t3 = t2;
-    t = t2;
-    t2 = t3;
+      "blah":0}
+    t3 = t2
+    t = t2
+    t2 = t3
     t["blah"] += 1
-    len = 1;
+    len = 1
     cache0 = [None] * len
     for i in range(0, len):
-      cache0[i] = -(i);
+      cache0[i] = -(i)
     cache1 = [None] * len
     for j in range(0, len):
-      cache1[j] = j;
-    cache2 = cache0;
-    cache0 = cache1;
-    cache2 = cache0;
-    return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"];
+      cache1[j] = j
+    cache2 = cache0
+    cache0 = cache1
+    cache2 = cache0
+    return t["foo"] + t["blah"] * t["bar"] + t["bar"] * t["foo"]
 
-t = mktoto(4);
-t2 = mktoto(5);
+t = mktoto(4)
+t2 = mktoto(5)
 t["bar"]=readint()
 stdinsep()
 t["blah"]=readint()
