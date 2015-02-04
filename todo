@@ -1,4 +1,12 @@
+Printers :
+  perl indentation
+  python ";"
+
+macros :
+  read_couple
+
 Langage & Compilateur :
+  structures as couples pour les langages qui le supportent
   tableau constant lors d'une initialisation
   cleaner un peu la lib standard
   python et ruby : utiliser [*0..n].map pour initialiser un tableau
