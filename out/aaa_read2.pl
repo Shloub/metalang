@@ -1,27 +1,4 @@
 #!/usr/bin/perl
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-  nextchar() if (!defined $currentchar);
-  my $o = $currentchar;
-  nextchar();
-  return $o;
-}
-sub readint {
-  nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') {
-    $sign = -1;
-    nextchar();
-  }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
 sub remainder {
     my ($a, $b) = @_;
     return 0 unless $b && $a;
@@ -33,34 +10,20 @@ sub remainder {
 #read int, read char et skip
 #
 
-my $len = readint();
-readspaces();
+my $len = int( <STDIN> );
 print($len, "=len\n");
-my $tab = [];
-foreach my $f (0 .. $len - 1) {
-  $tab->[$f] = readint();
-  readspaces();
-  }
+my $tab = [ map { int($_) } split(/\s+/, <STDIN>) ];
 foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tab->[$i], " ");
   }
 print("\n");
-my $tab2 = [];
-foreach my $l (0 .. $len - 1) {
-  $tab2->[$l] = readint();
-  readspaces();
-  }
+my $tab2 = [ map { int($_) } split(/\s+/, <STDIN>) ];
 foreach my $i_ (0 .. $len - 1) {
   print($i_, "==>", $tab2->[$i_], " ");
   }
-my $strlen = readint();
-readspaces();
+my $strlen = int( <STDIN> );
 print($strlen, "=strlen\n");
-my $tab4 = [];
-foreach my $s (0 .. $strlen - 1) {
-  $tab4->[$s] = readchar();
-  }
-readspaces();
+my $tab4 = [split(//, <STDIN>)];
 foreach my $i3 (0 .. $strlen - 1) {
   my $tmpc = $tab4->[$i3];
   my $c = ord($tmpc);

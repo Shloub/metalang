@@ -1,21 +1,4 @@
 #!/usr/bin/perl
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readint {
-  nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') {
-    $sign = -1;
-    nextchar();
-  }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
 
 sub programme_candidat{
   my($tableau,
@@ -31,18 +14,11 @@ sub programme_candidat{
   return $out0;
 }
 
-my $taille_x = readint();
-readspaces();
-my $taille_y = readint();
-readspaces();
+my $taille_x = int( <STDIN> );
+my $taille_y = int( <STDIN> );
 my $tableau = [];
-foreach my $m (0 .. $taille_y - 1) {
-  my $r = [];
-  foreach my $p (0 .. $taille_x - 1) {
-    $r->[$p] = readint();
-    readspaces();
-    }
-  $tableau->[$m] = $r;
+foreach my $f (0 .. $taille_y - 1) {
+  $tableau->[$f] = [ map { int($_) } split(/\s+/, <STDIN>) ];
   }
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");
 

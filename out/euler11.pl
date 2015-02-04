@@ -1,22 +1,5 @@
 #!/usr/bin/perl
 use List::Util qw(min max);
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readint {
-  nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') {
-    $sign = -1;
-    nextchar();
-  }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
 
 sub find{
   my($n,
@@ -55,15 +38,9 @@ foreach my $i (0 .. 8 - 1) {
   }
   }
 my $max0 = 0;
-my $h = 20;
 my $m = [];
-foreach my $o (0 .. 20 - 1) {
-  my $s = [];
-  foreach my $q (0 .. $h - 1) {
-    $s->[$q] = readint();
-    readspaces();
-    }
-  $m->[$o] = $s;
+foreach my $h (0 .. 20 - 1) {
+  $m->[$h] = [ map { int($_) } split(/\s+/, <STDIN>) ];
   }
 foreach my $j (0 .. 7) {
   my ($dx, $dy) = @{ $directions->[$j] };

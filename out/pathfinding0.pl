@@ -1,28 +1,5 @@
 #!/usr/bin/perl
 use List::Util qw(min max);
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-  nextchar() if (!defined $currentchar);
-  my $o = $currentchar;
-  nextchar();
-  return $o;
-}
-sub readint {
-  nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') {
-    $sign = -1;
-    nextchar();
-  }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
 
 sub pathfind_aux{
   my($cache,
@@ -68,21 +45,14 @@ sub pathfind{
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
-my $x = readint();
-readspaces();
-my $y = readint();
-readspaces();
+my $x = int( <STDIN> );
+my $y = int( <STDIN> );
 print($x, " ", $y, "\n");
-my $r = [];
-foreach my $s (0 .. $y - 1) {
-  my $ba = [];
-  foreach my $v (0 .. $x - 1) {
-    $ba->[$v] = readchar();
-    }
-  readspaces();
-  $r->[$s] = $ba;
+my $l = [];
+foreach my $m (0 .. $y - 1) {
+  $l->[$m] = [split(//, <STDIN>)];
   }
-my $tab = $r;
+my $tab = $l;
 my $result = pathfind($tab, $x, $y);
 print($result);
 

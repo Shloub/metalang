@@ -1,27 +1,4 @@
 #!/usr/bin/perl
-sub nextchar{ sysread STDIN, $currentchar, 1; }
-sub readchar{
-  nextchar() if (!defined $currentchar);
-  my $o = $currentchar;
-  nextchar();
-  return $o;
-}
-sub readint {
-  nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
-  if ($currentchar eq '-') {
-    $sign = -1;
-    nextchar();
-  }
-  while ($currentchar =~ /\d/){
-    $o = $o * 10 + $currentchar;
-    nextchar();
-  }
-  return $o * $sign;
-}sub readspaces {
-  while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
-}
 
 sub programme_candidat{
   my($tableau,
@@ -39,20 +16,13 @@ sub programme_candidat{
   return $out0;
 }
 
-my $taille_x = readint();
-readspaces();
-my $taille_y = readint();
-readspaces();
-my $l = [];
-foreach my $m (0 .. $taille_y - 1) {
-  my $r = [];
-  foreach my $p (0 .. $taille_x - 1) {
-    $r->[$p] = readchar();
-    }
-  readspaces();
-  $l->[$m] = $r;
+my $taille_x = int( <STDIN> );
+my $taille_y = int( <STDIN> );
+my $e = [];
+foreach my $f (0 .. $taille_y - 1) {
+  $e->[$f] = [split(//, <STDIN>)];
   }
-my $tableau = $l;
+my $tableau = $e;
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");
 
 
