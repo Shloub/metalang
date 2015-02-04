@@ -547,9 +547,25 @@ out/%.test_vb_ml : out/%.exeVB.out out/%.ml.out
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+out/%.test_py_ml : out/%.py.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
 testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
 
 testPerl : $(addsuffix .test_pl_ml, $(TESTS))
+
+testPy : $(addsuffix .test_py_ml, $(TESTS))
 
 testAda : $(addsuffix .test_adb_ml, $(TESTS))
 
