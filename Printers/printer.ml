@@ -275,6 +275,7 @@ class printer = object(self)
         )
         (String.replace "$" "$__MACRO__PARAM__" s)
         (List.combine params listr)
+      in let expanded = String.replace "$__MACRO__PARAM__" "$" expanded
       in Format.fprintf f "%s" expanded
 
   method call f var li =
