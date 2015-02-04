@@ -37,6 +37,7 @@ open CPrinter
 class pyPrinter = object(self)
   inherit cPrinter as super
 
+  method separator f () = ()
 
   method tuple f li =
     Format.fprintf f "@[<h>(%a)@]"
@@ -200,7 +201,7 @@ def skipchar():
 
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ =@ %a;@]" self#binding var self#expr e
+    Format.fprintf f "@[<h>%a@ =@ %a@]" self#binding var self#expr e
 
   method bloc f li =
     match li with

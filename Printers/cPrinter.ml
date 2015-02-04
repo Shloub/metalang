@@ -68,16 +68,18 @@ class cPrinter = object(self)
     | Type.Lexems -> assert false
 
   method declaration f var t e =
-    Format.fprintf f "@[<h>%a@ %a@ =@ %a;@]"
+    Format.fprintf f "@[<h>%a@ %a@ =@ %a%a@]"
       self#ptype t
       self#binding var
       self#expr e
+      self#separator ()
 
   method allocrecord f name t el =
-    Format.fprintf f "%a %a = malloc (sizeof(%a) );@\n%a"
+    Format.fprintf f "%a %a = malloc (sizeof(%a) )%a@\n%a"
       self#ptype t
       self#binding name
       self#binding name
+      self#separator ()
       (self#def_fields name) el
 
 
@@ -85,10 +87,11 @@ class cPrinter = object(self)
     Format.fprintf f "@[<h>%a@]"
       (print_list
          (fun f (fieldname, expr) ->
-           Format.fprintf f "%a->%a=%a;"
+           Format.fprintf f "%a->%a=%a%a"
              self#binding name
              self#field fieldname
              self#expr expr
+             self#separator ()
          )
          (fun t f1 e1 f2 e2 ->
            Format.fprintf t
@@ -97,13 +100,14 @@ class cPrinter = object(self)
       li
 
   method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ %a@ *@ sizeof(%a));@]"
+    Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ %a@ *@ sizeof(%a))%a@]"
       self#ptype type_
       self#binding binding
       (fun f a ->
         if self#nop (Expr.unfix a) then self#expr f a
         else self#printp f a) len
       self#ptype type_
+      self#separator ()
 
   method forloop f varname expr1 expr2 li =
       self#forloop_content f (varname, expr1, expr2, li)
@@ -130,10 +134,11 @@ class cPrinter = object(self)
 
   method main f main =
     let li_fori, li_forc = self#collect_for main in
-    Format.fprintf f "@[<v 2>int main(void){@\n%a%a%a@\nreturn 0;@]@\n}"
+    Format.fprintf f "@[<v 2>int main(void){@\n%a%a%a@\nreturn 0%a@]@\n}"
       (self#declare_for "int") li_fori
       (self#declare_for "char") li_forc
       self#instructions main
+      self#separator ()
 
   method bloc f li = match li with
   | [ Instr.Fixed.F ( _, ((Instr.AllocRecord _)
@@ -207,22 +212,23 @@ class cPrinter = object(self)
   method combine_formats () = true
   method multi_print f format exprs =
     if exprs = [] then
-      Format.fprintf f "@[<h>%a(\"%s\");@]" self#printf () format
+      Format.fprintf f "@[<h>%a(\"%s\")%a@]" self#printf () format self#separator ()
     else
-      Format.fprintf f "@[<h>%a(\"%s\", %a);@]" self#printf ()  format
+      Format.fprintf f "@[<h>%a(\"%s\", %a)%a@]" self#printf () format
         (print_list
            (fun f (t, e) -> self#expr f e)
            (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
+        self#separator ()
 
   method print f t expr = match Expr.unfix expr with
-  | Expr.Lief (Expr.String s) -> Format.fprintf f "@[%a(%s);@]" self#printf () ( self#noformat s )
-  | _ -> Format.fprintf f "@[%a(\"%a\", %a);@]" self#printf () self#format_type t self#expr expr
+  | Expr.Lief (Expr.String s) -> Format.fprintf f "@[%a(%s)%a@]" self#printf () ( self#noformat s ) self#separator ()
+  | _ -> Format.fprintf f "@[%a(\"%a\", %a)%a@]" self#printf () self#format_type t self#expr expr self#separator ()
 
   method prog f prog =
-    Format.fprintf f "#include<stdio.h>@\n#include<stdlib.h>@\n%a@\n%a%a@\n@\n"
+    Format.fprintf f "#include <stdio.h>@\n#include <stdlib.h>@\n%a@\n%a%a@\n@\n"
       (fun f () ->
         if Tags.is_taged "use_math"
-        then Format.fprintf f "#include<math.h>@\n"
+        then Format.fprintf f "#include <math.h>@\n"
       ) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
@@ -233,20 +239,21 @@ class cPrinter = object(self)
         let b = List.exists (fun (n, t) -> match Type.unfix t with
           | Type.Named n -> n = name
           | _ -> false) li in
-        Format.fprintf f "%atypedef struct %a {@\n@[<v 2>  %a@]@\n} %a;@\n"
+        Format.fprintf f "%atypedef struct %a {@\n@[<v 2>  %a@]@\n} %a%a@\n"
           (fun f b ->
-            if b then Format.fprintf f "struct %a;@\n" self#binding name
+            if b then Format.fprintf f "struct %a%a@\n" self#binding name self#separator ()
           ) b
           self#binding name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "%a %a;" self#ptype type_ self#binding name
+               Format.fprintf t "%a %a%a" self#ptype type_ self#binding name self#separator ()
              )
              (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li
           self#binding name
+          self#separator ()
     | Type.Enum li ->
-      Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
+      Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a%a"
         self#binding name
         (print_list
            (fun t name ->
@@ -255,10 +262,12 @@ class cPrinter = object(self)
            (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
         ) li
         self#binding name
+        self#separator ()
     | _ ->
-      Format.fprintf f "typedef %a %a;"
+      Format.fprintf f "typedef %a %a%a"
         baseprinter#ptype t
         baseprinter#binding name
+        self#separator ()
 
   method collect_for instrs =
     let collect acc i =
@@ -277,11 +286,12 @@ class cPrinter = object(self)
 
   method declare_for s f li =
     if li <> [] then
-      Format.fprintf f "%s %a;@\n"
+      Format.fprintf f "%s %a%a@\n"
         s
         (print_list self#binding
            (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)
         ) li
+        self#separator ()
 
   method print_fun f funname t li instrs =
     let li_fori, li_forc = self#collect_for instrs in
@@ -292,7 +302,7 @@ class cPrinter = object(self)
       self#instructions instrs
 
   method return f e =
-    Format.fprintf f "@[<h>return@ %a;@]" self#expr e
+    Format.fprintf f "@[<h>return@ %a%a@]" self#expr e self#separator ()
 
   method whileloop f expr li =
     Format.fprintf f "@[<h>while (%a)@]@\n%a"
