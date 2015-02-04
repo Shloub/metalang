@@ -1,66 +1,8 @@
 Imports System
+Imports System.Collections.Generic
 
 Module euler11
 
-Dim eof As Boolean
-Dim buffer As String
-Function readChar_() As Char
-  If buffer Is Nothing Then
-    buffer = Console.ReadLine()
-  End If
-  If buffer.Length = 0 Then
-    Dim tmp As String = Console.ReadLine()
-    eof = (tmp Is Nothing)
-    buffer = Chr(10)+tmp
-  End If
-  Return buffer(0)
-End Function
-
-Sub consommeChar()
-  readChar_()
-  buffer = buffer.Substring(1)
-End Sub
-
-Sub stdin_sep()
-  Do
-    If eof Then
-      Return
-    End If
-    Dim c As Char = readChar_()
-    If c = " "C Or c = Chr(13) Or c = Chr(9) Or c = Chr(10) Then
-      consommeChar()
-    Else
-      Return
-    End If
-  Loop
-End Sub
-
-Function readInt() As Integer
-  Dim i As Integer = 0
-  Dim s as Char = readChar_()
-  Dim sign As Integer = 1
-  If s = "-"C Then
-    sign = -1
-    consommeChar()
-  End If
-  Do
-    Dim c as Char = readChar_()
-    If c <= "9"C And c >= "0"C Then
-      i = i * 10 + Asc(c) - Asc("0"C)
-      consommeChar()
-    Else
-      return i * sign
-    End If
-  Loop
-End Function
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function find(ByVal n as Integer, ByRef m as Integer()(), ByVal x as Integer, ByVal y as Integer, ByVal dx as Integer, ByVal dy as Integer) As Integer
     If x < 0 OrElse x = 20 OrElse y < 0 OrElse y = 20 Then
       Return - 1
@@ -80,70 +22,65 @@ End Function
     Dim directions(8) As tuple_int_int
     For  i As Integer  = 0 to  8 - 1
       If i = 0 Then
-        Dim bh As tuple_int_int = new tuple_int_int()
-        bh.tuple_int_int_field_0 = 0
-        bh.tuple_int_int_field_1 = 1
-        directions(i) = bh
-      ElseIf i = 1 Then
-        Dim bg As tuple_int_int = new tuple_int_int()
-        bg.tuple_int_int_field_0 = 1
-        bg.tuple_int_int_field_1 = 0
-        directions(i) = bg
-      ElseIf i = 2 Then
-        Dim bf As tuple_int_int = new tuple_int_int()
-        bf.tuple_int_int_field_0 = 0
-        bf.tuple_int_int_field_1 = - 1
-        directions(i) = bf
-      ElseIf i = 3 Then
-        Dim be As tuple_int_int = new tuple_int_int()
-        be.tuple_int_int_field_0 = - 1
-        be.tuple_int_int_field_1 = 0
-        directions(i) = be
-      ElseIf i = 4 Then
-        Dim bd As tuple_int_int = new tuple_int_int()
-        bd.tuple_int_int_field_0 = 1
-        bd.tuple_int_int_field_1 = 1
-        directions(i) = bd
-      ElseIf i = 5 Then
-        Dim bc As tuple_int_int = new tuple_int_int()
-        bc.tuple_int_int_field_0 = 1
-        bc.tuple_int_int_field_1 = - 1
-        directions(i) = bc
-      ElseIf i = 6 Then
-        Dim bb As tuple_int_int = new tuple_int_int()
-        bb.tuple_int_int_field_0 = - 1
-        bb.tuple_int_int_field_1 = 1
-        directions(i) = bb
-      Else
         Dim ba As tuple_int_int = new tuple_int_int()
-        ba.tuple_int_int_field_0 = - 1
-        ba.tuple_int_int_field_1 = - 1
+        ba.tuple_int_int_field_0 = 0
+        ba.tuple_int_int_field_1 = 1
         directions(i) = ba
+      ElseIf i = 1 Then
+        Dim w As tuple_int_int = new tuple_int_int()
+        w.tuple_int_int_field_0 = 1
+        w.tuple_int_int_field_1 = 0
+        directions(i) = w
+      ElseIf i = 2 Then
+        Dim v As tuple_int_int = new tuple_int_int()
+        v.tuple_int_int_field_0 = 0
+        v.tuple_int_int_field_1 = - 1
+        directions(i) = v
+      ElseIf i = 3 Then
+        Dim u As tuple_int_int = new tuple_int_int()
+        u.tuple_int_int_field_0 = - 1
+        u.tuple_int_int_field_1 = 0
+        directions(i) = u
+      ElseIf i = 4 Then
+        Dim t As tuple_int_int = new tuple_int_int()
+        t.tuple_int_int_field_0 = 1
+        t.tuple_int_int_field_1 = 1
+        directions(i) = t
+      ElseIf i = 5 Then
+        Dim s As tuple_int_int = new tuple_int_int()
+        s.tuple_int_int_field_0 = 1
+        s.tuple_int_int_field_1 = - 1
+        directions(i) = s
+      ElseIf i = 6 Then
+        Dim r As tuple_int_int = new tuple_int_int()
+        r.tuple_int_int_field_0 = - 1
+        r.tuple_int_int_field_1 = 1
+        directions(i) = r
+      Else
+        Dim q As tuple_int_int = new tuple_int_int()
+        q.tuple_int_int_field_0 = - 1
+        q.tuple_int_int_field_1 = - 1
+        directions(i) = q
       End If
     Next
     Dim max0 As Integer = 0
-    Dim h As Integer = 20
     Dim m(20)() As Integer
-    For  o As Integer  = 0 to  20 - 1
-      Dim s(h) As Integer
-      For  q As Integer  = 0 to  h - 1
-        s(q) = readInt()
-        stdin_sep()
-      Next
-      m(o) = s
-      Next
-      For  j As Integer  = 0 to  7
-        Dim w As tuple_int_int = directions(j)
-        Dim dx As Integer = w.tuple_int_int_field_0
-        Dim dy As Integer = w.tuple_int_int_field_1
-        For  x As Integer  = 0 to  19
-          For  y As Integer  = 0 to  19
-            max0 = max2_(max0, find(4, m, x, y, dx, dy))
-          Next
+    For  h As Integer  = 0 to  20 - 1
+      m(h) = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
+    Next
+    For  j As Integer  = 0 to  7
+      Dim p As tuple_int_int = directions(j)
+      Dim dx As Integer = p.tuple_int_int_field_0
+      Dim dy As Integer = p.tuple_int_int_field_1
+      For  x As Integer  = 0 to  19
+        For  y As Integer  = 0 to  19
+          max0 = Math.Max(max0, find(4, m, x, y, dx, dy))
         Next
       Next
-      Console.Write("" & max0 & "" & Chr(10) & "")
+    Next
+    Console.Write("" & max0 & "" & Chr(10) & "")
     End Sub
     
     End Module
-     
+    
+    

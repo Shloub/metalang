@@ -2,14 +2,6 @@ Imports System
 
 Module euler05
 
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function primesfactors(ByVal n as Integer) As Integer()
     Dim tab(n + 1) As Integer
     For  i As Integer  = 0 to  n + 1 - 1
@@ -38,7 +30,7 @@ Module euler05
       For  i As Integer  = 1 to  lim
         Dim t As Integer() = primesfactors(i)
         For  j As Integer  = 1 to  i
-          o(j) = max2_(o(j), t(j))
+          o(j) = Math.Max(o(j), t(j))
         Next
       Next
       Dim product As Integer = 1

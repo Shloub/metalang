@@ -1,71 +1,8 @@
 Imports System
+Imports System.Collections.Generic
 
 Module pathfinding0
 
-Dim eof As Boolean
-Dim buffer As String
-Function readChar_() As Char
-  If buffer Is Nothing Then
-    buffer = Console.ReadLine()
-  End If
-  If buffer.Length = 0 Then
-    Dim tmp As String = Console.ReadLine()
-    eof = (tmp Is Nothing)
-    buffer = Chr(10)+tmp
-  End If
-  Return buffer(0)
-End Function
-
-Sub consommeChar()
-  readChar_()
-  buffer = buffer.Substring(1)
-End Sub
-Function readChar() As Char
-  Dim out_ as Char = readChar_()
-  consommeChar()
-  Return out_
-End Function
-
-Sub stdin_sep()
-  Do
-    If eof Then
-      Return
-    End If
-    Dim c As Char = readChar_()
-    If c = " "C Or c = Chr(13) Or c = Chr(9) Or c = Chr(10) Then
-      consommeChar()
-    Else
-      Return
-    End If
-  Loop
-End Sub
-
-Function readInt() As Integer
-  Dim i As Integer = 0
-  Dim s as Char = readChar_()
-  Dim sign As Integer = 1
-  If s = "-"C Then
-    sign = -1
-    consommeChar()
-  End If
-  Do
-    Dim c as Char = readChar_()
-    If c <= "9"C And c >= "0"C Then
-      i = i * 10 + Asc(c) - Asc("0"C)
-      consommeChar()
-    Else
-      return i * sign
-    End If
-  Loop
-End Function
-  Function min2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a < b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function pathfind_aux(ByRef cache as Integer()(), ByRef tab as Char()(), ByVal x as Integer, ByVal y as Integer, ByVal posX as Integer, ByVal posY as Integer) As Integer
     If posX = x - 1 AndAlso posY = y - 1 Then
       Return 0
@@ -81,7 +18,7 @@ End Function
       Dim val2 As Integer = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       Dim val3 As Integer = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       Dim val4 As Integer = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      Dim out0 As Integer = 1 + min2_(min2_(min2_(val1, val2), val3), val4)
+      Dim out0 As Integer = 1 + Math.Min(Math.Min(Math.Min(val1, val2), val3), val4)
       cache(posY)(posX) = out0
       Return out0
     End If
@@ -103,25 +40,17 @@ End Function
     
     
     Sub Main()
-      Dim x As Integer = readInt()
-      stdin_sep()
-      Dim y As Integer = readInt()
-      stdin_sep()
+      Dim x As Integer = Integer.Parse(Console.ReadLine())
+      Dim y As Integer = Integer.Parse(Console.ReadLine())
       Console.Write("" & x & " " & y & "" & Chr(10) & "")
-      Dim bf(y)() As Char
-      For  bg As Integer  = 0 to  y - 1
-        Dim bk(x) As Char
-        For  bi As Integer  = 0 to  x - 1
-          bk(bi) = readChar()
-        Next
-        stdin_sep()
-        bf(bg) = bk
-        Next
-        Dim tab As Char()() = bf
-        Dim result As Integer = pathfind(tab, x, y)
-        Console.Write(result)
+      Dim w(y)() As Char
+      For  ba As Integer  = 0 to  y - 1
+        w(ba) = Console.ReadLine().ToCharArray()
+      Next
+      Dim tab As Char()() = w
+      Dim result As Integer = pathfind(tab, x, y)
+      Console.Write(result)
       End Sub
       
-      End Module
-      
-      
+    End Module
+     

@@ -2,14 +2,6 @@ Imports System
 
 Module euler12
 
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function eratostene(ByRef t as Integer(), ByVal max0 as Integer) As Integer
     Dim n As Integer = 0
     For  i As Integer  = 2 to  max0 - 1
@@ -62,7 +54,7 @@ Module euler12
       For  m As Integer  = 0 to  n + 2 - 1
         primesFactors(m) = 0
       Next
-      Dim max0 As Integer = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
+      Dim max0 As Integer = Math.Max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
       primesFactors(2) = primesFactors(2) - 1
       Dim ndivs As Integer = 1
       For  i As Integer  = 0 to  max0

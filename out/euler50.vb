@@ -2,14 +2,6 @@ Imports System
 
 Module euler50
 
-  Function min2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a < b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function eratostene(ByRef t as Integer(), ByVal max0 as Integer) As Integer
     Dim n As Integer = 0
     For  i As Integer  = 2 to  max0 - 1
@@ -68,7 +60,7 @@ Module euler50
               resp = sum(i)
             End If
           Else
-            stop0 = min2_(stop0, i)
+            stop0 = Math.Min(stop0, i)
           End If
         End If
       Next

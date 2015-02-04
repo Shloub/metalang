@@ -2,25 +2,9 @@ Imports System
 
 Module euler33
 
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
-  Function min2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a < b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function pgcd(ByVal a as Integer, ByVal b as Integer) As Integer
-    Dim c As Integer = min2_(a, b)
-    Dim d As Integer = max2_(a, b)
+    Dim c As Integer = Math.Min(a, b)
+    Dim d As Integer = Math.Max(a, b)
     Dim reste As Integer = d Mod c
     If reste = 0 Then
       Return c

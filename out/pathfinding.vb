@@ -58,14 +58,6 @@ Function readInt() As Integer
     End If
   Loop
 End Function
-  Function min2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a < b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function pathfind_aux(ByRef cache as Integer()(), ByRef tab as Char()(), ByVal x as Integer, ByVal y as Integer, ByVal posX as Integer, ByVal posY as Integer) As Integer
     If posX = x - 1 AndAlso posY = y - 1 Then
       Return 0
@@ -81,7 +73,7 @@ End Function
       Dim val2 As Integer = pathfind_aux(cache, tab, x, y, posX - 1, posY)
       Dim val3 As Integer = pathfind_aux(cache, tab, x, y, posX, posY - 1)
       Dim val4 As Integer = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-      Dim out0 As Integer = 1 + min2_(min2_(min2_(val1, val2), val3), val4)
+      Dim out0 As Integer = 1 + Math.Min(Math.Min(Math.Min(val1, val2), val3), val4)
       cache(posY)(posX) = out0
       Return out0
     End If

@@ -2,14 +2,6 @@ Imports System
 
 Module euler04
 
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   '
   '
   '(a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -48,7 +40,7 @@ Module euler04
               For  e As Integer  = 0 to  9
                 Dim mul As Integer = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
                 If chiffre(0, mul) = chiffre(5, mul) AndAlso chiffre(1, mul) = chiffre(4, mul) AndAlso chiffre(2, mul) = chiffre(3, mul) Then
-                  m = max2_(mul, m)
+                  m = Math.Max(mul, m)
                 End If
               Next
             Next

@@ -53,14 +53,6 @@ Function readInt() As Integer
     End If
   Loop
 End Function
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Function nbPassePartout(ByVal n as Integer, ByRef passepartout as Integer()(), ByVal m as Integer, ByRef serrures as Integer()()) As Integer
     Dim max_ancient As Integer = 0
     Dim max_recent As Integer = 0
@@ -79,8 +71,8 @@ End Function
       If pp(0) >= max_ancient AndAlso pp(1) >= max_recent Then
         Return 1
       End If
-      max_ancient_pp = max2_(max_ancient_pp, pp(0))
-      max_recent_pp = max2_(max_recent_pp, pp(1))
+      max_ancient_pp = Math.Max(max_ancient_pp, pp(0))
+      max_recent_pp = Math.Max(max_recent_pp, pp(1))
     Next
     If max_ancient_pp >= max_ancient AndAlso max_recent_pp >= max_recent Then
       Return 2

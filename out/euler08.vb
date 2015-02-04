@@ -25,14 +25,6 @@ Function readChar() As Char
   consommeChar()
   Return out_
 End Function
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   
   Sub Main()
     Dim i As Integer = 1
@@ -61,7 +53,7 @@ End Function
       End If
       last(index) = f
       index = (index + 1) Mod 5
-      max0 = max2_(max0, i)
+      max0 = Math.Max(max0, i)
     Next
     Console.Write("" & max0 & "" & Chr(10) & "")
     End Sub

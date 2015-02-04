@@ -39,22 +39,6 @@ Sub stdin_sep()
     End If
   Loop
 End Sub
-  Function max2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a > b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
-  Function min2_(ByVal a as Integer, ByVal b as Integer) As Integer
-    If a < b Then
-      Return a
-    Else
-      Return b
-    End If
-  End Function
-  
   Public Class bigint
     Public bigint_sign As Boolean
     Public bigint_len As Integer
@@ -137,7 +121,7 @@ End Sub
     Function add_bigint_positif(ByRef a as bigint, ByRef b as bigint) As bigint
       ' Une addition ou on en a rien a faire des signes 
       
-      Dim len As Integer = max2_(a.bigint_len, b.bigint_len) + 1
+      Dim len As Integer = Math.Max(a.bigint_len, b.bigint_len) + 1
       Dim retenue As Integer = 0
       Dim chiffres(len) As Integer
       For  i As Integer  = 0 to  len - 1
@@ -264,7 +248,7 @@ End Sub
           End Function
           
           Function bigint_premiers_chiffres(ByRef a as bigint, ByVal i as Integer) As bigint
-            Dim len As Integer = min2_(i, a.bigint_len)
+            Dim len As Integer = Math.Min(i, a.bigint_len)
             Do While len <> 0 AndAlso a.bigint_chiffres(len - 1) = 0
               len = len - 1
             Loop
@@ -301,7 +285,7 @@ End Sub
               End If
               ' Algorithme de Karatsuba 
               
-              Dim split As Integer = min2_(aa.bigint_len, bb.bigint_len) \ 2
+              Dim split As Integer = Math.Min(aa.bigint_len, bb.bigint_len) \ 2
               Dim a As bigint = bigint_shift(aa, - split)
               Dim b As bigint = bigint_premiers_chiffres(aa, split)
               Dim c As bigint = bigint_shift(bb, - split)
