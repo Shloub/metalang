@@ -81,6 +81,7 @@ macro int native_macro_max2(int a, int b)
   js do "Math.max($a, $b)"
   java do "Math.max($a, $b)"
   csharp do "Math.Max($a, $b)"
+  vb do "Math.Max($a, $b)"
   php do "max($a, $b)"
   py do "max($a, $b)"
   pl do "max($a, $b)"
@@ -99,6 +100,7 @@ def lexems macro_max2(lexems a, lexems b)
   current_language() == LANG_Js ||
   current_language() == LANG_Php ||
   current_language() == LANG_Cs ||
+  current_language() == LANG_Vb ||
   current_language() == LANG_Rkt ||
   current_language() == LANG_Ml ||
   current_language() == LANG_Fun_ml ||
@@ -123,6 +125,7 @@ macro int native_macro_min2(int a, int b)
   js do "Math.min($a, $b)"
   java do "Math.min($a, $b)"
   csharp do "Math.Min($a, $b)"
+  vb do  "Math.Min($a, $b)"
   php do "min($a, $b)"
   py do "min($a, $b)"
   rkt do "min $a $b"
@@ -163,12 +166,14 @@ def lexems macro_min2(lexems a, lexems b)
   current_language() == LANG_Js ||
   current_language() == LANG_Php ||
   current_language() == LANG_Cs ||
+  current_language() == LANG_Vb ||
   current_language() == LANG_Ml ||
   current_language() == LANG_Fun_ml ||
   current_language() == LANG_Py ||
   current_language() == LANG_Rkt ||
   current_language() == LANG_Cl ||
   current_language() == LANG_Rb ||
+  current_language() == LANG_Vb ||
   current_language() == LANG_Pl
   then
     return { 
@@ -237,6 +242,7 @@ macro array<int> native_expand_read_int_line()
   py do "list(map(int, input().split()))"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
   csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll<int>(int.Parse).ToArray()"
+  vb do "Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(\" \".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))"
   rkt do "list->vector (map string->number (regexp-split \" \" (read-line)))"
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   *  do "E R R O R"
@@ -246,6 +252,7 @@ macro array<char> native_expand_read_char_line()
   py do "list(input())"
   php do "fgets(STDIN)"
   csharp do "Console.ReadLine().ToCharArray()"
+  vb do "Console.ReadLine().ToCharArray()"
   java do "scanner.nextLine().toCharArray()"
   cpp do "getline()"
   rkt do "list->vector (string->list (read-line))"
@@ -263,6 +270,7 @@ macro int native_expand_read_int()
   py do "int(input())"
   php do "intval(trim(fgets(STDIN)))"
   csharp do "int.Parse(Console.ReadLine())"
+  vb do "Integer.Parse(Console.ReadLine())"
   ml do "Scanf.scanf \"%d \" (fun x -> x)"
   rkt do "string->number (read-line)"
   ruby do "STDIN.readline.to_i(10)"
@@ -280,6 +288,7 @@ then
 	current_language() == LANG_Php ||
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Cs ||
+	current_language() == LANG_Vb ||
 	current_language() == LANG_Rb
 	then
     return {
@@ -300,6 +309,7 @@ def lexems expand_read_int_line(lexems a)
     if current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
 	current_language() == LANG_Cs ||
+	current_language() == LANG_Vb ||
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Rb
 	  then
@@ -335,6 +345,7 @@ def lexems expand_read_char_line(lexems a)
 	current_language() == LANG_Php ||
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Cs ||
+	current_language() == LANG_Vb ||
 	current_language() == LANG_Rb
 	  then
       return {
@@ -367,7 +378,8 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
     else
 			def s = {skip}
 			if current_language() == LANG_Php ||
-			current_language() == LANG_Cs
+			current_language() == LANG_Cs ||
+			current_language() == LANG_Vb
 			then
 				s = {}
 			end
