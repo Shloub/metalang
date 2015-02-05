@@ -444,3 +444,34 @@ end
 def inline (int, int) read_int_couple()
   ${ expand_read_int_couple() }
 end
+
+
+
+macro (int, int, int) native_expand_read_3ints()
+  py do "list(map(int, input().split()))"
+  php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
+  ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
+  pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
+  *  do "E R R O R"
+end
+
+def lexems expand_read_3ints()
+  if current_language() == LANG_Py ||
+ current_language() == LANG_Php ||
+ current_language() == LANG_Rb ||
+ current_language() == LANG_Pl
+  then
+    return { return native_expand_read_3ints() }
+  else
+    return {
+    def inline read int a skip
+    def inline read int b skip
+    def inline read int c skip
+    return (a, b, c)
+    }
+  end
+end
+
+def inline (int, int, int) read_3ints()
+  ${ expand_read_3ints() }
+end
