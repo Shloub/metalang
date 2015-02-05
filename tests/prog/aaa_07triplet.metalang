@@ -1,0 +1,8 @@
+
+main
+  for i = 1 to 3 do
+    def (a, b, c) = read_3ints()
+    print "a = " print a print " b = " print b print "c =" print c print "\n"
+  end
+end
+
