@@ -434,8 +434,8 @@ def lexems expand_read_int_couple()
     return { return native_expand_read_int_couple() }
   else
     return {
-    def read int a skip
-    def read int b skip
+    def inline read int a skip
+    def inline read int b skip
     return (a, b)
     }
   end
