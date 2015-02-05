@@ -87,7 +87,7 @@ Format.fprintf f "print(%a);" self#expr expr
   method print_proto f (funname, t, li) =
     if li = [] then Format.fprintf f "sub %a{" self#funname funname
     else
-    Format.fprintf f "sub %a{@\nmy(%a) = @@_;"
+    Format.fprintf f "sub %a{@\n@[<h>my(%a) = @@_;@]"
       self#funname funname
       (print_list
          (fun t (binding, type_) -> Format.fprintf t "%a" self#binding binding
@@ -176,7 +176,7 @@ Format.fprintf f "print(%a);" self#expr expr
       binding
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v 2>@[<h>foreach my %a (%a .. %a) {@]@\n%a@\n}@]"
+    Format.fprintf f "@[<v 2>@[<h>foreach my %a (%a .. %a) {@]@\n%a@]@\n}"
       self#binding varname
       self#expr expr1
       self#expr expr2
