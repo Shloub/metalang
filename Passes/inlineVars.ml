@@ -269,6 +269,12 @@ let printer = new Printer.printer
 let rec map_instrs (infos:infos) = function
   | [] -> false, []
   | hd::tl -> match Instr.unfix hd with
+    | Instr.Untuple (li1, (Expr.Fixed.F (_, Expr.Tuple li2)), opt ) -> (* on inline forcément untuple de tuples et on propage l'option *)
+      let l = List.zip li1 li2 in
+      let l = List.map (fun ((t, name), expr) ->
+        Instr.declare name t expr opt
+      ) l in
+      true, List.append l tl
     | Instr.AllocArray (name, ty, length, optli, { Instr.useless = true } ) ->
       begin match StringMap.find_opt name infos.infos with
       | Some [
