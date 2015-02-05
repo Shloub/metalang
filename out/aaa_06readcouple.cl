@@ -18,30 +18,22 @@
 (defun mread-blank () (progn
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
-(defstruct (tuple_int_int (:type list) :named)
-  tuple_int_int_field_0
-  tuple_int_int_field_1
-  )
 
 (do
   ((i 1 (+ 1 i)))
   ((> i 3))
   (progn
-    (let ((d (mread-int )))
+    (let ((a (mread-int )))
       (mread-blank)
-      (let ((e (mread-int )))
+      (let ((b (mread-int )))
         (mread-blank)
-        (let ((f (make-tuple_int_int :tuple_int_int_field_0 d
-                                     :tuple_int_int_field_1 e)))
-        (let ((a (tuple_int_int-tuple_int_int_field_0 f)))
-          (let ((b (tuple_int_int-tuple_int_int_field_1 f)))
-            (princ "a = ")
-            (princ a)
-            (princ " b = ")
-            (princ b)
-            (princ "
+        (princ "a = ")
+        (princ a)
+        (princ " b = ")
+        (princ b)
+        (princ "
 ")
-          ))))))
-)
+      )))
+  )
 
 

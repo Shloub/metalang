@@ -49,21 +49,15 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public class tuple_int_int {public int tuple_int_int_field_0;public int tuple_int_int_field_1;}
   
   public static void Main(String[] args)
   {
     for (int i = 1 ; i <= 3; i ++)
     {
-      int d = readInt();
+      int a = readInt();
       stdin_sep();
-      int e = readInt();
+      int b = readInt();
       stdin_sep();
-      tuple_int_int f = new tuple_int_int();
-      f.tuple_int_int_field_0 = d;
-      f.tuple_int_int_field_1 = e;
-      int a = f.tuple_int_int_field_0;
-      int b = f.tuple_int_int_field_1;
       Console.Write("" + "a = " + a + " b = " + b + "\n");
     }
   }

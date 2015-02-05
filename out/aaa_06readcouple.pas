@@ -61,33 +61,18 @@ begin
    until false;
 end;
 
-type
-    tuple_int_int=^tuple_int_int_r;
-    tuple_int_int_r = record
-      tuple_int_int_field_0 : Longint;
-      tuple_int_int_field_1 : Longint;
-    end;
-
 
 var
   a : Longint;
   b : Longint;
-  d : Longint;
-  e : Longint;
-  f : tuple_int_int;
   i : Longint;
 begin
   for i := 1 to  3 do
   begin
-    d := read_int_();
+    a := read_int_();
     skip();
-    e := read_int_();
+    b := read_int_();
     skip();
-    new(f);
-    f^.tuple_int_int_field_0 := d;
-    f^.tuple_int_int_field_1 := e;
-    a := f^.tuple_int_int_field_0;
-    b := f^.tuple_int_int_field_1;
     Write('a = ');
     Write(a);
     Write(' b = ');

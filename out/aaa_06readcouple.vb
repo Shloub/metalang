@@ -53,22 +53,13 @@ Function readInt() As Integer
     End If
   Loop
 End Function
-  Public Class tuple_int_int
-    Public tuple_int_int_field_0 As Integer
-    Public tuple_int_int_field_1 As Integer
-  End Class
   
   Sub Main()
     For  i As Integer  = 1 to  3
-      Dim d As Integer = readInt()
+      Dim a As Integer = readInt()
       stdin_sep()
-      Dim e As Integer = readInt()
+      Dim b As Integer = readInt()
       stdin_sep()
-      Dim f As tuple_int_int = new tuple_int_int()
-      f.tuple_int_int_field_0 = d
-      f.tuple_int_int_field_1 = e
-      Dim a As Integer = f.tuple_int_int_field_0
-      Dim b As Integer = f.tuple_int_int_field_1
       Console.Write("a = ")
       Console.Write(a)
       Console.Write(" b = ")

@@ -4,18 +4,13 @@ let main =
   let rec f i =
     (if (i <= h)
      then Scanf.scanf "%d"
-     (fun  d -> (
+     (fun  a -> (
                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                   Scanf.scanf "%d"
-                  (fun  e -> (
+                  (fun  b -> (
                                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                               let a = d
-                               and b = e in
-                               (
-                                 (Printf.printf "a = %d b = %d\n" a b);
-                                 (f (i + 1))
-                                 )
-                               
+                               (Printf.printf "a = %d b = %d\n" a b);
+                               (f (i + 1))
                                )
                   )
                   )

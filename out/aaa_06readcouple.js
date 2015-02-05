@@ -28,16 +28,10 @@ function read_int_(){
 }
 for (var i = 1 ; i <= 3; i++)
 {
-  d=read_int_();
+  a=read_int_();
   stdinsep();
-  e=read_int_();
+  b=read_int_();
   stdinsep();
-  var f = {
-    tuple_int_int_field_0 : d,
-    tuple_int_int_field_1 : e
-  };
-  var a = f.tuple_int_int_field_0;
-  var b = f.tuple_int_int_field_1;
   util.print("a = ", a, " b = ", b, "\n");
 }
 

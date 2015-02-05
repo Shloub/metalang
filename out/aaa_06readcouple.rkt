@@ -27,18 +27,14 @@
   (let ([h 3])
   (letrec ([f (lambda (i) 
                 (if (<= i h)
-                ((lambda (d) 
+                ((lambda (a) 
                    (block
                      (mread-blank)
-                     ((lambda (e) 
+                     ((lambda (b) 
                         (block
                           (mread-blank)
-                          (let ([a d]
-                          [b e])
-                          (block
-                            (map display (list "a = " a " b = " b "\n"))
-                            (f (+ i 1))
-                            ))
+                          (map display (list "a = " a " b = " b "\n"))
+                          (f (+ i 1))
                           )) (mread-int))
                    )) (mread-int))
     '()))])

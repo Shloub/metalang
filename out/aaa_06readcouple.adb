@@ -14,30 +14,14 @@ begin
   end loop;
 end;
 
-type tuple_int_int;
-type tuple_int_int_PTR is access tuple_int_int;
-type tuple_int_int is record
-  tuple_int_int_field_0 : Integer;
-  tuple_int_int_field_1 : Integer;
-end record;
-
-
-  f : tuple_int_int_PTR;
-  e : Integer;
-  d : Integer;
   b : Integer;
   a : Integer;
 begin
   for i in integer range (1)..(3) loop
-    Get(d);
+    Get(a);
     SkipSpaces;
-    Get(e);
+    Get(b);
     SkipSpaces;
-    f := new tuple_int_int;
-    f.tuple_int_int_field_0 := d;
-    f.tuple_int_int_field_1 := e;
-    a := f.tuple_int_int_field_0;
-    b := f.tuple_int_int_field_1;
     String'Write (Text_Streams.Stream (Current_Output), "a = ");
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(a), Left));
     String'Write (Text_Streams.Stream (Current_Output), " b = ");
