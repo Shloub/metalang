@@ -18,8 +18,7 @@ sub readint {
 }
 
 sub summax{
-  my($lst,
-  $len) = @_;
+  my($lst, $len) = @_;
   my $current = 0;
   my $max0 = 0;
   foreach my $i (0 .. $len - 1) {
@@ -30,7 +29,7 @@ sub summax{
     if ($max0 < $current) {
       $max0 = $current;
     }
-    }
+  }
   return $max0;
 }
 
@@ -43,7 +42,7 @@ foreach my $i (0 .. $len - 1) {
   $tmp = readint();
   readspaces();
   $tab->[$i] = $tmp;
-  }
+}
 my $result = summax($tab, $len);
 print($result);
 

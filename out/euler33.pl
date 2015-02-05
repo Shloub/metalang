@@ -7,8 +7,7 @@ sub remainder {
 }
 
 sub pgcd{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   my $c = min($a, $b);
   my $d = max($a, $b);
   my $reste = remainder($d, $c);
@@ -33,9 +32,9 @@ foreach my $i (1 .. 9) {
           $bottom = $bottom * $b;
         }
       }
-      }
     }
   }
+}
 print($top, "/", $bottom, "\n");
 my $p = pgcd($top, $bottom);
 print("pgcd=", $p, "\n", int(($bottom) / ($p)), "\n");

@@ -45,7 +45,7 @@ sub score{
     1;
     #		print c print " " print sum print " " 
     
-    }
+  }
   if (is_triangular($sum)) {
     return 1;
   }else{
@@ -57,13 +57,13 @@ foreach my $i (1 .. 55) {
   if (is_triangular($i)) {
     print($i, " ");
   }
-  }
+}
 print("\n");
 my $sum = 0;
 my $n = readint();
 foreach my $i (1 .. $n) {
   $sum = $sum + score();
-  }
+}
 print($sum, "\n");
 
 

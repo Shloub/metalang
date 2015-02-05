@@ -18,10 +18,7 @@ sub readint {
 }
 
 sub pathfind_aux{
-  my($cache,
-  $tab,
-  $len,
-  $pos) = @_;
+  my($cache, $tab, $len, $pos) = @_;
   if ($pos >= $len - 1) {
     return 0;
   }elsif ($cache->[$pos] ne -1) {
@@ -42,12 +39,11 @@ sub pathfind_aux{
 }
 
 sub pathfind{
-  my($tab,
-  $len) = @_;
+  my($tab, $len) = @_;
   my $cache = [];
   foreach my $i (0 .. $len - 1) {
     $cache->[$i] = -1;
-    }
+  }
   return pathfind_aux($cache, $tab, $len, 0);
 }
 
@@ -60,7 +56,7 @@ foreach my $i (0 .. $len - 1) {
   $tmp = readint();
   readspaces();
   $tab->[$i] = $tmp;
-  }
+}
 my $result = pathfind($tab, $len);
 print($result);
 

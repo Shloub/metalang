@@ -45,7 +45,7 @@ foreach my $i (0 .. $len - 1) {
   readspaces();
   print($i, "=>", $tmpi1, " ");
   $tab->[$i] = $tmpi1;
-  }
+}
 print("\n");
 my $tab2 = [];
 foreach my $i_ (0 .. $len - 1) {
@@ -53,7 +53,7 @@ foreach my $i_ (0 .. $len - 1) {
   readspaces();
   print($i_, "==>", $tmpi2, " ");
   $tab2->[$i_] = $tmpi2;
-  }
+}
 my $strlen = readint();
 readspaces();
 print($strlen, "=strlen\n");
@@ -66,9 +66,9 @@ foreach my $toto (0 .. $strlen - 1) {
     $c = remainder(($c - ord('a')) + 13, 26) + ord('a');
   }
   $tab4->[$toto] = chr($c);
-  }
+}
 foreach my $j (0 .. $strlen - 1) {
   print($tab4->[$j]);
-  }
+}
 
 

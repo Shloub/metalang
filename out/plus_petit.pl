@@ -18,9 +18,7 @@ sub readint {
 }
 
 sub go0{
-  my($tab,
-  $a,
-  $b) = @_;
+  my($tab, $a, $b) = @_;
   my $m = int(($a + $b) / (2));
   if ($a eq $m) {
     if ($tab->[$a] eq $m) {
@@ -50,8 +48,7 @@ sub go0{
 }
 
 sub plus_petit0{
-  my($tab,
-  $len) = @_;
+  my($tab, $len) = @_;
   return go0($tab, 0, $len);
 }
 
@@ -64,7 +61,7 @@ foreach my $i (0 .. $len - 1) {
   $tmp = readint();
   readspaces();
   $tab->[$i] = $tmp;
-  }
+}
 print(plus_petit0($tab, $len));
 
 

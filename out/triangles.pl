@@ -24,11 +24,7 @@ sub readint {
 #
 
 sub find0{
-  my($len,
-  $tab,
-  $cache,
-  $x,
-  $y) = @_;
+  my($len, $tab, $cache, $x, $y) = @_;
   #
   #	Cette fonction est récursive
   #	
@@ -53,16 +49,15 @@ sub find0{
 }
 
 sub find{
-  my($len,
-  $tab) = @_;
+  my($len, $tab) = @_;
   my $tab2 = [];
   foreach my $i (0 .. $len - 1) {
     my $tab3 = [];
     foreach my $j (0 .. $i + 1 - 1) {
       $tab3->[$j] = 0;
-      }
-    $tab2->[$i] = $tab3;
     }
+    $tab2->[$i] = $tab3;
+  }
   return find0($len, $tab, $tab2, 0, 0);
 }
 
@@ -77,15 +72,15 @@ foreach my $i (0 .. $len - 1) {
     $tmp = readint();
     readspaces();
     $tab2->[$j] = $tmp;
-    }
-  $tab->[$i] = $tab2;
   }
+  $tab->[$i] = $tab2;
+}
 print(find($len, $tab), "\n");
 foreach my $k (0 .. $len - 1) {
   foreach my $l (0 .. $k) {
     print($tab->[$k]->[$l], " ");
-    }
-  print("\n");
   }
+  print("\n");
+}
 
 

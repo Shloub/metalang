@@ -6,8 +6,7 @@ sub remainder {
 }
 
 sub eratostene{
-  my($t,
-  $max0) = @_;
+  my($t, $max0) = @_;
   my $n = 0;
   foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
@@ -19,15 +18,12 @@ sub eratostene{
         $j = $j + $i;
       }
     }
-    }
+  }
   return $n;
 }
 
 sub fillPrimesFactors{
-  my($t,
-  $n,
-  $primes,
-  $nprimes) = @_;
+  my($t, $n, $primes, $nprimes) = @_;
   foreach my $i (0 .. $nprimes - 1) {
     my $d = $primes->[$i];
     while ((remainder($n, $d)) eq 0)
@@ -38,14 +34,12 @@ sub fillPrimesFactors{
     if ($n eq 1) {
       return $primes->[$i];
     }
-    }
+  }
   return $n;
 }
 
 sub sumdivaux2{
-  my($t,
-  $n,
-  $i) = @_;
+  my($t, $n, $i) = @_;
   while ($i < $n && $t->[$i] eq 0)
   {
     $i = $i + 1;
@@ -54,9 +48,7 @@ sub sumdivaux2{
 }
 
 sub sumdivaux{
-  my($t,
-  $n,
-  $i) = @_;
+  my($t, $n, $i) = @_;
   if ($i > $n) {
     return 1;
   }elsif ($t->[$i] eq 0) {
@@ -68,19 +60,17 @@ sub sumdivaux{
     foreach my $j (1 .. $t->[$i]) {
       $out0 = $out0 + $p;
       $p = $p * $i;
-      }
+    }
     return ($out0 + 1) * $o;
   }
 }
 
 sub sumdiv{
-  my($nprimes,
-  $primes,
-  $n) = @_;
+  my($nprimes, $primes, $n) = @_;
   my $t = [];
   foreach my $i (0 .. $n + 1 - 1) {
     $t->[$i] = 0;
-    }
+  }
   my $max0 = fillPrimesFactors($t, $n, $primes, $nprimes);
   return sumdivaux($t, $max0, 0);
 }
@@ -89,19 +79,19 @@ my $maximumprimes = 1001;
 my $era = [];
 foreach my $j (0 .. $maximumprimes - 1) {
   $era->[$j] = $j;
-  }
+}
 my $nprimes = eratostene($era, $maximumprimes);
 my $primes = [];
 foreach my $o (0 .. $nprimes - 1) {
   $primes->[$o] = 0;
-  }
+}
 my $l = 0;
 foreach my $k (2 .. $maximumprimes - 1) {
   if ($era->[$k] eq $k) {
     $primes->[$l] = $k;
     $l = $l + 1;
   }
-  }
+}
 print($l, " == ", $nprimes, "\n");
 my $sum = 0;
 foreach my $n (2 .. 1000) {
@@ -114,7 +104,7 @@ foreach my $n (2 .. 1000) {
       $n;
     }
   }
-  }
+}
 print("\n", $sum, "\n");
 
 

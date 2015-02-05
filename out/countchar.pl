@@ -24,15 +24,13 @@ sub readint {
 }
 
 sub nth{
-  my($tab,
-  $tofind,
-  $len) = @_;
+  my($tab, $tofind, $len) = @_;
   my $out0 = 0;
   foreach my $i (0 .. $len - 1) {
     if ($tab->[$i] eq $tofind) {
       $out0 = $out0 + 1;
     }
-    }
+  }
   return $out0;
 }
 
@@ -47,7 +45,7 @@ foreach my $i (0 .. $len - 1) {
   my $tmp = '\000';
   $tmp = readchar();
   $tab->[$i] = $tmp;
-  }
+}
 my $result = nth($tab, $tofind, $len);
 print($result);
 

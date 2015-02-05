@@ -39,8 +39,7 @@ sub mktoto2{
 }
 
 sub result{
-  my($t_,
-  $t2_) = @_;
+  my($t_, $t2_) = @_;
   my $t = $t_;
   my $t2 = $t2_;
   my $t3 = {"foo" => 0,
@@ -54,11 +53,11 @@ sub result{
   my $cache0 = [];
   foreach my $i (0 .. $len - 1) {
     $cache0->[$i] = -$i;
-    }
+  }
   my $cache1 = [];
   foreach my $j (0 .. $len - 1) {
     $cache1->[$j] = $j;
-    }
+  }
   my $cache2 = $cache0;
   $cache0 = $cache1;
   $cache2 = $cache0;

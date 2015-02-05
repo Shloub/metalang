@@ -16,17 +16,14 @@ sub readint {
 }
 
 sub cons{
-  my($list,
-  $i) = @_;
+  my($list, $i) = @_;
   my $out0 = {"head" => $i,
               "tail" => $list};
   return $out0;
 }
 
 sub rev2{
-  my($empty,
-  $acc,
-  $torev) = @_;
+  my($empty, $acc, $torev) = @_;
   if ($torev eq $empty) {
     return $acc;
   }else{
@@ -37,8 +34,7 @@ sub rev2{
 }
 
 sub rev{
-  my($empty,
-  $torev) = @_;
+  my($empty, $torev) = @_;
   return rev2($empty, $empty, $torev);
 }
 

@@ -11,8 +11,7 @@ sub id{
 }
 
 sub g{
-  my($t,
-  $index) = @_;
+  my($t, $index) = @_;
   $t->[$index] = 0;
 }
 
@@ -20,7 +19,7 @@ my $a = [];
 foreach my $i (0 .. 5 - 1) {
   print($i);
   $a->[$i] = (remainder($i, 2)) eq 0;
-  }
+}
 my $c = $a->[0];
 if ($c) {
   print("True");

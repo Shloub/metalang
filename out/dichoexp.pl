@@ -23,8 +23,7 @@ sub remainder {
 }
 
 sub exp0{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   if ($b eq 0) {
     return 1;
   }

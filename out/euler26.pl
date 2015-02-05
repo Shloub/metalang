@@ -6,10 +6,7 @@ sub remainder {
 }
 
 sub periode{
-  my($restes,
-  $len,
-  $a,
-  $b) = @_;
+  my($restes, $len, $a, $b) = @_;
   while ($a ne 0)
   {
     my $chiffre = int(($a) / ($b));
@@ -18,7 +15,7 @@ sub periode{
       if ($restes->[$i] eq $reste) {
         return $len - $i;
       }
-      }
+    }
     $restes->[$len] = $reste;
     $len = $len + 1;
     $a = $reste * 10;
@@ -29,7 +26,7 @@ sub periode{
 my $t = [];
 foreach my $j (0 .. 1000 - 1) {
   $t->[$j] = 0;
-  }
+}
 my $m = 0;
 my $mi = 0;
 foreach my $i (1 .. 1000) {
@@ -38,7 +35,7 @@ foreach my $i (1 .. 1000) {
     $mi = $i;
     $m = $p;
   }
-  }
+}
 print($mi, "\n", $m, "\n");
 
 

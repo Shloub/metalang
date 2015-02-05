@@ -26,7 +26,7 @@ my $j = 0;
 foreach my $k (0 .. 10) {
   $j = $j + $k;
   print($j, "\n");
-  }
+}
 my $i = 4;
 while ($i < 10)
 {

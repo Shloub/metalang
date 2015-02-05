@@ -46,10 +46,7 @@ sub of_position_alphabet{
 }
 
 sub crypte{
-  my($taille_cle,
-  $cle,
-  $taille,
-  $message) = @_;
+  my($taille_cle, $cle, $taille, $message) = @_;
   foreach my $i (0 .. $taille - 1) {
     my $lettre = position_alphabet($message->[$i]);
     if ($lettre ne -1) {
@@ -57,7 +54,7 @@ sub crypte{
       my $new0 = remainder($addon + $lettre, 26);
       $message->[$i] = of_position_alphabet($new0);
     }
-    }
+  }
 }
 
 my $taille_cle = readint();
@@ -66,7 +63,7 @@ my $cle = [];
 foreach my $index (0 .. $taille_cle - 1) {
   my $out0 = readchar();
   $cle->[$index] = $out0;
-  }
+}
 readspaces();
 my $taille = readint();
 readspaces();
@@ -74,11 +71,11 @@ my $message = [];
 foreach my $index2 (0 .. $taille - 1) {
   my $out2 = readchar();
   $message->[$index2] = $out2;
-  }
+}
 crypte($taille_cle, $cle, $taille, $message);
 foreach my $i (0 .. $taille - 1) {
   print($message->[$i]);
-  }
+}
 print("\n");
 
 

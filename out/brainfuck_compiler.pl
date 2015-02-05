@@ -11,7 +11,7 @@ my $current_pos = 500;
 my $mem = [];
 foreach my $i (0 .. 1000 - 1) {
   $mem->[$i] = 0;
-  }
+}
 $mem->[$current_pos] = $mem->[$current_pos] + 1;
 $mem->[$current_pos] = $mem->[$current_pos] + 1;
 $mem->[$current_pos] = $mem->[$current_pos] + 1;

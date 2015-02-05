@@ -20,7 +20,7 @@ foreach my $j (0 .. 5 - 1) {
   my $d = ord($c) - ord('0');
   $i = $i * $d;
   $last->[$j] = $d;
-  }
+}
 my $max0 = $i;
 my $index = 0;
 my $nskipdiv = 0;
@@ -40,7 +40,7 @@ foreach my $k (1 .. 995) {
   $last->[$index] = $f;
   $index = remainder($index + 1, 5);
   $max0 = max($max0, $i);
-  }
+}
 print($max0, "\n");
 
 

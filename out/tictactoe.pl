@@ -42,11 +42,11 @@ sub print_state{
         print("X");
       }
       print("|");
-      }
+    }
     if ($y ne 2) {
       print("\n|-|-|-|\n|");
     }
-    }
+  }
   print("\n");
 }
 
@@ -75,13 +75,13 @@ sub eval0{
       }elsif ($linv ne $lin) {
         $lin = -2;
       }
-      }
+    }
     if ($col >= 0) {
       $win = $col;
     }elsif ($lin >= 0) {
       $win = $lin;
     }
-    }
+  }
   foreach my $x (1 .. 2) {
     if ($g->{"cases"}->[0]->[0] eq $x && $g->{"cases"}->[1]->[1] eq $x && $g->{"cases"}->[2]->[2] eq $x) {
       $win = $x;
@@ -89,7 +89,7 @@ sub eval0{
     if ($g->{"cases"}->[0]->[2] eq $x && $g->{"cases"}->[1]->[1] eq $x && $g->{"cases"}->[2]->[0] eq $x) {
       $win = $x;
     }
-    }
+  }
   $g->{"ended"} = $win ne 0 || $freecase eq 0;
   if ($win eq 1) {
     $g->{"note"} = 1000;
@@ -103,9 +103,7 @@ sub eval0{
 # On applique un mouvement 
 
 sub apply_move_xy{
-  my($x,
-  $y,
-  $g) = @_;
+  my($x, $y, $g) = @_;
   my $player = 2;
   if ($g->{"firstToPlay"}) {
     $player = 1;
@@ -115,36 +113,29 @@ sub apply_move_xy{
 }
 
 sub apply_move{
-  my($m,
-  $g) = @_;
+  my($m, $g) = @_;
   apply_move_xy($m->{"x"}, $m->{"y"}, $g);
 }
 
 sub cancel_move_xy{
-  my($x,
-  $y,
-  $g) = @_;
+  my($x, $y, $g) = @_;
   $g->{"cases"}->[$x]->[$y] = 0;
   $g->{"firstToPlay"} = !$g->{"firstToPlay"};
   $g->{"ended"} = 0;
 }
 
 sub cancel_move{
-  my($m,
-  $g) = @_;
+  my($m, $g) = @_;
   cancel_move_xy($m->{"x"}, $m->{"y"}, $g);
 }
 
 sub can_move_xy{
-  my($x,
-  $y,
-  $g) = @_;
+  my($x, $y, $g) = @_;
   return $g->{"cases"}->[$x]->[$y] eq 0;
 }
 
 sub can_move{
-  my($m,
-  $g) = @_;
+  my($m, $g) = @_;
   return can_move_xy($m->{"x"}, $m->{"y"}, $g);
 }
 
@@ -174,8 +165,8 @@ sub minmax{
           $maxNote = $currentNote;
         }
       }
-      }
     }
+  }
   return $maxNote;
 }
 
@@ -201,8 +192,8 @@ sub play{
           $minMove->{"y"} = $y;
         }
       }
-      }
     }
+  }
   print($minMove->{"x"}, $minMove->{"y"}, "\n");
   return $minMove;
 }
@@ -213,9 +204,9 @@ sub init0{
     my $tab = [];
     foreach my $j (0 .. 3 - 1) {
       $tab->[$j] = 0;
-      }
-    $cases->[$i] = $tab;
     }
+    $cases->[$i] = $tab;
+  }
   return {"cases" => $cases,
           "firstToPlay" => 1,
           "note" => 0,
@@ -250,6 +241,6 @@ foreach my $i (0 .. 1) {
   }
   print_state($state);
   print($state->{"note"}, "\n");
-  }
+}
 
 

@@ -33,12 +33,11 @@ sub is_number{
 #
 
 sub npi0{
-  my($str,
-  $len) = @_;
+  my($str, $len) = @_;
   my $stack = [];
   foreach my $i (0 .. $len - 1) {
     $stack->[$i] = 0;
-    }
+  }
   my $ptrStack = 0;
   my $ptrStr = 0;
   while ($ptrStr < $len)
@@ -72,7 +71,7 @@ foreach my $i (0 .. $len - 1) {
   my $tmp = '\000';
   $tmp = readchar();
   $tab->[$i] = $tmp;
-  }
+}
 my $result = npi0($tab, $len);
 print($result);
 

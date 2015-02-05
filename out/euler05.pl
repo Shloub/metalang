@@ -11,7 +11,7 @@ sub primesfactors{
   my $tab = [];
   foreach my $i (0 .. $n + 1 - 1) {
     $tab->[$i] = 0;
-    }
+  }
   my $d = 2;
   while ($n ne 1 && $d * $d <= $n)
   {
@@ -30,19 +30,19 @@ my $lim = 20;
 my $o = [];
 foreach my $m (0 .. $lim + 1 - 1) {
   $o->[$m] = 0;
-  }
+}
 foreach my $i (1 .. $lim) {
   my $t = primesfactors($i);
   foreach my $j (1 .. $i) {
     $o->[$j] = max($o->[$j], $t->[$j]);
-    }
   }
+}
 my $product = 1;
 foreach my $k (1 .. $lim) {
   foreach my $l (1 .. $o->[$k]) {
     $product = $product * $k;
-    }
   }
+}
 print($product, "\n");
 
 

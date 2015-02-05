@@ -12,7 +12,7 @@
 my $p = [];
 foreach my $i (0 .. 10 - 1) {
   $p->[$i] = $i * $i * $i * $i * $i;
-  }
+}
 my $sum = 0;
 foreach my $a (0 .. 9) {
   foreach my $b (0 .. 9) {
@@ -26,12 +26,12 @@ foreach my $a (0 .. 9) {
               print($f, $e, $d, $c, $b, $a, " ", $r, "\n");
               $sum = $sum + $r;
             }
-            }
           }
         }
       }
     }
   }
+}
 print($sum);
 
 

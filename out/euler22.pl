@@ -34,7 +34,7 @@ sub score{
     1;
     #		print c print " " print sum print " " 
     
-    }
+  }
   return $sum;
 }
 
@@ -43,7 +43,7 @@ my $n = readint();
 foreach my $i (1 .. $n) {
   $sum = $sum + $i *
   score();
-  }
+}
 print($sum, "\n");
 
 

@@ -15,8 +15,7 @@ sub next0{
 }
 
 sub find{
-  my($n,
-  $m) = @_;
+  my($n, $m) = @_;
   if ($n eq 1) {
     return 1;
   }elsif ($n >= 1000000) {
@@ -32,7 +31,7 @@ sub find{
 my $m = [];
 foreach my $j (0 .. 1000000 - 1) {
   $m->[$j] = 0;
-  }
+}
 my $max0 = 0;
 my $maxi = 0;
 foreach my $i (1 .. 999) {
@@ -43,7 +42,7 @@ foreach my $i (1 .. 999) {
     $max0 = $n2;
     $maxi = $i;
   }
-  }
+}
 print($max0, "\n", $maxi, "\n");
 
 

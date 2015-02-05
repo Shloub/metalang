@@ -12,8 +12,7 @@ sub is_leap{
 }
 
 sub ndayinmonth{
-  my($month,
-  $year) = @_;
+  my($month, $year) = @_;
   if ($month eq 0) {
     return 31;
   }elsif ($month eq 1) {

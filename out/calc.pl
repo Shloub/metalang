@@ -5,9 +5,7 @@
 #
 
 sub fibo{
-  my($a,
-  $b,
-  $i) = @_;
+  my($a, $b, $i) = @_;
   my $out_ = 0;
   my $a2 = $a;
   my $b2 = $b;
@@ -17,7 +15,7 @@ sub fibo{
     my $tmp = $b2;
     $b2 = $b2 + $a2;
     $a2 = $tmp;
-    }
+  }
   return $out_;
 }
 

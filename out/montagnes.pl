@@ -18,8 +18,7 @@ sub readint {
 }
 
 sub montagnes0{
-  my($tab,
-  $len) = @_;
+  my($tab, $len) = @_;
   my $max0 = 1;
   my $j = 1;
   my $i = $len - 2;
@@ -49,7 +48,7 @@ foreach my $i (0 .. $len - 1) {
   $x = readint();
   readspaces();
   $tab->[$i] = $x;
-  }
+}
 print(montagnes0($tab, $len));
 
 

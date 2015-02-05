@@ -27,21 +27,20 @@ sub mktoto{
 }
 
 sub result{
-  my($t,
-  $len) = @_;
+  my($t, $len) = @_;
   my $out0 = 0;
   foreach my $j (0 .. $len - 1) {
     $t->[$j]->{"blah"} = $t->[$j]->{"blah"} + 1;
     $out0 = $out0 + $t->[$j]->{"foo"} + $t->[$j]->{"blah"} *
     $t->[$j]->{"bar"} + $t->[$j]->{"bar"} * $t->[$j]->{"foo"};
-    }
+  }
   return $out0;
 }
 
 my $t = [];
 foreach my $i (0 .. 4 - 1) {
   $t->[$i] = mktoto($i);
-  }
+}
 $t->[0]->{"bar"} = readint();
 readspaces();
 $t->[1]->{"blah"} = readint();

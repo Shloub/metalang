@@ -6,22 +6,17 @@ sub remainder {
 }
 
 sub divisible{
-  my($n,
-  $t,
-  $size) = @_;
+  my($n, $t, $size) = @_;
   foreach my $i (0 .. $size - 1) {
     if ((remainder($n, $t->[$i])) eq 0) {
       return 1;
     }
-    }
+  }
   return 0;
 }
 
 sub find{
-  my($n,
-  $t,
-  $used,
-  $nth) = @_;
+  my($n, $t, $used, $nth) = @_;
   while ($used ne $nth)
   {
     if (divisible($n, $t, $used)) {
@@ -39,7 +34,7 @@ my $n = 10001;
 my $t = [];
 foreach my $i (0 .. $n - 1) {
   $t->[$i] = 2;
-  }
+}
 print(find(3, $t, 1, $n), "\n");
 
 

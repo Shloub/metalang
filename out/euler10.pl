@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 
 sub eratostene{
-  my($t,
-  $max0) = @_;
+  my($t, $max0) = @_;
   my $sum = 0;
   foreach my $i (2 .. $max0 - 1) {
     if ($t->[$i] eq $i) {
@@ -16,7 +15,7 @@ sub eratostene{
         }
       }
     }
-    }
+  }
   return $sum;
 }
 
@@ -26,7 +25,7 @@ my $n = 100000;
 my $t = [];
 foreach my $i (0 .. $n - 1) {
   $t->[$i] = $i;
-  }
+}
 $t->[1] = 0;
 print(eratostene($t, $n), "\n");
 

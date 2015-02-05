@@ -25,12 +25,7 @@ sub readint {
 }
 
 sub pathfind_aux{
-  my($cache,
-  $tab,
-  $x,
-  $y,
-  $posX,
-  $posY) = @_;
+  my($cache, $tab, $x, $y, $posX, $posY) = @_;
   if ($posX eq $x - 1 && $posY eq $y - 1) {
     return 0;
   }elsif ($posX < 0 || $posY < 0 || $posX >= $x || $posY >= $y) {
@@ -52,17 +47,15 @@ sub pathfind_aux{
 }
 
 sub pathfind{
-  my($tab,
-  $x,
-  $y) = @_;
+  my($tab, $x, $y) = @_;
   my $cache = [];
   foreach my $i (0 .. $y - 1) {
     my $tmp = [];
     foreach my $j (0 .. $x - 1) {
       $tmp->[$j] = -1;
-      }
-    $cache->[$i] = $tmp;
     }
+    $cache->[$i] = $tmp;
+  }
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
@@ -79,10 +72,10 @@ foreach my $i (0 .. $y - 1) {
     my $tmp = '\000';
     $tmp = readchar();
     $tab2->[$j] = $tmp;
-    }
+  }
   readspaces();
   $tab->[$i] = $tab2;
-  }
+}
 my $result = pathfind($tab, $x, $y);
 print($result);
 

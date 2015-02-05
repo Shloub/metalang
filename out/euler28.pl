@@ -27,7 +27,7 @@ sub sumdiag{
     # print int d print "=>" print un print " " 
     
     $sum = $sum + $un;
-    }
+  }
   return $sum;
 }
 

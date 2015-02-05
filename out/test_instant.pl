@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 
 sub foo{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   return $a + $b;
 }
 

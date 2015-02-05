@@ -42,9 +42,9 @@ foreach my $toto (0 .. $strlen - 1) {
     $c = remainder(($c - ord('a')) + 13, 26) + ord('a');
   }
   $tab4->[$toto] = chr($c);
-  }
+}
 foreach my $j (0 .. $strlen - 1) {
   print($tab4->[$j]);
-  }
+}
 
 

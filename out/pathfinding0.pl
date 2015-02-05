@@ -2,12 +2,7 @@
 use List::Util qw(min max);
 
 sub pathfind_aux{
-  my($cache,
-  $tab,
-  $x,
-  $y,
-  $posX,
-  $posY) = @_;
+  my($cache, $tab, $x, $y, $posX, $posY) = @_;
   if ($posX eq $x - 1 && $posY eq $y - 1) {
     return 0;
   }elsif ($posX < 0 || $posY < 0 || $posX >= $x || $posY >= $y) {
@@ -29,19 +24,17 @@ sub pathfind_aux{
 }
 
 sub pathfind{
-  my($tab,
-  $x,
-  $y) = @_;
+  my($tab, $x, $y) = @_;
   my $cache = [];
   foreach my $i (0 .. $y - 1) {
     my $tmp = [];
     foreach my $j (0 .. $x - 1) {
       print($tab->[$i]->[$j]);
       $tmp->[$j] = -1;
-      }
+    }
     print("\n");
     $cache->[$i] = $tmp;
-    }
+  }
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
 }
 
@@ -51,7 +44,7 @@ print($x, " ", $y, "\n");
 my $l = [];
 foreach my $m (0 .. $y - 1) {
   $l->[$m] = [split(//, <STDIN>)];
-  }
+}
 my $tab = $l;
 my $result = pathfind($tab, $x, $y);
 print($result);

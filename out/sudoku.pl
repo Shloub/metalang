@@ -30,7 +30,7 @@ sub read_sudoku{
     my $k = readint();
     readspaces();
     $out0->[$i] = $k;
-    }
+  }
   return $out0;
 }
 
@@ -44,12 +44,12 @@ sub print_sudoku{
       if ((remainder($x, 3)) eq 2) {
         print(" ");
       }
-      }
+    }
     print("\n");
     if ((remainder($y, 3)) eq 2) {
       print("\n");
     }
-    }
+  }
   print("\n");
 }
 
@@ -65,7 +65,7 @@ sub sudoku_done{
     if ($s->[$i] eq 0) {
       return 0;
     }
-    }
+  }
   return 1;
 }
 
@@ -3001,11 +3001,11 @@ sub solve{
         if (solve($sudoku0)) {
           return 1;
         }
-        }
+      }
       $sudoku0->[$i] = 0;
       return 0;
     }
-    }
+  }
   return 0;
 }
 

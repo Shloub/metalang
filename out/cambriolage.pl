@@ -19,10 +19,7 @@ sub readint {
 }
 
 sub nbPassePartout{
-  my($n,
-  $passepartout,
-  $m,
-  $serrures) = @_;
+  my($n, $passepartout, $m, $serrures) = @_;
   my $max_ancient = 0;
   my $max_recent = 0;
   foreach my $i (0 .. $m - 1) {
@@ -32,7 +29,7 @@ sub nbPassePartout{
     if ($serrures->[$i]->[0] eq 1 && $serrures->[$i]->[1] > $max_recent) {
       $max_recent = $serrures->[$i]->[1];
     }
-    }
+  }
   my $max_ancient_pp = 0;
   my $max_recent_pp = 0;
   foreach my $i (0 .. $n - 1) {
@@ -42,7 +39,7 @@ sub nbPassePartout{
     }
     $max_ancient_pp = max($max_ancient_pp, $pp->[0]);
     $max_recent_pp = max($max_recent_pp, $pp->[1]);
-    }
+  }
   if ($max_ancient_pp >= $max_ancient && $max_recent_pp >= $max_recent) {
     return 2;
   }else{
@@ -59,9 +56,9 @@ foreach my $i (0 .. $n - 1) {
     my $out01 = readint();
     readspaces();
     $out0->[$j] = $out01;
-    }
-  $passepartout->[$i] = $out0;
   }
+  $passepartout->[$i] = $out0;
+}
 my $m = readint();
 readspaces();
 my $serrures = [];
@@ -71,9 +68,9 @@ foreach my $k (0 .. $m - 1) {
     my $out_ = readint();
     readspaces();
     $out1->[$l] = $out_;
-    }
-  $serrures->[$k] = $out1;
   }
+  $serrures->[$k] = $out1;
+}
 print(nbPassePartout($n, $passepartout, $m, $serrures));
 
 

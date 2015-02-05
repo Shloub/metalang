@@ -23,12 +23,12 @@ sub read_bigint{
   foreach my $j (0 .. $len - 1) {
     my $c = readchar();
     $chiffres->[$j] = ord($c);
-    }
+  }
   foreach my $i (0 .. int(($len - 1) / (2))) {
     my $tmp = $chiffres->[$i];
     $chiffres->[$i] = $chiffres->[$len - 1 - $i];
     $chiffres->[$len - 1 - $i] = $tmp;
-    }
+  }
   return {"bigint_sign" => 1,
           "bigint_len" => $len,
           "bigint_chiffres" => $chiffres};
@@ -43,12 +43,11 @@ sub print_bigint{
     print($a->{"bigint_chiffres"}->[$a->{"bigint_len"} -
     1 -
     $i]);
-    }
+  }
 }
 
 sub bigint_eq{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   # Renvoie vrai si a = b 
   
   if ($a->{"bigint_sign"} ne $b->{"bigint_sign"}) {
@@ -60,14 +59,13 @@ sub bigint_eq{
       if ($a->{"bigint_chiffres"}->[$i] ne $b->{"bigint_chiffres"}->[$i]) {
         return 0;
       }
-      }
+    }
     return 1;
   }
 }
 
 sub bigint_gt{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   # Renvoie vrai si a > b 
   
   if ($a->{"bigint_sign"} && !$b->{"bigint_sign"}) {
@@ -87,21 +85,19 @@ sub bigint_gt{
         }elsif ($a->{"bigint_chiffres"}->[$j] < $b->{"bigint_chiffres"}->[$j]) {
           return !$a->{"bigint_sign"};
         }
-        }
+      }
     }
     return 1;
   }
 }
 
 sub bigint_lt{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   return !bigint_gt($a, $b);
 }
 
 sub add_bigint_positif{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   # Une addition ou on en a rien a faire des signes 
   
   my $len = max($a->{"bigint_len"}, $b->{"bigint_len"}) + 1;
@@ -117,7 +113,7 @@ sub add_bigint_positif{
     }
     $retenue = int(($tmp) / (10));
     $chiffres->[$i] = remainder($tmp, 10);
-    }
+  }
   while ($len > 0 && $chiffres->[$len - 1] eq 0)
   {
     $len = $len - 1;
@@ -128,8 +124,7 @@ sub add_bigint_positif{
 }
 
 sub sub_bigint_positif{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   # Une soustraction ou on en a rien a faire des signes
   #Pré-requis : a > b
   #
@@ -149,7 +144,7 @@ sub sub_bigint_positif{
       $retenue = 0;
     }
     $chiffres->[$i] = $tmp;
-    }
+  }
   while ($len > 0 && $chiffres->[$len - 1] eq 0)
   {
     $len = $len - 1;
@@ -167,8 +162,7 @@ sub neg_bigint{
 }
 
 sub add_bigint{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   if ($a->{"bigint_sign"} eq $b->{"bigint_sign"}) {
     if ($a->{"bigint_sign"}) {
       return add_bigint_positif($a, $b);
@@ -195,14 +189,12 @@ sub add_bigint{
 }
 
 sub sub_bigint{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   return add_bigint($a, neg_bigint($b));
 }
 
 sub mul_bigint_cp{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   # Cet algorithm est quadratique.
   #C'est le même que celui qu'on enseigne aux enfants en CP.
   #D'ou le nom de la fonction. 
@@ -211,7 +203,7 @@ sub mul_bigint_cp{
   my $chiffres = [];
   foreach my $k (0 .. $len - 1) {
     $chiffres->[$k] = 0;
-    }
+  }
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     my $retenue = 0;
     foreach my $j (0 .. $b->{"bigint_len"} - 1) {
@@ -219,10 +211,10 @@ sub mul_bigint_cp{
       $b->{"bigint_chiffres"}->[$j] * $a->{"bigint_chiffres"}->[$i];
       $retenue = int(($chiffres->[$i + $j]) / (10));
       $chiffres->[$i + $j] = remainder($chiffres->[$i + $j], 10);
-      }
+    }
     $chiffres->[$i + $b->{"bigint_len"}] = $chiffres->[$i +
     $b->{"bigint_len"}] + $retenue;
-    }
+  }
   $chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"}] =
   int(($chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1]) / (10));
   $chiffres->[$a->{"bigint_len"} + $b->{"bigint_len"} - 1] =
@@ -231,15 +223,14 @@ sub mul_bigint_cp{
     if ($len ne 0 && $chiffres->[$len - 1] eq 0) {
       $len = $len - 1;
     }
-    }
+  }
   return {"bigint_sign" => $a->{"bigint_sign"} eq $b->{"bigint_sign"},
           "bigint_len" => $len,
           "bigint_chiffres" => $chiffres};
 }
 
 sub bigint_premiers_chiffres{
-  my($a,
-  $i) = @_;
+  my($a, $i) = @_;
   my $len = min($i, $a->{"bigint_len"});
   while ($len ne 0 && $a->{"bigint_chiffres"}->[$len - 1] eq 0)
   {
@@ -251,8 +242,7 @@ sub bigint_premiers_chiffres{
 }
 
 sub bigint_shift{
-  my($a,
-  $i) = @_;
+  my($a, $i) = @_;
   my $chiffres = [];
   foreach my $k (0 .. $a->{"bigint_len"} + $i - 1) {
     if ($k >= $i) {
@@ -260,15 +250,14 @@ sub bigint_shift{
     }else{
       $chiffres->[$k] = 0;
     }
-    }
+  }
   return {"bigint_sign" => $a->{"bigint_sign"},
           "bigint_len" => $a->{"bigint_len"} + $i,
           "bigint_chiffres" => $chiffres};
 }
 
 sub mul_bigint{
-  my($aa,
-  $bb) = @_;
+  my($aa, $bb) = @_;
   if ($aa->{"bigint_len"} eq 0) {
     return $aa;
   }elsif ($bb->{"bigint_len"} eq 0) {
@@ -319,11 +308,11 @@ sub bigint_of_int{
   my $t = [];
   foreach my $j (0 .. $size - 1) {
     $t->[$j] = 0;
-    }
+  }
   foreach my $k (0 .. $size - 1) {
     $t->[$k] = remainder($i, 10);
     $i = int(($i) / (10));
-    }
+  }
   return {"bigint_sign" => 1,
           "bigint_len" => $size,
           "bigint_chiffres" => $t};
@@ -346,7 +335,7 @@ sub sum_chiffres_bigint{
   my $out0 = 0;
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     $out0 = $out0 + $a->{"bigint_chiffres"}->[$i];
-    }
+  }
   return $out0;
 }
 
@@ -361,8 +350,7 @@ sub euler20{
 }
 
 sub bigint_exp{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   if ($b eq 1) {
     return $a;
   }elsif ((remainder($b, 2)) eq 0) {
@@ -373,8 +361,7 @@ sub bigint_exp{
 }
 
 sub bigint_exp_10chiffres{
-  my($a,
-  $b) = @_;
+  my($a, $b) = @_;
   $a = bigint_premiers_chiffres($a, 10);
   if ($b eq 1) {
     return $a;
@@ -394,7 +381,7 @@ sub euler48{
     my $ibeib = bigint_exp_10chiffres($ib, $i);
     $sum = add_bigint($sum, $ibeib);
     $sum = bigint_premiers_chiffres($sum, 10);
-    }
+  }
   print("euler 48 = ");
   print_bigint($sum);
   print("\n");
@@ -430,15 +417,15 @@ sub euler29{
   my $a_bigint = [];
   foreach my $j (0 .. $maxA + 1 - 1) {
     $a_bigint->[$j] = bigint_of_int($j * $j);
-    }
+  }
   my $a0_bigint = [];
   foreach my $j2 (0 .. $maxA + 1 - 1) {
     $a0_bigint->[$j2] = bigint_of_int($j2);
-    }
+  }
   my $b = [];
   foreach my $k (0 .. $maxA + 1 - 1) {
     $b->[$k] = 2;
-    }
+  }
   my $n = 0;
   my $found = 1;
   while ($found)
@@ -456,7 +443,7 @@ sub euler29{
           $found = 1;
         }
       }
-      }
+    }
     if ($found) {
       $n = $n + 1;
       foreach my $l (2 .. $maxA) {
@@ -464,7 +451,7 @@ sub euler29{
           $b->[$l] = $b->[$l] + 1;
           $a_bigint->[$l] = mul_bigint($a_bigint->[$l], $a0_bigint->[$l]);
         }
-        }
+      }
     }
   }
   return $n;
@@ -476,7 +463,7 @@ foreach my $i (2 .. 100) {
   readspaces();
   my $tmp = read_bigint(50);
   $sum = add_bigint($sum, $tmp);
-  }
+}
 print("euler13 = ");
 print_bigint($sum);
 print("\n", "euler25 = ", euler25(), "\n", "euler16 = ", euler16(), "\n");

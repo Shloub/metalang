@@ -18,18 +18,16 @@ sub readint {
 }
 
 sub copytab{
-  my($tab,
-  $len) = @_;
+  my($tab, $len) = @_;
   my $o = [];
   foreach my $i (0 .. $len - 1) {
     $o->[$i] = $tab->[$i];
-    }
+  }
   return $o;
 }
 
 sub bubblesort{
-  my($tab,
-  $len) = @_;
+  my($tab, $len) = @_;
   foreach my $i (0 .. $len - 1) {
     foreach my $j ($i + 1 .. $len - 1) {
       if ($tab->[$i] > $tab->[$j]) {
@@ -37,15 +35,12 @@ sub bubblesort{
         $tab->[$i] = $tab->[$j];
         $tab->[$j] = $tmp;
       }
-      }
     }
+  }
 }
 
 sub qsort0{
-  my($tab,
-  $len,
-  $i,
-  $j) = @_;
+  my($tab, $len, $i, $j) = @_;
   if ($i < $j) {
     my $i0 = $i;
     my $j0 = $j;
@@ -88,18 +83,18 @@ foreach my $i_ (0 .. $len - 1) {
   $tmp = readint();
   readspaces();
   $tab->[$i_] = $tmp;
-  }
+}
 my $tab2 = copytab($tab, $len);
 bubblesort($tab2, $len);
 foreach my $i (0 .. $len - 1) {
   print($tab2->[$i], " ");
-  }
+}
 print("\n");
 my $tab3 = copytab($tab, $len);
 qsort0($tab3, $len, 0, $len - 1);
 foreach my $i (0 .. $len - 1) {
   print($tab3->[$i], " ");
-  }
+}
 print("\n");
 
 
