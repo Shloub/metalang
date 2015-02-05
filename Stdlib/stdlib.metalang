@@ -414,3 +414,33 @@ end
 def inline array<array<char>> read_char_matrix(int x, int y)
     ${expand_read_char_matrix( {x}, {y} )}
 end
+
+
+
+macro (int, int) native_expand_read_int_couple()
+  py do "list(map(int, input().split()))"
+  php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
+  ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
+  pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
+  *  do "E R R O R"
+end
+
+def lexems expand_read_int_couple()
+  if current_language() == LANG_Py ||
+ current_language() == LANG_Php ||
+ current_language() == LANG_Rb ||
+ current_language() == LANG_Pl
+  then
+    return { return native_expand_read_int_couple() }
+  else
+    return {
+    def read int a skip
+    def read int b skip
+    return (a, b)
+    }
+  end
+end
+
+def inline (int, int) read_int_couple()
+  ${ expand_read_int_couple() }
+end
