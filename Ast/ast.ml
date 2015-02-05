@@ -237,6 +237,7 @@ module Type = struct
   let unfix = Fixed.unfix
 
   let rec compare (ta : t) (tb : t) : int =
+
     match (unfix ta), (unfix tb) with
     | Auto, Auto -> 0
     | Auto, _ -> -1
@@ -299,7 +300,7 @@ module Type = struct
     | Struct _, _ -> -1
     | Named n1, Named n2 -> String.compare n1 n2
     | Named _, (Enum _| Struct _ | Bool | Void | Array _ | Char |
-        Auto | Lexems | Integer | String) -> 1
+        Auto | Lexems | Integer | String | Tuple _) -> 1
 
   (** module de réécriture et de parcours d'AST *)
   module Writer = AstWriter.F (struct
@@ -511,6 +512,7 @@ module Expr = struct
     | Type.Auto -> failwith ("auto is not an expression")
     | Type.Struct _ -> failwith ("new struct is not an expression")
     | Type.Enum _ -> failwith ("new enum is not an expression")
+    | Type.Tuple _ -> failwith ("new tuple is not an expression")
 
 end
 
