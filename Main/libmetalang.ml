@@ -166,7 +166,7 @@ let common_lisp_passes prog =
   prog |> default_passes
   (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> (fun (a, prog) ->
+  |> (fun (a, prog) -> (* TODO ne plus appliquer cette passe... *)
     let tuples, prog = DeclareTuples.apply a prog in
     let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog
     in a, b)

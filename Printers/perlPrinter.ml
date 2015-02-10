@@ -185,10 +185,12 @@ Format.fprintf f "print(%a);" self#expr expr
   method read_decl f t v = match Type.unfix t with
   | Type.Char -> Format.fprintf f "my %a = readchar();" self#binding v
   | Type.Integer ->  Format.fprintf f "my %a = readint();" self#binding v
+  | _ -> assert false
 
   method read f t mutable_ = match Type.unfix t with
   | Type.Char -> Format.fprintf f "%a = readchar();" self#mutable_ mutable_
   | Type.Integer ->  Format.fprintf f "%a = readint();" self#mutable_ mutable_
+  | _ -> assert false
 
   method stdin_sep f = Format.fprintf f "@[readspaces();@]"
 

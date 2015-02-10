@@ -199,6 +199,7 @@ let rec map_e acc e =
         let addon0, e = map_e acc e in
         List.append addon addon0, (name, e)) [] li
     in addon, Expr.Record li |> Expr.Fixed.fixa annot
+  | Expr.Lexems _ -> assert false
 
 and map_mut acc mut =
   let annot = Mutable.Fixed.annot mut in

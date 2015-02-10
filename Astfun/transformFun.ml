@@ -180,7 +180,6 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.While (e, li) ->
       let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
       let next = instrs suite contsuite contreturn env tl in
-      let b = Fresh.fresh () in
       let loop = Fresh.fresh () in
       let returnenv = List.map F.Expr.binding affected in
       let nextLoop = F.Expr.apply (F.Expr.binding loop) returnenv in

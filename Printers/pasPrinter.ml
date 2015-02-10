@@ -167,7 +167,7 @@ class pasPrinter = object(self)
       | Type.Named n -> Format.fprintf f "%s" n
       | Type.Struct li -> Format.fprintf f "a struct"
       | Type.Enum _ -> Format.fprintf f "an enum"
-      | Type.Lexems | Type.Auto -> assert false
+      | Type.Lexems | Type.Auto | Type.Tuple _ -> assert false
 
   method decl_procedure f funname li =
     Format.fprintf f "@[<h>procedure %a(%a);@]"

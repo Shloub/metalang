@@ -72,8 +72,7 @@ class cppPrinter = object(self)
     end
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Auto -> Format.fprintf f "auto"
-    | Type.Lexems -> assert false
+    | Type.Auto | Type.Lexems | Type.Tuple _ -> assert false
 
   method bool f = function
   | true -> Format.fprintf f "true"

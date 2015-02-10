@@ -71,8 +71,7 @@ class objCPrinter = object(self)
     end
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct _ -> Format.fprintf f "a struct"
-    | Type.Auto -> assert false
-    | Type.Lexems -> assert false
+    | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
 
   method allocrecord f name t el =
     Format.fprintf f "%a %a = [%s alloc];@\n%a"

@@ -87,6 +87,7 @@ let finstr acc (i: 'a Ast.Instr.t) =
   | Instr.DeclRead (t, _, _) -> acc + count_type t
   | Instr.StdinSep -> acc
   | Instr.Unquote e -> acc + count_expr e
+  | Instr.Untuple (vars, e, _) -> acc + count_expr e
 
 let count (li: 'a Ast.Expr.t Ast.Instr.t list) =
   List.fold_left

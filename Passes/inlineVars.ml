@@ -312,6 +312,8 @@ let rec map_instrs (infos:infos) = function
       | Some li ->
         (* Format.printf "match non géré pour l'inline de la déclaration %a (%d infos) TOTO@\n" printer#instr hd (List.length li) ; *)
         let b, tl = map_instrs infos tl in b, hd :: tl
+      | None ->
+        let b, tl = map_instrs infos tl in b, hd :: tl
 	    end
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
       begin match StringMap.find_opt name infos.infos with

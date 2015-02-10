@@ -446,9 +446,9 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
 	begin match Typer.byname n (super#getTyperEnv ()) |> Type.unfix with
 	| Type.Enum _ -> Format.fprintf f "%s" n
 	| Type.Struct _ -> Format.fprintf f "%s_PTR" n
+| _ -> assert false
 	end
       | Type.Struct li -> Format.fprintf f "a struct"
       | Type.Enum _ -> Format.fprintf f "an enum"
-      | Type.Lexems | Type.Auto -> assert false
-
+      | Type.Tuple _ | Type.Lexems | Type.Auto -> assert false
 end

@@ -103,6 +103,9 @@ class camlPrinter = object(self)
   (** show a type *)
   method ptype f (t : Ast.Type.t ) =
     match Type.Fixed.unfix t with
+    | Type.Tuple li ->
+      Format.fprintf f "(%a)"
+        (print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a * %a" fa a fb b)) li
     | Type.Integer -> Format.fprintf f "int"
     | Type.String -> Format.fprintf f "string"
     | Type.Array a -> Format.fprintf f "%a array" self#ptype a

@@ -302,6 +302,9 @@ class camlFunPrinter = object(self)
         ) li
     | Type.Lexems -> assert false
     | Type.Auto -> assert false
+    | Type.Tuple li ->
+      Format.fprintf f "(%a)"
+        (Printer.print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a * %a" fa a fb b)) li
 
   method is_rec name e =
     E.Writer.Deep.fold (fun acc e -> acc || match E.unfix e with

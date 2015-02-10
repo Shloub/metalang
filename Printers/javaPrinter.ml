@@ -58,8 +58,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     | Type.Named n -> Format.fprintf f "%s" n
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct li -> Format.fprintf f "a struct"
-    | Type.Auto -> assert false
-    | Type.Lexems -> assert false
+    | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
 
   method decl_type f name t =
     match (Type.unfix t) with
