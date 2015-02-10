@@ -3,7 +3,7 @@ import java.util.*;
 public class plus_petit
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int go0(int[] tab, int a, int b)
+  static int go0(int[] tab, int a, int b)
   {
     int m = (a + b) / 2;
     if (a == m)
@@ -33,7 +33,7 @@ public class plus_petit
       return go0(tab, m, b);
   }
   
-  public static int plus_petit0(int[] tab, int len)
+  static int plus_petit0(int[] tab, int len)
   {
     return go0(tab, 0, len);
   }

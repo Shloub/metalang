@@ -8,7 +8,7 @@ public class triangles
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 */
-  public static int find0(int len, int[][] tab, int[][] cache, int x, int y)
+  static int find0(int len, int[][] tab, int[][] cache, int x, int y)
   {
     /*
 	Cette fonction est récursive
@@ -30,7 +30,7 @@ on le retrouve ici : http://projecteuler.net/problem=18
     return result;
   }
   
-  public static int find(int len, int[][] tab)
+  static int find(int len, int[][] tab)
   {
     int[][] tab2 = new int[len][];
     for (int i = 0 ; i < len; i++)

@@ -2,7 +2,7 @@ using System;
 
 public class euler24
 {
-  public static int fact(int n)
+  static int fact(int n)
   {
     int prod = 1;
     for (int i = 2 ; i <= n; i ++)
@@ -10,7 +10,7 @@ public class euler24
     return prod;
   }
   
-  public static void show(int lim, int nth)
+  static void show(int lim, int nth)
   {
     int[] t = new int[lim];
     for (int i = 0 ; i < lim; i++)

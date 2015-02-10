@@ -4,7 +4,7 @@ public class sudoku
 {
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -16,11 +16,11 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static void stdin_sep(){
+static void stdin_sep(){
   do{
     if (eof) return;
     char c = readChar_();
@@ -31,7 +31,7 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;
@@ -50,7 +50,7 @@ public static int readInt(){
   } while(true);
 } 
   /* lit un sudoku sur l'entrée standard */
-  public static int[] read_sudoku()
+  static int[] read_sudoku()
   {
     int[] out0 = new int[9 * 9];
     for (int i = 0 ; i < 9 * 9; i++)
@@ -63,7 +63,7 @@ public static int readInt(){
   }
   
   /* affiche un sudoku */
-  public static void print_sudoku(int[] sudoku0)
+  static void print_sudoku(int[] sudoku0)
   {
     for (int y = 0 ; y <= 8; y ++)
     {
@@ -83,7 +83,7 @@ public static int readInt(){
   /* dit si les variables sont toutes différentes */
   /* dit si les variables sont toutes différentes */
   /* dit si le sudoku est terminé de remplir */
-  public static bool sudoku_done(int[] s)
+  static bool sudoku_done(int[] s)
   {
     for (int i = 0 ; i <= 80; i ++)
       if (s[i] == 0)
@@ -93,7 +93,7 @@ public static int readInt(){
   
   /* dit si il y a une erreur dans le sudoku */
   /* résout le sudoku*/
-  public static bool solve(int[] sudoku0)
+  static bool solve(int[] sudoku0)
   {
     if (false || (sudoku0[0] != 0 && sudoku0[0] == sudoku0[9]) || (sudoku0[0] !=
                                                                     0 &&

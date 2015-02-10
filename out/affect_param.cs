@@ -2,7 +2,7 @@ using System;
 
 public class affect_param
 {
-  public static void foo(int a)
+  static void foo(int a)
   {
     a = 4;
   }

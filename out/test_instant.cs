@@ -2,7 +2,7 @@ using System;
 
 public class test_instant
 {
-  public static int foo(int a, int b)
+  static int foo(int a, int b)
   {
     return a + b;
   }

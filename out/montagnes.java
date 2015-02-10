@@ -3,7 +3,7 @@ import java.util.*;
 public class montagnes
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int montagnes0(int[] tab, int len)
+  static int montagnes0(int[] tab, int len)
   {
     int max0 = 1;
     int j = 1;

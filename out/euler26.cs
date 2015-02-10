@@ -2,7 +2,7 @@ using System;
 
 public class euler26
 {
-  public static int periode(int[] restes, int len, int a, int b)
+  static int periode(int[] restes, int len, int a, int b)
   {
     while (a != 0)
     {

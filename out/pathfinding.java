@@ -3,7 +3,7 @@ import java.util.*;
 public class pathfinding
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
+  static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
       return 0;
@@ -26,7 +26,7 @@ public class pathfinding
     }
   }
   
-  public static int pathfind(char[][] tab, int x, int y)
+  static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
     for (int i = 0 ; i < y; i++)

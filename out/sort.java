@@ -3,7 +3,7 @@ import java.util.*;
 public class sort
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int[] copytab(int[] tab, int len)
+  static int[] copytab(int[] tab, int len)
   {
     int[] o = new int[len];
     for (int i = 0 ; i < len; i++)
@@ -11,7 +11,7 @@ public class sort
     return o;
   }
   
-  public static void bubblesort(int[] tab, int len)
+  static void bubblesort(int[] tab, int len)
   {
     for (int i = 0 ; i < len; i++)
       for (int j = i + 1 ; j < len; j++)
@@ -23,7 +23,7 @@ public class sort
     }
   }
   
-  public static void qsort0(int[] tab, int len, int i, int j)
+  static void qsort0(int[] tab, int len, int i, int j)
   {
     if (i < j)
     {

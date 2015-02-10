@@ -2,12 +2,12 @@ using System;
 
 public class aaa_05array
 {
-  public static bool[] id(bool[] b)
+  static bool[] id(bool[] b)
   {
     return b;
   }
   
-  public static void g(bool[] t, int index)
+  static void g(bool[] t, int index)
   {
     t[index] = false;
   }

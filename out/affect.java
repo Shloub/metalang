@@ -7,7 +7,7 @@ public class affect
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
   static class toto {public int foo;public int bar;public int blah;}
-  public static toto mktoto(int v1)
+  static toto mktoto(int v1)
   {
     toto t = new toto();
     t.foo = v1;
@@ -16,7 +16,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     return t;
   }
   
-  public static toto mktoto2(int v1)
+  static toto mktoto2(int v1)
   {
     toto t = new toto();
     t.foo = v1 + 3;
@@ -25,7 +25,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     return t;
   }
   
-  public static int result(toto t_, toto t2_)
+  static int result(toto t_, toto t2_)
   {
     toto t = t_;
     toto t2 = t2_;

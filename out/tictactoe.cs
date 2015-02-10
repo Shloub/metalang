@@ -4,7 +4,7 @@ public class tictactoe
 {
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -16,11 +16,11 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static void stdin_sep(){
+static void stdin_sep(){
   do{
     if (eof) return;
     char c = readChar_();
@@ -31,7 +31,7 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;
@@ -57,7 +57,7 @@ Tictactoe : un tictactoe avec une IA
   /* Un Mouvement */
   public class move {public int x;public int y;}
   /* On affiche l'état */
-  public static void print_state(gamestate g)
+  static void print_state(gamestate g)
   {
     Console.Write("\n|");
     for (int y = 0 ; y <= 2; y ++)
@@ -79,7 +79,7 @@ Tictactoe : un tictactoe avec une IA
   }
   
   /* On dit qui gagne (info stoquées dans g.ended et g.note ) */
-  public static void eval0(gamestate g)
+  static void eval0(gamestate g)
   {
     int win = 0;
     int freecase = 0;
@@ -124,7 +124,7 @@ Tictactoe : un tictactoe avec une IA
   }
   
   /* On applique un mouvement */
-  public static void apply_move_xy(int x, int y, gamestate g)
+  static void apply_move_xy(int x, int y, gamestate g)
   {
     int player = 2;
     if (g.firstToPlay)
@@ -133,29 +133,29 @@ Tictactoe : un tictactoe avec une IA
     g.firstToPlay = !g.firstToPlay;
   }
   
-  public static void apply_move(move m, gamestate g)
+  static void apply_move(move m, gamestate g)
   {
     apply_move_xy(m.x, m.y, g);
   }
   
-  public static void cancel_move_xy(int x, int y, gamestate g)
+  static void cancel_move_xy(int x, int y, gamestate g)
   {
     g.cases[x][y] = 0;
     g.firstToPlay = !g.firstToPlay;
     g.ended = false;
   }
   
-  public static void cancel_move(move m, gamestate g)
+  static void cancel_move(move m, gamestate g)
   {
     cancel_move_xy(m.x, m.y, g);
   }
   
-  public static bool can_move_xy(int x, int y, gamestate g)
+  static bool can_move_xy(int x, int y, gamestate g)
   {
     return g.cases[x][y] == 0;
   }
   
-  public static bool can_move(move m, gamestate g)
+  static bool can_move(move m, gamestate g)
   {
     return can_move_xy(m.x, m.y, g);
   }
@@ -163,7 +163,7 @@ Tictactoe : un tictactoe avec une IA
   /*
 Un minimax classique, renvoie la note du plateau
 */
-  public static int minmax(gamestate g)
+  static int minmax(gamestate g)
   {
     eval0(g);
     if (g.ended)
@@ -188,7 +188,7 @@ Un minimax classique, renvoie la note du plateau
   /*
 Renvoie le coup de l'IA
 */
-  public static move play(gamestate g)
+  static move play(gamestate g)
   {
     move minMove = new move();
     minMove.x = 0;
@@ -213,7 +213,7 @@ Renvoie le coup de l'IA
     return minMove;
   }
   
-  public static gamestate init0()
+  static gamestate init0()
   {
     int[][] cases = new int[3][];
     for (int i = 0 ; i < 3; i++)
@@ -231,7 +231,7 @@ Renvoie le coup de l'IA
     return a;
   }
   
-  public static move read_move()
+  static move read_move()
   {
     int x = readInt();
     stdin_sep();

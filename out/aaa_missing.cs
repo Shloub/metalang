@@ -6,7 +6,7 @@ public class aaa_missing
   /*
   Ce test a été généré par Metalang.
 */
-  public static int result(int len, int[] tab)
+  static int result(int len, int[] tab)
   {
     bool[] tab2 = new bool[len];
     for (int i = 0 ; i < len; i++)
@@ -28,7 +28,7 @@ public class aaa_missing
   {
     int len = int.Parse(Console.ReadLine());
     Console.Write("" + len + "\n");
-    int[] tab = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     Console.Write("" + result(len, tab) + "\n");
   }
   

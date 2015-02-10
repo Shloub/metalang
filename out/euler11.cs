@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class euler11
 {
-  public static int find(int n, int[][] m, int x, int y, int dx, int dy)
+  static int find(int n, int[][] m, int x, int y, int dx, int dy)
   {
     if (x < 0 || x == 20 || y < 0 || y == 20)
       return -1;
@@ -79,7 +79,7 @@ public class euler11
     int[][] m = new int[20][];
     for (int h = 0 ; h < 20; h++)
       m[h] =
-      new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+      new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int j = 0 ; j <= 7; j ++)
     {
       tuple_int_int p = directions[j];

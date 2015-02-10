@@ -4,7 +4,7 @@ public class record3
 {
   static Scanner scanner = new Scanner(System.in);
   static class toto {public int foo;public int bar;public int blah;}
-  public static toto mktoto(int v1)
+  static toto mktoto(int v1)
   {
     toto t = new toto();
     t.foo = v1;
@@ -13,7 +13,7 @@ public class record3
     return t;
   }
   
-  public static int result(toto[] t, int len)
+  static int result(toto[] t, int len)
   {
     int out0 = 0;
     for (int j = 0 ; j < len; j++)

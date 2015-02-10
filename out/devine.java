@@ -3,7 +3,7 @@ import java.util.*;
 public class devine
 {
   static Scanner scanner = new Scanner(System.in);
-  public static boolean devine0(int nombre, int[] tab, int len)
+  static boolean devine0(int nombre, int[] tab, int len)
   {
     int min0 = tab[0];
     int max0 = tab[1];

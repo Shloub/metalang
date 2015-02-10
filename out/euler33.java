@@ -3,7 +3,7 @@ import java.util.*;
 public class euler33
 {
   
-  public static int pgcd(int a, int b)
+  static int pgcd(int a, int b)
   {
     int c = Math.min(a, b);
     int d = Math.max(a, b);

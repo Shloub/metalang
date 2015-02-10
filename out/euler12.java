@@ -3,7 +3,7 @@ import java.util.*;
 public class euler12
 {
   
-  public static int eratostene(int[] t, int max0)
+  static int eratostene(int[] t, int max0)
   {
     int n = 0;
     for (int i = 2 ; i < max0; i++)
@@ -20,7 +20,7 @@ public class euler12
     return n;
   }
   
-  public static int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
+  static int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
   {
     for (int i = 0 ; i < nprimes; i++)
     {
@@ -36,7 +36,7 @@ public class euler12
     return n;
   }
   
-  public static int find(int ndiv2)
+  static int find(int ndiv2)
   {
     int maximumprimes = 110;
     int[] era = new int[maximumprimes];

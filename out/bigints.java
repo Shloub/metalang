@@ -4,7 +4,7 @@ public class bigints
 {
   static Scanner scanner = new Scanner(System.in);
   static class bigint {public boolean bigint_sign;public int bigint_len;public int[] bigint_chiffres;}
-  public static bigint read_bigint(int len)
+  static bigint read_bigint(int len)
   {
     int[] chiffres = new int[len];
     for (int j = 0 ; j < len; j++)
@@ -25,7 +25,7 @@ public class bigints
     return x;
   }
   
-  public static void print_bigint(bigint a)
+  static void print_bigint(bigint a)
   {
     if (!a.bigint_sign)
       System.out.printf("%c", '-');
@@ -33,7 +33,7 @@ public class bigints
       System.out.printf("%d", a.bigint_chiffres[a.bigint_len - 1 - i]);
   }
   
-  public static boolean bigint_eq(bigint a, bigint b)
+  static boolean bigint_eq(bigint a, bigint b)
   {
     /* Renvoie vrai si a = b */
     if (a.bigint_sign != b.bigint_sign)
@@ -49,7 +49,7 @@ public class bigints
     }
   }
   
-  public static boolean bigint_gt(bigint a, bigint b)
+  static boolean bigint_gt(bigint a, bigint b)
   {
     /* Renvoie vrai si a > b */
     if (a.bigint_sign && !b.bigint_sign)
@@ -75,12 +75,12 @@ public class bigints
     }
   }
   
-  public static boolean bigint_lt(bigint a, bigint b)
+  static boolean bigint_lt(bigint a, bigint b)
   {
     return !bigint_gt(a, b);
   }
   
-  public static bigint add_bigint_positif(bigint a, bigint b)
+  static bigint add_bigint_positif(bigint a, bigint b)
   {
     /* Une addition ou on en a rien a faire des signes */
     int len = Math.max(a.bigint_len, b.bigint_len) + 1;
@@ -105,7 +105,7 @@ public class bigints
     return y;
   }
   
-  public static bigint sub_bigint_positif(bigint a, bigint b)
+  static bigint sub_bigint_positif(bigint a, bigint b)
   {
     /* Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -136,7 +136,7 @@ Pré-requis : a > b
     return z;
   }
   
-  public static bigint neg_bigint(bigint a)
+  static bigint neg_bigint(bigint a)
   {
     bigint ba = new bigint();
     ba.bigint_sign = !a.bigint_sign;
@@ -145,7 +145,7 @@ Pré-requis : a > b
     return ba;
   }
   
-  public static bigint add_bigint(bigint a, bigint b)
+  static bigint add_bigint(bigint a, bigint b)
   {
     if (a.bigint_sign == b.bigint_sign)
     {
@@ -172,12 +172,12 @@ Pré-requis : a > b
     }
   }
   
-  public static bigint sub_bigint(bigint a, bigint b)
+  static bigint sub_bigint(bigint a, bigint b)
   {
     return add_bigint(a, neg_bigint(b));
   }
   
-  public static bigint mul_bigint_cp(bigint a, bigint b)
+  static bigint mul_bigint_cp(bigint a, bigint b)
   {
     /* Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -212,7 +212,7 @@ D'ou le nom de la fonction. */
     return bc;
   }
   
-  public static bigint bigint_premiers_chiffres(bigint a, int i)
+  static bigint bigint_premiers_chiffres(bigint a, int i)
   {
     int len = Math.min(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres[len - 1] == 0)
@@ -224,7 +224,7 @@ D'ou le nom de la fonction. */
     return be;
   }
   
-  public static bigint bigint_shift(bigint a, int i)
+  static bigint bigint_shift(bigint a, int i)
   {
     int[] chiffres = new int[a.bigint_len + i];
     for (int k = 0 ; k < a.bigint_len + i; k++)
@@ -239,7 +239,7 @@ D'ou le nom de la fonction. */
     return bf;
   }
   
-  public static bigint mul_bigint(bigint aa, bigint bb)
+  static bigint mul_bigint(bigint aa, bigint bb)
   {
     if (aa.bigint_len == 0)
       return aa;
@@ -267,7 +267,7 @@ D'ou le nom de la fonction. */
 Division,
 Modulo
 */
-  public static int log10(int a)
+  static int log10(int a)
   {
     int out0 = 1;
     while (a >= 10)
@@ -278,7 +278,7 @@ Modulo
     return out0;
   }
   
-  public static bigint bigint_of_int(int i)
+  static bigint bigint_of_int(int i)
   {
     int size = log10(i);
     if (i == 0)
@@ -298,7 +298,7 @@ Modulo
     return bg;
   }
   
-  public static bigint fact_bigint(bigint a)
+  static bigint fact_bigint(bigint a)
   {
     bigint one = bigint_of_int(1);
     bigint out0 = one;
@@ -310,7 +310,7 @@ Modulo
     return out0;
   }
   
-  public static int sum_chiffres_bigint(bigint a)
+  static int sum_chiffres_bigint(bigint a)
   {
     int out0 = 0;
     for (int i = 0 ; i < a.bigint_len; i++)
@@ -319,7 +319,7 @@ Modulo
   }
   
   /* http://projecteuler.net/problem=20 */
-  public static int euler20()
+  static int euler20()
   {
     bigint a = bigint_of_int(15);
     /* normalement c'est 100 */
@@ -327,7 +327,7 @@ Modulo
     return sum_chiffres_bigint(a);
   }
   
-  public static bigint bigint_exp(bigint a, int b)
+  static bigint bigint_exp(bigint a, int b)
   {
     if (b == 1)
       return a;
@@ -337,7 +337,7 @@ Modulo
       return mul_bigint(a, bigint_exp(a, b - 1));
   }
   
-  public static bigint bigint_exp_10chiffres(bigint a, int b)
+  static bigint bigint_exp_10chiffres(bigint a, int b)
   {
     a = bigint_premiers_chiffres(a, 10);
     if (b == 1)
@@ -348,7 +348,7 @@ Modulo
       return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
   }
   
-  public static void euler48()
+  static void euler48()
   {
     bigint sum = bigint_of_int(0);
     for (int i = 1 ; i <= 100; i ++)
@@ -364,7 +364,7 @@ Modulo
     System.out.print("\n");
   }
   
-  public static int euler16()
+  static int euler16()
   {
     bigint a = bigint_of_int(2);
     a = bigint_exp(a, 100);
@@ -372,7 +372,7 @@ Modulo
     return sum_chiffres_bigint(a);
   }
   
-  public static int euler25()
+  static int euler25()
   {
     int i = 2;
     bigint a = bigint_of_int(1);
@@ -388,7 +388,7 @@ Modulo
     return i;
   }
   
-  public static int euler29()
+  static int euler29()
   {
     int maxA = 5;
     int maxB = 5;

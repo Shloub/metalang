@@ -8,7 +8,7 @@ public class aaa_readints
   {
     int len = int.Parse(Console.ReadLine());
     Console.Write("" + len + "=len\n");
-    int[] tab1 = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab1 = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int i = 0 ; i < len; i++)
     {
       Console.Write("" + i + "=>" + tab1[i] + "\n");
@@ -17,7 +17,7 @@ public class aaa_readints
     int[][] tab2 = new int[len - 1][];
     for (int h = 0 ; h < len - 1; h++)
       tab2[h] =
-      new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+      new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int i = 0 ; i <= len - 2; i ++)
     {
       for (int j = 0 ; j < len; j++)

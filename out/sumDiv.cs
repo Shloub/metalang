@@ -4,7 +4,7 @@ public class sumDiv
 {
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -16,11 +16,11 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;
@@ -38,7 +38,7 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static void foo()
+  static void foo()
   {
     int a = 0;
     /* test */
@@ -46,12 +46,12 @@ public static int readInt(){
     /* test 2 */
   }
   
-  public static void foo2()
+  static void foo2()
   {
     
   }
   
-  public static void foo3()
+  static void foo3()
   {
     if (1 == 1)
     {
@@ -59,7 +59,7 @@ public static int readInt(){
     }
   }
   
-  public static int sumdiv(int n)
+  static int sumdiv(int n)
   {
     /* On désire renvoyer la somme des diviseurs */
     int out0 = 0;

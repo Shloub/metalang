@@ -2,7 +2,7 @@ using System;
 
 public class ocaml01
 {
-  public static int foo()
+  static int foo()
   {
     for (int i = 0 ; i <= 10; i ++)
     {
@@ -11,7 +11,7 @@ public class ocaml01
     return 0;
   }
   
-  public static int bar()
+  static int bar()
   {
     for (int i = 0 ; i <= 10; i ++)
     {

@@ -3,7 +3,7 @@ import java.util.*;
 public class dichoexp
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int exp0(int a, int b)
+  static int exp0(int a, int b)
   {
     if (b == 0)
       return 1;

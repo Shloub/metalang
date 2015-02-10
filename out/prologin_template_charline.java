@@ -3,7 +3,7 @@ import java.util.*;
 public class prologin_template_charline
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int programme_candidat(char[] tableau, int taille)
+  static int programme_candidat(char[] tableau, int taille)
   {
     int out0 = 0;
     for (int i = 0 ; i < taille; i++)

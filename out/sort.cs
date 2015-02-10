@@ -4,7 +4,7 @@ public class sort
 {
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -16,11 +16,11 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static void stdin_sep(){
+static void stdin_sep(){
   do{
     if (eof) return;
     char c = readChar_();
@@ -31,7 +31,7 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;
@@ -49,7 +49,7 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static int[] copytab(int[] tab, int len)
+  static int[] copytab(int[] tab, int len)
   {
     int[] o = new int[len];
     for (int i = 0 ; i < len; i++)
@@ -57,7 +57,7 @@ public static int readInt(){
     return o;
   }
   
-  public static void bubblesort(int[] tab, int len)
+  static void bubblesort(int[] tab, int len)
   {
     for (int i = 0 ; i < len; i++)
       for (int j = i + 1 ; j < len; j++)
@@ -69,7 +69,7 @@ public static int readInt(){
     }
   }
   
-  public static void qsort0(int[] tab, int len, int i, int j)
+  static void qsort0(int[] tab, int len, int i, int j)
   {
     if (i < j)
     {

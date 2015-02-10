@@ -11,7 +11,7 @@ public class euler11
         return out;
     }
 
-  public static int find(int n, int[][] m, int x, int y, int dx, int dy)
+  static int find(int n, int[][] m, int x, int y, int dx, int dy)
   {
     if (x < 0 || x == 20 || y < 0 || y == 20)
       return -1;

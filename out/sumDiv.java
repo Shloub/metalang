@@ -3,7 +3,7 @@ import java.util.*;
 public class sumDiv
 {
   static Scanner scanner = new Scanner(System.in);
-  public static void foo()
+  static void foo()
   {
     int a = 0;
     /* test */
@@ -11,12 +11,12 @@ public class sumDiv
     /* test 2 */
   }
   
-  public static void foo2()
+  static void foo2()
   {
     
   }
   
-  public static void foo3()
+  static void foo3()
   {
     if (1 == 1)
     {
@@ -24,7 +24,7 @@ public class sumDiv
     }
   }
   
-  public static int sumdiv(int n)
+  static int sumdiv(int n)
   {
     /* On désire renvoyer la somme des diviseurs */
     int out0 = 0;

@@ -21,7 +21,7 @@ a * d +
 c * f * 10000
 
 */
-  public static int chiffre(int c, int m)
+  static int chiffre(int c, int m)
   {
     if (c == 0)
       return m % 10;

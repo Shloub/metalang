@@ -2,7 +2,7 @@ using System;
 
 public class aaa_02if
 {
-  public static bool f(int i)
+  static bool f(int i)
   {
     if (i == 0)
       return true;

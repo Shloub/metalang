@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class pathfinding0
 {
-  public static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
+  static int pathfind_aux(int[][] cache, char[][] tab, int x, int y, int posX, int posY)
   {
     if (posX == x - 1 && posY == y - 1)
       return 0;
@@ -26,7 +26,7 @@ public class pathfinding0
     }
   }
   
-  public static int pathfind(char[][] tab, int x, int y)
+  static int pathfind(char[][] tab, int x, int y)
   {
     int[][] cache = new int[y][];
     for (int i = 0 ; i < y; i++)

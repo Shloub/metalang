@@ -2,7 +2,7 @@ using System;
 
 public class euler14
 {
-  public static int next0(int n)
+  static int next0(int n)
   {
     if ((n % 2) == 0)
       return n / 2;
@@ -10,7 +10,7 @@ public class euler14
       return 3 * n + 1;
   }
   
-  public static int find(int n, int[] m)
+  static int find(int n, int[] m)
   {
     if (n == 1)
       return 1;

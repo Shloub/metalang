@@ -14,7 +14,7 @@ public class aaa_missing
   /*
   Ce test a été généré par Metalang.
 */
-  public static int result(int len, int[] tab)
+  static int result(int len, int[] tab)
   {
     boolean[] tab2 = new boolean[len];
     for (int i = 0 ; i < len; i++)

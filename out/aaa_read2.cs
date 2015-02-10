@@ -12,13 +12,13 @@ read int, read char et skip
   {
     int len = int.Parse(Console.ReadLine());
     Console.Write("" + len + "=len\n");
-    int[] tab = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int i = 0 ; i < len; i++)
     {
       Console.Write("" + i + "=>" + tab[i] + " ");
     }
     Console.Write("\n");
-    int[] tab2 = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tab2 = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int i_ = 0 ; i_ < len; i_++)
     {
       Console.Write("" + i_ + "==>" + tab2[i_] + " ");

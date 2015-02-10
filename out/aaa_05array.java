@@ -3,12 +3,12 @@ import java.util.*;
 public class aaa_05array
 {
   
-  public static boolean[] id(boolean[] b)
+  static boolean[] id(boolean[] b)
   {
     return b;
   }
   
-  public static void g(boolean[] t, int index)
+  static void g(boolean[] t, int index)
   {
     t[index] = false;
   }

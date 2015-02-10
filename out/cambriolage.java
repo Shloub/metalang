@@ -3,7 +3,7 @@ import java.util.*;
 public class cambriolage
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)
+  static int nbPassePartout(int n, int[][] passepartout, int m, int[][] serrures)
   {
     int max_ancient = 0;
     int max_recent = 0;

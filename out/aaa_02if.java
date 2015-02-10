@@ -3,7 +3,7 @@ import java.util.*;
 public class aaa_02if
 {
   
-  public static boolean f(int i)
+  static boolean f(int i)
   {
     if (i == 0)
       return true;

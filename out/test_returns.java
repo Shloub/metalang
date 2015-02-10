@@ -3,7 +3,7 @@ import java.util.*;
 public class test_returns
 {
   
-  public static boolean is_pair(int i)
+  static boolean is_pair(int i)
   {
     int j = 1;
     if (i < 10)

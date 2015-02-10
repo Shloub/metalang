@@ -17,7 +17,7 @@ public class euler28
 
 
 */
-  public static int sumdiag(int n)
+  static int sumdiag(int n)
   {
     int nterms = n * 2 - 1;
     int un = 1;

@@ -11,7 +11,7 @@ public class prologin_template_intmatrix
         return out;
     }
 
-  public static int programme_candidat(int[][] tableau, int x, int y)
+  static int programme_candidat(int[][] tableau, int x, int y)
   {
     int out0 = 0;
     for (int i = 0 ; i < y; i++)

@@ -3,7 +3,7 @@ import java.util.*;
 public class summax_souslist
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int summax(int[] lst, int len)
+  static int summax(int[] lst, int len)
   {
     int current = 0;
     int max0 = 0;

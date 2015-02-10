@@ -3,7 +3,7 @@ import java.util.*;
 public class vigenere
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int position_alphabet(char c)
+  static int position_alphabet(char c)
   {
     int i = c;
     if (i <= 'Z' && i >= 'A')
@@ -14,12 +14,12 @@ public class vigenere
       return -1;
   }
   
-  public static char of_position_alphabet(int c)
+  static char of_position_alphabet(int c)
   {
     return (char)(c + 'a');
   }
   
-  public static void crypte(int taille_cle, char[] cle, int taille, char[] message)
+  static void crypte(int taille_cle, char[] cle, int taille, char[] message)
   {
     for (int i = 0 ; i < taille; i++)
     {

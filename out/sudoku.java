@@ -4,7 +4,7 @@ public class sudoku
 {
   static Scanner scanner = new Scanner(System.in);
   /* lit un sudoku sur l'entrée standard */
-  public static int[] read_sudoku()
+  static int[] read_sudoku()
   {
     int[] out0 = new int[9 * 9];
     for (int i = 0 ; i < 9 * 9; i++)
@@ -23,7 +23,7 @@ public class sudoku
   }
   
   /* affiche un sudoku */
-  public static void print_sudoku(int[] sudoku0)
+  static void print_sudoku(int[] sudoku0)
   {
     for (int y = 0 ; y <= 8; y ++)
     {
@@ -43,7 +43,7 @@ public class sudoku
   /* dit si les variables sont toutes différentes */
   /* dit si les variables sont toutes différentes */
   /* dit si le sudoku est terminé de remplir */
-  public static boolean sudoku_done(int[] s)
+  static boolean sudoku_done(int[] s)
   {
     for (int i = 0 ; i <= 80; i ++)
       if (s[i] == 0)
@@ -53,7 +53,7 @@ public class sudoku
   
   /* dit si il y a une erreur dans le sudoku */
   /* résout le sudoku*/
-  public static boolean solve(int[] sudoku0)
+  static boolean solve(int[] sudoku0)
   {
     if (false || (sudoku0[0] != 0 && sudoku0[0] == sudoku0[9]) || (sudoku0[0] !=
                                                                     0 &&

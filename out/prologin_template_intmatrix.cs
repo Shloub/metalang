@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class prologin_template_intmatrix
 {
-  public static int programme_candidat(int[][] tableau, int x, int y)
+  static int programme_candidat(int[][] tableau, int x, int y)
   {
     int out0 = 0;
     for (int i = 0 ; i < y; i++)
@@ -20,7 +20,7 @@ public class prologin_template_intmatrix
     int[][] tableau = new int[taille_y][];
     for (int f = 0 ; f < taille_y; f++)
       tableau[f] =
-      new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+      new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }
   

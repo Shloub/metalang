@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class prologin_template_intlist
 {
-  public static int programme_candidat(int[] tableau, int taille)
+  static int programme_candidat(int[] tableau, int taille)
   {
     int out0 = 0;
     for (int i = 0 ; i < taille; i++)
@@ -15,7 +15,7 @@ public class prologin_template_intlist
   public static void Main(String[] args)
   {
     int taille = int.Parse(Console.ReadLine());
-    int[] tableau = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll<int>(int.Parse).ToArray();
+    int[] tableau = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     Console.Write("" + programme_candidat(tableau, taille) + "\n");
   }
   

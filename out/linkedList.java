@@ -4,7 +4,7 @@ public class linkedList
 {
   static Scanner scanner = new Scanner(System.in);
   static class intlist {public int head;public intlist tail;}
-  public static intlist cons(intlist list, int i)
+  static intlist cons(intlist list, int i)
   {
     intlist out0 = new intlist();
     out0.head = i;
@@ -12,7 +12,7 @@ public class linkedList
     return out0;
   }
   
-  public static intlist rev2(intlist empty, intlist acc, intlist torev)
+  static intlist rev2(intlist empty, intlist acc, intlist torev)
   {
     if (torev == empty)
       return acc;
@@ -25,12 +25,12 @@ public class linkedList
     }
   }
   
-  public static intlist rev(intlist empty, intlist torev)
+  static intlist rev(intlist empty, intlist torev)
   {
     return rev2(empty, empty, torev);
   }
   
-  public static void test(intlist empty)
+  static void test(intlist empty)
   {
     intlist list = empty;
     int i = -1;

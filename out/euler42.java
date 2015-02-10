@@ -3,7 +3,7 @@ import java.util.*;
 public class euler42
 {
   static Scanner scanner = new Scanner(System.in);
-  public static boolean is_triangular(int n)
+  static boolean is_triangular(int n)
   {
     /*
    n = k * (k + 1) / 2
@@ -13,7 +13,7 @@ public class euler42
     return a * (a + 1) == n * 2;
   }
   
-  public static int score()
+  static int score()
   {
     scanner.findWithinHorizon("[\n\r ]*", 1);
     int len;

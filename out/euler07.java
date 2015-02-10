@@ -3,7 +3,7 @@ import java.util.*;
 public class euler07
 {
   
-  public static boolean divisible(int n, int[] t, int size)
+  static boolean divisible(int n, int[] t, int size)
   {
     for (int i = 0 ; i < size; i++)
       if ((n % t[i]) == 0)
@@ -11,7 +11,7 @@ public class euler07
     return false;
   }
   
-  public static int find(int n, int[] t, int used, int nth)
+  static int find(int n, int[] t, int used, int nth)
   {
     while (used != nth)
       if (divisible(n, t, used))

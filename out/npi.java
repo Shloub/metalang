@@ -3,7 +3,7 @@ import java.util.*;
 public class npi
 {
   static Scanner scanner = new Scanner(System.in);
-  public static boolean is_number(char c)
+  static boolean is_number(char c)
   {
     return c <= '9' && c >= '0';
   }
@@ -11,7 +11,7 @@ public class npi
   /*
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 */
-  public static int npi0(char[] str, int len)
+  static int npi0(char[] str, int len)
   {
     int[] stack = new int[len];
     for (int i = 0 ; i < len; i++)

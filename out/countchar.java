@@ -3,7 +3,7 @@ import java.util.*;
 public class countchar
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int nth(char[] tab, char tofind, int len)
+  static int nth(char[] tab, char tofind, int len)
   {
     int out0 = 0;
     for (int i = 0 ; i < len; i++)

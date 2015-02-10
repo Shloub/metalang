@@ -4,7 +4,7 @@ public class linkedList
 {
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -16,11 +16,11 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;
@@ -39,7 +39,7 @@ public static int readInt(){
   } while(true);
 } 
   public class intlist {public int head;public intlist tail;}
-  public static intlist cons(intlist list, int i)
+  static intlist cons(intlist list, int i)
   {
     intlist out0 = new intlist();
     out0.head = i;
@@ -47,7 +47,7 @@ public static int readInt(){
     return out0;
   }
   
-  public static intlist rev2(intlist empty, intlist acc, intlist torev)
+  static intlist rev2(intlist empty, intlist acc, intlist torev)
   {
     if (torev == empty)
       return acc;
@@ -60,12 +60,12 @@ public static int readInt(){
     }
   }
   
-  public static intlist rev(intlist empty, intlist torev)
+  static intlist rev(intlist empty, intlist torev)
   {
     return rev2(empty, empty, torev);
   }
   
-  public static void test(intlist empty)
+  static void test(intlist empty)
   {
     intlist list = empty;
     int i = -1;

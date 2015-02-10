@@ -3,7 +3,7 @@ import java.util.*;
 public class pathfindList
 {
   static Scanner scanner = new Scanner(System.in);
-  public static int pathfind_aux(int[] cache, int[] tab, int len, int pos)
+  static int pathfind_aux(int[] cache, int[] tab, int len, int pos)
   {
     if (pos >= len - 1)
       return 0;
@@ -24,7 +24,7 @@ public class pathfindList
     }
   }
   
-  public static int pathfind(int[] tab, int len)
+  static int pathfind(int[] tab, int len)
   {
     int[] cache = new int[len];
     for (int i = 0 ; i < len; i++)

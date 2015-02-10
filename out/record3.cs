@@ -4,7 +4,7 @@ public class record3
 {
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -16,11 +16,11 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static void stdin_sep(){
+static void stdin_sep(){
   do{
     if (eof) return;
     char c = readChar_();
@@ -31,7 +31,7 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;
@@ -50,7 +50,7 @@ public static int readInt(){
   } while(true);
 } 
   public class toto {public int foo;public int bar;public int blah;}
-  public static toto mktoto(int v1)
+  static toto mktoto(int v1)
   {
     toto t = new toto();
     t.foo = v1;
@@ -59,7 +59,7 @@ public static int readInt(){
     return t;
   }
   
-  public static int result(toto[] t, int len)
+  static int result(toto[] t, int len)
   {
     int out0 = 0;
     for (int j = 0 ; j < len; j++)

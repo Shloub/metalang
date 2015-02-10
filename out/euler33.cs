@@ -2,7 +2,7 @@ using System;
 
 public class euler33
 {
-  public static int pgcd(int a, int b)
+  static int pgcd(int a, int b)
   {
     int c = Math.Min(a, b);
     int d = Math.Max(a, b);

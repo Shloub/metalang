@@ -2,7 +2,7 @@ using System;
 
 public class euler27
 {
-  public static int eratostene(int[] t, int max0)
+  static int eratostene(int[] t, int max0)
   {
     int n = 0;
     for (int i = 2 ; i < max0; i++)
@@ -19,7 +19,7 @@ public class euler27
     return n;
   }
   
-  public static bool isPrime(int n, int[] primes, int len)
+  static bool isPrime(int n, int[] primes, int len)
   {
     int i = 0;
     if (n < 0)
@@ -33,7 +33,7 @@ public class euler27
     return true;
   }
   
-  public static int test(int a, int b, int[] primes, int len)
+  static int test(int a, int b, int[] primes, int len)
   {
     for (int n = 0 ; n <= 200; n ++)
     {

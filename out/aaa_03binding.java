@@ -3,7 +3,7 @@ import java.util.*;
 public class aaa_03binding
 {
   
-  public static int g(int i)
+  static int g(int i)
   {
     int j = i * 4;
     if ((j % 2) == 1)
@@ -11,7 +11,7 @@ public class aaa_03binding
     return j;
   }
   
-  public static void h(int i)
+  static void h(int i)
   {
     System.out.printf("%d\n", i);
   }

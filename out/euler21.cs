@@ -2,7 +2,7 @@ using System;
 
 public class euler21
 {
-  public static int eratostene(int[] t, int max0)
+  static int eratostene(int[] t, int max0)
   {
     int n = 0;
     for (int i = 2 ; i < max0; i++)
@@ -19,7 +19,7 @@ public class euler21
     return n;
   }
   
-  public static int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
+  static int fillPrimesFactors(int[] t, int n, int[] primes, int nprimes)
   {
     for (int i = 0 ; i < nprimes; i++)
     {
@@ -35,14 +35,14 @@ public class euler21
     return n;
   }
   
-  public static int sumdivaux2(int[] t, int n, int i)
+  static int sumdivaux2(int[] t, int n, int i)
   {
     while (i < n && t[i] == 0)
       i ++;
     return i;
   }
   
-  public static int sumdivaux(int[] t, int n, int i)
+  static int sumdivaux(int[] t, int n, int i)
   {
     if (i > n)
       return 1;
@@ -62,7 +62,7 @@ public class euler21
     }
   }
   
-  public static int sumdiv(int nprimes, int[] primes, int n)
+  static int sumdiv(int nprimes, int[] primes, int n)
   {
     int[] t = new int[n + 1];
     for (int i = 0 ; i < n + 1; i++)

@@ -2,7 +2,7 @@ using System;
 
 public class euler05
 {
-  public static int[] primesfactors(int n)
+  static int[] primesfactors(int n)
   {
     int[] tab = new int[n + 1];
     for (int i = 0 ; i < n + 1; i++)

@@ -4,7 +4,7 @@ public class plus_petit
 {
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -16,11 +16,11 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }
-public static void stdin_sep(){
+static void stdin_sep(){
   do{
     if (eof) return;
     char c = readChar_();
@@ -31,7 +31,7 @@ public static void stdin_sep(){
     }
   } while(true);
 }
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;
@@ -49,7 +49,7 @@ public static int readInt(){
     }
   } while(true);
 } 
-  public static int go0(int[] tab, int a, int b)
+  static int go0(int[] tab, int a, int b)
   {
     int m = (a + b) / 2;
     if (a == m)
@@ -79,7 +79,7 @@ public static int readInt(){
       return go0(tab, m, b);
   }
   
-  public static int plus_petit0(int[] tab, int len)
+  static int plus_petit0(int[] tab, int len)
   {
     return go0(tab, 0, len);
   }

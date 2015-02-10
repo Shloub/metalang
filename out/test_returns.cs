@@ -2,7 +2,7 @@ using System;
 
 public class test_returns
 {
-  public static bool is_pair(int i)
+  static bool is_pair(int i)
   {
     int j = 1;
     if (i < 10)

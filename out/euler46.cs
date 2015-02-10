@@ -2,7 +2,7 @@ using System;
 
 public class euler46
 {
-  public static int eratostene(int[] t, int max0)
+  static int eratostene(int[] t, int max0)
   {
     int n = 0;
     for (int i = 2 ; i < max0; i++)

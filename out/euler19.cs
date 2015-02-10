@@ -2,12 +2,12 @@ using System;
 
 public class euler19
 {
-  public static bool is_leap(int year)
+  static bool is_leap(int year)
   {
     return (year % 400) == 0 || ((year % 100) != 0 && (year % 4) == 0);
   }
   
-  public static int ndayinmonth(int month, int year)
+  static int ndayinmonth(int month, int year)
   {
     if (month == 0)
       return 31;
