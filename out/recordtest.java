@@ -3,7 +3,10 @@ import java.util.*;
 public class recordtest
 {
   static Scanner scanner = new Scanner(System.in);
-  static class toto {public int foo;public int bar;}
+  static class toto {
+    public int foo;
+    public int bar;
+  }
   
   public static void main(String args[])
   {

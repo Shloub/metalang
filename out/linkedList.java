@@ -3,7 +3,10 @@ import java.util.*;
 public class linkedList
 {
   static Scanner scanner = new Scanner(System.in);
-  static class intlist {public int head;public intlist tail;}
+  static class intlist {
+    public int head;
+    public intlist tail;
+  }
   static intlist cons(intlist list, int i)
   {
     intlist out0 = new intlist();

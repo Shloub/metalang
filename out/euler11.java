@@ -21,7 +21,10 @@ public class euler11
       return m[y][x] * find(n - 1, m, x + dx, y + dy, dx, dy);
   }
   
-  static class tuple_int_int {public int tuple_int_int_field_0;public int tuple_int_int_field_1;}
+  static class tuple_int_int {
+    public int tuple_int_int_field_0;
+    public int tuple_int_int_field_1;
+  }
   
   public static void main(String args[])
   {

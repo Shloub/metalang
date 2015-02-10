@@ -7,9 +7,17 @@ public class tictactoe
 Tictactoe : un tictactoe avec une IA
 */
   /* La structure de donnée */
-  static class gamestate {public int[][] cases;public boolean firstToPlay;public int note;public boolean ended;}
+  static class gamestate {
+    public int[][] cases;
+    public boolean firstToPlay;
+    public int note;
+    public boolean ended;
+  }
   /* Un Mouvement */
-  static class move {public int x;public int y;}
+  static class move {
+    public int x;
+    public int y;
+  }
   /* On affiche l'état */
   static void print_state(gamestate g)
   {

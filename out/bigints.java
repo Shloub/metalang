@@ -3,7 +3,11 @@ import java.util.*;
 public class bigints
 {
   static Scanner scanner = new Scanner(System.in);
-  static class bigint {public boolean bigint_sign;public int bigint_len;public int[] bigint_chiffres;}
+  static class bigint {
+    public boolean bigint_sign;
+    public int bigint_len;
+    public int[] bigint_chiffres;
+  }
   static bigint read_bigint(int len)
   {
     int[] chiffres = new int[len];

@@ -6,7 +6,11 @@ public class affect
   /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
-  static class toto {public int foo;public int bar;public int blah;}
+  static class toto {
+    public int foo;
+    public int bar;
+    public int blah;
+  }
   static toto mktoto(int v1)
   {
     toto t = new toto();
