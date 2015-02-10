@@ -3,6 +3,14 @@ import java.util.*;
 public class aaa_missing
 {
   static Scanner scanner = new Scanner(System.in);
+    static int[] read_int_line(){
+        String s[] = scanner.nextLine().split(" ");
+        int out[] = new int[s.length];
+        for (int i = 0; i < s.length; i ++)
+          out[i] = Integer.parseInt(s[i]);
+        return out;
+    }
+
   /*
   Ce test a été généré par Metalang.
 */
@@ -26,26 +34,9 @@ public class aaa_missing
   
   public static void main(String args[])
   {
-    int len;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      len = scanner.nextInt();
-    } else {
-      len = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int len = Integer.parseInt(scanner.nextLine());
     System.out.printf("%d\n", len);
-    int[] tab = new int[len];
-    for (int e = 0 ; e < len; e++)
-    {
-      if (scanner.hasNext("^-")){
-        scanner.next("^-");
-        tab[e] = -scanner.nextInt();
-      }else{
-        tab[e] = scanner.nextInt();
-      }
-      scanner.findWithinHorizon("[\n\r ]*", 1);
-    }
+    int[] tab = read_int_line();
     System.out.printf("%d\n", result(len, tab));
   }
   

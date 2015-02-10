@@ -13,7 +13,10 @@ begin
     Get(C);
   end loop;
 end;
+type o is Array (Integer range <>) of Integer;
+type o_PTR is access o;
 
+  l : o_PTR;
   b : Integer;
   a : Integer;
 begin
@@ -26,6 +29,15 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(a), Left));
     String'Write (Text_Streams.Stream (Current_Output), " b = ");
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(b), Left));
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  end loop;
+  l := new o (0..(10));
+  for k in integer range (0)..(10) - (1) loop
+    Get(l(k));
+    SkipSpaces;
+  end loop;
+  for j in integer range (0)..(9) loop
+    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l(j)), Left));
     String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
   end loop;
 end;

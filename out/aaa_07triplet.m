@@ -4,11 +4,20 @@
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int i, c, b, a;
+  int j, o, i, c, b, a;
   for (i = 1 ; i <= 3; i++)
   {
     scanf("%d %d %d ", &a, &b, &c);
     printf("a = %d b = %dc =%d\n", a, b, c);
+  }
+  int *l = malloc( 10 * sizeof(int));
+  for (o = 0 ; o < 10; o++)
+  {
+    scanf("%d ", &l[o]);
+  }
+  for (j = 0 ; j <= 9; j++)
+  {
+    printf("%d\n", l[j]);
   }
   [pool drain];
   return 0;

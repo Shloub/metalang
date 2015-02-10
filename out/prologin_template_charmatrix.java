@@ -21,26 +21,12 @@ public class prologin_template_charmatrix
   
   public static void main(String args[])
   {
-    int taille_x;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      taille_x = scanner.nextInt();
-    } else {
-      taille_x = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille_y;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      taille_y = scanner.nextInt();
-    } else {
-      taille_y = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    char[][] g = new char[taille_y][];
-    for (int h = 0 ; h < taille_y; h++)
-      g[h] = scanner.nextLine().toCharArray();
-    char[][] tableau = g;
+    int taille_x = Integer.parseInt(scanner.nextLine());
+    int taille_y = Integer.parseInt(scanner.nextLine());
+    char[][] e = new char[taille_y][];
+    for (int f = 0 ; f < taille_y; f++)
+      e[f] = scanner.nextLine().toCharArray();
+    char[][] tableau = e;
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   

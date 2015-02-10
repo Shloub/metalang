@@ -13,7 +13,10 @@ begin
     Get(C);
   end loop;
 end;
+type q is Array (Integer range <>) of Integer;
+type q_PTR is access q;
 
+  l : q_PTR;
   c : Integer;
   b : Integer;
   a : Integer;
@@ -31,6 +34,15 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(b), Left));
     String'Write (Text_Streams.Stream (Current_Output), "c =");
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(c), Left));
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  end loop;
+  l := new q (0..(10));
+  for o in integer range (0)..(10) - (1) loop
+    Get(l(o));
+    SkipSpaces;
+  end loop;
+  for j in integer range (0)..(9) loop
+    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l(j)), Left));
     String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
   end loop;
 end;

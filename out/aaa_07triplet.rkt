@@ -1,47 +1,27 @@
 #lang racket
 (require racket/block)
-(define last-char 0)
-(define next-char (lambda () (set! last-char (read-char (current-input-port)))))
-(next-char)
-(define mread-int (lambda ()
-  (if (eq? #\- last-char)
-  (block
-    (next-char) (- 0 (mread-int)))
-    (letrec ([w (lambda (out)
-      (if (eof-object? last-char)
-        out
-        (if (and last-char (>= (char->integer last-char) (char->integer #\0)) (<= (char->integer last-char) (char->integer #\9)))
-          (let ([out (+ (* 10 out) (- (char->integer last-char) (char->integer #\0)))])
-            (block
-              (next-char)
-              (w out)
-          ))
-        out
-      )))]) (w 0)))))
-(define mread-blank (lambda ()
-  (if (or (eq? last-char #\NewLine) (eq? last-char #\Space) ) (block (next-char) (mread-blank)) '())
-))
 
 (define main
-  (let ([j 1])
-  (let ([k 3])
-  (letrec ([h (lambda (i) 
-                (if (<= i k)
-                ((lambda (a) 
-                   (block
-                     (mread-blank)
-                     ((lambda (b) 
-                        (block
-                          (mread-blank)
-                          ((lambda (c) 
-                             (block
-                               (mread-blank)
-                               (map display (list "a = " a " b = " b "c =" c "\n"))
-                               (h (+ i 1))
-                               )) (mread-int))
-                        )) (mread-int))
-                )) (mread-int))
-  '()))])
-(h j))))
+  (let ([o 1])
+  (let ([p 3])
+  (letrec ([m (lambda (i) 
+                (if (<= i p)
+                ((lambda (internal_env) (apply (lambda (a b c) 
+                                                      (block
+                                                        (map display (list "a = " a " b = " b "c =" c "\n"))
+                                                        (m (+ i 1))
+                                                        )) internal_env)) (map string->number (regexp-split " " (read-line))))
+                (let ([l (list->vector (map string->number (regexp-split " " (read-line))))])
+                (let ([h 0])
+                (let ([k 9])
+                (letrec ([g (lambda (j) 
+                              (if (<= j k)
+                              (block
+                                (map display (list (vector-ref l j) "\n"))
+                                (g (+ j 1))
+                                )
+                              '()))])
+                (g h)))))))])
+  (m o))))
 )
 

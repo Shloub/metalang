@@ -3,6 +3,14 @@ import java.util.*;
 public class prologin_template_intmatrix
 {
   static Scanner scanner = new Scanner(System.in);
+    static int[] read_int_line(){
+        String s[] = scanner.nextLine().split(" ");
+        int out[] = new int[s.length];
+        for (int i = 0; i < s.length; i ++)
+          out[i] = Integer.parseInt(s[i]);
+        return out;
+    }
+
   public static int programme_candidat(int[][] tableau, int x, int y)
   {
     int out0 = 0;
@@ -15,38 +23,11 @@ public class prologin_template_intmatrix
   
   public static void main(String args[])
   {
-    int taille_x;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      taille_x = scanner.nextInt();
-    } else {
-      taille_x = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille_y;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      taille_y = scanner.nextInt();
-    } else {
-      taille_y = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int taille_x = Integer.parseInt(scanner.nextLine());
+    int taille_y = Integer.parseInt(scanner.nextLine());
     int[][] tableau = new int[taille_y][];
-    for (int m = 0 ; m < taille_y; m++)
-    {
-      int[] r = new int[taille_x];
-      for (int p = 0 ; p < taille_x; p++)
-      {
-        if (scanner.hasNext("^-")){
-          scanner.next("^-");
-          r[p] = -scanner.nextInt();
-        }else{
-          r[p] = scanner.nextInt();
-        }
-        scanner.findWithinHorizon("[\n\r ]*", 1);
-      }
-      tableau[m] = r;
-    }
+    for (int f = 0 ; f < taille_y; f++)
+      tableau[f] = read_int_line();
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   

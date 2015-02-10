@@ -24,22 +24,8 @@ public class prologin_template_2charline2
   
   public static void main(String args[])
   {
-    int taille1;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      taille1 = scanner.nextInt();
-    } else {
-      taille1 = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    int taille2;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      taille2 = scanner.nextInt();
-    } else {
-      taille2 = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int taille1 = Integer.parseInt(scanner.nextLine());
+    int taille2 = Integer.parseInt(scanner.nextLine());
     char[] tableau1 = scanner.nextLine().toCharArray();
     char[] tableau2 = scanner.nextLine().toCharArray();
     System.out.printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));

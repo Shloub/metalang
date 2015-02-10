@@ -3,6 +3,14 @@ import java.util.*;
 public class aaa_read2
 {
   static Scanner scanner = new Scanner(System.in);
+    static int[] read_int_line(){
+        String s[] = scanner.nextLine().split(" ");
+        int out[] = new int[s.length];
+        for (int i = 0; i < s.length; i ++)
+          out[i] = Integer.parseInt(s[i]);
+        return out;
+    }
+
   /*
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
@@ -10,54 +18,20 @@ read int, read char et skip
   
   public static void main(String args[])
   {
-    int len;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      len = scanner.nextInt();
-    } else {
-      len = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int len = Integer.parseInt(scanner.nextLine());
     System.out.printf("%d=len\n", len);
-    int[] tab = new int[len];
-    for (int f = 0 ; f < len; f++)
-    {
-      if (scanner.hasNext("^-")){
-        scanner.next("^-");
-        tab[f] = -scanner.nextInt();
-      }else{
-        tab[f] = scanner.nextInt();
-      }
-      scanner.findWithinHorizon("[\n\r ]*", 1);
-    }
+    int[] tab = read_int_line();
     for (int i = 0 ; i < len; i++)
     {
       System.out.printf("%d=>%d ", i, tab[i]);
     }
     System.out.print("\n");
-    int[] tab2 = new int[len];
-    for (int l = 0 ; l < len; l++)
-    {
-      if (scanner.hasNext("^-")){
-        scanner.next("^-");
-        tab2[l] = -scanner.nextInt();
-      }else{
-        tab2[l] = scanner.nextInt();
-      }
-      scanner.findWithinHorizon("[\n\r ]*", 1);
-    }
+    int[] tab2 = read_int_line();
     for (int i_ = 0 ; i_ < len; i_++)
     {
       System.out.printf("%d==>%d ", i_, tab2[i_]);
     }
-    int strlen;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      strlen = scanner.nextInt();
-    } else {
-      strlen = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int strlen = Integer.parseInt(scanner.nextLine());
     System.out.printf("%d=strlen\n", strlen);
     char[] tab4 = scanner.nextLine().toCharArray();
     for (int i3 = 0 ; i3 < strlen; i3++)

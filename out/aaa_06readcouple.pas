@@ -61,11 +61,15 @@ begin
    until false;
 end;
 
+type o = array of Longint;
 
 var
   a : Longint;
   b : Longint;
   i : Longint;
+  j : Longint;
+  k : Longint;
+  l : o;
 begin
   for i := 1 to  3 do
   begin
@@ -77,6 +81,17 @@ begin
     Write(a);
     Write(' b = ');
     Write(b);
+    Write(''#10'');
+  end;
+  SetLength(l, 10);
+  for k := 0 to  10 - 1 do
+  begin
+    l[k] := read_int_();
+    skip();
+  end;
+  for j := 0 to  9 do
+  begin
+    Write(l[j]);
     Write(''#10'');
   end;
 end.

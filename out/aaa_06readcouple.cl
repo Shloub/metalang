@@ -1,5 +1,13 @@
 
-(si::use-fast-links nil)(let ((last-char 0)))
+(si::use-fast-links nil)
+(defun array_init (len fun)
+  (let ((out (make-array len)) (i 0))
+    (while (not (= i len))
+      (progn
+        (setf (aref out i) (funcall fun i))
+        (setq i (+ 1 i ))))
+        out
+    ))(let ((last-char 0)))
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -19,21 +27,42 @@
   (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
 ))
 
-(do
-  ((i 1 (+ 1 i)))
-  ((> i 3))
-  (progn
-    (let ((a (mread-int )))
-      (mread-blank)
-      (let ((b (mread-int )))
+(progn
+  (do
+    ((i 1 (+ 1 i)))
+    ((> i 3))
+    (progn
+      (let ((a (mread-int )))
         (mread-blank)
-        (princ "a = ")
-        (princ a)
-        (princ " b = ")
-        (princ b)
-        (princ "
+        (let ((b (mread-int )))
+          (mread-blank)
+          (princ "a = ")
+          (princ a)
+          (princ " b = ")
+          (princ b)
+          (princ "
 ")
-      )))
+        )))
   )
+  (let
+   ((l (array_init
+          10
+          (function (lambda (k)
+          (block lambda_1
+            (let ((m (mread-int )))
+              (mread-blank)
+              (return-from lambda_1 m)
+            )))
+          ))))
+  (do
+    ((j 0 (+ 1 j)))
+    ((> j 9))
+    (progn
+      (princ (aref l j))
+      (princ "
+")
+    )
+  )
+  ))
 
 

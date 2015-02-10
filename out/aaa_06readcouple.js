@@ -34,4 +34,14 @@ for (var i = 1 ; i <= 3; i++)
   stdinsep();
   util.print("a = ", a, " b = ", b, "\n");
 }
+var l = new Array(10);
+for (var k = 0 ; k <= 10 - 1; k++)
+{
+  l[k]=read_int_();
+  stdinsep();
+}
+for (var j = 0 ; j <= 9; j++)
+{
+  util.print(l[j], "\n");
+}
 

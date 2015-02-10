@@ -46,27 +46,13 @@ public class pathfinding0
   
   public static void main(String args[])
   {
-    int x;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      x = scanner.nextInt();
-    } else {
-      x = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    int y;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      y = scanner.nextInt();
-    } else {
-      y = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
+    int x = Integer.parseInt(scanner.nextLine());
+    int y = Integer.parseInt(scanner.nextLine());
     System.out.printf("%d %d\n", x, y);
-    char[][] bb = new char[y][];
-    for (int bc = 0 ; bc < y; bc++)
-      bb[bc] = scanner.nextLine().toCharArray();
-    char[][] tab = bb;
+    char[][] w = new char[y][];
+    for (int ba = 0 ; ba < y; ba++)
+      w[ba] = scanner.nextLine().toCharArray();
+    char[][] tab = w;
     int result = pathfind(tab, x, y);
     System.out.printf("%d", result);
   }
