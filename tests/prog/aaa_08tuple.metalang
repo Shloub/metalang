@@ -1,0 +1,15 @@
+
+record @toto
+  foo : (int, int)
+  bar : int
+end
+
+main
+  def int bar_ = read_int()
+  def @toto t = record
+    foo = read_int_couple()
+    bar = bar_
+  end
+  def (a, b) = t.foo
+  print a print " " print b print " " print t.bar print "\n"
+end
