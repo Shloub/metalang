@@ -88,11 +88,13 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     Format.fprintf f "%s.%s" t e
 
   method prog f prog =
-    let reader = Tags.is_taged "use_cc_readline" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
+    let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
+    let datareader = Tags.is_taged "use_java_readline" in
     Format.fprintf f
-      "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a@\n%a@\n%a@]@\n}@\n"
+      "import java.util.*;@\n@\npublic class %s@\n@[<v 2>{@\n%a%a@\n%a@\n%a@]@\n}@\n"
       prog.Prog.progname
-      (if reader then self#print_scanner else fun f () -> ()) ()
+      (if reader || datareader then self#print_scanner else fun f () -> ()) ()
+      (if datareader then self#print_datareader else fun f () -> ()) ()
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
@@ -140,6 +142,17 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
 
   method print_scanner f () =
     Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
+
+  method print_datareader f () =
+    Format.fprintf f "@[<h>
+    static int[] read_int_line(){
+        String s[] = scanner.nextLine().split(\" \");
+        int out[] = new int[s.length];
+        for (int i = 0; i < s.length; i ++)
+          out[i] = Integer.parseInt(s[i]);
+        return out;
+    }
+@]"
 
   method read f t m =
     match Type.unfix t with
