@@ -547,7 +547,35 @@ out/%.test_vb_ml : out/%.exeVB.out out/%.ml.out
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+out/%.test_cs_ml : out/%.exe.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
 out/%.test_py_ml : out/%.py.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
+out/%.test_java_ml : out/%.class.out out/%.ml.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -572,6 +600,10 @@ testAda : $(addsuffix .test_adb_ml, $(TESTS))
 testRuby : $(addsuffix .test_rb_ml, $(TESTS))
 
 testVB : compileVB $(addsuffix .test_vb_ml, $(TESTS))
+
+testCSharp : compileCS $(addsuffix .test_cs_ml, $(TESTS))
+
+testJava : compileJAVA $(addsuffix .test_java_ml, $(TESTS))
 
 %.sources: $(addsuffix .%, $(TESTS))
 	@echo "$(green)$@ OK$(reset) $*"
