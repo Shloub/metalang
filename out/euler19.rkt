@@ -65,7 +65,7 @@
   (let ([dayofweek 1])
   ; 01-01-1901 : mardi 
   (let ([count 0])
-  (letrec ([n (lambda (count dayofweek month year) 
+  (letrec ([m (lambda (count dayofweek month year) 
                 (if (not (eq? year 2001))
                 (let ([ndays (ndayinmonth month year)])
                 (let ([dayofweek (remainder (+ dayofweek ndays) 7)])
@@ -75,7 +75,7 @@
                                                                    (let ([count (+ count 1)])
                                                                    count)
                                                                    count)])
-                                                      (n count dayofweek month year))) internal_env)) 
+                                                      (m count dayofweek month year))) internal_env)) 
                 (if (eq? month 12)
                 (let ([month 0])
                 (let ([year (+ year 1)])
@@ -84,6 +84,6 @@
                 (block
                   (map display (list count "\n"))
                   )))])
-  (n count dayofweek month year))))))
+  (m count dayofweek month year))))))
 )
 

@@ -27,7 +27,7 @@
 )
 (define (rev2 empty acc torev)
   ;toto
-  (let ([d (lambda (_) 
+  (let ([c (lambda (_) 
              '())])
   (if (eq? torev empty)
   acc
@@ -42,17 +42,17 @@
   ;toto
   (let ([list empty])
   (let ([i (- 1)])
-  (letrec ([b (lambda (i list) 
+  (letrec ([a (lambda (i list) 
                 (if (not (eq? i 0))
-                ((lambda (c) 
-                   (let ([i c])
+                ((lambda (b) 
+                   (let ([i b])
                    (let ([list (if (not (eq? i 0))
                                (let ([list (cons0 list i)])
                                list)
                                list)])
-                   (b i list)))) (mread-int))
+                   (a i list)))) (mread-int))
                 '()))])
-  (b i list))))
+  (a i list))))
 )
 (define main
   '()

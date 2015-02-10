@@ -5,7 +5,7 @@
   (let ([a 1])
   (let ([b 2])
   (let ([sum 0])
-  (letrec ([e (lambda (a b sum) 
+  (letrec ([d (lambda (a b sum) 
                 (if (< a 4000000)
                 (let ([sum (if (eq? (remainder a 2) 0)
                            (let ([sum (+ sum a)])
@@ -14,10 +14,10 @@
                 (let ([c a])
                 (let ([a b])
                 (let ([b (+ b c)])
-                (e a b sum)))))
+                (d a b sum)))))
                 (block
                   (map display (list sum "\n"))
                   )))])
-  (e a b sum)))))
+  (d a b sum)))))
 )
 

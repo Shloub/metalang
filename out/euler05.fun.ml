@@ -13,9 +13,9 @@ let primesfactors n =
   let tab = (Array.init_withenv (n + 1) (fun  i () -> let p = 0 in
   ((), p)) ()) in
   let d = 2 in
-  let rec r d n =
+  let rec q d n =
     (if ((n <> 1) && ((d * d) <= n))
-     then ((fun  (d, n) -> (r d n)) (if ((n mod d) = 0)
+     then ((fun  (d, n) -> (q d n)) (if ((n mod d) = 0)
                                      then (
                                             tab.(d) <- (tab.(d) + 1);
                                             let n = (n / d) in
@@ -29,44 +29,44 @@ let primesfactors n =
             tab
             )
      ) in
-    (r d n)
+    (q d n)
 let main =
   let lim = 20 in
-  let o = (Array.init_withenv (lim + 1) (fun  m () -> let s = 0 in
-  ((), s)) ()) in
-  let be = 1 in
-  let bf = lim in
-  let rec ba i =
-    (if (i <= bf)
+  let o = (Array.init_withenv (lim + 1) (fun  m () -> let r = 0 in
+  ((), r)) ()) in
+  let bd = 1 in
+  let be = lim in
+  let rec z i =
+    (if (i <= be)
      then let t = (primesfactors i) in
-     let bc = 1 in
-     let bd = i in
-     let rec bb j =
-       (if (j <= bd)
+     let bb = 1 in
+     let bc = i in
+     let rec ba j =
+       (if (j <= bc)
         then (
                o.(j) <- ((max (o.(j)) (t.(j))));
-               (bb (j + 1))
+               (ba (j + 1))
                )
         
-        else (ba (i + 1))) in
-       (bb bc)
+        else (z (i + 1))) in
+       (ba bb)
      else let product = 1 in
-     let y = 1 in
-     let z = lim in
-     let rec u k product =
-       (if (k <= z)
-        then let w = 1 in
-        let x = o.(k) in
-        let rec v l product =
-          (if (l <= x)
+     let x = 1 in
+     let y = lim in
+     let rec s k product =
+       (if (k <= y)
+        then let v = 1 in
+        let w = o.(k) in
+        let rec u l product =
+          (if (l <= w)
            then let product = (product * k) in
-           (v (l + 1) product)
-           else (u (k + 1) product)) in
-          (v w product)
+           (u (l + 1) product)
+           else (s (k + 1) product)) in
+          (u v product)
         else (
                (Printf.printf "%d\n" product)
                )
         ) in
-       (u y product)) in
-    (ba be)
+       (s x product)) in
+    (z bd)
 

@@ -11,47 +11,47 @@ end
 
 let eratostene t max0 =
   let n = 0 in
-  let bj = 2 in
-  let bk = (max0 - 1) in
-  let rec bg i n =
-    (if (i <= bk)
+  let bh = 2 in
+  let bi = (max0 - 1) in
+  let rec bf i n =
+    (if (i <= bi)
      then let n = (if (t.(i) = i)
                    then let j = (i * i) in
                    let n = (n + 1) in
-                   let rec bi j =
+                   let rec bg j =
                      (if ((j < max0) && (j > 0))
                       then (
                              t.(j) <- 0;
                              let j = (j + i) in
-                             (bi j)
+                             (bg j)
                              )
                       
                       else n) in
-                     (bi j)
+                     (bg j)
                    else n) in
-     (bg (i + 1) n)
+     (bf (i + 1) n)
      else n) in
-    (bg bj n)
+    (bf bh n)
 let fillPrimesFactors t n primes nprimes =
-  let be = 0 in
-  let bf = (nprimes - 1) in
+  let bd = 0 in
+  let be = (nprimes - 1) in
   let rec bb i n =
-    (if (i <= bf)
+    (if (i <= be)
      then let d = primes.(i) in
-     let rec bd n =
+     let rec bc n =
        (if ((n mod d) = 0)
         then (
                t.(d) <- (t.(d) + 1);
                let n = (n / d) in
-               (bd n)
+               (bc n)
                )
         
         else (if (n = 1)
               then primes.(i)
               else (bb (i + 1) n))) in
-       (bd n)
+       (bc n)
      else n) in
-    (bb be n)
+    (bb bd n)
 let find ndiv2 =
   let maximumprimes = 110 in
   let era = (Array.init_withenv maximumprimes (fun  j () -> let h = j in

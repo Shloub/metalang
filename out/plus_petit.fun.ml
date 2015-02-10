@@ -12,12 +12,12 @@ end
 let rec go0 tab a b =
   let m = ((a + b) / 2) in
   (if (a = m)
-   then let g () = let i = a in
+   then let f () = let i = a in
    let j = b in
-   let rec f i j =
+   let rec d i j =
      (if (i < j)
       then let e = tab.(i) in
-      ((fun  (i, j) -> (f i j)) (if (e < m)
+      ((fun  (i, j) -> (d i j)) (if (e < m)
                                  then let i = (i + 1) in
                                  (i, j)
                                  else let j = (j - 1) in
@@ -31,16 +31,16 @@ let rec go0 tab a b =
       (if (i < m)
        then (go0 tab a m)
        else (go0 tab m b))) in
-     (f i j) in
+     (d i j) in
    (if (tab.(a) = m)
     then b
     else a)
    else let i = a in
    let j = b in
-   let rec f i j =
+   let rec d i j =
      (if (i < j)
       then let e = tab.(i) in
-      ((fun  (i, j) -> (f i j)) (if (e < m)
+      ((fun  (i, j) -> (d i j)) (if (e < m)
                                  then let i = (i + 1) in
                                  (i, j)
                                  else let j = (j - 1) in
@@ -54,22 +54,22 @@ let rec go0 tab a b =
       (if (i < m)
        then (go0 tab a m)
        else (go0 tab m b))) in
-     (f i j))
+     (d i j))
 let plus_petit0 tab len =
   (go0 tab 0 len)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  l -> let len = l in
+  (fun  k -> let len = k in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init_withenv len (fun  i () -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  k -> let tmp = k in
+    (fun  h -> let tmp = h in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let h = tmp in
-      ((), h)
+      let g = tmp in
+      ((), g)
       )
     )) ()) in
     (Printf.printf "%d" (plus_petit0 tab len))

@@ -46,7 +46,7 @@ let main =
   let dayofweek = 1 in
   (*  01-01-1901 : mardi  *)
   let count = 0 in
-  let rec n count dayofweek month year =
+  let rec m count dayofweek month year =
     (if (year <> 2001)
      then let ndays = (ndayinmonth month year) in
      let dayofweek = ((dayofweek + ndays) mod 7) in
@@ -55,7 +55,7 @@ let main =
                                           then let count = (count + 1) in
                                           count
                                           else count) in
-     (n count dayofweek month year)) (if (month = 12)
+     (m count dayofweek month year)) (if (month = 12)
                                       then let month = 0 in
                                       let year = (year + 1) in
                                       (month, year)
@@ -64,5 +64,5 @@ let main =
             (Printf.printf "%d\n" count)
             )
      ) in
-    (n count dayofweek month year)
+    (m count dayofweek month year)
 

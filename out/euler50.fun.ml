@@ -11,25 +11,25 @@ end
 
 let eratostene t max0 =
   let n = 0 in
-  let g = 2 in
-  let h = (max0 - 1) in
+  let f = 2 in
+  let g = (max0 - 1) in
   let rec d i n =
-    (if (i <= h)
+    (if (i <= g)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
                    (
                      (if ((max0 / i) > i)
                       then let j = (i * i) in
-                      let rec f j =
+                      let rec e j =
                         (if ((j < max0) && (j > 0))
                          then (
                                 t.(j) <- 0;
                                 let j = (j + i) in
-                                (f j)
+                                (e j)
                                 )
                          
                          else ()) in
-                        (f j)
+                        (e j)
                       else ());
                      n
                      )
@@ -37,19 +37,19 @@ let eratostene t max0 =
                    else n) in
      (d (i + 1) n)
      else n) in
-    (d g n)
+    (d f n)
 let main =
   let maximumprimes = 1000001 in
-  let era = (Array.init_withenv maximumprimes (fun  j () -> let m = j in
-  ((), m)) ()) in
+  let era = (Array.init_withenv maximumprimes (fun  j () -> let h = j in
+  ((), h)) ()) in
   let nprimes = (eratostene era maximumprimes) in
-  let primes = (Array.init_withenv nprimes (fun  o () -> let p = 0 in
-  ((), p)) ()) in
+  let primes = (Array.init_withenv nprimes (fun  o () -> let m = 0 in
+  ((), m)) ()) in
   let l = 0 in
-  let y = 2 in
-  let z = (maximumprimes - 1) in
-  let rec x k l =
-    (if (k <= z)
+  let w = 2 in
+  let x = (maximumprimes - 1) in
+  let rec v k l =
+    (if (k <= x)
      then let l = (if (era.(k) = k)
                    then (
                           primes.(l) <- k;
@@ -58,24 +58,24 @@ let main =
                           )
                    
                    else l) in
-     (x (k + 1) l)
+     (v (k + 1) l)
      else (
             (Printf.printf "%d == %d\n" l nprimes);
-            let sum = (Array.init_withenv nprimes (fun  i_ () -> let q = primes.(i_) in
-            ((), q)) ()) in
+            let sum = (Array.init_withenv nprimes (fun  i_ () -> let p = primes.(i_) in
+            ((), p)) ()) in
             let maxl = 0 in
             let process = true in
             let stop = (maximumprimes - 1) in
             let len = 1 in
             let resp = 1 in
-            let rec s len maxl process resp stop =
+            let rec q len maxl process resp stop =
               (if process
                then let process = false in
-               let v = 0 in
-               let w = stop in
-               let rec u i maxl process resp stop =
-                 (if (i <= w)
-                  then ((fun  (maxl, process, resp, stop) -> (u (i + 1) maxl process resp stop)) (
+               let s = 0 in
+               let u = stop in
+               let rec r i maxl process resp stop =
+                 (if (i <= u)
+                  then ((fun  (maxl, process, resp, stop) -> (r (i + 1) maxl process resp stop)) (
                   if ((i + len) < nprimes)
                   then (
                          sum.(i) <- (sum.(i) + primes.((i + len)));
@@ -94,14 +94,14 @@ let main =
                   
                   else (maxl, process, resp, stop)))
                   else let len = (len + 1) in
-                  (s len maxl process resp stop)) in
-                 (u v maxl process resp stop)
+                  (q len maxl process resp stop)) in
+                 (r s maxl process resp stop)
                else (
                       (Printf.printf "%d\n%d\n" resp maxl)
                       )
                ) in
-              (s len maxl process resp stop)
+              (q len maxl process resp stop)
             )
      ) in
-    (x y l)
+    (v w l)
 

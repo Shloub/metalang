@@ -4,7 +4,7 @@ let cons list i =
   tail=list} in
   out0
 let rec rev2 empty acc torev =
-  let d () = () in
+  let c () = () in
   (if (torev = empty)
    then acc
    else let acc2 = {head=torev.head;
@@ -15,17 +15,17 @@ let rev empty torev =
 let test empty =
   let list = empty in
   let i = (- 1) in
-  let rec b i list =
+  let rec a i list =
     (if (i <> 0)
      then Scanf.scanf "%d"
-     (fun  c -> let i = c in
+     (fun  b -> let i = b in
      let list = (if (i <> 0)
                  then let list = (cons list i) in
                  list
                  else list) in
-     (b i list))
+     (a i list))
      else ()) in
-    (b i list)
+    (a i list)
 let main =
   ()
 

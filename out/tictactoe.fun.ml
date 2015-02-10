@@ -265,17 +265,17 @@ let read_move () =
                )
   )
 let main =
-  let bm = 0 in
-  let bn = 1 in
+  let bl = 0 in
+  let bm = 1 in
   let rec bj i =
-    (if (i <= bn)
+    (if (i <= bm)
      then let state = (init0 ()) in
      (
        (apply_move {x=1;
        y=1} state);
        (apply_move {x=0;
        y=0} state);
-       let rec bl () =
+       let rec bk () =
          (if (not state.ended)
           then (
                  (print_state state);
@@ -290,7 +290,7 @@ let main =
                          )
                   
                   else ());
-                 (bl ())
+                 (bk ())
                  )
           
           else (
@@ -299,9 +299,9 @@ let main =
                  (bj (i + 1))
                  )
           ) in
-         (bl ())
+         (bk ())
        )
      
      else ()) in
-    (bj bm)
+    (bj bl)
 

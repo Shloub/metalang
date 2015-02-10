@@ -13,13 +13,13 @@ let montagnes0 tab len =
   let max0 = 1 in
   let j = 1 in
   let i = (len - 2) in
-  let rec b i j max0 =
+  let rec a i j max0 =
     (if (i >= 0)
      then let x = tab.(i) in
-     let rec d j =
+     let rec b j =
        (if ((j >= 0) && (x > tab.((len - j))))
         then let j = (j - 1) in
-        (d j)
+        (b j)
         else let j = (j + 1) in
         (
           tab.((len - j)) <- x;
@@ -28,25 +28,25 @@ let montagnes0 tab len =
                       max0
                       else max0) in
           let i = (i - 1) in
-          (b i j max0)
+          (a i j max0)
           )
         ) in
-       (d j)
+       (b j)
      else max0) in
-    (b i j max0)
+    (a i j max0)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  g -> let len = g in
+  (fun  e -> let len = e in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init_withenv len (fun  i () -> let x = 0 in
     Scanf.scanf "%d"
-    (fun  f -> let x = f in
+    (fun  d -> let x = d in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let e = x in
-      ((), e)
+      let c = x in
+      ((), c)
       )
     )) ()) in
     (Printf.printf "%d" (montagnes0 tab len))

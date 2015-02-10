@@ -16,19 +16,19 @@ let npi0 str len =
   ((), a)) ()) in
   let ptrStack = 0 in
   let ptrStr = 0 in
-  let rec d ptrStack ptrStr =
+  let rec b ptrStack ptrStr =
     (if (ptrStr < len)
-     then ((fun  (ptrStack, ptrStr) -> (d ptrStack ptrStr)) (if (str.(ptrStr) = ' ')
+     then ((fun  (ptrStack, ptrStr) -> (b ptrStack ptrStr)) (if (str.(ptrStr) = ' ')
                                                              then let ptrStr = (ptrStr + 1) in
                                                              (ptrStack, ptrStr)
                                                              else ((fun  (ptrStack, ptrStr) -> (ptrStack, ptrStr)) (
                                                              if (is_number str.(ptrStr))
                                                              then let num = 0 in
-                                                             let rec f num ptrStr =
+                                                             let rec d num ptrStr =
                                                                (if (str.(ptrStr) <> ' ')
                                                                 then let num = (((num * 10) + (int_of_char (str.(ptrStr)))) - (int_of_char ('0'))) in
                                                                 let ptrStr = (ptrStr + 1) in
-                                                                (f num ptrStr)
+                                                                (d num ptrStr)
                                                                 else 
                                                                 (
                                                                   stack.(ptrStack) <- num;
@@ -36,7 +36,7 @@ let npi0 str len =
                                                                   (ptrStack, ptrStr)
                                                                   )
                                                                 ) in
-                                                               (f num ptrStr)
+                                                               (d num ptrStr)
                                                              else ((fun  (ptrStack, ptrStr) -> (ptrStack, ptrStr)) (
                                                              if (str.(ptrStr) = '+')
                                                              then (
@@ -48,18 +48,18 @@ let npi0 str len =
                                                              
                                                              else (ptrStack, ptrStr)))))))
      else stack.(0)) in
-    (d ptrStack ptrStr)
+    (b ptrStack ptrStr)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  j -> let len = j in
+  (fun  g -> let len = g in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init_withenv len (fun  i () -> let tmp = '\000' in
     Scanf.scanf "%c"
-    (fun  h -> let tmp = h in
-    let g = tmp in
-    ((), g))) ()) in
+    (fun  f -> let tmp = f in
+    let e = tmp in
+    ((), e))) ()) in
     let result = (npi0 tab len) in
     (Printf.printf "%d" result)
     )

@@ -11,54 +11,54 @@ end
 
 let eratostene t max0 =
   let n = 0 in
-  let ba = 2 in
-  let bb = (max0 - 1) in
-  let rec x i n =
-    (if (i <= bb)
+  let x = 2 in
+  let y = (max0 - 1) in
+  let rec v i n =
+    (if (i <= y)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
                    let j = (i * i) in
-                   let rec z j =
+                   let rec w j =
                      (if ((j < max0) && (j > 0))
                       then (
                              t.(j) <- 0;
                              let j = (j + i) in
-                             (z j)
+                             (w j)
                              )
                       
                       else n) in
-                     (z j)
+                     (w j)
                    else n) in
-     (x (i + 1) n)
+     (v (i + 1) n)
      else n) in
-    (x ba n)
+    (v x n)
 let fillPrimesFactors t n primes nprimes =
-  let v = 0 in
-  let w = (nprimes - 1) in
-  let rec r i n =
-    (if (i <= w)
+  let s = 0 in
+  let u = (nprimes - 1) in
+  let rec q i n =
+    (if (i <= u)
      then let d = primes.(i) in
-     let rec u n =
+     let rec r n =
        (if ((n mod d) = 0)
         then (
                t.(d) <- (t.(d) + 1);
                let n = (n / d) in
-               (u n)
+               (r n)
                )
         
         else (if (n = 1)
               then primes.(i)
-              else (r (i + 1) n))) in
-       (u n)
+              else (q (i + 1) n))) in
+       (r n)
      else n) in
-    (r v n)
+    (q s n)
 let sumdivaux2 t n i =
-  let rec q i =
+  let rec m i =
     (if ((i < n) && (t.(i) = 0))
      then let i = (i + 1) in
-     (q i)
+     (m i)
      else i) in
-    (q i)
+    (m i)
 let rec sumdivaux t n i =
   let c () = () in
   (if (i > n)
@@ -85,16 +85,16 @@ let sumdiv nprimes primes n =
   (sumdivaux t max0 0)
 let main =
   let maximumprimes = 1001 in
-  let era = (Array.init_withenv maximumprimes (fun  j () -> let bc = j in
-  ((), bc)) ()) in
+  let era = (Array.init_withenv maximumprimes (fun  j () -> let z = j in
+  ((), z)) ()) in
   let nprimes = (eratostene era maximumprimes) in
-  let primes = (Array.init_withenv nprimes (fun  o () -> let bd = 0 in
-  ((), bd)) ()) in
+  let primes = (Array.init_withenv nprimes (fun  o () -> let ba = 0 in
+  ((), ba)) ()) in
   let l = 0 in
-  let bi = 2 in
-  let bj = (maximumprimes - 1) in
-  let rec bh k l =
-    (if (k <= bj)
+  let bf = 2 in
+  let bg = (maximumprimes - 1) in
+  let rec be k l =
+    (if (k <= bg)
      then let l = (if (era.(k) = k)
                    then (
                           primes.(l) <- k;
@@ -103,14 +103,14 @@ let main =
                           )
                    
                    else l) in
-     (bh (k + 1) l)
+     (be (k + 1) l)
      else (
             (Printf.printf "%d == %d\n" l nprimes);
             let sum = 0 in
-            let bf = 2 in
-            let bg = 1000 in
-            let rec be n sum =
-              (if (n <= bg)
+            let bc = 2 in
+            let bd = 1000 in
+            let rec bb n sum =
+              (if (n <= bd)
                then let other = ((sumdiv nprimes primes n) - n) in
                let sum = (if (other > n)
                           then let othersum = ((sumdiv nprimes primes other) - other) in
@@ -124,13 +124,13 @@ let main =
                                      else sum) in
                           sum
                           else sum) in
-               (be (n + 1) sum)
+               (bb (n + 1) sum)
                else (
                       (Printf.printf "\n%d\n" sum)
                       )
                ) in
-              (be bf sum)
+              (bb bc sum)
             )
      ) in
-    (bh bi l)
+    (be bf l)
 

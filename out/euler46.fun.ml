@@ -11,25 +11,25 @@ end
 
 let eratostene t max0 =
   let n = 0 in
-  let d = 2 in
-  let e = (max0 - 1) in
+  let c = 2 in
+  let d = (max0 - 1) in
   let rec a i n =
-    (if (i <= e)
+    (if (i <= d)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
                    (
                      (if ((max0 / i) > i)
                       then let j = (i * i) in
-                      let rec c j =
+                      let rec b j =
                         (if ((j < max0) && (j > 0))
                          then (
                                 t.(j) <- 0;
                                 let j = (j + i) in
-                                (c j)
+                                (b j)
                                 )
                          
                          else ()) in
-                        (c j)
+                        (b j)
                       else ());
                      n
                      )
@@ -37,19 +37,19 @@ let eratostene t max0 =
                    else n) in
      (a (i + 1) n)
      else n) in
-    (a d n)
+    (a c n)
 let main =
   let maximumprimes = 6000 in
-  let era = (Array.init_withenv maximumprimes (fun  j_ () -> let f = j_ in
-  ((), f)) ()) in
+  let era = (Array.init_withenv maximumprimes (fun  j_ () -> let e = j_ in
+  ((), e)) ()) in
   let nprimes = (eratostene era maximumprimes) in
-  let primes = (Array.init_withenv nprimes (fun  o () -> let g = 0 in
-  ((), g)) ()) in
+  let primes = (Array.init_withenv nprimes (fun  o () -> let f = 0 in
+  ((), f)) ()) in
   let l = 0 in
-  let ba = 2 in
-  let bb = (maximumprimes - 1) in
-  let rec z k l =
-    (if (k <= bb)
+  let z = 2 in
+  let ba = (maximumprimes - 1) in
+  let rec y k l =
+    (if (k <= ba)
      then let l = (if (era.(k) = k)
                    then (
                           primes.(l) <- k;
@@ -58,33 +58,33 @@ let main =
                           )
                    
                    else l) in
-     (z (k + 1) l)
+     (y (k + 1) l)
      else (
             (Printf.printf "%d == %d\n" l nprimes);
-            let canbe = (Array.init_withenv maximumprimes (fun  i_ () -> let h = false in
-            ((), h)) ()) in
-            let x = 0 in
-            let y = (nprimes - 1) in
-            let rec s i =
-              (if (i <= y)
-               then let v = 0 in
-               let w = (maximumprimes - 1) in
-               let rec u j =
-                 (if (j <= w)
+            let canbe = (Array.init_withenv maximumprimes (fun  i_ () -> let g = false in
+            ((), g)) ()) in
+            let w = 0 in
+            let x = (nprimes - 1) in
+            let rec r i =
+              (if (i <= x)
+               then let u = 0 in
+               let v = (maximumprimes - 1) in
+               let rec s j =
+                 (if (j <= v)
                   then let n = (primes.(i) + ((2 * j) * j)) in
                   (
                     (if (n < maximumprimes)
                      then canbe.(n) <- true
                      else ());
-                    (u (j + 1))
+                    (s (j + 1))
                     )
                   
-                  else (s (i + 1))) in
-                 (u v)
-               else let q = 1 in
-               let r = maximumprimes in
-               let rec p m =
-                 (if (m <= r)
+                  else (r (i + 1))) in
+                 (s u)
+               else let p = 1 in
+               let q = maximumprimes in
+               let rec h m =
+                 (if (m <= q)
                   then let m2 = ((m * 2) + 1) in
                   (
                     (if ((m2 < maximumprimes) && (not canbe.(m2)))
@@ -93,13 +93,13 @@ let main =
                             )
                      
                      else ());
-                    (p (m + 1))
+                    (h (m + 1))
                     )
                   
                   else ()) in
-                 (p q)) in
-              (s x)
+                 (h p)) in
+              (r w)
             )
      ) in
-    (z ba l)
+    (y z l)
 

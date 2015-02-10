@@ -10,18 +10,18 @@ module Array = struct
 end
 
 let copytab tab len =
-  let o = (Array.init_withenv len (fun  i () -> let k = tab.(i) in
-  ((), k)) ()) in
+  let o = (Array.init_withenv len (fun  i () -> let h = tab.(i) in
+  ((), h)) ()) in
   o
 let bubblesort tab len =
-  let g = 0 in
-  let h = (len - 1) in
-  let rec c i =
-    (if (i <= h)
-     then let e = (i + 1) in
-     let f = (len - 1) in
-     let rec d j =
-       (if (j <= f)
+  let f = 0 in
+  let g = (len - 1) in
+  let rec b i =
+    (if (i <= g)
+     then let d = (i + 1) in
+     let e = (len - 1) in
+     let rec c j =
+       (if (j <= e)
         then (
                (if (tab.(i) > tab.(j))
                 then let tmp = tab.(i) in
@@ -31,21 +31,21 @@ let bubblesort tab len =
                   )
                 
                 else ());
-               (d (j + 1))
+               (c (j + 1))
                )
         
-        else (c (i + 1))) in
-       (d e)
+        else (b (i + 1))) in
+       (c d)
      else ()) in
-    (c g)
+    (b f)
 let rec qsort0 tab len i j =
   ((fun  (i, j) -> ()) (if (i < j)
                         then let i0 = i in
                         let j0 = j in
                         (*  pivot : tab[0]  *)
-                        let rec b i j =
+                        let rec a i j =
                           (if (i <> j)
-                           then ((fun  (i, j) -> (b i j)) (if (tab.(i) > tab.(j))
+                           then ((fun  (i, j) -> (a i j)) (if (tab.(i) > tab.(j))
                                                            then let i = (
                                                            if (i = (j - 1))
                                                            then (*  on inverse simplement *)
@@ -76,33 +76,33 @@ let rec qsort0 tab len i j =
                                   (i, j)
                                   )
                            ) in
-                          (b i j)
+                          (a i j)
                         else (i, j)))
 let main =
   let len = 2 in
   Scanf.scanf "%d"
-  (fun  u -> let len = u in
+  (fun  t -> let len = t in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init_withenv len (fun  i_ () -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  m -> let tmp = m in
+    (fun  l -> let tmp = l in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let l = tmp in
-      ((), l)
+      let k = tmp in
+      ((), k)
       )
     )) ()) in
     let tab2 = (copytab tab len) in
     (
       (bubblesort tab2 len);
-      let s = 0 in
-      let t = (len - 1) in
-      let rec r i =
-        (if (i <= t)
+      let r = 0 in
+      let s = (len - 1) in
+      let rec q i =
+        (if (i <= s)
          then (
                 (Printf.printf "%d " tab2.(i));
-                (r (i + 1))
+                (q (i + 1))
                 )
          
          else (
@@ -110,22 +110,22 @@ let main =
                 let tab3 = (copytab tab len) in
                 (
                   (qsort0 tab3 len 0 (len - 1));
-                  let p = 0 in
-                  let q = (len - 1) in
-                  let rec n i =
-                    (if (i <= q)
+                  let n = 0 in
+                  let p = (len - 1) in
+                  let rec m i =
+                    (if (i <= p)
                      then (
                             (Printf.printf "%d " tab3.(i));
-                            (n (i + 1))
+                            (m (i + 1))
                             )
                      
                      else (Printf.printf "\n")) in
-                    (n p)
+                    (m n)
                   )
                 
                 )
          ) in
-        (r s)
+        (q r)
       )
     
     )
