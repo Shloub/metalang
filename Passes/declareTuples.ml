@@ -76,7 +76,8 @@ let fold_ty tyenv (acc_fields, acc_names, li) t =
     let lnames = List.mapi (fun i _ -> prefix^"_field_" ^ (string_of_int i) ) l in
     let acc_fields = TypeMap.add t lnames acc_fields in
     let ty = Type.struct_ (List.combine lnames l) in
-    let acc_names = TypeMap.add t ty acc_names in
+    let tynamed = Type.named prefix in
+    let acc_names = TypeMap.add t tynamed acc_names in
     let declaration = Prog.DeclareType ( prefix, ty ) in
     acc_fields, acc_names, declaration :: li
   | _ -> acc_fields, (TypeMap.add t t acc_names), li
@@ -101,6 +102,9 @@ let process_top tyenv (acc1, acc2, li0) t = match t with
   | Prog.DeclarFun (_, _, _, li, _) ->
     let acc1, acc2, li0 = process_li tyenv (acc1, acc2, li0) li
     in acc1, acc2, t::li0
+  | Prog.DeclareType (name, ty) ->
+    let acc1, acc2, li0 = process_t tyenv (acc1, acc2, li0) ty in
+    acc1, acc2, t::li0
   | _ -> acc1, acc2, t::li0
 
 let apply tyenv prog =

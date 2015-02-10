@@ -40,13 +40,11 @@ type acc0 = Typer.env
 type 'lex acc = Typer.env;;
 let init_acc env = env;;
 
-let foldmapexpr tyenv acc e = match Expr.unfix e with
-  (*  | Expr.Tuple li ->
-      let varnmae = Fresh.fresh () in
-      let ni = Instr.AllocRecord (varname, t, li) in
-      let ne = Expr.access (Mutable.var varname) in
-      in ni::acc, ne *)
+let rec foldmapexpr tyenv acc e = match Expr.unfix e with
   | Expr.Record li ->
+    let acc, li = List.fold_left_map (fun acc (name, e) ->
+      let acc, e = process tyenv acc e in
+      acc, (name, e) ) acc li in
     let t = Typer.get_type tyenv e in
     let varname = Fresh.fresh () in
     let ni = Instr.alloc_record varname t li Instr.useless_declaration_option in
@@ -54,7 +52,7 @@ let foldmapexpr tyenv acc e = match Expr.unfix e with
     ni::acc, ne
   | _ -> acc, e
 
-let process tyenv acc e =
+and process tyenv acc e =
   let acc, e = foldmapexpr tyenv acc e in
   Expr.Writer.Deep.foldmap (foldmapexpr tyenv) acc e
 
@@ -62,7 +60,10 @@ let process_mut tyenv acc m = Mutable.foldmap_expr (process tyenv) acc m
 
 let expand tyenv i = match Instr.unfix i with
   | Instr.Declare (n, t, (Expr.Fixed.F (_, Expr.Record li) ), opt) ->
-    [Instr.alloc_record n t li opt]
+    let acc, li = List.fold_left_map (fun acc (name, e) ->
+      let acc, e = process tyenv acc e in
+      acc, (name, e) ) [] li in
+    List.append acc [Instr.alloc_record n t li opt]
   | Instr.Declare (n, t, e, opt) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Declare (n, t, e, opt)) ) :: instrs)
@@ -103,7 +104,7 @@ let expand tyenv i = match Instr.unfix i with
   | Instr.Untuple(li, e, opt) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Untuple (li, e, opt))  ) :: instrs)
-  | _ -> [i]
+  | Instr.Tag _ | Instr.Comment _ | Instr.StdinSep | Instr.Unquote _ | Instr.DeclRead _ -> [i]
 
 let mapi tyenv i =
   Instr.deep_map_bloc

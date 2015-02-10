@@ -36,8 +36,12 @@ open Warner
 open Fresh
 open PassesUtils
 
-(* TODO deep *)
-let mapt t (_, acc) = try TypeMap.find t acc with Not_found -> t
+let mapt (_, acc) t =
+  try TypeMap.find t acc with Not_found -> t
+
+let mapt t p =
+  Type.Writer.Deep.map (mapt p) t
+
 let maptli li acc = List.map (fun (x, t) -> x, mapt t acc ) li
 
 let name_of_field (i: int) (t : Type.t) (acc, _) =
@@ -95,6 +99,8 @@ let process (tyenv, acc) p =
   | Prog.DeclarFun (x, y, z, instrs, opt)->
     let instrs = List.map (fun i -> mapti i tyenv acc) instrs in
     (tyenv, acc), Prog.DeclarFun (x, mapt y acc, maptli z acc, List.collect (rewrite acc) instrs, opt)
+  | Prog.DeclareType (name, ty) -> 
+    (tyenv, acc), Prog.DeclareType (name, mapt ty acc)
   | _ -> (tyenv, acc), p
 
 let process_main (tyenv, acc) instrs =
