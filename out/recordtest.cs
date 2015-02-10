@@ -49,7 +49,10 @@ static int readInt(){
     }
   } while(true);
 } 
-  public class toto {public int foo;public int bar;}
+  public class toto {
+    public int foo;
+    public int bar;
+  }
   
   public static void Main(String[] args)
   {

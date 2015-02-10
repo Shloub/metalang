@@ -52,7 +52,11 @@ static int readInt(){
   /*
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
 */
-  public class toto {public int foo;public int bar;public int blah;}
+  public class toto {
+    public int foo;
+    public int bar;
+    public int blah;
+  }
   static toto mktoto(int v1)
   {
     toto t = new toto();

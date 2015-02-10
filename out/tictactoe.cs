@@ -53,9 +53,17 @@ static int readInt(){
 Tictactoe : un tictactoe avec une IA
 */
   /* La structure de donnée */
-  public class gamestate {public int[][] cases;public bool firstToPlay;public int note;public bool ended;}
+  public class gamestate {
+    public int[][] cases;
+    public bool firstToPlay;
+    public int note;
+    public bool ended;
+  }
   /* Un Mouvement */
-  public class move {public int x;public int y;}
+  public class move {
+    public int x;
+    public int y;
+  }
   /* On affiche l'état */
   static void print_state(gamestate g)
   {

@@ -36,7 +36,11 @@ static void stdin_sep(){
     }
   } while(true);
 }
-  public class bigint {public bool bigint_sign;public int bigint_len;public int[] bigint_chiffres;}
+  public class bigint {
+    public bool bigint_sign;
+    public int bigint_len;
+    public int[] bigint_chiffres;
+  }
   static bigint read_bigint(int len)
   {
     int[] chiffres = new int[len];

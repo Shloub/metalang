@@ -38,7 +38,10 @@ static int readInt(){
     }
   } while(true);
 } 
-  public class intlist {public int head;public intlist tail;}
+  public class intlist {
+    public int head;
+    public intlist tail;
+  }
   static intlist cons(intlist list, int i)
   {
     intlist out0 = new intlist();
