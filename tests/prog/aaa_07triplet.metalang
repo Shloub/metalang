@@ -4,5 +4,10 @@ main
     def (a, b, c) = read_3ints()
     print "a = " print a print " b = " print b print "c =" print c print "\n"
   end
+  def l = read_int_line(10)
+  for j = 0 to 9 do
+    print l[j]
+    print "\n"
+  end
 end
 
