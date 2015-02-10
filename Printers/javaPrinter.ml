@@ -64,13 +64,13 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        Format.fprintf f "static class %a {%a}"
+        Format.fprintf f "@[<v 2>static class %a {@\n%a@]@\n}"
           self#binding name
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "public %a %a;" self#ptype type_ self#binding name
              )
-             (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
