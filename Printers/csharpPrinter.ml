@@ -80,7 +80,7 @@ class csharpPrinter = object(self)
       (if need then "
 static bool eof;
 static String buffer;
-public static char readChar_(){
+static char readChar_(){
   if (buffer == null){
     buffer = Console.ReadLine();
   }
@@ -92,20 +92,20 @@ public static char readChar_(){
   char c = buffer[0];
   return c;
 }
-public static void consommeChar(){
+static void consommeChar(){
        readChar_();
   buffer = buffer.Substring(1);
 }" else "")
 
       (if need_readchar then "
-public static char readChar(){
+static char readChar(){
   char out_ = readChar_();
   consommeChar();
   return out_;
 }" else "")
 
       (if need_stdinsep then "
-public static void stdin_sep(){
+static void stdin_sep(){
   do{
     if (eof) return;
     char c = readChar_();
@@ -117,7 +117,7 @@ public static void stdin_sep(){
   } while(true);
 }" else "")
       (if need_readint then "
-public static int readInt(){
+static int readInt(){
   int i = 0;
   char s = readChar_();
   int sign = 1;

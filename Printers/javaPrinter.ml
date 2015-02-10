@@ -137,7 +137,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       self#instructions instrs
 
   method print_proto f triplet =
-    Format.fprintf f "public static %a"
+    Format.fprintf f "static %a"
       cppprinter#print_proto triplet
 
   method print_scanner f () =

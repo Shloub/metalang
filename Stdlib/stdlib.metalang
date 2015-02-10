@@ -241,7 +241,7 @@ end
 macro array<int> native_expand_read_int_line()
   py do "list(map(int, input().split()))"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
-  csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll<int>(int.Parse).ToArray()"
+  csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll(int.Parse).ToArray()"
   vb do "Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(\" \".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))"
   rkt do "list->vector (map string->number (regexp-split \" \" (read-line)))"
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
