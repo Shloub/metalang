@@ -2,8 +2,7 @@
 sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readint {
   nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
+  my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
     nextchar();
@@ -14,6 +13,7 @@ sub readint {
   }
   return $o * $sign;
 }
+
 
 sub cons{
   my($list, $i) = @_;

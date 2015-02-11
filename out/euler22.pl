@@ -8,8 +8,7 @@ sub readchar{
 }
 sub readint {
   nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
+  my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
     nextchar();
@@ -19,7 +18,8 @@ sub readint {
     nextchar();
   }
   return $o * $sign;
-}sub readspaces {
+}
+sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq "\r" || $currentchar eq "\n"){ nextchar() ; }
 }
 
