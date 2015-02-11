@@ -177,8 +177,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
 
   method multi_print f format exprs =
     match exprs with
-    | [] ->
-      Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format
+    | [] -> Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format
     | _ ->
       Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
         (print_list

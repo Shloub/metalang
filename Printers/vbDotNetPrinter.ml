@@ -69,20 +69,8 @@ class vbDotNetPrinter = object(self)
       self#ptype t
       self#expr e
 
-  method is_printable_i i = i > 10 && i < 128
-  method is_printable c = self#is_printable_i (int_of_char c)
 
-  method string f s =
-    let li = Array.to_list @$ String.chararray s in
-    Format.fprintf f "\"%a\""
-      (Printer.print_list
-	 (fun f c ->
-	   if self#is_printable c && c != '"' then
-	     Format.fprintf f "%c" c
-	   else Format.fprintf f "\" & %a & \"" self#char c
-	 )
-	 (fun f pa a pb b -> Format.fprintf f "%a%a" pa a pb b)
-    ) li
+  method string f s = self#string_noprintable false f s
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in

@@ -153,8 +153,21 @@ static int readInt(){
   method concat_operator f () = Format.fprintf f "+"
 
   method multi_print f format exprs =
-      Format.fprintf f "@[<h>Console.Write(\"\" %a %a)%a@]" (* TODO faire un truc si un des deux premier opérende est une chaine*)
-	self#concat_operator ()
+    let exprs = (Type.string, Expr.string "") :: exprs in
+    let rec compress = function
+      | ((ty1, e1)::(ty2, e2)::tl ) as li ->
+	begin match Expr.unfix e1, Expr.unfix e2 with
+	| Expr.Lief (Expr.String s1), Expr.Lief (Expr.String s2) ->
+	  (ty1, Expr.string (s2^s1))::tl
+	| _ -> li
+	end
+      | x -> x
+    in let exprs = List.fold_left (fun acc e ->
+      let nacc = e::acc in
+      compress nacc
+    ) [] exprs in
+    let exprs = List.rev exprs in
+      Format.fprintf f "@[<h>Console.Write(%a)%a@]"
         (print_list
            (fun f (t, e) ->
              if self#nop (Expr.unfix e) then self#expr f e

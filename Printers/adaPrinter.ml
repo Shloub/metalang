@@ -69,9 +69,6 @@ class adaPrinter = object(self)
   method integer f i =
     Format.fprintf f "(%d)" i
 
-  method is_printable_i i = i > 10 && i < 128
-  method is_printable c = self#is_printable_i (int_of_char c)
-
   method unop f op a =
     Format.fprintf f "(%a)" (fun f () -> super#unop f op a) ()
 
@@ -80,17 +77,7 @@ class adaPrinter = object(self)
     if self#is_printable_i i then Format.fprintf f "%C" c
     else Format.fprintf f "Character'Val(%d)" i
 
-  method string f s =
-    let li = Array.to_list @$ String.chararray s in
-    Format.fprintf f "\"%a\""
-      (Printer.print_list
-	 (fun f c ->
-	   if self#is_printable c && c != '"' then
-	     Format.fprintf f "%c" c
-	   else Format.fprintf f "\" & %a & \"" self#char c
-	 )
-	 (fun f pa a pb b -> Format.fprintf f "%a%a" pa a pb b)
-    ) li
+  method string f s = self#string_noprintable true f s
 
   method print f t expr =
     match Type.unfix t with

@@ -143,6 +143,49 @@ class printer = object(self)
   method typename f i = Format.fprintf f "%s" i
   method string f i = Format.fprintf f "%S" i
 
+  method is_printable_i i = i > 10 && i < 128
+  method is_printable c = self#is_printable_i (int_of_char c)
+
+  method string_noprintable print_first_char f s =
+    let li = Array.to_list @$ String.chararray s in
+    let fst, printable = List.fold_left
+      (fun (fst, printable) c ->
+	if fst then
+	  if self#is_printable c then begin
+	    Format.fprintf f "\"%c" c;
+	    (false, true)
+	  end
+	  else if print_first_char then
+	    begin Format.fprintf f "\"\" & %a" self#char c;
+	      (false, false) end
+	  else
+	    begin Format.fprintf f "%a" self#char c;
+	      (false, false) end
+	else if self#is_printable c then
+	  if printable then begin
+	    Format.fprintf f "%c" c;
+	    (false, true)
+	  end
+	  else begin
+	    Format.fprintf f " & \"%c" c;
+	    (false, true)
+	  end
+	else
+	  if printable then begin
+	    Format.fprintf f "\" & %a" self#char c;
+	    (false, false)
+	  end
+	  else begin
+	    Format.fprintf f " & %a" self#char c;
+	    (false, false)
+	  end
+      ) (true, false) li
+    in if printable then
+	Format.fprintf f "\""
+      else if fst then
+	Format.fprintf f "\"\""
+
+
   method declaration f var t e =
     Format.fprintf f "@[<hov>def %a@ %a@ =@ %a@]"
       self#ptype t
