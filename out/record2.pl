@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -36,6 +36,6 @@ my $t = mktoto(4);
 $t->{"bar"} = readint();
 readspaces();
 $t->{"blah"} = readint();
-print(result($t));
+print result($t);
 
 

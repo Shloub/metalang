@@ -3,7 +3,7 @@ sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
   my $o = $currentchar;
-  nextchar();
+  nextchar;
   return $o;
 }
 sub readint {
@@ -11,11 +11,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -46,7 +46,7 @@ foreach my $i (0 .. $len - 1) {
   print($i, "=>", $tmpi1, " ");
   $tab->[$i] = $tmpi1;
 }
-print("\n");
+print "\n";
 my $tab2 = [];
 foreach my $i_ (0 .. $len - 1) {
   my $tmpi2 = readint();
@@ -68,7 +68,7 @@ foreach my $toto (0 .. $strlen - 1) {
   $tab4->[$toto] = chr($c);
 }
 foreach my $j (0 .. $strlen - 1) {
-  print($tab4->[$j]);
+  print $tab4->[$j];
 }
 
 

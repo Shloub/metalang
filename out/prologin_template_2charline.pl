@@ -6,16 +6,16 @@ sub programme_candidat{
   foreach my $i (0 .. $taille1 - 1) {
     $out0 = $out0 + ord($tableau1->[$i]) *
     $i;
-    print($tableau1->[$i]);
+    print $tableau1->[$i];
   }
-  print("--\n");
+  print "--\n";
   foreach my $j (0 .. $taille2 - 1) {
     $out0 = $out0 + ord($tableau2->[$j]) *
     $j *
     100;
-    print($tableau2->[$j]);
+    print $tableau2->[$j];
   }
-  print("--\n");
+  print "--\n";
   return $out0;
 }
 

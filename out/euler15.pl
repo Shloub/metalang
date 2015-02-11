@@ -27,7 +27,7 @@ foreach my $m (0 .. $n - 1) {
   foreach my $k (0 .. $n - 1) {
     print($tab->[$m]->[$k], " ");
   }
-  print("\n");
+  print "\n";
 }
 print($tab->[0]->[0], "\n");
 

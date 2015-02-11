@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -42,15 +42,15 @@ sub print_sudoku{
     foreach my $x (0 .. 8) {
       print($sudoku0->[$x + $y * 9], " ");
       if ((remainder($x, 3)) eq 2) {
-        print(" ");
+        print " ";
       }
     }
-    print("\n");
+    print "\n";
     if ((remainder($y, 3)) eq 2) {
-      print("\n");
+      print "\n";
     }
   }
-  print("\n");
+  print "\n";
 }
 
 # dit si les variables sont toutes différentes 
@@ -3014,7 +3014,7 @@ print_sudoku($sudoku0);
 if (solve($sudoku0)) {
   print_sudoku($sudoku0);
 }else{
-  print("no solution\n");
+  print "no solution\n";
 }
 
 

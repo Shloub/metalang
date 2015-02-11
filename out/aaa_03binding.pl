@@ -22,12 +22,12 @@ sub h{
 h(14);
 my $a = 4;
 my $b = 5;
-print($a + $b);
+print ($a + $b);
 # main 
 
 h(15);
 $a = 2;
 $b = 1;
-print($a + $b);
+print ($a + $b);
 
 

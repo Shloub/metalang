@@ -30,7 +30,7 @@ foreach my $k (0 .. 10) {
 my $i = 4;
 while ($i < 10)
 {
-  print($i);
+  print $i;
   $i = $i + 1;
   $j = $j + $i;
 }

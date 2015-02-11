@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -62,6 +62,6 @@ foreach my $i (0 .. $len - 1) {
   readspaces();
   $tab->[$i] = $tmp;
 }
-print(plus_petit0($tab, $len));
+print plus_petit0($tab, $len);
 
 

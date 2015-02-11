@@ -3,7 +3,7 @@ sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
   my $o = $currentchar;
-  nextchar();
+  nextchar;
   return $o;
 }
 sub readint {
@@ -11,11 +11,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -47,6 +47,6 @@ foreach my $i (0 .. $len - 1) {
   $tab->[$i] = $tmp;
 }
 my $result = nth($tab, $tofind, $len);
-print($result);
+print $result;
 
 

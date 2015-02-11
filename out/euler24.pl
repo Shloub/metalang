@@ -31,7 +31,7 @@ sub show{
     foreach my $l (0 .. $lim - 1) {
       if (!$pris->[$l]) {
         if ($nchiffre eq 0) {
-          print($l);
+          print $l;
           $pris->[$l] = 1;
         }
         $nchiffre = $nchiffre - 1;
@@ -40,10 +40,10 @@ sub show{
   }
   foreach my $m (0 .. $lim - 1) {
     if (!$pris->[$m]) {
-      print($m);
+      print $m;
     }
   }
-  print("\n");
+  print "\n";
 }
 
 show(10, 999999);

@@ -29,10 +29,10 @@ sub pathfind{
   foreach my $i (0 .. $y - 1) {
     my $tmp = [];
     foreach my $j (0 .. $x - 1) {
-      print($tab->[$i]->[$j]);
+      print $tab->[$i]->[$j];
       $tmp->[$j] = -1;
     }
-    print("\n");
+    print "\n";
     $cache->[$i] = $tmp;
   }
   return pathfind_aux($cache, $tab, $x, $y, 0, 0);
@@ -47,6 +47,6 @@ foreach my $f (0 .. $y - 1) {
 }
 my $tab = $e;
 my $result = pathfind($tab, $x, $y);
-print($result);
+print $result;
 
 

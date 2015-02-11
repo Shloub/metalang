@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -44,6 +44,6 @@ foreach my $i (0 .. $len - 1) {
   $tab->[$i] = $tmp;
 }
 my $result = summax($tab, $len);
-print($result);
+print $result;
 
 

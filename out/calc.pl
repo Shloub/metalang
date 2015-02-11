@@ -10,7 +10,7 @@ sub fibo{
   my $a2 = $a;
   my $b2 = $b;
   foreach my $j (0 .. $i + 1) {
-    print($j);
+    print $j;
     $out_ = $out_ + $a2;
     my $tmp = $b2;
     $b2 = $b2 + $a2;
@@ -19,6 +19,6 @@ sub fibo{
   return $out_;
 }
 
-print(fibo(1, 2, 4));
+print fibo(1, 2, 4);
 
 

@@ -4,7 +4,7 @@ sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
   my $o = $currentchar;
-  nextchar();
+  nextchar;
   return $o;
 }
 sub readspaces {
@@ -37,12 +37,12 @@ sub read_bigint{
 sub print_bigint{
   my($a) = @_;
   if (!$a->{"bigint_sign"}) {
-    print('-');
+    print '-';
   }
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
-    print($a->{"bigint_chiffres"}->[$a->{"bigint_len"} -
+    print $a->{"bigint_chiffres"}->[$a->{"bigint_len"} -
     1 -
-    $i]);
+    $i];
   }
 }
 
@@ -382,9 +382,9 @@ sub euler48{
     $sum = add_bigint($sum, $ibeib);
     $sum = bigint_premiers_chiffres($sum, 10);
   }
-  print("euler 48 = ");
+  print "euler 48 = ";
   print_bigint($sum);
-  print("\n");
+  print "\n";
 }
 
 sub euler16{
@@ -464,7 +464,7 @@ foreach my $i (2 .. 100) {
   my $tmp = read_bigint(50);
   $sum = add_bigint($sum, $tmp);
 }
-print("euler13 = ");
+print "euler13 = ";
 print_bigint($sum);
 print("\n", "euler25 = ", euler25(), "\n", "euler16 = ", euler16(), "\n");
 euler48();
@@ -472,49 +472,49 @@ print("euler20 = ", euler20(), "\n");
 my $a = bigint_of_int(999999);
 my $b = bigint_of_int(9951263);
 print_bigint($a);
-print(">>1=");
+print ">>1=";
 print_bigint(bigint_shift($a, -1));
-print("\n");
+print "\n";
 print_bigint($a);
-print("*");
+print "*";
 print_bigint($b);
-print("=");
+print "=";
 print_bigint(mul_bigint($a, $b));
-print("\n");
+print "\n";
 print_bigint($a);
-print("*");
+print "*";
 print_bigint($b);
-print("=");
+print "=";
 print_bigint(mul_bigint_cp($a, $b));
-print("\n");
+print "\n";
 print_bigint($a);
-print("+");
+print "+";
 print_bigint($b);
-print("=");
+print "=";
 print_bigint(add_bigint($a, $b));
-print("\n");
+print "\n";
 print_bigint($b);
-print("-");
+print "-";
 print_bigint($a);
-print("=");
+print "=";
 print_bigint(sub_bigint($b, $a));
-print("\n");
+print "\n";
 print_bigint($a);
-print("-");
+print "-";
 print_bigint($b);
-print("=");
+print "=";
 print_bigint(sub_bigint($a, $b));
-print("\n");
+print "\n";
 print_bigint($a);
-print(">");
+print ">";
 print_bigint($b);
-print("=");
+print "=";
 my $e = bigint_gt($a, $b);
 if ($e) {
-  print("True");
+  print "True";
 }else{
-  print("False");
+  print "False";
 }
-print("\n");
+print "\n";
 
 

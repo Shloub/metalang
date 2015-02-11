@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -89,12 +89,12 @@ bubblesort($tab2, $len);
 foreach my $i (0 .. $len - 1) {
   print($tab2->[$i], " ");
 }
-print("\n");
+print "\n";
 my $tab3 = copytab($tab, $len);
 qsort0($tab3, $len, 0, $len - 1);
 foreach my $i (0 .. $len - 1) {
   print($tab3->[$i], " ");
 }
-print("\n");
+print "\n";
 
 

@@ -14,7 +14,7 @@ sub result{
     print($tab->[$i1], " ");
     $tab2->[$tab->[$i1]] = 1;
   }
-  print("\n");
+  print "\n";
   foreach my $i2 (0 .. $len - 1) {
     if (!$tab2->[$i2]) {
       return $i2;

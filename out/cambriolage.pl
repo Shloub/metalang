@@ -6,11 +6,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -71,6 +71,6 @@ foreach my $k (0 .. $m - 1) {
   }
   $serrures->[$k] = $out1;
 }
-print(nbPassePartout($n, $passepartout, $m, $serrures));
+print nbPassePartout($n, $passepartout, $m, $serrures);
 
 

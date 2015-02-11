@@ -5,6 +5,6 @@ sub foo{
   return $a + $b;
 }
 
-print(10);
+print 10;
 
 

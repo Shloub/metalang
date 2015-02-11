@@ -32,6 +32,6 @@ foreach my $a (0 .. 9) {
     }
   }
 }
-print($sum);
+print $sum;
 
 

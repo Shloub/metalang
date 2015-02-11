@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -70,6 +70,6 @@ my $n = 0;
 $n = readint();
 # Lecture de l'entier 
 
-print(sumdiv($n));
+print sumdiv($n);
 
 

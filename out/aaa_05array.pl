@@ -17,23 +17,23 @@ sub g{
 
 my $a = [];
 foreach my $i (0 .. 5 - 1) {
-  print($i);
+  print $i;
   $a->[$i] = (remainder($i, 2)) eq 0;
 }
 my $c = $a->[0];
 if ($c) {
-  print("True");
+  print "True";
 }else{
-  print("False");
+  print "False";
 }
-print("\n");
+print "\n";
 g(id($a), 0);
 my $d = $a->[0];
 if ($d) {
-  print("True");
+  print "True";
 }else{
-  print("False");
+  print "False";
 }
-print("\n");
+print "\n";
 
 

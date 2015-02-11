@@ -31,6 +31,6 @@ sub sumdiag{
   return $sum;
 }
 
-print(sumdiag(1001));
+print sumdiag(1001);
 
 

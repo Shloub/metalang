@@ -4,7 +4,7 @@ sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
   my $o = $currentchar;
-  nextchar();
+  nextchar;
   return $o;
 }
 sub remainder {

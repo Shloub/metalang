@@ -7,9 +7,9 @@ sub programme_candidat{
     foreach my $j (0 .. $taille_x - 1) {
       $out0 = $out0 + ord($tableau->[$i]->[$j]) *
       ($i + $j * 2);
-      print($tableau->[$i]->[$j]);
+      print $tableau->[$i]->[$j];
     }
-    print("--\n");
+    print "--\n";
   }
   return $out0;
 }

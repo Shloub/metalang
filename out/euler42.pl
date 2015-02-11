@@ -3,7 +3,7 @@ sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
   my $o = $currentchar;
-  nextchar();
+  nextchar;
   return $o;
 }
 sub readint {
@@ -11,11 +11,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -58,7 +58,7 @@ foreach my $i (1 .. 55) {
     print($i, " ");
   }
 }
-print("\n");
+print "\n";
 my $sum = 0;
 my $n = readint();
 foreach my $i (1 .. $n) {

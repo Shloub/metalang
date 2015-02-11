@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -31,23 +31,23 @@ sub readspaces {
 
 sub print_state{
   my($g) = @_;
-  print("\n|");
+  print "\n|";
   foreach my $y (0 .. 2) {
     foreach my $x (0 .. 2) {
       if ($g->{"cases"}->[$x]->[$y] eq 0) {
-        print(" ");
+        print " ";
       }elsif ($g->{"cases"}->[$x]->[$y] eq 1) {
-        print("O");
+        print "O";
       }else{
-        print("X");
+        print "X";
       }
-      print("|");
+      print "|";
     }
     if ($y ne 2) {
-      print("\n|-|-|-|\n|");
+      print "\n|-|-|-|\n|";
     }
   }
-  print("\n");
+  print "\n";
 }
 
 # On dit qui gagne (info stoquées dans g.ended et g.note ) 

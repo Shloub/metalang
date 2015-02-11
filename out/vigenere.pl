@@ -3,7 +3,7 @@ sub nextchar{ sysread STDIN, $currentchar, 1; }
 sub readchar{
   nextchar() if (!defined $currentchar);
   my $o = $currentchar;
-  nextchar();
+  nextchar;
   return $o;
 }
 sub readint {
@@ -11,11 +11,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -74,8 +74,8 @@ foreach my $index2 (0 .. $taille - 1) {
 }
 crypte($taille_cle, $cle, $taille, $message);
 foreach my $i (0 .. $taille - 1) {
-  print($message->[$i]);
+  print $message->[$i];
 }
-print("\n");
+print "\n";
 
 

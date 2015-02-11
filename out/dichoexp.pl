@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -40,6 +40,6 @@ my $b = 0;
 $a = readint();
 readspaces();
 $b = readint();
-print(exp0($a, $b));
+print exp0($a, $b);
 
 

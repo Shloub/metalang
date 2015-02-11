@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -80,7 +80,7 @@ foreach my $k (0 .. $len - 1) {
   foreach my $l (0 .. $k) {
     print($tab->[$k]->[$l], " ");
   }
-  print("\n");
+  print "\n";
 }
 
 

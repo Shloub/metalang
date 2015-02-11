@@ -5,11 +5,11 @@ sub readint {
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }
@@ -23,6 +23,6 @@ my $param = {"foo" => 0,
 $param->{"bar"} = readint();
 readspaces();
 $param->{"foo"} = readint();
-print($param->{"bar"} + $param->{"foo"} * $param->{"bar"});
+print ($param->{"bar"} + $param->{"foo"} * $param->{"bar"});
 
 

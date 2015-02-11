@@ -15,7 +15,7 @@ foreach my $i (0 .. $len - 2) {
   foreach my $j (0 .. $len - 1) {
     print($tab2->[$i]->[$j], " ");
   }
-  print("\n");
+  print "\n";
 }
 
 
