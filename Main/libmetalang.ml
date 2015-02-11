@@ -72,7 +72,7 @@ let conf_rename lang prog =
   Fresh.fresh_init prog ;
   Rename.clear ();
   if lang = "adb" then begin
-    BindingSet.iter (fun name ->
+    StringSet.iter (fun name ->
       if '_' = String.get name ((String.length name) - 1) then
 	      Rename.add name;
     ) !Fresh.bindings
@@ -152,6 +152,7 @@ let clike_passes prog =
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
 
 let python_passes prog =
   prog |> default_passes
@@ -161,7 +162,8 @@ let python_passes prog =
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
-
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
+ 
 let common_lisp_passes prog =
   prog |> default_passes
   (*  |> (fun (a, b) -> base_print b; (a, b)) *)
@@ -178,6 +180,8 @@ let common_lisp_passes prog =
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
+
 
 let ocaml_passes prog =
   prog |> default_passes
@@ -187,6 +191,7 @@ let ocaml_passes prog =
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
 
 let fun_passes config prog =
   prog |> default_passes
@@ -194,6 +199,7 @@ let fun_passes config prog =
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply config b)
 
@@ -208,6 +214,7 @@ let php_passes prog =
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
 
 let no_passes prog =
   prog

@@ -39,23 +39,23 @@ open PassesUtils
 
 type acc0 = unit
 type 'a acc = {
-  functions : BindingSet.t;
-  parameters : BindingSet.t;
-  variables : BindingSet.t;
-  array : BindingSet.t;
-  types : BindingSet.t;
+  functions : StringSet.t;
+  parameters : StringSet.t;
+  variables : StringSet.t;
+  array : StringSet.t;
+  types : StringSet.t;
 }
 let init_acc _ =
   {
-    functions = BindingSet.empty;
-    parameters = BindingSet.empty;
-    variables = BindingSet.empty;
-    array = BindingSet.empty;
-    types = BindingSet.empty;
+    functions = StringSet.empty;
+    parameters = StringSet.empty;
+    variables = StringSet.empty;
+    array = StringSet.empty;
+    types = StringSet.empty;
   }
 
 let check_name0 funname acc name loc =
-  if BindingSet.mem name acc then
+  if StringSet.mem name acc then
     Warner.err funname (fun t () -> Format.fprintf t "%s is re-declared %a" name Warner.ploc loc)
 
 let check_name funname acc name loc =
@@ -69,60 +69,60 @@ let check_name funname acc name loc =
 
 let add_type_in_acc funname name acc out loc =
   let () = check_name funname acc name loc in
-  let acc = { acc with types = BindingSet.add name acc.types }
+  let acc = { acc with types = StringSet.add name acc.types }
   in acc, out
 
 let add_fun_in_acc funname name acc out loc =
   let () = check_name funname acc name loc in
-  let acc = { acc with functions = BindingSet.add name acc.functions }
+  let acc = { acc with functions = StringSet.add name acc.functions }
   in acc, out
 
 let add_param_in_acc funname name acc loc =
   let () = check_name funname acc name loc in
-  let acc = { acc with parameters = BindingSet.add name acc.parameters }
+  let acc = { acc with parameters = StringSet.add name acc.parameters }
   in acc
 
 let add_array_in_acc funname name acc loc =
   let () = check_name funname acc name loc in
-  let acc = { acc with array = BindingSet.add name acc.array }
+  let acc = { acc with array = StringSet.add name acc.array }
   in acc
 
 let add_local_in_acc funname name acc loc =
   let () = check_name funname acc name loc in
-  let acc = { acc with variables = BindingSet.add name acc.variables }
+  let acc = { acc with variables = StringSet.add name acc.variables }
   in acc
 
 
 let is_value funname acc name loc =
   (* TODO if is parameter, change message *)
-  if not(BindingSet.mem name acc.variables) &&
-    not(BindingSet.mem name acc.parameters) &&
-    not(BindingSet.mem name acc.array)
+  if not(StringSet.mem name acc.variables) &&
+    not(StringSet.mem name acc.parameters) &&
+    not(StringSet.mem name acc.array)
   then
     Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable %a" name Warner.ploc loc)
 
 
 let is_local funname acc name loc =
   (* TODO if is parameter, change message *)
-  if not(BindingSet.mem name acc.variables) then
+  if not(StringSet.mem name acc.variables) then
     Warner.err funname (fun t () -> Format.fprintf t "%s is not a local variable %a" name Warner.ploc loc)
 
 
 let is_array funname acc name loc =
-  if not(BindingSet.mem name acc.array)
-    && not( BindingSet.mem name acc.parameters)
+  if not(StringSet.mem name acc.array)
+    && not( StringSet.mem name acc.parameters)
   then
     Warner.err funname (fun t () -> Format.fprintf t "%s is not an array %a" name Warner.ploc loc)
 
 let is_fun funname acc name loc =
-  if not(BindingSet.mem name acc.functions)
+  if not(StringSet.mem name acc.functions)
   then
     Warner.err funname (fun t () -> Format.fprintf t "%s is not a function %a" name Warner.ploc loc)
 
 let rec check_mutable funname acc mut =
   let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
   match Mutable.unfix mut with
-  | Mutable.Var varname ->
+  | Mutable.Var (UserName varname) ->
     is_value funname acc varname loc
   | Mutable.Array (mut, li) ->
     begin
@@ -151,14 +151,14 @@ let rec check_instr funname acc instr =
   let loc = Ast.PosMap.get (Instr.Fixed.annot instr) in
   match Instr.unfix instr with
   | Instr.Tag _ -> acc
-  | Instr.Declare (var, t, e, _) ->
+  | Instr.Declare (UserName var, t, e, _) ->
     let () = check_expr funname acc e in
     add_local_in_acc funname var acc loc
   | Instr.Affect (mut, e) ->
     let () = check_mutable funname acc mut in
     let () = check_expr funname acc e in
     acc
-  | Instr.Loop (v, e1, e2, li) ->
+  | Instr.Loop (UserName v, e1, e2, li) ->
     let () = check_expr funname acc e1 in
     let () = check_expr funname acc e2 in
     let acc2 = add_param_in_acc funname v acc loc in
@@ -171,16 +171,16 @@ let rec check_instr funname acc instr =
   | Instr.Comment _ -> acc
   | Instr.Return e ->
     let () = check_expr funname acc e in acc
-  | Instr.AllocArray (v, t, e, liopt, _) ->
+  | Instr.AllocArray (UserName v, t, e, liopt, _) ->
     let () = check_expr funname acc e in
     let acc = match liopt with
       | None -> acc
-      | Some (varname, li) ->
+      | Some (UserName varname, li) ->
         let () = check_name funname acc varname loc in
         let acc = add_param_in_acc funname varname acc loc in
         List.fold_left (check_instr funname) acc li
     in add_array_in_acc funname v acc loc
-  | Instr.AllocRecord (varname, t, li, _) ->
+  | Instr.AllocRecord (UserName varname, t, li, _) ->
     let () = check_name funname acc varname loc in
     let () = List.iter (fun (_field, expr) ->
       check_expr funname acc expr) li
@@ -198,7 +198,7 @@ let rec check_instr funname acc instr =
     in acc
   | Instr.Print (t, e) ->
     let () = check_expr funname acc e in acc
-  | Instr.DeclRead (t, v, _) ->
+  | Instr.DeclRead (t, UserName v, _) ->
     add_local_in_acc funname v acc loc
   | Instr.Read (t, mut) ->
     let () = check_mutable funname acc mut in
@@ -208,7 +208,7 @@ let rec check_instr funname acc instr =
     let () = check_expr funname acc e in acc
   | Instr.Untuple (li, e, _) ->
     let () = check_expr funname acc e in
-    List.fold_left (fun acc (_, name) ->
+    List.fold_left (fun acc (_, UserName name) ->
       add_local_in_acc funname name acc loc) acc li
 
 
@@ -224,7 +224,7 @@ let process acc f =
   | Prog.DeclarFun (funname, t, params, instrs, _) ->
     let loc = Ast.PosMap.get (Type.Fixed.annot t) in
     let acc, f = add_fun_in_acc funname funname acc f loc in
-    let acc0 = List.fold_left (fun acc (name, t) ->
+    let acc0 = List.fold_left (fun acc (UserName name, t) ->
       add_param_in_acc funname name acc loc
     ) acc params in
     let _ = List.fold_left (check_instr funname) acc0 instrs

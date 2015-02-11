@@ -39,7 +39,7 @@ let apply prog funs =
     | Prog.Unquote e -> f::li, CollectCalls.process_expr used_functions e
     | Prog.DeclarFun (v, _,_, _, _)
     | Prog.Macro (v, _, _, _) ->
-      if BindingSet.mem v used_functions
+      if StringSet.mem v used_functions
       then (f::li, (Passes.WalkCollectCalls.fold_fun used_functions f) )
       else (li, used_functions)
     | Prog.Comment _ -> (f::li, used_functions)

@@ -70,7 +70,7 @@ type env =
     enum : (Type.t * string) StringMap.t;
     gamma : Type.t StringMap.t;
     functions : functionType StringMap.t;
-    locales : varType StringMap.t;
+    locales : varType BindingMap.t;
     contraintes : (typeContrainte ref * typeContrainte ref) list;
   }
 
@@ -168,8 +168,11 @@ let error_ty t1 t2 loc1 loc2 =
     ploc loc2))
 
 let not_found name loc =
-  raise (Error (fun f -> Format.fprintf f "Cannot find variable %s %a \n%!"
-    name
+  raise (Error (fun f -> Format.fprintf f "Cannot find variable %a %a \n%!"
+    (fun f -> function
+    | UserName u -> Format.fprintf f "%s" u
+    | InternalName i -> Format.fprintf f "internal(%d)" i
+    ) name
     ploc loc))
 
 let not_found_ty name loc =
@@ -504,7 +507,7 @@ and collect_contraintes_mutable env mut =
   | Mutable.Var name ->
     let ty =
       try
-        StringMap.find name env.locales
+        BindingMap.find name env.locales
       with Not_found ->
         not_found name tloc
     in
@@ -551,7 +554,7 @@ let rec collect_contraintes_instructions env instructions
         let env, contrainte_ty = ty2typeContrainte env ty loc in
         let env =
           { env with locales =
-              StringMap.add var contrainte_ty env.locales } in
+              BindingMap.add var contrainte_ty env.locales } in
         {env with
           contraintes = (contrainte_ty, contrainte_expr) ::
             env.contraintes}
@@ -564,7 +567,7 @@ let rec collect_contraintes_instructions env instructions
 
       | Instr.Loop (var, e1, e2, li) ->
         let contrainte_integer = ref (Typed (Type.integer, loc) ) in
-        let env = {env with locales = StringMap.add var contrainte_integer
+        let env = {env with locales = BindingMap.add var contrainte_integer
             env.locales } in
         let env, contrainte_e1 = collect_contraintes_expr env e1 in
         let env, contrainte_e2 = collect_contraintes_expr env e2 in
@@ -600,11 +603,11 @@ let rec collect_contraintes_instructions env instructions
           | None -> env
           | Some (var, instrs) ->
             let env = {env with
-              locales = StringMap.add var contrainte_integer env.locales}
+              locales = BindingMap.add var contrainte_integer env.locales}
             in collect_contraintes_instructions env instrs ty
         in
         let env = {env with
-          locales = StringMap.add var
+          locales = BindingMap.add var
             (ref (PreTyped (Type.Array ty, loc)))
             env.locales}
         in env
@@ -637,7 +640,7 @@ let rec collect_contraintes_instructions env instructions
         in
         let env, ty = ty2typeContrainte env ty loc in
         let env = {env with
-          locales = StringMap.add var
+          locales = BindingMap.add var
             ty env.locales}
         in env
       | Instr.If (e, instrs1, instrs2) ->
@@ -688,7 +691,7 @@ let rec collect_contraintes_instructions env instructions
             let env, contrainte = ty2typeContrainte env ty loc in
             env, (contrainte, variable)) env li in
         let env = List.fold_left (fun env (contrainte, variable) ->
-          { env with locales = StringMap.add variable contrainte env.locales })
+          { env with locales = BindingMap.add variable contrainte env.locales })
           env li_contraintes in
         let tuple_contrainte = ref (PreTyped (Type.Tuple (List.map fst li_contraintes), loc)) in
         {env with contraintes = (tuple_contrainte, contrainte_expr) :: env.contraintes}
@@ -704,7 +707,7 @@ let rec collect_contraintes_instructions env instructions
         let env, ty = ty2typeContrainte env ty loc in
         let env =
           { env with locales =
-              StringMap.add var ty env.locales }
+              BindingMap.add var ty env.locales }
         in env
       | Instr.StdinSep -> env
       | Instr.Unquote li ->
@@ -721,13 +724,13 @@ let collect_contraintes e
     expand e x loc) @*snd) params), ty in
   let e = { e with
     functions = StringMap.add funname function_type e.functions;
-    locales = StringMap.empty
+    locales = BindingMap.empty
   } in
   let e = List.fold_left (fun e (name, ty) ->
     let tyloc = Ast.PosMap.get (Type.Fixed.annot ty) in
     let ty = expand e ty tyloc in
     let e, ty = ty2typeContrainte e ty tyloc in
-    {e with locales = StringMap.add name ty e.locales}
+    {e with locales = BindingMap.add name ty e.locales}
   ) e params
   in
   let e = collect_contraintes_instructions e instructions ty in
@@ -740,7 +743,7 @@ let empty = {
   fields = StringMap.empty;
   enum = StringMap.empty;
   functions = StringMap.empty;
-  locales = StringMap.empty;
+  locales = BindingMap.empty;
   contraintes = [];
 }
 

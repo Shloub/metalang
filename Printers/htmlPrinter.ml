@@ -39,7 +39,7 @@ class htmlPrinter = object(self)
 
   method lang () = "html"
 
-  method binding f i = Format.fprintf f "<span class=\"binding\">%s</span>" i
+  method binding f i = Format.fprintf f "<span class=\"binding\">%a</span>" super#binding i
   method funname f i = Format.fprintf f "<span class=\"funname\">%s</span>" i
   method string f i = Format.fprintf f "<span class=\"constant\">%S</span>" i
   method float f i = Format.fprintf f "<span class=\"constant\">%f</span>" i
@@ -171,7 +171,7 @@ class htmlPrinter = object(self)
         name
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#binding name
+             Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#field name
            )
            (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
         ) li
@@ -180,12 +180,12 @@ class htmlPrinter = object(self)
         name
         (print_list
            (fun t name ->
-             self#binding t name
+             self#enum t name
            )
            (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
         ) li
     | _ ->
-      Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#binding name self#ptype t
+      Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#typename name self#ptype t
 
   method main f main = Format.fprintf f "<span class=\"keyword\">main</span><div class=\"metalang_bloc_content\">%a</div>@\n<span class=\"keyword\">end</span>@\n</div>" super#instructions main
 

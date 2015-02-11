@@ -130,10 +130,17 @@ class printer = object(self)
 
   method setTyperEnv t = typerEnv <- t
 
-  val mutable macros = BindingMap.empty
+  val mutable macros = StringMap.empty
 
-  method binding f i = Format.fprintf f "%s" i
+  method binding f = function
+  | UserName i -> Format.fprintf f "%s"i 
+  | InternalName i -> Format.fprintf f "internal__%d" i
+
+  method field f i = Format.fprintf f "%s" i
+  method enum f i = Format.fprintf f "%s" i
+  method enumfield f i = Format.fprintf f "%s" i
   method funname f i = Format.fprintf f "%s" i
+  method typename f i = Format.fprintf f "%s" i
   method string f i = Format.fprintf f "%S" i
 
   method declaration f var t e =
@@ -188,7 +195,7 @@ class printer = object(self)
       Format.fprintf f "record@\n @[<hov>%a@]@\nend"
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a : %a;" self#binding name self#ptype type_
+             Format.fprintf t "%a : %a;" self#field name self#ptype type_
            )
            (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
         ) li
@@ -196,7 +203,7 @@ class printer = object(self)
       Format.fprintf f "enum{%a}"
         (print_list
            (fun t name ->
-             Format.fprintf t "%a " self#binding name
+             Format.fprintf t "%a " self#enumfield name
            )
            (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
         ) li
@@ -221,9 +228,6 @@ class printer = object(self)
       self#expr len
       self#binding binding2
       self#instructions lambda
-
-  method field f field =
-    Format.fprintf f "%s" field
 
   method mutable_ f m =
     match Mutable.unfix m with
@@ -279,7 +283,7 @@ class printer = object(self)
       in Format.fprintf f "%s" expanded
 
   method call f var li =
-    match BindingMap.find_opt var macros with
+    match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_call f var t params code li
     | None ->
@@ -299,7 +303,7 @@ class printer = object(self)
 
 
   method apply f var li =
-    match BindingMap.find_opt var macros with
+    match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_apply f var t params code li
     | None ->
@@ -537,11 +541,6 @@ class printer = object(self)
       self#print_op op
       (self#chf op Right) b
 
-
-
-  method enum f e =
-    Format.fprintf f "%s" e
-
   method integer f i =
     Format.fprintf f "%i" i
 
@@ -576,7 +575,7 @@ class printer = object(self)
 
   method record f li =
     Format.fprintf f "record %a end"
-      (self#def_fields "") li
+      (self#def_fields (InternalName 0)) li
 
   method char f c = Format.fprintf f "%C" c
 
@@ -609,8 +608,8 @@ class printer = object(self)
       self#print_fun f var t li instrs;
       Format.fprintf f "@\n"
     | Prog.Macro (name, t, params, code) ->
-      macros <- BindingMap.add
-        name (t, params, code)
+      macros <- StringMap.add
+        name (t, List.map (function | UserName n, t -> n, t | _ -> assert false) params, code)
         macros;
       ()
     | Prog.Unquote _ -> assert false
@@ -622,24 +621,24 @@ class printer = object(self)
     match (Type.unfix t) with
     | Type.Struct li ->
       Format.fprintf f "record %a %a@\nend@\n"
-        self#binding name
+        self#typename name
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a %a;@\n" self#ptype type_ self#binding name
+             Format.fprintf t "%a %a;@\n" self#ptype type_ self#field name
            )
            (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
         ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a @\n@[<v2>  %a@]@\nend@\n"
-        self#binding name
+        self#typename name
         (print_list
            (fun t name ->
-             self#binding t name
+             self#enumfield t name
            )
            (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
         ) li
     | _ ->
-      Format.fprintf f "type %a = %a;" self#binding name self#ptype t
+      Format.fprintf f "type %a = %a;" self#typename name self#ptype t
 
   method prog f (prog: Utils.prog) =
     Format.fprintf f "%a%a@\n"

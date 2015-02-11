@@ -48,6 +48,7 @@ module WalkRename = WalkTop(Rename);;
 module WalkInternalTags = WalkTop(InternalTags);;
 module WalkExpandUnTuple = WalkTop(ExpandUnTuple);;
 module WalkInlineFuncs0 = WalkTop(InlineFuncs);;
+module WalkRemoveInternal = WalkTop(RemoveInternal);;
 module WalkInlineFuncs = struct
   let apply () p =
     let p = WalkInlineFuncs0.apply () p in

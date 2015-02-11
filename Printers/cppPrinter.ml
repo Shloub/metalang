@@ -182,27 +182,25 @@ class cppPrinter = object(self)
     match (Type.unfix t) with
       Type.Struct li ->
         Format.fprintf f "class %a {@\npublic:@\n@[<v 2>  %a@]@\n};@\n"
-          self#binding name
+          self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "%a %a;" self#ptype type_ self#binding name
+               Format.fprintf t "%a %a;" self#ptype type_ self#field name
              )
              (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li
     | Type.Enum li ->
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
-        self#binding name
+        self#typename name
         (print_list
-           (fun t name ->
-             self#binding t name
-           )
+           (fun t name -> self#enumfield t name)
            (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
         ) li
-        self#binding name
+        self#typename name
     | _ ->
       Format.fprintf f "typedef %a %a;"
         self#ptype t
-        self#binding name
+        self#typename name
 
   method stdin_sep f = Format.fprintf f "@[std::cin >> std::skipws;@]"
 

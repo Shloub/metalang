@@ -349,20 +349,20 @@ End Function" else "")
     match (Type.unfix t) with
       Type.Struct li ->
         Format.fprintf f "Public Class %a@\n  @[<v>%a@]@\nEnd Class"
-          self#binding name
+          self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "Public %a As %a%a" self#binding name self#ptype type_ 
+               Format.fprintf t "Public %a As %a%a" self#field name self#ptype type_ 
 		 self#separator ()
              )
              (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li
     | Type.Enum li ->
       Format.fprintf f "Enum %a@\n  @[<v>%a@]@\nEnd Enum@\n"
-        self#binding name
+        self#typename name
         (print_list
            (fun t name ->
-             self#binding t name
+             self#enumfield t name
            )
            (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
         ) li

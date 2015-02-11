@@ -22,3 +22,4 @@ RecordExprToInstr
 DeclareTuples
 InlineFuncs
 InlineVars
+RemoveInternal

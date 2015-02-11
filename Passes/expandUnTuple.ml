@@ -58,7 +58,7 @@ let rec rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i w
   | Instr.Untuple (li, e, opt) ->
     let loc = PosMap.get (Instr.Fixed.annot i) in
     let t = Type.auto () in
-    let b = fresh () in
+    let b = fresh_internal () in
     let vb = Mutable.var b in
     let t_tuple = Type.tuple (List.map fst li) in
     let access = List.mapi (fun i (t, name) ->

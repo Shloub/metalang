@@ -32,7 +32,7 @@ class camlFunPrinter = object(self)
 
   method lang () = "ml"
 
-  val mutable macros = Ast.BindingMap.empty
+  val mutable macros = StringMap.empty
 
   val mutable typerEnv : Typer.env = Typer.empty
   method getTyperEnv () = typerEnv
@@ -155,7 +155,7 @@ class camlFunPrinter = object(self)
     let default () = self#apply_nomacros f e li in
     match E.unfix e with
     | E.Lief ( E.Binding binding ) ->
-      begin match Ast.BindingMap.find_opt binding macros with
+      begin match StringMap.find_opt binding macros with
       | None -> default ()
       | Some ((t, params, code)) -> self#expand_macro_call f binding t params code li
       end
@@ -335,7 +335,7 @@ class camlFunPrinter = object(self)
   | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
   | AstFun.DeclareType (name, ty) -> self#toplvl_declarety f name ty
   | AstFun.Macro (name, t, params, code) ->
-      macros <- Ast.BindingMap.add
+      macros <- StringMap.add
         name (t, params, code)
         macros;
       ()

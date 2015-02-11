@@ -136,6 +136,9 @@ let err_token_expected x = raise (Warner.Error (fun f -> Format.fprintf f "Got %
 
 let err_bad_arg_number s n1 n2 = raise (Warner.Error (fun f -> Format.fprintf f "Bad number of arguments %S : %d vs %d@\n" s n1 n2))
 
+let pvar f = function
+  | UserName n -> Format.fprintf f "%S" n
+  | InternalName i -> Format.fprintf f "internal(%d)" i
 
 (** extract an ocaml token list from a value *)
 let get_tokens = function
@@ -151,7 +154,7 @@ type execenv = result array
 (** compilation environment *)
 type  env = {
   nvars : int;
-  vars : int StringMap.t;
+  vars : int BindingMap.t;
   functions :
     (int * (execenv -> unit) ) ref
     StringMap.t;
@@ -196,7 +199,7 @@ let empty_env te =
   {
     tyenv = te;
     nvars = 0;
-    vars = StringMap.empty;
+    vars = BindingMap.empty;
     functions = StringMap.empty;
   }
 
@@ -346,7 +349,7 @@ let init_eenv nvars = Array.make nvars Nil
 
 (** find a variable position in the environment *)
 let find_in_env (env:env) v : int =
-  StringMap.find v env.vars
+  BindingMap.find v env.vars
 
 (** add a variable in the environment *)
 let add_in_env (env:env) v : env * int =
@@ -354,7 +357,7 @@ let add_in_env (env:env) v : env * int =
   {
     env with
       nvars = out + 1;
-      vars = StringMap.add v out env.vars
+      vars = BindingMap.add v out env.vars
   }, out
 
 (** find the index of a field in a record value *)
@@ -500,12 +503,12 @@ module EvalF (IO : EvalIO) = struct
     match Mutable.unfix mut with
     | Mutable.Var v ->
       begin try
-              let out = StringMap.find v env.vars in fun execenv v->
+              let out = BindingMap.find v env.vars in fun execenv v->
                 execenv.(out) <- v
         with Not_found ->
           raise (Error (fun f ->
             let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
-            Format.fprintf f "Cannot find var %s %a\n" v ploc loc ))
+            Format.fprintf f "Cannot find var %a %a\n" pvar v ploc loc ))
       end
     | Mutable.Array (m, li) ->
       let m, index = match List.rev li with
@@ -536,11 +539,11 @@ module EvalF (IO : EvalIO) = struct
     match Mutable.unfix mut with
     | Mutable.Var v ->
       begin try
-              let out = StringMap.find v env.vars in fun execenv ->
+              let out = BindingMap.find v env.vars in fun execenv ->
                 execenv.(out)
         with Not_found ->
           let loc = Ast.PosMap.get (Mutable.Fixed.annot mut) in
-          raise (Error (fun f -> Format.fprintf f "Cannot find var %s %a\n" v ploc loc))
+          raise (Error (fun f -> Format.fprintf f "Cannot find var %a %a\n" pvar v ploc loc))
       end
     | Mutable.Array (m, li) ->
       let m = mut_val env m in
@@ -800,9 +803,9 @@ module EvalF (IO : EvalIO) = struct
       nvars = nvars + 1;
       vars = List.fold_left
         (fun (f, i) (v, _) ->
-          (StringMap.add v i f), i+1
+          (BindingMap.add v i f), i+1
         )
-        (StringMap.empty, 0) li |> fst;
+        (BindingMap.empty, 0) li |> fst;
       functions =
         StringMap.add var
           thisfunc

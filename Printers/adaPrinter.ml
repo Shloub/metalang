@@ -179,7 +179,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
       (print_option self#main) prog.Prog.main
 
   method call f var li =
-    match BindingMap.find_opt var macros with
+    match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_call f var t params code li
     | None ->
@@ -193,7 +193,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
            )
         ) li
  method apply f var li =
-    match BindingMap.find_opt var macros with
+    match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_apply f var t params code li
     | None ->
@@ -259,7 +259,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
     let li_assoc, li = List.unzip @$ List.map
       (fun (name, t) ->
 	if BindingSet.mem name affected then
-	  let name2 = Fresh.fresh () in
+	  let name2 = UserName (Fresh.fresh_user ()) in
 	  Some (name, t, name2), (name2, t)
 	else None, (name, t) ) li
     in
@@ -306,23 +306,23 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
       Type.Struct li ->
 	let name2 = name ^ "_PTR" in
         Format.fprintf f "@\ntype %a;@\ntype %a is access %a;@\ntype %a is record@\n@[<v 2>  %a@]@\nend record;@]@\n"
-          self#binding name
-          self#binding name2
-          self#binding name
-          self#binding name
+          self#typename name
+          self#typename name2
+          self#typename name
+          self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "%a : %a;" self#binding name self#ptype type_
+               Format.fprintf t "%a : %a;" self#field name self#ptype type_
              )
              (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li;
 
     | Type.Enum li ->
       Format.fprintf f "Type %a is (@\n@[<v2>  %a@]);@\n"
-        self#binding name
+        self#typename name
         (print_list
            (fun t name ->
-             self#binding t name
+             self#enum t name
            )
            (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
         ) li
@@ -330,7 +330,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
     | _ ->
       Format.fprintf f "type %a = %a;"
         super#ptype t
-        super#binding name
+        super#typename name
 
   method declare_type declared_types f t =
     Type.Writer.Deep.fold (fun declared_types t -> self#declare_type0 declared_types f t) declared_types t
@@ -344,7 +344,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
         match TypeMap.find_opt t declared_types with
         | Some _ -> declared_types
         | None ->
-          let name : string = Fresh.fresh () in
+          let name : string = Fresh.fresh_user () in
 	  let name2 = name ^ "_PTR" in
 	  self#settypes declared_types; (* hack pour informer ptype de la nouvelle map. *)
           Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name self#ptype t name2 name;
@@ -416,10 +416,10 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
   method allocrecord f name t el =
     Format.fprintf f "%a := new %a;@\n%a"
       self#binding name
-      self#typename t
+      self#typename_aux t
       (self#def_fields name) el
 
-  method typename f t = match Type.unfix t with
+  method typename_aux f t = match Type.unfix t with
   | Type.Named n -> Format.fprintf f "%s" n
   | _ -> assert false
 

@@ -126,8 +126,6 @@ class commonLispPrinter = object(self)
         f
         ()
 
-  method binding f i = Format.fprintf f "%s" i
-
   method print_proto f (funname, t, li) =
     funname_ <- funname;
     Format.fprintf f "%a (%a)"
@@ -199,7 +197,7 @@ class commonLispPrinter = object(self)
     Format.fprintf f "'%s" e
 
   method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
-    match BindingMap.find_opt var macros with
+    match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_apply f var t params code li
     | None ->
@@ -249,7 +247,7 @@ class commonLispPrinter = object(self)
     let t = Typer.typename_for_field (fst (List.hd el) ) typerEnv in
     Format.fprintf f "(make-%s @[<v>%a@])"
       t
-      (self#def_fields "") el
+      (self#def_fields (InternalName 0)) el
 
   method whileloop f expr li =
     Format.fprintf f "@[<h>(loop while %a@]@\ndo @[<v 2>%a@]@\n)"
@@ -389,15 +387,15 @@ class commonLispPrinter = object(self)
     match (Type.unfix t) with
     | Type.Struct li ->
       Format.fprintf f "(defstruct (%a (:type list) :named)@\n  @[<v>%a@])@\n"
-        self#binding name
+        self#typename name
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a@\n" self#binding name
+             Format.fprintf t "%a@\n" self#field name
            )
            (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
         ) li
     | Type.Enum li -> ()
     | _ ->
-      Format.fprintf f "type %a = %a;" self#binding name self#ptype t
+      Format.fprintf f "type %a = %a;" self#typename name self#ptype t
 
 end

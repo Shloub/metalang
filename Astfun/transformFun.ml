@@ -48,7 +48,7 @@ let may_return i =
 let bad_return li = List.exists may_return li
 
 let rec name_of_mutable m = match A.Mutable.unfix m with
-  | A.Mutable.Var varname -> Some varname
+  | A.Mutable.Var (A.UserName varname) -> Some varname
   | A.Mutable.Array (m, _)
   | A.Mutable.Dot (m, _) -> None
 
@@ -74,7 +74,7 @@ let rec mutable_type tyenv t = match A.Type.unfix t with
   | A.Type.Auto -> assert false (* on a besoin d'un truc typế à ce moment de la compilation *)
 
 let rec accessmut (m:F.Expr.t A.Mutable.t) : F.Expr.t = match A.Mutable.unfix m with
-  | A.Mutable.Var varname -> F.Expr.binding varname
+  | A.Mutable.Var (A.UserName varname) -> F.Expr.binding varname
   | A.Mutable.Array (m, li) ->
     F.Expr.arrayaccess (accessmut m) li
   | A.Mutable.Dot (mut, field) ->
@@ -92,11 +92,11 @@ let affected li =
     | A.Instr.Read (_, m)
     | A.Instr.Affect (m, _) -> begin match name_of_mutable m with
       | None -> acc
-      | Some s -> A.BindingSet.add s acc
+      | Some s -> StringSet.add s acc
     end
     | _ -> acc
     ) acc i
-  ) A.BindingSet.empty li
+  ) StringSet.empty li
 
 let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
   | [] ->
@@ -106,13 +106,13 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | None -> F.Expr.unit
     end
   | hd::tl -> match A.Instr.unfix hd with
-    | A.Instr.Declare (v, ty, e, _) ->
+    | A.Instr.Declare (A.UserName v, ty, e, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [e]
-    | A.Instr.DeclRead (t, v, _) ->
+    | A.Instr.DeclRead (t, A.UserName v, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.readin (F.Expr.fun_ [v] tl) t
-    | A.Instr.AllocRecord (v, ty, li, _) ->
+    | A.Instr.AllocRecord (A.UserName v, ty, li, _) ->
       let tl = instrs suite contsuite contreturn (v::env) tl in
       F.Expr.apply (F.Expr.fun_ [v] tl) [F.Expr.record (List.map (fun (a, b) -> b, a) li)]
     | A.Instr.Affect (m, e) ->
@@ -127,7 +127,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let v = name_of_mutable m in
       let nenv = Option.map_default env (fun v -> if List.mem v env then env else v::env) v in
       let tl = instrs suite contsuite contreturn nenv tl in
-      let f = Fresh.fresh () in
+      let f = Fresh.fresh_user () in
       let cont = match v with
 	| Some v -> affect_mutable (F.Expr.fun_ [v] tl) m (F.Expr.binding f)
 	| None -> affect_mutable tl m (F.Expr.binding f)
@@ -147,7 +147,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.If (e, l1, l2) ->
       let affectedl1 = affected l1 in
       let affectedl2 = affected l2 in
-      let affected = A.BindingSet.elements @$ A.BindingSet.union affectedl1 affectedl2 in
+      let affected = StringSet.elements @$ StringSet.union affectedl1 affectedl2 in
       let affected = List.filter (fun x -> List.mem x env) affected in
       let next = instrs suite contsuite contreturn env tl in
       let brl1 = bad_return l1 in
@@ -158,7 +158,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
 	F.Expr.if_ e body1 body2
       else if brl2 || brl1 then
 	let next = F.Expr.fun_ affected next in
-	let nextname = Fresh.fresh () in
+	let nextname = Fresh.fresh_user () in
 	let ncont = F.Expr.apply (F.Expr.binding nextname) (List.map F.Expr.binding affected) in 
 	let body1 = instrs true ncont contreturn env l1 in
 	let body2 = instrs true ncont contreturn env l2 in
@@ -178,24 +178,24 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.skipin next
     | A.Instr.While (e, li) ->
-      let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
+      let affected = List.filter (fun x -> List.mem x env) @$ StringSet.elements @$ affected li in
       let next = instrs suite contsuite contreturn env tl in
-      let loop = Fresh.fresh () in
+      let loop = Fresh.fresh_user () in
       let returnenv = List.map F.Expr.binding affected in
       let nextLoop = F.Expr.apply (F.Expr.binding loop) returnenv in
       let content = instrs true nextLoop contreturn env li in
       let contentif = F.Expr.if_ e content next in
       F.Expr.letrecin loop affected contentif (F.Expr.apply (F.Expr.binding loop) returnenv)
-    | A.Instr.Loop (var, from_, end_, li) ->
-      let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
+    | A.Instr.Loop (A.UserName var, from_, end_, li) ->
+      let affected = List.filter (fun x -> List.mem x env) @$ StringSet.elements @$ affected li in
       let var_plus_un = F.Expr.binop (F.Expr.binding var) Ast.Expr.Add (F.Expr.integer 1) in
       let next = instrs suite contsuite contreturn env tl in
-      let loop = Fresh.fresh () in
+      let loop = Fresh.fresh_user () in
       let returnenv = List.map F.Expr.binding affected in
       let calloop = F.Expr.apply (F.Expr.binding loop) ((var_plus_un)::returnenv) in
       let content = instrs true calloop contreturn env li in
-      let from = Fresh.fresh () in
-      let to_ = Fresh.fresh () in
+      let from = Fresh.fresh_user () in
+      let to_ = Fresh.fresh_user () in
       let content = F.Expr.if_ (F.Expr.binop (F.Expr.binding var) Ast.Expr.LowerEq (F.Expr.binding to_) )
         content next in
       let cont = F.Expr.fun_ [from; to_]
@@ -203,9 +203,9 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
            (F.Expr.apply (F.Expr.binding loop) ((F.Expr.binding from)::returnenv))
         ) in
       F.Expr.apply cont [from_; end_]
-    | A.Instr.AllocArray (name, t, e, Some (varname, li), _) ->
-      let affected = List.filter (fun x -> List.mem x env) @$ A.BindingSet.elements @$ affected li in
-      let o = Fresh.fresh () in
+    | A.Instr.AllocArray (A.UserName name, t, e, Some (A.UserName varname, li), _) ->
+      let affected = List.filter (fun x -> List.mem x env) @$ StringSet.elements @$ affected li in
+      let o = Fresh.fresh_user () in
       let returnenv = F.Expr.tuple (List.map F.Expr.binding affected) in
       let returncont = F.Expr.fun_ [o] (F.Expr.tuple [returnenv; F.Expr.binding o] ) in
       let content = instrs false contsuite (Some returncont) (varname::env) li in
@@ -216,7 +216,7 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       F.Expr.apply next [F.Expr.arraymake e content returnenv]
     | A.Instr.AllocArray (name, t, e, None, _) -> assert false
     | A.Instr.Untuple (vars, e, _) ->
-      let vars = List.map snd vars in
+      let vars = List.map (function (_, A.UserName u) -> u ) vars in
       let tl = instrs suite contsuite contreturn (List.append vars env) tl in
       F.Expr.apply (F.Expr.funtuple vars tl) [e]
     | A.Instr.Tag s -> assert false
@@ -269,12 +269,13 @@ let instrs suite contsuite contreturn env li =
 let transform (tyenv, prog) =
   let fonctions = List.filter_map (function
     | Ast.Prog.DeclarFun (name, _, params, is, _) ->
-      let params = List.map fst params in
+      let params = List.map (fun (A.UserName n, _) -> n) params in
       let e = instrs false (F.Expr.unit) None params is in
       Some (F.Declaration (name, F.Expr.fun_ params e))
     | Ast.Prog.DeclareType (typename, ty) ->
       Some (F.DeclareType (typename, ty))
     | Ast.Prog.Macro (name, ty, params, code) ->
+      let params = List.map (fun (A.UserName n, t) -> n, t) params in
       Some (F.Macro (name, ty, params, code))
     | _ -> None) prog.Ast.Prog.funs
   in let declarations = match prog.Ast.Prog.main with

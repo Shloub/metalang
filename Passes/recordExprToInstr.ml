@@ -33,7 +33,6 @@
 open Stdlib
 
 open Ast
-open Fresh
 open PassesUtils
 
 type acc0 = Typer.env
@@ -46,7 +45,7 @@ let rec foldmapexpr tyenv acc e = match Expr.unfix e with
       let acc, e = process tyenv acc e in
       acc, (name, e) ) acc li in
     let t = Typer.get_type tyenv e in
-    let varname = Fresh.fresh () in
+    let varname = Fresh.fresh_internal () in
     let ni = Instr.alloc_record varname t li Instr.useless_declaration_option in
     let ne = Expr.access (Mutable.var varname) in
     ni::acc, ne

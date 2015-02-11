@@ -9,8 +9,6 @@ class goPrinter = object(self)
 
   method lang () = "go"
 
-  method binding f s = Format.fprintf f "%s" s
-
   method print_fun f funname t li instrs =
     self#calc_used_variables instrs;
     Format.fprintf f "@[<h>%a@]{@\n@[<v 2>  %a@]@\n}@\n"
@@ -212,25 +210,25 @@ func skip() {
     match (Type.unfix t) with
     | Type.Struct li ->
       Format.fprintf f "@\ntype %a struct {@\n@[<v 2>  %a@]@\n}@\n"
-        self#binding name
+        self#typename name
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%a %a;" self#binding name self#ptype type_
+             Format.fprintf t "%a %a;" self#field name self#ptype type_
            )
            (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
         ) li
     | Type.Enum li ->
       Format.fprintf f "type %a int@\nconst (@\n@[<v2>  %a@]@\n);"
-        self#binding name
+        self#typename name
         (print_list
            (fun t fname ->
              Format.fprintf t "%a %a = iota"
-               self#binding fname
-               self#binding name
+               self#enum fname
+               self#enum name
            )
            (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
         ) li
-    | _ -> Format.fprintf f "type %a %a;" self#binding name self#ptype t
+    | _ -> Format.fprintf f "type %a %a;" self#typename name self#ptype t
 
   method multiread f instrs = self#basemultiread f instrs
 

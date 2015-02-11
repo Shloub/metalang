@@ -98,7 +98,7 @@ class camlPrinter = object(self)
 
   method record f li =
     Format.fprintf f "{@\n  @[<v>%a@]@\n}"
-      (self#def_fields "") li
+      (self#def_fields (InternalName 0)) li
 
   (** show a type *)
   method ptype f (t : Ast.Type.t ) =
@@ -350,9 +350,9 @@ class camlPrinter = object(self)
   (** show a binding *)
   method binding f i =
     if BindingSet.mem i used_variables then
-      Format.fprintf f "%s" i
+      Format.fprintf f "%a" super#binding i
     else
-      Format.fprintf f "_%s" i
+      Format.fprintf f "_%a" super#binding i
 
   method hasSelfAffect op = false
 
@@ -619,7 +619,7 @@ class camlPrinter = object(self)
 
   (* Todo virer les parentheses quand on peut*)
   method apply f var li =
-    match BindingMap.find_opt var macros with
+    match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_call f var t params code li
     | None ->
@@ -708,7 +708,7 @@ class camlPrinter = object(self)
         ) li
     | _ ->
       Format.fprintf f "type %a = %a;;"
-        super#binding name
+        super#typename name
         super#ptype t
 
   method multiread f instrs =

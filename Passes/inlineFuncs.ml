@@ -65,7 +65,7 @@ let rec rename_mut acc mut =
   let annot = Mutable.Fixed.annot mut in
   match Mutable.unfix mut with
   | Mutable.Var varname ->
-    begin match StringMap.find_opt varname acc with
+    begin match BindingMap.find_opt varname acc with
     | None -> mut
     | Some s -> Mutable.Var s |> Mutable.Fixed.fixa annot
     end
@@ -92,9 +92,9 @@ let rec rename_instr acc (instr:Utils.instr) =
     let li = List.map (rename_e acc) li in
     acc, Instr.Call (name, li) |> Instr.fixa annot
   | Instr.Declare (var, t, e, opt) ->
-    let newname = Fresh.fresh () in
+    let newname = Fresh.fresh_internal () in
     let e = rename_e acc e in
-    let acc = StringMap.add var newname acc in
+    let acc = BindingMap.add var newname acc in
     acc, Instr.Declare (newname, t, e, opt) |> Instr.fixa annot
   | Instr.Affect (mut, e) ->
     let e = rename_e acc e in
@@ -103,8 +103,8 @@ let rec rename_instr acc (instr:Utils.instr) =
   | Instr.Loop (var, e1, e2, li) ->
     let e1 = rename_e acc e1 in
     let e2 = rename_e acc e2 in
-    let newname = Fresh.fresh () in
-    let acc = StringMap.add var newname acc in
+    let newname = Fresh.fresh_internal () in
+    let acc = BindingMap.add var newname acc in
     let li = rename_instrs acc li in
     acc, Instr.Loop (newname, e1, e2, li) |> Instr.fixa annot
   | Instr.While (e, li) ->
@@ -117,21 +117,21 @@ let rec rename_instr acc (instr:Utils.instr) =
     acc, Instr.Return (rename_e acc e) |> Instr.fixa annot
   | Instr.AllocArray (name, t, e, None, opt) ->
     let e = rename_e acc e in
-    let newname = Fresh.fresh () in
-    let acc = StringMap.add name newname acc in
+    let newname = Fresh.fresh_internal () in
+    let acc = BindingMap.add name newname acc in
     acc, Instr.AllocArray (newname, t, e, None, opt) |> Instr.fixa annot
   | Instr.AllocArray (name, t, e, Some (name2, li), opt) ->
     let e = rename_e acc e in
-    let newname = Fresh.fresh () in
-    let acc = StringMap.add name newname acc in
-    let newname2 = Fresh.fresh () in
-    let acc = StringMap.add name2 newname2 acc in
+    let newname = Fresh.fresh_internal () in
+    let acc = BindingMap.add name newname acc in
+    let newname2 = Fresh.fresh_internal () in
+    let acc = BindingMap.add name2 newname2 acc in
     let li = rename_instrs acc li in
     acc, Instr.AllocArray (newname, t, e, Some (newname2, li), opt) |> Instr.fixa annot
   | Instr.AllocRecord (name, t, fields, opt) ->
     let fields = List.map (fun (fieldname, expr) -> fieldname, rename_e acc expr) fields in
-    let newname = Fresh.fresh () in
-    let acc = StringMap.add name newname acc in
+    let newname = Fresh.fresh_internal () in
+    let acc = BindingMap.add name newname acc in
     acc, Instr.AllocRecord (newname, t, fields, opt) |> Instr.fixa annot
   | Instr.If (e, l1, l2) ->
     let e = rename_e acc e in
@@ -145,14 +145,14 @@ let rec rename_instr acc (instr:Utils.instr) =
     let mut = rename_mut acc mut in
     acc, Instr.Read (t, mut) |> Instr.fixa annot
   | Instr.DeclRead (t, name, opt) ->
-    let newname = Fresh.fresh () in
-    let acc = StringMap.add name newname acc in
+    let newname = Fresh.fresh_internal () in
+    let acc = BindingMap.add name newname acc in
     acc, Instr.DeclRead (t, newname, opt) |> Instr.fixa annot
   | Instr.Untuple (li, e, opt) ->
     let e = rename_e acc e in
     let acc, li = List.fold_left_map (fun acc (ty, name) ->
-      let newname = Fresh.fresh () in
-      let acc = StringMap.add name newname acc in
+      let newname = Fresh.fresh_internal () in
+      let acc = BindingMap.add name newname acc in
       acc, (ty, newname) ) acc li
     in
     acc, Instr.Untuple (li, e, opt) |> Instr.fixa annot
@@ -180,7 +180,7 @@ let rec map_e acc e =
     let addon, li = List.fold_left_map (fun addon0 e -> let addon, e = map_e acc e in List.append addon0 addon, e ) [] li in
     begin match StringMap.find_opt name acc with
     | Some {content=content; params=params; retype=retype} ->
-      let out = Fresh.fresh () in
+      let out = Fresh.fresh_internal () in
       let mout = Mutable.var out in
       let li = insert content retype params li (Some out) in
       let addon = List.append addon li in
@@ -221,12 +221,12 @@ and insert content retype params values optionreturn =
   let acc0, declares = List.fold_left_map (fun acc ((name, type_), expr) ->
     match Expr.unfix expr with
     | Expr.Access (Mutable.Fixed.F (_, Mutable.Var newname)) -> (* on évite un déclare quand c'est possible *)
-      StringMap.add name newname acc, None
+      BindingMap.add name newname acc, None
     | _ ->
-      let newname = Fresh.fresh () in
+      let newname = Fresh.fresh_internal () in
       let declare = Some (Instr.declare newname type_ expr Instr.useless_declaration_option) in
-      StringMap.add name newname acc, declare
-  ) StringMap.empty paramscouples in
+      BindingMap.add name newname acc, declare
+  ) BindingMap.empty paramscouples in
   let declares = List.filter_map (fun x -> x) declares in
   let content = rename_instrs acc0 content in
   let content = match optionreturn with

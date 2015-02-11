@@ -240,7 +240,7 @@ class pasPrinter = object(self)
           match TypeMap.find_opt t declared_types with
           | Some _ -> declared_types
           | None ->
-            let name : string = Fresh.fresh () in
+            let name : string = Fresh.fresh_user () in
             Format.fprintf f "type %s = %a;@\n" name self#ptype t;
             TypeMap.add t name declared_types
 	end
@@ -481,12 +481,12 @@ end;
     match (Type.unfix t) with
       Type.Struct li ->
         Format.fprintf f "type@[<v>@\n%a=^%a_r;@\n%a_r = record@\n@[<v 2>  %a@]@\nend;@]@\n"
-          self#binding name
-          self#binding name
-          self#binding name
+          self#typename name
+          self#typename name
+          self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "%a : %a;" self#binding name self#ptype type_
+               Format.fprintf t "%a : %a;" self#field name self#ptype type_
              )
              (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li
@@ -494,10 +494,10 @@ end;
 
     | Type.Enum li ->
       Format.fprintf f "Type %a = (@\n@[<v2>  %a@]);@\n"
-        self#binding name
+        self#typename name
         (print_list
            (fun t name ->
-             self#binding t name
+             self#enum t name
            )
            (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
         ) li
@@ -505,7 +505,7 @@ end;
     | _ ->
       Format.fprintf f "type %a = %a;"
         super#ptype t
-        super#binding name
+        super#typename name
 
 
 end

@@ -50,15 +50,15 @@ type info = {
 }
 
 type infos = {
-  infos : info list StringMap.t;
+  infos : info list BindingMap.t;
   linenumbers : int IntMap.t;
 }
 
 let addinfos acc name info =
-  let info = match StringMap.find_opt name acc with
+  let info = match BindingMap.find_opt name acc with
     | None -> [info]
     | Some li -> info::li
-  in StringMap.add name info acc
+  in BindingMap.add name info acc
 
 let rec name_of_mut mut = match Mutable.unfix mut with
   | Mutable.Var v -> v
@@ -153,7 +153,7 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
 and getinfos infos dad li = List.fold_left (getinfo_i dad ) infos li
 
 let getinfos instrs =
-  let infos = StringMap.empty in
+  let infos = BindingMap.empty in
   getinfos infos None instrs
 
 let replace_name name e li =
@@ -276,7 +276,7 @@ let rec map_instrs (infos:infos) = function
       ) l in
       true, List.append l tl
     | Instr.AllocArray (name, ty, length, optli, { Instr.useless = true } ) ->
-      begin match StringMap.find_opt name infos.infos with
+      begin match BindingMap.find_opt name infos.infos with
       | Some [
         {instruction= (Instr.Fixed.F (_, Instr.Declare ( name2, _, e, useless2)
         )) as i2 ; expression=_; affected=false; declaration=false; dad=dad2};
@@ -292,7 +292,7 @@ let rec map_instrs (infos:infos) = function
         let b, tl = map_instrs infos tl in b, hd :: tl
       end
     | Instr.DeclRead (ty, name, { Instr.useless = true } ) ->
-      begin match StringMap.find_opt name infos.infos with
+      begin match BindingMap.find_opt name infos.infos with
       | Some [
         {instruction=i2; expression=_; affected=false; declaration=false; dad=dad2};
         {instruction=i1; expression=_; affected=false; declaration=true; dad=dad1}]
@@ -316,7 +316,7 @@ let rec map_instrs (infos:infos) = function
         let b, tl = map_instrs infos tl in b, hd :: tl
 	    end
     | Instr.Declare (name, ty, e, { Instr.useless = true } ) ->
-      begin match StringMap.find_opt name infos.infos with
+      begin match BindingMap.find_opt name infos.infos with
       | Some li ->
         let items1, items2 = List.partition (fun x -> x.declaration) li in
         begin match items1 with

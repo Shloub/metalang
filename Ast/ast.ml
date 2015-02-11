@@ -33,13 +33,24 @@
 
 open Stdlib
 
-type varname = string
+type varname = | UserName of string
+               | InternalName of int
+
 type typename = string
 type funname = string
 type fieldname = string
 
-module BindingSet = StringSet
-module BindingMap = StringMap
+module BindingStruct = struct
+  type t = varname
+  let compare a b = match a, b with
+    | UserName v1, UserName v2 -> String.compare v1 v2
+    | InternalName i1, InternalName i2 -> i1 - i2
+    | InternalName _, UserName _ -> 1
+    | UserName _, InternalName _ -> -1
+end
+
+module BindingSet = MakeSet(BindingStruct)
+module BindingMap = MakeMap(BindingStruct)
 
 (** returns the next value *)
 let next =
@@ -158,7 +169,11 @@ module Mutable = struct
 
   let rec equals cmpe a b = match (unfix a, unfix b) with
     | Var v1, Var v2 ->
-      String.equals v1 v2
+      begin match (v1, v2) with
+      | InternalName i1, InternalName i2 -> i1 = i2
+      | UserName v1, UserName v2 -> String.equals v1 v2
+      | _ -> false
+      end
     | Array (m1, li1), Array (m2, li2) ->
       if equals cmpe m1 m2 then List.zip li1 li2 |> List.forall
           (uncurry cmpe)
@@ -416,7 +431,7 @@ module Expr = struct
   | Call of funname * 'a list (** appelle la fonction *)
   | Lexems of ('lex, 'a) Lexems.t list (** contient un bout d'AST *)
   | Tuple of 'a list
-  | Record of (varname * 'a) list
+  | Record of (fieldname * 'a) list
 
   (** {2 parcours} *)
 
@@ -791,10 +806,10 @@ module Prog = struct
     }
 
   type 'lex t_fun =
-    DeclarFun of varname * Type.t *
+    DeclarFun of funname * Type.t *
         ( varname * Type.t ) list * 'lex Expr.t Instr.t list * declaration_option
   | DeclareType of typename * Type.t
-  | Macro of varname * Type.t * (varname * Type.t) list * (string * string) list
+  | Macro of funname * Type.t * (varname * Type.t) list * (string * string) list
   | Comment of string
   | Unquote of 'lex Expr.t
 

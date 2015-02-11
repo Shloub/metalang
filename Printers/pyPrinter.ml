@@ -47,7 +47,7 @@ class pyPrinter = object(self)
 
   method record f li =
     Format.fprintf f "{@\n  @[<v>%a@]}"
-      (self#def_fields "") li
+      (self#def_fields (InternalName 0) ) li
 
   method selfAssoc f m e2 = function
   | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2

@@ -84,27 +84,27 @@ class objCPrinter = object(self)
     match (Type.unfix t) with
       Type.Struct li ->
         Format.fprintf f "@@interface %a : NSObject@\n{@\n@[<v 2>  %a@]@\n}@\n@@end@\n@@implementation %a @\n@@end@\n"
-          self#binding name
+          self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "@@public %a %a;" self#ptype type_ self#binding name
+               Format.fprintf t "@@public %a %a;" self#ptype type_ self#field name
              )
              (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li
-          self#binding name
+          self#typename name
     | Type.Enum li ->
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
-        self#binding name
+        self#typename name
         (print_list
            (fun t name ->
-             self#binding t name
+             self#enum t name
            )
            (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
         ) li
-        self#binding name
+        self#typename name
     | _ ->
       Format.fprintf f "typedef %a %a;"
         baseprinter#ptype t
-        baseprinter#binding name
+        baseprinter#typename name
 
 end

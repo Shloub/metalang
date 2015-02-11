@@ -40,8 +40,6 @@ class cPrinter = object(self)
 
   method lang () = "c"
 
-  method binding f i = Format.fprintf f "%s" i
-
   method bool f = function
   | true -> Format.fprintf f "1"
   | false -> Format.fprintf f "0"
@@ -240,32 +238,32 @@ class cPrinter = object(self)
           | _ -> false) li in
         Format.fprintf f "%atypedef struct %a {@\n@[<v 2>  %a@]@\n} %a%a@\n"
           (fun f b ->
-            if b then Format.fprintf f "struct %a%a@\n" self#binding name self#separator ()
+            if b then Format.fprintf f "struct %a%a@\n" self#typename name self#separator ()
           ) b
-          self#binding name
+          self#typename name
           (print_list
              (fun t (name, type_) ->
-               Format.fprintf t "%a %a%a" self#ptype type_ self#binding name self#separator ()
+               Format.fprintf t "%a %a%a" self#ptype type_ self#field name self#separator ()
              )
              (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
           ) li
-          self#binding name
+          self#typename name
           self#separator ()
     | Type.Enum li ->
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a%a"
-        self#binding name
+        self#typename name
         (print_list
            (fun t name ->
-             self#binding t name
+             self#enum t name
            )
            (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
         ) li
-        self#binding name
+        self#typename name
         self#separator ()
     | _ ->
       Format.fprintf f "typedef %a %a%a"
         baseprinter#ptype t
-        baseprinter#binding name
+        baseprinter#typename name
         self#separator ()
 
   method collect_for instrs =

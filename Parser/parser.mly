@@ -128,7 +128,7 @@ expr :
 ;
 
 mutabl :
-| IDENT { M.var $1  |> locatm ( Ast.location ($startpos($1), $endpos($1))) }
+| IDENT { M.var (Ast.UserName $1)  |> locatm ( Ast.location ($startpos($1), $endpos($1))) }
 | mutabl LEFT_BRACKET exprs RIGHT_BRACKET
     { M.array $1 $3  |> locatm ( Ast.location ($startpos($1), $endpos($4))) }
 | mutabl DOT IDENT
@@ -191,34 +191,34 @@ typed_varnames :
 
 define_var :
 
-| DEF IDENT SET expr { I.declare $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $4 I.default_declaration_option }
-| DEF USELESS IDENT SET expr { I.declare $3 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3))) ) $5 I.useless_declaration_option }
-| DEF typ IDENT SET expr { I.declare $3 $2 $5 I.default_declaration_option }
-| DEF USELESS typ IDENT SET expr { I.declare $4 $3 $6 I.useless_declaration_option }
+| DEF IDENT SET expr { I.declare (Ast.UserName $2) (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2))) ) $4 I.default_declaration_option }
+| DEF USELESS IDENT SET expr { I.declare (Ast.UserName $3) (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3))) ) $5 I.useless_declaration_option }
+| DEF typ IDENT SET expr { I.declare (Ast.UserName $3) $2 $5 I.default_declaration_option }
+| DEF USELESS typ IDENT SET expr { I.declare (Ast.UserName $4) $3 $6 I.useless_declaration_option }
 | DEF IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-    { I.alloc_array_lambda $2 (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $4 $7 $9
+    { I.alloc_array_lambda (Ast.UserName $2) (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $4 (Ast.UserName $7) $9
       I.default_declaration_option
     }
 | DEF typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
 	{ match T.unfix $2 with
-	  | T.Array x -> I.alloc_array_lambda $3 x $5 $8 $10 I.default_declaration_option
-    | T.Auto -> I.alloc_array_lambda $3 $2 $5 $8 $10 I.default_declaration_option
+	  | T.Array x -> I.alloc_array_lambda (Ast.UserName $3) x $5 (Ast.UserName $8) $10 I.default_declaration_option
+    | T.Auto -> I.alloc_array_lambda (Ast.UserName $3) $2 $5 (Ast.UserName $8) $10 I.default_declaration_option
 		| _ -> failwith "expected array"
 	}
 | DEF USELESS typ IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
 	{ match T.unfix $3 with
-	  | T.Array x -> I.alloc_array_lambda $4 x $6 $9 $11 I.useless_declaration_option
-    | T.Auto -> I.alloc_array_lambda $4 $3 $6 $9 $11 I.useless_declaration_option
+	  | T.Array x -> I.alloc_array_lambda (Ast.UserName $4) x $6  (Ast.UserName $9) $11 I.useless_declaration_option
+    | T.Auto -> I.alloc_array_lambda (Ast.UserName $4) $3 $6 (Ast.UserName $9) $11 I.useless_declaration_option
 		| _ -> failwith "expected array"
 	}
-| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) $3 I.default_declaration_option }
-| DEF READ typ IDENT { I.readdecl $3 $4 I.default_declaration_option }
-| DEF USELESS READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3)))) $4 I.useless_declaration_option }
-| DEF USELESS READ typ IDENT { I.readdecl $4 $5 I.useless_declaration_option }
-| DEF USELESS LEFT_PARENS typed_varnames SET expr { I.untuple $4 $6 I.useless_declaration_option }
-| DEF LEFT_PARENS typed_varnames SET expr { I.untuple $3 $5 I.default_declaration_option }
+| DEF READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($2)))) (Ast.UserName $3) I.default_declaration_option }
+| DEF READ typ IDENT { I.readdecl $3 (Ast.UserName $4) I.default_declaration_option }
+| DEF USELESS READ IDENT { I.readdecl (T.auto () |> locatt  ( Ast.location ($startpos($1), $endpos($3)))) (Ast.UserName $4) I.useless_declaration_option }
+| DEF USELESS READ typ IDENT { I.readdecl $4 (Ast.UserName $5) I.useless_declaration_option }
+| DEF USELESS LEFT_PARENS typed_varnames SET expr { I.untuple (List.map (fun (t, n) -> t, Ast.UserName n) $4) $6 I.useless_declaration_option }
+| DEF LEFT_PARENS typed_varnames SET expr { I.untuple (List.map (fun (t, n) -> t, Ast.UserName n) $3) $5 I.default_declaration_option }
 | DEF USELESS IDENT LEFT_BRACKET expr RIGHT_BRACKET WITH IDENT DO instrs END
-    { I.alloc_array_lambda $3 (T.auto () |> locatt  ( Ast.location ($startpos($2), $endpos($3)))) $5 $8 $10  I.useless_declaration_option}
+    { I.alloc_array_lambda (Ast.UserName $3) (T.auto () |> locatt  ( Ast.location ($startpos($2), $endpos($3)))) $5 (Ast.UserName $8) $10  I.useless_declaration_option}
 ;
 
 cond :
@@ -229,7 +229,7 @@ cond :
 
 control_flow :
 | IF cond { $2 }
-| FOR IDENT SET expr TO expr DO instrs END { I.loop $2 $4 $6 $8 }
+| FOR IDENT SET expr TO expr DO instrs END { I.loop (Ast.UserName $2) $4 $6 $8 }
 | WHILE expr DO instrs END { I.while_ $2 $4 }
 | RETURN expr { I.return $2 }
 | IDENT LEFT_PARENS exprs RIGHT_PARENS { I.call $1 $3 }
@@ -312,7 +312,7 @@ instrs :
 ;
 
 arg :
-| typ IDENT { $2, $1 }
+| typ IDENT { Ast.UserName $2, $1 }
 ;
 
 args :

@@ -37,7 +37,6 @@
 open Stdlib
 
 open Ast
-open Fresh
 open PassesUtils
 
 type acc0 = unit
@@ -75,7 +74,7 @@ let rec process (acc:'lex acc) i =
       | Type.Bool ->
         let annot = Instr.Fixed.annot t0 in
         let loc = PosMap.get (Instr.Fixed.annot t0) in
-        let b = fresh () in
+        let b = Fresh.fresh_internal () in
         [
           Instr.Declare (b, t, e, Instr.default_declaration_option) |> Instr.fixa annot |> locate loc;
           Instr.Print(t, locatee loc (Expr.access (locatem loc (Mutable.var b))))
@@ -93,7 +92,7 @@ let rec process (acc:'lex acc) i =
           Some (name, li)
       in
       let loc = PosMap.get (Instr.Fixed.annot t0) in
-      let b = fresh () in
+      let b = Fresh.fresh_internal () in
       [
         Instr.Declare (b, Type.integer, e, Instr.useless_declaration_option) |> Instr.fixa annot;
         Instr.AllocArray(b0, t,

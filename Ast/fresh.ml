@@ -44,40 +44,50 @@ let var_of_int =
       (f (i / len) ) ^ s
   in f;;
 
-let bindings = ref BindingSet.empty
+let bindings = ref StringSet.empty
 
 let add s =
-  bindings := BindingSet.add s !bindings
+  bindings := StringSet.add s !bindings
 
 let fresh_init prog =
   let addset acc i = Instr.Writer.Deep.fold
     (fun acc i ->
       match Instr.unfix i with
-      | Instr.Declare (b, _, _, _)
-      | Instr.DeclRead (_, b, _)
-      | Instr.AllocRecord(b, _, _, _)
-      | Instr.AllocArray (b, _, _, None, _)
-      | Instr.Loop (b, _, _, _)
-        -> BindingSet.add b acc
+      | Instr.Declare (UserName b, _, _, _)
+      | Instr.DeclRead (_, UserName b, _)
+      | Instr.AllocRecord(UserName b, _, _, _)
+      | Instr.AllocArray (UserName b, _, _, None, _)
+      | Instr.Loop (UserName b, _, _, _)
+        -> StringSet.add b acc
       | Instr.AllocArray (b1, _, _, Some (b2, _), _)
         ->
-        BindingSet.add b1 (BindingSet.add b2 acc)
+        let acc = match b1 with
+          | UserName b1 -> StringSet.add b1 acc
+          | _ -> acc in
+        let acc = match b2 with
+          | UserName b2 -> StringSet.add b2 acc
+          | _ -> acc
+        in acc
       | Instr.Untuple (li, e, _) ->
-        List.fold_left (fun acc (_, name) -> BindingSet.add name acc) acc li
+        List.fold_left (fun acc (_, name) ->
+          match name with UserName name -> StringSet.add name acc
+          | _ -> acc) acc li
       | _ -> acc
     ) acc i
   in
-  let addtop (acc : BindingSet.t) t : BindingSet.t = match t with
+  let addtop (acc : StringSet.t) t : StringSet.t = match t with
     | Prog.DeclarFun (v, t, params, instrs, _) ->
-      let acc = BindingSet.add v acc in
-      let acc:BindingSet.t = List.fold_left
-        (fun acc ((v:string), _ ) -> BindingSet.add v acc)
+      let acc = StringSet.add v acc in
+      let acc:StringSet.t = List.fold_left
+        (fun acc (v, _ ) -> match v with
+        | UserName v -> StringSet.add v acc
+        | _ -> acc)
         acc params in
-      let acc:BindingSet.t = List.fold_left addset acc instrs in
+      let acc:StringSet.t = List.fold_left addset acc instrs in
       acc
     | _ -> acc
   in
-  let set = BindingSet.empty in
+  let set = StringSet.empty in
   let set = match prog.Prog.main with
     | None -> set
     | Some instrs -> List.fold_left addset set instrs in
@@ -85,12 +95,18 @@ let fresh_init prog =
   let () = bindings := set
   in ();;
 
-let fresh =
+let fresh_user =
   let r = ref (-1) in
   let rec gen () =
     r := !r + 1 ;
     let out = var_of_int !r in
-    if BindingSet.mem out !bindings then gen () else out
+    if StringSet.mem out !bindings then gen () else out
   in gen
+
+
+
+let fresh_internal =
+  let r = ref (-1) in
+  fun () -> r := !r + 1 ; InternalName !r
 
 

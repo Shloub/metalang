@@ -228,9 +228,9 @@ end
 type expr = Expr.t
 
 type declaration =
-| Declaration of varname * expr
-| DeclareType of varname * Ast.Type.t
-| Macro of varname * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
+| Declaration of string * expr
+| DeclareType of string * Ast.Type.t
+| Macro of string * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
 
 type opts = { hasSkip : bool; reads : Ast.TypeSet.t }
 type prog = { declarations : declaration list; options : opts }

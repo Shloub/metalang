@@ -48,7 +48,7 @@ class phpPrinter = object(self)
 
   method record f li =
     Format.fprintf f "array(@\n  @[<v>%a@])"
-      (self#def_fields "") li
+      (self#def_fields (InternalName 0)) li
 
 
   method untuple f li e =
@@ -192,7 +192,7 @@ function nextChar(){
            "%a,@ %a" f1 e1 f2 e2)) li
 
 
-  method binding f i = Format.fprintf f "$%s" i
+  method binding f i = Format.fprintf f "$%a" super#binding i
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ =@ %a;@]" self#binding var self#expr e

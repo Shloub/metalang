@@ -43,7 +43,7 @@ class perlPrinter = object(self)
 
   method combine_formats () = false
 
-  method binding f i = Format.fprintf f "$%s" i
+  method binding f i = Format.fprintf f "$%a" baseprinter#binding i
 
   method bool f = function
   | true -> Format.fprintf f "1"
@@ -172,8 +172,8 @@ Format.fprintf f "print(%a);" self#expr expr
       lic
 
   method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>my $%s = [];@]"
-      binding
+    Format.fprintf f "@[<h>my %a = [];@]"
+     self#binding binding
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<v 2>@[<h>foreach my %a (%a .. %a) {@]@\n%a@]@\n}"
@@ -204,7 +204,7 @@ Format.fprintf f "print(%a);" self#expr expr
 
   method record f li =
     Format.fprintf f "{%a}"
-      (self#def_fields "") li
+      (self#def_fields (InternalName 0)) li
 
   method field f field =
     Format.fprintf f "%S" field
