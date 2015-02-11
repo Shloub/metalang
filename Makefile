@@ -609,7 +609,7 @@ testJava : compileJAVA $(addsuffix .test_java_ml, $(TESTS))
 	@echo "$(green)$@ OK$(reset) $*"
 	@echo "ok" > $@
 
-allsources: pl.sources m.sources ml.sources py.sources php.sources rb.sources js.sources cc.sources c.sources pas.sources java.sources rkt.sources fun.ml.sources cs.sources go.sources cl.sources
+allsources: pl.sources m.sources ml.sources py.sources php.sources rb.sources js.sources cc.sources c.sources pas.sources java.sources rkt.sources fun.ml.sources cs.sources go.sources cl.sources vb.sources
 	@echo "$(green)all sources OK$(reset) $*"
 	@echo "ok" > $@
 
