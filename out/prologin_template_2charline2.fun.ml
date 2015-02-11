@@ -11,26 +11,26 @@ end
 
 let programme_candidat tableau1 taille1 tableau2 taille2 =
   let out0 = 0 in
-  let r = 0 in
-  let s = (taille1 - 1) in
-  let rec q i out0 =
-    (if (i <= s)
+  let k = 0 in
+  let l = (taille1 - 1) in
+  let rec h i out0 =
+    (if (i <= l)
      then let out0 = (out0 + ((int_of_char (tableau1.(i))) * i)) in
      (
        (Printf.printf "%c" tableau1.(i));
-       (q (i + 1) out0)
+       (h (i + 1) out0)
        )
      
      else (
             (Printf.printf "--\n" );
-            let o = 0 in
-            let p = (taille2 - 1) in
-            let rec m j out0 =
-              (if (j <= p)
+            let f = 0 in
+            let g = (taille2 - 1) in
+            let rec e j out0 =
+              (if (j <= g)
                then let out0 = (out0 + ((int_of_char (tableau2.(j))) * (j * 100))) in
                (
                  (Printf.printf "%c" tableau2.(j));
-                 (m (j + 1) out0)
+                 (e (j + 1) out0)
                  )
                
                else (
@@ -38,21 +38,21 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
                       out0
                       )
                ) in
-              (m o out0)
+              (e f out0)
             )
      ) in
-    (q r out0)
+    (h k out0)
 let main =
   let taille1 = (Scanf.scanf "%d " (fun x -> x)) in
   let taille2 = (Scanf.scanf "%d " (fun x -> x)) in
-  let tableau1 = (Array.init_withenv taille1 (fun  e () -> Scanf.scanf "%c"
-  (fun  f -> let u = f in
-  ((), u))) ()) in
+  let tableau1 = (Array.init_withenv taille1 (fun  a () -> Scanf.scanf "%c"
+  (fun  b -> let m = b in
+  ((), m))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let tableau2 = (Array.init_withenv taille2 (fun  k () -> Scanf.scanf "%c"
-    (fun  l -> let v = l in
-    ((), v))) ()) in
+    let tableau2 = (Array.init_withenv taille2 (fun  c () -> Scanf.scanf "%c"
+    (fun  d -> let o = d in
+    ((), o))) ()) in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       (Printf.printf "%d\n" (programme_candidat tableau1 taille1 tableau2 taille2))

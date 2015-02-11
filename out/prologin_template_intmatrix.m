@@ -13,17 +13,17 @@ int programme_candidat(int** tableau, int x, int y){
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int m, p, taille_y, taille_x;
+  int a, c, taille_y, taille_x;
   scanf("%d %d ", &taille_x, &taille_y);
   int* *tableau = malloc( taille_y * sizeof(int*));
-  for (m = 0 ; m < taille_y; m++)
+  for (a = 0 ; a < taille_y; a++)
   {
-    int *r = malloc( taille_x * sizeof(int));
-    for (p = 0 ; p < taille_x; p++)
+    int *b = malloc( taille_x * sizeof(int));
+    for (c = 0 ; c < taille_x; c++)
     {
-      scanf("%d ", &r[p]);
+      scanf("%d ", &b[c]);
     }
-    tableau[m] = r;
+    tableau[a] = b;
   }
   printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   [pool drain];

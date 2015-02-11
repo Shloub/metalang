@@ -82,11 +82,11 @@ begin
     end;
 end;
 
-type r = array of Longint;
-type s = array of array of Longint;
-type t = array of char;
-type u = array of array of char;
-function pathfind_aux(cache : s; tab : u; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
+type e = array of Longint;
+type f = array of array of Longint;
+type g = array of char;
+type h = array of array of char;
+function pathfind_aux(cache : f; tab : h; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
   out0 : Longint;
   val1 : Longint;
@@ -124,12 +124,12 @@ begin
     end;;;;
 end;
 
-function pathfind(tab : u; x : Longint; y : Longint) : Longint;
+function pathfind(tab : h; x : Longint; y : Longint) : Longint;
 var
-  cache : s;
+  cache : f;
   i : Longint;
   j : Longint;
-  tmp : r;
+  tmp : e;
 begin
   SetLength(cache, y);
   for i := 0 to  y - 1 do
@@ -149,8 +149,8 @@ var
   i : Longint;
   j : Longint;
   result : Longint;
-  tab : u;
-  tab2 : t;
+  tab : h;
+  tab2 : g;
   tmp : char;
   x : Longint;
   y : Longint;

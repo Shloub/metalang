@@ -6,9 +6,9 @@ type toto = {
 let () =
 begin
   let bar_ = Scanf.scanf "%d " (fun x -> x) in
-  let e, f = Scanf.scanf "%d %d " (fun v_0 v_1 -> v_0, v_1) in
+  let c, d = Scanf.scanf "%d %d " (fun v_0 v_1 -> v_0, v_1) in
   let t = {
-    foo=(e, f);
+    foo=(c, d);
     bar=bar_;
   } in
   let (a, b) = t.foo in

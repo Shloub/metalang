@@ -19,11 +19,11 @@ end;
 --on le retrouve ici : http://projecteuler.net/problem=18
 --
 
-type c is Array (Integer range <>) of Integer;
-type c_PTR is access c;
-type d is Array (Integer range <>) of c_PTR;
-type d_PTR is access d;
-function find0(len : in Integer; tab : in d_PTR; cache : in d_PTR;
+type a is Array (Integer range <>) of Integer;
+type a_PTR is access a;
+type b is Array (Integer range <>) of a_PTR;
+type b_PTR is access b;
+function find0(len : in Integer; tab : in b_PTR; cache : in b_PTR;
 x : in Integer; y : in Integer) return Integer is
   result : Integer;
   out1 : Integer;
@@ -60,13 +60,13 @@ begin
   return result;
 end;
 
-function find(len : in Integer; tab : in d_PTR) return Integer is
-  tab3 : c_PTR;
-  tab2 : d_PTR;
+function find(len : in Integer; tab : in b_PTR) return Integer is
+  tab3 : a_PTR;
+  tab2 : b_PTR;
 begin
-  tab2 := new d (0..len);
+  tab2 := new b (0..len);
   for i in integer range (0)..len - (1) loop
-    tab3 := new c (0..i + (1));
+    tab3 := new a (0..i + (1));
     for j in integer range (0)..i + (1) - (1) loop
       tab3(j) := (0);
     end loop;
@@ -77,16 +77,16 @@ end;
 
 
   tmp : Integer;
-  tab2 : c_PTR;
-  tab : d_PTR;
+  tab2 : a_PTR;
+  tab : b_PTR;
   len : Integer;
 begin
   len := (0);
   Get(len);
   SkipSpaces;
-  tab := new d (0..len);
+  tab := new b (0..len);
   for i in integer range (0)..len - (1) loop
-    tab2 := new c (0..i + (1));
+    tab2 := new a (0..i + (1));
     for j in integer range (0)..i + (1) - (1) loop
       tmp := (0);
       Get(tmp);

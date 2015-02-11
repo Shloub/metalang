@@ -53,10 +53,10 @@
         (setf (aref chiffres (- (- len 1) i)) tmp)
       ))
   )
-  (let ((x (make-bigint :bigint_sign t
+  (let ((e (make-bigint :bigint_sign t
                         :bigint_len len
                         :bigint_chiffres chiffres)))
-  (return-from read_bigint x)
+  (return-from read_bigint e)
   ))))
 
 (defun print_bigint (a)
@@ -152,10 +152,10 @@
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((y (make-bigint :bigint_sign t
+      (let ((f (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from add_bigint_positif y)
+      (return-from add_bigint_positif f)
       ))))))
 
 (defun sub_bigint_positif (a b)
@@ -187,18 +187,18 @@ Pré-requis : a > b
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
       do (setq len ( - len 1))
       )
-      (let ((z (make-bigint :bigint_sign t
+      (let ((g (make-bigint :bigint_sign t
                             :bigint_len len
                             :bigint_chiffres chiffres)))
-      (return-from sub_bigint_positif z)
+      (return-from sub_bigint_positif g)
       ))))))
 
 (defun neg_bigint (a)
 (progn
-  (let ((ba (make-bigint :bigint_sign (not (bigint-bigint_sign a))
-                         :bigint_len (bigint-bigint_len a)
-                         :bigint_chiffres (bigint-bigint_chiffres a))))
-  (return-from neg_bigint ba)
+  (let ((h (make-bigint :bigint_sign (not (bigint-bigint_sign a))
+                        :bigint_len (bigint-bigint_len a)
+                        :bigint_chiffres (bigint-bigint_chiffres a))))
+  (return-from neg_bigint h)
 )))
 
 (defun add_bigint (a b)
@@ -268,10 +268,10 @@ D'ou le nom de la fonction. |#
         (and (not (= len 0)) (= (aref chiffres (- len 1)) 0))
         (setq len ( - len 1)))
     )
-    (let ((bc (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
-                           :bigint_len len
-                           :bigint_chiffres chiffres)))
-    (return-from mul_bigint_cp bc)
+    (let ((m (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
+                          :bigint_len len
+                          :bigint_chiffres chiffres)))
+    (return-from mul_bigint_cp m)
     )))))
 
 (defun bigint_premiers_chiffres (a i)
@@ -280,10 +280,10 @@ D'ou le nom de la fonction. |#
     (loop while (and (not (= len 0)) (= (aref (bigint-bigint_chiffres a) (- len 1)) 0))
     do (setq len ( - len 1))
     )
-    (let ((be (make-bigint :bigint_sign (bigint-bigint_sign a)
-                           :bigint_len len
-                           :bigint_chiffres (bigint-bigint_chiffres a))))
-    (return-from bigint_premiers_chiffres be)
+    (let ((o (make-bigint :bigint_sign (bigint-bigint_sign a)
+                          :bigint_len len
+                          :bigint_chiffres (bigint-bigint_chiffres a))))
+    (return-from bigint_premiers_chiffres o)
   ))))
 
 (defun bigint_shift (a i)
@@ -299,10 +299,10 @@ D'ou le nom de la fonction. |#
                      (return-from lambda_5 0))
                  ))
                  ))))
-  (let ((bf (make-bigint :bigint_sign (bigint-bigint_sign a)
-                         :bigint_len (+ (bigint-bigint_len a) i)
-                         :bigint_chiffres chiffres)))
-  (return-from bigint_shift bf)
+  (let ((p (make-bigint :bigint_sign (bigint-bigint_sign a)
+                        :bigint_len (+ (bigint-bigint_len a) i)
+                        :bigint_chiffres chiffres)))
+  (return-from bigint_shift p)
   ))))
 
 (defun mul_bigint (aa bb)
@@ -370,10 +370,10 @@ Modulo
         (setq i ( quotient i 10))
       )
     )
-    (let ((bg (make-bigint :bigint_sign t
-                           :bigint_len size
-                           :bigint_chiffres t0)))
-    (return-from bigint_of_int bg)
+    (let ((q (make-bigint :bigint_sign t
+                          :bigint_len size
+                          :bigint_chiffres t0)))
+    (return-from bigint_of_int q)
     )))))
 
 (defun fact_bigint (a)
@@ -621,9 +621,9 @@ Modulo
         (princ ">")
         (print_bigint b)
         (princ "=")
-        (let ((m (bigint_gt a b)))
+        (let ((r (bigint_gt a b)))
           (if
-            m
+            r
             (princ "True")
             (princ "False"))
           (princ "

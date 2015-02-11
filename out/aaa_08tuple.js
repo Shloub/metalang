@@ -29,20 +29,20 @@ function read_int_(){
 
 bar_=read_int_();
 stdinsep();
-f=read_int_();
+c=read_int_();
 stdinsep();
-g=read_int_();
+d=read_int_();
 stdinsep();
-var i = {
-  tuple_int_int_field_0 : f,
-  tuple_int_int_field_1 : g
+var e = {
+  tuple_int_int_field_0 : c,
+  tuple_int_int_field_1 : d
 };
 var t = {
-  foo : i,
+  foo : e,
   bar : bar_
 };
-var h = t.foo;
-var a = h.tuple_int_int_field_0;
-var b = h.tuple_int_int_field_1;
+var f = t.foo;
+var a = f.tuple_int_int_field_0;
+var b = f.tuple_int_int_field_1;
 util.print(a, " ", b, " ", t.bar, "\n");
 

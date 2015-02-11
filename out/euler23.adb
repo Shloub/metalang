@@ -3,9 +3,9 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler23 is
-type e is Array (Integer range <>) of Integer;
-type e_PTR is access e;
-function eratostene(t : in e_PTR; max0 : in Integer) return Integer is
+type a is Array (Integer range <>) of Integer;
+type a_PTR is access a;
+function eratostene(t : in a_PTR; max0 : in Integer) return Integer is
   n : Integer;
   j : Integer;
 begin
@@ -24,12 +24,12 @@ begin
   return n;
 end;
 
-function fillPrimesFactors(t : in e_PTR; f : in Integer; primes : in e_PTR;
+function fillPrimesFactors(t : in a_PTR; b : in Integer; primes : in a_PTR;
 nprimes : in Integer) return Integer is
   n : Integer;
   d : Integer;
 begin
-  n := f;
+  n := b;
   for i in integer range (0)..nprimes - (1) loop
     d := primes(i);
     while (n rem d) = (0) loop
@@ -44,18 +44,18 @@ begin
   return n;
 end;
 
-function sumdivaux2(t : in e_PTR; n : in Integer;
-g : in Integer) return Integer is
+function sumdivaux2(t : in a_PTR; n : in Integer;
+c : in Integer) return Integer is
   i : Integer;
 begin
-  i := g;
+  i := c;
   while i < n and then t(i) = (0) loop
     i := i + (1);
   end loop;
   return i;
 end;
 
-function sumdivaux(t : in e_PTR; n : in Integer;
+function sumdivaux(t : in a_PTR; n : in Integer;
 i : in Integer) return Integer is
   p : Integer;
   out0 : Integer;
@@ -81,12 +81,12 @@ begin
   end if;
 end;
 
-function sumdiv(nprimes : in Integer; primes : in e_PTR;
+function sumdiv(nprimes : in Integer; primes : in a_PTR;
 n : in Integer) return Integer is
-  t : e_PTR;
+  t : a_PTR;
   max0 : Integer;
 begin
-  t := new e (0..n + (1));
+  t := new a (0..n + (1));
   for i in integer range (0)..n + (1) - (1) loop
     t(i) := (0);
   end loop;
@@ -94,27 +94,27 @@ begin
   return sumdivaux(t, max0, (0));
 end;
 
-type h is Array (Integer range <>) of Boolean;
-type h_PTR is access h;
+type e is Array (Integer range <>) of Boolean;
+type e_PTR is access e;
 
-  summable : h_PTR;
+  summable : e_PTR;
   sum : Integer;
-  primes : e_PTR;
+  primes : a_PTR;
   other : Integer;
   nprimes : Integer;
   n : Integer;
   maximumprimes : Integer;
   l : Integer;
-  era : e_PTR;
-  abondant : h_PTR;
+  era : a_PTR;
+  abondant : e_PTR;
 begin
   maximumprimes := (30001);
-  era := new e (0..maximumprimes);
+  era := new a (0..maximumprimes);
   for s in integer range (0)..maximumprimes - (1) loop
     era(s) := s;
   end loop;
   nprimes := eratostene(era, maximumprimes);
-  primes := new e (0..nprimes);
+  primes := new a (0..nprimes);
   for t in integer range (0)..nprimes - (1) loop
     primes(t) := (0);
   end loop;
@@ -129,11 +129,11 @@ begin
   n := (100);
   -- 28124 ça prend trop de temps mais on arrive a passer le test 
   
-  abondant := new h (0..n + (1));
+  abondant := new e (0..n + (1));
   for p in integer range (0)..n + (1) - (1) loop
     abondant(p) := FALSE;
   end loop;
-  summable := new h (0..n + (1));
+  summable := new e (0..n + (1));
   for q in integer range (0)..n + (1) - (1) loop
     summable(q) := FALSE;
   end loop;

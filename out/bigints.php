@@ -37,13 +37,13 @@ function &read_bigint($len){
     $chiffres[$i] = $chiffres[$len - 1 - $i];
     $chiffres[$len - 1 - $i] = $tmp;
   }
-  $x = array(
+  $e = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $x;
+  return $e;
 }
 
 function print_bigint(&$a){
@@ -114,13 +114,13 @@ function &add_bigint_positif(&$a, &$b){
   }
   while ($len > 0 && $chiffres[$len - 1] == 0)
     $len --;
-  $y = array(
+  $f = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $y;
+  return $f;
 }
 
 function &sub_bigint_positif(&$a, &$b){
@@ -146,23 +146,23 @@ Pré-requis : a > b
   }
   while ($len > 0 && $chiffres[$len - 1] == 0)
     $len --;
-  $z = array(
+  $g = array(
     "bigint_sign"=>true,
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $z;
+  return $g;
 }
 
 function &neg_bigint(&$a){
-  $ba = array(
+  $h = array(
     "bigint_sign"=>!$a["bigint_sign"],
     "bigint_len"=>$a["bigint_len"],
     "bigint_chiffres"=>$a["bigint_chiffres"]
   );
   
-  return $ba;
+  return $h;
 }
 
 function &add_bigint(&$a, &$b){
@@ -223,26 +223,26 @@ D'ou le nom de la fonction. */
   for ($l = 0 ; $l <= 2; $l++)
     if ($len != 0 && $chiffres[$len - 1] == 0)
     $len --;
-  $bc = array(
+  $m = array(
     "bigint_sign"=>$a["bigint_sign"] == $b["bigint_sign"],
     "bigint_len"=>$len,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $bc;
+  return $m;
 }
 
 function &bigint_premiers_chiffres(&$a, $i){
   $len = min($i, $a["bigint_len"]);
   while ($len != 0 && $a["bigint_chiffres"][$len - 1] == 0)
     $len --;
-  $be = array(
+  $o = array(
     "bigint_sign"=>$a["bigint_sign"],
     "bigint_len"=>$len,
     "bigint_chiffres"=>$a["bigint_chiffres"]
   );
   
-  return $be;
+  return $o;
 }
 
 function &bigint_shift(&$a, $i){
@@ -252,13 +252,13 @@ function &bigint_shift(&$a, $i){
     $chiffres[$k] = $a["bigint_chiffres"][$k - $i];
   else
     $chiffres[$k] = 0;
-  $bf = array(
+  $p = array(
     "bigint_sign"=>$a["bigint_sign"],
     "bigint_len"=>$a["bigint_len"] + $i,
     "bigint_chiffres"=>$chiffres
   );
   
-  return $bf;
+  return $p;
 }
 
 function &mul_bigint(&$aa, &$bb){
@@ -310,13 +310,13 @@ function &bigint_of_int($i){
     $t[$k] = $i % 10;
     $i = intval($i / 10);
   }
-  $bg = array(
+  $q = array(
     "bigint_sign"=>true,
     "bigint_len"=>$size,
     "bigint_chiffres"=>$t
   );
   
-  return $bg;
+  return $q;
 }
 
 function &fact_bigint(&$a){
@@ -500,8 +500,8 @@ print_bigint($a);
 echo ">";
 print_bigint($b);
 echo "=";
-$m = bigint_gt($a, $b);
-if ($m)
+$r = bigint_gt($a, $b);
+if ($r)
   echo "True";
 else
   echo "False";

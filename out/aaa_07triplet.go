@@ -28,8 +28,8 @@ func main() {
       fmt.Printf("a = %d b = %dc =%d\n", a, b, c);
   }
   var l []int = make([]int, 10)
-  for o := 0 ; o <= 10 - 1; o++ {
-    fmt.Fscanf(reader, "%d", &l[o])
+  for d := 0 ; d <= 10 - 1; d++ {
+    fmt.Fscanf(reader, "%d", &l[d])
       skip()
   }
   for j := 0 ; j <= 9; j++ {

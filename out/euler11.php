@@ -28,8 +28,8 @@ else
   $directions[$i] = array(-1, -1);
 $max0 = 0;
 $m = array();
-for ($h = 0 ; $h < 20; $h++)
-  $m[$h] = array_map("intval", explode(" ", fgets(STDIN)));
+for ($c = 0 ; $c < 20; $c++)
+  $m[$c] = array_map("intval", explode(" ", fgets(STDIN)));
 for ($j = 0 ; $j <= 7; $j++)
 {
   list($dx, $dy) = $directions[$j];

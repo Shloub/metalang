@@ -9,9 +9,9 @@ def programme_candidat( tableau, taille_x, taille_y ):
 
 taille_x = int(input())
 taille_y = int(input())
-e = [None] * taille_y
-for f in range(0, taille_y):
-  e[f] = list(input())
-tableau = e
+a = [None] * taille_y
+for b in range(0, taille_y):
+  a[b] = list(input())
+tableau = a
 print("%d\n" % ( programme_candidat(tableau, taille_x, taille_y) ), end='')
 

@@ -23,15 +23,15 @@ begin
   end if;
 end;
 
-type r is Array (Integer range <>) of Integer;
-type r_PTR is access r;
-type s is Array (Integer range <>) of r_PTR;
-type s_PTR is access s;
-type t is Array (Integer range <>) of Character;
-type t_PTR is access t;
-type u is Array (Integer range <>) of t_PTR;
-type u_PTR is access u;
-function pathfind_aux(cache : in s_PTR; tab : in u_PTR; x : in Integer;
+type e is Array (Integer range <>) of Integer;
+type e_PTR is access e;
+type f is Array (Integer range <>) of e_PTR;
+type f_PTR is access f;
+type g is Array (Integer range <>) of Character;
+type g_PTR is access g;
+type h is Array (Integer range <>) of g_PTR;
+type h_PTR is access h;
+function pathfind_aux(cache : in f_PTR; tab : in h_PTR; x : in Integer;
 y : in Integer; posX : in Integer; posY : in Integer) return Integer is
   val4 : Integer;
   val3 : Integer;
@@ -69,14 +69,14 @@ begin
   end if;
 end;
 
-function pathfind(tab : in u_PTR; x : in Integer;
+function pathfind(tab : in h_PTR; x : in Integer;
 y : in Integer) return Integer is
-  tmp : r_PTR;
-  cache : s_PTR;
+  tmp : e_PTR;
+  cache : f_PTR;
 begin
-  cache := new s (0..y);
+  cache := new f (0..y);
   for i in integer range (0)..y - (1) loop
-    tmp := new r (0..x);
+    tmp := new e (0..x);
     for j in integer range (0)..x - (1) loop
       tmp(j) := (-(1));
     end loop;
@@ -89,8 +89,8 @@ end;
   y : Integer;
   x : Integer;
   tmp : Character;
-  tab2 : t_PTR;
-  tab : u_PTR;
+  tab2 : g_PTR;
+  tab : h_PTR;
   result : Integer;
 begin
   x := (0);
@@ -99,9 +99,9 @@ begin
   SkipSpaces;
   Get(y);
   SkipSpaces;
-  tab := new u (0..y);
+  tab := new h (0..y);
   for i in integer range (0)..y - (1) loop
-    tab2 := new t (0..x);
+    tab2 := new g (0..x);
     for j in integer range (0)..x - (1) loop
       tmp := Character'Val(0);
       Get(tmp);

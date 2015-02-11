@@ -25,9 +25,9 @@ int main(){
   std::cin >> len >> std::skipws;
   std::cout << len << "\n";
   std::vector<int > *tab = new std::vector<int>( len );
-  for (int e = 0 ; e < len; e++)
+  for (int a = 0 ; a < len; a++)
   {
-    std::cin >> tab->at(e) >> std::skipws;
+    std::cin >> tab->at(a) >> std::skipws;
   }
   std::cout << result(len, tab) << "\n";
   return 0;

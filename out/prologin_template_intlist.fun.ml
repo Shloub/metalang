@@ -11,21 +11,21 @@ end
 
 let programme_candidat tableau taille =
   let out0 = 0 in
-  let g = 0 in
-  let h = (taille - 1) in
-  let rec f i out0 =
-    (if (i <= h)
+  let d = 0 in
+  let e = (taille - 1) in
+  let rec c i out0 =
+    (if (i <= e)
      then let out0 = (out0 + tableau.(i)) in
-     (f (i + 1) out0)
+     (c (i + 1) out0)
      else out0) in
-    (f g out0)
+    (c d out0)
 let main =
   let taille = (Scanf.scanf "%d " (fun x -> x)) in
-  let tableau = (Array.init_withenv taille (fun  d () -> Scanf.scanf "%d"
-  (fun  e -> (
+  let tableau = (Array.init_withenv taille (fun  a () -> Scanf.scanf "%d"
+  (fun  b -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let j = e in
-               ((), j)
+               let f = b in
+               ((), f)
                )
   )) ()) in
   (

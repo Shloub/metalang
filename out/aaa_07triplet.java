@@ -16,10 +16,10 @@ public class aaa_07triplet
   {
     for (int i = 1 ; i <= 3; i ++)
     {
-      int[] k = read_int_line();
-      int a = k[0];
-      int b = k[1];
-      int c = k[2];
+      int[] d = read_int_line();
+      int a = d[0];
+      int b = d[1];
+      int c = d[2];
       System.out.printf("a = %d b = %dc =%d\n", a, b, c);
     }
     int[] l = read_int_line();

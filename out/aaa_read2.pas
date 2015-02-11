@@ -73,23 +73,23 @@ end;
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
 read int, read char et skip
 }
-type v = array of Longint;
-type w = array of char;
+type e = array of Longint;
+type f = array of char;
 
 var
+  a : Longint;
+  b : Longint;
   c : Longint;
-  f : Longint;
+  d : Longint;
   i : Longint;
   i3 : Longint;
   i_ : Longint;
   j : Longint;
-  l : Longint;
   len : Longint;
-  s : Longint;
   strlen : Longint;
-  tab : v;
-  tab2 : v;
-  tab4 : w;
+  tab : e;
+  tab2 : e;
+  tab4 : f;
   tmpc : char;
 begin
   len := read_int_();
@@ -97,9 +97,9 @@ begin
   Write(len);
   Write('=len'#10'');
   SetLength(tab, len);
-  for f := 0 to  len - 1 do
+  for a := 0 to  len - 1 do
   begin
-    tab[f] := read_int_();
+    tab[a] := read_int_();
     skip();
   end;
   for i := 0 to  len - 1 do
@@ -111,9 +111,9 @@ begin
   end;
   Write(''#10'');
   SetLength(tab2, len);
-  for l := 0 to  len - 1 do
+  for b := 0 to  len - 1 do
   begin
-    tab2[l] := read_int_();
+    tab2[b] := read_int_();
     skip();
   end;
   for i_ := 0 to  len - 1 do
@@ -128,9 +128,9 @@ begin
   Write(strlen);
   Write('=strlen'#10'');
   SetLength(tab4, strlen);
-  for s := 0 to  strlen - 1 do
+  for d := 0 to  strlen - 1 do
   begin
-    tab4[s] := read_char_();
+    tab4[d] := read_char_();
   end;
   skip();
   for i3 := 0 to  strlen - 1 do

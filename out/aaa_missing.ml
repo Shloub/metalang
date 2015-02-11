@@ -23,9 +23,9 @@ let () =
 begin
   let len = Scanf.scanf "%d " (fun x -> x) in
   Printf.printf "%d\n" len;
-  let tab = Array.init len (fun _d ->
-    let e = Scanf.scanf "%d " (fun v_0 -> v_0) in
-    e) in
+  let tab = Array.init len (fun _a ->
+    let b = Scanf.scanf "%d " (fun v_0 -> v_0) in
+    b) in
   Printf.printf "%d\n" (result len tab)
 end
  

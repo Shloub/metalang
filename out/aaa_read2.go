@@ -24,8 +24,8 @@ func main() {
   skip()
   fmt.Printf("%d=len\n", len);
   var tab []int = make([]int, len)
-  for f := 0 ; f <= len - 1; f++ {
-    fmt.Fscanf(reader, "%d", &tab[f])
+  for a := 0 ; a <= len - 1; a++ {
+    fmt.Fscanf(reader, "%d", &tab[a])
       skip()
   }
   for i := 0 ; i <= len - 1; i++ {
@@ -33,8 +33,8 @@ func main() {
   }
   fmt.Printf("\n");
   var tab2 []int = make([]int, len)
-  for l := 0 ; l <= len - 1; l++ {
-    fmt.Fscanf(reader, "%d", &tab2[l])
+  for b := 0 ; b <= len - 1; b++ {
+    fmt.Fscanf(reader, "%d", &tab2[b])
       skip()
   }
   for i_ := 0 ; i_ <= len - 1; i_++ {
@@ -45,8 +45,8 @@ func main() {
   skip()
   fmt.Printf("%d=strlen\n", strlen);
   var tab4 []byte = make([]byte, strlen)
-  for s := 0 ; s <= strlen - 1; s++ {
-    fmt.Fscanf(reader, "%c", &tab4[s])
+  for d := 0 ; d <= strlen - 1; d++ {
+    fmt.Fscanf(reader, "%c", &tab4[d])
   }
   skip()
   for i3 := 0 ; i3 <= strlen - 1; i3++ {

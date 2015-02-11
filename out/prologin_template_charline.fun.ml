@@ -11,14 +11,14 @@ end
 
 let programme_candidat tableau taille =
   let out0 = 0 in
-  let g = 0 in
-  let h = (taille - 1) in
-  let rec f i out0 =
-    (if (i <= h)
+  let d = 0 in
+  let e = (taille - 1) in
+  let rec c i out0 =
+    (if (i <= e)
      then let out0 = (out0 + ((int_of_char (tableau.(i))) * i)) in
      (
        (Printf.printf "%c" tableau.(i));
-       (f (i + 1) out0)
+       (c (i + 1) out0)
        )
      
      else (
@@ -26,12 +26,12 @@ let programme_candidat tableau taille =
             out0
             )
      ) in
-    (f g out0)
+    (c d out0)
 let main =
   let taille = (Scanf.scanf "%d " (fun x -> x)) in
-  let tableau = (Array.init_withenv taille (fun  d () -> Scanf.scanf "%c"
-  (fun  e -> let j = e in
-  ((), j))) ()) in
+  let tableau = (Array.init_withenv taille (fun  a () -> Scanf.scanf "%c"
+  (fun  b -> let f = b in
+  ((), f))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     (Printf.printf "%d\n" (programme_candidat tableau taille))

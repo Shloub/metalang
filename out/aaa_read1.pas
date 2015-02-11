@@ -42,17 +42,17 @@ begin
    skip_char();
    read_char_ := c;
 end;
-type f = array of char;
+type b = array of char;
 
 var
-  d : Longint;
+  a : Longint;
   i : Longint;
-  str : f;
+  str : b;
 begin
   SetLength(str, 12);
-  for d := 0 to  12 - 1 do
+  for a := 0 to  12 - 1 do
   begin
-    str[d] := read_char_();
+    str[a] := read_char_();
   end;
   skip();
   for i := 0 to  11 do

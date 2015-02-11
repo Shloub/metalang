@@ -20,15 +20,15 @@ int programme_candidat(char* tableau1, int taille1, char* tableau2, int taille2)
 }
 
 int main(void){
-  int m, g, taille2, taille1;
+  int b, a, taille2, taille1;
   scanf("%d %d ", &taille1, &taille2);
   char *tableau1 = malloc( taille1 * sizeof(char));
-  for (g = 0 ; g < taille1; g++)
-    scanf("%c", &tableau1[g]);
+  for (a = 0 ; a < taille1; a++)
+    scanf("%c", &tableau1[a]);
   scanf(" ");
   char *tableau2 = malloc( taille2 * sizeof(char));
-  for (m = 0 ; m < taille2; m++)
-    scanf("%c", &tableau2[m]);
+  for (b = 0 ; b < taille2; b++)
+    scanf("%c", &tableau2[b]);
   scanf(" ");
   printf("%d\n", programme_candidat(tableau1, taille1, tableau2, taille2));
   return 0;

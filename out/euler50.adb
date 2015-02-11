@@ -13,9 +13,9 @@ begin
   end if;
 end;
 
-type d is Array (Integer range <>) of Integer;
-type d_PTR is access d;
-function eratostene(t : in d_PTR; max0 : in Integer) return Integer is
+type c is Array (Integer range <>) of Integer;
+type c_PTR is access c;
+function eratostene(t : in c_PTR; max0 : in Integer) return Integer is
   n : Integer;
   j : Integer;
 begin
@@ -38,25 +38,25 @@ begin
 end;
 
 
-  sum : d_PTR;
+  sum : c_PTR;
   stop : Integer;
   resp : Integer;
   process : Boolean;
-  primes : d_PTR;
+  primes : c_PTR;
   nprimes : Integer;
   maxl : Integer;
   maximumprimes : Integer;
   len : Integer;
   l : Integer;
-  era : d_PTR;
+  era : c_PTR;
 begin
   maximumprimes := (1000001);
-  era := new d (0..maximumprimes);
+  era := new c (0..maximumprimes);
   for j in integer range (0)..maximumprimes - (1) loop
     era(j) := j;
   end loop;
   nprimes := eratostene(era, maximumprimes);
-  primes := new d (0..nprimes);
+  primes := new c (0..nprimes);
   for o in integer range (0)..nprimes - (1) loop
     primes(o) := (0);
   end loop;
@@ -72,7 +72,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), " == ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nprimes), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
-  sum := new d (0..nprimes);
+  sum := new c (0..nprimes);
   for i_0 in integer range (0)..nprimes - (1) loop
     sum(i_0) := primes(i_0);
   end loop;

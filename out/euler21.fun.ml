@@ -11,90 +11,90 @@ end
 
 let eratostene t max0 =
   let n = 0 in
-  let x = 2 in
-  let y = (max0 - 1) in
-  let rec v i n =
-    (if (i <= y)
+  let w = 2 in
+  let x = (max0 - 1) in
+  let rec u i n =
+    (if (i <= x)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
                    let j = (i * i) in
-                   let rec w j =
+                   let rec v j =
                      (if ((j < max0) && (j > 0))
                       then (
                              t.(j) <- 0;
                              let j = (j + i) in
-                             (w j)
+                             (v j)
                              )
                       
                       else n) in
-                     (w j)
+                     (v j)
                    else n) in
-     (v (i + 1) n)
+     (u (i + 1) n)
      else n) in
-    (v x n)
+    (u w n)
 let fillPrimesFactors t n primes nprimes =
-  let s = 0 in
-  let u = (nprimes - 1) in
-  let rec q i n =
-    (if (i <= u)
+  let r = 0 in
+  let s = (nprimes - 1) in
+  let rec m i n =
+    (if (i <= s)
      then let d = primes.(i) in
-     let rec r n =
+     let rec q n =
        (if ((n mod d) = 0)
         then (
                t.(d) <- (t.(d) + 1);
                let n = (n / d) in
-               (r n)
+               (q n)
                )
         
         else (if (n = 1)
               then primes.(i)
-              else (q (i + 1) n))) in
-       (r n)
+              else (m (i + 1) n))) in
+       (q n)
      else n) in
-    (q s n)
+    (m r n)
 let sumdivaux2 t n i =
-  let rec m i =
+  let rec h i =
     (if ((i < n) && (t.(i) = 0))
      then let i = (i + 1) in
-     (m i)
+     (h i)
      else i) in
-    (m i)
+    (h i)
 let rec sumdivaux t n i =
-  let c () = () in
+  let b () = () in
   (if (i > n)
    then 1
-   else let e () = (c ()) in
+   else let c () = (b ()) in
    (if (t.(i) = 0)
     then (sumdivaux t n (sumdivaux2 t n (i + 1)))
     else let o = (sumdivaux t n (sumdivaux2 t n (i + 1))) in
     let out0 = 0 in
     let p = i in
-    let g = 1 in
-    let h = t.(i) in
-    let rec f j out0 p =
-      (if (j <= h)
+    let f = 1 in
+    let g = t.(i) in
+    let rec e j out0 p =
+      (if (j <= g)
        then let out0 = (out0 + p) in
        let p = (p * i) in
-       (f (j + 1) out0 p)
+       (e (j + 1) out0 p)
        else ((out0 + 1) * o)) in
-      (f g out0 p)))
+      (e f out0 p)))
 let sumdiv nprimes primes n =
-  let t = (Array.init_withenv (n + 1) (fun  i () -> let b = 0 in
-  ((), b)) ()) in
+  let t = (Array.init_withenv (n + 1) (fun  i () -> let a = 0 in
+  ((), a)) ()) in
   let max0 = (fillPrimesFactors t n primes nprimes) in
   (sumdivaux t max0 0)
 let main =
   let maximumprimes = 1001 in
-  let era = (Array.init_withenv maximumprimes (fun  j () -> let z = j in
-  ((), z)) ()) in
+  let era = (Array.init_withenv maximumprimes (fun  j () -> let y = j in
+  ((), y)) ()) in
   let nprimes = (eratostene era maximumprimes) in
-  let primes = (Array.init_withenv nprimes (fun  o () -> let ba = 0 in
-  ((), ba)) ()) in
+  let primes = (Array.init_withenv nprimes (fun  o () -> let z = 0 in
+  ((), z)) ()) in
   let l = 0 in
-  let bf = 2 in
-  let bg = (maximumprimes - 1) in
-  let rec be k l =
-    (if (k <= bg)
+  let be = 2 in
+  let bf = (maximumprimes - 1) in
+  let rec bd k l =
+    (if (k <= bf)
      then let l = (if (era.(k) = k)
                    then (
                           primes.(l) <- k;
@@ -103,14 +103,14 @@ let main =
                           )
                    
                    else l) in
-     (be (k + 1) l)
+     (bd (k + 1) l)
      else (
             (Printf.printf "%d == %d\n" l nprimes);
             let sum = 0 in
-            let bc = 2 in
-            let bd = 1000 in
-            let rec bb n sum =
-              (if (n <= bd)
+            let bb = 2 in
+            let bc = 1000 in
+            let rec ba n sum =
+              (if (n <= bc)
                then let other = ((sumdiv nprimes primes n) - n) in
                let sum = (if (other > n)
                           then let othersum = ((sumdiv nprimes primes other) - other) in
@@ -124,13 +124,13 @@ let main =
                                      else sum) in
                           sum
                           else sum) in
-               (bb (n + 1) sum)
+               (ba (n + 1) sum)
                else (
                       (Printf.printf "\n%d\n" sum)
                       )
                ) in
-              (bb bc sum)
+              (ba bb sum)
             )
      ) in
-    (be bf l)
+    (bd be l)
 

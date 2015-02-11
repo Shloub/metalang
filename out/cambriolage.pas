@@ -74,16 +74,16 @@ begin
     end;
 end;
 
-type g = array of Longint;
-type h = array of g;
-function nbPassePartout(n : Longint; passepartout : h; m : Longint; serrures : h) : Longint;
+type c = array of Longint;
+type d = array of c;
+function nbPassePartout(n : Longint; passepartout : d; m : Longint; serrures : d) : Longint;
 var
   i : Longint;
   max_ancient : Longint;
   max_ancient_pp : Longint;
   max_recent : Longint;
   max_recent_pp : Longint;
-  pp : g;
+  pp : c;
 begin
   max_ancient := 0;
   max_recent := 0;
@@ -132,12 +132,12 @@ var
   l : Longint;
   m : Longint;
   n : Longint;
-  out0 : g;
+  out0 : c;
   out01 : Longint;
-  out1 : g;
+  out1 : c;
   out_ : Longint;
-  passepartout : h;
-  serrures : h;
+  passepartout : d;
+  serrures : d;
 begin
   n := read_int_();
   skip();

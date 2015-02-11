@@ -41,11 +41,11 @@ sub pathfind{
 my $x = int( <STDIN> );
 my $y = int( <STDIN> );
 print($x, " ", $y, "\n");
-my $l = [];
-foreach my $m (0 .. $y - 1) {
-  $l->[$m] = [split(//, <STDIN>)];
+my $e = [];
+foreach my $f (0 .. $y - 1) {
+  $e->[$f] = [split(//, <STDIN>)];
 }
-my $tab = $l;
+my $tab = $e;
 my $result = pathfind($tab, $x, $y);
 print($result);
 

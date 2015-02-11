@@ -23,11 +23,11 @@ begin
   end if;
 end;
 
-type bi is Array (Integer range <>) of Integer;
-type bi_PTR is access bi;
-type bj is Array (Integer range <>) of bi_PTR;
-type bj_PTR is access bj;
-function find(n : in Integer; m : in bj_PTR; x : in Integer; y : in Integer;
+type u is Array (Integer range <>) of Integer;
+type u_PTR is access u;
+type v is Array (Integer range <>) of u_PTR;
+type v_PTR is access v;
+function find(n : in Integer; m : in v_PTR; x : in Integer; y : in Integer;
 dx : in Integer; dy : in Integer) return Integer is
 begin
   if x < (0) or else x = (20) or else y < (0) or else y = (20)
@@ -51,81 +51,81 @@ type tuple_int_int is record
   tuple_int_int_field_1 : Integer;
 end record;
 
-type bk is Array (Integer range <>) of tuple_int_int_PTR;
-type bk_PTR is access bk;
+type w is Array (Integer range <>) of tuple_int_int_PTR;
+type w_PTR is access w;
 
-  w : tuple_int_int_PTR;
-  s : bi_PTR;
+  s : tuple_int_int_PTR;
+  q : u_PTR;
+  o : Integer;
   max0 : Integer;
-  m : bj_PTR;
-  h : Integer;
+  m : v_PTR;
+  l : tuple_int_int_PTR;
+  k : tuple_int_int_PTR;
+  h : tuple_int_int_PTR;
+  g : tuple_int_int_PTR;
+  f : tuple_int_int_PTR;
+  e : tuple_int_int_PTR;
   dy : Integer;
   dx : Integer;
-  directions : bk_PTR;
-  bh : tuple_int_int_PTR;
-  bg : tuple_int_int_PTR;
-  bf : tuple_int_int_PTR;
-  be : tuple_int_int_PTR;
-  bd : tuple_int_int_PTR;
-  bc : tuple_int_int_PTR;
-  bb : tuple_int_int_PTR;
-  ba : tuple_int_int_PTR;
+  directions : w_PTR;
+  d : tuple_int_int_PTR;
+  c : tuple_int_int_PTR;
 begin
-  directions := new bk (0..(8));
+  directions := new w (0..(8));
   for i in integer range (0)..(8) - (1) loop
     if i = (0)
     then
-      bh := new tuple_int_int;
-      bh.tuple_int_int_field_0 := (0);
-      bh.tuple_int_int_field_1 := (1);
-      directions(i) := bh;
+      c := new tuple_int_int;
+      c.tuple_int_int_field_0 := (0);
+      c.tuple_int_int_field_1 := (1);
+      directions(i) := c;
     else
       if i = (1)
       then
-        bg := new tuple_int_int;
-        bg.tuple_int_int_field_0 := (1);
-        bg.tuple_int_int_field_1 := (0);
-        directions(i) := bg;
+        d := new tuple_int_int;
+        d.tuple_int_int_field_0 := (1);
+        d.tuple_int_int_field_1 := (0);
+        directions(i) := d;
       else
         if i = (2)
         then
-          bf := new tuple_int_int;
-          bf.tuple_int_int_field_0 := (0);
-          bf.tuple_int_int_field_1 := (-(1));
-          directions(i) := bf;
+          e := new tuple_int_int;
+          e.tuple_int_int_field_0 := (0);
+          e.tuple_int_int_field_1 := (-(1));
+          directions(i) := e;
         else
           if i = (3)
           then
-            be := new tuple_int_int;
-            be.tuple_int_int_field_0 := (-(1));
-            be.tuple_int_int_field_1 := (0);
-            directions(i) := be;
+            f := new tuple_int_int;
+            f.tuple_int_int_field_0 := (-(1));
+            f.tuple_int_int_field_1 := (0);
+            directions(i) := f;
           else
             if i = (4)
             then
-              bd := new tuple_int_int;
-              bd.tuple_int_int_field_0 := (1);
-              bd.tuple_int_int_field_1 := (1);
-              directions(i) := bd;
+              g := new tuple_int_int;
+              g.tuple_int_int_field_0 := (1);
+              g.tuple_int_int_field_1 := (1);
+              directions(i) := g;
             else
               if i = (5)
               then
-                bc := new tuple_int_int;
-                bc.tuple_int_int_field_0 := (1);
-                bc.tuple_int_int_field_1 := (-(1));
-                directions(i) := bc;
+                h := new tuple_int_int;
+                h.tuple_int_int_field_0 := (1);
+                h.tuple_int_int_field_1 := (-(1));
+                directions(i) := h;
               else
                 if i = (6)
                 then
-                  bb := new tuple_int_int;
-                  bb.tuple_int_int_field_0 := (-(1));
-                  bb.tuple_int_int_field_1 := (1);
-                  directions(i) := bb;
+                  k := new tuple_int_int;
+                  k.tuple_int_int_field_0 := (-(1));
+                  k.tuple_int_int_field_1 := (1);
+                  directions(i) := k;
                 else
-                  ba := new tuple_int_int;
-                  ba.tuple_int_int_field_0 := (-(1));
-                  ba.tuple_int_int_field_1 := (-(1));
-                  directions(i) := ba;
+                  l := new tuple_int_int;
+                  l.tuple_int_int_field_0 := (-(1));
+                  l.tuple_int_int_field_1 := (-(1));
+                  directions(i) := l;
                 end if;
               end if;
             end if;
@@ -135,20 +135,20 @@ begin
     end if;
   end loop;
   max0 := (0);
-  h := (20);
-  m := new bj (0..(20));
-  for o in integer range (0)..(20) - (1) loop
-    s := new bi (0..h);
-    for q in integer range (0)..h - (1) loop
-      Get(s(q));
+  o := (20);
+  m := new v (0..(20));
+  for p in integer range (0)..(20) - (1) loop
+    q := new u (0..o);
+    for r in integer range (0)..o - (1) loop
+      Get(q(r));
       SkipSpaces;
     end loop;
-    m(o) := s;
+    m(p) := q;
   end loop;
   for j in integer range (0)..(7) loop
-    w := directions(j);
-    dx := w.tuple_int_int_field_0;
-    dy := w.tuple_int_int_field_1;
+    s := directions(j);
+    dx := s.tuple_int_int_field_0;
+    dy := s.tuple_int_int_field_1;
     for x in integer range (0)..(19) loop
       for y in integer range (0)..(19) loop
         max0 := max2_0(max0, find((4), m, x, y, dx, dy));

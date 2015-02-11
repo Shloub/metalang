@@ -62,12 +62,12 @@ begin
 end;
 
 { lit un sudoku sur l'entrée standard }
-type b = array of Longint;
-function read_sudoku() : b;
+type a = array of Longint;
+function read_sudoku() : a;
 var
   i : Longint;
   k : Longint;
-  out0 : b;
+  out0 : a;
 begin
   SetLength(out0, 9 * 9);
   for i := 0 to  9 * 9 - 1 do
@@ -80,7 +80,7 @@ begin
 end;
 
 { affiche un sudoku }
-procedure print_sudoku(sudoku0 : b);
+procedure print_sudoku(sudoku0 : a);
 var
   x : Longint;
   y : Longint;
@@ -110,7 +110,7 @@ end;
 { dit si les variables sont toutes différentes }
 { dit si les variables sont toutes différentes }
 { dit si le sudoku est terminé de remplir }
-function sudoku_done(s : b) : boolean;
+function sudoku_done(s : a) : boolean;
 var
   i : Longint;
 begin
@@ -127,7 +127,7 @@ end;
 
 { dit si il y a une erreur dans le sudoku }
 { résout le sudoku}
-function solve(sudoku0 : b) : boolean;
+function solve(sudoku0 : a) : boolean;
 var
   i : Longint;
   p : Longint;
@@ -4049,7 +4049,7 @@ end;
 
 
 var
-  sudoku0 : b;
+  sudoku0 : a;
 begin
   sudoku0 := read_sudoku();
   print_sudoku(sudoku0);

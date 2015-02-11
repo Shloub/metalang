@@ -13,52 +13,52 @@ let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d=len\n" len);
-    let tab = (Array.init_withenv len (fun  e () -> Scanf.scanf "%d"
-    (fun  f -> (
+    let tab = (Array.init_withenv len (fun  a () -> Scanf.scanf "%d"
+    (fun  b -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                 let s = f in
-                 ((), s)
+                 let h = b in
+                 ((), h)
                  )
     )) ()) in
-    let bg = 0 in
-    let bh = (len - 1) in
-    let rec bf i =
-      (if (i <= bh)
+    let y = 0 in
+    let z = (len - 1) in
+    let rec x i =
+      (if (i <= z)
        then (
               (Printf.printf "%d=>%d " i tab.(i));
-              (bf (i + 1))
+              (x (i + 1))
               )
        
        else (
               (Printf.printf "\n" );
-              let tab2 = (Array.init_withenv len (fun  k () -> Scanf.scanf "%d"
-              (fun  l -> (
+              let tab2 = (Array.init_withenv len (fun  d () -> Scanf.scanf "%d"
+              (fun  e -> (
                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                           let u = l in
-                           ((), u)
+                           let k = e in
+                           ((), k)
                            )
               )) ()) in
-              let bd = 0 in
-              let be = (len - 1) in
-              let rec bc i_ =
-                (if (i_ <= be)
+              let v = 0 in
+              let w = (len - 1) in
+              let rec u i_ =
+                (if (i_ <= w)
                  then (
                         (Printf.printf "%d==>%d " i_ tab2.(i_));
-                        (bc (i_ + 1))
+                        (u (i_ + 1))
                         )
                  
                  else let strlen = (Scanf.scanf "%d " (fun x -> x)) in
                  (
                    (Printf.printf "%d=strlen\n" strlen);
-                   let tab4 = (Array.init_withenv strlen (fun  q () -> Scanf.scanf "%c"
-                   (fun  r -> let v = r in
-                   ((), v))) ()) in
+                   let tab4 = (Array.init_withenv strlen (fun  f () -> Scanf.scanf "%c"
+                   (fun  g -> let l = g in
+                   ((), l))) ()) in
                    (
                      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                     let ba = 0 in
-                     let bb = (strlen - 1) in
-                     let rec z i3 =
-                       (if (i3 <= bb)
+                     let r = 0 in
+                     let s = (strlen - 1) in
+                     let rec q i3 =
+                       (if (i3 <= s)
                         then let tmpc = tab4.(i3) in
                         let c = (int_of_char (tmpc)) in
                         (
@@ -69,31 +69,31 @@ let main =
                                    else c) in
                           (
                             tab4.(i3) <- (char_of_int (c));
-                            (z (i3 + 1))
+                            (q (i3 + 1))
                             )
                           
                           )
                         
-                        else let x = 0 in
-                        let y = (strlen - 1) in
-                        let rec w j =
-                          (if (j <= y)
+                        else let o = 0 in
+                        let p = (strlen - 1) in
+                        let rec m j =
+                          (if (j <= p)
                            then (
                                   (Printf.printf "%c" tab4.(j));
-                                  (w (j + 1))
+                                  (m (j + 1))
                                   )
                            
                            else ()) in
-                          (w x)) in
-                       (z ba)
+                          (m o)) in
+                       (q r)
                      )
                    
                    )
                  ) in
-                (bc bd)
+                (u v)
               )
        ) in
-      (bf bg)
+      (x y)
     )
   
 

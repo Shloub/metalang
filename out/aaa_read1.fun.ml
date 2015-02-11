@@ -10,22 +10,22 @@ module Array = struct
 end
 
 let main =
-  let str = (Array.init_withenv 12 (fun  d () -> Scanf.scanf "%c"
-  (fun  e -> let f = e in
-  ((), f))) ()) in
+  let str = (Array.init_withenv 12 (fun  a () -> Scanf.scanf "%c"
+  (fun  b -> let c = b in
+  ((), c))) ()) in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let h = 0 in
-    let j = 11 in
-    let rec g i =
-      (if (i <= j)
+    let e = 0 in
+    let f = 11 in
+    let rec d i =
+      (if (i <= f)
        then (
               (Printf.printf "%c" str.(i));
-              (g (i + 1))
+              (d (i + 1))
               )
        
        else ()) in
-      (g h)
+      (d e)
     )
   
 

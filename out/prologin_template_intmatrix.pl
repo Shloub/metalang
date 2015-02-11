@@ -15,8 +15,8 @@ sub programme_candidat{
 my $taille_x = int( <STDIN> );
 my $taille_y = int( <STDIN> );
 my $tableau = [];
-foreach my $f (0 .. $taille_y - 1) {
-  $tableau->[$f] = [ map { int($_) } split(/\s+/, <STDIN>) ];
+foreach my $a (0 .. $taille_y - 1) {
+  $tableau->[$a] = [ map { int($_) } split(/\s+/, <STDIN>) ];
 }
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");
 

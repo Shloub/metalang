@@ -45,11 +45,11 @@ read int, read char et skip
     (let
      ((tab (array_init
               len
-              (function (lambda (f)
+              (function (lambda (a)
               (block lambda_1
-                (let ((g (mread-int )))
+                (let ((b (mread-int )))
                   (mread-blank)
-                  (return-from lambda_1 g)
+                  (return-from lambda_1 b)
                 )))
               ))))
     (do
@@ -67,11 +67,11 @@ read int, read char et skip
     (let
      ((tab2 (array_init
                len
-               (function (lambda (l)
+               (function (lambda (d)
                (block lambda_2
-                 (let ((m (mread-int )))
+                 (let ((e (mread-int )))
                    (mread-blank)
-                   (return-from lambda_2 m)
+                   (return-from lambda_2 e)
                  )))
                ))))
     (do
@@ -92,10 +92,10 @@ read int, read char et skip
       (let
        ((tab4 (array_init
                  strlen
-                 (function (lambda (s)
+                 (function (lambda (f)
                  (block lambda_3
-                   (let ((u (mread-char )))
-                     (return-from lambda_3 u)
+                   (let ((g (mread-char )))
+                     (return-from lambda_3 g)
                    )))
                  ))))
       (mread-blank)

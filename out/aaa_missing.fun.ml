@@ -10,41 +10,41 @@ module Array = struct
 end
 
 let result len tab =
-  let tab2 = (Array.init_withenv len (fun  i () -> let f = false in
-  ((), f)) ()) in
-  let l = 0 in
-  let m = (len - 1) in
-  let rec k i1 =
-    (if (i1 <= m)
+  let tab2 = (Array.init_withenv len (fun  i () -> let c = false in
+  ((), c)) ()) in
+  let h = 0 in
+  let j = (len - 1) in
+  let rec g i1 =
+    (if (i1 <= j)
      then (
             (Printf.printf "%d " tab.(i1));
             tab2.(tab.(i1)) <- true;
-            (k (i1 + 1))
+            (g (i1 + 1))
             )
      
      else (
             (Printf.printf "\n" );
-            let h = 0 in
-            let j = (len - 1) in
-            let rec g i2 =
-              (if (i2 <= j)
+            let e = 0 in
+            let f = (len - 1) in
+            let rec d i2 =
+              (if (i2 <= f)
                then (if (not tab2.(i2))
                      then i2
-                     else (g (i2 + 1)))
+                     else (d (i2 + 1)))
                else (- 1)) in
-              (g h)
+              (d e)
             )
      ) in
-    (k l)
+    (g h)
 let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d\n" len);
-    let tab = (Array.init_withenv len (fun  d () -> Scanf.scanf "%d"
-    (fun  e -> (
+    let tab = (Array.init_withenv len (fun  a () -> Scanf.scanf "%d"
+    (fun  b -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                 let o = e in
-                 ((), o)
+                 let k = b in
+                 ((), k)
                  )
     )) ()) in
     (

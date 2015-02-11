@@ -55,10 +55,10 @@
     (let
      ((tableau (array_init
                   taille
-                  (function (lambda (e)
+                  (function (lambda (a)
                   (block lambda_1
-                    (let ((f (mread-char )))
-                      (return-from lambda_1 f)
+                    (let ((b (mread-char )))
+                      (return-from lambda_1 b)
                     )))
                   ))))
     (mread-blank)

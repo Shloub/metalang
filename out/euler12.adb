@@ -13,9 +13,9 @@ begin
   end if;
 end;
 
-type h is Array (Integer range <>) of Integer;
-type h_PTR is access h;
-function eratostene(t : in h_PTR; max0 : in Integer) return Integer is
+type c is Array (Integer range <>) of Integer;
+type c_PTR is access c;
+function eratostene(t : in c_PTR; max0 : in Integer) return Integer is
   n : Integer;
   j : Integer;
 begin
@@ -34,12 +34,12 @@ begin
   return n;
 end;
 
-function fillPrimesFactors(t : in h_PTR; p : in Integer; primes : in h_PTR;
+function fillPrimesFactors(t : in c_PTR; e : in Integer; primes : in c_PTR;
 nprimes : in Integer) return Integer is
   n : Integer;
   d : Integer;
 begin
-  n := p;
+  n := e;
   for i in integer range (0)..nprimes - (1) loop
     d := primes(i);
     while (n rem d) = (0) loop
@@ -55,22 +55,22 @@ begin
 end;
 
 function find(ndiv2 : in Integer) return Integer is
-  primesFactors : h_PTR;
-  primes : h_PTR;
+  primesFactors : c_PTR;
+  primes : c_PTR;
   nprimes : Integer;
   ndivs : Integer;
   maximumprimes : Integer;
   max0 : Integer;
   l : Integer;
-  era : h_PTR;
+  era : c_PTR;
 begin
   maximumprimes := (110);
-  era := new h (0..maximumprimes);
+  era := new c (0..maximumprimes);
   for j in integer range (0)..maximumprimes - (1) loop
     era(j) := j;
   end loop;
   nprimes := eratostene(era, maximumprimes);
-  primes := new h (0..nprimes);
+  primes := new c (0..nprimes);
   for o in integer range (0)..nprimes - (1) loop
     primes(o) := (0);
   end loop;
@@ -83,7 +83,7 @@ begin
     end if;
   end loop;
   for n in integer range (1)..(10000) loop
-    primesFactors := new h (0..n + (2));
+    primesFactors := new c (0..n + (2));
     for m in integer range (0)..n + (2) - (1) loop
       primesFactors(m) := (0);
     end loop;

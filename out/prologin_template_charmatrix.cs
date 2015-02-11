@@ -23,10 +23,10 @@ public class prologin_template_charmatrix
   {
     int taille_x = int.Parse(Console.ReadLine());
     int taille_y = int.Parse(Console.ReadLine());
-    char[][] e = new char[taille_y][];
-    for (int f = 0 ; f < taille_y; f++)
-      e[f] = Console.ReadLine().ToCharArray();
-    char[][] tableau = e;
+    char[][] a = new char[taille_y][];
+    for (int b = 0 ; b < taille_y; b++)
+      a[b] = Console.ReadLine().ToCharArray();
+    char[][] tableau = a;
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }
   

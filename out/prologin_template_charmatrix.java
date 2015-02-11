@@ -23,10 +23,10 @@ public class prologin_template_charmatrix
   {
     int taille_x = Integer.parseInt(scanner.nextLine());
     int taille_y = Integer.parseInt(scanner.nextLine());
-    char[][] e = new char[taille_y][];
-    for (int f = 0 ; f < taille_y; f++)
-      e[f] = scanner.nextLine().toCharArray();
-    char[][] tableau = e;
+    char[][] a = new char[taille_y][];
+    for (int b = 0 ; b < taille_y; b++)
+      a[b] = scanner.nextLine().toCharArray();
+    char[][] tableau = a;
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   

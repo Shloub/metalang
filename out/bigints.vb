@@ -55,11 +55,11 @@ End Sub
       chiffres(i) = chiffres(len - 1 - i)
       chiffres(len - 1 - i) = tmp
     Next
-    Dim x As bigint = new bigint()
-    x.bigint_sign = true
-    x.bigint_len = len
-    x.bigint_chiffres = chiffres
-    Return x
+    Dim e As bigint = new bigint()
+    e.bigint_sign = true
+    e.bigint_len = len
+    e.bigint_chiffres = chiffres
+    Return e
     End Function
     
     Sub print_bigint(ByRef a as bigint)
@@ -138,11 +138,11 @@ End Sub
       Do While len > 0 AndAlso chiffres(len - 1) = 0
         len = len - 1
       Loop
-      Dim y As bigint = new bigint()
-      y.bigint_sign = true
-      y.bigint_len = len
-      y.bigint_chiffres = chiffres
-      Return y
+      Dim f As bigint = new bigint()
+      f.bigint_sign = true
+      f.bigint_len = len
+      f.bigint_chiffres = chiffres
+      Return f
       End Function
       
       Function sub_bigint_positif(ByRef a as bigint, ByRef b as bigint) As bigint
@@ -169,19 +169,19 @@ End Sub
         Do While len > 0 AndAlso chiffres(len - 1) = 0
           len = len - 1
         Loop
-        Dim z As bigint = new bigint()
-        z.bigint_sign = true
-        z.bigint_len = len
-        z.bigint_chiffres = chiffres
-        Return z
+        Dim g As bigint = new bigint()
+        g.bigint_sign = true
+        g.bigint_len = len
+        g.bigint_chiffres = chiffres
+        Return g
         End Function
         
         Function neg_bigint(ByRef a as bigint) As bigint
-          Dim ba As bigint = new bigint()
-          ba.bigint_sign = Not a.bigint_sign
-          ba.bigint_len = a.bigint_len
-          ba.bigint_chiffres = a.bigint_chiffres
-          Return ba
+          Dim h As bigint = new bigint()
+          h.bigint_sign = Not a.bigint_sign
+          h.bigint_len = a.bigint_len
+          h.bigint_chiffres = a.bigint_chiffres
+          Return h
         End Function
         
         Function add_bigint(ByRef a as bigint, ByRef b as bigint) As bigint
@@ -240,11 +240,11 @@ End Sub
               len = len - 1
             End If
           Next
-          Dim bc As bigint = new bigint()
-          bc.bigint_sign = a.bigint_sign = b.bigint_sign
-          bc.bigint_len = len
-          bc.bigint_chiffres = chiffres
-          Return bc
+          Dim m As bigint = new bigint()
+          m.bigint_sign = a.bigint_sign = b.bigint_sign
+          m.bigint_len = len
+          m.bigint_chiffres = chiffres
+          Return m
           End Function
           
           Function bigint_premiers_chiffres(ByRef a as bigint, ByVal i as Integer) As bigint
@@ -252,11 +252,11 @@ End Sub
             Do While len <> 0 AndAlso a.bigint_chiffres(len - 1) = 0
               len = len - 1
             Loop
-            Dim be As bigint = new bigint()
-            be.bigint_sign = a.bigint_sign
-            be.bigint_len = len
-            be.bigint_chiffres = a.bigint_chiffres
-            Return be
+            Dim o As bigint = new bigint()
+            o.bigint_sign = a.bigint_sign
+            o.bigint_len = len
+            o.bigint_chiffres = a.bigint_chiffres
+            Return o
           End Function
           
           Function bigint_shift(ByRef a as bigint, ByVal i as Integer) As bigint
@@ -268,11 +268,11 @@ End Sub
                 chiffres(k) = 0
               End If
             Next
-            Dim bf As bigint = new bigint()
-            bf.bigint_sign = a.bigint_sign
-            bf.bigint_len = a.bigint_len + i
-            bf.bigint_chiffres = chiffres
-            Return bf
+            Dim p As bigint = new bigint()
+            p.bigint_sign = a.bigint_sign
+            p.bigint_len = a.bigint_len + i
+            p.bigint_chiffres = chiffres
+            Return p
             End Function
             
             Function mul_bigint(ByRef aa as bigint, ByRef bb as bigint) As bigint
@@ -328,11 +328,11 @@ End Sub
                 t(k) = i Mod 10
                 i = i \ 10
               Next
-              Dim bg As bigint = new bigint()
-              bg.bigint_sign = true
-              bg.bigint_len = size
-              bg.bigint_chiffres = t
-              Return bg
+              Dim q As bigint = new bigint()
+              q.bigint_sign = true
+              q.bigint_len = size
+              q.bigint_chiffres = t
+              Return q
               End Function
               
               Function fact_bigint(ByRef a as bigint) As bigint
@@ -521,8 +521,8 @@ End Sub
                   Console.Write(">")
                   print_bigint(b)
                   Console.Write("=")
-                  Dim m As Boolean = bigint_gt(a, b)
-                  If m Then
+                  Dim r As Boolean = bigint_gt(a, b)
+                  If r Then
                     Console.Write("True")
                   Else
                     Console.Write("False")

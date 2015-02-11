@@ -66,9 +66,9 @@ end;
    dans les épreuves de prologin
 on le retrouve ici : http://projecteuler.net/problem=18
 }
-type c = array of Longint;
-type d = array of array of Longint;
-function find0(len : Longint; tab : d; cache : d; x : Longint; y : Longint) : Longint;
+type a = array of Longint;
+type b = array of array of Longint;
+function find0(len : Longint; tab : b; cache : b; x : Longint; y : Longint) : Longint;
 var
   out0 : Longint;
   out1 : Longint;
@@ -106,12 +106,12 @@ begin
   exit(result);
 end;
 
-function find(len : Longint; tab : d) : Longint;
+function find(len : Longint; tab : b) : Longint;
 var
   i : Longint;
   j : Longint;
-  tab2 : d;
-  tab3 : c;
+  tab2 : b;
+  tab3 : a;
 begin
   SetLength(tab2, len);
   for i := 0 to  len - 1 do
@@ -133,8 +133,8 @@ var
   k : Longint;
   l : Longint;
   len : Longint;
-  tab : d;
-  tab2 : c;
+  tab : b;
+  tab2 : a;
   tmp : Longint;
 begin
   len := 0;

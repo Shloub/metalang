@@ -509,8 +509,8 @@ print_bigint($a);
 print(">");
 print_bigint($b);
 print("=");
-my $m = bigint_gt($a, $b);
-if ($m) {
+my $e = bigint_gt($a, $b);
+if ($e) {
   print("True");
 }else{
   print("False");

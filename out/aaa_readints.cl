@@ -36,11 +36,11 @@
     (let
      ((tab1 (array_init
                len
-               (function (lambda (k)
+               (function (lambda (a)
                (block lambda_1
-                 (let ((l (mread-int )))
+                 (let ((b (mread-int )))
                    (mread-blank)
-                   (return-from lambda_1 l)
+                   (return-from lambda_1 b)
                  )))
                ))))
     (do
@@ -59,19 +59,19 @@
     (let
      ((tab2 (array_init
                (- len 1)
-               (function (lambda (s)
+               (function (lambda (c)
                (block lambda_2
                  (let
-                  ((ba (array_init
-                          len
-                          (function (lambda (v)
-                          (block lambda_3
-                            (let ((w (mread-int )))
-                              (mread-blank)
-                              (return-from lambda_3 w)
-                            )))
-                          ))))
-                 (return-from lambda_2 ba)
+                  ((e (array_init
+                         len
+                         (function (lambda (f)
+                         (block lambda_3
+                           (let ((d (mread-int )))
+                             (mread-blank)
+                             (return-from lambda_3 d)
+                           )))
+                         ))))
+                 (return-from lambda_2 e)
                  )))
                ))))
     (do

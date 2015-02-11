@@ -23,13 +23,13 @@ begin
   end if;
 end;
 
-type g is Array (Integer range <>) of Integer;
-type g_PTR is access g;
-type h is Array (Integer range <>) of g_PTR;
-type h_PTR is access h;
-function nbPassePartout(n : in Integer; passepartout : in h_PTR;
-m : in Integer; serrures : in h_PTR) return Integer is
-  pp : g_PTR;
+type c is Array (Integer range <>) of Integer;
+type c_PTR is access c;
+type d is Array (Integer range <>) of c_PTR;
+type d_PTR is access d;
+function nbPassePartout(n : in Integer; passepartout : in d_PTR;
+m : in Integer; serrures : in d_PTR) return Integer is
+  pp : c_PTR;
   max_recent_pp : Integer;
   max_recent : Integer;
   max_ancient_pp : Integer;
@@ -67,20 +67,20 @@ begin
 end;
 
 
-  serrures : h_PTR;
-  passepartout : h_PTR;
+  serrures : d_PTR;
+  passepartout : d_PTR;
   out_0 : Integer;
-  out1 : g_PTR;
+  out1 : c_PTR;
   out01 : Integer;
-  out0 : g_PTR;
+  out0 : c_PTR;
   n : Integer;
   m : Integer;
 begin
   Get(n);
   SkipSpaces;
-  passepartout := new h (0..n);
+  passepartout := new d (0..n);
   for i in integer range (0)..n - (1) loop
-    out0 := new g (0..(2));
+    out0 := new c (0..(2));
     for j in integer range (0)..(2) - (1) loop
       Get(out01);
       SkipSpaces;
@@ -90,9 +90,9 @@ begin
   end loop;
   Get(m);
   SkipSpaces;
-  serrures := new h (0..m);
+  serrures := new d (0..m);
   for k in integer range (0)..m - (1) loop
-    out1 := new g (0..(2));
+    out1 := new c (0..(2));
     for l in integer range (0)..(2) - (1) loop
       Get(out_0);
       SkipSpaces;

@@ -48,19 +48,19 @@ int pathfind(char** tab, int x, int y){
 }
 
 int main(void){
-  int bg, bi, y, x;
+  int f, h, y, x;
   scanf("%d %d ", &x, &y);
   printf("%d %d\n", x, y);
-  char* *bf = malloc( y * sizeof(char*));
-  for (bg = 0 ; bg < y; bg++)
+  char* *e = malloc( y * sizeof(char*));
+  for (f = 0 ; f < y; f++)
   {
-    char *bk = malloc( x * sizeof(char));
-    for (bi = 0 ; bi < x; bi++)
-      scanf("%c", &bk[bi]);
+    char *g = malloc( x * sizeof(char));
+    for (h = 0 ; h < x; h++)
+      scanf("%c", &g[h]);
     scanf(" ");
-    bf[bg] = bk;
+    e[f] = g;
   }
-  char** tab = bf;
+  char** tab = e;
   int result = pathfind(tab, x, y);
   printf("%d", result);
   return 0;

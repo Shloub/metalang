@@ -37,11 +37,11 @@ end
 x = STDIN.readline.to_i(10)
 y = STDIN.readline.to_i(10)
 printf "%d %d\n", x, y
-l = [];
-for m in (0 ..  y - 1) do
-  l[m] = STDIN.readline.split(//)
+e = [];
+for f in (0 ..  y - 1) do
+  e[f] = STDIN.readline.split(//)
 end
-tab = l
+tab = e
 result = pathfind(tab, x, y)
 printf "%d", result
 

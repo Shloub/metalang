@@ -13,15 +13,15 @@ begin
   end if;
 end;
 
-type q is Array (Integer range <>) of Integer;
-type q_PTR is access q;
-function primesfactors(p : in Integer) return q_PTR is
-  tab : q_PTR;
+type e is Array (Integer range <>) of Integer;
+type e_PTR is access e;
+function primesfactors(c : in Integer) return e_PTR is
+  tab : e_PTR;
   n : Integer;
   d : Integer;
 begin
-  n := p;
-  tab := new q (0..n + (1));
+  n := c;
+  tab := new e (0..n + (1));
   for i in integer range (0)..n + (1) - (1) loop
     tab(i) := (0);
   end loop;
@@ -40,14 +40,14 @@ begin
 end;
 
 
-  t : q_PTR;
+  t : e_PTR;
   product : Integer;
-  o : q_PTR;
+  o : e_PTR;
   n : Integer;
   lim : Integer;
 begin
   lim := (20);
-  o := new q (0..lim + (1));
+  o := new e (0..lim + (1));
   for m in integer range (0)..lim + (1) - (1) loop
     o(m) := (0);
   end loop;

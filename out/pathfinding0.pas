@@ -82,11 +82,11 @@ begin
     end;
 end;
 
-type bl = array of Longint;
-type bm = array of array of Longint;
-type bn = array of char;
-type bo = array of array of char;
-function pathfind_aux(cache : bm; tab : bo; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
+type k = array of Longint;
+type l = array of array of Longint;
+type m = array of char;
+type o = array of array of char;
+function pathfind_aux(cache : l; tab : o; x : Longint; y : Longint; posX : Longint; posY : Longint) : Longint;
 var
   out0 : Longint;
   val1 : Longint;
@@ -124,12 +124,12 @@ begin
     end;;;;
 end;
 
-function pathfind(tab : bo; x : Longint; y : Longint) : Longint;
+function pathfind(tab : o; x : Longint; y : Longint) : Longint;
 var
-  cache : bm;
+  cache : l;
   i : Longint;
   j : Longint;
-  tmp : bl;
+  tmp : k;
 begin
   SetLength(cache, y);
   for i := 0 to  y - 1 do
@@ -148,12 +148,12 @@ end;
 
 
 var
-  bf : bo;
-  bg : Longint;
-  bi : Longint;
-  bk : bn;
+  e : o;
+  f : Longint;
+  g : m;
+  h : Longint;
   result : Longint;
-  tab : bo;
+  tab : o;
   x : Longint;
   y : Longint;
 begin
@@ -165,18 +165,18 @@ begin
   Write(' ');
   Write(y);
   Write(''#10'');
-  SetLength(bf, y);
-  for bg := 0 to  y - 1 do
+  SetLength(e, y);
+  for f := 0 to  y - 1 do
   begin
-    SetLength(bk, x);
-    for bi := 0 to  x - 1 do
+    SetLength(g, x);
+    for h := 0 to  x - 1 do
     begin
-      bk[bi] := read_char_();
+      g[h] := read_char_();
     end;
     skip();
-    bf[bg] := bk;
+    e[f] := g;
   end;
-  tab := bf;
+  tab := e;
   result := pathfind(tab, x, y);
   Write(result);
 end.

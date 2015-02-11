@@ -31,10 +31,10 @@ def pathfind( tab, x, y ):
 x = int(input())
 y = int(input())
 print("%d %d\n" % ( x, y ), end='')
-l = [None] * y
-for m in range(0, y):
-  l[m] = list(input())
-tab = l
+e = [None] * y
+for f in range(0, y):
+  e[f] = list(input())
+tab = e
 result = pathfind(tab, x, y)
 print("%d" % result, end='')
 

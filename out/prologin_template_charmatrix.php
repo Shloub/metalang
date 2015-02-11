@@ -15,9 +15,9 @@ function programme_candidat(&$tableau, $taille_x, $taille_y){
 
 $taille_x = intval(trim(fgets(STDIN)));
 $taille_y = intval(trim(fgets(STDIN)));
-$e = array();
-for ($f = 0 ; $f < $taille_y; $f++)
-  $e[$f] = fgets(STDIN);
-$tableau = $e;
+$a = array();
+for ($b = 0 ; $b < $taille_y; $b++)
+  $a[$b] = fgets(STDIN);
+$tableau = $a;
 echo programme_candidat($tableau, $taille_x, $taille_y), "\n";
 ?>

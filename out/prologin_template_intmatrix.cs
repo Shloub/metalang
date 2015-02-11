@@ -18,8 +18,8 @@ public class prologin_template_intmatrix
     int taille_x = int.Parse(Console.ReadLine());
     int taille_y = int.Parse(Console.ReadLine());
     int[][] tableau = new int[taille_y][];
-    for (int f = 0 ; f < taille_y; f++)
-      tableau[f] =
+    for (int a = 0 ; a < taille_y; a++)
+      tableau[a] =
       new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     Console.Write("" + programme_candidat(tableau, taille_x, taille_y) + "\n");
   }

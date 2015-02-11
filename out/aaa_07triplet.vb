@@ -6,10 +6,10 @@ Module aaa_07triplet
   
   Sub Main()
     For  i As Integer  = 1 to  3
-      Dim k As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
-      Dim a As Integer = k(0)
-      Dim b As Integer = k(1)
-      Dim c As Integer = k(2)
+      Dim d As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
+      Dim a As Integer = d(0)
+      Dim b As Integer = d(1)
+      Dim c As Integer = d(2)
       Console.Write("a = ")
       Console.Write(a)
       Console.Write(" b = ")

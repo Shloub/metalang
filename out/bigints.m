@@ -41,11 +41,11 @@ bigint * read_bigint(int len){
     chiffres[i] = chiffres[len - 1 - i];
     chiffres[len - 1 - i] = tmp;
   }
-  bigint * x = [bigint alloc];
-  x->bigint_sign=1;
-  x->bigint_len=len;
-  x->bigint_chiffres=chiffres;
-  return x;
+  bigint * e = [bigint alloc];
+  e->bigint_sign=1;
+  e->bigint_len=len;
+  e->bigint_chiffres=chiffres;
+  return e;
 }
 
 void print_bigint(bigint * a){
@@ -120,11 +120,11 @@ bigint * add_bigint_positif(bigint * a, bigint * b){
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  bigint * y = [bigint alloc];
-  y->bigint_sign=1;
-  y->bigint_len=len;
-  y->bigint_chiffres=chiffres;
-  return y;
+  bigint * f = [bigint alloc];
+  f->bigint_sign=1;
+  f->bigint_len=len;
+  f->bigint_chiffres=chiffres;
+  return f;
 }
 
 bigint * sub_bigint_positif(bigint * a, bigint * b){
@@ -151,19 +151,19 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres[len - 1] == 0)
     len --;
-  bigint * z = [bigint alloc];
-  z->bigint_sign=1;
-  z->bigint_len=len;
-  z->bigint_chiffres=chiffres;
-  return z;
+  bigint * g = [bigint alloc];
+  g->bigint_sign=1;
+  g->bigint_len=len;
+  g->bigint_chiffres=chiffres;
+  return g;
 }
 
 bigint * neg_bigint(bigint * a){
-  bigint * ba = [bigint alloc];
-  ba->bigint_sign=!a->bigint_sign;
-  ba->bigint_len=a->bigint_len;
-  ba->bigint_chiffres=a->bigint_chiffres;
-  return ba;
+  bigint * h = [bigint alloc];
+  h->bigint_sign=!a->bigint_sign;
+  h->bigint_len=a->bigint_len;
+  h->bigint_chiffres=a->bigint_chiffres;
+  return h;
 }
 
 bigint * add_bigint(bigint * a, bigint * b){
@@ -224,22 +224,22 @@ D'ou le nom de la fonction. */
   for (l = 0 ; l <= 2; l++)
     if (len != 0 && chiffres[len - 1] == 0)
     len --;
-  bigint * bc = [bigint alloc];
-  bc->bigint_sign=a->bigint_sign == b->bigint_sign;
-  bc->bigint_len=len;
-  bc->bigint_chiffres=chiffres;
-  return bc;
+  bigint * m = [bigint alloc];
+  m->bigint_sign=a->bigint_sign == b->bigint_sign;
+  m->bigint_len=len;
+  m->bigint_chiffres=chiffres;
+  return m;
 }
 
 bigint * bigint_premiers_chiffres(bigint * a, int i){
   int len = min2_(i, a->bigint_len);
   while (len != 0 && a->bigint_chiffres[len - 1] == 0)
     len --;
-  bigint * be = [bigint alloc];
-  be->bigint_sign=a->bigint_sign;
-  be->bigint_len=len;
-  be->bigint_chiffres=a->bigint_chiffres;
-  return be;
+  bigint * o = [bigint alloc];
+  o->bigint_sign=a->bigint_sign;
+  o->bigint_len=len;
+  o->bigint_chiffres=a->bigint_chiffres;
+  return o;
 }
 
 bigint * bigint_shift(bigint * a, int i){
@@ -250,11 +250,11 @@ bigint * bigint_shift(bigint * a, int i){
     chiffres[k] = a->bigint_chiffres[k - i];
   else
     chiffres[k] = 0;
-  bigint * bf = [bigint alloc];
-  bf->bigint_sign=a->bigint_sign;
-  bf->bigint_len=a->bigint_len + i;
-  bf->bigint_chiffres=chiffres;
-  return bf;
+  bigint * p = [bigint alloc];
+  p->bigint_sign=a->bigint_sign;
+  p->bigint_len=a->bigint_len + i;
+  p->bigint_chiffres=chiffres;
+  return p;
 }
 
 bigint * mul_bigint(bigint * aa, bigint * bb){
@@ -307,11 +307,11 @@ bigint * bigint_of_int(int i){
     t[k] = i % 10;
     i /= 10;
   }
-  bigint * bg = [bigint alloc];
-  bg->bigint_sign=1;
-  bg->bigint_len=size;
-  bg->bigint_chiffres=t;
-  return bg;
+  bigint * q = [bigint alloc];
+  q->bigint_sign=1;
+  q->bigint_len=size;
+  q->bigint_chiffres=t;
+  return q;
 }
 
 bigint * fact_bigint(bigint * a){
@@ -501,8 +501,8 @@ int main(void){
   printf(">");
   print_bigint(b);
   printf("=");
-  int m = bigint_gt(a, b);
-  if (m)
+  int r = bigint_gt(a, b);
+  if (r)
     printf("True");
   else
     printf("False");

@@ -92,24 +92,24 @@
       (princ "
 ")
       (let
-       ((r (array_init
+       ((e (array_init
               y
-              (function (lambda (s)
+              (function (lambda (f)
               (block lambda_3
                 (let
-                 ((ba (array_init
-                         x
-                         (function (lambda (v)
-                         (block lambda_4
-                           (let ((w (mread-char )))
-                             (return-from lambda_4 w)
-                           )))
-                         ))))
+                 ((h (array_init
+                        x
+                        (function (lambda (k)
+                        (block lambda_4
+                          (let ((g (mread-char )))
+                            (return-from lambda_4 g)
+                          )))
+                        ))))
                 (mread-blank)
-                (return-from lambda_3 ba)
+                (return-from lambda_3 h)
                 )))
               ))))
-      (let ((tab r))
+      (let ((tab e))
         (let ((result (pathfind tab x y)))
           (princ result)
         ))))))

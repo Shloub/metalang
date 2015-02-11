@@ -26,8 +26,8 @@ public class prologin_template_intmatrix
     int taille_x = Integer.parseInt(scanner.nextLine());
     int taille_y = Integer.parseInt(scanner.nextLine());
     int[][] tableau = new int[taille_y][];
-    for (int f = 0 ; f < taille_y; f++)
-      tableau[f] = read_int_line();
+    for (int a = 0 ; a < taille_y; a++)
+      tableau[a] = read_int_line();
     System.out.printf("%d\n", programme_candidat(tableau, taille_x, taille_y));
   }
   

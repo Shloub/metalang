@@ -21,9 +21,9 @@ int main(){
   std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
   std::vector<int > *tab = new std::vector<int>( len );
-  for (int f = 0 ; f < len; f++)
+  for (int a = 0 ; a < len; a++)
   {
-    std::cin >> tab->at(f) >> std::skipws;
+    std::cin >> tab->at(a) >> std::skipws;
   }
   for (int i = 0 ; i < len; i++)
   {
@@ -31,9 +31,9 @@ int main(){
   }
   std::cout << "\n";
   std::vector<int > *tab2 = new std::vector<int>( len );
-  for (int l = 0 ; l < len; l++)
+  for (int b = 0 ; b < len; b++)
   {
-    std::cin >> tab2->at(l) >> std::skipws;
+    std::cin >> tab2->at(b) >> std::skipws;
   }
   for (int i_ = 0 ; i_ < len; i_++)
   {

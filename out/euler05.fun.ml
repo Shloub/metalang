@@ -10,12 +10,12 @@ module Array = struct
 end
 
 let primesfactors n =
-  let tab = (Array.init_withenv (n + 1) (fun  i () -> let p = 0 in
-  ((), p)) ()) in
+  let tab = (Array.init_withenv (n + 1) (fun  i () -> let c = 0 in
+  ((), c)) ()) in
   let d = 2 in
-  let rec q d n =
+  let rec e d n =
     (if ((n <> 1) && ((d * d) <= n))
-     then ((fun  (d, n) -> (q d n)) (if ((n mod d) = 0)
+     then ((fun  (d, n) -> (e d n)) (if ((n mod d) = 0)
                                      then (
                                             tab.(d) <- (tab.(d) + 1);
                                             let n = (n / d) in
@@ -29,44 +29,44 @@ let primesfactors n =
             tab
             )
      ) in
-    (q d n)
+    (e d n)
 let main =
   let lim = 20 in
-  let o = (Array.init_withenv (lim + 1) (fun  m () -> let r = 0 in
-  ((), r)) ()) in
-  let bd = 1 in
-  let be = lim in
-  let rec z i =
-    (if (i <= be)
+  let o = (Array.init_withenv (lim + 1) (fun  m () -> let f = 0 in
+  ((), f)) ()) in
+  let y = 1 in
+  let z = lim in
+  let rec u i =
+    (if (i <= z)
      then let t = (primesfactors i) in
-     let bb = 1 in
-     let bc = i in
-     let rec ba j =
-       (if (j <= bc)
+     let w = 1 in
+     let x = i in
+     let rec v j =
+       (if (j <= x)
         then (
                o.(j) <- ((max (o.(j)) (t.(j))));
-               (ba (j + 1))
+               (v (j + 1))
                )
         
-        else (z (i + 1))) in
-       (ba bb)
+        else (u (i + 1))) in
+       (v w)
      else let product = 1 in
-     let x = 1 in
-     let y = lim in
-     let rec s k product =
-       (if (k <= y)
-        then let v = 1 in
-        let w = o.(k) in
-        let rec u l product =
-          (if (l <= w)
+     let r = 1 in
+     let s = lim in
+     let rec g k product =
+       (if (k <= s)
+        then let p = 1 in
+        let q = o.(k) in
+        let rec h l product =
+          (if (l <= q)
            then let product = (product * k) in
-           (u (l + 1) product)
-           else (s (k + 1) product)) in
-          (u v product)
+           (h (l + 1) product)
+           else (g (k + 1) product)) in
+          (h p product)
         else (
                (Printf.printf "%d\n" product)
                )
         ) in
-       (s x product)) in
-    (z bd)
+       (g r product)) in
+    (u y)
 

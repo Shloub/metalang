@@ -13,14 +13,14 @@ int main(){
   int taille_y, taille_x;
   std::cin >> taille_x >> std::skipws >> taille_y;
   std::vector<std::vector<int> * > *tableau = new std::vector<std::vector<int> *>( taille_y );
-  for (int m = 0 ; m < taille_y; m++)
+  for (int a = 0 ; a < taille_y; a++)
   {
-    std::vector<int > *r = new std::vector<int>( taille_x );
-    for (int p = 0 ; p < taille_x; p++)
+    std::vector<int > *b = new std::vector<int>( taille_x );
+    for (int c = 0 ; c < taille_x; c++)
     {
-      std::cin >> r->at(p) >> std::skipws;
+      std::cin >> b->at(c) >> std::skipws;
     }
-    tableau->at(m) = r;
+    tableau->at(a) = b;
   }
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;

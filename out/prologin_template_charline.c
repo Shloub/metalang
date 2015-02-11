@@ -14,11 +14,11 @@ int programme_candidat(char* tableau, int taille){
 }
 
 int main(void){
-  int e, taille;
+  int a, taille;
   scanf("%d ", &taille);
   char *tableau = malloc( taille * sizeof(char));
-  for (e = 0 ; e < taille; e++)
-    scanf("%c", &tableau[e]);
+  for (a = 0 ; a < taille; a++)
+    scanf("%c", &tableau[a]);
   scanf(" ");
   printf("%d\n", programme_candidat(tableau, taille));
   return 0;

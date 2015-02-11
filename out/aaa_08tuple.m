@@ -22,17 +22,17 @@
 
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-  int g, f, bar_;
-  scanf("%d %d %d ", &bar_, &f, &g);
-  tuple_int_int * i = [tuple_int_int alloc];
-  i->tuple_int_int_field_0=f;
-  i->tuple_int_int_field_1=g;
+  int d, c, bar_;
+  scanf("%d %d %d ", &bar_, &c, &d);
+  tuple_int_int * e = [tuple_int_int alloc];
+  e->tuple_int_int_field_0=c;
+  e->tuple_int_int_field_1=d;
   toto * t = [toto alloc];
-  t->foo=i;
+  t->foo=e;
   t->bar=bar_;
-  tuple_int_int * h = t->foo;
-  int a = h->tuple_int_int_field_0;
-  int b = h->tuple_int_int_field_1;
+  tuple_int_int * f = t->foo;
+  int a = f->tuple_int_int_field_0;
+  int b = f->tuple_int_int_field_1;
   printf("%d %d %d\n", a, b, t->bar);
   [pool drain];
   return 0;

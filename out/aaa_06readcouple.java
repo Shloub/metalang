@@ -16,9 +16,9 @@ public class aaa_06readcouple
   {
     for (int i = 1 ; i <= 3; i ++)
     {
-      int[] h = read_int_line();
-      int a = h[0];
-      int b = h[1];
+      int[] c = read_int_line();
+      int a = c[0];
+      int b = c[1];
       System.out.printf("a = %d b = %d\n", a, b);
     }
     int[] l = read_int_line();

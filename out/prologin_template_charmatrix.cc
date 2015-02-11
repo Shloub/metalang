@@ -29,10 +29,10 @@ int programme_candidat(std::vector<std::vector<char> *> * tableau, int taille_x,
 int main(){
   int taille_y, taille_x;
   std::cin >> taille_x >> std::skipws >> taille_y;
-  std::vector<std::vector<char> * > *g = new std::vector<std::vector<char> *>( taille_y );
-  for (int h = 0 ; h < taille_y; h++)
-    g->at(h) = getline();
-  std::vector<std::vector<char> *> * tableau = g;
+  std::vector<std::vector<char> * > *a = new std::vector<std::vector<char> *>( taille_y );
+  for (int b = 0 ; b < taille_y; b++)
+    a->at(b) = getline();
+  std::vector<std::vector<char> *> * tableau = a;
   std::cout << programme_candidat(tableau, taille_x, taille_y) << "\n";
   return 0;
 }

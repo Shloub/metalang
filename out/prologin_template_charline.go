@@ -30,8 +30,8 @@ func main() {
   fmt.Fscanf(reader, "%d", &taille)
   skip()
   var tableau []byte = make([]byte, taille)
-  for e := 0 ; e <= taille - 1; e++ {
-    fmt.Fscanf(reader, "%c", &tableau[e])
+  for a := 0 ; a <= taille - 1; a++ {
+    fmt.Fscanf(reader, "%c", &tableau[a])
   }
   skip()
   fmt.Printf("%d\n", programme_candidat(tableau, taille));

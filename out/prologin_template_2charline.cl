@@ -65,10 +65,10 @@
     (let
      ((tableau1 (array_init
                    taille1
-                   (function (lambda (e)
+                   (function (lambda (a)
                    (block lambda_1
-                     (let ((f (mread-char )))
-                       (return-from lambda_1 f)
+                     (let ((b (mread-char )))
+                       (return-from lambda_1 b)
                      )))
                    ))))
     (mread-blank)
@@ -77,10 +77,10 @@
       (let
        ((tableau2 (array_init
                      taille2
-                     (function (lambda (m)
+                     (function (lambda (c)
                      (block lambda_2
-                       (let ((o (mread-char )))
-                         (return-from lambda_2 o)
+                       (let ((d (mread-char )))
+                         (return-from lambda_2 d)
                        )))
                      ))))
       (mread-blank)

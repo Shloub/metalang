@@ -515,8 +515,8 @@ print_bigint(a)
 print ">";
 print_bigint(b)
 print "=";
-m = bigint_gt(a, b)
-if m then
+e = bigint_gt(a, b)
+if e then
   print "True";
 else
   print "False";

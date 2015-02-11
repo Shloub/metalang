@@ -39,7 +39,7 @@ begin
     end;
 end;
 
-type h = array of Longint;
+type g = array of Longint;
 
 var
   c : char;
@@ -50,7 +50,7 @@ var
   index : Longint;
   j : Longint;
   k : Longint;
-  last : h;
+  last : g;
   max0 : Longint;
   nskipdiv : Longint;
 begin

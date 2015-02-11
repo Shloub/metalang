@@ -23,82 +23,82 @@ typedef struct tuple_int_int {
 } tuple_int_int;
 
 int main(void){
-  int j, x, y, o, q, i;
+  int j, x, y, p, r, i;
   struct tuple_int_int * *directions = malloc( 8 * sizeof(struct tuple_int_int *));
   for (i = 0 ; i < 8; i++)
     if (i == 0)
   {
-    struct tuple_int_int * bh = malloc (sizeof(bh) );
-    bh->tuple_int_int_field_0=0;
-    bh->tuple_int_int_field_1=1;
-    directions[i] = bh;
+    struct tuple_int_int * c = malloc (sizeof(c) );
+    c->tuple_int_int_field_0=0;
+    c->tuple_int_int_field_1=1;
+    directions[i] = c;
   }
   else if (i == 1)
   {
-    struct tuple_int_int * bg = malloc (sizeof(bg) );
-    bg->tuple_int_int_field_0=1;
-    bg->tuple_int_int_field_1=0;
-    directions[i] = bg;
+    struct tuple_int_int * d = malloc (sizeof(d) );
+    d->tuple_int_int_field_0=1;
+    d->tuple_int_int_field_1=0;
+    directions[i] = d;
   }
   else if (i == 2)
   {
-    struct tuple_int_int * bf = malloc (sizeof(bf) );
-    bf->tuple_int_int_field_0=0;
-    bf->tuple_int_int_field_1=-1;
-    directions[i] = bf;
+    struct tuple_int_int * e = malloc (sizeof(e) );
+    e->tuple_int_int_field_0=0;
+    e->tuple_int_int_field_1=-1;
+    directions[i] = e;
   }
   else if (i == 3)
   {
-    struct tuple_int_int * be = malloc (sizeof(be) );
-    be->tuple_int_int_field_0=-1;
-    be->tuple_int_int_field_1=0;
-    directions[i] = be;
+    struct tuple_int_int * f = malloc (sizeof(f) );
+    f->tuple_int_int_field_0=-1;
+    f->tuple_int_int_field_1=0;
+    directions[i] = f;
   }
   else if (i == 4)
   {
-    struct tuple_int_int * bd = malloc (sizeof(bd) );
-    bd->tuple_int_int_field_0=1;
-    bd->tuple_int_int_field_1=1;
-    directions[i] = bd;
+    struct tuple_int_int * g = malloc (sizeof(g) );
+    g->tuple_int_int_field_0=1;
+    g->tuple_int_int_field_1=1;
+    directions[i] = g;
   }
   else if (i == 5)
   {
-    struct tuple_int_int * bc = malloc (sizeof(bc) );
-    bc->tuple_int_int_field_0=1;
-    bc->tuple_int_int_field_1=-1;
-    directions[i] = bc;
+    struct tuple_int_int * h = malloc (sizeof(h) );
+    h->tuple_int_int_field_0=1;
+    h->tuple_int_int_field_1=-1;
+    directions[i] = h;
   }
   else if (i == 6)
   {
-    struct tuple_int_int * bb = malloc (sizeof(bb) );
-    bb->tuple_int_int_field_0=-1;
-    bb->tuple_int_int_field_1=1;
-    directions[i] = bb;
+    struct tuple_int_int * k = malloc (sizeof(k) );
+    k->tuple_int_int_field_0=-1;
+    k->tuple_int_int_field_1=1;
+    directions[i] = k;
   }
   else
   {
-    struct tuple_int_int * ba = malloc (sizeof(ba) );
-    ba->tuple_int_int_field_0=-1;
-    ba->tuple_int_int_field_1=-1;
-    directions[i] = ba;
+    struct tuple_int_int * l = malloc (sizeof(l) );
+    l->tuple_int_int_field_0=-1;
+    l->tuple_int_int_field_1=-1;
+    directions[i] = l;
   }
   int max0 = 0;
-  int h = 20;
+  int o = 20;
   int* *m = malloc( 20 * sizeof(int*));
-  for (o = 0 ; o < 20; o++)
+  for (p = 0 ; p < 20; p++)
   {
-    int *s = malloc( h * sizeof(int));
-    for (q = 0 ; q < h; q++)
+    int *q = malloc( o * sizeof(int));
+    for (r = 0 ; r < o; r++)
     {
-      scanf("%d ", &s[q]);
+      scanf("%d ", &q[r]);
     }
-    m[o] = s;
+    m[p] = q;
   }
   for (j = 0 ; j <= 7; j++)
   {
-    struct tuple_int_int * w = directions[j];
-    int dx = w->tuple_int_int_field_0;
-    int dy = w->tuple_int_int_field_1;
+    struct tuple_int_int * s = directions[j];
+    int dx = s->tuple_int_int_field_0;
+    int dy = s->tuple_int_int_field_1;
     for (x = 0 ; x <= 19; x++)
       for (y = 0 ; y <= 19; y++)
         max0 = max2_(max0, find(4, m, x, y, dx, dy));

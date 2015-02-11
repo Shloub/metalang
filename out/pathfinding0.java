@@ -49,10 +49,10 @@ public class pathfinding0
     int x = Integer.parseInt(scanner.nextLine());
     int y = Integer.parseInt(scanner.nextLine());
     System.out.printf("%d %d\n", x, y);
-    char[][] w = new char[y][];
-    for (int ba = 0 ; ba < y; ba++)
-      w[ba] = scanner.nextLine().toCharArray();
-    char[][] tab = w;
+    char[][] e = new char[y][];
+    for (int f = 0 ; f < y; f++)
+      e[f] = scanner.nextLine().toCharArray();
+    char[][] tab = e;
     int result = pathfind(tab, x, y);
     System.out.printf("%d", result);
   }

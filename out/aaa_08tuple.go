@@ -30,21 +30,21 @@ func main() {
   var bar_ int
   fmt.Fscanf(reader, "%d", &bar_)
   skip()
-  var f int
-  fmt.Fscanf(reader, "%d", &f)
+  var c int
+  fmt.Fscanf(reader, "%d", &c)
   skip()
-  var g int
-  fmt.Fscanf(reader, "%d", &g)
+  var d int
+  fmt.Fscanf(reader, "%d", &d)
   skip()
-  var i * tuple_int_int = new (tuple_int_int)
-  (*i).tuple_int_int_field_0=f
-  (*i).tuple_int_int_field_1=g
+  var e * tuple_int_int = new (tuple_int_int)
+  (*e).tuple_int_int_field_0=c
+  (*e).tuple_int_int_field_1=d
   var t * toto = new (toto)
-  (*t).foo=i
+  (*t).foo=e
   (*t).bar=bar_
-  var h * tuple_int_int = (*t).foo
-  var a int = (*h).tuple_int_int_field_0
-  var b int = (*h).tuple_int_int_field_1
+  var f * tuple_int_int = (*t).foo
+  var a int = (*f).tuple_int_int_field_0
+  var b int = (*f).tuple_int_int_field_1
   fmt.Printf("%d %d %d\n", a, b, (*t).bar);
 }
 

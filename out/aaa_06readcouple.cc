@@ -9,9 +9,9 @@ int main(){
     std::cout << "a = " << a << " b = " << b << "\n";
   }
   std::vector<int > *l = new std::vector<int>( 10 );
-  for (int k = 0 ; k < 10; k++)
+  for (int c = 0 ; c < 10; c++)
   {
-    std::cin >> l->at(k) >> std::skipws;
+    std::cin >> l->at(c) >> std::skipws;
   }
   for (int j = 0 ; j <= 9; j ++)
   {

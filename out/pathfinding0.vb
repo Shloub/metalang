@@ -43,11 +43,11 @@ Module pathfinding0
       Dim x As Integer = Integer.Parse(Console.ReadLine())
       Dim y As Integer = Integer.Parse(Console.ReadLine())
       Console.Write("" & x & " " & y & "" & Chr(10) & "")
-      Dim w(y)() As Char
-      For  ba As Integer  = 0 to  y - 1
-        w(ba) = Console.ReadLine().ToCharArray()
+      Dim e(y)() As Char
+      For  f As Integer  = 0 to  y - 1
+        e(f) = Console.ReadLine().ToCharArray()
       Next
-      Dim tab As Char()() = w
+      Dim tab As Char()() = e
       Dim result As Integer = pathfind(tab, x, y)
       Console.Write(result)
       End Sub

@@ -40,10 +40,10 @@ function pathfind(&$tab, $x, $y){
 $x = intval(trim(fgets(STDIN)));
 $y = intval(trim(fgets(STDIN)));
 echo $x, " ", $y, "\n";
-$l = array();
-for ($m = 0 ; $m < $y; $m++)
-  $l[$m] = fgets(STDIN);
-$tab = $l;
+$e = array();
+for ($f = 0 ; $f < $y; $f++)
+  $e[$f] = fgets(STDIN);
+$tab = $e;
 $result = pathfind($tab, $x, $y);
 echo $result;
 ?>

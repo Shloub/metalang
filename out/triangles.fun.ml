@@ -13,7 +13,7 @@ let rec find0 len tab cache x y =
   (* 
 	Cette fonction est récursive
 	 *)
-  let e () = let result = 0 in
+  let c () = let result = 0 in
   let out0 = (find0 len tab cache x (y + 1)) in
   let out1 = (find0 len tab cache (x + 1) (y + 1)) in
   let result = (if (out0 > out1)
@@ -28,58 +28,58 @@ let rec find0 len tab cache x y =
    in
   (if (y = (len - 1))
    then tab.(y).(x)
-   else let f () = (e ()) in
+   else let d () = (c ()) in
    (if (x > y)
     then (- 10000)
     else (if (cache.(y).(x) <> 0)
           then cache.(y).(x)
-          else (f ()))))
+          else (d ()))))
 let find len tab =
-  let tab2 = (Array.init_withenv len (fun  i () -> let tab3 = (Array.init_withenv (i + 1) (fun  j () -> let d = 0 in
-  ((), d)) ()) in
-  let c = tab3 in
-  ((), c)) ()) in
+  let tab2 = (Array.init_withenv len (fun  i () -> let tab3 = (Array.init_withenv (i + 1) (fun  j () -> let b = 0 in
+  ((), b)) ()) in
+  let a = tab3 in
+  ((), a)) ()) in
   (find0 len tab tab2 0 0)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  t -> let len = t in
+  (fun  r -> let len = r in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init_withenv len (fun  i () -> let tab2 = (Array.init_withenv (i + 1) (fun  j () -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  m -> let tmp = m in
+    (fun  g -> let tmp = g in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let h = tmp in
-      ((), h)
+      let f = tmp in
+      ((), f)
       )
     )) ()) in
-    let g = tab2 in
-    ((), g)) ()) in
+    let e = tab2 in
+    ((), e)) ()) in
     (
       (Printf.printf "%d\n" (find len tab));
-      let r = 0 in
-      let s = (len - 1) in
-      let rec n k =
-        (if (k <= s)
-         then let p = 0 in
-         let q = k in
-         let rec o l =
-           (if (l <= q)
+      let p = 0 in
+      let q = (len - 1) in
+      let rec h k =
+        (if (k <= q)
+         then let n = 0 in
+         let o = k in
+         let rec m l =
+           (if (l <= o)
             then (
                    (Printf.printf "%d " tab.(k).(l));
-                   (o (l + 1))
+                   (m (l + 1))
                    )
             
             else (
                    (Printf.printf "\n" );
-                   (n (k + 1))
+                   (h (k + 1))
                    )
             ) in
-           (o p)
+           (m n)
          else ()) in
-        (n r)
+        (h p)
       )
     
     )

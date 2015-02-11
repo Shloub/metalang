@@ -14,17 +14,17 @@ public:
 
 
 int main(){
-  int g, f, bar_;
-  std::cin >> bar_ >> std::skipws >> f >> g;
-  tuple_int_int * i = new tuple_int_int();
-  i->tuple_int_int_field_0=f;
-  i->tuple_int_int_field_1=g;
+  int d, c, bar_;
+  std::cin >> bar_ >> std::skipws >> c >> d;
+  tuple_int_int * e = new tuple_int_int();
+  e->tuple_int_int_field_0=c;
+  e->tuple_int_int_field_1=d;
   toto * t = new toto();
-  t->foo=i;
+  t->foo=e;
   t->bar=bar_;
-  tuple_int_int * h = t->foo;
-  int a = h->tuple_int_int_field_0;
-  int b = h->tuple_int_int_field_1;
+  tuple_int_int * f = t->foo;
+  int a = f->tuple_int_int_field_0;
+  int b = f->tuple_int_int_field_1;
   std::cout << a << " " << b << " " << t->bar << "\n";
   return 0;
 }

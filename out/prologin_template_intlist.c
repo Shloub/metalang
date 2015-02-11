@@ -10,12 +10,12 @@ int programme_candidat(int* tableau, int taille){
 }
 
 int main(void){
-  int e, taille;
+  int a, taille;
   scanf("%d ", &taille);
   int *tableau = malloc( taille * sizeof(int));
-  for (e = 0 ; e < taille; e++)
+  for (a = 0 ; a < taille; a++)
   {
-    scanf("%d ", &tableau[e]);
+    scanf("%d ", &tableau[a]);
   }
   printf("%d\n", programme_candidat(tableau, taille));
   return 0;

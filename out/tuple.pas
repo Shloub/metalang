@@ -12,36 +12,36 @@ var
   a : Longint;
   b : Longint;
   c : tuple_int_int;
-  e : tuple_int_int;
+  d : tuple_int_int;
 begin
   c := tuple0;
   a := c^.tuple_int_int_field_0;
   b := c^.tuple_int_int_field_1;
-  new(e);
-  e^.tuple_int_int_field_0 := a
+  new(d);
+  d^.tuple_int_int_field_0 := a
   +
   1;
-  e^.tuple_int_int_field_1 := b
+  d^.tuple_int_int_field_1 := b
   +
   1;
-  exit(e);
+  exit(d);
 end;
 
 
 var
   a : Longint;
   b : Longint;
-  d : tuple_int_int;
+  e : tuple_int_int;
   g : tuple_int_int;
   t : tuple_int_int;
 begin
-  new(g);
-  g^.tuple_int_int_field_0 := 0;
-  g^.tuple_int_int_field_1 := 1;
-  t := f(g);
-  d := t;
-  a := d^.tuple_int_int_field_0;
-  b := d^.tuple_int_int_field_1;
+  new(e);
+  e^.tuple_int_int_field_0 := 0;
+  e^.tuple_int_int_field_1 := 1;
+  t := f(e);
+  g := t;
+  a := g^.tuple_int_int_field_0;
+  b := g^.tuple_int_int_field_1;
   Write(a);
   Write(' -- ');
   Write(b);

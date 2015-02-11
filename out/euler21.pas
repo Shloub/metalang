@@ -1,7 +1,7 @@
 program euler21;
 
-type b = array of Longint;
-function eratostene(t : b; max0 : Longint) : Longint;
+type a = array of Longint;
+function eratostene(t : a; max0 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -25,7 +25,7 @@ begin
   exit(n);
 end;
 
-function fillPrimesFactors(t : b; n : Longint; primes : b; nprimes : Longint) : Longint;
+function fillPrimesFactors(t : a; n : Longint; primes : a; nprimes : Longint) : Longint;
 var
   d : Longint;
   i : Longint;
@@ -47,7 +47,7 @@ begin
   exit(n);
 end;
 
-function sumdivaux2(t : b; n : Longint; i : Longint) : Longint;
+function sumdivaux2(t : a; n : Longint; i : Longint) : Longint;
 begin
   while (i < n) and (t[i] = 0) do
   begin
@@ -56,7 +56,7 @@ begin
   exit(i);
 end;
 
-function sumdivaux(t : b; n : Longint; i : Longint) : Longint;
+function sumdivaux(t : a; n : Longint; i : Longint) : Longint;
 var
   j : Longint;
   o : Longint;
@@ -86,11 +86,11 @@ begin
     end;;
 end;
 
-function sumdiv(nprimes : Longint; primes : b; n : Longint) : Longint;
+function sumdiv(nprimes : Longint; primes : a; n : Longint) : Longint;
 var
   i : Longint;
   max0 : Longint;
-  t : b;
+  t : a;
 begin
   SetLength(t, n + 1);
   for i := 0 to  n + 1 - 1 do
@@ -103,7 +103,7 @@ end;
 
 
 var
-  era : b;
+  era : a;
   j : Longint;
   k : Longint;
   l : Longint;
@@ -113,7 +113,7 @@ var
   o : Longint;
   other : Longint;
   othersum : Longint;
-  primes : b;
+  primes : a;
   sum : Longint;
 begin
   maximumprimes := 1001;

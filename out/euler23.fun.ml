@@ -11,90 +11,90 @@ end
 
 let eratostene t max0 =
   let n = 0 in
-  let bc = 2 in
-  let bd = (max0 - 1) in
-  let rec ba i n =
-    (if (i <= bd)
+  let z = 2 in
+  let ba = (max0 - 1) in
+  let rec x i n =
+    (if (i <= ba)
      then let n = (if (t.(i) = i)
                    then let n = (n + 1) in
                    let j = (i * i) in
-                   let rec bb j =
+                   let rec y j =
                      (if ((j < max0) && (j > 0))
                       then (
                              t.(j) <- 0;
                              let j = (j + i) in
-                             (bb j)
+                             (y j)
                              )
                       
                       else n) in
-                     (bb j)
+                     (y j)
                    else n) in
-     (ba (i + 1) n)
+     (x (i + 1) n)
      else n) in
-    (ba bc n)
+    (x z n)
 let fillPrimesFactors t n primes nprimes =
-  let y = 0 in
-  let z = (nprimes - 1) in
-  let rec w i n =
-    (if (i <= z)
+  let v = 0 in
+  let w = (nprimes - 1) in
+  let rec m i n =
+    (if (i <= w)
      then let d = primes.(i) in
-     let rec x n =
+     let rec u n =
        (if ((n mod d) = 0)
         then (
                t.(d) <- (t.(d) + 1);
                let n = (n / d) in
-               (x n)
+               (u n)
                )
         
         else (if (n = 1)
               then primes.(i)
-              else (w (i + 1) n))) in
-       (x n)
+              else (m (i + 1) n))) in
+       (u n)
      else n) in
-    (w y n)
+    (m v n)
 let sumdivaux2 t n i =
-  let rec v i =
+  let rec h i =
     (if ((i < n) && (t.(i) = 0))
      then let i = (i + 1) in
-     (v i)
+     (h i)
      else i) in
-    (v i)
+    (h i)
 let rec sumdivaux t n i =
-  let f () = () in
+  let b () = () in
   (if (i > n)
    then 1
-   else let g () = (f ()) in
+   else let c () = (b ()) in
    (if (t.(i) = 0)
     then (sumdivaux t n (sumdivaux2 t n (i + 1)))
     else let o = (sumdivaux t n (sumdivaux2 t n (i + 1))) in
     let out0 = 0 in
     let p = i in
-    let m = 1 in
-    let u = t.(i) in
-    let rec h j out0 p =
-      (if (j <= u)
+    let f = 1 in
+    let g = t.(i) in
+    let rec e j out0 p =
+      (if (j <= g)
        then let out0 = (out0 + p) in
        let p = (p * i) in
-       (h (j + 1) out0 p)
+       (e (j + 1) out0 p)
        else ((out0 + 1) * o)) in
-      (h m out0 p)))
+      (e f out0 p)))
 let sumdiv nprimes primes n =
-  let t = (Array.init_withenv (n + 1) (fun  i () -> let e = 0 in
-  ((), e)) ()) in
+  let t = (Array.init_withenv (n + 1) (fun  i () -> let a = 0 in
+  ((), a)) ()) in
   let max0 = (fillPrimesFactors t n primes nprimes) in
   (sumdivaux t max0 0)
 let main =
   let maximumprimes = 30001 in
-  let era = (Array.init_withenv maximumprimes (fun  s () -> let be = s in
-  ((), be)) ()) in
+  let era = (Array.init_withenv maximumprimes (fun  s () -> let bb = s in
+  ((), bb)) ()) in
   let nprimes = (eratostene era maximumprimes) in
-  let primes = (Array.init_withenv nprimes (fun  t () -> let bf = 0 in
-  ((), bf)) ()) in
+  let primes = (Array.init_withenv nprimes (fun  t () -> let bc = 0 in
+  ((), bc)) ()) in
   let l = 0 in
-  let bv = 2 in
-  let bw = (maximumprimes - 1) in
-  let rec bu k l =
-    (if (k <= bw)
+  let bs = 2 in
+  let bt = (maximumprimes - 1) in
+  let rec br k l =
+    (if (k <= bt)
      then let l = (if (era.(k) = k)
                    then (
                           primes.(l) <- k;
@@ -103,58 +103,58 @@ let main =
                           )
                    
                    else l) in
-     (bu (k + 1) l)
+     (br (k + 1) l)
      else let n = 100 in
      (*  28124 ça prend trop de temps mais on arrive a passer le test  *)
-     let abondant = (Array.init_withenv (n + 1) (fun  p () -> let bg = false in
-     ((), bg)) ()) in
-     let summable = (Array.init_withenv (n + 1) (fun  q () -> let bh = false in
-     ((), bh)) ()) in
+     let abondant = (Array.init_withenv (n + 1) (fun  p () -> let bd = false in
+     ((), bd)) ()) in
+     let summable = (Array.init_withenv (n + 1) (fun  q () -> let be = false in
+     ((), be)) ()) in
      let sum = 0 in
-     let bs = 2 in
-     let bt = n in
-     let rec br r =
-       (if (r <= bt)
+     let bp = 2 in
+     let bq = n in
+     let rec bo r =
+       (if (r <= bq)
         then let other = ((sumdiv nprimes primes r) - r) in
         (
           (if (other > r)
            then abondant.(r) <- true
            else ());
-          (br (r + 1))
+          (bo (r + 1))
           )
         
-        else let bp = 1 in
-        let bq = n in
-        let rec bl i =
-          (if (i <= bq)
-           then let bn = 1 in
-           let bo = n in
-           let rec bm j =
-             (if (j <= bo)
+        else let bm = 1 in
+        let bn = n in
+        let rec bi i =
+          (if (i <= bn)
+           then let bk = 1 in
+           let bl = n in
+           let rec bj j =
+             (if (j <= bl)
               then (
                      (if ((abondant.(i) && abondant.(j)) && ((i + j) <= n))
                       then summable.((i + j)) <- true
                       else ());
-                     (bm (j + 1))
+                     (bj (j + 1))
                      )
               
-              else (bl (i + 1))) in
-             (bm bn)
-           else let bj = 1 in
-           let bk = n in
-           let rec bi o sum =
-             (if (o <= bk)
+              else (bi (i + 1))) in
+             (bj bk)
+           else let bg = 1 in
+           let bh = n in
+           let rec bf o sum =
+             (if (o <= bh)
               then let sum = (if (not summable.(o))
                               then let sum = (sum + o) in
                               sum
                               else sum) in
-              (bi (o + 1) sum)
+              (bf (o + 1) sum)
               else (
                      (Printf.printf "\n%d\n" sum)
                      )
               ) in
-             (bi bj sum)) in
-          (bl bp)) in
-       (br bs)) in
-    (bu bv l)
+             (bf bg sum)) in
+          (bi bm)) in
+       (bo bp)) in
+    (br bs l)
 

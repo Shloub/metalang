@@ -50,19 +50,19 @@
       (let
        ((tableau (array_init
                     taille_y
-                    (function (lambda (m)
+                    (function (lambda (a)
                     (block lambda_1
                       (let
-                       ((r (array_init
+                       ((c (array_init
                               taille_x
-                              (function (lambda (p)
+                              (function (lambda (d)
                               (block lambda_2
-                                (let ((q (mread-int )))
+                                (let ((b (mread-int )))
                                   (mread-blank)
-                                  (return-from lambda_2 q)
+                                  (return-from lambda_2 b)
                                 )))
                               ))))
-                      (return-from lambda_1 r)
+                      (return-from lambda_1 c)
                       )))
                     ))))
       (princ (programme_candidat tableau taille_x taille_y))

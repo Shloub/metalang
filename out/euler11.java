@@ -32,64 +32,64 @@ public class euler11
     for (int i = 0 ; i < 8; i++)
       if (i == 0)
     {
-      tuple_int_int ba = new tuple_int_int();
-      ba.tuple_int_int_field_0 = 0;
-      ba.tuple_int_int_field_1 = 1;
-      directions[i] = ba;
+      tuple_int_int c = new tuple_int_int();
+      c.tuple_int_int_field_0 = 0;
+      c.tuple_int_int_field_1 = 1;
+      directions[i] = c;
     }
     else if (i == 1)
     {
-      tuple_int_int w = new tuple_int_int();
-      w.tuple_int_int_field_0 = 1;
-      w.tuple_int_int_field_1 = 0;
-      directions[i] = w;
+      tuple_int_int d = new tuple_int_int();
+      d.tuple_int_int_field_0 = 1;
+      d.tuple_int_int_field_1 = 0;
+      directions[i] = d;
     }
     else if (i == 2)
     {
-      tuple_int_int v = new tuple_int_int();
-      v.tuple_int_int_field_0 = 0;
-      v.tuple_int_int_field_1 = -1;
-      directions[i] = v;
+      tuple_int_int e = new tuple_int_int();
+      e.tuple_int_int_field_0 = 0;
+      e.tuple_int_int_field_1 = -1;
+      directions[i] = e;
     }
     else if (i == 3)
     {
-      tuple_int_int u = new tuple_int_int();
-      u.tuple_int_int_field_0 = -1;
-      u.tuple_int_int_field_1 = 0;
-      directions[i] = u;
+      tuple_int_int f = new tuple_int_int();
+      f.tuple_int_int_field_0 = -1;
+      f.tuple_int_int_field_1 = 0;
+      directions[i] = f;
     }
     else if (i == 4)
     {
-      tuple_int_int t = new tuple_int_int();
-      t.tuple_int_int_field_0 = 1;
-      t.tuple_int_int_field_1 = 1;
-      directions[i] = t;
+      tuple_int_int g = new tuple_int_int();
+      g.tuple_int_int_field_0 = 1;
+      g.tuple_int_int_field_1 = 1;
+      directions[i] = g;
     }
     else if (i == 5)
     {
-      tuple_int_int s = new tuple_int_int();
-      s.tuple_int_int_field_0 = 1;
-      s.tuple_int_int_field_1 = -1;
-      directions[i] = s;
+      tuple_int_int h = new tuple_int_int();
+      h.tuple_int_int_field_0 = 1;
+      h.tuple_int_int_field_1 = -1;
+      directions[i] = h;
     }
     else if (i == 6)
     {
-      tuple_int_int r = new tuple_int_int();
-      r.tuple_int_int_field_0 = -1;
-      r.tuple_int_int_field_1 = 1;
-      directions[i] = r;
+      tuple_int_int k = new tuple_int_int();
+      k.tuple_int_int_field_0 = -1;
+      k.tuple_int_int_field_1 = 1;
+      directions[i] = k;
     }
     else
     {
-      tuple_int_int q = new tuple_int_int();
-      q.tuple_int_int_field_0 = -1;
-      q.tuple_int_int_field_1 = -1;
-      directions[i] = q;
+      tuple_int_int l = new tuple_int_int();
+      l.tuple_int_int_field_0 = -1;
+      l.tuple_int_int_field_1 = -1;
+      directions[i] = l;
     }
     int max0 = 0;
     int[][] m = new int[20][];
-    for (int h = 0 ; h < 20; h++)
-      m[h] = read_int_line();
+    for (int o = 0 ; o < 20; o++)
+      m[o] = read_int_line();
     for (int j = 0 ; j <= 7; j ++)
     {
       tuple_int_int p = directions[j];

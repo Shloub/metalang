@@ -40,86 +40,86 @@ var directions = new Array(8);
 for (var i = 0 ; i <= 8 - 1; i++)
   if (i == 0)
 {
-  var bh = {
+  var c = {
     tuple_int_int_field_0 : 0,
     tuple_int_int_field_1 : 1
   };
-  directions[i] = bh;
+  directions[i] = c;
 }
 else if (i == 1)
 {
-  var bg = {
+  var d = {
     tuple_int_int_field_0 : 1,
     tuple_int_int_field_1 : 0
   };
-  directions[i] = bg;
+  directions[i] = d;
 }
 else if (i == 2)
 {
-  var bf = {
+  var e = {
     tuple_int_int_field_0 : 0,
     tuple_int_int_field_1 : -1
   };
-  directions[i] = bf;
+  directions[i] = e;
 }
 else if (i == 3)
 {
-  var be = {
+  var f = {
     tuple_int_int_field_0 : -1,
     tuple_int_int_field_1 : 0
   };
-  directions[i] = be;
+  directions[i] = f;
 }
 else if (i == 4)
 {
-  var bd = {
+  var g = {
     tuple_int_int_field_0 : 1,
     tuple_int_int_field_1 : 1
   };
-  directions[i] = bd;
+  directions[i] = g;
 }
 else if (i == 5)
 {
-  var bc = {
+  var h = {
     tuple_int_int_field_0 : 1,
     tuple_int_int_field_1 : -1
   };
-  directions[i] = bc;
+  directions[i] = h;
 }
 else if (i == 6)
 {
-  var bb = {
+  var k = {
     tuple_int_int_field_0 : -1,
     tuple_int_int_field_1 : 1
   };
-  directions[i] = bb;
+  directions[i] = k;
 }
 else
 {
-  var ba = {
+  var l = {
     tuple_int_int_field_0 : -1,
     tuple_int_int_field_1 : -1
   };
-  directions[i] = ba;
+  directions[i] = l;
 }
 var max0 = 0;
-var h = 20;
+var o = 20;
 var m = new Array(20);
-for (var o = 0 ; o <= 20 - 1; o++)
+for (var p = 0 ; p <= 20 - 1; p++)
 {
-  var s = new Array(h);
-  for (var q = 0 ; q <= h - 1; q++)
+  var q = new Array(o);
+  for (var r = 0 ; r <= o - 1; r++)
   {
-    s[q]=read_int_();
+    q[r]=read_int_();
     stdinsep();
   }
-  m[o] = s;
+  m[p] = q;
 }
 for (var j = 0 ; j <= 7; j++)
 {
-  var w = directions[j];
-  var dx = w.tuple_int_int_field_0;
-  var dy = w.tuple_int_int_field_1;
+  var s = directions[j];
+  var dx = s.tuple_int_int_field_0;
+  var dy = s.tuple_int_int_field_1;
   for (var x = 0 ; x <= 19; x++)
     for (var y = 0 ; y <= 19; y++)
       max0 = Math.max(max0, find(4, m, x, y, dx, dy));

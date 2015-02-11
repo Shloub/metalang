@@ -51,11 +51,11 @@
   (let
    ((l (array_init
           10
-          (function (lambda (o)
+          (function (lambda (d)
           (block lambda_1
-            (let ((p (mread-int )))
+            (let ((e (mread-int )))
               (mread-blank)
-              (return-from lambda_1 p)
+              (return-from lambda_1 e)
             )))
           ))))
   (do

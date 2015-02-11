@@ -15,8 +15,8 @@ public class aaa_readints
     }
     len = int.Parse(Console.ReadLine());
     int[][] tab2 = new int[len - 1][];
-    for (int h = 0 ; h < len - 1; h++)
-      tab2[h] =
+    for (int a = 0 ; a < len - 1; a++)
+      tab2[a] =
       new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int i = 0 ; i <= len - 2; i ++)
     {

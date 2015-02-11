@@ -13,14 +13,14 @@ begin
     Get(C);
   end loop;
 end;
-type f is Array (Integer range <>) of Character;
-type f_PTR is access f;
+type b is Array (Integer range <>) of Character;
+type b_PTR is access b;
 
-  str : f_PTR;
+  str : b_PTR;
 begin
-  str := new f (0..(12));
-  for d in integer range (0)..(12) - (1) loop
-    Get(str(d));
+  str := new b (0..(12));
+  for a in integer range (0)..(12) - (1) loop
+    Get(str(a));
   end loop;
   SkipSpaces;
   for i in integer range (0)..(11) loop

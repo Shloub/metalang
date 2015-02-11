@@ -69,11 +69,11 @@
     (let
      ((tab (array_init
               len
-              (function (lambda (e)
+              (function (lambda (a)
               (block lambda_2
-                (let ((f (mread-int )))
+                (let ((b (mread-int )))
                   (mread-blank)
-                  (return-from lambda_2 f)
+                  (return-from lambda_2 b)
                 )))
               ))))
     (princ (result len tab))

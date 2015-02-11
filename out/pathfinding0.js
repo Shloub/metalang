@@ -75,16 +75,16 @@ stdinsep();
 y=read_int_();
 stdinsep();
 util.print(x, " ", y, "\n");
-var r = new Array(y);
-for (var s = 0 ; s <= y - 1; s++)
+var e = new Array(y);
+for (var f = 0 ; f <= y - 1; f++)
 {
-  var ba = new Array(x);
-  for (var v = 0 ; v <= x - 1; v++)
-    ba[v]=read_char_();
+  var g = new Array(x);
+  for (var h = 0 ; h <= x - 1; h++)
+    g[h]=read_char_();
   stdinsep();
-  r[s] = ba;
+  e[f] = g;
 }
-var tab = r;
+var tab = e;
 var result = pathfind(tab, x, y);
 util.print(result);
 

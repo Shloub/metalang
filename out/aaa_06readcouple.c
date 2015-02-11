@@ -2,16 +2,16 @@
 #include <stdlib.h>
 
 int main(void){
-  int j, k, i, b, a;
+  int j, c, i, b, a;
   for (i = 1 ; i <= 3; i++)
   {
     scanf("%d %d ", &a, &b);
     printf("a = %d b = %d\n", a, b);
   }
   int *l = malloc( 10 * sizeof(int));
-  for (k = 0 ; k < 10; k++)
+  for (c = 0 ; c < 10; c++)
   {
-    scanf("%d ", &l[k]);
+    scanf("%d ", &l[c]);
   }
   for (j = 0 ; j <= 9; j++)
   {

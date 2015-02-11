@@ -13,9 +13,9 @@ begin
     Get(C);
   end loop;
 end;
-type g is Array (Integer range <>) of Integer;
-type g_PTR is access g;
-function programme_candidat(tableau : in g_PTR;
+type b is Array (Integer range <>) of Integer;
+type b_PTR is access b;
+function programme_candidat(tableau : in b_PTR;
 taille : in Integer) return Integer is
   out0 : Integer;
 begin
@@ -28,13 +28,13 @@ end;
 
 
   taille : Integer;
-  tableau : g_PTR;
+  tableau : b_PTR;
 begin
   Get(taille);
   SkipSpaces;
-  tableau := new g (0..taille);
-  for e in integer range (0)..taille - (1) loop
-    Get(tableau(e));
+  tableau := new b (0..taille);
+  for a in integer range (0)..taille - (1) loop
+    Get(tableau(a));
     SkipSpaces;
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,

@@ -23,15 +23,15 @@ begin
   end if;
 end;
 
-type bl is Array (Integer range <>) of Integer;
-type bl_PTR is access bl;
-type bm is Array (Integer range <>) of bl_PTR;
-type bm_PTR is access bm;
-type bn is Array (Integer range <>) of Character;
-type bn_PTR is access bn;
-type bo is Array (Integer range <>) of bn_PTR;
-type bo_PTR is access bo;
-function pathfind_aux(cache : in bm_PTR; tab : in bo_PTR; x : in Integer;
+type k is Array (Integer range <>) of Integer;
+type k_PTR is access k;
+type l is Array (Integer range <>) of k_PTR;
+type l_PTR is access l;
+type m is Array (Integer range <>) of Character;
+type m_PTR is access m;
+type o is Array (Integer range <>) of m_PTR;
+type o_PTR is access o;
+function pathfind_aux(cache : in l_PTR; tab : in o_PTR; x : in Integer;
 y : in Integer; posX : in Integer; posY : in Integer) return Integer is
   val4 : Integer;
   val3 : Integer;
@@ -69,14 +69,14 @@ begin
   end if;
 end;
 
-function pathfind(tab : in bo_PTR; x : in Integer;
+function pathfind(tab : in o_PTR; x : in Integer;
 y : in Integer) return Integer is
-  tmp : bl_PTR;
-  cache : bm_PTR;
+  tmp : k_PTR;
+  cache : l_PTR;
 begin
-  cache := new bm (0..y);
+  cache := new l (0..y);
   for i in integer range (0)..y - (1) loop
-    tmp := new bl (0..x);
+    tmp := new k (0..x);
     for j in integer range (0)..x - (1) loop
       Character'Write (Text_Streams.Stream (Current_Output), tab(i)(j));
       tmp(j) := (-(1));
@@ -90,10 +90,10 @@ end;
 
   y : Integer;
   x : Integer;
-  tab : bo_PTR;
+  tab : o_PTR;
   result : Integer;
-  bk : bn_PTR;
-  bf : bo_PTR;
+  g : m_PTR;
+  e : o_PTR;
 begin
   Get(x);
   SkipSpaces;
@@ -103,16 +103,16 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), " ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(y), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
-  bf := new bo (0..y);
-  for bg in integer range (0)..y - (1) loop
-    bk := new bn (0..x);
-    for bi in integer range (0)..x - (1) loop
-      Get(bk(bi));
+  e := new o (0..y);
+  for f in integer range (0)..y - (1) loop
+    g := new m (0..x);
+    for h in integer range (0)..x - (1) loop
+      Get(g(h));
     end loop;
     SkipSpaces;
-    bf(bg) := bk;
+    e(f) := g;
   end loop;
-  tab := bf;
+  tab := e;
   result := pathfind(tab, x, y);
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result), Left));
 end;

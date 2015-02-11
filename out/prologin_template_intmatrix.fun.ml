@@ -11,32 +11,32 @@ end
 
 let programme_candidat tableau x y =
   let out0 = 0 in
-  let v = 0 in
-  let w = (y - 1) in
-  let rec q i out0 =
-    (if (i <= w)
-     then let s = 0 in
-     let u = (x - 1) in
-     let rec r j out0 =
-       (if (j <= u)
+  let k = 0 in
+  let l = (y - 1) in
+  let rec e i out0 =
+    (if (i <= l)
+     then let g = 0 in
+     let h = (x - 1) in
+     let rec f j out0 =
+       (if (j <= h)
         then let out0 = (out0 + (tableau.(i).(j) * ((i * 2) + j))) in
-        (r (j + 1) out0)
-        else (q (i + 1) out0)) in
-       (r s out0)
+        (f (j + 1) out0)
+        else (e (i + 1) out0)) in
+       (f g out0)
      else out0) in
-    (q v out0)
+    (e k out0)
 let main =
   let taille_x = (Scanf.scanf "%d " (fun x -> x)) in
   let taille_y = (Scanf.scanf "%d " (fun x -> x)) in
-  let tableau = (Array.init_withenv taille_y (fun  k () -> let p = (Array.init_withenv taille_x (fun  m () -> Scanf.scanf "%d"
-  (fun  o -> (
+  let tableau = (Array.init_withenv taille_y (fun  a () -> let c = (Array.init_withenv taille_x (fun  d () -> Scanf.scanf "%d"
+  (fun  b -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let bb = o in
-               ((), bb)
+               let o = b in
+               ((), o)
                )
   )) ()) in
-  let ba = p in
-  ((), ba)) ()) in
+  let m = c in
+  ((), m)) ()) in
   (
     (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
     )

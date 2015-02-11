@@ -8,8 +8,8 @@ for ($i = 0 ; $i < $len; $i++)
 }
 $len = intval(trim(fgets(STDIN)));
 $tab2 = array();
-for ($h = 0 ; $h < $len - 1; $h++)
-  $tab2[$h] = array_map("intval", explode(" ", fgets(STDIN)));
+for ($a = 0 ; $a < $len - 1; $a++)
+  $tab2[$a] = array_map("intval", explode(" ", fgets(STDIN)));
 for ($i = 0 ; $i <= $len - 2; $i++)
 {
   for ($j = 0 ; $j < $len; $j++)

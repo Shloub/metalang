@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 int main(void){
-  int i, d;
+  int i, a;
   char *str = malloc( 12 * sizeof(char));
-  for (d = 0 ; d < 12; d++)
-    scanf("%c", &str[d]);
+  for (a = 0 ; a < 12; a++)
+    scanf("%c", &str[a]);
   scanf(" ");
   for (i = 0 ; i <= 11; i++)
     printf("%c", str[i]);

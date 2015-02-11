@@ -35,11 +35,11 @@ bigint * read_bigint(int len){
     chiffres->at(i) = chiffres->at(len - 1 - i);
     chiffres->at(len - 1 - i) = tmp;
   }
-  bigint * x = new bigint();
-  x->bigint_sign=true;
-  x->bigint_len=len;
-  x->bigint_chiffres=chiffres;
-  return x;
+  bigint * e = new bigint();
+  e->bigint_sign=true;
+  e->bigint_len=len;
+  e->bigint_chiffres=chiffres;
+  return e;
 }
 
 void print_bigint(bigint * a){
@@ -110,11 +110,11 @@ bigint * add_bigint_positif(bigint * a, bigint * b){
   }
   while (len > 0 && chiffres->at(len - 1) == 0)
     len --;
-  bigint * y = new bigint();
-  y->bigint_sign=true;
-  y->bigint_len=len;
-  y->bigint_chiffres=chiffres;
-  return y;
+  bigint * f = new bigint();
+  f->bigint_sign=true;
+  f->bigint_len=len;
+  f->bigint_chiffres=chiffres;
+  return f;
 }
 
 bigint * sub_bigint_positif(bigint * a, bigint * b){
@@ -140,19 +140,19 @@ Pré-requis : a > b
   }
   while (len > 0 && chiffres->at(len - 1) == 0)
     len --;
-  bigint * z = new bigint();
-  z->bigint_sign=true;
-  z->bigint_len=len;
-  z->bigint_chiffres=chiffres;
-  return z;
+  bigint * g = new bigint();
+  g->bigint_sign=true;
+  g->bigint_len=len;
+  g->bigint_chiffres=chiffres;
+  return g;
 }
 
 bigint * neg_bigint(bigint * a){
-  bigint * ba = new bigint();
-  ba->bigint_sign=!a->bigint_sign;
-  ba->bigint_len=a->bigint_len;
-  ba->bigint_chiffres=a->bigint_chiffres;
-  return ba;
+  bigint * h = new bigint();
+  h->bigint_sign=!a->bigint_sign;
+  h->bigint_len=a->bigint_len;
+  h->bigint_chiffres=a->bigint_chiffres;
+  return h;
 }
 
 bigint * add_bigint(bigint * a, bigint * b){
@@ -213,22 +213,22 @@ D'ou le nom de la fonction. */
   for (int l = 0 ; l <= 2; l ++)
     if (len != 0 && chiffres->at(len - 1) == 0)
     len --;
-  bigint * bc = new bigint();
-  bc->bigint_sign=a->bigint_sign == b->bigint_sign;
-  bc->bigint_len=len;
-  bc->bigint_chiffres=chiffres;
-  return bc;
+  bigint * m = new bigint();
+  m->bigint_sign=a->bigint_sign == b->bigint_sign;
+  m->bigint_len=len;
+  m->bigint_chiffres=chiffres;
+  return m;
 }
 
 bigint * bigint_premiers_chiffres(bigint * a, int i){
   int len = min2_(i, a->bigint_len);
   while (len != 0 && a->bigint_chiffres->at(len - 1) == 0)
     len --;
-  bigint * be = new bigint();
-  be->bigint_sign=a->bigint_sign;
-  be->bigint_len=len;
-  be->bigint_chiffres=a->bigint_chiffres;
-  return be;
+  bigint * o = new bigint();
+  o->bigint_sign=a->bigint_sign;
+  o->bigint_len=len;
+  o->bigint_chiffres=a->bigint_chiffres;
+  return o;
 }
 
 bigint * bigint_shift(bigint * a, int i){
@@ -238,11 +238,11 @@ bigint * bigint_shift(bigint * a, int i){
     chiffres->at(k) = a->bigint_chiffres->at(k - i);
   else
     chiffres->at(k) = 0;
-  bigint * bf = new bigint();
-  bf->bigint_sign=a->bigint_sign;
-  bf->bigint_len=a->bigint_len + i;
-  bf->bigint_chiffres=chiffres;
-  return bf;
+  bigint * p = new bigint();
+  p->bigint_sign=a->bigint_sign;
+  p->bigint_len=a->bigint_len + i;
+  p->bigint_chiffres=chiffres;
+  return p;
 }
 
 bigint * mul_bigint(bigint * aa, bigint * bb){
@@ -294,11 +294,11 @@ bigint * bigint_of_int(int i){
     t->at(k) = i % 10;
     i /= 10;
   }
-  bigint * bg = new bigint();
-  bg->bigint_sign=true;
-  bg->bigint_len=size;
-  bg->bigint_chiffres=t;
-  return bg;
+  bigint * q = new bigint();
+  q->bigint_sign=true;
+  q->bigint_len=size;
+  q->bigint_chiffres=t;
+  return q;
 }
 
 bigint * fact_bigint(bigint * a){
@@ -484,8 +484,8 @@ int main(){
   std::cout << ">";
   print_bigint(b);
   std::cout << "=";
-  bool m = bigint_gt(a, b);
-  if (m)
+  bool r = bigint_gt(a, b);
+  if (r)
     std::cout << "True";
   else
     std::cout << "False";

@@ -15,13 +15,13 @@ begin
 end;
 -- lit un sudoku sur l'entrée standard 
 
-type b is Array (Integer range <>) of Integer;
-type b_PTR is access b;
-function read_sudoku return b_PTR is
-  out0 : b_PTR;
+type a is Array (Integer range <>) of Integer;
+type a_PTR is access a;
+function read_sudoku return a_PTR is
+  out0 : a_PTR;
   k : Integer;
 begin
-  out0 := new b (0..(9) * (9));
+  out0 := new a (0..(9) * (9));
   for i in integer range (0)..(9) * (9) - (1) loop
     Get(k);
     SkipSpaces;
@@ -32,7 +32,7 @@ end;
 
 -- affiche un sudoku 
 
-procedure print_sudoku(sudoku0 : in b_PTR) is
+procedure print_sudoku(sudoku0 : in a_PTR) is
 begin
   for y in integer range (0)..(8) loop
     for x in integer range (0)..(8) loop
@@ -59,7 +59,7 @@ end;
 
 -- dit si le sudoku est terminé de remplir 
 
-function sudoku_done(s : in b_PTR) return Boolean is
+function sudoku_done(s : in a_PTR) return Boolean is
 begin
   for i in integer range (0)..(80) loop
     if s(i) = (0)
@@ -74,7 +74,7 @@ end;
 
 -- résout le sudoku
 
-function solve(sudoku0 : in b_PTR) return Boolean is
+function solve(sudoku0 : in a_PTR) return Boolean is
 begin
   if FALSE or else
   (sudoku0((0)) /= (0) and then sudoku0((0)) = sudoku0((9))) or else
@@ -1074,7 +1074,7 @@ begin
 end;
 
 
-  sudoku0 : b_PTR;
+  sudoku0 : a_PTR;
 begin
   sudoku0 := read_sudoku;
   print_sudoku(sudoku0);

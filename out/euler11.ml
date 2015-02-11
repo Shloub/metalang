@@ -26,12 +26,12 @@ begin
     else
       (-1, -1)) in
   let max0 = ref( 0 ) in
-  let h = 20 in
-  let m = Array.init 20 (fun _o ->
-    let s = Array.init h (fun _q ->
-      let r = Scanf.scanf "%d " (fun v_0 -> v_0) in
-      r) in
-    s) in
+  let c = 20 in
+  let m = Array.init 20 (fun _d ->
+    let f = Array.init c (fun _g ->
+      let e = Scanf.scanf "%d " (fun v_0 -> v_0) in
+      e) in
+    f) in
   for j = 0 to 7 do
     let (dx, dy) = directions.(j) in
     for x = 0 to 19 do

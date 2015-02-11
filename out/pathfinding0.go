@@ -66,16 +66,16 @@ func main() {
   fmt.Fscanf(reader, "%d", &y)
   skip()
   fmt.Printf("%d %d\n", x, y);
-  var bf [][]byte = make([][]byte, y)
-  for bg := 0 ; bg <= y - 1; bg++ {
-    var bk []byte = make([]byte, x)
-      for bi := 0 ; bi <= x - 1; bi++ {
-        fmt.Fscanf(reader, "%c", &bk[bi])
+  var e [][]byte = make([][]byte, y)
+  for f := 0 ; f <= y - 1; f++ {
+    var g []byte = make([]byte, x)
+      for h := 0 ; h <= x - 1; h++ {
+        fmt.Fscanf(reader, "%c", &g[h])
       }
       skip()
-      bf[bg] = bk;
+      e[f] = g;
   }
-  var tab [][]byte = bf
+  var tab [][]byte = e
   var result int = pathfind(tab, x, y)
   fmt.Printf("%d", result);
 }

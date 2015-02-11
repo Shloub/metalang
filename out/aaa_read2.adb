@@ -18,15 +18,15 @@ end;
 --read int, read char et skip
 --
 
-type v is Array (Integer range <>) of Integer;
-type v_PTR is access v;
-type w is Array (Integer range <>) of Character;
-type w_PTR is access w;
+type e is Array (Integer range <>) of Integer;
+type e_PTR is access e;
+type f is Array (Integer range <>) of Character;
+type f_PTR is access f;
 
   tmpc : Character;
-  tab4 : w_PTR;
-  tab2 : v_PTR;
-  tab : v_PTR;
+  tab4 : f_PTR;
+  tab2 : e_PTR;
+  tab : e_PTR;
   strlen : Integer;
   len : Integer;
   c : Integer;
@@ -35,9 +35,9 @@ begin
   SkipSpaces;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=len" & Character'Val(10) & "");
-  tab := new v (0..len);
-  for f in integer range (0)..len - (1) loop
-    Get(tab(f));
+  tab := new e (0..len);
+  for a in integer range (0)..len - (1) loop
+    Get(tab(a));
     SkipSpaces;
   end loop;
   for i in integer range (0)..len - (1) loop
@@ -47,9 +47,9 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), " ");
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
-  tab2 := new v (0..len);
-  for l in integer range (0)..len - (1) loop
-    Get(tab2(l));
+  tab2 := new e (0..len);
+  for b in integer range (0)..len - (1) loop
+    Get(tab2(b));
     SkipSpaces;
   end loop;
   for i_0 in integer range (0)..len - (1) loop
@@ -62,9 +62,9 @@ begin
   SkipSpaces;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(strlen), Left));
   String'Write (Text_Streams.Stream (Current_Output), "=strlen" & Character'Val(10) & "");
-  tab4 := new w (0..strlen);
-  for s in integer range (0)..strlen - (1) loop
-    Get(tab4(s));
+  tab4 := new f (0..strlen);
+  for d in integer range (0)..strlen - (1) loop
+    Get(tab4(d));
   end loop;
   SkipSpaces;
   for i3 in integer range (0)..strlen - (1) loop

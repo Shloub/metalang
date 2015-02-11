@@ -17,14 +17,14 @@ end;
 --  Ce test a été généré par Metalang.
 --
 
-type g is Array (Integer range <>) of Boolean;
-type g_PTR is access g;
-type h is Array (Integer range <>) of Integer;
-type h_PTR is access h;
-function result(len : in Integer; tab : in h_PTR) return Integer is
-  tab2 : g_PTR;
+type b is Array (Integer range <>) of Boolean;
+type b_PTR is access b;
+type c is Array (Integer range <>) of Integer;
+type c_PTR is access c;
+function result(len : in Integer; tab : in c_PTR) return Integer is
+  tab2 : b_PTR;
 begin
-  tab2 := new g (0..len);
+  tab2 := new b (0..len);
   for i in integer range (0)..len - (1) loop
     tab2(i) := FALSE;
   end loop;
@@ -44,16 +44,16 @@ begin
 end;
 
 
-  tab : h_PTR;
+  tab : c_PTR;
   len : Integer;
 begin
   Get(len);
   SkipSpaces;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
-  tab := new h (0..len);
-  for e in integer range (0)..len - (1) loop
-    Get(tab(e));
+  tab := new c (0..len);
+  for a in integer range (0)..len - (1) loop
+    Get(tab(a));
     SkipSpaces;
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result(len,

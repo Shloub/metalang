@@ -12,17 +12,17 @@ typedef struct toto {
 } toto;
 
 int main(void){
-  int g, f, bar_;
-  scanf("%d %d %d ", &bar_, &f, &g);
-  struct tuple_int_int * i = malloc (sizeof(i) );
-  i->tuple_int_int_field_0=f;
-  i->tuple_int_int_field_1=g;
+  int d, c, bar_;
+  scanf("%d %d %d ", &bar_, &c, &d);
+  struct tuple_int_int * e = malloc (sizeof(e) );
+  e->tuple_int_int_field_0=c;
+  e->tuple_int_int_field_1=d;
   struct toto * t = malloc (sizeof(t) );
-  t->foo=i;
+  t->foo=e;
   t->bar=bar_;
-  struct tuple_int_int * h = t->foo;
-  int a = h->tuple_int_int_field_0;
-  int b = h->tuple_int_int_field_1;
+  struct tuple_int_int * f = t->foo;
+  int a = f->tuple_int_int_field_0;
+  int b = f->tuple_int_int_field_1;
   printf("%d %d %d\n", a, b, t->bar);
   return 0;
 }

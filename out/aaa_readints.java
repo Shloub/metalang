@@ -23,8 +23,8 @@ public class aaa_readints
     }
     len = Integer.parseInt(scanner.nextLine());
     int[][] tab2 = new int[len - 1][];
-    for (int h = 0 ; h < len - 1; h++)
-      tab2[h] = read_int_line();
+    for (int a = 0 ; a < len - 1; a++)
+      tab2[a] = read_int_line();
     for (int i = 0 ; i <= len - 2; i ++)
     {
       for (int j = 0 ; j < len; j++)

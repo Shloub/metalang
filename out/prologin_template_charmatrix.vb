@@ -19,11 +19,11 @@ Module prologin_template_charmatrix
   Sub Main()
     Dim taille_x As Integer = Integer.Parse(Console.ReadLine())
     Dim taille_y As Integer = Integer.Parse(Console.ReadLine())
-    Dim e(taille_y)() As Char
-    For  f As Integer  = 0 to  taille_y - 1
-      e(f) = Console.ReadLine().ToCharArray()
+    Dim a(taille_y)() As Char
+    For  b As Integer  = 0 to  taille_y - 1
+      a(b) = Console.ReadLine().ToCharArray()
     Next
-    Dim tableau As Char()() = e
+    Dim tableau As Char()() = a
     Console.Write("" & programme_candidat(tableau, taille_x, taille_y) & "" & Chr(10) & "")
     End Sub
     

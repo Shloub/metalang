@@ -13,11 +13,11 @@ begin
     Get(C);
   end loop;
 end;
-type s is Array (Integer range <>) of Character;
-type s_PTR is access s;
-type u is Array (Integer range <>) of s_PTR;
-type u_PTR is access u;
-function programme_candidat(tableau : in u_PTR; taille_x : in Integer;
+type e is Array (Integer range <>) of Character;
+type e_PTR is access e;
+type f is Array (Integer range <>) of e_PTR;
+type f_PTR is access f;
+function programme_candidat(tableau : in f_PTR; taille_x : in Integer;
 taille_y : in Integer) return Integer is
   out0 : Integer;
 begin
@@ -35,24 +35,24 @@ end;
 
   taille_y : Integer;
   taille_x : Integer;
-  tableau : u_PTR;
-  r : s_PTR;
-  l : u_PTR;
+  tableau : f_PTR;
+  c : e_PTR;
+  a : f_PTR;
 begin
   Get(taille_x);
   SkipSpaces;
   Get(taille_y);
   SkipSpaces;
-  l := new u (0..taille_y);
-  for m in integer range (0)..taille_y - (1) loop
-    r := new s (0..taille_x);
-    for p in integer range (0)..taille_x - (1) loop
-      Get(r(p));
+  a := new f (0..taille_y);
+  for b in integer range (0)..taille_y - (1) loop
+    c := new e (0..taille_x);
+    for d in integer range (0)..taille_x - (1) loop
+      Get(c(d));
     end loop;
     SkipSpaces;
-    l(m) := r;
+    a(b) := c;
   end loop;
-  tableau := l;
+  tableau := a;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,
   taille_x, taille_y)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");

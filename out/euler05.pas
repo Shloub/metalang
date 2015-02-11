@@ -13,12 +13,12 @@ begin
     end;
 end;
 
-type p = array of Longint;
-function primesfactors(n : Longint) : p;
+type c = array of Longint;
+function primesfactors(n : Longint) : c;
 var
   d : Longint;
   i : Longint;
-  tab : p;
+  tab : c;
 begin
   SetLength(tab, n + 1);
   for i := 0 to  n + 1 - 1 do
@@ -51,9 +51,9 @@ var
   l : Longint;
   lim : Longint;
   m : Longint;
-  o : p;
+  o : c;
   product : Longint;
-  t : p;
+  t : c;
 begin
   lim := 20;
   SetLength(o, lim + 1);

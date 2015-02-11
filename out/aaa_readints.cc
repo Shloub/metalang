@@ -6,9 +6,9 @@ int main(){
   std::cin >> len >> std::skipws;
   std::cout << len << "=len\n";
   std::vector<int > *tab1 = new std::vector<int>( len );
-  for (int k = 0 ; k < len; k++)
+  for (int a = 0 ; a < len; a++)
   {
-    std::cin >> tab1->at(k) >> std::skipws;
+    std::cin >> tab1->at(a) >> std::skipws;
   }
   for (int i = 0 ; i < len; i++)
   {
@@ -16,14 +16,14 @@ int main(){
   }
   std::cin >> len >> std::skipws;
   std::vector<std::vector<int> * > *tab2 = new std::vector<std::vector<int> *>( len - 1 );
-  for (int s = 0 ; s < len - 1; s++)
+  for (int b = 0 ; b < len - 1; b++)
   {
-    std::vector<int > *ba = new std::vector<int>( len );
-    for (int v = 0 ; v < len; v++)
+    std::vector<int > *c = new std::vector<int>( len );
+    for (int d = 0 ; d < len; d++)
     {
-      std::cin >> ba->at(v) >> std::skipws;
+      std::cin >> c->at(d) >> std::skipws;
     }
-    tab2->at(s) = ba;
+    tab2->at(b) = c;
   }
   for (int i = 0 ; i <= len - 2; i ++)
   {

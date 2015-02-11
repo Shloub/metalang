@@ -28,77 +28,77 @@ int main(){
   for (int i = 0 ; i < 8; i++)
     if (i == 0)
   {
-    tuple_int_int * bh = new tuple_int_int();
-    bh->tuple_int_int_field_0=0;
-    bh->tuple_int_int_field_1=1;
-    directions->at(i) = bh;
+    tuple_int_int * c = new tuple_int_int();
+    c->tuple_int_int_field_0=0;
+    c->tuple_int_int_field_1=1;
+    directions->at(i) = c;
   }
   else if (i == 1)
   {
-    tuple_int_int * bg = new tuple_int_int();
-    bg->tuple_int_int_field_0=1;
-    bg->tuple_int_int_field_1=0;
-    directions->at(i) = bg;
+    tuple_int_int * d = new tuple_int_int();
+    d->tuple_int_int_field_0=1;
+    d->tuple_int_int_field_1=0;
+    directions->at(i) = d;
   }
   else if (i == 2)
   {
-    tuple_int_int * bf = new tuple_int_int();
-    bf->tuple_int_int_field_0=0;
-    bf->tuple_int_int_field_1=-1;
-    directions->at(i) = bf;
+    tuple_int_int * e = new tuple_int_int();
+    e->tuple_int_int_field_0=0;
+    e->tuple_int_int_field_1=-1;
+    directions->at(i) = e;
   }
   else if (i == 3)
   {
-    tuple_int_int * be = new tuple_int_int();
-    be->tuple_int_int_field_0=-1;
-    be->tuple_int_int_field_1=0;
-    directions->at(i) = be;
+    tuple_int_int * f = new tuple_int_int();
+    f->tuple_int_int_field_0=-1;
+    f->tuple_int_int_field_1=0;
+    directions->at(i) = f;
   }
   else if (i == 4)
   {
-    tuple_int_int * bd = new tuple_int_int();
-    bd->tuple_int_int_field_0=1;
-    bd->tuple_int_int_field_1=1;
-    directions->at(i) = bd;
+    tuple_int_int * g = new tuple_int_int();
+    g->tuple_int_int_field_0=1;
+    g->tuple_int_int_field_1=1;
+    directions->at(i) = g;
   }
   else if (i == 5)
   {
-    tuple_int_int * bc = new tuple_int_int();
-    bc->tuple_int_int_field_0=1;
-    bc->tuple_int_int_field_1=-1;
-    directions->at(i) = bc;
+    tuple_int_int * h = new tuple_int_int();
+    h->tuple_int_int_field_0=1;
+    h->tuple_int_int_field_1=-1;
+    directions->at(i) = h;
   }
   else if (i == 6)
   {
-    tuple_int_int * bb = new tuple_int_int();
-    bb->tuple_int_int_field_0=-1;
-    bb->tuple_int_int_field_1=1;
-    directions->at(i) = bb;
+    tuple_int_int * k = new tuple_int_int();
+    k->tuple_int_int_field_0=-1;
+    k->tuple_int_int_field_1=1;
+    directions->at(i) = k;
   }
   else
   {
-    tuple_int_int * ba = new tuple_int_int();
-    ba->tuple_int_int_field_0=-1;
-    ba->tuple_int_int_field_1=-1;
-    directions->at(i) = ba;
+    tuple_int_int * l = new tuple_int_int();
+    l->tuple_int_int_field_0=-1;
+    l->tuple_int_int_field_1=-1;
+    directions->at(i) = l;
   }
   int max0 = 0;
-  int h = 20;
+  int o = 20;
   std::vector<std::vector<int> * > *m = new std::vector<std::vector<int> *>( 20 );
-  for (int o = 0 ; o < 20; o++)
+  for (int p = 0 ; p < 20; p++)
   {
-    std::vector<int > *s = new std::vector<int>( h );
-    for (int q = 0 ; q < h; q++)
+    std::vector<int > *q = new std::vector<int>( o );
+    for (int r = 0 ; r < o; r++)
     {
-      std::cin >> s->at(q) >> std::skipws;
+      std::cin >> q->at(r) >> std::skipws;
     }
-    m->at(o) = s;
+    m->at(p) = q;
   }
   for (int j = 0 ; j <= 7; j ++)
   {
-    tuple_int_int * w = directions->at(j);
-    int dx = w->tuple_int_int_field_0;
-    int dy = w->tuple_int_int_field_1;
+    tuple_int_int * s = directions->at(j);
+    int dx = s->tuple_int_int_field_0;
+    int dy = s->tuple_int_int_field_1;
     for (int x = 0 ; x <= 19; x ++)
       for (int y = 0 ; y <= 19; y ++)
         max0 = max2_(max0, find(4, m, x, y, dx, dy));

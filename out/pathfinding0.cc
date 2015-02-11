@@ -61,10 +61,10 @@ int main(){
   int y, x;
   std::cin >> x >> std::skipws >> y;
   std::cout << x << " " << y << "\n";
-  std::vector<std::vector<char> * > *bb = new std::vector<std::vector<char> *>( y );
-  for (int bc = 0 ; bc < y; bc++)
-    bb->at(bc) = getline();
-  std::vector<std::vector<char> *> * tab = bb;
+  std::vector<std::vector<char> * > *e = new std::vector<std::vector<char> *>( y );
+  for (int f = 0 ; f < y; f++)
+    e->at(f) = getline();
+  std::vector<std::vector<char> *> * tab = e;
   int result = pathfind(tab, x, y);
   std::cout << result;
   return 0;

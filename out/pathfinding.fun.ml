@@ -10,16 +10,16 @@ module Array = struct
 end
 
 let rec pathfind_aux cache tab x y posX posY =
-  let t () = () in
+  let g () = () in
   (if ((posX = (x - 1)) && (posY = (y - 1)))
    then 0
-   else let u () = (t ()) in
+   else let h () = (g ()) in
    (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
     then ((x * y) * 10)
-    else let v () = (u ()) in
+    else let k () = (h ()) in
     (if (tab.(posY).(posX) = '#')
      then ((x * y) * 10)
-     else let w () = (v ()) in
+     else let l () = (k ()) in
      (if (cache.(posY).(posX) <> (- 1))
       then cache.(posY).(posX)
       else (
@@ -37,31 +37,31 @@ let rec pathfind_aux cache tab x y posX posY =
              )
       ))))
 let pathfind tab x y =
-  let cache = (Array.init_withenv y (fun  i () -> let tmp = (Array.init_withenv x (fun  j () -> let s = (- 1) in
-  ((), s)) ()) in
-  let r = tmp in
-  ((), r)) ()) in
+  let cache = (Array.init_withenv y (fun  i () -> let tmp = (Array.init_withenv x (fun  j () -> let f = (- 1) in
+  ((), f)) ()) in
+  let e = tmp in
+  ((), e)) ()) in
   (pathfind_aux cache tab x y 0 0)
 let main =
   let x = 0 in
   let y = 0 in
   Scanf.scanf "%d"
-  (fun  bd -> let x = bd in
+  (fun  q -> let x = q in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     Scanf.scanf "%d"
-    (fun  bc -> let y = bc in
+    (fun  p -> let y = p in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       let tab = (Array.init_withenv y (fun  i () -> let tab2 = (Array.init_withenv x (fun  j () -> let tmp = '\000' in
       Scanf.scanf "%c"
-      (fun  bb -> let tmp = bb in
-      let ba = tmp in
-      ((), ba))) ()) in
+      (fun  o -> let tmp = o in
+      let n = tmp in
+      ((), n))) ()) in
       (
         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-        let z = tab2 in
-        ((), z)
+        let m = tab2 in
+        ((), m)
         )
       ) ()) in
       let result = (pathfind tab x y) in

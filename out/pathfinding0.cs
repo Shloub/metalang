@@ -49,10 +49,10 @@ public class pathfinding0
     int x = int.Parse(Console.ReadLine());
     int y = int.Parse(Console.ReadLine());
     Console.Write("" + x + " " + y + "\n");
-    char[][] w = new char[y][];
-    for (int ba = 0 ; ba < y; ba++)
-      w[ba] = Console.ReadLine().ToCharArray();
-    char[][] tab = w;
+    char[][] e = new char[y][];
+    for (int f = 0 ; f < y; f++)
+      e[f] = Console.ReadLine().ToCharArray();
+    char[][] tab = e;
     int result = pathfind(tab, x, y);
     Console.Write(result);
   }

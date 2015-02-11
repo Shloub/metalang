@@ -34,8 +34,8 @@ foreach my $i (0 .. 8 - 1) {
 }
 my $max0 = 0;
 my $m = [];
-foreach my $h (0 .. 20 - 1) {
-  $m->[$h] = [ map { int($_) } split(/\s+/, <STDIN>) ];
+foreach my $c (0 .. 20 - 1) {
+  $m->[$c] = [ map { int($_) } split(/\s+/, <STDIN>) ];
 }
 foreach my $j (0 .. 7) {
   my ($dx, $dy) = @{ $directions->[$j] };

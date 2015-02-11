@@ -10,7 +10,7 @@ function programme_candidat(&$tableau, $x, $y){
 $taille_x = intval(trim(fgets(STDIN)));
 $taille_y = intval(trim(fgets(STDIN)));
 $tableau = array();
-for ($f = 0 ; $f < $taille_y; $f++)
-  $tableau[$f] = array_map("intval", explode(" ", fgets(STDIN)));
+for ($a = 0 ; $a < $taille_y; $a++)
+  $tableau[$a] = array_map("intval", explode(" ", fgets(STDIN)));
 echo programme_candidat($tableau, $taille_x, $taille_y), "\n";
 ?>

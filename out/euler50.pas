@@ -13,8 +13,8 @@ begin
     end;
 end;
 
-type d = array of Longint;
-function eratostene(t : d; max0 : Longint) : Longint;
+type c = array of Longint;
+function eratostene(t : c; max0 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -44,7 +44,7 @@ end;
 
 
 var
-  era : d;
+  era : c;
   i : Longint;
   i_ : Longint;
   j : Longint;
@@ -55,11 +55,11 @@ var
   maxl : Longint;
   nprimes : Longint;
   o : Longint;
-  primes : d;
+  primes : c;
   process : boolean;
   resp : Longint;
   stop : Longint;
-  sum : d;
+  sum : c;
 begin
   maximumprimes := 1000001;
   SetLength(era, maximumprimes);

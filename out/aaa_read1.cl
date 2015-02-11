@@ -24,10 +24,10 @@
   (let
    ((str (array_init
             12
-            (function (lambda (d)
+            (function (lambda (a)
             (block lambda_1
-              (let ((e (mread-char )))
-                (return-from lambda_1 e)
+              (let ((b (mread-char )))
+                (return-from lambda_1 b)
               )))
             ))))
   (mread-blank)

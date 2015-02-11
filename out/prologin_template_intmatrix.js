@@ -39,15 +39,15 @@ stdinsep();
 taille_y=read_int_();
 stdinsep();
 var tableau = new Array(taille_y);
-for (var m = 0 ; m <= taille_y - 1; m++)
+for (var a = 0 ; a <= taille_y - 1; a++)
 {
-  var r = new Array(taille_x);
-  for (var p = 0 ; p <= taille_x - 1; p++)
+  var b = new Array(taille_x);
+  for (var c = 0 ; c <= taille_x - 1; c++)
   {
-    r[p]=read_int_();
+    b[c]=read_int_();
     stdinsep();
   }
-  tableau[m] = r;
+  tableau[a] = b;
 }
 util.print(programme_candidat(tableau, taille_x, taille_y), "\n");
 

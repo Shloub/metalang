@@ -16,11 +16,11 @@ sub programme_candidat{
 
 my $taille_x = int( <STDIN> );
 my $taille_y = int( <STDIN> );
-my $e = [];
-foreach my $f (0 .. $taille_y - 1) {
-  $e->[$f] = [split(//, <STDIN>)];
+my $a = [];
+foreach my $b (0 .. $taille_y - 1) {
+  $a->[$b] = [split(//, <STDIN>)];
 }
-my $tableau = $e;
+my $tableau = $a;
 print(programme_candidat($tableau, $taille_x, $taille_y), "\n");
 
 

@@ -12,28 +12,28 @@ let score () =
     (fun  len -> (
                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                    let sum = 0 in
-                   let g = 1 in
-                   let h = len in
-                   let rec f i sum =
-                     (if (i <= h)
+                   let e = 1 in
+                   let f = len in
+                   let rec d i sum =
+                     (if (i <= f)
                       then Scanf.scanf "%c"
                       (fun  c -> let sum = (sum + (((int_of_char (c)) - (int_of_char ('A'))) + 1)) in
                       (* 		print c print " " print sum print " "  *)
-                      (f (i + 1) sum))
-                      else let e () = () in
+                      (d (i + 1) sum))
+                      else let b () = () in
                       (if (is_triangular sum)
                        then 1
                        else 0)) in
-                     (f g sum)
+                     (d e sum)
                    )
     )
     )
   
 let main =
-  let o = 1 in
-  let p = 55 in
-  let rec m i =
-    (if (i <= p)
+  let l = 1 in
+  let m = 55 in
+  let rec k i =
+    (if (i <= m)
      then (
             (if (is_triangular i)
              then (
@@ -41,25 +41,25 @@ let main =
                     )
              
              else ());
-            (m (i + 1))
+            (k (i + 1))
             )
      
      else (
             (Printf.printf "\n" );
             let sum = 0 in
             Scanf.scanf "%d"
-            (fun  n -> let k = 1 in
-            let l = n in
-            let rec j i sum =
-              (if (i <= l)
+            (fun  n -> let h = 1 in
+            let j = n in
+            let rec g i sum =
+              (if (i <= j)
                then let sum = (sum + (score ())) in
-               (j (i + 1) sum)
+               (g (i + 1) sum)
                else (
                       (Printf.printf "%d\n" sum)
                       )
                ) in
-              (j k sum))
+              (g h sum))
             )
      ) in
-    (m o)
+    (k l)
 

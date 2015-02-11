@@ -44,11 +44,11 @@
     (let
      ((tableau (array_init
                   taille
-                  (function (lambda (e)
+                  (function (lambda (a)
                   (block lambda_1
-                    (let ((f (mread-int )))
+                    (let ((b (mread-int )))
                       (mread-blank)
-                      (return-from lambda_1 f)
+                      (return-from lambda_1 b)
                     )))
                   ))))
     (princ (programme_candidat tableau taille))

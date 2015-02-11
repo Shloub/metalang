@@ -69,9 +69,9 @@ begin
    until false;
 end;
 
-type s = array of char;
-type u = array of array of char;
-function programme_candidat(tableau : u; taille_x : Longint; taille_y : Longint) : Longint;
+type e = array of char;
+type f = array of array of char;
+function programme_candidat(tableau : f; taille_x : Longint; taille_y : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -92,11 +92,11 @@ end;
 
 
 var
-  l : u;
-  m : Longint;
-  p : Longint;
-  r : s;
-  tableau : u;
+  a : f;
+  b : Longint;
+  c : e;
+  d : Longint;
+  tableau : f;
   taille_x : Longint;
   taille_y : Longint;
 begin
@@ -104,18 +104,18 @@ begin
   skip();
   taille_y := read_int_();
   skip();
-  SetLength(l, taille_y);
-  for m := 0 to  taille_y - 1 do
+  SetLength(a, taille_y);
+  for b := 0 to  taille_y - 1 do
   begin
-    SetLength(r, taille_x);
-    for p := 0 to  taille_x - 1 do
+    SetLength(c, taille_x);
+    for d := 0 to  taille_x - 1 do
     begin
-      r[p] := read_char_();
+      c[d] := read_char_();
     end;
     skip();
-    l[m] := r;
+    a[b] := c;
   end;
-  tableau := l;
+  tableau := a;
   Write(programme_candidat(tableau, taille_x, taille_y));
   Write(''#10'');
 end.

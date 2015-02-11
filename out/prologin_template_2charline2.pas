@@ -69,8 +69,8 @@ begin
    until false;
 end;
 
-type p = array of char;
-function programme_candidat(tableau1 : p; taille1 : Longint; tableau2 : p; taille2 : Longint) : Longint;
+type c = array of char;
+function programme_candidat(tableau1 : c; taille1 : Longint; tableau2 : c; taille2 : Longint) : Longint;
 var
   i : Longint;
   j : Longint;
@@ -94,10 +94,10 @@ end;
 
 
 var
-  g : Longint;
-  m : Longint;
-  tableau1 : p;
-  tableau2 : p;
+  a : Longint;
+  b : Longint;
+  tableau1 : c;
+  tableau2 : c;
   taille1 : Longint;
   taille2 : Longint;
 begin
@@ -106,15 +106,15 @@ begin
   taille2 := read_int_();
   skip();
   SetLength(tableau1, taille1);
-  for g := 0 to  taille1 - 1 do
+  for a := 0 to  taille1 - 1 do
   begin
-    tableau1[g] := read_char_();
+    tableau1[a] := read_char_();
   end;
   skip();
   SetLength(tableau2, taille2);
-  for m := 0 to  taille2 - 1 do
+  for b := 0 to  taille2 - 1 do
   begin
-    tableau2[m] := read_char_();
+    tableau2[b] := read_char_();
   end;
   skip();
   Write(programme_candidat(tableau1, taille1, tableau2, taille2));

@@ -61,16 +61,16 @@ begin
    until false;
 end;
 
-type q = array of Longint;
+type e = array of Longint;
 
 var
   a : Longint;
   b : Longint;
   c : Longint;
+  d : Longint;
   i : Longint;
   j : Longint;
-  l : q;
-  o : Longint;
+  l : e;
 begin
   for i := 1 to  3 do
   begin
@@ -89,9 +89,9 @@ begin
     Write(''#10'');
   end;
   SetLength(l, 10);
-  for o := 0 to  10 - 1 do
+  for d := 0 to  10 - 1 do
   begin
-    l[o] := read_int_();
+    l[d] := read_int_();
     skip();
   end;
   for j := 0 to  9 do
