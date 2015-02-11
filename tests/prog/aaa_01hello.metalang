@@ -1,3 +1,5 @@
 main
 	print "Hello World"
+  def a = 5
+  print (4 + 6) * 2 print " " print "\n" print a print "foo" print ""
 end
