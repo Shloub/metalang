@@ -114,8 +114,7 @@ Format.fprintf f "print(%a);" self#expr expr
   if Tags.is_taged "perl_use_list_min" then Format.fprintf f "use List::Util qw(min max);@\n"
 ) ()
       (fun f () ->
-	if need then Format.fprintf f "sub nextchar{ sysread STDIN, $currentchar, 1; }
-") ()
+	if need then Format.fprintf f "sub nextchar{ sysread STDIN, $currentchar, 1; }@\n") ()
       (fun f () ->
 	if need_readchar then Format.fprintf f
 	  "sub readchar{
@@ -123,14 +122,12 @@ Format.fprintf f "print(%a);" self#expr expr
   my $o = $currentchar;
   nextchar();
   return $o;
-}
-") ()
+}@\n") ()
       (fun f () ->
 	if need_readint then Format.fprintf f
 	  "sub readint {
   nextchar() if (!defined $currentchar);
-  my $o = 0;
-  my $sign = 1;
+  my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
     nextchar();
@@ -140,13 +137,12 @@ Format.fprintf f "print(%a);" self#expr expr
     nextchar();
   }
   return $o * $sign;
-}") ()
+}@\n") ()
       (fun f () ->
 	if need_stdinsep then Format.fprintf f
 	  "sub readspaces {
   while ($currentchar eq ' ' || $currentchar eq \"\\r\" || $currentchar eq \"\\n\"){ nextchar() ; }
-}
-") ()
+}@\n") ()
       (fun f () -> if Tags.is_taged "__internal__mod" then Format.fprintf f
 	  "sub remainder {
     my ($a, $b) = @@_;
