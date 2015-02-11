@@ -75,14 +75,18 @@ class perlPrinter = object(self)
         self#instructions ifcase
         self#instructions elsecase
 
+  method expr_inprint f expr = match Expr.unfix expr with
+  | Expr.BinOp _ -> Format.fprintf f "(%a)" self#expr expr
+  | _ -> self#expr f expr
+
   method print f t expr =
-Format.fprintf f "print(%a);" self#expr expr
+    Format.fprintf f "print %a;" self#expr_inprint expr
 
   method multi_print f format exprs =
     Format.fprintf f "@[<h>print(%a);@]"
       (print_list
          (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a, %a" f1 e1 f2 e2)) exprs
+         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print_proto f (funname, t, li) =
     if li = [] then Format.fprintf f "sub %a{" self#funname funname
@@ -120,7 +124,7 @@ Format.fprintf f "print(%a);" self#expr expr
 	  "sub readchar{
   nextchar() if (!defined $currentchar);
   my $o = $currentchar;
-  nextchar();
+  nextchar;
   return $o;
 }@\n") ()
       (fun f () ->
@@ -130,11 +134,11 @@ Format.fprintf f "print(%a);" self#expr expr
   my $o = 0, $sign = 1;
   if ($currentchar eq '-') {
     $sign = -1;
-    nextchar();
+    nextchar;
   }
   while ($currentchar =~ /\\d/){
     $o = $o * 10 + $currentchar;
-    nextchar();
+    nextchar;
   }
   return $o * $sign;
 }@\n") ()
