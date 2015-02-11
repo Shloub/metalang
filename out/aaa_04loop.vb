@@ -23,7 +23,7 @@ Module aaa_04loop
     For  k As Integer  = 0 to  10
       j = j + k
       Console.Write(j)
-      Console.Write("" & Chr(10) & "")
+      Console.Write(Chr(10))
     Next
     Dim i As Integer = 4
     Do While i < 10
@@ -31,7 +31,7 @@ Module aaa_04loop
       i = i + 1
       j = j + i
     Loop
-    Console.Write("" & j & i & "FIN TEST" & Chr(10) & "")
+    Console.Write("" & j & i & "FIN TEST" & Chr(10))
   End Sub
   
 End Module

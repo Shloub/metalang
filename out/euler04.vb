@@ -48,7 +48,7 @@ Module euler04
         Next
       Next
     Next
-    Console.Write("" & m & "" & Chr(10) & "")
+    Console.Write("" & m & Chr(10))
   End Sub
   
 End Module

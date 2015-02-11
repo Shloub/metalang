@@ -29,7 +29,7 @@ Module euler10
       t(i) = i
     Next
     t(1) = 0
-    Console.Write("" & eratostene(t, n) & "" & Chr(10) & "")
+    Console.Write("" & eratostene(t, n) & Chr(10))
     End Sub
     
   End Module

@@ -33,10 +33,10 @@ Module euler17
     Dim ninety As Integer = 6
     Dim hundred As Integer = 7
     Dim thousand As Integer = 8
-    Console.Write("" & (one + two + three + four + five) & "" & Chr(10) & "")
+    Console.Write("" & (one + two + three + four + five) & Chr(10))
     Dim hundred_and As Integer = 10
     Dim one_to_nine As Integer = one + two + three + four + five + six + seven + eight + nine
-    Console.Write("" & one_to_nine & "" & Chr(10) & "")
+    Console.Write("" & one_to_nine & Chr(10))
     Dim one_to_ten As Integer = one_to_nine + ten
     Dim one_to_twenty As Integer = one_to_ten + eleven + twelve + thirteen + fourteen + fifteen + sixteen + seventeen + eighteen + nineteen + twenty
     Dim one_to_thirty As Integer = one_to_twenty + twenty * 9 + one_to_nine + thirty
@@ -47,7 +47,7 @@ Module euler17
     Dim one_to_eighty As Integer = one_to_seventy + seventy * 9 + one_to_nine + eighty
     Dim one_to_ninety As Integer = one_to_eighty + eighty * 9 + one_to_nine + ninety
     Dim one_to_ninety_nine As Integer = one_to_ninety + ninety * 9 + one_to_nine
-    Console.Write("" & one_to_ninety_nine & "" & Chr(10) & "" & (100 * one_to_nine + one_to_ninety_nine * 10 + hundred_and * 9 * 99 + hundred * 9 + one + thousand) & "" & Chr(10) & "")
+    Console.Write("" & one_to_ninety_nine & Chr(10) & (100 * one_to_nine + one_to_ninety_nine * 10 + hundred_and * 9 * 99 + hundred * 9 + one + thousand) & Chr(10))
   End Sub
   
 End Module

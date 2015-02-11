@@ -94,13 +94,13 @@ End Function
         Console.Write(" ")
       End If
     Next
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
     Dim sum As Integer = 0
     Dim n As Integer = readInt()
     For  i As Integer  = 1 to  n
       sum = sum + score()
     Next
-    Console.Write("" & sum & "" & Chr(10) & "")
+    Console.Write("" & sum & Chr(10))
   End Sub
   
 End Module

@@ -529,7 +529,7 @@ begin
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), "euler 48 = ");
   print_bigint(sum);
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;
 
 function euler16 return Integer is
@@ -631,7 +631,7 @@ end;
   a : bigint_PTR;
 begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler29), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   sum := read_bigint((50));
   for i in integer range (2)..(100) loop
     SkipSpaces;
@@ -640,53 +640,53 @@ begin
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), "euler13 = ");
   print_bigint(sum);
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), "euler25 = ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler25), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), "euler16 = ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler16), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   euler48;
   String'Write (Text_Streams.Stream (Current_Output), "euler20 = ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler20), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   a := bigint_of_int((999999));
   b := bigint_of_int((9951263));
   print_bigint(a);
   String'Write (Text_Streams.Stream (Current_Output), ">>1=");
   print_bigint(bigint_shift(a, (-(1))));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   print_bigint(a);
   String'Write (Text_Streams.Stream (Current_Output), "*");
   print_bigint(b);
   String'Write (Text_Streams.Stream (Current_Output), "=");
   print_bigint(mul_bigint(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   print_bigint(a);
   String'Write (Text_Streams.Stream (Current_Output), "*");
   print_bigint(b);
   String'Write (Text_Streams.Stream (Current_Output), "=");
   print_bigint(mul_bigint_cp(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   print_bigint(a);
   String'Write (Text_Streams.Stream (Current_Output), "+");
   print_bigint(b);
   String'Write (Text_Streams.Stream (Current_Output), "=");
   print_bigint(add_bigint(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   print_bigint(b);
   String'Write (Text_Streams.Stream (Current_Output), "-");
   print_bigint(a);
   String'Write (Text_Streams.Stream (Current_Output), "=");
   print_bigint(sub_bigint(b, a));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   print_bigint(a);
   String'Write (Text_Streams.Stream (Current_Output), "-");
   print_bigint(b);
   String'Write (Text_Streams.Stream (Current_Output), "=");
   print_bigint(sub_bigint(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   print_bigint(a);
   String'Write (Text_Streams.Stream (Current_Output), ">");
   print_bigint(b);
@@ -698,5 +698,5 @@ begin
   else
     String'Write (Text_Streams.Stream (Current_Output), "False");
   end if;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

@@ -55,7 +55,7 @@ End Function
       index = (index + 1) Mod 5
       max0 = Math.Max(max0, i)
     Next
-    Console.Write("" & max0 & "" & Chr(10) & "")
+    Console.Write("" & max0 & Chr(10))
     End Sub
     
   End Module

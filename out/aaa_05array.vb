@@ -23,7 +23,7 @@ Module aaa_05array
     Else
       Console.Write("False")
     End If
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
     g(id(a), 0)
     Dim d As Boolean = a(0)
     If d Then
@@ -31,7 +31,7 @@ Module aaa_05array
     Else
       Console.Write("False")
     End If
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
     End Sub
     
   End Module

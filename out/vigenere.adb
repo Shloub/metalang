@@ -81,5 +81,5 @@ begin
   for i in integer range (0)..taille - (1) loop
     Character'Write (Text_Streams.Stream (Current_Output), message(i));
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

@@ -17,7 +17,7 @@ Module aaa_missing
       Console.Write(" ")
       tab2(tab(i1)) = true
     Next
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
     For  i2 As Integer  = 0 to  len - 1
       If Not tab2(i2) Then
         Return i2
@@ -29,9 +29,9 @@ Module aaa_missing
     
     Sub Main()
       Dim len As Integer = Integer.Parse(Console.ReadLine())
-      Console.Write("" & len & "" & Chr(10) & "")
+      Console.Write("" & len & Chr(10))
       Dim tab As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
-      Console.Write("" & result(len, tab) & "" & Chr(10) & "")
+      Console.Write("" & result(len, tab) & Chr(10))
     End Sub
     
   End Module

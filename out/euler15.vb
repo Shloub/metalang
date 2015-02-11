@@ -32,9 +32,9 @@ Module euler15
           Console.Write(tab(m)(k))
           Console.Write(" ")
         Next
-        Console.Write("" & Chr(10) & "")
+        Console.Write(Chr(10))
       Next
-      Console.Write("" & tab(0)(0) & "" & Chr(10) & "")
+      Console.Write("" & tab(0)(0) & Chr(10))
     End Sub
     
     End Module

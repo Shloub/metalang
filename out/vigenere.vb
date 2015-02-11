@@ -105,7 +105,7 @@ End Function
     For  i As Integer  = 0 to  taille - 1
       Console.Write(message(i))
     Next
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
     End Sub
     
     End Module

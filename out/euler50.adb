@@ -71,7 +71,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l), Left));
   String'Write (Text_Streams.Stream (Current_Output), " == ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nprimes), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   sum := new c (0..nprimes);
   for i_0 in integer range (0)..nprimes - (1) loop
     sum(i_0) := primes(i_0);
@@ -103,7 +103,7 @@ begin
     len := len + (1);
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(resp), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(maxl), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

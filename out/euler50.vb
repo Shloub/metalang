@@ -38,7 +38,7 @@ Module euler50
         l = l + 1
       End If
     Next
-    Console.Write("" & l & " == " & nprimes & "" & Chr(10) & "")
+    Console.Write("" & l & " == " & nprimes & Chr(10))
     Dim sum(nprimes) As Integer
     For  i_ As Integer  = 0 to  nprimes - 1
       sum(i_) = primes(i_)
@@ -66,7 +66,7 @@ Module euler50
       Next
       len = len + 1
     Loop
-    Console.Write("" & resp & "" & Chr(10) & "" & maxl & "" & Chr(10) & "")
+    Console.Write("" & resp & Chr(10) & maxl & Chr(10))
     End Sub
     
     End Module

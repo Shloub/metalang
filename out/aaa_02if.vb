@@ -12,11 +12,11 @@ Module aaa_02if
   
   Sub Main()
     If f(4) Then
-      Console.Write("true <-" & Chr(10) & " ->" & Chr(10) & "")
+      Console.Write("true <-" & Chr(10) & " ->" & Chr(10))
     Else
-      Console.Write("false <-" & Chr(10) & " ->" & Chr(10) & "")
+      Console.Write("false <-" & Chr(10) & " ->" & Chr(10))
     End If
-    Console.Write("small test end" & Chr(10) & "")
+    Console.Write("small test end" & Chr(10))
   End Sub
   
 End Module

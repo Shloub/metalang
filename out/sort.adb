@@ -110,12 +110,12 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab2(i)), Left));
     String'Write (Text_Streams.Stream (Current_Output), " ");
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   tab3 := copytab(tab, len);
   qsort0(tab3, len, (0), len - (1));
   for i in integer range (0)..len - (1) loop
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab3(i)), Left));
     String'Write (Text_Streams.Stream (Current_Output), " ");
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

@@ -41,5 +41,5 @@ begin
   t((1)) := (0);
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(eratostene(t,
   n)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

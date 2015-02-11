@@ -81,7 +81,7 @@ begin
       Character'Write (Text_Streams.Stream (Current_Output), tab(i)(j));
       tmp(j) := (-(1));
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
     cache(i) := tmp;
   end loop;
   return pathfind_aux(cache, tab, x, y, (0), (0));
@@ -102,7 +102,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(x), Left));
   String'Write (Text_Streams.Stream (Current_Output), " ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(y), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   e := new o (0..y);
   for f in integer range (0)..y - (1) loop
     g := new m (0..x);

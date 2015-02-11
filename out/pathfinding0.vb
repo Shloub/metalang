@@ -32,7 +32,7 @@ Module pathfinding0
         Console.Write(tab(i)(j))
         tmp(j) = - 1
       Next
-      Console.Write("" & Chr(10) & "")
+      Console.Write(Chr(10))
       cache(i) = tmp
       Next
       Return pathfind_aux(cache, tab, x, y, 0, 0)
@@ -42,7 +42,7 @@ Module pathfinding0
     Sub Main()
       Dim x As Integer = Integer.Parse(Console.ReadLine())
       Dim y As Integer = Integer.Parse(Console.ReadLine())
-      Console.Write("" & x & " " & y & "" & Chr(10) & "")
+      Console.Write("" & x & " " & y & Chr(10))
       Dim e(y)() As Char
       For  f As Integer  = 0 to  y - 1
         e(f) = Console.ReadLine().ToCharArray()

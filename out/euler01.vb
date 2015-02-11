@@ -10,7 +10,7 @@ Module euler01
         sum = sum + i
       End If
     Next
-    Console.Write("" & sum & "" & Chr(10) & "")
+    Console.Write("" & sum & Chr(10))
   End Sub
   
 End Module

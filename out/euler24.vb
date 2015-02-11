@@ -38,7 +38,7 @@ Module euler24
         Console.Write(m)
       End If
     Next
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
     End Sub
     
     

@@ -396,7 +396,7 @@ End Sub
                 Next
                 Console.Write("euler 48 = ")
                 print_bigint(sum)
-                Console.Write("" & Chr(10) & "")
+                Console.Write(Chr(10))
               End Sub
               
               Function euler16() As Integer
@@ -469,7 +469,7 @@ End Sub
                 
                 
                 Sub Main()
-                  Console.Write("" & euler29() & "" & Chr(10) & "")
+                  Console.Write("" & euler29() & Chr(10))
                   Dim sum As bigint = read_bigint(50)
                   For  i As Integer  = 2 to  100
                     stdin_sep()
@@ -478,45 +478,45 @@ End Sub
                   Next
                   Console.Write("euler13 = ")
                   print_bigint(sum)
-                  Console.Write("" & "" & Chr(10) & "" & "euler25 = " & euler25() & "" & Chr(10) & "" & "euler16 = " & euler16() & "" & Chr(10) & "")
+                  Console.Write(Chr(10) & "euler25 = " & euler25() & Chr(10) & "euler16 = " & euler16() & Chr(10))
                   euler48()
-                  Console.Write("" & "euler20 = " & euler20() & "" & Chr(10) & "")
+                  Console.Write("euler20 = " & euler20() & Chr(10))
                   Dim a As bigint = bigint_of_int(999999)
                   Dim b As bigint = bigint_of_int(9951263)
                   print_bigint(a)
                   Console.Write(">>1=")
                   print_bigint(bigint_shift(a, - 1))
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                   print_bigint(a)
                   Console.Write("*")
                   print_bigint(b)
                   Console.Write("=")
                   print_bigint(mul_bigint(a, b))
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                   print_bigint(a)
                   Console.Write("*")
                   print_bigint(b)
                   Console.Write("=")
                   print_bigint(mul_bigint_cp(a, b))
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                   print_bigint(a)
                   Console.Write("+")
                   print_bigint(b)
                   Console.Write("=")
                   print_bigint(add_bigint(a, b))
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                   print_bigint(b)
                   Console.Write("-")
                   print_bigint(a)
                   Console.Write("=")
                   print_bigint(sub_bigint(b, a))
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                   print_bigint(a)
                   Console.Write("-")
                   print_bigint(b)
                   Console.Write("=")
                   print_bigint(sub_bigint(a, b))
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                   print_bigint(a)
                   Console.Write(">")
                   print_bigint(b)
@@ -527,7 +527,7 @@ End Sub
                   Else
                     Console.Write("False")
                   End If
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                 End Sub
                 
                 End Module

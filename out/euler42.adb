@@ -59,12 +59,12 @@ begin
       String'Write (Text_Streams.Stream (Current_Output), " ");
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   sum := (0);
   Get(n);
   for i in integer range (1)..n loop
     sum := sum + score;
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(sum), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

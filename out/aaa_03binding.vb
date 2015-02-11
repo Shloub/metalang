@@ -11,7 +11,7 @@ Module aaa_03binding
   End Function
   
   Sub h(ByVal i as Integer)
-    Console.Write("" & i & "" & Chr(10) & "")
+    Console.Write("" & i & Chr(10))
   End Sub
   
   

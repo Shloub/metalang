@@ -74,7 +74,7 @@ End Function
   ' On affiche l'état 
   
   Sub print_state(ByRef g as gamestate)
-    Console.Write("" & Chr(10) & "|")
+    Console.Write(Chr(10) & "|")
     For  y As Integer  = 0 to  2
       For  x As Integer  = 0 to  2
         If g.cases(x)(y) = 0 Then
@@ -87,10 +87,10 @@ End Function
         Console.Write("|")
       Next
       If y <> 2 Then
-        Console.Write("" & Chr(10) & "|-|-|-|" & Chr(10) & "|")
+        Console.Write(Chr(10) & "|-|-|-|" & Chr(10) & "|")
       End If
     Next
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
   End Sub
   
   ' On dit qui gagne (info stoquées dans g.ended et g.note ) 
@@ -224,7 +224,7 @@ End Function
           Console.Write(y)
           Console.Write(", ")
           Console.Write(currentNote)
-          Console.Write("" & Chr(10) & "")
+          Console.Write(Chr(10))
           cancel_move_xy(x, y, g)
           If currentNote < minNote Then
             minNote = currentNote
@@ -234,7 +234,7 @@ End Function
         End If
       Next
     Next
-    Console.Write("" & minMove.x & minMove.y & "" & Chr(10) & "")
+    Console.Write("" & minMove.x & minMove.y & Chr(10))
     Return minMove
   End Function
   
@@ -290,7 +290,7 @@ End Function
         Loop
         print_state(state)
         Console.Write(state.note)
-        Console.Write("" & Chr(10) & "")
+        Console.Write(Chr(10))
       Next
     End Sub
     

@@ -78,7 +78,7 @@ Module euler11
         Next
       Next
     Next
-    Console.Write("" & max0 & "" & Chr(10) & "")
+    Console.Write("" & max0 & Chr(10))
     End Sub
     
     End Module

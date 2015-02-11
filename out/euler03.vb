@@ -23,7 +23,7 @@ Module euler03
       Loop
       If Not found Then
         Console.Write(a)
-        Console.Write("" & Chr(10) & "")
+        Console.Write(Chr(10))
         a = 1
       End If
     Loop

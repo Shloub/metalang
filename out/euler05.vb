@@ -39,7 +39,7 @@ Module euler05
           product = product * k
         Next
       Next
-      Console.Write("" & product & "" & Chr(10) & "")
+      Console.Write("" & product & Chr(10))
       End Sub
       
     End Module

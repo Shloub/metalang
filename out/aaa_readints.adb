@@ -26,7 +26,7 @@ begin
   Get(len);
   SkipSpaces;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "=len" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "=len" & Character'Val(10));
   tab1 := new e (0..len);
   for a in integer range (0)..len - (1) loop
     Get(tab1(a));
@@ -36,7 +36,7 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
     String'Write (Text_Streams.Stream (Current_Output), "=>");
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab1(i)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
   Get(len);
   SkipSpaces;
@@ -54,6 +54,6 @@ begin
       String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab2(i)(j)), Left));
       String'Write (Text_Streams.Stream (Current_Output), " ");
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
 end;

@@ -485,9 +485,9 @@ Modulo
     }
     Console.Write("euler13 = ");
     print_bigint(sum);
-    Console.Write("" + "\n" + "euler25 = " + euler25() + "\n" + "euler16 = " + euler16() + "\n");
+    Console.Write("\neuler25 = " + euler25() + "\neuler16 = " + euler16() + "\n");
     euler48();
-    Console.Write("" + "euler20 = " + euler20() + "\n");
+    Console.Write("euler20 = " + euler20() + "\n");
     bigint a = bigint_of_int(999999);
     bigint b = bigint_of_int(9951263);
     print_bigint(a);

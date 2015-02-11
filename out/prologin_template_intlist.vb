@@ -15,7 +15,7 @@ Module prologin_template_intlist
   Sub Main()
     Dim taille As Integer = Integer.Parse(Console.ReadLine())
     Dim tableau As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
-    Console.Write("" & programme_candidat(tableau, taille) & "" & Chr(10) & "")
+    Console.Write("" & programme_candidat(tableau, taille) & Chr(10))
   End Sub
   
 End Module

@@ -83,7 +83,7 @@ Module euler21
           l = l + 1
         End If
       Next
-      Console.Write("" & l & " == " & nprimes & "" & Chr(10) & "")
+      Console.Write("" & l & " == " & nprimes & Chr(10))
       Dim sum As Integer = 0
       For  n As Integer  = 2 to  1000
         Dim other As Integer = sumdiv(nprimes, primes, n) - n
@@ -93,12 +93,12 @@ Module euler21
             Console.Write(other)
             Console.Write(" & ")
             Console.Write(n)
-            Console.Write("" & Chr(10) & "")
+            Console.Write(Chr(10))
             sum = sum + other + n
           End If
         End If
       Next
-      Console.Write("" & "" & Chr(10) & "" & sum & "" & Chr(10) & "")
+      Console.Write(Chr(10) & sum & Chr(10))
       End Sub
       
       End Module

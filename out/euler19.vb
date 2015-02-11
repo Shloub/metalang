@@ -59,7 +59,7 @@ Module euler19
         count = count + 1
       End If
     Loop
-    Console.Write("" & count & "" & Chr(10) & "")
+    Console.Write("" & count & Chr(10))
   End Sub
   
 End Module

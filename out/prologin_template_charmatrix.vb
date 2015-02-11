@@ -10,7 +10,7 @@ Module prologin_template_charmatrix
         out0 = out0 + Asc(tableau(i)(j)) * (i + j * 2)
         Console.Write(tableau(i)(j))
       Next
-      Console.Write("--" & Chr(10) & "")
+      Console.Write("--" & Chr(10))
     Next
     Return out0
   End Function
@@ -24,7 +24,7 @@ Module prologin_template_charmatrix
       a(b) = Console.ReadLine().ToCharArray()
     Next
     Dim tableau As Char()() = a
-    Console.Write("" & programme_candidat(tableau, taille_x, taille_y) & "" & Chr(10) & "")
+    Console.Write("" & programme_candidat(tableau, taille_x, taille_y) & Chr(10))
     End Sub
     
   End Module

@@ -67,9 +67,9 @@ End Function
   Sub Main()
     Dim len As Integer = readInt()
     stdin_sep()
-    Console.Write("" & len & "=len" & Chr(10) & "")
+    Console.Write("" & len & "=len" & Chr(10))
     len = len * 2
-    Console.Write("" & "len*2=" & len & "" & Chr(10) & "")
+    Console.Write("len*2=" & len & Chr(10))
     len = len \ 2
     Dim tab(len) As Integer
     For  i As Integer  = 0 to  len - 1
@@ -81,7 +81,7 @@ End Function
       Console.Write(" ")
       tab(i) = tmpi1
     Next
-    Console.Write("" & Chr(10) & "")
+    Console.Write(Chr(10))
     Dim tab2(len) As Integer
     For  i_ As Integer  = 0 to  len - 1
       Dim tmpi2 As Integer = readInt()
@@ -94,7 +94,7 @@ End Function
     Next
     Dim strlen As Integer = readInt()
     stdin_sep()
-    Console.Write("" & strlen & "=strlen" & Chr(10) & "")
+    Console.Write("" & strlen & "=strlen" & Chr(10))
     Dim tab4(strlen) As Char
     For  toto As Integer  = 0 to  strlen - 1
       Dim tmpc As Char = readChar()

@@ -35,7 +35,7 @@ Module euler30
                   Console.Write(a)
                   Console.Write(" ")
                   Console.Write(r)
-                  Console.Write("" & Chr(10) & "")
+                  Console.Write(Chr(10))
                   sum = sum + r
                 End If
               Next

@@ -68,7 +68,7 @@ begin
       String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "|-|-|-|" & Character'Val(10) & "|");
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;
 
 -- On dit qui gagne (info stoquées dans g.ended et g.note ) 
@@ -253,7 +253,7 @@ begin
         String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(y), Left));
         String'Write (Text_Streams.Stream (Current_Output), ", ");
         String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(currentNote), Left));
-        String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+        String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
         cancel_move_xy(x, y, g);
         if currentNote < minNote
         then
@@ -266,7 +266,7 @@ begin
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(minMove.x), Left));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(minMove.y), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   return minMove;
 end;
 
@@ -334,6 +334,6 @@ begin
     end loop;
     print_state(state);
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(state.note), Left));
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
 end;

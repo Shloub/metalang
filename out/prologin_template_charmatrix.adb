@@ -27,7 +27,7 @@ begin
       out0 := out0 + Character'Pos(tableau(i)(j)) * (i + j * (2));
       Character'Write (Text_Streams.Stream (Current_Output), tableau(i)(j));
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10));
   end loop;
   return out0;
 end;
@@ -55,5 +55,5 @@ begin
   tableau := a;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,
   taille_x, taille_y)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

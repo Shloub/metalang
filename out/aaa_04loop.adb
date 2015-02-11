@@ -29,7 +29,7 @@ begin
   for k in integer range (0)..(10) loop
     j := j + k;
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
   i := (4);
   while i < (10) loop
@@ -39,5 +39,5 @@ begin
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "FIN TEST" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "FIN TEST" & Character'Val(10));
 end;

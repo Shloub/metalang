@@ -32,7 +32,7 @@ begin
   else
     String'Write (Text_Streams.Stream (Current_Output), "False");
   end if;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   g(id(a), (0));
   d := a((0));
   if d
@@ -41,5 +41,5 @@ begin
   else
     String'Write (Text_Streams.Stream (Current_Output), "False");
   end if;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

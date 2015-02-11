@@ -73,7 +73,7 @@ Module euler12
     
     
     Sub Main()
-      Console.Write("" & find(500) & "" & Chr(10) & "")
+      Console.Write("" & find(500) & Chr(10))
     End Sub
     
     End Module

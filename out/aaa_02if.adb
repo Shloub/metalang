@@ -16,9 +16,9 @@ end;
 begin
   if f((4))
   then
-    String'Write (Text_Streams.Stream (Current_Output), "true <-" & Character'Val(10) & " ->" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "true <-" & Character'Val(10) & " ->" & Character'Val(10));
   else
-    String'Write (Text_Streams.Stream (Current_Output), "false <-" & Character'Val(10) & " ->" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "false <-" & Character'Val(10) & " ->" & Character'Val(10));
   end if;
-  String'Write (Text_Streams.Stream (Current_Output), "small test end" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "small test end" & Character'Val(10));
 end;

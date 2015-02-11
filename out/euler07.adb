@@ -49,5 +49,5 @@ begin
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(find((3),
   t, (1), n)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

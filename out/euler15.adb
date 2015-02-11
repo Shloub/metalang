@@ -42,8 +42,8 @@ begin
       String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab(m)(k)), Left));
       String'Write (Text_Streams.Stream (Current_Output), " ");
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab((0))((0))), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

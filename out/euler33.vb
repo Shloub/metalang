@@ -27,7 +27,7 @@ Module euler33
               Console.Write(a)
               Console.Write("/")
               Console.Write(b)
-              Console.Write("" & Chr(10) & "")
+              Console.Write(Chr(10))
               top = top * a
               bottom = bottom * b
             End If
@@ -35,9 +35,9 @@ Module euler33
         Next
       Next
     Next
-    Console.Write("" & top & "/" & bottom & "" & Chr(10) & "")
+    Console.Write("" & top & "/" & bottom & Chr(10))
     Dim p As Integer = pgcd(top, bottom)
-    Console.Write("" & "pgcd=" & p & "" & Chr(10) & "" & (bottom \ p) & "" & Chr(10) & "")
+    Console.Write("pgcd=" & p & Chr(10) & (bottom \ p) & Chr(10))
   End Sub
   
 End Module

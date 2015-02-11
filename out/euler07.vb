@@ -31,7 +31,7 @@ Module euler07
     For  i As Integer  = 0 to  n - 1
       t(i) = 2
     Next
-    Console.Write("" & find(3, t, 1, n) & "" & Chr(10) & "")
+    Console.Write("" & find(3, t, 1, n) & Chr(10))
     End Sub
     
   End Module

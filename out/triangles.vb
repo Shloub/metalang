@@ -111,13 +111,13 @@ End Function
         Next
         tab(i) = tab2
         Next
-        Console.Write("" & find(len, tab) & "" & Chr(10) & "")
+        Console.Write("" & find(len, tab) & Chr(10))
         For  k As Integer  = 0 to  len - 1
           For  l As Integer  = 0 to  k
             Console.Write(tab(k)(l))
             Console.Write(" ")
           Next
-          Console.Write("" & Chr(10) & "")
+          Console.Write(Chr(10))
         Next
       End Sub
       

@@ -34,7 +34,7 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(b), Left));
     String'Write (Text_Streams.Stream (Current_Output), "c =");
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(c), Left));
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
   l := new e (0..(10));
   for d in integer range (0)..(10) - (1) loop
@@ -43,6 +43,6 @@ begin
   end loop;
   for j in integer range (0)..(9) loop
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l(j)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
 end;

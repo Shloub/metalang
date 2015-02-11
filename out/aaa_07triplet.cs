@@ -12,7 +12,7 @@ public class aaa_07triplet
       int a = d[0];
       int b = d[1];
       int c = d[2];
-      Console.Write("" + "a = " + a + " b = " + b + "c =" + c + "\n");
+      Console.Write("a = " + a + " b = " + b + "c =" + c + "\n");
     }
     int[] l = new List<string>(Console.ReadLine().Split(" ".ToCharArray())).ConvertAll(int.Parse).ToArray();
     for (int j = 0 ; j <= 9; j ++)

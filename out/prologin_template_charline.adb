@@ -24,7 +24,7 @@ begin
     out0 := out0 + Character'Pos(tableau(i)) * i;
     Character'Write (Text_Streams.Stream (Current_Output), tableau(i));
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10));
   return out0;
 end;
 
@@ -41,5 +41,5 @@ begin
   SkipSpaces;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,
   taille)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

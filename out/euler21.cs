@@ -104,7 +104,7 @@ public class euler21
         }
       }
     }
-    Console.Write("" + "\n" + sum + "\n");
+    Console.Write("\n" + sum + "\n");
   }
   
 }

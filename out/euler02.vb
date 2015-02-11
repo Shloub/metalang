@@ -15,7 +15,7 @@ Module euler02
       a = b
       b = b + c
     Loop
-    Console.Write("" & sum & "" & Chr(10) & "")
+    Console.Write("" & sum & Chr(10))
   End Sub
   
 End Module

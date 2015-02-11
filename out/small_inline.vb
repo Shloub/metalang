@@ -60,7 +60,7 @@ End Function
       t(d) = readInt()
       stdin_sep()
     Next
-    Console.Write("" & t(0) & " - " & t(1) & "" & Chr(10) & "")
+    Console.Write("" & t(0) & " - " & t(1) & Chr(10))
     End Sub
     
   End Module

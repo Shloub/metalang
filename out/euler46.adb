@@ -60,7 +60,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l), Left));
   String'Write (Text_Streams.Stream (Current_Output), " == ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nprimes), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   canbe := new b (0..maximumprimes);
   for i_0 in integer range (0)..maximumprimes - (1) loop
     canbe(i_0) := FALSE;
@@ -79,7 +79,7 @@ begin
     if m2 < maximumprimes and then (not canbe(m2))
     then
       String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(m2), Left));
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
     end if;
   end loop;
 end;

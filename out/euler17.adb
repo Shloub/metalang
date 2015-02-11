@@ -77,11 +77,11 @@ begin
   thousand := (8);
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(one +
   two + three + four + five), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   hundred_and := (10);
   one_to_nine := one + two + three + four + five + six + seven + eight + nine;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(one_to_nine), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   one_to_ten := one_to_nine + ten;
   one_to_twenty := one_to_ten + eleven + twelve + thirteen + fourteen + fifteen + sixteen + seventeen + eighteen + nineteen + twenty;
   one_to_thirty := one_to_twenty + twenty * (9) + one_to_nine + thirty;
@@ -93,9 +93,9 @@ begin
   one_to_ninety := one_to_eighty + eighty * (9) + one_to_nine + ninety;
   one_to_ninety_nine := one_to_ninety + ninety * (9) + one_to_nine;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(one_to_ninety_nine), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image((100) *
   one_to_nine + one_to_ninety_nine * (10) + hundred_and * (9) * (99) +
   hundred * (9) + one + thousand), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

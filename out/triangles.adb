@@ -97,12 +97,12 @@ begin
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(find(len,
   tab)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   for k in integer range (0)..len - (1) loop
     for l in integer range (0)..k loop
       String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab(k)(l)), Left));
       String'Write (Text_Streams.Stream (Current_Output), " ");
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
 end;

@@ -32,7 +32,7 @@ begin
     if (not found)
     then
       String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(a), Left));
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
       a := (1);
     end if;
   end loop;

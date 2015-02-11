@@ -13,12 +13,12 @@ Module aaa_06readcouple
       Console.Write(a)
       Console.Write(" b = ")
       Console.Write(b)
-      Console.Write("" & Chr(10) & "")
+      Console.Write(Chr(10))
     Next
     Dim l As Integer() = Array(Of String).ConvertAll(Of String, Integer)(Console.ReadLine().Split(" ".ToCharArray()), New Converter(Of String, Integer)(AddressOf Integer.Parse))
     For  j As Integer  = 0 to  9
       Console.Write(l(j))
-      Console.Write("" & Chr(10) & "")
+      Console.Write(Chr(10))
     Next
   End Sub
   

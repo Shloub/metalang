@@ -34,7 +34,7 @@ public class euler33
     }
     Console.Write("" + top + "/" + bottom + "\n");
     int p = pgcd(top, bottom);
-    Console.Write("" + "pgcd=" + p + "\n" + (bottom / p) + "\n");
+    Console.Write("pgcd=" + p + "\n" + (bottom / p) + "\n");
   }
   
 }

@@ -33,7 +33,7 @@ Module euler26
         m = p
       End If
     Next
-    Console.Write("" & mi & "" & Chr(10) & "" & m & "" & Chr(10) & "")
+    Console.Write("" & mi & Chr(10) & m & Chr(10))
     End Sub
     
   End Module

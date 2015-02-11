@@ -95,7 +95,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l), Left));
   String'Write (Text_Streams.Stream (Current_Output), " == ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nprimes), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   ma := (0);
   mb := (0);
   for b in integer range (3)..(999) loop
@@ -124,9 +124,9 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(ma), Left));
   String'Write (Text_Streams.Stream (Current_Output), " ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(mb), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(max0), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

@@ -76,12 +76,12 @@ End Function
             Console.Write(" ")
           End If
         Next
-        Console.Write("" & Chr(10) & "")
+        Console.Write(Chr(10))
         If (y Mod 3) = 2 Then
-          Console.Write("" & Chr(10) & "")
+          Console.Write(Chr(10))
         End If
       Next
-      Console.Write("" & Chr(10) & "")
+      Console.Write(Chr(10))
     End Sub
     
     ' dit si les variables sont toutes différentes 
@@ -132,7 +132,7 @@ End Function
       If solve(sudoku0) Then
         print_sudoku(sudoku0)
       Else
-        Console.Write("no solution" & Chr(10) & "")
+        Console.Write("no solution" & Chr(10))
       End If
     End Sub
     

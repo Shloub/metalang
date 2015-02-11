@@ -44,13 +44,13 @@ begin
         String'Write (Text_Streams.Stream (Current_Output), " ");
       end if;
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
     if (y rem (3)) = (2)
     then
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;
 
 -- dit si les variables sont toutes différentes 
@@ -1082,6 +1082,6 @@ begin
   then
     print_sudoku(sudoku0);
   else
-    String'Write (Text_Streams.Stream (Current_Output), "no solution" & Character'Val(10) & "");
+    String'Write (Text_Streams.Stream (Current_Output), "no solution" & Character'Val(10));
   end if;
 end;

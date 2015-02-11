@@ -125,7 +125,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l), Left));
   String'Write (Text_Streams.Stream (Current_Output), " == ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nprimes), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   sum := (0);
   for n in integer range (2)..(1000) loop
     other := sumdiv(nprimes, primes, n) - n;
@@ -137,12 +137,12 @@ begin
         String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(other), Left));
         String'Write (Text_Streams.Stream (Current_Output), " & ");
         String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(n), Left));
-        String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+        String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
         sum := sum + other + n;
       end if;
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(sum), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

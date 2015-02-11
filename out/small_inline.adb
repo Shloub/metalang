@@ -26,5 +26,5 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t((0))), Left));
   String'Write (Text_Streams.Stream (Current_Output), " - ");
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t((1))), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

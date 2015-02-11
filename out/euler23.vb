@@ -113,7 +113,7 @@ Module euler23
           sum = sum + o
         End If
       Next
-      Console.Write("" & "" & Chr(10) & "" & sum & "" & Chr(10) & "")
+      Console.Write(Chr(10) & sum & Chr(10))
       End Sub
       
       End Module

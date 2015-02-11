@@ -79,7 +79,7 @@ End Function
     For  i As Integer  = 1 to  n
       sum = sum + i * score()
     Next
-    Console.Write("" & sum & "" & Chr(10) & "")
+    Console.Write("" & sum & Chr(10))
   End Sub
   
 End Module

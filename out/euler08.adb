@@ -57,5 +57,5 @@ begin
     max0 := max2_0(max0, i);
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(max0), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "");
+  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

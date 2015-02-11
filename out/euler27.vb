@@ -62,7 +62,7 @@ Module euler27
         l = l + 1
       End If
     Next
-    Console.Write("" & l & " == " & nprimes & "" & Chr(10) & "")
+    Console.Write("" & l & " == " & nprimes & Chr(10))
     Dim ma As Integer = 0
     Dim mb As Integer = 0
     For  b As Integer  = 3 to  999
@@ -85,7 +85,7 @@ Module euler27
         Next
       End If
     Next
-    Console.Write("" & ma & " " & mb & "" & Chr(10) & "" & max0 & "" & Chr(10) & "" & result & "" & Chr(10) & "")
+    Console.Write("" & ma & " " & mb & Chr(10) & max0 & Chr(10) & result & Chr(10))
     End Sub
     
     End Module

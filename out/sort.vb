@@ -124,14 +124,14 @@ End Function
         Console.Write(tab2(i))
         Console.Write(" ")
       Next
-      Console.Write("" & Chr(10) & "")
+      Console.Write(Chr(10))
       Dim tab3 As Integer() = copytab(tab, len)
       qsort0(tab3, len, 0, len - 1)
       For  i As Integer  = 0 to  len - 1
         Console.Write(tab3(i))
         Console.Write(" ")
       Next
-      Console.Write("" & Chr(10) & "")
+      Console.Write(Chr(10))
       End Sub
       
     End Module
