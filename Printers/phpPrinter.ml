@@ -126,9 +126,12 @@ class phpPrinter = object(self)
     Format.fprintf f "<?php@\n%s%s%s%a%a@\n?>"
       (if need then "
 $stdin='';
-function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN).\"\\n\";}
+function stdin_(){
+  global $stdin;
+  if ( !feof(STDIN)) $stdin.=fgets(STDIN).\"\\n\";
+}
 function scan($format){
- stdin_();
+  stdin_();
   global $stdin;
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
@@ -137,11 +140,11 @@ function scan($format){
       (if need_stdinsep then "
 function scantrim(){
   global $stdin;
-while(true){
- $stdin = ltrim($stdin);
-if ($stdin != '' || feof(STDIN)) break;
-  stdin_();
-}
+  while(true){
+    $stdin = ltrim($stdin);
+    if ($stdin != '' || feof(STDIN)) break;
+    stdin_();
+  }
 }" else "")
       (if need_readchar then "
 function nextChar(){
