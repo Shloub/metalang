@@ -1,9 +1,12 @@
 <?php
 
 $stdin='';
-function stdin_(){   global $stdin; if ( !feof(STDIN)) $stdin.=fgets(STDIN)."\n";}
+function stdin_(){
+  global $stdin;
+  if ( !feof(STDIN)) $stdin.=fgets(STDIN)."\n";
+}
 function scan($format){
- stdin_();
+  stdin_();
   global $stdin;
   $out = sscanf($stdin, $format);
   $stdin = substr($stdin, strlen($out[0]));
@@ -11,11 +14,11 @@ function scan($format){
 }
 function scantrim(){
   global $stdin;
-while(true){
- $stdin = ltrim($stdin);
-if ($stdin != '' || feof(STDIN)) break;
-  stdin_();
-}
+  while(true){
+    $stdin = ltrim($stdin);
+    if ($stdin != '' || feof(STDIN)) break;
+    stdin_();
+  }
 }
 function pathfind_aux(&$cache, &$tab, $len, $pos){
   if ($pos >= $len - 1)
