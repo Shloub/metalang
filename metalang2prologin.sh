@@ -4,10 +4,18 @@ rename () {
     local filename
     for i in `ls "$1"`; do
         filename="${i%.*}"
+        if [ "$filename" != "ref" ]; then
+        if [ "$filename" != "gen" ]; then
+        if [ "$filename" != "gentests" ]; then
+        if [ "$filename" != "gen-worstcase" ]; then
         extension="${i##*.}"
         if [ "$extension" = "$2" ] ; then
             git mv "$1/$filename.$2" "$1/$filename.$3"
             mv "$1/$filename.$2" "$1/$filename.$3"
+        fi
+        fi
+        fi
+        fi
         fi
     done
 
