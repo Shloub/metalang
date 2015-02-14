@@ -24,93 +24,6 @@ unit:
 	ocamlbuild Stdlib/unit.byte
 	./unit.byte
 
-.PHONY: cversion
-cversion :
-	@gcc --version
-	@echo "$(green)GCC OK$(reset)";
-
-.PHONY: goversion
-goversion :
-	@go version
-	@echo "$(green)Go OK$(reset)";
-
-.PHONY: ccversion
-ccversion :
-	@g++ --version
-	@echo "$(green)g++ OK$(reset)";
-
-.PHONY: pyversion
-pyversion :
-	@$(python) --version
-	@echo "$(green)Python OK$(reset)";
-
-.PHONY: ocamlversion
-ocamlversion :
-	@ocaml -version
-	@echo "$(green)OCAML OK$(reset)";
-
-.PHONY: javaversion
-javaversion :
-	@java -version
-	@echo "$(green)Java OK$(reset)";
-
-.PHONY: monoversion
-monoversion :
-	@mono --version
-	@echo "$(green)Mono OK$(reset)";
-
-.PHONY: nodeversion
-nodeversion :
-	@node --version
-	@echo "$(green)Node OK$(reset)";
-
-.PHONY: phpversion
-phpversion :
-	@php --version
-	@echo "$(green)PHP OK$(reset)";
-
-.PHONY: commonlispversion
-commonlispversion :
-	@echo "" | gcl --version
-	@echo "$(green)Common Lisp OK$(reset)";
-
-.PHONY: rbversion
-rbversion :
-	@ruby --version
-	@echo "$(green)Ruby OK$(reset)";
-
-.PHONY: pascalversion
-pascalversion :
-	@fpc --version
-	@echo "$(green)Free pascal OK$(reset)";
-
-.PHONY: check-langages
-check-langages : cversion goversion ccversion pyversion ocamlversion javaversion monoversion nodeversion phpversion commonlispversion rbversion pascalversion
-
-
-
-tar :
-	rm -rf tarball
-	@mkdir tarball tarball/Astutils tarball/Eval tarball/Parser tarball/Main tarball/Printers tarball/tools tarball/Stdlib tarball/tests tarball/tests/prog tarball/tests/compile tarball/tests/not_compile || true
-	for i in Astutils Eval Main Parser Printers Stdlib tools tests/not_compile tests/prog tests/compile; do \
-	echo $$i; \
-	find ./$$i -name "*.mllib" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*.mly" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*.mll" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*.mli" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*.ml" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*.el" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*.in" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*.metalang" -exec cp {} tarball/{} \;; \
-	find ./$$i -name "*_tags" -exec cp {} tarball/{} \;; \
-	done;
-	cp _tags tarball/_tags
-	cp myocamlbuild.ml tarball/myocamlbuild.ml
-	cp Makefile tarball/Makefile
-	tar -czf tarball.tar.gz tarball
-	rm -rf tarball
-
-
 java	?=	java
 python	?=	python3
 
@@ -118,13 +31,10 @@ OBJCFLAGS ?= -O3 -Wall
 CFLAGS ?= -O3 -Wall -lm
 CCFLAGS ?= -O3 -Wall
 
-TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, \
+TESTSNOTCOMPILEFILES := $(basename $(filter %.metalang, \
 	$(shell ls tests/not_compile/)))
 
 COMPILER_SOURCES:= $(shell find . \( -name "*.ml" -or -name "*.mll" -or -name "*.mly" \) -not -path "./out/*" -not -path "./_build/*")
-
-showSources:
-	@echo $(COMPILER_SOURCES)
 
 TESTSFILES	:= $(filter %.metalang, $(shell ls tests/prog/))
 TESTS		:= $(addprefix out/, $(basename $(TESTSFILES)))
@@ -195,6 +105,7 @@ TMPFILES	:=\
 	$(addsuffix .metalang_parsed, $(TESTS))
 
 .SECONDARY: $(TMPFILES)
+
 
 metalang : $(COMPILER_SOURCES) main.byte
 	@cp _build/Main/main.byte metalang
@@ -592,7 +503,23 @@ out/%.test_java_ml : out/%.class.out out/%.ml.out
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+out/%.test_hs_ml : out/%.hs.exe.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
 testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
+
+testHaskell : $(addsuffix .test_hs_ml, $(TESTS))
 
 testPerl : $(addsuffix .test_pl_ml, $(TESTS))
 
@@ -612,7 +539,7 @@ testJava : compileJAVA $(addsuffix .test_java_ml, $(TESTS))
 	@echo "$(green)$@ OK$(reset) $*"
 	@echo "ok" > $@
 
-allsources: pl.sources m.sources ml.sources py.sources php.sources rb.sources js.sources cc.sources c.sources pas.sources java.sources rkt.sources fun.ml.sources cs.sources go.sources cl.sources vb.sources
+allsources: pl.sources m.sources ml.sources py.sources php.sources rb.sources js.sources cc.sources c.sources pas.sources java.sources rkt.sources fun.ml.sources cs.sources go.sources cl.sources vb.sources hs.sources
 	@echo "$(green)all sources OK$(reset) $*"
 	@echo "ok" > $@
 
