@@ -255,7 +255,7 @@ let languages, printers =
     "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
     "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
     "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
-(*    "hs",      (true, ocaml_passes)   => new HaskellPrinter.haskellPrinter ; *)
+    "hs",      (true, fun_passes {Makelet.curry=true}) => new HaskellPrinter.haskellPrinter ;
     "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
     "rb",      (false, python_passes) => new RbPrinter.rbPrinter ;
     "py",      (false, python_passes) => new PyPrinter.pyPrinter ;
