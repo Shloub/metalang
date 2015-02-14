@@ -121,7 +121,10 @@ CCFLAGS ?= -O3 -Wall
 TESTSNOTCOMPILEFILES	:= $(basename $(filter %.metalang, \
 	$(shell ls tests/not_compile/)))
 
-COMPILER_SOURCES:= $(shell find . -name "*.ml" -not -path "./out/*" -not -path "./_build/*")
+COMPILER_SOURCES:= $(shell find . \( -name "*.ml" -or -name "*.mll" -or -name "*.mly" \) -not -path "./out/*" -not -path "./_build/*")
+
+showSources:
+	@echo $(COMPILER_SOURCES)
 
 TESTSFILES	:= $(filter %.metalang, $(shell ls tests/prog/))
 TESTS		:= $(addprefix out/, $(basename $(TESTSFILES)))
