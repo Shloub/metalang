@@ -233,4 +233,4 @@ type declaration =
 | Macro of string * Ast.Type.t * (string * Ast.Type.t) list * (string * string ) list
 
 type opts = { hasSkip : bool; reads : Ast.TypeSet.t }
-type prog = { declarations : declaration list; options : opts }
+type prog = { declarations : declaration list; options : opts ; side_effects : bool IntMap.t }

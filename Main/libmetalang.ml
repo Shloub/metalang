@@ -216,6 +216,18 @@ let php_passes prog =
   |> check_reads
   |> typed "remove internals" Passes.WalkRemoveInternal.apply
 
+let hs_passes prog =
+  prog |> default_passes
+  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
+  |> typed "inline vars" Passes.WalkInlineVars.apply
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
+  |> (fun (a, b) -> a, TransformFun.transform (a, b))
+  |> (fun (a, b) -> a, Makelet.apply {Makelet.curry=false} b)
+  |> (fun (a, b) -> a, RenameFun.apply b)
+  |> (fun (a, b) -> a, DetectSideEffect.apply b)
+
 let no_passes prog =
   prog
 
@@ -255,7 +267,7 @@ let languages, printers =
     "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
     "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
     "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
-    "hs",      (true, fun_passes {Makelet.curry=true}) => new HaskellPrinter.haskellPrinter ;
+    "hs",      (true, hs_passes) => new HaskellPrinter.haskellPrinter ;
     "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
     "rb",      (false, python_passes) => new RbPrinter.rbPrinter ;
     "py",      (false, python_passes) => new PyPrinter.pyPrinter ;

@@ -39,7 +39,7 @@ class haskellPrinter = object(self)
   method lang () = "hs"
 
   val mutable macros = StringMap.empty
-
+  val mutable side_effects = IntMap.empty
   val mutable typerEnv : Typer.env = Typer.empty
   method getTyperEnv () = typerEnv
   method setTyperEnv t = typerEnv <- t
@@ -70,7 +70,7 @@ class haskellPrinter = object(self)
   method binop f a op b = Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
   method unop f a op = Format.fprintf f "(%a %a)"self#punop op self#expr a
 
-  method comment f str c = Format.fprintf f "{-|%s-}@\n%a" str self#expr c
+  method comment f str c = Format.fprintf f "{-%s-}@\n%a" str self#expr c
 
   method fun_ f params e =
     let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
@@ -81,12 +81,12 @@ class haskellPrinter = object(self)
     Format.fprintf f "(\\%a -> %a)" pparams () self#expr e
 
   method letrecin f name params e1 e2 = match params with
-  | [] -> Format.fprintf f "@[<v 2>let rec %a () =@\n%a in@\n%a@]"
+  | [] -> Format.fprintf f "let %a @[<v>() =@\n%a in@\n%a@]"
     self#binding name
     self#expr e1
     self#expr e2
   | _ ->
-    Format.fprintf f "@[<v 2>let rec %a %a =@\n%a in@\n%a@]"
+    Format.fprintf f "let %a @[<v>%a =@\n%a in@\n%a@]"
       self#binding name
       (Printer.print_list
          self#binding
@@ -94,8 +94,15 @@ class haskellPrinter = object(self)
       self#expr e1
       self#expr e2
 
+  method isSideEffect expr = IntMap.find (E.Fixed.annot expr) side_effects
+  method isPure expr = not (self#isSideEffect expr)
 
-  method ignore f e1 e2 = Format.fprintf f "do %a@\n%a" self#expr e1 self#expr e2
+  method eM f expr =
+    if self#isSideEffect expr then
+      self#expr f expr
+    else Format.fprintf f "return %a" self#expr expr
+
+  method ignore f e1 e2 = Format.fprintf f "do %a@\n%a" self#eM e1 self#eM e2
 
   method binding f s = Format.fprintf f "%s" s
 
@@ -113,8 +120,8 @@ class haskellPrinter = object(self)
   | E.Char c -> Format.fprintf f "%C" c
   | E.String s -> Format.fprintf f "%S" s
   | E.Integer i -> Format.fprintf f "%i" i
-  | E.Bool true -> Format.fprintf f "true"
-  | E.Bool false -> Format.fprintf f "false"
+  | E.Bool true -> Format.fprintf f "True"
+  | E.Bool false -> Format.fprintf f "False"
   | E.Enum s -> Format.fprintf f "%s" s
   | E.Binding s -> self#binding f s
 
@@ -151,8 +158,25 @@ class haskellPrinter = object(self)
   method apply_nomacros f e li =
     match li with
     | [] -> Format.fprintf f "(%a ())" self#expr e
-    | _ -> Format.fprintf f "(%a %a)"
-      self#expr e (Printer.print_list self#expr Printer.sep_space) li
+    | _ ->
+      let count = List.length li in
+      let _, pure, p = List.fold_left
+        (fun (c, pure, p) arg ->
+          let c1 = c + 1 in
+          if c = count then
+            match pure, self#isPure arg with
+              (true, true) -> (c1, true, (fun f () -> Format.fprintf f "%a %a" p () self#expr arg))
+            | (true, false) -> (c1, false, (fun f () -> Format.fprintf f "%a =<< %a" p () self#expr arg))
+            | (false, false) -> (c1, false, (fun f () -> Format.fprintf f "join (%a <*> %a)" p () self#expr arg))
+            | (false, true) -> (c1, false, (fun f () -> Format.fprintf f "join (%a <*> (return %a))" p () self#expr arg))
+          else
+            match pure, self#isPure arg with
+              (true, true) -> (c1, true, (fun f () -> Format.fprintf f "%a %a" p () self#expr arg))
+            | (true, false) -> (c1, false, (fun f () -> Format.fprintf f "%a <$> %a" p () self#expr arg))
+            | (false, false) -> (c1, false, (fun f () -> Format.fprintf f "%a <*> %a" p () self#expr arg))
+            | (false, true) -> (c1, false, (fun f () -> Format.fprintf f "%a <*> (return %a)" p () self#expr arg))
+        ) (1, true, (fun f () -> self#expr f e)) li
+      in Format.fprintf f " (%a)" p ()
 
   method apply f e li =
     let default () = self#apply_nomacros f e li in
@@ -172,7 +196,7 @@ class haskellPrinter = object(self)
 
   method block f li = Format.fprintf f "@[<v 2>do {@\n%a@\n}@]@\n"
     (Printer.print_list
-       self#expr
+       self#eM
        (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
 
 
@@ -181,13 +205,13 @@ class haskellPrinter = object(self)
   method print f expr t =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[(%a %a (%a :: %a))@]"
+      Format.fprintf f "@[(%a %a (%a :: %a))::IO()@]"
         self#printf ()
         self#format_type t
         self#expr expr
         self#ptype t
     | _ -> 
-      Format.fprintf f "@[(%a %a %a)@]"
+      Format.fprintf f "@[(%a %a %a)::IO()@]"
         self#printf ()
         self#format_type t
         self#expr expr
@@ -252,7 +276,7 @@ class haskellPrinter = object(self)
     (Printer.print_list
        (fun f (s, a) ->
 	 let pparams, a = self#extract_fun_params a (fun f () -> ()) in
-	 Format.fprintf f "%a%a = %a"
+	 Format.fprintf f "%a%a =@[<v> %a@]"
 	   self#binding s pparams () self#expr a
        )
        (fun f pa a pb b -> Format.fprintf f "%a@\nand %a" pa a pb b))
@@ -326,7 +350,7 @@ class haskellPrinter = object(self)
       ()
 
   method header f opts =
-    Format.fprintf f "import Text.Printf@\n";
+    Format.fprintf f "import Text.Printf@\nimport Control.Applicative@\nimport Control.Monad@\n";
     if Tags.is_taged "__internal__allocArray" then
       Format.fprintf f
 	"module Array = struct
@@ -342,6 +366,7 @@ end
 "
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
+    side_effects <- prog.AstFun.side_effects;
     self#header f prog.AstFun.options;
     List.iter (self#decl f) prog.AstFun.declarations
 

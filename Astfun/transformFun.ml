@@ -283,7 +283,10 @@ let transform (tyenv, prog) =
   | Some m ->
     let main = instrs false (F.Expr.unit) None [] m in
     List.append fonctions [F.Declaration ("main", main)]
-     in { AstFun.declarations = declarations; options = {
-       AstFun.reads = prog.Ast.Prog.reads;
-       AstFun.hasSkip = prog.Ast.Prog.hasSkip;
-     }}
+     in { AstFun.declarations = declarations;
+          options = {
+            AstFun.reads = prog.Ast.Prog.reads;
+            AstFun.hasSkip = prog.Ast.Prog.hasSkip;
+          };
+          side_effects = IntMap.empty
+        }
