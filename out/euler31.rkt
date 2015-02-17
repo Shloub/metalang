@@ -1,0 +1,60 @@
+#lang racket
+(require racket/block)
+(define array_init_withenv (lambda (len f env)
+  (build-vector len (lambda (i)
+    (let ([o ((f i) env)])
+      (block
+        (set! env (car o))
+        (cadr o)
+      )
+    )))))
+
+(define (result sum t0 maxIndex cache)
+  ;toto
+  (let ([a (lambda (_) 
+             '())])
+  (if (not (eq? (vector-ref (vector-ref cache sum) maxIndex) 0))
+  (vector-ref (vector-ref cache sum) maxIndex)
+  (let ([b (lambda (_) 
+             (a 'nil))])
+  (if (or (eq? sum 0) (eq? maxIndex 0))
+  1
+  (let ([out0 0])
+  (let ([div (quotient sum (vector-ref t0 maxIndex))])
+  (let ([d 0])
+  (let ([e div])
+  (letrec ([c (lambda (i out0) 
+                (if (<= i e)
+                (let ([out0 (+ out0 (result (- sum (* i (vector-ref t0 maxIndex))) t0 (- maxIndex 1) cache))])
+                (c (+ i 1) out0))
+                (block
+                  (vector-set! (vector-ref cache sum) maxIndex out0)
+                  out0
+                  )))])
+  (c d out0))))))))))
+)
+(define main
+  (let ([t0 (array_init_withenv 8 (lambda (i) 
+                                    (lambda (_) (let ([f 0])
+                                                (list '() f)))) '())])
+  (block
+    (vector-set! t0 0 1)
+    (vector-set! t0 1 2)
+    (vector-set! t0 2 5)
+    (vector-set! t0 3 10)
+    (vector-set! t0 4 20)
+    (vector-set! t0 5 50)
+    (vector-set! t0 6 100)
+    (vector-set! t0 7 200)
+    (let ([cache (array_init_withenv 201 (lambda (j) 
+                                           (lambda (_) (let ([o (array_init_withenv 8 
+                                                       (lambda (k) 
+                                                         (lambda (_) 
+                                                         (let ([h 0])
+                                                         (list '() h)))) '())])
+                                           (let ([g o])
+                                           (list '() g))))) '())])
+  (display (result 200 t0 7 cache)))
+))
+)
+
