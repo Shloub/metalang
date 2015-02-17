@@ -61,6 +61,7 @@ let keywords lang=
     "qsort"
   ]
   in match lang with
+    "pas" -> "div"::li
   | "cl" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
   | "rkt" -> "isqrt" :: "t" :: "mem" :: "nth" :: "cons" :: "find" :: li
   | "php" -> "sqrt" :: "log10" :: li
