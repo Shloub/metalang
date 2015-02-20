@@ -48,7 +48,8 @@ class commonLispPrinter = object(self)
     else Format.fprintf f "(code-char %d)" (int_of_char c)
 
   method string f s =
-    let s = String.replace "\\\"" "\\\\\"" s in
+		let s = List.fold_left (fun s (from, to_) -> String.replace from to_ s) s
+			["\\\"", "\\\\\""] in
     Format.fprintf f "\"%s\"" s
 
   method affectop f m = match Mutable.unfix m with
@@ -69,7 +70,6 @@ class commonLispPrinter = object(self)
   | Expr.Mod -> Format.fprintf f "@[<h>(%a %a ( remainder %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
   | _ -> assert false
 
-
   method allocarray_lambda f binding type_ len binding2 lambda _ =
     let () = nlet <- nlet + 1 in
     Format.fprintf f "@[<h>(let@\n ((%a@ (@[<v 2>array_init@\n%a@\n(function (lambda (%a)@\n%a)@\n@]))))"
@@ -78,32 +78,19 @@ class commonLispPrinter = object(self)
       self#binding binding2
       self#blocnamed lambda
 
-  method stdin_sep f =
-    Format.fprintf f "@[(mread-blank)@]"
+  method stdin_sep f = Format.fprintf f "@[(mread-blank)@]"
 
   method read_decl f t v =
     match Type.unfix t with
-    | Type.Integer ->
-      self#declaration f v t (Expr.call "mread-int" [])
-    | Type.Char ->
-      self#declaration f v t (Expr.call "mread-char" [])
+    | Type.Integer -> self#declaration f v t (Expr.call "mread-int" [])
+    | Type.Char -> self#declaration f v t (Expr.call "mread-char" [])
     | _ -> assert false
 
   method read f t mutable_ =
     match Type.unfix t with
-    | Type.Integer ->
-      self#affect f mutable_ (Expr.call "mread-int" [])
-    | Type.Char ->
-      self#affect f mutable_ (Expr.call "mread-char" [])
+    | Type.Integer -> self#affect f mutable_ (Expr.call "mread-int" [])
+    | Type.Char -> self#affect f mutable_ (Expr.call "mread-char" [])
     | _ -> assert false
-
-  method instructions f instrs =
-    (print_list
-       self#instr
-       (fun t print1 item1 print2 item2 ->
-         Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-       )
-    ) f instrs
 
   method mutable_ f m =
     match m |> Mutable.unfix with
@@ -115,7 +102,6 @@ class commonLispPrinter = object(self)
         self#field field
         self#mutable_ mutable_
     | Mutable.Array (mut, indexes) ->
-
       List.fold_left (fun func e f () ->
         Format.fprintf f "(aref %a %a)"
           func ()
@@ -141,7 +127,6 @@ class commonLispPrinter = object(self)
       self#print_proto (funname, t, li)
       self#bloc instrs
 
-
   method if_ f e ifcase elsecase =
     match elsecase with
     | [] ->
@@ -154,21 +139,12 @@ class commonLispPrinter = object(self)
         self#bloc ifcase
         self#bloc elsecase
 
-
   method forloop f varname expr1 expr2 li =
 		Format.fprintf f "(loop for %a from %a to %a do %a)"
 			self#binding varname
       self#expr expr1
       self#expr expr2
       self#bloc li
-(*
-    Format.fprintf f "@[<v 2>(do@\n@[<h>((%a %a (+ 1 %a)))@]@\n@[<h>((> %a@ %a))@]@\n%a@]@\n)"
-      self#binding varname
-      self#expr expr1
-      self#binding varname
-      self#binding varname
-      self#expr expr2
-      self#bloc li *)
 
   method unop f op a = match op with
   | Expr.Neg -> Format.fprintf f "(- 0 %a)" self#expr a
@@ -199,8 +175,7 @@ class commonLispPrinter = object(self)
     | Expr.Record e -> self#record f e
     | Expr.Lief l -> self#lief f l
 
-  method enum f e =
-    Format.fprintf f "'%s" e
+  method enum f e = Format.fprintf f "'%s" e
 
   method apply (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
     match StringMap.find_opt var macros with
@@ -218,11 +193,9 @@ class commonLispPrinter = object(self)
            )
         ) li
 
-  method call (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit =
-    self#apply f var li
+  method call (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit = self#apply f var li
 
-  method print f t expr =
-    Format.fprintf f "@[(princ %a)@]" self#expr expr
+  method print f t expr = Format.fprintf f "@[(princ %a)@]" self#expr expr
 
   method declaration f var t e =
     let () = nlet <- nlet + 1 in
@@ -270,6 +243,25 @@ class commonLispPrinter = object(self)
   | true -> Format.fprintf f "t"
   | false -> Format.fprintf f "nil"
 
+	method formater_type t = match Type.unfix t with
+  | Type.Integer -> "~D"
+  | Type.Char -> "~C"
+  | Type.String ->  "~A"
+  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
+
+  method noformat s = let s = Format.sprintf "-%s-" s
+                      in List.fold_left (fun s (from, to_) -> String.replace from to_ s) s
+											["~", "~~"; "\n", "~%"]
+
+	method combine_formats () = true
+
+	method multi_print f format exprs =
+		Format.fprintf f "@[<v>(format t %a %a)@]"
+			self#string format
+      (print_list
+         (fun f (t, e) -> self#expr f e)
+         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
+
   method bloc f li =
     match li with
     | [instr] ->
@@ -287,8 +279,7 @@ class commonLispPrinter = object(self)
       begin
         nlet <- 0;
         Format.fprintf f "@[<v 2>(progn@\n%a@]@\n)"
-          (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-            "%a@\n%a" f1 e1 f2 e2)) li;
+          self #instructions li;
         for i = 1 to nlet do
           Format.fprintf f ")@]";
         done;
@@ -328,8 +319,8 @@ class commonLispPrinter = object(self)
       out
     )))
 " else "")
-(if Tags.is_taged "__internal__div" then "\n(defun quotient (a b) (truncate a b))" else "")
-(if Tags.is_taged "__internal__mod" then "(defun remainder (a b) (- a (* b (truncate a b))))" else "")
+(if Tags.is_taged "__internal__div" then "\n(defun quotient (a b) (truncate a b))\n" else "")
+(if Tags.is_taged "__internal__mod" then "(defun remainder (a b) (- a (* b (truncate a b))))\n" else "")
       (if need then
           "(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
@@ -368,7 +359,6 @@ class commonLispPrinter = object(self)
 
   method main f main =
     self#bloc f main
-
 
   method print_op f op =
     Format.fprintf f

@@ -714,13 +714,15 @@ class printer = object(self)
   | Instr.StdinSep -> true
   | _ -> false
 
+	method formater_type t = format_type t
+
   method instructions0 f instrs =
     if List.for_all self#is_stdin instrs then
       self#multiread f instrs
     else if (match instrs with [_] -> false | _ -> true)
       && List.for_all self#is_print instrs then
       let li = List.map (fun i -> match Instr.unfix i with
-        | Instr.Print (t, i) -> format_type t, (t, i)
+        | Instr.Print (t, i) -> self#formater_type t, (t, i)
         | _ -> assert false
       ) instrs in
       let li =
