@@ -132,19 +132,23 @@ class commonLispPrinter = object(self)
     | [] ->
       Format.fprintf f "@[<v 2>(if@\n%a@\n%a)@]"
         self#expr e
-        self#bloc ifcase
+        self#blocnonnull ifcase
     | _ ->
       Format.fprintf f "@[<v 2>(if@\n%a@\n%a@\n%a)@]"
         self#expr e
-        self#bloc ifcase
+        self#blocnonnull ifcase
         self#bloc elsecase
 
+	method blocnonnull f = function
+	| [] -> Format.fprintf f "'()"
+	| li -> self#bloc f li
+
   method forloop f varname expr1 expr2 li =
-		Format.fprintf f "(loop for %a from %a to %a do %a)"
+		Format.fprintf f "@[<v 2>(loop for %a from %a to %a do@\n%a)@]"
 			self#binding varname
       self#expr expr1
       self#expr expr2
-      self#bloc li
+      self#blocnonnull li
 
   method unop f op a = match op with
   | Expr.Neg -> Format.fprintf f "(- 0 %a)" self#expr a
@@ -231,7 +235,7 @@ class commonLispPrinter = object(self)
   method whileloop f expr li =
     Format.fprintf f "@[<h>(loop while %a@]@\ndo @[<v 2>%a@]@\n)"
       self#expr expr
-      self#bloc li
+      self#blocnonnull li
 
   method affect f mutable_ expr =
     Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#affectop mutable_ self#mutable_ mutable_ self#expr expr
@@ -260,7 +264,7 @@ class commonLispPrinter = object(self)
 			self#string format
       (print_list
          (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
+         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a %a" f1 e1 f2 e2)) exprs
 
   method bloc f li =
     match li with
@@ -274,6 +278,8 @@ class commonLispPrinter = object(self)
         done;
         nlet <- exnlet;
       end
+		| li when (match li with [_] -> false | _ -> true)
+				&& List.for_all self#is_print li -> self#instructions f li;
     | _ ->
       let exnlet = nlet in
       begin
@@ -295,8 +301,7 @@ class commonLispPrinter = object(self)
       funname_ <- "lambda_" ^ (string_of_int iblocname);
       Format.fprintf f "@[<v 2>(block %s@\n%a@]@\n)"
         funname_
-        (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-          "%a@\n%a" f1 e1 f2 e2)) li;
+				self#instructions li;
       for i = 1 to nlet do
         Format.fprintf f ")@]";
       done;
