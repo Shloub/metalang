@@ -27,10 +27,6 @@ unit:
 java	?=	java
 python	?=	python3
 
-OBJCFLAGS ?= -O3 -Wall
-CFLAGS ?= -O3 -Wall -lm
-CCFLAGS ?= -O3 -Wall
-
 TESTSNOTCOMPILEFILES := $(basename $(filter %.metalang, \
 	$(shell ls tests/not_compile/)))
 
@@ -272,14 +268,14 @@ out/%.metalang.test : out/%.metalang Stdlib/stdlib.metalang metalang
 	done;
 
 out/%.m.bin : out/%.m
-	@gcc `gnustep-config --objc-flags` -lgnustep-base $(OBJCFLAGS) $< -o $@ || exit 1
+	@gcc $< -o $@ `gnustep-config --objc-flags` `gnustep-config --base-libs` -lm || exit 1
 	@rm out/$(basename $*).m.d || exit 0
 
 out/%.c.bin : out/%.c
-	@gcc $(CFLAGS) $< -o $@ || exit 1
+	@gcc -Wall $< -o $@ -lm || exit 1
 
 out/%.cc.bin : out/%.cc
-	@g++ $(CCFLAGS) $< -o $@ || exit 1
+	@g++ -Wall $< -o $@ -lm || exit 1
 
 out/%.pas.bin : out/%.pas
 	@fpc $< || exit 1
