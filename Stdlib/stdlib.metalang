@@ -40,7 +40,7 @@ macro char char_of_int(int c)
   csharp do "(char)($c)"
   php do "chr($c)"
   go do "(byte)($c)"
-  clisp do "(int-char $c)"
+  clisp do "(code-char $c)"
   cpp do "(char)($c)"
   rkt do "integer->char $c"
   pl do "chr($c)"
@@ -55,7 +55,7 @@ end
 macro int int_of_char(char c)
   ml do "int_of_char ($c)"
   py do "ord($c)"
-  clisp do "(char-int $c)"
+  clisp do "(char-code $c)"
   ruby do "$c.ord"
   pas do "ord($c)"
   php do "ord($c)"

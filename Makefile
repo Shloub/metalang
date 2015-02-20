@@ -363,7 +363,7 @@ out/%.py.out : out/%.py
 	$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.cl.out : out/%.cl
-	gcl -f $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	sbcl --script $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.rb.out : out/%.rb
 	ruby $< < tests/prog/$(basename $*).in > $@ || exit 1;
@@ -517,7 +517,23 @@ out/%.test_hs_ml : out/%.hs.exe.out out/%.ml.out
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+out/%.test_cl_ml : out/%.cl.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
 testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
+
+testLisp : $(addsuffix .test_cl_ml, $(TESTS))
 
 testHaskell : $(addsuffix .test_hs_ml, $(TESTS))
 

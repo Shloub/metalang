@@ -45,7 +45,7 @@ class commonLispPrinter = object(self)
       (x >= '0' && x <= '9') or
       (x >= 'A' && x <= 'Z')
     then Format.fprintf f "#\\%c" x
-    else Format.fprintf f "(int-char %d)" (int_of_char c)
+    else Format.fprintf f "(code-char %d)" (int_of_char c)
 
   method string f s =
     let s = String.replace "\\\"" "\\\\\"" s in
@@ -156,13 +156,19 @@ class commonLispPrinter = object(self)
 
 
   method forloop f varname expr1 expr2 li =
+		Format.fprintf f "(loop for %a from %a to %a do %a)"
+			self#binding varname
+      self#expr expr1
+      self#expr expr2
+      self#bloc li
+(*
     Format.fprintf f "@[<v 2>(do@\n@[<h>((%a %a (+ 1 %a)))@]@\n@[<h>((> %a@ %a))@]@\n%a@]@\n)"
       self#binding varname
       self#expr expr1
       self#binding varname
       self#binding varname
       self#expr expr2
-      self#bloc li
+      self#bloc li *)
 
   method unop f op a = match op with
   | Expr.Neg -> Format.fprintf f "(- 0 %a)" self#expr a
@@ -216,7 +222,7 @@ class commonLispPrinter = object(self)
     self#apply f var li
 
   method print f t expr =
-    Format.fprintf f "@[(princ@ %a)@]" self#expr expr
+    Format.fprintf f "@[(princ %a)@]" self#expr expr
 
   method declaration f var t e =
     let () = nlet <- nlet + 1 in
@@ -312,22 +318,20 @@ class commonLispPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "
-(si::use-fast-links nil)%s%s%s%s%s%s%s%a
-"
+    Format.fprintf f "%s%s%s%s%s%s%s%a@\n"
 (if Tags.is_taged "__internal__allocArray" then "
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))" else "")
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+" else "")
 (if Tags.is_taged "__internal__div" then "\n(defun quotient (a b) (truncate a b))" else "")
 (if Tags.is_taged "__internal__mod" then "(defun remainder (a b) (- a (* b (truncate a b))))" else "")
       (if need then
-          "(let ((last-char 0)))
+          "(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 " else "" )
@@ -345,9 +349,9 @@ class commonLispPrinter = object(self)
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\\0)) (<= (char-int last-char) (char-int #\\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\\0)) (<= (char-code last-char) (char-code #\\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\\0))))
           (next-char)
         )
       )
@@ -356,7 +360,7 @@ class commonLispPrinter = object(self)
 " else "")
       (if need_stdinsep then
           "(defun mread-blank () (progn
-  (while (or (eq last-char #\\NewLine) (eq last-char #\\Space) ) (next-char))
+  (loop while (or (eq last-char #\\NewLine) (eq last-char #\\Space) ) do (next-char))
 ))
 " else "")
 
