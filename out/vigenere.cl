@@ -1,13 +1,13 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(defun remainder (a b) (- a (* b (truncate a b))))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defun remainder (a b) (- a (* b (truncate a b))))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -21,37 +21,35 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun position_alphabet (c)
 (progn
-  (let ((i (char-int c)))
+  (let ((i (char-code c)))
     (if
-      (and (<= i (char-int #\Z)) (>= i (char-int #\A)))
-      (return-from position_alphabet (- i (char-int #\A)))
+      (and (<= i (char-code #\Z)) (>= i (char-code #\A)))
+      (return-from position_alphabet (- i (char-code #\A)))
       (if
-        (and (<= i (char-int #\z)) (>= i (char-int #\a)))
-        (return-from position_alphabet (- i (char-int #\a)))
+        (and (<= i (char-code #\z)) (>= i (char-code #\a)))
+        (return-from position_alphabet (- i (char-code #\a)))
         (return-from position_alphabet (- 0 1))))
   )))
 
 (defun of_position_alphabet (c)
-(return-from of_position_alphabet (int-char (+ c (char-int #\a)))))
+(return-from of_position_alphabet (code-char (+ c (char-code #\a)))))
 
 (defun crypte (taille_cle cle taille message)
-(do
-  ((i 0 (+ 1 i)))
-  ((> i (- taille 1)))
+(loop for i from 0 to (- taille 1) do
   (progn
     (let ((lettre (position_alphabet (aref message i))))
       (if
@@ -61,8 +59,7 @@
             (let ((new0 (remainder (+ addon lettre) 26)))
               (setf (aref message i) (of_position_alphabet new0))
             ))))
-    ))
-  ))
+    ))))
 
 (progn
   (let ((taille_cle (mread-int )))
@@ -89,11 +86,8 @@
                       )))
                     ))))
       (crypte taille_cle cle taille message)
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (- taille 1)))
-        (princ (aref message i))
-      )
+      (loop for i from 0 to (- taille 1) do
+        (princ (aref message i)))
       (princ "
 ")
       )))))

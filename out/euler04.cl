@@ -1,6 +1,7 @@
 
-(si::use-fast-links nil)
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun max2_ (a b)
 (if
   (> a b)
@@ -33,39 +34,19 @@ c * f * 10000
 
 (progn
   (let ((m 1))
-    (do
-      ((a 0 (+ 1 a)))
-      ((> a 9))
-      (do
-        ((f 1 (+ 1 f)))
-        ((> f 9))
-        (do
-          ((d 0 (+ 1 d)))
-          ((> d 9))
-          (do
-            ((c 1 (+ 1 c)))
-            ((> c 9))
-            (do
-              ((b 0 (+ 1 b)))
-              ((> b 9))
-              (do
-                ((e 0 (+ 1 e)))
-                ((> e 9))
+    (loop for a from 0 to 9 do
+      (loop for f from 1 to 9 do
+        (loop for d from 0 to 9 do
+          (loop for c from 1 to 9 do
+            (loop for b from 0 to 9 do
+              (loop for e from 0 to 9 do
                 (progn
                   (let ((mul (+ (+ (+ (+ (* a d) (* 10 (+ (* a e) (* b d)))) (* 100 (+ (+ (* a f) (* b e)) (* c d)))) (* 1000 (+ (* c e) (* b f)))) (* (* 10000 c) f))))
                     (if
                       (and (and (= (chiffre 0 mul) (chiffre 5 mul)) (= (chiffre 1 mul) (chiffre 4 mul))) (= (chiffre 2 mul) (chiffre 3 mul)))
                       (setq m (max2_ mul m)))
-                  ))
-                )
-              )
-            )
-          )
-        )
-    )
-    (princ m)
-    (princ "
-")
+                  ))))))))
+    (format t "~D~%" m)
   ))
 
 

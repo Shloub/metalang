@@ -1,22 +1,20 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun fact (n)
 (progn
   (let ((prod 1))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i n))
-      (setq prod ( * prod i))
-    )
+    (loop for i from 2 to n do
+      (setq prod ( * prod i)))
     (return-from fact prod)
   )))
 
@@ -38,16 +36,12 @@
                (return-from lambda_2 nil)
              ))
              ))))
-  (do
-    ((k 1 (+ 1 k)))
-    ((> k (- lim 1)))
+  (loop for k from 1 to (- lim 1) do
     (progn
       (let ((n (fact (- lim k))))
         (let ((nchiffre (quotient nth0 n)))
           (setq nth0 ( remainder nth0 n))
-          (do
-            ((l 0 (+ 1 l)))
-            ((> l (- lim 1)))
+          (loop for l from 0 to (- lim 1) do
             (if
               (not (aref pris l))
               (progn
@@ -58,17 +52,12 @@
                     (setf (aref pris l) t)
                   ))
                 (setq nchiffre ( - nchiffre 1))
-              ))
-          )
-        )))
-  )
-  (do
-    ((m 0 (+ 1 m)))
-    ((> m (- lim 1)))
+              )))
+        ))))
+  (loop for m from 0 to (- lim 1) do
     (if
       (not (aref pris m))
-      (princ m))
-  )
+      (princ m)))
   (princ "
 ")
   ))))

@@ -1,22 +1,19 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(defun remainder (a b) (- a (* b (truncate a b))))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun divisible (n t0 size)
 (progn
-  (do
-    ((i 0 (+ 1 i)))
-    ((> i (- size 1)))
+  (loop for i from 0 to (- size 1) do
     (if
       (= (remainder n (aref t0 i)) 0)
-      (return-from divisible t))
-  )
+      (return-from divisible t)))
   (return-from divisible nil)
 ))
 
@@ -45,9 +42,7 @@
                (return-from lambda_1 2)
              ))
              ))))
-    (princ (find0 3 t0 1 n))
-    (princ "
-")
+    (format t "~D~%" (find0 3 t0 1 n))
     )))
 
 

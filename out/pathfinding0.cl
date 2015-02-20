@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -21,16 +20,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun pathfind_aux (cache tab x y posX posY)
@@ -41,7 +40,7 @@
     (or (or (or (< posX 0) (< posY 0)) (>= posX x)) (>= posY y))
     (return-from pathfind_aux (* (* x y) 10))
     (if
-      (eq (aref (aref tab posY) posX) (int-char 35))
+      (eq (aref (aref tab posY) posX) (code-char 35))
       (return-from pathfind_aux (* (* x y) 10))
       (if
         (not (= (aref (aref cache posY) posX) (- 0 1)))
@@ -86,11 +85,7 @@
     (mread-blank)
     (let ((y (mread-int )))
       (mread-blank)
-      (princ x)
-      (princ " ")
-      (princ y)
-      (princ "
-")
+      (format t "~D ~D~%" x y)
       (let
        ((e (array_init
               y

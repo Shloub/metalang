@@ -1,14 +1,15 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun max2_ (a b)
 (if
   (> a b)
@@ -49,31 +50,17 @@
               (return-from lambda_2 0)
             ))
             ))))
-    (do
-      ((i 1 (+ 1 i)))
-      ((> i lim))
+    (loop for i from 1 to lim do
       (progn
         (let ((t0 (primesfactors i)))
-          (do
-            ((j 1 (+ 1 j)))
-            ((> j i))
-            (setf (aref o j) (max2_ (aref o j) (aref t0 j)))
-          )
-        ))
-    )
+          (loop for j from 1 to i do
+            (setf (aref o j) (max2_ (aref o j) (aref t0 j))))
+        )))
     (let ((product 1))
-      (do
-        ((k 1 (+ 1 k)))
-        ((> k lim))
-        (do
-          ((l 1 (+ 1 l)))
-          ((> l (aref o k)))
-          (setq product ( * product k))
-          )
-      )
-      (princ product)
-      (princ "
-")
+      (loop for k from 1 to lim do
+        (loop for l from 1 to (aref o k) do
+          (setq product ( * product k))))
+      (format t "~D~%" product)
     ))))
 
 

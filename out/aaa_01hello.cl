@@ -1,14 +1,7 @@
-
-(si::use-fast-links nil)(progn
-                           (princ "Hello World")
-                           (let ((a 5))
-                             (princ (* (+ 4 6) 2))
-                             (princ " ")
-                             (princ "
-")
-                             (princ a)
-                             (princ "foo")
-                             (princ "")
-                           ))
+(progn
+  (princ "Hello World")
+  (let ((a 5))
+    (format t "~D ~%~Dfoo" (* (+ 4 6) 2) a)
+  ))
 
 

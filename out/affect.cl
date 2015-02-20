@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +14,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #|
 Ce test permet de vérifier que l'implémentation de l'affectation fonctionne correctement
@@ -95,8 +94,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
       (setf (toto-bar t2) (mread-int ))
       (mread-blank)
       (setf (toto-blah t2) (mread-int ))
-      (princ (result t0 t2))
-      (princ (toto-blah t0))
+      (format t "~D~D" (result t0 t2) (toto-blah t0))
     )))
 
 

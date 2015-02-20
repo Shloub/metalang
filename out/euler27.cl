@@ -1,19 +1,17 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(defun remainder (a b) (- a (* b (truncate a b))))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun eratostene (t0 max0)
 (progn
   (let ((n 0))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i (- max0 1)))
+    (loop for i from 2 to (- max0 1) do
       (if
         (= (aref t0 i) i)
         (progn
@@ -25,8 +23,7 @@
                  (setq j ( + j i))
                  )
             )
-          )))
-    )
+          ))))
     (return-from eratostene n)
   )))
 
@@ -49,16 +46,13 @@
 
 (defun test (a b primes len)
 (progn
-  (do
-    ((n 0 (+ 1 n)))
-    ((> n 200))
+  (loop for n from 0 to 200 do
     (progn
       (let ((j (+ (+ (* n n) (* a n)) b)))
         (if
           (not (isPrime j primes len))
           (return-from test n))
-      ))
-  )
+      )))
   (return-from test 200)
 ))
 
@@ -84,31 +78,20 @@
                        ))
                        ))))
           (let ((l 0))
-            (do
-              ((k 2 (+ 1 k)))
-              ((> k (- maximumprimes 1)))
+            (loop for k from 2 to (- maximumprimes 1) do
               (if
                 (= (aref era k) k)
                 (progn
                   (setf (aref primes l) k)
                   (setq l ( + l 1))
-                ))
-            )
-            (princ l)
-            (princ " == ")
-            (princ nprimes)
-            (princ "
-")
+                )))
+            (format t "~D == ~D~%" l nprimes)
             (let ((ma 0))
               (let ((mb 0))
-                (do
-                  ((b 3 (+ 1 b)))
-                  ((> b 999))
+                (loop for b from 3 to 999 do
                   (if
                     (= (aref era b) b)
-                    (do
-                      ((a (- 0 999) (+ 1 a)))
-                      ((> a 999))
+                    (loop for a from (- 0 999) to 999 do
                       (progn
                         (let ((n1 (test a b primes nprimes)))
                           (let ((n2 (test a (- 0 b) primes nprimes)))
@@ -128,20 +111,8 @@
                                 (setq ma a)
                                 (setq mb (- 0 b))
                               ))
-                          )))
-                      ))
-                )
-                (princ ma)
-                (princ " ")
-                (princ mb)
-                (princ "
-")
-                (princ max0)
-                (princ "
-")
-                (princ result)
-                (princ "
-")
+                          ))))))
+                (format t "~D ~D~%~D~%~D~%" ma mb max0 result)
               ))))))))))
 
 

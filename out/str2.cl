@@ -1,7 +1,3 @@
-
-(si::use-fast-links nil)(progn
-                           (princ "ma petite chaine")
-                           (princ " en or")
-)
+(format t "ma petite chaine en or" )
 
 

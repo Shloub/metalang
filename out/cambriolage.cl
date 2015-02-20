@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +14,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun max2_ (a b)
@@ -37,9 +36,7 @@
 (progn
   (let ((max_ancient 0))
     (let ((max_recent 0))
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (- m 1)))
+      (loop for i from 0 to (- m 1) do
         (progn
           (if
             (and (= (aref (aref serrures i) 0) (- 0 1)) (> (aref (aref serrures i) 1) max_ancient))
@@ -47,13 +44,10 @@
           (if
             (and (= (aref (aref serrures i) 0) 1) (> (aref (aref serrures i) 1) max_recent))
             (setq max_recent (aref (aref serrures i) 1)))
-        )
-      )
+        ))
       (let ((max_ancient_pp 0))
         (let ((max_recent_pp 0))
-          (do
-            ((i 0 (+ 1 i)))
-            ((> i (- n 1)))
+          (loop for i from 0 to (- n 1) do
             (progn
               (let ((pp (aref passepartout i)))
                 (if
@@ -61,8 +55,7 @@
                   (return-from nbPassePartout 1))
                 (setq max_ancient_pp (max2_ max_ancient_pp (aref pp 0)))
                 (setq max_recent_pp (max2_ max_recent_pp (aref pp 1)))
-              ))
-          )
+              )))
           (if
             (and (>= max_ancient_pp max_ancient) (>= max_recent_pp max_recent))
             (return-from nbPassePartout 2)

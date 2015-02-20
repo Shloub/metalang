@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +14,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 (defstruct (toto (:type list) :named)
   foo
@@ -43,14 +42,11 @@
 (defun result (t0 len)
 (progn
   (let ((out0 0))
-    (do
-      ((j 0 (+ 1 j)))
-      ((> j (- len 1)))
+    (loop for j from 0 to (- len 1) do
       (progn
         (setf (toto-blah (aref t0 j)) (+ (toto-blah (aref t0 j)) 1))
         (setq out0 (+ (+ (+ out0 (toto-foo (aref t0 j))) (* (toto-blah (aref t0 j)) (toto-bar (aref t0 j)))) (* (toto-bar (aref t0 j)) (toto-foo (aref t0 j)))))
-      )
-    )
+      ))
     (return-from result out0)
   )))
 
@@ -67,8 +63,7 @@
   (mread-blank)
   (setf (toto-blah (aref t0 1)) (mread-int ))
   (let ((titi (result t0 4)))
-    (princ titi)
-    (princ (toto-blah (aref t0 2)))
+    (format t "~D~D" titi (toto-blah (aref t0 2)))
   )))
 
 

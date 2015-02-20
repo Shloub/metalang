@@ -1,20 +1,18 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
 (defun quotient (a b) (truncate a b))
+
 (defun eratostene (t0 max0)
 (progn
   (let ((n 0))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i (- max0 1)))
+    (loop for i from 2 to (- max0 1) do
       (if
         (= (aref t0 i) i)
         (progn
@@ -30,8 +28,7 @@
                      )
                 )
               )))
-        ))
-    )
+        )))
     (return-from eratostene n)
   )))
 
@@ -55,21 +52,14 @@
                    ))
                    ))))
       (let ((l 0))
-        (do
-          ((k 2 (+ 1 k)))
-          ((> k (- maximumprimes 1)))
+        (loop for k from 2 to (- maximumprimes 1) do
           (if
             (= (aref era k) k)
             (progn
               (setf (aref primes l) k)
               (setq l ( + l 1))
-            ))
-        )
-        (princ l)
-        (princ " == ")
-        (princ nprimes)
-        (princ "
-")
+            )))
+        (format t "~D == ~D~%" l nprimes)
         (let
          ((canbe (array_init
                     maximumprimes
@@ -78,34 +68,21 @@
                       (return-from lambda_3 nil)
                     ))
                     ))))
-        (do
-          ((i 0 (+ 1 i)))
-          ((> i (- nprimes 1)))
-          (do
-            ((j 0 (+ 1 j)))
-            ((> j (- maximumprimes 1)))
+        (loop for i from 0 to (- nprimes 1) do
+          (loop for j from 0 to (- maximumprimes 1) do
             (progn
               (let ((n (+ (aref primes i) (* (* 2 j) j))))
                 (if
                   (< n maximumprimes)
                   (setf (aref canbe n) t))
-              ))
-            )
-        )
-        (do
-          ((m 1 (+ 1 m)))
-          ((> m maximumprimes))
+              ))))
+        (loop for m from 1 to maximumprimes do
           (progn
             (let ((m2 (+ (* m 2) 1)))
               (if
                 (and (< m2 maximumprimes) (not (aref canbe m2)))
-                (progn
-                  (princ m2)
-                  (princ "
-")
-                ))
-            ))
-        )
+                (format t "~D~%" m2))
+            )))
         )))))))
 
 

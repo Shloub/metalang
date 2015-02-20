@@ -1,6 +1,7 @@
 
-(si::use-fast-links nil)
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (progn
   (let ((maximum 1))
     (let ((b0 2))
@@ -27,9 +28,7 @@
                    (if
                      (not found)
                      (progn
-                       (princ a)
-                       (princ "
-")
+                       (format t "~D~%" a)
                        (setq a 1)
                      ))
                  )))

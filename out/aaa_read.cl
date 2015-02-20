@@ -1,14 +1,15 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -22,16 +23,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #|
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
@@ -40,14 +41,9 @@ read int, read char et skip
 (progn
   (let ((len (mread-int )))
     (mread-blank)
-    (princ len)
-    (princ "=len
-")
+    (format t "~D=len~%" len)
     (setq len ( * len 2))
-    (princ "len*2=")
-    (princ len)
-    (princ "
-")
+    (format t "len*2=~D~%" len)
     (setq len ( quotient len 2))
     (let
      ((tab (array_init
@@ -56,10 +52,7 @@ read int, read char et skip
               (block lambda_1
                 (let ((tmpi1 (mread-int )))
                   (mread-blank)
-                  (princ i)
-                  (princ "=>")
-                  (princ tmpi1)
-                  (princ " ")
+                  (format t "~D=>~D " i tmpi1)
                   (return-from lambda_1 tmpi1)
                 )))
               ))))
@@ -72,40 +65,29 @@ read int, read char et skip
                (block lambda_2
                  (let ((tmpi2 (mread-int )))
                    (mread-blank)
-                   (princ i_)
-                   (princ "==>")
-                   (princ tmpi2)
-                   (princ " ")
+                   (format t "~D==>~D " i_ tmpi2)
                    (return-from lambda_2 tmpi2)
                  )))
                ))))
     (let ((strlen (mread-int )))
       (mread-blank)
-      (princ strlen)
-      (princ "=strlen
-")
+      (format t "~D=strlen~%" strlen)
       (let
        ((tab4 (array_init
                  strlen
                  (function (lambda (toto)
                  (block lambda_3
                    (let ((tmpc (mread-char )))
-                     (let ((c (char-int tmpc)))
-                       (princ tmpc)
-                       (princ ":")
-                       (princ c)
-                       (princ " ")
+                     (let ((c (char-code tmpc)))
+                       (format t "~C:~D " tmpc c)
                        (if
                          (not (eq tmpc #\Space))
-                         (setq c (+ (remainder (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
-                       (return-from lambda_3 (int-char c))
+                         (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a))))
+                       (return-from lambda_3 (code-char c))
                      ))))
                  ))))
-      (do
-        ((j 0 (+ 1 j)))
-        ((> j (- strlen 1)))
-        (princ (aref tab4 j))
-      )
+      (loop for j from 0 to (- strlen 1) do
+        (princ (aref tab4 j)))
       ))))))
 
 

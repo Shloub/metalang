@@ -1,20 +1,18 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
 (defun quotient (a b) (truncate a b))
+
 (defun eratostene (t0 max0)
 (progn
   (let ((sum 0))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i (- max0 1)))
+    (loop for i from 2 to (- max0 1) do
       (if
         (= (aref t0 i) i)
         (progn
@@ -30,8 +28,7 @@
                      )
                 )
               )))
-        ))
-    )
+        )))
     (return-from eratostene sum)
   )))
 
@@ -47,9 +44,7 @@
              ))
              ))))
     (setf (aref t0 1) 0)
-    (princ (eratostene t0 n))
-    (princ "
-")
+    (format t "~D~%" (eratostene t0 n))
     )))
 
 

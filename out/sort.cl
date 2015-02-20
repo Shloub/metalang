@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +14,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun copytab (tab len)
@@ -41,21 +40,15 @@
   )))
 
 (defun bubblesort (tab len)
-(do
-  ((i 0 (+ 1 i)))
-  ((> i (- len 1)))
-  (do
-    ((j (+ i 1) (+ 1 j)))
-    ((> j (- len 1)))
+(loop for i from 0 to (- len 1) do
+  (loop for j from (+ i 1) to (- len 1) do
     (if
       (> (aref tab i) (aref tab j))
       (progn
         (let ((tmp (aref tab i)))
           (setf (aref tab i) (aref tab j))
           (setf (aref tab j) tmp)
-        )))
-    )
-  ))
+        ))))))
 
 (defun qsort0 (tab len i j)
 (if
@@ -107,26 +100,14 @@
               ))))
     (let ((tab2 (copytab tab len)))
       (bubblesort tab2 len)
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i (- len 1)))
-        (progn
-          (princ (aref tab2 i))
-          (princ " ")
-        )
-      )
+      (loop for i from 0 to (- len 1) do
+        (format t "~D " (aref tab2 i)))
       (princ "
 ")
       (let ((tab3 (copytab tab len)))
         (qsort0 tab3 len 0 (- len 1))
-        (do
-          ((i 0 (+ 1 i)))
-          ((> i (- len 1)))
-          (progn
-            (princ (aref tab3 i))
-            (princ " ")
-          )
-        )
+        (loop for i from 0 to (- len 1) do
+          (format t "~D " (aref tab3 i)))
         (princ "
 ")
       )))))

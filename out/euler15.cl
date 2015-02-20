@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
 (progn
   (let ((n 10))
     #| normalement on doit mettre 20 mais là on se tape un overflow |#
@@ -28,48 +27,28 @@
                 (return-from lambda_1 tab2)
                 )))
               ))))
-    (do
-      ((l 0 (+ 1 l)))
-      ((> l (- n 1)))
+    (loop for l from 0 to (- n 1) do
       (progn
         (setf (aref (aref tab (- n 1)) l) 1)
         (setf (aref (aref tab l) (- n 1)) 1)
-      )
-    )
-    (do
-      ((o 2 (+ 1 o)))
-      ((> o n))
+      ))
+    (loop for o from 2 to n do
       (progn
         (let ((r (- n o)))
-          (do
-            ((p 2 (+ 1 p)))
-            ((> p n))
+          (loop for p from 2 to n do
             (progn
               (let ((q (- n p)))
                 (setf (aref (aref tab r) q) (+ (aref (aref tab (+ r 1)) q) (aref (aref tab r) (+ q 1))))
-              ))
-          )
-        ))
-    )
-    (do
-      ((m 0 (+ 1 m)))
-      ((> m (- n 1)))
+              )))
+        )))
+    (loop for m from 0 to (- n 1) do
       (progn
-        (do
-          ((k 0 (+ 1 k)))
-          ((> k (- n 1)))
-          (progn
-            (princ (aref (aref tab m) k))
-            (princ " ")
-          )
-        )
+        (loop for k from 0 to (- n 1) do
+          (format t "~D " (aref (aref tab m) k)))
         (princ "
 ")
-      )
-    )
-    (princ (aref (aref tab 0) 0))
-    (princ "
-")
+      ))
+    (format t "~D~%" (aref (aref tab 0) 0))
     )))
 
 

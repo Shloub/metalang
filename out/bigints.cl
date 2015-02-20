@@ -1,14 +1,15 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -18,7 +19,7 @@
       out
     )))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun max2_ (a b)
@@ -41,18 +42,15 @@
                  (function (lambda (j)
                  (block lambda_1
                    (let ((c (mread-char )))
-                     (return-from lambda_1 (char-int c))
+                     (return-from lambda_1 (char-code c))
                    )))
                  ))))
-  (do
-    ((i 0 (+ 1 i)))
-    ((> i (quotient (- len 1) 2)))
+  (loop for i from 0 to (quotient (- len 1) 2) do
     (progn
       (let ((tmp (aref chiffres i)))
         (setf (aref chiffres i) (aref chiffres (- (- len 1) i)))
         (setf (aref chiffres (- (- len 1) i)) tmp)
-      ))
-  )
+      )))
   (let ((e (make-bigint :bigint_sign t
                         :bigint_len len
                         :bigint_chiffres chiffres)))
@@ -63,12 +61,9 @@
 (progn
   (if
     (not (bigint-bigint_sign a))
-    (princ (int-char 45)))
-  (do
-    ((i 0 (+ 1 i)))
-    ((> i (- (bigint-bigint_len a) 1)))
-    (princ (aref (bigint-bigint_chiffres a) (- (- (bigint-bigint_len a) 1) i)))
-  )
+    (princ (code-char 45)))
+  (loop for i from 0 to (- (bigint-bigint_len a) 1) do
+    (princ (aref (bigint-bigint_chiffres a) (- (- (bigint-bigint_len a) 1) i))))
 ))
 
 (defun bigint_eq (a b)
@@ -81,13 +76,10 @@
       (not (= (bigint-bigint_len a) (bigint-bigint_len b)))
       (return-from bigint_eq nil)
       (progn
-        (do
-          ((i 0 (+ 1 i)))
-          ((> i (- (bigint-bigint_len a) 1)))
+        (loop for i from 0 to (- (bigint-bigint_len a) 1) do
           (if
             (not (= (aref (bigint-bigint_chiffres a) i) (aref (bigint-bigint_chiffres b) i)))
-            (return-from bigint_eq nil))
-        )
+            (return-from bigint_eq nil)))
         (return-from bigint_eq t)
       )))
 ))
@@ -108,9 +100,7 @@
           (if
             (< (bigint-bigint_len a) (bigint-bigint_len b))
             (return-from bigint_gt (not (bigint-bigint_sign a)))
-            (do
-              ((i 0 (+ 1 i)))
-              ((> i (- (bigint-bigint_len a) 1)))
+            (loop for i from 0 to (- (bigint-bigint_len a) 1) do
               (progn
                 (let ((j (- (- (bigint-bigint_len a) 1) i)))
                   (if
@@ -119,8 +109,7 @@
                     (if
                       (< (aref (bigint-bigint_chiffres a) j) (aref (bigint-bigint_chiffres b) j))
                       (return-from bigint_gt (not (bigint-bigint_sign a)))))
-                ))
-              )))
+                )))))
         (return-from bigint_gt t)
       )))
 ))
@@ -242,32 +231,23 @@ D'ou le nom de la fonction. |#
                      (return-from lambda_4 0)
                    ))
                    ))))
-    (do
-      ((i 0 (+ 1 i)))
-      ((> i (- (bigint-bigint_len a) 1)))
+    (loop for i from 0 to (- (bigint-bigint_len a) 1) do
       (progn
         (let ((retenue 0))
-          (do
-            ((j 0 (+ 1 j)))
-            ((> j (- (bigint-bigint_len b) 1)))
+          (loop for j from 0 to (- (bigint-bigint_len b) 1) do
             (progn
               (setf (aref chiffres (+ i j)) (+ (aref chiffres (+ i j)) (+ retenue (* (aref (bigint-bigint_chiffres b) j) (aref (bigint-bigint_chiffres a) i)))))
               (setq retenue (quotient (aref chiffres (+ i j)) 10))
               (setf (aref chiffres (+ i j)) (remainder (aref chiffres (+ i j)) 10))
-            )
-          )
+            ))
           (setf (aref chiffres (+ i (bigint-bigint_len b))) (+ (aref chiffres (+ i (bigint-bigint_len b))) retenue))
-        ))
-    )
+        )))
     (setf (aref chiffres (+ (bigint-bigint_len a) (bigint-bigint_len b))) (quotient (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
     (setf (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) (remainder (aref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
-    (do
-      ((l 0 (+ 1 l)))
-      ((> l 2))
+    (loop for l from 0 to 2 do
       (if
         (and (not (= len 0)) (= (aref chiffres (- len 1)) 0))
-        (setq len ( - len 1)))
-    )
+        (setq len ( - len 1))))
     (let ((m (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
                           :bigint_len len
                           :bigint_chiffres chiffres)))
@@ -362,14 +342,11 @@ Modulo
                (return-from lambda_6 0)
              ))
              ))))
-    (do
-      ((k 0 (+ 1 k)))
-      ((> k (- size 1)))
+    (loop for k from 0 to (- size 1) do
       (progn
         (setf (aref t0 k) (remainder i 10))
         (setq i ( quotient i 10))
-      )
-    )
+      ))
     (let ((q (make-bigint :bigint_sign t
                           :bigint_len size
                           :bigint_chiffres t0)))
@@ -392,11 +369,8 @@ Modulo
 (defun sum_chiffres_bigint (a)
 (progn
   (let ((out0 0))
-    (do
-      ((i 0 (+ 1 i)))
-      ((> i (- (bigint-bigint_len a) 1)))
-      (setq out0 ( + out0 (aref (bigint-bigint_chiffres a) i)))
-    )
+    (loop for i from 0 to (- (bigint-bigint_len a) 1) do
+      (setq out0 ( + out0 (aref (bigint-bigint_chiffres a) i))))
     (return-from sum_chiffres_bigint out0)
   )))
 
@@ -433,17 +407,14 @@ Modulo
 (defun euler48 ()
 (progn
   (let ((sum (bigint_of_int 0)))
-    (do
-      ((i 1 (+ 1 i)))
-      ((> i 100))
+    (loop for i from 1 to 100 do
       (progn
         #| 1000 normalement |#
         (let ((ib (bigint_of_int i)))
           (let ((ibeib (bigint_exp_10chiffres ib i)))
             (setq sum (add_bigint sum ibeib))
             (setq sum (bigint_premiers_chiffres sum 10))
-          )))
-    )
+          ))))
     (princ "euler 48 = ")
     (print_bigint sum)
     (princ "
@@ -509,9 +480,7 @@ Modulo
           do (progn
                (let ((min0 (aref a0_bigint 0)))
                  (setq found nil)
-                 (do
-                   ((i 2 (+ 1 i)))
-                   ((> i maxA))
+                 (loop for i from 2 to maxA do
                    (if
                      (<= (aref b i) maxB)
                      (if
@@ -522,22 +491,18 @@ Modulo
                        (progn
                          (setq min0 (aref a_bigint i))
                          (setq found t)
-                       )))
-                 )
+                       ))))
                  (if
                    found
                    (progn
                      (setq n ( + n 1))
-                     (do
-                       ((l 2 (+ 1 l)))
-                       ((> l maxA))
+                     (loop for l from 2 to maxA do
                        (if
                          (and (bigint_eq (aref a_bigint l) min0) (<= (aref b l) maxB))
                          (progn
                            (setf (aref b l) (+ (aref b l) 1))
                            (setf (aref a_bigint l) (mul_bigint (aref a_bigint l) (aref a0_bigint l)))
-                         ))
-                     )
+                         )))
                    ))
                ))
           )
@@ -545,36 +510,19 @@ Modulo
         )))))))))
 
 (progn
-  (princ (euler29 ))
-  (princ "
-")
+  (format t "~D~%" (euler29 ))
   (let ((sum (read_bigint 50)))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i 100))
+    (loop for i from 2 to 100 do
       (progn
         (mread-blank)
         (let ((tmp (read_bigint 50)))
           (setq sum (add_bigint sum tmp))
-        ))
-    )
+        )))
     (princ "euler13 = ")
     (print_bigint sum)
-    (princ "
-")
-    (princ "euler25 = ")
-    (princ (euler25 ))
-    (princ "
-")
-    (princ "euler16 = ")
-    (princ (euler16 ))
-    (princ "
-")
+    (format t "~%euler25 = ~D~%euler16 = ~D~%" (euler25 ) (euler16 ))
     (euler48 )
-    (princ "euler20 = ")
-    (princ (euler20 ))
-    (princ "
-")
+    (format t "euler20 = ~D~%" (euler20 ))
     (let ((a (bigint_of_int 999999)))
       (let ((b (bigint_of_int 9951263)))
         (print_bigint a)

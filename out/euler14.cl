@@ -1,14 +1,15 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun next0 (n)
 (if
   (= (remainder n 2) 0)
@@ -41,9 +42,7 @@
           ))))
   (let ((max0 0))
     (let ((maxi 0))
-      (do
-        ((i 1 (+ 1 i)))
-        ((> i 999))
+      (loop for i from 1 to 999 do
         (progn
           #| normalement on met 999999 mais ça dépasse les int32... |#
           (let ((n2 (find0 i m)))
@@ -53,14 +52,8 @@
                 (setq max0 n2)
                 (setq maxi i)
               ))
-          ))
-      )
-      (princ max0)
-      (princ "
-")
-      (princ maxi)
-      (princ "
-")
+          )))
+      (format t "~D~%~D~%" max0 maxi)
     ))))
 
 

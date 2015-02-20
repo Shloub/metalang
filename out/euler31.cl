@@ -1,14 +1,14 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
 (defun quotient (a b) (truncate a b))
+
 (defun result (sum t0 maxIndex cache)
 (if
   (not (= (aref (aref cache sum) maxIndex) 0))
@@ -19,11 +19,8 @@
     (progn
       (let ((out0 0))
         (let ((div (quotient sum (aref t0 maxIndex))))
-          (do
-            ((i 0 (+ 1 i)))
-            ((> i div))
-            (setq out0 ( + out0 (result (- sum (* i (aref t0 maxIndex))) t0 (- maxIndex 1) cache)))
-          )
+          (loop for i from 0 to div do
+            (setq out0 ( + out0 (result (- sum (* i (aref t0 maxIndex))) t0 (- maxIndex 1) cache))))
           (setf (aref (aref cache sum) maxIndex) out0)
           (return-from result out0)
         ))))))

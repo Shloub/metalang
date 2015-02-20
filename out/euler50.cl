@@ -1,20 +1,18 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
 (defun quotient (a b) (truncate a b))
+
 (defun eratostene (t0 max0)
 (progn
   (let ((n 0))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i (- max0 1)))
+    (loop for i from 2 to (- max0 1) do
       (if
         (= (aref t0 i) i)
         (progn
@@ -30,8 +28,7 @@
                      )
                 )
               )))
-        ))
-    )
+        )))
     (return-from eratostene n)
   )))
 
@@ -55,21 +52,14 @@
                    ))
                    ))))
       (let ((l 0))
-        (do
-          ((k 2 (+ 1 k)))
-          ((> k (- maximumprimes 1)))
+        (loop for k from 2 to (- maximumprimes 1) do
           (if
             (= (aref era k) k)
             (progn
               (setf (aref primes l) k)
               (setq l ( + l 1))
-            ))
-        )
-        (princ l)
-        (princ " == ")
-        (princ nprimes)
-        (princ "
-")
+            )))
+        (format t "~D == ~D~%" l nprimes)
         (let
          ((sum (array_init
                   nprimes
@@ -86,9 +76,7 @@
                   (loop while process
                   do (progn
                        (setq process nil)
-                       (do
-                         ((i 0 (+ 1 i)))
-                         ((> i stop))
+                       (loop for i from 0 to stop do
                          (if
                            (< (+ i len) nprimes)
                            (progn
@@ -105,17 +93,11 @@
                                    ))
                                )
                                (setq stop (min stop i)))
-                           ))
-                       )
+                           )))
                        (setq len ( + len 1))
                        )
                   )
-                  (princ resp)
-                  (princ "
-")
-                  (princ maxl)
-                  (princ "
-")
+                  (format t "~D~%~D~%" resp maxl)
                 ))))))))))))
 
 

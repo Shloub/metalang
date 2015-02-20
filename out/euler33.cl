@@ -1,6 +1,7 @@
 
-(si::use-fast-links nil)
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun max2_ (a b)
 (if
   (> a b)
@@ -21,15 +22,9 @@
 (progn
   (let ((top 1))
     (let ((bottom 1))
-      (do
-        ((i 1 (+ 1 i)))
-        ((> i 9))
-        (do
-          ((j 1 (+ 1 j)))
-          ((> j 9))
-          (do
-            ((k 1 (+ 1 k)))
-            ((> k 9))
+      (loop for i from 1 to 9 do
+        (loop for j from 1 to 9 do
+          (loop for k from 1 to 9 do
             (if
               (and (not (= i j)) (not (= j k)))
               (progn
@@ -38,31 +33,14 @@
                     (if
                       (= (* a k) (* i b))
                       (progn
-                        (princ a)
-                        (princ "/")
-                        (princ b)
-                        (princ "
-")
+                        (format t "~D/~D~%" a b)
                         (setq top ( * top a))
                         (setq bottom ( * bottom b))
                       ))
-                  ))))
-            )
-          )
-      )
-      (princ top)
-      (princ "/")
-      (princ bottom)
-      (princ "
-")
+                  )))))))
+      (format t "~D/~D~%" top bottom)
       (let ((p (pgcd top bottom)))
-        (princ "pgcd=")
-        (princ p)
-        (princ "
-")
-        (princ (quotient bottom p))
-        (princ "
-")
+        (format t "pgcd=~D~%~D~%" p (quotient bottom p))
       ))))
 
 

@@ -1,9 +1,8 @@
-
-(si::use-fast-links nil)(defun f (i)
-                         (if
-                           (= i 0)
-                           (return-from f t)
-                           (return-from f nil)))
+(defun f (i)
+(if
+  (= i 0)
+  (return-from f t)
+  (return-from f nil)))
 
 (progn
   (if

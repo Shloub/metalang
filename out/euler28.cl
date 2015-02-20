@@ -1,6 +1,6 @@
 
-(si::use-fast-links nil)
-(defun quotient (a b) (truncate a b))#|
+(defun quotient (a b) (truncate a b))
+#|
 
 43 44 45 46 47 48 49
 42 21 22 23 24 25 26
@@ -20,16 +20,13 @@
   (let ((nterms (- (* n 2) 1)))
     (let ((un 1))
       (let ((sum 1))
-        (do
-          ((i 0 (+ 1 i)))
-          ((> i (- nterms 2)))
+        (loop for i from 0 to (- nterms 2) do
           (progn
             (let ((d (* 2 (+ 1 (quotient i 4)))))
               (setq un ( + un d))
               #| print int d print "=>" print un print " " |#
               (setq sum ( + sum un))
-            ))
-        )
+            )))
         (return-from sumdiag sum)
       )))))
 

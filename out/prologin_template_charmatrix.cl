@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -21,37 +20,31 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun programme_candidat (tableau taille_x taille_y)
 (progn
   (let ((out0 0))
-    (do
-      ((i 0 (+ 1 i)))
-      ((> i (- taille_y 1)))
+    (loop for i from 0 to (- taille_y 1) do
       (progn
-        (do
-          ((j 0 (+ 1 j)))
-          ((> j (- taille_x 1)))
+        (loop for j from 0 to (- taille_x 1) do
           (progn
-            (setq out0 ( + out0 (* (char-int (aref (aref tableau i) j)) (+ i (* j 2)))))
+            (setq out0 ( + out0 (* (char-code (aref (aref tableau i) j)) (+ i (* j 2)))))
             (princ (aref (aref tableau i) j))
-          )
-        )
+          ))
         (princ "--
 ")
-      )
-    )
+      ))
     (return-from programme_candidat out0)
   )))
 
@@ -79,9 +72,7 @@
                 )))
               ))))
       (let ((tableau a))
-        (princ (programme_candidat tableau taille_x taille_y))
-        (princ "
-")
+        (format t "~D~%" (programme_candidat tableau taille_x taille_y))
       )))))
 
 

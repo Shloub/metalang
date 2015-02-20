@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -21,20 +20,20 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun is_number (c)
-(return-from is_number (and (<= (char-int c) (char-int #\9)) (>= (char-int c) (char-int #\0)))))
+(return-from is_number (and (<= (char-code c) (char-code #\9)) (>= (char-code c) (char-code #\0)))))
 
 #|
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
@@ -61,7 +60,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
                (let ((num 0))
                  (loop while (not (eq (aref str ptrStr) #\Space))
                  do (progn
-                      (setq num (- (+ (* num 10) (char-int (aref str ptrStr))) (char-int #\0)))
+                      (setq num (- (+ (* num 10) (char-code (aref str ptrStr))) (char-code #\0)))
                       (setq ptrStr ( + ptrStr 1))
                       )
                  )
@@ -69,7 +68,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
                  (setq ptrStack ( + ptrStack 1))
                ))
              (if
-               (eq (aref str ptrStr) (int-char 43))
+               (eq (aref str ptrStr) (code-char 43))
                (progn
                  (setf (aref stack (- ptrStack 2)) (+ (aref stack (- ptrStack 2)) (aref stack (- ptrStack 1))))
                  (setq ptrStack ( - ptrStack 1))
@@ -88,7 +87,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
               len
               (function (lambda (i)
               (block lambda_2
-                (let ((tmp (int-char 0)))
+                (let ((tmp (code-char 0)))
                   (setq tmp (mread-char ))
                   (return-from lambda_2 tmp)
                 )))

@@ -1,20 +1,19 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+
 (defun eratostene (t0 max0)
 (progn
   (let ((n 0))
-    (do
-      ((i 2 (+ 1 i)))
-      ((> i (- max0 1)))
+    (loop for i from 2 to (- max0 1) do
       (if
         (= (aref t0 i) i)
         (progn
@@ -26,16 +25,13 @@
                  (setq j ( + j i))
                  )
             )
-          )))
-    )
+          ))))
     (return-from eratostene n)
   )))
 
 (defun fillPrimesFactors (t0 n primes nprimes)
 (progn
-  (do
-    ((i 0 (+ 1 i)))
-    ((> i (- nprimes 1)))
+  (loop for i from 0 to (- nprimes 1) do
     (progn
       (let ((d (aref primes i)))
         (loop while (= (remainder n d) 0)
@@ -47,8 +43,7 @@
         (if
           (= n 1)
           (return-from fillPrimesFactors (aref primes i)))
-      ))
-  )
+      )))
   (return-from fillPrimesFactors n)
 ))
 
@@ -71,14 +66,11 @@
       (let ((o (sumdivaux t0 n (sumdivaux2 t0 n (+ i 1)))))
         (let ((out0 0))
           (let ((p i))
-            (do
-              ((j 1 (+ 1 j)))
-              ((> j (aref t0 i)))
+            (loop for j from 1 to (aref t0 i) do
               (progn
                 (setq out0 ( + out0 p))
                 (setq p ( * p i))
-              )
-            )
+              ))
             (return-from sumdivaux (* (+ out0 1) o))
           )))))))
 
@@ -116,16 +108,13 @@
                    ))
                    ))))
       (let ((l 0))
-        (do
-          ((k 2 (+ 1 k)))
-          ((> k (- maximumprimes 1)))
+        (loop for k from 2 to (- maximumprimes 1) do
           (if
             (= (aref era k) k)
             (progn
               (setf (aref primes l) k)
               (setq l ( + l 1))
-            ))
-        )
+            )))
         (let ((n 100))
           #| 28124 ça prend trop de temps mais on arrive a passer le test |#
           (let
@@ -145,39 +134,23 @@
                          ))
                          ))))
           (let ((sum 0))
-            (do
-              ((r 2 (+ 1 r)))
-              ((> r n))
+            (loop for r from 2 to n do
               (progn
                 (let ((other (- (sumdiv nprimes primes r) r)))
                   (if
                     (> other r)
                     (setf (aref abondant r) t))
-                ))
-            )
-            (do
-              ((i 1 (+ 1 i)))
-              ((> i n))
-              (do
-                ((j 1 (+ 1 j)))
-                ((> j n))
+                )))
+            (loop for i from 1 to n do
+              (loop for j from 1 to n do
                 (if
                   (and (and (aref abondant i) (aref abondant j)) (<= (+ i j) n))
-                  (setf (aref summable (+ i j)) t))
-                )
-            )
-            (do
-              ((o 1 (+ 1 o)))
-              ((> o n))
+                  (setf (aref summable (+ i j)) t))))
+            (loop for o from 1 to n do
               (if
                 (not (aref summable o))
-                (setq sum ( + sum o)))
-            )
-            (princ "
-")
-            (princ sum)
-            (princ "
-")
+                (setq sum ( + sum o))))
+            (format t "~%~D~%" sum)
           ))))))))))
 
 

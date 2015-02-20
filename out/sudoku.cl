@@ -1,13 +1,13 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(defun remainder (a b) (- a (* b (truncate a b))))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defun remainder (a b) (- a (* b (truncate a b))))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +15,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #| lit un sudoku sur l'entrée standard |#
 (defun read_sudoku ()
@@ -45,29 +45,22 @@
 #| affiche un sudoku |#
 (defun print_sudoku (sudoku0)
 (progn
-  (do
-    ((y 0 (+ 1 y)))
-    ((> y 8))
+  (loop for y from 0 to 8 do
     (progn
-      (do
-        ((x 0 (+ 1 x)))
-        ((> x 8))
+      (loop for x from 0 to 8 do
         (progn
-          (princ (aref sudoku0 (+ x (* y 9))))
-          (princ " ")
+          (format t "~D " (aref sudoku0 (+ x (* y 9))))
           (if
             (= (remainder x 3) 2)
             (princ " "))
-        )
-      )
+        ))
       (princ "
 ")
       (if
         (= (remainder y 3) 2)
         (princ "
 "))
-    )
-  )
+    ))
   (princ "
 ")
 ))
@@ -77,13 +70,10 @@
 #| dit si le sudoku est terminé de remplir |#
 (defun sudoku_done (s)
 (progn
-  (do
-    ((i 0 (+ 1 i)))
-    ((> i 80))
+  (loop for i from 0 to 80 do
     (if
       (= (aref s i) 0)
-      (return-from sudoku_done nil))
-  )
+      (return-from sudoku_done nil)))
   (return-from sudoku_done t)
 ))
 
@@ -97,26 +87,20 @@
     (sudoku_done sudoku0)
     (return-from solve t)
     (progn
-      (do
-        ((i 0 (+ 1 i)))
-        ((> i 80))
+      (loop for i from 0 to 80 do
         (if
           (= (aref sudoku0 i) 0)
           (progn
-            (do
-              ((p 1 (+ 1 p)))
-              ((> p 9))
+            (loop for p from 1 to 9 do
               (progn
                 (setf (aref sudoku0 i) p)
                 (if
                   (solve sudoku0)
                   (return-from solve t))
-              )
-            )
+              ))
             (setf (aref sudoku0 i) 0)
             (return-from solve nil)
-          ))
-      )
+          )))
       (return-from solve nil)
     ))))
 

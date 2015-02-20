@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +14,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #|
 Tictactoe : un tictactoe avec une IA
@@ -48,13 +47,9 @@ Tictactoe : un tictactoe avec une IA
 (progn
   (princ "
 |")
-  (do
-    ((y 0 (+ 1 y)))
-    ((> y 2))
+  (loop for y from 0 to 2 do
     (progn
-      (do
-        ((x 0 (+ 1 x)))
-        ((> x 2))
+      (loop for x from 0 to 2 do
         (progn
           (if
             (= (aref (aref (gamestate-cases g) x) y) 0)
@@ -64,15 +59,13 @@ Tictactoe : un tictactoe avec une IA
               (princ "O")
               (princ "X")))
           (princ "|")
-        )
-      )
+        ))
       (if
         (not (= y 2))
         (princ "
 |-|-|-|
 |"))
-    )
-  )
+    ))
   (princ "
 ")
 ))
@@ -82,15 +75,11 @@ Tictactoe : un tictactoe avec une IA
 (progn
   (let ((win 0))
     (let ((freecase 0))
-      (do
-        ((y 0 (+ 1 y)))
-        ((> y 2))
+      (loop for y from 0 to 2 do
         (progn
           (let ((col (- 0 1)))
             (let ((lin (- 0 1)))
-              (do
-                ((x 0 (+ 1 x)))
-                ((> x 2))
+              (loop for x from 0 to 2 do
                 (progn
                   (if
                     (= (aref (aref (gamestate-cases g) x) y) 0)
@@ -109,19 +98,15 @@ Tictactoe : un tictactoe avec une IA
                         (if
                           (not (= linv lin))
                           (setq lin (- 0 2))))
-                    )))
-              )
+                    ))))
               (if
                 (>= col 0)
                 (setq win col)
                 (if
                   (>= lin 0)
                   (setq win lin)))
-            )))
-      )
-      (do
-        ((x 1 (+ 1 x)))
-        ((> x 2))
+            ))))
+      (loop for x from 1 to 2 do
         (progn
           (if
             (and (and (= (aref (aref (gamestate-cases g) 0) 0) x) (= (aref (aref (gamestate-cases g) 1) 1) x)) (= (aref (aref (gamestate-cases g) 2) 2) x))
@@ -129,8 +114,7 @@ Tictactoe : un tictactoe avec une IA
           (if
             (and (and (= (aref (aref (gamestate-cases g) 0) 2) x) (= (aref (aref (gamestate-cases g) 1) 1) x)) (= (aref (aref (gamestate-cases g) 2) 0) x))
             (setq win x))
-        )
-      )
+        ))
       (setf (gamestate-ended g) (or (not (= win 0)) (= freecase 0)))
       (if
         (= win 1)
@@ -185,12 +169,8 @@ Un minimax classique, renvoie la note du plateau
         (if
           (not (gamestate-firstToPlay g))
           (setq maxNote 10000))
-        (do
-          ((x 0 (+ 1 x)))
-          ((> x 2))
-          (do
-            ((y 0 (+ 1 y)))
-            ((> y 2))
+        (loop for x from 0 to 2 do
+          (loop for y from 0 to 2 do
             (if
               (can_move_xy x y g)
               (progn
@@ -201,9 +181,7 @@ Un minimax classique, renvoie la note du plateau
                   (if
                     (eq (> currentNote maxNote) (gamestate-firstToPlay g))
                     (setq maxNote currentNote))
-                )))
-            )
-        )
+                )))))
         (return-from minmax maxNote)
       )))
 ))
@@ -216,24 +194,14 @@ Renvoie le coup de l'IA
   (let ((minMove (make-move :x 0
                             :y 0)))
   (let ((minNote 10000))
-    (do
-      ((x 0 (+ 1 x)))
-      ((> x 2))
-      (do
-        ((y 0 (+ 1 y)))
-        ((> y 2))
+    (loop for x from 0 to 2 do
+      (loop for y from 0 to 2 do
         (if
           (can_move_xy x y g)
           (progn
             (apply_move_xy x y g)
             (let ((currentNote (minmax g)))
-              (princ x)
-              (princ ", ")
-              (princ y)
-              (princ ", ")
-              (princ currentNote)
-              (princ "
-")
+              (format t "~D, ~D, ~D~%" x y currentNote)
               (cancel_move_xy x y g)
               (if
                 (< currentNote minNote)
@@ -242,13 +210,8 @@ Renvoie le coup de l'IA
                   (setf (move-x minMove) x)
                   (setf (move-y minMove) y)
                 ))
-            )))
-        )
-    )
-    (princ (move-x minMove))
-    (princ (move-y minMove))
-    (princ "
-")
+            )))))
+    (format t "~D~D~%" (move-x minMove) (move-y minMove))
     (return-from play minMove)
   ))))
 
@@ -288,9 +251,7 @@ Renvoie le coup de l'IA
       (return-from read_move b)
     )))))
 
-(do
-  ((i 0 (+ 1 i)))
-  ((> i 1))
+(loop for i from 0 to 1 do
   (progn
     (let ((state (init0 )))
       (let ((c (make-move :x 1
@@ -314,10 +275,7 @@ Renvoie le coup de l'IA
            )
       )
       (print_state state)
-      (princ (gamestate-note state))
-      (princ "
-")
-    ))))
-)
+      (format t "~D~%" (gamestate-note state))
+    )))))
 
 

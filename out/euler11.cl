@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +14,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 
 (defun max2_ (a b)
@@ -129,27 +128,16 @@
               (return-from lambda_2 r)
               )))
             ))))
-    (do
-      ((j 0 (+ 1 j)))
-      ((> j 7))
+    (loop for j from 0 to 7 do
       (progn
         (let ((u (aref directions j)))
           (let ((dx (tuple_int_int-tuple_int_int_field_0 u)))
             (let ((dy (tuple_int_int-tuple_int_int_field_1 u)))
-              (do
-                ((x 0 (+ 1 x)))
-                ((> x 19))
-                (do
-                  ((y 0 (+ 1 y)))
-                  ((> y 19))
-                  (setq max0 (max2_ max0 (find0 4 m x y dx dy)))
-                  )
-              )
-            ))))
-    )
-    (princ max0)
-    (princ "
-")
+              (loop for x from 0 to 19 do
+                (loop for y from 0 to 19 do
+                  (setq max0 (max2_ max0 (find0 4 m x y dx dy)))))
+            )))))
+    (format t "~D~%" max0)
     )))))
 
 

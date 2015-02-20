@@ -1,5 +1,4 @@
-
-(si::use-fast-links nil)(let ((last-char 0)))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -7,16 +6,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #|
 La suite de fibonaci
@@ -26,16 +25,13 @@ La suite de fibonaci
   (let ((out0 0))
     (let ((a2 a))
       (let ((b2 b))
-        (do
-          ((j 0 (+ 1 j)))
-          ((> j (+ i 1)))
+        (loop for j from 0 to (+ i 1) do
           (progn
             (setq out0 ( + out0 a2))
             (let ((tmp b2))
               (setq b2 ( + b2 a2))
               (setq a2 tmp)
-            ))
-        )
+            )))
         (return-from fibo0 out0)
       )))))
 

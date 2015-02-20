@@ -1,13 +1,13 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(defun remainder (a b) (- a (* b (truncate a b))))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defun remainder (a b) (- a (* b (truncate a b))))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-char ()
@@ -21,16 +21,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #|
 Ce test effectue un rot13 sur une chaine lue en entrée
@@ -44,18 +44,15 @@ Ce test effectue un rot13 sur une chaine lue en entrée
                (function (lambda (toto)
                (block lambda_1
                  (let ((tmpc (mread-char )))
-                   (let ((c (char-int tmpc)))
+                   (let ((c (char-code tmpc)))
                      (if
                        (not (eq tmpc #\Space))
-                       (setq c (+ (remainder (+ (- c (char-int #\a)) 13) 26) (char-int #\a))))
-                     (return-from lambda_1 (int-char c))
+                       (setq c (+ (remainder (+ (- c (char-code #\a)) 13) 26) (char-code #\a))))
+                     (return-from lambda_1 (code-char c))
                    ))))
                ))))
-    (do
-      ((j 0 (+ 1 j)))
-      ((> j (- strlen 1)))
-      (princ (aref tab4 j))
-    )
+    (loop for j from 0 to (- strlen 1) do
+      (princ (aref tab4 j)))
     )))
 
 

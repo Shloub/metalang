@@ -1,5 +1,4 @@
-
-(si::use-fast-links nil)(defstruct (tuple_int_int (:type list) :named)
+(defstruct (tuple_int_int (:type list) :named)
   tuple_int_int_field_0
   tuple_int_int_field_1
   )
@@ -21,11 +20,7 @@
     (let ((g t0))
       (let ((a (tuple_int_int-tuple_int_int_field_0 g)))
         (let ((b (tuple_int_int-tuple_int_int_field_1 g)))
-          (princ a)
-          (princ " -- ")
-          (princ b)
-          (princ "--
-")
+          (format t "~D -- ~D--~%" a b)
         ))))))
 
 

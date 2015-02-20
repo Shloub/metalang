@@ -1,7 +1,6 @@
-
-(si::use-fast-links nil)(defun remainder (a b) (- a (* b (truncate a b))))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun is_leap (year)
-(return-from is_leap (or (= (remainder year 400) 0) (and (not (= (remainder year 100) 0)) (= (remainder year 4) 0)))))
+                                                   (return-from is_leap (or (= (remainder year 400) 0) (and (not (= (remainder year 100) 0)) (= (remainder year 4) 0)))))
 
 (defun ndayinmonth (month year)
 (if
@@ -67,9 +66,7 @@
                    (setq count ( + count 1)))
                ))
           )
-          (princ count)
-          (princ "
-")
+          (format t "~D~%" count)
         )))))
 
 

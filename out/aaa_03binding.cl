@@ -1,20 +1,15 @@
-
-(si::use-fast-links nil)(defun remainder (a b) (- a (* b (truncate a b))))
+(defun remainder (a b) (- a (* b (truncate a b))))
 (defun g (i)
-(progn
-  (let ((j (* i 4)))
-    (if
-      (= (remainder j 2) 1)
-      (return-from g 0)
-      (return-from g j))
-  )))
+                                                   (progn
+                                                     (let ((j (* i 4)))
+                                                       (if
+                                                         (= (remainder j 2) 1)
+                                                         (return-from g 0)
+                                                         (return-from g j))
+                                                     )))
 
 (defun h (i)
-(progn
-  (princ i)
-  (princ "
-")
-))
+(format t "~D~%" i))
 
 (progn
   (h 14)

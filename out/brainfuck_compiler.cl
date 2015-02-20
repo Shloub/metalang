@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))#|
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+#|
 Ce test permet de tester les macros
 C'est un compilateur brainfuck qui lit sur l'entrée standard pendant la compilation
 et qui produit les macros metalang correspondante
@@ -86,7 +85,7 @@ et qui produit les macros metalang correspondante
            (setf (aref mem0 current_pos) (- (aref mem0 current_pos) 1))
            (setq current_pos ( - current_pos 1))
            (setf (aref mem0 current_pos) (+ (aref mem0 current_pos) 1))
-           (princ (int-char (aref mem0 current_pos)))
+           (princ (code-char (aref mem0 current_pos)))
            (setq current_pos ( + current_pos 1))
            )
       )

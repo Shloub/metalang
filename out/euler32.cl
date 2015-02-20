@@ -1,14 +1,15 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))
-(defun quotient (a b) (truncate a b))(defun remainder (a b) (- a (* b (truncate a b))))#|
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+
+(defun quotient (a b) (truncate a b))
+(defun remainder (a b) (- a (* b (truncate a b))))
+#|
 We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
 for example, the 5-digit number, 15234, is 1 through 5 pandigital.
 
@@ -66,14 +67,10 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                     (return-from lambda_2 nil)
                   ))
                   ))))
-    (do
-      ((e 1 (+ 1 e)))
-      ((> e 9))
+    (loop for e from 1 to 9 do
       (progn
         (setf (aref allowed e) nil)
-        (do
-          ((b 1 (+ 1 b)))
-          ((> b 9))
+        (loop for b from 1 to 9 do
           (if
             (aref allowed b)
             (progn
@@ -83,23 +80,17 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                   (aref allowed be)
                   (progn
                     (setf (aref allowed be) nil)
-                    (do
-                      ((a 1 (+ 1 a)))
-                      ((> a 9))
+                    (loop for a from 1 to 9 do
                       (if
                         (aref allowed a)
                         (progn
                           (setf (aref allowed a) nil)
-                          (do
-                            ((c 1 (+ 1 c)))
-                            ((> c 9))
+                          (loop for c from 1 to 9 do
                             (if
                               (aref allowed c)
                               (progn
                                 (setf (aref allowed c) nil)
-                                (do
-                                  ((d 1 (+ 1 d)))
-                                  ((> d 9))
+                                (loop for d from 1 to 9 do
                                   (if
                                     (aref allowed d)
                                     (progn
@@ -111,8 +102,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                           (progn
                                             (setf (aref counted product) t)
                                             (setq count ( + count product))
-                                            (princ product)
-                                            (princ " ")
+                                            (format t "~D " product)
                                           ))
                                         #| 1  * 4 digits |#
                                         (let ((product2 (* b (+ (+ (+ (* a 1000) (* c 100)) (* d 10)) e))))
@@ -121,29 +111,21 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                             (progn
                                               (setf (aref counted product2) t)
                                               (setq count ( + count product2))
-                                              (princ product2)
-                                              (princ " ")
+                                              (format t "~D " product2)
                                             ))
                                           (setf (aref allowed d) t)
-                                        ))))
-                                )
+                                        )))))
                                 (setf (aref allowed c) t)
-                              ))
-                          )
+                              )))
                           (setf (aref allowed a) t)
-                        ))
-                    )
+                        )))
                     (setf (aref allowed be) t)
                   ))
                 (setf (aref allowed b) t)
-              )))
-        )
+              ))))
         (setf (aref allowed e) t)
-      )
-    )
-    (princ count)
-    (princ "
-")
+      ))
+    (format t "~D~%" count)
     ))))
 
 

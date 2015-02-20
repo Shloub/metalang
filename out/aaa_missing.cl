@@ -1,13 +1,12 @@
 
-(si::use-fast-links nil)
 (defun array_init (len fun)
-  (let ((out (make-array len)) (i 0))
-    (while (not (= i len))
-      (progn
-        (setf (aref out i) (funcall fun i))
-        (setq i (+ 1 i ))))
-        out
-    ))(let ((last-char 0)))
+  (let ((out (make-array len)))
+    (progn
+      (loop for i from 0 to (- len 1) do
+        (setf (aref out i) (funcall fun i)))
+      out
+    )))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -15,16 +14,16 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
       out
     ))))
 (defun mread-blank () (progn
-  (while (or (eq last-char #\NewLine) (eq last-char #\Space) ) (next-char))
+  (loop while (or (eq last-char #\NewLine) (eq last-char #\Space) ) do (next-char))
 ))
 #|
   Ce test a été généré par Metalang.
@@ -39,33 +38,24 @@
                (return-from lambda_1 nil)
              ))
              ))))
-  (do
-    ((i1 0 (+ 1 i1)))
-    ((> i1 (- len 1)))
+  (loop for i1 from 0 to (- len 1) do
     (progn
-      (princ (aref tab i1))
-      (princ " ")
+      (format t "~D " (aref tab i1))
       (setf (aref tab2 (aref tab i1)) t)
-    )
-  )
+    ))
   (princ "
 ")
-  (do
-    ((i2 0 (+ 1 i2)))
-    ((> i2 (- len 1)))
+  (loop for i2 from 0 to (- len 1) do
     (if
       (not (aref tab2 i2))
-      (return-from result i2))
-  )
+      (return-from result i2)))
   (return-from result (- 0 1))
   )))
 
 (progn
   (let ((len (mread-int )))
     (mread-blank)
-    (princ len)
-    (princ "
-")
+    (format t "~D~%" len)
     (let
      ((tab (array_init
               len
@@ -76,9 +66,7 @@
                   (return-from lambda_2 b)
                 )))
               ))))
-    (princ (result len tab))
-    (princ "
-")
+    (format t "~D~%" (result len tab))
     )))
 
 

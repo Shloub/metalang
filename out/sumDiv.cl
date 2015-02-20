@@ -1,5 +1,5 @@
-
-(si::use-fast-links nil)(defun remainder (a b) (- a (* b (truncate a b))))(let ((last-char 0)))
+(defun remainder (a b) (- a (* b (truncate a b))))
+(defvar last-char 0)
 (defun next-char () (setq last-char (read-char *standard-input* nil)))
 (next-char)
 (defun mread-int ()
@@ -7,9 +7,9 @@
   (progn (next-char) (- 0 (mread-int)))
   (let ((out 0))
     (progn
-      (while (and last-char (>= (char-int last-char) (char-int #\0)) (<= (char-int last-char) (char-int #\9)))
+      (loop while (and last-char (>= (char-code last-char) (char-code #\0)) (<= (char-code last-char) (char-code #\9))) do
         (progn
-          (setq out (+ (* 10 out) (- (char-int last-char) (char-int #\0))))
+          (setq out (+ (* 10 out) (- (char-code last-char) (char-code #\0))))
           (next-char)
         )
       )
@@ -25,25 +25,19 @@
   )))
 
 (defun foo2 ()
-(progn
-  
-))
+)
 
 (defun foo3 ()
 (if
   (= 1 1)
-  (progn
-    
-  )))
+  '()))
 
 (defun sumdiv (n)
 (progn
   #| On désire renvoyer la somme des diviseurs |#
   (let ((out0 0))
     #| On déclare un entier qui contiendra la somme |#
-    (do
-      ((i 1 (+ 1 i)))
-      ((> i n))
+    (loop for i from 1 to n do
       (progn
         #| La boucle : i est le diviseur potentiel|#
         (if
@@ -54,8 +48,7 @@
             #| On incrémente |#
           )
           #| nop |#)
-      )
-    )
+      ))
     (return-from sumdiv out0)
     #|On renvoie out|#
   )))
