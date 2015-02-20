@@ -71,6 +71,9 @@ let side_effects acc e =
     | Expr.ArrayAffect _ -> true
     | Expr.LetIn (li, e) ->
       List.exists (fun (name, e) -> has_side_effects acc e) li || has_side_effects acc e
+		| Expr.Tuple (li) ->
+			List.exists (has_side_effects acc) li
+
   in IntMap.add (Expr.Fixed.annot e) has acc
 
 let tr acc e = Expr.Writer.Deep.fold side_effects acc e
@@ -78,6 +81,7 @@ let tr acc e = Expr.Writer.Deep.fold side_effects acc e
 let apply p =
   let side_effects = List.fold_left (fun acc e -> match e with
   | Declaration (name, e) -> tr acc e
+	| _ -> acc
   ) p.side_effects p.declarations
   in {p with side_effects = side_effects }
 
