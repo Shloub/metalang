@@ -29,5 +29,9 @@ compileJAVA
 compileML
 compileOBJC
 compilePAS
+compileADA
+compileVB
 allsources
+*.test_cl_ml
+*.exeVB
 
