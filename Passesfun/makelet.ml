@@ -60,7 +60,7 @@ let transform config e = match Expr.unfix e with
     let rec f acc = function
       | [] -> assert false
       | hd::tl -> match Expr.unfix hd with
-	| Expr.LetIn (bindings, e) -> List.rev ( (Expr.letand bindings (Expr.block (e::tl))) :: acc)
+	| Expr.LetIn (name, v, e) -> List.rev ( (Expr.letin name v (Expr.block (e::tl))) :: acc)
 	| _ -> f (hd::acc) tl
     in Expr.block (f [] li)
   | Expr.Apply (Expr.Fixed.F (_, Expr.FunTuple ([], e1)), [e2]) -> Expr.block [e2; e1]
@@ -68,7 +68,7 @@ let transform config e = match Expr.unfix e with
   | Expr.Fun (params, ( Expr.Fixed.F (_, Expr.Fun (params2, expr)))) when config.curry ->
     Expr.fun_ (List.append params params2) expr
   | Expr.Apply ( Expr.Fixed.F (_, Expr.FunTuple (params, expr)), [Expr.Fixed.F (_, Expr.Tuple values)]) ->
-    Expr.letand (List.combine params values) expr
+    List.fold_left (fun acc (name, v) -> Expr.letin name v acc) expr (List.combine params values)
   | Expr.Apply ( (Expr.Fixed.F (_, Expr.Fun (params, expr) ), values)) ->
     let rec f expr = function
       | ([], []) -> expr

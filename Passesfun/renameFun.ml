@@ -46,17 +46,17 @@ let rec transform tra ( (set, rename) as acc) e =
     ) (set, rename) params
     in let _, e = transform tra (set, rename) e
     in acc, Expr.Fixed.fixa annot (Expr.Fun (params, e))
-  | Expr.LetIn (bindings, e) ->
-    let (set, rename), bindings = List.fold_left_map (fun (set, rename) (name, e) ->
-      let _, e = transform tra (set, rename) e in
+  | Expr.LetIn (name, v, e) ->
+		let bindings =  [name, v] in
+    let (set, rename), (name, v) =
+      let _, v = transform tra (set, rename) v in
       if StringSet.mem name set then
         let name2 = Fresh.fresh_user () in
-        (StringSet.add name2 set, StringMap.add name name2 rename), (name2, e)
+        (StringSet.add name2 set, StringMap.add name name2 rename), (name2, v)
       else
-        (StringSet.add name set, rename), (name, e)
-    ) (set, rename) bindings
+        (StringSet.add name set, rename), (name, v)
     in let _, e = transform tra (set, rename) e
-    in acc, Expr.Fixed.fixa annot (Expr.LetIn (bindings, e))
+    in acc, Expr.Fixed.fixa annot (Expr.LetIn (name, v, e))
   | Expr.Lief (Expr.Binding name) ->
     begin match StringMap.find_opt name rename with
     | None -> (set, rename), e

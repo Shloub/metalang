@@ -66,11 +66,10 @@ let side_effects acc e =
       List.exists (fun (e, name) -> has_side_effects acc e) li
     | Expr.RecordAffect _ -> true
     | Expr.RecordAccess _ -> true
-    | Expr.ArrayMake (a, b, c) -> true (* TODO *)
+    | Expr.ArrayMake (a, b, c) -> true
     | Expr.ArrayAccess _ -> true
     | Expr.ArrayAffect _ -> true
-    | Expr.LetIn (li, e) ->
-      List.exists (fun (name, e) -> has_side_effects acc e) li || has_side_effects acc e
+    | Expr.LetIn (binding, e1, e) -> has_side_effects acc e || has_side_effects acc e1
 		| Expr.Tuple (li) ->
 			List.exists (has_side_effects acc) li
 

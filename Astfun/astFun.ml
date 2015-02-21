@@ -68,7 +68,7 @@ module Expr = struct
   | ArrayMake of 'a * 'a * 'a
   | ArrayAccess of 'a * 'a list
   | ArrayAffect of 'a * 'a list * 'a
-  | LetIn of (string * 'a ) list * 'a
+  | LetIn of string * 'a * 'a
 
   module Fixed = Fix(struct
     type ('a, 'b) alias = 'a tofix
@@ -96,7 +96,7 @@ module Expr = struct
       | ArrayAccess (tab, indexes) -> ArrayAccess (f tab, List.map f indexes)
       | ArrayMake (len, lambda, env) -> ArrayMake (f len, f lambda, f env)
       | ArrayAffect (tab, indexes, v) -> ArrayAffect (f tab, List.map f indexes, f v)
-      | LetIn (params, b) -> LetIn (List.map (fun (s, a) -> s, f a) params, f b)
+      | LetIn (binding, e, b) -> LetIn (binding, f e, f b)
     let next () = next ()
   end)
 
@@ -185,19 +185,14 @@ module Expr = struct
 	  let acc, indexes = List.fold_left_map f acc indexes in
 	  let acc, v = f acc v in
 	  acc, ArrayAffect (tab, indexes, v)
-	| LetIn (params, b) ->
-	  let acc, params =
-	    List.fold_left_map (fun acc (s, a) ->
-	      let acc, a = f acc a
-	      in acc, (s, a))
-	      acc params in
+	| LetIn (binding, e, b) ->
+	  let acc, e = f acc e in
 	  let acc, b = f acc b in
-	  acc, LetIn (params, b)
+	  acc, LetIn (binding, e, b)
       in acc, fixa annot unfixed
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
-  let letin name e1 e2 = fix (LetIn ([name, e1], e2) )
-  let letand params e2 = fix (LetIn (params, e2) )
+  let letin name e1 e2 = fix (LetIn (name, e1, e2) )
   let lief l = fix (Lief l)
   let unit = lief (Unit)
   let error = lief (Error)

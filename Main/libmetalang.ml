@@ -67,6 +67,7 @@ let keywords lang=
   | "php" -> "sqrt" :: "log10" :: li
   | "m" -> "log10" :: "id" :: li
   | "vb" -> "stop" :: li
+  | "hs" -> "id"::li
   | _ -> li
 
 let conf_rename lang prog =
@@ -268,7 +269,7 @@ let languages, printers =
     "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
     "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
     "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
-    "hs",      (true, hs_passes) => new HaskellPrinter.haskellPrinter ;
+    "hs",      (false, hs_passes) => new HaskellPrinter.haskellPrinter ;
     "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
     "rb",      (false, python_passes) => new RbPrinter.rbPrinter ;
     "py",      (false, python_passes) => new PyPrinter.pyPrinter ;

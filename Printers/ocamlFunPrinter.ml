@@ -230,7 +230,7 @@ class camlFunPrinter = object(self)
   | E.ArrayMake (len, lambda, env) -> self#arraymake f len lambda env
   | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
   | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect f tab indexes v
-  | E.LetIn (params, b) -> self#letin f params b
+  | E.LetIn (binding, e, b) -> self#letin f [binding, e] b
 
   method recordaccess f record field  =
     Format.fprintf f "%a.%s" self#expr record field
