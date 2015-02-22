@@ -8,14 +8,14 @@ def void g(array<bool> t, int index)
 end
 
 main
-	#def j = 0
+	def j = 0
   def a[5] with i do
     print i
-		#j += i
+		j += i
     return i % 2 == 0
   end
-	#print j
-	#print " "
+	print j
+	print " "
   print a[0]
   print "\n"
   g(id(a), 0)

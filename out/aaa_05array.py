@@ -7,10 +7,13 @@ def id( b ):
 def g( t, index ):
     t[index] = False
 
+j = 0
 a = [None] * 5
 for i in range(0, 5):
   print("%d" % i, end='')
+  j += i
   a[i] = (mod(i, 2)) == 0
+print("%d " % ( j ), end='')
 c = a[0]
 if c:
   print( "True", end='')

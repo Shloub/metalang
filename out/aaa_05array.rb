@@ -11,11 +11,14 @@ def g( t, index )
     t[index] = false
 end
 
+j = 0
 a = [];
 for i in (0 ..  5 - 1) do
   printf "%d", i
+  j += i
   a[i] = (mod(i, 2)) == 0
 end
+printf "%d ", j
 c = a[0]
 if c then
   print "True";

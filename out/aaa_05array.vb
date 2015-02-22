@@ -12,11 +12,14 @@ Module aaa_05array
   
   
   Sub Main()
+    Dim j As Integer = 0
     Dim a(5) As Boolean
     For  i As Integer  = 0 to  5 - 1
       Console.Write(i)
+      j = j + i
       a(i) = (i Mod 2) = 0
     Next
+    Console.Write("" & j & " ")
     Dim c As Boolean = a(0)
     If c Then
       Console.Write("True")

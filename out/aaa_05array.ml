@@ -6,9 +6,12 @@ let g t index =
 
 let () =
 begin
+  let j = ref( 0 ) in
   let a = Array.init 5 (fun i ->
     Printf.printf "%d" i;
+    j := (!j) + i;
     (i mod 2) = 0) in
+  Printf.printf "%d " (!j);
   let c = a.(0) in
   if c then
     Printf.printf "True"

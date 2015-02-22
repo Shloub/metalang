@@ -10,12 +10,15 @@ void g(std::vector<bool> * t, int index){
 
 
 int main(){
+  int j = 0;
   std::vector<bool > *a = new std::vector<bool>( 5 );
   for (int i = 0 ; i < 5; i++)
   {
     std::cout << i;
+    j += i;
     a->at(i) = (i % 2) == 0;
   }
+  std::cout << j << " ";
   bool c = a->at(0);
   if (c)
     std::cout << "True";

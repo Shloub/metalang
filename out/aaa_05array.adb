@@ -16,15 +16,20 @@ begin
 end;
 
 
+  j : Integer;
   d : Boolean;
   c : Boolean;
   a : e_PTR;
 begin
+  j := (0);
   a := new e (0..(5));
   for i in integer range (0)..(5) - (1) loop
     String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+    j := j + i;
     a(i) := (i rem (2)) = (0);
   end loop;
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
+  String'Write (Text_Streams.Stream (Current_Output), " ");
   c := a((0));
   if c
   then

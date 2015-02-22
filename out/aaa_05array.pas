@@ -17,13 +17,18 @@ var
   c : boolean;
   d : boolean;
   i : Longint;
+  j : Longint;
 begin
+  j := 0;
   SetLength(a, 5);
   for i := 0 to  5 - 1 do
   begin
     Write(i);
+    j := j + i;
     a[i] := (i Mod 2) = 0;
   end;
+  Write(j);
+  Write(' ');
   c := a[0];
   if c
   then

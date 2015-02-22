@@ -15,12 +15,15 @@ public class aaa_05array
   
   public static void Main(String[] args)
   {
+    int j = 0;
     bool[] a = new bool[5];
     for (int i = 0 ; i < 5; i++)
     {
       Console.Write(i);
+      j += i;
       a[i] = (i % 2) == 0;
     }
+    Console.Write("" + j + " ");
     bool c = a[0];
     if (c)
       Console.Write("True");
