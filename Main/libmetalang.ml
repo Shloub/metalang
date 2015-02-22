@@ -31,6 +31,7 @@
     @author Prologin (info@prologin.org)
 *)
 
+
 open Stdlib
 open Ast
 
@@ -244,12 +245,12 @@ let languages, printers =
       begin
 
 	      if cut then begin
-          Format.pp_set_margin out 80;
+          Format.pp_set_margin out 81;
 	        Format.pp_set_max_indent out 80;
         end
         else begin
-          Format.pp_set_margin out 65000;
-	        Format.pp_set_max_indent out 65000;
+          Format.pp_set_margin out 801;
+	        Format.pp_set_max_indent out 800;
         end;
         pr#setTyperEnv typerEnv;
         pr#prog out processed
