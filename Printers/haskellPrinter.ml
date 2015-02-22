@@ -45,11 +45,14 @@ class haskellPrinter = object(self)
   method setTyperEnv t = typerEnv <- t
   method typename_of_field field = Typer.typename_for_field field typerEnv
 
+	method tname f name =
+		Format.fprintf f "%s" (String.capitalize name)
+
   method binopstr = function
   | Ast.Expr.Add -> "+"
   | Ast.Expr.Sub -> "-"
   | Ast.Expr.Mul -> "*"
-  | Ast.Expr.Div -> "`div`"
+  | Ast.Expr.Div -> "`quot`"
   | Ast.Expr.Mod -> "`rem`"
   | Ast.Expr.Or -> "||"
   | Ast.Expr.And -> "&&"
@@ -68,17 +71,21 @@ class haskellPrinter = object(self)
   method punop f op = Format.fprintf f "%s" (self#unopstr op)
 
   method binop f a op b = Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
-  method unop f a op = Format.fprintf f "(%a %a)"self#punop op self#expr a
+  method unop f a op =
+		if self#isPure a then
+			Format.fprintf f "(%a %a)"self#punop op self#expr a
+		else
+			Format.fprintf f "(fmap (%a) %a)"self#punop op self#expr a
 
   method comment f str c = Format.fprintf f "{-%s-}@\n%a" str self#expr c
 
   method fun_ f params e =
     let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
-    Format.fprintf f "(\\%a ->@[<hov> %a)@]" pparams () self#expr e
+    Format.fprintf f "@[<v 2>(\\%a ->@\n%a)@]" pparams () self#expr e
 
   method funtuple f params e =
     let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
-    Format.fprintf f "(\\%a ->@[<hov> %a)@]" pparams () self#expr e
+    Format.fprintf f "@[<v 2>(\\%a ->@\n%a)@]" pparams () self#expr e
 
   method letrecin f name params e1 e2 = match params with
   | [] -> Format.fprintf f "let %a @[<v>() =@\n%a in@\n%a@]"
@@ -126,7 +133,7 @@ class haskellPrinter = object(self)
         match acc with
         | Some _ -> acc
         | None ->
-          if clang = "" or clang = lang then
+          if clang = "" || clang = lang then
             Some expantion
           else None
       ) None
@@ -189,14 +196,20 @@ class haskellPrinter = object(self)
   method if_ f e1 e2 e3 =
 		let p =	if self#isPure e2 && self#isPure e3 then self#expr else self#eM in
 		if self#isPure e1 then
-				Format.fprintf f "@[if %a@\nthen %a@\nelse %a@]" self#expr e1 p e2 p e3
+				Format.fprintf f "@[<v>if %a@\nthen %a@\nelse %a@]" self#expr e1 p e2 p e3
 		else
-			Format.fprintf f "@[ifM (%a) (%a) (%a)@]" self#expr e1 p e2 p e3
+			Format.fprintf f "@[<v>ifM (%a) (%a) (%a)@]" self#expr e1 p e2 p e3
 
 	method blockContent f li =
     Printer.print_list
 			(fun f e ->
 				match E.unfix e with
+
+				| E.ReadIn( Type.Fixed.F(_, Type.Integer),
+										E.Fixed.F(_, E.Fun ( [name], next))
+									 ) ->
+										 Format.fprintf f "@[<h>%a <- read_int@]@\n%a" self#binding name
+											 self#blockContent [next]
 				| E.Block li -> self#blockContent f li
 				| E.LetIn (s, v, e) ->
 					let pparams, a = self#extract_fun_params v (fun f () -> ()) in
@@ -210,7 +223,7 @@ class haskellPrinter = object(self)
 			)
       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b) f li
 
-  method block f li = Format.fprintf f "@[<v 2>do @\n%a@]@\n"
+  method block f li = Format.fprintf f "do @[<v>%a@]"
 		self#blockContent li
 
   method printf f () = Format.fprintf f "printf"
@@ -264,25 +277,30 @@ class haskellPrinter = object(self)
   | E.LetIn (_, _,_) -> self#block f [e]
 
   method recordaccess f record field  =
-    Format.fprintf f "%a.%s" self#expr record field
+    Format.fprintf f "@[<v>readIORef (%s %a)@]" field self#expr record
 
   method recordaffect f record field value =
-    Format.fprintf f "%a.%s <- %a"
-      self#expr record field
+    Format.fprintf f "@[<v>writeIORef (%s %a) %a@]" field
+      self#expr record
       self#expr value
 
   method record f li =
-    Format.fprintf f "{%a}"
+    let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
+    Format.fprintf f "@[<v>%a <$> %a@]"
+			self#tname t
       (Printer.print_list
-	 (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
-	 (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
+				 (fun f (expr, field) -> Format.fprintf f "(newIORef %a)" self#expr expr)
+				 (fun f pa a pb b -> Format.fprintf f "%a <*> %a" pa a pb b)) li
 
   method skip f = Format.fprintf f "skip_whitespaces"
 
   method read f ty next =
-		match Type.unfix ty with
-		| Type.Integer -> Format.fprintf f "read_int >>= @[<hov>(%a)@]" self#expr next
-		| Type.Char -> Format.fprintf f "hGetChar stdin >>= (%a)" self#expr next
+		match Type.unfix ty, E.unfix next with
+		| Type.Integer, E.Fun ( [name], next) ->
+Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
+											 self#blockContent [next]
+		| Type.Integer, _ -> Format.fprintf f "@[<h>read_int >>=@[<v> (%a)@]@]" self#expr next
+		| Type.Char, _ -> Format.fprintf f "@[<h>hGetChar stdin >>=@[<v> (%a)@]@]" self#expr next
 		| _ -> assert false
 
 	method param_of_pure f e =
@@ -298,13 +316,26 @@ class haskellPrinter = object(self)
       (fun f () -> self#expr f tab)
       indexes f ()
 
-  method arrayaffect f tab indexes v =
+  method arrayaffect f tab indexes v =			
     match List.rev indexes with
     | hd::tl -> let tl = List.rev tl in
-                Format.fprintf f "(writeArray %a %a %a)"
-                  (fun f () -> self#arrayindex f tab tl) ()
-                  self#param_of_pure hd
-                  self#expr v
+								let array_pure = self#isPure tab && List.for_all self#isPure tl in
+								let index_pure = self#isPure hd in
+								let v_pure = self#isPure v in
+								begin match array_pure, index_pure, v_pure with
+								| true, true, true ->
+									Format.fprintf f "writeArray %a %a %a"
+										(fun f () -> self#arrayindex f tab tl) () self#expr hd self#expr v
+								| true, true, false ->
+									Format.fprintf f "writeArray %a %a =<< %a"
+										(fun f () -> self#arrayindex f tab tl) () self#expr hd self#expr v
+								| true, false, _ ->
+									Format.fprintf f "join (writeArray %a <$> %a <*> %a)"
+										(fun f () -> self#arrayindex f tab tl) () self#expr hd self#eM v
+								| false, _, _ ->
+									Format.fprintf f "join (writeArray <$> %a <*> %a <*> %a)"
+										(fun f () -> self#arrayindex f tab tl) () self#eM hd self#eM v
+								end
 
   (** show a type *)
   method ptype f (t : Type.t ) =
@@ -317,12 +348,12 @@ class haskellPrinter = object(self)
     | Type.Char -> Format.fprintf f "Char"
     | Type.Named n -> Format.fprintf f "%s" n
     | Type.Struct li ->
-      Format.fprintf f "{%a}"
+      Format.fprintf f "{@[<v 2>@\n%a@\n}@]"
         (Printer.print_list
            (fun t (name, type_) ->
-             Format.fprintf t "mutable %s : %a;" name self#ptype type_
+             Format.fprintf t "%s :: IORef(%a)" name self#ptype type_
            )
-           Printer.sep_space
+           (fun f pa a pb b -> Format.fprintf f "%a,@\n%a" pa a pb b)
         ) li
     | Type.Enum li ->
       Format.fprintf f "%a"
@@ -360,8 +391,10 @@ class haskellPrinter = object(self)
     Format.fprintf f "@[<v 2>%s%a%a =@\n%a@]@\n" (if self#is_rec name e then "rec " else "")
       self#binding name pparams () self#eM e
 
-  method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>type %a = %a@]@\n"
-    self#binding name self#ptype ty
+  method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>data %a = %a %a@]@\n"
+    self#tname name
+    self#tname name 
+		self#ptype ty
 
   method decl f d = match d with
   | AstFun.Declaration (name, e) -> self#toplvl_declare f name e
@@ -380,7 +413,8 @@ class haskellPrinter = object(self)
 			"Data.Array.MArray";
 			"Data.Array.IO";
 			"Data.Char";
-			"System.IO"
+			"System.IO";
+			"Data.IORef"
 		] in
     Format.fprintf f "%a
 
@@ -394,11 +428,13 @@ ifM cond if_ els_ =
 
 skip_whitespaces :: IO ()
 skip_whitespaces =
-  do c <- hLookAhead stdin
-     if c == ' ' || c == '\\n' || c == '\\t' || c == '\\r' then
-        do hGetChar stdin
-           skip_whitespaces
-        else return ()
+  ifM (hIsEOF stdin)
+      (return ())
+      (do c <- hLookAhead stdin
+          if c == ' ' || c == '\\n' || c == '\\t' || c == '\\r' then
+           do hGetChar stdin
+              skip_whitespaces
+           else return ())
 
 read_int_a :: Int -> IO Int
 read_int_a b =
@@ -412,7 +448,7 @@ read_int :: IO Int
 read_int =
    do c <- hLookAhead stdin
       sign <- if c == '-'
-                 then fmap (\x -> -1::Int) $ hGetChar stdin
+                 then fmap (\\x -> -1::Int) $ hGetChar stdin
                  else return 1
       num <- read_int_a 0
       return (num * sign)
