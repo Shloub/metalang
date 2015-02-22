@@ -206,14 +206,16 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
     | A.Instr.AllocArray (A.UserName name, t, e, Some (A.UserName varname, li), _) ->
       let affected = List.filter (fun x -> List.mem x env) @$ StringSet.elements @$ affected li in
       let o = Fresh.fresh_user () in
+      let envname = Fresh.fresh_user () in
       let returnenv = F.Expr.tuple (List.map F.Expr.binding affected) in
       let returncont = F.Expr.fun_ [o] (F.Expr.tuple [returnenv; F.Expr.binding o] ) in
       let content = instrs false contsuite (Some returncont) (varname::env) li in
       let content = F.Expr.funtuple affected content in
       let content = F.Expr.fun_ [varname] content in
       let next = instrs suite contsuite  contreturn env tl in
-      let next = F.Expr.fun_ [name] next in
-      F.Expr.apply next [F.Expr.arraymake e content returnenv]
+			F.Expr.apply (F.Expr.funtuple [envname; name]
+											(F.Expr.apply (F.Expr.funtuple affected next) [F.Expr.binding envname]))
+				[F.Expr.arraymake e content returnenv]
     | A.Instr.AllocArray (name, t, e, None, _) -> assert false
     | A.Instr.Untuple (vars, e, _) ->
       let vars = List.map (function (_, A.UserName u) -> u ) vars in

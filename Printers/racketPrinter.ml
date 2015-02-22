@@ -113,13 +113,13 @@ Format.fprintf f "#lang racket
 %a%a%a%a%a@\n"
 (fun f () -> if Tags.is_taged "__internal__allocArray" then Format.fprintf f
 "(define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 "
 ) ()
 (fun f () -> if need then Format.fprintf f

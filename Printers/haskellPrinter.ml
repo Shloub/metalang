@@ -74,11 +74,11 @@ class haskellPrinter = object(self)
 
   method fun_ f params e =
     let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
-    Format.fprintf f "(\\%a -> %a)" pparams () self#expr e
+    Format.fprintf f "(\\%a ->@[<hov> %a)@]" pparams () self#expr e
 
   method funtuple f params e =
     let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
-    Format.fprintf f "(\\%a -> %a)" pparams () self#expr e
+    Format.fprintf f "(\\%a ->@[<hov> %a)@]" pparams () self#expr e
 
   method letrecin f name params e1 e2 = match params with
   | [] -> Format.fprintf f "let %a @[<v>() =@\n%a in@\n%a@]"
@@ -289,7 +289,7 @@ class haskellPrinter = object(self)
 		if self#isPure e then self#expr f e
 		else Format.fprintf f "=<< %a" self#expr e
 
-  method arraymake f len lambda env = Format.fprintf f "(fmap snd (array_init_withenv %a %a %a))" self#param_of_pure len self#expr lambda self#expr env
+  method arraymake f len lambda env = Format.fprintf f "(array_init_withenv %a %a %a)" self#param_of_pure len self#expr lambda self#expr env
 
   method arrayindex f tab indexes =
     List.fold_left (fun acc index f () -> Format.fprintf f "(readArray %a %a)"
