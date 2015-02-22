@@ -16,7 +16,7 @@
 <Eval/*.cmx>: use_passes, use_ast, inline(9)
 
 true: use_str
-
+true: annot, bin_annot
 true : use_menhir
 
 "Stdlib" or "Ast" or "Parser" or "Printers" or "Eval" or "Passes" or "Astfun" or "Passesfun" or "Main" : include
