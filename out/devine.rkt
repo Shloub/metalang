@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -61,20 +61,24 @@
        ((lambda (len) 
           (block
             (mread-blank)
-            (let ([tab (array_init_withenv len (lambda (i) 
-                                                 (lambda (_) ((lambda (tmp) 
-                                                                (block
-                                                                  (mread-blank)
-                                                                  (let ([e tmp])
-                                                                  (list '() e))
-                                                                  )) (mread-int)))) '())])
-          (let ([a (devine0 nombre tab len)])
-          (block
-            (if a
-            (display "True")
-            (display "False"))
-            '()
-            )))
+            ((lambda (internal_env) (apply (lambda (f tab) 
+                                                  (block
+                                                    f
+                                                    (let ([a (devine0 nombre tab len)])
+                                                    (block
+                                                      (if a
+                                                      (display "True")
+                                                      (display "False"))
+                                                      '()
+                                                      ))
+                                                    )) internal_env)) (array_init_withenv len 
+            (lambda (i) 
+              (lambda (_) ((lambda (tmp) 
+                             (block
+                               (mread-blank)
+                               (let ([e tmp])
+                               (list '() e))
+                               )) (mread-int)))) '()))
        )) (mread-int))
 )) (mread-int))
 )

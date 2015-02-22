@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let devine0 nombre tab len =
@@ -38,21 +38,24 @@ let main =
                     Scanf.scanf "%d"
                     (fun  len -> (
                                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                   let tab = (Array.init_withenv len (fun  i () -> Scanf.scanf "%d"
+                                   ((fun  (f, tab) -> (
+                                                        f;
+                                                        let a = (devine0 nombre tab len) in
+                                                        (
+                                                          (if a
+                                                           then (Printf.printf "True")
+                                                           else (Printf.printf "False"));
+                                                          ()
+                                                          )
+                                                        
+                                                        )
+                                   ) (Array.init_withenv len (fun  i () -> Scanf.scanf "%d"
                                    (fun  tmp -> (
                                                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                                   let e = tmp in
                                                   ((), e)
                                                   )
-                                   )) ()) in
-                                   let a = (devine0 nombre tab len) in
-                                   (
-                                     (if a
-                                      then (Printf.printf "True")
-                                      else (Printf.printf "False"));
-                                     ()
-                                     )
-                                   
+                                   )) ()))
                                    )
                     )
                     )

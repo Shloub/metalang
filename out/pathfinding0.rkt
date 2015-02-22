@@ -1,30 +1,30 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 
 (define (pathfind_aux cache tab x y posX posY)
   ;toto
-  (let ([k (lambda (_) 
+  (let ([m (lambda (_) 
              '())])
   (if (and (eq? posX (- x 1)) (eq? posY (- y 1)))
   0
-  (let ([l (lambda (_) 
-             (k 'nil))])
-  (if (or (or (or (< posX 0) (< posY 0)) (>= posX x)) (>= posY y))
-  (* (* x y) 10)
-  (let ([m (lambda (_) 
-             (l 'nil))])
-  (if (eq? (vector-ref (vector-ref tab posY) posX) (integer->char 35))
-  (* (* x y) 10)
   (let ([o (lambda (_) 
              (m 'nil))])
+  (if (or (or (or (< posX 0) (< posY 0)) (>= posX x)) (>= posY y))
+  (* (* x y) 10)
+  (let ([p (lambda (_) 
+             (o 'nil))])
+  (if (eq? (vector-ref (vector-ref tab posY) posX) (integer->char 35))
+  (* (* x y) 10)
+  (let ([q (lambda (_) 
+             (p 'nil))])
   (if (not (eq? (vector-ref (vector-ref cache posY) posX) (- 1)))
   (vector-ref (vector-ref cache posY) posX)
   (block
@@ -42,32 +42,41 @@
 )
 (define (pathfind tab x y)
   ;toto
-  (let ([cache (array_init_withenv y (lambda (i) 
-                                       (lambda (_) (let ([tmp (array_init_withenv x 
-                                                   (lambda (j) 
-                                                     (lambda (_) (block
-                                                                   (display (vector-ref (vector-ref tab i) j))
-                                                                   (let ([h (- 1)])
-                                                                   (list '() h))
-                                                                   ))) '())])
-                                       (block
-                                         (display "\n")
-                                         (let ([g tmp])
-                                         (list '() g))
-                                         )))) '())])
-(pathfind_aux cache tab x y 0 0))
+  ((lambda (internal_env) (apply (lambda (h cache) 
+                                        (block
+                                          h
+                                          (pathfind_aux cache tab x y 0 0)
+                                          )) internal_env)) (array_init_withenv y 
+  (lambda (i) 
+    (lambda (_) ((lambda (internal_env) (apply (lambda (l tmp) 
+                                                      (block
+                                                        l
+                                                        (display "\n")
+                                                        (let ([g tmp])
+                                                        (list '() g))
+                                                        )) internal_env)) (array_init_withenv x 
+    (lambda (j) 
+      (lambda (_) (block
+                    (display (vector-ref (vector-ref tab i) j))
+                    (let ([k (- 1)])
+                    (list '() k))
+                    ))) '())))) '()))
 )
 (define main
   (let ([x (string->number (read-line))])
   (let ([y (string->number (read-line))])
   (block
     (map display (list x " " y "\n"))
-    (let ([e (array_init_withenv y (lambda (f) 
-                                     (lambda (_) (let ([p (list->vector (string->list (read-line)))])
-                                                 (list '() p)))) '())])
-    (let ([tab e])
-    (let ([result (pathfind tab x y)])
-    (display result))))
+    ((lambda (internal_env) (apply (lambda (s e) 
+                                          (block
+                                            s
+                                            (let ([tab e])
+                                            (let ([result (pathfind tab x y)])
+                                            (display result)))
+                                            )) internal_env)) (array_init_withenv y 
+    (lambda (f) 
+      (lambda (_) (let ([r (list->vector (string->list (read-line)))])
+                  (list '() r)))) '()))
   )))
 )
 

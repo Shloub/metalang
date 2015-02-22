@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 
 (define (result sum t0 maxIndex cache)
   ;toto
@@ -34,27 +34,36 @@
   (c d out0))))))))))
 )
 (define main
-  (let ([t0 (array_init_withenv 8 (lambda (i) 
-                                    (lambda (_) (let ([f 0])
-                                                (list '() f)))) '())])
-  (block
-    (vector-set! t0 0 1)
-    (vector-set! t0 1 2)
-    (vector-set! t0 2 5)
-    (vector-set! t0 3 10)
-    (vector-set! t0 4 20)
-    (vector-set! t0 5 50)
-    (vector-set! t0 6 100)
-    (vector-set! t0 7 200)
-    (let ([cache (array_init_withenv 201 (lambda (j) 
-                                           (lambda (_) (let ([o (array_init_withenv 8 
-                                                       (lambda (k) 
-                                                         (lambda (_) 
-                                                         (let ([h 0])
-                                                         (list '() h)))) '())])
-                                           (let ([g o])
-                                           (list '() g))))) '())])
-  (display (result 200 t0 7 cache)))
-))
+  ((lambda (internal_env) (apply (lambda (g t0) 
+                                        (block
+                                          g
+                                          (vector-set! t0 0 1)
+                                          (vector-set! t0 1 2)
+                                          (vector-set! t0 2 5)
+                                          (vector-set! t0 3 10)
+                                          (vector-set! t0 4 20)
+                                          (vector-set! t0 5 50)
+                                          (vector-set! t0 6 100)
+                                          (vector-set! t0 7 200)
+                                          ((lambda (internal_env) (apply (lambda
+                                           (l cache) 
+                                          (block
+                                            l
+                                            (display (result 200 t0 7 cache))
+                                            )) internal_env)) (array_init_withenv 201 
+                                          (lambda (j) 
+                                            (lambda (_) ((lambda (internal_env) (apply (lambda
+                                             (n o) 
+                                            (block
+                                              n
+                                              (let ([h o])
+                                              (list '() h))
+                                              )) internal_env)) (array_init_withenv 8 
+                                            (lambda (k) 
+                                              (lambda (_) (let ([m 0])
+                                                          (list '() m)))) '())))) '()))
+  )) internal_env)) (array_init_withenv 8 (lambda (i) 
+                                            (lambda (_) (let ([f 0])
+                                                        (list '() f)))) '()))
 )
 

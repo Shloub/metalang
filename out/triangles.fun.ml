@@ -2,18 +2,18 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let rec find0 len tab cache x y =
   (* 
 	Cette fonction est récursive
 	 *)
-  let c () = let result = 0 in
+  let e () = let result = 0 in
   let out0 = (find0 len tab cache x (y + 1)) in
   let out1 = (find0 len tab cache (x + 1) (y + 1)) in
   let result = (if (out0 > out1)
@@ -28,60 +28,69 @@ let rec find0 len tab cache x y =
    in
   (if (y = (len - 1))
    then tab.(y).(x)
-   else let d () = (c ()) in
+   else let f () = (e ()) in
    (if (x > y)
     then (- 10000)
     else (if (cache.(y).(x) <> 0)
           then cache.(y).(x)
-          else (d ()))))
+          else (f ()))))
 let find len tab =
-  let tab2 = (Array.init_withenv len (fun  i () -> let tab3 = (Array.init_withenv (i + 1) (fun  j () -> let b = 0 in
-  ((), b)) ()) in
-  let a = tab3 in
-  ((), a)) ()) in
-  (find0 len tab tab2 0 0)
+  ((fun  (b, tab2) -> (
+                        b;
+                        (find0 len tab tab2 0 0)
+                        )
+  ) (Array.init_withenv len (fun  i () -> ((fun  (d, tab3) -> (
+                                                                d;
+                                                                let a = tab3 in
+                                                                ((), a)
+                                                                )
+  ) (Array.init_withenv (i + 1) (fun  j () -> let c = 0 in
+  ((), c)) ()))) ()))
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  r -> let len = r in
+  (fun  v -> let len = v in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let tab = (Array.init_withenv len (fun  i () -> let tab2 = (Array.init_withenv (i + 1) (fun  j () -> let tmp = 0 in
+    ((fun  (h, tab) -> (
+                         h;
+                         (Printf.printf "%d\n" (find len tab));
+                         let t = 0 in
+                         let u = (len - 1) in
+                         let rec p k =
+                           (if (k <= u)
+                            then let r = 0 in
+                            let s = k in
+                            let rec q l =
+                              (if (l <= s)
+                               then (
+                                      (Printf.printf "%d " tab.(k).(l));
+                                      (q (l + 1))
+                                      )
+                               
+                               else (
+                                      (Printf.printf "\n" );
+                                      (p (k + 1))
+                                      )
+                               ) in
+                              (q r)
+                            else ()) in
+                           (p t)
+                         )
+    ) (Array.init_withenv len (fun  i () -> ((fun  (n, tab2) -> (
+                                                                  n;
+                                                                  let g = tab2 in
+                                                                  ((), g)
+                                                                  )
+    ) (Array.init_withenv (i + 1) (fun  j () -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  g -> let tmp = g in
+    (fun  o -> let tmp = o in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let f = tmp in
-      ((), f)
+      let m = tmp in
+      ((), m)
       )
-    )) ()) in
-    let e = tab2 in
-    ((), e)) ()) in
-    (
-      (Printf.printf "%d\n" (find len tab));
-      let p = 0 in
-      let q = (len - 1) in
-      let rec h k =
-        (if (k <= q)
-         then let n = 0 in
-         let o = k in
-         let rec m l =
-           (if (l <= o)
-            then (
-                   (Printf.printf "%d " tab.(k).(l));
-                   (m (l + 1))
-                   )
-            
-            else (
-                   (Printf.printf "\n" );
-                   (h (k + 1))
-                   )
-            ) in
-           (m n)
-         else ()) in
-        (h p)
-      )
-    
+    )) ()))) ()))
     )
   )
 

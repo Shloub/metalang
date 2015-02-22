@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -52,36 +52,45 @@
   (block
     (set-toto-blah! t0 (+ (toto-blah t0) 1))
     (let ([len 1])
-    (let ([cache0 (array_init_withenv len (lambda (i) 
-                                            (lambda (_) (let ([a (- i)])
-                                                        (list '() a)))) '())])
-    (let ([cache1 (array_init_withenv len (lambda (j) 
-                                            (lambda (_) (let ([b j])
-                                                        (list '() b)))) '())])
-    (let ([cache2 cache0])
-    (let ([cache0 cache1])
-    (let ([cache2 cache0])
-    (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0)))))))))
+    ((lambda (internal_env) (apply (lambda (b cache0) 
+                                          (block
+                                            b
+                                            ((lambda (internal_env) (apply (lambda
+                                             (d cache1) 
+                                            (block
+                                              d
+                                              (let ([cache2 cache0])
+                                              (let ([cache0 cache1])
+                                              (let ([cache2 cache0])
+                                              (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))))
+                                              )) internal_env)) (array_init_withenv len 
+                                            (lambda (j) 
+                                              (lambda (_) (let ([c j])
+                                                          (list '() c)))) '()))
+                                          )) internal_env)) (array_init_withenv len 
+    (lambda (i) 
+      (lambda (_) (let ([a (- i)])
+                  (list '() a)))) '())))
   )))))))
 )
 (define main
   (let ([t0 (mktoto 4)])
   (let ([t2 (mktoto 5)])
-  ((lambda (f) 
+  ((lambda (h) 
      (block
-       (set-toto-bar! t0 f)
+       (set-toto-bar! t0 h)
        (mread-blank)
-       ((lambda (e) 
+       ((lambda (g) 
           (block
-            (set-toto-blah! t0 e)
+            (set-toto-blah! t0 g)
             (mread-blank)
-            ((lambda (d) 
+            ((lambda (f) 
                (block
-                 (set-toto-bar! t2 d)
+                 (set-toto-bar! t2 f)
                  (mread-blank)
-                 ((lambda (c) 
+                 ((lambda (e) 
                     (block
-                      (set-toto-blah! t2 c)
+                      (set-toto-blah! t2 e)
                       (map display (list (result t0 t2) (toto-blah t0)))
                       )) (mread-int))
                )) (mread-int))

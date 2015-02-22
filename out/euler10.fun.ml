@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let eratostene t max0 =
@@ -41,11 +41,11 @@ let eratostene t max0 =
 let main =
   let n = 100000 in
   (*  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages  *)
-  let t = (Array.init_withenv n (fun  i () -> let e = i in
-  ((), e)) ()) in
-  (
-    t.(1) <- 0;
-    (Printf.printf "%d\n" (eratostene t n))
-    )
-  
+  ((fun  (f, t) -> (
+                     f;
+                     t.(1) <- 0;
+                     (Printf.printf "%d\n" (eratostene t n))
+                     )
+  ) (Array.init_withenv n (fun  i () -> let e = i in
+  ((), e)) ()))
 

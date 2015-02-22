@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let montagnes0 tab len =
@@ -37,19 +37,22 @@ let montagnes0 tab len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  e -> let len = e in
+  (fun  f -> let len = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    let tab = (Array.init_withenv len (fun  i () -> let x = 0 in
+    ((fun  (d, tab) -> (
+                         d;
+                         (Printf.printf "%d" (montagnes0 tab len))
+                         )
+    ) (Array.init_withenv len (fun  i () -> let x = 0 in
     Scanf.scanf "%d"
-    (fun  d -> let x = d in
+    (fun  e -> let x = e in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       let c = x in
       ((), c)
       )
-    )) ()) in
-    (Printf.printf "%d" (montagnes0 tab len))
+    )) ()))
     )
   )
 

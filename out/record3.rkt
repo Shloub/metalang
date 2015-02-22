@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -52,21 +52,24 @@
   (a b out0)))))
 )
 (define main
-  (let ([t0 (array_init_withenv 4 (lambda (i) 
-                                    (lambda (_) (let ([d (mktoto i)])
-                                                (list '() d)))) '())])
-  ((lambda (f) 
-     (block
-       (set-toto-bar! (vector-ref t0 0) f)
-       (mread-blank)
-       ((lambda (e) 
-          (block
-            (set-toto-blah! (vector-ref t0 1) e)
-            (let ([titi (result t0 4)])
-            (block
-              (map display (list titi (toto-blah (vector-ref t0 2))))
-              ))
-            )) (mread-int))
-     )) (mread-int)))
+  ((lambda (internal_env) (apply (lambda (e t0) 
+                                        (block
+                                          e
+                                          ((lambda (g) 
+                                             (block
+                                               (set-toto-bar! (vector-ref t0 0) g)
+                                               (mread-blank)
+                                               ((lambda (f) 
+                                                  (block
+                                                    (set-toto-blah! (vector-ref t0 1) f)
+                                                    (let ([titi (result t0 4)])
+                                                    (block
+                                                      (map display (list titi (toto-blah (vector-ref t0 2))))
+                                                      ))
+                                                    )) (mread-int))
+                                             )) (mread-int))
+  )) internal_env)) (array_init_withenv 4 (lambda (i) 
+                                            (lambda (_) (let ([d (mktoto i)])
+                                                        (list '() d)))) '()))
 )
 

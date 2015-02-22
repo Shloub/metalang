@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 type gamestate = {mutable cases : int array array; mutable firstToPlay : bool; mutable note : int; mutable ended : bool;}
@@ -14,14 +14,14 @@ type move = {mutable x : int; mutable y : int;}
 let print_state g =
   (
     (Printf.printf "\n|" );
-    let bh = 0 in
-    let bi = 2 in
-    let rec bd y =
-      (if (y <= bi)
-       then let bf = 0 in
-       let bg = 2 in
-       let rec be x =
-         (if (x <= bg)
+    let bj = 0 in
+    let bk = 2 in
+    let rec bf y =
+      (if (y <= bk)
+       then let bh = 0 in
+       let bi = 2 in
+       let rec bg x =
+         (if (x <= bi)
           then (
                  (if (g.cases.(x).(y) = 0)
                   then (Printf.printf " ")
@@ -33,34 +33,34 @@ let print_state g =
                          )
                   );
                  (Printf.printf "|" );
-                 (be (x + 1))
+                 (bg (x + 1))
                  )
           
           else (
                  (if (y <> 2)
                   then (Printf.printf "\n|-|-|-|\n|")
                   else ());
-                 (bd (y + 1))
+                 (bf (y + 1))
                  )
           ) in
-         (be bf)
+         (bg bh)
        else (Printf.printf "\n")) in
-      (bd bh)
+      (bf bj)
     )
   
 let eval0 g =
   let win = 0 in
   let freecase = 0 in
-  let bb = 0 in
-  let bc = 2 in
-  let rec v y freecase win =
-    (if (y <= bc)
+  let bd = 0 in
+  let be = 2 in
+  let rec z y freecase win =
+    (if (y <= be)
      then let col = (- 1) in
      let lin = (- 1) in
-     let z = 0 in
-     let ba = 2 in
-     let rec w x col freecase lin =
-       (if (x <= ba)
+     let bb = 0 in
+     let bc = 2 in
+     let rec ba x col freecase lin =
+       (if (x <= bc)
         then let freecase = (if (g.cases.(x).(y) = 0)
                              then let freecase = (freecase + 1) in
                              freecase
@@ -83,7 +83,7 @@ let eval0 g =
                                    lin
                                    else lin) in
                    lin) in
-        (w (x + 1) col freecase lin)
+        (ba (x + 1) col freecase lin)
         else let win = (if (col >= 0)
                         then let win = col in
                         win
@@ -92,12 +92,12 @@ let eval0 g =
                                         win
                                         else win) in
                         win) in
-        (v (y + 1) freecase win)) in
-       (w z col freecase lin)
-     else let t = 1 in
-     let u = 2 in
-     let rec s x win =
-       (if (x <= u)
+        (z (y + 1) freecase win)) in
+       (ba bb col freecase lin)
+     else let v = 1 in
+     let w = 2 in
+     let rec u x win =
+       (if (x <= w)
         then let win = (if (((g.cases.(0).(0) = x) && (g.cases.(1).(1) = x)) && (g.cases.(2).(2) = x))
                         then let win = x in
                         win
@@ -106,7 +106,7 @@ let eval0 g =
                    then let win = x in
                    win
                    else win) in
-        (s (x + 1) win)
+        (u (x + 1) win)
         else (
                g.ended <- ((win <> 0) || (freecase = 0));
                (if (win = 1)
@@ -121,8 +121,8 @@ let eval0 g =
                ()
                )
         ) in
-       (s t win)) in
-    (v bb freecase win)
+       (u v win)) in
+    (z bd freecase win)
 let apply_move_xy x y g =
   let player = 2 in
   let player = (if g.firstToPlay
@@ -167,14 +167,14 @@ let rec minmax g =
                     then let maxNote = 10000 in
                     maxNote
                     else maxNote) in
-     let q = 0 in
-     let r = 2 in
-     let rec l x maxNote =
-       (if (x <= r)
-        then let o = 0 in
-        let p = 2 in
-        let rec n y maxNote =
-          (if (y <= p)
+     let s = 0 in
+     let t = 2 in
+     let rec o x maxNote =
+       (if (x <= t)
+        then let q = 0 in
+        let r = 2 in
+        let rec p y maxNote =
+          (if (y <= r)
            then let maxNote = (if (can_move_xy x y g)
                                then (
                                       (apply_move_xy x y g);
@@ -192,25 +192,25 @@ let rec minmax g =
                                       )
                                
                                else maxNote) in
-           (n (y + 1) maxNote)
-           else (l (x + 1) maxNote)) in
-          (n o maxNote)
+           (p (y + 1) maxNote)
+           else (o (x + 1) maxNote)) in
+          (p q maxNote)
         else maxNote) in
-       (l q maxNote))
+       (o s maxNote))
     )
   
 let play g =
   let minMove = {x=0;
   y=0} in
   let minNote = 10000 in
-  let h = 0 in
-  let k = 2 in
-  let rec c x minNote =
-    (if (x <= k)
-     then let e = 0 in
-     let f = 2 in
-     let rec d y minNote =
-       (if (y <= f)
+  let l = 0 in
+  let n = 2 in
+  let rec e x minNote =
+    (if (x <= n)
+     then let h = 0 in
+     let k = 2 in
+     let rec f y minNote =
+       (if (y <= k)
         then let minNote = (if (can_move_xy x y g)
                             then (
                                    (apply_move_xy x y g);
@@ -233,24 +233,30 @@ let play g =
                                    )
                             
                             else minNote) in
-        (d (y + 1) minNote)
-        else (c (x + 1) minNote)) in
-       (d e minNote)
+        (f (y + 1) minNote)
+        else (e (x + 1) minNote)) in
+       (f h minNote)
      else (
             (Printf.printf "%d%d\n" minMove.x minMove.y);
             minMove
             )
      ) in
-    (c h minNote)
+    (e l minNote)
 let init0 () =
-  let cases = (Array.init_withenv 3 (fun  i () -> let tab = (Array.init_withenv 3 (fun  j () -> let b = 0 in
-  ((), b)) ()) in
-  let a = tab in
-  ((), a)) ()) in
-  {cases=cases;
-  firstToPlay=true;
-  note=0;
-  ended=false}
+  ((fun  (b, cases) -> (
+                         b;
+                         {cases=cases;
+                         firstToPlay=true;
+                         note=0;
+                         ended=false}
+                         )
+  ) (Array.init_withenv 3 (fun  i () -> ((fun  (d, tab) -> (
+                                                             d;
+                                                             let a = tab in
+                                                             ((), a)
+                                                             )
+  ) (Array.init_withenv 3 (fun  j () -> let c = 0 in
+  ((), c)) ()))) ()))
 let read_move () =
   Scanf.scanf "%d"
   (fun  x -> (
@@ -265,17 +271,17 @@ let read_move () =
                )
   )
 let main =
-  let bl = 0 in
-  let bm = 1 in
-  let rec bj i =
-    (if (i <= bm)
+  let bn = 0 in
+  let bo = 1 in
+  let rec bl i =
+    (if (i <= bo)
      then let state = (init0 ()) in
      (
        (apply_move {x=1;
        y=1} state);
        (apply_move {x=0;
        y=0} state);
-       let rec bk () =
+       let rec bm () =
          (if (not state.ended)
           then (
                  (print_state state);
@@ -290,18 +296,18 @@ let main =
                          )
                   
                   else ());
-                 (bk ())
+                 (bm ())
                  )
           
           else (
                  (print_state state);
                  (Printf.printf "%d\n" state.note);
-                 (bj (i + 1))
+                 (bl (i + 1))
                  )
           ) in
-         (bk ())
+         (bm ())
        )
      
      else ()) in
-    (bj bl)
+    (bl bn)
 

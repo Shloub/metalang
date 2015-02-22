@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let nbPassePartout n passepartout m serrures =
@@ -47,30 +47,46 @@ let main =
   Scanf.scanf "%d"
   (fun  n -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let passepartout = (Array.init_withenv n (fun  i () -> let out0 = (Array.init_withenv 2 (fun  j () -> Scanf.scanf "%d"
+               ((fun  (q, passepartout) -> (
+                                             q;
+                                             Scanf.scanf "%d"
+                                             (fun  m -> (
+                                                          (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                                          ((fun  (u, serrures) -> 
+                                                          (
+                                                            u;
+                                                            (Printf.printf "%d" (nbPassePartout n passepartout m serrures))
+                                                            )
+                                                          ) (Array.init_withenv m (fun  k () -> ((fun  (w, out1) -> 
+                                                          (
+                                                            w;
+                                                            let t = out1 in
+                                                            ((), t)
+                                                            )
+                                                          ) (Array.init_withenv 2 (fun  l () -> Scanf.scanf "%d"
+                                                          (fun  out_ -> 
+                                                          (
+                                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                                            let v = out_ in
+                                                            ((), v)
+                                                            )
+                                                          )) ()))) ()))
+                                                          )
+                                             )
+                                             )
+               ) (Array.init_withenv n (fun  i () -> ((fun  (s, out0) -> 
+               (
+                 s;
+                 let p = out0 in
+                 ((), p)
+                 )
+               ) (Array.init_withenv 2 (fun  j () -> Scanf.scanf "%d"
                (fun  out01 -> (
                                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                let q = out01 in
-                                ((), q)
+                                let r = out01 in
+                                ((), r)
                                 )
-               )) ()) in
-               let p = out0 in
-               ((), p)) ()) in
-               Scanf.scanf "%d"
-               (fun  m -> (
-                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                            let serrures = (Array.init_withenv m (fun  k () -> let out1 = (Array.init_withenv 2 (fun  l () -> Scanf.scanf "%d"
-                            (fun  out_ -> (
-                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                            let s = out_ in
-                                            ((), s)
-                                            )
-                            )) ()) in
-                            let r = out1 in
-                            ((), r)) ()) in
-                            (Printf.printf "%d" (nbPassePartout n passepartout m serrures))
-                            )
-               )
+               )) ()))) ()))
                )
   )
 

@@ -2,24 +2,24 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let rec pathfind_aux cache tab x y posX posY =
-  let o () = () in
+  let q () = () in
   (if ((posX = (x - 1)) && (posY = (y - 1)))
    then 0
-   else let p () = (o ()) in
+   else let r () = (q ()) in
    (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
     then ((x * y) * 10)
-    else let q () = (p ()) in
+    else let s () = (r ()) in
     (if (tab.(posY).(posX) = '#')
      then ((x * y) * 10)
-     else let r () = (q ()) in
+     else let u () = (s ()) in
      (if (cache.(posY).(posX) <> (- 1))
       then cache.(posY).(posX)
       else (
@@ -37,37 +37,42 @@ let rec pathfind_aux cache tab x y posX posY =
              )
       ))))
 let pathfind tab x y =
-  let cache = (Array.init_withenv y (fun  i () -> let tmp = (Array.init_withenv x (fun  j () -> 
-  (
-    (Printf.printf "%c" tab.(i).(j));
-    let m = (- 1) in
-    ((), m)
-    )
-  ) ()) in
-  (
-    (Printf.printf "\n" );
-    let l = tmp in
-    ((), l)
-    )
-  ) ()) in
-  (pathfind_aux cache tab x y 0 0)
+  ((fun  (m, cache) -> (
+                         m;
+                         (pathfind_aux cache tab x y 0 0)
+                         )
+  ) (Array.init_withenv y (fun  i () -> ((fun  (p, tmp) -> (
+                                                             p;
+                                                             (Printf.printf "\n" );
+                                                             let l = tmp in
+                                                             ((), l)
+                                                             )
+  ) (Array.init_withenv x (fun  j () -> (
+                                          (Printf.printf "%c" tab.(i).(j));
+                                          let o = (- 1) in
+                                          ((), o)
+                                          )
+  ) ()))) ()))
 let main =
   let x = (Scanf.scanf "%d " (fun x -> x)) in
   let y = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d %d\n" x y);
-    let e = (Array.init_withenv y (fun  f () -> let h = (Array.init_withenv x (fun  k () -> Scanf.scanf "%c"
-    (fun  g -> let u = g in
-    ((), u))) ()) in
-    (
-      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let s = h in
-      ((), s)
-      )
-    ) ()) in
-    let tab = e in
-    let result = (pathfind tab x y) in
-    (Printf.printf "%d" result)
+    ((fun  (w, e) -> (
+                       w;
+                       let tab = e in
+                       let result = (pathfind tab x y) in
+                       (Printf.printf "%d" result)
+                       )
+    ) (Array.init_withenv y (fun  f () -> ((fun  (bb, h) -> (
+                                                              bb;
+                                                              (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                                              let v = h in
+                                                              ((), v)
+                                                              )
+    ) (Array.init_withenv x (fun  k () -> Scanf.scanf "%c"
+    (fun  g -> let ba = g in
+    ((), ba))) ()))) ()))
     )
   
 

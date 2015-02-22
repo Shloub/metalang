@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let position_alphabet c =
@@ -41,36 +41,38 @@ let main =
   Scanf.scanf "%d"
   (fun  taille_cle -> (
                         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                        let cle = (Array.init_withenv taille_cle (fun  index () -> Scanf.scanf "%c"
+                        ((fun  (h, cle) -> (
+                                             h;
+                                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                             Scanf.scanf "%d"
+                                             (fun  taille -> (
+                                                               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                                               ((fun  (k, message) -> 
+                                                               (
+                                                                 k;
+                                                                 (crypte taille_cle cle taille message);
+                                                                 let m = 0 in
+                                                                 let n = (taille - 1) in
+                                                                 let rec l i =
+                                                                   (if (i <= n)
+                                                                    then 
+                                                                    (
+                                                                    (Printf.printf "%c" message.(i));
+                                                                    (l (i + 1))
+                                                                    )
+                                                                    
+                                                                    else (Printf.printf "\n")) in
+                                                                   (l m)
+                                                                 )
+                                                               ) (Array.init_withenv taille (fun  index2 () -> Scanf.scanf "%c"
+                                                               (fun  out2 -> let j = out2 in
+                                                               ((), j))) ()))
+                                                               )
+                                             )
+                                             )
+                        ) (Array.init_withenv taille_cle (fun  index () -> Scanf.scanf "%c"
                         (fun  out0 -> let g = out0 in
-                        ((), g))) ()) in
-                        (
-                          (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                          Scanf.scanf "%d"
-                          (fun  taille -> (
-                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                            let message = (Array.init_withenv taille (fun  index2 () -> Scanf.scanf "%c"
-                                            (fun  out2 -> let h = out2 in
-                                            ((), h))) ()) in
-                                            (
-                                              (crypte taille_cle cle taille message);
-                                              let k = 0 in
-                                              let l = (taille - 1) in
-                                              let rec j i =
-                                                (if (i <= l)
-                                                 then (
-                                                        (Printf.printf "%c" message.(i));
-                                                        (j (i + 1))
-                                                        )
-                                                 
-                                                 else (Printf.printf "\n")) in
-                                                (j k)
-                                              )
-                                            
-                                            )
-                          )
-                          )
-                        
+                        ((), g))) ()))
                         )
   )
 

@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 
 (define (okdigits ok n)
   ;toto
@@ -31,52 +31,56 @@
 )
 (define main
   (let ([count 0])
-  (let ([allowed (array_init_withenv 10 (lambda (i) 
-                                          (lambda (_) (let ([h (not (eq? i 0))])
-                                                      (list '() h)))) '())])
-  (let ([counted (array_init_withenv 100000 (lambda (j) 
-                                              (lambda (_) (let ([k #f])
-                                                          (list '() k)))) '())])
-  (let ([bb 1])
-  (let ([bc 9])
-  (letrec ([l (lambda (e count) 
-                (if (<= e bc)
-                (block
-                  (vector-set! allowed e #f)
-                  (let ([z 1])
-                  (let ([ba 9])
-                  (letrec ([m (lambda (b count) 
-                                (if (<= b ba)
-                                (let ([count (if (vector-ref allowed b)
-                                             (block
-                                               (vector-set! allowed b #f)
-                                               (let ([be (remainder (* b e) 10)])
-                                               (let ([count (if (vector-ref allowed be)
-                                                            (block
-                                                              (vector-set! allowed be #f)
-                                                              (let ([x 1])
-                                                              (let ([y 9])
-                                                              (letrec ([p 
-                                                                (lambda (a count) 
-                                                                  (if (<= a y)
+  ((lambda (internal_env) (apply (lambda (k allowed) 
+                                        (block
+                                          k
+                                          ((lambda (internal_env) (apply (lambda
+                                           (m counted) 
+                                          (block
+                                            m
+                                            (let ([bd 1])
+                                            (let ([bf 9])
+                                            (letrec ([p (lambda (e count) 
+                                                          (if (<= e bf)
+                                                          (block
+                                                            (vector-set! allowed e #f)
+                                                            (let ([bb 1])
+                                                            (let ([bc 9])
+                                                            (letrec ([q 
+                                                              (lambda (b count) 
+                                                                (if (<= b bc)
+                                                                (let ([count 
+                                                                (if (vector-ref allowed b)
+                                                                (block
+                                                                  (vector-set! allowed b #f)
+                                                                  (let ([be (remainder (* b e) 10)])
                                                                   (let ([count 
-                                                                  (if (vector-ref allowed a)
+                                                                  (if (vector-ref allowed be)
                                                                   (block
+                                                                    (vector-set! allowed be #f)
+                                                                    (let ([z 1])
+                                                                    (let ([ba 9])
+                                                                    (letrec ([r 
+                                                                    (lambda (a count) 
+                                                                    (if (<= a ba)
+                                                                    (let ([count 
+                                                                    (if (vector-ref allowed a)
+                                                                    (block
                                                                     (vector-set! allowed a #f)
-                                                                    (let ([v 1])
-                                                                    (let ([w 9])
-                                                                    (letrec ([q 
+                                                                    (let ([x 1])
+                                                                    (let ([y 9])
+                                                                    (letrec ([s 
                                                                     (lambda (c count) 
-                                                                    (if (<= c w)
+                                                                    (if (<= c y)
                                                                     (let ([count 
                                                                     (if (vector-ref allowed c)
                                                                     (block
                                                                     (vector-set! allowed c #f)
-                                                                    (let ([s 1])
-                                                                    (let ([u 9])
-                                                                    (letrec ([r 
+                                                                    (let ([v 1])
+                                                                    (let ([w 9])
+                                                                    (letrec ([u 
                                                                     (lambda (d count) 
-                                                                    (if (<= d u)
+                                                                    (if (<= d w)
                                                                     (let ([count 
                                                                     (if (vector-ref allowed d)
                                                                     (block
@@ -113,46 +117,52 @@
                                                                     )))))
                                                                     )
                                                                     count)])
-                                                                    (r (+ d 1) count))
+                                                                    (u (+ d 1) count))
                                                                     (block
                                                                     (vector-set! allowed c #t)
                                                                     count
                                                                     )))])
-                                                                    (r s count))))
+                                                                    (u v count))))
                                                                     )
                                                                     count)])
-                                                                    (q (+ c 1) count))
+                                                                    (s (+ c 1) count))
                                                                     (block
                                                                     (vector-set! allowed a #t)
                                                                     count
                                                                     )))])
-                                                                    (q v count))))
+                                                                    (s x count))))
+                                                                    )
+                                                                    count)])
+                                                                    (r (+ a 1) count))
+                                                                    (block
+                                                                    (vector-set! allowed be #t)
+                                                                    count
+                                                                    )))])
+                                                                    (r z count))))
                                                                   )
                                                                   count)])
-                                                                  (p (+ a 1) count))
                                                                 (block
-                                                                  (vector-set! allowed be #t)
+                                                                  (vector-set! allowed b #t)
                                                                   count
-                                                                  )))])
-                                                              (p x count))))
-                                               )
-                                               count)])
-                                             (block
-                                               (vector-set! allowed b #t)
-                                               count
-                                               )))
-                                )
-                                count)])
-                    (m (+ b 1) count))
-                  (block
-                    (vector-set! allowed e #t)
-                    (l (+ e 1) count)
-                    )))])
-                (m z count))))
-  )
-  (block
-    (map display (list count "\n"))
-    )))])
-(l bb count)))))))
+                                                                  )))
+                                                                )
+                                                                count)])
+                                                              (q (+ b 1) count))
+                                                            (block
+                                                              (vector-set! allowed e #t)
+                                                              (p (+ e 1) count)
+                                                              )))])
+                                                          (q bb count))))
+                                            )
+                                            (block
+                                              (map display (list count "\n"))
+                                              )))])
+                                          (p bd count))))
+  )) internal_env)) (array_init_withenv 100000 (lambda (j) 
+                                                 (lambda (_) (let ([l #f])
+                                                             (list '() l)))) '()))
+)) internal_env)) (array_init_withenv 10 (lambda (i) 
+                                           (lambda (_) (let ([h (not (eq? i 0))])
+                                                       (list '() h)))) '())))
 )
 

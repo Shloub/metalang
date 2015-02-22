@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;}
@@ -30,22 +30,25 @@ let result t len =
      else out0) in
     (a b out0)
 let main =
-  let t = (Array.init_withenv 4 (fun  i () -> let d = (mktoto i) in
-  ((), d)) ()) in
-  Scanf.scanf "%d"
-  (fun  f -> (
-               t.(0).bar <- f;
-               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               Scanf.scanf "%d"
-               (fun  e -> (
-                            t.(1).blah <- e;
-                            let titi = (result t 4) in
-                            (
-                              (Printf.printf "%d%d" titi t.(2).blah)
-                              )
-                            
-                            )
-               )
-               )
-  )
+  ((fun  (e, t) -> (
+                     e;
+                     Scanf.scanf "%d"
+                     (fun  g -> (
+                                  t.(0).bar <- g;
+                                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                  Scanf.scanf "%d"
+                                  (fun  f -> (
+                                               t.(1).blah <- f;
+                                               let titi = (result t 4) in
+                                               (
+                                                 (Printf.printf "%d%d" titi t.(2).blah)
+                                                 )
+                                               
+                                               )
+                                  )
+                                  )
+                     )
+                     )
+  ) (Array.init_withenv 4 (fun  i () -> let d = (mktoto i) in
+  ((), d)) ()))
 

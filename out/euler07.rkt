@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 
 (define (divisible n t0 size)
   ;toto
@@ -41,11 +41,13 @@
 )
 (define main
   (let ([n 10001])
-  (let ([t0 (array_init_withenv n (lambda (i) 
-                                    (lambda (_) (let ([e 2])
-                                                (list '() e)))) '())])
-  (block
-    (map display (list (find0 3 t0 1 n) "\n"))
-    )))
+  ((lambda (internal_env) (apply (lambda (f t0) 
+                                        (block
+                                          f
+                                          (map display (list (find0 3 t0 1 n) "\n"))
+                                          )) internal_env)) (array_init_withenv n 
+  (lambda (i) 
+    (lambda (_) (let ([e 2])
+                (list '() e)))) '())))
 )
 

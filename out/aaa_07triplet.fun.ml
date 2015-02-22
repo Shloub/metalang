@@ -2,18 +2,18 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let main =
-  let o = 1 in
-  let p = 3 in
-  let rec m i =
-    (if (i <= p)
+  let p = 1 in
+  let q = 3 in
+  let rec o i =
+    (if (i <= q)
      then Scanf.scanf "%d"
      (fun  a -> (
                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
@@ -24,30 +24,33 @@ let main =
                                (fun  c -> (
                                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                             (Printf.printf "a = %d b = %dc =%d\n" a b c);
-                                            (m (i + 1))
+                                            (o (i + 1))
                                             )
                                )
                                )
                   )
                   )
      )
-     else let l = (Array.init_withenv 10 (fun  d () -> Scanf.scanf "%d"
+     else ((fun  (g, l) -> (
+                             g;
+                             let k = 0 in
+                             let m = 9 in
+                             let rec h j =
+                               (if (j <= m)
+                                then (
+                                       (Printf.printf "%d\n" l.(j));
+                                       (h (j + 1))
+                                       )
+                                
+                                else ()) in
+                               (h k)
+                             )
+     ) (Array.init_withenv 10 (fun  d () -> Scanf.scanf "%d"
      (fun  e -> (
                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                   let f = e in
                   ((), f)
                   )
-     )) ()) in
-     let h = 0 in
-     let k = 9 in
-     let rec g j =
-       (if (j <= k)
-        then (
-               (Printf.printf "%d\n" l.(j));
-               (g (j + 1))
-               )
-        
-        else ()) in
-       (g h)) in
-    (m o)
+     )) ()))) in
+    (o p)
 

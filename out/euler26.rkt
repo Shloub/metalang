@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 
 (define (periode restes len a b)
   ;toto
@@ -33,26 +33,31 @@
 (c a len))
 )
 (define main
-  (let ([t0 (array_init_withenv 1000 (lambda (j) 
-                                       (lambda (_) (let ([g 0])
-                                                   (list '() g)))) '())])
-  (let ([m 0])
-  (let ([mi 0])
-  (let ([k 1])
-  (let ([l 1000])
-  (letrec ([h (lambda (i m mi) 
-                (if (<= i l)
-                (let ([p (periode t0 0 1 i)])
-                ((lambda (internal_env) (apply (lambda (m mi) 
-                                                      (h (+ i 1) m mi)) internal_env)) 
-                (if (> p m)
-                (let ([mi i])
-                (let ([m p])
-                (list m mi)))
-                (list m mi))))
-                (block
-                  (map display (list mi "\n" m "\n"))
-                  )))])
-  (h k m mi)))))))
+  ((lambda (internal_env) (apply (lambda (h t0) 
+                                        (block
+                                          h
+                                          (let ([m 0])
+                                          (let ([mi 0])
+                                          (let ([l 1])
+                                          (let ([n 1000])
+                                          (letrec ([k (lambda (i m mi) 
+                                                        (if (<= i n)
+                                                        (let ([p (periode t0 0 1 i)])
+                                                        ((lambda (internal_env) (apply (lambda
+                                                         (m mi) 
+                                                        (k (+ i 1) m mi)) internal_env)) 
+                                                        (if (> p m)
+                                                        (let ([mi i])
+                                                        (let ([m p])
+                                                        (list m mi)))
+                                                        (list m mi))))
+                                                        (block
+                                                          (map display (list mi "\n" m "\n"))
+                                                          )))])
+                                          (k l m mi))))))
+                                        )) internal_env)) (array_init_withenv 1000 
+(lambda (j) 
+  (lambda (_) (let ([g 0])
+              (list '() g)))) '()))
 )
 

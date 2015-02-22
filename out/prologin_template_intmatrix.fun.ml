@@ -2,11 +2,11 @@ module Array = struct
   include Array
   let init_withenv len f env =
     let refenv = ref env in
-    Array.init len (fun i ->
+    let tab = Array.init len (fun i ->
       let env, out = f i !refenv in
       refenv := env;
       out
-    )
+    ) in !refenv, tab
 end
 
 let programme_candidat tableau x y =
@@ -28,17 +28,20 @@ let programme_candidat tableau x y =
 let main =
   let taille_x = (Scanf.scanf "%d " (fun x -> x)) in
   let taille_y = (Scanf.scanf "%d " (fun x -> x)) in
-  let tableau = (Array.init_withenv taille_y (fun  a () -> let c = (Array.init_withenv taille_x (fun  d () -> Scanf.scanf "%d"
+  ((fun  (o, tableau) -> (
+                           o;
+                           (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
+                           )
+  ) (Array.init_withenv taille_y (fun  a () -> ((fun  (q, c) -> (
+                                                                  q;
+                                                                  let m = c in
+                                                                  ((), m)
+                                                                  )
+  ) (Array.init_withenv taille_x (fun  d () -> Scanf.scanf "%d"
   (fun  b -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let o = b in
-               ((), o)
+               let p = b in
+               ((), p)
                )
-  )) ()) in
-  let m = c in
-  ((), m)) ()) in
-  (
-    (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
-    )
-  
+  )) ()))) ()))
 

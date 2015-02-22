@@ -1,13 +1,13 @@
 #lang racket
 (require racket/block)
 (define array_init_withenv (lambda (len f env)
-  (build-vector len (lambda (i)
+  (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
       (block
         (set! env (car o))
         (cadr o)
       )
-    )))))
+    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -75,35 +75,38 @@
   ((lambda (taille_cle) 
      (block
        (mread-blank)
-       (let ([cle (array_init_withenv taille_cle (lambda (index) 
-                                                   (lambda (_) ((lambda (out0) 
-                                                                  (let ([g out0])
-                                                                  (list '() g))) (mread-char)))) '())])
-     (block
-       (mread-blank)
-       ((lambda (taille) 
-          (block
-            (mread-blank)
-            (let ([message (array_init_withenv taille (lambda (index2) 
-                                                        (lambda (_) (
-                                                        (lambda (out2) 
-                                                          (let ([h out2])
-                                                          (list '() h))) (mread-char)))) '())])
-          (block
-            (crypte taille_cle cle taille message)
-            (let ([k 0])
-            (let ([l (- taille 1)])
-            (letrec ([j (lambda (i) 
-                          (if (<= i l)
-                          (block
-                            (display (vector-ref message i))
-                            (j (+ i 1))
-                            )
-                          (display "\n")))])
-            (j k))))
-          ))
-     )) (mread-int))
-))
+       ((lambda (internal_env) (apply (lambda (h cle) 
+                                             (block
+                                               h
+                                               (mread-blank)
+                                               ((lambda (taille) 
+                                                  (block
+                                                    (mread-blank)
+                                                    ((lambda (internal_env) (apply (lambda
+                                                     (k message) 
+                                                    (block
+                                                      k
+                                                      (crypte taille_cle cle taille message)
+                                                      (let ([m 0])
+                                                      (let ([n (- taille 1)])
+                                                      (letrec ([l (lambda (i) 
+                                                                    (if (<= i n)
+                                                                    (block
+                                                                    (display (vector-ref message i))
+                                                                    (l (+ i 1))
+                                                                    )
+                                                                    (display "\n")))])
+                                                      (l m))))
+                                                    )) internal_env)) (array_init_withenv taille 
+                                                  (lambda (index2) 
+                                                    (lambda (_) ((lambda (out2) 
+                                                                   (let ([j out2])
+                                                                   (list '() j))) (mread-char)))) '()))
+                                             )) (mread-int))
+  )) internal_env)) (array_init_withenv taille_cle (lambda (index) 
+                                                     (lambda (_) ((lambda (out0) 
+                                                                    (let ([g out0])
+                                                                    (list '() g))) (mread-char)))) '()))
 )) (mread-int))
 )
 
