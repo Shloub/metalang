@@ -63,7 +63,9 @@ let side_effects acc e =
     | Expr.Block li ->
       List.exists (has_side_effects acc) li
     | Expr.Record li ->
-      List.exists (fun (e, name) -> has_side_effects acc e) li
+			true
+(*
+      List.exists (fun (e, name) -> has_side_effects acc e) li *)
     | Expr.RecordAffect _ -> true
     | Expr.RecordAccess _ -> true
     | Expr.ArrayMake (a, b, c) -> true
