@@ -147,7 +147,7 @@ class camlPrinter = object(self)
       | Expr.Mul -> "*"
       | Expr.Div -> "/"
       | Expr.Mod -> "mod"
-      | Expr.Or -> "or"
+      | Expr.Or -> "||"
       | Expr.And -> "&&"
       | Expr.Lower -> "<"
       | Expr.LowerEq -> "<="
