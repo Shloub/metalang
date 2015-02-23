@@ -31,24 +31,20 @@ let periode restes len a b =
      else 0) in
     (c a len)
 let main =
-  ((fun  (g, t) -> (
-                     g;
-                     let m = 0 in
-                     let mi = 0 in
-                     let rec h i m mi =
-                       (if (i <= 1000)
-                        then let p = (periode t 0 1 i) in
-                        (if (p > m)
-                         then let mi = i in
-                         let m = p in
-                         (h (i + 1) m mi)
-                         else (h (i + 1) m mi))
-                        else (
-                               (Printf.printf "%d\n%d\n" mi m)
-                               )
-                        ) in
-                       (h 1 m mi)
-                     )
-  ) (Array.init_withenv 1000 (fun  j () -> let f = 0 in
+  ((fun  (g, t) -> let m = 0 in
+  let mi = 0 in
+  let rec h i m mi =
+    (if (i <= 1000)
+     then let p = (periode t 0 1 i) in
+     (if (p > m)
+      then let mi = i in
+      let m = p in
+      (h (i + 1) m mi)
+      else (h (i + 1) m mi))
+     else (
+            (Printf.printf "%d\n%d\n" mi m)
+            )
+     ) in
+    (h 1 m mi)) (Array.init_withenv 1000 (fun  j g -> let f = 0 in
   ((), f)) ()))
 

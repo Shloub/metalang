@@ -89,9 +89,8 @@ main =
   do taille <- read_int
      skip_whitespaces
      ((\ (f, tableau) ->
-        do return (f)
-           printf "%d" =<< ((programme_candidat tableau taille) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv taille (\ a () ->
+        do printf "%d" =<< ((programme_candidat tableau taille) :: IO Int)
+           printf "\n" ::IO()) =<< (array_init_withenv taille (\ a f ->
                                                                 do b <- read_int
                                                                    skip_whitespaces
                                                                    let e = b

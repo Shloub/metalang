@@ -117,11 +117,9 @@ fillPrimesFactors t n primes nprimes =
 find ndiv2 =
   do let maximumprimes = 110
      ((\ (e, era) ->
-        do return (e)
-           nprimes <- (eratostene era maximumprimes)
+        do nprimes <- (eratostene era maximumprimes)
            ((\ (g, primes) ->
-              do return (g)
-                 let l = 0
+              do let l = 0
                  let u = (maximumprimes - 1)
                  let s k bi =
                        (if (k <= u)
@@ -133,8 +131,7 @@ find ndiv2 =
                        else let h n =
                                   (if (n <= 10000)
                                   then ((\ (q, primesFactors) ->
-                                          do return (q)
-                                             max0 <- (join (max2_ <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)))
+                                          do max0 <- (join (max2_ <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)))
                                              writeIOA primesFactors 2 =<< ((-) <$> (readIOA primesFactors 2) <*> return (1))
                                              let ndivs = 1
                                              let r i bk =
@@ -147,14 +144,14 @@ find ndiv2 =
                                                         then return (((n * (n + 1)) `quot` 2))
                                                         else {- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" -}
                                                              (h (n + 1)))) in
-                                                   (r 0 ndivs)) =<< (array_init_withenv (n + 2) (\ m () ->
+                                                   (r 0 ndivs)) =<< (array_init_withenv (n + 2) (\ m q ->
                                                                                                   let p = 0
                                                                                                           in return (((), p))) ()))
                                   else return (0)) in
                                   (h 1)) in
-                       (s 2 l)) =<< (array_init_withenv nprimes (\ o () ->
+                       (s 2 l)) =<< (array_init_withenv nprimes (\ o g ->
                                                                   let f = 0
-                                                                          in return (((), f))) ()))) =<< (array_init_withenv maximumprimes (\ j () ->
+                                                                          in return (((), f))) ()))) =<< (array_init_withenv maximumprimes (\ j e ->
                                                                                                                                              let c = j
                                                                                                                                                      in return (((), c))) ()))
 main =

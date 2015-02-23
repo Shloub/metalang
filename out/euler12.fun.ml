@@ -51,56 +51,43 @@ let fillPrimesFactors t n primes nprimes =
     (v 0 n)
 let find ndiv2 =
   let maximumprimes = 110 in
-  ((fun  (e, era) -> (
-                       e;
-                       let nprimes = (eratostene era maximumprimes) in
-                       ((fun  (g, primes) -> (
-                                               g;
-                                               let l = 0 in
-                                               let u = (maximumprimes - 1) in
-                                               let rec s k l =
-                                                 (if (k <= u)
-                                                  then (if (era.(k) = k)
-                                                        then (
-                                                               primes.(l) <- k;
-                                                               let l = (l + 1) in
-                                                               (s (k + 1) l)
-                                                               )
-                                                        
-                                                        else (s (k + 1) l))
-                                                  else let rec h n =
-                                                         (if (n <= 10000)
-                                                          then ((fun  (q, primesFactors) -> 
-                                                          (
-                                                            q;
-                                                            let max0 = ((max ((fillPrimesFactors primesFactors n primes nprimes)) ((fillPrimesFactors primesFactors (n + 1) primes nprimes)))) in
-                                                            (
-                                                              primesFactors.(2) <- (primesFactors.(2) - 1);
-                                                              let ndivs = 1 in
-                                                              let rec r i ndivs =
-                                                                (if (i <= max0)
-                                                                 then (if (primesFactors.(i) <> 0)
-                                                                       then let ndivs = (ndivs * (1 + primesFactors.(i))) in
-                                                                       (r (i + 1) ndivs)
-                                                                       else (r (i + 1) ndivs))
-                                                                 else (if (ndivs > ndiv2)
-                                                                       then ((n * (n + 1)) / 2)
-                                                                       else (*  print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n"  *)
-                                                                       (h (n + 1)))) in
-                                                                (r 0 ndivs)
-                                                              )
-                                                            
-                                                            )
-                                                          ) (Array.init_withenv (n + 2) (fun  m () -> let p = 0 in
-                                                          ((), p)) ()))
-                                                          else 0) in
-                                                         (h 1)) in
-                                                 (s 2 l)
-                                               )
-                       ) (Array.init_withenv nprimes (fun  o () -> let f = 0 in
-                       ((), f)) ()))
-                       )
-  ) (Array.init_withenv maximumprimes (fun  j () -> let c = j in
+  ((fun  (e, era) -> let nprimes = (eratostene era maximumprimes) in
+  ((fun  (g, primes) -> let l = 0 in
+  let u = (maximumprimes - 1) in
+  let rec s k l =
+    (if (k <= u)
+     then (if (era.(k) = k)
+           then (
+                  primes.(l) <- k;
+                  let l = (l + 1) in
+                  (s (k + 1) l)
+                  )
+           
+           else (s (k + 1) l))
+     else let rec h n =
+            (if (n <= 10000)
+             then ((fun  (q, primesFactors) -> let max0 = ((max ((fillPrimesFactors primesFactors n primes nprimes)) ((fillPrimesFactors primesFactors (n + 1) primes nprimes)))) in
+             (
+               primesFactors.(2) <- (primesFactors.(2) - 1);
+               let ndivs = 1 in
+               let rec r i ndivs =
+                 (if (i <= max0)
+                  then (if (primesFactors.(i) <> 0)
+                        then let ndivs = (ndivs * (1 + primesFactors.(i))) in
+                        (r (i + 1) ndivs)
+                        else (r (i + 1) ndivs))
+                  else (if (ndivs > ndiv2)
+                        then ((n * (n + 1)) / 2)
+                        else (*  print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n"  *)
+                        (h (n + 1)))) in
+                 (r 0 ndivs)
+               )
+             ) (Array.init_withenv (n + 2) (fun  m q -> let p = 0 in
+             ((), p)) ()))
+             else 0) in
+            (h 1)) in
+    (s 2 l)) (Array.init_withenv nprimes (fun  o g -> let f = 0 in
+  ((), f)) ()))) (Array.init_withenv maximumprimes (fun  j e -> let c = j in
   ((), c)) ()))
 let main =
   (

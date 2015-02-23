@@ -37,14 +37,10 @@ let main =
                     Scanf.scanf "%d"
                     (fun  len -> (
                                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                   ((fun  (e, tab) -> (
-                                                        e;
-                                                        let a = (devine0 nombre tab len) in
-                                                        (if a
-                                                         then (Printf.printf "True")
-                                                         else (Printf.printf "False"))
-                                                        )
-                                   ) (Array.init_withenv len (fun  i () -> Scanf.scanf "%d"
+                                   ((fun  (e, tab) -> let a = (devine0 nombre tab len) in
+                                   (if a
+                                    then (Printf.printf "True")
+                                    else (Printf.printf "False"))) (Array.init_withenv len (fun  i e -> Scanf.scanf "%d"
                                    (fun  tmp -> (
                                                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                                   let d = tmp in

@@ -11,7 +11,6 @@ end
 
 let main =
   ((fun  (d, str) -> (
-                       d;
                        (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                        let rec e i =
                          (if (i <= 11)
@@ -23,7 +22,7 @@ let main =
                           else ()) in
                          (e 0)
                        )
-  ) (Array.init_withenv 12 (fun  a () -> Scanf.scanf "%c"
+  ) (Array.init_withenv 12 (fun  a d -> Scanf.scanf "%c"
   (fun  b -> let c = b in
   ((), c))) ()))
 

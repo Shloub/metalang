@@ -61,17 +61,13 @@
 (define main
   (let ([maximumprimes 1000])
   ((lambda (internal_env) (apply (lambda (m era) 
-                                        (block
-                                          m
-                                          (let ([result 0])
-                                          (let ([max0 0])
-                                          (let ([nprimes (eratostene era maximumprimes)])
-                                          ((lambda (internal_env) (apply (lambda (q primes) 
-                                                                                (block
-                                                                                q
-                                                                                (let ([l 0])
-                                                                                (let ([v (- maximumprimes 1)])
-                                                                                (letrec ([u 
+                                        (let ([result 0])
+                                        (let ([max0 0])
+                                        (let ([nprimes (eratostene era maximumprimes)])
+                                        ((lambda (internal_env) (apply (lambda (q primes) 
+                                                                              (let ([l 0])
+                                                                              (let ([v (- maximumprimes 1)])
+                                                                              (letrec ([u 
                                                                                 (lambda (k l) 
                                                                                 (if (<= k v)
                                                                                 (if (eq? (vector-ref era k) k)
@@ -118,13 +114,14 @@
                                                                                 )))])
                                                                                 (r 3 ma max0 mb result))))
                                                                                 )))])
-                                                                                (u 2 l))))
-                                          )) internal_env)) (array_init_withenv nprimes 
-                                          (lambda (o) 
-                                            (lambda (_) (let ([p 0])
-                                                        (list '() p)))) '())))))
-)) internal_env)) (array_init_withenv maximumprimes (lambda (j) 
-                                                      (lambda (_) (let ([h j])
-                                                                  (list '() h)))) '())))
+                                                                              (u 2 l))))) internal_env)) (array_init_withenv nprimes 
+                                        (lambda (o) 
+                                          (lambda (q) 
+                                            (let ([p 0])
+                                            (list '() p)))) '())))))) internal_env)) (array_init_withenv maximumprimes 
+(lambda (j) 
+  (lambda (m) 
+    (let ([h j])
+    (list '() h)))) '())))
 )
 

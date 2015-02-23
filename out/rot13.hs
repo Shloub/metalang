@@ -80,14 +80,13 @@ main =
   do strlen <- read_int
      skip_whitespaces
      ((\ (b, tab4) ->
-        do return (b)
-           let e = (strlen - 1)
+        do let e = (strlen - 1)
            let d j =
                  (if (j <= e)
                  then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
                          (d (j + 1))
                  else return (())) in
-                 (d 0)) =<< (array_init_withenv strlen (\ toto () ->
+                 (d 0)) =<< (array_init_withenv strlen (\ toto b ->
                                                          hGetChar stdin >>= ((\ tmpc ->
                                                                                do c <- ((fmap ord (return (tmpc))))
                                                                                   f <- (if (tmpc /= ' ')

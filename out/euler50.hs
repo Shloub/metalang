@@ -103,11 +103,9 @@ eratostene t max0 =
 main =
   do let maximumprimes = 1000001
      ((\ (g, era) ->
-        do return (g)
-           nprimes <- (eratostene era maximumprimes)
+        do nprimes <- (eratostene era maximumprimes)
            ((\ (m, primes) ->
-              do return (m)
-                 let l = 0
+              do let l = 0
                  let v = (maximumprimes - 1)
                  let u k ba =
                        (if (k <= v)
@@ -121,8 +119,7 @@ main =
                                printf "%d" (nprimes :: Int)::IO()
                                printf "\n" ::IO()
                                ((\ (q, sum) ->
-                                  do return (q)
-                                     let maxl = 0
+                                  do let maxl = 0
                                      let process = True
                                      let stop = (maximumprimes - 1)
                                      let len = 1
@@ -151,12 +148,12 @@ main =
                                                    printf "\n" ::IO()
                                                    printf "%d" (bd :: Int)::IO()
                                                    printf "\n" ::IO()) in
-                                           (r len maxl process resp stop)) =<< (array_init_withenv nprimes (\ i_ () ->
+                                           (r len maxl process resp stop)) =<< (array_init_withenv nprimes (\ i_ q ->
                                                                                                              do p <- (readIOA primes i_)
                                                                                                                 return (((), p))) ()))) in
-                       (u 2 l)) =<< (array_init_withenv nprimes (\ o () ->
+                       (u 2 l)) =<< (array_init_withenv nprimes (\ o m ->
                                                                   let h = 0
-                                                                          in return (((), h))) ()))) =<< (array_init_withenv maximumprimes (\ j () ->
+                                                                          in return (((), h))) ()))) =<< (array_init_withenv maximumprimes (\ j g ->
                                                                                                                                              let f = j
                                                                                                                                                      in return (((), f))) ()))
 

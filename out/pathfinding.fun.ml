@@ -33,16 +33,8 @@ let rec pathfind_aux cache tab x y posX posY =
                             )
                      ))))
 let pathfind tab x y =
-  ((fun  (f, cache) -> (
-                         f;
-                         (pathfind_aux cache tab x y 0 0)
-                         )
-  ) (Array.init_withenv y (fun  i () -> ((fun  (h, tmp) -> (
-                                                             h;
-                                                             let e = tmp in
-                                                             ((), e)
-                                                             )
-  ) (Array.init_withenv x (fun  j () -> let g = (- 1) in
+  ((fun  (f, cache) -> (pathfind_aux cache tab x y 0 0)) (Array.init_withenv y (fun  i f -> ((fun  (h, tmp) -> let e = tmp in
+  ((), e)) (Array.init_withenv x (fun  j h -> let g = (- 1) in
   ((), g)) ()))) ()))
 let main =
   let x = 0 in
@@ -55,18 +47,14 @@ let main =
     (fun  p -> let y = p in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      ((fun  (l, tab) -> (
-                           l;
-                           let result = (pathfind tab x y) in
-                           (Printf.printf "%d" result)
-                           )
-      ) (Array.init_withenv y (fun  i () -> ((fun  (n, tab2) -> (
-                                                                  n;
-                                                                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                                  let k = tab2 in
-                                                                  ((), k)
-                                                                  )
-      ) (Array.init_withenv x (fun  j () -> let tmp = '\000' in
+      ((fun  (l, tab) -> let result = (pathfind tab x y) in
+      (Printf.printf "%d" result)) (Array.init_withenv y (fun  i l -> ((fun  (n, tab2) -> 
+      (
+        (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+        let k = tab2 in
+        ((), k)
+        )
+      ) (Array.init_withenv x (fun  j n -> let tmp = '\000' in
       Scanf.scanf "%c"
       (fun  o -> let tmp = o in
       let m = tmp in

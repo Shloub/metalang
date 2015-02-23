@@ -31,12 +31,8 @@ let main =
     (fun  f -> let tofind = f in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      ((fun  (d, tab) -> (
-                           d;
-                           let result = (nth tab tofind len) in
-                           (Printf.printf "%d" result)
-                           )
-      ) (Array.init_withenv len (fun  i () -> let tmp = '\000' in
+      ((fun  (d, tab) -> let result = (nth tab tofind len) in
+      (Printf.printf "%d" result)) (Array.init_withenv len (fun  i d -> let tmp = '\000' in
       Scanf.scanf "%c"
       (fun  e -> let tmp = e in
       let c = tmp in

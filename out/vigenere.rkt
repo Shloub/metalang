@@ -72,7 +72,6 @@
        (mread-blank)
        ((lambda (internal_env) (apply (lambda (e cle) 
                                              (block
-                                               e
                                                (mread-blank)
                                                ((lambda (taille) 
                                                   (block
@@ -80,7 +79,6 @@
                                                     ((lambda (internal_env) (apply (lambda
                                                      (g message) 
                                                     (block
-                                                      g
                                                       (crypte taille_cle cle taille message)
                                                       (let ([j (- taille 1)])
                                                       (letrec ([h (lambda (i) 
@@ -93,14 +91,16 @@
                                                       (h 0)))
                                                     )) internal_env)) (array_init_withenv taille 
                                                   (lambda (index2) 
-                                                    (lambda (_) ((lambda (out2) 
-                                                                   (let ([f out2])
-                                                                   (list '() f))) (mread-char)))) '()))
-                                             )) (mread-int))
-  )) internal_env)) (array_init_withenv taille_cle (lambda (index) 
-                                                     (lambda (_) ((lambda (out0) 
-                                                                    (let ([d out0])
-                                                                    (list '() d))) (mread-char)))) '()))
+                                                    (lambda (g) 
+                                                      ((lambda (out2) 
+                                                         (let ([f out2])
+                                                         (list '() f))) (mread-char)))) '()))
+       )) (mread-int))
+)) internal_env)) (array_init_withenv taille_cle (lambda (index) 
+                                                   (lambda (e) 
+                                                     ((lambda (out0) 
+                                                        (let ([d out0])
+                                                        (list '() d))) (mread-char)))) '()))
 )) (mread-int))
 )
 

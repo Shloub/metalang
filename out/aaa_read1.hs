@@ -78,14 +78,13 @@ array_init_withenv len f env =
 
 main =
   ((\ (d, str) ->
-     do return (d)
-        skip_whitespaces
+     do skip_whitespaces
         let e i =
               (if (i <= 11)
               then do printf "%c" =<< ((readIOA str i) :: IO Char)
                       (e (i + 1))
               else return (())) in
-              (e 0)) =<< (array_init_withenv 12 (\ a () ->
+              (e 0)) =<< (array_init_withenv 12 (\ a d ->
                                                   hGetChar stdin >>= ((\ b ->
                                                                         let c = b
                                                                                 in return (((), c))))) ()))

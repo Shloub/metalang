@@ -13,7 +13,6 @@ let main =
   let input = ' ' in
   let current_pos = 500 in
   ((fun  (b, mem) -> (
-                       b;
                        mem.(current_pos) <- (mem.(current_pos) + 1);
                        mem.(current_pos) <- (mem.(current_pos) + 1);
                        mem.(current_pos) <- (mem.(current_pos) + 1);
@@ -92,6 +91,6 @@ let main =
                          )
                        
                        )
-  ) (Array.init_withenv 1000 (fun  i () -> let a = 0 in
+  ) (Array.init_withenv 1000 (fun  i b -> let a = 0 in
   ((), a)) ()))
 

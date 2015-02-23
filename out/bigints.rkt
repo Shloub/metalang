@@ -25,24 +25,22 @@
 (define (read_bigint len)
   ;toto
   ((lambda (internal_env) (apply (lambda (cd chiffres) 
-                                        (block
-                                          cd
-                                          (let ([cf (quotient (- len 1) 2)])
-                                          (letrec ([ce (lambda (i) 
-                                                         (if (<= i cf)
-                                                         (let ([tmp (vector-ref chiffres i)])
-                                                         (block
-                                                           (vector-set! chiffres i (vector-ref chiffres (- (- len 1) i)))
-                                                           (vector-set! chiffres (- (- len 1) i) tmp)
-                                                           (ce (+ i 1))
-                                                           ))
-                                                         (bigint chiffres len #t)))])
-                                          (ce 0)))
-                                        )) internal_env)) (array_init_withenv len 
+                                        (let ([cf (quotient (- len 1) 2)])
+                                        (letrec ([ce (lambda (i) 
+                                                       (if (<= i cf)
+                                                       (let ([tmp (vector-ref chiffres i)])
+                                                       (block
+                                                         (vector-set! chiffres i (vector-ref chiffres (- (- len 1) i)))
+                                                         (vector-set! chiffres (- (- len 1) i) tmp)
+                                                         (ce (+ i 1))
+                                                         ))
+                                                       (bigint chiffres len #t)))])
+                                        (ce 0)))) internal_env)) (array_init_withenv len 
 (lambda (j) 
-  (lambda (_) ((lambda (c) 
-                 (let ([cc (char->integer c)])
-                 (list '() cc))) (mread-char)))) '()))
+  (lambda (cd) 
+    ((lambda (c) 
+       (let ([cc (char->integer c)])
+       (list '() cc))) (mread-char)))) '()))
 )
 (define (print_bigint a)
   ;toto
@@ -109,14 +107,13 @@
   ; Une addition ou on en a rien a faire des signes 
   (let ([len (+ (max (bigint-bigint_len a) (bigint-bigint_len b)) 1)])
   (let ([retenue 0])
-  ((lambda (internal_env) (apply (lambda (bu chiffres) 
-                                        (let ([retenue bu])
+  ((lambda (internal_env) (apply (lambda (retenue chiffres) 
                                         (letrec ([bv (lambda (len) 
                                                        (if (and (> len 0) (eq? (vector-ref chiffres (- len 1)) 0))
                                                        (let ([len (- len 1)])
                                                        (bv len))
                                                        (bigint chiffres len #t)))])
-                                        (bv len)))) internal_env)) (array_init_withenv len 
+                                        (bv len))) internal_env)) (array_init_withenv len 
   (lambda (i) 
     (lambda (retenue) 
       (let ([tmp retenue])
@@ -139,14 +136,13 @@
   ;
   (let ([len (bigint-bigint_len a)])
   (let ([retenue 0])
-  ((lambda (internal_env) (apply (lambda (br chiffres) 
-                                        (let ([retenue br])
+  ((lambda (internal_env) (apply (lambda (retenue chiffres) 
                                         (letrec ([bs (lambda (len) 
                                                        (if (and (> len 0) (eq? (vector-ref chiffres (- len 1)) 0))
                                                        (let ([len (- len 1)])
                                                        (bs len))
                                                        (bigint chiffres len #t)))])
-                                        (bs len)))) internal_env)) (array_init_withenv len 
+                                        (bs len))) internal_env)) (array_init_withenv len 
   (lambda (i) 
     (lambda (retenue) 
       (let ([tmp (+ retenue (vector-ref (bigint-bigint_chiffres a) i))])
@@ -194,44 +190,42 @@
   ;D'ou le nom de la fonction. 
   (let ([len (+ (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)])
   ((lambda (internal_env) (apply (lambda (bk chiffres) 
-                                        (block
-                                          bk
-                                          (let ([bp (- (bigint-bigint_len a) 1)])
-                                          (letrec ([bm (lambda (i) 
-                                                         (if (<= i bp)
-                                                         (let ([retenue 0])
-                                                         (let ([bo (- (bigint-bigint_len b) 1)])
-                                                         (letrec ([bn (lambda (j retenue) 
-                                                                        (if (<= j bo)
+                                        (let ([bp (- (bigint-bigint_len a) 1)])
+                                        (letrec ([bm (lambda (i) 
+                                                       (if (<= i bp)
+                                                       (let ([retenue 0])
+                                                       (let ([bo (- (bigint-bigint_len b) 1)])
+                                                       (letrec ([bn (lambda (j retenue) 
+                                                                      (if (<= j bo)
+                                                                      (block
+                                                                        (vector-set! chiffres (+ i j) (+ (vector-ref chiffres (+ i j)) (+ retenue (* (vector-ref (bigint-bigint_chiffres b) j) (vector-ref (bigint-bigint_chiffres a) i)))))
+                                                                        (let ([retenue (quotient (vector-ref chiffres (+ i j)) 10)])
                                                                         (block
-                                                                          (vector-set! chiffres (+ i j) (+ (vector-ref chiffres (+ i j)) (+ retenue (* (vector-ref (bigint-bigint_chiffres b) j) (vector-ref (bigint-bigint_chiffres a) i)))))
-                                                                          (let ([retenue (quotient (vector-ref chiffres (+ i j)) 10)])
-                                                                          (block
-                                                                            (vector-set! chiffres (+ i j) (remainder (vector-ref chiffres (+ i j)) 10))
-                                                                            (bn (+ j 1) retenue)
-                                                                            ))
-                                                                          )
-                                                                        (block
-                                                                          (vector-set! chiffres (+ i (bigint-bigint_len b)) (+ (vector-ref chiffres (+ i (bigint-bigint_len b))) retenue))
-                                                                          (bm (+ i 1))
-                                                                          )))])
-                                                         (bn 0 retenue))))
-                                                         (block
-                                                           (vector-set! chiffres (+ (bigint-bigint_len a) (bigint-bigint_len b)) (quotient (vector-ref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
-                                                           (vector-set! chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1) (remainder (vector-ref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
-                                                           (letrec ([bl (lambda (l len) 
-                                                                          (if (<= l 2)
-                                                                          (if (and (not (eq? len 0)) (eq? (vector-ref chiffres (- len 1)) 0))
-                                                                          (let ([len (- len 1)])
-                                                                          (bl (+ l 1) len))
-                                                                          (bl (+ l 1) len))
-                                                                          (bigint chiffres len (eq? (bigint-bigint_sign a) (bigint-bigint_sign b)))))])
-                                                           (bl 0 len))
-                                                         )))])
-                                        (bm 0)))
-  )) internal_env)) (array_init_withenv len (lambda (k) 
-                                              (lambda (_) (let ([bj 0])
-                                                          (list '() bj)))) '())))
+                                                                          (vector-set! chiffres (+ i j) (remainder (vector-ref chiffres (+ i j)) 10))
+                                                                          (bn (+ j 1) retenue)
+                                                                          ))
+                                                                        )
+                                                                      (block
+                                                                        (vector-set! chiffres (+ i (bigint-bigint_len b)) (+ (vector-ref chiffres (+ i (bigint-bigint_len b))) retenue))
+                                                                        (bm (+ i 1))
+                                                                        )))])
+                                                       (bn 0 retenue))))
+                                                       (block
+                                                         (vector-set! chiffres (+ (bigint-bigint_len a) (bigint-bigint_len b)) (quotient (vector-ref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
+                                                         (vector-set! chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1) (remainder (vector-ref chiffres (- (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)) 10))
+                                                         (letrec ([bl (lambda (l len) 
+                                                                        (if (<= l 2)
+                                                                        (if (and (not (eq? len 0)) (eq? (vector-ref chiffres (- len 1)) 0))
+                                                                        (let ([len (- len 1)])
+                                                                        (bl (+ l 1) len))
+                                                                        (bl (+ l 1) len))
+                                                                        (bigint chiffres len (eq? (bigint-bigint_sign a) (bigint-bigint_sign b)))))])
+                                                         (bl 0 len))
+                                                       )))])
+  (bm 0)))) internal_env)) (array_init_withenv len (lambda (k) 
+                                                     (lambda (bk) 
+                                                       (let ([bj 0])
+                                                       (list '() bj)))) '())))
 )
 (define (bigint_premiers_chiffres a i)
   ;toto
@@ -246,16 +240,14 @@
 (define (bigint_shift a i)
   ;toto
   ((lambda (internal_env) (apply (lambda (bh chiffres) 
-                                        (block
-                                          bh
-                                          (bigint chiffres (+ (bigint-bigint_len a) i) (bigint-bigint_sign a))
-                                          )) internal_env)) (array_init_withenv (+ (bigint-bigint_len a) i) 
+                                        (bigint chiffres (+ (bigint-bigint_len a) i) (bigint-bigint_sign a))) internal_env)) (array_init_withenv (+ (bigint-bigint_len a) i) 
   (lambda (k) 
-    (lambda (_) (if (>= k i)
-                (let ([bg (vector-ref (bigint-bigint_chiffres a) (- k i))])
-                (list '() bg))
-                (let ([bg 0])
-                (list '() bg))))) '()))
+    (lambda (bh) 
+      (if (>= k i)
+      (let ([bg (vector-ref (bigint-bigint_chiffres a) (- k i))])
+      (list '() bg))
+      (let ([bg 0])
+      (list '() bg))))) '()))
 )
 (define (mul_bigint aa bb)
   ;toto
@@ -298,22 +290,20 @@
               size)
               size)])
   ((lambda (internal_env) (apply (lambda (ba t0) 
-                                        (block
-                                          ba
-                                          (let ([be (- size 1)])
-                                          (letrec ([bc (lambda (k i) 
-                                                         (if (<= k be)
-                                                         (block
-                                                           (vector-set! t0 k (remainder i 10))
-                                                           (let ([i (quotient i 10)])
-                                                           (bc (+ k 1) i))
-                                                           )
-                                                         (bigint t0 size #t)))])
-                                          (bc 0 i)))
-                                        )) internal_env)) (array_init_withenv size 
+                                        (let ([be (- size 1)])
+                                        (letrec ([bc (lambda (k i) 
+                                                       (if (<= k be)
+                                                       (block
+                                                         (vector-set! t0 k (remainder i 10))
+                                                         (let ([i (quotient i 10)])
+                                                         (bc (+ k 1) i))
+                                                         )
+                                                       (bigint t0 size #t)))])
+                                        (bc 0 i)))) internal_env)) (array_init_withenv size 
   (lambda (j) 
-    (lambda (_) (let ([z 0])
-                (list '() z)))) '()))))
+    (lambda (ba) 
+      (let ([z 0])
+      (list '() z)))) '()))))
 )
 (define (fact_bigint a)
   ;toto
@@ -408,18 +398,12 @@
   (let ([maxA 5])
   (let ([maxB 5])
   ((lambda (internal_env) (apply (lambda (g a_bigint) 
-                                        (block
-                                          g
-                                          ((lambda (internal_env) (apply (lambda (m a0_bigint) 
-                                                                                (block
-                                                                                m
-                                                                                ((lambda (internal_env) (apply (lambda
-                                                                                 (p b) 
-                                                                                (block
-                                                                                p
-                                                                                (let ([n 0])
-                                                                                (let ([found #t])
-                                                                                (letrec ([q 
+                                        ((lambda (internal_env) (apply (lambda (m a0_bigint) 
+                                                                              ((lambda (internal_env) (apply (lambda
+                                                                               (p b) 
+                                                                              (let ([n 0])
+                                                                              (let ([found #t])
+                                                                              (letrec ([q 
                                                                                 (lambda (found n) 
                                                                                 (if found
                                                                                 (let ([min0 (vector-ref a0_bigint 0)])
@@ -454,17 +438,18 @@
                                                                                 (q found n))))])
                                                                                 (s 2 found min0))))
                                                                                 n))])
-                                                                                (q found n))))
-                                                                                )) internal_env)) (array_init_withenv (+ maxA 1) 
-                                        (lambda (k) 
-                                          (lambda (_) (let ([o 2])
-                                                      (list '() o)))) '()))
-  )) internal_env)) (array_init_withenv (+ maxA 1) (lambda (j2) 
-                                                     (lambda (_) (let ([h (bigint_of_int j2)])
-                                                                 (list '() h)))) '()))
-)) internal_env)) (array_init_withenv (+ maxA 1) (lambda (j) 
-                                                   (lambda (_) (let ([f (bigint_of_int (* j j))])
-                                                               (list '() f)))) '()))))
+                                                                              (q found n))))) internal_env)) (array_init_withenv (+ maxA 1) 
+  (lambda (k) 
+    (lambda (p) 
+      (let ([o 2])
+      (list '() o)))) '()))) internal_env)) (array_init_withenv (+ maxA 1) (lambda (j2) 
+                                                                             (lambda (m) 
+                                                                               (let ([h (bigint_of_int j2)])
+                                                                               (list '() h)))) '()))) internal_env)) (array_init_withenv (+ maxA 1) 
+(lambda (j) 
+  (lambda (g) 
+    (let ([f (bigint_of_int (* j j))])
+    (list '() f)))) '()))))
 )
 (define main
   (block

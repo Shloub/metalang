@@ -57,20 +57,16 @@
 (define (find01 len tab)
   ;toto
   ((lambda (internal_env) (apply (lambda (b tab2) 
-                                        (block
-                                          b
-                                          (find0 len tab tab2 0 0)
-                                          )) internal_env)) (array_init_withenv len 
+                                        (find0 len tab tab2 0 0)) internal_env)) (array_init_withenv len 
   (lambda (i) 
-    (lambda (_) ((lambda (internal_env) (apply (lambda (d tab3) 
-                                                      (block
-                                                        d
-                                                        (let ([a tab3])
-                                                        (list '() a))
-                                                        )) internal_env)) (array_init_withenv (+ i 1) 
-    (lambda (j) 
-      (lambda (_) (let ([c 0])
-                  (list '() c)))) '())))) '()))
+    (lambda (b) 
+      ((lambda (internal_env) (apply (lambda (d tab3) 
+                                            (let ([a tab3])
+                                            (list '() a))) internal_env)) (array_init_withenv (+ i 1) 
+      (lambda (j) 
+        (lambda (d) 
+          (let ([c 0])
+          (list '() c)))) '())))) '()))
 )
 (define main
   (let ([len 0])
@@ -80,41 +76,39 @@
        (mread-blank)
        ((lambda (internal_env) (apply (lambda (f tab) 
                                              (block
-                                               f
                                                (map display (list (find01 len tab) "\n"))
-                                               (let ([p (- len 1)])
-                                               (letrec ([n (lambda (k) 
-                                                             (if (<= k p)
-                                                             (letrec ([o (lambda (l) 
+                                               (let ([m (- len 1)])
+                                               (letrec ([g (lambda (k) 
+                                                             (if (<= k m)
+                                                             (letrec ([h (lambda (l) 
                                                                            (if (<= l k)
                                                                            (block
                                                                              (map display (list (vector-ref (vector-ref tab k) l) " "))
-                                                                             (o (+ l 1))
+                                                                             (h (+ l 1))
                                                                              )
                                                                            (block
                                                                              (display "\n")
-                                                                             (n (+ k 1))
+                                                                             (g (+ k 1))
                                                                              )))])
-                                                             (o 0))
+                                                             (h 0))
                                                              '()))])
-                                               (n 0)))
+                                               (g 0)))
        )) internal_env)) (array_init_withenv len (lambda (i) 
-                                                   (lambda (_) ((lambda (internal_env) (apply (lambda
-                                                    (h tab2) 
-                                                   (block
-                                                     h
+                                                   (lambda (f) 
+                                                     ((lambda (internal_env) (apply (lambda
+                                                      (o tab2) 
                                                      (let ([e tab2])
-                                                     (list '() e))
-                                                     )) internal_env)) (array_init_withenv (+ i 1) 
-                                                   (lambda (j) 
-                                                     (lambda (_) (let ([tmp 0])
-                                                                 ((lambda (m) 
-                                                                    (let ([tmp m])
-                                                                    (block
-                                                                      (mread-blank)
-                                                                      (let ([g tmp])
-                                                                      (list '() g))
-                                                                      ))) (mread-int))))) '())))) '()))
+                                                     (list '() e))) internal_env)) (array_init_withenv (+ i 1) 
+                                                     (lambda (j) 
+                                                       (lambda (o) 
+                                                         (let ([tmp 0])
+                                                         ((lambda (p) 
+                                                            (let ([tmp p])
+                                                            (block
+                                                              (mread-blank)
+                                                              (let ([n tmp])
+                                                              (list '() n))
+                                                              ))) (mread-int))))) '())))) '()))
 ))) (mread-int)))
 )
 

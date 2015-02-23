@@ -96,8 +96,7 @@ periode restes len a b =
         (c a len)
 main =
   ((\ (g, t) ->
-     do return (g)
-        let m = 0
+     do let m = 0
         let mi = 0
         let h i q r =
               (if (i <= 1000)
@@ -111,7 +110,7 @@ main =
                       printf "\n" ::IO()
                       printf "%d" (q :: Int)::IO()
                       printf "\n" ::IO()) in
-              (h 1 m mi)) =<< (array_init_withenv 1000 (\ j () ->
+              (h 1 m mi)) =<< (array_init_withenv 1000 (\ j g ->
                                                          let f = 0
                                                                  in return (((), f))) ()))
 

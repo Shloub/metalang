@@ -61,18 +61,16 @@
           (block
             (mread-blank)
             ((lambda (internal_env) (apply (lambda (d tab) 
-                                                  (block
-                                                    d
-                                                    (let ([result (nth0 tab tofind len)])
-                                                    (display result))
-                                                    )) internal_env)) (array_init_withenv len 
+                                                  (let ([result (nth0 tab tofind len)])
+                                                  (display result))) internal_env)) (array_init_withenv len 
             (lambda (i) 
-              (lambda (_) (let ([tmp (integer->char 0)])
-                          ((lambda (e) 
-                             (let ([tmp e])
-                             (let ([c tmp])
-                             (list '() c)))) (mread-char))))) '()))
-          ))) (mread-char)))
+              (lambda (d) 
+                (let ([tmp (integer->char 0)])
+                ((lambda (e) 
+                   (let ([tmp e])
+                   (let ([c tmp])
+                   (list '() c)))) (mread-char))))) '()))
+       ))) (mread-char)))
   ))) (mread-int)))
 )
 

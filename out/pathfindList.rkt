@@ -55,13 +55,11 @@
 (define (pathfind tab len)
   ;toto
   ((lambda (internal_env) (apply (lambda (b cache) 
-                                        (block
-                                          b
-                                          (pathfind_aux cache tab len 0)
-                                          )) internal_env)) (array_init_withenv len 
+                                        (pathfind_aux cache tab len 0)) internal_env)) (array_init_withenv len 
   (lambda (i) 
-    (lambda (_) (let ([a (- 1)])
-                (list '() a)))) '()))
+    (lambda (b) 
+      (let ([a (- 1)])
+      (list '() a)))) '()))
 )
 (define main
   (let ([len 0])
@@ -70,20 +68,18 @@
      (block
        (mread-blank)
        ((lambda (internal_env) (apply (lambda (d tab) 
-                                             (block
-                                               d
-                                               (let ([result (pathfind tab len)])
-                                               (display result))
-                                               )) internal_env)) (array_init_withenv len 
+                                             (let ([result (pathfind tab len)])
+                                             (display result))) internal_env)) (array_init_withenv len 
        (lambda (i) 
-         (lambda (_) (let ([tmp 0])
-                     ((lambda (e) 
-                        (let ([tmp e])
-                        (block
-                          (mread-blank)
-                          (let ([c tmp])
-                          (list '() c))
-                          ))) (mread-int))))) '()))
-     ))) (mread-int)))
+         (lambda (d) 
+           (let ([tmp 0])
+           ((lambda (e) 
+              (let ([tmp e])
+              (block
+                (mread-blank)
+                (let ([c tmp])
+                (list '() c))
+                ))) (mread-int))))) '()))
+  ))) (mread-int)))
 )
 

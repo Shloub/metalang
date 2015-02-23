@@ -33,17 +33,15 @@
 (define (read_sudoku _)
   ;toto
   ((lambda (internal_env) (apply (lambda (g out0) 
-                                        (block
-                                          g
-                                          out0
-                                          )) internal_env)) (array_init_withenv (* 9 9) 
+                                        out0) internal_env)) (array_init_withenv (* 9 9) 
   (lambda (i) 
-    (lambda (_) ((lambda (k) 
-                   (block
-                     (mread-blank)
-                     (let ([f k])
-                     (list '() f))
-                     )) (mread-int)))) '()))
+    (lambda (g) 
+      ((lambda (k) 
+         (block
+           (mread-blank)
+           (let ([f k])
+           (list '() f))
+           )) (mread-int)))) '()))
 )
 (define (print_sudoku sudoku0)
   ;toto

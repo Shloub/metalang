@@ -33,15 +33,15 @@
 (define main
   ((lambda (internal_env) (apply (lambda (b t0) 
                                         (block
-                                          b
                                           (map display (list (vector-ref t0 0) " - " (vector-ref t0 1) "\n"))
                                           )) internal_env)) (array_init_withenv 2 
   (lambda (d) 
-    (lambda (_) ((lambda (out0) 
-                   (block
-                     (mread-blank)
-                     (let ([a out0])
-                     (list '() a))
-                     )) (mread-int)))) '()))
+    (lambda (b) 
+      ((lambda (out0) 
+         (block
+           (mread-blank)
+           (let ([a out0])
+           (list '() a))
+           )) (mread-int)))) '()))
 )
 

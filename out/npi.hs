@@ -80,8 +80,7 @@ is_number c =
   (((<=) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('9'))))) <&&> ((>=) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('0'))))))
 npi0 str len =
   ((\ (b, stack) ->
-     do return (b)
-        let ptrStack = 0
+     do let ptrStack = 0
         let ptrStr = 0
         let d k l =
               (if (l < len)
@@ -106,7 +105,7 @@ npi0 str len =
                                      (d s t))
                                  ((d k l))))
               else (readIOA stack 0)) in
-              (d ptrStack ptrStr)) =<< (array_init_withenv len (\ i () ->
+              (d ptrStack ptrStr)) =<< (array_init_withenv len (\ i b ->
                                                                  let a = 0
                                                                          in return (((), a))) ()))
 main =
@@ -115,9 +114,8 @@ main =
      let u = j
      skip_whitespaces
      ((\ (g, tab) ->
-        do return (g)
-           result <- (npi0 tab u)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv u (\ i () ->
+        do result <- (npi0 tab u)
+           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv u (\ i g ->
                                                                           do let tmp = '\000'
                                                                              hGetChar stdin >>= ((\ h ->
                                                                                                    let v = h

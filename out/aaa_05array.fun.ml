@@ -15,27 +15,26 @@ let g t index =
   t.(index) <- false
 let main =
   let j = 0 in
-  ((fun  (f, a) -> let j = f in
-  (
-    (Printf.printf "%d " j);
-    let c = a.(0) in
-    (
-      (if c
-       then (Printf.printf "True")
-       else (Printf.printf "False"));
-      (Printf.printf "\n" );
-      (g (id a) 0);
-      let d = a.(0) in
-      (
-        (if d
-         then (Printf.printf "True")
-         else (Printf.printf "False"));
-        (Printf.printf "\n" )
-        )
-      
-      )
-    
-    )
+  ((fun  (j, a) -> (
+                     (Printf.printf "%d " j);
+                     let c = a.(0) in
+                     (
+                       (if c
+                        then (Printf.printf "True")
+                        else (Printf.printf "False"));
+                       (Printf.printf "\n" );
+                       (g (id a) 0);
+                       let d = a.(0) in
+                       (
+                         (if d
+                          then (Printf.printf "True")
+                          else (Printf.printf "False"));
+                         (Printf.printf "\n" )
+                         )
+                       
+                       )
+                     
+                     )
   ) (Array.init_withenv 5 (fun  i j -> (
                                          (Printf.printf "%d" i);
                                          let j = (j + i) in

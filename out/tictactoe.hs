@@ -247,14 +247,12 @@ play g =
            (e 0 minNote)
 init0 () =
   ((\ (b, cases) ->
-     do return (b)
-        (Gamestate <$> (newIORef cases) <*> (newIORef True) <*> (newIORef 0) <*> (newIORef False))) =<< (array_init_withenv 3 (\ i () ->
-                                                                                                                                ((\ (d, tab) ->
-                                                                                                                                   do return (d)
-                                                                                                                                      let a = tab
-                                                                                                                                      return (((), a))) =<< (array_init_withenv 3 (\ j () ->
-                                                                                                                                                                                    let c = 0
-                                                                                                                                                                                            in return (((), c))) ()))) ()))
+     (Gamestate <$> (newIORef cases) <*> (newIORef True) <*> (newIORef 0) <*> (newIORef False))) =<< (array_init_withenv 3 (\ i b ->
+                                                                                                                             ((\ (d, tab) ->
+                                                                                                                                let a = tab
+                                                                                                                                        in return (((), a))) =<< (array_init_withenv 3 (\ j d ->
+                                                                                                                                                                                         let c = 0
+                                                                                                                                                                                                 in return (((), c))) ()))) ()))
 read_move () =
   do x <- read_int
      skip_whitespaces

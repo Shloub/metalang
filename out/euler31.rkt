@@ -30,7 +30,6 @@
 (define main
   ((lambda (internal_env) (apply (lambda (c t0) 
                                         (block
-                                          c
                                           (vector-set! t0 0 1)
                                           (vector-set! t0 1 2)
                                           (vector-set! t0 2 5)
@@ -40,23 +39,20 @@
                                           (vector-set! t0 6 100)
                                           (vector-set! t0 7 200)
                                           ((lambda (internal_env) (apply (lambda (e cache) 
-                                                                                (block
-                                                                                e
-                                                                                (display (result 200 t0 7 cache))
-                                                                                )) internal_env)) (array_init_withenv 201 
+                                                                                (display (result 200 t0 7 cache))) internal_env)) (array_init_withenv 201 
                                           (lambda (j) 
-                                            (lambda (_) ((lambda (internal_env) (apply (lambda
-                                             (g o) 
-                                            (block
-                                              g
+                                            (lambda (e) 
+                                              ((lambda (internal_env) (apply (lambda
+                                               (g o) 
                                               (let ([d o])
-                                              (list '() d))
-                                              )) internal_env)) (array_init_withenv 8 
-                                            (lambda (k) 
-                                              (lambda (_) (let ([f 0])
-                                                          (list '() f)))) '())))) '()))
-  )) internal_env)) (array_init_withenv 8 (lambda (i) 
-                                            (lambda (_) (let ([b 0])
-                                                        (list '() b)))) '()))
+                                              (list '() d))) internal_env)) (array_init_withenv 8 
+                                              (lambda (k) 
+                                                (lambda (g) 
+                                                  (let ([f 0])
+                                                  (list '() f)))) '())))) '()))
+)) internal_env)) (array_init_withenv 8 (lambda (i) 
+                                          (lambda (c) 
+                                            (let ([b 0])
+                                            (list '() b)))) '()))
 )
 

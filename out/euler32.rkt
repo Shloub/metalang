@@ -28,12 +28,8 @@
 (define main
   (let ([count 0])
   ((lambda (internal_env) (apply (lambda (g allowed) 
-                                        (block
-                                          g
-                                          ((lambda (internal_env) (apply (lambda (k counted) 
-                                                                                (block
-                                                                                k
-                                                                                (letrec ([l 
+                                        ((lambda (internal_env) (apply (lambda (k counted) 
+                                                                              (letrec ([l 
                                                                                 (lambda (e count) 
                                                                                 (if (<= e 9)
                                                                                 (block
@@ -131,16 +127,17 @@
                                                                                 (l (+ e 1) count)
                                                                                 )))])
                                                                                 (m 1 count))
-                                                                                )
-                                                                                (block
-                                                                                (map display (list count "\n"))
-                                                                                )))])
-  (l 1 count))
-  )) internal_env)) (array_init_withenv 100000 (lambda (j) 
-                                                 (lambda (_) (let ([h #f])
-                                                             (list '() h)))) '()))
-)) internal_env)) (array_init_withenv 10 (lambda (i) 
-                                           (lambda (_) (let ([f (not (eq? i 0))])
-                                                       (list '() f)))) '())))
+                                                                              )
+                                        (block
+                                          (map display (list count "\n"))
+                                          )))])
+(l 1 count))) internal_env)) (array_init_withenv 100000 (lambda (j) 
+                                                          (lambda (k) 
+                                                            (let ([h #f])
+                                                            (list '() h)))) '()))) internal_env)) (array_init_withenv 10 
+(lambda (i) 
+  (lambda (g) 
+    (let ([f (not (eq? i 0))])
+    (list '() f)))) '())))
 )
 

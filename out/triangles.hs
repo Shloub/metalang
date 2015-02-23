@@ -98,44 +98,40 @@ find0 len tab cache x y =
                     return (r))))
 find len tab =
   ((\ (b, tab2) ->
-     do return (b)
-        (find0 len tab tab2 0 0)) =<< (array_init_withenv len (\ i () ->
-                                                                ((\ (d, tab3) ->
-                                                                   do return (d)
-                                                                      let a = tab3
-                                                                      return (((), a))) =<< (array_init_withenv (i + 1) (\ j () ->
-                                                                                                                          let c = 0
-                                                                                                                                  in return (((), c))) ()))) ()))
+     (find0 len tab tab2 0 0)) =<< (array_init_withenv len (\ i b ->
+                                                             ((\ (d, tab3) ->
+                                                                let a = tab3
+                                                                        in return (((), a))) =<< (array_init_withenv (i + 1) (\ j d ->
+                                                                                                                               let c = 0
+                                                                                                                                       in return (((), c))) ()))) ()))
 main =
   do let len = 0
      q <- read_int
      let u = q
      skip_whitespaces
      ((\ (f, tab) ->
-        do return (f)
-           printf "%d" =<< ((find u tab) :: IO Int)
+        do printf "%d" =<< ((find u tab) :: IO Int)
            printf "\n" ::IO()
-           let p = (u - 1)
-           let n k =
-                 (if (k <= p)
-                 then let o l =
+           let m = (u - 1)
+           let g k =
+                 (if (k <= m)
+                 then let h l =
                             (if (l <= k)
                             then do printf "%d" =<< (join (readIOA <$> (readIOA tab k) <*> return (l)) :: IO Int)
                                     printf " " ::IO()
-                                    (o (l + 1))
+                                    (h (l + 1))
                             else do printf "\n" ::IO()
-                                    (n (k + 1))) in
-                            (o 0)
+                                    (g (k + 1))) in
+                            (h 0)
                  else return (())) in
-                 (n 0)) =<< (array_init_withenv u (\ i () ->
-                                                    ((\ (h, tab2) ->
-                                                       do return (h)
-                                                          let e = tab2
-                                                          return (((), e))) =<< (array_init_withenv (i + 1) (\ j () ->
-                                                                                                              do let tmp = 0
-                                                                                                                 m <- read_int
-                                                                                                                 let v = m
-                                                                                                                 skip_whitespaces
-                                                                                                                 let g = v
-                                                                                                                 return (((), g))) ()))) ()))
+                 (g 0)) =<< (array_init_withenv u (\ i f ->
+                                                    ((\ (o, tab2) ->
+                                                       let e = tab2
+                                                               in return (((), e))) =<< (array_init_withenv (i + 1) (\ j o ->
+                                                                                                                      do let tmp = 0
+                                                                                                                         p <- read_int
+                                                                                                                         let v = p
+                                                                                                                         skip_whitespaces
+                                                                                                                         let n = v
+                                                                                                                         return (((), n))) ()))) ()))
 

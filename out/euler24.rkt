@@ -22,13 +22,9 @@
 (define (show lim nth0)
   ;toto
   ((lambda (internal_env) (apply (lambda (b t0) 
-                                        (block
-                                          b
-                                          ((lambda (internal_env) (apply (lambda (d pris) 
-                                                                                (block
-                                                                                d
-                                                                                (let ([p (- lim 1)])
-                                                                                (letrec ([g 
+                                        ((lambda (internal_env) (apply (lambda (d pris) 
+                                                                              (let ([p (- lim 1)])
+                                                                              (letrec ([g 
                                                                                 (lambda (k nth0) 
                                                                                 (if (<= k p)
                                                                                 (let ([n (fact (- lim k))])
@@ -64,14 +60,14 @@
                                                                                 (e (+ m 1)))
                                                                                 (display "\n")))])
                                                                                 (e 0)))))])
-                                                                                (g 1 nth0)))
-                                        )) internal_env)) (array_init_withenv lim 
+                                        (g 1 nth0)))) internal_env)) (array_init_withenv lim 
 (lambda (j) 
-  (lambda (_) (let ([c #f])
-              (list '() c)))) '()))
-)) internal_env)) (array_init_withenv lim (lambda (i) 
-                                            (lambda (_) (let ([a i])
-                                                        (list '() a)))) '()))
+  (lambda (d) 
+    (let ([c #f])
+    (list '() c)))) '()))) internal_env)) (array_init_withenv lim (lambda (i) 
+                                                                    (lambda (b) 
+                                                                      (let ([a i])
+                                                                      (list '() a)))) '()))
 )
 (define main
   (block

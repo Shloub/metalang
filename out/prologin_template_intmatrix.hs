@@ -96,15 +96,13 @@ main =
      taille_y <- read_int
      skip_whitespaces
      ((\ (l, tableau) ->
-        do return (l)
-           printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv taille_y (\ a () ->
+        do printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
+           printf "\n" ::IO()) =<< (array_init_withenv taille_y (\ a l ->
                                                                   ((\ (o, c) ->
-                                                                     do return (o)
-                                                                        let k = c
-                                                                        return (((), k))) =<< (array_init_withenv taille_x (\ d () ->
-                                                                                                                             do b <- read_int
-                                                                                                                                skip_whitespaces
-                                                                                                                                let m = b
-                                                                                                                                return (((), m))) ()))) ()))
+                                                                     let k = c
+                                                                             in return (((), k))) =<< (array_init_withenv taille_x (\ d o ->
+                                                                                                                                     do b <- read_int
+                                                                                                                                        skip_whitespaces
+                                                                                                                                        let m = b
+                                                                                                                                        return (((), m))) ()))) ()))
 

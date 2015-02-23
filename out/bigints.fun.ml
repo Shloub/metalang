@@ -11,24 +11,20 @@ end
 
 type bigint = {mutable bigint_sign : bool; mutable bigint_len : int; mutable bigint_chiffres : int array;}
 let read_bigint len =
-  ((fun  (cd, chiffres) -> (
-                             cd;
-                             let cf = ((len - 1) / 2) in
-                             let rec ce i =
-                               (if (i <= cf)
-                                then let tmp = chiffres.(i) in
-                                (
-                                  chiffres.(i) <- chiffres.(((len - 1) - i));
-                                  chiffres.(((len - 1) - i)) <- tmp;
-                                  (ce (i + 1))
-                                  )
-                                
-                                else {bigint_sign=true;
-                                bigint_len=len;
-                                bigint_chiffres=chiffres}) in
-                               (ce 0)
-                             )
-  ) (Array.init_withenv len (fun  j () -> Scanf.scanf "%c"
+  ((fun  (cd, chiffres) -> let cf = ((len - 1) / 2) in
+  let rec ce i =
+    (if (i <= cf)
+     then let tmp = chiffres.(i) in
+     (
+       chiffres.(i) <- chiffres.(((len - 1) - i));
+       chiffres.(((len - 1) - i)) <- tmp;
+       (ce (i + 1))
+       )
+     
+     else {bigint_sign=true;
+     bigint_len=len;
+     bigint_chiffres=chiffres}) in
+    (ce 0)) (Array.init_withenv len (fun  j cd -> Scanf.scanf "%c"
   (fun  c -> let cc = (int_of_char (c)) in
   ((), cc))) ()))
 let print_bigint a =
@@ -89,15 +85,14 @@ let add_bigint_positif a b =
   (*  Une addition ou on en a rien a faire des signes  *)
   let len = (((max (a.bigint_len) (b.bigint_len))) + 1) in
   let retenue = 0 in
-  ((fun  (bu, chiffres) -> let retenue = bu in
-  let rec bv len =
-    (if ((len > 0) && (chiffres.((len - 1)) = 0))
-     then let len = (len - 1) in
-     (bv len)
-     else {bigint_sign=true;
-     bigint_len=len;
-     bigint_chiffres=chiffres}) in
-    (bv len)) (Array.init_withenv len (fun  i retenue -> let tmp = retenue in
+  ((fun  (retenue, chiffres) -> let rec bv len =
+                                  (if ((len > 0) && (chiffres.((len - 1)) = 0))
+                                   then let len = (len - 1) in
+                                   (bv len)
+                                   else {bigint_sign=true;
+                                   bigint_len=len;
+                                   bigint_chiffres=chiffres}) in
+                                  (bv len)) (Array.init_withenv len (fun  i retenue -> let tmp = retenue in
   let tmp = (if (i < a.bigint_len)
              then let tmp = (tmp + a.bigint_chiffres.(i)) in
              tmp
@@ -115,15 +110,14 @@ Pré-requis : a > b
  *)
   let len = a.bigint_len in
   let retenue = 0 in
-  ((fun  (br, chiffres) -> let retenue = br in
-  let rec bs len =
-    (if ((len > 0) && (chiffres.((len - 1)) = 0))
-     then let len = (len - 1) in
-     (bs len)
-     else {bigint_sign=true;
-     bigint_len=len;
-     bigint_chiffres=chiffres}) in
-    (bs len)) (Array.init_withenv len (fun  i retenue -> let tmp = (retenue + a.bigint_chiffres.(i)) in
+  ((fun  (retenue, chiffres) -> let rec bs len =
+                                  (if ((len > 0) && (chiffres.((len - 1)) = 0))
+                                   then let len = (len - 1) in
+                                   (bs len)
+                                   else {bigint_sign=true;
+                                   bigint_len=len;
+                                   bigint_chiffres=chiffres}) in
+                                  (bs len)) (Array.init_withenv len (fun  i retenue -> let tmp = (retenue + a.bigint_chiffres.(i)) in
   let tmp = (if (i < b.bigint_len)
              then let tmp = (tmp - b.bigint_chiffres.(i)) in
              tmp
@@ -160,49 +154,45 @@ let mul_bigint_cp a b =
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction.  *)
   let len = ((a.bigint_len + b.bigint_len) + 1) in
-  ((fun  (bk, chiffres) -> (
-                             bk;
-                             let bp = (a.bigint_len - 1) in
-                             let rec bm i =
-                               (if (i <= bp)
-                                then let retenue = 0 in
-                                let bo = (b.bigint_len - 1) in
-                                let rec bn j retenue =
-                                  (if (j <= bo)
-                                   then (
-                                          chiffres.((i + j)) <- (chiffres.((i + j)) + (retenue + (b.bigint_chiffres.(j) * a.bigint_chiffres.(i))));
-                                          let retenue = (chiffres.((i + j)) / 10) in
-                                          (
-                                            chiffres.((i + j)) <- (chiffres.((i + j)) mod 10);
-                                            (bn (j + 1) retenue)
-                                            )
-                                          
-                                          )
-                                   
-                                   else (
-                                          chiffres.((i + b.bigint_len)) <- (chiffres.((i + b.bigint_len)) + retenue);
-                                          (bm (i + 1))
-                                          )
-                                   ) in
-                                  (bn 0 retenue)
-                                else (
-                                       chiffres.((a.bigint_len + b.bigint_len)) <- (chiffres.(((a.bigint_len + b.bigint_len) - 1)) / 10);
-                                       chiffres.(((a.bigint_len + b.bigint_len) - 1)) <- (chiffres.(((a.bigint_len + b.bigint_len) - 1)) mod 10);
-                                       let rec bl l len =
-                                         (if (l <= 2)
-                                          then (if ((len <> 0) && (chiffres.((len - 1)) = 0))
-                                                then let len = (len - 1) in
-                                                (bl (l + 1) len)
-                                                else (bl (l + 1) len))
-                                          else {bigint_sign=(a.bigint_sign = b.bigint_sign);
-                                          bigint_len=len;
-                                          bigint_chiffres=chiffres}) in
-                                         (bl 0 len)
-                                       )
-                                ) in
-                               (bm 0)
-                             )
-  ) (Array.init_withenv len (fun  k () -> let bj = 0 in
+  ((fun  (bk, chiffres) -> let bp = (a.bigint_len - 1) in
+  let rec bm i =
+    (if (i <= bp)
+     then let retenue = 0 in
+     let bo = (b.bigint_len - 1) in
+     let rec bn j retenue =
+       (if (j <= bo)
+        then (
+               chiffres.((i + j)) <- (chiffres.((i + j)) + (retenue + (b.bigint_chiffres.(j) * a.bigint_chiffres.(i))));
+               let retenue = (chiffres.((i + j)) / 10) in
+               (
+                 chiffres.((i + j)) <- (chiffres.((i + j)) mod 10);
+                 (bn (j + 1) retenue)
+                 )
+               
+               )
+        
+        else (
+               chiffres.((i + b.bigint_len)) <- (chiffres.((i + b.bigint_len)) + retenue);
+               (bm (i + 1))
+               )
+        ) in
+       (bn 0 retenue)
+     else (
+            chiffres.((a.bigint_len + b.bigint_len)) <- (chiffres.(((a.bigint_len + b.bigint_len) - 1)) / 10);
+            chiffres.(((a.bigint_len + b.bigint_len) - 1)) <- (chiffres.(((a.bigint_len + b.bigint_len) - 1)) mod 10);
+            let rec bl l len =
+              (if (l <= 2)
+               then (if ((len <> 0) && (chiffres.((len - 1)) = 0))
+                     then let len = (len - 1) in
+                     (bl (l + 1) len)
+                     else (bl (l + 1) len))
+               else {bigint_sign=(a.bigint_sign = b.bigint_sign);
+               bigint_len=len;
+               bigint_chiffres=chiffres}) in
+              (bl 0 len)
+            )
+     ) in
+    (bm 0)) (Array.init_withenv len (fun  k bk -> let bj = 0 in
   ((), bj)) ()))
 let bigint_premiers_chiffres a i =
   let len = ((min (i) (a.bigint_len))) in
@@ -215,17 +205,14 @@ let bigint_premiers_chiffres a i =
      bigint_chiffres=a.bigint_chiffres}) in
     (bi len)
 let bigint_shift a i =
-  ((fun  (bh, chiffres) -> (
-                             bh;
-                             {bigint_sign=a.bigint_sign;
-                             bigint_len=(a.bigint_len + i);
-                             bigint_chiffres=chiffres}
-                             )
-  ) (Array.init_withenv (a.bigint_len + i) (fun  k () -> (if (k >= i)
-                                                          then let bg = a.bigint_chiffres.((k - i)) in
-                                                          ((), bg)
-                                                          else let bg = 0 in
-                                                          ((), bg))) ()))
+  ((fun  (bh, chiffres) -> {bigint_sign=a.bigint_sign;
+  bigint_len=(a.bigint_len + i);
+  bigint_chiffres=chiffres}) (Array.init_withenv (a.bigint_len + i) (fun  k bh -> (
+  if (k >= i)
+  then let bg = a.bigint_chiffres.((k - i)) in
+  ((), bg)
+  else let bg = 0 in
+  ((), bg))) ()))
 let rec mul_bigint aa bb =
   (if (aa.bigint_len = 0)
    then aa
@@ -261,23 +248,19 @@ let bigint_of_int i =
               then let size = 0 in
               size
               else size) in
-  ((fun  (ba, t) -> (
-                      ba;
-                      let be = (size - 1) in
-                      let rec bc k i =
-                        (if (k <= be)
-                         then (
-                                t.(k) <- (i mod 10);
-                                let i = (i / 10) in
-                                (bc (k + 1) i)
-                                )
-                         
-                         else {bigint_sign=true;
-                         bigint_len=size;
-                         bigint_chiffres=t}) in
-                        (bc 0 i)
-                      )
-  ) (Array.init_withenv size (fun  j () -> let z = 0 in
+  ((fun  (ba, t) -> let be = (size - 1) in
+  let rec bc k i =
+    (if (k <= be)
+     then (
+            t.(k) <- (i mod 10);
+            let i = (i / 10) in
+            (bc (k + 1) i)
+            )
+     
+     else {bigint_sign=true;
+     bigint_len=size;
+     bigint_chiffres=t}) in
+    (bc 0 i)) (Array.init_withenv size (fun  j ba -> let z = 0 in
   ((), z)) ()))
 let fact_bigint a =
   let one = (bigint_of_int 1) in
@@ -355,62 +338,44 @@ let euler25 () =
 let euler29 () =
   let maxA = 5 in
   let maxB = 5 in
-  ((fun  (g, a_bigint) -> (
-                            g;
-                            ((fun  (m, a0_bigint) -> (
-                                                       m;
-                                                       ((fun  (p, b) -> (
-                                                                          p;
-                                                                          let n = 0 in
-                                                                          let found = true in
-                                                                          let rec q found n =
-                                                                            (if found
-                                                                             then let min0 = a0_bigint.(0) in
-                                                                             let found = false in
-                                                                             let rec s i found min0 =
-                                                                               (if (i <= maxA)
-                                                                                then (
-                                                                                if (b.(i) <= maxB)
-                                                                                then (
-                                                                                if found
-                                                                                then (
-                                                                                if (bigint_lt a_bigint.(i) min0)
-                                                                                then let min0 = a_bigint.(i) in
-                                                                                (s (i + 1) found min0)
-                                                                                else (s (i + 1) found min0))
-                                                                                else let min0 = a_bigint.(i) in
-                                                                                let found = true in
-                                                                                (s (i + 1) found min0))
-                                                                                else (s (i + 1) found min0))
-                                                                                else (
-                                                                                if found
-                                                                                then let n = (n + 1) in
-                                                                                let rec r l =
-                                                                                (if (l <= maxA)
-                                                                                then (
-                                                                                if ((bigint_eq a_bigint.(l) min0) && (b.(l) <= maxB))
-                                                                                then 
-                                                                                (
-                                                                                b.(l) <- (b.(l) + 1);
-                                                                                a_bigint.(l) <- (mul_bigint a_bigint.(l) a0_bigint.(l));
-                                                                                (r (l + 1))
-                                                                                )
-                                                                                
-                                                                                else (r (l + 1)))
-                                                                                else (q found n)) in
-                                                                                (r 2)
-                                                                                else (q found n))) in
-                                                                               (s 2 found min0)
-                                                                             else n) in
-                                                                            (q found n)
-                                                                          )
-                                                       ) (Array.init_withenv (maxA + 1) (fun  k () -> let o = 2 in
-                                                       ((), o)) ()))
-                                                       )
-                            ) (Array.init_withenv (maxA + 1) (fun  j2 () -> let h = (bigint_of_int j2) in
-                            ((), h)) ()))
-                            )
-  ) (Array.init_withenv (maxA + 1) (fun  j () -> let f = (bigint_of_int (j * j)) in
+  ((fun  (g, a_bigint) -> ((fun  (m, a0_bigint) -> ((fun  (p, b) -> let n = 0 in
+  let found = true in
+  let rec q found n =
+    (if found
+     then let min0 = a0_bigint.(0) in
+     let found = false in
+     let rec s i found min0 =
+       (if (i <= maxA)
+        then (if (b.(i) <= maxB)
+              then (if found
+                    then (if (bigint_lt a_bigint.(i) min0)
+                          then let min0 = a_bigint.(i) in
+                          (s (i + 1) found min0)
+                          else (s (i + 1) found min0))
+                    else let min0 = a_bigint.(i) in
+                    let found = true in
+                    (s (i + 1) found min0))
+              else (s (i + 1) found min0))
+        else (if found
+              then let n = (n + 1) in
+              let rec r l =
+                (if (l <= maxA)
+                 then (if ((bigint_eq a_bigint.(l) min0) && (b.(l) <= maxB))
+                       then (
+                              b.(l) <- (b.(l) + 1);
+                              a_bigint.(l) <- (mul_bigint a_bigint.(l) a0_bigint.(l));
+                              (r (l + 1))
+                              )
+                       
+                       else (r (l + 1)))
+                 else (q found n)) in
+                (r 2)
+              else (q found n))) in
+       (s 2 found min0)
+     else n) in
+    (q found n)) (Array.init_withenv (maxA + 1) (fun  k p -> let o = 2 in
+  ((), o)) ()))) (Array.init_withenv (maxA + 1) (fun  j2 m -> let h = (bigint_of_int j2) in
+  ((), h)) ()))) (Array.init_withenv (maxA + 1) (fun  j g -> let f = (bigint_of_int (j * j)) in
   ((), f)) ()))
 let main =
   (

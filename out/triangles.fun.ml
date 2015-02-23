@@ -33,16 +33,8 @@ let rec find0 len tab cache x y =
                  )
                )))
 let find len tab =
-  ((fun  (b, tab2) -> (
-                        b;
-                        (find0 len tab tab2 0 0)
-                        )
-  ) (Array.init_withenv len (fun  i () -> ((fun  (d, tab3) -> (
-                                                                d;
-                                                                let a = tab3 in
-                                                                ((), a)
-                                                                )
-  ) (Array.init_withenv (i + 1) (fun  j () -> let c = 0 in
+  ((fun  (b, tab2) -> (find0 len tab tab2 0 0)) (Array.init_withenv len (fun  i b -> ((fun  (d, tab3) -> let a = tab3 in
+  ((), a)) (Array.init_withenv (i + 1) (fun  j d -> let c = 0 in
   ((), c)) ()))) ()))
 let main =
   let len = 0 in
@@ -51,39 +43,34 @@ let main =
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     ((fun  (f, tab) -> (
-                         f;
                          (Printf.printf "%d\n" (find len tab));
-                         let p = (len - 1) in
-                         let rec n k =
-                           (if (k <= p)
-                            then let rec o l =
+                         let m = (len - 1) in
+                         let rec g k =
+                           (if (k <= m)
+                            then let rec h l =
                                    (if (l <= k)
                                     then (
                                            (Printf.printf "%d " tab.(k).(l));
-                                           (o (l + 1))
+                                           (h (l + 1))
                                            )
                                     
                                     else (
                                            (Printf.printf "\n" );
-                                           (n (k + 1))
+                                           (g (k + 1))
                                            )
                                     ) in
-                                   (o 0)
+                                   (h 0)
                             else ()) in
-                           (n 0)
+                           (g 0)
                          )
-    ) (Array.init_withenv len (fun  i () -> ((fun  (h, tab2) -> (
-                                                                  h;
-                                                                  let e = tab2 in
-                                                                  ((), e)
-                                                                  )
-    ) (Array.init_withenv (i + 1) (fun  j () -> let tmp = 0 in
+    ) (Array.init_withenv len (fun  i f -> ((fun  (o, tab2) -> let e = tab2 in
+    ((), e)) (Array.init_withenv (i + 1) (fun  j o -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  m -> let tmp = m in
+    (fun  p -> let tmp = p in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let g = tmp in
-      ((), g)
+      let n = tmp in
+      ((), n)
       )
     )) ()))) ()))
     )

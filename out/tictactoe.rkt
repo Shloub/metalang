@@ -233,20 +233,16 @@
 (define (init0 _)
   ;toto
   ((lambda (internal_env) (apply (lambda (b cases) 
-                                        (block
-                                          b
-                                          (gamestate cases #f #t 0)
-                                          )) internal_env)) (array_init_withenv 3 
+                                        (gamestate cases #f #t 0)) internal_env)) (array_init_withenv 3 
   (lambda (i) 
-    (lambda (_) ((lambda (internal_env) (apply (lambda (d tab) 
-                                                      (block
-                                                        d
-                                                        (let ([a tab])
-                                                        (list '() a))
-                                                        )) internal_env)) (array_init_withenv 3 
-    (lambda (j) 
-      (lambda (_) (let ([c 0])
-                  (list '() c)))) '())))) '()))
+    (lambda (b) 
+      ((lambda (internal_env) (apply (lambda (d tab) 
+                                            (let ([a tab])
+                                            (list '() a))) internal_env)) (array_init_withenv 3 
+      (lambda (j) 
+        (lambda (d) 
+          (let ([c 0])
+          (list '() c)))) '())))) '()))
 )
 (define (read_move _)
   ;toto

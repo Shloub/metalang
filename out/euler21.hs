@@ -135,19 +135,16 @@ sumdivaux t n i =
                      (c 1 out0 p)))
 sumdiv nprimes primes n =
   ((\ (b, t) ->
-     do return (b)
-        max0 <- (fillPrimesFactors t n primes nprimes)
-        (sumdivaux t max0 0)) =<< (array_init_withenv (n + 1) (\ i () ->
+     do max0 <- (fillPrimesFactors t n primes nprimes)
+        (sumdivaux t max0 0)) =<< (array_init_withenv (n + 1) (\ i b ->
                                                                 let a = 0
                                                                         in return (((), a))) ()))
 main =
   do let maximumprimes = 1001
      ((\ (v, era) ->
-        do return (v)
-           nprimes <- (eratostene era maximumprimes)
+        do nprimes <- (eratostene era maximumprimes)
            ((\ (x, primes) ->
-              do return (x)
-                 let l = 0
+              do let l = 0
                  let ba = (maximumprimes - 1)
                  let z k bo =
                        (if (k <= ba)
@@ -179,9 +176,9 @@ main =
                                              printf "%d" (bq :: Int)::IO()
                                              printf "\n" ::IO()) in
                                      (y 2 sum)) in
-                       (z 2 l)) =<< (array_init_withenv nprimes (\ o () ->
+                       (z 2 l)) =<< (array_init_withenv nprimes (\ o x ->
                                                                   let w = 0
-                                                                          in return (((), w))) ()))) =<< (array_init_withenv maximumprimes (\ j () ->
+                                                                          in return (((), w))) ()))) =<< (array_init_withenv maximumprimes (\ j v ->
                                                                                                                                              let u = j
                                                                                                                                                      in return (((), u))) ()))
 

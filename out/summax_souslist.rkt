@@ -56,20 +56,18 @@
      (block
        (mread-blank)
        ((lambda (internal_env) (apply (lambda (d tab) 
-                                             (block
-                                               d
-                                               (let ([result (summax tab len)])
-                                               (display result))
-                                               )) internal_env)) (array_init_withenv len 
+                                             (let ([result (summax tab len)])
+                                             (display result))) internal_env)) (array_init_withenv len 
        (lambda (i) 
-         (lambda (_) (let ([tmp 0])
-                     ((lambda (e) 
-                        (let ([tmp e])
-                        (block
-                          (mread-blank)
-                          (let ([c tmp])
-                          (list '() c))
-                          ))) (mread-int))))) '()))
-     ))) (mread-int)))
+         (lambda (d) 
+           (let ([tmp 0])
+           ((lambda (e) 
+              (let ([tmp e])
+              (block
+                (mread-blank)
+                (let ([c tmp])
+                (list '() c))
+                ))) (mread-int))))) '()))
+  ))) (mread-int)))
 )
 

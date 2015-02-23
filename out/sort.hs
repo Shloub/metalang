@@ -78,10 +78,9 @@ array_init_withenv len f env =
 
 copytab tab len =
   ((\ (g, o) ->
-     do return (g)
-        return (o)) =<< (array_init_withenv len (\ i () ->
-                                                  do f <- (readIOA tab i)
-                                                     return (((), f))) ()))
+     return (o)) =<< (array_init_withenv len (\ i g ->
+                                               do f <- (readIOA tab i)
+                                                  return (((), f))) ()))
 bubblesort tab len =
   do let e = (len - 1)
      let b i =
@@ -134,30 +133,29 @@ main =
      let x = r
      skip_whitespaces
      ((\ (k, tab) ->
-        do return (k)
-           tab2 <- (copytab tab x)
+        do tab2 <- (copytab tab x)
            (bubblesort tab2 x)
-           let q = (x - 1)
-           let p i =
-                 (if (i <= q)
+           let p = (x - 1)
+           let n i =
+                 (if (i <= p)
                  then do printf "%d" =<< ((readIOA tab2 i) :: IO Int)
                          printf " " ::IO()
-                         (p (i + 1))
+                         (n (i + 1))
                  else do printf "\n" ::IO()
                          tab3 <- (copytab tab x)
                          (qsort0 tab3 x 0 (x - 1))
-                         let n = (x - 1)
-                         let m y =
-                               (if (y <= n)
+                         let m = (x - 1)
+                         let l y =
+                               (if (y <= m)
                                then do printf "%d" =<< ((readIOA tab3 y) :: IO Int)
                                        printf " " ::IO()
-                                       (m (y + 1))
+                                       (l (y + 1))
                                else printf "\n" ::IO()) in
-                               (m 0)) in
-                 (p 0)) =<< (array_init_withenv x (\ i_ () ->
+                               (l 0)) in
+                 (n 0)) =<< (array_init_withenv x (\ i_ k ->
                                                     do let tmp = 0
-                                                       l <- read_int
-                                                       let z = l
+                                                       q <- read_int
+                                                       let z = q
                                                        skip_whitespaces
                                                        let h = z
                                                        return (((), h))) ()))

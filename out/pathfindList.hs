@@ -94,19 +94,17 @@ pathfind_aux cache tab len pos =
                return (g)))
 pathfind tab len =
   ((\ (b, cache) ->
-     do return (b)
-        (pathfind_aux cache tab len 0)) =<< (array_init_withenv len (\ i () ->
-                                                                      let a = (- 1)
-                                                                              in return (((), a))) ()))
+     (pathfind_aux cache tab len 0)) =<< (array_init_withenv len (\ i b ->
+                                                                   let a = (- 1)
+                                                                           in return (((), a))) ()))
 main =
   do let len = 0
      f <- read_int
      let k = f
      skip_whitespaces
      ((\ (d, tab) ->
-        do return (d)
-           result <- (pathfind tab k)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv k (\ i () ->
+        do result <- (pathfind tab k)
+           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv k (\ i d ->
                                                                           do let tmp = 0
                                                                              e <- read_int
                                                                              let l = e

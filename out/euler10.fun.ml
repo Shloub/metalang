@@ -36,10 +36,9 @@ let main =
   let n = 100000 in
   (*  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages  *)
   ((fun  (e, t) -> (
-                     e;
                      t.(1) <- 0;
                      (Printf.printf "%d\n" (eratostene t n))
                      )
-  ) (Array.init_withenv n (fun  i () -> let d = i in
+  ) (Array.init_withenv n (fun  i e -> let d = i in
   ((), d)) ()))
 

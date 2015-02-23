@@ -86,8 +86,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 -}
   ((\ (h, p) ->
-     do return (h)
-        let sum = 0
+     do let sum = 0
         let j a q =
               (if (a <= 9)
               then let k b t =
@@ -126,7 +125,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
                          else (j (a + 1) t)) in
                          (k 0 q)
               else printf "%d" (q :: Int)::IO()) in
-              (j 0 sum)) =<< (array_init_withenv 10 (\ i () ->
+              (j 0 sum)) =<< (array_init_withenv 10 (\ i h ->
                                                       let g = ((((i * i) * i) * i) * i)
                                                               in return (((), g))) ()))
 

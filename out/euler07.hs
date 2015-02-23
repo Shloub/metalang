@@ -100,9 +100,8 @@ find n t used nth =
 main =
   do let n = 10001
      ((\ (e, t) ->
-        do return (e)
-           printf "%d" =<< ((find 3 t 1 n) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv n (\ i () ->
+        do printf "%d" =<< ((find 3 t 1 n) :: IO Int)
+           printf "\n" ::IO()) =<< (array_init_withenv n (\ i e ->
                                                            let d = 2
                                                                    in return (((), d))) ()))
 

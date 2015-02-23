@@ -78,12 +78,11 @@ array_init_withenv len f env =
 
 read_sudoku () =
   ((\ (g, out0) ->
-     do return (g)
-        return (out0)) =<< (array_init_withenv (9 * 9) (\ i () ->
-                                                         do k <- read_int
-                                                            skip_whitespaces
-                                                            let f = k
-                                                            return (((), f))) ()))
+     return (out0)) =<< (array_init_withenv (9 * 9) (\ i g ->
+                                                      do k <- read_int
+                                                         skip_whitespaces
+                                                         let f = k
+                                                         return (((), f))) ()))
 print_sudoku sudoku0 =
   let d y =
         (if (y <= 8)

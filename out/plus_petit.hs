@@ -106,12 +106,11 @@ main =
      let p = h
      skip_whitespaces
      ((\ (f, tab) ->
-        do return (f)
-           printf "%d" =<< ((plus_petit0 tab p) :: IO Int)) =<< (array_init_withenv p (\ i () ->
-                                                                                        do let tmp = 0
-                                                                                           g <- read_int
-                                                                                           let q = g
-                                                                                           skip_whitespaces
-                                                                                           let d = q
-                                                                                           return (((), d))) ()))
+        printf "%d" =<< ((plus_petit0 tab p) :: IO Int)) =<< (array_init_withenv p (\ i f ->
+                                                                                     do let tmp = 0
+                                                                                        g <- read_int
+                                                                                        let q = g
+                                                                                        skip_whitespaces
+                                                                                        let d = q
+                                                                                        return (((), d))) ()))
 

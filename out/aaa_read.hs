@@ -87,23 +87,20 @@ main =
      printf "\n" ::IO()
      let m = (l `quot` 2)
      ((\ (b, tab) ->
-        do return (b)
-           printf "\n" ::IO()
+        do printf "\n" ::IO()
            ((\ (e, tab2) ->
-              do return (e)
-                 strlen <- read_int
+              do strlen <- read_int
                  skip_whitespaces
                  printf "%d" (strlen :: Int)::IO()
                  printf "=strlen\n" ::IO()
                  ((\ (g, tab4) ->
-                    do return (g)
-                       let k = (strlen - 1)
+                    do let k = (strlen - 1)
                        let h j =
                              (if (j <= k)
                              then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
                                      (h (j + 1))
                              else return (())) in
-                             (h 0)) =<< (array_init_withenv strlen (\ toto () ->
+                             (h 0)) =<< (array_init_withenv strlen (\ toto g ->
                                                                      hGetChar stdin >>= ((\ tmpc ->
                                                                                            do c <- ((fmap ord (return (tmpc))))
                                                                                               printf "%c" (tmpc :: Char)::IO()
@@ -115,7 +112,7 @@ main =
                                                                                                            return (o)
                                                                                                    else return (c))
                                                                                               f <- ((fmap chr (return (n))))
-                                                                                              return (((), f))))) ()))) =<< (array_init_withenv m (\ i_ () ->
+                                                                                              return (((), f))))) ()))) =<< (array_init_withenv m (\ i_ e ->
                                                                                                                                                     do tmpi2 <- read_int
                                                                                                                                                        skip_whitespaces
                                                                                                                                                        printf "%d" (i_ :: Int)::IO()
@@ -123,7 +120,7 @@ main =
                                                                                                                                                        printf "%d" (tmpi2 :: Int)::IO()
                                                                                                                                                        printf " " ::IO()
                                                                                                                                                        let d = tmpi2
-                                                                                                                                                       return (((), d))) ()))) =<< (array_init_withenv m (\ i () ->
+                                                                                                                                                       return (((), d))) ()))) =<< (array_init_withenv m (\ i b ->
                                                                                                                                                                                                            do tmpi1 <- read_int
                                                                                                                                                                                                               skip_whitespaces
                                                                                                                                                                                                               printf "%d" (i :: Int)::IO()

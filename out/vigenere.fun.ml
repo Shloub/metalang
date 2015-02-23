@@ -39,14 +39,12 @@ let main =
   (fun  taille_cle -> (
                         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                         ((fun  (e, cle) -> (
-                                             e;
                                              (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                              Scanf.scanf "%d"
                                              (fun  taille -> (
                                                                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                                                ((fun  (g, message) -> 
                                                                (
-                                                                 g;
                                                                  (crypte taille_cle cle taille message);
                                                                  let j = (taille - 1) in
                                                                  let rec h i =
@@ -59,13 +57,13 @@ let main =
                                                                     else (Printf.printf "\n")) in
                                                                    (h 0)
                                                                  )
-                                                               ) (Array.init_withenv taille (fun  index2 () -> Scanf.scanf "%c"
+                                                               ) (Array.init_withenv taille (fun  index2 g -> Scanf.scanf "%c"
                                                                (fun  out2 -> let f = out2 in
                                                                ((), f))) ()))
                                                                )
                                              )
                                              )
-                        ) (Array.init_withenv taille_cle (fun  index () -> Scanf.scanf "%c"
+                        ) (Array.init_withenv taille_cle (fun  index e -> Scanf.scanf "%c"
                         (fun  out0 -> let d = out0 in
                         ((), d))) ()))
                         )

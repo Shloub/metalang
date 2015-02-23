@@ -63,19 +63,17 @@
      (block
        (mread-blank)
        ((lambda (internal_env) (apply (lambda (d tab) 
-                                             (block
-                                               d
-                                               (display (montagnes0 tab len))
-                                               )) internal_env)) (array_init_withenv len 
+                                             (display (montagnes0 tab len))) internal_env)) (array_init_withenv len 
        (lambda (i) 
-         (lambda (_) (let ([x 0])
-                     ((lambda (e) 
-                        (let ([x e])
-                        (block
-                          (mread-blank)
-                          (let ([c x])
-                          (list '() c))
-                          ))) (mread-int))))) '()))
-     ))) (mread-int)))
+         (lambda (d) 
+           (let ([x 0])
+           ((lambda (e) 
+              (let ([x e])
+              (block
+                (mread-blank)
+                (let ([c x])
+                (list '() c))
+                ))) (mread-int))))) '()))
+  ))) (mread-int)))
 )
 

@@ -53,24 +53,19 @@
     (set-toto-blah! t0 (+ (toto-blah t0) 1))
     (let ([len 1])
     ((lambda (internal_env) (apply (lambda (b cache0) 
-                                          (block
-                                            b
-                                            ((lambda (internal_env) (apply (lambda
-                                             (d cache1) 
-                                            (block
-                                              d
-                                              (let ([cache2 cache0])
-                                              (let ([cache0 cache1])
-                                              (let ([cache2 cache0])
-                                              (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))))
-                                              )) internal_env)) (array_init_withenv len 
-                                            (lambda (j) 
-                                              (lambda (_) (let ([c j])
-                                                          (list '() c)))) '()))
-                                          )) internal_env)) (array_init_withenv len 
-    (lambda (i) 
-      (lambda (_) (let ([a (- i)])
-                  (list '() a)))) '())))
+                                          ((lambda (internal_env) (apply (lambda (d cache1) 
+                                                                                (let ([cache2 cache0])
+                                                                                (let ([cache0 cache1])
+                                                                                (let ([cache2 cache0])
+                                                                                (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))))) internal_env)) (array_init_withenv len 
+                                          (lambda (j) 
+                                            (lambda (d) 
+                                              (let ([c j])
+                                              (list '() c)))) '()))) internal_env)) (array_init_withenv len 
+  (lambda (i) 
+    (lambda (b) 
+      (let ([a (- i)])
+      (list '() a)))) '())))
   )))))))
 )
 (define main

@@ -82,8 +82,7 @@ main =
      printf "%d" (len :: Int)::IO()
      printf "=len\n" ::IO()
      ((\ (k, tab) ->
-        do return (k)
-           let y = (len - 1)
+        do let y = (len - 1)
            let x i =
                  (if (i <= y)
                  then do printf "%d" (i :: Int)::IO()
@@ -93,8 +92,7 @@ main =
                          (x (i + 1))
                  else do printf "\n" ::IO()
                          ((\ (m, tab2) ->
-                            do return (m)
-                               let w = (len - 1)
+                            do let w = (len - 1)
                                let v i_ =
                                      (if (i_ <= w)
                                      then do printf "%d" (i_ :: Int)::IO()
@@ -107,8 +105,7 @@ main =
                                              printf "%d" (strlen :: Int)::IO()
                                              printf "=strlen\n" ::IO()
                                              ((\ (p, tab4) ->
-                                                do return (p)
-                                                   skip_whitespaces
+                                                do skip_whitespaces
                                                    let u = (strlen - 1)
                                                    let s i3 =
                                                          (if (i3 <= u)
@@ -131,16 +128,16 @@ main =
                                                                                (q (j + 1))
                                                                        else return (())) in
                                                                        (q 0)) in
-                                                         (s 0)) =<< (array_init_withenv strlen (\ f () ->
+                                                         (s 0)) =<< (array_init_withenv strlen (\ f p ->
                                                                                                  hGetChar stdin >>= ((\ g ->
                                                                                                                        let o = g
                                                                                                                                in return (((), o))))) ()))) in
-                                     (v 0)) =<< (array_init_withenv len (\ d () ->
+                                     (v 0)) =<< (array_init_withenv len (\ d m ->
                                                                           do e <- read_int
                                                                              skip_whitespaces
                                                                              let l = e
                                                                              return (((), l))) ()))) in
-                 (x 0)) =<< (array_init_withenv len (\ a () ->
+                 (x 0)) =<< (array_init_withenv len (\ a k ->
                                                       do b <- read_int
                                                          skip_whitespaces
                                                          let h = b

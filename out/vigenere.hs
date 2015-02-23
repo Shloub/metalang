@@ -102,23 +102,21 @@ main =
   do taille_cle <- read_int
      skip_whitespaces
      ((\ (e, cle) ->
-        do return (e)
-           skip_whitespaces
+        do skip_whitespaces
            taille <- read_int
            skip_whitespaces
            ((\ (g, message) ->
-              do return (g)
-                 (crypte taille_cle cle taille message)
+              do (crypte taille_cle cle taille message)
                  let j = (taille - 1)
                  let h i =
                        (if (i <= j)
                        then do printf "%c" =<< ((readIOA message i) :: IO Char)
                                (h (i + 1))
                        else printf "\n" ::IO()) in
-                       (h 0)) =<< (array_init_withenv taille (\ index2 () ->
+                       (h 0)) =<< (array_init_withenv taille (\ index2 g ->
                                                                hGetChar stdin >>= ((\ out2 ->
                                                                                      let f = out2
-                                                                                             in return (((), f))))) ()))) =<< (array_init_withenv taille_cle (\ index () ->
+                                                                                             in return (((), f))))) ()))) =<< (array_init_withenv taille_cle (\ index e ->
                                                                                                                                                                hGetChar stdin >>= ((\ out0 ->
                                                                                                                                                                                      let d = out0
                                                                                                                                                                                              in return (((), d))))) ()))

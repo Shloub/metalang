@@ -78,8 +78,7 @@ array_init_withenv len f env =
 
 result len tab =
   ((\ (d, tab2) ->
-     do return (d)
-        let h = (len - 1)
+     do let h = (len - 1)
         let g i1 =
               (if (i1 <= h)
               then do printf "%d" =<< ((readIOA tab i1) :: IO Int)
@@ -95,7 +94,7 @@ result len tab =
                                      ((e (i2 + 1)))
                             else return ((- 1))) in
                             (e 0)) in
-              (g 0)) =<< (array_init_withenv len (\ i () ->
+              (g 0)) =<< (array_init_withenv len (\ i d ->
                                                    let c = False
                                                            in return (((), c))) ()))
 main =
@@ -104,9 +103,8 @@ main =
      printf "%d" (len :: Int)::IO()
      printf "\n" ::IO()
      ((\ (k, tab) ->
-        do return (k)
-           printf "%d" =<< ((result len tab) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv len (\ a () ->
+        do printf "%d" =<< ((result len tab) :: IO Int)
+           printf "\n" ::IO()) =<< (array_init_withenv len (\ a k ->
                                                              do b <- read_int
                                                                 skip_whitespaces
                                                                 let j = b

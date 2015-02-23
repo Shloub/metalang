@@ -61,21 +61,19 @@
           (block
             (mread-blank)
             ((lambda (internal_env) (apply (lambda (e tab) 
-                                                  (block
-                                                    e
-                                                    (let ([a (devine0 nombre tab len)])
-                                                    (if a
-                                                    (display "True")
-                                                    (display "False")))
-                                                    )) internal_env)) (array_init_withenv len 
+                                                  (let ([a (devine0 nombre tab len)])
+                                                  (if a
+                                                  (display "True")
+                                                  (display "False")))) internal_env)) (array_init_withenv len 
             (lambda (i) 
-              (lambda (_) ((lambda (tmp) 
-                             (block
-                               (mread-blank)
-                               (let ([d tmp])
-                               (list '() d))
-                               )) (mread-int)))) '()))
-       )) (mread-int))
+              (lambda (e) 
+                ((lambda (tmp) 
+                   (block
+                     (mread-blank)
+                     (let ([d tmp])
+                     (list '() d))
+                     )) (mread-int)))) '()))
+     )) (mread-int))
 )) (mread-int))
 )
 

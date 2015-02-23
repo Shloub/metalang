@@ -100,10 +100,9 @@ main =
   do let n = 100000
      {- normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages -}
      ((\ (e, t) ->
-        do return (e)
-           writeIOA t 1 0
+        do writeIOA t 1 0
            printf "%d" =<< ((eratostene t n) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv n (\ i () ->
+           printf "\n" ::IO()) =<< (array_init_withenv n (\ i e ->
                                                            let d = i
                                                                    in return (((), d))) ()))
 

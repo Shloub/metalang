@@ -32,19 +32,11 @@ let result t_ t2_ =
   (
     t.blah <- (t.blah + 1);
     let len = 1 in
-    ((fun  (b, cache0) -> (
-                            b;
-                            ((fun  (d, cache1) -> (
-                                                    d;
-                                                    let cache2 = cache0 in
-                                                    let cache0 = cache1 in
-                                                    let cache2 = cache0 in
-                                                    ((t.foo + (t.blah * t.bar)) + (t.bar * t.foo))
-                                                    )
-                            ) (Array.init_withenv len (fun  j () -> let c = j in
-                            ((), c)) ()))
-                            )
-    ) (Array.init_withenv len (fun  i () -> let a = (- i) in
+    ((fun  (b, cache0) -> ((fun  (d, cache1) -> let cache2 = cache0 in
+    let cache0 = cache1 in
+    let cache2 = cache0 in
+    ((t.foo + (t.blah * t.bar)) + (t.bar * t.foo))) (Array.init_withenv len (fun  j d -> let c = j in
+    ((), c)) ()))) (Array.init_withenv len (fun  i b -> let a = (- i) in
     ((), a)) ()))
     )
   

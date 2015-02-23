@@ -81,44 +81,42 @@ main =
      {- normalement on doit mettre 20 mais là on se tape un overflow -}
      do let w = (n + 1)
         ((\ (b, tab) ->
-           do return (b)
-              let v = (w - 1)
-              let u l =
-                    (if (l <= v)
+           do let t = (w - 1)
+              let s l =
+                    (if (l <= t)
                     then do join (writeIOA <$> (readIOA tab (w - 1)) <*> return (l) <*> return (1))
                             join (writeIOA <$> (readIOA tab l) <*> return ((w - 1)) <*> return (1))
-                            (u (l + 1))
-                    else let s o =
+                            (s (l + 1))
+                    else let g o =
                                (if (o <= w)
                                then do let r = (w - o)
-                                       let t p =
+                                       let h p =
                                              (if (p <= w)
                                              then do let q = (w - p)
                                                      join (writeIOA <$> (readIOA tab r) <*> return (q) <*> ((+) <$> join (readIOA <$> (readIOA tab (r + 1)) <*> return (q)) <*> join (readIOA <$> (readIOA tab r) <*> return ((q + 1)))))
-                                                     (t (p + 1))
-                                             else (s (o + 1))) in
-                                             (t 2)
-                               else do let h = (w - 1)
-                                       let e m =
-                                             (if (m <= h)
-                                             then do let g = (w - 1)
-                                                     let f k =
-                                                           (if (k <= g)
+                                                     (h (p + 1))
+                                             else (g (o + 1))) in
+                                             (h 2)
+                               else do let f = (w - 1)
+                                       let c m =
+                                             (if (m <= f)
+                                             then do let e = (w - 1)
+                                                     let d k =
+                                                           (if (k <= e)
                                                            then do printf "%d" =<< (join (readIOA <$> (readIOA tab m) <*> return (k)) :: IO Int)
                                                                    printf " " ::IO()
-                                                                   (f (k + 1))
+                                                                   (d (k + 1))
                                                            else do printf "\n" ::IO()
-                                                                   (e (m + 1))) in
-                                                           (f 0)
+                                                                   (c (m + 1))) in
+                                                           (d 0)
                                              else do printf "%d" =<< (join (readIOA <$> (readIOA tab 0) <*> return (0)) :: IO Int)
                                                      printf "\n" ::IO()) in
-                                             (e 0)) in
-                               (s 2)) in
-                    (u 0)) =<< (array_init_withenv w (\ i () ->
-                                                       ((\ (d, tab2) ->
-                                                          do return (d)
-                                                             let a = tab2
-                                                             return (((), a))) =<< (array_init_withenv w (\ j () ->
-                                                                                                           let c = 0
-                                                                                                                   in return (((), c))) ()))) ()))
+                                             (c 0)) in
+                               (g 2)) in
+                    (s 0)) =<< (array_init_withenv w (\ i b ->
+                                                       ((\ (v, tab2) ->
+                                                          let a = tab2
+                                                                  in return (((), a))) =<< (array_init_withenv w (\ j v ->
+                                                                                                                   let u = 0
+                                                                                                                           in return (((), u))) ()))) ()))
 

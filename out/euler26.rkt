@@ -33,25 +33,23 @@
 )
 (define main
   ((lambda (internal_env) (apply (lambda (g t0) 
-                                        (block
-                                          g
-                                          (let ([m 0])
-                                          (let ([mi 0])
-                                          (letrec ([h (lambda (i m mi) 
-                                                        (if (<= i 1000)
-                                                        (let ([p (periode t0 0 1 i)])
-                                                        (if (> p m)
-                                                        (let ([mi i])
-                                                        (let ([m p])
-                                                        (h (+ i 1) m mi)))
-                                                        (h (+ i 1) m mi)))
-                                                        (block
-                                                          (map display (list mi "\n" m "\n"))
-                                                          )))])
-                                          (h 1 m mi))))
-                                        )) internal_env)) (array_init_withenv 1000 
+                                        (let ([m 0])
+                                        (let ([mi 0])
+                                        (letrec ([h (lambda (i m mi) 
+                                                      (if (<= i 1000)
+                                                      (let ([p (periode t0 0 1 i)])
+                                                      (if (> p m)
+                                                      (let ([mi i])
+                                                      (let ([m p])
+                                                      (h (+ i 1) m mi)))
+                                                      (h (+ i 1) m mi)))
+                                                      (block
+                                                        (map display (list mi "\n" m "\n"))
+                                                        )))])
+                                        (h 1 m mi))))) internal_env)) (array_init_withenv 1000 
 (lambda (j) 
-  (lambda (_) (let ([f 0])
-              (list '() f)))) '()))
+  (lambda (g) 
+    (let ([f 0])
+    (list '() f)))) '()))
 )
 

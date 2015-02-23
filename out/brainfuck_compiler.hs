@@ -80,8 +80,7 @@ main =
   do let input = ' '
      let current_pos = 500
      ((\ (b, mem) ->
-        do return (b)
-           writeIOA mem current_pos =<< ((+) <$> (readIOA mem current_pos) <*> return (1))
+        do writeIOA mem current_pos =<< ((+) <$> (readIOA mem current_pos) <*> return (1))
            writeIOA mem current_pos =<< ((+) <$> (readIOA mem current_pos) <*> return (1))
            writeIOA mem current_pos =<< ((+) <$> (readIOA mem current_pos) <*> return (1))
            writeIOA mem current_pos =<< ((+) <$> (readIOA mem current_pos) <*> return (1))
@@ -148,7 +147,7 @@ main =
                          let g = (f + 1)
                          (c g))
                      (return (())) in
-                 (c d)) =<< (array_init_withenv 1000 (\ i () ->
+                 (c d)) =<< (array_init_withenv 1000 (\ i b ->
                                                        let a = 0
                                                                in return (((), a))) ()))
 

@@ -91,8 +91,7 @@ find n m =
                     (readIOA m n))))
 main =
   ((\ (b, m) ->
-     do return (b)
-        let max0 = 0
+     do let max0 = 0
         let maxi = 0
         let c i d e =
               (if (i <= 999)
@@ -107,7 +106,7 @@ main =
                       printf "\n" ::IO()
                       printf "%d" (e :: Int)::IO()
                       printf "\n" ::IO()) in
-              (c 1 max0 maxi)) =<< (array_init_withenv 1000000 (\ j () ->
+              (c 1 max0 maxi)) =<< (array_init_withenv 1000000 (\ j b ->
                                                                  let a = 0
                                                                          in return (((), a))) ()))
 

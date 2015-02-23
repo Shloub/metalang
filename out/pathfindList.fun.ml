@@ -32,11 +32,7 @@ let rec pathfind_aux cache tab len pos =
                 )
          ))
 let pathfind tab len =
-  ((fun  (b, cache) -> (
-                         b;
-                         (pathfind_aux cache tab len 0)
-                         )
-  ) (Array.init_withenv len (fun  i () -> let a = (- 1) in
+  ((fun  (b, cache) -> (pathfind_aux cache tab len 0)) (Array.init_withenv len (fun  i b -> let a = (- 1) in
   ((), a)) ()))
 let main =
   let len = 0 in
@@ -44,12 +40,8 @@ let main =
   (fun  f -> let len = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (d, tab) -> (
-                         d;
-                         let result = (pathfind tab len) in
-                         (Printf.printf "%d" result)
-                         )
-    ) (Array.init_withenv len (fun  i () -> let tmp = 0 in
+    ((fun  (d, tab) -> let result = (pathfind tab len) in
+    (Printf.printf "%d" result)) (Array.init_withenv len (fun  i d -> let tmp = 0 in
     Scanf.scanf "%d"
     (fun  e -> let tmp = e in
     (

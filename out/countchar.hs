@@ -97,9 +97,8 @@ main =
                            do let l = f
                               skip_whitespaces
                               ((\ (d, tab) ->
-                                 do return (d)
-                                    result <- (nth tab l k)
-                                    printf "%d" (result :: Int)::IO()) =<< (array_init_withenv k (\ i () ->
+                                 do result <- (nth tab l k)
+                                    printf "%d" (result :: Int)::IO()) =<< (array_init_withenv k (\ i d ->
                                                                                                    do let tmp = '\000'
                                                                                                       hGetChar stdin >>= ((\ e ->
                                                                                                                             let m = e

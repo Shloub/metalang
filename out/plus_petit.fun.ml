@@ -42,11 +42,7 @@ let main =
   (fun  h -> let len = h in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (f, tab) -> (
-                         f;
-                         (Printf.printf "%d" (plus_petit0 tab len))
-                         )
-    ) (Array.init_withenv len (fun  i () -> let tmp = 0 in
+    ((fun  (f, tab) -> (Printf.printf "%d" (plus_petit0 tab len))) (Array.init_withenv len (fun  i f -> let tmp = 0 in
     Scanf.scanf "%d"
     (fun  g -> let tmp = g in
     (

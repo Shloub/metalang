@@ -103,11 +103,10 @@ main =
      len <- read_int
      skip_whitespaces
      ((\ (e, tab) ->
-        do return (e)
-           a <- (devine0 nombre tab len)
+        do a <- (devine0 nombre tab len)
            (if a
            then printf "True" ::IO()
-           else printf "False" ::IO())) =<< (array_init_withenv len (\ i () ->
+           else printf "False" ::IO())) =<< (array_init_withenv len (\ i e ->
                                                                       do tmp <- read_int
                                                                          skip_whitespaces
                                                                          let d = tmp

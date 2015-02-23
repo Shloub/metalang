@@ -43,42 +43,24 @@ let main =
   Scanf.scanf "%d"
   (fun  n -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               ((fun  (h, passepartout) -> (
-                                             h;
-                                             Scanf.scanf "%d"
-                                             (fun  m -> (
-                                                          (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                          ((fun  (r, serrures) -> 
-                                                          (
-                                                            r;
-                                                            (Printf.printf "%d" (nbPassePartout n passepartout m serrures))
-                                                            )
-                                                          ) (Array.init_withenv m (fun  k () -> ((fun  (t, out1) -> 
-                                                          (
-                                                            t;
-                                                            let q = out1 in
-                                                            ((), q)
-                                                            )
-                                                          ) (Array.init_withenv 2 (fun  l () -> Scanf.scanf "%d"
-                                                          (fun  out_ -> (
-                                                                          (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                                          let s = out_ in
-                                                                          ((), s)
-                                                                          )
-                                                          )) ()))) ()))
-                                                          )
-                                             )
-                                             )
-               ) (Array.init_withenv n (fun  i () -> ((fun  (p, out0) -> (
-                                                                           p;
-                                                                           let g = out0 in
-                                                                           ((), g)
-                                                                           )
-               ) (Array.init_withenv 2 (fun  j () -> Scanf.scanf "%d"
+               ((fun  (h, passepartout) -> Scanf.scanf "%d"
+               (fun  m -> (
+                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                            ((fun  (p, serrures) -> (Printf.printf "%d" (nbPassePartout n passepartout m serrures))) (Array.init_withenv m (fun  k p -> ((fun  (r, out1) -> let o = out1 in
+                            ((), o)) (Array.init_withenv 2 (fun  l r -> Scanf.scanf "%d"
+                            (fun  out_ -> (
+                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                            let q = out_ in
+                                            ((), q)
+                                            )
+                            )) ()))) ()))
+                            )
+               )) (Array.init_withenv n (fun  i h -> ((fun  (t, out0) -> let g = out0 in
+               ((), g)) (Array.init_withenv 2 (fun  j t -> Scanf.scanf "%d"
                (fun  out01 -> (
                                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                let o = out01 in
-                                ((), o)
+                                let s = out01 in
+                                ((), s)
                                 )
                )) ()))) ()))
                )

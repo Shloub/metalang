@@ -30,11 +30,11 @@
   (let ([taille_y (string->number (read-line))])
   ((lambda (internal_env) (apply (lambda (g tableau) 
                                         (block
-                                          g
                                           (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
                                           )) internal_env)) (array_init_withenv taille_y 
   (lambda (a) 
-    (lambda (_) (let ([f (list->vector (map string->number (regexp-split " " (read-line))))])
-                (list '() f)))) '()))))
+    (lambda (g) 
+      (let ([f (list->vector (map string->number (regexp-split " " (read-line))))])
+      (list '() f)))) '()))))
 )
 

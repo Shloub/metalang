@@ -35,15 +35,13 @@
   (let ([taille_x (string->number (read-line))])
   (let ([taille_y (string->number (read-line))])
   ((lambda (internal_env) (apply (lambda (h a) 
+                                        (let ([tableau a])
                                         (block
-                                          h
-                                          (let ([tableau a])
-                                          (block
-                                            (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
-                                            ))
-                                          )) internal_env)) (array_init_withenv taille_y 
+                                          (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
+                                          ))) internal_env)) (array_init_withenv taille_y 
   (lambda (b) 
-    (lambda (_) (let ([g (list->vector (string->list (read-line)))])
-                (list '() g)))) '()))))
+    (lambda (h) 
+      (let ([g (list->vector (string->list (read-line)))])
+      (list '() g)))) '()))))
 )
 

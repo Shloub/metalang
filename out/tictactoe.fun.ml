@@ -206,19 +206,11 @@ let play g =
      ) in
     (e 0 minNote)
 let init0 () =
-  ((fun  (b, cases) -> (
-                         b;
-                         {cases=cases;
-                         firstToPlay=true;
-                         note=0;
-                         ended=false}
-                         )
-  ) (Array.init_withenv 3 (fun  i () -> ((fun  (d, tab) -> (
-                                                             d;
-                                                             let a = tab in
-                                                             ((), a)
-                                                             )
-  ) (Array.init_withenv 3 (fun  j () -> let c = 0 in
+  ((fun  (b, cases) -> {cases=cases;
+  firstToPlay=true;
+  note=0;
+  ended=false}) (Array.init_withenv 3 (fun  i b -> ((fun  (d, tab) -> let a = tab in
+  ((), a)) (Array.init_withenv 3 (fun  j d -> let c = 0 in
   ((), c)) ()))) ()))
 let read_move () =
   Scanf.scanf "%d"

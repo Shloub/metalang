@@ -36,9 +36,8 @@ let find n t used nth =
 let main =
   let n = 10001 in
   ((fun  (e, t) -> (
-                     e;
                      (Printf.printf "%d\n" (find 3 t 1 n))
                      )
-  ) (Array.init_withenv n (fun  i () -> let d = 2 in
+  ) (Array.init_withenv n (fun  i e -> let d = 2 in
   ((), d)) ()))
 

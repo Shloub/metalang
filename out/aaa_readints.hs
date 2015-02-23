@@ -82,8 +82,7 @@ main =
      printf "%d" (len :: Int)::IO()
      printf "=len\n" ::IO()
      ((\ (h, tab1) ->
-        do return (h)
-           let w = (len - 1)
+        do let w = (len - 1)
            let v i =
                  (if (i <= w)
                  then do printf "%d" (i :: Int)::IO()
@@ -95,30 +94,28 @@ main =
                          let ba = u
                          skip_whitespaces
                          ((\ (l, tab2) ->
-                            do return (l)
-                               let s = (ba - 2)
-                               let p bb =
-                                     (if (bb <= s)
-                                     then do let r = (ba - 1)
-                                             let q j =
-                                                   (if (j <= r)
+                            do let q = (ba - 2)
+                               let m bb =
+                                     (if (bb <= q)
+                                     then do let p = (ba - 1)
+                                             let o j =
+                                                   (if (j <= p)
                                                    then do printf "%d" =<< (join (readIOA <$> (readIOA tab2 bb) <*> return (j)) :: IO Int)
                                                            printf " " ::IO()
-                                                           (q (j + 1))
+                                                           (o (j + 1))
                                                    else do printf "\n" ::IO()
-                                                           (p (bb + 1))) in
-                                                   (q 0)
+                                                           (m (bb + 1))) in
+                                                   (o 0)
                                      else return (())) in
-                                     (p 0)) =<< (array_init_withenv (ba - 1) (\ c () ->
-                                                                               ((\ (o, e) ->
-                                                                                  do return (o)
-                                                                                     let k = e
-                                                                                     return (((), k))) =<< (array_init_withenv ba (\ f () ->
-                                                                                                                                    do d <- read_int
-                                                                                                                                       skip_whitespaces
-                                                                                                                                       let m = d
-                                                                                                                                       return (((), m))) ()))) ()))) in
-                 (v 0)) =<< (array_init_withenv len (\ a () ->
+                                     (m 0)) =<< (array_init_withenv (ba - 1) (\ c l ->
+                                                                               ((\ (s, e) ->
+                                                                                  let k = e
+                                                                                          in return (((), k))) =<< (array_init_withenv ba (\ f s ->
+                                                                                                                                            do d <- read_int
+                                                                                                                                               skip_whitespaces
+                                                                                                                                               let r = d
+                                                                                                                                               return (((), r))) ()))) ()))) in
+                 (v 0)) =<< (array_init_withenv len (\ a h ->
                                                       do b <- read_int
                                                          skip_whitespaces
                                                          let g = b

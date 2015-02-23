@@ -11,8 +11,7 @@ end
 
 let main =
   let i = 1 in
-  ((fun  (h, last) -> let i = h in
-  let max0 = i in
+  ((fun  (i, last) -> let max0 = i in
   let index = 0 in
   let nskipdiv = 0 in
   let rec l k i index max0 nskipdiv =

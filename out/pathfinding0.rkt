@@ -35,24 +35,22 @@
 (define (pathfind tab x y)
   ;toto
   ((lambda (internal_env) (apply (lambda (h cache) 
-                                        (block
-                                          h
-                                          (pathfind_aux cache tab x y 0 0)
-                                          )) internal_env)) (array_init_withenv y 
+                                        (pathfind_aux cache tab x y 0 0)) internal_env)) (array_init_withenv y 
   (lambda (i) 
-    (lambda (_) ((lambda (internal_env) (apply (lambda (l tmp) 
-                                                      (block
-                                                        l
-                                                        (display "\n")
-                                                        (let ([g tmp])
-                                                        (list '() g))
-                                                        )) internal_env)) (array_init_withenv x 
-    (lambda (j) 
-      (lambda (_) (block
-                    (display (vector-ref (vector-ref tab i) j))
-                    (let ([k (- 1)])
-                    (list '() k))
-                    ))) '())))) '()))
+    (lambda (h) 
+      ((lambda (internal_env) (apply (lambda (l tmp) 
+                                            (block
+                                              (display "\n")
+                                              (let ([g tmp])
+                                              (list '() g))
+                                              )) internal_env)) (array_init_withenv x 
+      (lambda (j) 
+        (lambda (l) 
+          (block
+            (display (vector-ref (vector-ref tab i) j))
+            (let ([k (- 1)])
+            (list '() k))
+            ))) '())))) '()))
 )
 (define main
   (let ([x (string->number (read-line))])
@@ -60,15 +58,13 @@
   (block
     (map display (list x " " y "\n"))
     ((lambda (internal_env) (apply (lambda (o e) 
-                                          (block
-                                            o
-                                            (let ([tab e])
-                                            (let ([result (pathfind tab x y)])
-                                            (display result)))
-                                            )) internal_env)) (array_init_withenv y 
+                                          (let ([tab e])
+                                          (let ([result (pathfind tab x y)])
+                                          (display result)))) internal_env)) (array_init_withenv y 
     (lambda (f) 
-      (lambda (_) (let ([m (list->vector (string->list (read-line)))])
-                  (list '() m)))) '()))
+      (lambda (o) 
+        (let ([m (list->vector (string->list (read-line)))])
+        (list '() m)))) '()))
   )))
 )
 

@@ -99,9 +99,8 @@ main =
      let n = f
      skip_whitespaces
      ((\ (d, tab) ->
-        do return (d)
-           result <- (summax tab n)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv n (\ i () ->
+        do result <- (summax tab n)
+           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv n (\ i d ->
                                                                           do let tmp = 0
                                                                              e <- read_int
                                                                              let o = e

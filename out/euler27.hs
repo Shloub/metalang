@@ -120,13 +120,11 @@ test a b primes len =
 main =
   do let maximumprimes = 1000
      ((\ (m, era) ->
-        do return (m)
-           let result = 0
+        do let result = 0
            let max0 = 0
            nprimes <- (eratostene era maximumprimes)
            ((\ (q, primes) ->
-              do return (q)
-                 let l = 0
+              do let l = 0
                  let v = (maximumprimes - 1)
                  let u k be =
                        (if (k <= v)
@@ -174,9 +172,9 @@ main =
                                              printf "%d" (bj :: Int)::IO()
                                              printf "\n" ::IO()) in
                                      (r 3 ma max0 mb result)) in
-                       (u 2 l)) =<< (array_init_withenv nprimes (\ o () ->
+                       (u 2 l)) =<< (array_init_withenv nprimes (\ o q ->
                                                                   let p = 0
-                                                                          in return (((), p))) ()))) =<< (array_init_withenv maximumprimes (\ j () ->
+                                                                          in return (((), p))) ()))) =<< (array_init_withenv maximumprimes (\ j m ->
                                                                                                                                              let h = j
                                                                                                                                                      in return (((), h))) ()))
 

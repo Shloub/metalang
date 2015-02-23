@@ -82,9 +82,8 @@ g t index =
   writeIOA t index False
 main =
   do let j = 0
-     ((\ (f, a) ->
-        do let h = f
-           printf "%d" (h :: Int)::IO()
+     ((\ (h, a) ->
+        do printf "%d" (h :: Int)::IO()
            printf " " ::IO()
            c <- (readIOA a 0)
            (if c

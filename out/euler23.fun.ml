@@ -73,95 +73,66 @@ let rec sumdivaux t n i =
             else ((out0 + 1) * o)) in
            (c 1 out0 p)))
 let sumdiv nprimes primes n =
-  ((fun  (b, t) -> (
-                     b;
-                     let max0 = (fillPrimesFactors t n primes nprimes) in
-                     (sumdivaux t max0 0)
-                     )
-  ) (Array.init_withenv (n + 1) (fun  i () -> let a = 0 in
+  ((fun  (b, t) -> let max0 = (fillPrimesFactors t n primes nprimes) in
+  (sumdivaux t max0 0)) (Array.init_withenv (n + 1) (fun  i b -> let a = 0 in
   ((), a)) ()))
 let main =
   let maximumprimes = 30001 in
-  ((fun  (y, era) -> (
-                       y;
-                       let nprimes = (eratostene era maximumprimes) in
-                       ((fun  (ba, primes) -> (
-                                                ba;
-                                                let l = 0 in
-                                                let bk = (maximumprimes - 1) in
-                                                let rec bj k l =
-                                                  (if (k <= bk)
-                                                   then (if (era.(k) = k)
-                                                         then (
-                                                                primes.(l) <- k;
-                                                                let l = (l + 1) in
-                                                                (bj (k + 1) l)
-                                                                )
-                                                         
-                                                         else (bj (k + 1) l))
-                                                   else let n = 100 in
-                                                   (*  28124 ça prend trop de temps mais on arrive a passer le test  *)
-                                                   ((fun  (bc, abondant) -> (
-                                                                              bc;
-                                                                              ((fun  (be, summable) -> 
-                                                                              (
-                                                                                be;
-                                                                                let sum = 0 in
-                                                                                let rec bi r =
-                                                                                (if (r <= n)
-                                                                                then let other = ((sumdiv nprimes primes r) - r) in
-                                                                                (if (other > r)
-                                                                                then 
-                                                                                (
-                                                                                abondant.(r) <- true;
-                                                                                (bi (r + 1))
-                                                                                )
-                                                                                
-                                                                                else (bi (r + 1)))
-                                                                                else 
-                                                                                let rec bg i =
-                                                                                (if (i <= n)
-                                                                                then 
-                                                                                let rec bh j =
-                                                                                (if (j <= n)
-                                                                                then (
-                                                                                if ((abondant.(i) && abondant.(j)) && ((i + j) <= n))
-                                                                                then 
-                                                                                (
-                                                                                summable.((i + j)) <- true;
-                                                                                (bh (j + 1))
-                                                                                )
-                                                                                
-                                                                                else (bh (j + 1)))
-                                                                                else (bg (i + 1))) in
-                                                                                (bh 1)
-                                                                                else 
-                                                                                let rec bf o sum =
-                                                                                (if (o <= n)
-                                                                                then (
-                                                                                if (not summable.(o))
-                                                                                then let sum = (sum + o) in
-                                                                                (bf (o + 1) sum)
-                                                                                else (bf (o + 1) sum))
-                                                                                else 
-                                                                                (
-                                                                                (Printf.printf "\n%d\n" sum)
-                                                                                )
-                                                                                ) in
-                                                                                (bf 1 sum)) in
-                                                                                (bg 1)) in
-                                                                                (bi 2)
-                                                                                )
-                                                                              ) (Array.init_withenv (n + 1) (fun  q () -> let bd = false in
-                                                                              ((), bd)) ()))
-                                                                              )
-                                                   ) (Array.init_withenv (n + 1) (fun  p () -> let bb = false in
-                                                   ((), bb)) ()))) in
-                                                  (bj 2 l)
-                                                )
-                       ) (Array.init_withenv nprimes (fun  t () -> let z = 0 in
-                       ((), z)) ()))
-                       )
-  ) (Array.init_withenv maximumprimes (fun  s () -> let x = s in
+  ((fun  (y, era) -> let nprimes = (eratostene era maximumprimes) in
+  ((fun  (ba, primes) -> let l = 0 in
+  let bk = (maximumprimes - 1) in
+  let rec bj k l =
+    (if (k <= bk)
+     then (if (era.(k) = k)
+           then (
+                  primes.(l) <- k;
+                  let l = (l + 1) in
+                  (bj (k + 1) l)
+                  )
+           
+           else (bj (k + 1) l))
+     else let n = 100 in
+     (*  28124 ça prend trop de temps mais on arrive a passer le test  *)
+     ((fun  (bc, abondant) -> ((fun  (be, summable) -> let sum = 0 in
+     let rec bi r =
+       (if (r <= n)
+        then let other = ((sumdiv nprimes primes r) - r) in
+        (if (other > r)
+         then (
+                abondant.(r) <- true;
+                (bi (r + 1))
+                )
+         
+         else (bi (r + 1)))
+        else let rec bg i =
+               (if (i <= n)
+                then let rec bh j =
+                       (if (j <= n)
+                        then (if ((abondant.(i) && abondant.(j)) && ((i + j) <= n))
+                              then (
+                                     summable.((i + j)) <- true;
+                                     (bh (j + 1))
+                                     )
+                              
+                              else (bh (j + 1)))
+                        else (bg (i + 1))) in
+                       (bh 1)
+                else let rec bf o sum =
+                       (if (o <= n)
+                        then (if (not summable.(o))
+                              then let sum = (sum + o) in
+                              (bf (o + 1) sum)
+                              else (bf (o + 1) sum))
+                        else (
+                               (Printf.printf "\n%d\n" sum)
+                               )
+                        ) in
+                       (bf 1 sum)) in
+               (bg 1)) in
+       (bi 2)) (Array.init_withenv (n + 1) (fun  q be -> let bd = false in
+     ((), bd)) ()))) (Array.init_withenv (n + 1) (fun  p bc -> let bb = false in
+     ((), bb)) ()))) in
+    (bj 2 l)) (Array.init_withenv nprimes (fun  t ba -> let z = 0 in
+  ((), z)) ()))) (Array.init_withenv maximumprimes (fun  s y -> let x = s in
   ((), x)) ()))
 

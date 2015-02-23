@@ -24,19 +24,15 @@ let main =
                   )
                   )
      )
-     else ((fun  (f, l) -> (
-                             f;
-                             let rec g j =
-                               (if (j <= 9)
-                                then (
-                                       (Printf.printf "%d\n" l.(j));
-                                       (g (j + 1))
-                                       )
-                                
-                                else ()) in
-                               (g 0)
-                             )
-     ) (Array.init_withenv 10 (fun  c () -> Scanf.scanf "%d"
+     else ((fun  (f, l) -> let rec g j =
+                             (if (j <= 9)
+                              then (
+                                     (Printf.printf "%d\n" l.(j));
+                                     (g (j + 1))
+                                     )
+                              
+                              else ()) in
+                             (g 0)) (Array.init_withenv 10 (fun  c f -> Scanf.scanf "%d"
      (fun  d -> (
                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                   let e = d in

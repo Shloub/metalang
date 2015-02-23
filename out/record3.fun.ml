@@ -29,25 +29,21 @@ let result t len =
      else out0) in
     (a 0 out0)
 let main =
-  ((fun  (d, t) -> (
-                     d;
-                     Scanf.scanf "%d"
-                     (fun  f -> (
-                                  t.(0).bar <- f;
-                                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                  Scanf.scanf "%d"
-                                  (fun  e -> (
-                                               t.(1).blah <- e;
-                                               let titi = (result t 4) in
-                                               (
-                                                 (Printf.printf "%d%d" titi t.(2).blah)
-                                                 )
-                                               
-                                               )
-                                  )
-                                  )
-                     )
-                     )
-  ) (Array.init_withenv 4 (fun  i () -> let c = (mktoto i) in
+  ((fun  (d, t) -> Scanf.scanf "%d"
+  (fun  f -> (
+               t.(0).bar <- f;
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               Scanf.scanf "%d"
+               (fun  e -> (
+                            t.(1).blah <- e;
+                            let titi = (result t 4) in
+                            (
+                              (Printf.printf "%d%d" titi t.(2).blah)
+                              )
+                            
+                            )
+               )
+               )
+  )) (Array.init_withenv 4 (fun  i d -> let c = (mktoto i) in
   ((), c)) ()))
 

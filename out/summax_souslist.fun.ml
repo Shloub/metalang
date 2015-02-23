@@ -32,12 +32,8 @@ let main =
   (fun  f -> let len = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (d, tab) -> (
-                         d;
-                         let result = (summax tab len) in
-                         (Printf.printf "%d" result)
-                         )
-    ) (Array.init_withenv len (fun  i () -> let tmp = 0 in
+    ((fun  (d, tab) -> let result = (summax tab len) in
+    (Printf.printf "%d" result)) (Array.init_withenv len (fun  i d -> let tmp = 0 in
     Scanf.scanf "%d"
     (fun  e -> let tmp = e in
     (

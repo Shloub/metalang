@@ -114,26 +114,22 @@ main =
   do n <- read_int
      skip_whitespaces
      ((\ (h, passepartout) ->
-        do return (h)
-           m <- read_int
+        do m <- read_int
            skip_whitespaces
-           ((\ (r, serrures) ->
-              do return (r)
-                 printf "%d" =<< ((nbPassePartout n passepartout m serrures) :: IO Int)) =<< (array_init_withenv m (\ k () ->
-                                                                                                                     ((\ (t, out1) ->
-                                                                                                                        do return (t)
-                                                                                                                           let q = out1
-                                                                                                                           return (((), q))) =<< (array_init_withenv 2 (\ l () ->
-                                                                                                                                                                         do out_ <- read_int
-                                                                                                                                                                            skip_whitespaces
-                                                                                                                                                                            let s = out_
-                                                                                                                                                                            return (((), s))) ()))) ()))) =<< (array_init_withenv n (\ i () ->
-                                                                                                                                                                                                                                      ((\ (p, out0) ->
-                                                                                                                                                                                                                                         do return (p)
-                                                                                                                                                                                                                                            let g = out0
-                                                                                                                                                                                                                                            return (((), g))) =<< (array_init_withenv 2 (\ j () ->
-                                                                                                                                                                                                                                                                                          do out01 <- read_int
-                                                                                                                                                                                                                                                                                             skip_whitespaces
-                                                                                                                                                                                                                                                                                             let o = out01
-                                                                                                                                                                                                                                                                                             return (((), o))) ()))) ()))
+           ((\ (p, serrures) ->
+              printf "%d" =<< ((nbPassePartout n passepartout m serrures) :: IO Int)) =<< (array_init_withenv m (\ k p ->
+                                                                                                                  ((\ (r, out1) ->
+                                                                                                                     let o = out1
+                                                                                                                             in return (((), o))) =<< (array_init_withenv 2 (\ l r ->
+                                                                                                                                                                              do out_ <- read_int
+                                                                                                                                                                                 skip_whitespaces
+                                                                                                                                                                                 let q = out_
+                                                                                                                                                                                 return (((), q))) ()))) ()))) =<< (array_init_withenv n (\ i h ->
+                                                                                                                                                                                                                                           ((\ (t, out0) ->
+                                                                                                                                                                                                                                              let g = out0
+                                                                                                                                                                                                                                                      in return (((), g))) =<< (array_init_withenv 2 (\ j t ->
+                                                                                                                                                                                                                                                                                                       do out01 <- read_int
+                                                                                                                                                                                                                                                                                                          skip_whitespaces
+                                                                                                                                                                                                                                                                                                          let s = out01
+                                                                                                                                                                                                                                                                                                          return (((), s))) ()))) ()))
 

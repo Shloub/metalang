@@ -14,7 +14,6 @@
   (let ([current_pos 500])
   ((lambda (internal_env) (apply (lambda (b mem0) 
                                         (block
-                                          b
                                           (vector-set! mem0 current_pos (+ (vector-ref mem0 current_pos) 1))
                                           (vector-set! mem0 current_pos (+ (vector-ref mem0 current_pos) 1))
                                           (vector-set! mem0 current_pos (+ (vector-ref mem0 current_pos) 1))
@@ -91,7 +90,8 @@
                                           ))
                                         )) internal_env)) (array_init_withenv 1000 
   (lambda (i) 
-    (lambda (_) (let ([a 0])
-                (list '() a)))) '()))))
+    (lambda (b) 
+      (let ([a 0])
+      (list '() a)))) '()))))
 )
 

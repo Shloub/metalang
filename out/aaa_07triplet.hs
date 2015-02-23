@@ -94,17 +94,16 @@ main =
                 printf "\n" ::IO()
                 (k (i + 1))
         else ((\ (g, l) ->
-                do return (g)
-                   let h j =
-                         (if (j <= 9)
-                         then do printf "%d" =<< ((readIOA l j) :: IO Int)
-                                 printf "\n" ::IO()
-                                 (h (j + 1))
-                         else return (())) in
-                         (h 0)) =<< (array_init_withenv 10 (\ d () ->
-                                                             do e <- read_int
-                                                                skip_whitespaces
-                                                                let f = e
-                                                                return (((), f))) ()))) in
+                let h j =
+                      (if (j <= 9)
+                      then do printf "%d" =<< ((readIOA l j) :: IO Int)
+                              printf "\n" ::IO()
+                              (h (j + 1))
+                      else return (())) in
+                      (h 0)) =<< (array_init_withenv 10 (\ d g ->
+                                                          do e <- read_int
+                                                             skip_whitespaces
+                                                             let f = e
+                                                             return (((), f))) ()))) in
         (k 1)
 

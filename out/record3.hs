@@ -98,15 +98,14 @@ result t len =
            (a 0 out0)
 main =
   ((\ (d, t) ->
-     do return (d)
-        f <- read_int
+     do f <- read_int
         (join (writeIORef <$> (_bar <$> (readIOA t 0)) <*> (return f)))
         skip_whitespaces
         e <- read_int
         (join (writeIORef <$> (_blah <$> (readIOA t 1)) <*> (return e)))
         titi <- (result t 4)
         printf "%d" (titi :: Int)::IO()
-        printf "%d" =<< ((join (readIORef <$> (_blah <$> (readIOA t 2)))) :: IO Int)) =<< (array_init_withenv 4 (\ i () ->
+        printf "%d" =<< ((join (readIORef <$> (_blah <$> (readIOA t 2)))) :: IO Int)) =<< (array_init_withenv 4 (\ i d ->
                                                                                                                   do c <- (mktoto i)
                                                                                                                      return (((), c))) ()))
 

@@ -135,19 +135,16 @@ sumdivaux t n i =
                      (c 1 out0 p)))
 sumdiv nprimes primes n =
   ((\ (b, t) ->
-     do return (b)
-        max0 <- (fillPrimesFactors t n primes nprimes)
-        (sumdivaux t max0 0)) =<< (array_init_withenv (n + 1) (\ i () ->
+     do max0 <- (fillPrimesFactors t n primes nprimes)
+        (sumdivaux t max0 0)) =<< (array_init_withenv (n + 1) (\ i b ->
                                                                 let a = 0
                                                                         in return (((), a))) ()))
 main =
   do let maximumprimes = 30001
      ((\ (y, era) ->
-        do return (y)
-           nprimes <- (eratostene era maximumprimes)
+        do nprimes <- (eratostene era maximumprimes)
            ((\ (ba, primes) ->
-              do return (ba)
-                 let l = 0
+              do let l = 0
                  let bk = (maximumprimes - 1)
                  let bj k by =
                         (if (k <= bk)
@@ -159,46 +156,44 @@ main =
                         else do let n = 100
                                 {- 28124 ça prend trop de temps mais on arrive a passer le test -}
                                 ((\ (bc, abondant) ->
-                                   do return (bc)
-                                      ((\ (be, summable) ->
-                                         do return (be)
-                                            let sum = 0
-                                            let bi r =
-                                                   (if (r <= n)
-                                                   then do other <- ((-) <$> (sumdiv nprimes primes r) <*> return (r))
-                                                           (if (other > r)
-                                                           then do writeIOA abondant r True
-                                                                   (bi (r + 1))
-                                                           else (bi (r + 1)))
-                                                   else let bg i =
-                                                               (if (i <= n)
-                                                               then let bh j =
-                                                                           (if (j <= n)
-                                                                           then ifM ((((readIOA abondant i) <&&> (readIOA abondant j)) <&&> return (((i + j) <= n))))
-                                                                                    (do writeIOA summable (i + j) True
-                                                                                        (bh (j + 1)))
-                                                                                    ((bh (j + 1)))
-                                                                           else (bg (i + 1))) in
-                                                                           (bh 1)
-                                                               else let bf o ca =
-                                                                           (if (o <= n)
-                                                                           then ifM ((fmap (not) (readIOA summable o)))
-                                                                                    (do let cb = (ca + o)
-                                                                                        (bf (o + 1) cb))
-                                                                                    ((bf (o + 1) ca))
-                                                                           else do printf "\n" ::IO()
-                                                                                   printf "%d" (ca :: Int)::IO()
-                                                                                   printf "\n" ::IO()) in
-                                                                           (bf 1 sum)) in
-                                                               (bg 1)) in
-                                                   (bi 2)) =<< (array_init_withenv (n + 1) (\ q () ->
-                                                                                             let bd = False
-                                                                                                      in return (((), bd))) ()))) =<< (array_init_withenv (n + 1) (\ p () ->
-                                                                                                                                                                    let bb = False
-                                                                                                                                                                             in return (((), bb))) ()))) in
-                        (bj 2 l)) =<< (array_init_withenv nprimes (\ t () ->
+                                   ((\ (be, summable) ->
+                                      do let sum = 0
+                                         let bi r =
+                                                (if (r <= n)
+                                                then do other <- ((-) <$> (sumdiv nprimes primes r) <*> return (r))
+                                                        (if (other > r)
+                                                        then do writeIOA abondant r True
+                                                                (bi (r + 1))
+                                                        else (bi (r + 1)))
+                                                else let bg i =
+                                                            (if (i <= n)
+                                                            then let bh j =
+                                                                        (if (j <= n)
+                                                                        then ifM ((((readIOA abondant i) <&&> (readIOA abondant j)) <&&> return (((i + j) <= n))))
+                                                                                 (do writeIOA summable (i + j) True
+                                                                                     (bh (j + 1)))
+                                                                                 ((bh (j + 1)))
+                                                                        else (bg (i + 1))) in
+                                                                        (bh 1)
+                                                            else let bf o ca =
+                                                                        (if (o <= n)
+                                                                        then ifM ((fmap (not) (readIOA summable o)))
+                                                                                 (do let cb = (ca + o)
+                                                                                     (bf (o + 1) cb))
+                                                                                 ((bf (o + 1) ca))
+                                                                        else do printf "\n" ::IO()
+                                                                                printf "%d" (ca :: Int)::IO()
+                                                                                printf "\n" ::IO()) in
+                                                                        (bf 1 sum)) in
+                                                            (bg 1)) in
+                                                (bi 2)) =<< (array_init_withenv (n + 1) (\ q be ->
+                                                                                          let bd = False
+                                                                                                   in return (((), bd))) ()))) =<< (array_init_withenv (n + 1) (\ p bc ->
+                                                                                                                                                                 let bb = False
+                                                                                                                                                                          in return (((), bb))) ()))) in
+                        (bj 2 l)) =<< (array_init_withenv nprimes (\ t ba ->
                                                                     let z = 0
-                                                                            in return (((), z))) ()))) =<< (array_init_withenv maximumprimes (\ s () ->
+                                                                            in return (((), z))) ()))) =<< (array_init_withenv maximumprimes (\ s y ->
                                                                                                                                                let x = s
                                                                                                                                                        in return (((), x))) ()))
 

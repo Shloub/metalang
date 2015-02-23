@@ -10,11 +10,7 @@ module Array = struct
 end
 
 let read_sudoku () =
-  ((fun  (g, out0) -> (
-                        g;
-                        out0
-                        )
-  ) (Array.init_withenv (9 * 9) (fun  i () -> Scanf.scanf "%d"
+  ((fun  (g, out0) -> out0) (Array.init_withenv (9 * 9) (fun  i g -> Scanf.scanf "%d"
   (fun  k -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                let f = k in

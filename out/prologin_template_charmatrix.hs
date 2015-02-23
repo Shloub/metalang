@@ -98,15 +98,13 @@ main =
      taille_y <- read_int
      skip_whitespaces
      ((\ (m, a) ->
-        do return (m)
-           let tableau = a
+        do let tableau = a
            printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv taille_y (\ b () ->
+           printf "\n" ::IO()) =<< (array_init_withenv taille_y (\ b m ->
                                                                   ((\ (p, d) ->
-                                                                     do return (p)
-                                                                        skip_whitespaces
+                                                                     do skip_whitespaces
                                                                         let l = d
-                                                                        return (((), l))) =<< (array_init_withenv taille_x (\ e () ->
+                                                                        return (((), l))) =<< (array_init_withenv taille_x (\ e p ->
                                                                                                                              hGetChar stdin >>= ((\ c ->
                                                                                                                                                    let o = c
                                                                                                                                                            in return (((), o))))) ()))) ()))

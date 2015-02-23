@@ -81,27 +81,21 @@
 (define (sumdiv nprimes primes n)
   ;toto
   ((lambda (internal_env) (apply (lambda (b t0) 
-                                        (block
-                                          b
-                                          (let ([max0 (fillPrimesFactors t0 n primes nprimes)])
-                                          (sumdivaux t0 max0 0))
-                                          )) internal_env)) (array_init_withenv (+ n 1) 
+                                        (let ([max0 (fillPrimesFactors t0 n primes nprimes)])
+                                        (sumdivaux t0 max0 0))) internal_env)) (array_init_withenv (+ n 1) 
   (lambda (i) 
-    (lambda (_) (let ([a 0])
-                (list '() a)))) '()))
+    (lambda (b) 
+      (let ([a 0])
+      (list '() a)))) '()))
 )
 (define main
   (let ([maximumprimes 1001])
   ((lambda (internal_env) (apply (lambda (v era) 
-                                        (block
-                                          v
-                                          (let ([nprimes (eratostene era maximumprimes)])
-                                          ((lambda (internal_env) (apply (lambda (x primes) 
-                                                                                (block
-                                                                                x
-                                                                                (let ([l 0])
-                                                                                (let ([ba (- maximumprimes 1)])
-                                                                                (letrec ([z 
+                                        (let ([nprimes (eratostene era maximumprimes)])
+                                        ((lambda (internal_env) (apply (lambda (x primes) 
+                                                                              (let ([l 0])
+                                                                              (let ([ba (- maximumprimes 1)])
+                                                                              (letrec ([z 
                                                                                 (lambda (k l) 
                                                                                 (if (<= k ba)
                                                                                 (if (eq? (vector-ref era k) k)
@@ -133,13 +127,13 @@
                                                                                 )))])
                                                                                 (y 2 sum)))
                                                                                 )))])
-                                                                                (z 2 l))))
-                                          )) internal_env)) (array_init_withenv nprimes 
-                                        (lambda (o) 
-                                          (lambda (_) (let ([w 0])
-                                                      (list '() w)))) '())))
-  )) internal_env)) (array_init_withenv maximumprimes (lambda (j) 
-                                                        (lambda (_) (let ([u j])
-                                                                    (list '() u)))) '())))
+                                                                              (z 2 l))))) internal_env)) (array_init_withenv nprimes 
+  (lambda (o) 
+    (lambda (x) 
+      (let ([w 0])
+      (list '() w)))) '())))) internal_env)) (array_init_withenv maximumprimes (lambda (j) 
+                                                                                (lambda (v) 
+                                                                                (let ([u j])
+                                                                                (list '() u)))) '())))
 )
 

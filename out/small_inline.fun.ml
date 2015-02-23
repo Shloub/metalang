@@ -11,10 +11,9 @@ end
 
 let main =
   ((fun  (b, t) -> (
-                     b;
                      (Printf.printf "%d - %d\n" t.(0) t.(1))
                      )
-  ) (Array.init_withenv 2 (fun  d () -> Scanf.scanf "%d"
+  ) (Array.init_withenv 2 (fun  d b -> Scanf.scanf "%d"
   (fun  out0 -> (
                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                   let a = out0 in

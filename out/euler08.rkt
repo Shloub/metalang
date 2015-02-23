@@ -20,8 +20,7 @@
 
 (define main
   (let ([i 1])
-  ((lambda (internal_env) (apply (lambda (h last) 
-                                        (let ([i h])
+  ((lambda (internal_env) (apply (lambda (i last) 
                                         (let ([max0 i])
                                         (let ([index 0])
                                         (let ([nskipdiv 0])
@@ -51,7 +50,7 @@
                                                       (block
                                                         (map display (list max0 "\n"))
                                                         )))])
-                                        (l 1 i index max0 nskipdiv))))))) internal_env)) (array_init_withenv 5 
+                                        (l 1 i index max0 nskipdiv)))))) internal_env)) (array_init_withenv 5 
 (lambda (j) 
   (lambda (i) 
     ((lambda (c) 

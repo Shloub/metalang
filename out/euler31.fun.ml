@@ -28,7 +28,6 @@ let rec result sum t maxIndex cache =
            (a 0 out0)))
 let main =
   ((fun  (c, t) -> (
-                     c;
                      t.(0) <- 1;
                      t.(1) <- 2;
                      t.(2) <- 5;
@@ -37,18 +36,10 @@ let main =
                      t.(5) <- 50;
                      t.(6) <- 100;
                      t.(7) <- 200;
-                     ((fun  (e, cache) -> (
-                                            e;
-                                            (Printf.printf "%d" (result 200 t 7 cache))
-                                            )
-                     ) (Array.init_withenv 201 (fun  j () -> ((fun  (g, o) -> (
-                                                                                g;
-                                                                                let d = o in
-                                                                                ((), d)
-                                                                                )
-                     ) (Array.init_withenv 8 (fun  k () -> let f = 0 in
+                     ((fun  (e, cache) -> (Printf.printf "%d" (result 200 t 7 cache))) (Array.init_withenv 201 (fun  j e -> ((fun  (g, o) -> let d = o in
+                     ((), d)) (Array.init_withenv 8 (fun  k g -> let f = 0 in
                      ((), f)) ()))) ()))
                      )
-  ) (Array.init_withenv 8 (fun  i () -> let b = 0 in
+  ) (Array.init_withenv 8 (fun  i c -> let b = 0 in
   ((), b)) ()))
 

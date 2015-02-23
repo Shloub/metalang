@@ -99,14 +99,12 @@ pathfind_aux cache tab x y posX posY =
                          return (out0)))))
 pathfind tab x y =
   ((\ (f, cache) ->
-     do return (f)
-        (pathfind_aux cache tab x y 0 0)) =<< (array_init_withenv y (\ i () ->
-                                                                      ((\ (h, tmp) ->
-                                                                         do return (h)
-                                                                            let e = tmp
-                                                                            return (((), e))) =<< (array_init_withenv x (\ j () ->
-                                                                                                                          let g = (- 1)
-                                                                                                                                  in return (((), g))) ()))) ()))
+     (pathfind_aux cache tab x y 0 0)) =<< (array_init_withenv y (\ i f ->
+                                                                   ((\ (h, tmp) ->
+                                                                      let e = tmp
+                                                                              in return (((), e))) =<< (array_init_withenv x (\ j h ->
+                                                                                                                               let g = (- 1)
+                                                                                                                                       in return (((), g))) ()))) ()))
 main =
   do let x = 0
      let y = 0
@@ -117,14 +115,12 @@ main =
      let s = p
      skip_whitespaces
      ((\ (l, tab) ->
-        do return (l)
-           result <- (pathfind tab r s)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv s (\ i () ->
+        do result <- (pathfind tab r s)
+           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv s (\ i l ->
                                                                           ((\ (n, tab2) ->
-                                                                             do return (n)
-                                                                                skip_whitespaces
+                                                                             do skip_whitespaces
                                                                                 let k = tab2
-                                                                                return (((), k))) =<< (array_init_withenv r (\ j () ->
+                                                                                return (((), k))) =<< (array_init_withenv r (\ j n ->
                                                                                                                               do let tmp = '\000'
                                                                                                                                  hGetChar stdin >>= ((\ o ->
                                                                                                                                                        let t = o

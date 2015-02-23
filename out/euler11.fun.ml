@@ -16,64 +16,52 @@ let rec find n m x y dx dy =
          then 1
          else (m.(y).(x) * (find (n - 1) m (x + dx) (y + dy) dx dy))))
 let main =
-  ((fun  (k, directions) -> (
-                              k;
-                              let max0 = 0 in
-                              let c = 20 in
-                              ((fun  (o, m) -> (
-                                                 o;
-                                                 let rec r j max0 =
-                                                   (if (j <= 7)
-                                                    then ((fun  (dx, dy) -> let rec s x max0 =
-                                                                              (if (x <= 19)
-                                                                               then 
-                                                                               let rec u y max0 =
-                                                                                (if (y <= 19)
-                                                                                then let max0 = ((max (max0) ((find 4 m x y dx dy)))) in
-                                                                                (u (y + 1) max0)
-                                                                                else (s (x + 1) max0)) in
-                                                                                (u 0 max0)
-                                                                               else (r (j + 1) max0)) in
-                                                                              (s 0 max0)) directions.(j))
-                                                    else (
-                                                           (Printf.printf "%d\n" max0)
-                                                           )
-                                                    ) in
-                                                   (r 0 max0)
-                                                 )
-                              ) (Array.init_withenv 20 (fun  d () -> ((fun  (q, f) -> 
-                              (
-                                q;
-                                let l = f in
-                                ((), l)
-                                )
-                              ) (Array.init_withenv c (fun  g () -> Scanf.scanf "%d"
-                              (fun  e -> (
-                                           (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                           let p = e in
-                                           ((), p)
-                                           )
-                              )) ()))) ()))
-                              )
-  ) (Array.init_withenv 8 (fun  i () -> (if (i = 0)
-                                         then let h = (0, 1) in
-                                         ((), h)
-                                         else (if (i = 1)
-                                               then let h = (1, 0) in
-                                               ((), h)
-                                               else (if (i = 2)
-                                                     then let h = (0, (- 1)) in
+  ((fun  (k, directions) -> let max0 = 0 in
+  let c = 20 in
+  ((fun  (o, m) -> let rec p j max0 =
+                     (if (j <= 7)
+                      then ((fun  (dx, dy) -> let rec q x max0 =
+                                                (if (x <= 19)
+                                                 then let rec r y max0 =
+                                                        (if (y <= 19)
+                                                         then let max0 = ((max (max0) ((find 4 m x y dx dy)))) in
+                                                         (r (y + 1) max0)
+                                                         else (q (x + 1) max0)) in
+                                                        (r 0 max0)
+                                                 else (p (j + 1) max0)) in
+                                                (q 0 max0)) directions.(j))
+                      else (
+                             (Printf.printf "%d\n" max0)
+                             )
+                      ) in
+                     (p 0 max0)) (Array.init_withenv 20 (fun  d o -> ((fun  (u, f) -> let l = f in
+  ((), l)) (Array.init_withenv c (fun  g u -> Scanf.scanf "%d"
+  (fun  e -> (
+               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+               let s = e in
+               ((), s)
+               )
+  )) ()))) ()))) (Array.init_withenv 8 (fun  i k -> (if (i = 0)
+                                                     then let h = (0, 1) in
                                                      ((), h)
-                                                     else (if (i = 3)
-                                                           then let h = ((- 1), 0) in
+                                                     else (if (i = 1)
+                                                           then let h = (1, 0) in
                                                            ((), h)
-                                                           else (if (i = 4)
-                                                                 then let h = (1, 1) in
+                                                           else (if (i = 2)
+                                                                 then let h = (0, (- 1)) in
                                                                  ((), h)
-                                                                 else (if (i = 5)
-                                                                       then let h = (1, (- 1)) in
+                                                                 else (if (i = 3)
+                                                                       then let h = ((- 1), 0) in
                                                                        ((), h)
-                                                                       else (if (i = 6)
+                                                                       else (if (i = 4)
+                                                                             then let h = (1, 1) in
+                                                                             ((), h)
+                                                                             else (
+                                                                             if (i = 5)
+                                                                             then let h = (1, (- 1)) in
+                                                                             ((), h)
+                                                                             else (
+                                                                             if (i = 6)
                                                                              then let h = ((- 1), 1) in
                                                                              ((), h)
                                                                              else let h = ((- 1), (- 1)) in

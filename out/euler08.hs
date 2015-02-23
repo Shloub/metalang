@@ -82,9 +82,8 @@ max2_ a b =
           else b))
 main =
   do let i = 1
-     ((\ (h, last) ->
-        do let m = h
-           let max0 = m
+     ((\ (m, last) ->
+        do let max0 = m
            let index = 0
            let nskipdiv = 0
            let l k n o p q =

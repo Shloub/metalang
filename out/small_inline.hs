@@ -78,11 +78,10 @@ array_init_withenv len f env =
 
 main =
   ((\ (b, t) ->
-     do return (b)
-        printf "%d" =<< ((readIOA t 0) :: IO Int)
+     do printf "%d" =<< ((readIOA t 0) :: IO Int)
         printf " - " ::IO()
         printf "%d" =<< ((readIOA t 1) :: IO Int)
-        printf "\n" ::IO()) =<< (array_init_withenv 2 (\ d () ->
+        printf "\n" ::IO()) =<< (array_init_withenv 2 (\ d b ->
                                                         do out0 <- read_int
                                                            skip_whitespaces
                                                            let a = out0

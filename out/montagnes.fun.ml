@@ -40,11 +40,7 @@ let main =
   (fun  f -> let len = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (d, tab) -> (
-                         d;
-                         (Printf.printf "%d" (montagnes0 tab len))
-                         )
-    ) (Array.init_withenv len (fun  i () -> let x = 0 in
+    ((fun  (d, tab) -> (Printf.printf "%d" (montagnes0 tab len))) (Array.init_withenv len (fun  i d -> let x = 0 in
     Scanf.scanf "%d"
     (fun  e -> let x = e in
     (

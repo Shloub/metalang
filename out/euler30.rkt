@@ -19,20 +19,17 @@
   ;  e ^ 5
   ;
   ((lambda (internal_env) (apply (lambda (h p) 
-                                        (block
-                                          h
-                                          (let ([sum 0])
-                                          (letrec ([j (lambda (a sum) 
-                                                        (if (<= a 9)
-                                                        (letrec ([k (lambda (b sum) 
-                                                                      (if (<= b 9)
-                                                                      (letrec ([l 
-                                                                        (lambda (c sum) 
-                                                                          (if (<= c 9)
-                                                                          (letrec ([m 
-                                                                            (lambda (d sum) 
-                                                                              (if (<= d 9)
-                                                                              (letrec ([n 
+                                        (let ([sum 0])
+                                        (letrec ([j (lambda (a sum) 
+                                                      (if (<= a 9)
+                                                      (letrec ([k (lambda (b sum) 
+                                                                    (if (<= b 9)
+                                                                    (letrec ([l (lambda (c sum) 
+                                                                                (if (<= c 9)
+                                                                                (letrec ([m 
+                                                                                (lambda (d sum) 
+                                                                                (if (<= d 9)
+                                                                                (letrec ([n 
                                                                                 (lambda (e sum) 
                                                                                 (if (<= e 9)
                                                                                 (letrec ([o 
@@ -50,17 +47,17 @@
                                                                                 (n (+ e 1) sum)))])
                                                                                 (o 0 sum))
                                                                                 (m (+ d 1) sum)))])
-                                                                              (n 0 sum))
-                                                                            (l (+ c 1) sum)))])
-                                                                        (m 0 sum))
-                                                                      (k (+ b 1) sum)))])
-                                                        (l 0 sum))
-                                                        (j (+ a 1) sum)))])
-                                          (k 0 sum))
-                                        (display sum)))])
-(j 0 sum)))
-)) internal_env)) (array_init_withenv 10 (lambda (i) 
-                                           (lambda (_) (let ([g (* (* (* (* i i) i) i) i)])
+                                                                                (n 0 sum))
+                                                                                (l (+ c 1) sum)))])
+                                                                      (m 0 sum))
+                                                                    (k (+ b 1) sum)))])
+                                                      (l 0 sum))
+                                                      (j (+ a 1) sum)))])
+                                        (k 0 sum))
+  (display sum)))])
+(j 0 sum)))) internal_env)) (array_init_withenv 10 (lambda (i) 
+                                                     (lambda (h) 
+                                                       (let ([g (* (* (* (* i i) i) i) i)])
                                                        (list '() g)))) '()))
 )
 

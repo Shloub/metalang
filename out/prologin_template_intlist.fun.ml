@@ -21,10 +21,9 @@ let programme_candidat tableau taille =
 let main =
   let taille = (Scanf.scanf "%d " (fun x -> x)) in
   ((fun  (f, tableau) -> (
-                           f;
                            (Printf.printf "%d\n" (programme_candidat tableau taille))
                            )
-  ) (Array.init_withenv taille (fun  a () -> Scanf.scanf "%d"
+  ) (Array.init_withenv taille (fun  a f -> Scanf.scanf "%d"
   (fun  b -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                let e = b in

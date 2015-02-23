@@ -19,8 +19,7 @@
 )
 (define main
   (let ([j 0])
-  ((lambda (internal_env) (apply (lambda (f a) 
-                                        (let ([j f])
+  ((lambda (internal_env) (apply (lambda (j a) 
                                         (block
                                           (map display (list j " "))
                                           (let ([c (vector-ref a 0)])
@@ -38,7 +37,7 @@
                                               (display "\n")
                                               ))
                                             ))
-                                          ))) internal_env)) (array_init_withenv 5 
+                                          )) internal_env)) (array_init_withenv 5 
   (lambda (i) 
     (lambda (j) 
       (block

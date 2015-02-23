@@ -62,20 +62,16 @@
 (define (pathfind tab x y)
   ;toto
   ((lambda (internal_env) (apply (lambda (f cache) 
-                                        (block
-                                          f
-                                          (pathfind_aux cache tab x y 0 0)
-                                          )) internal_env)) (array_init_withenv y 
+                                        (pathfind_aux cache tab x y 0 0)) internal_env)) (array_init_withenv y 
   (lambda (i) 
-    (lambda (_) ((lambda (internal_env) (apply (lambda (h tmp) 
-                                                      (block
-                                                        h
-                                                        (let ([e tmp])
-                                                        (list '() e))
-                                                        )) internal_env)) (array_init_withenv x 
-    (lambda (j) 
-      (lambda (_) (let ([g (- 1)])
-                  (list '() g)))) '())))) '()))
+    (lambda (f) 
+      ((lambda (internal_env) (apply (lambda (h tmp) 
+                                            (let ([e tmp])
+                                            (list '() e))) internal_env)) (array_init_withenv x 
+      (lambda (j) 
+        (lambda (h) 
+          (let ([g (- 1)])
+          (list '() g)))) '())))) '()))
 )
 (define main
   (let ([x 0])
@@ -89,26 +85,24 @@
           (block
             (mread-blank)
             ((lambda (internal_env) (apply (lambda (l tab) 
-                                                  (block
-                                                    l
-                                                    (let ([result (pathfind tab x y)])
-                                                    (display result))
-                                                    )) internal_env)) (array_init_withenv y 
+                                                  (let ([result (pathfind tab x y)])
+                                                  (display result))) internal_env)) (array_init_withenv y 
             (lambda (i) 
-              (lambda (_) ((lambda (internal_env) (apply (lambda (n tab2) 
-                                                                (block
-                                                                  n
-                                                                  (mread-blank)
-                                                                  (let ([k tab2])
-                                                                  (list '() k))
-                                                                  )) internal_env)) (array_init_withenv x 
-              (lambda (j) 
-                (lambda (_) (let ([tmp (integer->char 0)])
-                            ((lambda (o) 
-                               (let ([tmp o])
-                               (let ([m tmp])
-                               (list '() m)))) (mread-char))))) '())))) '()))
-       ))) (mread-int))
-  ))) (mread-int))))
+              (lambda (l) 
+                ((lambda (internal_env) (apply (lambda (n tab2) 
+                                                      (block
+                                                        (mread-blank)
+                                                        (let ([k tab2])
+                                                        (list '() k))
+                                                        )) internal_env)) (array_init_withenv x 
+                (lambda (j) 
+                  (lambda (n) 
+                    (let ([tmp (integer->char 0)])
+                    ((lambda (o) 
+                       (let ([tmp o])
+                       (let ([m tmp])
+                       (list '() m)))) (mread-char))))) '())))) '()))
+     ))) (mread-int))
+))) (mread-int))))
 )
 

@@ -40,11 +40,11 @@
   (let ([n 10001])
   ((lambda (internal_env) (apply (lambda (e t0) 
                                         (block
-                                          e
                                           (map display (list (find0 3 t0 1 n) "\n"))
                                           )) internal_env)) (array_init_withenv n 
   (lambda (i) 
-    (lambda (_) (let ([d 2])
-                (list '() d)))) '())))
+    (lambda (e) 
+      (let ([d 2])
+      (list '() d)))) '())))
 )
 

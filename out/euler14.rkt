@@ -30,26 +30,24 @@
 )
 (define main
   ((lambda (internal_env) (apply (lambda (b m) 
-                                        (block
-                                          b
-                                          (let ([max0 0])
-                                          (let ([maxi 0])
-                                          (letrec ([c (lambda (i max0 maxi) 
-                                                        (if (<= i 999)
-                                                        ; normalement on met 999999 mais ça dépasse les int32... 
-                                                        (let ([n2 (find0 i m)])
-                                                        (if (> n2 max0)
-                                                        (let ([max0 n2])
-                                                        (let ([maxi i])
-                                                        (c (+ i 1) max0 maxi)))
-                                                        (c (+ i 1) max0 maxi)))
-                                                        (block
-                                                          (map display (list max0 "\n" maxi "\n"))
-                                                          )))])
-                                          (c 1 max0 maxi))))
-                                        )) internal_env)) (array_init_withenv 1000000 
+                                        (let ([max0 0])
+                                        (let ([maxi 0])
+                                        (letrec ([c (lambda (i max0 maxi) 
+                                                      (if (<= i 999)
+                                                      ; normalement on met 999999 mais ça dépasse les int32... 
+                                                      (let ([n2 (find0 i m)])
+                                                      (if (> n2 max0)
+                                                      (let ([max0 n2])
+                                                      (let ([maxi i])
+                                                      (c (+ i 1) max0 maxi)))
+                                                      (c (+ i 1) max0 maxi)))
+                                                      (block
+                                                        (map display (list max0 "\n" maxi "\n"))
+                                                        )))])
+                                        (c 1 max0 maxi))))) internal_env)) (array_init_withenv 1000000 
 (lambda (j) 
-  (lambda (_) (let ([a 0])
-              (list '() a)))) '()))
+  (lambda (b) 
+    (let ([a 0])
+    (list '() a)))) '()))
 )
 

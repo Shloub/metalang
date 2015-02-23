@@ -101,16 +101,14 @@ main =
      taille2 <- read_int
      skip_whitespaces
      ((\ (l, tableau1) ->
-        do return (l)
-           skip_whitespaces
+        do skip_whitespaces
            ((\ (o, tableau2) ->
-              do return (o)
-                 skip_whitespaces
+              do skip_whitespaces
                  printf "%d" =<< ((programme_candidat tableau1 taille1 tableau2 taille2) :: IO Int)
-                 printf "\n" ::IO()) =<< (array_init_withenv taille2 (\ c () ->
+                 printf "\n" ::IO()) =<< (array_init_withenv taille2 (\ c o ->
                                                                        hGetChar stdin >>= ((\ d ->
                                                                                              let m = d
-                                                                                                     in return (((), m))))) ()))) =<< (array_init_withenv taille1 (\ a () ->
+                                                                                                     in return (((), m))))) ()))) =<< (array_init_withenv taille1 (\ a l ->
                                                                                                                                                                     hGetChar stdin >>= ((\ b ->
                                                                                                                                                                                           let k = b
                                                                                                                                                                                                   in return (((), k))))) ()))

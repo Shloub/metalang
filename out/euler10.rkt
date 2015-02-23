@@ -38,12 +38,12 @@
   ; normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
   ((lambda (internal_env) (apply (lambda (e t0) 
                                         (block
-                                          e
                                           (vector-set! t0 1 0)
                                           (map display (list (eratostene t0 n) "\n"))
                                           )) internal_env)) (array_init_withenv n 
   (lambda (i) 
-    (lambda (_) (let ([d i])
-                (list '() d)))) '())))
+    (lambda (e) 
+      (let ([d i])
+      (list '() d)))) '())))
 )
 
