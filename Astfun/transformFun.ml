@@ -223,14 +223,25 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let affected = List.filter (fun x -> List.mem x env) @$ StringSet.elements @$ affected li in
       let o = Fresh.fresh_user () in
       let envname = Fresh.fresh_user () in
-      let returnenv = F.Expr.tuple (List.map F.Expr.binding affected) in
+      let next = instrs suite contsuite contreturn env tl in
+
+      let returnenv, next =
+        match affected with
+        | [] -> F.Expr.tuple [], F.Expr.funtuple [envname; name] next
+        | [a] -> F.Expr.binding a, F.Expr.funtuple [a; name] next
+        | _ -> F.Expr.tuple (List.map F.Expr.binding affected),
+            (F.Expr.funtuple [envname; name]
+	 (F.Expr.apply (F.Expr.funtuple affected next) [F.Expr.binding envname]))
+      in
       let returncont = F.Expr.fun_ [o] (F.Expr.tuple [returnenv; F.Expr.binding o] ) in
       let content = instrs false contsuite (Some returncont) (varname::env) li in
-      let content = F.Expr.funtuple affected content in
+      let content =
+        match affected with
+        | [] -> F.Expr.fun_ [envname] content
+        | [a] -> F.Expr.fun_ [a] content
+        | _ -> F.Expr.funtuple affected content in
       let content = F.Expr.fun_ [varname] content in
-      let next = instrs suite contsuite  contreturn env tl in
-      F.Expr.apply (F.Expr.funtuple [envname; name]
-	        (F.Expr.apply (F.Expr.funtuple affected next) [F.Expr.binding envname]))
+      F.Expr.apply next
         [F.Expr.arraymake e content returnenv]
     | A.Instr.AllocArray (name, t, e, None, _) -> assert false
     | A.Instr.Untuple (vars, e, _) ->
