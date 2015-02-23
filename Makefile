@@ -309,7 +309,7 @@ out/%.ml.native : out/%.ml
 	@rm out/$(basename $*).o || exit 0
 
 out/%.hs.exe : out/%.hs
-	@ghc out/$(basename $*).hs -o out/$(basename $*).hs.exe || exit 1
+	@ghc -rtsopts out/$(basename $*).hs -o out/$(basename $*).hs.exe || exit 1
 	@rm out/$(basename $*).o
 	@rm out/$(basename $*).hi
 
@@ -332,7 +332,7 @@ out/%.ml.native.out : out/%.ml.native
 	./$< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.hs.exe.out : out/%.hs.exe
-	./$< < tests/prog/$(basename $*).in > $@ || exit 1;
+	./$< +RTS -K1G -RTS < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.go.out : out/%.go
 	go run $< < tests/prog/$(basename $*).in > $@ || exit 1;
