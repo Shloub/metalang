@@ -32,6 +32,7 @@ compilePAS
 compileADA
 compileVB
 allsources
+*.test_hs_ml
 *.test_cl_ml
 *.exeVB
 
