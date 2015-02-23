@@ -1,0 +1,129 @@
+import Text.Printf
+import Control.Applicative
+import Control.Monad
+import Data.Array.MArray
+import Data.Array.IO
+import Data.Char
+import System.IO
+import Data.IORef
+
+
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
+
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
+
+(<&&>) a b =
+	do aa <- a
+	   if aa then b
+		 else return False
+
+(<||>) a b =
+	do aa <- a
+	   if aa then return True
+		 else b
+
+
+main :: IO ()
+
+ifM :: IO Bool -> IO a -> IO a -> IO a
+ifM cond if_ els_ =
+  do b <- cond
+     if b then if_ else els_
+
+skip_whitespaces :: IO ()
+skip_whitespaces =
+  ifM (hIsEOF stdin)
+      (return ())
+      (do c <- hLookAhead stdin
+          if c == ' ' || c == '\n' || c == '\t' || c == '\r' then
+           do hGetChar stdin
+              skip_whitespaces
+           else return ())
+
+read_int_a :: Int -> IO Int
+read_int_a b =
+  ifM (hIsEOF stdin)
+      (return b)
+      (do c <- hLookAhead stdin
+          if c >= '0' && c <= '9' then
+           do hGetChar stdin
+              read_int_a (b * 10 + ord c - 48)
+           else return b)
+
+read_int :: IO Int
+read_int =
+   do c <- hLookAhead stdin
+      sign <- if c == '-'
+                 then fmap (\x -> -1::Int) $ hGetChar stdin
+                 else return 1
+      num <- read_int_a 0
+      return (num * sign)
+
+
+array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
+array_init_withenv len f env =
+  do (env, li) <- g 0 env
+     o <- newListArray (0, len - 1) li
+     return (env, o)
+  where g i env =
+           if i == len
+           then return (env, [])
+           else do (env', item) <- f i env
+                   (env'', li) <- g (i+1) env'
+                   return (env'', item:li)
+
+
+
+data Toto = Toto {
+                    _foo :: IORef Int,
+                    _bar :: IORef Int,
+                    _blah :: IORef Int
+                    }
+  deriving Eq
+
+mktoto v1 =
+  do t <- (Toto <$> (newIORef v1) <*> (newIORef v1) <*> (newIORef v1))
+     return (t)
+mktoto2 v1 =
+  do t <- (Toto <$> (newIORef (v1 + 3)) <*> (newIORef (v1 + 2)) <*> (newIORef (v1 + 1)))
+     return (t)
+result t_ t2_ =
+  do let t = t_
+     let t2 = t2_
+     t3 <- (Toto <$> (newIORef 0) <*> (newIORef 0) <*> (newIORef 0))
+     let k = t2
+     let l = t2
+     let m = k
+     (join (writeIORef (_blah l) <$> ((+) <$> (readIORef (_blah l)) <*> return (1))))
+     let len = 1
+     ((\ (b, cache0) ->
+        do return (b)
+           ((\ (d, cache1) ->
+              do return (d)
+                 let cache2 = cache0
+                 let n = cache1
+                 let o = n
+                 ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))) =<< (array_init_withenv len (\ j () ->
+                                                                                                                                                                                                                  let c = j
+                                                                                                                                                                                                                          in return (((), c))) ()))) =<< (array_init_withenv len (\ i () ->
+                                                                                                                                                                                                                                                                                   let a = (- i)
+                                                                                                                                                                                                                                                                                           in return (((), a))) ()))
+main =
+  do t <- (mktoto 4)
+     t2 <- (mktoto 5)
+     h <- read_int
+     (writeIORef (_bar t) h)
+     skip_whitespaces
+     g <- read_int
+     (writeIORef (_blah t) g)
+     skip_whitespaces
+     f <- read_int
+     (writeIORef (_bar t2) f)
+     skip_whitespaces
+     e <- read_int
+     (writeIORef (_blah t2) e)
+     printf "%d" =<< ((result t t2) :: IO Int)
+     printf "%d" =<< ((readIORef (_blah t)) :: IO Int)
+
