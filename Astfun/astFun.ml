@@ -155,40 +155,40 @@ module Expr = struct
           let acc, e = f acc e in
           acc, ReadIn (ty, e)
         | Skip -> acc, Skip
-	| Block li ->
-	  let acc, li = List.fold_left_map f acc li in
-	  acc, Block li
-	| Record li ->
-	  let acc, li = List.fold_left_map (fun acc (e, s) ->
-	    let acc, e = f acc e in
-	    acc, (e, s)
-	  ) acc li in
-	  acc, Record li
-	| RecordAffect (e1, s, e2) ->
-          let acc, e1 = f acc e1 in
+				| Block li ->
+						let acc, li = List.fold_left_map f acc li in
+						acc, Block li
+				| Record li ->
+						let acc, li = List.fold_left_map (fun acc (e, s) ->
+							let acc, e = f acc e in
+							acc, (e, s)
+																						 ) acc li in
+						acc, Record li
+				| RecordAffect (e1, s, e2) ->
+						let acc, e1 = f acc e1 in
           let acc, e2 = f acc e2 in
           acc, RecordAffect (e1, s, e2)
-	| RecordAccess (e, s) ->
-	  let acc, e = f acc e in
-	  acc, RecordAccess (e, s)
-	| ArrayAccess (tab, indexes) ->
-	  let acc, tab = f acc tab in
-	  let acc, indexes = List.fold_left_map f acc indexes in
-	  acc, ArrayAccess (tab, indexes)
-	| ArrayMake (len, lambda, env) ->
-	  let acc, len = f acc len in
-	  let acc, env = f acc env in
-	  let acc, lambda = f acc lambda in
-	  acc, ArrayMake (len, lambda, env)
-	| ArrayAffect (tab, indexes, v) ->
-	  let acc, tab = f acc tab in
-	  let acc, indexes = List.fold_left_map f acc indexes in
-	  let acc, v = f acc v in
-	  acc, ArrayAffect (tab, indexes, v)
-	| LetIn (binding, e, b) ->
-	  let acc, e = f acc e in
-	  let acc, b = f acc b in
-	  acc, LetIn (binding, e, b)
+				| RecordAccess (e, s) ->
+						let acc, e = f acc e in
+						acc, RecordAccess (e, s)
+				| ArrayAccess (tab, indexes) ->
+						let acc, tab = f acc tab in
+						let acc, indexes = List.fold_left_map f acc indexes in
+						acc, ArrayAccess (tab, indexes)
+				| ArrayMake (len, lambda, env) ->
+						let acc, len = f acc len in
+						let acc, env = f acc env in
+						let acc, lambda = f acc lambda in
+						acc, ArrayMake (len, lambda, env)
+				| ArrayAffect (tab, indexes, v) ->
+						let acc, tab = f acc tab in
+						let acc, indexes = List.fold_left_map f acc indexes in
+						let acc, v = f acc v in
+						acc, ArrayAffect (tab, indexes, v)
+				| LetIn (binding, e, b) ->
+						let acc, e = f acc e in
+						let acc, b = f acc b in
+						acc, LetIn (binding, e, b)
       in acc, fixa annot unfixed
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
