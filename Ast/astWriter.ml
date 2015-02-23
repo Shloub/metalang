@@ -65,6 +65,9 @@ module F (T : SigAst) = struct
         T.foldmap f acc t
       in acc
 
+		let map (f: 'a T.t -> 'a T.t) t =
+			let f () t = (), f t
+			in snd @$ T.foldmap f () t
     let iter f0 t = fold (fun acc t -> f0 t) () t
 
   end
@@ -81,7 +84,6 @@ module F (T : SigAst) = struct
     let fold f0 acc t =
       let f acc t = f0 acc t, t in
       fst @$ foldmap f acc t
-
 
     let iter f t = fold (fun () t -> f t) () t
 
