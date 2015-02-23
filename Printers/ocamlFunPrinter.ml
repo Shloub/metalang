@@ -88,9 +88,6 @@ class camlFunPrinter = object(self)
     let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
     Format.fprintf f "(fun %a -> %a)" pparams () self#expr e
 
-
-  method ignore f e1 e2 = Format.fprintf f "%a;@\n%a" self#expr e1 self#expr e2
-
   method binding f s = Format.fprintf f "%s" s
 
   method print f e ty = match E.unfix e with
@@ -217,7 +214,6 @@ class camlFunPrinter = object(self)
   | E.Tuple li -> self#tuple f li
   | E.Lief l -> self#lief f l
   | E.Comment (s, c) -> self#comment f s c
-  | E.Ignore (e1, e2) -> self#ignore f e1 e2
   | E.If (e1, e2, e3) -> self#if_ f e1 e2 e3
   | E.Print (e, ty) ->
     self#print f e ty

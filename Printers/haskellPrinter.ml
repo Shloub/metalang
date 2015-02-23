@@ -159,12 +159,6 @@ class haskellPrinter = object(self)
 	  self#expr f expr
 	else Format.fprintf f "return (%a)" self#expr expr
 
-  method ignore f e1 e2 =
-    if self#isPure e1 then
-      self#expr f e2
-    else
-      self#block f [e1 ;e2]
-
   method binding f s = Format.fprintf f "%s" s
 
   method format_type f t = Format.fprintf f "%S" (Printer.format_type t)
@@ -309,7 +303,6 @@ class haskellPrinter = object(self)
   | E.Tuple li -> self#tuple f li
   | E.Lief l -> self#lief f l
   | E.Comment (s, c) -> self#comment f s c
-  | E.Ignore (e1, e2) -> self#ignore f e1 e2
   | E.If (e1, e2, e3) -> self#if_ f e1 e2 e3
   | E.Print (e, ty) ->
     self#print f e ty

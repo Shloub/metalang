@@ -57,7 +57,6 @@ module Expr = struct
   | Tuple of 'a list
   | Lief of lief
   | Comment of string * 'a
-  | Ignore of 'a * 'a
   | If of 'a * 'a * 'a
   | Print of 'a * Ast.Type.t
   | ReadIn of Ast.Type.t * 'a
@@ -84,7 +83,6 @@ module Expr = struct
       | Tuple li -> Tuple (List.map f li)
       | Lief l -> Lief l
       | Comment (s, c) -> Comment (s, f c)
-      | Ignore (e1, e2) -> Ignore (f e1, f e2)
       | If (e1, e2, e3) -> If (f e1, f e2, f e3)
       | Print (e, ty) -> Print (f e, ty)
       | ReadIn (ty, e) -> ReadIn (ty, f e)
@@ -139,10 +137,6 @@ module Expr = struct
         | Comment (s, c) ->
           let acc, c = f acc c in
           acc, Comment (s, c)
-        | Ignore (e1, e2) ->
-          let acc, e1 = f acc e1 in
-          let acc, e2 = f acc e2 in
-          acc, Ignore (e1, e2)
         | If (e1, e2, e3) ->
           let acc, e1 = f acc e1 in
           let acc, e2 = f acc e2 in
@@ -205,7 +199,6 @@ module Expr = struct
   let funtuple li a = fix (FunTuple (li, a))
   let tuple li = fix (Tuple li)
   let comment s c = fix (Comment (s, c))
-  let ignore e1 e2 = fix (Ignore (e1, e2))
   let if_ e1 e2 e3 = fix (If (e1, e2, e3))
   let block li = fix (Block li)
   let print e ty next = block [ fix (Print (e, ty)); next]

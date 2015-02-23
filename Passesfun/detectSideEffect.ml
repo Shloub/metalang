@@ -52,8 +52,6 @@ let side_effects acc e =
       List.exists (has_side_effects acc) li
     | Expr.Lief _ -> false
     | Expr.Comment (_, e) -> has_side_effects acc e
-    | Expr.Ignore (a, b) ->
-      has_side_effects acc a || has_side_effects acc b
     | Expr.If (a, b, c) ->
       has_side_effects acc a ||
         has_side_effects acc b ||
