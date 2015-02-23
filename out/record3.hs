@@ -88,26 +88,25 @@ mktoto v1 =
      return (t)
 result t len =
   do let out0 = 0
-     let b = 0
-     let c = (len - 1)
-     let a j h =
-           (if (j <= c)
+     let b = (len - 1)
+     let a j g =
+           (if (j <= b)
            then do (join (writeIORef <$> (_blah <$> (readIOA t j)) <*> ((+) <$> (join (readIORef <$> (_blah <$> (readIOA t j)))) <*> return (1))))
-                   k <- ((+) <$> ((+) <$> (((+) h) <$> (join (readIORef <$> (_foo <$> (readIOA t j))))) <*> ((*) <$> (join (readIORef <$> (_blah <$> (readIOA t j)))) <*> (join (readIORef <$> (_bar <$> (readIOA t j)))))) <*> ((*) <$> (join (readIORef <$> (_bar <$> (readIOA t j)))) <*> (join (readIORef <$> (_foo <$> (readIOA t j))))))
-                   (a (j + 1) k)
-           else return (h)) in
-           (a b out0)
+                   h <- ((+) <$> ((+) <$> (((+) g) <$> (join (readIORef <$> (_foo <$> (readIOA t j))))) <*> ((*) <$> (join (readIORef <$> (_blah <$> (readIOA t j)))) <*> (join (readIORef <$> (_bar <$> (readIOA t j)))))) <*> ((*) <$> (join (readIORef <$> (_bar <$> (readIOA t j)))) <*> (join (readIORef <$> (_foo <$> (readIOA t j))))))
+                   (a (j + 1) h)
+           else return (g)) in
+           (a 0 out0)
 main =
-  ((\ (e, t) ->
-     do return (e)
-        g <- read_int
-        (join (writeIORef <$> (_bar <$> (readIOA t 0)) <*> (return g)))
-        skip_whitespaces
+  ((\ (d, t) ->
+     do return (d)
         f <- read_int
-        (join (writeIORef <$> (_blah <$> (readIOA t 1)) <*> (return f)))
+        (join (writeIORef <$> (_bar <$> (readIOA t 0)) <*> (return f)))
+        skip_whitespaces
+        e <- read_int
+        (join (writeIORef <$> (_blah <$> (readIOA t 1)) <*> (return e)))
         titi <- (result t 4)
         printf "%d" (titi :: Int)::IO()
         printf "%d" =<< ((join (readIORef <$> (_blah <$> (readIOA t 2)))) :: IO Int)) =<< (array_init_withenv 4 (\ i () ->
-                                                                                                                  do d <- (mktoto i)
-                                                                                                                     return (((), d))) ()))
+                                                                                                                  do c <- (mktoto i)
+                                                                                                                     return (((), c))) ()))
 

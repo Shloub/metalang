@@ -77,44 +77,37 @@ array_init_withenv len f env =
 
 
 next0 n =
-  let d () = ()
-             in return ((if ((n `rem` 2) == 0)
-                        then (n `quot` 2)
-                        else ((3 * n) + 1)))
+  return ((if ((n `rem` 2) == 0)
+          then (n `quot` 2)
+          else ((3 * n) + 1)))
 find n m =
-  do let a () = return (())
-     (if (n == 1)
-     then return (1)
-     else do let b () = (a ())
-             (if (n >= 1000000)
-             then (((+) 1) <$> (join (find <$> (next0 n) <*> (return m))))
-             else do let c () = (b ())
-                     ifM (((/=) <$> (readIOA m n) <*> return (0)))
-                         ((readIOA m n))
-                         (do writeIOA m n =<< (((+) 1) <$> (join (find <$> (next0 n) <*> (return m))))
-                             (readIOA m n))))
+  (if (n == 1)
+  then return (1)
+  else (if (n >= 1000000)
+       then (((+) 1) <$> (join (find <$> (next0 n) <*> (return m))))
+       else ifM (((/=) <$> (readIOA m n) <*> return (0)))
+                ((readIOA m n))
+                (do writeIOA m n =<< (((+) 1) <$> (join (find <$> (next0 n) <*> (return m))))
+                    (readIOA m n))))
 main =
-  ((\ (f, m) ->
-     do return (f)
+  ((\ (b, m) ->
+     do return (b)
         let max0 = 0
         let maxi = 0
-        let h = 1
-        let k = 999
-        let g i l o =
-              (if (i <= k)
+        let c i d e =
+              (if (i <= 999)
               then {- normalement on met 999999 mais ça dépasse les int32... -}
                    do n2 <- (find i m)
-                      ((\ (p, q) ->
-                         (g (i + 1) p q)) (if (n2 > l)
-                                          then let r = n2
-                                                       in let s = i
-                                                                  in (r, s)
-                                          else (l, o)))
-              else do printf "%d" (l :: Int)::IO()
+                      (if (n2 > d)
+                      then do let f = n2
+                              let g = i
+                              (c (i + 1) f g)
+                      else (c (i + 1) d e))
+              else do printf "%d" (d :: Int)::IO()
                       printf "\n" ::IO()
-                      printf "%d" (o :: Int)::IO()
+                      printf "%d" (e :: Int)::IO()
                       printf "\n" ::IO()) in
-              (g h max0 maxi)) =<< (array_init_withenv 1000000 (\ j () ->
-                                                                 let e = 0
-                                                                         in return (((), e))) ()))
+              (c 1 max0 maxi)) =<< (array_init_withenv 1000000 (\ j () ->
+                                                                 let a = 0
+                                                                         in return (((), a))) ()))
 

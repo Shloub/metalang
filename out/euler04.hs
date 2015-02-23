@@ -62,58 +62,43 @@ read_int =
       return (num * sign)
 
 max2_ a b =
-  let h () = ()
-             in return ((if (a > b)
-                        then a
-                        else b))
+  return ((if (a > b)
+          then a
+          else b))
 chiffre c m =
-  do let g () = return (())
-     (if (c == 0)
-     then return ((m `rem` 10))
-     else (chiffre (c - 1) (m `quot` 10)))
+  (if (c == 0)
+  then return ((m `rem` 10))
+  else (chiffre (c - 1) (m `quot` 10)))
 main =
   do let m = 1
-     let z = 0
-     let ba = 9
-     let i a bb =
-           (if (a <= ba)
-           then do let x = 1
-                   let y = 9
-                   let j f bc =
-                         (if (f <= y)
-                         then do let v = 0
-                                 let w = 9
-                                 let k d bd =
-                                       (if (d <= w)
-                                       then do let t = 1
-                                               let u = 9
-                                               let l c be =
-                                                     (if (c <= u)
-                                                     then do let r = 0
-                                                             let s = 9
-                                                             let n b bf =
-                                                                   (if (b <= s)
-                                                                   then do let p = 0
-                                                                           let q = 9
-                                                                           let o e bg =
-                                                                                 (if (e <= q)
-                                                                                 then do let mul = (((((a * d) + (10 * ((a * e) + (b * d)))) + (100 * (((a * f) + (b * e)) + (c * d)))) + (1000 * ((c * e) + (b * f)))) + ((10000 * c) * f))
-                                                                                         bh <- ifM (((((==) <$> (chiffre 0 mul) <*> (chiffre 5 mul)) <&&> ((==) <$> (chiffre 1 mul) <*> (chiffre 4 mul))) <&&> ((==) <$> (chiffre 2 mul) <*> (chiffre 3 mul))))
-                                                                                                   (do bi <- (max2_ mul bg)
-                                                                                                       return (bi))
-                                                                                                   (return (bg))
-                                                                                         (o (e + 1) bh)
-                                                                                 else (n (b + 1) bg)) in
-                                                                                 (o p bf)
-                                                                   else (l (c + 1) bf)) in
-                                                                   (n r be)
-                                                     else (k (d + 1) be)) in
-                                                     (l t bd)
-                                       else (j (f + 1) bd)) in
-                                       (k v bc)
-                         else (i (a + 1) bc)) in
-                         (j x bb)
-           else do printf "%d" (bb :: Int)::IO()
+     let g a n =
+           (if (a <= 9)
+           then let h f o =
+                      (if (f <= 9)
+                      then let i d p =
+                                 (if (d <= 9)
+                                 then let j c q =
+                                            (if (c <= 9)
+                                            then let k b r =
+                                                       (if (b <= 9)
+                                                       then let l e s =
+                                                                  (if (e <= 9)
+                                                                  then do let mul = (((((a * d) + (10 * ((a * e) + (b * d)))) + (100 * (((a * f) + (b * e)) + (c * d)))) + (1000 * ((c * e) + (b * f)))) + ((10000 * c) * f))
+                                                                          ifM (((((==) <$> (chiffre 0 mul) <*> (chiffre 5 mul)) <&&> ((==) <$> (chiffre 1 mul) <*> (chiffre 4 mul))) <&&> ((==) <$> (chiffre 2 mul) <*> (chiffre 3 mul))))
+                                                                              (do t <- (max2_ mul s)
+                                                                                  (l (e + 1) t))
+                                                                              ((l (e + 1) s))
+                                                                  else (k (b + 1) s)) in
+                                                                  (l 0 r)
+                                                       else (j (c + 1) r)) in
+                                                       (k 0 q)
+                                            else (i (d + 1) q)) in
+                                            (j 1 p)
+                                 else (h (f + 1) p)) in
+                                 (i 0 o)
+                      else (g (a + 1) o)) in
+                      (h 1 n)
+           else do printf "%d" (n :: Int)::IO()
                    printf "\n" ::IO()) in
-           (i z m)
+           (g 0 m)
 

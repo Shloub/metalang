@@ -1,17 +1,14 @@
 let main =
   let sum = 0 in
-  let b = 0 in
-  let c = 999 in
   let rec a i sum =
-    (if (i <= c)
-     then let sum = (if (((i mod 3) = 0) || ((i mod 5) = 0))
-                     then let sum = (sum + i) in
-                     sum
-                     else sum) in
-     (a (i + 1) sum)
+    (if (i <= 999)
+     then (if (((i mod 3) = 0) || ((i mod 5) = 0))
+           then let sum = (sum + i) in
+           (a (i + 1) sum)
+           else (a (i + 1) sum))
      else (
             (Printf.printf "%d\n" sum)
             )
      ) in
-    (a b sum)
+    (a 0 sum)
 

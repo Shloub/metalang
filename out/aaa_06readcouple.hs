@@ -77,34 +77,30 @@ array_init_withenv len f env =
 
 
 main =
-  do let o = 1
-     let p = 3
-     let m i =
-           (if (i <= p)
-           then do a <- read_int
-                   skip_whitespaces
-                   b <- read_int
-                   skip_whitespaces
-                   printf "a = " ::IO()
-                   printf "%d" (a :: Int)::IO()
-                   printf " b = " ::IO()
-                   printf "%d" (b :: Int)::IO()
-                   printf "\n" ::IO()
-                   (m (i + 1))
-           else ((\ (f, l) ->
-                   do return (f)
-                      let h = 0
-                      let k = 9
-                      let g j =
-                            (if (j <= k)
-                            then do printf "%d" =<< ((readIOA l j) :: IO Int)
-                                    printf "\n" ::IO()
-                                    (g (j + 1))
-                            else return (())) in
-                            (g h)) =<< (array_init_withenv 10 (\ c () ->
-                                                                do d <- read_int
-                                                                   skip_whitespaces
-                                                                   let e = d
-                                                                   return (((), e))) ()))) in
-           (m o)
+  let h i =
+        (if (i <= 3)
+        then do a <- read_int
+                skip_whitespaces
+                b <- read_int
+                skip_whitespaces
+                printf "a = " ::IO()
+                printf "%d" (a :: Int)::IO()
+                printf " b = " ::IO()
+                printf "%d" (b :: Int)::IO()
+                printf "\n" ::IO()
+                (h (i + 1))
+        else ((\ (f, l) ->
+                do return (f)
+                   let g j =
+                         (if (j <= 9)
+                         then do printf "%d" =<< ((readIOA l j) :: IO Int)
+                                 printf "\n" ::IO()
+                                 (g (j + 1))
+                         else return (())) in
+                         (g 0)) =<< (array_init_withenv 10 (\ c () ->
+                                                             do d <- read_int
+                                                                skip_whitespaces
+                                                                let e = d
+                                                                return (((), e))) ()))) in
+        (h 1)
 

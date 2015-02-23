@@ -32,12 +32,8 @@
 
 (define (pathfind_aux cache tab len pos)
   ;toto
-  (let ([c (lambda (_) 
-             '())])
   (if (>= pos (- len 1))
   0
-  (let ([d (lambda (_) 
-             (c 'nil))])
   (if (not (eq? (vector-ref cache pos) (- 1)))
   (vector-ref cache pos)
   (block
@@ -54,7 +50,7 @@
       (vector-set! cache pos out0)
       out0
       )))))
-    )))))
+    )))
 )
 (define (pathfind tab len)
   ;toto
@@ -69,24 +65,24 @@
 )
 (define main
   (let ([len 0])
-  ((lambda (h) 
-     (let ([len h])
+  ((lambda (f) 
+     (let ([len f])
      (block
        (mread-blank)
-       ((lambda (internal_env) (apply (lambda (f tab) 
+       ((lambda (internal_env) (apply (lambda (d tab) 
                                              (block
-                                               f
+                                               d
                                                (let ([result (pathfind tab len)])
                                                (display result))
                                                )) internal_env)) (array_init_withenv len 
        (lambda (i) 
          (lambda (_) (let ([tmp 0])
-                     ((lambda (g) 
-                        (let ([tmp g])
+                     ((lambda (e) 
+                        (let ([tmp e])
                         (block
                           (mread-blank)
-                          (let ([e tmp])
-                          (list '() e))
+                          (let ([c tmp])
+                          (list '() c))
                           ))) (mread-int))))) '()))
      ))) (mread-int)))
 )

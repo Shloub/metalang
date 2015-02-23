@@ -39,29 +39,28 @@
 (define (result t0 len)
   ;toto
   (let ([out0 0])
-  (let ([b 0])
-  (let ([c (- len 1)])
+  (let ([b (- len 1)])
   (letrec ([a (lambda (j out0) 
-                (if (<= j c)
+                (if (<= j b)
                 (block
                   (set-toto-blah! (vector-ref t0 j) (+ (toto-blah (vector-ref t0 j)) 1))
                   (let ([out0 (+ (+ (+ out0 (toto-foo (vector-ref t0 j))) (* (toto-blah (vector-ref t0 j)) (toto-bar (vector-ref t0 j)))) (* (toto-bar (vector-ref t0 j)) (toto-foo (vector-ref t0 j))))])
                   (a (+ j 1) out0))
                   )
                 out0))])
-  (a b out0)))))
+  (a 0 out0))))
 )
 (define main
-  ((lambda (internal_env) (apply (lambda (e t0) 
+  ((lambda (internal_env) (apply (lambda (d t0) 
                                         (block
-                                          e
-                                          ((lambda (g) 
+                                          d
+                                          ((lambda (f) 
                                              (block
-                                               (set-toto-bar! (vector-ref t0 0) g)
+                                               (set-toto-bar! (vector-ref t0 0) f)
                                                (mread-blank)
-                                               ((lambda (f) 
+                                               ((lambda (e) 
                                                   (block
-                                                    (set-toto-blah! (vector-ref t0 1) f)
+                                                    (set-toto-blah! (vector-ref t0 1) e)
                                                     (let ([titi (result t0 4)])
                                                     (block
                                                       (map display (list titi (toto-blah (vector-ref t0 2))))
@@ -69,7 +68,7 @@
                                                     )) (mread-int))
                                              )) (mread-int))
   )) internal_env)) (array_init_withenv 4 (lambda (i) 
-                                            (lambda (_) (let ([d (mktoto i)])
-                                                        (list '() d)))) '()))
+                                            (lambda (_) (let ([c (mktoto i)])
+                                                        (list '() c)))) '()))
 )
 

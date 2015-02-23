@@ -79,25 +79,23 @@ array_init_withenv len f env =
 result len tab =
   ((\ (d, tab2) ->
      do return (d)
-        let j = 0
-        let k = (len - 1)
-        let h i1 =
-              (if (i1 <= k)
+        let h = (len - 1)
+        let g i1 =
+              (if (i1 <= h)
               then do printf "%d" =<< ((readIOA tab i1) :: IO Int)
                       printf " " ::IO()
                       join (writeIOA tab2 <$> (readIOA tab i1) <*> return (True))
-                      (h (i1 + 1))
+                      (g (i1 + 1))
               else do printf "\n" ::IO()
-                      let f = 0
-                      let g = (len - 1)
+                      let f = (len - 1)
                       let e i2 =
-                            (if (i2 <= g)
+                            (if (i2 <= f)
                             then ifM ((fmap (not) (readIOA tab2 i2)))
                                      (return (i2))
                                      ((e (i2 + 1)))
                             else return ((- 1))) in
-                            (e f)) in
-              (h j)) =<< (array_init_withenv len (\ i () ->
+                            (e 0)) in
+              (g 0)) =<< (array_init_withenv len (\ i () ->
                                                    let c = False
                                                            in return (((), c))) ()))
 main =
@@ -105,12 +103,12 @@ main =
      skip_whitespaces
      printf "%d" (len :: Int)::IO()
      printf "\n" ::IO()
-     ((\ (m, tab) ->
-        do return (m)
+     ((\ (k, tab) ->
+        do return (k)
            printf "%d" =<< ((result len tab) :: IO Int)
            printf "\n" ::IO()) =<< (array_init_withenv len (\ a () ->
                                                              do b <- read_int
                                                                 skip_whitespaces
-                                                                let l = b
-                                                                return (((), l))) ()))
+                                                                let j = b
+                                                                return (((), j))) ()))
 

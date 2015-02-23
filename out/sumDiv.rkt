@@ -33,39 +33,33 @@
 )
 (define (foo3 _)
   ;toto
-  (block
-    (if (eq? 1 1)
-    '()
-    '())
-    '()
-    )
+  (if (eq? 1 1)
+  '()
+  '())
 )
 (define (sumdiv n)
   ;toto
   ; On désire renvoyer la somme des diviseurs 
   (let ([out0 0])
   ; On déclare un entier qui contiendra la somme 
-  (let ([c 1])
-  (let ([d n])
   (letrec ([b (lambda (i out0) 
-                (if (<= i d)
+                (if (<= i n)
                 ; La boucle : i est le diviseur potentiel
-                (let ([out0 (if (eq? (remainder n i) 0)
-                            ; Si i divise 
-                            (let ([out0 (+ out0 i)])
-                            ; On incrémente 
-                            out0)
-                            ; nop 
-                            out0)])
+                (if (eq? (remainder n i) 0)
+                ; Si i divise 
+                (let ([out0 (+ out0 i)])
+                ; On incrémente 
+                (b (+ i 1) out0))
+                ; nop 
                 (b (+ i 1) out0))
                 out0))])
-  (b c out0)))))
+  (b 1 out0)))
 )
 (define main
   ; Programme principal 
   (let ([n 0])
-  ((lambda (e) 
-     (let ([n e])
+  ((lambda (c) 
+     (let ([n c])
      ; Lecture de l'entier 
      (display (sumdiv n)))) (mread-int)))
 )

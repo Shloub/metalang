@@ -10,10 +10,8 @@ module Array = struct
 end
 
 let main =
-  let p = 1 in
-  let q = 3 in
-  let rec o i =
-    (if (i <= q)
+  let rec k i =
+    (if (i <= 3)
      then Scanf.scanf "%d"
      (fun  a -> (
                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
@@ -24,7 +22,7 @@ let main =
                                (fun  c -> (
                                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                             (Printf.printf "a = %d b = %dc =%d\n" a b c);
-                                            (o (i + 1))
+                                            (k (i + 1))
                                             )
                                )
                                )
@@ -33,17 +31,15 @@ let main =
      )
      else ((fun  (g, l) -> (
                              g;
-                             let k = 0 in
-                             let m = 9 in
                              let rec h j =
-                               (if (j <= m)
+                               (if (j <= 9)
                                 then (
                                        (Printf.printf "%d\n" l.(j));
                                        (h (j + 1))
                                        )
                                 
                                 else ()) in
-                               (h k)
+                               (h 0)
                              )
      ) (Array.init_withenv 10 (fun  d () -> Scanf.scanf "%d"
      (fun  e -> (
@@ -52,5 +48,5 @@ let main =
                   ((), f)
                   )
      )) ()))) in
-    (o p)
+    (k 1)
 

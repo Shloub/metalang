@@ -34,10 +34,9 @@
   ;toto
   (let ([min0 (vector-ref tab 0)])
   (let ([max0 (vector-ref tab 1)])
-  (let ([c 2])
-  (let ([d (- len 1)])
+  (let ([c (- len 1)])
   (letrec ([b (lambda (i max0 min0) 
-                (if (<= i d)
+                (if (<= i c)
                 (if (or (> (vector-ref tab i) max0) (< (vector-ref tab i) min0))
                 #f
                 (let ([min0 (if (< (vector-ref tab i) nombre)
@@ -52,7 +51,7 @@
                 #f
                 (b (+ i 1) max0 min0)))))
                 #t))])
-  (b c max0 min0))))))
+  (b 2 max0 min0)))))
 )
 (define main
   ((lambda (nombre) 
@@ -61,23 +60,20 @@
        ((lambda (len) 
           (block
             (mread-blank)
-            ((lambda (internal_env) (apply (lambda (f tab) 
+            ((lambda (internal_env) (apply (lambda (e tab) 
                                                   (block
-                                                    f
+                                                    e
                                                     (let ([a (devine0 nombre tab len)])
-                                                    (block
-                                                      (if a
-                                                      (display "True")
-                                                      (display "False"))
-                                                      '()
-                                                      ))
+                                                    (if a
+                                                    (display "True")
+                                                    (display "False")))
                                                     )) internal_env)) (array_init_withenv len 
             (lambda (i) 
               (lambda (_) ((lambda (tmp) 
                              (block
                                (mread-blank)
-                               (let ([e tmp])
-                               (list '() e))
+                               (let ([d tmp])
+                               (list '() d))
                                )) (mread-int)))) '()))
        )) (mread-int))
 )) (mread-int))

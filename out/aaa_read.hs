@@ -81,11 +81,11 @@ main =
      skip_whitespaces
      printf "%d" (len :: Int)::IO()
      printf "=len\n" ::IO()
-     let m = (len * 2)
+     let l = (len * 2)
      printf "len*2=" ::IO()
-     printf "%d" (m :: Int)::IO()
+     printf "%d" (l :: Int)::IO()
      printf "\n" ::IO()
-     let n = (m `quot` 2)
+     let m = (l `quot` 2)
      ((\ (b, tab) ->
         do return (b)
            printf "\n" ::IO()
@@ -97,26 +97,25 @@ main =
                  printf "=strlen\n" ::IO()
                  ((\ (g, tab4) ->
                     do return (g)
-                       let k = 0
-                       let l = (strlen - 1)
+                       let k = (strlen - 1)
                        let h j =
-                             (if (j <= l)
+                             (if (j <= k)
                              then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
                                      (h (j + 1))
                              else return (())) in
-                             (h k)) =<< (array_init_withenv strlen (\ toto () ->
+                             (h 0)) =<< (array_init_withenv strlen (\ toto () ->
                                                                      hGetChar stdin >>= ((\ tmpc ->
                                                                                            do c <- ((fmap ord (return (tmpc))))
                                                                                               printf "%c" (tmpc :: Char)::IO()
                                                                                               printf ":" ::IO()
                                                                                               printf "%d" (c :: Int)::IO()
                                                                                               printf " " ::IO()
-                                                                                              o <- (if (tmpc /= ' ')
-                                                                                                   then do p <- ((+) <$> (rem <$> ((+) <$> (((-) c) <$> ((fmap ord (return ('a'))))) <*> return (13)) <*> return (26)) <*> ((fmap ord (return ('a')))))
-                                                                                                           return (p)
+                                                                                              n <- (if (tmpc /= ' ')
+                                                                                                   then do o <- ((+) <$> (rem <$> ((+) <$> (((-) c) <$> ((fmap ord (return ('a'))))) <*> return (13)) <*> return (26)) <*> ((fmap ord (return ('a')))))
+                                                                                                           return (o)
                                                                                                    else return (c))
-                                                                                              f <- ((fmap chr (return (o))))
-                                                                                              return (((), f))))) ()))) =<< (array_init_withenv n (\ i_ () ->
+                                                                                              f <- ((fmap chr (return (n))))
+                                                                                              return (((), f))))) ()))) =<< (array_init_withenv m (\ i_ () ->
                                                                                                                                                     do tmpi2 <- read_int
                                                                                                                                                        skip_whitespaces
                                                                                                                                                        printf "%d" (i_ :: Int)::IO()
@@ -124,7 +123,7 @@ main =
                                                                                                                                                        printf "%d" (tmpi2 :: Int)::IO()
                                                                                                                                                        printf " " ::IO()
                                                                                                                                                        let d = tmpi2
-                                                                                                                                                       return (((), d))) ()))) =<< (array_init_withenv n (\ i () ->
+                                                                                                                                                       return (((), d))) ()))) =<< (array_init_withenv m (\ i () ->
                                                                                                                                                                                                            do tmpi1 <- read_int
                                                                                                                                                                                                               skip_whitespaces
                                                                                                                                                                                                               printf "%d" (i :: Int)::IO()

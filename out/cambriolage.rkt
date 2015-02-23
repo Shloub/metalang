@@ -34,85 +34,80 @@
   ;toto
   (let ([max_ancient 0])
   (let ([max_recent 0])
-  (let ([h 0])
-  (let ([o (- m 1)])
-  (letrec ([g (lambda (i max_ancient max_recent) 
-                (if (<= i o)
+  (let ([f (- m 1)])
+  (letrec ([e (lambda (i max_ancient max_recent) 
+                (if (<= i f)
                 (let ([max_ancient (if (and (eq? (vector-ref (vector-ref serrures i) 0) (- 1)) (> (vector-ref (vector-ref serrures i) 1) max_ancient))
                                    (let ([max_ancient (vector-ref (vector-ref serrures i) 1)])
                                    max_ancient)
                                    max_ancient)])
-                (let ([max_recent (if (and (eq? (vector-ref (vector-ref serrures i) 0) 1) (> (vector-ref (vector-ref serrures i) 1) max_recent))
-                                  (let ([max_recent (vector-ref (vector-ref serrures i) 1)])
-                                  max_recent)
-                                  max_recent)])
-                (g (+ i 1) max_ancient max_recent)))
+                (if (and (eq? (vector-ref (vector-ref serrures i) 0) 1) (> (vector-ref (vector-ref serrures i) 1) max_recent))
+                (let ([max_recent (vector-ref (vector-ref serrures i) 1)])
+                (e (+ i 1) max_ancient max_recent))
+                (e (+ i 1) max_ancient max_recent)))
                 (let ([max_ancient_pp 0])
                 (let ([max_recent_pp 0])
-                (let ([e 0])
-                (let ([f (- n 1)])
-                (letrec ([d (lambda (i max_ancient_pp max_recent_pp) 
-                              (if (<= i f)
+                (let ([d (- n 1)])
+                (letrec ([c (lambda (i max_ancient_pp max_recent_pp) 
+                              (if (<= i d)
                               (let ([pp (vector-ref passepartout i)])
                               (if (and (>= (vector-ref pp 0) max_ancient) (>= (vector-ref pp 1) max_recent))
                               1
                               (let ([max_ancient_pp (max max_ancient_pp (vector-ref pp 0))])
                               (let ([max_recent_pp (max max_recent_pp (vector-ref pp 1))])
-                              (d (+ i 1) max_ancient_pp max_recent_pp)))))
-                              (let ([c (lambda (_) 
-                                         '())])
+                              (c (+ i 1) max_ancient_pp max_recent_pp)))))
                               (if (and (>= max_ancient_pp max_ancient) (>= max_recent_pp max_recent))
                               2
-                              0))))])
-                (d e max_ancient_pp max_recent_pp))))))))])
-  (g h max_ancient max_recent))))))
+                              0)))])
+                (c 0 max_ancient_pp max_recent_pp)))))))])
+  (e 0 max_ancient max_recent)))))
 )
 (define main
   ((lambda (n) 
      (block
        (mread-blank)
-       ((lambda (internal_env) (apply (lambda (q passepartout) 
+       ((lambda (internal_env) (apply (lambda (h passepartout) 
                                              (block
-                                               q
+                                               h
                                                ((lambda (m) 
                                                   (block
                                                     (mread-blank)
                                                     ((lambda (internal_env) (apply (lambda
-                                                     (v serrures) 
+                                                     (r serrures) 
                                                     (block
-                                                      v
+                                                      r
                                                       (display (nbPassePartout n passepartout m serrures))
                                                       )) internal_env)) (array_init_withenv m 
                                                     (lambda (k) 
                                                       (lambda (_) ((lambda (internal_env) (apply (lambda
-                                                       (x out1) 
+                                                       (u out1) 
                                                       (block
-                                                        x
-                                                        (let ([u out1])
-                                                        (list '() u))
+                                                        u
+                                                        (let ([q out1])
+                                                        (list '() q))
                                                         )) internal_env)) (array_init_withenv 2 
                                                       (lambda (l) 
                                                         (lambda (_) ((lambda (out_) 
                                                                        (block
                                                                          (mread-blank)
-                                                                         (let ([w out_])
-                                                                         (list '() w))
+                                                                         (let ([s out_])
+                                                                         (list '() s))
                                                                          )) (mread-int)))) '())))) '()))
                                              )) (mread-int))
   )) internal_env)) (array_init_withenv n (lambda (i) 
                                             (lambda (_) ((lambda (internal_env) (apply (lambda
-                                             (s out0) 
+                                             (p out0) 
                                             (block
-                                              s
-                                              (let ([p out0])
-                                              (list '() p))
+                                              p
+                                              (let ([g out0])
+                                              (list '() g))
                                               )) internal_env)) (array_init_withenv 2 
                                             (lambda (j) 
                                               (lambda (_) ((lambda (out01) 
                                                              (block
                                                                (mread-blank)
-                                                               (let ([r out01])
-                                                               (list '() r))
+                                                               (let ([o out01])
+                                                               (list '() o))
                                                                )) (mread-int)))) '())))) '()))
 )) (mread-int))
 )

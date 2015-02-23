@@ -18,15 +18,14 @@ let main =
                                   let found = true in
                                   (a, b, b0, found, sqrtia)
                                   else (a, b, b0, found, sqrtia)))
-        else let a = (if (not found)
-                      then (
-                             (Printf.printf "%d\n" a);
-                             let a = 1 in
-                             a
-                             )
-                      
-                      else a) in
-        (d a b0 sqrtia)) in
+        else (if (not found)
+              then (
+                     (Printf.printf "%d\n" a);
+                     let a = 1 in
+                     (d a b0 sqrtia)
+                     )
+              
+              else (d a b0 sqrtia))) in
        (e a b b0 found sqrtia)
      else ()) in
     (d a b0 sqrtia)

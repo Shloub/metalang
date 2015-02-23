@@ -12,31 +12,29 @@
 (define (programme_candidat tableau x y)
   ;toto
   (let ([out0 0])
-  (let ([f 0])
-  (let ([g (- y 1)])
+  (let ([e (- y 1)])
   (letrec ([b (lambda (i out0) 
-                (if (<= i g)
-                (let ([d 0])
-                (let ([e (- x 1)])
+                (if (<= i e)
+                (let ([d (- x 1)])
                 (letrec ([c (lambda (j out0) 
-                              (if (<= j e)
+                              (if (<= j d)
                               (let ([out0 (+ out0 (* (vector-ref (vector-ref tableau i) j) (+ (* i 2) j)))])
                               (c (+ j 1) out0))
                               (b (+ i 1) out0)))])
-                (c d out0))))
+                (c 0 out0)))
                 out0))])
-  (b f out0)))))
+  (b 0 out0))))
 )
 (define main
   (let ([taille_x (string->number (read-line))])
   (let ([taille_y (string->number (read-line))])
-  ((lambda (internal_env) (apply (lambda (k tableau) 
+  ((lambda (internal_env) (apply (lambda (g tableau) 
                                         (block
-                                          k
+                                          g
                                           (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
                                           )) internal_env)) (array_init_withenv taille_y 
   (lambda (a) 
-    (lambda (_) (let ([h (list->vector (map string->number (regexp-split " " (read-line))))])
-                (list '() h)))) '()))))
+    (lambda (_) (let ([f (list->vector (map string->number (regexp-split " " (read-line))))])
+                (list '() f)))) '()))))
 )
 

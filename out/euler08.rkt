@@ -25,10 +25,8 @@
                                         (let ([max0 i])
                                         (let ([index 0])
                                         (let ([nskipdiv 0])
-                                        (let ([m 1])
-                                        (let ([n 995])
                                         (letrec ([l (lambda (k i index max0 nskipdiv) 
-                                                      (if (<= k n)
+                                                      (if (<= k 995)
                                                       ((lambda (e) 
                                                          (let ([f (- (char->integer e) (char->integer #\0))])
                                                          ((lambda (internal_env) (apply (lambda
@@ -53,7 +51,7 @@
                                                       (block
                                                         (map display (list max0 "\n"))
                                                         )))])
-                                        (l m i index max0 nskipdiv))))))))) internal_env)) (array_init_withenv 5 
+                                        (l 1 i index max0 nskipdiv))))))) internal_env)) (array_init_withenv 5 
 (lambda (j) 
   (lambda (i) 
     ((lambda (c) 

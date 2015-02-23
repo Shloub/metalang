@@ -32,58 +32,56 @@
 
 (define (read_sudoku _)
   ;toto
-  ((lambda (internal_env) (apply (lambda (v out0) 
+  ((lambda (internal_env) (apply (lambda (g out0) 
                                         (block
-                                          v
+                                          g
                                           out0
                                           )) internal_env)) (array_init_withenv (* 9 9) 
   (lambda (i) 
     (lambda (_) ((lambda (k) 
                    (block
                      (mread-blank)
-                     (let ([u k])
-                     (list '() u))
+                     (let ([f k])
+                     (list '() f))
                      )) (mread-int)))) '()))
 )
 (define (print_sudoku sudoku0)
   ;toto
-  (let ([q 0])
-  (let ([r 8])
-  (letrec ([l (lambda (y) 
-                (if (<= y r)
-                (let ([n 0])
-                (let ([o 8])
-                (letrec ([m (lambda (x) 
-                              (if (<= x o)
+  (letrec ([d (lambda (y) 
+                (if (<= y 8)
+                (letrec ([e (lambda (x) 
+                              (if (<= x 8)
                               (block
                                 (map display (list (vector-ref sudoku0 (+ x (* y 9))) " "))
                                 (if (eq? (remainder x 3) 2)
-                                (display " ")
-                                '())
-                                (m (+ x 1))
+                                (block
+                                  (display " ")
+                                  (e (+ x 1))
+                                  )
+                                (e (+ x 1)))
                                 )
                               (block
                                 (display "\n")
                                 (if (eq? (remainder y 3) 2)
-                                (display "\n")
-                                '())
-                                (l (+ y 1))
+                                (block
+                                  (display "\n")
+                                  (d (+ y 1))
+                                  )
+                                (d (+ y 1)))
                                 )))])
-                (m n))))
+                (e 0))
                 (display "\n")))])
-  (l q))))
+(d 0))
 )
 (define (sudoku_done s)
   ;toto
-  (let ([h 0])
-  (let ([j 80])
-  (letrec ([g (lambda (i) 
-                (if (<= i j)
+  (letrec ([c (lambda (i) 
+                (if (<= i 80)
                 (if (eq? (vector-ref s i) 0)
                 #f
-                (g (+ i 1)))
+                (c (+ i 1)))
                 #t))])
-  (g h))))
+  (c 0))
 )
 (define (solve sudoku0)
   ;toto
@@ -91,15 +89,11 @@
   #f
   (if (sudoku_done sudoku0)
   #t
-  (let ([e 0])
-  (let ([f 80])
   (letrec ([a (lambda (i) 
-                (if (<= i f)
+                (if (<= i 80)
                 (if (eq? (vector-ref sudoku0 i) 0)
-                (let ([c 1])
-                (let ([d 9])
                 (letrec ([b (lambda (p) 
-                              (if (<= p d)
+                              (if (<= p 9)
                               (block
                                 (vector-set! sudoku0 i p)
                                 (if (solve sudoku0)
@@ -110,10 +104,10 @@
                                 (vector-set! sudoku0 i 0)
                                 #f
                                 )))])
-                (b c))))
+                (b 1))
                 (a (+ i 1)))
                 #f))])
-  (a e))))))
+  (a 0))))
 )
 (define main
   (let ([sudoku0 (read_sudoku 'nil)])
@@ -125,7 +119,6 @@
       '()
       )
     (display "no solution\n"))
-    '()
     ))
 )
 

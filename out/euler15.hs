@@ -79,53 +79,46 @@ array_init_withenv len f env =
 main =
   do let n = 10
      {- normalement on doit mettre 20 mais là on se tape un overflow -}
-     do let bd = (n + 1)
+     do let w = (n + 1)
         ((\ (b, tab) ->
            do return (b)
-              let bb = 0
-              let bc = (bd - 1)
-              let ba l =
-                     (if (l <= bc)
-                     then do join (writeIOA <$> (readIOA tab (bd - 1)) <*> return (l) <*> return (1))
-                             join (writeIOA <$> (readIOA tab l) <*> return ((bd - 1)) <*> return (1))
-                             (ba (l + 1))
-                     else do let y = 2
-                             let z = bd
-                             let u o =
-                                   (if (o <= z)
-                                   then do let r = (bd - o)
-                                           let w = 2
-                                           let x = bd
-                                           let v p =
-                                                 (if (p <= x)
-                                                 then do let q = (bd - p)
-                                                         join (writeIOA <$> (readIOA tab r) <*> return (q) <*> ((+) <$> join (readIOA <$> (readIOA tab (r + 1)) <*> return (q)) <*> join (readIOA <$> (readIOA tab r) <*> return ((q + 1)))))
-                                                         (v (p + 1))
-                                                 else (u (o + 1))) in
-                                                 (v w)
-                                   else do let s = 0
-                                           let t = (bd - 1)
-                                           let e m =
-                                                 (if (m <= t)
-                                                 then do let g = 0
-                                                         let h = (bd - 1)
-                                                         let f k =
-                                                               (if (k <= h)
-                                                               then do printf "%d" =<< (join (readIOA <$> (readIOA tab m) <*> return (k)) :: IO Int)
-                                                                       printf " " ::IO()
-                                                                       (f (k + 1))
-                                                               else do printf "\n" ::IO()
-                                                                       (e (m + 1))) in
-                                                               (f g)
-                                                 else do printf "%d" =<< (join (readIOA <$> (readIOA tab 0) <*> return (0)) :: IO Int)
-                                                         printf "\n" ::IO()) in
-                                                 (e s)) in
-                                   (u y)) in
-                     (ba bb)) =<< (array_init_withenv bd (\ i () ->
-                                                           ((\ (d, tab2) ->
-                                                              do return (d)
-                                                                 let a = tab2
-                                                                 return (((), a))) =<< (array_init_withenv bd (\ j () ->
-                                                                                                                let c = 0
-                                                                                                                        in return (((), c))) ()))) ()))
+              let v = (w - 1)
+              let u l =
+                    (if (l <= v)
+                    then do join (writeIOA <$> (readIOA tab (w - 1)) <*> return (l) <*> return (1))
+                            join (writeIOA <$> (readIOA tab l) <*> return ((w - 1)) <*> return (1))
+                            (u (l + 1))
+                    else let s o =
+                               (if (o <= w)
+                               then do let r = (w - o)
+                                       let t p =
+                                             (if (p <= w)
+                                             then do let q = (w - p)
+                                                     join (writeIOA <$> (readIOA tab r) <*> return (q) <*> ((+) <$> join (readIOA <$> (readIOA tab (r + 1)) <*> return (q)) <*> join (readIOA <$> (readIOA tab r) <*> return ((q + 1)))))
+                                                     (t (p + 1))
+                                             else (s (o + 1))) in
+                                             (t 2)
+                               else do let h = (w - 1)
+                                       let e m =
+                                             (if (m <= h)
+                                             then do let g = (w - 1)
+                                                     let f k =
+                                                           (if (k <= g)
+                                                           then do printf "%d" =<< (join (readIOA <$> (readIOA tab m) <*> return (k)) :: IO Int)
+                                                                   printf " " ::IO()
+                                                                   (f (k + 1))
+                                                           else do printf "\n" ::IO()
+                                                                   (e (m + 1))) in
+                                                           (f 0)
+                                             else do printf "%d" =<< (join (readIOA <$> (readIOA tab 0) <*> return (0)) :: IO Int)
+                                                     printf "\n" ::IO()) in
+                                             (e 0)) in
+                               (s 2)) in
+                    (u 0)) =<< (array_init_withenv w (\ i () ->
+                                                       ((\ (d, tab2) ->
+                                                          do return (d)
+                                                             let a = tab2
+                                                             return (((), a))) =<< (array_init_withenv w (\ j () ->
+                                                                                                           let c = 0
+                                                                                                                   in return (((), c))) ()))) ()))
 

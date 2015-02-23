@@ -12,14 +12,12 @@
 (define (fact n)
   ;toto
   (let ([prod 1])
-  (let ([v 2])
-  (let ([w n])
-  (letrec ([u (lambda (i prod) 
-                (if (<= i w)
+  (letrec ([q (lambda (i prod) 
+                (if (<= i n)
                 (let ([prod (* prod i)])
-                (u (+ i 1) prod))
+                (q (+ i 1) prod))
                 prod))])
-  (u v prod)))))
+  (q 2 prod)))
 )
 (define (show lim nth0)
   ;toto
@@ -29,20 +27,17 @@
                                           ((lambda (internal_env) (apply (lambda (d pris) 
                                                                                 (block
                                                                                 d
-                                                                                (let ([r 1])
-                                                                                (let ([s (- lim 1)])
-                                                                                (letrec ([h 
+                                                                                (let ([p (- lim 1)])
+                                                                                (letrec ([g 
                                                                                 (lambda (k nth0) 
-                                                                                (if (<= k s)
+                                                                                (if (<= k p)
                                                                                 (let ([n (fact (- lim k))])
                                                                                 (let ([nchiffre (quotient nth0 n)])
                                                                                 (let ([nth0 (remainder nth0 n)])
-                                                                                (let ([p 0])
-                                                                                (let ([q (- lim 1)])
-                                                                                (letrec ([o 
+                                                                                (let ([o (- lim 1)])
+                                                                                (letrec ([h 
                                                                                 (lambda (l nchiffre) 
-                                                                                (if (<= l q)
-                                                                                (let ([nchiffre 
+                                                                                (if (<= l o)
                                                                                 (if (not (vector-ref pris l))
                                                                                 (block
                                                                                 (if (eq? nchiffre 0)
@@ -52,26 +47,24 @@
                                                                                 )
                                                                                 '())
                                                                                 (let ([nchiffre (- nchiffre 1)])
-                                                                                nchiffre)
+                                                                                (h (+ l 1) nchiffre))
                                                                                 )
-                                                                                nchiffre)])
-                                                                                (o (+ l 1) nchiffre))
-                                                                                (h (+ k 1) nth0)))])
-                                                                                (o p nchiffre)))))))
-                                                                                (let ([f 0])
-                                                                                (let ([g (- lim 1)])
+                                                                                (h (+ l 1) nchiffre))
+                                                                                (g (+ k 1) nth0)))])
+                                                                                (h 0 nchiffre))))))
+                                                                                (let ([f (- lim 1)])
                                                                                 (letrec ([e 
                                                                                 (lambda (m) 
-                                                                                (if (<= m g)
-                                                                                (block
+                                                                                (if (<= m f)
                                                                                 (if (not (vector-ref pris m))
+                                                                                (block
                                                                                 (display m)
-                                                                                '())
                                                                                 (e (+ m 1))
                                                                                 )
+                                                                                (e (+ m 1)))
                                                                                 (display "\n")))])
-                                                                                (e f))))))])
-                                                                                (h r nth0))))
+                                                                                (e 0)))))])
+                                                                                (g 1 nth0)))
                                         )) internal_env)) (array_init_withenv lim 
 (lambda (j) 
   (lambda (_) (let ([c #f])

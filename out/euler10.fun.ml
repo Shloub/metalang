@@ -11,41 +11,35 @@ end
 
 let eratostene t max0 =
   let sum = 0 in
-  let c = 2 in
-  let d = (max0 - 1) in
+  let c = (max0 - 1) in
   let rec a i sum =
-    (if (i <= d)
-     then let sum = (if (t.(i) = i)
-                     then let sum = (sum + i) in
-                     (
-                       (if ((max0 / i) > i)
-                        then let j = (i * i) in
-                        let rec b j =
-                          (if ((j < max0) && (j > 0))
-                           then (
-                                  t.(j) <- 0;
-                                  let j = (j + i) in
-                                  (b j)
-                                  )
-                           
-                           else ()) in
-                          (b j)
-                        else ());
-                       sum
-                       )
-                     
-                     else sum) in
-     (a (i + 1) sum)
+    (if (i <= c)
+     then (if (t.(i) = i)
+           then let sum = (sum + i) in
+           (if ((max0 / i) > i)
+            then let j = (i * i) in
+            let rec b j =
+              (if ((j < max0) && (j > 0))
+               then (
+                      t.(j) <- 0;
+                      let j = (j + i) in
+                      (b j)
+                      )
+               
+               else (a (i + 1) sum)) in
+              (b j)
+            else (a (i + 1) sum))
+           else (a (i + 1) sum))
      else sum) in
-    (a c sum)
+    (a 2 sum)
 let main =
   let n = 100000 in
   (*  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages  *)
-  ((fun  (f, t) -> (
-                     f;
+  ((fun  (e, t) -> (
+                     e;
                      t.(1) <- 0;
                      (Printf.printf "%d\n" (eratostene t n))
                      )
-  ) (Array.init_withenv n (fun  i () -> let e = i in
-  ((), e)) ()))
+  ) (Array.init_withenv n (fun  i () -> let d = i in
+  ((), d)) ()))
 

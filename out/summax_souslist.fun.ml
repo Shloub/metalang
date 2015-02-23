@@ -12,40 +12,38 @@ end
 let summax lst len =
   let current = 0 in
   let max0 = 0 in
-  let b = 0 in
-  let c = (len - 1) in
+  let b = (len - 1) in
   let rec a i current max0 =
-    (if (i <= c)
+    (if (i <= b)
      then let current = (current + lst.(i)) in
      let current = (if (current < 0)
                     then let current = 0 in
                     current
                     else current) in
-     let max0 = (if (max0 < current)
-                 then let max0 = current in
-                 max0
-                 else max0) in
-     (a (i + 1) current max0)
+     (if (max0 < current)
+      then let max0 = current in
+      (a (i + 1) current max0)
+      else (a (i + 1) current max0))
      else max0) in
-    (a b current max0)
+    (a 0 current max0)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  g -> let len = g in
+  (fun  f -> let len = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (e, tab) -> (
-                         e;
+    ((fun  (d, tab) -> (
+                         d;
                          let result = (summax tab len) in
                          (Printf.printf "%d" result)
                          )
     ) (Array.init_withenv len (fun  i () -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  f -> let tmp = f in
+    (fun  e -> let tmp = e in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let d = tmp in
-      ((), d)
+      let c = tmp in
+      ((), c)
       )
     )) ()))
     )

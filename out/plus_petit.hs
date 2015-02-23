@@ -79,59 +79,39 @@ array_init_withenv len f env =
 go0 tab a b =
   do let m = ((a + b) `quot` 2)
      (if (a == m)
-     then do let f () = do let i = a
-                           let j = b
-                           let d n o =
-                                 (if (n < o)
-                                 then do e <- (readIOA tab n)
-                                         ((\ (p, q) ->
-                                            (d p q)) =<< (if (e < m)
-                                                         then let r = (n + 1)
-                                                                      in return ((r, o))
-                                                         else do let s = (o - 1)
-                                                                 writeIOA tab n =<< (readIOA tab s)
-                                                                 writeIOA tab s e
-                                                                 return ((n, s))))
-                                 else do let c () = return (())
-                                         (if (n < m)
-                                         then (go0 tab a m)
-                                         else (go0 tab m b))) in
-                                 (d i j)
-             ifM (((==) <$> (readIOA tab a) <*> return (m)))
-                 (return (b))
-                 (return (a))
+     then ifM (((==) <$> (readIOA tab a) <*> return (m)))
+              (return (b))
+              (return (a))
      else do let i = a
              let j = b
-             let d t u =
-                   (if (t < u)
-                   then do e <- (readIOA tab t)
-                           ((\ (v, w) ->
-                              (d v w)) =<< (if (e < m)
-                                           then let x = (t + 1)
-                                                        in return ((x, u))
-                                           else do let y = (u - 1)
-                                                   writeIOA tab t =<< (readIOA tab y)
-                                                   writeIOA tab y e
-                                                   return ((t, y))))
-                   else do let c () = return (())
-                           (if (t < m)
-                           then (go0 tab a m)
-                           else (go0 tab m b))) in
-                   (d i j))
+             let c k l =
+                   (if (k < l)
+                   then do e <- (readIOA tab k)
+                           (if (e < m)
+                           then do let n = (k + 1)
+                                   (c n l)
+                           else do let o = (l - 1)
+                                   writeIOA tab k =<< (readIOA tab o)
+                                   writeIOA tab o e
+                                   (c k o))
+                   else (if (k < m)
+                        then (go0 tab a m)
+                        else (go0 tab m b))) in
+                   (c i j))
 plus_petit0 tab len =
   (go0 tab 0 len)
 main =
   do let len = 0
-     l <- read_int
-     let z = l
+     h <- read_int
+     let p = h
      skip_whitespaces
-     ((\ (h, tab) ->
-        do return (h)
-           printf "%d" =<< ((plus_petit0 tab z) :: IO Int)) =<< (array_init_withenv z (\ i () ->
+     ((\ (f, tab) ->
+        do return (f)
+           printf "%d" =<< ((plus_petit0 tab p) :: IO Int)) =<< (array_init_withenv p (\ i () ->
                                                                                         do let tmp = 0
-                                                                                           k <- read_int
-                                                                                           let ba = k
+                                                                                           g <- read_int
+                                                                                           let q = g
                                                                                            skip_whitespaces
-                                                                                           let g = ba
-                                                                                           return (((), g))) ()))
+                                                                                           let d = q
+                                                                                           return (((), d))) ()))
 

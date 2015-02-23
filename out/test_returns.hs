@@ -62,37 +62,29 @@ read_int =
       return (num * sign)
 
 is_pair i =
-  let j = 1
-          in return ((if (i < 10)
-                     then let a = 2
-                                  in (if (i == 0)
-                                     then let b = 4
-                                                  in True
-                                     else let c = 3
-                                                  in (if (i == 2)
-                                                     then let d = 4
-                                                                  in True
-                                                     else let e = 5
-                                                                  in let f = 6
-                                                                             in let g = (if (i < 20)
-                                                                                        then let h = (if (i == 22)
-                                                                                                     then let k = 0
-                                                                                                                  in k
-                                                                                                     else f)
-                                                                                                     in let l = 8
-                                                                                                                in l
-                                                                                        else f)
-                                                                                        in ((i `rem` 2) == 0)))
-                     else let m = 6
-                                  in let n = (if (i < 20)
-                                             then let o = (if (i == 22)
-                                                          then let p = 0
-                                                                       in p
-                                                          else m)
-                                                          in let q = 8
-                                                                     in q
-                                             else m)
-                                             in ((i `rem` 2) == 0)))
+  do let j = 1
+     let a b = let c = 6
+                       in let d = (if (i < 20)
+                                  then let e = (if (i == 22)
+                                               then let f = 0
+                                                            in f
+                                               else c)
+                                               in let g = 8
+                                                          in g
+                                  else c)
+                                  in return (((i `rem` 2) == 0))
+     (if (i < 10)
+     then do let h = 2
+             (if (i == 0)
+             then let k = 4
+                          in return (True)
+             else do let l = 3
+                     (if (i == 2)
+                     then let m = 4
+                                  in return (True)
+                     else do let n = 5
+                             (a n)))
+     else (a j))
 main =
   return (())
 

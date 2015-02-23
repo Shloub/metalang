@@ -3,15 +3,13 @@
 
 (define main
   (let ([str (list->vector (string->list (read-line)))])
-  (let ([b 0])
-  (let ([c 11])
   (letrec ([a (lambda (i) 
-                (if (<= i c)
+                (if (<= i 11)
                 (block
                   (display (vector-ref str i))
                   (a (+ i 1))
                   )
                 '()))])
-  (a b)))))
+  (a 0)))
 )
 

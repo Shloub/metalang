@@ -62,10 +62,9 @@ read_int =
       return (num * sign)
 
 min2_ a b =
-  let e () = ()
-             in return ((if (a < b)
-                        then a
-                        else b))
+  return ((if (a < b)
+          then a
+          else b))
 main =
   do printf "%d" =<< ((join (min2_ <$> (join (min2_ <$> (min2_ 1 2) <*> (return 3))) <*> (return 4))) :: IO Int)
      printf " " ::IO()

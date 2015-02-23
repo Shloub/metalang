@@ -30,10 +30,9 @@ let main =
                                                                                 ((fun  (g, tab4) -> 
                                                                                 (
                                                                                 g;
-                                                                                let k = 0 in
-                                                                                let l = (strlen - 1) in
+                                                                                let k = (strlen - 1) in
                                                                                 let rec h j =
-                                                                                (if (j <= l)
+                                                                                (if (j <= k)
                                                                                 then 
                                                                                 (
                                                                                 (Printf.printf "%c" tab4.(j));
@@ -41,7 +40,7 @@ let main =
                                                                                 )
                                                                                 
                                                                                 else ()) in
-                                                                                (h k)
+                                                                                (h 0)
                                                                                 )
                                                                                 ) (Array.init_withenv strlen (fun  toto () -> Scanf.scanf "%c"
                                                                                 (fun  tmpc -> let c = (int_of_char (tmpc)) in

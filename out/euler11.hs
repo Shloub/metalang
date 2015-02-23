@@ -77,83 +77,67 @@ array_init_withenv len f env =
 
 
 max2_ a b =
-  let l () = ()
-             in return ((if (a > b)
-                        then a
-                        else b))
+  return ((if (a > b)
+          then a
+          else b))
 find n m x y dx dy =
-  do let h () = return (())
-     (if ((((x < 0) || (x == 20)) || (y < 0)) || (y == 20))
-     then return ((- 1))
-     else do let k () = (h ())
-             (if (n == 0)
-             then return (1)
-             else ((*) <$> join (readIOA <$> (readIOA m y) <*> return (x)) <*> (find (n - 1) m (x + dx) (y + dy) dx dy))))
+  (if ((((x < 0) || (x == 20)) || (y < 0)) || (y == 20))
+  then return ((- 1))
+  else (if (n == 0)
+       then return (1)
+       else ((*) <$> join (readIOA <$> (readIOA m y) <*> return (x)) <*> (find (n - 1) m (x + dx) (y + dy) dx dy))))
 main =
-  ((\ (p, directions) ->
-     do return (p)
+  ((\ (k, directions) ->
+     do return (k)
         let max0 = 0
         let c = 20
-        ((\ (bc, m) ->
-           do return (bc)
-              let bm = 0
-              let bn = 7
-              let bf j bo =
-                     (if (j <= bn)
-                     then ((\ (dx, dy) ->
-                             do let bk = 0
-                                let bl = 19
-                                let bg x bp =
-                                       (if (x <= bl)
-                                       then do let bi = 0
-                                               let bj = 19
-                                               let bh y bq =
-                                                      (if (y <= bj)
-                                                      then do br <- (max2_ bq =<< (find 4 m x y dx dy))
-                                                              (bh (y + 1) br)
-                                                      else (bg (x + 1) bq)) in
-                                                      (bh bi bp)
-                                       else (bf (j + 1) bp)) in
-                                       (bg bk bo)) =<< (readIOA directions j))
-                     else do printf "%d" (bo :: Int)::IO()
-                             printf "\n" ::IO()) in
-                     (bf bm max0)) =<< (array_init_withenv 20 (\ d () ->
-                                                                ((\ (be, f) ->
-                                                                   do return (be)
-                                                                      let bb = f
-                                                                      return (((), bb))) =<< (array_init_withenv c (\ g () ->
-                                                                                                                     do e <- read_int
-                                                                                                                        skip_whitespaces
-                                                                                                                        let bd = e
-                                                                                                                        return (((), bd))) ()))) ()))) =<< (array_init_withenv 8 (\ i () ->
-                                                                                                                                                                                   let q () o = ((), o)
-                                                                                                                                                                                                in return ((if (i == 0)
-                                                                                                                                                                                                           then let o = (0, 1)
-                                                                                                                                                                                                                        in ((), o)
-                                                                                                                                                                                                           else let r () = (q ())
-                                                                                                                                                                                                                           in (if (i == 1)
-                                                                                                                                                                                                                              then let o = (1, 0)
-                                                                                                                                                                                                                                           in ((), o)
-                                                                                                                                                                                                                              else let s () = (r ())
-                                                                                                                                                                                                                                              in (if (i == 2)
-                                                                                                                                                                                                                                                 then let o = (0, (- 1))
-                                                                                                                                                                                                                                                              in ((), o)
-                                                                                                                                                                                                                                                 else let u () = (s ())
-                                                                                                                                                                                                                                                                 in (if (i == 3)
-                                                                                                                                                                                                                                                                    then let o = ((- 1), 0)
-                                                                                                                                                                                                                                                                                 in ((), o)
-                                                                                                                                                                                                                                                                    else let v () = (u ())
-                                                                                                                                                                                                                                                                                    in (if (i == 4)
-                                                                                                                                                                                                                                                                                       then let o = (1, 1)
-                                                                                                                                                                                                                                                                                                    in ((), o)
-                                                                                                                                                                                                                                                                                       else let w () = (v ())
-                                                                                                                                                                                                                                                                                                       in (if (i == 5)
-                                                                                                                                                                                                                                                                                                          then let o = (1, (- 1))
-                                                                                                                                                                                                                                                                                                                       in ((), o)
-                                                                                                                                                                                                                                                                                                          else let ba () = (w ())
-                                                                                                                                                                                                                                                                                                                           in (if (i == 6)
-                                                                                                                                                                                                                                                                                                                              then let o = ((- 1), 1)
-                                                                                                                                                                                                                                                                                                                                           in ((), o)
-                                                                                                                                                                                                                                                                                                                              else let o = ((- 1), (- 1))
-                                                                                                                                                                                                                                                                                                                                           in ((), o)))))))))) ()))
+        ((\ (o, m) ->
+           do return (o)
+              let r j v =
+                    (if (j <= 7)
+                    then ((\ (dx, dy) ->
+                            let s x w =
+                                  (if (x <= 19)
+                                  then let u y ba =
+                                             (if (y <= 19)
+                                             then do bb <- (max2_ ba =<< (find 4 m x y dx dy))
+                                                     (u (y + 1) bb)
+                                             else (s (x + 1) ba)) in
+                                             (u 0 w)
+                                  else (r (j + 1) w)) in
+                                  (s 0 v)) =<< (readIOA directions j))
+                    else do printf "%d" (v :: Int)::IO()
+                            printf "\n" ::IO()) in
+                    (r 0 max0)) =<< (array_init_withenv 20 (\ d () ->
+                                                             ((\ (q, f) ->
+                                                                do return (q)
+                                                                   let l = f
+                                                                   return (((), l))) =<< (array_init_withenv c (\ g () ->
+                                                                                                                 do e <- read_int
+                                                                                                                    skip_whitespaces
+                                                                                                                    let p = e
+                                                                                                                    return (((), p))) ()))) ()))) =<< (array_init_withenv 8 (\ i () ->
+                                                                                                                                                                              return ((if (i == 0)
+                                                                                                                                                                                      then let h = (0, 1)
+                                                                                                                                                                                                   in ((), h)
+                                                                                                                                                                                      else (if (i == 1)
+                                                                                                                                                                                           then let h = (1, 0)
+                                                                                                                                                                                                        in ((), h)
+                                                                                                                                                                                           else (if (i == 2)
+                                                                                                                                                                                                then let h = (0, (- 1))
+                                                                                                                                                                                                             in ((), h)
+                                                                                                                                                                                                else (if (i == 3)
+                                                                                                                                                                                                     then let h = ((- 1), 0)
+                                                                                                                                                                                                                  in ((), h)
+                                                                                                                                                                                                     else (if (i == 4)
+                                                                                                                                                                                                          then let h = (1, 1)
+                                                                                                                                                                                                                       in ((), h)
+                                                                                                                                                                                                          else (if (i == 5)
+                                                                                                                                                                                                               then let h = (1, (- 1))
+                                                                                                                                                                                                                            in ((), h)
+                                                                                                                                                                                                               else (if (i == 6)
+                                                                                                                                                                                                                    then let h = ((- 1), 1)
+                                                                                                                                                                                                                                 in ((), h)
+                                                                                                                                                                                                                    else let h = ((- 1), (- 1))
+                                                                                                                                                                                                                                 in ((), h)))))))))) ()))
 

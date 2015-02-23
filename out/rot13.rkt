@@ -43,16 +43,15 @@
        ((lambda (internal_env) (apply (lambda (b tab4) 
                                              (block
                                                b
-                                               (let ([e 0])
-                                               (let ([f (- strlen 1)])
+                                               (let ([e (- strlen 1)])
                                                (letrec ([d (lambda (j) 
-                                                             (if (<= j f)
+                                                             (if (<= j e)
                                                              (block
                                                                (display (vector-ref tab4 j))
                                                                (d (+ j 1))
                                                                )
                                                              '()))])
-                                               (d e))))
+                                               (d 0)))
                                              )) internal_env)) (array_init_withenv strlen 
      (lambda (toto) 
        (lambda (_) ((lambda (tmpc) 

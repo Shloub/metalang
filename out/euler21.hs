@@ -78,67 +78,61 @@ array_init_withenv len f env =
 
 eratostene t max0 =
   do let n = 0
-     let x = 2
-     let y = (max0 - 1)
-     let v i bj =
-           (if (i <= y)
-           then do bk <- ifM (((==) <$> (readIOA t i) <*> return (i)))
-                             (do let bl = (bj + 1)
-                                 let j = (i * i)
-                                 let w bm =
-                                       (if ((bm < max0) && (bm > 0))
-                                       then do writeIOA t bm 0
-                                               let bn = (bm + i)
-                                               (w bn)
-                                       else return (bl)) in
-                                       (w j))
-                             (return (bj))
-                   (v (i + 1) bk)
-           else return (bj)) in
-           (v x n)
+     let s = (max0 - 1)
+     let q i bb =
+           (if (i <= s)
+           then ifM (((==) <$> (readIOA t i) <*> return (i)))
+                    (do let bc = (bb + 1)
+                        let j = (i * i)
+                        let r bd =
+                              (if ((bd < max0) && (bd > 0))
+                              then do writeIOA t bd 0
+                                      let be = (bd + i)
+                                      (r be)
+                              else (q (i + 1) bc)) in
+                              (r j))
+                    ((q (i + 1) bb))
+           else return (bb)) in
+           (q 2 n)
 fillPrimesFactors t n primes nprimes =
-  do let s = 0
-     let u = (nprimes - 1)
-     let q i bo =
-           (if (i <= u)
+  do let m = (nprimes - 1)
+     let g i bf =
+           (if (i <= m)
            then do d <- (readIOA primes i)
-                   let r bp =
-                         (if ((bp `rem` d) == 0)
+                   let h bg =
+                         (if ((bg `rem` d) == 0)
                          then do writeIOA t d =<< ((+) <$> (readIOA t d) <*> return (1))
-                                 let bq = (bp `quot` d)
-                                 (r bq)
-                         else (if (bp == 1)
+                                 let bh = (bg `quot` d)
+                                 (h bh)
+                         else (if (bg == 1)
                               then (readIOA primes i)
-                              else (q (i + 1) bp))) in
-                         (r bo)
-           else return (bo)) in
-           (q s n)
+                              else (g (i + 1) bg))) in
+                         (h bf)
+           else return (bf)) in
+           (g 0 n)
 sumdivaux2 t n i =
-  let m br =
-        ifM ((return ((br < n)) <&&> ((==) <$> (readIOA t br) <*> return (0))))
-            (do let bs = (br + 1)
-                (m bs))
-            (return (br)) in
-        (m i)
+  let f bi =
+        ifM ((return ((bi < n)) <&&> ((==) <$> (readIOA t bi) <*> return (0))))
+            (do let bj = (bi + 1)
+                (f bj))
+            (return (bi)) in
+        (f i)
 sumdivaux t n i =
-  do let c () = return (())
-     (if (i > n)
-     then return (1)
-     else do let e () = (c ())
-             ifM (((==) <$> (readIOA t i) <*> return (0)))
-                 ((sumdivaux t n =<< (sumdivaux2 t n (i + 1))))
-                 (do o <- (sumdivaux t n =<< (sumdivaux2 t n (i + 1)))
-                     let out0 = 0
-                     let p = i
-                     let g = 1
-                     h <- (readIOA t i)
-                     let f j bt bu =
-                           (if (j <= h)
-                           then do let bv = (bt + bu)
-                                   let bw = (bu * i)
-                                   (f (j + 1) bv bw)
-                           else return (((bt + 1) * o))) in
-                           (f g out0 p)))
+  (if (i > n)
+  then return (1)
+  else ifM (((==) <$> (readIOA t i) <*> return (0)))
+           ((sumdivaux t n =<< (sumdivaux2 t n (i + 1))))
+           (do o <- (sumdivaux t n =<< (sumdivaux2 t n (i + 1)))
+               let out0 = 0
+               let p = i
+               e <- (readIOA t i)
+               let c j bk bl =
+                     (if (j <= e)
+                     then do let bm = (bk + bl)
+                             let bn = (bl * i)
+                             (c (j + 1) bm bn)
+                     else return (((bk + 1) * o))) in
+                     (c 1 out0 p)))
 sumdiv nprimes primes n =
   ((\ (b, t) ->
      do return (b)
@@ -148,52 +142,46 @@ sumdiv nprimes primes n =
                                                                         in return (((), a))) ()))
 main =
   do let maximumprimes = 1001
-     ((\ (ba, era) ->
-        do return (ba)
+     ((\ (v, era) ->
+        do return (v)
            nprimes <- (eratostene era maximumprimes)
-           ((\ (bc, primes) ->
-              do return (bc)
+           ((\ (x, primes) ->
+              do return (x)
                  let l = 0
-                 let bh = 2
-                 let bi = (maximumprimes - 1)
-                 let bg k bx =
-                        (if (k <= bi)
-                        then do by <- ifM (((==) <$> (readIOA era k) <*> return (k)))
-                                          (do writeIOA primes bx k
-                                              let bz = (bx + 1)
-                                              return (bz))
-                                          (return (bx))
-                                (bg (k + 1) by)
-                        else do printf "%d" (bx :: Int)::IO()
-                                printf " == " ::IO()
-                                printf "%d" (nprimes :: Int)::IO()
-                                printf "\n" ::IO()
-                                let sum = 0
-                                let be = 2
-                                let bf = 1000
-                                let bd n ca =
-                                       (if (n <= bf)
-                                       then do other <- ((-) <$> (sumdiv nprimes primes n) <*> return (n))
-                                               cb <- (if (other > n)
-                                                     then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> return (other))
-                                                             cc <- (if (othersum == n)
-                                                                   then do printf "%d" (other :: Int)::IO()
-                                                                           printf " & " ::IO()
-                                                                           printf "%d" (n :: Int)::IO()
-                                                                           printf "\n" ::IO()
-                                                                           let cd = (ca + (other + n))
-                                                                           return (cd)
-                                                                   else return (ca))
-                                                             return (cc)
-                                                     else return (ca))
-                                               (bd (n + 1) cb)
-                                       else do printf "\n" ::IO()
-                                               printf "%d" (ca :: Int)::IO()
-                                               printf "\n" ::IO()) in
-                                       (bd be sum)) in
-                        (bg bh l)) =<< (array_init_withenv nprimes (\ o () ->
-                                                                     let bb = 0
-                                                                              in return (((), bb))) ()))) =<< (array_init_withenv maximumprimes (\ j () ->
-                                                                                                                                                  let z = j
-                                                                                                                                                          in return (((), z))) ()))
+                 let ba = (maximumprimes - 1)
+                 let z k bo =
+                       (if (k <= ba)
+                       then ifM (((==) <$> (readIOA era k) <*> return (k)))
+                                (do writeIOA primes bo k
+                                    let bp = (bo + 1)
+                                    (z (k + 1) bp))
+                                ((z (k + 1) bo))
+                       else do printf "%d" (bo :: Int)::IO()
+                               printf " == " ::IO()
+                               printf "%d" (nprimes :: Int)::IO()
+                               printf "\n" ::IO()
+                               let sum = 0
+                               let y n bq =
+                                     (if (n <= 1000)
+                                     then do other <- ((-) <$> (sumdiv nprimes primes n) <*> return (n))
+                                             (if (other > n)
+                                             then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> return (other))
+                                                     (if (othersum == n)
+                                                     then do printf "%d" (other :: Int)::IO()
+                                                             printf " & " ::IO()
+                                                             printf "%d" (n :: Int)::IO()
+                                                             printf "\n" ::IO()
+                                                             let br = (bq + (other + n))
+                                                             (y (n + 1) br)
+                                                     else (y (n + 1) bq))
+                                             else (y (n + 1) bq))
+                                     else do printf "\n" ::IO()
+                                             printf "%d" (bq :: Int)::IO()
+                                             printf "\n" ::IO()) in
+                                     (y 2 sum)) in
+                       (z 2 l)) =<< (array_init_withenv nprimes (\ o () ->
+                                                                  let w = 0
+                                                                          in return (((), w))) ()))) =<< (array_init_withenv maximumprimes (\ j () ->
+                                                                                                                                             let u = j
+                                                                                                                                                     in return (((), u))) ()))
 

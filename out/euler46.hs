@@ -78,84 +78,75 @@ array_init_withenv len f env =
 
 eratostene t max0 =
   do let n = 0
-     let c = 2
-     let d = (max0 - 1)
-     let a i be =
-           (if (i <= d)
-           then do bf <- ifM (((==) <$> (readIOA t i) <*> return (i)))
-                             (do let bg = (be + 1)
-                                 (if ((max0 `quot` i) > i)
-                                 then do let j = (i * i)
-                                         let b bh =
-                                               (if ((bh < max0) && (bh > 0))
-                                               then do writeIOA t bh 0
-                                                       let bi = (bh + i)
-                                                       (b bi)
-                                               else return (())) in
-                                               (b j)
-                                 else return (()))
-                                 return (bg))
-                             (return (be))
-                   (a (i + 1) bf)
-           else return (be)) in
-           (a c n)
+     let c = (max0 - 1)
+     let a i y =
+           (if (i <= c)
+           then ifM (((==) <$> (readIOA t i) <*> return (i)))
+                    (do let z = (y + 1)
+                        (if ((max0 `quot` i) > i)
+                        then do let j = (i * i)
+                                let b ba =
+                                      (if ((ba < max0) && (ba > 0))
+                                      then do writeIOA t ba 0
+                                              let bb = (ba + i)
+                                              (b bb)
+                                      else (a (i + 1) z)) in
+                                      (b j)
+                        else (a (i + 1) z)))
+                    ((a (i + 1) y))
+           else return (y)) in
+           (a 2 n)
 main =
   do let maximumprimes = 6000
-     ((\ (f, era) ->
-        do return (f)
+     ((\ (e, era) ->
+        do return (e)
            nprimes <- (eratostene era maximumprimes)
-           ((\ (h, primes) ->
-              do return (h)
+           ((\ (g, primes) ->
+              do return (g)
                  let l = 0
-                 let bc = 2
-                 let bd = (maximumprimes - 1)
-                 let bb k bj =
-                        (if (k <= bd)
-                        then do bk <- ifM (((==) <$> (readIOA era k) <*> return (k)))
-                                          (do writeIOA primes bj k
-                                              let bl = (bj + 1)
-                                              return (bl))
-                                          (return (bj))
-                                (bb (k + 1) bk)
-                        else do printf "%d" (bj :: Int)::IO()
-                                printf " == " ::IO()
-                                printf "%d" (nprimes :: Int)::IO()
-                                printf "\n" ::IO()
-                                ((\ (q, canbe) ->
-                                   do return (q)
-                                      let z = 0
-                                      let ba = (nprimes - 1)
-                                      let v i =
-                                            (if (i <= ba)
-                                            then do let x = 0
-                                                    let y = (maximumprimes - 1)
-                                                    let w j =
-                                                          (if (j <= y)
-                                                          then do n <- ((+) <$> (readIOA primes i) <*> return (((2 * j) * j)))
-                                                                  (if (n < maximumprimes)
-                                                                  then writeIOA canbe n True
-                                                                  else return (()))
-                                                                  (w (j + 1))
-                                                          else (v (i + 1))) in
-                                                          (w x)
-                                            else do let s = 1
-                                                    let u = maximumprimes
-                                                    let r m =
-                                                          (if (m <= u)
-                                                          then do let m2 = ((m * 2) + 1)
-                                                                  ifM ((return ((m2 < maximumprimes)) <&&> (fmap (not) (readIOA canbe m2))))
-                                                                      (do printf "%d" (m2 :: Int)::IO()
-                                                                          printf "\n" ::IO())
-                                                                      (return (()))
-                                                                  (r (m + 1))
-                                                          else return (())) in
-                                                          (r s)) in
-                                            (v z)) =<< (array_init_withenv maximumprimes (\ i_ () ->
-                                                                                           let p = False
-                                                                                                   in return (((), p))) ()))) in
-                        (bb bc l)) =<< (array_init_withenv nprimes (\ o () ->
-                                                                     let g = 0
-                                                                             in return (((), g))) ()))) =<< (array_init_withenv maximumprimes (\ j_ () ->
-                                                                                                                                                let e = j_
-                                                                                                                                                        in return (((), e))) ()))
+                 let x = (maximumprimes - 1)
+                 let w k bc =
+                       (if (k <= x)
+                       then ifM (((==) <$> (readIOA era k) <*> return (k)))
+                                (do writeIOA primes bc k
+                                    let bd = (bc + 1)
+                                    (w (k + 1) bd))
+                                ((w (k + 1) bc))
+                       else do printf "%d" (bc :: Int)::IO()
+                               printf " == " ::IO()
+                               printf "%d" (nprimes :: Int)::IO()
+                               printf "\n" ::IO()
+                               ((\ (p, canbe) ->
+                                  do return (p)
+                                     let v = (nprimes - 1)
+                                     let r i =
+                                           (if (i <= v)
+                                           then do let u = (maximumprimes - 1)
+                                                   let s j =
+                                                         (if (j <= u)
+                                                         then do n <- ((+) <$> (readIOA primes i) <*> return (((2 * j) * j)))
+                                                                 (if (n < maximumprimes)
+                                                                 then do writeIOA canbe n True
+                                                                         (s (j + 1))
+                                                                 else (s (j + 1)))
+                                                         else (r (i + 1))) in
+                                                         (s 0)
+                                           else let q m =
+                                                      (if (m <= maximumprimes)
+                                                      then do let m2 = ((m * 2) + 1)
+                                                              ifM ((return ((m2 < maximumprimes)) <&&> (fmap (not) (readIOA canbe m2))))
+                                                                  (do printf "%d" (m2 :: Int)::IO()
+                                                                      printf "\n" ::IO()
+                                                                      (q (m + 1)))
+                                                                  ((q (m + 1)))
+                                                      else return (())) in
+                                                      (q 1)) in
+                                           (r 0)) =<< (array_init_withenv maximumprimes (\ i_ () ->
+                                                                                          let h = False
+                                                                                                  in return (((), h))) ()))) in
+                       (w 2 l)) =<< (array_init_withenv nprimes (\ o () ->
+                                                                  let f = 0
+                                                                          in return (((), f))) ()))) =<< (array_init_withenv maximumprimes (\ j_ () ->
+                                                                                                                                             let d = j_
+                                                                                                                                                     in return (((), d))) ()))
 

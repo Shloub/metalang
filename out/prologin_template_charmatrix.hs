@@ -78,38 +78,36 @@ array_init_withenv len f env =
 
 programme_candidat tableau taille_x taille_y =
   do let out0 = 0
-     let l = 0
-     let m = (taille_y - 1)
-     let f i s =
-           (if (i <= m)
-           then do let h = 0
-                   let k = (taille_x - 1)
-                   let g j u =
-                         (if (j <= k)
-                         then do v <- (((+) u) <$> ((*) <$> ((fmap ord (join (readIOA <$> (readIOA tableau i) <*> return (j))))) <*> return ((i + (j * 2)))))
+     let k = (taille_y - 1)
+     let f i q =
+           (if (i <= k)
+           then do let h = (taille_x - 1)
+                   let g j r =
+                         (if (j <= h)
+                         then do s <- (((+) r) <$> ((*) <$> ((fmap ord (join (readIOA <$> (readIOA tableau i) <*> return (j))))) <*> return ((i + (j * 2)))))
                                  printf "%c" =<< (join (readIOA <$> (readIOA tableau i) <*> return (j)) :: IO Char)
-                                 (g (j + 1) v)
+                                 (g (j + 1) s)
                          else do printf "--\n" ::IO()
-                                 (f (i + 1) u)) in
-                         (g h s)
-           else return (s)) in
-           (f l out0)
+                                 (f (i + 1) r)) in
+                         (g 0 q)
+           else return (q)) in
+           (f 0 out0)
 main =
   do taille_x <- read_int
      skip_whitespaces
      taille_y <- read_int
      skip_whitespaces
-     ((\ (p, a) ->
-        do return (p)
+     ((\ (m, a) ->
+        do return (m)
            let tableau = a
            printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
            printf "\n" ::IO()) =<< (array_init_withenv taille_y (\ b () ->
-                                                                  ((\ (r, d) ->
-                                                                     do return (r)
+                                                                  ((\ (p, d) ->
+                                                                     do return (p)
                                                                         skip_whitespaces
-                                                                        let o = d
-                                                                        return (((), o))) =<< (array_init_withenv taille_x (\ e () ->
+                                                                        let l = d
+                                                                        return (((), l))) =<< (array_init_withenv taille_x (\ e () ->
                                                                                                                              hGetChar stdin >>= ((\ c ->
-                                                                                                                                                   let q = c
-                                                                                                                                                           in return (((), q))))) ()))) ()))
+                                                                                                                                                   let o = c
+                                                                                                                                                           in return (((), o))))) ()))) ()))
 

@@ -61,16 +61,15 @@
                                                          (g tab4) 
                                                         (block
                                                           g
-                                                          (let ([k 0])
-                                                          (let ([l (- strlen 1)])
+                                                          (let ([k (- strlen 1)])
                                                           (letrec ([h (lambda (j) 
-                                                                        (if (<= j l)
+                                                                        (if (<= j k)
                                                                         (block
                                                                           (display (vector-ref tab4 j))
                                                                           (h (+ j 1))
                                                                           )
                                                                         '()))])
-                                                          (h k))))
+                                                          (h 0)))
                                                         )) internal_env)) (array_init_withenv strlen 
                                                       (lambda (toto) 
                                                         (lambda (_) ((lambda (tmpc) 

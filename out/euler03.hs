@@ -82,13 +82,12 @@ main =
                                                                let x = True
                                                                return ((t, v, u, x, w))
                                                        else return ((i, j, k, l, m))))
-                         else do y <- (if (not l)
-                                      then do printf "%d" (i :: Int)::IO()
-                                              printf "\n" ::IO()
-                                              let z = 1
-                                              return (z)
-                                      else return (i))
-                                 (d y k m)) in
+                         else (if (not l)
+                              then do printf "%d" (i :: Int)::IO()
+                                      printf "\n" ::IO()
+                                      let y = 1
+                                      (d y k m)
+                              else (d i k m))) in
                          (e f b g found h)
            else return (())) in
            (d a b0 sqrtia)

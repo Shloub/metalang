@@ -18,10 +18,8 @@
 )
 (define main
   (let ([j 0])
-  (let ([d 0])
-  (let ([e 10])
   (letrec ([c (lambda (k j) 
-                (if (<= k e)
+                (if (<= k 10)
                 (let ([j (+ j k)])
                 (block
                   (map display (list j "\n"))
@@ -40,6 +38,6 @@
                                 (map display (list j i "FIN TEST\n"))
                                 )))])
                 (b i j)))))])
-  (c d j)))))
+  (c 0 j)))
 )
 

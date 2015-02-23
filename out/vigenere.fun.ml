@@ -11,67 +11,63 @@ end
 
 let position_alphabet c =
   let i = (int_of_char (c)) in
-  let e () = () in
   (if ((i <= (int_of_char ('Z'))) && (i >= (int_of_char ('A'))))
    then (i - (int_of_char ('A')))
-   else let f () = (e ()) in
-   (if ((i <= (int_of_char ('z'))) && (i >= (int_of_char ('a'))))
-    then (i - (int_of_char ('a')))
-    else (- 1)))
+   else (if ((i <= (int_of_char ('z'))) && (i >= (int_of_char ('a'))))
+         then (i - (int_of_char ('a')))
+         else (- 1)))
 let of_position_alphabet c =
   (char_of_int ((c + (int_of_char ('a')))))
 let crypte taille_cle cle taille message =
-  let b = 0 in
-  let d = (taille - 1) in
+  let b = (taille - 1) in
   let rec a i =
-    (if (i <= d)
+    (if (i <= b)
      then let lettre = (position_alphabet message.(i)) in
-     (
-       (if (lettre <> (- 1))
-        then let addon = (position_alphabet cle.((i mod taille_cle))) in
-        let new0 = ((addon + lettre) mod 26) in
-        message.(i) <- (of_position_alphabet new0)
-        else ());
-       (a (i + 1))
-       )
-     
+     (if (lettre <> (- 1))
+      then let addon = (position_alphabet cle.((i mod taille_cle))) in
+      let new0 = ((addon + lettre) mod 26) in
+      (
+        message.(i) <- (of_position_alphabet new0);
+        (a (i + 1))
+        )
+      
+      else (a (i + 1)))
      else ()) in
-    (a b)
+    (a 0)
 let main =
   Scanf.scanf "%d"
   (fun  taille_cle -> (
                         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                        ((fun  (h, cle) -> (
-                                             h;
+                        ((fun  (e, cle) -> (
+                                             e;
                                              (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                              Scanf.scanf "%d"
                                              (fun  taille -> (
                                                                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                               ((fun  (k, message) -> 
+                                                               ((fun  (g, message) -> 
                                                                (
-                                                                 k;
+                                                                 g;
                                                                  (crypte taille_cle cle taille message);
-                                                                 let m = 0 in
-                                                                 let n = (taille - 1) in
-                                                                 let rec l i =
-                                                                   (if (i <= n)
+                                                                 let j = (taille - 1) in
+                                                                 let rec h i =
+                                                                   (if (i <= j)
                                                                     then (
                                                                            (Printf.printf "%c" message.(i));
-                                                                           (l (i + 1))
+                                                                           (h (i + 1))
                                                                            )
                                                                     
                                                                     else (Printf.printf "\n")) in
-                                                                   (l m)
+                                                                   (h 0)
                                                                  )
                                                                ) (Array.init_withenv taille (fun  index2 () -> Scanf.scanf "%c"
-                                                               (fun  out2 -> let j = out2 in
-                                                               ((), j))) ()))
+                                                               (fun  out2 -> let f = out2 in
+                                                               ((), f))) ()))
                                                                )
                                              )
                                              )
                         ) (Array.init_withenv taille_cle (fun  index () -> Scanf.scanf "%c"
-                        (fun  out0 -> let g = out0 in
-                        ((), g))) ()))
+                        (fun  out0 -> let d = out0 in
+                        ((), d))) ()))
                         )
   )
 

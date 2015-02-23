@@ -15,26 +15,23 @@ let main =
     (Printf.printf "%d=len\n" len);
     ((fun  (h, tab1) -> (
                           h;
-                          let ba = 0 in
-                          let bb = (len - 1) in
-                          let rec w i =
-                            (if (i <= bb)
+                          let v = (len - 1) in
+                          let rec u i =
+                            (if (i <= v)
                              then (
                                     (Printf.printf "%d=>%d\n" i tab1.(i));
-                                    (w (i + 1))
+                                    (u (i + 1))
                                     )
                              
                              else let len = (Scanf.scanf "%d " (fun x -> x)) in
                              ((fun  (l, tab2) -> (
                                                    l;
-                                                   let u = 0 in
-                                                   let v = (len - 2) in
+                                                   let s = (len - 2) in
                                                    let rec p i =
-                                                     (if (i <= v)
-                                                      then let r = 0 in
-                                                      let s = (len - 1) in
+                                                     (if (i <= s)
+                                                      then let r = (len - 1) in
                                                       let rec q j =
-                                                        (if (j <= s)
+                                                        (if (j <= r)
                                                          then (
                                                                 (Printf.printf "%d " tab2.(i).(j));
                                                                 (q (j + 1))
@@ -45,9 +42,9 @@ let main =
                                                                 (p (i + 1))
                                                                 )
                                                          ) in
-                                                        (q r)
+                                                        (q 0)
                                                       else ()) in
-                                                     (p u)
+                                                     (p 0)
                                                    )
                              ) (Array.init_withenv (len - 1) (fun  c () -> ((fun  (o, e) -> 
                              (
@@ -62,7 +59,7 @@ let main =
                                           ((), m)
                                           )
                              )) ()))) ()))) in
-                            (w ba)
+                            (u 0)
                           )
     ) (Array.init_withenv len (fun  a () -> Scanf.scanf "%d"
     (fun  b -> (

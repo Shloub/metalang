@@ -15,10 +15,8 @@ let main =
   let max0 = i in
   let index = 0 in
   let nskipdiv = 0 in
-  let m = 1 in
-  let n = 995 in
   let rec l k i index max0 nskipdiv =
-    (if (k <= n)
+    (if (k <= 995)
      then Scanf.scanf "%c"
      (fun  e -> let f = ((int_of_char (e)) - (int_of_char ('0'))) in
      ((fun  (i, nskipdiv) -> (
@@ -42,7 +40,7 @@ let main =
             (Printf.printf "%d\n" max0)
             )
      ) in
-    (l m i index max0 nskipdiv)) (Array.init_withenv 5 (fun  j i -> Scanf.scanf "%c"
+    (l 1 i index max0 nskipdiv)) (Array.init_withenv 5 (fun  j i -> Scanf.scanf "%c"
   (fun  c -> let d = ((int_of_char (c)) - (int_of_char ('0'))) in
   let i = (i * d) in
   let g = d in

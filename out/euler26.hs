@@ -77,45 +77,41 @@ array_init_withenv len f env =
 
 
 periode restes len a b =
-  let c o q =
-        (if (o /= 0)
-        then do let chiffre = (o `quot` b)
-                let reste = (o `rem` b)
-                let e = 0
-                let f = (q - 1)
+  let c k l =
+        (if (k /= 0)
+        then do let chiffre = (k `quot` b)
+                let reste = (k `rem` b)
+                let e = (l - 1)
                 let d i =
-                      (if (i <= f)
+                      (if (i <= e)
                       then ifM (((==) <$> (readIOA restes i) <*> return (reste)))
-                               (return ((q - i)))
+                               (return ((l - i)))
                                ((d (i + 1)))
-                      else do writeIOA restes q reste
-                              let r = (q + 1)
-                              let s = (reste * 10)
-                              (c s r)) in
-                      (d e)
+                      else do writeIOA restes l reste
+                              let n = (l + 1)
+                              let o = (reste * 10)
+                              (c o n)) in
+                      (d 0)
         else return (0)) in
         (c a len)
 main =
-  ((\ (h, t) ->
-     do return (h)
+  ((\ (g, t) ->
+     do return (g)
         let m = 0
         let mi = 0
-        let l = 1
-        let n = 1000
-        let k i u v =
-              (if (i <= n)
+        let h i q r =
+              (if (i <= 1000)
               then do p <- (periode t 0 1 i)
-                      ((\ (w, x) ->
-                         (k (i + 1) w x)) (if (p > u)
-                                          then let y = i
-                                                       in let z = p
-                                                                  in (z, y)
-                                          else (u, v)))
-              else do printf "%d" (v :: Int)::IO()
+                      (if (p > q)
+                      then do let s = i
+                              let u = p
+                              (h (i + 1) u s)
+                      else (h (i + 1) q r))
+              else do printf "%d" (r :: Int)::IO()
                       printf "\n" ::IO()
-                      printf "%d" (u :: Int)::IO()
+                      printf "%d" (q :: Int)::IO()
                       printf "\n" ::IO()) in
-              (k l m mi)) =<< (array_init_withenv 1000 (\ j () ->
-                                                         let g = 0
-                                                                 in return (((), g))) ()))
+              (h 1 m mi)) =<< (array_init_withenv 1000 (\ j () ->
+                                                         let f = 0
+                                                                 in return (((), f))) ()))
 

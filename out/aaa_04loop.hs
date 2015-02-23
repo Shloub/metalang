@@ -66,34 +66,32 @@ h i =
     if i % j == 5 then return true end
   end -}
   do let j = (i - 2)
-     let a f =
-           (if (f <= (i + 2))
-           then (if ((i `rem` f) == 5)
+     let a d =
+           (if (d <= (i + 2))
+           then (if ((i `rem` d) == 5)
                 then return (True)
-                else do let g = (f + 1)
-                        (a g))
+                else do let e = (d + 1)
+                        (a e))
            else return (False)) in
            (a j)
 main =
   do let j = 0
-     let d = 0
-     let e = 10
-     let c k l =
-           (if (k <= e)
-           then do let m = (l + k)
-                   printf "%d" (m :: Int)::IO()
+     let c k f =
+           (if (k <= 10)
+           then do let g = (f + k)
+                   printf "%d" (g :: Int)::IO()
                    printf "\n" ::IO()
-                   (c (k + 1) m)
+                   (c (k + 1) g)
            else do let i = 4
-                   let b n o =
-                         (if (n < 10)
-                         then do printf "%d" (n :: Int)::IO()
-                                 let p = (n + 1)
-                                 let q = (o + p)
-                                 (b p q)
-                         else do printf "%d" (o :: Int)::IO()
-                                 printf "%d" (n :: Int)::IO()
+                   let b l m =
+                         (if (l < 10)
+                         then do printf "%d" (l :: Int)::IO()
+                                 let n = (l + 1)
+                                 let o = (m + n)
+                                 (b n o)
+                         else do printf "%d" (m :: Int)::IO()
+                                 printf "%d" (l :: Int)::IO()
                                  printf "FIN TEST\n" ::IO()) in
-                         (b i l)) in
-           (c d j)
+                         (b i f)) in
+           (c 0 j)
 

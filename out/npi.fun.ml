@@ -18,35 +18,32 @@ let npi0 str len =
                          let ptrStr = 0 in
                          let rec d ptrStack ptrStr =
                            (if (ptrStr < len)
-                            then ((fun  (ptrStack, ptrStr) -> (d ptrStack ptrStr)) (
-                            if (str.(ptrStr) = ' ')
-                            then let ptrStr = (ptrStr + 1) in
-                            (ptrStack, ptrStr)
-                            else ((fun  (ptrStack, ptrStr) -> (ptrStack, ptrStr)) (
-                            if (is_number str.(ptrStr))
-                            then let num = 0 in
-                            let rec e num ptrStr =
-                              (if (str.(ptrStr) <> ' ')
-                               then let num = (((num * 10) + (int_of_char (str.(ptrStr)))) - (int_of_char ('0'))) in
-                               let ptrStr = (ptrStr + 1) in
-                               (e num ptrStr)
-                               else (
-                                      stack.(ptrStack) <- num;
-                                      let ptrStack = (ptrStack + 1) in
-                                      (ptrStack, ptrStr)
-                                      )
-                               ) in
-                              (e num ptrStr)
-                            else ((fun  (ptrStack, ptrStr) -> (ptrStack, ptrStr)) (
-                            if (str.(ptrStr) = '+')
-                            then (
-                                   stack.((ptrStack - 2)) <- (stack.((ptrStack - 2)) + stack.((ptrStack - 1)));
-                                   let ptrStack = (ptrStack - 1) in
-                                   let ptrStr = (ptrStr + 1) in
-                                   (ptrStack, ptrStr)
-                                   )
-                            
-                            else (ptrStack, ptrStr)))))))
+                            then (if (str.(ptrStr) = ' ')
+                                  then let ptrStr = (ptrStr + 1) in
+                                  (d ptrStack ptrStr)
+                                  else (if (is_number str.(ptrStr))
+                                        then let num = 0 in
+                                        let rec e num ptrStr =
+                                          (if (str.(ptrStr) <> ' ')
+                                           then let num = (((num * 10) + (int_of_char (str.(ptrStr)))) - (int_of_char ('0'))) in
+                                           let ptrStr = (ptrStr + 1) in
+                                           (e num ptrStr)
+                                           else (
+                                                  stack.(ptrStack) <- num;
+                                                  let ptrStack = (ptrStack + 1) in
+                                                  (d ptrStack ptrStr)
+                                                  )
+                                           ) in
+                                          (e num ptrStr)
+                                        else (if (str.(ptrStr) = '+')
+                                              then (
+                                                     stack.((ptrStack - 2)) <- (stack.((ptrStack - 2)) + stack.((ptrStack - 1)));
+                                                     let ptrStack = (ptrStack - 1) in
+                                                     let ptrStr = (ptrStr + 1) in
+                                                     (d ptrStack ptrStr)
+                                                     )
+                                              
+                                              else (d ptrStack ptrStr))))
                             else stack.(0)) in
                            (d ptrStack ptrStr)
                          )

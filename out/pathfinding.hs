@@ -77,31 +77,26 @@ array_init_withenv len f env =
 
 
 min2_ a b =
-  let o () = ()
-             in return ((if (a < b)
-                        then a
-                        else b))
+  return ((if (a < b)
+          then a
+          else b))
 pathfind_aux cache tab x y posX posY =
-  do let k () = return (())
-     (if ((posX == (x - 1)) && (posY == (y - 1)))
-     then return (0)
-     else do let l () = (k ())
-             (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
-             then return (((x * y) * 10))
-             else do let m () = (l ())
-                     ifM (((==) <$> join (readIOA <$> (readIOA tab posY) <*> return (posX)) <*> return ('#')))
-                         (return (((x * y) * 10)))
-                         (do let n () = (m ())
-                             ifM (((/=) <$> join (readIOA <$> (readIOA cache posY) <*> return (posX)) <*> return ((- 1))))
-                                 (join (readIOA <$> (readIOA cache posY) <*> return (posX)))
-                                 (do join (writeIOA <$> (readIOA cache posY) <*> return (posX) <*> return (((x * y) * 10)))
-                                     val1 <- (pathfind_aux cache tab x y (posX + 1) posY)
-                                     val2 <- (pathfind_aux cache tab x y (posX - 1) posY)
-                                     val3 <- (pathfind_aux cache tab x y posX (posY - 1))
-                                     val4 <- (pathfind_aux cache tab x y posX (posY + 1))
-                                     out0 <- (((+) 1) <$> (join (min2_ <$> (join (min2_ <$> (min2_ val1 val2) <*> (return val3))) <*> (return val4))))
-                                     join (writeIOA <$> (readIOA cache posY) <*> return (posX) <*> return (out0))
-                                     return (out0)))))
+  (if ((posX == (x - 1)) && (posY == (y - 1)))
+  then return (0)
+  else (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
+       then return (((x * y) * 10))
+       else ifM (((==) <$> join (readIOA <$> (readIOA tab posY) <*> return (posX)) <*> return ('#')))
+                (return (((x * y) * 10)))
+                (ifM (((/=) <$> join (readIOA <$> (readIOA cache posY) <*> return (posX)) <*> return ((- 1))))
+                     (join (readIOA <$> (readIOA cache posY) <*> return (posX)))
+                     (do join (writeIOA <$> (readIOA cache posY) <*> return (posX) <*> return (((x * y) * 10)))
+                         val1 <- (pathfind_aux cache tab x y (posX + 1) posY)
+                         val2 <- (pathfind_aux cache tab x y (posX - 1) posY)
+                         val3 <- (pathfind_aux cache tab x y posX (posY - 1))
+                         val4 <- (pathfind_aux cache tab x y posX (posY + 1))
+                         out0 <- (((+) 1) <$> (join (min2_ <$> (join (min2_ <$> (min2_ val1 val2) <*> (return val3))) <*> (return val4))))
+                         join (writeIOA <$> (readIOA cache posY) <*> return (posX) <*> return (out0))
+                         return (out0)))))
 pathfind tab x y =
   ((\ (f, cache) ->
      do return (f)
@@ -115,24 +110,24 @@ pathfind tab x y =
 main =
   do let x = 0
      let y = 0
-     v <- read_int
-     let w = v
+     q <- read_int
+     let r = q
      skip_whitespaces
-     u <- read_int
-     let z = u
+     p <- read_int
+     let s = p
      skip_whitespaces
-     ((\ (q, tab) ->
-        do return (q)
-           result <- (pathfind tab w z)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv z (\ i () ->
-                                                                          ((\ (s, tab2) ->
-                                                                             do return (s)
+     ((\ (l, tab) ->
+        do return (l)
+           result <- (pathfind tab r s)
+           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv s (\ i () ->
+                                                                          ((\ (n, tab2) ->
+                                                                             do return (n)
                                                                                 skip_whitespaces
-                                                                                let p = tab2
-                                                                                return (((), p))) =<< (array_init_withenv w (\ j () ->
+                                                                                let k = tab2
+                                                                                return (((), k))) =<< (array_init_withenv r (\ j () ->
                                                                                                                               do let tmp = '\000'
-                                                                                                                                 hGetChar stdin >>= ((\ t ->
-                                                                                                                                                       let ba = t
-                                                                                                                                                                in let r = ba
-                                                                                                                                                                           in return (((), r))))) ()))) ()))
+                                                                                                                                 hGetChar stdin >>= ((\ o ->
+                                                                                                                                                       let t = o
+                                                                                                                                                               in let m = t
+                                                                                                                                                                          in return (((), m))))) ()))) ()))
 

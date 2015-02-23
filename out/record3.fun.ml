@@ -17,10 +17,9 @@ let mktoto v1 =
   t
 let result t len =
   let out0 = 0 in
-  let b = 0 in
-  let c = (len - 1) in
+  let b = (len - 1) in
   let rec a j out0 =
-    (if (j <= c)
+    (if (j <= b)
      then (
             t.(j).blah <- (t.(j).blah + 1);
             let out0 = (((out0 + t.(j).foo) + (t.(j).blah * t.(j).bar)) + (t.(j).bar * t.(j).foo)) in
@@ -28,17 +27,17 @@ let result t len =
             )
      
      else out0) in
-    (a b out0)
+    (a 0 out0)
 let main =
-  ((fun  (e, t) -> (
-                     e;
+  ((fun  (d, t) -> (
+                     d;
                      Scanf.scanf "%d"
-                     (fun  g -> (
-                                  t.(0).bar <- g;
+                     (fun  f -> (
+                                  t.(0).bar <- f;
                                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                                   Scanf.scanf "%d"
-                                  (fun  f -> (
-                                               t.(1).blah <- f;
+                                  (fun  e -> (
+                                               t.(1).blah <- e;
                                                let titi = (result t 4) in
                                                (
                                                  (Printf.printf "%d%d" titi t.(2).blah)
@@ -49,6 +48,6 @@ let main =
                                   )
                      )
                      )
-  ) (Array.init_withenv 4 (fun  i () -> let d = (mktoto i) in
-  ((), d)) ()))
+  ) (Array.init_withenv 4 (fun  i () -> let c = (mktoto i) in
+  ((), c)) ()))
 

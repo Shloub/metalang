@@ -10,32 +10,28 @@ module Array = struct
 end
 
 let rec pathfind_aux cache tab x y posX posY =
-  let q () = () in
   (if ((posX = (x - 1)) && (posY = (y - 1)))
    then 0
-   else let r () = (q ()) in
-   (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
-    then ((x * y) * 10)
-    else let s () = (r ()) in
-    (if (tab.(posY).(posX) = '#')
-     then ((x * y) * 10)
-     else let u () = (s ()) in
-     (if (cache.(posY).(posX) <> (- 1))
-      then cache.(posY).(posX)
-      else (
-             cache.(posY).(posX) <- ((x * y) * 10);
-             let val1 = (pathfind_aux cache tab x y (posX + 1) posY) in
-             let val2 = (pathfind_aux cache tab x y (posX - 1) posY) in
-             let val3 = (pathfind_aux cache tab x y posX (posY - 1)) in
-             let val4 = (pathfind_aux cache tab x y posX (posY + 1)) in
-             let out0 = (1 + ((min (((min (((min (val1) (val2)))) (val3)))) (val4)))) in
-             (
-               cache.(posY).(posX) <- out0;
-               out0
-               )
-             
-             )
-      ))))
+   else (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
+         then ((x * y) * 10)
+         else (if (tab.(posY).(posX) = '#')
+               then ((x * y) * 10)
+               else (if (cache.(posY).(posX) <> (- 1))
+                     then cache.(posY).(posX)
+                     else (
+                            cache.(posY).(posX) <- ((x * y) * 10);
+                            let val1 = (pathfind_aux cache tab x y (posX + 1) posY) in
+                            let val2 = (pathfind_aux cache tab x y (posX - 1) posY) in
+                            let val3 = (pathfind_aux cache tab x y posX (posY - 1)) in
+                            let val4 = (pathfind_aux cache tab x y posX (posY + 1)) in
+                            let out0 = (1 + ((min (((min (((min (val1) (val2)))) (val3)))) (val4)))) in
+                            (
+                              cache.(posY).(posX) <- out0;
+                              out0
+                              )
+                            
+                            )
+                     ))))
 let pathfind tab x y =
   ((fun  (m, cache) -> (
                          m;
@@ -58,21 +54,21 @@ let main =
   let y = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d %d\n" x y);
-    ((fun  (w, e) -> (
-                       w;
+    ((fun  (r, e) -> (
+                       r;
                        let tab = e in
                        let result = (pathfind tab x y) in
                        (Printf.printf "%d" result)
                        )
-    ) (Array.init_withenv y (fun  f () -> ((fun  (bb, h) -> (
-                                                              bb;
-                                                              (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                              let v = h in
-                                                              ((), v)
-                                                              )
+    ) (Array.init_withenv y (fun  f () -> ((fun  (u, h) -> (
+                                                             u;
+                                                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                                             let q = h in
+                                                             ((), q)
+                                                             )
     ) (Array.init_withenv x (fun  k () -> Scanf.scanf "%c"
-    (fun  g -> let ba = g in
-    ((), ba))) ()))) ()))
+    (fun  g -> let s = g in
+    ((), s))) ()))) ()))
     )
   
 

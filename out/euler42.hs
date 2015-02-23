@@ -73,40 +73,33 @@ score () =
      len <- read_int
      skip_whitespaces
      let sum = 0
-     let e = 1
-     let f = len
-     let d i o =
-           (if (i <= f)
+     let b i f =
+           (if (i <= len)
            then hGetChar stdin >>= ((\ c ->
-                                      do p <- (((+) o) <$> ((+) <$> ((-) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('A'))))) <*> return (1)))
+                                      do g <- (((+) f) <$> ((+) <$> ((-) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('A'))))) <*> return (1)))
                                          {-		print c print " " print sum print " " -}
-                                         (d (i + 1) p)))
-           else do let b () = return (())
-                   ifM ((is_triangular o))
-                       (return (1))
-                       (return (0))) in
-           (d e sum)
+                                         (b (i + 1) g)))
+           else ifM ((is_triangular f))
+                    (return (1))
+                    (return (0))) in
+           (b 1 sum)
 main =
-  do let l = 1
-     let m = 55
-     let k i =
-           (if (i <= m)
-           then do ifM ((is_triangular i))
-                       (do printf "%d" (i :: Int)::IO()
-                           printf " " ::IO())
-                       (return (()))
-                   (k (i + 1))
-           else do printf "\n" ::IO()
-                   let sum = 0
-                   n <- read_int
-                   let h = 1
-                   let j = n
-                   let g q r =
-                         (if (q <= j)
-                         then do s <- (((+) r) <$> (score ()))
-                                 (g (q + 1) s)
-                         else do printf "%d" (r :: Int)::IO()
-                                 printf "\n" ::IO()) in
-                         (g h sum)) in
-           (k l)
+  let e i =
+        (if (i <= 55)
+        then ifM ((is_triangular i))
+                 (do printf "%d" (i :: Int)::IO()
+                     printf " " ::IO()
+                     (e (i + 1)))
+                 ((e (i + 1)))
+        else do printf "\n" ::IO()
+                let sum = 0
+                n <- read_int
+                let d h j =
+                      (if (h <= n)
+                      then do k <- (((+) j) <$> (score ()))
+                              (d (h + 1) k)
+                      else do printf "%d" (j :: Int)::IO()
+                              printf "\n" ::IO()) in
+                      (d 1 sum)) in
+        (e 1)
 

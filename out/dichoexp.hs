@@ -64,18 +64,17 @@ read_int =
 exp0 a b =
   (if (b == 0)
   then return (1)
-  else do let c () = return (())
-          (if ((b `rem` 2) == 0)
-          then do o <- (exp0 a (b `quot` 2))
-                  return ((o * o))
-          else (((*) a) <$> (exp0 a (b - 1)))))
+  else (if ((b `rem` 2) == 0)
+       then do o <- (exp0 a (b `quot` 2))
+               return ((o * o))
+       else (((*) a) <$> (exp0 a (b - 1)))))
 main =
   do let a = 0
      let b = 0
-     e <- read_int
-     let f = e
-     skip_whitespaces
      d <- read_int
-     let g = d
-     printf "%d" =<< ((exp0 f g) :: IO Int)
+     let e = d
+     skip_whitespaces
+     c <- read_int
+     let f = c
+     printf "%d" =<< ((exp0 e f) :: IO Int)
 

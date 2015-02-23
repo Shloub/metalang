@@ -15,17 +15,16 @@ let main =
                     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                     ((fun  (b, tab4) -> (
                                           b;
-                                          let e = 0 in
-                                          let f = (strlen - 1) in
+                                          let e = (strlen - 1) in
                                           let rec d j =
-                                            (if (j <= f)
+                                            (if (j <= e)
                                              then (
                                                     (Printf.printf "%c" tab4.(j));
                                                     (d (j + 1))
                                                     )
                                              
                                              else ()) in
-                                            (d e)
+                                            (d 0)
                                           )
                     ) (Array.init_withenv strlen (fun  toto () -> Scanf.scanf "%c"
                     (fun  tmpc -> let c = (int_of_char (tmpc)) in

@@ -65,28 +65,27 @@ fibo0 a b i =
   do let out0 = 0
      let a2 = a
      let b2 = b
-     let d = 0
-     let e = (i + 1)
-     let c j k l m =
-           (if (j <= e)
-           then do let n = (m + k)
-                   let tmp = l
-                   let o = (l + k)
-                   let p = tmp
-                   (c (j + 1) p o n)
-           else return (m)) in
-           (c d a2 b2 out0)
+     let d = (i + 1)
+     let c j h k l =
+           (if (j <= d)
+           then do let m = (l + h)
+                   let tmp = k
+                   let n = (k + h)
+                   let o = tmp
+                   (c (j + 1) o n m)
+           else return (l)) in
+           (c 0 a2 b2 out0)
 main =
   do let a = 0
      let b = 0
      let i = 0
-     h <- read_int
-     let q = h
-     skip_whitespaces
      g <- read_int
-     let r = g
+     let p = g
      skip_whitespaces
      f <- read_int
-     let s = f
-     printf "%d" =<< ((fibo0 q r s) :: IO Int)
+     let q = f
+     skip_whitespaces
+     e <- read_int
+     let r = e
+     printf "%d" =<< ((fibo0 p q r) :: IO Int)
 

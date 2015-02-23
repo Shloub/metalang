@@ -11,121 +11,110 @@ end
 
 let eratostene t max0 =
   let n = 0 in
-  let m = 2 in
-  let p = (max0 - 1) in
-  let rec g i n =
-    (if (i <= p)
-     then let n = (if (t.(i) = i)
-                   then let n = (n + 1) in
-                   let j = (i * i) in
-                   let rec h j =
-                     (if ((j < max0) && (j > 0))
-                      then (
-                             t.(j) <- 0;
-                             let j = (j + i) in
-                             (h j)
-                             )
-                      
-                      else n) in
-                     (h j)
-                   else n) in
-     (g (i + 1) n)
+  let g = (max0 - 1) in
+  let rec e i n =
+    (if (i <= g)
+     then (if (t.(i) = i)
+           then let n = (n + 1) in
+           let j = (i * i) in
+           let rec f j =
+             (if ((j < max0) && (j > 0))
+              then (
+                     t.(j) <- 0;
+                     let j = (j + i) in
+                     (f j)
+                     )
+              
+              else (e (i + 1) n)) in
+             (f j)
+           else (e (i + 1) n))
      else n) in
-    (g m n)
+    (e 2 n)
 let isPrime n primes len =
   let i = 0 in
   let n = (if (n < 0)
            then let n = (- n) in
            n
            else n) in
-  let rec f i =
+  let rec d i =
     (if ((primes.(i) * primes.(i)) < n)
      then (if ((n mod primes.(i)) = 0)
            then false
            else let i = (i + 1) in
-           (f i))
+           (d i))
      else true) in
-    (f i)
+    (d i)
 let test a b primes len =
-  let d = 0 in
-  let e = 200 in
   let rec c n =
-    (if (n <= e)
+    (if (n <= 200)
      then let j = (((n * n) + (a * n)) + b) in
      (if (not (isPrime j primes len))
       then n
       else (c (n + 1)))
      else 200) in
-    (c d)
+    (c 0)
 let main =
   let maximumprimes = 1000 in
-  ((fun  (r, era) -> (
-                       r;
+  ((fun  (m, era) -> (
+                       m;
                        let result = 0 in
                        let max0 = 0 in
                        let nprimes = (eratostene era maximumprimes) in
-                       ((fun  (u, primes) -> (
-                                               u;
+                       ((fun  (q, primes) -> (
+                                               q;
                                                let l = 0 in
-                                               let bc = 2 in
-                                               let bd = (maximumprimes - 1) in
-                                               let rec bb k l =
-                                                 (if (k <= bd)
-                                                  then let l = (if (era.(k) = k)
-                                                                then (
-                                                                       primes.(l) <- k;
-                                                                       let l = (l + 1) in
-                                                                       l
-                                                                       )
-                                                                
-                                                                else l) in
-                                                  (bb (k + 1) l)
+                                               let v = (maximumprimes - 1) in
+                                               let rec u k l =
+                                                 (if (k <= v)
+                                                  then (if (era.(k) = k)
+                                                        then (
+                                                               primes.(l) <- k;
+                                                               let l = (l + 1) in
+                                                               (u (k + 1) l)
+                                                               )
+                                                        
+                                                        else (u (k + 1) l))
                                                   else (
                                                          (Printf.printf "%d == %d\n" l nprimes);
                                                          let ma = 0 in
                                                          let mb = 0 in
-                                                         let z = 3 in
-                                                         let ba = 999 in
-                                                         let rec v b ma max0 mb result =
-                                                           (if (b <= ba)
-                                                            then ((fun  (ma, max0, mb, result) -> (v (b + 1) ma max0 mb result)) (
-                                                            if (era.(b) = b)
-                                                            then let x = (- 999) in
-                                                            let y = 999 in
-                                                            let rec w a ma max0 mb result =
-                                                              (if (a <= y)
-                                                               then let n1 = (test a b primes nprimes) in
-                                                               let n2 = (test a (- b) primes nprimes) in
-                                                               ((fun  (ma, max0, mb, result) -> ((fun  (ma, max0, mb, result) -> (w (a + 1) ma max0 mb result)) (
-                                                               if (n2 > max0)
-                                                               then let max0 = n2 in
-                                                               let result = ((- a) * b) in
-                                                               let ma = a in
-                                                               let mb = (- b) in
-                                                               (ma, max0, mb, result)
-                                                               else (ma, max0, mb, result)))) (
-                                                               if (n1 > max0)
-                                                               then let max0 = n1 in
-                                                               let result = (a * b) in
-                                                               let ma = a in
-                                                               let mb = b in
-                                                               (ma, max0, mb, result)
-                                                               else (ma, max0, mb, result)))
-                                                               else (ma, max0, mb, result)) in
-                                                              (w x ma max0 mb result)
-                                                            else (ma, max0, mb, result)))
+                                                         let rec r b ma max0 mb result =
+                                                           (if (b <= 999)
+                                                            then (if (era.(b) = b)
+                                                                  then let rec s a ma max0 mb result =
+                                                                         (if (a <= 999)
+                                                                          then let n1 = (test a b primes nprimes) in
+                                                                          let n2 = (test a (- b) primes nprimes) in
+                                                                          ((fun  (ma, max0, mb, result) -> (
+                                                                          if (n2 > max0)
+                                                                          then let max0 = n2 in
+                                                                          let result = ((- a) * b) in
+                                                                          let ma = a in
+                                                                          let mb = (- b) in
+                                                                          (s (a + 1) ma max0 mb result)
+                                                                          else (s (a + 1) ma max0 mb result))) (
+                                                                          if (n1 > max0)
+                                                                          then let max0 = n1 in
+                                                                          let result = (a * b) in
+                                                                          let ma = a in
+                                                                          let mb = b in
+                                                                          (ma, max0, mb, result)
+                                                                          else (ma, max0, mb, result)))
+                                                                          else (r (b + 1) ma max0 mb result)) in
+                                                                         (s (- 999) ma max0 mb result)
+                                                                  else (r (b + 1) ma max0 mb result))
                                                             else (
                                                                    (Printf.printf "%d %d\n%d\n%d\n" ma mb max0 result)
                                                                    )
                                                             ) in
-                                                           (v z ma max0 mb result)
+                                                           (r 3 ma max0 mb result)
                                                          )
                                                   ) in
-                                                 (bb bc l)
+                                                 (u 2 l)
                                                )
-                       ) (Array.init_withenv nprimes (fun  o () -> let s = 0 in
-                       ((), s)) ()))
+                       ) (Array.init_withenv nprimes (fun  o () -> let p = 0 in
+                       ((), p)) ()))
                        )
-  ) (Array.init_withenv maximumprimes (fun  j () -> let q = j in
-  ((), q)) ()))
+  ) (Array.init_withenv maximumprimes (fun  j () -> let h = j in
+  ((), h)) ()))
 

@@ -85,29 +85,26 @@ npi0 str len =
         let ptrStr = 0
         let d k l =
               (if (l < len)
-              then ((\ (m, n) ->
-                      (d m n)) =<< ifM (((==) <$> (readIOA str l) <*> return (' ')))
-                                       (let o = (l + 1)
-                                                in return ((k, o)))
-                                       (((\ (p, q) ->
-                                           return ((p, q))) =<< ifM ((is_number =<< (readIOA str l)))
-                                                                    (do let num = 0
-                                                                        let e r s =
-                                                                              ifM (((/=) <$> (readIOA str s) <*> return (' ')))
-                                                                                  (do t <- ((-) <$> (((+) (r * 10)) <$> ((fmap ord ((readIOA str s))))) <*> ((fmap ord (return ('0')))))
-                                                                                      let u = (s + 1)
-                                                                                      (e t u))
-                                                                                  (do writeIOA stack k r
-                                                                                      let v = (k + 1)
-                                                                                      return ((v, s))) in
-                                                                              (e num l))
-                                                                    (((\ (w, x) ->
-                                                                        return ((w, x))) =<< ifM (((==) <$> (readIOA str l) <*> return ('+')))
-                                                                                                 (do writeIOA stack (k - 2) =<< ((+) <$> (readIOA stack (k - 2)) <*> (readIOA stack (k - 1)))
-                                                                                                     let y = (k - 1)
-                                                                                                     let z = (l + 1)
-                                                                                                     return ((y, z)))
-                                                                                                 (return ((k, l))))))))
+              then ifM (((==) <$> (readIOA str l) <*> return (' ')))
+                       (do let m = (l + 1)
+                           (d k m))
+                       (ifM ((is_number =<< (readIOA str l)))
+                            (do let num = 0
+                                let e n o =
+                                      ifM (((/=) <$> (readIOA str o) <*> return (' ')))
+                                          (do p <- ((-) <$> (((+) (n * 10)) <$> ((fmap ord ((readIOA str o))))) <*> ((fmap ord (return ('0')))))
+                                              let q = (o + 1)
+                                              (e p q))
+                                          (do writeIOA stack k n
+                                              let r = (k + 1)
+                                              (d r o)) in
+                                      (e num l))
+                            (ifM (((==) <$> (readIOA str l) <*> return ('+')))
+                                 (do writeIOA stack (k - 2) =<< ((+) <$> (readIOA stack (k - 2)) <*> (readIOA stack (k - 1)))
+                                     let s = (k - 1)
+                                     let t = (l + 1)
+                                     (d s t))
+                                 ((d k l))))
               else (readIOA stack 0)) in
               (d ptrStack ptrStr)) =<< (array_init_withenv len (\ i () ->
                                                                  let a = 0
@@ -115,15 +112,15 @@ npi0 str len =
 main =
   do let len = 0
      j <- read_int
-     let ba = j
+     let u = j
      skip_whitespaces
      ((\ (g, tab) ->
         do return (g)
-           result <- (npi0 tab ba)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv ba (\ i () ->
-                                                                           do let tmp = '\000'
-                                                                              hGetChar stdin >>= ((\ h ->
-                                                                                                    let bb = h
-                                                                                                             in let f = bb
-                                                                                                                        in return (((), f))))) ()))
+           result <- (npi0 tab u)
+           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv u (\ i () ->
+                                                                          do let tmp = '\000'
+                                                                             hGetChar stdin >>= ((\ h ->
+                                                                                                   let v = h
+                                                                                                           in let f = v
+                                                                                                                      in return (((), f))))) ()))
 

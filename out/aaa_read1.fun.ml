@@ -13,17 +13,15 @@ let main =
   ((fun  (d, str) -> (
                        d;
                        (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                       let f = 0 in
-                       let g = 11 in
                        let rec e i =
-                         (if (i <= g)
+                         (if (i <= 11)
                           then (
                                  (Printf.printf "%c" str.(i));
                                  (e (i + 1))
                                  )
                           
                           else ()) in
-                         (e f)
+                         (e 0)
                        )
   ) (Array.init_withenv 12 (fun  a () -> Scanf.scanf "%c"
   (fun  b -> let c = b in

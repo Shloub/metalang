@@ -27,12 +27,10 @@
 )
 (define (rev2 empty acc torev)
   ;toto
-  (let ([c (lambda (_) 
-             '())])
   (if (eq? torev empty)
   acc
   (let ([acc2 (intlist (intlist-head torev) acc)])
-  (rev2 empty acc (intlist-tail torev)))))
+  (rev2 empty acc (intlist-tail torev))))
 )
 (define (rev empty torev)
   ;toto
@@ -46,10 +44,9 @@
                 (if (not (eq? i 0))
                 ((lambda (b) 
                    (let ([i b])
-                   (let ([list (if (not (eq? i 0))
-                               (let ([list (cons0 list i)])
-                               list)
-                               list)])
+                   (if (not (eq? i 0))
+                   (let ([list (cons0 list i)])
+                   (a i list))
                    (a i list)))) (mread-int))
                 '()))])
   (a i list))))

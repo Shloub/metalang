@@ -15,26 +15,24 @@ let main =
     (Printf.printf "%d=len\n" len);
     ((fun  (k, tab) -> (
                          k;
-                         let bb = 0 in
-                         let bc = (len - 1) in
-                         let rec ba i =
-                           (if (i <= bc)
+                         let y = (len - 1) in
+                         let rec x i =
+                           (if (i <= y)
                             then (
                                    (Printf.printf "%d=>%d " i tab.(i));
-                                   (ba (i + 1))
+                                   (x (i + 1))
                                    )
                             
                             else (
                                    (Printf.printf "\n" );
                                    ((fun  (m, tab2) -> (
                                                          m;
-                                                         let y = 0 in
-                                                         let z = (len - 1) in
-                                                         let rec x i_ =
-                                                           (if (i_ <= z)
+                                                         let w = (len - 1) in
+                                                         let rec v i_ =
+                                                           (if (i_ <= w)
                                                             then (
                                                                    (Printf.printf "%d==>%d " i_ tab2.(i_));
-                                                                   (x (i_ + 1))
+                                                                   (v (i_ + 1))
                                                                    )
                                                             
                                                             else let strlen = (Scanf.scanf "%d " (fun x -> x)) in
@@ -44,10 +42,9 @@ let main =
                                                               (
                                                                 p;
                                                                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                                let v = 0 in
-                                                                let w = (strlen - 1) in
-                                                                let rec u i3 =
-                                                                  (if (i3 <= w)
+                                                                let u = (strlen - 1) in
+                                                                let rec s i3 =
+                                                                  (if (i3 <= u)
                                                                    then let tmpc = tab4.(i3) in
                                                                    let c = (int_of_char (tmpc)) in
                                                                    (
@@ -58,30 +55,29 @@ let main =
                                                                               else c) in
                                                                      (
                                                                        tab4.(i3) <- (char_of_int (c));
-                                                                       (u (i3 + 1))
+                                                                       (s (i3 + 1))
                                                                        )
                                                                      
                                                                      )
                                                                    
-                                                                   else let r = 0 in
-                                                                   let s = (strlen - 1) in
+                                                                   else let r = (strlen - 1) in
                                                                    let rec q j =
-                                                                     (if (j <= s)
+                                                                     (if (j <= r)
                                                                       then (
                                                                              (Printf.printf "%c" tab4.(j));
                                                                              (q (j + 1))
                                                                              )
                                                                       
                                                                       else ()) in
-                                                                     (q r)) in
-                                                                  (u v)
+                                                                     (q 0)) in
+                                                                  (s 0)
                                                                 )
                                                               ) (Array.init_withenv strlen (fun  f () -> Scanf.scanf "%c"
                                                               (fun  g -> let o = g in
                                                               ((), o))) ()))
                                                               )
                                                             ) in
-                                                           (x y)
+                                                           (v 0)
                                                          )
                                    ) (Array.init_withenv len (fun  d () -> Scanf.scanf "%d"
                                    (fun  e -> (
@@ -92,7 +88,7 @@ let main =
                                    )) ()))
                                    )
                             ) in
-                           (ba bb)
+                           (x 0)
                          )
     ) (Array.init_withenv len (fun  a () -> Scanf.scanf "%d"
     (fun  b -> (

@@ -2,10 +2,9 @@ let fibo a b i =
   let out_ = 0 in
   let a2 = a in
   let b2 = b in
-  let d = 0 in
-  let e = (i + 1) in
+  let d = (i + 1) in
   let rec c j a2 b2 out_ =
-    (if (j <= e)
+    (if (j <= d)
      then (
             (Printf.printf "%d" j);
             let out_ = (out_ + a2) in
@@ -16,7 +15,7 @@ let fibo a b i =
             )
      
      else out_) in
-    (c d a2 b2 out_)
+    (c 0 a2 b2 out_)
 let main =
   (Printf.printf "%d" (fibo 1 2 4))
 

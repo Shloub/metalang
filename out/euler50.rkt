@@ -12,119 +12,100 @@
 (define (eratostene t0 max0)
   ;toto
   (let ([n 0])
-  (let ([e 2])
-  (let ([f (- max0 1)])
+  (let ([e (- max0 1)])
   (letrec ([c (lambda (i n) 
-                (if (<= i f)
-                (let ([n (if (eq? (vector-ref t0 i) i)
-                         (let ([n (+ n 1)])
-                         (block
-                           (if (> (quotient max0 i) i)
-                           (let ([j (* i i)])
-                           (letrec ([d (lambda (j) 
-                                         (if (and (< j max0) (> j 0))
-                                         (block
-                                           (vector-set! t0 j 0)
-                                           (let ([j (+ j i)])
-                                           (d j))
-                                           )
-                                         '()))])
-                           (d j)))
-                           '())
-                         n
-                         ))
-                n)])
+                (if (<= i e)
+                (if (eq? (vector-ref t0 i) i)
+                (let ([n (+ n 1)])
+                (if (> (quotient max0 i) i)
+                (let ([j (* i i)])
+                (letrec ([d (lambda (j) 
+                              (if (and (< j max0) (> j 0))
+                              (block
+                                (vector-set! t0 j 0)
+                                (let ([j (+ j i)])
+                                (d j))
+                                )
+                              (c (+ i 1) n)))])
+                (d j)))
+                (c (+ i 1) n)))
                 (c (+ i 1) n))
                 n))])
-  (c e n)))))
+  (c 2 n))))
 )
 (define main
   (let ([maximumprimes 1000001])
-  ((lambda (internal_env) (apply (lambda (h era) 
+  ((lambda (internal_env) (apply (lambda (g era) 
                                         (block
-                                          h
+                                          g
                                           (let ([nprimes (eratostene era maximumprimes)])
-                                          ((lambda (internal_env) (apply (lambda (p primes) 
+                                          ((lambda (internal_env) (apply (lambda (m primes) 
                                                                                 (block
-                                                                                p
+                                                                                m
                                                                                 (let ([l 0])
-                                                                                (let ([y 2])
-                                                                                (let ([z (- maximumprimes 1)])
-                                                                                (letrec ([x 
+                                                                                (let ([v (- maximumprimes 1)])
+                                                                                (letrec ([u 
                                                                                 (lambda (k l) 
-                                                                                (if (<= k z)
-                                                                                (let ([l 
+                                                                                (if (<= k v)
                                                                                 (if (eq? (vector-ref era k) k)
                                                                                 (block
                                                                                 (vector-set! primes l k)
                                                                                 (let ([l (+ l 1)])
-                                                                                l)
+                                                                                (u (+ k 1) l))
                                                                                 )
-                                                                                l)])
-                                                                                (x (+ k 1) l))
+                                                                                (u (+ k 1) l))
                                                                                 (block
                                                                                 (map display (list l " == " nprimes "\n"))
                                                                                 ((lambda (internal_env) (apply (lambda
-                                                                                 (r sum) 
+                                                                                 (q sum) 
                                                                                 (block
-                                                                                r
+                                                                                q
                                                                                 (let ([maxl 0])
                                                                                 (let ([process #t])
                                                                                 (let ([stop (- maximumprimes 1)])
                                                                                 (let ([len 1])
                                                                                 (let ([resp 1])
-                                                                                (letrec ([s 
+                                                                                (letrec ([r 
                                                                                 (lambda (len maxl process resp stop) 
                                                                                 (if process
                                                                                 (let ([process #f])
-                                                                                (let ([v 0])
-                                                                                (let ([w stop])
-                                                                                (letrec ([u 
+                                                                                (letrec ([s 
                                                                                 (lambda (i maxl process resp stop) 
-                                                                                (if (<= i w)
-                                                                                ((lambda (internal_env) (apply (lambda
-                                                                                 (maxl process resp stop) 
-                                                                                (u (+ i 1) maxl process resp stop)) internal_env)) 
+                                                                                (if (<= i stop)
                                                                                 (if (< (+ i len) nprimes)
                                                                                 (block
                                                                                 (vector-set! sum i (+ (vector-ref sum i) (vector-ref primes (+ i len))))
-                                                                                ((lambda (internal_env) (apply (lambda
-                                                                                 (maxl process resp stop) 
-                                                                                (list maxl process resp stop)) internal_env)) 
                                                                                 (if (> maximumprimes (vector-ref sum i))
                                                                                 (let ([process #t])
-                                                                                ((lambda (internal_env) (apply (lambda
-                                                                                 (maxl resp) 
-                                                                                (list maxl process resp stop)) internal_env)) 
                                                                                 (if (eq? (vector-ref era (vector-ref sum i)) (vector-ref sum i))
                                                                                 (let ([maxl len])
                                                                                 (let ([resp (vector-ref sum i)])
-                                                                                (list maxl resp)))
-                                                                                (list maxl resp))))
+                                                                                (s (+ i 1) maxl process resp stop)))
+                                                                                (s (+ i 1) maxl process resp stop)))
                                                                                 (let ([stop (min stop i)])
-                                                                                (list maxl process resp stop))))
+                                                                                (s (+ i 1) maxl process resp stop)))
                                                                                 )
-                                                                                (list maxl process resp stop)))
+                                                                                (s (+ i 1) maxl process resp stop))
                                                                                 (let ([len (+ len 1)])
-                                                                                (s len maxl process resp stop))))])
-                                                                                (u v maxl process resp stop)))))
+                                                                                (r len maxl process resp stop))))])
+                                                                                (s 0 maxl process resp stop)))
                                                                                 (block
                                                                                 (map display (list resp "\n" maxl "\n"))
                                                                                 )))])
-                                                                                (s len maxl process resp stop)))))))
+                                                                                (r len maxl process resp stop)))))))
                                                                                 )) internal_env)) (array_init_withenv nprimes 
                                                                                 (lambda (i_) 
                                                                                 (lambda (_) 
-                                                                                (let ([q (vector-ref primes i_)])
-                                                                                (list '() q)))) '()))
+                                                                                (let ([p (vector-ref primes i_)])
+                                                                                (list '() p)))) '()))
                                                                                 )))])
-                                                                                (x y l)))))
+                                                                                (u 2 l))))
                                         )) internal_env)) (array_init_withenv nprimes 
   (lambda (o) 
-    (lambda (_) (let ([m 0])
-                (list '() m)))) '())))
+    (lambda (_) (let ([h 0])
+                (list '() h)))) '())))
 )) internal_env)) (array_init_withenv maximumprimes (lambda (j) 
-                                                      (lambda (_) (let ([g j])
-                                                                  (list '() g)))) '())))
+                                                      (lambda (_) (let ([f j])
+                                                                  (list '() f)))) '())))
 )
 

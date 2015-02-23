@@ -78,52 +78,48 @@ array_init_withenv len f env =
 
 position_alphabet c =
   do i <- ((fmap ord (return (c))))
-     let e () = return (())
      ifM (((((<=) i) <$> ((fmap ord (return ('Z'))))) <&&> (((>=) i) <$> ((fmap ord (return ('A')))))))
          ((((-) i) <$> ((fmap ord (return ('A'))))))
-         (do let f () = (e ())
-             ifM (((((<=) i) <$> ((fmap ord (return ('z'))))) <&&> (((>=) i) <$> ((fmap ord (return ('a')))))))
-                 ((((-) i) <$> ((fmap ord (return ('a'))))))
-                 (return ((- 1))))
+         (ifM (((((<=) i) <$> ((fmap ord (return ('z'))))) <&&> (((>=) i) <$> ((fmap ord (return ('a')))))))
+              ((((-) i) <$> ((fmap ord (return ('a'))))))
+              (return ((- 1))))
 of_position_alphabet c =
   ((fmap chr ((((+) c) <$> ((fmap ord (return ('a'))))))))
 crypte taille_cle cle taille message =
-  do let b = 0
-     let d = (taille - 1)
+  do let b = (taille - 1)
      let a i =
-           (if (i <= d)
+           (if (i <= b)
            then do lettre <- (position_alphabet =<< (readIOA message i))
                    (if (lettre /= (- 1))
                    then do addon <- (position_alphabet =<< (readIOA cle (i `rem` taille_cle)))
                            let new0 = ((addon + lettre) `rem` 26)
                            writeIOA message i =<< (of_position_alphabet new0)
-                   else return (()))
-                   (a (i + 1))
+                           (a (i + 1))
+                   else (a (i + 1)))
            else return (())) in
-           (a b)
+           (a 0)
 main =
   do taille_cle <- read_int
      skip_whitespaces
-     ((\ (h, cle) ->
-        do return (h)
+     ((\ (e, cle) ->
+        do return (e)
            skip_whitespaces
            taille <- read_int
            skip_whitespaces
-           ((\ (k, message) ->
-              do return (k)
+           ((\ (g, message) ->
+              do return (g)
                  (crypte taille_cle cle taille message)
-                 let m = 0
-                 let n = (taille - 1)
-                 let l i =
-                       (if (i <= n)
+                 let j = (taille - 1)
+                 let h i =
+                       (if (i <= j)
                        then do printf "%c" =<< ((readIOA message i) :: IO Char)
-                               (l (i + 1))
+                               (h (i + 1))
                        else printf "\n" ::IO()) in
-                       (l m)) =<< (array_init_withenv taille (\ index2 () ->
+                       (h 0)) =<< (array_init_withenv taille (\ index2 () ->
                                                                hGetChar stdin >>= ((\ out2 ->
-                                                                                     let j = out2
-                                                                                             in return (((), j))))) ()))) =<< (array_init_withenv taille_cle (\ index () ->
+                                                                                     let f = out2
+                                                                                             in return (((), f))))) ()))) =<< (array_init_withenv taille_cle (\ index () ->
                                                                                                                                                                hGetChar stdin >>= ((\ out0 ->
-                                                                                                                                                                                     let g = out0
-                                                                                                                                                                                             in return (((), g))))) ()))
+                                                                                                                                                                                     let d = out0
+                                                                                                                                                                                             in return (((), d))))) ()))
 

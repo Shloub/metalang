@@ -78,52 +78,46 @@ array_init_withenv len f env =
 
 fact n =
   do let prod = 1
-     let v = 2
-     let w = n
-     let u i x =
-           (if (i <= w)
-           then do let y = (x * i)
-                   (u (i + 1) y)
-           else return (x)) in
-           (u v prod)
+     let q i r =
+           (if (i <= n)
+           then do let s = (r * i)
+                   (q (i + 1) s)
+           else return (r)) in
+           (q 2 prod)
 show0 lim nth =
   ((\ (b, t) ->
      do return (b)
         ((\ (d, pris) ->
            do return (d)
-              let r = 1
-              let s = (lim - 1)
-              let h k z =
-                    (if (k <= s)
+              let p = (lim - 1)
+              let g k u =
+                    (if (k <= p)
                     then do n <- (fact (lim - k))
-                            let nchiffre = (z `quot` n)
-                            let ba = (z `rem` n)
-                            let p = 0
-                            let q = (lim - 1)
-                            let o l bb =
-                                  (if (l <= q)
-                                  then do bc <- ifM ((fmap (not) (readIOA pris l)))
-                                                    (do (if (bb == 0)
-                                                        then do printf "%d" (l :: Int)::IO()
-                                                                writeIOA pris l True
-                                                        else return (()))
-                                                        let bd = (bb - 1)
-                                                        return (bd))
-                                                    (return (bb))
-                                          (o (l + 1) bc)
-                                  else (h (k + 1) ba)) in
-                                  (o p nchiffre)
-                    else do let f = 0
-                            let g = (lim - 1)
+                            let nchiffre = (u `quot` n)
+                            let v = (u `rem` n)
+                            let o = (lim - 1)
+                            let h l w =
+                                  (if (l <= o)
+                                  then ifM ((fmap (not) (readIOA pris l)))
+                                           (do (if (w == 0)
+                                               then do printf "%d" (l :: Int)::IO()
+                                                       writeIOA pris l True
+                                               else return (()))
+                                               let x = (w - 1)
+                                               (h (l + 1) x))
+                                           ((h (l + 1) w))
+                                  else (g (k + 1) v)) in
+                                  (h 0 nchiffre)
+                    else do let f = (lim - 1)
                             let e m =
-                                  (if (m <= g)
-                                  then do ifM ((fmap (not) (readIOA pris m)))
-                                              (printf "%d" (m :: Int)::IO())
-                                              (return (()))
-                                          (e (m + 1))
+                                  (if (m <= f)
+                                  then ifM ((fmap (not) (readIOA pris m)))
+                                           (do printf "%d" (m :: Int)::IO()
+                                               (e (m + 1)))
+                                           ((e (m + 1)))
                                   else printf "\n" ::IO()) in
-                                  (e f)) in
-                    (h r nth)) =<< (array_init_withenv lim (\ j () ->
+                                  (e 0)) in
+                    (g 1 nth)) =<< (array_init_withenv lim (\ j () ->
                                                              let c = False
                                                                      in return (((), c))) ()))) =<< (array_init_withenv lim (\ i () ->
                                                                                                                               let a = i

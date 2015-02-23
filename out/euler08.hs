@@ -77,44 +77,41 @@ array_init_withenv len f env =
 
 
 max2_ a b =
-  let g () = ()
-             in return ((if (a > b)
-                        then a
-                        else b))
+  return ((if (a > b)
+          then a
+          else b))
 main =
   do let i = 1
-     ((\ (l, last) ->
-        do let p = l
-           let max0 = p
+     ((\ (h, last) ->
+        do let m = h
+           let max0 = m
            let index = 0
            let nskipdiv = 0
-           let n = 1
-           let o = 995
-           let m k q r s t =
-                 (if (k <= o)
+           let l k n o p q =
+                 (if (k <= 995)
                  then hGetChar stdin >>= ((\ e ->
                                             do f <- ((-) <$> ((fmap ord (return (e)))) <*> ((fmap ord (return ('0')))))
-                                               ((\ (u, v) ->
-                                                  do writeIOA last r f
-                                                     let w = ((r + 1) `rem` 5)
-                                                     x <- (max2_ s u)
-                                                     (m (k + 1) u w x v)) =<< (if (f == 0)
-                                                                              then let y = 1
-                                                                                           in let z = 4
-                                                                                                      in return ((y, z))
-                                                                              else do let ba = (q * f)
-                                                                                      bb <- (if (t < 0)
-                                                                                            then do bc <- ((quot ba) <$> (readIOA last r))
-                                                                                                    return (bc)
-                                                                                            else return (ba))
-                                                                                      let bd = (t - 1)
-                                                                                      return ((bb, bd))))))
-                 else do printf "%d" (s :: Int)::IO()
+                                               ((\ (r, s) ->
+                                                  do writeIOA last o f
+                                                     let t = ((o + 1) `rem` 5)
+                                                     u <- (max2_ p r)
+                                                     (l (k + 1) r t u s)) =<< (if (f == 0)
+                                                                              then let v = 1
+                                                                                           in let w = 4
+                                                                                                      in return ((v, w))
+                                                                              else do let x = (n * f)
+                                                                                      y <- (if (q < 0)
+                                                                                           then do z <- ((quot x) <$> (readIOA last o))
+                                                                                                   return (z)
+                                                                                           else return (x))
+                                                                                      let ba = (q - 1)
+                                                                                      return ((y, ba))))))
+                 else do printf "%d" (p :: Int)::IO()
                          printf "\n" ::IO()) in
-                 (m n p index max0 nskipdiv)) =<< (array_init_withenv 5 (\ j be ->
+                 (l 1 m index max0 nskipdiv)) =<< (array_init_withenv 5 (\ j bb ->
                                                                           hGetChar stdin >>= ((\ c ->
                                                                                                 do d <- ((-) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('0')))))
-                                                                                                   let bf = (be * d)
-                                                                                                   let h = d
-                                                                                                   return ((bf, h))))) i))
+                                                                                                   let bc = (bb * d)
+                                                                                                   let g = d
+                                                                                                   return ((bc, g))))) i))
 

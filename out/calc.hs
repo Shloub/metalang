@@ -65,18 +65,17 @@ fibo a b i =
   do let out_ = 0
      let a2 = a
      let b2 = b
-     let d = 0
-     let e = (i + 1)
-     let c j f g h =
-           (if (j <= e)
+     let d = (i + 1)
+     let c j e f g =
+           (if (j <= d)
            then do printf "%d" (j :: Int)::IO()
-                   let k = (h + f)
-                   let tmp = g
-                   let l = (g + f)
-                   let m = tmp
-                   (c (j + 1) m l k)
-           else return (h)) in
-           (c d a2 b2 out_)
+                   let h = (g + e)
+                   let tmp = f
+                   let k = (f + e)
+                   let l = tmp
+                   (c (j + 1) l k h)
+           else return (g)) in
+           (c 0 a2 b2 out_)
 main =
   printf "%d" =<< ((fibo 1 2 4) :: IO Int)
 

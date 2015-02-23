@@ -80,14 +80,12 @@ main =
   ((\ (d, str) ->
      do return (d)
         skip_whitespaces
-        let f = 0
-        let g = 11
         let e i =
-              (if (i <= g)
+              (if (i <= 11)
               then do printf "%c" =<< ((readIOA str i) :: IO Char)
                       (e (i + 1))
               else return (())) in
-              (e f)) =<< (array_init_withenv 12 (\ a () ->
+              (e 0)) =<< (array_init_withenv 12 (\ a () ->
                                                   hGetChar stdin >>= ((\ b ->
                                                                         let c = b
                                                                                 in return (((), c))))) ()))

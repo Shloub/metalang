@@ -77,26 +77,22 @@ array_init_withenv len f env =
 
 
 result sum t maxIndex cache =
-  do let a () = return (())
-     ifM (((/=) <$> join (readIOA <$> (readIOA cache sum) <*> return (maxIndex)) <*> return (0)))
-         (join (readIOA <$> (readIOA cache sum) <*> return (maxIndex)))
-         (do let b () = (a ())
-             (if ((sum == 0) || (maxIndex == 0))
-             then return (1)
-             else do let out0 = 0
-                     div <- ((quot sum) <$> (readIOA t maxIndex))
-                     let d = 0
-                     let e = div
-                     let c i p =
-                           (if (i <= e)
-                           then do q <- (((+) p) <$> (join (result <$> (((-) sum) <$> (((*) i) <$> (readIOA t maxIndex))) <*> (return t) <*> (return (maxIndex - 1)) <*> (return cache))))
-                                   (c (i + 1) q)
-                           else do join (writeIOA <$> (readIOA cache sum) <*> return (maxIndex) <*> return (p))
-                                   return (p)) in
-                           (c d out0)))
+  ifM (((/=) <$> join (readIOA <$> (readIOA cache sum) <*> return (maxIndex)) <*> return (0)))
+      (join (readIOA <$> (readIOA cache sum) <*> return (maxIndex)))
+      ((if ((sum == 0) || (maxIndex == 0))
+       then return (1)
+       else do let out0 = 0
+               div <- ((quot sum) <$> (readIOA t maxIndex))
+               let a i h =
+                     (if (i <= div)
+                     then do l <- (((+) h) <$> (join (result <$> (((-) sum) <$> (((*) i) <$> (readIOA t maxIndex))) <*> (return t) <*> (return (maxIndex - 1)) <*> (return cache))))
+                             (a (i + 1) l)
+                     else do join (writeIOA <$> (readIOA cache sum) <*> return (maxIndex) <*> return (h))
+                             return (h)) in
+                     (a 0 out0)))
 main =
-  ((\ (g, t) ->
-     do return (g)
+  ((\ (c, t) ->
+     do return (c)
         writeIOA t 0 1
         writeIOA t 1 2
         writeIOA t 2 5
@@ -105,15 +101,15 @@ main =
         writeIOA t 5 50
         writeIOA t 6 100
         writeIOA t 7 200
-        ((\ (l, cache) ->
-           do return (l)
+        ((\ (e, cache) ->
+           do return (e)
               printf "%d" =<< ((result 200 t 7 cache) :: IO Int)) =<< (array_init_withenv 201 (\ j () ->
-                                                                                                ((\ (n, o) ->
-                                                                                                   do return (n)
-                                                                                                      let h = o
-                                                                                                      return (((), h))) =<< (array_init_withenv 8 (\ k () ->
-                                                                                                                                                    let m = 0
-                                                                                                                                                            in return (((), m))) ()))) ()))) =<< (array_init_withenv 8 (\ i () ->
-                                                                                                                                                                                                                         let f = 0
-                                                                                                                                                                                                                                 in return (((), f))) ()))
+                                                                                                ((\ (g, o) ->
+                                                                                                   do return (g)
+                                                                                                      let d = o
+                                                                                                      return (((), d))) =<< (array_init_withenv 8 (\ k () ->
+                                                                                                                                                    let f = 0
+                                                                                                                                                            in return (((), f))) ()))) ()))) =<< (array_init_withenv 8 (\ i () ->
+                                                                                                                                                                                                                         let b = 0
+                                                                                                                                                                                                                                 in return (((), b))) ()))
 

@@ -15,15 +15,15 @@ let primesfactors n =
                        let d = 2 in
                        let rec f d n =
                          (if ((n <> 1) && ((d * d) <= n))
-                          then ((fun  (d, n) -> (f d n)) (if ((n mod d) = 0)
-                                                          then (
-                                                                 tab.(d) <- (tab.(d) + 1);
-                                                                 let n = (n / d) in
-                                                                 (d, n)
-                                                                 )
-                                                          
-                                                          else let d = (d + 1) in
-                                                          (d, n)))
+                          then (if ((n mod d) = 0)
+                                then (
+                                       tab.(d) <- (tab.(d) + 1);
+                                       let n = (n / d) in
+                                       (f d n)
+                                       )
+                                
+                                else let d = (d + 1) in
+                                (f d n))
                           else (
                                  tab.(n) <- (tab.(n) + 1);
                                  tab
@@ -37,41 +37,34 @@ let main =
   let lim = 20 in
   ((fun  (h, o) -> (
                      h;
-                     let ba = 1 in
-                     let bb = lim in
-                     let rec w i =
-                       (if (i <= bb)
+                     let rec s i =
+                       (if (i <= lim)
                         then let t = (primesfactors i) in
-                        let y = 1 in
-                        let z = i in
-                        let rec x j =
-                          (if (j <= z)
+                        let rec u j =
+                          (if (j <= i)
                            then (
                                   o.(j) <- ((max (o.(j)) (t.(j))));
-                                  (x (j + 1))
+                                  (u (j + 1))
                                   )
                            
-                           else (w (i + 1))) in
-                          (x y)
+                           else (s (i + 1))) in
+                          (u 1)
                         else let product = 1 in
-                        let u = 1 in
-                        let v = lim in
                         let rec p k product =
-                          (if (k <= v)
-                           then let r = 1 in
-                           let s = o.(k) in
+                          (if (k <= lim)
+                           then let r = o.(k) in
                            let rec q l product =
-                             (if (l <= s)
+                             (if (l <= r)
                               then let product = (product * k) in
                               (q (l + 1) product)
                               else (p (k + 1) product)) in
-                             (q r product)
+                             (q 1 product)
                            else (
                                   (Printf.printf "%d\n" product)
                                   )
                            ) in
-                          (p u product)) in
-                       (w ba)
+                          (p 1 product)) in
+                       (s 1)
                      )
   ) (Array.init_withenv (lim + 1) (fun  m () -> let g = 0 in
   ((), g)) ()))

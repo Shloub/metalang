@@ -62,22 +62,18 @@ read_int =
       return (num * sign)
 
 foo () =
-  do let f = 0
-     let g = 10
-     let e i =
-           (if (i <= g)
-           then (e (i + 1))
-           else return (0)) in
-           (e f)
+  let c i =
+        (if (i <= 10)
+        then (c (i + 1))
+        else return (0)) in
+        (c 0)
 bar () =
-  do let c = 0
-     let d = 10
-     let b i =
-           (if (i <= d)
-           then do let a = 0
-                   (b (i + 1))
-           else return (0)) in
-           (b c)
+  let b i =
+        (if (i <= 10)
+        then do let a = 0
+                (b (i + 1))
+        else return (0)) in
+        (b 0)
 main =
   return (())
 

@@ -35,28 +35,24 @@
   ;
   ;	Cette fonction est récursive
   ;	
-  (let ([e (lambda (_) 
-             (let ([result 0])
-             (let ([out0 (find0 len tab cache x (+ y 1))])
-             (let ([out1 (find0 len tab cache (+ x 1) (+ y 1))])
-             (let ([result (if (> out0 out1)
-                           (let ([result (+ out0 (vector-ref (vector-ref tab y) x))])
-                           result)
-                           (let ([result (+ out1 (vector-ref (vector-ref tab y) x))])
-                           result))])
-             (block
-               (vector-set! (vector-ref cache y) x result)
-               result
-               ))))))])
   (if (eq? y (- len 1))
   (vector-ref (vector-ref tab y) x)
-  (let ([f (lambda (_) 
-             (e 'nil))])
   (if (> x y)
   (- 10000)
   (if (not (eq? (vector-ref (vector-ref cache y) x) 0))
   (vector-ref (vector-ref cache y) x)
-  (f 'nil))))))
+  (let ([result 0])
+  (let ([out0 (find0 len tab cache x (+ y 1))])
+  (let ([out1 (find0 len tab cache (+ x 1) (+ y 1))])
+  (let ([result (if (> out0 out1)
+                (let ([result (+ out0 (vector-ref (vector-ref tab y) x))])
+                result)
+                (let ([result (+ out1 (vector-ref (vector-ref tab y) x))])
+                result))])
+  (block
+    (vector-set! (vector-ref cache y) x result)
+    result
+    ))))))))
 )
 (define (find01 len tab)
   ;toto
@@ -78,49 +74,46 @@
 )
 (define main
   (let ([len 0])
-  ((lambda (w) 
-     (let ([len w])
+  ((lambda (q) 
+     (let ([len q])
      (block
        (mread-blank)
-       ((lambda (internal_env) (apply (lambda (h tab) 
+       ((lambda (internal_env) (apply (lambda (f tab) 
                                              (block
-                                               h
+                                               f
                                                (map display (list (find01 len tab) "\n"))
-                                               (let ([u 0])
-                                               (let ([v (- len 1)])
-                                               (letrec ([p (lambda (k) 
-                                                             (if (<= k v)
-                                                             (let ([r 0])
-                                                             (let ([s k])
-                                                             (letrec ([q (lambda (l) 
-                                                                           (if (<= l s)
+                                               (let ([p (- len 1)])
+                                               (letrec ([n (lambda (k) 
+                                                             (if (<= k p)
+                                                             (letrec ([o (lambda (l) 
+                                                                           (if (<= l k)
                                                                            (block
                                                                              (map display (list (vector-ref (vector-ref tab k) l) " "))
-                                                                             (q (+ l 1))
+                                                                             (o (+ l 1))
                                                                              )
                                                                            (block
                                                                              (display "\n")
-                                                                             (p (+ k 1))
+                                                                             (n (+ k 1))
                                                                              )))])
-                                                             (q r))))
+                                                             (o 0))
                                                              '()))])
-                                               (p u))))
+                                               (n 0)))
        )) internal_env)) (array_init_withenv len (lambda (i) 
                                                    (lambda (_) ((lambda (internal_env) (apply (lambda
-                                                    (n tab2) 
+                                                    (h tab2) 
                                                    (block
-                                                     n
-                                                     (let ([g tab2])
-                                                     (list '() g))
+                                                     h
+                                                     (let ([e tab2])
+                                                     (list '() e))
                                                      )) internal_env)) (array_init_withenv (+ i 1) 
                                                    (lambda (j) 
                                                      (lambda (_) (let ([tmp 0])
-                                                                 ((lambda (o) 
-                                                                    (let ([tmp o])
+                                                                 ((lambda (m) 
+                                                                    (let ([tmp m])
                                                                     (block
                                                                       (mread-blank)
-                                                                      (let ([m tmp])
-                                                                      (list '() m))
+                                                                      (let ([g tmp])
+                                                                      (list '() g))
                                                                       ))) (mread-int))))) '())))) '()))
 ))) (mread-int)))
 )

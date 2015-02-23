@@ -77,95 +77,88 @@ array_init_withenv len f env =
 
 
 copytab tab len =
-  ((\ (k, o) ->
-     do return (k)
+  ((\ (g, o) ->
+     do return (g)
         return (o)) =<< (array_init_withenv len (\ i () ->
-                                                  do h <- (readIOA tab i)
-                                                     return (((), h))) ()))
+                                                  do f <- (readIOA tab i)
+                                                     return (((), f))) ()))
 bubblesort tab len =
-  do let f = 0
-     let g = (len - 1)
+  do let e = (len - 1)
      let b i =
-           (if (i <= g)
-           then do let d = (i + 1)
-                   let e = (len - 1)
+           (if (i <= e)
+           then do let d = (len - 1)
                    let c j =
-                         (if (j <= e)
-                         then do ifM (((>) <$> (readIOA tab i) <*> (readIOA tab j)))
-                                     (do tmp <- (readIOA tab i)
-                                         writeIOA tab i =<< (readIOA tab j)
-                                         writeIOA tab j tmp)
-                                     (return (()))
-                                 (c (j + 1))
+                         (if (j <= d)
+                         then ifM (((>) <$> (readIOA tab i) <*> (readIOA tab j)))
+                                  (do tmp <- (readIOA tab i)
+                                      writeIOA tab i =<< (readIOA tab j)
+                                      writeIOA tab j tmp
+                                      (c (j + 1)))
+                                  ((c (j + 1)))
                          else (b (i + 1))) in
-                         (c d)
+                         (c (i + 1))
            else return (())) in
-           (b f)
+           (b 0)
 qsort0 tab len i j =
-  ((\ (w, x) ->
-     return (())) =<< (if (i < j)
-                      then do let i0 = i
-                              let j0 = j
-                              {- pivot : tab[0] -}
-                              let a y z =
-                                    (if (y /= z)
-                                    then ((\ (ba, bb) ->
-                                            (a ba bb)) =<< ifM (((>) <$> (readIOA tab y) <*> (readIOA tab z)))
-                                                               (do bc <- (if (y == (z - 1))
-                                                                         then {- on inverse simplement-}
-                                                                              do tmp <- (readIOA tab y)
-                                                                                 writeIOA tab y =<< (readIOA tab z)
-                                                                                 writeIOA tab z tmp
-                                                                                 let bd = (y + 1)
-                                                                                 return (bd)
-                                                                         else {- on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] -}
-                                                                              do tmp <- (readIOA tab y)
-                                                                                 writeIOA tab y =<< (readIOA tab z)
-                                                                                 writeIOA tab z =<< (readIOA tab (y + 1))
-                                                                                 writeIOA tab (y + 1) tmp
-                                                                                 let be = (y + 1)
-                                                                                 return (be))
-                                                                   return ((bc, z)))
-                                                               (let bf = (z - 1)
-                                                                         in return ((y, bf))))
-                                    else do (qsort0 tab len i0 (y - 1))
-                                            (qsort0 tab len (y + 1) j0)
-                                            return ((y, z))) in
-                                    (a i j)
-                      else return ((i, j))))
+  (if (i < j)
+  then do let i0 = i
+          let j0 = j
+          {- pivot : tab[0] -}
+          let a s t =
+                (if (s /= t)
+                then ifM (((>) <$> (readIOA tab s) <*> (readIOA tab t)))
+                         ((if (s == (t - 1))
+                          then {- on inverse simplement-}
+                               do tmp <- (readIOA tab s)
+                                  writeIOA tab s =<< (readIOA tab t)
+                                  writeIOA tab t tmp
+                                  let u = (s + 1)
+                                  (a u t)
+                          else {- on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] -}
+                               do tmp <- (readIOA tab s)
+                                  writeIOA tab s =<< (readIOA tab t)
+                                  writeIOA tab t =<< (readIOA tab (s + 1))
+                                  writeIOA tab (s + 1) tmp
+                                  let v = (s + 1)
+                                  (a v t)))
+                         (do let w = (t - 1)
+                             (a s w))
+                else do (qsort0 tab len i0 (s - 1))
+                        (qsort0 tab len (s + 1) j0)
+                        return (())) in
+                (a i j)
+  else return (()))
 main =
   do let len = 2
-     v <- read_int
-     let bg = v
+     r <- read_int
+     let x = r
      skip_whitespaces
-     ((\ (m, tab) ->
-        do return (m)
-           tab2 <- (copytab tab bg)
-           (bubblesort tab2 bg)
-           let t = 0
-           let u = (bg - 1)
-           let s i =
-                 (if (i <= u)
+     ((\ (k, tab) ->
+        do return (k)
+           tab2 <- (copytab tab x)
+           (bubblesort tab2 x)
+           let q = (x - 1)
+           let p i =
+                 (if (i <= q)
                  then do printf "%d" =<< ((readIOA tab2 i) :: IO Int)
                          printf " " ::IO()
-                         (s (i + 1))
+                         (p (i + 1))
                  else do printf "\n" ::IO()
-                         tab3 <- (copytab tab bg)
-                         (qsort0 tab3 bg 0 (bg - 1))
-                         let q = 0
-                         let r = (bg - 1)
-                         let p bh =
-                               (if (bh <= r)
-                               then do printf "%d" =<< ((readIOA tab3 bh) :: IO Int)
+                         tab3 <- (copytab tab x)
+                         (qsort0 tab3 x 0 (x - 1))
+                         let n = (x - 1)
+                         let m y =
+                               (if (y <= n)
+                               then do printf "%d" =<< ((readIOA tab3 y) :: IO Int)
                                        printf " " ::IO()
-                                       (p (bh + 1))
+                                       (m (y + 1))
                                else printf "\n" ::IO()) in
-                               (p q)) in
-                 (s t)) =<< (array_init_withenv bg (\ i_ () ->
-                                                     do let tmp = 0
-                                                        n <- read_int
-                                                        let bi = n
-                                                        skip_whitespaces
-                                                        let l = bi
-                                                        return (((), l))) ()))
+                               (m 0)) in
+                 (p 0)) =<< (array_init_withenv x (\ i_ () ->
+                                                    do let tmp = 0
+                                                       l <- read_int
+                                                       let z = l
+                                                       skip_whitespaces
+                                                       let h = z
+                                                       return (((), h))) ()))
 

@@ -26,22 +26,20 @@
   ;toto
   (if (eq? b 0)
   1
-  (let ([c (lambda (_) 
-             '())])
   (if (eq? (remainder b 2) 0)
   (let ([o (exp0 a (quotient b 2))])
   (* o o))
-  (* a (exp0 a (- b 1))))))
+  (* a (exp0 a (- b 1)))))
 )
 (define main
   (let ([a 0])
   (let ([b 0])
-  ((lambda (e) 
-     (let ([a e])
+  ((lambda (d) 
+     (let ([a d])
      (block
        (mread-blank)
-       ((lambda (d) 
-          (let ([b d])
+       ((lambda (c) 
+          (let ([b c])
           (display (exp0 a b)))) (mread-int))
      ))) (mread-int))))
 )

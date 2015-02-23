@@ -81,20 +81,19 @@ main =
      skip_whitespaces
      ((\ (b, tab4) ->
         do return (b)
-           let e = 0
-           let f = (strlen - 1)
+           let e = (strlen - 1)
            let d j =
-                 (if (j <= f)
+                 (if (j <= e)
                  then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
                          (d (j + 1))
                  else return (())) in
-                 (d e)) =<< (array_init_withenv strlen (\ toto () ->
+                 (d 0)) =<< (array_init_withenv strlen (\ toto () ->
                                                          hGetChar stdin >>= ((\ tmpc ->
                                                                                do c <- ((fmap ord (return (tmpc))))
-                                                                                  g <- (if (tmpc /= ' ')
-                                                                                       then do h <- ((+) <$> (rem <$> ((+) <$> (((-) c) <$> ((fmap ord (return ('a'))))) <*> return (13)) <*> return (26)) <*> ((fmap ord (return ('a')))))
-                                                                                               return (h)
+                                                                                  f <- (if (tmpc /= ' ')
+                                                                                       then do g <- ((+) <$> (rem <$> ((+) <$> (((-) c) <$> ((fmap ord (return ('a'))))) <*> return (13)) <*> return (26)) <*> ((fmap ord (return ('a')))))
+                                                                                               return (g)
                                                                                        else return (c))
-                                                                                  a <- ((fmap chr (return (g))))
+                                                                                  a <- ((fmap chr (return (f))))
                                                                                   return (((), a))))) ()))
 

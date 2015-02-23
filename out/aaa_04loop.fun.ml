@@ -13,10 +13,8 @@ let h i =
     (a j)
 let main =
   let j = 0 in
-  let d = 0 in
-  let e = 10 in
   let rec c k j =
-    (if (k <= e)
+    (if (k <= 10)
      then let j = (j + k) in
      (
        (Printf.printf "%d\n" j);
@@ -38,5 +36,5 @@ let main =
                )
         ) in
        (b i j)) in
-    (c d j)
+    (c 0 j)
 

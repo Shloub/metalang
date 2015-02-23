@@ -78,33 +78,31 @@ array_init_withenv len f env =
 
 nth tab tofind len =
   do let out0 = 0
-     let b = 0
-     let c = (len - 1)
-     let a i j =
-           (if (i <= c)
-           then do k <- ifM (((==) <$> (readIOA tab i) <*> return (tofind)))
-                            (let l = (j + 1)
-                                     in return (l))
-                            (return (j))
-                   (a (i + 1) k)
-           else return (j)) in
-           (a b out0)
+     let b = (len - 1)
+     let a i h =
+           (if (i <= b)
+           then ifM (((==) <$> (readIOA tab i) <*> return (tofind)))
+                    (do let j = (h + 1)
+                        (a (i + 1) j))
+                    ((a (i + 1) h))
+           else return (h)) in
+           (a 0 out0)
 main =
   do let len = 0
-     h <- read_int
-     let m = h
+     g <- read_int
+     let k = g
      skip_whitespaces
      let tofind = '\000'
-     hGetChar stdin >>= ((\ g ->
-                           do let n = g
+     hGetChar stdin >>= ((\ f ->
+                           do let l = f
                               skip_whitespaces
-                              ((\ (e, tab) ->
-                                 do return (e)
-                                    result <- (nth tab n m)
-                                    printf "%d" (result :: Int)::IO()) =<< (array_init_withenv m (\ i () ->
+                              ((\ (d, tab) ->
+                                 do return (d)
+                                    result <- (nth tab l k)
+                                    printf "%d" (result :: Int)::IO()) =<< (array_init_withenv k (\ i () ->
                                                                                                    do let tmp = '\000'
-                                                                                                      hGetChar stdin >>= ((\ f ->
-                                                                                                                            let o = f
-                                                                                                                                    in let d = o
-                                                                                                                                               in return (((), d))))) ()))))
+                                                                                                      hGetChar stdin >>= ((\ e ->
+                                                                                                                            let m = e
+                                                                                                                                    in let c = m
+                                                                                                                                               in return (((), c))))) ()))))
 

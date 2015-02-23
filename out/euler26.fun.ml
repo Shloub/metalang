@@ -14,10 +14,9 @@ let periode restes len a b =
     (if (a <> 0)
      then let chiffre = (a / b) in
      let reste = (a mod b) in
-     let e = 0 in
-     let f = (len - 1) in
+     let e = (len - 1) in
      let rec d i =
-       (if (i <= f)
+       (if (i <= e)
         then (if (restes.(i) = reste)
               then (len - i)
               else (d (i + 1)))
@@ -28,30 +27,28 @@ let periode restes len a b =
                (c a len)
                )
         ) in
-       (d e)
+       (d 0)
      else 0) in
     (c a len)
 let main =
-  ((fun  (h, t) -> (
-                     h;
+  ((fun  (g, t) -> (
+                     g;
                      let m = 0 in
                      let mi = 0 in
-                     let l = 1 in
-                     let n = 1000 in
-                     let rec k i m mi =
-                       (if (i <= n)
+                     let rec h i m mi =
+                       (if (i <= 1000)
                         then let p = (periode t 0 1 i) in
-                        ((fun  (m, mi) -> (k (i + 1) m mi)) (if (p > m)
-                                                             then let mi = i in
-                                                             let m = p in
-                                                             (m, mi)
-                                                             else (m, mi)))
+                        (if (p > m)
+                         then let mi = i in
+                         let m = p in
+                         (h (i + 1) m mi)
+                         else (h (i + 1) m mi))
                         else (
                                (Printf.printf "%d\n%d\n" mi m)
                                )
                         ) in
-                       (k l m mi)
+                       (h 1 m mi)
                      )
-  ) (Array.init_withenv 1000 (fun  j () -> let g = 0 in
-  ((), g)) ()))
+  ) (Array.init_withenv 1000 (fun  j () -> let f = 0 in
+  ((), f)) ()))
 

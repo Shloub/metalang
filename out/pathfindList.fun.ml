@@ -10,29 +10,27 @@ module Array = struct
 end
 
 let rec pathfind_aux cache tab len pos =
-  let c () = () in
   (if (pos >= (len - 1))
    then 0
-   else let d () = (c ()) in
-   (if (cache.(pos) <> (- 1))
-    then cache.(pos)
-    else (
-           cache.(pos) <- (len * 2);
-           let posval = (pathfind_aux cache tab len tab.(pos)) in
-           let oneval = (pathfind_aux cache tab len (pos + 1)) in
-           let out0 = 0 in
-           let out0 = (if (posval < oneval)
-                       then let out0 = (1 + posval) in
-                       out0
-                       else let out0 = (1 + oneval) in
-                       out0) in
-           (
-             cache.(pos) <- out0;
-             out0
-             )
-           
-           )
-    ))
+   else (if (cache.(pos) <> (- 1))
+         then cache.(pos)
+         else (
+                cache.(pos) <- (len * 2);
+                let posval = (pathfind_aux cache tab len tab.(pos)) in
+                let oneval = (pathfind_aux cache tab len (pos + 1)) in
+                let out0 = 0 in
+                let out0 = (if (posval < oneval)
+                            then let out0 = (1 + posval) in
+                            out0
+                            else let out0 = (1 + oneval) in
+                            out0) in
+                (
+                  cache.(pos) <- out0;
+                  out0
+                  )
+                
+                )
+         ))
 let pathfind tab len =
   ((fun  (b, cache) -> (
                          b;
@@ -43,21 +41,21 @@ let pathfind tab len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  h -> let len = h in
+  (fun  f -> let len = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (f, tab) -> (
-                         f;
+    ((fun  (d, tab) -> (
+                         d;
                          let result = (pathfind tab len) in
                          (Printf.printf "%d" result)
                          )
     ) (Array.init_withenv len (fun  i () -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  g -> let tmp = g in
+    (fun  e -> let tmp = e in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let e = tmp in
-      ((), e)
+      let c = tmp in
+      ((), c)
       )
     )) ()))
     )

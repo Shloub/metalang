@@ -66,26 +66,22 @@ score () =
      len <- read_int
      skip_whitespaces
      let sum = 0
-     let b = 1
-     let d = len
-     let a i h =
-           (if (i <= d)
+     let a i d =
+           (if (i <= len)
            then hGetChar stdin >>= ((\ c ->
-                                      do j <- (((+) h) <$> ((+) <$> ((-) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('A'))))) <*> return (1)))
+                                      do e <- (((+) d) <$> ((+) <$> ((-) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('A'))))) <*> return (1)))
                                          {-		print c print " " print sum print " " -}
-                                         (a (i + 1) j)))
-           else return (h)) in
-           (a b sum)
+                                         (a (i + 1) e)))
+           else return (d)) in
+           (a 1 sum)
 main =
   do let sum = 0
      n <- read_int
-     let f = 1
-     let g = n
-     let e i k =
-           (if (i <= g)
-           then do l <- (((+) k) <$> (((*) i) <$> (score ())))
-                   (e (i + 1) l)
-           else do printf "%d" (k :: Int)::IO()
+     let b i f =
+           (if (i <= n)
+           then do g <- (((+) f) <$> (((*) i) <$> (score ())))
+                   (b (i + 1) g)
+           else do printf "%d" (f :: Int)::IO()
                    printf "\n" ::IO()) in
-           (e f sum)
+           (b 1 sum)
 

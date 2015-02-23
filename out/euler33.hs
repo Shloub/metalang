@@ -62,66 +62,55 @@ read_int =
       return (num * sign)
 
 max2_ a b =
-  let g () = ()
-             in return ((if (a > b)
-                        then a
-                        else b))
+  return ((if (a > b)
+          then a
+          else b))
 min2_ a b =
-  let f () = ()
-             in return ((if (a < b)
-                        then a
-                        else b))
+  return ((if (a < b)
+          then a
+          else b))
 pgcd a b =
   do c <- (min2_ a b)
      d <- (max2_ a b)
      let reste = (d `rem` c)
-     let e () = return (())
      (if (reste == 0)
      then return (c)
      else (pgcd c reste))
 main =
   do let top = 1
      let bottom = 1
-     let s = 1
-     let t = 9
-     let h i u v =
-           (if (i <= t)
-           then do let q = 1
-                   let r = 9
-                   let l j w x =
-                         (if (j <= r)
-                         then do let n = 1
-                                 let o = 9
-                                 let m k y z =
-                                       (if (k <= o)
-                                       then ((\ (ba, bb) ->
-                                               (m (k + 1) ba bb)) =<< (if ((i /= j) && (j /= k))
-                                                                      then do let a = ((i * 10) + j)
-                                                                              let b = ((j * 10) + k)
-                                                                              ((\ (bc, bd) ->
-                                                                                 return ((bc, bd))) =<< (if ((a * k) == (i * b))
-                                                                                                        then do printf "%d" (a :: Int)::IO()
-                                                                                                                printf "/" ::IO()
-                                                                                                                printf "%d" (b :: Int)::IO()
-                                                                                                                printf "\n" ::IO()
-                                                                                                                let be = (z * a)
-                                                                                                                let bf = (y * b)
-                                                                                                                return ((bf, be))
-                                                                                                        else return ((y, z))))
-                                                                      else return ((y, z))))
-                                       else (l (j + 1) y z)) in
-                                       (m n w x)
-                         else (h (i + 1) w x)) in
-                         (l q u v)
-           else do printf "%d" (v :: Int)::IO()
+     let e i h l =
+           (if (i <= 9)
+           then let f j m n =
+                      (if (j <= 9)
+                      then let g k o q =
+                                 (if (k <= 9)
+                                 then (if ((i /= j) && (j /= k))
+                                      then do let a = ((i * 10) + j)
+                                              let b = ((j * 10) + k)
+                                              (if ((a * k) == (i * b))
+                                              then do printf "%d" (a :: Int)::IO()
+                                                      printf "/" ::IO()
+                                                      printf "%d" (b :: Int)::IO()
+                                                      printf "\n" ::IO()
+                                                      let r = (q * a)
+                                                      let s = (o * b)
+                                                      (g (k + 1) s r)
+                                              else (g (k + 1) o q))
+                                      else (g (k + 1) o q))
+                                 else (f (j + 1) o q)) in
+                                 (g 1 m n)
+                      else (e (i + 1) m n)) in
+                      (f 1 h l)
+           else do printf "%d" (l :: Int)::IO()
                    printf "/" ::IO()
-                   printf "%d" (u :: Int)::IO()
+                   printf "%d" (h :: Int)::IO()
                    printf "\n" ::IO()
-                   p <- (pgcd v u)
+                   p <- (pgcd l h)
                    printf "pgcd=" ::IO()
                    printf "%d" (p :: Int)::IO()
                    printf "\n" ::IO()
-                   printf "%d" ((u `quot` p) :: Int)::IO()
+                   printf "%d" ((h `quot` p) :: Int)::IO()
                    printf "\n" ::IO()) in
-           (h s bottom top)
+           (e 1 bottom top)
 

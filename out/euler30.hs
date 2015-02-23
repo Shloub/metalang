@@ -88,58 +88,45 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   ((\ (h, p) ->
      do return (h)
         let sum = 0
-        let bc = 0
-        let bd = 9
-        let j a be =
-              (if (a <= bd)
-              then do let ba = 0
-                      let bb = 9
-                      let k b bf =
-                            (if (b <= bb)
-                            then do let y = 0
-                                    let z = 9
-                                    let l c bg =
-                                          (if (c <= z)
-                                          then do let w = 0
-                                                  let x = 9
-                                                  let m d bh =
-                                                        (if (d <= x)
-                                                        then do let u = 0
-                                                                let v = 9
-                                                                let n e bi =
-                                                                      (if (e <= v)
-                                                                      then do let q = 0
-                                                                              let t = 9
-                                                                              let o f bj =
-                                                                                    (if (f <= t)
-                                                                                    then do s <- ((+) <$> ((+) <$> ((+) <$> ((+) <$> ((+) <$> (readIOA p a) <*> (readIOA p b)) <*> (readIOA p c)) <*> (readIOA p d)) <*> (readIOA p e)) <*> (readIOA p f))
-                                                                                            let r = (((((a + (b * 10)) + (c * 100)) + (d * 1000)) + (e * 10000)) + (f * 100000))
-                                                                                            bk <- (if ((s == r) && (r /= 1))
-                                                                                                  then do printf "%d" (f :: Int)::IO()
-                                                                                                          printf "%d" (e :: Int)::IO()
-                                                                                                          printf "%d" (d :: Int)::IO()
-                                                                                                          printf "%d" (c :: Int)::IO()
-                                                                                                          printf "%d" (b :: Int)::IO()
-                                                                                                          printf "%d" (a :: Int)::IO()
-                                                                                                          printf " " ::IO()
-                                                                                                          printf "%d" (r :: Int)::IO()
-                                                                                                          printf "\n" ::IO()
-                                                                                                          let bl = (bj + r)
-                                                                                                          return (bl)
-                                                                                                  else return (bj))
-                                                                                            (o (f + 1) bk)
-                                                                                    else (n (e + 1) bj)) in
-                                                                                    (o q bi)
-                                                                      else (m (d + 1) bi)) in
-                                                                      (n u bh)
-                                                        else (l (c + 1) bh)) in
-                                                        (m w bg)
-                                          else (k (b + 1) bg)) in
-                                          (l y bf)
-                            else (j (a + 1) bf)) in
-                            (k ba be)
-              else printf "%d" (be :: Int)::IO()) in
-              (j bc sum)) =<< (array_init_withenv 10 (\ i () ->
-                                                       let g = ((((i * i) * i) * i) * i)
-                                                               in return (((), g))) ()))
+        let j a q =
+              (if (a <= 9)
+              then let k b t =
+                         (if (b <= 9)
+                         then let l c u =
+                                    (if (c <= 9)
+                                    then let m d v =
+                                               (if (d <= 9)
+                                               then let n e w =
+                                                          (if (e <= 9)
+                                                          then let o f x =
+                                                                     (if (f <= 9)
+                                                                     then do s <- ((+) <$> ((+) <$> ((+) <$> ((+) <$> ((+) <$> (readIOA p a) <*> (readIOA p b)) <*> (readIOA p c)) <*> (readIOA p d)) <*> (readIOA p e)) <*> (readIOA p f))
+                                                                             let r = (((((a + (b * 10)) + (c * 100)) + (d * 1000)) + (e * 10000)) + (f * 100000))
+                                                                             (if ((s == r) && (r /= 1))
+                                                                             then do printf "%d" (f :: Int)::IO()
+                                                                                     printf "%d" (e :: Int)::IO()
+                                                                                     printf "%d" (d :: Int)::IO()
+                                                                                     printf "%d" (c :: Int)::IO()
+                                                                                     printf "%d" (b :: Int)::IO()
+                                                                                     printf "%d" (a :: Int)::IO()
+                                                                                     printf " " ::IO()
+                                                                                     printf "%d" (r :: Int)::IO()
+                                                                                     printf "\n" ::IO()
+                                                                                     let y = (x + r)
+                                                                                     (o (f + 1) y)
+                                                                             else (o (f + 1) x))
+                                                                     else (n (e + 1) x)) in
+                                                                     (o 0 w)
+                                                          else (m (d + 1) w)) in
+                                                          (n 0 v)
+                                               else (l (c + 1) v)) in
+                                               (m 0 u)
+                                    else (k (b + 1) u)) in
+                                    (l 0 t)
+                         else (j (a + 1) t)) in
+                         (k 0 q)
+              else printf "%d" (q :: Int)::IO()) in
+              (j 0 sum)) =<< (array_init_withenv 10 (\ i () ->
+                                                      let g = ((((i * i) * i) * i) * i)
+                                                              in return (((), g))) ()))
 

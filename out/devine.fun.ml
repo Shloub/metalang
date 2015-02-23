@@ -12,10 +12,9 @@ end
 let devine0 nombre tab len =
   let min0 = tab.(0) in
   let max0 = tab.(1) in
-  let c = 2 in
-  let d = (len - 1) in
+  let c = (len - 1) in
   let rec b i max0 min0 =
-    (if (i <= d)
+    (if (i <= c)
      then (if ((tab.(i) > max0) || (tab.(i) < min0))
            then false
            else let min0 = (if (tab.(i) < nombre)
@@ -30,7 +29,7 @@ let devine0 nombre tab len =
             then false
             else (b (i + 1) max0 min0)))
      else true) in
-    (b c max0 min0)
+    (b 2 max0 min0)
 let main =
   Scanf.scanf "%d"
   (fun  nombre -> (
@@ -38,22 +37,18 @@ let main =
                     Scanf.scanf "%d"
                     (fun  len -> (
                                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                   ((fun  (f, tab) -> (
-                                                        f;
+                                   ((fun  (e, tab) -> (
+                                                        e;
                                                         let a = (devine0 nombre tab len) in
-                                                        (
-                                                          (if a
-                                                           then (Printf.printf "True")
-                                                           else (Printf.printf "False"));
-                                                          ()
-                                                          )
-                                                        
+                                                        (if a
+                                                         then (Printf.printf "True")
+                                                         else (Printf.printf "False"))
                                                         )
                                    ) (Array.init_withenv len (fun  i () -> Scanf.scanf "%d"
                                    (fun  tmp -> (
                                                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                  let e = tmp in
-                                                  ((), e)
+                                                  let d = tmp in
+                                                  ((), d)
                                                   )
                                    )) ()))
                                    )

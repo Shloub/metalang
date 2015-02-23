@@ -78,25 +78,24 @@ array_init_withenv len f env =
 
 programme_candidat tableau taille =
   do let out0 = 0
-     let d = 0
-     let e = (taille - 1)
-     let c i h =
-           (if (i <= e)
-           then do j <- (((+) h) <$> ((*) <$> ((fmap ord ((readIOA tableau i)))) <*> return (i)))
+     let d = (taille - 1)
+     let c i g =
+           (if (i <= d)
+           then do h <- (((+) g) <$> ((*) <$> ((fmap ord ((readIOA tableau i)))) <*> return (i)))
                    printf "%c" =<< ((readIOA tableau i) :: IO Char)
-                   (c (i + 1) j)
+                   (c (i + 1) h)
            else do printf "--\n" ::IO()
-                   return (h)) in
-           (c d out0)
+                   return (g)) in
+           (c 0 out0)
 main =
   do taille <- read_int
      skip_whitespaces
-     ((\ (g, tableau) ->
-        do return (g)
+     ((\ (f, tableau) ->
+        do return (f)
            skip_whitespaces
            printf "%d" =<< ((programme_candidat tableau taille) :: IO Int)
            printf "\n" ::IO()) =<< (array_init_withenv taille (\ a () ->
                                                                 hGetChar stdin >>= ((\ b ->
-                                                                                      let f = b
-                                                                                              in return (((), f))))) ()))
+                                                                                      let e = b
+                                                                                              in return (((), e))))) ()))
 

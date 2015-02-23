@@ -11,43 +11,40 @@
 
 (define (divisible n t0 size)
   ;toto
-  (let ([c 0])
-  (let ([d (- size 1)])
+  (let ([c (- size 1)])
   (letrec ([b (lambda (i) 
-                (if (<= i d)
+                (if (<= i c)
                 (if (eq? (remainder n (vector-ref t0 i)) 0)
                 #t
                 (b (+ i 1)))
                 #f))])
-  (b c))))
+  (b 0)))
 )
 (define (find0 n t0 used nth0)
   ;toto
   (letrec ([a (lambda (n used) 
                 (if (not (eq? used nth0))
-                ((lambda (internal_env) (apply (lambda (n used) 
-                                                      (a n used)) internal_env)) 
                 (if (divisible n t0 used)
                 (let ([n (+ n 1)])
-                (list n used))
+                (a n used))
                 (block
                   (vector-set! t0 used n)
                   (let ([n (+ n 1)])
                   (let ([used (+ used 1)])
-                  (list n used)))
-                  )))
+                  (a n used)))
+                  ))
                 (vector-ref t0 (- used 1))))])
   (a n used))
 )
 (define main
   (let ([n 10001])
-  ((lambda (internal_env) (apply (lambda (f t0) 
+  ((lambda (internal_env) (apply (lambda (e t0) 
                                         (block
-                                          f
+                                          e
                                           (map display (list (find0 3 t0 1 n) "\n"))
                                           )) internal_env)) (array_init_withenv n 
   (lambda (i) 
-    (lambda (_) (let ([e 2])
-                (list '() e)))) '())))
+    (lambda (_) (let ([d 2])
+                (list '() d)))) '())))
 )
 

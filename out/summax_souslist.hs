@@ -79,35 +79,33 @@ array_init_withenv len f env =
 summax lst len =
   do let current = 0
      let max0 = 0
-     let b = 0
-     let c = (len - 1)
-     let a i h j =
-           (if (i <= c)
-           then do k <- (((+) h) <$> (readIOA lst i))
-                   let l = (if (k < 0)
-                           then let m = 0
-                                        in m
-                           else k)
-                   let n = (if (j < l)
-                           then let o = l
-                                        in o
+     let b = (len - 1)
+     let a i g h =
+           (if (i <= b)
+           then do j <- (((+) g) <$> (readIOA lst i))
+                   let k = (if (j < 0)
+                           then let l = 0
+                                        in l
                            else j)
-                   (a (i + 1) l n)
-           else return (j)) in
-           (a b current max0)
+                   (if (h < k)
+                   then do let m = k
+                           (a (i + 1) k m)
+                   else (a (i + 1) k h))
+           else return (h)) in
+           (a 0 current max0)
 main =
   do let len = 0
-     g <- read_int
-     let p = g
+     f <- read_int
+     let n = f
      skip_whitespaces
-     ((\ (e, tab) ->
-        do return (e)
-           result <- (summax tab p)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv p (\ i () ->
+     ((\ (d, tab) ->
+        do return (d)
+           result <- (summax tab n)
+           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv n (\ i () ->
                                                                           do let tmp = 0
-                                                                             f <- read_int
-                                                                             let q = f
+                                                                             e <- read_int
+                                                                             let o = e
                                                                              skip_whitespaces
-                                                                             let d = q
-                                                                             return (((), d))) ()))
+                                                                             let c = o
+                                                                             return (((), c))) ()))
 

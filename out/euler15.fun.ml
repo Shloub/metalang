@@ -15,59 +15,52 @@ let main =
   let n = (n + 1) in
   ((fun  (b, tab) -> (
                        b;
-                       let bb = 0 in
-                       let bc = (n - 1) in
-                       let rec ba l =
-                         (if (l <= bc)
+                       let v = (n - 1) in
+                       let rec u l =
+                         (if (l <= v)
                           then (
                                  tab.((n - 1)).(l) <- 1;
                                  tab.(l).((n - 1)) <- 1;
-                                 (ba (l + 1))
+                                 (u (l + 1))
                                  )
                           
-                          else let y = 2 in
-                          let z = n in
-                          let rec u o =
-                            (if (o <= z)
-                             then let r = (n - o) in
-                             let w = 2 in
-                             let x = n in
-                             let rec v p =
-                               (if (p <= x)
-                                then let q = (n - p) in
-                                (
-                                  tab.(r).(q) <- (tab.((r + 1)).(q) + tab.(r).((q + 1)));
-                                  (v (p + 1))
-                                  )
-                                
-                                else (u (o + 1))) in
-                               (v w)
-                             else let s = 0 in
-                             let t = (n - 1) in
-                             let rec e m =
-                               (if (m <= t)
-                                then let g = 0 in
-                                let h = (n - 1) in
-                                let rec f k =
-                                  (if (k <= h)
-                                   then (
-                                          (Printf.printf "%d " tab.(m).(k));
-                                          (f (k + 1))
-                                          )
-                                   
-                                   else (
-                                          (Printf.printf "\n" );
-                                          (e (m + 1))
-                                          )
-                                   ) in
-                                  (f g)
-                                else (
-                                       (Printf.printf "%d\n" tab.(0).(0))
+                          else let rec s o =
+                                 (if (o <= n)
+                                  then let r = (n - o) in
+                                  let rec t p =
+                                    (if (p <= n)
+                                     then let q = (n - p) in
+                                     (
+                                       tab.(r).(q) <- (tab.((r + 1)).(q) + tab.(r).((q + 1)));
+                                       (t (p + 1))
                                        )
-                                ) in
-                               (e s)) in
-                            (u y)) in
-                         (ba bb)
+                                     
+                                     else (s (o + 1))) in
+                                    (t 2)
+                                  else let h = (n - 1) in
+                                  let rec e m =
+                                    (if (m <= h)
+                                     then let g = (n - 1) in
+                                     let rec f k =
+                                       (if (k <= g)
+                                        then (
+                                               (Printf.printf "%d " tab.(m).(k));
+                                               (f (k + 1))
+                                               )
+                                        
+                                        else (
+                                               (Printf.printf "\n" );
+                                               (e (m + 1))
+                                               )
+                                        ) in
+                                       (f 0)
+                                     else (
+                                            (Printf.printf "%d\n" tab.(0).(0))
+                                            )
+                                     ) in
+                                    (e 0)) in
+                                 (s 2)) in
+                         (u 0)
                        )
   ) (Array.init_withenv n (fun  i () -> ((fun  (d, tab2) -> (
                                                               d;
