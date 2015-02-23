@@ -83,6 +83,11 @@ class haskellPrinter = object(self)
   | Ast.Expr.Eq -> "=="
   | Ast.Expr.Diff -> "/="
 
+	method binopShortCut = function
+  | Ast.Expr.And -> Some "<&&>"
+  | Ast.Expr.Or -> Some "<||>"
+	| _ -> None
+
 	method binopf = function
 		| Ast.Expr.Div
 		| Ast.Expr.Mod -> true
@@ -105,11 +110,11 @@ class haskellPrinter = object(self)
   method punop f op = Format.fprintf f "%s" (self#unopstr op)
 
   method binop f a op b =
-		match self#isPure a, self#isPure b with
-		| true, true -> Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
-		| true, false -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op self#expr a self#expr b
-		| _ -> Format.fprintf f "(%a <$> %a <*> %a)"self#pbinopf op self#eM a self#eM b
-
+		match self#isPure a, self#isPure b, self#binopShortCut op with
+		| true, true, _ -> Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
+		| true, false, None -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op self#expr a self#expr b
+		| _, _, None -> Format.fprintf f "(%a <$> %a <*> %a)" self#pbinopf op self#eM a self#eM b
+		| _, _, Some s -> Format.fprintf f "(%a %s %a)" self#eM a s self#eM b
   method unop f a op =
 		if self#isPure a then
 			Format.fprintf f "(%a %a)"self#punop op self#expr a
@@ -330,21 +335,20 @@ class haskellPrinter = object(self)
   method recordaccess f record field  =
 		hsapply f (fun f () -> Format.fprintf f "readIORef") true
 			[self#isPure record, (fun f () ->
-				hsapply f (fun f () -> Format.fprintf f "%s" field) false
+				hsapply f (fun f () -> Format.fprintf f "_%s" field) false
 					[self#isPure record, self#expr, record]), ()]
 
   method recordaffect f record field value =
 	  hsapply f (fun f () -> Format.fprintf f "writeIORef") true
 	    [self#isPure record, (fun f () ->
-				hsapply f (fun f () -> Format.fprintf f "%s" field) false
+				hsapply f (fun f () -> Format.fprintf f "_%s" field) false
 					[self#isPure record, self#expr, record]), ();
 			 self#isPure value, (fun f () -> self#expr f value), ()
 		 ]
 
-
-  method record f li =
+  method record f li = (* TODO trier les champs dans le bon ordre *)
     let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
-    Format.fprintf f "@[<v>%a <$> %a@]"
+    Format.fprintf f "@[<v>(%a <$> %a)@]"
 			self#tname t
       (Printer.print_list
 	 (fun f (expr, field) ->
@@ -378,13 +382,13 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
 		| hd::tl -> let tl = List.rev tl in
 			let pureetl = self#isPure tab && List.for_all self#isPure tl in
 			match pureetl, self#isPure hd with
-			| true, true -> Format.fprintf f "(readArray %a %a)"
+			| true, true -> Format.fprintf f "(readIOA %a %a)"
 						(fun f () -> self#arrayindex f tab tl) ()
 						self#expr hd
-			| true, false -> Format.fprintf f "join (readArray %a <$> %a)"
+			| true, false -> Format.fprintf f "join (readIOA %a <$> %a)"
 						(fun f () -> self#arrayindex f tab tl) ()
 						self#expr hd
-			| false, _ -> Format.fprintf f "join (readArray <$> %a <*> %a)"
+			| false, _ -> Format.fprintf f "join (readIOA <$> %a <*> %a)"
 						(fun f () -> self#arrayindex f tab tl) ()
 						self#eM hd
 
@@ -398,16 +402,16 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
 								let v_pure = self#isPure v in
 								begin match array_pure, index_pure, v_pure with
 								| true, true, true ->
-									Format.fprintf f "writeArray %a %a %a"
+									Format.fprintf f "writeIOA %a %a %a"
 										(fun f () -> self#arrayindex f tab tl) () self#expr hd self#expr v
 								| true, true, false ->
-									Format.fprintf f "writeArray %a %a =<< %a"
+									Format.fprintf f "writeIOA %a %a =<< %a"
 										(fun f () -> self#arrayindex f tab tl) () self#expr hd self#expr v
 								| true, false, _ ->
-									Format.fprintf f "join (writeArray %a <$> %a <*> %a)"
+									Format.fprintf f "join (writeIOA %a <$> %a <*> %a)"
 										(fun f () -> self#arrayindex f tab tl) () self#expr hd self#eM v
 								| false, _, _ ->
-									Format.fprintf f "join (writeArray <$> %a <*> %a <*> %a)"
+									Format.fprintf f "join (writeIOA <$> %a <*> %a <*> %a)"
 										(fun f () -> self#arrayindex f tab tl) () self#eM hd self#eM v
 								end
 
@@ -420,12 +424,12 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
     | Type.Void ->  Format.fprintf f "()"
     | Type.Bool -> Format.fprintf f "Bool"
     | Type.Char -> Format.fprintf f "Char"
-    | Type.Named n -> Format.fprintf f "%s" n
+    | Type.Named n -> self#tname f n
     | Type.Struct li ->
       Format.fprintf f "{@[<v 2>@\n%a@\n}@]"
         (Printer.print_list
            (fun t (name, type_) ->
-             Format.fprintf t "%s :: IORef %a" name self#ptype type_
+             Format.fprintf t "_%s :: IORef %a" name self#ptype type_
            )
            (fun f pa a pb b -> Format.fprintf f "%a,@\n%a" pa a pb b)
         ) li
@@ -461,8 +465,18 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
     Format.fprintf f "@[<v 2>%a%a =@\n%a@]@\n"
       self#binding name pparams () self#eM e
 
-  method toplvl_declarety f name ty = Format.fprintf f "@[<v 2>data %a = %a %a@]@\n"
+  method toplvl_declarety f name ty = match Type.unfix ty with
+	| Type.Struct _ ->
+		Format.fprintf f "@[<v 2>data %a = %a %a@]@\n  deriving Eq@\n@\n"
     self#tname name
+    self#tname name 
+		self#ptype ty
+	| Type.Enum _ ->
+		Format.fprintf f "@[<v 2>data %a = %a@]@\n  deriving Eq@\n@\n"
+    self#tname name 
+		self#ptype ty
+	| _ ->
+		Format.fprintf f "@[<v 2>type %a = %a@]@\n@\n"
     self#tname name 
 		self#ptype ty
 
@@ -487,6 +501,23 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
 			"Data.IORef"
 		] in
     Format.fprintf f "%a
+
+
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
+
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
+
+(<&&>) a b =
+	do aa <- a
+	   if aa then b
+		 else return False
+
+(<||>) a b =
+	do aa <- a
+	   if aa then return True
+		 else b
 
 
 main :: IO ()

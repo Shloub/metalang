@@ -68,7 +68,7 @@ let keywords lang=
   | "php" -> "sqrt" :: "log10" :: li
   | "m" -> "log10" :: "id" :: li
   | "vb" -> "stop" :: li
-  | "hs" -> "id"::li
+  | "hs" -> "id" :: "show" :: "head" :: "tail" :: li
   | _ -> li
 
 let conf_rename lang prog =
