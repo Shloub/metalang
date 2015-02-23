@@ -65,12 +65,11 @@ let find ndiv2 =
                                                let rec x k l =
                                                  (if (k <= z)
                                                   then let l = (if (era.(k) = k)
-                                                                then 
-                                                                (
-                                                                  primes.(l) <- k;
-                                                                  let l = (l + 1) in
-                                                                  l
-                                                                  )
+                                                                then (
+                                                                       primes.(l) <- k;
+                                                                       let l = (l + 1) in
+                                                                       l
+                                                                       )
                                                                 
                                                                 else l) in
                                                   (x (k + 1) l)
@@ -89,11 +88,10 @@ let find ndiv2 =
                                                          let u = max0 in
                                                          let rec r i ndivs =
                                                            (if (i <= u)
-                                                            then let ndivs = (
-                                                            if (primesFactors.(i) <> 0)
-                                                            then let ndivs = (ndivs * (1 + primesFactors.(i))) in
-                                                            ndivs
-                                                            else ndivs) in
+                                                            then let ndivs = (if (primesFactors.(i) <> 0)
+                                                                              then let ndivs = (ndivs * (1 + primesFactors.(i))) in
+                                                                              ndivs
+                                                                              else ndivs) in
                                                             (r (i + 1) ndivs)
                                                             else (if (ndivs > ndiv2)
                                                                   then ((n * (n + 1)) / 2)

@@ -28,29 +28,27 @@
                                                           c
                                                           (let ([h 0])
                                                           (let ([k (- len 2)])
-                                                          (letrec ([d 
-                                                            (lambda (i) 
-                                                              (if (<= i k)
-                                                              (let ([f 0])
-                                                              (let ([g (- len 1)])
-                                                              (letrec ([e 
-                                                                (lambda (j) 
-                                                                  (if (<= j g)
-                                                                  (block
-                                                                    (map display (list (vector-ref (vector-ref tab2 i) j) " "))
-                                                                    (e (+ j 1))
-                                                                    )
-                                                                  (block
-                                                                    (display "\n")
-                                                                    (d (+ i 1))
-                                                                    )))])
-                                                              (e f))))
-                                                              '()))])
+                                                          (letrec ([d (lambda (i) 
+                                                                        (if (<= i k)
+                                                                        (let ([f 0])
+                                                                        (let ([g (- len 1)])
+                                                                        (letrec ([e 
+                                                                          (lambda (j) 
+                                                                            (if (<= j g)
+                                                                            (block
+                                                                              (map display (list (vector-ref (vector-ref tab2 i) j) " "))
+                                                                              (e (+ j 1))
+                                                                              )
+                                                                            (block
+                                                                              (display "\n")
+                                                                              (d (+ i 1))
+                                                                              )))])
+                                                                        (e f))))
+                                                                        '()))])
                                                           (d h))))
                   )) internal_env)) (array_init_withenv (- len 1) (lambda (a) 
-                                                                    (lambda (_) 
-                                                                    (let ([b (list->vector (map string->number (regexp-split " " (read-line))))])
-                                                                    (list '() b)))) '())))))])
+                                                                    (lambda (_) (let ([b (list->vector (map string->number (regexp-split " " (read-line))))])
+                                                                                (list '() b)))) '())))))])
     (l m)))))
 ))
 )

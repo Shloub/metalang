@@ -27,13 +27,12 @@
                                                           (display "\n")
                                                           (let ([d 0])
                                                           (let ([e (- len 1)])
-                                                          (letrec ([c 
-                                                            (lambda (i2) 
-                                                              (if (<= i2 e)
-                                                              (if (not (vector-ref tab2 i2))
-                                                              i2
-                                                              (c (+ i2 1)))
-                                                              (- 1)))])
+                                                          (letrec ([c (lambda (i2) 
+                                                                        (if (<= i2 e)
+                                                                        (if (not (vector-ref tab2 i2))
+                                                                        i2
+                                                                        (c (+ i2 1)))
+                                                                        (- 1)))])
                                                           (c d))))
                                                         )))])
                                           (f g))))

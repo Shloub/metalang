@@ -112,8 +112,7 @@ begin
                               begin
                                 allowed[d] := false;
                                 { 2 * 3 digits }
-                                product := (a * 10 + b) * (c * 100 + d * 10 +
-                                                            e);
+                                product := (a * 10 + b) * (c * 100 + d * 10 + e);
                                 if not counted[product] and okdigits(allowed, product Div 10)
                                 then
                                   begin

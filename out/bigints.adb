@@ -350,8 +350,7 @@ begin
   return p;
 end;
 
-function mul_bigint(aa : in bigint_PTR;
-bb : in bigint_PTR) return bigint_PTR is
+function mul_bigint(aa : in bigint_PTR; bb : in bigint_PTR) return bigint_PTR is
   split : Integer;
   d : bigint_PTR;
   cmoinsd : bigint_PTR;

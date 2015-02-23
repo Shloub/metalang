@@ -26,13 +26,12 @@ let main =
                                                                  let b = ((j * 10) + k) in
                                                                  ((fun  (bottom, top) -> (bottom, top)) (
                                                                  if ((a * k) = (i * b))
-                                                                 then 
-                                                                 (
-                                                                   (Printf.printf "%d/%d\n" a b);
-                                                                   let top = (top * a) in
-                                                                   let bottom = (bottom * b) in
-                                                                   (bottom, top)
-                                                                   )
+                                                                 then (
+                                                                        (Printf.printf "%d/%d\n" a b);
+                                                                        let top = (top * a) in
+                                                                        let bottom = (bottom * b) in
+                                                                        (bottom, top)
+                                                                        )
                                                                  
                                                                  else (bottom, top)))
                                                                  else (bottom, top)))

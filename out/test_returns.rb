@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def is_pair( i )
     j = 1
     if i < 10 then

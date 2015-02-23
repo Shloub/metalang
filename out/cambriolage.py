@@ -32,7 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def nbPassePartout( n, passepartout, m, serrures ):
     max_ancient = 0
     max_recent = 0

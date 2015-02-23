@@ -391,62 +391,60 @@ let euler29 () =
                             g;
                             ((fun  (m, a0_bigint) -> (
                                                        m;
-                                                       ((fun  (p, b) -> 
-                                                       (
-                                                         p;
-                                                         let n = 0 in
-                                                         let found = true in
-                                                         let rec q found n =
-                                                           (if found
-                                                            then let min0 = a0_bigint.(0) in
-                                                            let found = false in
-                                                            let w = 2 in
-                                                            let x = maxA in
-                                                            let rec v i found min0 =
-                                                              (if (i <= x)
-                                                               then ((fun  (found, min0) -> (v (i + 1) found min0)) (
-                                                               if (b.(i) <= maxB)
-                                                               then ((fun  (found, min0) -> (found, min0)) (
-                                                               if found
-                                                               then let min0 = (
-                                                               if (bigint_lt a_bigint.(i) min0)
-                                                               then let min0 = a_bigint.(i) in
-                                                               min0
-                                                               else min0) in
-                                                               (found, min0)
-                                                               else let min0 = a_bigint.(i) in
-                                                               let found = true in
-                                                               (found, min0)))
-                                                               else (found, min0)))
-                                                               else let n = (
-                                                               if found
-                                                               then let n = (n + 1) in
-                                                               let s = 2 in
-                                                               let u = maxA in
-                                                               let rec r l =
-                                                                 (if (l <= u)
-                                                                  then 
-                                                                  (
-                                                                    (
-                                                                    if ((bigint_eq a_bigint.(l) min0) && (b.(l) <= maxB))
-                                                                    then 
-                                                                    (
-                                                                    b.(l) <- (b.(l) + 1);
-                                                                    a_bigint.(l) <- (mul_bigint a_bigint.(l) a0_bigint.(l))
-                                                                    )
-                                                                    
-                                                                    else ());
-                                                                    (r (l + 1))
-                                                                    )
-                                                                  
-                                                                  else n) in
-                                                                 (r s)
-                                                               else n) in
-                                                               (q found n)) in
-                                                              (v w found min0)
-                                                            else n) in
-                                                           (q found n)
-                                                         )
+                                                       ((fun  (p, b) -> (
+                                                                          p;
+                                                                          let n = 0 in
+                                                                          let found = true in
+                                                                          let rec q found n =
+                                                                            (if found
+                                                                             then let min0 = a0_bigint.(0) in
+                                                                             let found = false in
+                                                                             let w = 2 in
+                                                                             let x = maxA in
+                                                                             let rec v i found min0 =
+                                                                               (if (i <= x)
+                                                                                then ((fun  (found, min0) -> (v (i + 1) found min0)) (
+                                                                                if (b.(i) <= maxB)
+                                                                                then ((fun  (found, min0) -> (found, min0)) (
+                                                                                if found
+                                                                                then let min0 = (
+                                                                                if (bigint_lt a_bigint.(i) min0)
+                                                                                then let min0 = a_bigint.(i) in
+                                                                                min0
+                                                                                else min0) in
+                                                                                (found, min0)
+                                                                                else let min0 = a_bigint.(i) in
+                                                                                let found = true in
+                                                                                (found, min0)))
+                                                                                else (found, min0)))
+                                                                                else let n = (
+                                                                                if found
+                                                                                then let n = (n + 1) in
+                                                                                let s = 2 in
+                                                                                let u = maxA in
+                                                                                let rec r l =
+                                                                                (if (l <= u)
+                                                                                then 
+                                                                                (
+                                                                                (if ((bigint_eq a_bigint.(l) min0) && (b.(l) <= maxB))
+                                                                                then 
+                                                                                (
+                                                                                b.(l) <- (b.(l) + 1);
+                                                                                a_bigint.(l) <- (mul_bigint a_bigint.(l) a0_bigint.(l))
+                                                                                )
+                                                                                
+                                                                                else ());
+                                                                                (r (l + 1))
+                                                                                )
+                                                                                
+                                                                                else n) in
+                                                                                (r s)
+                                                                                else n) in
+                                                                                (q found n)) in
+                                                                               (v w found min0)
+                                                                             else n) in
+                                                                            (q found n)
+                                                                          )
                                                        ) (Array.init_withenv (maxA + 1) (fun  k () -> let o = 2 in
                                                        ((), o)) ()))
                                                        )

@@ -32,7 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def montagnes0( tab, len ):
     max0 = 1
     j = 1

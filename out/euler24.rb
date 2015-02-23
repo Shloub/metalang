@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def fact( n )
     prod = 1
     for i in (2 ..  n) do

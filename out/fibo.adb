@@ -17,8 +17,7 @@ end;
 --La suite de fibonaci
 --
 
-function fibo0(a : in Integer; b : in Integer;
-i : in Integer) return Integer is
+function fibo0(a : in Integer; b : in Integer; i : in Integer) return Integer is
   tmp : Integer;
   out0 : Integer;
   b2 : Integer;

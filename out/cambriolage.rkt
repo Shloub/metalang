@@ -92,13 +92,12 @@
                                                         (list '() u))
                                                         )) internal_env)) (array_init_withenv 2 
                                                       (lambda (l) 
-                                                        (lambda (_) (
-                                                        (lambda (out_) 
-                                                          (block
-                                                            (mread-blank)
-                                                            (let ([w out_])
-                                                            (list '() w))
-                                                            )) (mread-int)))) '())))) '()))
+                                                        (lambda (_) ((lambda (out_) 
+                                                                       (block
+                                                                         (mread-blank)
+                                                                         (let ([w out_])
+                                                                         (list '() w))
+                                                                         )) (mread-int)))) '())))) '()))
                                              )) (mread-int))
   )) internal_env)) (array_init_withenv n (lambda (i) 
                                             (lambda (_) ((lambda (internal_env) (apply (lambda

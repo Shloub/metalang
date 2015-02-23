@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 i = 0
 i -= 1
 printf "%d\n", i

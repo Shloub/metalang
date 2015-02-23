@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def eratostene( t, max0 )
     n = 0
     for i in (2 ..  max0 - 1) do

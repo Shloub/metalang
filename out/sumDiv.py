@@ -28,7 +28,6 @@ def readint():
       return out * sign
 def mod(x, y):
   return x - y * math.trunc(x / y)
-
 def foo(  ):
     a = 0
     """ test """

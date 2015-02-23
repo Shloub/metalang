@@ -32,7 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def devine0( nombre, tab, len ):
     min0 = tab[0]
     max0 = tab[1]

@@ -95,7 +95,7 @@ begin
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(one_to_ninety_nine), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image((100) *
-  one_to_nine + one_to_ninety_nine * (10) + hundred_and * (9) * (99) +
-  hundred * (9) + one + thousand), Left));
+  one_to_nine + one_to_ninety_nine * (10) + hundred_and * (9) * (99) + hundred *
+  (9) + one + thousand), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

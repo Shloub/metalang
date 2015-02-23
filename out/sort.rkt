@@ -73,40 +73,39 @@
                                                             (let ([i0 i])
                                                             (let ([j0 j])
                                                             ; pivot : tab[0] 
-                                                            (letrec ([a 
-                                                              (lambda (i j) 
-                                                                (if (not (eq? i j))
-                                                                ((lambda (internal_env) (apply (lambda
-                                                                 (i j) 
-                                                                (a i j)) internal_env)) 
-                                                                (if (> (vector-ref tab i) (vector-ref tab j))
-                                                                (let ([i 
-                                                                (if (eq? i (- j 1))
-                                                                ; on inverse simplement
-                                                                (let ([tmp (vector-ref tab i)])
-                                                                (block
-                                                                  (vector-set! tab i (vector-ref tab j))
-                                                                  (vector-set! tab j tmp)
-                                                                  (let ([i (+ i 1)])
-                                                                  i)
-                                                                  ))
-                                                                ; on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
-                                                                (let ([tmp (vector-ref tab i)])
-                                                                (block
-                                                                  (vector-set! tab i (vector-ref tab j))
-                                                                  (vector-set! tab j (vector-ref tab (+ i 1)))
-                                                                  (vector-set! tab (+ i 1) tmp)
-                                                                  (let ([i (+ i 1)])
-                                                                  i)
-                                                                  )))])
-                                                                (list i j))
-                                                                (let ([j (- j 1)])
-                                                                (list i j))))
-                                                                (block
-                                                                  (qsort0 tab len i0 (- i 1))
-                                                                  (qsort0 tab len (+ i 1) j0)
-                                                                  (list i j)
-                                                                  )))])
+                                                            (letrec ([a (lambda (i j) 
+                                                                          (if (not (eq? i j))
+                                                                          ((lambda (internal_env) (apply (lambda
+                                                                           (i j) 
+                                                                          (a i j)) internal_env)) 
+                                                                          (if (> (vector-ref tab i) (vector-ref tab j))
+                                                                          (let ([i 
+                                                                          (if (eq? i (- j 1))
+                                                                          ; on inverse simplement
+                                                                          (let ([tmp (vector-ref tab i)])
+                                                                          (block
+                                                                            (vector-set! tab i (vector-ref tab j))
+                                                                            (vector-set! tab j tmp)
+                                                                            (let ([i (+ i 1)])
+                                                                            i)
+                                                                            ))
+                                                                          ; on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
+                                                                          (let ([tmp (vector-ref tab i)])
+                                                                          (block
+                                                                            (vector-set! tab i (vector-ref tab j))
+                                                                            (vector-set! tab j (vector-ref tab (+ i 1)))
+                                                                            (vector-set! tab (+ i 1) tmp)
+                                                                            (let ([i (+ i 1)])
+                                                                            i)
+                                                                            )))])
+                                                                          (list i j))
+                                                                          (let ([j (- j 1)])
+                                                                          (list i j))))
+                                                                          (block
+                                                                            (qsort0 tab len i0 (- i 1))
+                                                                            (qsort0 tab len (+ i 1) j0)
+                                                                            (list i j)
+                                                                            )))])
                                                             (a i j))))
   (list i j)))
 )
@@ -137,14 +136,13 @@
                                                                    (qsort0 tab3 len 0 (- len 1))
                                                                    (let ([q 0])
                                                                    (let ([r (- len 1)])
-                                                                   (letrec ([p 
-                                                                    (lambda (i) 
-                                                                    (if (<= i r)
-                                                                    (block
-                                                                    (map display (list (vector-ref tab3 i) " "))
-                                                                    (p (+ i 1))
-                                                                    )
-                                                                    (display "\n")))])
+                                                                   (letrec ([p (lambda (i) 
+                                                                                (if (<= i r)
+                                                                                (block
+                                                                                (map display (list (vector-ref tab3 i) " "))
+                                                                                (p (+ i 1))
+                                                                                )
+                                                                                (display "\n")))])
                                                                    (p q))))
                                                                  ))
                                                                )))])

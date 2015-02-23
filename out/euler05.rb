@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def primesfactors( n )
     tab = [];
     for i in (0 ..  n + 1 - 1) do

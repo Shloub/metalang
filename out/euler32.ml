@@ -68,8 +68,8 @@ begin
                               begin
                                 allowed.(d) <- false;
                                 (* 2 * 3 digits *)
-                                let product = (a * 10 + b) * (c * 100 + d *
-                                                               10 + e) in
+                                let product = (a * 10 + b) * (c * 100 + d * 10 +
+                                                               e) in
                                 if not counted.(product) && okdigits allowed (product / 10) then
                                   begin
                                     counted.(product) <- true;

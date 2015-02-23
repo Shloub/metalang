@@ -55,10 +55,12 @@ begin
             for e in integer range (0)..(9) loop
               mul := a * d + (10) * (a * e + b * d) + (100) * (a * f + b * e +
                                                                 c * d) + (1000) * (c *
-                                                                    e + b * f) + (10000) * c * f;
+                                                                                e +
+                                                                                b *
+                                                                                f) + (10000) * c * f;
               if chiffre((0), mul) = chiffre((5), mul) and then chiffre((1),
-              mul) = chiffre((4), mul) and then chiffre((2), mul) =
-              chiffre((3), mul)
+              mul) = chiffre((4), mul) and then chiffre((2), mul) = chiffre((3),
+              mul)
               then
                 m := max2_0(mul, m);
               end if;

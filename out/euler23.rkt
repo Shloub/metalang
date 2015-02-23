@@ -104,90 +104,92 @@
                                         (block
                                           bd
                                           (let ([nprimes (eratostene era maximumprimes)])
-                                          ((lambda (internal_env) (apply (lambda
-                                           (bf primes) 
-                                          (block
-                                            bf
-                                            (let ([l 0])
-                                            (let ([bx 2])
-                                            (let ([by (- maximumprimes 1)])
-                                            (letrec ([bw (lambda (k l) 
-                                                           (if (<= k by)
-                                                           (let ([l (if (eq? (vector-ref era k) k)
-                                                                    (block
-                                                                    (vector-set! primes l k)
-                                                                    (let ([l (+ l 1)])
-                                                                    l)
-                                                                    )
-                                                                    l)])
-                                                           (bw (+ k 1) l))
-                                                           (let ([n 100])
-                                                           ; 28124 ça prend trop de temps mais on arrive a passer le test 
-                                                           ((lambda (internal_env) (apply (lambda
-                                                            (bh abondant) 
-                                                           (block
-                                                             bh
-                                                             ((lambda (internal_env) (apply (lambda
-                                                              (bj summable) 
-                                                             (block
-                                                               bj
-                                                               (let ([sum 0])
-                                                               (let ([bu 2])
-                                                               (let ([bv n])
-                                                               (letrec ([bt 
-                                                                 (lambda (r) 
-                                                                   (if (<= r bv)
-                                                                   (let ([other (- (sumdiv nprimes primes r) r)])
-                                                                   (block
-                                                                    (if (> other r)
-                                                                    (vector-set! abondant r #t)
-                                                                    '())
-                                                                    (bt (+ r 1))
-                                                                    ))
-                                                                   (let ([br 1])
-                                                                   (let ([bs n])
-                                                                   (letrec ([bn 
-                                                                    (lambda (i) 
-                                                                    (if (<= i bs)
-                                                                    (let ([bp 1])
-                                                                    (let ([bq n])
-                                                                    (letrec ([bo 
-                                                                    (lambda (j) 
-                                                                    (if (<= j bq)
-                                                                    (block
-                                                                    (if (and (and (vector-ref abondant i) (vector-ref abondant j)) (<= (+ i j) n))
-                                                                    (vector-set! summable (+ i j) #t)
-                                                                    '())
-                                                                    (bo (+ j 1))
-                                                                    )
-                                                                    (bn (+ i 1))))])
-                                                                    (bo bp))))
-                                                                    (let ([bl 1])
-                                                                    (let ([bm n])
-                                                                    (letrec ([bk 
-                                                                    (lambda (o sum) 
-                                                                    (if (<= o bm)
-                                                                    (let ([sum 
-                                                                    (if (not (vector-ref summable o))
-                                                                    (let ([sum (+ sum o)])
-                                                                    sum)
-                                                                    sum)])
-                                                                    (bk (+ o 1) sum))
-                                                                    (block
-                                                                    (map display (list "\n" sum "\n"))
-                                                                    )))])
-                                                                    (bk bl sum))))))])
-                                                                   (bn br))))))])
-                                                               (bt bu)))))
-                                                           )) internal_env)) (array_init_withenv (+ n 1) 
-                                                           (lambda (q) 
-                                                             (lambda (_) 
-                                                             (let ([bi #f])
-                                                             (list '() bi)))) '()))
-                                              )) internal_env)) (array_init_withenv (+ n 1) 
-                                            (lambda (p) 
-                                              (lambda (_) (let ([bg #f])
-                                                          (list '() bg)))) '())))))])
+                                          ((lambda (internal_env) (apply (lambda (bf primes) 
+                                                                                (block
+                                                                                bf
+                                                                                (let ([l 0])
+                                                                                (let ([bx 2])
+                                                                                (let ([by (- maximumprimes 1)])
+                                                                                (letrec ([bw 
+                                                                                (lambda (k l) 
+                                                                                (if (<= k by)
+                                                                                (let ([l 
+                                                                                (if (eq? (vector-ref era k) k)
+                                                                                (block
+                                                                                (vector-set! primes l k)
+                                                                                (let ([l (+ l 1)])
+                                                                                l)
+                                                                                )
+                                                                                l)])
+                                                                                (bw (+ k 1) l))
+                                                                                (let ([n 100])
+                                                                                ; 28124 ça prend trop de temps mais on arrive a passer le test 
+                                                                                ((lambda (internal_env) (apply (lambda
+                                                                                 (bh abondant) 
+                                                                                (block
+                                                                                bh
+                                                                                ((lambda (internal_env) (apply (lambda
+                                                                                 (bj summable) 
+                                                                                (block
+                                                                                bj
+                                                                                (let ([sum 0])
+                                                                                (let ([bu 2])
+                                                                                (let ([bv n])
+                                                                                (letrec ([bt 
+                                                                                (lambda (r) 
+                                                                                (if (<= r bv)
+                                                                                (let ([other (- (sumdiv nprimes primes r) r)])
+                                                                                (block
+                                                                                (if (> other r)
+                                                                                (vector-set! abondant r #t)
+                                                                                '())
+                                                                                (bt (+ r 1))
+                                                                                ))
+                                                                                (let ([br 1])
+                                                                                (let ([bs n])
+                                                                                (letrec ([bn 
+                                                                                (lambda (i) 
+                                                                                (if (<= i bs)
+                                                                                (let ([bp 1])
+                                                                                (let ([bq n])
+                                                                                (letrec ([bo 
+                                                                                (lambda (j) 
+                                                                                (if (<= j bq)
+                                                                                (block
+                                                                                (if (and (and (vector-ref abondant i) (vector-ref abondant j)) (<= (+ i j) n))
+                                                                                (vector-set! summable (+ i j) #t)
+                                                                                '())
+                                                                                (bo (+ j 1))
+                                                                                )
+                                                                                (bn (+ i 1))))])
+                                                                                (bo bp))))
+                                                                                (let ([bl 1])
+                                                                                (let ([bm n])
+                                                                                (letrec ([bk 
+                                                                                (lambda (o sum) 
+                                                                                (if (<= o bm)
+                                                                                (let ([sum 
+                                                                                (if (not (vector-ref summable o))
+                                                                                (let ([sum (+ sum o)])
+                                                                                sum)
+                                                                                sum)])
+                                                                                (bk (+ o 1) sum))
+                                                                                (block
+                                                                                (map display (list "\n" sum "\n"))
+                                                                                )))])
+                                                                                (bk bl sum))))))])
+                                                                                (bn br))))))])
+                                                                                (bt bu)))))
+                                                                                )) internal_env)) (array_init_withenv (+ n 1) 
+                                                                                (lambda (q) 
+                                                                                (lambda (_) 
+                                                                                (let ([bi #f])
+                                                                                (list '() bi)))) '()))
+                                                                                )) internal_env)) (array_init_withenv (+ n 1) 
+                                                                                (lambda (p) 
+                                                                                (lambda (_) 
+                                                                                (let ([bg #f])
+                                                                                (list '() bg)))) '())))))])
                                           (bw bx l)))))
 )) internal_env)) (array_init_withenv nprimes (lambda (t0) 
                                                 (lambda (_) (let ([be 0])

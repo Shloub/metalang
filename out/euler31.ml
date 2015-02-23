@@ -1,7 +1,7 @@
 let rec result sum t maxIndex cache =
   if cache.(sum).(maxIndex) <> 0 then
     cache.(sum).(maxIndex)
-  else if sum = 0 or maxIndex = 0 then
+  else if sum = 0 || maxIndex = 0 then
     1
   else
     begin

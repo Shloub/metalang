@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def divisible( n, t, size )
     for i in (0 ..  size - 1) do
       if (mod(n, t[i])) == 0 then

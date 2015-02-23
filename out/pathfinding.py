@@ -36,7 +36,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def pathfind_aux( cache, tab, x, y, posX, posY ):
     if posX == x - 1 and posY == y - 1:
       return 0

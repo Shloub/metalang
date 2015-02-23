@@ -32,7 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def summax( lst, len ):
     current = 0
     max0 = 0

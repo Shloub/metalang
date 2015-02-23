@@ -72,12 +72,11 @@ let main =
                                                let rec bb k l =
                                                  (if (k <= bd)
                                                   then let l = (if (era.(k) = k)
-                                                                then 
-                                                                (
-                                                                  primes.(l) <- k;
-                                                                  let l = (l + 1) in
-                                                                  l
-                                                                  )
+                                                                then (
+                                                                       primes.(l) <- k;
+                                                                       let l = (l + 1) in
+                                                                       l
+                                                                       )
                                                                 
                                                                 else l) in
                                                   (bb (k + 1) l)

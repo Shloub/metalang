@@ -51,58 +51,56 @@ let main =
                                                let rec bb k l =
                                                  (if (k <= bd)
                                                   then let l = (if (era.(k) = k)
-                                                                then 
-                                                                (
-                                                                  primes.(l) <- k;
-                                                                  let l = (l + 1) in
-                                                                  l
-                                                                  )
+                                                                then (
+                                                                       primes.(l) <- k;
+                                                                       let l = (l + 1) in
+                                                                       l
+                                                                       )
                                                                 
                                                                 else l) in
                                                   (bb (k + 1) l)
                                                   else (
                                                          (Printf.printf "%d == %d\n" l nprimes);
-                                                         ((fun  (q, canbe) -> 
-                                                         (
-                                                           q;
-                                                           let z = 0 in
-                                                           let ba = (nprimes - 1) in
-                                                           let rec v i =
-                                                             (if (i <= ba)
-                                                              then let x = 0 in
-                                                              let y = (maximumprimes - 1) in
-                                                              let rec w j =
-                                                                (if (j <= y)
-                                                                 then let n = (primes.(i) + ((2 * j) * j)) in
-                                                                 (
-                                                                   (if (n < maximumprimes)
-                                                                    then canbe.(n) <- true
-                                                                    else ());
-                                                                   (w (j + 1))
-                                                                   )
-                                                                 
-                                                                 else (v (i + 1))) in
-                                                                (w x)
-                                                              else let s = 1 in
-                                                              let u = maximumprimes in
-                                                              let rec r m =
-                                                                (if (m <= u)
-                                                                 then let m2 = ((m * 2) + 1) in
-                                                                 (
-                                                                   (if ((m2 < maximumprimes) && (not canbe.(m2)))
-                                                                    then 
-                                                                    (
-                                                                    (Printf.printf "%d\n" m2)
-                                                                    )
-                                                                    
-                                                                    else ());
-                                                                   (r (m + 1))
-                                                                   )
-                                                                 
-                                                                 else ()) in
-                                                                (r s)) in
-                                                             (v z)
-                                                           )
+                                                         ((fun  (q, canbe) -> (
+                                                                                q;
+                                                                                let z = 0 in
+                                                                                let ba = (nprimes - 1) in
+                                                                                let rec v i =
+                                                                                (if (i <= ba)
+                                                                                then let x = 0 in
+                                                                                let y = (maximumprimes - 1) in
+                                                                                let rec w j =
+                                                                                (if (j <= y)
+                                                                                then let n = (primes.(i) + ((2 * j) * j)) in
+                                                                                (
+                                                                                (if (n < maximumprimes)
+                                                                                then canbe.(n) <- true
+                                                                                else ());
+                                                                                (w (j + 1))
+                                                                                )
+                                                                                
+                                                                                else (v (i + 1))) in
+                                                                                (w x)
+                                                                                else let s = 1 in
+                                                                                let u = maximumprimes in
+                                                                                let rec r m =
+                                                                                (if (m <= u)
+                                                                                then let m2 = ((m * 2) + 1) in
+                                                                                (
+                                                                                (if ((m2 < maximumprimes) && (not canbe.(m2)))
+                                                                                then 
+                                                                                (
+                                                                                (Printf.printf "%d\n" m2)
+                                                                                )
+                                                                                
+                                                                                else ());
+                                                                                (r (m + 1))
+                                                                                )
+                                                                                
+                                                                                else ()) in
+                                                                                (r s)) in
+                                                                                (v z)
+                                                                                )
                                                          ) (Array.init_withenv maximumprimes (fun  i_ () -> let p = false in
                                                          ((), p)) ()))
                                                          )

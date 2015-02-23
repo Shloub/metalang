@@ -45,12 +45,11 @@ let main =
                                             l;
                                             (Printf.printf "%d" (result 200 t 7 cache))
                                             )
-                     ) (Array.init_withenv 201 (fun  j () -> ((fun  (n, o) -> 
-                     (
-                       n;
-                       let h = o in
-                       ((), h)
-                       )
+                     ) (Array.init_withenv 201 (fun  j () -> ((fun  (n, o) -> (
+                                                                                n;
+                                                                                let h = o in
+                                                                                ((), h)
+                                                                                )
                      ) (Array.init_withenv 8 (fun  k () -> let m = 0 in
                      ((), m)) ()))) ()))
                      )

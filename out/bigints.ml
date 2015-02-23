@@ -217,7 +217,7 @@ let rec mul_bigint aa bb =
     aa
   else if bb.bigint_len = 0 then
     bb
-  else if aa.bigint_len < 3 or bb.bigint_len < 3 then
+  else if aa.bigint_len < 3 || bb.bigint_len < 3 then
     mul_bigint_cp aa bb
   else
     begin

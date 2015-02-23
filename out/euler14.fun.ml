@@ -40,12 +40,11 @@ let main =
                        (if (i <= k)
                         then (*  normalement on met 999999 mais ça dépasse les int32...  *)
                         let n2 = (find i m) in
-                        ((fun  (max0, maxi) -> (g (i + 1) max0 maxi)) (
-                        if (n2 > max0)
-                        then let max0 = n2 in
-                        let maxi = i in
-                        (max0, maxi)
-                        else (max0, maxi)))
+                        ((fun  (max0, maxi) -> (g (i + 1) max0 maxi)) (if (n2 > max0)
+                                                                       then let max0 = n2 in
+                                                                       let maxi = i in
+                                                                       (max0, maxi)
+                                                                       else (max0, maxi)))
                         else (
                                (Printf.printf "%d\n%d\n" max0 maxi)
                                )

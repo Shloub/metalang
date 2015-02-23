@@ -5,7 +5,7 @@ let devine0 nombre tab len =
   let min0 = ref( tab.(0) ) in
   let max0 = ref( tab.(1) ) in
   for i = 2 to len - 1 do
-    if tab.(i) > (!max0) or tab.(i) < (!min0) then
+    if tab.(i) > (!max0) || tab.(i) < (!min0) then
       raise (Found_1(false));
     if tab.(i) < nombre then
       min0 := tab.(i);

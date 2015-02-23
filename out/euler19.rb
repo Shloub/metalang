@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def is_leap( year )
     return ((mod(year, 400)) == 0 || ((mod(year, 100)) != 0 && (mod(year, 4)) == 0));
 end

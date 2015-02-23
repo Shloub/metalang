@@ -51,60 +51,60 @@ let main =
                                                let rec x k l =
                                                  (if (k <= z)
                                                   then let l = (if (era.(k) = k)
-                                                                then 
-                                                                (
-                                                                  primes.(l) <- k;
-                                                                  let l = (l + 1) in
-                                                                  l
-                                                                  )
+                                                                then (
+                                                                       primes.(l) <- k;
+                                                                       let l = (l + 1) in
+                                                                       l
+                                                                       )
                                                                 
                                                                 else l) in
                                                   (x (k + 1) l)
                                                   else (
                                                          (Printf.printf "%d == %d\n" l nprimes);
-                                                         ((fun  (r, sum) -> 
-                                                         (
-                                                           r;
-                                                           let maxl = 0 in
-                                                           let process = true in
-                                                           let stop = (maximumprimes - 1) in
-                                                           let len = 1 in
-                                                           let resp = 1 in
-                                                           let rec s len maxl process resp stop =
-                                                             (if process
-                                                              then let process = false in
-                                                              let v = 0 in
-                                                              let w = stop in
-                                                              let rec u i maxl process resp stop =
-                                                                (if (i <= w)
-                                                                 then ((fun  (maxl, process, resp, stop) -> (u (i + 1) maxl process resp stop)) (
-                                                                 if ((i + len) < nprimes)
-                                                                 then 
-                                                                 (
-                                                                   sum.(i) <- (sum.(i) + primes.((i + len)));
-                                                                   ((fun  (maxl, process, resp, stop) -> (maxl, process, resp, stop)) (
-                                                                   if (maximumprimes > sum.(i))
-                                                                   then let process = true in
-                                                                   ((fun  (maxl, resp) -> (maxl, process, resp, stop)) (
-                                                                   if (era.(sum.(i)) = sum.(i))
-                                                                   then let maxl = len in
-                                                                   let resp = sum.(i) in
-                                                                   (maxl, resp)
-                                                                   else (maxl, resp)))
-                                                                   else let stop = ((min (stop) (i))) in
-                                                                   (maxl, process, resp, stop)))
-                                                                   )
-                                                                 
-                                                                 else (maxl, process, resp, stop)))
-                                                                 else let len = (len + 1) in
-                                                                 (s len maxl process resp stop)) in
-                                                                (u v maxl process resp stop)
-                                                              else (
-                                                                    (Printf.printf "%d\n%d\n" resp maxl)
-                                                                    )
-                                                              ) in
-                                                             (s len maxl process resp stop)
-                                                           )
+                                                         ((fun  (r, sum) -> (
+                                                                              r;
+                                                                              let maxl = 0 in
+                                                                              let process = true in
+                                                                              let stop = (maximumprimes - 1) in
+                                                                              let len = 1 in
+                                                                              let resp = 1 in
+                                                                              let rec s len maxl process resp stop =
+                                                                                (
+                                                                                if process
+                                                                                then let process = false in
+                                                                                let v = 0 in
+                                                                                let w = stop in
+                                                                                let rec u i maxl process resp stop =
+                                                                                (if (i <= w)
+                                                                                then ((fun  (maxl, process, resp, stop) -> (u (i + 1) maxl process resp stop)) (
+                                                                                if ((i + len) < nprimes)
+                                                                                then 
+                                                                                (
+                                                                                sum.(i) <- (sum.(i) + primes.((i + len)));
+                                                                                ((fun  (maxl, process, resp, stop) -> (maxl, process, resp, stop)) (
+                                                                                if (maximumprimes > sum.(i))
+                                                                                then let process = true in
+                                                                                ((fun  (maxl, resp) -> (maxl, process, resp, stop)) (
+                                                                                if (era.(sum.(i)) = sum.(i))
+                                                                                then let maxl = len in
+                                                                                let resp = sum.(i) in
+                                                                                (maxl, resp)
+                                                                                else (maxl, resp)))
+                                                                                else let stop = ((min (stop) (i))) in
+                                                                                (maxl, process, resp, stop)))
+                                                                                )
+                                                                                
+                                                                                else (maxl, process, resp, stop)))
+                                                                                else let len = (len + 1) in
+                                                                                (s len maxl process resp stop)) in
+                                                                                (u v maxl process resp stop)
+                                                                                else 
+                                                                                (
+                                                                                (Printf.printf "%d\n%d\n" resp maxl)
+                                                                                )
+                                                                                ) in
+                                                                                (s len maxl process resp stop)
+                                                                              )
                                                          ) (Array.init_withenv nprimes (fun  i_ () -> let q = primes.(i_) in
                                                          ((), q)) ()))
                                                          )

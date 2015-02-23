@@ -92,9 +92,9 @@
                                                       (letrec ([l (lambda (i) 
                                                                     (if (<= i n)
                                                                     (block
-                                                                    (display (vector-ref message i))
-                                                                    (l (+ i 1))
-                                                                    )
+                                                                      (display (vector-ref message i))
+                                                                      (l (+ i 1))
+                                                                      )
                                                                     (display "\n")))])
                                                       (l m))))
                                                     )) internal_env)) (array_init_withenv taille 

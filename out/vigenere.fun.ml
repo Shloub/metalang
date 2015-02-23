@@ -55,11 +55,10 @@ let main =
                                                                  let n = (taille - 1) in
                                                                  let rec l i =
                                                                    (if (i <= n)
-                                                                    then 
-                                                                    (
-                                                                    (Printf.printf "%c" message.(i));
-                                                                    (l (i + 1))
-                                                                    )
+                                                                    then (
+                                                                           (Printf.printf "%c" message.(i));
+                                                                           (l (i + 1))
+                                                                           )
                                                                     
                                                                     else (Printf.printf "\n")) in
                                                                    (l m)

@@ -104,52 +104,53 @@
                                         (block
                                           ba
                                           (let ([nprimes (eratostene era maximumprimes)])
-                                          ((lambda (internal_env) (apply (lambda
-                                           (bc primes) 
-                                          (block
-                                            bc
-                                            (let ([l 0])
-                                            (let ([bh 2])
-                                            (let ([bi (- maximumprimes 1)])
-                                            (letrec ([bg (lambda (k l) 
-                                                           (if (<= k bi)
-                                                           (let ([l (if (eq? (vector-ref era k) k)
-                                                                    (block
-                                                                    (vector-set! primes l k)
-                                                                    (let ([l (+ l 1)])
-                                                                    l)
-                                                                    )
-                                                                    l)])
-                                                           (bg (+ k 1) l))
-                                                           (block
-                                                             (map display (list l " == " nprimes "\n"))
-                                                             (let ([sum 0])
-                                                             (let ([be 2])
-                                                             (let ([bf 1000])
-                                                             (letrec ([bd 
-                                                               (lambda (n sum) 
-                                                                 (if (<= n bf)
-                                                                 (let ([other (- (sumdiv nprimes primes n) n)])
-                                                                 (let ([sum 
-                                                                 (if (> other n)
-                                                                 (let ([othersum (- (sumdiv nprimes primes other) other)])
-                                                                 (let ([sum 
-                                                                 (if (eq? othersum n)
-                                                                 (block
-                                                                   (map display (list other " & " n "\n"))
-                                                                   (let ([sum (+ sum (+ other n))])
-                                                                   sum)
-                                                                   )
-                                                                 sum)])
-                                                                 sum))
-                                                                 sum)])
-                                                                 (bd (+ n 1) sum)))
-                                                                 (block
-                                                                   (map display (list "\n" sum "\n"))
-                                                                   )))])
-                                                             (bd be sum)))))
-                                                           )))])
-                                            (bg bh l)))))
+                                          ((lambda (internal_env) (apply (lambda (bc primes) 
+                                                                                (block
+                                                                                bc
+                                                                                (let ([l 0])
+                                                                                (let ([bh 2])
+                                                                                (let ([bi (- maximumprimes 1)])
+                                                                                (letrec ([bg 
+                                                                                (lambda (k l) 
+                                                                                (if (<= k bi)
+                                                                                (let ([l 
+                                                                                (if (eq? (vector-ref era k) k)
+                                                                                (block
+                                                                                (vector-set! primes l k)
+                                                                                (let ([l (+ l 1)])
+                                                                                l)
+                                                                                )
+                                                                                l)])
+                                                                                (bg (+ k 1) l))
+                                                                                (block
+                                                                                (map display (list l " == " nprimes "\n"))
+                                                                                (let ([sum 0])
+                                                                                (let ([be 2])
+                                                                                (let ([bf 1000])
+                                                                                (letrec ([bd 
+                                                                                (lambda (n sum) 
+                                                                                (if (<= n bf)
+                                                                                (let ([other (- (sumdiv nprimes primes n) n)])
+                                                                                (let ([sum 
+                                                                                (if (> other n)
+                                                                                (let ([othersum (- (sumdiv nprimes primes other) other)])
+                                                                                (let ([sum 
+                                                                                (if (eq? othersum n)
+                                                                                (block
+                                                                                (map display (list other " & " n "\n"))
+                                                                                (let ([sum (+ sum (+ other n))])
+                                                                                sum)
+                                                                                )
+                                                                                sum)])
+                                                                                sum))
+                                                                                sum)])
+                                                                                (bd (+ n 1) sum)))
+                                                                                (block
+                                                                                (map display (list "\n" sum "\n"))
+                                                                                )))])
+                                                                                (bd be sum)))))
+                                                                                )))])
+                                                                                (bg bh l)))))
                                           )) internal_env)) (array_init_withenv nprimes 
                                         (lambda (o) 
                                           (lambda (_) (let ([bb 0])

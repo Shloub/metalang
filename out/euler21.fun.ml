@@ -99,12 +99,11 @@ let main =
                                                  let rec bg k l =
                                                    (if (k <= bi)
                                                     then let l = (if (era.(k) = k)
-                                                                  then 
-                                                                  (
-                                                                    primes.(l) <- k;
-                                                                    let l = (l + 1) in
-                                                                    l
-                                                                    )
+                                                                  then (
+                                                                         primes.(l) <- k;
+                                                                         let l = (l + 1) in
+                                                                         l
+                                                                         )
                                                                   
                                                                   else l) in
                                                     (bg (k + 1) l)
@@ -116,24 +115,23 @@ let main =
                                                            let rec bd n sum =
                                                              (if (n <= bf)
                                                               then let other = ((sumdiv nprimes primes n) - n) in
-                                                              let sum = (
-                                                              if (other > n)
-                                                              then let othersum = ((sumdiv nprimes primes other) - other) in
-                                                              let sum = (
-                                                              if (othersum = n)
-                                                              then (
-                                                                    (Printf.printf "%d & %d\n" other n);
-                                                                    let sum = (sum + (other + n)) in
-                                                                    sum
-                                                                    )
-                                                              
-                                                              else sum) in
-                                                              sum
-                                                              else sum) in
+                                                              let sum = (if (other > n)
+                                                                         then let othersum = ((sumdiv nprimes primes other) - other) in
+                                                                         let sum = (
+                                                                         if (othersum = n)
+                                                                         then (
+                                                                                (Printf.printf "%d & %d\n" other n);
+                                                                                let sum = (sum + (other + n)) in
+                                                                                sum
+                                                                                )
+                                                                         
+                                                                         else sum) in
+                                                                         sum
+                                                                         else sum) in
                                                               (bd (n + 1) sum)
                                                               else (
-                                                                    (Printf.printf "\n%d\n" sum)
-                                                                    )
+                                                                     (Printf.printf "\n%d\n" sum)
+                                                                     )
                                                               ) in
                                                              (bd be sum)
                                                            )

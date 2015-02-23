@@ -61,61 +61,62 @@
                                         (block
                                           e
                                           (let ([nprimes (eratostene era maximumprimes)])
-                                          ((lambda (internal_env) (apply (lambda
-                                           (g primes) 
-                                          (block
-                                            g
-                                            (let ([l 0])
-                                            (let ([y 2])
-                                            (let ([z (- maximumprimes 1)])
-                                            (letrec ([x (lambda (k l) 
-                                                          (if (<= k z)
-                                                          (let ([l (if (eq? (vector-ref era k) k)
-                                                                   (block
-                                                                    (vector-set! primes l k)
-                                                                    (let ([l (+ l 1)])
-                                                                    l)
-                                                                    )
-                                                                   l)])
-                                                          (x (+ k 1) l))
-                                                          (let ([v 1])
-                                                          (let ([w 10000])
-                                                          (letrec ([h 
-                                                            (lambda (n) 
-                                                              (if (<= n w)
-                                                              ((lambda (internal_env) (apply (lambda
-                                                               (q primesFactors) 
-                                                              (block
-                                                                q
-                                                                (let ([max0 (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))])
-                                                                (block
-                                                                  (vector-set! primesFactors 2 (- (vector-ref primesFactors 2) 1))
-                                                                  (let ([ndivs 1])
-                                                                  (let ([s 0])
-                                                                  (let ([u max0])
-                                                                  (letrec ([r 
-                                                                    (lambda (i ndivs) 
-                                                                    (if (<= i u)
-                                                                    (let ([ndivs 
-                                                                    (if (not (eq? (vector-ref primesFactors i) 0))
-                                                                    (let ([ndivs (* ndivs (+ 1 (vector-ref primesFactors i)))])
-                                                                    ndivs)
-                                                                    ndivs)])
-                                                                    (r (+ i 1) ndivs))
-                                                                    (if (> ndivs ndiv2)
-                                                                    (quotient (* n (+ n 1)) 2)
-                                                                    ; print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
-                                                                    (h (+ n 1)))))])
-                                                                  (r s ndivs)))))
-                                                                ))
-                                                              )) internal_env)) (array_init_withenv (+ n 2) 
-                                                              (lambda (m) 
-                                                                (lambda (_) 
-                                                                (let ([p 0])
-                                                                (list '() p)))) '()))
-                                                            0))])
-                                                          (h v))))))])
-                                            (x y l)))))
+                                          ((lambda (internal_env) (apply (lambda (g primes) 
+                                                                                (block
+                                                                                g
+                                                                                (let ([l 0])
+                                                                                (let ([y 2])
+                                                                                (let ([z (- maximumprimes 1)])
+                                                                                (letrec ([x 
+                                                                                (lambda (k l) 
+                                                                                (if (<= k z)
+                                                                                (let ([l 
+                                                                                (if (eq? (vector-ref era k) k)
+                                                                                (block
+                                                                                (vector-set! primes l k)
+                                                                                (let ([l (+ l 1)])
+                                                                                l)
+                                                                                )
+                                                                                l)])
+                                                                                (x (+ k 1) l))
+                                                                                (let ([v 1])
+                                                                                (let ([w 10000])
+                                                                                (letrec ([h 
+                                                                                (lambda (n) 
+                                                                                (if (<= n w)
+                                                                                ((lambda (internal_env) (apply (lambda
+                                                                                 (q primesFactors) 
+                                                                                (block
+                                                                                q
+                                                                                (let ([max0 (max (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))])
+                                                                                (block
+                                                                                (vector-set! primesFactors 2 (- (vector-ref primesFactors 2) 1))
+                                                                                (let ([ndivs 1])
+                                                                                (let ([s 0])
+                                                                                (let ([u max0])
+                                                                                (letrec ([r 
+                                                                                (lambda (i ndivs) 
+                                                                                (if (<= i u)
+                                                                                (let ([ndivs 
+                                                                                (if (not (eq? (vector-ref primesFactors i) 0))
+                                                                                (let ([ndivs (* ndivs (+ 1 (vector-ref primesFactors i)))])
+                                                                                ndivs)
+                                                                                ndivs)])
+                                                                                (r (+ i 1) ndivs))
+                                                                                (if (> ndivs ndiv2)
+                                                                                (quotient (* n (+ n 1)) 2)
+                                                                                ; print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
+                                                                                (h (+ n 1)))))])
+                                                                                (r s ndivs)))))
+                                                                                ))
+                                                                                )) internal_env)) (array_init_withenv (+ n 2) 
+                                                                                (lambda (m) 
+                                                                                (lambda (_) 
+                                                                                (let ([p 0])
+                                                                                (list '() p)))) '()))
+                                                                                0))])
+                                                                                (h v))))))])
+                                                                                (x y l)))))
                                         )) internal_env)) (array_init_withenv nprimes 
   (lambda (o) 
     (lambda (_) (let ([f 0])

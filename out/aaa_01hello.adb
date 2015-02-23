@@ -8,8 +8,9 @@ procedure aaa_01hello is
 begin
   String'Write (Text_Streams.Stream (Current_Output), "Hello World");
   a := (5);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(
-  ((4) + (6)) * (2)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(((4) +
+                                                                           (6)) *
+  (2)), Left));
   String'Write (Text_Streams.Stream (Current_Output), " ");
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(a), Left));

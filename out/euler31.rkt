@@ -45,12 +45,11 @@
                                           (vector-set! t0 5 50)
                                           (vector-set! t0 6 100)
                                           (vector-set! t0 7 200)
-                                          ((lambda (internal_env) (apply (lambda
-                                           (l cache) 
-                                          (block
-                                            l
-                                            (display (result 200 t0 7 cache))
-                                            )) internal_env)) (array_init_withenv 201 
+                                          ((lambda (internal_env) (apply (lambda (l cache) 
+                                                                                (block
+                                                                                l
+                                                                                (display (result 200 t0 7 cache))
+                                                                                )) internal_env)) (array_init_withenv 201 
                                           (lambda (j) 
                                             (lambda (_) ((lambda (internal_env) (apply (lambda
                                              (n o) 

@@ -65,7 +65,7 @@ let eval0 g =
     if g.cases.(0).(2) = x && g.cases.(1).(1) = x && g.cases.(2).(0) = x then
       win := x
   done;
-  g.ended <- (!win) <> 0 or (!freecase) = 0;
+  g.ended <- (!win) <> 0 || (!freecase) = 0;
   if (!win) = 1 then
     g.note <- 1000
   else if (!win) = 2 then

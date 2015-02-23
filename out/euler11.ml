@@ -1,5 +1,5 @@
 let rec find n m x y dx dy =
-  if x < 0 or x = 20 or y < 0 or y = 20 then
+  if x < 0 || x = 20 || y < 0 || y = 20 then
     -1
   else if n = 0 then
     1

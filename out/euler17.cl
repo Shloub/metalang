@@ -28,33 +28,26 @@
                                                       (let ((ninety 6))
                                                         (let ((hundred 7))
                                                           (let ((thousand 8))
-                                                            (format t "~D~%" 
-                                                            (+ (+ (+ (+ one two) three) four) five))
+                                                            (format t "~D~%" (+ (+ (+ (+ one two) three) four) five))
                                                             (let ((hundred_and 10))
                                                               (let ((one_to_nine (+ (+ (+ (+ (+ (+ (+ (+ one two) three) four) five) six) seven) eight) nine)))
                                                                 (format t "~D~%" one_to_nine)
-                                                                (let 
-                                                                  ((one_to_ten (+ one_to_nine ten)))
-                                                                  (let 
-                                                                    ((one_to_twenty (+ (+ (+ (+ (+ (+ (+ (+ (+ (+ one_to_ten eleven) twelve) thirteen) fourteen) fifteen) sixteen) seventeen) eighteen) nineteen) twenty)))
-                                                                    (let 
-                                                                    ((one_to_thirty (+ (+ (+ one_to_twenty (* twenty 9)) one_to_nine) thirty)))
-                                                                    (let 
-                                                                    ((one_to_forty (+ (+ (+ one_to_thirty (* thirty 9)) one_to_nine) forty)))
-                                                                    (let 
-                                                                    ((one_to_fifty (+ (+ (+ one_to_forty (* forty 9)) one_to_nine) fifty)))
-                                                                    (let 
-                                                                    ((one_to_sixty (+ (+ (+ one_to_fifty (* fifty 9)) one_to_nine) sixty)))
-                                                                    (let 
-                                                                    ((one_to_seventy (+ (+ (+ one_to_sixty (* sixty 9)) one_to_nine) seventy)))
-                                                                    (let 
-                                                                    ((one_to_eighty (+ (+ (+ one_to_seventy (* seventy 9)) one_to_nine) eighty)))
-                                                                    (let 
-                                                                    ((one_to_ninety (+ (+ (+ one_to_eighty (* eighty 9)) one_to_nine) ninety)))
-                                                                    (let 
-                                                                    ((one_to_ninety_nine (+ (+ one_to_ninety (* ninety 9)) one_to_nine)))
-                                                                    (format t "~D~%~D~%" one_to_ninety_nine 
-                                                                    (+ (+ (+ (+ (+ (* 100 one_to_nine) (* one_to_ninety_nine 10)) (* (* hundred_and 9) 99)) (* hundred 9)) one) thousand))
-                                                                    ))))))))))))))))))))))))))))))))))))))))))
+                                                                (let ((one_to_ten (+ one_to_nine ten)))
+                                                                  (let ((one_to_twenty (+ (+ (+ (+ (+ (+ (+ (+ (+ (+ one_to_ten eleven) twelve) thirteen) fourteen) fifteen) sixteen) seventeen) eighteen) nineteen) twenty)))
+                                                                    (let ((one_to_thirty (+ (+ (+ one_to_twenty (* twenty 9)) one_to_nine) thirty)))
+                                                                      (let ((one_to_forty (+ (+ (+ one_to_thirty (* thirty 9)) one_to_nine) forty)))
+                                                                        (let ((one_to_fifty (+ (+ (+ one_to_forty (* forty 9)) one_to_nine) fifty)))
+                                                                          (let ((one_to_sixty (+ (+ (+ one_to_fifty (* fifty 9)) one_to_nine) sixty)))
+                                                                            (let 
+                                                                              ((one_to_seventy (+ (+ (+ one_to_sixty (* sixty 9)) one_to_nine) seventy)))
+                                                                              (let 
+                                                                                ((one_to_eighty (+ (+ (+ one_to_seventy (* seventy 9)) one_to_nine) eighty)))
+                                                                                (let 
+                                                                                ((one_to_ninety (+ (+ (+ one_to_eighty (* eighty 9)) one_to_nine) ninety)))
+                                                                                (let 
+                                                                                ((one_to_ninety_nine (+ (+ one_to_ninety (* ninety 9)) one_to_nine)))
+                                                                                (format t "~D~%~D~%" one_to_ninety_nine 
+                                                                                (+ (+ (+ (+ (+ (* 100 one_to_nine) (* one_to_ninety_nine 10)) (* (* hundred_and 9) 99)) (* hundred 9)) one) thousand))
+                                                                                ))))))))))))))))))))))))))))))))))))))))))
 
 

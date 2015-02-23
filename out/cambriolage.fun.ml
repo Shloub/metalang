@@ -64,22 +64,20 @@ let main =
                                                             ((), t)
                                                             )
                                                           ) (Array.init_withenv 2 (fun  l () -> Scanf.scanf "%d"
-                                                          (fun  out_ -> 
-                                                          (
-                                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                            let v = out_ in
-                                                            ((), v)
-                                                            )
+                                                          (fun  out_ -> (
+                                                                          (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                                                          let v = out_ in
+                                                                          ((), v)
+                                                                          )
                                                           )) ()))) ()))
                                                           )
                                              )
                                              )
-               ) (Array.init_withenv n (fun  i () -> ((fun  (s, out0) -> 
-               (
-                 s;
-                 let p = out0 in
-                 ((), p)
-                 )
+               ) (Array.init_withenv n (fun  i () -> ((fun  (s, out0) -> (
+                                                                           s;
+                                                                           let p = out0 in
+                                                                           ((), p)
+                                                                           )
                ) (Array.init_withenv 2 (fun  j () -> Scanf.scanf "%d"
                (fun  out01 -> (
                                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));

@@ -49,27 +49,26 @@ let rec qsort0 tab len i j =
                         let rec a i j =
                           (if (i <> j)
                            then ((fun  (i, j) -> (a i j)) (if (tab.(i) > tab.(j))
-                                                           then let i = (
-                                                           if (i = (j - 1))
-                                                           then (*  on inverse simplement *)
-                                                           let tmp = tab.(i) in
-                                                           (
-                                                             tab.(i) <- tab.(j);
-                                                             tab.(j) <- tmp;
-                                                             let i = (i + 1) in
-                                                             i
-                                                             )
-                                                           
-                                                           else (*  on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1]  *)
-                                                           let tmp = tab.(i) in
-                                                           (
-                                                             tab.(i) <- tab.(j);
-                                                             tab.(j) <- tab.((i + 1));
-                                                             tab.((i + 1)) <- tmp;
-                                                             let i = (i + 1) in
-                                                             i
-                                                             )
-                                                           ) in
+                                                           then let i = (if (i = (j - 1))
+                                                                         then (*  on inverse simplement *)
+                                                                         let tmp = tab.(i) in
+                                                                         (
+                                                                           tab.(i) <- tab.(j);
+                                                                           tab.(j) <- tmp;
+                                                                           let i = (i + 1) in
+                                                                           i
+                                                                           )
+                                                                         
+                                                                         else (*  on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1]  *)
+                                                                         let tmp = tab.(i) in
+                                                                         (
+                                                                           tab.(i) <- tab.(j);
+                                                                           tab.(j) <- tab.((i + 1));
+                                                                           tab.((i + 1)) <- tmp;
+                                                                           let i = (i + 1) in
+                                                                           i
+                                                                           )
+                                                                         ) in
                                                            (i, j)
                                                            else let j = (j - 1) in
                                                            (i, j)))

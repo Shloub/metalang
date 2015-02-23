@@ -37,7 +37,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def is_triangular( n ):
     """
    n = k * (k + 1) / 2

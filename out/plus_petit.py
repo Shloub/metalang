@@ -33,7 +33,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def go0( tab, a, b ):
     m = math.trunc((a + b) / 2)
     if a == m:

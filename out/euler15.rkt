@@ -27,45 +27,44 @@
                                                            )
                                                          (let ([z 2])
                                                          (let ([ba n])
-                                                         (letrec ([v 
-                                                           (lambda (o) 
-                                                             (if (<= o ba)
-                                                             (let ([r (- n o)])
-                                                             (let ([x 2])
-                                                             (let ([y n])
-                                                             (letrec ([w 
-                                                               (lambda (p) 
-                                                                 (if (<= p y)
-                                                                 (let ([q (- n p)])
-                                                                 (block
-                                                                   (vector-set! (vector-ref tab r) q (+ (vector-ref (vector-ref tab (+ r 1)) q) (vector-ref (vector-ref tab r) (+ q 1))))
-                                                                   (w (+ p 1))
-                                                                   ))
-                                                                 (v (+ o 1))))])
-                                                             (w x)))))
-                                                             (let ([s 0])
-                                                             (let ([u (- n 1)])
-                                                             (letrec ([e 
-                                                               (lambda (m) 
-                                                                 (if (<= m u)
-                                                                 (let ([g 0])
-                                                                 (let ([h (- n 1)])
-                                                                 (letrec ([f 
-                                                                   (lambda (k) 
-                                                                    (if (<= k h)
-                                                                    (block
-                                                                    (map display (list (vector-ref (vector-ref tab m) k) " "))
-                                                                    (f (+ k 1))
-                                                                    )
-                                                                    (block
-                                                                    (display "\n")
-                                                                    (e (+ m 1))
-                                                                    )))])
-                                                                 (f g))))
-                                                                 (block
-                                                                   (map display (list (vector-ref (vector-ref tab 0) 0) "\n"))
-                                                                   )))])
-                                                             (e s))))))])
+                                                         (letrec ([v (lambda (o) 
+                                                                       (if (<= o ba)
+                                                                       (let ([r (- n o)])
+                                                                       (let ([x 2])
+                                                                       (let ([y n])
+                                                                       (letrec ([w 
+                                                                         (lambda (p) 
+                                                                           (if (<= p y)
+                                                                           (let ([q (- n p)])
+                                                                           (block
+                                                                             (vector-set! (vector-ref tab r) q (+ (vector-ref (vector-ref tab (+ r 1)) q) (vector-ref (vector-ref tab r) (+ q 1))))
+                                                                             (w (+ p 1))
+                                                                             ))
+                                                                           (v (+ o 1))))])
+                                                                       (w x)))))
+                                                                       (let ([s 0])
+                                                                       (let ([u (- n 1)])
+                                                                       (letrec ([e 
+                                                                         (lambda (m) 
+                                                                           (if (<= m u)
+                                                                           (let ([g 0])
+                                                                           (let ([h (- n 1)])
+                                                                           (letrec ([f 
+                                                                             (lambda (k) 
+                                                                               (if (<= k h)
+                                                                               (block
+                                                                                (map display (list (vector-ref (vector-ref tab m) k) " "))
+                                                                                (f (+ k 1))
+                                                                                )
+                                                                               (block
+                                                                                (display "\n")
+                                                                                (e (+ m 1))
+                                                                                )))])
+                                                                           (f g))))
+                                                                           (block
+                                                                             (map display (list (vector-ref (vector-ref tab 0) 0) "\n"))
+                                                                             )))])
+                                                                       (e s))))))])
                                                          (v z))))))])
   (bb bc))))
 )) internal_env)) (array_init_withenv n (lambda (i) 

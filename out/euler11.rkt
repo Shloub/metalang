@@ -26,36 +26,36 @@
                                         (block
                                           g
                                           (let ([max0 0])
-                                          ((lambda (internal_env) (apply (lambda
-                                           (u m) 
-                                          (block
-                                            u
-                                            (let ([bf 0])
-                                            (let ([bg 7])
-                                            (letrec ([v (lambda (j max0) 
-                                                          (if (<= j bg)
-                                                          ((lambda (internal_env) (apply (lambda
-                                                           (dx dy) 
-                                                          (let ([bd 0])
-                                                          (let ([be 19])
-                                                          (letrec ([w 
-                                                            (lambda (x max0) 
-                                                              (if (<= x be)
-                                                              (let ([bb 0])
-                                                              (let ([bc 19])
-                                                              (letrec ([ba 
-                                                                (lambda (y max0) 
-                                                                  (if (<= y bc)
-                                                                  (let ([max0 (max max0 (find0 4 m x y dx dy))])
-                                                                  (ba (+ y 1) max0))
-                                                                  (w (+ x 1) max0)))])
-                                                              (ba bb max0))))
-                                                              (v (+ j 1) max0)))])
-                                                          (w bd max0))))) internal_env)) (vector-ref directions j))
-                                              (block
-                                                (map display (list max0 "\n"))
-                                                )))])
-                                            (v bf max0))))
+                                          ((lambda (internal_env) (apply (lambda (u m) 
+                                                                                (block
+                                                                                u
+                                                                                (let ([bf 0])
+                                                                                (let ([bg 7])
+                                                                                (letrec ([v 
+                                                                                (lambda (j max0) 
+                                                                                (if (<= j bg)
+                                                                                ((lambda (internal_env) (apply (lambda
+                                                                                 (dx dy) 
+                                                                                (let ([bd 0])
+                                                                                (let ([be 19])
+                                                                                (letrec ([w 
+                                                                                (lambda (x max0) 
+                                                                                (if (<= x be)
+                                                                                (let ([bb 0])
+                                                                                (let ([bc 19])
+                                                                                (letrec ([ba 
+                                                                                (lambda (y max0) 
+                                                                                (if (<= y bc)
+                                                                                (let ([max0 (max max0 (find0 4 m x y dx dy))])
+                                                                                (ba (+ y 1) max0))
+                                                                                (w (+ x 1) max0)))])
+                                                                                (ba bb max0))))
+                                                                                (v (+ j 1) max0)))])
+                                                                                (w bd max0))))) internal_env)) (vector-ref directions j))
+                                                                                (block
+                                                                                (map display (list max0 "\n"))
+                                                                                )))])
+                                                                                (v bf max0))))
                                           )) internal_env)) (array_init_withenv 20 
   (lambda (c) 
     (lambda (_) (let ([s (list->vector (map string->number (regexp-split " " (read-line))))])

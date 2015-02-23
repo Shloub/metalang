@@ -63,39 +63,37 @@
                                                           g
                                                           (let ([k 0])
                                                           (let ([l (- strlen 1)])
-                                                          (letrec ([h 
-                                                            (lambda (j) 
-                                                              (if (<= j l)
-                                                              (block
-                                                                (display (vector-ref tab4 j))
-                                                                (h (+ j 1))
-                                                                )
-                                                              '()))])
+                                                          (letrec ([h (lambda (j) 
+                                                                        (if (<= j l)
+                                                                        (block
+                                                                          (display (vector-ref tab4 j))
+                                                                          (h (+ j 1))
+                                                                          )
+                                                                        '()))])
                                                           (h k))))
                                                         )) internal_env)) (array_init_withenv strlen 
                                                       (lambda (toto) 
-                                                        (lambda (_) (
-                                                        (lambda (tmpc) 
-                                                          (let ([c (char->integer tmpc)])
-                                                          (block
-                                                            (map display (list tmpc ":" c " "))
-                                                            (let ([c 
-                                                            (if (not (eq? tmpc #\Space))
-                                                            (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
-                                                            c)
-                                                            c)])
-                                                            (let ([f (integer->char c)])
-                                                            (list '() f)))
-                                                            ))) (mread-char)))) '()))
+                                                        (lambda (_) ((lambda (tmpc) 
+                                                                       (let ([c (char->integer tmpc)])
+                                                                       (block
+                                                                         (map display (list tmpc ":" c " "))
+                                                                         (let ([c 
+                                                                         (if (not (eq? tmpc #\Space))
+                                                                         (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
+                                                                         c)
+                                                                         c)])
+                                                                         (let ([f (integer->char c)])
+                                                                         (list '() f)))
+                                                                         ))) (mread-char)))) '()))
                                                  )) (mread-int))
          )) internal_env)) (array_init_withenv len (lambda (i_) 
                                                      (lambda (_) ((lambda (tmpi2) 
                                                                     (block
-                                                                    (mread-blank)
-                                                                    (map display (list i_ "==>" tmpi2 " "))
-                                                                    (let ([d tmpi2])
-                                                                    (list '() d))
-                                                                    )) (mread-int)))) '()))
+                                                                      (mread-blank)
+                                                                      (map display (list i_ "==>" tmpi2 " "))
+                                                                      (let ([d tmpi2])
+                                                                      (list '() d))
+                                                                      )) (mread-int)))) '()))
      )) internal_env)) (array_init_withenv len (lambda (i) 
                                                  (lambda (_) ((lambda (tmpi1) 
                                                                 (block

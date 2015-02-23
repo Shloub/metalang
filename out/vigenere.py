@@ -39,7 +39,6 @@ def readint():
       return out * sign
 def mod(x, y):
   return x - y * math.trunc(x / y)
-
 def position_alphabet( c ):
     i = ord(c)
     if i <= ord('Z') and i >= ord('A'):

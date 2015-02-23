@@ -92,17 +92,16 @@
                                                              (if (<= k v)
                                                              (let ([r 0])
                                                              (let ([s k])
-                                                             (letrec ([q 
-                                                               (lambda (l) 
-                                                                 (if (<= l s)
-                                                                 (block
-                                                                   (map display (list (vector-ref (vector-ref tab k) l) " "))
-                                                                   (q (+ l 1))
-                                                                   )
-                                                                 (block
-                                                                   (display "\n")
-                                                                   (p (+ k 1))
-                                                                   )))])
+                                                             (letrec ([q (lambda (l) 
+                                                                           (if (<= l s)
+                                                                           (block
+                                                                             (map display (list (vector-ref (vector-ref tab k) l) " "))
+                                                                             (q (+ l 1))
+                                                                             )
+                                                                           (block
+                                                                             (display "\n")
+                                                                             (p (+ k 1))
+                                                                             )))])
                                                              (q r))))
                                                              '()))])
                                                (p u))))
@@ -119,10 +118,10 @@
                                                                  ((lambda (o) 
                                                                     (let ([tmp o])
                                                                     (block
-                                                                    (mread-blank)
-                                                                    (let ([m tmp])
-                                                                    (list '() m))
-                                                                    ))) (mread-int))))) '())))) '()))
+                                                                      (mread-blank)
+                                                                      (let ([m tmp])
+                                                                      (list '() m))
+                                                                      ))) (mread-int))))) '())))) '()))
 ))) (mread-int)))
 )
 

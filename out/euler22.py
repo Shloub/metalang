@@ -36,7 +36,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def score(  ):
     stdinsep()
     len=readint()

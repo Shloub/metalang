@@ -150,8 +150,7 @@ end;
 
 -- On applique un mouvement 
 
-procedure apply_move_xy(x : in Integer; y : in Integer;
-g : in gamestate_PTR) is
+procedure apply_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) is
   player : Integer;
 begin
   player := (2);

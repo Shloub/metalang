@@ -27,8 +27,8 @@ type c is Array (Integer range <>) of Integer;
 type c_PTR is access c;
 type d is Array (Integer range <>) of c_PTR;
 type d_PTR is access d;
-function nbPassePartout(n : in Integer; passepartout : in d_PTR;
-m : in Integer; serrures : in d_PTR) return Integer is
+function nbPassePartout(n : in Integer; passepartout : in d_PTR; m : in Integer;
+serrures : in d_PTR) return Integer is
   pp : c_PTR;
   max_recent_pp : Integer;
   max_recent : Integer;

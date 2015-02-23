@@ -203,8 +203,7 @@ D'ou le nom de la fonction. */
       retenue = chiffres->at(i + j) / 10;
       chiffres->at(i + j) = chiffres->at(i + j) % 10;
     }
-    chiffres->at(i + b->bigint_len) = chiffres->at(i + b->bigint_len) +
-    retenue;
+    chiffres->at(i + b->bigint_len) = chiffres->at(i + b->bigint_len) + retenue;
   }
   chiffres->at(a->bigint_len + b->bigint_len) =
   chiffres->at(a->bigint_len + b->bigint_len - 1) / 10;

@@ -32,7 +32,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def copytab( tab, len ):
     o = [None] * len
     for i in range(0, len):

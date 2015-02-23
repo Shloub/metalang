@@ -2,7 +2,6 @@ require "scanf.rb"
 def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
-
 def periode( restes, len, a, b )
     while a != 0 do
       chiffre = (a.to_f / b).to_i

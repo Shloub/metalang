@@ -36,7 +36,6 @@ def readint():
       skipchar()
     else:
       return out * sign
-
 def nth( tab, tofind, len ):
     out0 = 0
     for i in range(0, len):

@@ -35,15 +35,14 @@
                                             (let ([b (+ (* j 10) k)])
                                             ((lambda (internal_env) (apply (lambda
                                              (bottom top) 
-                                            (list bottom top)) internal_env)) 
-                                            (if (eq? (* a k) (* i b))
-                                            (block
-                                              (map display (list a "/" b "\n"))
-                                              (let ([top (* top a)])
-                                              (let ([bottom (* bottom b)])
-                                              (list bottom top)))
-                                              )
-                                            (list bottom top)))))
+                                            (list bottom top)) internal_env)) (if (eq? (* a k) (* i b))
+                                                                              (block
+                                                                                (map display (list a "/" b "\n"))
+                                                                                (let ([top (* top a)])
+                                                                                (let ([bottom (* bottom b)])
+                                                                                (list bottom top)))
+                                                                                )
+                                                                              (list bottom top)))))
                                             (list bottom top)))
                                             (g (+ j 1) bottom top)))])
                               (h l bottom top))))

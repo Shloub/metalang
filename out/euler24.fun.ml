@@ -35,21 +35,21 @@ let show lim nth =
                                               let q = (lim - 1) in
                                               let rec o l nchiffre =
                                                 (if (l <= q)
-                                                 then let nchiffre = (
-                                                 if (not pris.(l))
-                                                 then (
-                                                        (if (nchiffre = 0)
-                                                         then (
-                                                                (Printf.printf "%d" l);
-                                                                pris.(l) <- true
-                                                                )
-                                                         
-                                                         else ());
-                                                        let nchiffre = (nchiffre - 1) in
-                                                        nchiffre
-                                                        )
-                                                 
-                                                 else nchiffre) in
+                                                 then let nchiffre = (if (not pris.(l))
+                                                                      then (
+                                                                             (if (nchiffre = 0)
+                                                                              then 
+                                                                              (
+                                                                                (Printf.printf "%d" l);
+                                                                                pris.(l) <- true
+                                                                                )
+                                                                              
+                                                                              else ());
+                                                                             let nchiffre = (nchiffre - 1) in
+                                                                             nchiffre
+                                                                             )
+                                                                      
+                                                                      else nchiffre) in
                                                  (o (l + 1) nchiffre)
                                                  else (h (k + 1) nth)) in
                                                 (o p nchiffre)

@@ -51,31 +51,29 @@ let main =
                                                                    then let tmpc = tab4.(i3) in
                                                                    let c = (int_of_char (tmpc)) in
                                                                    (
-                                                                    (Printf.printf "%c:%d " tmpc c);
-                                                                    let c = (
-                                                                    if (tmpc <> ' ')
-                                                                    then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
-                                                                    c
-                                                                    else c) in
-                                                                    (
-                                                                    tab4.(i3) <- (char_of_int (c));
-                                                                    (u (i3 + 1))
-                                                                    )
-                                                                    
-                                                                    )
+                                                                     (Printf.printf "%c:%d " tmpc c);
+                                                                     let c = (if (tmpc <> ' ')
+                                                                              then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
+                                                                              c
+                                                                              else c) in
+                                                                     (
+                                                                       tab4.(i3) <- (char_of_int (c));
+                                                                       (u (i3 + 1))
+                                                                       )
+                                                                     
+                                                                     )
                                                                    
                                                                    else let r = 0 in
                                                                    let s = (strlen - 1) in
                                                                    let rec q j =
-                                                                    (if (j <= s)
-                                                                    then 
-                                                                    (
-                                                                    (Printf.printf "%c" tab4.(j));
-                                                                    (q (j + 1))
-                                                                    )
-                                                                    
-                                                                    else ()) in
-                                                                    (q r)) in
+                                                                     (if (j <= s)
+                                                                      then (
+                                                                             (Printf.printf "%c" tab4.(j));
+                                                                             (q (j + 1))
+                                                                             )
+                                                                      
+                                                                      else ()) in
+                                                                     (q r)) in
                                                                   (u v)
                                                                 )
                                                               ) (Array.init_withenv strlen (fun  f () -> Scanf.scanf "%c"

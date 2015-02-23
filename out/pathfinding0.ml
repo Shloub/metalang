@@ -1,7 +1,7 @@
 let rec pathfind_aux cache tab x y posX posY =
   if posX = x - 1 && posY = y - 1 then
     0
-  else if posX < 0 or posY < 0 or posX >= x or posY >= y then
+  else if posX < 0 || posY < 0 || posX >= x || posY >= y then
     x * y * 10
   else if tab.(posY).(posX) = '#' then
     x * y * 10
