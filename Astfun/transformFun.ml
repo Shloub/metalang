@@ -45,6 +45,17 @@ let may_return i =
     | A.Instr.AllocArray _ -> acc
     | _ -> tra acc i
   in f (A.Instr.Writer.Traverse.fold f) false i
+
+let bad_return li = List.exists may_return li
+
+let rec must_return li =
+  let f i =
+    match A.Instr.unfix i with
+    | A.Instr.Return i -> true
+		| A.Instr.If (e, li1, li2) -> must_return li1 && must_return li2
+		| _ -> false
+  in List.exists f li
+
 let bad_return li = List.exists may_return li
 
 let rec name_of_mutable m = match A.Mutable.unfix m with
@@ -152,25 +163,28 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let next = instrs suite contsuite contreturn env tl in
       let brl1 = bad_return l1 in
       let brl2 = bad_return l2 in
-      if (brl1 || brl2) && not (brl1 && brl2) then (* xor *)
-	let body1 = instrs true next contreturn env l1 in
-	let body2 = instrs true next contreturn env l2 in
-	F.Expr.if_ e body1 body2
+      let mrl1 = must_return l1 in
+      let mrl2 = must_return l2 in
+      if mrl2 || mrl1 || tl = [] then (* if terminal OU une seule branche renvoie *)
+        let body1 = instrs true next contreturn env l1 in
+        let body2 = instrs true next contreturn env l2 in
+        F.Expr.if_ e body1 body2
       else if brl2 || brl1 then
-	let next = F.Expr.fun_ affected next in
-	let nextname = Fresh.fresh_user () in
-	let ncont = F.Expr.apply (F.Expr.binding nextname) (List.map F.Expr.binding affected) in 
-	let body1 = instrs true ncont contreturn env l1 in
-	let body2 = instrs true ncont contreturn env l2 in
-	F.Expr.apply
-	  (F.Expr.fun_ [nextname] (F.Expr.if_ e body1 body2))
-	  [next]
-      else
-	let next = F.Expr.funtuple affected next in
-	let ncont = F.Expr.tuple (List.map F.Expr.binding affected) in 
-	let body1 = instrs true ncont contreturn env l1 in
-	let body2 = instrs true ncont contreturn env l2 in
-	F.Expr.apply next [F.Expr.if_ e body1 body2]
+        let next = F.Expr.fun_ affected next in
+        let nextname = Fresh.fresh_user () in
+        let ncont = F.Expr.apply (F.Expr.binding nextname) (List.map F.Expr.binding affected) in
+        let body1 = instrs true ncont contreturn env l1 in
+        let body2 = instrs true ncont contreturn env l2 in
+        F.Expr.apply
+          (F.Expr.fun_ [nextname] (F.Expr.if_ e body1 body2))
+          [next]
+      else (* on renvoie un environement *)
+        let next, ncont = match affected with
+        | [affected] ->	F.Expr.fun_ [affected] next , F.Expr.binding affected
+        | _ -> F.Expr.funtuple affected next ,F.Expr.tuple (List.map F.Expr.binding affected) in
+        let body1 = instrs true ncont contreturn env l1 in
+        let body2 = instrs true ncont contreturn env l2 in
+        F.Expr.apply next [F.Expr.if_ e body1 body2]
     | A.Instr.Print (ty, e) ->
       let next = instrs suite contsuite contreturn env tl in
       F.Expr.print e ty next
@@ -194,15 +208,17 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let returnenv = List.map F.Expr.binding affected in
       let calloop = F.Expr.apply (F.Expr.binding loop) ((var_plus_un)::returnenv) in
       let content = instrs true calloop contreturn env li in
-      let from = Fresh.fresh_user () in
-      let to_ = Fresh.fresh_user () in
-      let content = F.Expr.if_ (F.Expr.binop (F.Expr.binding var) Ast.Expr.LowerEq (F.Expr.binding to_) )
-        content next in
-      let cont = F.Expr.fun_ [from; to_]
-        (F.Expr.letrecin loop (var::affected) content
-           (F.Expr.apply (F.Expr.binding loop) ((F.Expr.binding from)::returnenv))
-        ) in
-      F.Expr.apply cont [from_; end_]
+      let c eto_ =
+        let content = F.Expr.if_ (F.Expr.binop (F.Expr.binding var) Ast.Expr.LowerEq eto_ )
+            content next in
+        F.Expr.letrecin loop (var::affected) content
+           (F.Expr.apply (F.Expr.binding loop) (from_::returnenv))
+      in begin match F.Expr.unfix end_ with
+      | F.Expr.Lief _ -> c end_
+      | _ ->
+          let n = Fresh.fresh_user () in
+          F.Expr.apply (F.Expr.fun_ [n] (c (F.Expr.binding n))) [end_]
+      end
     | A.Instr.AllocArray (A.UserName name, t, e, Some (A.UserName varname, li), _) ->
       let affected = List.filter (fun x -> List.mem x env) @$ StringSet.elements @$ affected li in
       let o = Fresh.fresh_user () in
@@ -213,9 +229,9 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let content = F.Expr.funtuple affected content in
       let content = F.Expr.fun_ [varname] content in
       let next = instrs suite contsuite  contreturn env tl in
-			F.Expr.apply (F.Expr.funtuple [envname; name]
-											(F.Expr.apply (F.Expr.funtuple affected next) [F.Expr.binding envname]))
-				[F.Expr.arraymake e content returnenv]
+      F.Expr.apply (F.Expr.funtuple [envname; name]
+	        (F.Expr.apply (F.Expr.funtuple affected next) [F.Expr.binding envname]))
+        [F.Expr.arraymake e content returnenv]
     | A.Instr.AllocArray (name, t, e, None, _) -> assert false
     | A.Instr.Untuple (vars, e, _) ->
       let vars = List.map (function (_, A.UserName u) -> u ) vars in

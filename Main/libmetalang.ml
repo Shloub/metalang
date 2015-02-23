@@ -203,6 +203,7 @@ let fun_passes config prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
   |> typed "remove internals" Passes.WalkRemoveInternal.apply
+  |> typed "merging if" Passes.WalkIfMerge.apply
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply config b)
 
@@ -226,6 +227,7 @@ let hs_passes prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
   |> typed "remove internals" Passes.WalkRemoveInternal.apply
+  |> typed "merging if" Passes.WalkIfMerge.apply
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply {Makelet.curry=false} b)
   |> (fun (a, b) -> a, RenameFun.apply b)
