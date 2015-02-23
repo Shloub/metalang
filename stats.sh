@@ -21,6 +21,7 @@ pl=$(st "out" "*.pl")
 java=$(st "out" "*.java")
 ada=$(st "out" "*.adb")
 vb=$(st "out" "*.vb")
+hs=$(st "out" "*.hs")
 
 ml=$(( $ml - $funml ))
 
@@ -42,6 +43,7 @@ pl=$(( $pl * 1000 / $metalang))
 vb=$(( $vb * 1000 / $metalang))
 java=$(( $java * 1000 / $metalang))
 ada=$(( $ada * 1000 / $metalang))
+hs=$(( $hs * 1000 / $metalang))
 
 file="stats_repartition.dat"
 
@@ -86,6 +88,7 @@ cs $cs
 pl $pl
 ada $ada
 vb $vb
+hs $hs
 java $java" | swap | sort | swap ) > "$file"
 
 filestatsplot(){
