@@ -64,38 +64,38 @@ array_init_withenv len f env =
                                                                                                                                           
 
 result len tab =
-  ((\ (d, tab2) ->
-     do let h = (len - 1)
-        let g i1 =
-              (if (i1 <= h)
-              then do printf "%d" =<< ((readIOA tab i1) :: IO Int)
-                      printf " " ::IO()
-                      join (writeIOA tab2 <$> (readIOA tab i1) <*> return (True))
-                      (g (i1 + 1))
-              else do printf "\n" ::IO()
-                      let f = (len - 1)
-                      let e i2 =
-                            (if (i2 <= f)
-                            then ifM ((fmap (not) (readIOA tab2 i2)))
-                                     (return (i2))
-                                     ((e (i2 + 1)))
-                            else return ((- 1))) in
-                            (e 0)) in
-              (g 0)) =<< (array_init_withenv len (\ i d ->
-                                                   let c = False
-                                                           in return (((), c))) ()))
+  ((array_init_withenv len (\ i d ->
+                             let c = False
+                                     in return ((), c)) ()) >>= (\ (d, tab2) ->
+                                                                  do let h = (len - 1)
+                                                                     let g i1 =
+                                                                           (if (i1 <= h)
+                                                                           then do printf "%d" =<< ((readIOA tab i1) :: IO Int)
+                                                                                   printf " " ::IO()
+                                                                                   (join $ writeIOA tab2 <$> (readIOA tab i1) <*> return True)
+                                                                                   (g (i1 + 1))
+                                                                           else do printf "\n" ::IO()
+                                                                                   let f = (len - 1)
+                                                                                   let e i2 =
+                                                                                         (if (i2 <= f)
+                                                                                         then ifM (fmap (not) (readIOA tab2 i2))
+                                                                                                  (return i2)
+                                                                                                  ((e (i2 + 1)))
+                                                                                         else return (- 1)) in
+                                                                                         (e 0)) in
+                                                                           (g 0)))
 
 main =
   do len <- read_int
      skip_whitespaces
      printf "%d" (len :: Int)::IO()
      printf "\n" ::IO()
-     ((\ (k, tab) ->
-        do printf "%d" =<< ((result len tab) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv len (\ a k ->
-                                                             do b <- read_int
-                                                                skip_whitespaces
-                                                                let j = b
-                                                                return (((), j))) ()))
+     ((array_init_withenv len (\ a k ->
+                                do b <- read_int
+                                   skip_whitespaces
+                                   let j = b
+                                   return ((), j)) ()) >>= (\ (k, tab) ->
+                                                             do printf "%d" =<< ((result len tab) :: IO Int)
+                                                                printf "\n" ::IO()))
 
 

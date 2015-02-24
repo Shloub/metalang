@@ -13,9 +13,9 @@ main :: IO ()
 
 g i =
   let j = (i * 4)
-          in return ((if ((j `rem` 2) == 1)
-                     then 0
-                     else j))
+          in return (if ((j `rem` 2) == 1)
+                    then 0
+                    else j)
 
 h i =
   do printf "%d" (i :: Int)::IO()

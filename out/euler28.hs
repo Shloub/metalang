@@ -28,7 +28,7 @@ sumdiag n =
                    {- print int d print "=>" print un print " " -}
                    do let g = (c + f)
                       (a (i + 1) g f)
-           else return (c)) in
+           else return c) in
            (a 0 sum un)
 
 main =

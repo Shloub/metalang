@@ -44,12 +44,12 @@ data Intlist = Intlist {
 
 cons list i =
   do out0 <- (Intlist <$> (newIORef i) <*> (newIORef list))
-     return (out0)
+     return out0
 
 rev2 empty acc torev =
   (if (torev == empty)
-  then return (acc)
-  else do acc2 <- (Intlist <$> (join (newIORef <$> (readIORef (_head0 torev)))) <*> (newIORef acc))
+  then return acc
+  else do acc2 <- (Intlist <$> ((readIORef (_head0 torev)) >>= newIORef) <*> (newIORef acc))
           (rev2 empty acc =<< (readIORef (_tail0 torev))))
 
 rev empty torev =
@@ -66,10 +66,10 @@ test empty =
                    then do f <- (cons d e)
                            (a e f)
                    else (a e d))
-           else return (())) in
+           else return ()) in
            (a i list)
 
 main =
-  return (())
+  return ()
 
 

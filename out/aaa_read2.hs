@@ -80,66 +80,66 @@ main =
      skip_whitespaces
      printf "%d" (len :: Int)::IO()
      printf "=len\n" ::IO()
-     ((\ (k, tab) ->
-        do let y = (len - 1)
-           let x i =
-                 (if (i <= y)
-                 then do printf "%d" (i :: Int)::IO()
-                         printf "=>" ::IO()
-                         printf "%d" =<< ((readIOA tab i) :: IO Int)
-                         printf " " ::IO()
-                         (x (i + 1))
-                 else do printf "\n" ::IO()
-                         ((\ (m, tab2) ->
-                            do let w = (len - 1)
-                               let v i_ =
-                                     (if (i_ <= w)
-                                     then do printf "%d" (i_ :: Int)::IO()
-                                             printf "==>" ::IO()
-                                             printf "%d" =<< ((readIOA tab2 i_) :: IO Int)
-                                             printf " " ::IO()
-                                             (v (i_ + 1))
-                                     else do strlen <- read_int
-                                             skip_whitespaces
-                                             printf "%d" (strlen :: Int)::IO()
-                                             printf "=strlen\n" ::IO()
-                                             ((\ (p, tab4) ->
-                                                do skip_whitespaces
-                                                   let u = (strlen - 1)
-                                                   let s i3 =
-                                                         (if (i3 <= u)
-                                                         then do tmpc <- (readIOA tab4 i3)
-                                                                 c <- ((fmap ord (return (tmpc))))
-                                                                 printf "%c" (tmpc :: Char)::IO()
-                                                                 printf ":" ::IO()
-                                                                 printf "%d" (c :: Int)::IO()
-                                                                 printf " " ::IO()
-                                                                 z <- (if (tmpc /= ' ')
-                                                                      then do ba <- ((+) <$> (rem <$> ((+) <$> (((-) c) <$> ((fmap ord (return ('a'))))) <*> return (13)) <*> return (26)) <*> ((fmap ord (return ('a')))))
-                                                                              return (ba)
-                                                                      else return (c))
-                                                                 writeIOA tab4 i3 =<< ((fmap chr (return (z))))
-                                                                 (s (i3 + 1))
-                                                         else do let r = (strlen - 1)
-                                                                 let q j =
-                                                                       (if (j <= r)
-                                                                       then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
-                                                                               (q (j + 1))
-                                                                       else return (())) in
-                                                                       (q 0)) in
-                                                         (s 0)) =<< (array_init_withenv strlen (\ f p ->
-                                                                                                 hGetChar stdin >>= ((\ g ->
-                                                                                                                       let o = g
-                                                                                                                               in return (((), o))))) ()))) in
-                                     (v 0)) =<< (array_init_withenv len (\ d m ->
-                                                                          do e <- read_int
-                                                                             skip_whitespaces
-                                                                             let l = e
-                                                                             return (((), l))) ()))) in
-                 (x 0)) =<< (array_init_withenv len (\ a k ->
-                                                      do b <- read_int
-                                                         skip_whitespaces
-                                                         let h = b
-                                                         return (((), h))) ()))
+     ((array_init_withenv len (\ a k ->
+                                do b <- read_int
+                                   skip_whitespaces
+                                   let h = b
+                                   return ((), h)) ()) >>= (\ (k, tab) ->
+                                                             do let y = (len - 1)
+                                                                let x i =
+                                                                      (if (i <= y)
+                                                                      then do printf "%d" (i :: Int)::IO()
+                                                                              printf "=>" ::IO()
+                                                                              printf "%d" =<< ((readIOA tab i) :: IO Int)
+                                                                              printf " " ::IO()
+                                                                              (x (i + 1))
+                                                                      else do printf "\n" ::IO()
+                                                                              ((array_init_withenv len (\ d m ->
+                                                                                                         do e <- read_int
+                                                                                                            skip_whitespaces
+                                                                                                            let l = e
+                                                                                                            return ((), l)) ()) >>= (\ (m, tab2) ->
+                                                                                                                                      do let w = (len - 1)
+                                                                                                                                         let v i_ =
+                                                                                                                                               (if (i_ <= w)
+                                                                                                                                               then do printf "%d" (i_ :: Int)::IO()
+                                                                                                                                                       printf "==>" ::IO()
+                                                                                                                                                       printf "%d" =<< ((readIOA tab2 i_) :: IO Int)
+                                                                                                                                                       printf " " ::IO()
+                                                                                                                                                       (v (i_ + 1))
+                                                                                                                                               else do strlen <- read_int
+                                                                                                                                                       skip_whitespaces
+                                                                                                                                                       printf "%d" (strlen :: Int)::IO()
+                                                                                                                                                       printf "=strlen\n" ::IO()
+                                                                                                                                                       ((array_init_withenv strlen (\ f p ->
+                                                                                                                                                                                     hGetChar stdin >>= ((\ g ->
+                                                                                                                                                                                                           let o = g
+                                                                                                                                                                                                                   in return ((), o)))) ()) >>= (\ (p, tab4) ->
+                                                                                                                                                                                                                                                  do skip_whitespaces
+                                                                                                                                                                                                                                                     let u = (strlen - 1)
+                                                                                                                                                                                                                                                     let s i3 =
+                                                                                                                                                                                                                                                           (if (i3 <= u)
+                                                                                                                                                                                                                                                           then do tmpc <- (readIOA tab4 i3)
+                                                                                                                                                                                                                                                                   c <- ((fmap ord (return tmpc)))
+                                                                                                                                                                                                                                                                   printf "%c" (tmpc :: Char)::IO()
+                                                                                                                                                                                                                                                                   printf ":" ::IO()
+                                                                                                                                                                                                                                                                   printf "%d" (c :: Int)::IO()
+                                                                                                                                                                                                                                                                   printf " " ::IO()
+                                                                                                                                                                                                                                                                   z <- (if (tmpc /= ' ')
+                                                                                                                                                                                                                                                                        then do ba <- ((+) <$> (rem <$> ((+) <$> (((-) c) <$> ((fmap ord (return 'a')))) <*> return 13) <*> return 26) <*> ((fmap ord (return 'a'))))
+                                                                                                                                                                                                                                                                                return ba
+                                                                                                                                                                                                                                                                        else return c)
+                                                                                                                                                                                                                                                                   (writeIOA tab4 i3 =<< ((fmap chr (return z))))
+                                                                                                                                                                                                                                                                   (s (i3 + 1))
+                                                                                                                                                                                                                                                           else do let r = (strlen - 1)
+                                                                                                                                                                                                                                                                   let q j =
+                                                                                                                                                                                                                                                                         (if (j <= r)
+                                                                                                                                                                                                                                                                         then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
+                                                                                                                                                                                                                                                                                 (q (j + 1))
+                                                                                                                                                                                                                                                                         else return ()) in
+                                                                                                                                                                                                                                                                         (q 0)) in
+                                                                                                                                                                                                                                                           (s 0)))) in
+                                                                                                                                               (v 0)))) in
+                                                                      (x 0)))
 
 

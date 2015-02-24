@@ -57,10 +57,10 @@ read_int =
 
 exp0 a b =
   (if (b == 0)
-  then return (1)
+  then return 1
   else (if ((b `rem` 2) == 0)
        then do o <- (exp0 a (b `quot` 2))
-               return ((o * o))
+               return (o * o)
        else (((*) a) <$> (exp0 a (b - 1)))))
 
 main =

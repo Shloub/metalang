@@ -19,6 +19,6 @@ data Foo_t = Foo
 
 main =
   let foo_val = Foo
-                in return (())
+                in return ()
 
 

@@ -74,10 +74,10 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 copytab tab len =
-  ((\ (g, o) ->
-     return (o)) =<< (array_init_withenv len (\ i g ->
-                                               do f <- (readIOA tab i)
-                                                  return (((), f))) ()))
+  ((array_init_withenv len (\ i g ->
+                             do f <- (readIOA tab i)
+                                return ((), f)) ()) >>= (\ (g, o) ->
+                                                          return o))
 
 bubblesort tab len =
   do let e = (len - 1)
@@ -86,15 +86,15 @@ bubblesort tab len =
            then do let d = (len - 1)
                    let c j =
                          (if (j <= d)
-                         then ifM (((>) <$> (readIOA tab i) <*> (readIOA tab j)))
+                         then ifM ((>) <$> (readIOA tab i) <*> (readIOA tab j))
                                   (do tmp <- (readIOA tab i)
-                                      writeIOA tab i =<< (readIOA tab j)
-                                      writeIOA tab j tmp
+                                      (writeIOA tab i =<< (readIOA tab j))
+                                      (writeIOA tab j tmp)
                                       (c (j + 1)))
                                   ((c (j + 1)))
                          else (b (i + 1))) in
                          (c (i + 1))
-           else return (())) in
+           else return ()) in
            (b 0)
 
 qsort0 tab len i j =
@@ -104,60 +104,60 @@ qsort0 tab len i j =
           {- pivot : tab[0] -}
           let a s t =
                 (if (s /= t)
-                then ifM (((>) <$> (readIOA tab s) <*> (readIOA tab t)))
+                then ifM ((>) <$> (readIOA tab s) <*> (readIOA tab t))
                          ((if (s == (t - 1))
                           then {- on inverse simplement-}
                                do tmp <- (readIOA tab s)
-                                  writeIOA tab s =<< (readIOA tab t)
-                                  writeIOA tab t tmp
+                                  (writeIOA tab s =<< (readIOA tab t))
+                                  (writeIOA tab t tmp)
                                   let u = (s + 1)
                                   (a u t)
                           else {- on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] -}
                                do tmp <- (readIOA tab s)
-                                  writeIOA tab s =<< (readIOA tab t)
-                                  writeIOA tab t =<< (readIOA tab (s + 1))
-                                  writeIOA tab (s + 1) tmp
+                                  (writeIOA tab s =<< (readIOA tab t))
+                                  (writeIOA tab t =<< (readIOA tab (s + 1)))
+                                  (writeIOA tab (s + 1) tmp)
                                   let v = (s + 1)
                                   (a v t)))
                          (do let w = (t - 1)
                              (a s w))
                 else do (qsort0 tab len i0 (s - 1))
                         (qsort0 tab len (s + 1) j0)
-                        return (())) in
+                        return ()) in
                 (a i j)
-  else return (()))
+  else return ())
 
 main =
   do let len = 2
      r <- read_int
      let x = r
      skip_whitespaces
-     ((\ (k, tab) ->
-        do tab2 <- (copytab tab x)
-           (bubblesort tab2 x)
-           let p = (x - 1)
-           let n i =
-                 (if (i <= p)
-                 then do printf "%d" =<< ((readIOA tab2 i) :: IO Int)
-                         printf " " ::IO()
-                         (n (i + 1))
-                 else do printf "\n" ::IO()
-                         tab3 <- (copytab tab x)
-                         (qsort0 tab3 x 0 (x - 1))
-                         let m = (x - 1)
-                         let l y =
-                               (if (y <= m)
-                               then do printf "%d" =<< ((readIOA tab3 y) :: IO Int)
-                                       printf " " ::IO()
-                                       (l (y + 1))
-                               else printf "\n" ::IO()) in
-                               (l 0)) in
-                 (n 0)) =<< (array_init_withenv x (\ i_ k ->
-                                                    do let tmp = 0
-                                                       q <- read_int
-                                                       let z = q
-                                                       skip_whitespaces
-                                                       let h = z
-                                                       return (((), h))) ()))
+     ((array_init_withenv x (\ i_ k ->
+                              do let tmp = 0
+                                 q <- read_int
+                                 let z = q
+                                 skip_whitespaces
+                                 let h = z
+                                 return ((), h)) ()) >>= (\ (k, tab) ->
+                                                           do tab2 <- (copytab tab x)
+                                                              (bubblesort tab2 x)
+                                                              let p = (x - 1)
+                                                              let n i =
+                                                                    (if (i <= p)
+                                                                    then do printf "%d" =<< ((readIOA tab2 i) :: IO Int)
+                                                                            printf " " ::IO()
+                                                                            (n (i + 1))
+                                                                    else do printf "\n" ::IO()
+                                                                            tab3 <- (copytab tab x)
+                                                                            (qsort0 tab3 x 0 (x - 1))
+                                                                            let m = (x - 1)
+                                                                            let l y =
+                                                                                  (if (y <= m)
+                                                                                  then do printf "%d" =<< ((readIOA tab3 y) :: IO Int)
+                                                                                          printf " " ::IO()
+                                                                                          (l (y + 1))
+                                                                                  else printf "\n" ::IO()) in
+                                                                                  (l 0)) in
+                                                                    (n 0)))
 
 

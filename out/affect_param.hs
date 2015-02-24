@@ -13,7 +13,7 @@ main :: IO ()
 
 foo a =
   let b = 4
-          in return (())
+          in return ()
 
 main =
   do let a = 0

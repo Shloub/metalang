@@ -13,17 +13,17 @@ main :: IO ()
 
 
 main =
-  do printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return (4)))) :: IO Int)
+  do printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 4))) :: IO Int)
      printf " " ::IO()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return (16)))) :: IO Int)
+     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 16))) :: IO Int)
      printf " " ::IO()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return (20)))) :: IO Int)
+     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 20))) :: IO Int)
      printf " " ::IO()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return (1000)))) :: IO Int)
+     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 1000))) :: IO Int)
      printf " " ::IO()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return (500)))) :: IO Int)
+     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 500))) :: IO Int)
      printf " " ::IO()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return (10)))) :: IO Int)
+     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 10))) :: IO Int)
      printf " " ::IO()
 
 

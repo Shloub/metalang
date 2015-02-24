@@ -14,6 +14,6 @@ main :: IO ()
 main =
   do printf "ma petite chaine" ::IO()
      printf " en or" ::IO()
-     return (())
+     return ()
 
 

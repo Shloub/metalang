@@ -83,30 +83,30 @@ data Toto = Toto {
 
 mktoto v1 =
   do t <- (Toto <$> (newIORef v1) <*> (newIORef 0) <*> (newIORef 0))
-     return (t)
+     return t
 
 result t len =
   do let out0 = 0
      let b = (len - 1)
      let a j g =
            (if (j <= b)
-           then do (join (writeIORef <$> (_blah <$> (readIOA t j)) <*> ((+) <$> (join (readIORef <$> (_blah <$> (readIOA t j)))) <*> return (1))))
-                   h <- ((+) <$> ((+) <$> (((+) g) <$> (join (readIORef <$> (_foo <$> (readIOA t j))))) <*> ((*) <$> (join (readIORef <$> (_blah <$> (readIOA t j)))) <*> (join (readIORef <$> (_bar <$> (readIOA t j)))))) <*> ((*) <$> (join (readIORef <$> (_bar <$> (readIOA t j)))) <*> (join (readIORef <$> (_foo <$> (readIOA t j))))))
+           then do (join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> ((+) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> return 1))
+                   h <- ((+) <$> ((+) <$> (((+) g) <$> ((_foo <$> (readIOA t j)) >>= readIORef)) <*> ((*) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> ((_bar <$> (readIOA t j)) >>= readIORef))) <*> ((*) <$> ((_bar <$> (readIOA t j)) >>= readIORef) <*> ((_foo <$> (readIOA t j)) >>= readIORef)))
                    (a (j + 1) h)
-           else return (g)) in
+           else return g) in
            (a 0 out0)
 
 main =
-  ((\ (d, t) ->
-     do f <- read_int
-        (join (writeIORef <$> (_bar <$> (readIOA t 0)) <*> (return f)))
-        skip_whitespaces
-        e <- read_int
-        (join (writeIORef <$> (_blah <$> (readIOA t 1)) <*> (return e)))
-        titi <- (result t 4)
-        printf "%d" (titi :: Int)::IO()
-        printf "%d" =<< ((join (readIORef <$> (_blah <$> (readIOA t 2)))) :: IO Int)) =<< (array_init_withenv 4 (\ i d ->
-                                                                                                                  do c <- (mktoto i)
-                                                                                                                     return (((), c))) ()))
+  ((array_init_withenv 4 (\ i d ->
+                           do c <- (mktoto i)
+                              return ((), c)) ()) >>= (\ (d, t) ->
+                                                        do f <- read_int
+                                                           (join $ writeIORef <$> (_bar <$> (readIOA t 0)) <*> return f)
+                                                           skip_whitespaces
+                                                           e <- read_int
+                                                           (join $ writeIORef <$> (_blah <$> (readIOA t 1)) <*> return e)
+                                                           titi <- (result t 4)
+                                                           printf "%d" (titi :: Int)::IO()
+                                                           printf "%d" =<< (((_blah <$> (readIOA t 2)) >>= readIORef) :: IO Int)))
 
 

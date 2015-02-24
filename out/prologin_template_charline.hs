@@ -79,22 +79,22 @@ programme_candidat tableau taille =
      let d = (taille - 1)
      let c i g =
            (if (i <= d)
-           then do h <- (((+) g) <$> ((*) <$> ((fmap ord ((readIOA tableau i)))) <*> return (i)))
+           then do h <- (((+) g) <$> ((*) <$> ((fmap ord ((readIOA tableau i)))) <*> return i))
                    printf "%c" =<< ((readIOA tableau i) :: IO Char)
                    (c (i + 1) h)
            else do printf "--\n" ::IO()
-                   return (g)) in
+                   return g) in
            (c 0 out0)
 
 main =
   do taille <- read_int
      skip_whitespaces
-     ((\ (f, tableau) ->
-        do skip_whitespaces
-           printf "%d" =<< ((programme_candidat tableau taille) :: IO Int)
-           printf "\n" ::IO()) =<< (array_init_withenv taille (\ a f ->
-                                                                hGetChar stdin >>= ((\ b ->
-                                                                                      let e = b
-                                                                                              in return (((), e))))) ()))
+     ((array_init_withenv taille (\ a f ->
+                                   hGetChar stdin >>= ((\ b ->
+                                                         let e = b
+                                                                 in return ((), e)))) ()) >>= (\ (f, tableau) ->
+                                                                                                do skip_whitespaces
+                                                                                                   printf "%d" =<< ((programme_candidat tableau taille) :: IO Int)
+                                                                                                   printf "\n" ::IO()))
 
 

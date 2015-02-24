@@ -74,38 +74,38 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 min2_ a b =
-  return ((if (a < b)
-          then a
-          else b))
+  return (if (a < b)
+         then a
+         else b)
 
 pathfind_aux cache tab x y posX posY =
   (if ((posX == (x - 1)) && (posY == (y - 1)))
-  then return (0)
+  then return 0
   else (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
-       then return (((x * y) * 10))
-       else ifM (((==) <$> join (readIOA <$> (readIOA tab posY) <*> return (posX)) <*> return ('#')))
-                (return (((x * y) * 10)))
-                (ifM (((/=) <$> join (readIOA <$> (readIOA cache posY) <*> return (posX)) <*> return ((- 1))))
-                     (join (readIOA <$> (readIOA cache posY) <*> return (posX)))
-                     (do join (writeIOA <$> (readIOA cache posY) <*> return (posX) <*> return (((x * y) * 10)))
+       then return ((x * y) * 10)
+       else ifM ((==) <$> (join $ readIOA <$> (readIOA tab posY) <*> return posX) <*> return '#')
+                (return ((x * y) * 10))
+                (ifM ((/=) <$> (join $ readIOA <$> (readIOA cache posY) <*> return posX) <*> return (- 1))
+                     ((join $ readIOA <$> (readIOA cache posY) <*> return posX))
+                     (do (join $ writeIOA <$> (readIOA cache posY) <*> return posX <*> return ((x * y) * 10))
                          val1 <- (pathfind_aux cache tab x y (posX + 1) posY)
                          val2 <- (pathfind_aux cache tab x y (posX - 1) posY)
                          val3 <- (pathfind_aux cache tab x y posX (posY - 1))
                          val4 <- (pathfind_aux cache tab x y posX (posY + 1))
-                         out0 <- (((+) 1) <$> (join (min2_ <$> (join (min2_ <$> (min2_ val1 val2) <*> (return val3))) <*> (return val4))))
-                         join (writeIOA <$> (readIOA cache posY) <*> return (posX) <*> return (out0))
-                         return (out0)))))
+                         out0 <- (((+) 1) <$> (join $ min2_ <$> (join $ min2_ <$> (min2_ val1 val2) <*> return val3) <*> return val4))
+                         (join $ writeIOA <$> (readIOA cache posY) <*> return posX <*> return out0)
+                         return out0))))
 
 pathfind tab x y =
-  ((\ (m, cache) ->
-     (pathfind_aux cache tab x y 0 0)) =<< (array_init_withenv y (\ i m ->
-                                                                   ((\ (p, tmp) ->
-                                                                      do printf "\n" ::IO()
-                                                                         let l = tmp
-                                                                         return (((), l))) =<< (array_init_withenv x (\ j p ->
-                                                                                                                       do printf "%c" =<< (join (readIOA <$> (readIOA tab i) <*> return (j)) :: IO Char)
-                                                                                                                          let o = (- 1)
-                                                                                                                          return (((), o))) ()))) ()))
+  ((array_init_withenv y (\ i m ->
+                           ((array_init_withenv x (\ j p ->
+                                                    do printf "%c" =<< ((join $ readIOA <$> (readIOA tab i) <*> return j) :: IO Char)
+                                                       let o = (- 1)
+                                                       return ((), o)) ()) >>= (\ (p, tmp) ->
+                                                                                 do printf "\n" ::IO()
+                                                                                    let l = tmp
+                                                                                    return ((), l)))) ()) >>= (\ (m, cache) ->
+                                                                                                                (pathfind_aux cache tab x y 0 0)))
 
 main =
   do x <- read_int
@@ -116,16 +116,16 @@ main =
      printf " " ::IO()
      printf "%d" (y :: Int)::IO()
      printf "\n" ::IO()
-     ((\ (r, e) ->
-        do let tab = e
-           result <- (pathfind tab x y)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv y (\ f r ->
-                                                                          ((\ (u, h) ->
-                                                                             do skip_whitespaces
-                                                                                let q = h
-                                                                                return (((), q))) =<< (array_init_withenv x (\ k u ->
-                                                                                                                              hGetChar stdin >>= ((\ g ->
-                                                                                                                                                    let s = g
-                                                                                                                                                            in return (((), s))))) ()))) ()))
+     ((array_init_withenv y (\ f r ->
+                              ((array_init_withenv x (\ k u ->
+                                                       hGetChar stdin >>= ((\ g ->
+                                                                             let s = g
+                                                                                     in return ((), s)))) ()) >>= (\ (u, h) ->
+                                                                                                                    do skip_whitespaces
+                                                                                                                       let q = h
+                                                                                                                       return ((), q)))) ()) >>= (\ (r, e) ->
+                                                                                                                                                   do let tab = e
+                                                                                                                                                      result <- (pathfind tab x y)
+                                                                                                                                                      printf "%d" (result :: Int)::IO()))
 
 

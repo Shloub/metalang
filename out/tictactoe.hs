@@ -95,9 +95,9 @@ print_state g =
            (if (y <= 2)
            then let q x =
                       (if (x <= 2)
-                      then do ifM (((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y)) <*> return (0)))
+                      then do ifM ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 0)
                                   (printf " " ::IO())
-                                  (ifM (((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y)) <*> return (1)))
+                                  (ifM ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 1)
                                        (printf "O" ::IO())
                                        (printf "X" ::IO()))
                               printf "|" ::IO()
@@ -119,12 +119,12 @@ eval0 g =
                    let lin = (- 1)
                    let o x v w z =
                          (if (x <= 2)
-                         then do ba <- ifM (((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y)) <*> return (0)))
+                         then do ba <- ifM ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 0)
                                            (let bb = (w + 1)
-                                                     in return (bb))
-                                           (return (w))
-                                 colv <- join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y))
-                                 linv <- join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (y)) <*> return (x))
+                                                     in return bb)
+                                           (return w)
+                                 colv <- (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y)
+                                 linv <- (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return y) <*> return x)
                                  let bc = (if ((v == (- 1)) && (colv /= 0))
                                           then let bd = colv
                                                         in bd
@@ -149,11 +149,11 @@ eval0 g =
                          (o 0 col t lin)
            else let l x bj =
                       (if (x <= 2)
-                      then do bk <- ifM (((((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (0)) <*> return (0)) <*> return (x)) <&&> ((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (1)) <*> return (1)) <*> return (x))) <&&> ((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (2)) <*> return (2)) <*> return (x))))
+                      then do bk <- ifM ((((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 0) <*> return x) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1) <*> return x)) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 2) <*> return x))
                                         (let bl = x
-                                                  in return (bl))
-                                        (return (bj))
-                              ifM (((((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (0)) <*> return (2)) <*> return (x)) <&&> ((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (1)) <*> return (1)) <*> return (x))) <&&> ((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (2)) <*> return (0)) <*> return (x))))
+                                                  in return bl)
+                                        (return bj)
+                              ifM ((((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 2) <*> return x) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1) <*> return x)) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 0) <*> return x))
                                   (do let bm = x
                                       (l (x + 1) bm))
                                   ((l (x + 1) bk))
@@ -168,58 +168,58 @@ eval0 g =
 
 apply_move_xy x y g =
   do let player = 2
-     bn <- ifM ((readIORef (_firstToPlay g)))
+     bn <- ifM (readIORef (_firstToPlay g))
                (let bo = 1
-                         in return (bo))
-               (return (player))
-     join (writeIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y) <*> return (bn))
-     (join (writeIORef (_firstToPlay g) <$> (fmap (not) (readIORef (_firstToPlay g)))))
+                         in return bo)
+               (return player)
+     (join $ writeIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y <*> return bn)
+     (writeIORef (_firstToPlay g) =<< (fmap (not) (readIORef (_firstToPlay g))))
 
 apply_move m g =
-  do (join (apply_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> (return g)))
-     return (())
+  do (join $ apply_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> return g)
+     return ()
 
 cancel_move_xy x y g =
-  do join (writeIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y) <*> return (0))
-     (join (writeIORef (_firstToPlay g) <$> (fmap (not) (readIORef (_firstToPlay g)))))
+  do (join $ writeIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y <*> return 0)
+     (writeIORef (_firstToPlay g) =<< (fmap (not) (readIORef (_firstToPlay g))))
      (writeIORef (_ended g) False)
 
 cancel_move m g =
-  do (join (cancel_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> (return g)))
-     return (())
+  do (join $ cancel_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> return g)
+     return ()
 
 can_move_xy x y g =
-  ((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y)) <*> return (0))
+  ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 0)
 
 can_move m g =
-  (join (can_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> (return g)))
+  (join $ can_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> return g)
 
 minmax g =
   do (eval0 g)
-     ifM ((readIORef (_ended g)))
+     ifM (readIORef (_ended g))
          ((readIORef (_note g)))
          (do let maxNote = (- 10000)
-             bp <- ifM ((fmap (not) (readIORef (_firstToPlay g))))
+             bp <- ifM (fmap (not) (readIORef (_firstToPlay g)))
                        (let bq = 10000
-                                 in return (bq))
-                       (return (maxNote))
+                                 in return bq)
+                       (return maxNote)
              let h x br =
                    (if (x <= 2)
                    then let k y bs =
                               (if (y <= 2)
-                              then ifM ((can_move_xy x y g))
+                              then ifM (can_move_xy x y g)
                                        (do (apply_move_xy x y g)
                                            currentNote <- (minmax g)
                                            (cancel_move_xy x y g)
                                            {- Minimum ou Maximum selon le coté ou l'on joue-}
-                                           ifM ((((==) (currentNote > bs)) <$> (readIORef (_firstToPlay g))))
+                                           ifM (((==) (currentNote > bs)) <$> (readIORef (_firstToPlay g)))
                                                (do let bt = currentNote
                                                    (k (y + 1) bt))
                                                ((k (y + 1) bs)))
                                        ((k (y + 1) bs))
                               else (h (x + 1) bs)) in
                               (k 0 br)
-                   else return (br)) in
+                   else return br) in
                    (h 0 bp))
 
 play g =
@@ -229,7 +229,7 @@ play g =
            (if (x <= 2)
            then let f y bv =
                       (if (y <= 2)
-                      then ifM ((can_move_xy x y g))
+                      then ifM (can_move_xy x y g)
                                (do (apply_move_xy x y g)
                                    currentNote <- (minmax g)
                                    printf "%d" (x :: Int)::IO()
@@ -251,17 +251,17 @@ play g =
            else do printf "%d" =<< ((readIORef (_x minMove)) :: IO Int)
                    printf "%d" =<< ((readIORef (_y minMove)) :: IO Int)
                    printf "\n" ::IO()
-                   return (minMove)) in
+                   return minMove) in
            (e 0 minNote)
 
 init0 () =
-  ((\ (b, cases) ->
-     (Gamestate <$> (newIORef cases) <*> (newIORef True) <*> (newIORef 0) <*> (newIORef False))) =<< (array_init_withenv 3 (\ i b ->
-                                                                                                                             ((\ (d, tab) ->
-                                                                                                                                let a = tab
-                                                                                                                                        in return (((), a))) =<< (array_init_withenv 3 (\ j d ->
-                                                                                                                                                                                         let c = 0
-                                                                                                                                                                                                 in return (((), c))) ()))) ()))
+  ((array_init_withenv 3 (\ i b ->
+                           ((array_init_withenv 3 (\ j d ->
+                                                    let c = 0
+                                                            in return ((), c)) ()) >>= (\ (d, tab) ->
+                                                                                         let a = tab
+                                                                                                 in return ((), a)))) ()) >>= (\ (b, cases) ->
+                                                                                                                                (Gamestate <$> (newIORef cases) <*> (newIORef True) <*> (newIORef 0) <*> (newIORef False))))
 
 read_move () =
   do x <- read_int
@@ -274,16 +274,16 @@ main =
   let r i =
         (if (i <= 1)
         then do state <- (init0 ())
-                (join (apply_move <$> (Move <$> (newIORef 1) <*> (newIORef 1)) <*> (return state)))
-                (join (apply_move <$> (Move <$> (newIORef 0) <*> (newIORef 0)) <*> (return state)))
+                (join $ apply_move <$> (Move <$> (newIORef 1) <*> (newIORef 1)) <*> return state)
+                (join $ apply_move <$> (Move <$> (newIORef 0) <*> (newIORef 0)) <*> return state)
                 let s () =
-                      ifM ((fmap (not) (readIORef (_ended state))))
+                      ifM (fmap (not) (readIORef (_ended state)))
                           (do (print_state state)
-                              (join (apply_move <$> (play state) <*> (return state)))
+                              (join $ apply_move <$> (play state) <*> return state)
                               (eval0 state)
                               (print_state state)
-                              ifM ((fmap (not) (readIORef (_ended state))))
-                                  (do (join (apply_move <$> (play state) <*> (return state)))
+                              ifM (fmap (not) (readIORef (_ended state)))
+                                  (do (join $ apply_move <$> (play state) <*> return state)
                                       (eval0 state)
                                       (s ()))
                                   ((s ())))
@@ -292,7 +292,7 @@ main =
                               printf "\n" ::IO()
                               (r (i + 1))) in
                       (s ())
-        else return (())) in
+        else return ()) in
         (r 0)
 
 

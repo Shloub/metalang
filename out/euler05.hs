@@ -45,54 +45,54 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 max2_ a b =
-  return ((if (a > b)
-          then a
-          else b))
+  return (if (a > b)
+         then a
+         else b)
 
 primesfactors n =
-  ((\ (e, tab) ->
-     do let d = 2
-        let f v w =
-              (if ((w /= 1) && ((v * v) <= w))
-              then (if ((w `rem` v) == 0)
-                   then do writeIOA tab v =<< ((+) <$> (readIOA tab v) <*> return (1))
-                           let x = (w `quot` v)
-                           (f v x)
-                   else do let y = (v + 1)
-                           (f y w))
-              else do writeIOA tab w =<< ((+) <$> (readIOA tab w) <*> return (1))
-                      return (tab)) in
-              (f d n)) =<< (array_init_withenv (n + 1) (\ i e ->
-                                                         let c = 0
-                                                                 in return (((), c))) ()))
+  ((array_init_withenv (n + 1) (\ i e ->
+                                 let c = 0
+                                         in return ((), c)) ()) >>= (\ (e, tab) ->
+                                                                      do let d = 2
+                                                                         let f v w =
+                                                                               (if ((w /= 1) && ((v * v) <= w))
+                                                                               then (if ((w `rem` v) == 0)
+                                                                                    then do (writeIOA tab v =<< ((+) <$> (readIOA tab v) <*> return 1))
+                                                                                            let x = (w `quot` v)
+                                                                                            (f v x)
+                                                                                    else do let y = (v + 1)
+                                                                                            (f y w))
+                                                                               else do (writeIOA tab w =<< ((+) <$> (readIOA tab w) <*> return 1))
+                                                                                       return tab) in
+                                                                               (f d n)))
 
 main =
   do let lim = 20
-     ((\ (h, o) ->
-        let s i =
-              (if (i <= lim)
-              then do t <- (primesfactors i)
-                      let u j =
-                            (if (j <= i)
-                            then do writeIOA o j =<< (join (max2_ <$> (readIOA o j) <*> (readIOA t j)))
-                                    (u (j + 1))
-                            else (s (i + 1))) in
-                            (u 1)
-              else do let product = 1
-                      let p k z =
-                            (if (k <= lim)
-                            then do r <- (readIOA o k)
-                                    let q l ba =
-                                          (if (l <= r)
-                                          then do let bb = (ba * k)
-                                                  (q (l + 1) bb)
-                                          else (p (k + 1) ba)) in
-                                          (q 1 z)
-                            else do printf "%d" (z :: Int)::IO()
-                                    printf "\n" ::IO()) in
-                            (p 1 product)) in
-              (s 1)) =<< (array_init_withenv (lim + 1) (\ m h ->
-                                                         let g = 0
-                                                                 in return (((), g))) ()))
+     ((array_init_withenv (lim + 1) (\ m h ->
+                                      let g = 0
+                                              in return ((), g)) ()) >>= (\ (h, o) ->
+                                                                           let s i =
+                                                                                 (if (i <= lim)
+                                                                                 then do t <- (primesfactors i)
+                                                                                         let u j =
+                                                                                               (if (j <= i)
+                                                                                               then do (writeIOA o j =<< (join $ max2_ <$> (readIOA o j) <*> (readIOA t j)))
+                                                                                                       (u (j + 1))
+                                                                                               else (s (i + 1))) in
+                                                                                               (u 1)
+                                                                                 else do let product = 1
+                                                                                         let p k z =
+                                                                                               (if (k <= lim)
+                                                                                               then do r <- (readIOA o k)
+                                                                                                       let q l ba =
+                                                                                                             (if (l <= r)
+                                                                                                             then do let bb = (ba * k)
+                                                                                                                     (q (l + 1) bb)
+                                                                                                             else (p (k + 1) ba)) in
+                                                                                                             (q 1 z)
+                                                                                               else do printf "%d" (z :: Int)::IO()
+                                                                                                       printf "\n" ::IO()) in
+                                                                                               (p 1 product)) in
+                                                                                 (s 1)))
 
 

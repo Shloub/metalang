@@ -78,11 +78,11 @@ nth tab tofind len =
      let b = (len - 1)
      let a i h =
            (if (i <= b)
-           then ifM (((==) <$> (readIOA tab i) <*> return (tofind)))
+           then ifM ((==) <$> (readIOA tab i) <*> return tofind)
                     (do let j = (h + 1)
                         (a (i + 1) j))
                     ((a (i + 1) h))
-           else return (h)) in
+           else return h) in
            (a 0 out0)
 
 main =
@@ -94,13 +94,13 @@ main =
      hGetChar stdin >>= ((\ f ->
                            do let l = f
                               skip_whitespaces
-                              ((\ (d, tab) ->
-                                 do result <- (nth tab l k)
-                                    printf "%d" (result :: Int)::IO()) =<< (array_init_withenv k (\ i d ->
-                                                                                                   do let tmp = '\000'
-                                                                                                      hGetChar stdin >>= ((\ e ->
-                                                                                                                            let m = e
-                                                                                                                                    in let c = m
-                                                                                                                                               in return (((), c))))) ()))))
+                              ((array_init_withenv k (\ i d ->
+                                                       do let tmp = '\000'
+                                                          hGetChar stdin >>= ((\ e ->
+                                                                                let m = e
+                                                                                        in let c = m
+                                                                                                   in return ((), c)))) ()) >>= (\ (d, tab) ->
+                                                                                                                                  do result <- (nth tab l k)
+                                                                                                                                     printf "%d" (result :: Int)::IO()))))
 
 

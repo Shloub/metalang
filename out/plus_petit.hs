@@ -76,9 +76,9 @@ array_init_withenv len f env =
 go0 tab a b =
   do let m = ((a + b) `quot` 2)
      (if (a == m)
-     then ifM (((==) <$> (readIOA tab a) <*> return (m)))
-              (return (b))
-              (return (a))
+     then ifM ((==) <$> (readIOA tab a) <*> return m)
+              (return b)
+              (return a)
      else do let i = a
              let j = b
              let c k l =
@@ -88,8 +88,8 @@ go0 tab a b =
                            then do let n = (k + 1)
                                    (c n l)
                            else do let o = (l - 1)
-                                   writeIOA tab k =<< (readIOA tab o)
-                                   writeIOA tab o e
+                                   (writeIOA tab k =<< (readIOA tab o))
+                                   (writeIOA tab o e)
                                    (c k o))
                    else (if (k < m)
                         then (go0 tab a m)
@@ -104,13 +104,13 @@ main =
      h <- read_int
      let p = h
      skip_whitespaces
-     ((\ (f, tab) ->
-        printf "%d" =<< ((plus_petit0 tab p) :: IO Int)) =<< (array_init_withenv p (\ i f ->
-                                                                                     do let tmp = 0
-                                                                                        g <- read_int
-                                                                                        let q = g
-                                                                                        skip_whitespaces
-                                                                                        let d = q
-                                                                                        return (((), d))) ()))
+     ((array_init_withenv p (\ i f ->
+                              do let tmp = 0
+                                 g <- read_int
+                                 let q = g
+                                 skip_whitespaces
+                                 let d = q
+                                 return ((), d)) ()) >>= (\ (f, tab) ->
+                                                           printf "%d" =<< ((plus_petit0 tab p) :: IO Int)))
 
 

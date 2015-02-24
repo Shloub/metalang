@@ -37,18 +37,18 @@ read_int =
 
 foo () =
   let a = 0
-          in return ({- test -}
-                     let d = (a + 1)
-                             in {- test 2 -}
-                                ())
+          in {- test -}
+             let d = (a + 1)
+                     in {- test 2 -}
+                        return ()
 
 foo2 () =
-  return (())
+  return ()
 
 foo3 () =
-  return ((if (1 == 1)
-          then ()
-          else ()))
+  return (if (1 == 1)
+         then ()
+         else ())
 
 sumdiv n =
   {- On désire renvoyer la somme des diviseurs -}
@@ -64,7 +64,7 @@ sumdiv n =
                         (b (i + 1) f)
                 else {- nop -}
                      (b (i + 1) e))
-           else return (e)) in
+           else return e) in
            (b 1 out0)
 
 main =

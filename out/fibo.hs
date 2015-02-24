@@ -57,7 +57,7 @@ fibo0 a b i =
                    let n = (k + h)
                    let o = tmp
                    (c (j + 1) o n m)
-           else return (l)) in
+           else return l) in
            (c 0 a2 b2 out0)
 
 main =

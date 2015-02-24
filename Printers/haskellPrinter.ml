@@ -53,7 +53,20 @@ let hsapply f fun_ apply_side_effects args =
       if not pure && apply_side_effects then Format.fprintf f "(join $ %a)" p ()
       else Format.fprintf f "(%a)" p ()
 
-
+let commutative = function
+    | Ast.Expr.Add -> Some Ast.Expr.Add
+    | Ast.Expr.Mul -> Some Ast.Expr.Mul
+    | Ast.Expr.Eq -> Some Ast.Expr.Eq
+    | Ast.Expr.Diff -> Some Ast.Expr.Diff
+    | Ast.Expr.Or -> Some Ast.Expr.Or
+    | Ast.Expr.And -> Some Ast.Expr.And
+    | Ast.Expr.Lower -> Some Ast.Expr.Higher
+    | Ast.Expr.LowerEq -> Some Ast.Expr.HigherEq
+    | Ast.Expr.Higher -> Some Ast.Expr.Lower
+    | Ast.Expr.HigherEq -> Some Ast.Expr.LowerEq
+    | Ast.Expr.Div
+    | Ast.Expr.Mod
+    | Ast.Expr.Sub -> None
 
 
 class haskellPrinter = object(self)
@@ -112,11 +125,13 @@ class haskellPrinter = object(self)
   method punop f op = Format.fprintf f "%s" (self#unopstr op)
 
   method binop f a op b =
-    match self#isPure a, self#isPure b, self#binopShortCut op with
-    | true, true, _ -> Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
-    | true, false, None -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op self#expr a self#expr b
-    | _, _, None -> Format.fprintf f "(%a <$> %a <*> %a)" self#pbinopf op self#eM a self#eM b
-    | _, _, Some s -> Format.fprintf f "(%a %s %a)" self#eM a s self#eM b
+    match self#isPure a, self#isPure b, self#binopShortCut op, commutative op with
+    | true, true, _, _ -> Format.fprintf f "(%a %a %a)" self#expr a self#pbinop op self#expr b
+    | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op self#expr a self#expr b
+    | false, true, None, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op2 self#expr b self#expr a
+    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" self#pbinopf op self#eM a self#eM b
+    | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" self#eM a s self#eM b
+
   method unop f a op =
     if self#isPure a then
       Format.fprintf f "(%a %a)"self#punop op self#expr a

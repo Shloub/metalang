@@ -68,44 +68,44 @@ main =
      skip_whitespaces
      printf "%d" (len :: Int)::IO()
      printf "=len\n" ::IO()
-     ((\ (h, tab1) ->
-        do let w = (len - 1)
-           let v i =
-                 (if (i <= w)
-                 then do printf "%d" (i :: Int)::IO()
-                         printf "=>" ::IO()
-                         printf "%d" =<< ((readIOA tab1 i) :: IO Int)
-                         printf "\n" ::IO()
-                         (v (i + 1))
-                 else do u <- read_int
-                         let ba = u
-                         skip_whitespaces
-                         ((\ (l, tab2) ->
-                            do let q = (ba - 2)
-                               let m bb =
-                                     (if (bb <= q)
-                                     then do let p = (ba - 1)
-                                             let o j =
-                                                   (if (j <= p)
-                                                   then do printf "%d" =<< (join (readIOA <$> (readIOA tab2 bb) <*> return (j)) :: IO Int)
-                                                           printf " " ::IO()
-                                                           (o (j + 1))
-                                                   else do printf "\n" ::IO()
-                                                           (m (bb + 1))) in
-                                                   (o 0)
-                                     else return (())) in
-                                     (m 0)) =<< (array_init_withenv (ba - 1) (\ c l ->
-                                                                               ((\ (s, e) ->
-                                                                                  let k = e
-                                                                                          in return (((), k))) =<< (array_init_withenv ba (\ f s ->
-                                                                                                                                            do d <- read_int
-                                                                                                                                               skip_whitespaces
-                                                                                                                                               let r = d
-                                                                                                                                               return (((), r))) ()))) ()))) in
-                 (v 0)) =<< (array_init_withenv len (\ a h ->
-                                                      do b <- read_int
-                                                         skip_whitespaces
-                                                         let g = b
-                                                         return (((), g))) ()))
+     ((array_init_withenv len (\ a h ->
+                                do b <- read_int
+                                   skip_whitespaces
+                                   let g = b
+                                   return ((), g)) ()) >>= (\ (h, tab1) ->
+                                                             do let w = (len - 1)
+                                                                let v i =
+                                                                      (if (i <= w)
+                                                                      then do printf "%d" (i :: Int)::IO()
+                                                                              printf "=>" ::IO()
+                                                                              printf "%d" =<< ((readIOA tab1 i) :: IO Int)
+                                                                              printf "\n" ::IO()
+                                                                              (v (i + 1))
+                                                                      else do u <- read_int
+                                                                              let ba = u
+                                                                              skip_whitespaces
+                                                                              ((array_init_withenv (ba - 1) (\ c l ->
+                                                                                                              ((array_init_withenv ba (\ f s ->
+                                                                                                                                        do d <- read_int
+                                                                                                                                           skip_whitespaces
+                                                                                                                                           let r = d
+                                                                                                                                           return ((), r)) ()) >>= (\ (s, e) ->
+                                                                                                                                                                     let k = e
+                                                                                                                                                                             in return ((), k)))) ()) >>= (\ (l, tab2) ->
+                                                                                                                                                                                                            do let q = (ba - 2)
+                                                                                                                                                                                                               let m bb =
+                                                                                                                                                                                                                     (if (bb <= q)
+                                                                                                                                                                                                                     then do let p = (ba - 1)
+                                                                                                                                                                                                                             let o j =
+                                                                                                                                                                                                                                   (if (j <= p)
+                                                                                                                                                                                                                                   then do printf "%d" =<< ((join $ readIOA <$> (readIOA tab2 bb) <*> return j) :: IO Int)
+                                                                                                                                                                                                                                           printf " " ::IO()
+                                                                                                                                                                                                                                           (o (j + 1))
+                                                                                                                                                                                                                                   else do printf "\n" ::IO()
+                                                                                                                                                                                                                                           (m (bb + 1))) in
+                                                                                                                                                                                                                                   (o 0)
+                                                                                                                                                                                                                     else return ()) in
+                                                                                                                                                                                                                     (m 0)))) in
+                                                                      (v 0)))
 
 

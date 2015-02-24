@@ -64,10 +64,10 @@ score () =
      let a i d =
            (if (i <= len)
            then hGetChar stdin >>= ((\ c ->
-                                      do e <- (((+) d) <$> ((+) <$> ((-) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('A'))))) <*> return (1)))
+                                      do e <- (((+) d) <$> ((+) <$> ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return 'A')))) <*> return 1))
                                          {-		print c print " " print sum print " " -}
                                          (a (i + 1) e)))
-           else return (d)) in
+           else return d) in
            (a 1 sum)
 
 main =

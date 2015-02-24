@@ -78,60 +78,60 @@ find0 len tab cache x y =
 	Cette fonction est récursive
 	-}
   (if (y == (len - 1))
-  then join (readIOA <$> (readIOA tab y) <*> return (x))
+  then (join $ readIOA <$> (readIOA tab y) <*> return x)
   else (if (x > y)
-       then return ((- 10000))
-       else ifM (((/=) <$> join (readIOA <$> (readIOA cache y) <*> return (x)) <*> return (0)))
-                (join (readIOA <$> (readIOA cache y) <*> return (x)))
+       then return (- 10000)
+       else ifM ((/=) <$> (join $ readIOA <$> (readIOA cache y) <*> return x) <*> return 0)
+                ((join $ readIOA <$> (readIOA cache y) <*> return x))
                 (do let result = 0
                     out0 <- (find0 len tab cache x (y + 1))
                     out1 <- (find0 len tab cache (x + 1) (y + 1))
                     r <- (if (out0 > out1)
-                         then do s <- (((+) out0) <$> join (readIOA <$> (readIOA tab y) <*> return (x)))
-                                 return (s)
-                         else do t <- (((+) out1) <$> join (readIOA <$> (readIOA tab y) <*> return (x)))
-                                 return (t))
-                    join (writeIOA <$> (readIOA cache y) <*> return (x) <*> return (r))
-                    return (r))))
+                         then do s <- (((+) out0) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
+                                 return s
+                         else do t <- (((+) out1) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
+                                 return t)
+                    (join $ writeIOA <$> (readIOA cache y) <*> return x <*> return r)
+                    return r)))
 
 find len tab =
-  ((\ (b, tab2) ->
-     (find0 len tab tab2 0 0)) =<< (array_init_withenv len (\ i b ->
-                                                             ((\ (d, tab3) ->
-                                                                let a = tab3
-                                                                        in return (((), a))) =<< (array_init_withenv (i + 1) (\ j d ->
-                                                                                                                               let c = 0
-                                                                                                                                       in return (((), c))) ()))) ()))
+  ((array_init_withenv len (\ i b ->
+                             ((array_init_withenv (i + 1) (\ j d ->
+                                                            let c = 0
+                                                                    in return ((), c)) ()) >>= (\ (d, tab3) ->
+                                                                                                 let a = tab3
+                                                                                                         in return ((), a)))) ()) >>= (\ (b, tab2) ->
+                                                                                                                                        (find0 len tab tab2 0 0)))
 
 main =
   do let len = 0
      q <- read_int
      let u = q
      skip_whitespaces
-     ((\ (f, tab) ->
-        do printf "%d" =<< ((find u tab) :: IO Int)
-           printf "\n" ::IO()
-           let m = (u - 1)
-           let g k =
-                 (if (k <= m)
-                 then let h l =
-                            (if (l <= k)
-                            then do printf "%d" =<< (join (readIOA <$> (readIOA tab k) <*> return (l)) :: IO Int)
-                                    printf " " ::IO()
-                                    (h (l + 1))
-                            else do printf "\n" ::IO()
-                                    (g (k + 1))) in
-                            (h 0)
-                 else return (())) in
-                 (g 0)) =<< (array_init_withenv u (\ i f ->
-                                                    ((\ (o, tab2) ->
-                                                       let e = tab2
-                                                               in return (((), e))) =<< (array_init_withenv (i + 1) (\ j o ->
-                                                                                                                      do let tmp = 0
-                                                                                                                         p <- read_int
-                                                                                                                         let v = p
-                                                                                                                         skip_whitespaces
-                                                                                                                         let n = v
-                                                                                                                         return (((), n))) ()))) ()))
+     ((array_init_withenv u (\ i f ->
+                              ((array_init_withenv (i + 1) (\ j o ->
+                                                             do let tmp = 0
+                                                                p <- read_int
+                                                                let v = p
+                                                                skip_whitespaces
+                                                                let n = v
+                                                                return ((), n)) ()) >>= (\ (o, tab2) ->
+                                                                                          let e = tab2
+                                                                                                  in return ((), e)))) ()) >>= (\ (f, tab) ->
+                                                                                                                                 do printf "%d" =<< ((find u tab) :: IO Int)
+                                                                                                                                    printf "\n" ::IO()
+                                                                                                                                    let m = (u - 1)
+                                                                                                                                    let g k =
+                                                                                                                                          (if (k <= m)
+                                                                                                                                          then let h l =
+                                                                                                                                                     (if (l <= k)
+                                                                                                                                                     then do printf "%d" =<< ((join $ readIOA <$> (readIOA tab k) <*> return l) :: IO Int)
+                                                                                                                                                             printf " " ::IO()
+                                                                                                                                                             (h (l + 1))
+                                                                                                                                                     else do printf "\n" ::IO()
+                                                                                                                                                             (g (k + 1))) in
+                                                                                                                                                     (h 0)
+                                                                                                                                          else return ()) in
+                                                                                                                                          (g 0)))
 
 

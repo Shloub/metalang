@@ -20,7 +20,7 @@ foo () =
   let c i =
         (if (i <= 10)
         then (c (i + 1))
-        else return (0)) in
+        else return 0) in
         (c 0)
 
 bar () =
@@ -28,10 +28,10 @@ bar () =
         (if (i <= 10)
         then do let a = 0
                 (b (i + 1))
-        else return (0)) in
+        else return 0) in
         (b 0)
 
 main =
-  return (())
+  return ()
 
 

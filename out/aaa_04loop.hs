@@ -24,10 +24,10 @@ h i =
      let a d =
            (if (d <= (i + 2))
            then (if ((i `rem` d) == 5)
-                then return (True)
+                then return True
                 else do let e = (d + 1)
                         (a e))
-           else return (False)) in
+           else return False) in
            (a j)
 
 main =

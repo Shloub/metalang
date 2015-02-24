@@ -17,12 +17,12 @@ main :: IO ()
 
 
 f i =
-  return ((if (i == 0)
-          then True
-          else False))
+  return (if (i == 0)
+         then True
+         else False)
 
 main =
-  do ifM ((f 4))
+  do ifM (f 4)
          (printf "true <-\n ->\n" ::IO())
          (printf "false <-\n ->\n" ::IO())
      printf "small test end\n" ::IO()

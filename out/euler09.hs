@@ -40,7 +40,7 @@ main =
                            else (e (b + 1)))
                    else (d (a + 1))) in
                    (e (a + 1))
-        else return (())) in
+        else return ()) in
         (d 1)
 
 

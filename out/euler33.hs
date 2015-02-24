@@ -17,21 +17,21 @@ main :: IO ()
 
 
 max2_ a b =
-  return ((if (a > b)
-          then a
-          else b))
+  return (if (a > b)
+         then a
+         else b)
 
 min2_ a b =
-  return ((if (a < b)
-          then a
-          else b))
+  return (if (a < b)
+         then a
+         else b)
 
 pgcd a b =
   do c <- (min2_ a b)
      d <- (max2_ a b)
      let reste = (d `rem` c)
      (if (reste == 0)
-     then return (c)
+     then return c
      else (pgcd c reste))
 
 main =

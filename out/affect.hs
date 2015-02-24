@@ -83,11 +83,11 @@ data Toto = Toto {
 
 mktoto v1 =
   do t <- (Toto <$> (newIORef v1) <*> (newIORef v1) <*> (newIORef v1))
-     return (t)
+     return t
 
 mktoto2 v1 =
   do t <- (Toto <$> (newIORef (v1 + 3)) <*> (newIORef (v1 + 2)) <*> (newIORef (v1 + 1)))
-     return (t)
+     return t
 
 result t_ t2_ =
   do let t = t_
@@ -96,18 +96,18 @@ result t_ t2_ =
      let k = t2
      let l = t2
      let m = k
-     (join (writeIORef (_blah l) <$> ((+) <$> (readIORef (_blah l)) <*> return (1))))
+     (writeIORef (_blah l) =<< ((+) <$> (readIORef (_blah l)) <*> return 1))
      let len = 1
-     ((\ (b, cache0) ->
-        ((\ (d, cache1) ->
-           do let cache2 = cache0
-              let n = cache1
-              let o = n
-              ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))) =<< (array_init_withenv len (\ j d ->
-                                                                                                                                                                                                               let c = j
-                                                                                                                                                                                                                       in return (((), c))) ()))) =<< (array_init_withenv len (\ i b ->
-                                                                                                                                                                                                                                                                                let a = (- i)
-                                                                                                                                                                                                                                                                                        in return (((), a))) ()))
+     ((array_init_withenv len (\ i b ->
+                                let a = (- i)
+                                        in return ((), a)) ()) >>= (\ (b, cache0) ->
+                                                                     ((array_init_withenv len (\ j d ->
+                                                                                                let c = j
+                                                                                                        in return ((), c)) ()) >>= (\ (d, cache1) ->
+                                                                                                                                     do let cache2 = cache0
+                                                                                                                                        let n = cache1
+                                                                                                                                        let o = n
+                                                                                                                                        ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))))))
 
 main =
   do t <- (mktoto 4)

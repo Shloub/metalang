@@ -27,21 +27,21 @@ is_pair i =
                                                in let g = 8
                                                           in g
                                   else c)
-                                  in return (((i `rem` 2) == 0))
+                                  in return ((i `rem` 2) == 0)
      (if (i < 10)
      then do let h = 2
              (if (i == 0)
              then let k = 4
-                          in return (True)
+                          in return True
              else do let l = 3
                      (if (i == 2)
                      then let m = 4
-                                  in return (True)
+                                  in return True
                      else do let n = 5
                              (a n)))
      else (a j))
 
 main =
-  return (())
+  return ()
 
 

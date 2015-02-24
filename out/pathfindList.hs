@@ -75,10 +75,10 @@ array_init_withenv len f env =
 
 pathfind_aux cache tab len pos =
   (if (pos >= (len - 1))
-  then return (0)
-  else ifM (((/=) <$> (readIOA cache pos) <*> return ((- 1))))
+  then return 0
+  else ifM ((/=) <$> (readIOA cache pos) <*> return (- 1))
            ((readIOA cache pos))
-           (do writeIOA cache pos (len * 2)
+           (do (writeIOA cache pos (len * 2))
                posval <- (pathfind_aux cache tab len =<< (readIOA tab pos))
                oneval <- (pathfind_aux cache tab len (pos + 1))
                let out0 = 0
@@ -87,28 +87,28 @@ pathfind_aux cache tab len pos =
                                     in h
                        else let j = (1 + oneval)
                                     in j)
-               writeIOA cache pos g
-               return (g)))
+               (writeIOA cache pos g)
+               return g))
 
 pathfind tab len =
-  ((\ (b, cache) ->
-     (pathfind_aux cache tab len 0)) =<< (array_init_withenv len (\ i b ->
-                                                                   let a = (- 1)
-                                                                           in return (((), a))) ()))
+  ((array_init_withenv len (\ i b ->
+                             let a = (- 1)
+                                     in return ((), a)) ()) >>= (\ (b, cache) ->
+                                                                  (pathfind_aux cache tab len 0)))
 
 main =
   do let len = 0
      f <- read_int
      let k = f
      skip_whitespaces
-     ((\ (d, tab) ->
-        do result <- (pathfind tab k)
-           printf "%d" (result :: Int)::IO()) =<< (array_init_withenv k (\ i d ->
-                                                                          do let tmp = 0
-                                                                             e <- read_int
-                                                                             let l = e
-                                                                             skip_whitespaces
-                                                                             let c = l
-                                                                             return (((), c))) ()))
+     ((array_init_withenv k (\ i d ->
+                              do let tmp = 0
+                                 e <- read_int
+                                 let l = e
+                                 skip_whitespaces
+                                 let c = l
+                                 return ((), c)) ()) >>= (\ (d, tab) ->
+                                                           do result <- (pathfind tab k)
+                                                              printf "%d" (result :: Int)::IO()))
 
 

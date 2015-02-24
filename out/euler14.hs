@@ -45,39 +45,39 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 next0 n =
-  return ((if ((n `rem` 2) == 0)
-          then (n `quot` 2)
-          else ((3 * n) + 1)))
+  return (if ((n `rem` 2) == 0)
+         then (n `quot` 2)
+         else ((3 * n) + 1))
 
 find n m =
   (if (n == 1)
-  then return (1)
+  then return 1
   else (if (n >= 1000000)
-       then (((+) 1) <$> (join (find <$> (next0 n) <*> (return m))))
-       else ifM (((/=) <$> (readIOA m n) <*> return (0)))
+       then (((+) 1) <$> (join $ find <$> (next0 n) <*> return m))
+       else ifM ((/=) <$> (readIOA m n) <*> return 0)
                 ((readIOA m n))
-                (do writeIOA m n =<< (((+) 1) <$> (join (find <$> (next0 n) <*> (return m))))
+                (do (writeIOA m n =<< (((+) 1) <$> (join $ find <$> (next0 n) <*> return m)))
                     (readIOA m n))))
 
 main =
-  ((\ (b, m) ->
-     do let max0 = 0
-        let maxi = 0
-        let c i d e =
-              (if (i <= 999)
-              then {- normalement on met 999999 mais ça dépasse les int32... -}
-                   do n2 <- (find i m)
-                      (if (n2 > d)
-                      then do let f = n2
-                              let g = i
-                              (c (i + 1) f g)
-                      else (c (i + 1) d e))
-              else do printf "%d" (d :: Int)::IO()
-                      printf "\n" ::IO()
-                      printf "%d" (e :: Int)::IO()
-                      printf "\n" ::IO()) in
-              (c 1 max0 maxi)) =<< (array_init_withenv 1000000 (\ j b ->
-                                                                 let a = 0
-                                                                         in return (((), a))) ()))
+  ((array_init_withenv 1000000 (\ j b ->
+                                 let a = 0
+                                         in return ((), a)) ()) >>= (\ (b, m) ->
+                                                                      do let max0 = 0
+                                                                         let maxi = 0
+                                                                         let c i d e =
+                                                                               (if (i <= 999)
+                                                                               then {- normalement on met 999999 mais ça dépasse les int32... -}
+                                                                                    do n2 <- (find i m)
+                                                                                       (if (n2 > d)
+                                                                                       then do let f = n2
+                                                                                               let g = i
+                                                                                               (c (i + 1) f g)
+                                                                                       else (c (i + 1) d e))
+                                                                               else do printf "%d" (d :: Int)::IO()
+                                                                                       printf "\n" ::IO()
+                                                                                       printf "%d" (e :: Int)::IO()
+                                                                                       printf "\n" ::IO()) in
+                                                                               (c 1 max0 maxi)))
 
 

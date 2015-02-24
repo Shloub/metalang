@@ -79,37 +79,37 @@ programme_candidat tableau1 taille1 tableau2 taille2 =
      let h = (taille1 - 1)
      let g i p =
            (if (i <= h)
-           then do q <- (((+) p) <$> ((*) <$> ((fmap ord ((readIOA tableau1 i)))) <*> return (i)))
+           then do q <- (((+) p) <$> ((*) <$> ((fmap ord ((readIOA tableau1 i)))) <*> return i))
                    printf "%c" =<< ((readIOA tableau1 i) :: IO Char)
                    (g (i + 1) q)
            else do printf "--\n" ::IO()
                    let f = (taille2 - 1)
                    let e j r =
                          (if (j <= f)
-                         then do s <- (((+) r) <$> ((*) <$> ((fmap ord ((readIOA tableau2 j)))) <*> return ((j * 100))))
+                         then do s <- (((+) r) <$> ((*) <$> ((fmap ord ((readIOA tableau2 j)))) <*> return (j * 100)))
                                  printf "%c" =<< ((readIOA tableau2 j) :: IO Char)
                                  (e (j + 1) s)
                          else do printf "--\n" ::IO()
-                                 return (r)) in
+                                 return r) in
                          (e 0 p)) in
            (g 0 out0)
 
 main =
   do taille1 <- read_int
      skip_whitespaces
-     ((\ (l, tableau1) ->
-        do skip_whitespaces
-           taille2 <- read_int
-           skip_whitespaces
-           ((\ (o, tableau2) ->
-              do skip_whitespaces
-                 printf "%d" =<< ((programme_candidat tableau1 taille1 tableau2 taille2) :: IO Int)
-                 printf "\n" ::IO()) =<< (array_init_withenv taille2 (\ c o ->
-                                                                       hGetChar stdin >>= ((\ d ->
-                                                                                             let m = d
-                                                                                                     in return (((), m))))) ()))) =<< (array_init_withenv taille1 (\ a l ->
-                                                                                                                                                                    hGetChar stdin >>= ((\ b ->
-                                                                                                                                                                                          let k = b
-                                                                                                                                                                                                  in return (((), k))))) ()))
+     ((array_init_withenv taille1 (\ a l ->
+                                    hGetChar stdin >>= ((\ b ->
+                                                          let k = b
+                                                                  in return ((), k)))) ()) >>= (\ (l, tableau1) ->
+                                                                                                 do skip_whitespaces
+                                                                                                    taille2 <- read_int
+                                                                                                    skip_whitespaces
+                                                                                                    ((array_init_withenv taille2 (\ c o ->
+                                                                                                                                   hGetChar stdin >>= ((\ d ->
+                                                                                                                                                         let m = d
+                                                                                                                                                                 in return ((), m)))) ()) >>= (\ (o, tableau2) ->
+                                                                                                                                                                                                do skip_whitespaces
+                                                                                                                                                                                                   printf "%d" =<< ((programme_candidat tableau1 taille1 tableau2 taille2) :: IO Int)
+                                                                                                                                                                                                   printf "\n" ::IO()))))
 
 

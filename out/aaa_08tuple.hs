@@ -60,12 +60,12 @@ main =
      d <- read_int
      skip_whitespaces
      t <- (Toto <$> (newIORef (c, d)) <*> (newIORef bar_))
-     ((\ (a, b) ->
-        do printf "%d" (a :: Int)::IO()
-           printf " " ::IO()
-           printf "%d" (b :: Int)::IO()
-           printf " " ::IO()
-           printf "%d" =<< ((readIORef (_bar t)) :: IO Int)
-           printf "\n" ::IO()) =<< (readIORef (_foo t)))
+     ((readIORef (_foo t)) >>= (\ (a, b) ->
+                                 do printf "%d" (a :: Int)::IO()
+                                    printf " " ::IO()
+                                    printf "%d" (b :: Int)::IO()
+                                    printf " " ::IO()
+                                    printf "%d" =<< ((readIORef (_bar t)) :: IO Int)
+                                    printf "\n" ::IO()))
 
 

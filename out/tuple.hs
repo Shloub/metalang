@@ -13,7 +13,7 @@ main :: IO ()
 
 f tuple0 =
   ((\ (a, b) ->
-     return (((a + 1), (b + 1)))) tuple0)
+     return ((a + 1), (b + 1))) tuple0)
 
 main =
   do t <- (f (0, 1))

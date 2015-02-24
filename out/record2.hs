@@ -65,10 +65,10 @@ data Toto = Toto {
 
 mktoto v1 =
   do t <- (Toto <$> (newIORef v1) <*> (newIORef 0) <*> (newIORef 0))
-     return (t)
+     return t
 
 result t =
-  do (join (writeIORef (_blah t) <$> ((+) <$> (readIORef (_blah t)) <*> return (1))))
+  do (writeIORef (_blah t) =<< ((+) <$> (readIORef (_blah t)) <*> return 1))
      ((+) <$> ((+) <$> (readIORef (_foo t)) <*> ((*) <$> (readIORef (_blah t)) <*> (readIORef (_bar t)))) <*> ((*) <$> (readIORef (_bar t)) <*> (readIORef (_foo t))))
 
 main =

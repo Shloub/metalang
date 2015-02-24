@@ -12,7 +12,7 @@ main :: IO ()
 
 
 foo a b =
-  return ((a + b))
+  return (a + b)
 
 main =
   printf "%d" (10 :: Int)::IO()
