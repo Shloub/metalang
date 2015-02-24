@@ -17,12 +17,13 @@ import Data.IORef
 	   if aa then return True
 		 else b
 
-main :: IO ()
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
+
+main :: IO ()
+
 
 skip_whitespaces :: IO ()
 skip_whitespaces =
@@ -33,7 +34,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                         
 writeIOA :: IOArray Int a -> Int -> a -> IO ()
 writeIOA = writeArray
 
@@ -51,7 +52,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                         
 
 
 max2_ a b =

@@ -7,22 +7,13 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-(<&&>) a b =
-	do aa <- a
-	   if aa then b
-		 else return False
-
-(<||>) a b =
-	do aa <- a
-	   if aa then return True
-		 else b
-
-main :: IO ()
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
+
+main :: IO ()
+
 
 read_int_a :: Int -> IO Int
 read_int_a b =
@@ -42,7 +33,7 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
-                                                                                                                                                                                                                                                                        
+                                                                                                                                          
 
 data Intlist = Intlist {
                           _head0 :: IORef Int,
