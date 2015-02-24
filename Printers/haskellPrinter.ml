@@ -482,7 +482,7 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
         macros;
       ()
 
-  method header f opts =
+  method header binand binor ifm f opts =
     let need_stdinsep = opts.AstFun.hasSkip in
     let need_readint = Ast.TypeSet.mem (Type.integer) opts.AstFun.reads in
     let need_readchar = Ast.TypeSet.mem (Type.char) opts.AstFun.reads in
@@ -497,28 +497,34 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
       "Data.IORef"
     ] in
     Format.fprintf f "@[%a@]
-
-(<&&>) a b =
-	do aa <- a
-	   if aa then b
-		 else return False
-
-(<||>) a b =
-	do aa <- a
-	   if aa then return True
-		 else b
-
+%a%a%a
 main :: IO ()
 
-ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
 @[%a@]@[%a@]@[%a@]
 "
           (Printer.print_list (fun f s -> Format.fprintf f "import %s" s)
              (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
           imports
+(fun f () -> if binand then Format.fprintf f "
+(<&&>) a b =
+	do aa <- a
+	   if aa then b
+		 else return False
+") ()
+(fun f () -> if binor then Format.fprintf f "
+(<||>) a b =
+	do aa <- a
+	   if aa then return True
+		 else b
+") ()
+(fun f () -> if ifm then Format.fprintf f "
+ifM :: IO Bool -> IO a -> IO a -> IO a
+ifM cond if_ els_ =
+  do b <- cond
+     if b then if_ else els_
+") ()
+
+
           (fun f () -> if need_stdinsep then
             Format.fprintf f "
 skip_whitespaces :: IO ()
@@ -575,8 +581,25 @@ array_init_withenv len f env =
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
     side_effects <- prog.AstFun.side_effects;
+    let unsafeop op = AstFun.existsExpr (fun e ->
+      match E.unfix e with
+      | E.BinOp (a, op, b) ->
+          IntMap.find (E.Fixed.annot a) prog.AstFun.side_effects ||
+          IntMap.find (E.Fixed.annot b) prog.AstFun.side_effects
+        | _ -> false
+      ) prog.AstFun.declarations
+    in
+    let need_readint = Ast.TypeSet.mem (Type.integer) prog.AstFun.options.AstFun.reads in
+    let ifm = prog.AstFun.options.AstFun.hasSkip || need_readint || AstFun.existsExpr (fun e ->
+      match E.unfix e with
+      | E.If (a, b, c) ->
+          IntMap.find (E.Fixed.annot a) prog.AstFun.side_effects ||
+          IntMap.find (E.Fixed.annot b) prog.AstFun.side_effects ||
+          IntMap.find (E.Fixed.annot c) prog.AstFun.side_effects
+        | _ -> false
+      ) prog.AstFun.declarations in
     Format.fprintf f "%a@\n@[%a@]@\n"
-    self#header prog.AstFun.options
+    (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) ifm) prog.AstFun.options
     (Printer.print_list self#decl
        (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
 prog.AstFun.declarations
