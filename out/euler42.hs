@@ -73,7 +73,7 @@ score () =
      let b i f =
            (if (i <= len)
            then hGetChar stdin >>= ((\ c ->
-                                      do g <- (((+) f) <$> ((+) <$> ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return 'A')))) <*> return 1))
+                                      do g <- (((+) f) <$> (((+) 1) <$> ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return 'A'))))))
                                          {-		print c print " " print sum print " " -}
                                          (b (i + 1) g)))
            else ifM (is_triangular f)

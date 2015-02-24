@@ -52,7 +52,7 @@ periode restes len a b =
                 let e = (l - 1)
                 let d i =
                       (if (i <= e)
-                      then ifM ((==) <$> (readIOA restes i) <*> return reste)
+                      then ifM (((==) reste) <$> (readIOA restes i))
                                (return (l - i))
                                ((d (i + 1)))
                       else do (writeIOA restes l reste)

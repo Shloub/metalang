@@ -81,7 +81,7 @@ programme_candidat tableau x y =
            then do let g = (x - 1)
                    let f j q =
                          (if (j <= g)
-                         then do r <- (((+) q) <$> ((*) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j) <*> return ((i * 2) + j)))
+                         then do r <- (((+) q) <$> (((*) ((i * 2) + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
                                  (f (j + 1) r)
                          else (e (i + 1) q)) in
                          (f 0 p)

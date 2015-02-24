@@ -79,14 +79,14 @@ programme_candidat tableau1 taille1 tableau2 taille2 =
      let h = (taille1 - 1)
      let g i p =
            (if (i <= h)
-           then do q <- (((+) p) <$> ((*) <$> ((fmap ord ((readIOA tableau1 i)))) <*> return i))
+           then do q <- (((+) p) <$> (((*) i) <$> ((fmap ord ((readIOA tableau1 i))))))
                    printf "%c" =<< ((readIOA tableau1 i) :: IO Char)
                    (g (i + 1) q)
            else do printf "--\n" ::IO()
                    let f = (taille2 - 1)
                    let e j r =
                          (if (j <= f)
-                         then do s <- (((+) r) <$> ((*) <$> ((fmap ord ((readIOA tableau2 j)))) <*> return (j * 100)))
+                         then do s <- (((+) r) <$> (((*) (j * 100)) <$> ((fmap ord ((readIOA tableau2 j))))))
                                  printf "%c" =<< ((readIOA tableau2 j) :: IO Char)
                                  (e (j + 1) s)
                          else do printf "--\n" ::IO()

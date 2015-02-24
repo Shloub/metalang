@@ -45,7 +45,7 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 result sum t maxIndex cache =
-  ifM ((/=) <$> (join $ readIOA <$> (readIOA cache sum) <*> return maxIndex) <*> return 0)
+  ifM (((/=) 0) <$> (join $ readIOA <$> (readIOA cache sum) <*> return maxIndex))
       ((join $ readIOA <$> (readIOA cache sum) <*> return maxIndex))
       ((if ((sum == 0) || (maxIndex == 0))
        then return 1

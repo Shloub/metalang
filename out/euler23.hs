@@ -49,7 +49,7 @@ eratostene t max0 =
      let w = (max0 - 1)
      let u i bl =
            (if (i <= w)
-           then ifM ((==) <$> (readIOA t i) <*> return i)
+           then ifM (((==) i) <$> (readIOA t i))
                     (do let bm = (bl + 1)
                         let j = (i * i)
                         let v bn =
@@ -70,7 +70,7 @@ fillPrimesFactors t n primes nprimes =
            then do d <- (readIOA primes i)
                    let h bq =
                          (if ((bq `rem` d) == 0)
-                         then do (writeIOA t d =<< ((+) <$> (readIOA t d) <*> return 1))
+                         then do (writeIOA t d =<< (((+) 1) <$> (readIOA t d)))
                                  let br = (bq `quot` d)
                                  (h br)
                          else (if (bq == 1)
@@ -82,7 +82,7 @@ fillPrimesFactors t n primes nprimes =
 
 sumdivaux2 t n i =
   let f bs =
-        ifM (return (bs < n) <&&> ((==) <$> (readIOA t bs) <*> return 0))
+        ifM (return (bs < n) <&&> (((==) 0) <$> (readIOA t bs)))
             (do let bt = (bs + 1)
                 (f bt))
             (return bs) in
@@ -91,7 +91,7 @@ sumdivaux2 t n i =
 sumdivaux t n i =
   (if (i > n)
   then return 1
-  else ifM ((==) <$> (readIOA t i) <*> return 0)
+  else ifM (((==) 0) <$> (readIOA t i))
            ((sumdivaux t n =<< (sumdivaux2 t n (i + 1))))
            (do o <- (sumdivaux t n =<< (sumdivaux2 t n (i + 1)))
                let out0 = 0
@@ -125,7 +125,7 @@ main =
                                                                                                                                                          let bk = (maximumprimes - 1)
                                                                                                                                                          let bj k by =
                                                                                                                                                                 (if (k <= bk)
-                                                                                                                                                                then ifM ((==) <$> (readIOA era k) <*> return k)
+                                                                                                                                                                then ifM (((==) k) <$> (readIOA era k))
                                                                                                                                                                          (do (writeIOA primes by k)
                                                                                                                                                                              let bz = (by + 1)
                                                                                                                                                                              (bj (k + 1) bz))

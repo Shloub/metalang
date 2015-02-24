@@ -57,12 +57,12 @@ primesfactors n =
                                                                          let f v w =
                                                                                (if ((w /= 1) && ((v * v) <= w))
                                                                                then (if ((w `rem` v) == 0)
-                                                                                    then do (writeIOA tab v =<< ((+) <$> (readIOA tab v) <*> return 1))
+                                                                                    then do (writeIOA tab v =<< (((+) 1) <$> (readIOA tab v)))
                                                                                             let x = (w `quot` v)
                                                                                             (f v x)
                                                                                     else do let y = (v + 1)
                                                                                             (f y w))
-                                                                               else do (writeIOA tab w =<< ((+) <$> (readIOA tab w) <*> return 1))
+                                                                               else do (writeIOA tab w =<< (((+) 1) <$> (readIOA tab w)))
                                                                                        return tab) in
                                                                                (f d n)))
 

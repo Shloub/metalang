@@ -90,7 +90,7 @@ result t len =
      let b = (len - 1)
      let a j g =
            (if (j <= b)
-           then do (join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> ((+) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> return 1))
+           then do (join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> (((+) 1) <$> ((_blah <$> (readIOA t j)) >>= readIORef)))
                    h <- ((+) <$> ((+) <$> (((+) g) <$> ((_foo <$> (readIOA t j)) >>= readIORef)) <*> ((*) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> ((_bar <$> (readIOA t j)) >>= readIORef))) <*> ((*) <$> ((_bar <$> (readIOA t j)) >>= readIORef) <*> ((_foo <$> (readIOA t j)) >>= readIORef)))
                    (a (j + 1) h)
            else return g) in

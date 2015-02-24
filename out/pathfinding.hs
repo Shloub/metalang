@@ -83,9 +83,9 @@ pathfind_aux cache tab x y posX posY =
   then return 0
   else (if ((((posX < 0) || (posY < 0)) || (posX >= x)) || (posY >= y))
        then return ((x * y) * 10)
-       else ifM ((==) <$> (join $ readIOA <$> (readIOA tab posY) <*> return posX) <*> return '#')
+       else ifM (((==) '#') <$> (join $ readIOA <$> (readIOA tab posY) <*> return posX))
                 (return ((x * y) * 10))
-                (ifM ((/=) <$> (join $ readIOA <$> (readIOA cache posY) <*> return posX) <*> return (- 1))
+                (ifM (((/=) (- 1)) <$> (join $ readIOA <$> (readIOA cache posY) <*> return posX))
                      ((join $ readIOA <$> (readIOA cache posY) <*> return posX))
                      (do (join $ writeIOA <$> (readIOA cache posY) <*> return posX <*> return ((x * y) * 10))
                          val1 <- (pathfind_aux cache tab x y (posX + 1) posY)

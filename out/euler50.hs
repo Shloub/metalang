@@ -54,7 +54,7 @@ eratostene t max0 =
      let e = (max0 - 1)
      let c i w =
            (if (i <= e)
-           then ifM ((==) <$> (readIOA t i) <*> return i)
+           then ifM (((==) i) <$> (readIOA t i))
                     (do let x = (w + 1)
                         (if ((max0 `quot` i) > i)
                         then do let j = (i * i)
@@ -83,7 +83,7 @@ main =
                                                                                                                                                          let v = (maximumprimes - 1)
                                                                                                                                                          let u k ba =
                                                                                                                                                                (if (k <= v)
-                                                                                                                                                               then ifM ((==) <$> (readIOA era k) <*> return k)
+                                                                                                                                                               then ifM (((==) k) <$> (readIOA era k))
                                                                                                                                                                         (do (writeIOA primes ba k)
                                                                                                                                                                             let bb = (ba + 1)
                                                                                                                                                                             (u (k + 1) bb))

@@ -79,7 +79,7 @@ programme_candidat tableau taille =
      let d = (taille - 1)
      let c i g =
            (if (i <= d)
-           then do h <- (((+) g) <$> ((*) <$> ((fmap ord ((readIOA tableau i)))) <*> return i))
+           then do h <- (((+) g) <$> (((*) i) <$> ((fmap ord ((readIOA tableau i))))))
                    printf "%c" =<< ((readIOA tableau i) :: IO Char)
                    (c (i + 1) h)
            else do printf "--\n" ::IO()

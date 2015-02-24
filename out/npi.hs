@@ -85,13 +85,13 @@ npi0 str len =
                                                                      let ptrStr = 0
                                                                      let d k l =
                                                                            (if (l < len)
-                                                                           then ifM ((==) <$> (readIOA str l) <*> return ' ')
+                                                                           then ifM (((==) ' ') <$> (readIOA str l))
                                                                                     (do let m = (l + 1)
                                                                                         (d k m))
                                                                                     (ifM ((readIOA str l) >>= is_number)
                                                                                          (do let num = 0
                                                                                              let e n o =
-                                                                                                   ifM ((/=) <$> (readIOA str o) <*> return ' ')
+                                                                                                   ifM (((/=) ' ') <$> (readIOA str o))
                                                                                                        (do p <- ((-) <$> (((+) (n * 10)) <$> ((fmap ord ((readIOA str o))))) <*> ((fmap ord (return '0'))))
                                                                                                            let q = (o + 1)
                                                                                                            (e p q))
@@ -99,7 +99,7 @@ npi0 str len =
                                                                                                            let r = (k + 1)
                                                                                                            (d r o)) in
                                                                                                    (e num l))
-                                                                                         (ifM ((==) <$> (readIOA str l) <*> return '+')
+                                                                                         (ifM (((==) '+') <$> (readIOA str l))
                                                                                               (do (writeIOA stack (k - 2) =<< ((+) <$> (readIOA stack (k - 2)) <*> (readIOA stack (k - 1))))
                                                                                                   let s = (k - 1)
                                                                                                   let t = (l + 1)

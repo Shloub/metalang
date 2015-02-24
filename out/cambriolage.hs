@@ -84,11 +84,11 @@ nbPassePartout n passepartout m serrures =
      let f = (m - 1)
      let e i u v =
            (if (i <= f)
-           then do w <- ifM (((==) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0) <*> return (- 1)) <&&> ((>) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1) <*> return u))
+           then do w <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) u) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
                             (do x <- (join $ readIOA <$> (readIOA serrures i) <*> return 1)
                                 return x)
                             (return u)
-                   ifM (((==) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0) <*> return 1) <&&> ((>) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1) <*> return v))
+                   ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) v) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
                        (do y <- (join $ readIOA <$> (readIOA serrures i) <*> return 1)
                            (e (i + 1) w y))
                        ((e (i + 1) w v))
@@ -98,7 +98,7 @@ nbPassePartout n passepartout m serrures =
                    let c z ba bb =
                          (if (z <= d)
                          then do pp <- (readIOA passepartout z)
-                                 ifM (((>=) <$> (readIOA pp 0) <*> return u) <&&> ((>=) <$> (readIOA pp 1) <*> return v))
+                                 ifM ((((<=) u) <$> (readIOA pp 0)) <&&> (((<=) v) <$> (readIOA pp 1)))
                                      (return 1)
                                      (do bc <- (max2_ ba =<< (readIOA pp 0))
                                          bd <- (max2_ bb =<< (readIOA pp 1))

@@ -54,7 +54,7 @@ eratostene t max0 =
      let ba = (max0 - 1)
      let y i bb =
            (if (i <= ba)
-           then ifM ((==) <$> (readIOA t i) <*> return i)
+           then ifM (((==) i) <$> (readIOA t i))
                     (do let j = (i * i)
                         let bc = (bb + 1)
                         let z bd =
@@ -75,7 +75,7 @@ fillPrimesFactors t n primes nprimes =
            then do d <- (readIOA primes i)
                    let w bg =
                          (if ((bg `rem` d) == 0)
-                         then do (writeIOA t d =<< ((+) <$> (readIOA t d) <*> return 1))
+                         then do (writeIOA t d =<< (((+) 1) <$> (readIOA t d)))
                                  let bh = (bg `quot` d)
                                  (w bh)
                          else (if (bg == 1)
@@ -98,7 +98,7 @@ find ndiv2 =
                                                                                                                                                          let u = (maximumprimes - 1)
                                                                                                                                                          let s k bi =
                                                                                                                                                                (if (k <= u)
-                                                                                                                                                               then ifM ((==) <$> (readIOA era k) <*> return k)
+                                                                                                                                                               then ifM (((==) k) <$> (readIOA era k))
                                                                                                                                                                         (do (writeIOA primes bi k)
                                                                                                                                                                             let bj = (bi + 1)
                                                                                                                                                                             (s (k + 1) bj))
@@ -113,7 +113,7 @@ find ndiv2 =
                                                                                                                                                                                                                                                       let ndivs = 1
                                                                                                                                                                                                                                                       let r i bk =
                                                                                                                                                                                                                                                             (if (i <= max0)
-                                                                                                                                                                                                                                                            then ifM ((/=) <$> (readIOA primesFactors i) <*> return 0)
+                                                                                                                                                                                                                                                            then ifM (((/=) 0) <$> (readIOA primesFactors i))
                                                                                                                                                                                                                                                                      (do bl <- (((*) bk) <$> (((+) 1) <$> (readIOA primesFactors i)))
                                                                                                                                                                                                                                                                          (r (i + 1) bl))
                                                                                                                                                                                                                                                                      ((r (i + 1) bk))

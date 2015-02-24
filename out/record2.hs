@@ -68,7 +68,7 @@ mktoto v1 =
      return t
 
 result t =
-  do (writeIORef (_blah t) =<< ((+) <$> (readIORef (_blah t)) <*> return 1))
+  do (writeIORef (_blah t) =<< (((+) 1) <$> (readIORef (_blah t))))
      ((+) <$> ((+) <$> (readIORef (_foo t)) <*> ((*) <$> (readIORef (_blah t)) <*> (readIORef (_bar t)))) <*> ((*) <$> (readIORef (_bar t)) <*> (readIORef (_foo t))))
 
 main =

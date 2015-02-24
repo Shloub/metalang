@@ -54,7 +54,7 @@ find n m =
   then return 1
   else (if (n >= 1000000)
        then (((+) 1) <$> (join $ find <$> (next0 n) <*> return m))
-       else ifM ((/=) <$> (readIOA m n) <*> return 0)
+       else ifM (((/=) 0) <$> (readIOA m n))
                 ((readIOA m n))
                 (do (writeIOA m n =<< (((+) 1) <$> (join $ find <$> (next0 n) <*> return m)))
                     (readIOA m n))))

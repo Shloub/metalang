@@ -96,7 +96,7 @@ result t_ t2_ =
      let k = t2
      let l = t2
      let m = k
-     (writeIORef (_blah l) =<< ((+) <$> (readIORef (_blah l)) <*> return 1))
+     (writeIORef (_blah l) =<< (((+) 1) <$> (readIORef (_blah l))))
      let len = 1
      ((array_init_withenv len (\ i b ->
                                 let a = (- i)

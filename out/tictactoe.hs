@@ -95,9 +95,9 @@ print_state g =
            (if (y <= 2)
            then let q x =
                       (if (x <= 2)
-                      then do ifM ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 0)
+                      then do ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
                                   (printf " " ::IO())
-                                  (ifM ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 1)
+                                  (ifM (((==) 1) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
                                        (printf "O" ::IO())
                                        (printf "X" ::IO()))
                               printf "|" ::IO()
@@ -119,7 +119,7 @@ eval0 g =
                    let lin = (- 1)
                    let o x v w z =
                          (if (x <= 2)
-                         then do ba <- ifM ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 0)
+                         then do ba <- ifM (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
                                            (let bb = (w + 1)
                                                      in return bb)
                                            (return w)
@@ -149,11 +149,11 @@ eval0 g =
                          (o 0 col t lin)
            else let l x bj =
                       (if (x <= 2)
-                      then do bk <- ifM ((((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 0) <*> return x) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1) <*> return x)) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 2) <*> return x))
+                      then do bk <- ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 0)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 2)))
                                         (let bl = x
                                                   in return bl)
                                         (return bj)
-                              ifM ((((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 2) <*> return x) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1) <*> return x)) <&&> ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 0) <*> return x))
+                              ifM (((((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 0) <*> return 2)) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 1) <*> return 1))) <&&> (((==) x) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return 2) <*> return 0)))
                                   (do let bm = x
                                       (l (x + 1) bm))
                                   ((l (x + 1) bk))
@@ -189,7 +189,7 @@ cancel_move m g =
      return ()
 
 can_move_xy x y g =
-  ((==) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y) <*> return 0)
+  (((==) 0) <$> (join $ readIOA <$> (join $ readIOA <$> (readIORef (_cases g)) <*> return x) <*> return y))
 
 can_move m g =
   (join $ can_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> return g)

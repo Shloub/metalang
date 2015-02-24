@@ -76,7 +76,7 @@ array_init_withenv len f env =
 go0 tab a b =
   do let m = ((a + b) `quot` 2)
      (if (a == m)
-     then ifM ((==) <$> (readIOA tab a) <*> return m)
+     then ifM (((==) m) <$> (readIOA tab a))
               (return b)
               (return a)
      else do let i = a

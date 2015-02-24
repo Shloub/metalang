@@ -81,7 +81,7 @@ find0 len tab cache x y =
   then (join $ readIOA <$> (readIOA tab y) <*> return x)
   else (if (x > y)
        then return (- 10000)
-       else ifM ((/=) <$> (join $ readIOA <$> (readIOA cache y) <*> return x) <*> return 0)
+       else ifM (((/=) 0) <$> (join $ readIOA <$> (readIOA cache y) <*> return x))
                 ((join $ readIOA <$> (readIOA cache y) <*> return x))
                 (do let result = 0
                     out0 <- (find0 len tab cache x (y + 1))

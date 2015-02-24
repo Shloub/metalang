@@ -49,7 +49,7 @@ eratostene t max0 =
      let c = (max0 - 1)
      let a i f =
            (if (i <= c)
-           then ifM ((==) <$> (readIOA t i) <*> return i)
+           then ifM (((==) i) <$> (readIOA t i))
                     (do let g = (f + i)
                         (if ((max0 `quot` i) > i)
                         then do let j = (i * i)

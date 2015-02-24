@@ -48,7 +48,7 @@ divisible n t size =
   do let c = (size - 1)
      let b i =
            (if (i <= c)
-           then ifM ((==) <$> ((rem n) <$> (readIOA t i)) <*> return 0)
+           then ifM (((==) 0) <$> ((rem n) <$> (readIOA t i)))
                     (return True)
                     ((b (i + 1)))
            else return False) in

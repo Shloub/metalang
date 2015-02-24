@@ -78,7 +78,7 @@ nth tab tofind len =
      let b = (len - 1)
      let a i h =
            (if (i <= b)
-           then ifM ((==) <$> (readIOA tab i) <*> return tofind)
+           then ifM (((==) tofind) <$> (readIOA tab i))
                     (do let j = (h + 1)
                         (a (i + 1) j))
                     ((a (i + 1) h))

@@ -76,7 +76,7 @@ array_init_withenv len f env =
 pathfind_aux cache tab len pos =
   (if (pos >= (len - 1))
   then return 0
-  else ifM ((/=) <$> (readIOA cache pos) <*> return (- 1))
+  else ifM (((/=) (- 1)) <$> (readIOA cache pos))
            ((readIOA cache pos))
            (do (writeIOA cache pos (len * 2))
                posval <- (pathfind_aux cache tab len =<< (readIOA tab pos))

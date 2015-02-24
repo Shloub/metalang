@@ -49,7 +49,7 @@ eratostene t max0 =
      let c = (max0 - 1)
      let a i y =
            (if (i <= c)
-           then ifM ((==) <$> (readIOA t i) <*> return i)
+           then ifM (((==) i) <$> (readIOA t i))
                     (do let z = (y + 1)
                         (if ((max0 `quot` i) > i)
                         then do let j = (i * i)
@@ -78,7 +78,7 @@ main =
                                                                                                                                                          let x = (maximumprimes - 1)
                                                                                                                                                          let w k bc =
                                                                                                                                                                (if (k <= x)
-                                                                                                                                                               then ifM ((==) <$> (readIOA era k) <*> return k)
+                                                                                                                                                               then ifM (((==) k) <$> (readIOA era k))
                                                                                                                                                                         (do (writeIOA primes bc k)
                                                                                                                                                                             let bd = (bc + 1)
                                                                                                                                                                             (w (k + 1) bd))
@@ -96,7 +96,7 @@ main =
                                                                                                                                                                                                                                                           then do let u = (maximumprimes - 1)
                                                                                                                                                                                                                                                                   let s j =
                                                                                                                                                                                                                                                                         (if (j <= u)
-                                                                                                                                                                                                                                                                        then do n <- ((+) <$> (readIOA primes i) <*> return ((2 * j) * j))
+                                                                                                                                                                                                                                                                        then do n <- (((+) ((2 * j) * j)) <$> (readIOA primes i))
                                                                                                                                                                                                                                                                                 (if (n < maximumprimes)
                                                                                                                                                                                                                                                                                 then do (writeIOA canbe n True)
                                                                                                                                                                                                                                                                                         (s (j + 1))

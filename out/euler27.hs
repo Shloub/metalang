@@ -49,7 +49,7 @@ eratostene t max0 =
      let g = (max0 - 1)
      let e i w =
            (if (i <= g)
-           then ifM ((==) <$> (readIOA t i) <*> return i)
+           then ifM (((==) i) <$> (readIOA t i))
                     (do let x = (w + 1)
                         let j = (i * i)
                         let f y =
@@ -70,8 +70,8 @@ isPrime n primes len =
                             in bb
               else n)
      let d bc =
-           ifM ((<) <$> ((*) <$> (readIOA primes bc) <*> (readIOA primes bc)) <*> return ba)
-               (ifM ((==) <$> ((rem ba) <$> (readIOA primes bc)) <*> return 0)
+           ifM (((>) ba) <$> ((*) <$> (readIOA primes bc) <*> (readIOA primes bc)))
+               (ifM (((==) 0) <$> ((rem ba) <$> (readIOA primes bc)))
                     (return False)
                     (do let bd = (bc + 1)
                         (d bd)))
@@ -103,7 +103,7 @@ main =
                                                                                                                                                          let v = (maximumprimes - 1)
                                                                                                                                                          let u k be =
                                                                                                                                                                (if (k <= v)
-                                                                                                                                                               then ifM ((==) <$> (readIOA era k) <*> return k)
+                                                                                                                                                               then ifM (((==) k) <$> (readIOA era k))
                                                                                                                                                                         (do (writeIOA primes be k)
                                                                                                                                                                             let bf = (be + 1)
                                                                                                                                                                             (u (k + 1) bf))
@@ -116,7 +116,7 @@ main =
                                                                                                                                                                        let mb = 0
                                                                                                                                                                        let r b bg bh bi bj =
                                                                                                                                                                              (if (b <= 999)
-                                                                                                                                                                             then ifM ((==) <$> (readIOA era b) <*> return b)
+                                                                                                                                                                             then ifM (((==) b) <$> (readIOA era b))
                                                                                                                                                                                       (let s a bk bl bm bn =
                                                                                                                                                                                              (if (a <= 999)
                                                                                                                                                                                              then do n1 <- (test a b primes nprimes)

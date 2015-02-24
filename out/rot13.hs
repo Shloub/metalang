@@ -82,7 +82,7 @@ main =
                                    hGetChar stdin >>= ((\ tmpc ->
                                                          do c <- ((fmap ord (return tmpc)))
                                                             f <- (if (tmpc /= ' ')
-                                                                 then do g <- ((+) <$> (rem <$> ((+) <$> (((-) c) <$> ((fmap ord (return 'a')))) <*> return 13) <*> return 26) <*> ((fmap ord (return 'a'))))
+                                                                 then do g <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> return 26) <*> ((fmap ord (return 'a'))))
                                                                          return g
                                                                  else return c)
                                                             a <- ((fmap chr (return f)))
