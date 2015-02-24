@@ -222,3 +222,9 @@ type declaration =
 
 type opts = { hasSkip : bool; reads : Ast.TypeSet.t }
 type prog = { declarations : declaration list; options : opts ; side_effects : bool IntMap.t }
+
+let existsExpr f li =
+   List.exists (function
+     | Declaration (_, e) -> Expr.Writer.Deep.exists f e
+    | _ -> false
+              ) li
