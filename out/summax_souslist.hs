@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,8 +70,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 summax lst len =
   do let current = 0
@@ -93,6 +89,7 @@ summax lst len =
                    else (a (i + 1) k h))
            else return (h)) in
            (a 0 current max0)
+
 main =
   do let len = 0
      f <- read_int
@@ -107,4 +104,5 @@ main =
                                                                              skip_whitespaces
                                                                              let c = o
                                                                              return (((), c))) ()))
+
 

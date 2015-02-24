@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,19 +70,20 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 max2_ a b =
   return ((if (a > b)
           then a
           else b))
+
 find n m x y dx dy =
   (if ((((x < 0) || (x == 20)) || (y < 0)) || (y == 20))
   then return ((- 1))
   else (if (n == 0)
        then return (1)
        else ((*) <$> join (readIOA <$> (readIOA m y) <*> return (x)) <*> (find (n - 1) m (x + dx) (y + dy) dx dy))))
+
 main =
   ((\ (k, directions) ->
      do let max0 = 0
@@ -137,4 +135,5 @@ main =
                                                                                                                                                                                                                                       in ((), h)
                                                                                                                                                                                                                          else let h = ((- 1), (- 1))
                                                                                                                                                                                                                                       in ((), h)))))))))) ()))
+
 

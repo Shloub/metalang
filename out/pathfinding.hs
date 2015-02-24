@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,13 +70,13 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 min2_ a b =
   return ((if (a < b)
           then a
           else b))
+
 pathfind_aux cache tab x y posX posY =
   (if ((posX == (x - 1)) && (posY == (y - 1)))
   then return (0)
@@ -97,6 +94,7 @@ pathfind_aux cache tab x y posX posY =
                          out0 <- (((+) 1) <$> (join (min2_ <$> (join (min2_ <$> (min2_ val1 val2) <*> (return val3))) <*> (return val4))))
                          join (writeIOA <$> (readIOA cache posY) <*> return (posX) <*> return (out0))
                          return (out0)))))
+
 pathfind tab x y =
   ((\ (f, cache) ->
      (pathfind_aux cache tab x y 0 0)) =<< (array_init_withenv y (\ i f ->
@@ -105,6 +103,7 @@ pathfind tab x y =
                                                                               in return (((), e))) =<< (array_init_withenv x (\ j h ->
                                                                                                                                let g = (- 1)
                                                                                                                                        in return (((), g))) ()))) ()))
+
 main =
   do let x = 0
      let y = 0
@@ -126,4 +125,5 @@ main =
                                                                                                                                                        let t = o
                                                                                                                                                                in let m = t
                                                                                                                                                                           in return (((), m))))) ()))) ()))
+
 

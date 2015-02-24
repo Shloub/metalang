@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -24,23 +17,12 @@ readIOA = readArray
 	   if aa then return True
 		 else b
 
-
 main :: IO ()
 
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
-
-skip_whitespaces :: IO ()
-skip_whitespaces =
-  ifM (hIsEOF stdin)
-      (return ())
-      (do c <- hLookAhead stdin
-          if c == ' ' || c == '\n' || c == '\t' || c == '\r' then
-           do hGetChar stdin
-              skip_whitespaces
-           else return ())
 
 read_int_a :: Int -> IO Int
 read_int_a b =
@@ -60,6 +42,7 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
 
 foo () =
   let a = 0
@@ -67,12 +50,15 @@ foo () =
                      let d = (a + 1)
                              in {- test 2 -}
                                 ())
+
 foo2 () =
   return (())
+
 foo3 () =
   return ((if (1 == 1)
           then ()
           else ()))
+
 sumdiv n =
   {- On désire renvoyer la somme des diviseurs -}
   do let out0 = 0
@@ -89,6 +75,7 @@ sumdiv n =
                      (b (i + 1) e))
            else return (e)) in
            (b 1 out0)
+
 main =
   {- Programme principal -}
   do let n = 0
@@ -96,4 +83,5 @@ main =
      let g = c
      {- Lecture de l'entier -}
      printf "%d" =<< ((sumdiv g) :: IO Int)
+
 

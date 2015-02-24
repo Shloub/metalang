@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,8 +70,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 data Gamestate = Gamestate {
                               _cases :: IORef (IOArray Int (IOArray Int Int)),
@@ -84,11 +80,13 @@ data Gamestate = Gamestate {
                               }
   deriving Eq
 
+
 data Move = Move {
                     _x :: IORef Int,
                     _y :: IORef Int
                     }
   deriving Eq
+
 
 print_state g =
   do printf "\n|" ::IO()
@@ -110,6 +108,7 @@ print_state g =
                       (q 0)
            else printf "\n" ::IO()) in
            (p 0)
+
 eval0 g =
   do let win = 0
      let freecase = 0
@@ -165,6 +164,7 @@ eval0 g =
                                    else (writeIORef (_note g) 0)))) in
                       (l 1 u)) in
            (n 0 freecase win)
+
 apply_move_xy x y g =
   do let player = 2
      bn <- ifM ((readIORef (_firstToPlay g)))
@@ -173,20 +173,26 @@ apply_move_xy x y g =
                (return (player))
      join (writeIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y) <*> return (bn))
      (join (writeIORef (_firstToPlay g) <$> (fmap (not) (readIORef (_firstToPlay g)))))
+
 apply_move m g =
   do (join (apply_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> (return g)))
      return (())
+
 cancel_move_xy x y g =
   do join (writeIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y) <*> return (0))
      (join (writeIORef (_firstToPlay g) <$> (fmap (not) (readIORef (_firstToPlay g)))))
      (writeIORef (_ended g) False)
+
 cancel_move m g =
   do (join (cancel_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> (return g)))
      return (())
+
 can_move_xy x y g =
   ((==) <$> join (readIOA <$> join (readIOA <$> (readIORef (_cases g)) <*> return (x)) <*> return (y)) <*> return (0))
+
 can_move m g =
   (join (can_move_xy <$> (readIORef (_x m)) <*> (readIORef (_y m)) <*> (return g)))
+
 minmax g =
   do (eval0 g)
      ifM ((readIORef (_ended g)))
@@ -214,6 +220,7 @@ minmax g =
                               (k 0 br)
                    else return (br)) in
                    (h 0 bp))
+
 play g =
   do minMove <- (Move <$> (newIORef 0) <*> (newIORef 0))
      let minNote = 10000
@@ -245,6 +252,7 @@ play g =
                    printf "\n" ::IO()
                    return (minMove)) in
            (e 0 minNote)
+
 init0 () =
   ((\ (b, cases) ->
      (Gamestate <$> (newIORef cases) <*> (newIORef True) <*> (newIORef 0) <*> (newIORef False))) =<< (array_init_withenv 3 (\ i b ->
@@ -253,12 +261,14 @@ init0 () =
                                                                                                                                         in return (((), a))) =<< (array_init_withenv 3 (\ j d ->
                                                                                                                                                                                          let c = 0
                                                                                                                                                                                                  in return (((), c))) ()))) ()))
+
 read_move () =
   do x <- read_int
      skip_whitespaces
      y <- read_int
      skip_whitespaces
      (Move <$> (newIORef x) <*> (newIORef y))
+
 main =
   let r i =
         (if (i <= 1)
@@ -283,4 +293,5 @@ main =
                       (s ())
         else return (())) in
         (r 0)
+
 

@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,26 +33,12 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
-read_int_a :: Int -> IO Int
-read_int_a b =
-  ifM (hIsEOF stdin)
-      (return b)
-      (do c <- hLookAhead stdin
-          if c >= '0' && c <= '9' then
-           do hGetChar stdin
-              read_int_a (b * 10 + ord c - 48)
-           else return b)
-
-read_int :: IO Int
-read_int =
-   do c <- hLookAhead stdin
-      sign <- if c == '-'
-                 then fmap (\x -> -1::Int) $ hGetChar stdin
-                 else return 1
-      num <- read_int_a 0
-      return (num * sign)
-
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,23 +51,26 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
+                                                                                                                                                                                                                                                                        
 
 
 max2_ a b =
   return ((if (a > b)
           then a
           else b))
+
 min2_ a b =
   return ((if (a < b)
           then a
           else b))
+
 data Bigint = Bigint {
                         _bigint_sign :: IORef Bool,
                         _bigint_len :: IORef Int,
                         _bigint_chiffres :: IORef (IOArray Int Int)
                         }
   deriving Eq
+
 
 read_bigint len =
   ((\ (cd, chiffres) ->
@@ -105,6 +86,7 @@ read_bigint len =
                                                      hGetChar stdin >>= ((\ c ->
                                                                            do cc <- ((fmap ord (return (c))))
                                                                               return (((), cc))))) ()))
+
 print_bigint a =
   do ifM ((fmap (not) (readIORef (_bigint_sign a))))
          (printf "%c" ('-' :: Char)::IO())
@@ -116,6 +98,7 @@ print_bigint a =
                     (ca (i + 1))
             else return (())) in
             (ca 0)
+
 bigint_eq a b =
   {- Renvoie vrai si a = b -}
   ifM (((/=) <$> (readIORef (_bigint_sign a)) <*> (readIORef (_bigint_sign b))))
@@ -130,6 +113,7 @@ bigint_eq a b =
                                ((by (i + 1)))
                       else return (True)) in
                       (by 0)))
+
 bigint_gt a b =
   {- Renvoie vrai si a > b -}
   ifM (((readIORef (_bigint_sign a)) <&&> (fmap (not) (readIORef (_bigint_sign b)))))
@@ -151,8 +135,10 @@ bigint_gt a b =
                                                  ((bw (i + 1))))
                                 else return (True)) in
                                 (bw 0)))))
+
 bigint_lt a b =
   (fmap (not) (bigint_gt a b))
+
 add_bigint_positif a b =
   {- Une addition ou on en a rien a faire des signes -}
   do len <- ((+) <$> (join (max2_ <$> (readIORef (_bigint_len a)) <*> (readIORef (_bigint_len b)))) <*> return (1))
@@ -176,6 +162,7 @@ add_bigint_positif a b =
                                                           let cp = (cn `quot` 10)
                                                           let bt = (cn `rem` 10)
                                                           return ((cp, bt))) retenue))
+
 sub_bigint_positif a b =
   {- Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
@@ -202,8 +189,10 @@ Pré-requis : a > b
                                                                                                                       in (cz, cy)
                                                                                             else let da = 0
                                                                                                           in (da, cu)))) retenue))
+
 neg_bigint a =
   (Bigint <$> (join (newIORef <$> (fmap (not) (readIORef (_bigint_sign a))))) <*> (join (newIORef <$> (readIORef (_bigint_len a)))) <*> (join (newIORef <$> (readIORef (_bigint_chiffres a)))))
+
 add_bigint a b =
   ifM (((==) <$> (readIORef (_bigint_sign a)) <*> (readIORef (_bigint_sign b))))
       (ifM ((readIORef (_bigint_sign a)))
@@ -218,8 +207,10 @@ add_bigint a b =
             ifM ((join (bigint_gt <$> (neg_bigint a) <*> (return b))))
                 ((neg_bigint =<< (sub_bigint_positif a b)))
                 ((sub_bigint_positif b a))))
+
 sub_bigint a b =
   (add_bigint a =<< (neg_bigint b))
+
 mul_bigint_cp a b =
   {- Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
@@ -253,6 +244,7 @@ D'ou le nom de la fonction. -}
                   (bm 0)) =<< (array_init_withenv len (\ k bk ->
                                                         let bj = 0
                                                                  in return (((), bj))) ()))
+
 bigint_premiers_chiffres a i =
   do len <- (min2_ i =<< (readIORef (_bigint_len a)))
      let bi df =
@@ -261,6 +253,7 @@ bigint_premiers_chiffres a i =
                     (bi dg))
                 ((Bigint <$> (join (newIORef <$> (readIORef (_bigint_sign a)))) <*> (newIORef df) <*> (join (newIORef <$> (readIORef (_bigint_chiffres a)))))) in
             (bi len)
+
 bigint_shift a i =
   ((\ (bh, chiffres) ->
      (Bigint <$> (join (newIORef <$> (readIORef (_bigint_sign a)))) <*> (join (newIORef <$> ((+) <$> (readIORef (_bigint_len a)) <*> return (i)))) <*> (newIORef chiffres))) =<< (join (array_init_withenv <$> ((+) <$> (readIORef (_bigint_len a)) <*> return (i)) <*> (return (\ k bh ->
@@ -269,6 +262,7 @@ bigint_shift a i =
                                                                                                                                                                                                                                                                                           return (((), bg))
                                                                                                                                                                                                                                                                                   else let bg = 0
                                                                                                                                                                                                                                                                                                 in return (((), bg))))) <*> (return ()))))
+
 mul_bigint aa bb =
   ifM (((==) <$> (readIORef (_bigint_len aa)) <*> return (0)))
       (return (aa))
@@ -289,6 +283,7 @@ mul_bigint aa bb =
                     amoinsbcmoinsd <- (mul_bigint amoinsb cmoinsd)
                     acdec <- (bigint_shift ac (2 * split))
                     (join (add_bigint <$> (add_bigint acdec bd) <*> (join (bigint_shift <$> (join (sub_bigint <$> (add_bigint ac bd) <*> (return amoinsbcmoinsd))) <*> (return split))))))))
+
 log10 a =
   do let out0 = 1
      let bf dh di =
@@ -298,6 +293,7 @@ log10 a =
                     (bf dj dk)
             else return (di)) in
             (bf a out0)
+
 bigint_of_int i =
   do size <- (log10 i)
      let dl = (if (i == 0)
@@ -315,6 +311,7 @@ bigint_of_int i =
                   (bc 0 i)) =<< (array_init_withenv dl (\ j ba ->
                                                          let z = 0
                                                                  in return (((), z))) ()))
+
 fact_bigint a =
   do one <- (bigint_of_int 1)
      let out0 = one
@@ -325,6 +322,7 @@ fact_bigint a =
                    (y dt ds))
                (return (dr)) in
            (y a out0)
+
 sum_chiffres_bigint a =
   do let out0 = 0
      x <- ((-) <$> (readIORef (_bigint_len a)) <*> return (1))
@@ -334,17 +332,20 @@ sum_chiffres_bigint a =
                    (w (i + 1) dv)
            else return (du)) in
            (w 0 out0)
+
 euler20 () =
   do a <- (bigint_of_int 15)
      {- normalement c'est 100 -}
      do dw <- (fact_bigint a)
         (sum_chiffres_bigint dw)
+
 bigint_exp a b =
   (if (b == 1)
   then return (a)
   else (if ((b `rem` 2) == 0)
        then (join (bigint_exp <$> (mul_bigint a a) <*> (return (b `quot` 2))))
        else (mul_bigint a =<< (bigint_exp a (b - 1)))))
+
 bigint_exp_10chiffres a b =
   do dx <- (bigint_premiers_chiffres a 10)
      (if (b == 1)
@@ -352,6 +353,7 @@ bigint_exp_10chiffres a b =
      else (if ((b `rem` 2) == 0)
           then (join (bigint_exp_10chiffres <$> (mul_bigint dx dx) <*> (return (b `quot` 2))))
           else (mul_bigint dx =<< (bigint_exp_10chiffres dx (b - 1)))))
+
 euler48 () =
   do sum <- (bigint_of_int 0)
      let v i dy =
@@ -366,11 +368,13 @@ euler48 () =
                    (print_bigint dy)
                    printf "\n" ::IO()) in
            (v 1 sum)
+
 euler16 () =
   do a <- (bigint_of_int 2)
      eb <- (bigint_exp a 100)
      {- 1000 normalement -}
      (sum_chiffres_bigint eb)
+
 euler25 () =
   do let i = 2
      a <- (bigint_of_int 1)
@@ -385,6 +389,7 @@ euler25 () =
                    (u ef eg eh))
                (return (ee)) in
            (u a b i)
+
 euler29 () =
   do let maxA = 5
      let maxB = 5
@@ -430,6 +435,7 @@ euler29 () =
                                                                                                                                                     return (((), h))) ()))) =<< (array_init_withenv (maxA + 1) (\ j g ->
                                                                                                                                                                                                                  do f <- (bigint_of_int (j * j))
                                                                                                                                                                                                                     return (((), f))) ()))
+
 main =
   do printf "%d" =<< ((euler29 ()) :: IO Int)
      printf "\n" ::IO()
@@ -499,4 +505,5 @@ main =
                     else printf "False" ::IO())
                     printf "\n" ::IO()) in
             (cg 2 sum)
+
 

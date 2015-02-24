@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,6 +70,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
+                                                                                                                                                                                                                                                                        
 
 
 
@@ -83,8 +81,10 @@ position_alphabet c =
          (ifM (((((<=) i) <$> ((fmap ord (return ('z'))))) <&&> (((>=) i) <$> ((fmap ord (return ('a')))))))
               ((((-) i) <$> ((fmap ord (return ('a'))))))
               (return ((- 1))))
+
 of_position_alphabet c =
   ((fmap chr ((((+) c) <$> ((fmap ord (return ('a'))))))))
+
 crypte taille_cle cle taille message =
   do let b = (taille - 1)
      let a i =
@@ -98,6 +98,7 @@ crypte taille_cle cle taille message =
                    else (a (i + 1)))
            else return (())) in
            (a 0)
+
 main =
   do taille_cle <- read_int
      skip_whitespaces
@@ -120,4 +121,5 @@ main =
                                                                                                                                                                hGetChar stdin >>= ((\ out0 ->
                                                                                                                                                                                      let d = out0
                                                                                                                                                                                              in return (((), d))))) ()))
+
 

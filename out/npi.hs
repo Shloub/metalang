@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,11 +70,12 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
+                                                                                                                                                                                                                                                                        
 
 
 is_number c =
   (((<=) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('9'))))) <&&> ((>=) <$> ((fmap ord (return (c)))) <*> ((fmap ord (return ('0'))))))
+
 npi0 str len =
   ((\ (b, stack) ->
      do let ptrStack = 0
@@ -108,6 +106,7 @@ npi0 str len =
               (d ptrStack ptrStr)) =<< (array_init_withenv len (\ i b ->
                                                                  let a = 0
                                                                          in return (((), a))) ()))
+
 main =
   do let len = 0
      j <- read_int
@@ -121,4 +120,5 @@ main =
                                                                                                    let v = h
                                                                                                            in let f = v
                                                                                                                       in return (((), f))))) ()))
+
 

@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,6 +52,7 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
 
 fibo0 a b i =
   do let out0 = 0
@@ -75,6 +68,7 @@ fibo0 a b i =
                    (c (j + 1) o n m)
            else return (l)) in
            (c 0 a2 b2 out0)
+
 main =
   do let a = 0
      let b = 0
@@ -88,4 +82,5 @@ main =
      e <- read_int
      let r = e
      printf "%d" =<< ((fibo0 p q r) :: IO Int)
+
 

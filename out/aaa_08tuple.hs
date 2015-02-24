@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,12 +52,14 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
 
 data Toto = Toto {
                     _foo :: IORef (Int, Int),
                     _bar :: IORef Int
                     }
   deriving Eq
+
 
 main =
   do bar_ <- read_int
@@ -82,4 +76,5 @@ main =
            printf " " ::IO()
            printf "%d" =<< ((readIORef (_bar t)) :: IO Int)
            printf "\n" ::IO()) =<< (readIORef (_foo t)))
+
 

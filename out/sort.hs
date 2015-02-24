@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,14 +70,14 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 copytab tab len =
   ((\ (g, o) ->
      return (o)) =<< (array_init_withenv len (\ i g ->
                                                do f <- (readIOA tab i)
                                                   return (((), f))) ()))
+
 bubblesort tab len =
   do let e = (len - 1)
      let b i =
@@ -98,6 +95,7 @@ bubblesort tab len =
                          (c (i + 1))
            else return (())) in
            (b 0)
+
 qsort0 tab len i j =
   (if (i < j)
   then do let i0 = i
@@ -127,6 +125,7 @@ qsort0 tab len i j =
                         return (())) in
                 (a i j)
   else return (()))
+
 main =
   do let len = 2
      r <- read_int
@@ -159,4 +158,5 @@ main =
                                                        skip_whitespaces
                                                        let h = z
                                                        return (((), h))) ()))
+
 

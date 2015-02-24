@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,13 +70,13 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 max2_ a b =
   return ((if (a > b)
           then a
           else b))
+
 nbPassePartout n passepartout m serrures =
   do let max_ancient = 0
      let max_recent = 0
@@ -110,6 +107,7 @@ nbPassePartout n passepartout m serrures =
                                       else 0))) in
                          (c 0 max_ancient_pp max_recent_pp)) in
            (e 0 max_ancient max_recent)
+
 main =
   do n <- read_int
      skip_whitespaces
@@ -132,4 +130,5 @@ main =
                                                                                                                                                                                                                                                                                                           skip_whitespaces
                                                                                                                                                                                                                                                                                                           let s = out01
                                                                                                                                                                                                                                                                                                           return (((), s))) ()))) ()))
+
 

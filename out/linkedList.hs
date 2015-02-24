@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -24,23 +17,12 @@ readIOA = readArray
 	   if aa then return True
 		 else b
 
-
 main :: IO ()
 
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
-
-skip_whitespaces :: IO ()
-skip_whitespaces =
-  ifM (hIsEOF stdin)
-      (return ())
-      (do c <- hLookAhead stdin
-          if c == ' ' || c == '\n' || c == '\t' || c == '\r' then
-           do hGetChar stdin
-              skip_whitespaces
-           else return ())
 
 read_int_a :: Int -> IO Int
 read_int_a b =
@@ -60,6 +42,7 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
 
 data Intlist = Intlist {
                           _head0 :: IORef Int,
@@ -67,16 +50,20 @@ data Intlist = Intlist {
                           }
   deriving Eq
 
+
 cons list i =
   do out0 <- (Intlist <$> (newIORef i) <*> (newIORef list))
      return (out0)
+
 rev2 empty acc torev =
   (if (torev == empty)
   then return (acc)
   else do acc2 <- (Intlist <$> (join (newIORef <$> (readIORef (_head0 torev)))) <*> (newIORef acc))
           (rev2 empty acc =<< (readIORef (_tail0 torev))))
+
 rev empty torev =
   (rev2 empty empty torev)
+
 test empty =
   do let list = empty
      let i = (- 1)
@@ -90,6 +77,8 @@ test empty =
                    else (a e d))
            else return (())) in
            (a i list)
+
 main =
   return (())
+
 

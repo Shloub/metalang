@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,7 +52,12 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,8 +70,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 data Toto = Toto {
                     _foo :: IORef Int,
@@ -83,9 +79,11 @@ data Toto = Toto {
                     }
   deriving Eq
 
+
 mktoto v1 =
   do t <- (Toto <$> (newIORef v1) <*> (newIORef 0) <*> (newIORef 0))
      return (t)
+
 result t len =
   do let out0 = 0
      let b = (len - 1)
@@ -96,6 +94,7 @@ result t len =
                    (a (j + 1) h)
            else return (g)) in
            (a 0 out0)
+
 main =
   ((\ (d, t) ->
      do f <- read_int
@@ -108,4 +107,5 @@ main =
         printf "%d" =<< ((join (readIORef <$> (_blah <$> (readIOA t 2)))) :: IO Int)) =<< (array_init_withenv 4 (\ i d ->
                                                                                                                   do c <- (mktoto i)
                                                                                                                      return (((), c))) ()))
+
 

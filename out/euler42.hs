@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -23,7 +16,6 @@ readIOA = readArray
 	do aa <- a
 	   if aa then return True
 		 else b
-
 
 main :: IO ()
 
@@ -41,7 +33,7 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-
+                                                                                                                                                                                                                                                                        
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -60,6 +52,9 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
+                                                                                                                                                                                                                                                                        
+
+
 
 is_triangular n =
   {-
@@ -68,6 +63,7 @@ is_triangular n =
    -}
   do a <- ((fmap (floor . sqrt . fromIntegral) (return ((n * 2)))))
      return (((a * (a + 1)) == (n * 2)))
+
 score () =
   do skip_whitespaces
      len <- read_int
@@ -83,6 +79,7 @@ score () =
                     (return (1))
                     (return (0))) in
            (b 1 sum)
+
 main =
   let e i =
         (if (i <= 55)
@@ -102,4 +99,5 @@ main =
                               printf "\n" ::IO()) in
                       (d 1 sum)) in
         (e 1)
+
 

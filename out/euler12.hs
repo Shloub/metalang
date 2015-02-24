@@ -7,13 +7,6 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
@@ -24,7 +17,6 @@ readIOA = readArray
 	   if aa then return True
 		 else b
 
-
 main :: IO ()
 
 ifM :: IO Bool -> IO a -> IO a -> IO a
@@ -32,35 +24,11 @@ ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
 
-skip_whitespaces :: IO ()
-skip_whitespaces =
-  ifM (hIsEOF stdin)
-      (return ())
-      (do c <- hLookAhead stdin
-          if c == ' ' || c == '\n' || c == '\t' || c == '\r' then
-           do hGetChar stdin
-              skip_whitespaces
-           else return ())
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
 
-read_int_a :: Int -> IO Int
-read_int_a b =
-  ifM (hIsEOF stdin)
-      (return b)
-      (do c <- hLookAhead stdin
-          if c >= '0' && c <= '9' then
-           do hGetChar stdin
-              read_int_a (b * 10 + ord c - 48)
-           else return b)
-
-read_int :: IO Int
-read_int =
-   do c <- hLookAhead stdin
-      sign <- if c == '-'
-                 then fmap (\x -> -1::Int) $ hGetChar stdin
-                 else return 1
-      num <- read_int_a 0
-      return (num * sign)
-
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -73,13 +41,13 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-
-
+                                                                                                                                                                                                                                                                        
 
 max2_ a b =
   return ((if (a > b)
           then a
           else b))
+
 eratostene t max0 =
   do let n = 0
      let ba = (max0 - 1)
@@ -98,6 +66,7 @@ eratostene t max0 =
                     ((y (i + 1) bb))
            else return (bb)) in
            (y 2 n)
+
 fillPrimesFactors t n primes nprimes =
   do let x = (nprimes - 1)
      let v i bf =
@@ -114,6 +83,7 @@ fillPrimesFactors t n primes nprimes =
                          (w bf)
            else return (bf)) in
            (v 0 n)
+
 find ndiv2 =
   do let maximumprimes = 110
      ((\ (e, era) ->
@@ -154,8 +124,10 @@ find ndiv2 =
                                                                           in return (((), f))) ()))) =<< (array_init_withenv maximumprimes (\ j e ->
                                                                                                                                              let c = j
                                                                                                                                                      in return (((), c))) ()))
+
 main =
   do printf "%d" =<< ((find 500) :: IO Int)
      printf "\n" ::IO()
      return (())
+
 
