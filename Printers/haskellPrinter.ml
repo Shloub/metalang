@@ -37,6 +37,7 @@ module Type = Ast.Type
 let hsapply f fun_ apply_side_effects args =
   match args with
   | [] -> Format.fprintf f "(%a ())" fun_ ()
+  | [false, pr, x] when apply_side_effects -> Format.fprintf f "(%a >>= %a)" pr x fun_ ()
   | _ ->
       let count = if apply_side_effects then List.length args else 0 (* ne sera jamais atteind *) in
       let _, pure, p = List.fold_left
@@ -46,10 +47,10 @@ let hsapply f fun_ apply_side_effects args =
             | (true, false) when c = count -> c+1, true, (fun f () -> Format.fprintf f "%a =<< %a" p () parg arg)
             | (true, false)  -> c+1, false, (fun f () -> Format.fprintf f "%a <$> %a" p () parg arg)
             | (false, false) -> c+1, false, (fun f () -> Format.fprintf f "%a <*> %a" p () parg arg)
-            | (false, true) -> c+1, false, (fun f () -> Format.fprintf f "%a <*> (return %a)" p () parg arg)
+            | (false, true) -> c+1, false, (fun f () -> Format.fprintf f "%a <*> return %a" p () parg arg)
           ) (1, true, fun_) args
       in
-      if not pure && apply_side_effects then Format.fprintf f "(join (%a))" p ()
+      if not pure && apply_side_effects then Format.fprintf f "(join $ %a)" p ()
       else Format.fprintf f "(%a)" p ()
 
 
@@ -122,7 +123,7 @@ class haskellPrinter = object(self)
     else
       Format.fprintf f "(fmap (%a) %a)"self#punop op self#expr a
 
-  method comment f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str self#expr c
+  method comment fe f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str fe c
 
   method fun_ f params e =
     let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
@@ -151,6 +152,7 @@ class haskellPrinter = object(self)
 
   method eM f expr =
     match E.unfix expr with
+    | E.Comment (s, c) -> self#comment self#eM f s c
     | E.Block _ -> self#expr f expr
     | E.LetIn (name, v, e) ->
         if self#isPure expr then self#letin f name v e self#eM
@@ -158,7 +160,7 @@ class haskellPrinter = object(self)
     | _ ->
         if self#isSideEffect expr then
           self#expr f expr
-        else Format.fprintf f "return (%a)" self#expr expr
+        else Format.fprintf f "return %a" self#expr expr
 
   method binding f s = Format.fprintf f "%s" s
 
@@ -224,32 +226,32 @@ class haskellPrinter = object(self)
        (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
 
   method if_ f e1 e2 e3 =
-		let p =	if self#isPure e2 && self#isPure e3 then self#expr else self#eM in
-		if self#isPure e1 then
-				Format.fprintf f "@[<v>(if %a@\nthen %a@\nelse %a)@]" self#expr e1 p e2 p e3
-		else
-			Format.fprintf f "@[<h>ifM @[<v>(%a)@\n(%a)@\n(%a)@]@]" self#eM e1 self#eM e2 self#eM e3
-
+    let p =	if self#isPure e2 && self#isPure e3 then self#expr else self#eM in
+    if self#isPure e1 then
+      Format.fprintf f "@[<v>(if %a@\nthen %a@\nelse %a)@]" self#expr e1 p e2 p e3
+    else
+      Format.fprintf f "@[<h>ifM @[<v>%a@\n(%a)@\n(%a)@]@]" self#eM e1 self#eM e2 self#eM e3
+        
   method blockContent f li =
     Printer.print_list
       (fun f e ->
-				match E.unfix e with
-				| E.ReadIn( Type.Fixed.F(_, Type.Integer),
-										E.Fixed.F(_, E.Fun ( [name], next))
-									 ) ->
-										 Format.fprintf f "@[<h>%a <- read_int@]@\n%a" self#binding name
-											 self#blockContent [next]
-				| E.Block li -> self#blockContent f li
-				| E.LetIn (s, v, e) ->
-						let isfun, (pparams, a) = self#extract_fun_params' v (fun f () -> ()) in
-						if self#isPure v then
-							Format.fprintf f "@[<h>let %a%a = @[<v>%a@]@]@\n%a" self#binding s pparams ()
-								(if isfun then self#eM else self#expr) a
-								self#blockContent [e]
-						else
-							Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" self#binding s pparams () self#expr a
-								self#blockContent [e]
-				| _ -> self#eM f e
+        match E.unfix e with
+        | E.ReadIn( Type.Fixed.F(_, Type.Integer),
+	      E.Fixed.F(_, E.Fun ( [name], next))
+	     ) ->
+	       Format.fprintf f "@[<h>%a <- read_int@]@\n%a" self#binding name
+	         self#blockContent [next]
+        | E.Block li -> self#blockContent f li
+        | E.LetIn (s, v, e) ->
+            let isfun, (pparams, a) = self#extract_fun_params' v (fun f () -> ()) in
+            if self#isPure v then
+	Format.fprintf f "@[<h>let %a%a = @[<v>%a@]@]@\n%a" self#binding s pparams ()
+	  (if isfun then self#eM else self#expr) a
+	  self#blockContent [e]
+            else
+	Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" self#binding s pparams () self#expr a
+	  self#blockContent [e]
+        | _ -> self#eM f e
       )
       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b) f li
 			
@@ -284,7 +286,7 @@ class haskellPrinter = object(self)
   | E.Apply (e, li) -> self#apply f e li
   | E.Tuple li -> self#tuple f li
   | E.Lief l -> self#lief f l
-  | E.Comment (s, c) -> self#comment f s c
+  | E.Comment (s, c) -> self#comment self#expr f s c
   | E.If (e1, e2, e3) -> self#if_ f e1 e2 e3
   | E.Print (e, ty) ->
     self#print f e ty
@@ -324,23 +326,23 @@ class haskellPrinter = object(self)
   method record f li = (* TODO trier les champs dans le bon ordre *)
     let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
     Format.fprintf f "@[<v>(%a <$> %a)@]"
-			self#tname t
+      self#tname t
       (Printer.print_list
-	 (fun f (expr, field) ->
-	   hsapply f (fun f () -> Format.fprintf f "newIORef") true
-	     [self#isPure expr, self#expr, expr])
-	 (fun f pa a pb b -> Format.fprintf f "%a <*> %a" pa a pb b)) li
+         (fun f (expr, field) ->
+           hsapply f (fun f () -> Format.fprintf f "newIORef") true
+             [self#isPure expr, self#expr, expr])
+         (fun f pa a pb b -> Format.fprintf f "%a <*> %a" pa a pb b)) li
 
   method skip f = Format.fprintf f "skip_whitespaces"
 
   method read f ty next =
-		match Type.unfix ty, E.unfix next with
-		| Type.Integer, E.Fun ( [name], next) ->
-Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
-											 self#blockContent [next]
-		| Type.Integer, _ -> Format.fprintf f "@[<h>read_int >>=@[<v> (%a)@]@]" self#expr next
-		| Type.Char, _ -> Format.fprintf f "@[<h>hGetChar stdin >>=@[<v> (%a)@]@]" self#expr next
-		| _ -> assert false
+    match Type.unfix ty, E.unfix next with
+    | Type.Integer, E.Fun ( [name], next) ->
+        Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
+          self#blockContent [next]
+    | Type.Integer, _ -> Format.fprintf f "@[<h>read_int >>=@[<v> (%a)@]@]" self#expr next
+    | Type.Char, _ -> Format.fprintf f "@[<h>hGetChar stdin >>=@[<v> (%a)@]@]" self#expr next
+    | _ -> assert false
 
   method arraymake f len lambda env =
     let f' e = self#isPure e, self#expr, e in    
