@@ -483,24 +483,20 @@ Format.fprintf f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
       ()
 
   method header f opts =
-		let imports = [
-			"Text.Printf";
-			"Control.Applicative";
-			"Control.Monad";
-			"Data.Array.MArray";
-			"Data.Array.IO";
-			"Data.Char";
-			"System.IO";
-			"Data.IORef"
-		] in
-    Format.fprintf f "%a
-
-
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
+    let need_stdinsep = opts.AstFun.hasSkip in
+    let need_readint = Ast.TypeSet.mem (Type.integer) opts.AstFun.reads in
+    let need_readchar = Ast.TypeSet.mem (Type.char) opts.AstFun.reads in
+    let imports = [
+      "Text.Printf";
+      "Control.Applicative";
+      "Control.Monad";
+      "Data.Array.MArray";
+      "Data.Array.IO";
+      "Data.Char";
+      "System.IO";
+      "Data.IORef"
+    ] in
+    Format.fprintf f "@[%a@]
 
 (<&&>) a b =
 	do aa <- a
@@ -512,14 +508,19 @@ readIOA = readArray
 	   if aa then return True
 		 else b
 
-
 main :: IO ()
 
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
-
+@[%a@]@[%a@]@[%a@]
+"
+          (Printer.print_list (fun f s -> Format.fprintf f "import %s" s)
+             (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
+          imports
+          (fun f () -> if need_stdinsep then
+            Format.fprintf f "
 skip_whitespaces :: IO ()
 skip_whitespaces =
   ifM (hIsEOF stdin)
@@ -528,8 +529,10 @@ skip_whitespaces =
           if c == ' ' || c == '\\n' || c == '\\t' || c == '\\r' then
            do hGetChar stdin
               skip_whitespaces
-           else return ())
-
+           else return ())@\n"
+          ) ()
+          (fun f () -> if need_readint then
+            Format.fprintf f "
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -547,15 +550,16 @@ read_int =
                  then fmap (\\x -> -1::Int) $ hGetChar stdin
                  else return 1
       num <- read_int_a 0
-      return (num * sign)
-"
-			(Printer.print_list (fun f s -> Format.fprintf f "import %s" s)
-				(fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
-			imports
-		;
-
+      return (num * sign)@\n"
+) ()
+(fun f () ->
     if Tags.is_taged "__internal__allocArray" then
       Format.fprintf f "
+writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
+
+readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -567,15 +571,15 @@ array_init_withenv len f env =
            then return (env, [])
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
-
-
-"
+                   return (env'', item:li)@\n") ()
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
     side_effects <- prog.AstFun.side_effects;
-    self#header f prog.AstFun.options;
-    List.iter (self#decl f) prog.AstFun.declarations
+    Format.fprintf f "%a@\n@[%a@]@\n"
+    self#header prog.AstFun.options
+    (Printer.print_list self#decl
+       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
+prog.AstFun.declarations
 
 
 
