@@ -24,7 +24,6 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-                                                                                                                                          
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -43,7 +42,7 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
-                                                                                                                                          
+
 
 fibo0 a b i =
   do let out0 = 0

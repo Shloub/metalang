@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 main =
   do let sum = 0
      let a i b =

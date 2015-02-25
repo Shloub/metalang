@@ -24,7 +24,6 @@ skip_whitespaces =
            do hGetChar stdin
               skip_whitespaces
            else return ())
-                                                                                                                                          
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -43,12 +42,9 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
-                                                                                                                                          
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
+
 
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
@@ -61,7 +57,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-                                                                                                                                          
+
 
 main =
   ((array_init_withenv 2 (\ d b ->

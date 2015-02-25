@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 max2_ a b =
   return (if a > b
           then a

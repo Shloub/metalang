@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 main =
   {-
 	a + b + c = 1000 && a * a + b * b = c * c

@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 main =
   do let a = 1
      let b = 2

@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 h i =
   {-  for j = i - 2 to i + 2 do
     if i % j == 5 then return true end

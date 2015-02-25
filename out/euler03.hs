@@ -16,7 +16,6 @@ main :: IO ()
 
 
 
-
 main =
   do let maximum = 1
      let b0 = 2

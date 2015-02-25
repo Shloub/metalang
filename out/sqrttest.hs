@@ -7,8 +7,8 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-main :: IO ()
 
+main :: IO ()
 
 
 

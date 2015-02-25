@@ -7,27 +7,23 @@ import Data.Char
 import System.IO
 import Data.IORef
 
+
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
 		 else return False
-
 (<||>) a b =
 	do aa <- a
 	   if aa then return True
 		 else b
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
 
 main :: IO ()
-
-
 writeIOA :: IOArray Int a -> Int -> a -> IO ()
 writeIOA = writeArray
-
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
@@ -42,7 +38,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-                                                                                                                                                                                                                                                                         
+                                                                                                                                 
 
 eratostene t max0 =
   do let sum = 0

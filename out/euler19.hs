@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 is_leap year =
   return ((year `rem` 400) == 0 || ((year `rem` 100) /= 0 && (year `rem` 4) == 0))
 

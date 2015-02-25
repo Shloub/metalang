@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 sumdiag n =
   do let nterms = n * 2 - 1
      let un = 1

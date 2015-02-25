@@ -13,8 +13,6 @@ ifM cond if_ els_ =
      if b then if_ else els_
 
 main :: IO ()
-
-
 read_int_a :: Int -> IO Int
 read_int_a b =
   ifM (hIsEOF stdin)
@@ -33,7 +31,7 @@ read_int =
                  else return 1
       num <- read_int_a 0
       return (num * sign)
-                                                                                                                                          
+
 
 foo () =
   let a = 0

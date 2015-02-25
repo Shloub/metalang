@@ -13,11 +13,8 @@ ifM cond if_ els_ =
      if b then if_ else els_
 
 main :: IO ()
-
-
 writeIOA :: IOArray Int a -> Int -> a -> IO ()
 writeIOA = writeArray
-
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
@@ -32,7 +29,7 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-                                                                                                                                          
+                                                                                                                                 
 
 fact n =
   do let prod = 1

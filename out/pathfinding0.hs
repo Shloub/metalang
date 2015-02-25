@@ -7,56 +7,23 @@ import Data.Char
 import System.IO
 import Data.IORef
 
+
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
 		 else return False
-
 (<||>) a b =
 	do aa <- a
 	   if aa then return True
 		 else b
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
 
 main :: IO ()
-
-
-skip_whitespaces :: IO ()
-skip_whitespaces =
-  ifM (hIsEOF stdin)
-      (return ())
-      (do c <- hLookAhead stdin
-          if c == ' ' || c == '\n' || c == '\t' || c == '\r' then
-           do hGetChar stdin
-              skip_whitespaces
-           else return ())
-                                                                                                                                                                                                                                                                         
-read_int_a :: Int -> IO Int
-read_int_a b =
-  ifM (hIsEOF stdin)
-      (return b)
-      (do c <- hLookAhead stdin
-          if c >= '0' && c <= '9' then
-           do hGetChar stdin
-              read_int_a (b * 10 + ord c - 48)
-           else return b)
-
-read_int :: IO Int
-read_int =
-   do c <- hLookAhead stdin
-      sign <- if c == '-'
-                 then fmap (\x -> -1::Int) $ hGetChar stdin
-                 else return 1
-      num <- read_int_a 0
-      return (num * sign)
-                                                                                                                                                                                                                                                                         
 writeIOA :: IOArray Int a -> Int -> a -> IO ()
 writeIOA = writeArray
-
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
@@ -71,12 +38,14 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-                                                                                                                                                                                                                                                                         
+                                                                                                                                 
 
 min2_ a b =
   return (if a < b
           then a
           else b)
+
+
 
 pathfind_aux cache tab x y posX posY =
   if posX == x - 1 && posY == y - 1
@@ -97,35 +66,28 @@ pathfind_aux cache tab x y posX posY =
                          return out0))
 
 pathfind tab x y =
-  ((array_init_withenv y (\ i m ->
-                           ((array_init_withenv x (\ j p ->
+  ((array_init_withenv y (\ i h ->
+                           ((array_init_withenv x (\ j l ->
                                                     do printf "%c" =<< ((join $ readIOA <$> (readIOA tab i) <*> return j) :: IO Char)
-                                                       let o = - 1
-                                                       return ((), o)) ()) >>= (\ (p, tmp) ->
+                                                       let k = - 1
+                                                       return ((), k)) ()) >>= (\ (l, tmp) ->
                                                                                  do printf "\n" :: IO ()
-                                                                                    let l = tmp
-                                                                                    return ((), l)))) ()) >>= (\ (m, cache) ->
+                                                                                    let g = tmp
+                                                                                    return ((), g)))) ()) >>= (\ (h, cache) ->
                                                                                                                 (pathfind_aux cache tab x y 0 0)))
 
 main =
-  do x <- read_int
-     skip_whitespaces
-     y <- read_int
-     skip_whitespaces
+  do x <- (fmap read getLine)
+     y <- (fmap read getLine)
      printf "%d" (x :: Int) :: IO ()
      printf " " :: IO ()
      printf "%d" (y :: Int) :: IO ()
      printf "\n" :: IO ()
-     ((array_init_withenv y (\ f r ->
-                              ((array_init_withenv x (\ k u ->
-                                                       hGetChar stdin >>= ((\ g ->
-                                                                             let s = g
-                                                                                     in return ((), s)))) ()) >>= (\ (u, h) ->
-                                                                                                                    do skip_whitespaces
-                                                                                                                       let q = h
-                                                                                                                       return ((), q)))) ()) >>= (\ (r, e) ->
-                                                                                                                                                   do let tab = e
-                                                                                                                                                      result <- (pathfind tab x y)
-                                                                                                                                                      printf "%d" (result :: Int) :: IO ()))
+     ((array_init_withenv y (\ f o ->
+                              do m <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return x)) <*> getLine))
+                                 return ((), m)) ()) >>= (\ (o, e) ->
+                                                           do let tab = e
+                                                              result <- (pathfind tab x y)
+                                                              printf "%d" (result :: Int) :: IO ()))
 
 

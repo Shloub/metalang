@@ -7,56 +7,21 @@ import Data.Char
 import System.IO
 import Data.IORef
 
+
 (<&&>) a b =
 	do aa <- a
 	   if aa then b
 		 else return False
-
 (<||>) a b =
 	do aa <- a
 	   if aa then return True
 		 else b
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM cond if_ els_ =
   do b <- cond
      if b then if_ else els_
 
 main :: IO ()
-
-
-skip_whitespaces :: IO ()
-skip_whitespaces =
-  ifM (hIsEOF stdin)
-      (return ())
-      (do c <- hLookAhead stdin
-          if c == ' ' || c == '\n' || c == '\t' || c == '\r' then
-           do hGetChar stdin
-              skip_whitespaces
-           else return ())
-                                                                                                                                                                                                                                                                         
-read_int_a :: Int -> IO Int
-read_int_a b =
-  ifM (hIsEOF stdin)
-      (return b)
-      (do c <- hLookAhead stdin
-          if c >= '0' && c <= '9' then
-           do hGetChar stdin
-              read_int_a (b * 10 + ord c - 48)
-           else return b)
-
-read_int :: IO Int
-read_int =
-   do c <- hLookAhead stdin
-      sign <- if c == '-'
-                 then fmap (\x -> -1::Int) $ hGetChar stdin
-                 else return 1
-      num <- read_int_a 0
-      return (num * sign)
-                                                                                                                                                                                                                                                                         
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
@@ -71,37 +36,32 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-                                                                                                                                                                                                                                                                         
+                                                            
+
+
 
 programme_candidat tableau x y =
   do let out0 = 0
-     let h = y - 1
-     let e i p =
-           if i <= h
-           then do let g = x - 1
-                   let f j q =
-                         if j <= g
-                         then do r <- (((+) q) <$> (((*) (i * 2 + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
-                                 (f (j + 1) r)
-                         else (e (i + 1) q) in
-                         (f 0 p)
-           else return p in
-           (e 0 out0)
+     let e = y - 1
+     let b i h =
+           if i <= e
+           then do let d = x - 1
+                   let c j k =
+                         if j <= d
+                         then do l <- (((+) k) <$> (((*) (i * 2 + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
+                                 (c (j + 1) l)
+                         else (b (i + 1) k) in
+                         (c 0 h)
+           else return h in
+           (b 0 out0)
 
 main =
-  do taille_x <- read_int
-     skip_whitespaces
-     taille_y <- read_int
-     skip_whitespaces
-     ((array_init_withenv taille_y (\ a l ->
-                                     ((array_init_withenv taille_x (\ d o ->
-                                                                     do b <- read_int
-                                                                        skip_whitespaces
-                                                                        let m = b
-                                                                        return ((), m)) ()) >>= (\ (o, c) ->
-                                                                                                  let k = c
-                                                                                                          in return ((), k)))) ()) >>= (\ (l, tableau) ->
-                                                                                                                                         do printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
-                                                                                                                                            printf "\n" :: IO ()))
+  do taille_x <- (fmap read getLine)
+     taille_y <- (fmap read getLine)
+     ((array_init_withenv taille_y (\ a g ->
+                                     do f <- (join (newListArray . (,) 0 . subtract 1 <$> return taille_x <*> fmap (map read . words) getLine))
+                                        return ((), f)) ()) >>= (\ (g, tableau) ->
+                                                                  do printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
+                                                                     printf "\n" :: IO ()))
 
 

@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 is_pair i =
   do let j = 1
      let a b = let c = 6

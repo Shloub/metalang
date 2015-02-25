@@ -15,7 +15,6 @@ ifM cond if_ els_ =
 main :: IO ()
 
 
-
 fibo a b i =
   do let out_ = 0
      let a2 = a
