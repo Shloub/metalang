@@ -47,7 +47,7 @@ class perlPrinter = object(self)
 
   method bool f = function
   | true -> Format.fprintf f "1"
-  | false -> Format.fprintf f "0"
+  | false -> Format.fprintf f "()"
 
   method main f main = self#instructions f main
 
