@@ -266,7 +266,15 @@ class haskellPrinter = object(self)
       end
     | _ -> default ()
 
-  method tuple f li = Format.fprintf f "(%a)" (Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
+  method tuple f li =
+    if List.for_all self#isPure li then
+      Format.fprintf f "(%a)" (Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
+    else
+      let li = List.map (fun e -> self#isPure e, self#expr', e) li in
+      hsapply f (fun f () -> Format.fprintf f "(%a)" (Printer.print_list (fun _ _ -> ()) (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li)
+        false li
+
+
 
   method if_ ~p f e1 e2 e3 =
     let pr = if self#isPure e2 && self#isPure e3 then self#expr else self#eM in
