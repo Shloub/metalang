@@ -34,6 +34,62 @@ open Stdlib
 module E = AstFun.Expr
 module Type = Ast.Type
 
+let prelude_and = "
+(<&&>) a b =
+	do aa <- a
+	   if aa then b
+		 else return False
+"
+let prelude_or = "(<||>) a b =
+	do aa <- a
+	   if aa then return True
+		 else b
+"
+let prelude_ifm = "ifM :: IO Bool -> IO a -> IO a -> IO a
+ifM cond if_ els_ =
+  do b <- cond
+     if b then if_ else els_
+"
+let prelude_writeIOA = "writeIOA :: IOArray Int a -> Int -> a -> IO ()
+writeIOA = writeArray
+"
+let prelude_readIOA = "readIOA :: IOArray Int a -> Int -> IO a
+readIOA = readArray
+"
+let prelude_skip = "
+
+skip_whitespaces :: IO ()
+skip_whitespaces =
+  ifM (hIsEOF stdin)
+      (return ())
+      (do c <- hLookAhead stdin
+          if c == ' ' || c == '\\n' || c == '\\t' || c == '\\r' then
+           do hGetChar stdin
+              skip_whitespaces
+           else return ())
+"
+
+let prelude_readint = "read_int_a :: Int -> IO Int
+read_int_a b =
+  ifM (hIsEOF stdin)
+      (return b)
+      (do c <- hLookAhead stdin
+          if c >= '0' && c <= '9' then
+           do hGetChar stdin
+              read_int_a (b * 10 + ord c - 48)
+           else return b)
+
+read_int :: IO Int
+read_int =
+   do c <- hLookAhead stdin
+      sign <- if c == '-'
+                 then fmap (\\x -> -1::Int) $ hGetChar stdin
+                 else return 1
+      num <- read_int_a 0
+      return (num * sign)
+"
+
+
 let nop = -100
 let fun_priority = 0
 
@@ -492,7 +548,7 @@ class haskellPrinter = object(self)
         macros;
       ()
 
-  method header binand binor ifm f opts =
+  method header binand binor ifm read_array write_array f opts =
     let need_stdinsep = opts.AstFun.hasSkip in
     let need_readint = Ast.TypeSet.mem (Type.integer) opts.AstFun.reads in
     let need_readchar = Ast.TypeSet.mem (Type.char) opts.AstFun.reads in
@@ -506,77 +562,20 @@ class haskellPrinter = object(self)
       "System.IO";
       "Data.IORef"
     ] in
-    Format.fprintf f "@[%a@]
-%a%a%a
-main :: IO ()
-
-@[%a@]@[%a@]@[%a@]
-"
+    Format.fprintf f "@[%a@]@\n@\n%a%a%a@\nmain :: IO ()@\n@[%a@]@[%a@]@[%a@]@[%a@]@[%a@]@\n"
           (Printer.print_list (fun f s -> Format.fprintf f "import %s" s)
              (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
           imports
-(fun f () -> if binand then Format.fprintf f "
-(<&&>) a b =
-	do aa <- a
-	   if aa then b
-		 else return False
-") ()
-(fun f () -> if binor then Format.fprintf f "
-(<||>) a b =
-	do aa <- a
-	   if aa then return True
-		 else b
-") ()
-(fun f () -> if ifm then Format.fprintf f "
-ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
-") ()
-
-
-          (fun f () -> if need_stdinsep then
-            Format.fprintf f "
-skip_whitespaces :: IO ()
-skip_whitespaces =
-  ifM (hIsEOF stdin)
-      (return ())
-      (do c <- hLookAhead stdin
-          if c == ' ' || c == '\\n' || c == '\\t' || c == '\\r' then
-           do hGetChar stdin
-              skip_whitespaces
-           else return ())@\n"
-          ) ()
-          (fun f () -> if need_readint then
-            Format.fprintf f "
-read_int_a :: Int -> IO Int
-read_int_a b =
-  ifM (hIsEOF stdin)
-      (return b)
-      (do c <- hLookAhead stdin
-          if c >= '0' && c <= '9' then
-           do hGetChar stdin
-              read_int_a (b * 10 + ord c - 48)
-           else return b)
-
-read_int :: IO Int
-read_int =
-   do c <- hLookAhead stdin
-      sign <- if c == '-'
-                 then fmap (\\x -> -1::Int) $ hGetChar stdin
-                 else return 1
-      num <- read_int_a 0
-      return (num * sign)@\n"
-) ()
-(fun f () ->
-    if Tags.is_taged "__internal__allocArray" then
+      (fun f () -> if binand then Format.fprintf f "%s" prelude_and) ()
+      (fun f () -> if binor then Format.fprintf f "%s" prelude_or) ()
+      (fun f () -> if ifm then Format.fprintf f "%s" prelude_ifm) ()
+      (fun f () -> if need_stdinsep then Format.fprintf f "%s" prelude_skip) ()
+      (fun f () -> if need_readint then Format.fprintf f "%s" prelude_readint) ()
+      (fun f () -> if write_array then Format.fprintf f "%s" prelude_writeIOA) ()
+      (fun f () -> if read_array then Format.fprintf f "%s" prelude_readIOA) ()
+      (fun f () ->
+        if Tags.is_taged "__internal__allocArray" then
       Format.fprintf f "
-writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-
-readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
   do (env, li) <- g 0 env
@@ -608,8 +607,17 @@ array_init_withenv len f env =
           IntMap.find (E.Fixed.annot c) prog.AstFun.side_effects
         | _ -> false
       ) prog.AstFun.declarations in
+
+    let read_array = AstFun.existsExpr (fun e ->match E.unfix e with
+    | E.ArrayAccess _ -> true
+    | _ -> false
+                                       ) prog.AstFun.declarations in
+    let write_array = AstFun.existsExpr (fun e ->match E.unfix e with
+    | E.ArrayAffect _ -> true
+    | _ -> false
+                                       ) prog.AstFun.declarations in
     Format.fprintf f "%a@\n@[%a@]@\n"
-    (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) ifm) prog.AstFun.options
+    (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) ifm read_array write_array) prog.AstFun.options
     (Printer.print_list self#decl
        (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
 prog.AstFun.declarations
