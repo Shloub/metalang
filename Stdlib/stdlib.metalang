@@ -241,7 +241,7 @@ def int pgcd(int a, int b)
 	end
 end
 
-macro array<int> native_expand_read_int_line()
+macro array<int> native_expand_read_int_line(int c)
   py do "list(map(int, input().split()))"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
   csharp do "new List<string>(Console.ReadLine().Split(\" \".ToCharArray())).ConvertAll(int.Parse).ToArray()"
@@ -250,10 +250,11 @@ macro array<int> native_expand_read_int_line()
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   java do "read_int_line()"
+  hs do "join (newListArray . (,) 0 . subtract 1 <$> $c <*> fmap (map read . words) getLine)"
   *  do "E R R O R"
 end
 
-macro array<char> native_expand_read_char_line()
+macro array<char> native_expand_read_char_line(int c)
   py do "list(input())"
   php do "fgets(STDIN)"
   csharp do "Console.ReadLine().ToCharArray()"
@@ -263,6 +264,7 @@ macro array<char> native_expand_read_char_line()
   ruby do "STDIN.readline.split(//)"
   pl do "[split(//, <STDIN>)]"
   java do "scanner.nextLine().toCharArray()"
+  hs do "join (newListArray <$> (fmap (\\x -> (0, x-1)) ($c)) <*> getLine)"
   *  do "E R R O R"
 end
 
@@ -282,6 +284,7 @@ macro int native_expand_read_int()
   ruby do "STDIN.readline.to_i(10)"
   pl do "int( <STDIN> )"
   java do "Integer.parseInt(scanner.nextLine())"
+  hs do "fmap read getLine"
   *  do "E R R O R"
 end
 
@@ -299,7 +302,8 @@ then
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Java ||
-	current_language() == LANG_Rb
+	current_language() == LANG_Rb ||
+	current_language() == LANG_Hs
 	then
     return {
     tag use_readline
@@ -323,13 +327,14 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Pl ||
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Java ||
-	current_language() == LANG_Rb
+	current_language() == LANG_Rb ||
+	current_language() == LANG_Hs
 	  then
       return {
         tag use_java_readline
         tag use_readmacros
         tag use_readline
-        return native_expand_read_int_line()
+        return native_expand_read_int_line(${a})
       }
     else
     return {
@@ -351,7 +356,7 @@ def lexems expand_read_char_line(lexems a)
   then
     return {
       tag use_cc_readline
-    return native_expand_read_char_line( )
+    return native_expand_read_char_line(${a})
     }
   elsif current_language() == LANG_Py ||
 	current_language() == LANG_Php ||
@@ -360,12 +365,13 @@ def lexems expand_read_char_line(lexems a)
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Java ||
-	current_language() == LANG_Rb
+	current_language() == LANG_Rb ||
+	current_language() == LANG_Hs
 	  then
       return {
       tag use_readline
 			tag use_readmacros
-      return native_expand_read_char_line()
+      return native_expand_read_char_line(${a})
       }
     else
     return {
@@ -432,18 +438,23 @@ macro (int, int) native_expand_read_int_couple()
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   rkt do "map string->number (regexp-split \" \" (read-line))"
+  hs do " (fmap read . head . reads) <$> getLine :: IO (Int, Int)"
   *  do "E R R O R"
 end
 
 def lexems expand_read_int_couple()
-  if current_language() == LANG_Vb || current_language() == LANG_Cs || current_language() == LANG_Java then
+  if current_language() == LANG_Vb ||
+     current_language() == LANG_Cs ||
+     current_language() == LANG_Java
+  then
     return { def array<int> l = read_int_line(2)
     return (l[0], l[1]) }
   elsif current_language() == LANG_Py ||
     current_language() == LANG_Php ||
     current_language() == LANG_Rb ||
     current_language() == LANG_Rkt ||
-    current_language() == LANG_Pl
+    current_language() == LANG_Pl ||
+    current_language() == LANG_Hs
   then
     return { return native_expand_read_int_couple() }
   else
@@ -471,7 +482,10 @@ macro (int, int, int) native_expand_read_3ints()
 end
 
 def lexems expand_read_3ints()
-  if current_language() == LANG_Vb || current_language() == LANG_Cs || current_language() == LANG_Java then
+  if current_language() == LANG_Vb ||
+     current_language() == LANG_Cs ||
+     current_language() == LANG_Hs ||
+     current_language() == LANG_Java then
     return { def array<int> l = read_int_line(3)
     return (l[0], l[1], l[2]) }
   elsif current_language() == LANG_Py ||
