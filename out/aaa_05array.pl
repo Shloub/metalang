@@ -12,7 +12,7 @@ sub id{
 
 sub g{
   my($t, $index) = @_;
-  $t->[$index] = 0;
+  $t->[$index] = ();
 }
 
 my $j = 0;

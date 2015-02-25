@@ -51,13 +51,13 @@ sub bigint_eq{
   # Renvoie vrai si a = b 
   
   if ($a->{"bigint_sign"} ne $b->{"bigint_sign"}) {
-    return 0;
+    return ();
   }elsif ($a->{"bigint_len"} ne $b->{"bigint_len"}) {
-    return 0;
+    return ();
   }else{
     foreach my $i (0 .. $a->{"bigint_len"} - 1) {
       if ($a->{"bigint_chiffres"}->[$i] ne $b->{"bigint_chiffres"}->[$i]) {
-        return 0;
+        return ();
       }
     }
     return 1;
@@ -71,7 +71,7 @@ sub bigint_gt{
   if ($a->{"bigint_sign"} && !$b->{"bigint_sign"}) {
     return 1;
   }elsif (!$a->{"bigint_sign"} && $b->{"bigint_sign"}) {
-    return 0;
+    return ();
   }else{
     if ($a->{"bigint_len"} > $b->{"bigint_len"}) {
       return $a->{"bigint_sign"};
@@ -431,7 +431,7 @@ sub euler29{
   while ($found)
   {
     my $min0 = $a0_bigint->[0];
-    $found = 0;
+    $found = ();
     foreach my $i (2 .. $maxA) {
       if ($b->[$i] <= $maxB) {
         if ($found) {

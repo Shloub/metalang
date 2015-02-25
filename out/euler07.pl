@@ -12,7 +12,7 @@ sub divisible{
       return 1;
     }
   }
-  return 0;
+  return ();
 }
 
 sub find{

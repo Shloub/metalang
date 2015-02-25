@@ -83,31 +83,31 @@ read_sudoku () =
 
 print_sudoku sudoku0 =
   let d y =
-        (if (y <= 8)
+        if y <= 8
         then let e x =
-                   (if (x <= 8)
-                   then do printf "%d" =<< ((readIOA sudoku0 (x + (y * 9))) :: IO Int)
-                           printf " " ::IO()
-                           (if ((x `rem` 3) == 2)
-                           then do printf " " ::IO()
+                   if x <= 8
+                   then do printf "%d" =<< ((readIOA sudoku0 (x + y * 9)) :: IO Int)
+                           printf " " :: IO ()
+                           if (x `rem` 3) == 2
+                           then do printf " " :: IO ()
                                    (e (x + 1))
-                           else (e (x + 1)))
-                   else do printf "\n" ::IO()
-                           (if ((y `rem` 3) == 2)
-                           then do printf "\n" ::IO()
+                           else (e (x + 1))
+                   else do printf "\n" :: IO ()
+                           if (y `rem` 3) == 2
+                           then do printf "\n" :: IO ()
                                    (d (y + 1))
-                           else (d (y + 1)))) in
+                           else (d (y + 1)) in
                    (e 0)
-        else printf "\n" ::IO()) in
+        else printf "\n" :: IO () in
         (d 0)
 
 sudoku_done s =
   let c i =
-        (if (i <= 80)
+        if i <= 80
         then ifM (((==) 0) <$> (readIOA s i))
                  (return False)
-                 ((c (i + 1)))
-        else return True) in
+                 (c (i + 1))
+        else return True in
         (c 0)
 
 solve sudoku0 =
@@ -116,19 +116,19 @@ solve sudoku0 =
       (ifM (sudoku_done sudoku0)
            (return True)
            (let a i =
-                  (if (i <= 80)
+                  if i <= 80
                   then ifM (((==) 0) <$> (readIOA sudoku0 i))
                            (let b p =
-                                  (if (p <= 9)
+                                  if p <= 9
                                   then do (writeIOA sudoku0 i p)
                                           ifM (solve sudoku0)
                                               (return True)
-                                              ((b (p + 1)))
+                                              (b (p + 1))
                                   else do (writeIOA sudoku0 i 0)
-                                          return False) in
+                                          return False in
                                   (b 1))
-                           ((a (i + 1)))
-                  else return False) in
+                           (a (i + 1))
+                  else return False in
                   (a 0)))
 
 main =
@@ -137,6 +137,6 @@ main =
      ifM (solve sudoku0)
          (do (print_sudoku sudoku0)
              return ())
-         (printf "no solution\n" ::IO())
+         (printf "no solution\n" :: IO ())
 
 

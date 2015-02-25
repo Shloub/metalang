@@ -46,23 +46,23 @@ array_init_withenv len f env =
 
 eratostene t max0 =
   do let sum = 0
-     let c = (max0 - 1)
+     let c = max0 - 1
      let a i f =
-           (if (i <= c)
+           if i <= c
            then ifM (((==) i) <$> (readIOA t i))
-                    (do let g = (f + i)
-                        (if ((max0 `quot` i) > i)
-                        then do let j = (i * i)
+                    (do let g = f + i
+                        if (max0 `quot` i) > i
+                        then do let j = i * i
                                 let b h =
-                                      (if ((h < max0) && (h > 0))
+                                      if h < max0 && h > 0
                                       then do (writeIOA t h 0)
-                                              let k = (h + i)
+                                              let k = h + i
                                               (b k)
-                                      else (a (i + 1) g)) in
+                                      else (a (i + 1) g) in
                                       (b j)
-                        else (a (i + 1) g)))
-                    ((a (i + 1) f))
-           else return f) in
+                        else (a (i + 1) g))
+                    (a (i + 1) f)
+           else return f in
            (a 2 sum)
 
 main =
@@ -73,6 +73,6 @@ main =
                                       in return ((), d)) ()) >>= (\ (e, t) ->
                                                                    do (writeIOA t 1 0)
                                                                       printf "%d" =<< ((eratostene t n) :: IO Int)
-                                                                      printf "\n" ::IO()))
+                                                                      printf "\n" :: IO ()))
 
 

@@ -65,16 +65,16 @@ array_init_withenv len f env =
 
 main =
   let h i =
-        (if (i <= 3)
+        if i <= 3
         then do a <- read_int
                 skip_whitespaces
                 b <- read_int
                 skip_whitespaces
-                printf "a = " ::IO()
-                printf "%d" (a :: Int)::IO()
-                printf " b = " ::IO()
-                printf "%d" (b :: Int)::IO()
-                printf "\n" ::IO()
+                printf "a = " :: IO ()
+                printf "%d" (a :: Int) :: IO ()
+                printf " b = " :: IO ()
+                printf "%d" (b :: Int) :: IO ()
+                printf "\n" :: IO ()
                 (h (i + 1))
         else ((array_init_withenv 10 (\ c f ->
                                        do d <- read_int
@@ -82,12 +82,12 @@ main =
                                           let e = d
                                           return ((), e)) ()) >>= (\ (f, l) ->
                                                                     let g j =
-                                                                          (if (j <= 9)
+                                                                          if j <= 9
                                                                           then do printf "%d" =<< ((readIOA l j) :: IO Int)
-                                                                                  printf "\n" ::IO()
+                                                                                  printf "\n" :: IO ()
                                                                                   (g (j + 1))
-                                                                          else return ()) in
-                                                                          (g 0)))) in
+                                                                          else return () in
+                                                                          (g 0))) in
         (h 1)
 
 

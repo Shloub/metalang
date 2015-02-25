@@ -74,16 +74,16 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 max2_ a b =
-  return (if (a > b)
-         then a
-         else b)
+  return (if a > b
+          then a
+          else b)
 
 nbPassePartout n passepartout m serrures =
   do let max_ancient = 0
      let max_recent = 0
-     let f = (m - 1)
+     let f = m - 1
      let e i u v =
-           (if (i <= f)
+           if i <= f
            then do w <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) u) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
                             (do x <- (join $ readIOA <$> (readIOA serrures i) <*> return 1)
                                 return x)
@@ -91,22 +91,22 @@ nbPassePartout n passepartout m serrures =
                    ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) v) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
                        (do y <- (join $ readIOA <$> (readIOA serrures i) <*> return 1)
                            (e (i + 1) w y))
-                       ((e (i + 1) w v))
+                       (e (i + 1) w v)
            else do let max_ancient_pp = 0
                    let max_recent_pp = 0
-                   let d = (n - 1)
+                   let d = n - 1
                    let c z ba bb =
-                         (if (z <= d)
+                         if z <= d
                          then do pp <- (readIOA passepartout z)
                                  ifM ((((<=) u) <$> (readIOA pp 0)) <&&> (((<=) v) <$> (readIOA pp 1)))
                                      (return 1)
                                      (do bc <- (max2_ ba =<< (readIOA pp 0))
                                          bd <- (max2_ bb =<< (readIOA pp 1))
                                          (c (z + 1) bc bd))
-                         else return (if ((ba >= u) && (bb >= v))
-                                     then 2
-                                     else 0)) in
-                         (c 0 max_ancient_pp max_recent_pp)) in
+                         else return (if ba >= u && bb >= v
+                                      then 2
+                                      else 0) in
+                         (c 0 max_ancient_pp max_recent_pp) in
            (e 0 max_ancient max_recent)
 
 main =

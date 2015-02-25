@@ -74,27 +74,27 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 go0 tab a b =
-  do let m = ((a + b) `quot` 2)
-     (if (a == m)
+  do let m = (a + b) `quot` 2
+     if a == m
      then ifM (((==) m) <$> (readIOA tab a))
               (return b)
               (return a)
      else do let i = a
              let j = b
              let c k l =
-                   (if (k < l)
+                   if k < l
                    then do e <- (readIOA tab k)
-                           (if (e < m)
-                           then do let n = (k + 1)
+                           if e < m
+                           then do let n = k + 1
                                    (c n l)
-                           else do let o = (l - 1)
+                           else do let o = l - 1
                                    (writeIOA tab k =<< (readIOA tab o))
                                    (writeIOA tab o e)
-                                   (c k o))
-                   else (if (k < m)
+                                   (c k o)
+                   else if k < m
                         then (go0 tab a m)
-                        else (go0 tab m b))) in
-                   (c i j))
+                        else (go0 tab m b) in
+                   (c i j)
 
 plus_petit0 tab len =
   (go0 tab 0 len)

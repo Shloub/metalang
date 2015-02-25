@@ -45,26 +45,26 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 divisible n t size =
-  do let c = (size - 1)
+  do let c = size - 1
      let b i =
-           (if (i <= c)
+           if i <= c
            then ifM (((==) 0) <$> ((rem n) <$> (readIOA t i)))
                     (return True)
-                    ((b (i + 1)))
-           else return False) in
+                    (b (i + 1))
+           else return False in
            (b 0)
 
 find n t used nth =
   let a f g =
-        (if (g /= nth)
+        if g /= nth
         then ifM (divisible f t g)
-                 (do let h = (f + 1)
+                 (do let h = f + 1
                      (a h g))
                  (do (writeIOA t g f)
-                     let j = (f + 1)
-                     let k = (g + 1)
+                     let j = f + 1
+                     let k = g + 1
                      (a j k))
-        else (readIOA t (g - 1))) in
+        else (readIOA t (g - 1)) in
         (a n used)
 
 main =
@@ -73,6 +73,6 @@ main =
                               let d = 2
                                       in return ((), d)) ()) >>= (\ (e, t) ->
                                                                    do printf "%d" =<< ((find 3 t 1 n) :: IO Int)
-                                                                      printf "\n" ::IO()))
+                                                                      printf "\n" :: IO ()))
 
 

@@ -63,7 +63,7 @@ sub sudoku_done{
   my($s) = @_;
   foreach my $i (0 .. 80) {
     if ($s->[$i] eq 0) {
-      return 0;
+      return ();
     }
   }
   return 1;
@@ -75,10 +75,10 @@ sub sudoku_done{
 
 sub solve{
   my($sudoku0) = @_;
-  if (0 || ($sudoku0->[0] ne 0 && $sudoku0->[0] eq $sudoku0->[9]) || ($sudoku0->[0] ne
-                                                                       0 &&
-                                                                       $sudoku0->[0] eq
-                                                                       $sudoku0->[18]) || ($sudoku0->[9] ne
+  if (() || ($sudoku0->[0] ne 0 && $sudoku0->[0] eq $sudoku0->[9]) || ($sudoku0->[0] ne
+                                                                        0 &&
+                                                                        $sudoku0->[0] eq
+                                                                        $sudoku0->[18]) || ($sudoku0->[9] ne
                                                                                 0 &&
                                                                                 $sudoku0->[9] eq
                                                                                 $sudoku0->[18]) || ($sudoku0->[0] ne
@@ -2989,7 +2989,7 @@ sub solve{
                                                                                 0 &&
                                                                                 $sudoku0->[79] eq
                                                                                 $sudoku0->[80])) {
-    return 0;
+    return ();
   }
   if (sudoku_done($sudoku0)) {
     return 1;
@@ -3003,10 +3003,10 @@ sub solve{
         }
       }
       $sudoku0->[$i] = 0;
-      return 0;
+      return ();
     }
   }
-  return 0;
+  return ();
 }
 
 my $sudoku0 = read_sudoku();

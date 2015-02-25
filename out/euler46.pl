@@ -39,7 +39,7 @@ foreach my $k (2 .. $maximumprimes - 1) {
 print($l, " == ", $nprimes, "\n");
 my $canbe = [];
 foreach my $i_ (0 .. $maximumprimes - 1) {
-  $canbe->[$i_] = 0;
+  $canbe->[$i_] = ();
 }
 foreach my $i (0 .. $nprimes - 1) {
   foreach my $j (0 .. $maximumprimes - 1) {

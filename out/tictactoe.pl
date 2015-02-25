@@ -121,7 +121,7 @@ sub cancel_move_xy{
   my($x, $y, $g) = @_;
   $g->{"cases"}->[$x]->[$y] = 0;
   $g->{"firstToPlay"} = !$g->{"firstToPlay"};
-  $g->{"ended"} = 0;
+  $g->{"ended"} = ();
 }
 
 sub cancel_move{
@@ -210,7 +210,7 @@ sub init0{
   return {"cases" => $cases,
           "firstToPlay" => 1,
           "note" => 0,
-          "ended" => 0};
+          "ended" => ()};
 }
 
 sub read_move{

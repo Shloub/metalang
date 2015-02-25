@@ -49,15 +49,15 @@ fibo0 a b i =
   do let out0 = 0
      let a2 = a
      let b2 = b
-     let d = (i + 1)
+     let d = i + 1
      let c j h k l =
-           (if (j <= d)
-           then do let m = (l + h)
+           if j <= d
+           then do let m = l + h
                    let tmp = k
-                   let n = (k + h)
+                   let n = k + h
                    let o = tmp
                    (c (j + 1) o n m)
-           else return l) in
+           else return l in
            (c 0 a2 b2 out0)
 
 main =

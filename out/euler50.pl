@@ -49,7 +49,7 @@ my $len = 1;
 my $resp = 1;
 while ($process)
 {
-  $process = 0;
+  $process = ();
   foreach my $i (0 .. $stop) {
     if ($i + $len < $nprimes) {
       $sum->[$i] = $sum->[$i] + $primes->[$i + $len];

@@ -99,7 +99,7 @@ result t_ t2_ =
      (writeIORef (_blah l) =<< (((+) 1) <$> (readIORef (_blah l))))
      let len = 1
      ((array_init_withenv len (\ i b ->
-                                let a = (- i)
+                                let a = - i
                                         in return ((), a)) ()) >>= (\ (b, cache0) ->
                                                                      ((array_init_withenv len (\ j d ->
                                                                                                 let c = j

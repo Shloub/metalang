@@ -51,10 +51,10 @@ main =
                                                           in return ((), c)))) ()) >>= (\ (d, str) ->
                                                                                          do skip_whitespaces
                                                                                             let e i =
-                                                                                                  (if (i <= 11)
+                                                                                                  if i <= 11
                                                                                                   then do printf "%c" =<< ((readIOA str i) :: IO Char)
                                                                                                           (e (i + 1))
-                                                                                                  else return ()) in
+                                                                                                  else return () in
                                                                                                   (e 0)))
 
 

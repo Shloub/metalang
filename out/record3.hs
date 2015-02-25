@@ -87,13 +87,13 @@ mktoto v1 =
 
 result t len =
   do let out0 = 0
-     let b = (len - 1)
+     let b = len - 1
      let a j g =
-           (if (j <= b)
+           if j <= b
            then do (join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> (((+) 1) <$> ((_blah <$> (readIOA t j)) >>= readIORef)))
                    h <- ((+) <$> ((+) <$> (((+) g) <$> ((_foo <$> (readIOA t j)) >>= readIORef)) <*> ((*) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> ((_bar <$> (readIOA t j)) >>= readIORef))) <*> ((*) <$> ((_bar <$> (readIOA t j)) >>= readIORef) <*> ((_foo <$> (readIOA t j)) >>= readIORef)))
                    (a (j + 1) h)
-           else return g) in
+           else return g in
            (a 0 out0)
 
 main =
@@ -106,7 +106,7 @@ main =
                                                            e <- read_int
                                                            (join $ writeIORef <$> (_blah <$> (readIOA t 1)) <*> return e)
                                                            titi <- (result t 4)
-                                                           printf "%d" (titi :: Int)::IO()
+                                                           printf "%d" (titi :: Int) :: IO ()
                                                            printf "%d" =<< (((_blah <$> (readIOA t 2)) >>= readIORef) :: IO Int)))
 
 

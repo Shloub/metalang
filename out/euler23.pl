@@ -97,11 +97,11 @@ my $n = 100;
 
 my $abondant = [];
 foreach my $p (0 .. $n + 1 - 1) {
-  $abondant->[$p] = 0;
+  $abondant->[$p] = ();
 }
 my $summable = [];
 foreach my $q (0 .. $n + 1 - 1) {
-  $summable->[$q] = 0;
+  $summable->[$q] = ();
 }
 my $sum = 0;
 foreach my $r (2 .. $n) {

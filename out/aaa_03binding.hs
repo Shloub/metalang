@@ -12,24 +12,24 @@ main :: IO ()
 
 
 g i =
-  let j = (i * 4)
-          in return (if ((j `rem` 2) == 1)
-                    then 0
-                    else j)
+  let j = i * 4
+          in return (if (j `rem` 2) == 1
+                     then 0
+                     else j)
 
 h i =
-  do printf "%d" (i :: Int)::IO()
-     printf "\n" ::IO()
+  do printf "%d" (i :: Int) :: IO ()
+     printf "\n" :: IO ()
 
 main =
   do (h 14)
      let a = 4
      let b = 5
-     printf "%d" ((a + b) :: Int)::IO()
+     printf "%d" (a + b :: Int) :: IO ()
      {- main -}
      do (h 15)
         let c = 2
         let d = 1
-        printf "%d" ((c + d) :: Int)::IO()
+        printf "%d" (c + d :: Int) :: IO ()
 
 

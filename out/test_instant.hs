@@ -15,6 +15,6 @@ foo a b =
   return (a + b)
 
 main =
-  printf "%d" (10 :: Int)::IO()
+  printf "%d" (10 :: Int) :: IO ()
 
 

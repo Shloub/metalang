@@ -36,12 +36,12 @@ sub okdigits{
   }else{
     my $digit = remainder($n, 10);
     if ($ok->[$digit]) {
-      $ok->[$digit] = 0;
+      $ok->[$digit] = ();
       my $o = okdigits($ok, int(($n) / (10)));
       $ok->[$digit] = 1;
       return $o;
     }else{
-      return 0;
+      return ();
     }
   }
 }
@@ -53,25 +53,25 @@ foreach my $i (0 .. 10 - 1) {
 }
 my $counted = [];
 foreach my $j (0 .. 100000 - 1) {
-  $counted->[$j] = 0;
+  $counted->[$j] = ();
 }
 foreach my $e (1 .. 9) {
-  $allowed->[$e] = 0;
+  $allowed->[$e] = ();
   foreach my $b (1 .. 9) {
     if ($allowed->[$b]) {
-      $allowed->[$b] = 0;
+      $allowed->[$b] = ();
       my $be = remainder($b * $e, 10);
       if ($allowed->[$be]) {
-        $allowed->[$be] = 0;
+        $allowed->[$be] = ();
         foreach my $a (1 .. 9) {
           if ($allowed->[$a]) {
-            $allowed->[$a] = 0;
+            $allowed->[$a] = ();
             foreach my $c (1 .. 9) {
               if ($allowed->[$c]) {
-                $allowed->[$c] = 0;
+                $allowed->[$c] = ();
                 foreach my $d (1 .. 9) {
                   if ($allowed->[$d]) {
-                    $allowed->[$d] = 0;
+                    $allowed->[$d] = ();
                     # 2 * 3 digits 
                     
                     my $product = ($a * 10 + $b) * ($c * 100 + $d * 10 + $e);

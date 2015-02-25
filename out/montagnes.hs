@@ -76,24 +76,24 @@ array_init_withenv len f env =
 montagnes0 tab len =
   do let max0 = 1
      let j = 1
-     let i = (len - 2)
+     let i = len - 2
      let a g h k =
-           (if (g >= 0)
+           if g >= 0
            then do x <- (readIOA tab g)
                    let b l =
                          ifM (return (l >= 0) <&&> (((>) x) <$> (readIOA tab (len - l))))
-                             (do let m = (l - 1)
+                             (do let m = l - 1
                                  (b m))
-                             (do let n = (l + 1)
+                             (do let n = l + 1
                                  (writeIOA tab (len - n) x)
-                                 let o = (if (n > k)
+                                 let o = if n > k
                                          then let p = n
                                                       in p
-                                         else k)
-                                 let q = (g - 1)
+                                         else k
+                                 let q = g - 1
                                  (a q n o)) in
                          (b h)
-           else return k) in
+           else return k in
            (a i j max0)
 
 main =

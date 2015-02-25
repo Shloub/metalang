@@ -20,16 +20,16 @@ fibo a b i =
   do let out_ = 0
      let a2 = a
      let b2 = b
-     let d = (i + 1)
+     let d = i + 1
      let c j e f g =
-           (if (j <= d)
-           then do printf "%d" (j :: Int)::IO()
-                   let h = (g + e)
+           if j <= d
+           then do printf "%d" (j :: Int) :: IO ()
+                   let h = g + e
                    let tmp = f
-                   let k = (f + e)
+                   let k = f + e
                    let l = tmp
                    (c (j + 1) l k h)
-           else return g) in
+           else return g in
            (c 0 a2 b2 out_)
 
 main =

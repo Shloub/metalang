@@ -74,67 +74,67 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 max2_ a b =
-  return (if (a > b)
-         then a
-         else b)
+  return (if a > b
+          then a
+          else b)
 
 find n m x y dx dy =
-  (if ((((x < 0) || (x == 20)) || (y < 0)) || (y == 20))
+  if x < 0 || x == 20 || y < 0 || y == 20
   then return (- 1)
-  else (if (n == 0)
+  else if n == 0
        then return 1
-       else ((*) <$> (join $ readIOA <$> (readIOA m y) <*> return x) <*> (find (n - 1) m (x + dx) (y + dy) dx dy))))
+       else ((*) <$> (join $ readIOA <$> (readIOA m y) <*> return x) <*> (find (n - 1) m (x + dx) (y + dy) dx dy))
 
 main =
   ((array_init_withenv 8 (\ i k ->
-                           return (if (i == 0)
-                                  then let h = (0, 1)
-                                               in ((), h)
-                                  else (if (i == 1)
-                                       then let h = (1, 0)
-                                                    in ((), h)
-                                       else (if (i == 2)
-                                            then let h = (0, (- 1))
-                                                         in ((), h)
-                                            else (if (i == 3)
-                                                 then let h = ((- 1), 0)
-                                                              in ((), h)
-                                                 else (if (i == 4)
-                                                      then let h = (1, 1)
-                                                                   in ((), h)
-                                                      else (if (i == 5)
-                                                           then let h = (1, (- 1))
-                                                                        in ((), h)
-                                                           else (if (i == 6)
-                                                                then let h = ((- 1), 1)
-                                                                             in ((), h)
-                                                                else let h = ((- 1), (- 1))
-                                                                             in ((), h))))))))) ()) >>= (\ (k, directions) ->
-                                                                                                          do let max0 = 0
-                                                                                                             let c = 20
-                                                                                                             ((array_init_withenv 20 (\ d o ->
-                                                                                                                                       ((array_init_withenv c (\ g u ->
-                                                                                                                                                                do e <- read_int
-                                                                                                                                                                   skip_whitespaces
-                                                                                                                                                                   let s = e
-                                                                                                                                                                   return ((), s)) ()) >>= (\ (u, f) ->
-                                                                                                                                                                                             let l = f
-                                                                                                                                                                                                     in return ((), l)))) ()) >>= (\ (o, m) ->
-                                                                                                                                                                                                                                    let p j v =
-                                                                                                                                                                                                                                          (if (j <= 7)
-                                                                                                                                                                                                                                          then ((readIOA directions j) >>= (\ (dx, dy) ->
-                                                                                                                                                                                                                                                                             let q x w =
-                                                                                                                                                                                                                                                                                   (if (x <= 19)
-                                                                                                                                                                                                                                                                                   then let r y ba =
-                                                                                                                                                                                                                                                                                              (if (y <= 19)
-                                                                                                                                                                                                                                                                                              then do bb <- (max2_ ba =<< (find 4 m x y dx dy))
-                                                                                                                                                                                                                                                                                                      (r (y + 1) bb)
-                                                                                                                                                                                                                                                                                              else (q (x + 1) ba)) in
-                                                                                                                                                                                                                                                                                              (r 0 w)
-                                                                                                                                                                                                                                                                                   else (p (j + 1) w)) in
-                                                                                                                                                                                                                                                                                   (q 0 v)))
-                                                                                                                                                                                                                                          else do printf "%d" (v :: Int)::IO()
-                                                                                                                                                                                                                                                  printf "\n" ::IO()) in
-                                                                                                                                                                                                                                          (p 0 max0)))))
+                           return (if i == 0
+                                   then let h = (0, 1)
+                                                in ((), h)
+                                   else if i == 1
+                                        then let h = (1, 0)
+                                                     in ((), h)
+                                        else if i == 2
+                                             then let h = (0, - 1)
+                                                          in ((), h)
+                                             else if i == 3
+                                                  then let h = (- 1, 0)
+                                                               in ((), h)
+                                                  else if i == 4
+                                                       then let h = (1, 1)
+                                                                    in ((), h)
+                                                       else if i == 5
+                                                            then let h = (1, - 1)
+                                                                         in ((), h)
+                                                            else if i == 6
+                                                                 then let h = (- 1, 1)
+                                                                              in ((), h)
+                                                                 else let h = (- 1, - 1)
+                                                                              in ((), h))) ()) >>= (\ (k, directions) ->
+                                                                                                     do let max0 = 0
+                                                                                                        let c = 20
+                                                                                                        ((array_init_withenv 20 (\ d o ->
+                                                                                                                                  ((array_init_withenv c (\ g u ->
+                                                                                                                                                           do e <- read_int
+                                                                                                                                                              skip_whitespaces
+                                                                                                                                                              let s = e
+                                                                                                                                                              return ((), s)) ()) >>= (\ (u, f) ->
+                                                                                                                                                                                        let l = f
+                                                                                                                                                                                                in return ((), l)))) ()) >>= (\ (o, m) ->
+                                                                                                                                                                                                                               let p j v =
+                                                                                                                                                                                                                                     if j <= 7
+                                                                                                                                                                                                                                     then ((readIOA directions j) >>= (\ (dx, dy) ->
+                                                                                                                                                                                                                                                                        let q x w =
+                                                                                                                                                                                                                                                                              if x <= 19
+                                                                                                                                                                                                                                                                              then let r y ba =
+                                                                                                                                                                                                                                                                                         if y <= 19
+                                                                                                                                                                                                                                                                                         then do bb <- (max2_ ba =<< (find 4 m x y dx dy))
+                                                                                                                                                                                                                                                                                                 (r (y + 1) bb)
+                                                                                                                                                                                                                                                                                         else (q (x + 1) ba) in
+                                                                                                                                                                                                                                                                                         (r 0 w)
+                                                                                                                                                                                                                                                                              else (p (j + 1) w) in
+                                                                                                                                                                                                                                                                              (q 0 v)))
+                                                                                                                                                                                                                                     else do printf "%d" (v :: Int) :: IO ()
+                                                                                                                                                                                                                                             printf "\n" :: IO () in
+                                                                                                                                                                                                                                     (p 0 max0)))))
 
 

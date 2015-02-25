@@ -70,8 +70,8 @@ main =
                               let a = out0
                               return ((), a)) ()) >>= (\ (b, t) ->
                                                         do printf "%d" =<< ((readIOA t 0) :: IO Int)
-                                                           printf " - " ::IO()
+                                                           printf " - " :: IO ()
                                                            printf "%d" =<< ((readIOA t 1) :: IO Int)
-                                                           printf "\n" ::IO()))
+                                                           printf "\n" :: IO ()))
 
 

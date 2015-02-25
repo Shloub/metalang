@@ -46,21 +46,21 @@ array_init_withenv len f env =
 
 periode restes len a b =
   let c k l =
-        (if (k /= 0)
-        then do let chiffre = (k `quot` b)
-                let reste = (k `rem` b)
-                let e = (l - 1)
+        if k /= 0
+        then do let chiffre = k `quot` b
+                let reste = k `rem` b
+                let e = l - 1
                 let d i =
-                      (if (i <= e)
+                      if i <= e
                       then ifM (((==) reste) <$> (readIOA restes i))
                                (return (l - i))
-                               ((d (i + 1)))
+                               (d (i + 1))
                       else do (writeIOA restes l reste)
-                              let n = (l + 1)
-                              let o = (reste * 10)
-                              (c o n)) in
+                              let n = l + 1
+                              let o = reste * 10
+                              (c o n) in
                       (d 0)
-        else return 0) in
+        else return 0 in
         (c a len)
 
 main =
@@ -70,17 +70,17 @@ main =
                                                                    do let m = 0
                                                                       let mi = 0
                                                                       let h i q r =
-                                                                            (if (i <= 1000)
+                                                                            if i <= 1000
                                                                             then do p <- (periode t 0 1 i)
-                                                                                    (if (p > q)
+                                                                                    if p > q
                                                                                     then do let s = i
                                                                                             let u = p
                                                                                             (h (i + 1) u s)
-                                                                                    else (h (i + 1) q r))
-                                                                            else do printf "%d" (r :: Int)::IO()
-                                                                                    printf "\n" ::IO()
-                                                                                    printf "%d" (q :: Int)::IO()
-                                                                                    printf "\n" ::IO()) in
+                                                                                    else (h (i + 1) q r)
+                                                                            else do printf "%d" (r :: Int) :: IO ()
+                                                                                    printf "\n" :: IO ()
+                                                                                    printf "%d" (q :: Int) :: IO ()
+                                                                                    printf "\n" :: IO () in
                                                                             (h 1 m mi)))
 
 

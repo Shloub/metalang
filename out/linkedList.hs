@@ -47,26 +47,26 @@ cons list i =
      return out0
 
 rev2 empty acc torev =
-  (if (torev == empty)
+  if torev == empty
   then return acc
   else do acc2 <- (Intlist <$> ((readIORef (_head0 torev)) >>= newIORef) <*> (newIORef acc))
-          (rev2 empty acc =<< (readIORef (_tail0 torev))))
+          (rev2 empty acc =<< (readIORef (_tail0 torev)))
 
 rev empty torev =
   (rev2 empty empty torev)
 
 test empty =
   do let list = empty
-     let i = (- 1)
+     let i = - 1
      let a c d =
-           (if (c /= 0)
+           if c /= 0
            then do b <- read_int
                    let e = b
-                   (if (e /= 0)
+                   if e /= 0
                    then do f <- (cons d e)
                            (a e f)
-                   else (a e d))
-           else return ()) in
+                   else (a e d)
+           else return () in
            (a i list)
 
 main =

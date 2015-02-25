@@ -48,7 +48,7 @@ read_int =
 main =
   do len <- read_int
      skip_whitespaces
-     printf "%d" (len :: Int)::IO()
-     printf "\n" ::IO()
+     printf "%d" (len :: Int) :: IO ()
+     printf "\n" :: IO ()
 
 

@@ -5,7 +5,7 @@ sub f{
   if ($i eq 0) {
     return 1;
   }
-  return 0;
+  return ();
 }
 
 if (f(4)) {

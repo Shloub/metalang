@@ -31,7 +31,7 @@ sub isPrime{
   while ($primes->[$i] * $primes->[$i] < $n)
   {
     if ((remainder($n, $primes->[$i])) eq 0) {
-      return 0;
+      return ();
     }
     $i = $i + 1;
   }

@@ -78,26 +78,26 @@ array_init_withenv len f env =
 position_alphabet c =
   do i <- ((fmap ord (return c)))
      ifM ((((<=) i) <$> ((fmap ord (return 'Z')))) <&&> (((>=) i) <$> ((fmap ord (return 'A')))))
-         ((((-) i) <$> ((fmap ord (return 'A')))))
+         (((-) i) <$> ((fmap ord (return 'A'))))
          (ifM ((((<=) i) <$> ((fmap ord (return 'z')))) <&&> (((>=) i) <$> ((fmap ord (return 'a')))))
-              ((((-) i) <$> ((fmap ord (return 'a')))))
+              (((-) i) <$> ((fmap ord (return 'a'))))
               (return (- 1)))
 
 of_position_alphabet c =
   ((fmap chr ((((+) c) <$> ((fmap ord (return 'a')))))))
 
 crypte taille_cle cle taille message =
-  do let b = (taille - 1)
+  do let b = taille - 1
      let a i =
-           (if (i <= b)
+           if i <= b
            then do lettre <- ((readIOA message i) >>= position_alphabet)
-                   (if (lettre /= (- 1))
+                   if lettre /= - 1
                    then do addon <- ((readIOA cle (i `rem` taille_cle)) >>= position_alphabet)
-                           let new0 = ((addon + lettre) `rem` 26)
+                           let new0 = (addon + lettre) `rem` 26
                            (writeIOA message i =<< (of_position_alphabet new0))
                            (a (i + 1))
-                   else (a (i + 1)))
-           else return ()) in
+                   else (a (i + 1))
+           else return () in
            (a 0)
 
 main =
@@ -115,12 +115,12 @@ main =
                                                                                                                                                            let f = out2
                                                                                                                                                                    in return ((), f)))) ()) >>= (\ (g, message) ->
                                                                                                                                                                                                   do (crypte taille_cle cle taille message)
-                                                                                                                                                                                                     let j = (taille - 1)
+                                                                                                                                                                                                     let j = taille - 1
                                                                                                                                                                                                      let h i =
-                                                                                                                                                                                                           (if (i <= j)
+                                                                                                                                                                                                           if i <= j
                                                                                                                                                                                                            then do printf "%c" =<< ((readIOA message i) :: IO Char)
                                                                                                                                                                                                                    (h (i + 1))
-                                                                                                                                                                                                           else printf "\n" ::IO()) in
+                                                                                                                                                                                                           else printf "\n" :: IO () in
                                                                                                                                                                                                            (h 0)))))
 
 

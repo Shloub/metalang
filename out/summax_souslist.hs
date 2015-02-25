@@ -76,19 +76,19 @@ array_init_withenv len f env =
 summax lst len =
   do let current = 0
      let max0 = 0
-     let b = (len - 1)
+     let b = len - 1
      let a i g h =
-           (if (i <= b)
+           if i <= b
            then do j <- (((+) g) <$> (readIOA lst i))
-                   let k = (if (j < 0)
+                   let k = if j < 0
                            then let l = 0
                                         in l
-                           else j)
-                   (if (h < k)
+                           else j
+                   if h < k
                    then do let m = k
                            (a (i + 1) k m)
-                   else (a (i + 1) k h))
-           else return h) in
+                   else (a (i + 1) k h)
+           else return h in
            (a 0 current max0)
 
 main =
@@ -104,6 +104,6 @@ main =
                                  let c = o
                                  return ((), c)) ()) >>= (\ (d, tab) ->
                                                            do result <- (summax tab n)
-                                                              printf "%d" (result :: Int)::IO()))
+                                                              printf "%d" (result :: Int) :: IO ()))
 
 

@@ -75,14 +75,14 @@ array_init_withenv len f env =
 
 nth tab tofind len =
   do let out0 = 0
-     let b = (len - 1)
+     let b = len - 1
      let a i h =
-           (if (i <= b)
+           if i <= b
            then ifM (((==) tofind) <$> (readIOA tab i))
-                    (do let j = (h + 1)
+                    (do let j = h + 1
                         (a (i + 1) j))
-                    ((a (i + 1) h))
-           else return h) in
+                    (a (i + 1) h)
+           else return h in
            (a 0 out0)
 
 main =
@@ -101,6 +101,6 @@ main =
                                                                                         in let c = m
                                                                                                    in return ((), c)))) ()) >>= (\ (d, tab) ->
                                                                                                                                   do result <- (nth tab l k)
-                                                                                                                                     printf "%d" (result :: Int)::IO()))))
+                                                                                                                                     printf "%d" (result :: Int) :: IO ()))))
 
 

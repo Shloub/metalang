@@ -76,19 +76,19 @@ array_init_withenv len f env =
 
 programme_candidat tableau taille_x taille_y =
   do let out0 = 0
-     let k = (taille_y - 1)
+     let k = taille_y - 1
      let f i q =
-           (if (i <= k)
-           then do let h = (taille_x - 1)
+           if i <= k
+           then do let h = taille_x - 1
                    let g j r =
-                         (if (j <= h)
-                         then do s <- (((+) r) <$> (((*) (i + (j * 2))) <$> ((fmap ord ((join $ readIOA <$> (readIOA tableau i) <*> return j))))))
+                         if j <= h
+                         then do s <- (((+) r) <$> (((*) (i + j * 2)) <$> ((fmap ord ((join $ readIOA <$> (readIOA tableau i) <*> return j))))))
                                  printf "%c" =<< ((join $ readIOA <$> (readIOA tableau i) <*> return j) :: IO Char)
                                  (g (j + 1) s)
-                         else do printf "--\n" ::IO()
-                                 (f (i + 1) r)) in
+                         else do printf "--\n" :: IO ()
+                                 (f (i + 1) r) in
                          (g 0 q)
-           else return q) in
+           else return q in
            (f 0 out0)
 
 main =
@@ -106,6 +106,6 @@ main =
                                                                                                                                      return ((), l)))) ()) >>= (\ (m, a) ->
                                                                                                                                                                  do let tableau = a
                                                                                                                                                                     printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
-                                                                                                                                                                    printf "\n" ::IO()))
+                                                                                                                                                                    printf "\n" :: IO ()))
 
 

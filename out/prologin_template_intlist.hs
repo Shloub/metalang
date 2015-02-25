@@ -75,12 +75,12 @@ array_init_withenv len f env =
 
 programme_candidat tableau taille =
   do let out0 = 0
-     let d = (taille - 1)
+     let d = taille - 1
      let c i g =
-           (if (i <= d)
+           if i <= d
            then do h <- (((+) g) <$> (readIOA tableau i))
                    (c (i + 1) h)
-           else return g) in
+           else return g in
            (c 0 out0)
 
 main =
@@ -92,6 +92,6 @@ main =
                                       let e = b
                                       return ((), e)) ()) >>= (\ (f, tableau) ->
                                                                 do printf "%d" =<< ((programme_candidat tableau taille) :: IO Int)
-                                                                   printf "\n" ::IO()))
+                                                                   printf "\n" :: IO ()))
 
 

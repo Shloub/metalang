@@ -74,25 +74,25 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 pathfind_aux cache tab len pos =
-  (if (pos >= (len - 1))
+  if pos >= len - 1
   then return 0
   else ifM (((/=) (- 1)) <$> (readIOA cache pos))
-           ((readIOA cache pos))
+           (readIOA cache pos)
            (do (writeIOA cache pos (len * 2))
                posval <- (pathfind_aux cache tab len =<< (readIOA tab pos))
                oneval <- (pathfind_aux cache tab len (pos + 1))
                let out0 = 0
-               let g = (if (posval < oneval)
-                       then let h = (1 + posval)
+               let g = if posval < oneval
+                       then let h = 1 + posval
                                     in h
-                       else let j = (1 + oneval)
-                                    in j)
+                       else let j = 1 + oneval
+                                    in j
                (writeIOA cache pos g)
-               return g))
+               return g)
 
 pathfind tab len =
   ((array_init_withenv len (\ i b ->
-                             let a = (- 1)
+                             let a = - 1
                                      in return ((), a)) ()) >>= (\ (b, cache) ->
                                                                   (pathfind_aux cache tab len 0)))
 
@@ -109,6 +109,6 @@ main =
                                  let c = l
                                  return ((), c)) ()) >>= (\ (d, tab) ->
                                                            do result <- (pathfind tab k)
-                                                              printf "%d" (result :: Int)::IO()))
+                                                              printf "%d" (result :: Int) :: IO ()))
 
 

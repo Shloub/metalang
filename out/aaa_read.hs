@@ -78,55 +78,55 @@ array_init_withenv len f env =
 main =
   do len <- read_int
      skip_whitespaces
-     printf "%d" (len :: Int)::IO()
-     printf "=len\n" ::IO()
-     let l = (len * 2)
-     printf "len*2=" ::IO()
-     printf "%d" (l :: Int)::IO()
-     printf "\n" ::IO()
-     let m = (l `quot` 2)
+     printf "%d" (len :: Int) :: IO ()
+     printf "=len\n" :: IO ()
+     let l = len * 2
+     printf "len*2=" :: IO ()
+     printf "%d" (l :: Int) :: IO ()
+     printf "\n" :: IO ()
+     let m = l `quot` 2
      ((array_init_withenv m (\ i b ->
                               do tmpi1 <- read_int
                                  skip_whitespaces
-                                 printf "%d" (i :: Int)::IO()
-                                 printf "=>" ::IO()
-                                 printf "%d" (tmpi1 :: Int)::IO()
-                                 printf " " ::IO()
+                                 printf "%d" (i :: Int) :: IO ()
+                                 printf "=>" :: IO ()
+                                 printf "%d" (tmpi1 :: Int) :: IO ()
+                                 printf " " :: IO ()
                                  let a = tmpi1
                                  return ((), a)) ()) >>= (\ (b, tab) ->
-                                                           do printf "\n" ::IO()
+                                                           do printf "\n" :: IO ()
                                                               ((array_init_withenv m (\ i_ e ->
                                                                                        do tmpi2 <- read_int
                                                                                           skip_whitespaces
-                                                                                          printf "%d" (i_ :: Int)::IO()
-                                                                                          printf "==>" ::IO()
-                                                                                          printf "%d" (tmpi2 :: Int)::IO()
-                                                                                          printf " " ::IO()
+                                                                                          printf "%d" (i_ :: Int) :: IO ()
+                                                                                          printf "==>" :: IO ()
+                                                                                          printf "%d" (tmpi2 :: Int) :: IO ()
+                                                                                          printf " " :: IO ()
                                                                                           let d = tmpi2
                                                                                           return ((), d)) ()) >>= (\ (e, tab2) ->
                                                                                                                     do strlen <- read_int
                                                                                                                        skip_whitespaces
-                                                                                                                       printf "%d" (strlen :: Int)::IO()
-                                                                                                                       printf "=strlen\n" ::IO()
+                                                                                                                       printf "%d" (strlen :: Int) :: IO ()
+                                                                                                                       printf "=strlen\n" :: IO ()
                                                                                                                        ((array_init_withenv strlen (\ toto g ->
                                                                                                                                                      hGetChar stdin >>= ((\ tmpc ->
                                                                                                                                                                            do c <- ((fmap ord (return tmpc)))
-                                                                                                                                                                              printf "%c" (tmpc :: Char)::IO()
-                                                                                                                                                                              printf ":" ::IO()
-                                                                                                                                                                              printf "%d" (c :: Int)::IO()
-                                                                                                                                                                              printf " " ::IO()
-                                                                                                                                                                              n <- (if (tmpc /= ' ')
+                                                                                                                                                                              printf "%c" (tmpc :: Char) :: IO ()
+                                                                                                                                                                              printf ":" :: IO ()
+                                                                                                                                                                              printf "%d" (c :: Int) :: IO ()
+                                                                                                                                                                              printf " " :: IO ()
+                                                                                                                                                                              n <- if tmpc /= ' '
                                                                                                                                                                                    then do o <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> return 26) <*> ((fmap ord (return 'a'))))
                                                                                                                                                                                            return o
-                                                                                                                                                                                   else return c)
+                                                                                                                                                                                   else return c
                                                                                                                                                                               f <- ((fmap chr (return n)))
                                                                                                                                                                               return ((), f)))) ()) >>= (\ (g, tab4) ->
-                                                                                                                                                                                                          do let k = (strlen - 1)
+                                                                                                                                                                                                          do let k = strlen - 1
                                                                                                                                                                                                              let h j =
-                                                                                                                                                                                                                   (if (j <= k)
+                                                                                                                                                                                                                   if j <= k
                                                                                                                                                                                                                    then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
                                                                                                                                                                                                                            (h (j + 1))
-                                                                                                                                                                                                                   else return ()) in
+                                                                                                                                                                                                                   else return () in
                                                                                                                                                                                                                    (h 0)))))))
 
 

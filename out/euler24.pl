@@ -22,7 +22,7 @@ sub show{
   }
   my $pris = [];
   foreach my $j (0 .. $lim - 1) {
-    $pris->[$j] = 0;
+    $pris->[$j] = ();
   }
   foreach my $k (1 .. $lim - 1) {
     my $n = fact($lim - $k);

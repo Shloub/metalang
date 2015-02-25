@@ -19,7 +19,7 @@ sub h{
     }
     $j = $j + 1;
   }
-  return 0;
+  return ();
 }
 
 my $j = 0;

@@ -38,7 +38,7 @@ read_int =
 foo () =
   let a = 0
           in {- test -}
-             let d = (a + 1)
+             let d = a + 1
                      in {- test 2 -}
                         return ()
 
@@ -46,25 +46,25 @@ foo2 () =
   return ()
 
 foo3 () =
-  return (if (1 == 1)
-         then ()
-         else ())
+  return (if 1 == 1
+          then ()
+          else ())
 
 sumdiv n =
   {- On désire renvoyer la somme des diviseurs -}
   do let out0 = 0
      {- On déclare un entier qui contiendra la somme -}
      let b i e =
-           (if (i <= n)
+           if i <= n
            then {- La boucle : i est le diviseur potentiel-}
-                (if ((n `rem` i) == 0)
+                if (n `rem` i) == 0
                 then {- Si i divise -}
-                     do let f = (e + i)
+                     do let f = e + i
                         {- On incrémente -}
                         (b (i + 1) f)
                 else {- nop -}
-                     (b (i + 1) e))
-           else return e) in
+                     (b (i + 1) e)
+           else return e in
            (b 1 out0)
 
 main =

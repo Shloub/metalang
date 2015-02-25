@@ -23,7 +23,7 @@ sub devine0{
   my $max0 = $tab->[1];
   foreach my $i (2 .. $len - 1) {
     if ($tab->[$i] > $max0 || $tab->[$i] < $min0) {
-      return 0;
+      return ();
     }
     if ($tab->[$i] < $nombre) {
       $min0 = $tab->[$i];
@@ -32,7 +32,7 @@ sub devine0{
       $max0 = $tab->[$i];
     }
     if ($tab->[$i] eq $nombre && $len ne $i + 1) {
-      return 0;
+      return ();
     }
   }
   return 1;

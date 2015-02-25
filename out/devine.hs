@@ -76,9 +76,9 @@ array_init_withenv len f env =
 devine0 nombre tab len =
   do min0 <- (readIOA tab 0)
      max0 <- (readIOA tab 1)
-     let c = (len - 1)
+     let c = len - 1
      let b i f g =
-           (if (i <= c)
+           if i <= c
            then ifM ((((<) f) <$> (readIOA tab i)) <||> (((>) g) <$> (readIOA tab i)))
                     (return False)
                     (do h <- ifM (((>) nombre) <$> (readIOA tab i))
@@ -89,10 +89,10 @@ devine0 nombre tab len =
                                  (do l <- (readIOA tab i)
                                      return l)
                                  (return f)
-                        ifM ((((==) nombre) <$> (readIOA tab i)) <&&> return (len /= (i + 1)))
+                        ifM (((&&) (len /= i + 1)) <$> (((==) nombre) <$> (readIOA tab i)))
                             (return False)
-                            ((b (i + 1) k h)))
-           else return True) in
+                            (b (i + 1) k h))
+           else return True in
            (b 2 max0 min0)
 
 main =
@@ -106,8 +106,8 @@ main =
                                    let d = tmp
                                    return ((), d)) ()) >>= (\ (e, tab) ->
                                                              do a <- (devine0 nombre tab len)
-                                                                (if a
-                                                                then printf "True" ::IO()
-                                                                else printf "False" ::IO())))
+                                                                if a
+                                                                then printf "True" :: IO ()
+                                                                else printf "False" :: IO ()))
 
 

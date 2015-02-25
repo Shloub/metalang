@@ -45,44 +45,44 @@ array_init_withenv len f env =
                                                                                                                                                                                                                                                                          
 
 max2_ a b =
-  return (if (a > b)
-         then a
-         else b)
+  return (if a > b
+          then a
+          else b)
 
 eratostene t max0 =
   do let n = 0
-     let ba = (max0 - 1)
+     let ba = max0 - 1
      let y i bb =
-           (if (i <= ba)
+           if i <= ba
            then ifM (((==) i) <$> (readIOA t i))
-                    (do let j = (i * i)
-                        let bc = (bb + 1)
+                    (do let j = i * i
+                        let bc = bb + 1
                         let z bd =
-                              (if ((bd < max0) && (bd > 0))
+                              if bd < max0 && bd > 0
                               then do (writeIOA t bd 0)
-                                      let be = (bd + i)
+                                      let be = bd + i
                                       (z be)
-                              else (y (i + 1) bc)) in
+                              else (y (i + 1) bc) in
                               (z j))
-                    ((y (i + 1) bb))
-           else return bb) in
+                    (y (i + 1) bb)
+           else return bb in
            (y 2 n)
 
 fillPrimesFactors t n primes nprimes =
-  do let x = (nprimes - 1)
+  do let x = nprimes - 1
      let v i bf =
-           (if (i <= x)
+           if i <= x
            then do d <- (readIOA primes i)
                    let w bg =
-                         (if ((bg `rem` d) == 0)
+                         if (bg `rem` d) == 0
                          then do (writeIOA t d =<< (((+) 1) <$> (readIOA t d)))
-                                 let bh = (bg `quot` d)
+                                 let bh = bg `quot` d
                                  (w bh)
-                         else (if (bg == 1)
+                         else if bg == 1
                               then (readIOA primes i)
-                              else (v (i + 1) bg))) in
+                              else (v (i + 1) bg) in
                          (w bf)
-           else return bf) in
+           else return bf in
            (v 0 n)
 
 find ndiv2 =
@@ -95,16 +95,16 @@ find ndiv2 =
                                                                                                                  let f = 0
                                                                                                                          in return ((), f)) ()) >>= (\ (g, primes) ->
                                                                                                                                                       do let l = 0
-                                                                                                                                                         let u = (maximumprimes - 1)
+                                                                                                                                                         let u = maximumprimes - 1
                                                                                                                                                          let s k bi =
-                                                                                                                                                               (if (k <= u)
+                                                                                                                                                               if k <= u
                                                                                                                                                                then ifM (((==) k) <$> (readIOA era k))
                                                                                                                                                                         (do (writeIOA primes bi k)
-                                                                                                                                                                            let bj = (bi + 1)
+                                                                                                                                                                            let bj = bi + 1
                                                                                                                                                                             (s (k + 1) bj))
-                                                                                                                                                                        ((s (k + 1) bi))
+                                                                                                                                                                        (s (k + 1) bi)
                                                                                                                                                                else let h n =
-                                                                                                                                                                          (if (n <= 10000)
+                                                                                                                                                                          if n <= 10000
                                                                                                                                                                           then ((array_init_withenv (n + 2) (\ m q ->
                                                                                                                                                                                                               let p = 0
                                                                                                                                                                                                                       in return ((), p)) ()) >>= (\ (q, primesFactors) ->
@@ -112,23 +112,23 @@ find ndiv2 =
                                                                                                                                                                                                                                                       (writeIOA primesFactors 2 =<< ((-) <$> (readIOA primesFactors 2) <*> return 1))
                                                                                                                                                                                                                                                       let ndivs = 1
                                                                                                                                                                                                                                                       let r i bk =
-                                                                                                                                                                                                                                                            (if (i <= max0)
+                                                                                                                                                                                                                                                            if i <= max0
                                                                                                                                                                                                                                                             then ifM (((/=) 0) <$> (readIOA primesFactors i))
                                                                                                                                                                                                                                                                      (do bl <- (((*) bk) <$> (((+) 1) <$> (readIOA primesFactors i)))
                                                                                                                                                                                                                                                                          (r (i + 1) bl))
-                                                                                                                                                                                                                                                                     ((r (i + 1) bk))
-                                                                                                                                                                                                                                                            else (if (bk > ndiv2)
+                                                                                                                                                                                                                                                                     (r (i + 1) bk)
+                                                                                                                                                                                                                                                            else if bk > ndiv2
                                                                                                                                                                                                                                                                  then return ((n * (n + 1)) `quot` 2)
                                                                                                                                                                                                                                                                  else {- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" -}
-                                                                                                                                                                                                                                                                      (h (n + 1)))) in
+                                                                                                                                                                                                                                                                      (h (n + 1)) in
                                                                                                                                                                                                                                                             (r 0 ndivs)))
-                                                                                                                                                                          else return 0) in
-                                                                                                                                                                          (h 1)) in
+                                                                                                                                                                          else return 0 in
+                                                                                                                                                                          (h 1) in
                                                                                                                                                                (s 2 l)))))
 
 main =
   do printf "%d" =<< ((find 500) :: IO Int)
-     printf "\n" ::IO()
+     printf "\n" :: IO ()
      return ()
 
 
