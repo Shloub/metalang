@@ -87,37 +87,37 @@ crypte taille_cle cle taille message =
   do let b = taille - 1
      let a i =
            if i <= b
-           then do lettre <- ((readIOA message i) >>= position_alphabet)
+           then do lettre <- (readIOA message i) >>= position_alphabet
                    if lettre /= - 1
-                   then do addon <- ((readIOA cle (i `rem` taille_cle)) >>= position_alphabet)
+                   then do addon <- (readIOA cle (i `rem` taille_cle)) >>= position_alphabet
                            let new0 = (addon + lettre) `rem` 26
-                           (writeIOA message i =<< (of_position_alphabet new0))
-                           (a (i + 1))
-                   else (a (i + 1))
+                           writeIOA message i =<< (of_position_alphabet new0)
+                           a (i + 1)
+                   else a (i + 1)
            else return () in
-           (a 0)
+           a 0
 
 main =
   do taille_cle <- read_int
      skip_whitespaces
-     ((array_init_withenv taille_cle (\ index e ->
-                                       hGetChar stdin >>= ((\ out0 ->
-                                                             let d = out0
-                                                                     in return ((), d)))) ()) >>= (\ (e, cle) ->
-                                                                                                    do skip_whitespaces
-                                                                                                       taille <- read_int
-                                                                                                       skip_whitespaces
-                                                                                                       ((array_init_withenv taille (\ index2 g ->
-                                                                                                                                     hGetChar stdin >>= ((\ out2 ->
-                                                                                                                                                           let f = out2
-                                                                                                                                                                   in return ((), f)))) ()) >>= (\ (g, message) ->
-                                                                                                                                                                                                  do (crypte taille_cle cle taille message)
-                                                                                                                                                                                                     let j = taille - 1
-                                                                                                                                                                                                     let h i =
-                                                                                                                                                                                                           if i <= j
-                                                                                                                                                                                                           then do printf "%c" =<< ((readIOA message i) :: IO Char)
-                                                                                                                                                                                                                   (h (i + 1))
-                                                                                                                                                                                                           else printf "\n" :: IO () in
-                                                                                                                                                                                                           (h 0)))))
+     (array_init_withenv taille_cle (\ index e ->
+                                      hGetChar stdin >>= ((\ out0 ->
+                                                            let d = out0
+                                                                    in return ((), d)))) ()) >>= (\ (e, cle) ->
+                                                                                                   do skip_whitespaces
+                                                                                                      taille <- read_int
+                                                                                                      skip_whitespaces
+                                                                                                      (array_init_withenv taille (\ index2 g ->
+                                                                                                                                   hGetChar stdin >>= ((\ out2 ->
+                                                                                                                                                         let f = out2
+                                                                                                                                                                 in return ((), f)))) ()) >>= (\ (g, message) ->
+                                                                                                                                                                                                do crypte taille_cle cle taille message
+                                                                                                                                                                                                   let j = taille - 1
+                                                                                                                                                                                                   let h i =
+                                                                                                                                                                                                         if i <= j
+                                                                                                                                                                                                         then do printf "%c" =<< (readIOA message i :: IO Char)
+                                                                                                                                                                                                                 h (i + 1)
+                                                                                                                                                                                                         else printf "\n" :: IO () in
+                                                                                                                                                                                                         h 0))
 
 

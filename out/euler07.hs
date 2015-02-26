@@ -48,27 +48,27 @@ divisible n t size =
                     (return True)
                     (b (i + 1))
            else return False in
-           (b 0)
+           b 0
 
 find n t used nth =
   let a f g =
         if g /= nth
         then ifM (divisible f t g)
                  (do let h = f + 1
-                     (a h g))
-                 (do (writeIOA t g f)
+                     a h g)
+                 (do writeIOA t g f
                      let j = f + 1
                      let k = g + 1
-                     (a j k))
-        else (readIOA t (g - 1)) in
-        (a n used)
+                     a j k)
+        else readIOA t (g - 1) in
+        a n used
 
 main =
   do let n = 10001
-     ((array_init_withenv n (\ i e ->
-                              let d = 2
-                                      in return ((), d)) ()) >>= (\ (e, t) ->
-                                                                   do printf "%d" =<< ((find 3 t 1 n) :: IO Int)
-                                                                      printf "\n" :: IO ()))
+     (array_init_withenv n (\ i e ->
+                             let d = 2
+                                     in return ((), d)) ()) >>= (\ (e, t) ->
+                                                                  do printf "%d" =<< (find 3 t 1 n :: IO Int)
+                                                                     printf "\n" :: IO ())
 
 

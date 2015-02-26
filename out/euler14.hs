@@ -52,28 +52,28 @@ find n m =
        then (((+) 1) <$> (join $ find <$> (next0 n) <*> return m))
        else ifM (((/=) 0) <$> (readIOA m n))
                 (readIOA m n)
-                (do (writeIOA m n =<< (((+) 1) <$> (join $ find <$> (next0 n) <*> return m)))
-                    (readIOA m n))
+                (do writeIOA m n =<< (((+) 1) <$> (join $ find <$> (next0 n) <*> return m))
+                    readIOA m n)
 
 main =
-  ((array_init_withenv 1000000 (\ j b ->
-                                 let a = 0
-                                         in return ((), a)) ()) >>= (\ (b, m) ->
-                                                                      do let max0 = 0
-                                                                         let maxi = 0
-                                                                         let c i d e =
-                                                                               if i <= 999
-                                                                               then {- normalement on met 999999 mais ça dépasse les int32... -}
-                                                                                    do n2 <- (find i m)
-                                                                                       if n2 > d
-                                                                                       then do let f = n2
-                                                                                               let g = i
-                                                                                               (c (i + 1) f g)
-                                                                                       else (c (i + 1) d e)
-                                                                               else do printf "%d" (d :: Int) :: IO ()
-                                                                                       printf "\n" :: IO ()
-                                                                                       printf "%d" (e :: Int) :: IO ()
-                                                                                       printf "\n" :: IO () in
-                                                                               (c 1 max0 maxi)))
+  (array_init_withenv 1000000 (\ j b ->
+                                let a = 0
+                                        in return ((), a)) ()) >>= (\ (b, m) ->
+                                                                     do let max0 = 0
+                                                                        let maxi = 0
+                                                                        let c i d e =
+                                                                              if i <= 999
+                                                                              then {- normalement on met 999999 mais ça dépasse les int32... -}
+                                                                                   do n2 <- find i m
+                                                                                      if n2 > d
+                                                                                      then do let f = n2
+                                                                                              let g = i
+                                                                                              c (i + 1) f g
+                                                                                      else c (i + 1) d e
+                                                                              else do printf "%d" (d :: Int) :: IO ()
+                                                                                      printf "\n" :: IO ()
+                                                                                      printf "%d" (e :: Int) :: IO ()
+                                                                                      printf "\n" :: IO () in
+                                                                              c 1 max0 maxi)
 
 

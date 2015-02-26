@@ -23,12 +23,12 @@ data Toto = Toto {
 main =
   do bar_ <- (fmap read getLine)
      t <- (Toto <$> (( (fmap read . head . reads) <$> getLine :: IO (Int, Int)) >>= newIORef) <*> (newIORef bar_))
-     ((readIORef (_foo t)) >>= (\ (a, b) ->
-                                 do printf "%d" (a :: Int) :: IO ()
-                                    printf " " :: IO ()
-                                    printf "%d" (b :: Int) :: IO ()
-                                    printf " " :: IO ()
-                                    printf "%d" =<< ((readIORef (_bar t)) :: IO Int)
-                                    printf "\n" :: IO ()))
+     (readIORef (_foo t)) >>= (\ (a, b) ->
+                                do printf "%d" (a :: Int) :: IO ()
+                                   printf " " :: IO ()
+                                   printf "%d" (b :: Int) :: IO ()
+                                   printf " " :: IO ()
+                                   printf "%d" =<< (readIORef (_bar t) :: IO Int)
+                                   printf "\n" :: IO ())
 
 

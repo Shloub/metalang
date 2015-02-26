@@ -39,7 +39,7 @@ main =
      if d
      then printf "True" :: IO ()
      else printf "False" :: IO ()
-     let e = True && not False && not (True && False)
+     let e = (True && not False) && not (True && False)
      if e
      then printf "True" :: IO ()
      else printf "False" :: IO ()

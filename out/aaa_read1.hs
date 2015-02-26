@@ -22,9 +22,9 @@ main =
   do str <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return 12)) <*> getLine))
      let a i =
            if i <= 11
-           then do printf "%c" =<< ((readIOA str i) :: IO Char)
-                   (a (i + 1))
+           then do printf "%c" =<< (readIOA str i :: IO Char)
+                   a (i + 1)
            else return () in
-           (a 0)
+           a 0
 
 

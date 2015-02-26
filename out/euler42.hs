@@ -73,11 +73,11 @@ score () =
            then hGetChar stdin >>= ((\ c ->
                                       do g <- (((+) f) <$> (((+) 1) <$> ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return 'A'))))))
                                          {-		print c print " " print sum print " " -}
-                                         (b (i + 1) g)))
+                                         b (i + 1) g))
            else ifM (is_triangular f)
                     (return 1)
                     (return 0) in
-           (b 1 sum)
+           b 1 sum
 
 main =
   let e i =
@@ -85,7 +85,7 @@ main =
         then ifM (is_triangular i)
                  (do printf "%d" (i :: Int) :: IO ()
                      printf " " :: IO ()
-                     (e (i + 1)))
+                     e (i + 1))
                  (e (i + 1))
         else do printf "\n" :: IO ()
                 let sum = 0
@@ -93,10 +93,10 @@ main =
                 let d h j =
                       if h <= n
                       then do k <- (((+) j) <$> (score ()))
-                              (d (h + 1) k)
+                              d (h + 1) k
                       else do printf "%d" (j :: Int) :: IO ()
                               printf "\n" :: IO () in
-                      (d 1 sum) in
-        (e 1)
+                      d 1 sum in
+        e 1
 
 

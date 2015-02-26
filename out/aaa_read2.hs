@@ -43,9 +43,9 @@ main =
            if i <= k
            then do printf "%d" (i :: Int) :: IO ()
                    printf "=>" :: IO ()
-                   printf "%d" =<< ((readIOA tab i) :: IO Int)
+                   printf "%d" =<< (readIOA tab i :: IO Int)
                    printf " " :: IO ()
-                   (h (i + 1))
+                   h (i + 1)
            else do printf "\n" :: IO ()
                    tab2 <- (join (newListArray . (,) 0 . subtract 1 <$> return len <*> fmap (map read . words) getLine))
                    let g = len - 1
@@ -53,9 +53,9 @@ main =
                          if i_ <= g
                          then do printf "%d" (i_ :: Int) :: IO ()
                                  printf "==>" :: IO ()
-                                 printf "%d" =<< ((readIOA tab2 i_) :: IO Int)
+                                 printf "%d" =<< (readIOA tab2 i_ :: IO Int)
                                  printf " " :: IO ()
-                                 (f (i_ + 1))
+                                 f (i_ + 1)
                          else do strlen <- (fmap read getLine)
                                  printf "%d" (strlen :: Int) :: IO ()
                                  printf "=strlen\n" :: IO ()
@@ -63,27 +63,27 @@ main =
                                  let e = strlen - 1
                                  let d i3 =
                                        if i3 <= e
-                                       then do tmpc <- (readIOA tab4 i3)
+                                       then do tmpc <- readIOA tab4 i3
                                                c <- ((fmap ord (return tmpc)))
                                                printf "%c" (tmpc :: Char) :: IO ()
                                                printf ":" :: IO ()
                                                printf "%d" (c :: Int) :: IO ()
                                                printf " " :: IO ()
                                                l <- if tmpc /= ' '
-                                                    then do m <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> return 26) <*> ((fmap ord (return 'a'))))
+                                                    then do m <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> (return 26)) <*> ((fmap ord (return 'a'))))
                                                             return m
                                                     else return c
-                                               (writeIOA tab4 i3 =<< ((fmap chr (return l))))
-                                               (d (i3 + 1))
+                                               writeIOA tab4 i3 =<< ((fmap chr (return l)))
+                                               d (i3 + 1)
                                        else do let b = strlen - 1
                                                let a j =
                                                      if j <= b
-                                                     then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
-                                                             (a (j + 1))
+                                                     then do printf "%c" =<< (readIOA tab4 j :: IO Char)
+                                                             a (j + 1)
                                                      else return () in
-                                                     (a 0) in
-                                       (d 0) in
-                         (f 0) in
-           (h 0)
+                                                     a 0 in
+                                       d 0 in
+                         f 0 in
+           h 0
 
 

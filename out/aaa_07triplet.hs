@@ -22,9 +22,9 @@ main =
   let f i =
         if i <= 3
         then do d <- (join (newListArray . (,) 0 . subtract 1 <$> return 3 <*> fmap (map read . words) getLine))
-                a <- (readIOA d 0)
-                b <- (readIOA d 1)
-                c <- (readIOA d 2)
+                a <- readIOA d 0
+                b <- readIOA d 1
+                c <- readIOA d 2
                 printf "a = " :: IO ()
                 printf "%d" (a :: Int) :: IO ()
                 printf " b = " :: IO ()
@@ -32,15 +32,15 @@ main =
                 printf "c =" :: IO ()
                 printf "%d" (c :: Int) :: IO ()
                 printf "\n" :: IO ()
-                (f (i + 1))
+                f (i + 1)
         else do l <- (join (newListArray . (,) 0 . subtract 1 <$> return 10 <*> fmap (map read . words) getLine))
                 let e j =
                       if j <= 9
-                      then do printf "%d" =<< ((readIOA l j) :: IO Int)
+                      then do printf "%d" =<< (readIOA l j :: IO Int)
                               printf "\n" :: IO ()
-                              (e (j + 1))
+                              e (j + 1)
                       else return () in
-                      (e 0) in
-        (f 1)
+                      e 0 in
+        f 1
 
 

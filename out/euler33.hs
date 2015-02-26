@@ -26,12 +26,12 @@ min2_ a b =
           else b)
 
 pgcd a b =
-  do c <- (min2_ a b)
-     d <- (max2_ a b)
+  do c <- min2_ a b
+     d <- max2_ a b
      let reste = d `rem` c
      if reste == 0
      then return c
-     else (pgcd c reste)
+     else pgcd c reste
 
 main =
   do let top = 1
@@ -52,23 +52,23 @@ main =
                                                       printf "\n" :: IO ()
                                                       let r = q * a
                                                       let s = o * b
-                                                      (g (k + 1) s r)
-                                              else (g (k + 1) o q)
-                                      else (g (k + 1) o q)
-                                 else (f (j + 1) o q) in
-                                 (g 1 m n)
-                      else (e (i + 1) m n) in
-                      (f 1 h l)
+                                                      g (k + 1) s r
+                                              else g (k + 1) o q
+                                      else g (k + 1) o q
+                                 else f (j + 1) o q in
+                                 g 1 m n
+                      else e (i + 1) m n in
+                      f 1 h l
            else do printf "%d" (l :: Int) :: IO ()
                    printf "/" :: IO ()
                    printf "%d" (h :: Int) :: IO ()
                    printf "\n" :: IO ()
-                   p <- (pgcd l h)
+                   p <- pgcd l h
                    printf "pgcd=" :: IO ()
                    printf "%d" (p :: Int) :: IO ()
                    printf "\n" :: IO ()
                    printf "%d" (h `quot` p :: Int) :: IO ()
                    printf "\n" :: IO () in
-           (e 1 bottom top)
+           e 1 bottom top
 
 

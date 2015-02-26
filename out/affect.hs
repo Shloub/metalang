@@ -88,34 +88,34 @@ result t_ t2_ =
      let k = t2
      let l = t2
      let m = k
-     (writeIORef (_blah l) =<< (((+) 1) <$> (readIORef (_blah l))))
+     writeIORef (_blah l) =<< (((+) 1) <$> (readIORef (_blah l)))
      let len = 1
-     ((array_init_withenv len (\ i b ->
-                                let a = - i
-                                        in return ((), a)) ()) >>= (\ (b, cache0) ->
-                                                                     ((array_init_withenv len (\ j d ->
-                                                                                                let c = j
-                                                                                                        in return ((), c)) ()) >>= (\ (d, cache1) ->
-                                                                                                                                     do let cache2 = cache0
-                                                                                                                                        let n = cache1
-                                                                                                                                        let o = n
-                                                                                                                                        ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))))))
+     (array_init_withenv len (\ i b ->
+                               let a = - i
+                                       in return ((), a)) ()) >>= (\ (b, cache0) ->
+                                                                    (array_init_withenv len (\ j d ->
+                                                                                              let c = j
+                                                                                                      in return ((), c)) ()) >>= (\ (d, cache1) ->
+                                                                                                                                   do let cache2 = cache0
+                                                                                                                                      let n = cache1
+                                                                                                                                      let o = n
+                                                                                                                                      ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))))
 
 main =
-  do t <- (mktoto 4)
-     t2 <- (mktoto 5)
+  do t <- mktoto 4
+     t2 <- mktoto 5
      h <- read_int
-     (writeIORef (_bar t) h)
+     writeIORef (_bar t) h
      skip_whitespaces
      g <- read_int
-     (writeIORef (_blah t) g)
+     writeIORef (_blah t) g
      skip_whitespaces
      f <- read_int
-     (writeIORef (_bar t2) f)
+     writeIORef (_bar t2) f
      skip_whitespaces
      e <- read_int
-     (writeIORef (_blah t2) e)
-     printf "%d" =<< ((result t t2) :: IO Int)
-     printf "%d" =<< ((readIORef (_blah t)) :: IO Int)
+     writeIORef (_blah t2) e
+     printf "%d" =<< (result t t2 :: IO Int)
+     printf "%d" =<< (readIORef (_blah t) :: IO Int)
 
 

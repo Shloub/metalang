@@ -22,12 +22,12 @@ h i =
      printf "\n" :: IO ()
 
 main =
-  do (h 14)
+  do h 14
      let a = 4
      let b = 5
      printf "%d" (a + b :: Int) :: IO ()
      {- main -}
-     do (h 15)
+     do h 15
         let c = 2
         let d = 1
         printf "%d" (c + d :: Int) :: IO ()

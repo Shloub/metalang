@@ -81,24 +81,24 @@ summax lst len =
                            else j
                    if h < k
                    then do let m = k
-                           (a (i + 1) k m)
-                   else (a (i + 1) k h)
+                           a (i + 1) k m
+                   else a (i + 1) k h
            else return h in
-           (a 0 current max0)
+           a 0 current max0
 
 main =
   do let len = 0
      f <- read_int
      let n = f
      skip_whitespaces
-     ((array_init_withenv n (\ i d ->
-                              do let tmp = 0
-                                 e <- read_int
-                                 let o = e
-                                 skip_whitespaces
-                                 let c = o
-                                 return ((), c)) ()) >>= (\ (d, tab) ->
-                                                           do result <- (summax tab n)
-                                                              printf "%d" (result :: Int) :: IO ()))
+     (array_init_withenv n (\ i d ->
+                             do let tmp = 0
+                                e <- read_int
+                                let o = e
+                                skip_whitespaces
+                                let c = o
+                                return ((), c)) ()) >>= (\ (d, tab) ->
+                                                          do result <- summax tab n
+                                                             printf "%d" (result :: Int) :: IO ())
 
 

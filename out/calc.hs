@@ -27,11 +27,11 @@ fibo a b i =
                    let tmp = f
                    let k = f + e
                    let l = tmp
-                   (c (j + 1) l k h)
+                   c (j + 1) l k h
            else return g in
-           (c 0 a2 b2 out_)
+           c 0 a2 b2 out_
 
 main =
-  printf "%d" =<< ((fibo 1 2 4) :: IO Int)
+  printf "%d" =<< (fibo 1 2 4 :: IO Int)
 
 

@@ -55,9 +55,9 @@ fibo0 a b i =
                    let tmp = k
                    let n = k + h
                    let o = tmp
-                   (c (j + 1) o n m)
+                   c (j + 1) o n m
            else return l in
-           (c 0 a2 b2 out0)
+           c 0 a2 b2 out0
 
 main =
   do let a = 0
@@ -71,6 +71,6 @@ main =
      skip_whitespaces
      e <- read_int
      let r = e
-     printf "%d" =<< ((fibo0 p q r) :: IO Int)
+     printf "%d" =<< (fibo0 p q r :: IO Int)
 
 

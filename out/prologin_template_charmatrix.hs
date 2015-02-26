@@ -49,23 +49,23 @@ programme_candidat tableau taille_x taille_y =
            then do let e = taille_x - 1
                    let d j l =
                          if j <= e
-                         then do m <- (((+) l) <$> (((*) (i + j * 2)) <$> ((fmap ord ((join $ readIOA <$> (readIOA tableau i) <*> return j))))))
-                                 printf "%c" =<< ((join $ readIOA <$> (readIOA tableau i) <*> return j) :: IO Char)
-                                 (d (j + 1) m)
+                         then do m <- (((+) l) <$> (((*) (i + j * 2)) <$> ((fmap ord (join $ readIOA <$> (readIOA tableau i) <*> return j)))))
+                                 printf "%c" =<< (join $ readIOA <$> (readIOA tableau i) <*> return j :: IO Char)
+                                 d (j + 1) m
                          else do printf "--\n" :: IO ()
-                                 (c (i + 1) l) in
-                         (d 0 k)
+                                 c (i + 1) l in
+                         d 0 k
            else return k in
-           (c 0 out0)
+           c 0 out0
 
 main =
   do taille_x <- (fmap read getLine)
      taille_y <- (fmap read getLine)
-     ((array_init_withenv taille_y (\ b h ->
-                                     do g <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille_x)) <*> getLine))
-                                        return ((), g)) ()) >>= (\ (h, a) ->
-                                                                  do let tableau = a
-                                                                     printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
-                                                                     printf "\n" :: IO ()))
+     (array_init_withenv taille_y (\ b h ->
+                                    do g <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille_x)) <*> getLine))
+                                       return ((), g)) ()) >>= (\ (h, a) ->
+                                                                 do let tableau = a
+                                                                    printf "%d" =<< (programme_candidat tableau taille_x taille_y :: IO Int)
+                                                                    printf "\n" :: IO ())
 
 

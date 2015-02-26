@@ -28,9 +28,9 @@ main =
                    let c = e
                    let j = f
                    let k = f + c
-                   (d j k h)
+                   d j k h
            else do printf "%d" (g :: Int) :: IO ()
                    printf "\n" :: IO () in
-           (d a b sum)
+           d a b sum
 
 

@@ -63,10 +63,10 @@ data Toto = Toto {
 main =
   do param <- (Toto <$> (newIORef 0) <*> (newIORef 0))
      b <- read_int
-     (writeIORef (_bar param) b)
+     writeIORef (_bar param) b
      skip_whitespaces
      a <- read_int
-     (writeIORef (_foo param) a)
+     writeIORef (_foo param) a
      printf "%d" =<< (((+) <$> (readIORef (_bar param)) <*> ((*) <$> (readIORef (_foo param)) <*> (readIORef (_bar param)))) :: IO Int)
 
 

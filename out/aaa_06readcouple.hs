@@ -22,21 +22,21 @@ readIOA = readArray
 main =
   let d i =
         if i <= 3
-        then (( (fmap read . head . reads) <$> getLine :: IO (Int, Int)) >>= (\ (a, b) ->
-                                                                               do printf "a = " :: IO ()
-                                                                                  printf "%d" (a :: Int) :: IO ()
-                                                                                  printf " b = " :: IO ()
-                                                                                  printf "%d" (b :: Int) :: IO ()
-                                                                                  printf "\n" :: IO ()
-                                                                                  (d (i + 1))))
+        then ( (fmap read . head . reads) <$> getLine :: IO (Int, Int)) >>= (\ (a, b) ->
+                                                                              do printf "a = " :: IO ()
+                                                                                 printf "%d" (a :: Int) :: IO ()
+                                                                                 printf " b = " :: IO ()
+                                                                                 printf "%d" (b :: Int) :: IO ()
+                                                                                 printf "\n" :: IO ()
+                                                                                 d (i + 1))
         else do l <- (join (newListArray . (,) 0 . subtract 1 <$> return 10 <*> fmap (map read . words) getLine))
                 let c j =
                       if j <= 9
-                      then do printf "%d" =<< ((readIOA l j) :: IO Int)
+                      then do printf "%d" =<< (readIOA l j :: IO Int)
                               printf "\n" :: IO ()
-                              (c (j + 1))
+                              c (j + 1)
                       else return () in
-                      (c 0) in
-        (d 1)
+                      c 0 in
+        d 1
 
 

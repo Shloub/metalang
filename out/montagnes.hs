@@ -76,35 +76,35 @@ montagnes0 tab len =
      let i = len - 2
      let a g h k =
            if g >= 0
-           then do x <- (readIOA tab g)
+           then do x <- readIOA tab g
                    let b l =
-                         ifM (return (l >= 0) <&&> (((>) x) <$> (readIOA tab (len - l))))
+                         ifM ((return (l >= 0)) <&&> (((>) x) <$> (readIOA tab (len - l))))
                              (do let m = l - 1
-                                 (b m))
+                                 b m)
                              (do let n = l + 1
-                                 (writeIOA tab (len - n) x)
+                                 writeIOA tab (len - n) x
                                  let o = if n > k
                                          then let p = n
                                                       in p
                                          else k
                                  let q = g - 1
-                                 (a q n o)) in
-                         (b h)
+                                 a q n o) in
+                         b h
            else return k in
-           (a i j max0)
+           a i j max0
 
 main =
   do let len = 0
      f <- read_int
      let r = f
      skip_whitespaces
-     ((array_init_withenv r (\ i d ->
-                              do let x = 0
-                                 e <- read_int
-                                 let s = e
-                                 skip_whitespaces
-                                 let c = s
-                                 return ((), c)) ()) >>= (\ (d, tab) ->
-                                                           printf "%d" =<< ((montagnes0 tab r) :: IO Int)))
+     (array_init_withenv r (\ i d ->
+                             do let x = 0
+                                e <- read_int
+                                let s = e
+                                skip_whitespaces
+                                let c = s
+                                return ((), c)) ()) >>= (\ (d, tab) ->
+                                                          printf "%d" =<< (montagnes0 tab r :: IO Int))
 
 

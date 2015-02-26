@@ -25,9 +25,9 @@ h i =
            then if (i `rem` d) == 5
                 then return True
                 else do let e = d + 1
-                        (a e)
+                        a e
            else return False in
-           (a j)
+           a j
 
 main =
   do let j = 0
@@ -36,18 +36,18 @@ main =
            then do let g = f + k
                    printf "%d" (g :: Int) :: IO ()
                    printf "\n" :: IO ()
-                   (c (k + 1) g)
+                   c (k + 1) g
            else do let i = 4
                    let b l m =
                          if l < 10
                          then do printf "%d" (l :: Int) :: IO ()
                                  let n = l + 1
                                  let o = m + n
-                                 (b n o)
+                                 b n o
                          else do printf "%d" (m :: Int) :: IO ()
                                  printf "%d" (l :: Int) :: IO ()
                                  printf "FIN TEST\n" :: IO () in
-                         (b i f) in
-           (c 0 j)
+                         b i f in
+           c 0 j
 
 

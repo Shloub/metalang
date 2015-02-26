@@ -66,16 +66,16 @@ mktoto v1 =
      return t
 
 result t =
-  do (writeIORef (_blah t) =<< (((+) 1) <$> (readIORef (_blah t))))
+  do writeIORef (_blah t) =<< (((+) 1) <$> (readIORef (_blah t)))
      ((+) <$> ((+) <$> (readIORef (_foo t)) <*> ((*) <$> (readIORef (_blah t)) <*> (readIORef (_bar t)))) <*> ((*) <$> (readIORef (_bar t)) <*> (readIORef (_foo t))))
 
 main =
-  do t <- (mktoto 4)
+  do t <- mktoto 4
      b <- read_int
-     (writeIORef (_bar t) b)
+     writeIORef (_bar t) b
      skip_whitespaces
      a <- read_int
-     (writeIORef (_blah t) a)
-     printf "%d" =<< ((result t) :: IO Int)
+     writeIORef (_blah t) a
+     printf "%d" =<< (result t :: IO Int)
 
 

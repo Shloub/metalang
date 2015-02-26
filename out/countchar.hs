@@ -75,10 +75,10 @@ nth tab tofind len =
            if i <= b
            then ifM (((==) tofind) <$> (readIOA tab i))
                     (do let j = h + 1
-                        (a (i + 1) j))
+                        a (i + 1) j)
                     (a (i + 1) h)
            else return h in
-           (a 0 out0)
+           a 0 out0
 
 main =
   do let len = 0
@@ -89,13 +89,13 @@ main =
      hGetChar stdin >>= ((\ f ->
                            do let l = f
                               skip_whitespaces
-                              ((array_init_withenv k (\ i d ->
-                                                       do let tmp = '\000'
-                                                          hGetChar stdin >>= ((\ e ->
-                                                                                let m = e
-                                                                                        in let c = m
-                                                                                                   in return ((), c)))) ()) >>= (\ (d, tab) ->
-                                                                                                                                  do result <- (nth tab l k)
-                                                                                                                                     printf "%d" (result :: Int) :: IO ()))))
+                              (array_init_withenv k (\ i d ->
+                                                      do let tmp = '\000'
+                                                         hGetChar stdin >>= ((\ e ->
+                                                                               let m = e
+                                                                                       in let c = m
+                                                                                                  in return ((), c)))) ()) >>= (\ (d, tab) ->
+                                                                                                                                 do result <- nth tab l k
+                                                                                                                                    printf "%d" (result :: Int) :: IO ())))
 
 

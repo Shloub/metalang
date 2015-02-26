@@ -48,36 +48,36 @@ max2_ a b =
 
 main =
   do let i = 1
-     ((array_init_withenv 5 (\ j bb ->
-                              hGetChar stdin >>= ((\ c ->
-                                                    do d <- ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return '0'))))
-                                                       let bc = bb * d
-                                                       let g = d
-                                                       return (bc, g)))) i) >>= (\ (m, last) ->
-                                                                                  do let max0 = m
-                                                                                     let index = 0
-                                                                                     let nskipdiv = 0
-                                                                                     let l k n o p q =
-                                                                                           if k <= 995
-                                                                                           then hGetChar stdin >>= ((\ e ->
-                                                                                                                      do f <- ((-) <$> ((fmap ord (return e))) <*> ((fmap ord (return '0'))))
-                                                                                                                         ((if f == 0
-                                                                                                                           then let v = 1
-                                                                                                                                        in let w = 4
-                                                                                                                                                   in return (v, w)
-                                                                                                                           else do let x = n * f
-                                                                                                                                   y <- if q < 0
-                                                                                                                                        then do z <- ((quot x) <$> (readIOA last o))
-                                                                                                                                                return z
-                                                                                                                                        else return x
-                                                                                                                                   let ba = q - 1
-                                                                                                                                   return (y, ba)) >>= (\ (r, s) ->
-                                                                                                                                                         do (writeIOA last o f)
-                                                                                                                                                            let t = (o + 1) `rem` 5
-                                                                                                                                                            u <- (max2_ p r)
-                                                                                                                                                            (l (k + 1) r t u s)))))
-                                                                                           else do printf "%d" (p :: Int) :: IO ()
-                                                                                                   printf "\n" :: IO () in
-                                                                                           (l 1 m index max0 nskipdiv)))
+     (array_init_withenv 5 (\ j bb ->
+                             hGetChar stdin >>= ((\ c ->
+                                                   do d <- ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return '0'))))
+                                                      let bc = bb * d
+                                                      let g = d
+                                                      return (bc, g)))) i) >>= (\ (m, last) ->
+                                                                                 do let max0 = m
+                                                                                    let index = 0
+                                                                                    let nskipdiv = 0
+                                                                                    let l k n o p q =
+                                                                                          if k <= 995
+                                                                                          then hGetChar stdin >>= ((\ e ->
+                                                                                                                     do f <- ((-) <$> ((fmap ord (return e))) <*> ((fmap ord (return '0'))))
+                                                                                                                        (if f == 0
+                                                                                                                         then let v = 1
+                                                                                                                                      in let w = 4
+                                                                                                                                                 in return (v, w)
+                                                                                                                         else do let x = n * f
+                                                                                                                                 y <- if q < 0
+                                                                                                                                      then do z <- ((quot x) <$> (readIOA last o))
+                                                                                                                                              return z
+                                                                                                                                      else return x
+                                                                                                                                 let ba = q - 1
+                                                                                                                                 return (y, ba)) >>= (\ (r, s) ->
+                                                                                                                                                       do writeIOA last o f
+                                                                                                                                                          let t = (o + 1) `rem` 5
+                                                                                                                                                          u <- max2_ p r
+                                                                                                                                                          l (k + 1) r t u s)))
+                                                                                          else do printf "%d" (p :: Int) :: IO ()
+                                                                                                  printf "\n" :: IO () in
+                                                                                          l 1 m index max0 nskipdiv)
 
 

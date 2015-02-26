@@ -80,51 +80,51 @@ nbPassePartout n passepartout m serrures =
      let e i u v =
            if i <= f
            then do w <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) u) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                            (do x <- (join $ readIOA <$> (readIOA serrures i) <*> return 1)
+                            (do x <- join $ readIOA <$> (readIOA serrures i) <*> return 1
                                 return x)
                             (return u)
                    ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) v) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                       (do y <- (join $ readIOA <$> (readIOA serrures i) <*> return 1)
-                           (e (i + 1) w y))
+                       (do y <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                           e (i + 1) w y)
                        (e (i + 1) w v)
            else do let max_ancient_pp = 0
                    let max_recent_pp = 0
                    let d = n - 1
                    let c z ba bb =
                          if z <= d
-                         then do pp <- (readIOA passepartout z)
+                         then do pp <- readIOA passepartout z
                                  ifM ((((<=) u) <$> (readIOA pp 0)) <&&> (((<=) v) <$> (readIOA pp 1)))
                                      (return 1)
-                                     (do bc <- (max2_ ba =<< (readIOA pp 0))
-                                         bd <- (max2_ bb =<< (readIOA pp 1))
-                                         (c (z + 1) bc bd))
+                                     (do bc <- max2_ ba =<< (readIOA pp 0)
+                                         bd <- max2_ bb =<< (readIOA pp 1)
+                                         c (z + 1) bc bd)
                          else return (if ba >= u && bb >= v
                                       then 2
                                       else 0) in
-                         (c 0 max_ancient_pp max_recent_pp) in
-           (e 0 max_ancient max_recent)
+                         c 0 max_ancient_pp max_recent_pp in
+           e 0 max_ancient max_recent
 
 main =
   do n <- read_int
      skip_whitespaces
-     ((array_init_withenv n (\ i h ->
-                              ((array_init_withenv 2 (\ j t ->
-                                                       do out01 <- read_int
-                                                          skip_whitespaces
-                                                          let s = out01
-                                                          return ((), s)) ()) >>= (\ (t, out0) ->
-                                                                                    let g = out0
-                                                                                            in return ((), g)))) ()) >>= (\ (h, passepartout) ->
-                                                                                                                           do m <- read_int
-                                                                                                                              skip_whitespaces
-                                                                                                                              ((array_init_withenv m (\ k p ->
-                                                                                                                                                       ((array_init_withenv 2 (\ l r ->
-                                                                                                                                                                                do out_ <- read_int
-                                                                                                                                                                                   skip_whitespaces
-                                                                                                                                                                                   let q = out_
-                                                                                                                                                                                   return ((), q)) ()) >>= (\ (r, out1) ->
-                                                                                                                                                                                                             let o = out1
-                                                                                                                                                                                                                     in return ((), o)))) ()) >>= (\ (p, serrures) ->
-                                                                                                                                                                                                                                                    printf "%d" =<< ((nbPassePartout n passepartout m serrures) :: IO Int)))))
+     (array_init_withenv n (\ i h ->
+                             (array_init_withenv 2 (\ j t ->
+                                                     do out01 <- read_int
+                                                        skip_whitespaces
+                                                        let s = out01
+                                                        return ((), s)) ()) >>= (\ (t, out0) ->
+                                                                                  let g = out0
+                                                                                          in return ((), g))) ()) >>= (\ (h, passepartout) ->
+                                                                                                                        do m <- read_int
+                                                                                                                           skip_whitespaces
+                                                                                                                           (array_init_withenv m (\ k p ->
+                                                                                                                                                   (array_init_withenv 2 (\ l r ->
+                                                                                                                                                                           do out_ <- read_int
+                                                                                                                                                                              skip_whitespaces
+                                                                                                                                                                              let q = out_
+                                                                                                                                                                              return ((), q)) ()) >>= (\ (r, out1) ->
+                                                                                                                                                                                                        let o = out1
+                                                                                                                                                                                                                in return ((), o))) ()) >>= (\ (p, serrures) ->
+                                                                                                                                                                                                                                              printf "%d" =<< (nbPassePartout n passepartout m serrures :: IO Int)))
 
 

@@ -73,21 +73,21 @@ array_init_withenv len f env =
 main =
   do strlen <- read_int
      skip_whitespaces
-     ((array_init_withenv strlen (\ toto b ->
-                                   hGetChar stdin >>= ((\ tmpc ->
-                                                         do c <- ((fmap ord (return tmpc)))
-                                                            f <- if tmpc /= ' '
-                                                                 then do g <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> return 26) <*> ((fmap ord (return 'a'))))
-                                                                         return g
-                                                                 else return c
-                                                            a <- ((fmap chr (return f)))
-                                                            return ((), a)))) ()) >>= (\ (b, tab4) ->
-                                                                                        do let e = strlen - 1
-                                                                                           let d j =
-                                                                                                 if j <= e
-                                                                                                 then do printf "%c" =<< ((readIOA tab4 j) :: IO Char)
-                                                                                                         (d (j + 1))
-                                                                                                 else return () in
-                                                                                                 (d 0)))
+     (array_init_withenv strlen (\ toto b ->
+                                  hGetChar stdin >>= ((\ tmpc ->
+                                                        do c <- ((fmap ord (return tmpc)))
+                                                           f <- if tmpc /= ' '
+                                                                then do g <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> (return 26)) <*> ((fmap ord (return 'a'))))
+                                                                        return g
+                                                                else return c
+                                                           a <- ((fmap chr (return f)))
+                                                           return ((), a)))) ()) >>= (\ (b, tab4) ->
+                                                                                       do let e = strlen - 1
+                                                                                          let d j =
+                                                                                                if j <= e
+                                                                                                then do printf "%c" =<< (readIOA tab4 j :: IO Char)
+                                                                                                        d (j + 1)
+                                                                                                else return () in
+                                                                                                d 0)
 
 

@@ -26,11 +26,11 @@ sumdiag n =
                    let f = e + d
                    {- print int d print "=>" print un print " " -}
                    do let g = c + f
-                      (a (i + 1) g f)
+                      a (i + 1) g f
            else return c in
-           (a 0 sum un)
+           a 0 sum un
 
 main =
-  printf "%d" =<< ((sumdiag 1001) :: IO Int)
+  printf "%d" =<< (sumdiag 1001 :: IO Int)
 
 

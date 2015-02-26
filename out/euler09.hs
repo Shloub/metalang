@@ -35,11 +35,11 @@ main =
                                    printf "\n" :: IO ()
                                    printf "%d" (a * b * c :: Int) :: IO ()
                                    printf "\n" :: IO ()
-                                   (e (b + 1))
-                           else (e (b + 1))
-                   else (d (a + 1)) in
-                   (e (a + 1))
+                                   e (b + 1)
+                           else e (b + 1)
+                   else d (a + 1) in
+                   e (a + 1)
         else return () in
-        (d 1)
+        d 1
 
 

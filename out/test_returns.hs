@@ -37,8 +37,8 @@ is_pair i =
                      then let m = 4
                                   in return True
                      else do let n = 5
-                             (a n)
-     else (a j)
+                             a n
+     else a j
 
 main =
   return ()

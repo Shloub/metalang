@@ -34,14 +34,14 @@ programme_candidat tableau taille =
      let a i c =
            if i <= b
            then do d <- (((+) c) <$> (readIOA tableau i))
-                   (a (i + 1) d)
+                   a (i + 1) d
            else return c in
-           (a 0 out0)
+           a 0 out0
 
 main =
   do taille <- (fmap read getLine)
      tableau <- (join (newListArray . (,) 0 . subtract 1 <$> return taille <*> fmap (map read . words) getLine))
-     printf "%d" =<< ((programme_candidat tableau taille) :: IO Int)
+     printf "%d" =<< (programme_candidat tableau taille :: IO Int)
      printf "\n" :: IO ()
 
 

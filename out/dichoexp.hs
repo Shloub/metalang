@@ -57,7 +57,7 @@ exp0 a b =
   if b == 0
   then return 1
   else if (b `rem` 2) == 0
-       then do o <- (exp0 a (b `quot` 2))
+       then do o <- exp0 a (b `quot` 2)
                return (o * o)
        else (((*) a) <$> (exp0 a (b - 1)))
 
@@ -69,6 +69,6 @@ main =
      skip_whitespaces
      c <- read_int
      let f = c
-     printf "%d" =<< ((exp0 e f) :: IO Int)
+     printf "%d" =<< (exp0 e f :: IO Int)
 
 

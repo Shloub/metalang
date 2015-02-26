@@ -49,19 +49,19 @@ programme_candidat tableau x y =
                    let c j k =
                          if j <= d
                          then do l <- (((+) k) <$> (((*) (i * 2 + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
-                                 (c (j + 1) l)
-                         else (b (i + 1) k) in
-                         (c 0 h)
+                                 c (j + 1) l
+                         else b (i + 1) k in
+                         c 0 h
            else return h in
-           (b 0 out0)
+           b 0 out0
 
 main =
   do taille_x <- (fmap read getLine)
      taille_y <- (fmap read getLine)
-     ((array_init_withenv taille_y (\ a g ->
-                                     do f <- (join (newListArray . (,) 0 . subtract 1 <$> return taille_x <*> fmap (map read . words) getLine))
-                                        return ((), f)) ()) >>= (\ (g, tableau) ->
-                                                                  do printf "%d" =<< ((programme_candidat tableau taille_x taille_y) :: IO Int)
-                                                                     printf "\n" :: IO ()))
+     (array_init_withenv taille_y (\ a g ->
+                                    do f <- (join (newListArray . (,) 0 . subtract 1 <$> return taille_x <*> fmap (map read . words) getLine))
+                                       return ((), f)) ()) >>= (\ (g, tableau) ->
+                                                                 do printf "%d" =<< (programme_candidat tableau taille_x taille_y :: IO Int)
+                                                                    printf "\n" :: IO ())
 
 

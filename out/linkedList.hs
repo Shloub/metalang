@@ -48,10 +48,10 @@ rev2 empty acc torev =
   if torev == empty
   then return acc
   else do acc2 <- (Intlist <$> ((readIORef (_head0 torev)) >>= newIORef) <*> (newIORef acc))
-          (rev2 empty acc =<< (readIORef (_tail0 torev)))
+          rev2 empty acc =<< (readIORef (_tail0 torev))
 
 rev empty torev =
-  (rev2 empty empty torev)
+  rev2 empty empty torev
 
 test empty =
   do let list = empty
@@ -61,11 +61,11 @@ test empty =
            then do b <- read_int
                    let e = b
                    if e /= 0
-                   then do f <- (cons d e)
-                           (a e f)
-                   else (a e d)
+                   then do f <- cons d e
+                           a e f
+                   else a e d
            else return () in
-           (a i list)
+           a i list
 
 main =
   return ()

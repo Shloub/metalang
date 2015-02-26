@@ -69,40 +69,40 @@ array_init_withenv len f env =
 
 
 devine0 nombre tab len =
-  do min0 <- (readIOA tab 0)
-     max0 <- (readIOA tab 1)
+  do min0 <- readIOA tab 0
+     max0 <- readIOA tab 1
      let c = len - 1
      let b i f g =
            if i <= c
            then ifM ((((<) f) <$> (readIOA tab i)) <||> (((>) g) <$> (readIOA tab i)))
                     (return False)
                     (do h <- ifM (((>) nombre) <$> (readIOA tab i))
-                                 (do j <- (readIOA tab i)
+                                 (do j <- readIOA tab i
                                      return j)
                                  (return g)
                         k <- ifM (((<) nombre) <$> (readIOA tab i))
-                                 (do l <- (readIOA tab i)
+                                 (do l <- readIOA tab i
                                      return l)
                                  (return f)
                         ifM (((&&) (len /= i + 1)) <$> (((==) nombre) <$> (readIOA tab i)))
                             (return False)
                             (b (i + 1) k h))
            else return True in
-           (b 2 max0 min0)
+           b 2 max0 min0
 
 main =
   do nombre <- read_int
      skip_whitespaces
      len <- read_int
      skip_whitespaces
-     ((array_init_withenv len (\ i e ->
-                                do tmp <- read_int
-                                   skip_whitespaces
-                                   let d = tmp
-                                   return ((), d)) ()) >>= (\ (e, tab) ->
-                                                             do a <- (devine0 nombre tab len)
-                                                                if a
-                                                                then printf "True" :: IO ()
-                                                                else printf "False" :: IO ()))
+     (array_init_withenv len (\ i e ->
+                               do tmp <- read_int
+                                  skip_whitespaces
+                                  let d = tmp
+                                  return ((), d)) ()) >>= (\ (e, tab) ->
+                                                            do a <- devine0 nombre tab len
+                                                               if a
+                                                               then printf "True" :: IO ()
+                                                               else printf "False" :: IO ())
 
 

@@ -34,33 +34,33 @@ array_init_withenv len f env =
 
 
 result len tab =
-  ((array_init_withenv len (\ i b ->
-                             let a = False
-                                     in return ((), a)) ()) >>= (\ (b, tab2) ->
-                                                                  do let f = len - 1
-                                                                     let e i1 =
-                                                                           if i1 <= f
-                                                                           then do printf "%d" =<< ((readIOA tab i1) :: IO Int)
-                                                                                   printf " " :: IO ()
-                                                                                   (join $ writeIOA tab2 <$> (readIOA tab i1) <*> return True)
-                                                                                   (e (i1 + 1))
-                                                                           else do printf "\n" :: IO ()
-                                                                                   let d = len - 1
-                                                                                   let c i2 =
-                                                                                         if i2 <= d
-                                                                                         then ifM (fmap not (readIOA tab2 i2))
-                                                                                                  (return i2)
-                                                                                                  (c (i2 + 1))
-                                                                                         else return (- 1) in
-                                                                                         (c 0) in
-                                                                           (e 0)))
+  (array_init_withenv len (\ i b ->
+                            let a = False
+                                    in return ((), a)) ()) >>= (\ (b, tab2) ->
+                                                                 do let f = len - 1
+                                                                    let e i1 =
+                                                                          if i1 <= f
+                                                                          then do printf "%d" =<< (readIOA tab i1 :: IO Int)
+                                                                                  printf " " :: IO ()
+                                                                                  join $ writeIOA tab2 <$> (readIOA tab i1) <*> return True
+                                                                                  e (i1 + 1)
+                                                                          else do printf "\n" :: IO ()
+                                                                                  let d = len - 1
+                                                                                  let c i2 =
+                                                                                        if i2 <= d
+                                                                                        then ifM (fmap not (readIOA tab2 i2))
+                                                                                                 (return i2)
+                                                                                                 (c (i2 + 1))
+                                                                                        else return (- 1) in
+                                                                                        c 0 in
+                                                                          e 0)
 
 main =
   do len <- (fmap read getLine)
      printf "%d" (len :: Int) :: IO ()
      printf "\n" :: IO ()
      tab <- (join (newListArray . (,) 0 . subtract 1 <$> return len <*> fmap (map read . words) getLine))
-     printf "%d" =<< ((result len tab) :: IO Int)
+     printf "%d" =<< (result len tab :: IO Int)
      printf "\n" :: IO ()
 
 

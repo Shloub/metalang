@@ -59,11 +59,11 @@ sumdiv n =
                 then {- Si i divise -}
                      do let f = e + i
                         {- On incrémente -}
-                        (b (i + 1) f)
+                        b (i + 1) f
                 else {- nop -}
-                     (b (i + 1) e)
+                     b (i + 1) e
            else return e in
-           (b 1 out0)
+           b 1 out0
 
 main =
   {- Programme principal -}
@@ -71,6 +71,6 @@ main =
      c <- read_int
      let g = c
      {- Lecture de l'entier -}
-     printf "%d" =<< ((sumdiv g) :: IO Int)
+     printf "%d" =<< (sumdiv g :: IO Int)
 
 

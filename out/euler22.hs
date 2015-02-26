@@ -64,9 +64,9 @@ score () =
            then hGetChar stdin >>= ((\ c ->
                                       do e <- (((+) d) <$> (((+) 1) <$> ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return 'A'))))))
                                          {-		print c print " " print sum print " " -}
-                                         (a (i + 1) e)))
+                                         a (i + 1) e))
            else return d in
-           (a 1 sum)
+           a 1 sum
 
 main =
   do let sum = 0
@@ -74,9 +74,9 @@ main =
      let b i f =
            if i <= n
            then do g <- (((+) f) <$> (((*) i) <$> (score ())))
-                   (b (i + 1) g)
+                   b (i + 1) g
            else do printf "%d" (f :: Int) :: IO ()
                    printf "\n" :: IO () in
-           (b 1 sum)
+           b 1 sum
 
 

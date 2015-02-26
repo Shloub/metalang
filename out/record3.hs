@@ -85,23 +85,23 @@ result t len =
      let b = len - 1
      let a j g =
            if j <= b
-           then do (join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> (((+) 1) <$> ((_blah <$> (readIOA t j)) >>= readIORef)))
+           then do join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> (((+) 1) <$> ((_blah <$> (readIOA t j)) >>= readIORef))
                    h <- ((+) <$> ((+) <$> (((+) g) <$> ((_foo <$> (readIOA t j)) >>= readIORef)) <*> ((*) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> ((_bar <$> (readIOA t j)) >>= readIORef))) <*> ((*) <$> ((_bar <$> (readIOA t j)) >>= readIORef) <*> ((_foo <$> (readIOA t j)) >>= readIORef)))
-                   (a (j + 1) h)
+                   a (j + 1) h
            else return g in
-           (a 0 out0)
+           a 0 out0
 
 main =
-  ((array_init_withenv 4 (\ i d ->
-                           do c <- (mktoto i)
-                              return ((), c)) ()) >>= (\ (d, t) ->
-                                                        do f <- read_int
-                                                           (join $ writeIORef <$> (_bar <$> (readIOA t 0)) <*> return f)
-                                                           skip_whitespaces
-                                                           e <- read_int
-                                                           (join $ writeIORef <$> (_blah <$> (readIOA t 1)) <*> return e)
-                                                           titi <- (result t 4)
-                                                           printf "%d" (titi :: Int) :: IO ()
-                                                           printf "%d" =<< (((_blah <$> (readIOA t 2)) >>= readIORef) :: IO Int)))
+  (array_init_withenv 4 (\ i d ->
+                          do c <- mktoto i
+                             return ((), c)) ()) >>= (\ (d, t) ->
+                                                       do f <- read_int
+                                                          join $ writeIORef <$> (_bar <$> (readIOA t 0)) <*> return f
+                                                          skip_whitespaces
+                                                          e <- read_int
+                                                          join $ writeIORef <$> (_blah <$> (readIOA t 1)) <*> return e
+                                                          titi <- result t 4
+                                                          printf "%d" (titi :: Int) :: IO ()
+                                                          printf "%d" =<< ((_blah <$> (readIOA t 2)) >>= readIORef :: IO Int))
 
 
