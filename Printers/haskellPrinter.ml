@@ -91,26 +91,30 @@ read_int =
 
 
 let nop = -100
-let fun_priority = 0
+let fun_priority = 20
 
-let hsapply ?p f fun_ apply_side_effects args =
+let parens ~(p:int) p2 f fmt =
+  let fmt = if p >= p2 then let open Format in "(" ^^ fmt ^^ ")" else fmt in
+ Format.fprintf f fmt
+
+let hsapply ~p f fun_ apply_side_effects args =
   match args with
-  | [] -> Format.fprintf f "(%a ())" fun_ ()
-  | [false, pr, x] when apply_side_effects -> Format.fprintf f "(%a >>= %a)" (pr ~p:0) x fun_ ()
+  | [] -> parens ~p fun_priority f "%a ()" fun_ ()
+  | [false, pr, x] when apply_side_effects -> parens ~p fun_priority f "%a >>= %a" (pr ~p:fun_priority) x fun_ ()
   | _ ->
       let count = if apply_side_effects then List.length args else 0 (* ne sera jamais atteind *) in
-      let _, pure, p = List.fold_left
+      let _, pure, pr = List.fold_left
           (fun (c, pure, p) (isPure, parg, arg) ->
             match pure, isPure with
-              (true, true) -> c+1, true, (fun f () -> Format.fprintf f "%a %a" p () (parg ~p:0) arg)
-            | (true, false) when c = count -> c+1, true, (fun f () -> Format.fprintf f "%a =<< %a" p () (parg ~p:0) arg)
-            | (true, false)  -> c+1, false, (fun f () -> Format.fprintf f "%a <$> %a" p () (parg ~p:0) arg)
-            | (false, false) -> c+1, false, (fun f () -> Format.fprintf f "%a <*> %a" p () (parg ~p:0) arg)
-            | (false, true) -> c+1, false, (fun f () -> Format.fprintf f "%a <*> return %a" p () (parg ~p:0) arg)
+              (true, true) -> c+1, true, (fun f () -> Format.fprintf f "%a %a" p () (parg ~p:fun_priority) arg)
+            | (true, false) when c = count -> c+1, true, (fun f () -> Format.fprintf f "%a =<< %a" p () (parg ~p:fun_priority) arg)
+            | (true, false)  -> c+1, false, (fun f () -> Format.fprintf f "%a <$> %a" p () (parg ~p:fun_priority) arg)
+            | (false, false) -> c+1, false, (fun f () -> Format.fprintf f "%a <*> %a" p () (parg ~p:fun_priority) arg)
+            | (false, true) -> c+1, false, (fun f () -> Format.fprintf f "%a <*> return %a" p () (parg ~p:fun_priority) arg)
           ) (1, true, fun_) args
       in
-      if not pure && apply_side_effects then Format.fprintf f "(join $ %a)" p ()
-      else Format.fprintf f "(%a)" p ()
+      if not pure && apply_side_effects then parens ~p fun_priority f "join $ %a" pr ()
+      else parens ~p fun_priority f "%a" pr ()
 
 let commutative = function
     | Ast.Expr.Add -> Some Ast.Expr.Add
@@ -126,10 +130,6 @@ let commutative = function
     | Ast.Expr.Div
     | Ast.Expr.Mod
     | Ast.Expr.Sub -> None
-
-let parens ~(p:int) p2 f fmt =
-  let fmt = if p > p2 then let open Format in "(" ^^ fmt ^^ ")" else fmt in
- Format.fprintf f fmt
 
 (*
   if p1 >= p2 then
@@ -164,11 +164,11 @@ class haskellPrinter = object(self)
     | Ast.Expr.Diff -> "/="
 
   method binop_priority = function
-    | Ast.Expr.Add -> -2, -2, -2
-    | Ast.Expr.Sub -> -2, -2, -1
-    | Ast.Expr.Mul -> -1, -1, -1
-    | Ast.Expr.Div -> -10, 1, 1
-    | Ast.Expr.Mod -> -10, 1, 1
+    | Ast.Expr.Add -> -1, -2, -2
+    | Ast.Expr.Sub -> -1, -2, -1
+    | Ast.Expr.Mul -> 0, -1, -1
+    | Ast.Expr.Div -> -10, 15, 15
+    | Ast.Expr.Mod -> -10, 15, 15
     | Ast.Expr.Or -> -8, -8, -8
     | Ast.Expr.And -> -10, -10, -10
     | Ast.Expr.Lower -> -5, -5, -5
@@ -213,14 +213,18 @@ class haskellPrinter = object(self)
     let cq, q1, q2 = self#binop_priority op in
     match self#isPure a, self#isPure b, self#binopShortCut op, commutative op with
     | true, true, _, _ -> parens ~p cq f "%a %a %a" (self#expr' ~p:q1) a self#pbinop op (self#expr' ~p:q2)  b
-    | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op self#expr_ a self#expr b
-    | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op2 self#expr_ b self#expr a
-    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" self#pbinopf op self#eM a self#eM b
-    | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" self#eM a s self#eM b
+    | true, false, None, _ -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op self#expr_ a self#expr_ b
+    | false, true, _, Some op2 -> Format.fprintf f "((%a %a) <$> %a)" self#pbinopf op2 self#expr_ b self#expr_ a
+    | _, _, None, _ -> Format.fprintf f "(%a <$> %a <*> %a)" self#pbinopf op self#eM_ a self#eM_ b
+    | _, _, Some s, _ -> Format.fprintf f "(%a %s %a)" self#eM_ a s self#eM_ b
 
   method unop ~p f a op =
-    if self#isPure a then parens ~p (fun_priority-1) f "%a %a" self#punop op self#expr_ a
-    else parens ~p (fun_priority-1) f "fmap %a %a"self#punopf op self#expr_ a
+    let pr = match op with
+    | Ast.Expr.Neg -> 2
+    | Ast.Expr.Not -> fun_priority
+    in
+    if self#isPure a then parens ~p pr f "%a %a" self#punop op (self#expr' ~p:pr) a
+    else parens ~p (fun_priority - 1) f "fmap %a %a"self#punopf op (self#expr' ~p:fun_priority) a
 
   method comment fe f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str fe c
 
@@ -308,12 +312,12 @@ class haskellPrinter = object(self)
             (List.combine params listr)
         in Format.fprintf f "(%s)" expanded
 
-  method apply_nomacros f e li =
+  method apply_nomacros ~p f e li =
     let li = List.map (fun e -> self#isPure e, self#expr', e) li in
-    hsapply f (fun f () -> self#expr f e) true li
+    hsapply ~p f (fun f () -> self#expr f e) true li
 
-  method apply f e li =
-    let default () = self#apply_nomacros f e li in
+  method apply ~p f e li =
+    let default () = self#apply_nomacros ~p f e li in
     match E.unfix e with
     | E.Lief ( E.Binding binding ) ->
       begin match StringMap.find_opt binding macros with
@@ -327,10 +331,8 @@ class haskellPrinter = object(self)
       Format.fprintf f "(%a)" (Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
     else
       let li = List.map (fun e -> self#isPure e, self#expr', e) li in
-      hsapply f (fun f () -> Format.fprintf f "(%a)" (Printer.print_list (fun _ _ -> ()) (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li)
+      hsapply ~p:nop f (fun f () -> Format.fprintf f "(%a)" (Printer.print_list (fun _ _ -> ()) (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li)
         false li
-
-
 
   method if_ ~p f e1 e2 e3 =
     let pr = if self#isPure e2 && self#isPure e3 then self#expr else self#eM in
@@ -367,30 +369,30 @@ class haskellPrinter = object(self)
 
   method print ~p f expr t =
     match E.unfix expr with
-    | E.Lief (E.String s) -> parens ~p nop f "%a %S :: IO ()" self#printf () s
+    | E.Lief (E.String s) -> parens ~p fun_priority f "%a %S :: IO ()" self#printf () s
     | _ ->
         if self#isPure expr then
-          parens ~p nop f "@[%a %a (%a :: %a) :: IO ()@]"
+          parens ~p fun_priority f "@[%a %a (%a :: %a) :: IO ()@]"
             self#printf ()
             self#format_type t
             (self#expr' ~p:nop) expr
             self#ptype t
         else
-          parens ~p nop f "@[%a %a =<< (%a :: IO %a)@]"
+          parens ~p fun_priority f "@[%a %a =<< (%a :: IO %a)@]"
             self#printf ()
             self#format_type t
             (self#expr' ~p:nop) expr
             self#ptype t
 
   method expr f e = self#expr' ~p:nop f e
-  method expr_ f e = self#expr' ~p:0 f e
+  method expr_ f e = self#expr' ~p:fun_priority f e
   method expr' ~p f e = match E.unfix e with
   | E.LetRecIn (name, params, e1, e2) -> self#letrecin ~p f name params e1 e2
   | E.BinOp (a, op, b) -> self#binop ~p f a op b
   | E.UnOp (a, op) -> self#unop ~p f a op
   | E.Fun (params, e) -> self#fun_ f params e
   | E.FunTuple (params, e) -> self#funtuple f params e
-  | E.Apply (e, li) -> self#apply f e li
+  | E.Apply (e, li) -> self#apply ~p f e li
   | E.Tuple li -> self#tuple f li
   | E.Lief l -> self#lief ~p f l
   | E.Comment (s, c) -> self#comment (self#expr' ~p) f s c
@@ -401,11 +403,11 @@ class haskellPrinter = object(self)
   | E.Block [e] -> self#expr' ~p f e
   | E.Block li -> self#block ~p f li
   | E.Record li -> self#record f li
-  | E.RecordAccess (record, field) -> self#recordaccess f record field
-  | E.RecordAffect (record, field, value) -> self#recordaffect f record field value
-  | E.ArrayMake (len, lambda, env) -> self#arraymake f len lambda env
-  | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
-  | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect f tab indexes v
+  | E.RecordAccess (record, field) -> self#recordaccess ~p f record field
+  | E.RecordAffect (record, field, value) -> self#recordaffect ~p f record field value
+  | E.ArrayMake (len, lambda, env) -> self#arraymake ~p f len lambda env
+  | E.ArrayAccess (tab, indexes) -> self#arrayindex ~p f tab indexes
+  | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect ~p f tab indexes v
   | E.LetIn (name, v, e') ->
       if self#isPure e then
         self#letin ~p f name v e' self#expr
@@ -416,27 +418,27 @@ class haskellPrinter = object(self)
     parens ~p (fun_priority -1) f "@[<h>let %a%a = @[<v>%a@\nin %a@]@]"
       self#binding name pparams () self#expr v pexpr e
 
-  method recordaccess f record field  =
-    hsapply f (fun f () -> Format.fprintf f "readIORef") true
+  method recordaccess ~p f record field  =
+    hsapply ~p f (fun f () -> Format.fprintf f "readIORef") true
       [self#isPure record, (fun ~p f () ->
-        hsapply f (fun f () -> Format.fprintf f "_%s" field) false
+        hsapply ~p f (fun f () -> Format.fprintf f "_%s" field) false
           [self#isPure record, self#expr', record]), ()]
 
-  method recordaffect f record field value =
-    hsapply f (fun f () -> Format.fprintf f "writeIORef") true
+  method recordaffect ~p f record field value =
+    hsapply ~p f (fun f () -> Format.fprintf f "writeIORef") true
       [self#isPure record, (fun ~p f () ->
-        hsapply f (fun f () -> Format.fprintf f "_%s" field) false
+        hsapply ~p f (fun f () -> Format.fprintf f "_%s" field) false
           [self#isPure record, self#expr', record]), ();
        self#isPure value, (fun ~p f () -> self#expr' ~p f value), ()
      ]
 
-  method record f li = (* TODO trier les champs dans le bon ordre *)
+  method record f li = (* TODO trier les champs dans le bon ordre et parentheser correctement *)
     let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
     Format.fprintf f "@[<v>(%a <$> %a)@]"
       self#tname t
       (Printer.print_list
          (fun f (expr, field) ->
-           hsapply f (fun f () -> Format.fprintf f "newIORef") true
+           hsapply ~p:fun_priority f (fun f () -> Format.fprintf f "newIORef") true
              [self#isPure expr, self#expr', expr])
          (fun f pa a pb b -> Format.fprintf f "%a <*> %a" pa a pb b)) li
 
@@ -451,26 +453,26 @@ class haskellPrinter = object(self)
     | Type.Char, _ -> parens ~p (fun_priority-1) f "@[<h>hGetChar stdin >>=@[<v> (%a)@]@]" self#expr next
     | _ -> assert false
 
-  method arraymake f len lambda env =
+  method arraymake ~p f len lambda env =
     let f' e = self#isPure e, self#expr', e in    
-    hsapply f (fun f () -> Format.fprintf f "array_init_withenv") true [f' len; f' lambda; f' env]
+    hsapply ~p f (fun f () -> Format.fprintf f "array_init_withenv") true [f' len; f' lambda; f' env]
 
-  method arrayindex f tab indexes =
+  method arrayindex ~p f tab indexes =
     match List.rev indexes with
-    | [] -> self#expr f tab
+    | [] -> self#expr' ~p f tab
     | hd::tl -> let tl = List.rev tl in
       let array_pure = self#isPure tab && List.for_all self#isPure tl in
-      hsapply f (fun f () -> Format.fprintf f "readIOA") true
-        [array_pure, (fun ~p f () -> self#arrayindex f tab tl), () ; (* TODO propager p *)
+      hsapply ~p f (fun f () -> Format.fprintf f "readIOA") true
+        [array_pure, (fun ~p f () -> self#arrayindex ~p f tab tl), ();
          self#isPure hd, (fun ~p f () -> self#expr' ~p f hd), ();]
 
-  method arrayaffect f tab indexes v =			
+  method arrayaffect ~p f tab indexes v =			
     match List.rev indexes with
     | [] -> assert false
     | hd::tl -> let tl = List.rev tl in
       let array_pure = self#isPure tab && List.for_all self#isPure tl in
-      hsapply f (fun f () -> Format.fprintf f "writeIOA") true
-      [array_pure, (fun ~p f () -> self#arrayindex f tab tl), () ; (* TODO *)
+      hsapply ~p f (fun f () -> Format.fprintf f "writeIOA") true
+      [array_pure, (fun ~p f () -> self#arrayindex ~p f tab tl), ();
        self#isPure hd, (fun ~p f () -> self#expr' ~p  f hd), (); 
        self#isPure v, (fun ~p f () -> self#expr' ~p  f v), ()]
 
