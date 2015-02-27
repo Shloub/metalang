@@ -396,14 +396,6 @@ def lexems expand_read_int_matrix(lexems x, lexems y)
         return py_expand_read_int_matrix( ${ y } )
       }
     else
-			def s = {skip}
-			if current_language() == LANG_Php ||
-			current_language() == LANG_Cs ||
-			current_language() == LANG_Java ||
-			current_language() == LANG_Vb
-			then
-				s = {}
-			end
     return {
       def inline array<array<int>> tab[${y}] with z do
 				return read_int_line(x)
