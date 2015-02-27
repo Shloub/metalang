@@ -323,7 +323,7 @@ let rec map_instrs (infos:infos) = function
         | [{instruction=i1; expression=None; affected=false; declaration=true; dad=dad1}] ->
           if List.for_all (function
         {instruction=i2; expression=Some e2; affected=false; declaration=false; dad=dad2} ->
-          dad1 = dad2 && List.forall (no_affectation tl i2) (all_variables e) && can_map_mut name e2 e
+          List.forall (no_affectation tl i2) (all_variables e) && can_map_mut name e2 e
           | _ -> false
           ) items2 then true, replace_name name e tl
           else begin
