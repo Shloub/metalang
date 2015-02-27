@@ -406,6 +406,7 @@ class haskellPrinter = object(self)
   | E.RecordAccess (record, field) -> self#recordaccess ~p f record field
   | E.RecordAffect (record, field, value) -> self#recordaffect ~p f record field value
   | E.ArrayMake (len, lambda, env) -> self#arraymake ~p f len lambda env
+  | E.ArrayInit (len, lambda) -> self#arrayinit ~p f len lambda
   | E.ArrayAccess (tab, indexes) -> self#arrayindex ~p f tab indexes
   | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect ~p f tab indexes v
   | E.LetIn (name, v, e') ->
@@ -456,6 +457,10 @@ class haskellPrinter = object(self)
   method arraymake ~p f len lambda env =
     let f' e = self#isPure e, self#expr', e in    
     hsapply ~p f (fun f () -> Format.fprintf f "array_init_withenv") true [f' len; f' lambda; f' env]
+
+  method arrayinit ~p f len lambda =
+    let f' e = self#isPure e, self#expr', e in    
+    hsapply ~p f (fun f () -> Format.fprintf f "array_init") true [f' len; f' lambda]
 
   method arrayindex ~p f tab indexes =
     match List.rev indexes with
@@ -550,7 +555,7 @@ class haskellPrinter = object(self)
         macros;
       ()
 
-  method header binand binor ifm read_array write_array f opts =
+  method header binand binor array_init array_make ifm read_array write_array f opts =
     let need_stdinsep = opts.AstFun.hasSkip in
     let need_readint = Ast.TypeSet.mem (Type.integer) opts.AstFun.reads in
     let need_readchar = Ast.TypeSet.mem (Type.char) opts.AstFun.reads in
@@ -576,8 +581,8 @@ class haskellPrinter = object(self)
       (fun f () -> if write_array then Format.fprintf f "%s" prelude_writeIOA) ()
       (fun f () -> if read_array then Format.fprintf f "%s" prelude_readIOA) ()
       (fun f () ->
-        if Tags.is_taged "__internal__allocArray" then
-      Format.fprintf f "
+let array_init_withenv = "
+
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
   do (env, li) <- g 0 env
@@ -588,7 +593,29 @@ array_init_withenv len f env =
            then return (env, [])
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
-                   return (env'', item:li)@\n") ()
+                   return (env'', item:li)
+
+" in
+         match array_init, array_make with
+         | (true, true) ->
+      Format.fprintf f "%s
+array_init len f = fmap snd (array_init_withenv len (\\x () -> fmap ((,) ()) (f x)) ())@\n" array_init_withenv
+         | true, false ->
+Format.fprintf f "
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
+           if i == len
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)@\n"
+         | false, true ->
+             Format.fprintf f "%s" array_init_withenv
+         | false, false -> ()
+) ()
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
     side_effects <- prog.AstFun.side_effects;
@@ -609,17 +636,20 @@ array_init_withenv len f env =
           IntMap.find (E.Fixed.annot c) prog.AstFun.side_effects
         | _ -> false
       ) prog.AstFun.declarations in
-
     let read_array = AstFun.existsExpr (fun e ->match E.unfix e with
     | E.ArrayAccess _ -> true
-    | _ -> false
-                                       ) prog.AstFun.declarations in
+    | _ -> false ) prog.AstFun.declarations in
     let write_array = AstFun.existsExpr (fun e ->match E.unfix e with
     | E.ArrayAffect _ -> true
-    | _ -> false
-                                       ) prog.AstFun.declarations in
+    | _ -> false ) prog.AstFun.declarations in
+    let array_init = AstFun.existsExpr (fun e ->match E.unfix e with
+    | E.ArrayInit _ -> true
+    | _ -> false ) prog.AstFun.declarations in
+    let array_make = AstFun.existsExpr (fun e ->match E.unfix e with
+    | E.ArrayMake _ -> true
+    | _ -> false ) prog.AstFun.declarations in
     Format.fprintf f "%a@\n@[%a@]@\n"
-    (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) ifm read_array write_array) prog.AstFun.options
+    (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) array_init array_make ifm read_array write_array) prog.AstFun.options
     (Printer.print_list self#decl
        (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
 prog.AstFun.declarations

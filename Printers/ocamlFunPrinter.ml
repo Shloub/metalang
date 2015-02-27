@@ -224,6 +224,7 @@ class camlFunPrinter = object(self)
   | E.RecordAccess (record, field) -> self#recordaccess f record field
   | E.RecordAffect (record, field, value) -> self#recordaffect f record field value
   | E.ArrayMake (len, lambda, env) -> self#arraymake f len lambda env
+  | E.ArrayInit (len, lambda) -> self#arrayinit f len lambda
   | E.ArrayAccess (tab, indexes) -> self#arrayindex f tab indexes
   | E.ArrayAffect (tab, indexes, v) -> self#arrayaffect f tab indexes v
   | E.LetIn (binding, e, b) -> self#letin f [binding, e] b
@@ -243,6 +244,8 @@ class camlFunPrinter = object(self)
 	 (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
 
   method skip f = Format.fprintf f "(Scanf.scanf \"%%[\\n \\010]\" (fun _ -> ()))"
+
+  method arrayinit f len lambda = Format.fprintf f "(Array.init %a %a)" self#expr len self#expr lambda
 
   method arraymake f len lambda env = Format.fprintf f "(Array.init_withenv %a %a %a)" self#expr len self#expr lambda self#expr env
 
@@ -336,8 +339,8 @@ class camlFunPrinter = object(self)
         macros;
       ()
 
-  method header f opts =
-    if Tags.is_taged "__internal__allocArray" then
+  method header array_init array_make f _ =
+    if array_make then
       Format.fprintf f
 	"module Array = struct
   include Array
@@ -352,7 +355,13 @@ end
 "
 
   method prog (f:Format.formatter) (prog:AstFun.prog) =
-    self#header f prog.AstFun.options;
+    let array_init = AstFun.existsExpr (fun e ->match E.unfix e with
+    | E.ArrayInit _ -> true
+    | _ -> false ) prog.AstFun.declarations in
+    let array_make = AstFun.existsExpr (fun e ->match E.unfix e with
+    | E.ArrayMake _ -> true
+    | _ -> false ) prog.AstFun.declarations in
+    self#header array_init array_make f prog.AstFun.options;
     List.iter (self#decl f) prog.AstFun.declarations
 
 end

@@ -66,6 +66,7 @@ let side_effects acc e =
       List.exists (fun (e, name) -> has_side_effects acc e) li *)
     | Expr.RecordAffect _ -> true
     | Expr.RecordAccess _ -> true
+    | Expr.ArrayInit _ -> true
     | Expr.ArrayMake (a, b, c) -> true
     | Expr.ArrayAccess _ -> true
     | Expr.ArrayAffect _ -> true

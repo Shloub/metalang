@@ -68,9 +68,9 @@ class racketPrinter = object(self)
     begin match c with
     | ' ' -> Format.fprintf f "#\\Space"
     | '\n' -> Format.fprintf f "#\\NewLine"
-    | x -> if (x >= 'a' && x <= 'z') or
-	(x >= '0' && x <= '9') or
-	(x >= 'A' && x <= 'Z')
+    | x -> if (x >= 'a' && x <= 'z') ||
+	    (x >= '0' && x <= '9') ||
+	    (x >= 'A' && x <= 'Z')
       then Format.fprintf f "#\\%c" x
       else Format.fprintf f "(integer->char %d)" (int_of_char c)
     end
@@ -103,7 +103,7 @@ class racketPrinter = object(self)
       params
       self#expr e
 
-  method header f opts =
+  method header array_init array_make f opts =
     let need_stdinsep = opts.AstFun.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) opts.AstFun.reads in
     let need_readchar = TypeSet.mem (Type.char) opts.AstFun.reads in
@@ -111,7 +111,7 @@ class racketPrinter = object(self)
 Format.fprintf f "#lang racket
 (require racket/block)
 %a%a%a%a%a@\n"
-(fun f () -> if Tags.is_taged "__internal__allocArray" then Format.fprintf f
+(fun f () -> if array_make then Format.fprintf f
 "(define array_init_withenv (lambda (len f env)
   (let ((tab (build-vector len (lambda (i)
     (let ([o ((f i) env)])
@@ -241,6 +241,8 @@ Format.fprintf f "#lang racket
       self#expr e1
       self#expr e2
 
+  method arrayinit f len lambda = Format.fprintf f "(build-vector %a %a)" self#expr len self#expr lambda
+
   method arraymake f len lambda env = Format.fprintf f "(array_init_withenv %a %a %a)" self#expr len self#expr lambda self#expr env
 
   method arrayindex f tab indexes =
@@ -263,8 +265,6 @@ Format.fprintf f "#lang racket
 	(fun f () -> self#arrayindex f tab tl) ()
 	self#expr hd
 	self#expr v
-
-
 
   method recordaccess f record field  =
     Format.fprintf f "(%s-%s %a)"

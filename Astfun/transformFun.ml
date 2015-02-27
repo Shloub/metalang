@@ -225,24 +225,27 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
       let envname = Fresh.fresh_user () in
       let next = instrs suite contsuite contreturn env tl in
 
-      let returnenv, next =
+      let make, returncont, returnenv, next =
         match affected with
-        | [] -> F.Expr.tuple [], F.Expr.funtuple [envname; name] next
-        | [a] -> F.Expr.binding a, F.Expr.funtuple [a; name] next
-        | _ -> F.Expr.tuple (List.map F.Expr.binding affected),
-            (F.Expr.funtuple [envname; name]
+        | [] -> (fun len f _ -> F.Expr.arrayinit len f), None, F.Expr.tuple [], F.Expr.fun_ [name] next
+        | [a] ->
+            let returncont = F.Expr.fun_ [o] (F.Expr.tuple [F.Expr.binding a; F.Expr.binding o] ) in
+            F.Expr.arraymake, Some returncont, F.Expr.binding a, F.Expr.funtuple [a; name] next
+        | _ ->
+            let returnenv = F.Expr.tuple (List.map F.Expr.binding affected) in
+            let returncont = F.Expr.fun_ [o] (F.Expr.tuple [returnenv; F.Expr.binding o] ) in
+            F.Expr.arraymake, Some returncont, returnenv, (F.Expr.funtuple [envname; name]
 	 (F.Expr.apply (F.Expr.funtuple affected next) [F.Expr.binding envname]))
       in
-      let returncont = F.Expr.fun_ [o] (F.Expr.tuple [returnenv; F.Expr.binding o] ) in
-      let content = instrs false contsuite (Some returncont) (varname::env) li in
+      let content = instrs false contsuite returncont (varname::env) li in
       let content =
         match affected with
-        | [] -> F.Expr.fun_ [envname] content
+        | [] -> content
         | [a] -> F.Expr.fun_ [a] content
         | _ -> F.Expr.funtuple affected content in
       let content = F.Expr.fun_ [varname] content in
       F.Expr.apply next
-        [F.Expr.arraymake e content returnenv]
+        [ make e content returnenv]
     | A.Instr.AllocArray (name, t, e, None, _) -> assert false
     | A.Instr.Untuple (vars, e, _) ->
       let vars = List.map (function (_, A.UserName u) -> u ) vars in
