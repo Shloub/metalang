@@ -85,20 +85,19 @@ func main() {
       }      
   }
   var max0 int = 0
-  var o int = 20
   var m [][]int = make([][]int, 20)
-  for p := 0 ; p <= 20 - 1; p++ {
-    var q []int = make([]int, o)
-      for r := 0 ; r <= o - 1; r++ {
-        fmt.Fscanf(reader, "%d", &q[r])
+  for o := 0 ; o <= 20 - 1; o++ {
+    var p []int = make([]int, 20)
+      for q := 0 ; q <= 20 - 1; q++ {
+        fmt.Fscanf(reader, "%d", &p[q])
           skip()
       }
-      m[p] = q;
+      m[o] = p;
   }
   for j := 0 ; j <= 7; j++ {
-    var s * tuple_int_int = directions[j]
-      var dx int = (*s).tuple_int_int_field_0
-      var dy int = (*s).tuple_int_int_field_1
+    var r * tuple_int_int = directions[j]
+      var dx int = (*r).tuple_int_int_field_0
+      var dy int = (*r).tuple_int_int_field_1
       for x := 0 ; x <= 19; x++ {
         for y := 0 ; y <= 19; y++ {
             max0 = max2_(max0, find(4, m, x, y, dx, dy));

@@ -23,11 +23,11 @@ begin
   end if;
 end;
 
-type u is Array (Integer range <>) of Integer;
+type s is Array (Integer range <>) of Integer;
+type s_PTR is access s;
+type u is Array (Integer range <>) of s_PTR;
 type u_PTR is access u;
-type v is Array (Integer range <>) of u_PTR;
-type v_PTR is access v;
-function find(n : in Integer; m : in v_PTR; x : in Integer; y : in Integer;
+function find(n : in Integer; m : in u_PTR; x : in Integer; y : in Integer;
 dx : in Integer; dy : in Integer) return Integer is
 begin
   if x < (0) or else x = (20) or else y < (0) or else y = (20)
@@ -51,14 +51,13 @@ type tuple_int_int is record
   tuple_int_int_field_1 : Integer;
 end record;
 
-type w is Array (Integer range <>) of tuple_int_int_PTR;
-type w_PTR is access w;
+type v is Array (Integer range <>) of tuple_int_int_PTR;
+type v_PTR is access v;
 
-  s : tuple_int_int_PTR;
-  q : u_PTR;
-  o : Integer;
+  r : tuple_int_int_PTR;
+  p : s_PTR;
   max0 : Integer;
-  m : v_PTR;
+  m : u_PTR;
   l : tuple_int_int_PTR;
   k : tuple_int_int_PTR;
   h : tuple_int_int_PTR;
@@ -67,11 +66,11 @@ type w_PTR is access w;
   e : tuple_int_int_PTR;
   dy : Integer;
   dx : Integer;
-  directions : w_PTR;
+  directions : v_PTR;
   d : tuple_int_int_PTR;
   c : tuple_int_int_PTR;
 begin
-  directions := new w (0..(8));
+  directions := new v (0..(8));
   for i in integer range (0)..(8) - (1) loop
     if i = (0)
     then
@@ -135,20 +134,19 @@ begin
     end if;
   end loop;
   max0 := (0);
-  o := (20);
-  m := new v (0..(20));
-  for p in integer range (0)..(20) - (1) loop
-    q := new u (0..o);
-    for r in integer range (0)..o - (1) loop
-      Get(q(r));
+  m := new u (0..(20));
+  for o in integer range (0)..(20) - (1) loop
+    p := new s (0..(20));
+    for q in integer range (0)..(20) - (1) loop
+      Get(p(q));
       SkipSpaces;
     end loop;
-    m(p) := q;
+    m(o) := p;
   end loop;
   for j in integer range (0)..(7) loop
-    s := directions(j);
-    dx := s.tuple_int_int_field_0;
-    dy := s.tuple_int_int_field_1;
+    r := directions(j);
+    dx := r.tuple_int_int_field_0;
+    dy := r.tuple_int_int_field_1;
     for x in integer range (0)..(19) loop
       for y in integer range (0)..(19) loop
         max0 := max2_0(max0, find((4), m, x, y, dx, dy));

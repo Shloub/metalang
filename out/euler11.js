@@ -103,23 +103,22 @@ else
   directions[i] = l;
 }
 var max0 = 0;
-var o = 20;
 var m = new Array(20);
-for (var p = 0 ; p <= 20 - 1; p++)
+for (var o = 0 ; o <= 20 - 1; o++)
 {
-  var q = new Array(o);
-  for (var r = 0 ; r <= o - 1; r++)
+  var p = new Array(20);
+  for (var q = 0 ; q <= 20 - 1; q++)
   {
-    q[r]=read_int_();
+    p[q]=read_int_();
     stdinsep();
   }
-  m[p] = q;
+  m[o] = p;
 }
 for (var j = 0 ; j <= 7; j++)
 {
-  var s = directions[j];
-  var dx = s.tuple_int_int_field_0;
-  var dy = s.tuple_int_int_field_1;
+  var r = directions[j];
+  var dx = r.tuple_int_int_field_0;
+  var dy = r.tuple_int_int_field_1;
   for (var x = 0 ; x <= 19; x++)
     for (var y = 0 ; y <= 19; y++)
       max0 = Math.max(max0, find(4, m, x, y, dx, dy));

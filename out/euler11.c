@@ -23,7 +23,7 @@ typedef struct tuple_int_int {
 } tuple_int_int;
 
 int main(void){
-  int j, x, y, p, r, i;
+  int j, x, y, o, q, i;
   struct tuple_int_int * *directions = malloc( 8 * sizeof(struct tuple_int_int *));
   for (i = 0 ; i < 8; i++)
     if (i == 0)
@@ -83,22 +83,21 @@ int main(void){
     directions[i] = l;
   }
   int max0 = 0;
-  int o = 20;
   int* *m = malloc( 20 * sizeof(int*));
-  for (p = 0 ; p < 20; p++)
+  for (o = 0 ; o < 20; o++)
   {
-    int *q = malloc( o * sizeof(int));
-    for (r = 0 ; r < o; r++)
+    int *p = malloc( 20 * sizeof(int));
+    for (q = 0 ; q < 20; q++)
     {
-      scanf("%d ", &q[r]);
+      scanf("%d ", &p[q]);
     }
-    m[p] = q;
+    m[o] = p;
   }
   for (j = 0 ; j <= 7; j++)
   {
-    struct tuple_int_int * s = directions[j];
-    int dx = s->tuple_int_int_field_0;
-    int dy = s->tuple_int_int_field_1;
+    struct tuple_int_int * r = directions[j];
+    int dx = r->tuple_int_int_field_0;
+    int dy = r->tuple_int_int_field_1;
     for (x = 0 ; x <= 19; x++)
       for (y = 0 ; y <= 19; y++)
         max0 = max2_(max0, find(4, m, x, y, dx, dy));

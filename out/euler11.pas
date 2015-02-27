@@ -74,9 +74,9 @@ begin
     end;
 end;
 
-type u = array of Longint;
-type v = array of array of Longint;
-function find(n : Longint; m : v; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;
+type s = array of Longint;
+type u = array of array of Longint;
+function find(n : Longint; m : u; x : Longint; y : Longint; dx : Longint; dy : Longint) : Longint;
 begin
   if (x < 0) or (x = 20) or (y < 0) or (y = 20) then
     begin
@@ -100,12 +100,12 @@ type
       tuple_int_int_field_1 : Longint;
     end;
 
-type w = array of tuple_int_int;
+type v = array of tuple_int_int;
 
 var
   c : tuple_int_int;
   d : tuple_int_int;
-  directions : w;
+  directions : v;
   dx : Longint;
   dy : Longint;
   e : tuple_int_int;
@@ -116,13 +116,12 @@ var
   j : Longint;
   k : tuple_int_int;
   l : tuple_int_int;
-  m : v;
+  m : u;
   max0 : Longint;
   o : Longint;
-  p : Longint;
-  q : u;
-  r : Longint;
-  s : tuple_int_int;
+  p : s;
+  q : Longint;
+  r : tuple_int_int;
   x : Longint;
   y : Longint;
 begin
@@ -188,23 +187,22 @@ begin
       end;;;;;;;
   end;
   max0 := 0;
-  o := 20;
   SetLength(m, 20);
-  for p := 0 to  20 - 1 do
+  for o := 0 to  20 - 1 do
   begin
-    SetLength(q, o);
-    for r := 0 to  o - 1 do
+    SetLength(p, 20);
+    for q := 0 to  20 - 1 do
     begin
-      q[r] := read_int_();
+      p[q] := read_int_();
       skip();
     end;
-    m[p] := q;
+    m[o] := p;
   end;
   for j := 0 to  7 do
   begin
-    s := directions[j];
-    dx := s^.tuple_int_int_field_0;
-    dy := s^.tuple_int_int_field_1;
+    r := directions[j];
+    dx := r^.tuple_int_int_field_0;
+    dy := r^.tuple_int_int_field_1;
     for x := 0 to  19 do
     begin
       for y := 0 to  19 do

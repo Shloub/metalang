@@ -109,35 +109,34 @@
 ))
 ))))
 (let ((max0 0))
-  (let ((o 20))
-    (let
-     ((m (array_init
-            20
-            (function (lambda (p)
-            (block lambda_2
-              (let
-               ((r (array_init
-                      o
-                      (function (lambda (s)
-                      (block lambda_3
-                        (let ((q (mread-int )))
-                          (mread-blank)
-                          (return-from lambda_3 q)
-                        )))
-                      ))))
-              (return-from lambda_2 r)
-              )))
-            ))))
-    (loop for j from 0 to 7 do
-      (progn
-        (let ((u (aref directions j)))
-          (let ((dx (tuple_int_int-tuple_int_int_field_0 u)))
-            (let ((dy (tuple_int_int-tuple_int_int_field_1 u)))
-              (loop for x from 0 to 19 do
-                (loop for y from 0 to 19 do
-                  (setq max0 (max2_ max0 (find0 4 m x y dx dy)))))
-            )))))
-    (format t "~D~%" max0)
-    )))))
+  (let
+   ((m (array_init
+          20
+          (function (lambda (o)
+          (block lambda_2
+            (let
+             ((q (array_init
+                    20
+                    (function (lambda (r)
+                    (block lambda_3
+                      (let ((p (mread-int )))
+                        (mread-blank)
+                        (return-from lambda_3 p)
+                      )))
+                    ))))
+            (return-from lambda_2 q)
+            )))
+          ))))
+  (loop for j from 0 to 7 do
+    (progn
+      (let ((s (aref directions j)))
+        (let ((dx (tuple_int_int-tuple_int_int_field_0 s)))
+          (let ((dy (tuple_int_int-tuple_int_int_field_1 s)))
+            (loop for x from 0 to 19 do
+              (loop for y from 0 to 19 do
+                (setq max0 (max2_ max0 (find0 4 m x y dx dy)))))
+          )))))
+  (format t "~D~%" max0)
+  ))))
 
 
