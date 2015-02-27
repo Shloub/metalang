@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 eratostene t max0 =
@@ -102,53 +101,50 @@ sumdivaux t n i =
                      c 1 out0 p)
 
 sumdiv nprimes primes n =
-  (array_init_withenv (n + 1) (\ i b ->
-                                let a = 0
-                                        in return ((), a)) ()) >>= (\ (b, t) ->
-                                                                     do max0 <- fillPrimesFactors t n primes nprimes
-                                                                        sumdivaux t max0 0)
+  do t <- array_init (n + 1) (\ i ->
+                               return 0)
+     max0 <- fillPrimesFactors t n primes nprimes
+     sumdivaux t max0 0
 
 main =
   do let maximumprimes = 1001
-     (array_init_withenv maximumprimes (\ j v ->
-                                         let u = j
-                                                 in return ((), u)) ()) >>= (\ (v, era) ->
-                                                                              do nprimes <- eratostene era maximumprimes
-                                                                                 (array_init_withenv nprimes (\ o x ->
-                                                                                                               let w = 0
-                                                                                                                       in return ((), w)) ()) >>= (\ (x, primes) ->
-                                                                                                                                                    do let l = 0
-                                                                                                                                                       let ba = maximumprimes - 1
-                                                                                                                                                       let z k bo =
-                                                                                                                                                             if k <= ba
-                                                                                                                                                             then ifM (((==) k) <$> (readIOA era k))
-                                                                                                                                                                      (do writeIOA primes bo k
-                                                                                                                                                                          let bp = bo + 1
-                                                                                                                                                                          z (k + 1) bp)
-                                                                                                                                                                      (z (k + 1) bo)
-                                                                                                                                                             else do printf "%d" (bo :: Int) :: IO ()
-                                                                                                                                                                     printf " == " :: IO ()
-                                                                                                                                                                     printf "%d" (nprimes :: Int) :: IO ()
-                                                                                                                                                                     printf "\n" :: IO ()
-                                                                                                                                                                     let sum = 0
-                                                                                                                                                                     let y n bq =
-                                                                                                                                                                           if n <= 1000
-                                                                                                                                                                           then do other <- ((-) <$> (sumdiv nprimes primes n) <*> (return n))
-                                                                                                                                                                                   if other > n
-                                                                                                                                                                                   then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> (return other))
-                                                                                                                                                                                           if othersum == n
-                                                                                                                                                                                           then do printf "%d" (other :: Int) :: IO ()
-                                                                                                                                                                                                   printf " & " :: IO ()
-                                                                                                                                                                                                   printf "%d" (n :: Int) :: IO ()
-                                                                                                                                                                                                   printf "\n" :: IO ()
-                                                                                                                                                                                                   let br = bq + other + n
-                                                                                                                                                                                                   y (n + 1) br
-                                                                                                                                                                                           else y (n + 1) bq
-                                                                                                                                                                                   else y (n + 1) bq
-                                                                                                                                                                           else do printf "\n" :: IO ()
-                                                                                                                                                                                   printf "%d" (bq :: Int) :: IO ()
-                                                                                                                                                                                   printf "\n" :: IO () in
-                                                                                                                                                                           y 2 sum in
-                                                                                                                                                             z 2 l))
+     era <- array_init maximumprimes (\ j ->
+                                       return j)
+     nprimes <- eratostene era maximumprimes
+     primes <- array_init nprimes (\ o ->
+                                    return 0)
+     let l = 0
+     let ba = maximumprimes - 1
+     let z k bo =
+           if k <= ba
+           then ifM (((==) k) <$> (readIOA era k))
+                    (do writeIOA primes bo k
+                        let bp = bo + 1
+                        z (k + 1) bp)
+                    (z (k + 1) bo)
+           else do printf "%d" (bo :: Int) :: IO ()
+                   printf " == " :: IO ()
+                   printf "%d" (nprimes :: Int) :: IO ()
+                   printf "\n" :: IO ()
+                   let sum = 0
+                   let y n bq =
+                         if n <= 1000
+                         then do other <- ((-) <$> (sumdiv nprimes primes n) <*> (return n))
+                                 if other > n
+                                 then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> (return other))
+                                         if othersum == n
+                                         then do printf "%d" (other :: Int) :: IO ()
+                                                 printf " & " :: IO ()
+                                                 printf "%d" (n :: Int) :: IO ()
+                                                 printf "\n" :: IO ()
+                                                 let br = bq + other + n
+                                                 y (n + 1) br
+                                         else y (n + 1) bq
+                                 else y (n + 1) bq
+                         else do printf "\n" :: IO ()
+                                 printf "%d" (bq :: Int) :: IO ()
+                                 printf "\n" :: IO () in
+                         y 2 sum in
+           z 2 l
 
 

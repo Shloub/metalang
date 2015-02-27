@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;}
 let mktoto v1 =
   let t = {foo=v1;
@@ -32,12 +21,12 @@ let result t_ t2_ =
   (
     t.blah <- (t.blah + 1);
     let len = 1 in
-    ((fun  (b, cache0) -> ((fun  (d, cache1) -> let cache2 = cache0 in
+    let cache0 = (Array.init len (fun  i -> (- i))) in
+    let cache1 = (Array.init len (fun  j -> j)) in
+    let cache2 = cache0 in
     let cache0 = cache1 in
     let cache2 = cache0 in
-    ((t.foo + (t.blah * t.bar)) + (t.bar * t.foo))) (Array.init_withenv len (fun  j d -> let c = j in
-    ((), c)) ()))) (Array.init_withenv len (fun  i b -> let a = (- i) in
-    ((), a)) ()))
+    ((t.foo + (t.blah * t.bar)) + (t.bar * t.foo))
     )
   
 let main =

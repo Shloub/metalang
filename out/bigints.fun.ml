@@ -11,7 +11,9 @@ end
 
 type bigint = {mutable bigint_sign : bool; mutable bigint_len : int; mutable bigint_chiffres : int array;}
 let read_bigint len =
-  ((fun  (cd, chiffres) -> let cf = ((len - 1) / 2) in
+  let chiffres = (Array.init len (fun  j -> Scanf.scanf "%c"
+  (fun  c -> (int_of_char (c))))) in
+  let cf = ((len - 1) / 2) in
   let rec ce i =
     (if (i <= cf)
      then let tmp = chiffres.(i) in
@@ -24,9 +26,7 @@ let read_bigint len =
      else {bigint_sign=true;
      bigint_len=len;
      bigint_chiffres=chiffres}) in
-    (ce 0)) (Array.init_withenv len (fun  j cd -> Scanf.scanf "%c"
-  (fun  c -> let cc = (int_of_char (c)) in
-  ((), cc))) ()))
+    (ce 0)
 let print_bigint a =
   (
     (if (not a.bigint_sign)
@@ -154,7 +154,8 @@ let mul_bigint_cp a b =
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction.  *)
   let len = ((a.bigint_len + b.bigint_len) + 1) in
-  ((fun  (bk, chiffres) -> let bp = (a.bigint_len - 1) in
+  let chiffres = (Array.init len (fun  k -> 0)) in
+  let bp = (a.bigint_len - 1) in
   let rec bm i =
     (if (i <= bp)
      then let retenue = 0 in
@@ -192,8 +193,7 @@ D'ou le nom de la fonction.  *)
               (bl 0 len)
             )
      ) in
-    (bm 0)) (Array.init_withenv len (fun  k bk -> let bj = 0 in
-  ((), bj)) ()))
+    (bm 0)
 let bigint_premiers_chiffres a i =
   let len = ((min (i) (a.bigint_len))) in
   let rec bi len =
@@ -205,14 +205,12 @@ let bigint_premiers_chiffres a i =
      bigint_chiffres=a.bigint_chiffres}) in
     (bi len)
 let bigint_shift a i =
-  ((fun  (bh, chiffres) -> {bigint_sign=a.bigint_sign;
+  let chiffres = (Array.init (a.bigint_len + i) (fun  k -> (if (k >= i)
+                                                            then a.bigint_chiffres.((k - i))
+                                                            else 0))) in
+  {bigint_sign=a.bigint_sign;
   bigint_len=(a.bigint_len + i);
-  bigint_chiffres=chiffres}) (Array.init_withenv (a.bigint_len + i) (fun  k bh -> (
-  if (k >= i)
-  then let bg = a.bigint_chiffres.((k - i)) in
-  ((), bg)
-  else let bg = 0 in
-  ((), bg))) ()))
+  bigint_chiffres=chiffres}
 let rec mul_bigint aa bb =
   (if (aa.bigint_len = 0)
    then aa
@@ -248,7 +246,8 @@ let bigint_of_int i =
               then let size = 0 in
               size
               else size) in
-  ((fun  (ba, t) -> let be = (size - 1) in
+  let t = (Array.init size (fun  j -> 0)) in
+  let be = (size - 1) in
   let rec bc k i =
     (if (k <= be)
      then (
@@ -260,8 +259,7 @@ let bigint_of_int i =
      else {bigint_sign=true;
      bigint_len=size;
      bigint_chiffres=t}) in
-    (bc 0 i)) (Array.init_withenv size (fun  j ba -> let z = 0 in
-  ((), z)) ()))
+    (bc 0 i)
 let fact_bigint a =
   let one = (bigint_of_int 1) in
   let out0 = one in
@@ -338,7 +336,10 @@ let euler25 () =
 let euler29 () =
   let maxA = 5 in
   let maxB = 5 in
-  ((fun  (g, a_bigint) -> ((fun  (m, a0_bigint) -> ((fun  (p, b) -> let n = 0 in
+  let a_bigint = (Array.init (maxA + 1) (fun  j -> (bigint_of_int (j * j)))) in
+  let a0_bigint = (Array.init (maxA + 1) (fun  j2 -> (bigint_of_int j2))) in
+  let b = (Array.init (maxA + 1) (fun  k -> 2)) in
+  let n = 0 in
   let found = true in
   let rec q found n =
     (if found
@@ -373,10 +374,7 @@ let euler29 () =
               else (q found n))) in
        (s 2 found min0)
      else n) in
-    (q found n)) (Array.init_withenv (maxA + 1) (fun  k p -> let o = 2 in
-  ((), o)) ()))) (Array.init_withenv (maxA + 1) (fun  j2 m -> let h = (bigint_of_int j2) in
-  ((), h)) ()))) (Array.init_withenv (maxA + 1) (fun  j g -> let f = (bigint_of_int (j * j)) in
-  ((), f)) ()))
+    (q found n)
 let main =
   (
     (Printf.printf "%d\n" (euler29 ()));

@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let eratostene t max0 =
   let sum = 0 in
   let c = (max0 - 1) in
@@ -35,10 +24,10 @@ let eratostene t max0 =
 let main =
   let n = 100000 in
   (*  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages  *)
-  ((fun  (e, t) -> (
-                     t.(1) <- 0;
-                     (Printf.printf "%d\n" (eratostene t n))
-                     )
-  ) (Array.init_withenv n (fun  i e -> let d = i in
-  ((), d)) ()))
+  let t = (Array.init n (fun  i -> i)) in
+  (
+    t.(1) <- 0;
+    (Printf.printf "%d\n" (eratostene t n))
+    )
+  
 

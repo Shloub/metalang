@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 eratostene t max0 =
@@ -102,68 +101,63 @@ sumdivaux t n i =
                      c 1 out0 p)
 
 sumdiv nprimes primes n =
-  (array_init_withenv (n + 1) (\ i b ->
-                                let a = 0
-                                        in return ((), a)) ()) >>= (\ (b, t) ->
-                                                                     do max0 <- fillPrimesFactors t n primes nprimes
-                                                                        sumdivaux t max0 0)
+  do t <- array_init (n + 1) (\ i ->
+                               return 0)
+     max0 <- fillPrimesFactors t n primes nprimes
+     sumdivaux t max0 0
 
 main =
   do let maximumprimes = 30001
-     (array_init_withenv maximumprimes (\ s y ->
-                                         let x = s
-                                                 in return ((), x)) ()) >>= (\ (y, era) ->
-                                                                              do nprimes <- eratostene era maximumprimes
-                                                                                 (array_init_withenv nprimes (\ t ba ->
-                                                                                                               let z = 0
-                                                                                                                       in return ((), z)) ()) >>= (\ (ba, primes) ->
-                                                                                                                                                    do let l = 0
-                                                                                                                                                       let bk = maximumprimes - 1
-                                                                                                                                                       let bj k by =
-                                                                                                                                                              if k <= bk
-                                                                                                                                                              then ifM (((==) k) <$> (readIOA era k))
-                                                                                                                                                                       (do writeIOA primes by k
-                                                                                                                                                                           let bz = by + 1
-                                                                                                                                                                           bj (k + 1) bz)
-                                                                                                                                                                       (bj (k + 1) by)
-                                                                                                                                                              else do let n = 100
-                                                                                                                                                                      {- 28124 ça prend trop de temps mais on arrive a passer le test -}
-                                                                                                                                                                      (array_init_withenv (n + 1) (\ p bc ->
-                                                                                                                                                                                                    let bb = False
-                                                                                                                                                                                                             in return ((), bb)) ()) >>= (\ (bc, abondant) ->
-                                                                                                                                                                                                                                           (array_init_withenv (n + 1) (\ q be ->
-                                                                                                                                                                                                                                                                         let bd = False
-                                                                                                                                                                                                                                                                                  in return ((), bd)) ()) >>= (\ (be, summable) ->
-                                                                                                                                                                                                                                                                                                                do let sum = 0
-                                                                                                                                                                                                                                                                                                                   let bi r =
-                                                                                                                                                                                                                                                                                                                          if r <= n
-                                                                                                                                                                                                                                                                                                                          then do other <- ((-) <$> (sumdiv nprimes primes r) <*> (return r))
-                                                                                                                                                                                                                                                                                                                                  if other > r
-                                                                                                                                                                                                                                                                                                                                  then do writeIOA abondant r True
-                                                                                                                                                                                                                                                                                                                                          bi (r + 1)
-                                                                                                                                                                                                                                                                                                                                  else bi (r + 1)
-                                                                                                                                                                                                                                                                                                                          else let bg i =
-                                                                                                                                                                                                                                                                                                                                      if i <= n
-                                                                                                                                                                                                                                                                                                                                      then let bh j =
-                                                                                                                                                                                                                                                                                                                                                  if j <= n
-                                                                                                                                                                                                                                                                                                                                                  then ifM (((&&) (i + j <= n)) <$> ((readIOA abondant i) <&&> (readIOA abondant j)))
-                                                                                                                                                                                                                                                                                                                                                           (do writeIOA summable (i + j) True
-                                                                                                                                                                                                                                                                                                                                                               bh (j + 1))
-                                                                                                                                                                                                                                                                                                                                                           (bh (j + 1))
-                                                                                                                                                                                                                                                                                                                                                  else bg (i + 1) in
-                                                                                                                                                                                                                                                                                                                                                  bh 1
-                                                                                                                                                                                                                                                                                                                                      else let bf o ca =
-                                                                                                                                                                                                                                                                                                                                                  if o <= n
-                                                                                                                                                                                                                                                                                                                                                  then ifM (fmap not (readIOA summable o))
-                                                                                                                                                                                                                                                                                                                                                           (do let cb = ca + o
-                                                                                                                                                                                                                                                                                                                                                               bf (o + 1) cb)
-                                                                                                                                                                                                                                                                                                                                                           (bf (o + 1) ca)
-                                                                                                                                                                                                                                                                                                                                                  else do printf "\n" :: IO ()
-                                                                                                                                                                                                                                                                                                                                                          printf "%d" (ca :: Int) :: IO ()
-                                                                                                                                                                                                                                                                                                                                                          printf "\n" :: IO () in
-                                                                                                                                                                                                                                                                                                                                                  bf 1 sum in
-                                                                                                                                                                                                                                                                                                                                      bg 1 in
-                                                                                                                                                                                                                                                                                                                          bi 2)) in
-                                                                                                                                                              bj 2 l))
+     era <- array_init maximumprimes (\ s ->
+                                       return s)
+     nprimes <- eratostene era maximumprimes
+     primes <- array_init nprimes (\ t ->
+                                    return 0)
+     let l = 0
+     let bk = maximumprimes - 1
+     let bj k by =
+            if k <= bk
+            then ifM (((==) k) <$> (readIOA era k))
+                     (do writeIOA primes by k
+                         let bz = by + 1
+                         bj (k + 1) bz)
+                     (bj (k + 1) by)
+            else do let n = 100
+                    {- 28124 ça prend trop de temps mais on arrive a passer le test -}
+                    do abondant <- array_init (n + 1) (\ p ->
+                                                        return False)
+                       summable <- array_init (n + 1) (\ q ->
+                                                        return False)
+                       let sum = 0
+                       let bi r =
+                              if r <= n
+                              then do other <- ((-) <$> (sumdiv nprimes primes r) <*> (return r))
+                                      if other > r
+                                      then do writeIOA abondant r True
+                                              bi (r + 1)
+                                      else bi (r + 1)
+                              else let bg i =
+                                          if i <= n
+                                          then let bh j =
+                                                      if j <= n
+                                                      then ifM (((&&) (i + j <= n)) <$> ((readIOA abondant i) <&&> (readIOA abondant j)))
+                                                               (do writeIOA summable (i + j) True
+                                                                   bh (j + 1))
+                                                               (bh (j + 1))
+                                                      else bg (i + 1) in
+                                                      bh 1
+                                          else let bf o ca =
+                                                      if o <= n
+                                                      then ifM (fmap not (readIOA summable o))
+                                                               (do let cb = ca + o
+                                                                   bf (o + 1) cb)
+                                                               (bf (o + 1) ca)
+                                                      else do printf "\n" :: IO ()
+                                                              printf "%d" (ca :: Int) :: IO ()
+                                                              printf "\n" :: IO () in
+                                                      bf 1 sum in
+                                          bg 1 in
+                              bi 2 in
+            bj 2 l
 
 

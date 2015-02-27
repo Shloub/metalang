@@ -25,17 +25,16 @@ main :: IO ()
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                             
 
 max2_ a b =
@@ -52,49 +51,40 @@ find n m x y dx dy =
        else ((*) <$> (join $ readIOA <$> (readIOA m y) <*> return x) <*> (find (n - 1) m (x + dx) (y + dy) dx dy))
 
 main =
-  (array_init_withenv 8 (\ i e ->
-                          return (if i == 0
-                                  then let d = (0, 1)
-                                               in ((), d)
-                                  else if i == 1
-                                       then let d = (1, 0)
-                                                    in ((), d)
-                                       else if i == 2
-                                            then let d = (0, - 1)
-                                                         in ((), d)
-                                            else if i == 3
-                                                 then let d = (- 1, 0)
-                                                              in ((), d)
-                                                 else if i == 4
-                                                      then let d = (1, 1)
-                                                                   in ((), d)
-                                                      else if i == 5
-                                                           then let d = (1, - 1)
-                                                                        in ((), d)
-                                                           else if i == 6
-                                                                then let d = (- 1, 1)
-                                                                             in ((), d)
-                                                                else let d = (- 1, - 1)
-                                                                             in ((), d))) ()) >>= (\ (e, directions) ->
-                                                                                                    do let max0 = 0
-                                                                                                       (array_init_withenv 20 (\ c g ->
-                                                                                                                                do f <- (join (newListArray . (,) 0 . subtract 1 <$> return 20 <*> fmap (map read . words) getLine))
-                                                                                                                                   return ((), f)) ()) >>= (\ (g, m) ->
-                                                                                                                                                             let h j o =
-                                                                                                                                                                   if j <= 7
-                                                                                                                                                                   then (readIOA directions j) >>= (\ (dx, dy) ->
-                                                                                                                                                                                                     let k x p =
-                                                                                                                                                                                                           if x <= 19
-                                                                                                                                                                                                           then let l y q =
-                                                                                                                                                                                                                      if y <= 19
-                                                                                                                                                                                                                      then do r <- max2_ q =<< (find 4 m x y dx dy)
-                                                                                                                                                                                                                              l (y + 1) r
-                                                                                                                                                                                                                      else k (x + 1) q in
-                                                                                                                                                                                                                      l 0 p
-                                                                                                                                                                                                           else h (j + 1) p in
-                                                                                                                                                                                                           k 0 o)
-                                                                                                                                                                   else do printf "%d" (o :: Int) :: IO ()
-                                                                                                                                                                           printf "\n" :: IO () in
-                                                                                                                                                                   h 0 max0))
+  do directions <- array_init 8 (\ i ->
+                                  return (if i == 0
+                                          then (0, 1)
+                                          else if i == 1
+                                               then (1, 0)
+                                               else if i == 2
+                                                    then (0, - 1)
+                                                    else if i == 3
+                                                         then (- 1, 0)
+                                                         else if i == 4
+                                                              then (1, 1)
+                                                              else if i == 5
+                                                                   then (1, - 1)
+                                                                   else if i == 6
+                                                                        then (- 1, 1)
+                                                                        else (- 1, - 1)))
+     let max0 = 0
+     m <- array_init 20 (\ c ->
+                          (join (newListArray . (,) 0 . subtract 1 <$> return 20 <*> fmap (map read . words) getLine)))
+     let h j o =
+           if j <= 7
+           then (readIOA directions j) >>= (\ (dx, dy) ->
+                                             let k x p =
+                                                   if x <= 19
+                                                   then let l y q =
+                                                              if y <= 19
+                                                              then do r <- max2_ q =<< (find 4 m x y dx dy)
+                                                                      l (y + 1) r
+                                                              else k (x + 1) q in
+                                                              l 0 p
+                                                   else h (j + 1) p in
+                                                   k 0 o)
+           else do printf "%d" (o :: Int) :: IO ()
+                   printf "\n" :: IO () in
+           h 0 max0
 
 

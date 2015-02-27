@@ -55,17 +55,16 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
 
 
 
@@ -73,21 +72,20 @@ array_init_withenv len f env =
 main =
   do strlen <- read_int
      skip_whitespaces
-     (array_init_withenv strlen (\ toto b ->
-                                  hGetChar stdin >>= ((\ tmpc ->
-                                                        do c <- ((fmap ord (return tmpc)))
-                                                           f <- if tmpc /= ' '
-                                                                then do g <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> (return 26)) <*> ((fmap ord (return 'a'))))
-                                                                        return g
-                                                                else return c
-                                                           a <- ((fmap chr (return f)))
-                                                           return ((), a)))) ()) >>= (\ (b, tab4) ->
-                                                                                       do let e = strlen - 1
-                                                                                          let d j =
-                                                                                                if j <= e
-                                                                                                then do printf "%c" =<< (readIOA tab4 j :: IO Char)
-                                                                                                        d (j + 1)
-                                                                                                else return () in
-                                                                                                d 0)
+     tab4 <- array_init strlen (\ toto ->
+                                 hGetChar stdin >>= ((\ tmpc ->
+                                                       do c <- ((fmap ord (return tmpc)))
+                                                          f <- if tmpc /= ' '
+                                                               then do g <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> (return 26)) <*> ((fmap ord (return 'a'))))
+                                                                       return g
+                                                               else return c
+                                                          ((fmap chr (return f))))))
+     let e = strlen - 1
+     let d j =
+           if j <= e
+           then do printf "%c" =<< (readIOA tab4 j :: IO Char)
+                   d (j + 1)
+           else return () in
+           d 0
 
 

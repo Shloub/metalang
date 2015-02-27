@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let rec pathfind_aux cache tab x y posX posY =
   (if ((posX = (x - 1)) && (posY = (y - 1)))
    then 0
@@ -33,34 +22,32 @@ let rec pathfind_aux cache tab x y posX posY =
                             )
                      ))))
 let pathfind tab x y =
-  ((fun  (m, cache) -> (pathfind_aux cache tab x y 0 0)) (Array.init_withenv y (fun  i m -> ((fun  (p, tmp) -> 
+  let cache = (Array.init y (fun  i -> let tmp = (Array.init x (fun  j -> (
+                                                                            (Printf.printf "%c" tab.(i).(j));
+                                                                            (- 1)
+                                                                            )
+  )) in
   (
     (Printf.printf "\n" );
-    let l = tmp in
-    ((), l)
+    tmp
     )
-  ) (Array.init_withenv x (fun  j p -> (
-                                         (Printf.printf "%c" tab.(i).(j));
-                                         let o = (- 1) in
-                                         ((), o)
-                                         )
-  ) ()))) ()))
+  )) in
+  (pathfind_aux cache tab x y 0 0)
 let main =
   let x = (Scanf.scanf "%d " (fun x -> x)) in
   let y = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d %d\n" x y);
-    ((fun  (r, e) -> let tab = e in
-    let result = (pathfind tab x y) in
-    (Printf.printf "%d" result)) (Array.init_withenv y (fun  f r -> ((fun  (u, h) -> 
+    let e = (Array.init y (fun  f -> let h = (Array.init x (fun  k -> Scanf.scanf "%c"
+    (fun  g -> g))) in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let q = h in
-      ((), q)
+      h
       )
-    ) (Array.init_withenv x (fun  k u -> Scanf.scanf "%c"
-    (fun  g -> let s = g in
-    ((), s))) ()))) ()))
+    )) in
+    let tab = e in
+    let result = (pathfind tab x y) in
+    (Printf.printf "%d" result)
     )
   
 

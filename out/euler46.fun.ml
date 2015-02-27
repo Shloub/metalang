@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let eratostene t max0 =
   let n = 0 in
   let c = (max0 - 1) in
@@ -34,8 +23,10 @@ let eratostene t max0 =
     (a 2 n)
 let main =
   let maximumprimes = 6000 in
-  ((fun  (e, era) -> let nprimes = (eratostene era maximumprimes) in
-  ((fun  (g, primes) -> let l = 0 in
+  let era = (Array.init maximumprimes (fun  j_ -> j_)) in
+  let nprimes = (eratostene era maximumprimes) in
+  let primes = (Array.init nprimes (fun  o -> 0)) in
+  let l = 0 in
   let x = (maximumprimes - 1) in
   let rec w k l =
     (if (k <= x)
@@ -49,7 +40,8 @@ let main =
            else (w (k + 1) l))
      else (
             (Printf.printf "%d == %d\n" l nprimes);
-            ((fun  (p, canbe) -> let v = (nprimes - 1) in
+            let canbe = (Array.init maximumprimes (fun  i_ -> false)) in
+            let v = (nprimes - 1) in
             let rec r i =
               (if (i <= v)
                then let u = (maximumprimes - 1) in
@@ -77,11 +69,8 @@ let main =
                         else (q (m + 1)))
                        else ()) in
                       (q 1)) in
-              (r 0)) (Array.init_withenv maximumprimes (fun  i_ p -> let h = false in
-            ((), h)) ()))
+              (r 0)
             )
      ) in
-    (w 2 l)) (Array.init_withenv nprimes (fun  o g -> let f = 0 in
-  ((), f)) ()))) (Array.init_withenv maximumprimes (fun  j_ e -> let d = j_ in
-  ((), d)) ()))
+    (w 2 l)
 

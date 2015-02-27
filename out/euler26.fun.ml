@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let periode restes len a b =
   let rec c a len =
     (if (a <> 0)
@@ -31,7 +20,8 @@ let periode restes len a b =
      else 0) in
     (c a len)
 let main =
-  ((fun  (g, t) -> let m = 0 in
+  let t = (Array.init 1000 (fun  j -> 0)) in
+  let m = 0 in
   let mi = 0 in
   let rec h i m mi =
     (if (i <= 1000)
@@ -45,6 +35,5 @@ let main =
             (Printf.printf "%d\n%d\n" mi m)
             )
      ) in
-    (h 1 m mi)) (Array.init_withenv 1000 (fun  j g -> let f = 0 in
-  ((), f)) ()))
+    (h 1 m mi)
 

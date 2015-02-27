@@ -27,61 +27,58 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 main =
   do let n = 10
      {- normalement on doit mettre 20 mais là on se tape un overflow -}
      do let w = n + 1
-        (array_init_withenv w (\ i b ->
-                                (array_init_withenv w (\ j v ->
-                                                        let u = 0
-                                                                in return ((), u)) ()) >>= (\ (v, tab2) ->
-                                                                                             let a = tab2
-                                                                                                     in return ((), a))) ()) >>= (\ (b, tab) ->
-                                                                                                                                   do let t = w - 1
-                                                                                                                                      let s l =
-                                                                                                                                            if l <= t
-                                                                                                                                            then do join $ writeIOA <$> (readIOA tab (w - 1)) <*> return l <*> return 1
-                                                                                                                                                    join $ writeIOA <$> (readIOA tab l) <*> return (w - 1) <*> return 1
-                                                                                                                                                    s (l + 1)
-                                                                                                                                            else let g o =
-                                                                                                                                                       if o <= w
-                                                                                                                                                       then do let r = w - o
-                                                                                                                                                               let h p =
-                                                                                                                                                                     if p <= w
-                                                                                                                                                                     then do let q = w - p
-                                                                                                                                                                             join $ writeIOA <$> (readIOA tab r) <*> return q <*> ((+) <$> (join $ readIOA <$> (readIOA tab (r + 1)) <*> return q) <*> (join $ readIOA <$> (readIOA tab r) <*> return (q + 1)))
-                                                                                                                                                                             h (p + 1)
-                                                                                                                                                                     else g (o + 1) in
-                                                                                                                                                                     h 2
-                                                                                                                                                       else do let f = w - 1
-                                                                                                                                                               let c m =
-                                                                                                                                                                     if m <= f
-                                                                                                                                                                     then do let e = w - 1
-                                                                                                                                                                             let d k =
-                                                                                                                                                                                   if k <= e
-                                                                                                                                                                                   then do printf "%d" =<< (join $ readIOA <$> (readIOA tab m) <*> return k :: IO Int)
-                                                                                                                                                                                           printf " " :: IO ()
-                                                                                                                                                                                           d (k + 1)
-                                                                                                                                                                                   else do printf "\n" :: IO ()
-                                                                                                                                                                                           c (m + 1) in
-                                                                                                                                                                                   d 0
-                                                                                                                                                                     else do printf "%d" =<< (join $ readIOA <$> (readIOA tab 0) <*> return 0 :: IO Int)
-                                                                                                                                                                             printf "\n" :: IO () in
-                                                                                                                                                                     c 0 in
-                                                                                                                                                       g 2 in
-                                                                                                                                            s 0)
+        tab <- array_init w (\ i ->
+                              do tab2 <- array_init w (\ j ->
+                                                        return 0)
+                                 return tab2)
+        let t = w - 1
+        let s l =
+              if l <= t
+              then do join $ writeIOA <$> (readIOA tab (w - 1)) <*> return l <*> return 1
+                      join $ writeIOA <$> (readIOA tab l) <*> return (w - 1) <*> return 1
+                      s (l + 1)
+              else let g o =
+                         if o <= w
+                         then do let r = w - o
+                                 let h p =
+                                       if p <= w
+                                       then do let q = w - p
+                                               join $ writeIOA <$> (readIOA tab r) <*> return q <*> ((+) <$> (join $ readIOA <$> (readIOA tab (r + 1)) <*> return q) <*> (join $ readIOA <$> (readIOA tab r) <*> return (q + 1)))
+                                               h (p + 1)
+                                       else g (o + 1) in
+                                       h 2
+                         else do let f = w - 1
+                                 let c m =
+                                       if m <= f
+                                       then do let e = w - 1
+                                               let d k =
+                                                     if k <= e
+                                                     then do printf "%d" =<< (join $ readIOA <$> (readIOA tab m) <*> return k :: IO Int)
+                                                             printf " " :: IO ()
+                                                             d (k + 1)
+                                                     else do printf "\n" :: IO ()
+                                                             c (m + 1) in
+                                                     d 0
+                                       else do printf "%d" =<< (join $ readIOA <$> (readIOA tab 0) <*> return 0 :: IO Int)
+                                               printf "\n" :: IO () in
+                                       c 0 in
+                         g 2 in
+              s 0
 
 

@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -70,37 +62,31 @@
   ((lambda (taille_cle) 
      (block
        (mread-blank)
-       ((lambda (internal_env) (apply (lambda (e cle) 
-                                             (block
-                                               (mread-blank)
-                                               ((lambda (taille) 
-                                                  (block
-                                                    (mread-blank)
-                                                    ((lambda (internal_env) (apply (lambda
-                                                     (g message) 
-                                                    (block
-                                                      (crypte taille_cle cle taille message)
-                                                      (let ([j (- taille 1)])
-                                                      (letrec ([h (lambda (i) 
-                                                                    (if (<= i j)
-                                                                    (block
-                                                                      (display (vector-ref message i))
-                                                                      (h (+ i 1))
-                                                                      )
-                                                                    (display "\n")))])
-                                                      (h 0)))
-                                                    )) internal_env)) (array_init_withenv taille 
-                                                  (lambda (index2) 
-                                                    (lambda (g) 
-                                                      ((lambda (out2) 
-                                                         (let ([f out2])
-                                                         (list '() f))) (mread-char)))) '()))
-       )) (mread-int))
-)) internal_env)) (array_init_withenv taille_cle (lambda (index) 
-                                                   (lambda (e) 
-                                                     ((lambda (out0) 
-                                                        (let ([d out0])
-                                                        (list '() d))) (mread-char)))) '()))
+       (let ([cle (build-vector taille_cle (lambda (index) 
+                                             ((lambda (out0) 
+                                                out0) (mread-char))))])
+     (block
+       (mread-blank)
+       ((lambda (taille) 
+          (block
+            (mread-blank)
+            (let ([message (build-vector taille (lambda (index2) 
+                                                  ((lambda (out2) 
+                                                     out2) (mread-char))))])
+          (block
+            (crypte taille_cle cle taille message)
+            (let ([j (- taille 1)])
+            (letrec ([h (lambda (i) 
+                          (if (<= i j)
+                          (block
+                            (display (vector-ref message i))
+                            (h (+ i 1))
+                            )
+                          (display "\n")))])
+            (h 0)))
+          ))
+     )) (mread-int))
+))
 )) (mread-int))
 )
 

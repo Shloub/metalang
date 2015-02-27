@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -32,16 +24,13 @@
 
 (define (read_sudoku _)
   ;toto
-  ((lambda (internal_env) (apply (lambda (g out0) 
-                                        out0) internal_env)) (array_init_withenv (* 9 9) 
-  (lambda (i) 
-    (lambda (g) 
-      ((lambda (k) 
-         (block
-           (mread-blank)
-           (let ([f k])
-           (list '() f))
-           )) (mread-int)))) '()))
+  (let ([out0 (build-vector (* 9 9) (lambda (i) 
+                                      ((lambda (k) 
+                                         (block
+                                           (mread-blank)
+                                           k
+                                           )) (mread-int))))])
+out0)
 )
 (define (print_sudoku sudoku0)
   ;toto

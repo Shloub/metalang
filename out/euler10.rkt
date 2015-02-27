@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 
 (define (eratostene t0 max0)
   ;toto
@@ -36,14 +28,11 @@
 (define main
   (let ([n 100000])
   ; normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
-  ((lambda (internal_env) (apply (lambda (e t0) 
-                                        (block
-                                          (vector-set! t0 1 0)
-                                          (map display (list (eratostene t0 n) "\n"))
-                                          )) internal_env)) (array_init_withenv n 
-  (lambda (i) 
-    (lambda (e) 
-      (let ([d i])
-      (list '() d)))) '())))
+  (let ([t0 (build-vector n (lambda (i) 
+                              i))])
+  (block
+    (vector-set! t0 1 0)
+    (map display (list (eratostene t0 n) "\n"))
+    )))
 )
 

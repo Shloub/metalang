@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let fact n =
   let prod = 1 in
   let rec q i prod =
@@ -18,7 +7,9 @@ let fact n =
      else prod) in
     (q 2 prod)
 let show lim nth =
-  ((fun  (b, t) -> ((fun  (d, pris) -> let p = (lim - 1) in
+  let t = (Array.init lim (fun  i -> i)) in
+  let pris = (Array.init lim (fun  j -> false)) in
+  let p = (lim - 1) in
   let rec g k nth =
     (if (k <= p)
      then let n = (fact (lim - k)) in
@@ -55,9 +46,7 @@ let show lim nth =
               else (e (m + 1)))
         else (Printf.printf "\n")) in
        (e 0)) in
-    (g 1 nth)) (Array.init_withenv lim (fun  j d -> let c = false in
-  ((), c)) ()))) (Array.init_withenv lim (fun  i b -> let a = i in
-  ((), a)) ()))
+    (g 1 nth)
 let main =
   (
     (show 10 999999);

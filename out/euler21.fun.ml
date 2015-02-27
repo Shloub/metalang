@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let eratostene t max0 =
   let n = 0 in
   let s = (max0 - 1) in
@@ -73,13 +62,15 @@ let rec sumdivaux t n i =
             else ((out0 + 1) * o)) in
            (c 1 out0 p)))
 let sumdiv nprimes primes n =
-  ((fun  (b, t) -> let max0 = (fillPrimesFactors t n primes nprimes) in
-  (sumdivaux t max0 0)) (Array.init_withenv (n + 1) (fun  i b -> let a = 0 in
-  ((), a)) ()))
+  let t = (Array.init (n + 1) (fun  i -> 0)) in
+  let max0 = (fillPrimesFactors t n primes nprimes) in
+  (sumdivaux t max0 0)
 let main =
   let maximumprimes = 1001 in
-  ((fun  (v, era) -> let nprimes = (eratostene era maximumprimes) in
-  ((fun  (x, primes) -> let l = 0 in
+  let era = (Array.init maximumprimes (fun  j -> j)) in
+  let nprimes = (eratostene era maximumprimes) in
+  let primes = (Array.init nprimes (fun  o -> 0)) in
+  let l = 0 in
   let ba = (maximumprimes - 1) in
   let rec z k l =
     (if (k <= ba)
@@ -115,7 +106,5 @@ let main =
               (y 2 sum)
             )
      ) in
-    (z 2 l)) (Array.init_withenv nprimes (fun  o x -> let w = 0 in
-  ((), w)) ()))) (Array.init_withenv maximumprimes (fun  j v -> let u = j in
-  ((), u)) ()))
+    (z 2 l)
 

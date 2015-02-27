@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -32,12 +24,9 @@
 
 (define (copytab tab len)
   ;toto
-  ((lambda (internal_env) (apply (lambda (g o) 
-                                        o) internal_env)) (array_init_withenv len 
-  (lambda (i) 
-    (lambda (g) 
-      (let ([f (vector-ref tab i)])
-      (list '() f)))) '()))
+  (let ([o (build-vector len (lambda (i) 
+                               (vector-ref tab i)))])
+  o)
 )
 (define (bubblesort tab len)
   ;toto
@@ -103,45 +92,42 @@
      (let ([len r])
      (block
        (mread-blank)
-       ((lambda (internal_env) (apply (lambda (k tab) 
-                                             (let ([tab2 (copytab tab len)])
-                                             (block
-                                               (bubblesort tab2 len)
-                                               (let ([p (- len 1)])
-                                               (letrec ([n (lambda (i) 
-                                                             (if (<= i p)
-                                                             (block
-                                                               (map display (list (vector-ref tab2 i) " "))
-                                                               (n (+ i 1))
-                                                               )
-                                                             (block
-                                                               (display "\n")
-                                                               (let ([tab3 (copytab tab len)])
-                                                               (block
-                                                                 (qsort0 tab3 len 0 (- len 1))
-                                                                 (let ([m (- len 1)])
-                                                                 (letrec ([l (lambda (i) 
-                                                                               (if (<= i m)
-                                                                               (block
-                                                                                (map display (list (vector-ref tab3 i) " "))
-                                                                                (l (+ i 1))
-                                                                                )
-                                                                               (display "\n")))])
-                                                                 (l 0)))
-                                                               ))
-                                                             )))])
-                                               (n 0)))
-                                             ))) internal_env)) (array_init_withenv len 
-     (lambda (i_) 
-       (lambda (k) 
-         (let ([tmp 0])
-         ((lambda (q) 
-            (let ([tmp q])
-            (block
-              (mread-blank)
-              (let ([h tmp])
-              (list '() h))
-              ))) (mread-int))))) '()))
-))) (mread-int)))
+       (let ([tab (build-vector len (lambda (i_) 
+                                      (let ([tmp 0])
+                                      ((lambda (q) 
+                                         (let ([tmp q])
+                                         (block
+                                           (mread-blank)
+                                           tmp
+                                           ))) (mread-int)))))])
+     (let ([tab2 (copytab tab len)])
+     (block
+       (bubblesort tab2 len)
+       (let ([p (- len 1)])
+       (letrec ([n (lambda (i) 
+                     (if (<= i p)
+                     (block
+                       (map display (list (vector-ref tab2 i) " "))
+                       (n (+ i 1))
+                       )
+                     (block
+                       (display "\n")
+                       (let ([tab3 (copytab tab len)])
+                       (block
+                         (qsort0 tab3 len 0 (- len 1))
+                         (let ([m (- len 1)])
+                         (letrec ([l (lambda (i) 
+                                       (if (<= i m)
+                                       (block
+                                         (map display (list (vector-ref tab3 i) " "))
+                                         (l (+ i 1))
+                                         )
+                                       (display "\n")))])
+                         (l 0)))
+                       ))
+                     )))])
+       (n 0)))
+     )))
+  ))) (mread-int)))
 )
 

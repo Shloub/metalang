@@ -1,19 +1,10 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let main =
   let n = 10 in
   (*  normalement on doit mettre 20 mais là on se tape un overflow  *)
   let n = (n + 1) in
-  ((fun  (b, tab) -> let t = (n - 1) in
+  let tab = (Array.init n (fun  i -> let tab2 = (Array.init n (fun  j -> 0)) in
+  tab2)) in
+  let t = (n - 1) in
   let rec s l =
     (if (l <= t)
      then (
@@ -58,7 +49,5 @@ let main =
                 ) in
                (c 0)) in
             (g 2)) in
-    (s 0)) (Array.init_withenv n (fun  i b -> ((fun  (v, tab2) -> let a = tab2 in
-  ((), a)) (Array.init_withenv n (fun  j v -> let u = 0 in
-  ((), u)) ()))) ()))
+    (s 0)
 

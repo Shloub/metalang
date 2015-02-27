@@ -1,16 +1,6 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let result len tab =
-  ((fun  (d, tab2) -> let h = (len - 1) in
+  let tab2 = (Array.init len (fun  i -> false)) in
+  let h = (len - 1) in
   let rec g i1 =
     (if (i1 <= h)
      then (
@@ -31,22 +21,21 @@ let result len tab =
               (e 0)
             )
      ) in
-    (g 0)) (Array.init_withenv len (fun  i d -> let c = false in
-  ((), c)) ()))
+    (g 0)
 let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d\n" len);
-    ((fun  (k, tab) -> (
-                         (Printf.printf "%d\n" (result len tab))
-                         )
-    ) (Array.init_withenv len (fun  a k -> Scanf.scanf "%d"
+    let tab = (Array.init len (fun  a -> Scanf.scanf "%d"
     (fun  b -> (
                  (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                 let j = b in
-                 ((), j)
+                 b
                  )
-    )) ()))
+    ))) in
+    (
+      (Printf.printf "%d\n" (result len tab))
+      )
+    
     )
   
 

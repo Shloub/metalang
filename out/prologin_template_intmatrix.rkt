@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 
 (define (programme_candidat tableau x y)
   ;toto
@@ -28,13 +20,10 @@
 (define main
   (let ([taille_x (string->number (read-line))])
   (let ([taille_y (string->number (read-line))])
-  ((lambda (internal_env) (apply (lambda (g tableau) 
-                                        (block
-                                          (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
-                                          )) internal_env)) (array_init_withenv taille_y 
-  (lambda (a) 
-    (lambda (g) 
-      (let ([f (list->vector (map string->number (regexp-split " " (read-line))))])
-      (list '() f)))) '()))))
+  (let ([tableau (build-vector taille_y (lambda (a) 
+                                          (list->vector (map string->number (regexp-split " " (read-line))))))])
+  (block
+    (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
+    ))))
 )
 

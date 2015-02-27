@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -54,12 +46,9 @@
 )
 (define (pathfind tab len)
   ;toto
-  ((lambda (internal_env) (apply (lambda (b cache) 
-                                        (pathfind_aux cache tab len 0)) internal_env)) (array_init_withenv len 
-  (lambda (i) 
-    (lambda (b) 
-      (let ([a (- 1)])
-      (list '() a)))) '()))
+  (let ([cache (build-vector len (lambda (i) 
+                                   (- 1)))])
+  (pathfind_aux cache tab len 0))
 )
 (define main
   (let ([len 0])
@@ -67,19 +56,16 @@
      (let ([len f])
      (block
        (mread-blank)
-       ((lambda (internal_env) (apply (lambda (d tab) 
-                                             (let ([result (pathfind tab len)])
-                                             (display result))) internal_env)) (array_init_withenv len 
-       (lambda (i) 
-         (lambda (d) 
-           (let ([tmp 0])
-           ((lambda (e) 
-              (let ([tmp e])
-              (block
-                (mread-blank)
-                (let ([c tmp])
-                (list '() c))
-                ))) (mread-int))))) '()))
-  ))) (mread-int)))
+       (let ([tab (build-vector len (lambda (i) 
+                                      (let ([tmp 0])
+                                      ((lambda (e) 
+                                         (let ([tmp e])
+                                         (block
+                                           (mread-blank)
+                                           tmp
+                                           ))) (mread-int)))))])
+     (let ([result (pathfind tab len)])
+     (display result)))
+     ))) (mread-int)))
 )
 

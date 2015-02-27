@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 
 (define (periode restes len a b)
   ;toto
@@ -32,24 +24,21 @@
 (c a len))
 )
 (define main
-  ((lambda (internal_env) (apply (lambda (g t0) 
-                                        (let ([m 0])
-                                        (let ([mi 0])
-                                        (letrec ([h (lambda (i m mi) 
-                                                      (if (<= i 1000)
-                                                      (let ([p (periode t0 0 1 i)])
-                                                      (if (> p m)
-                                                      (let ([mi i])
-                                                      (let ([m p])
-                                                      (h (+ i 1) m mi)))
-                                                      (h (+ i 1) m mi)))
-                                                      (block
-                                                        (map display (list mi "\n" m "\n"))
-                                                        )))])
-                                        (h 1 m mi))))) internal_env)) (array_init_withenv 1000 
-(lambda (j) 
-  (lambda (g) 
-    (let ([f 0])
-    (list '() f)))) '()))
+  (let ([t0 (build-vector 1000 (lambda (j) 
+                                 0))])
+  (let ([m 0])
+  (let ([mi 0])
+  (letrec ([h (lambda (i m mi) 
+                (if (<= i 1000)
+                (let ([p (periode t0 0 1 i)])
+                (if (> p m)
+                (let ([mi i])
+                (let ([m p])
+                (h (+ i 1) m mi)))
+                (h (+ i 1) m mi)))
+                (block
+                  (map display (list mi "\n" m "\n"))
+                  )))])
+  (h 1 m mi)))))
 )
 

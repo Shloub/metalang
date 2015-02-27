@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 
 (define (result sum t0 maxIndex cache)
   ;toto
@@ -28,31 +20,22 @@
   (a 0 out0))))))
 )
 (define main
-  ((lambda (internal_env) (apply (lambda (c t0) 
-                                        (block
-                                          (vector-set! t0 0 1)
-                                          (vector-set! t0 1 2)
-                                          (vector-set! t0 2 5)
-                                          (vector-set! t0 3 10)
-                                          (vector-set! t0 4 20)
-                                          (vector-set! t0 5 50)
-                                          (vector-set! t0 6 100)
-                                          (vector-set! t0 7 200)
-                                          ((lambda (internal_env) (apply (lambda (e cache) 
-                                                                                (display (result 200 t0 7 cache))) internal_env)) (array_init_withenv 201 
-                                          (lambda (j) 
-                                            (lambda (e) 
-                                              ((lambda (internal_env) (apply (lambda
-                                               (g o) 
-                                              (let ([d o])
-                                              (list '() d))) internal_env)) (array_init_withenv 8 
-                                              (lambda (k) 
-                                                (lambda (g) 
-                                                  (let ([f 0])
-                                                  (list '() f)))) '())))) '()))
-)) internal_env)) (array_init_withenv 8 (lambda (i) 
-                                          (lambda (c) 
-                                            (let ([b 0])
-                                            (list '() b)))) '()))
+  (let ([t0 (build-vector 8 (lambda (i) 
+                              0))])
+  (block
+    (vector-set! t0 0 1)
+    (vector-set! t0 1 2)
+    (vector-set! t0 2 5)
+    (vector-set! t0 3 10)
+    (vector-set! t0 4 20)
+    (vector-set! t0 5 50)
+    (vector-set! t0 6 100)
+    (vector-set! t0 7 200)
+    (let ([cache (build-vector 201 (lambda (j) 
+                                     (let ([o (build-vector 8 (lambda (k) 
+                                                                0))])
+                                     o)))])
+  (display (result 200 t0 7 cache)))
+))
 )
 

@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let position_alphabet c =
   let i = (int_of_char (c)) in
   (if ((i <= (int_of_char ('Z'))) && (i >= (int_of_char ('A'))))
@@ -38,34 +27,33 @@ let main =
   Scanf.scanf "%d"
   (fun  taille_cle -> (
                         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                        ((fun  (e, cle) -> (
-                                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                             Scanf.scanf "%d"
-                                             (fun  taille -> (
-                                                               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                               ((fun  (g, message) -> 
-                                                               (
-                                                                 (crypte taille_cle cle taille message);
-                                                                 let j = (taille - 1) in
-                                                                 let rec h i =
-                                                                   (if (i <= j)
-                                                                    then (
-                                                                           (Printf.printf "%c" message.(i));
-                                                                           (h (i + 1))
-                                                                           )
-                                                                    
-                                                                    else (Printf.printf "\n")) in
-                                                                   (h 0)
-                                                                 )
-                                                               ) (Array.init_withenv taille (fun  index2 g -> Scanf.scanf "%c"
-                                                               (fun  out2 -> let f = out2 in
-                                                               ((), f))) ()))
-                                                               )
-                                             )
-                                             )
-                        ) (Array.init_withenv taille_cle (fun  index e -> Scanf.scanf "%c"
-                        (fun  out0 -> let d = out0 in
-                        ((), d))) ()))
+                        let cle = (Array.init taille_cle (fun  index -> Scanf.scanf "%c"
+                        (fun  out0 -> out0))) in
+                        (
+                          (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                          Scanf.scanf "%d"
+                          (fun  taille -> (
+                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                            let message = (Array.init taille (fun  index2 -> Scanf.scanf "%c"
+                                            (fun  out2 -> out2))) in
+                                            (
+                                              (crypte taille_cle cle taille message);
+                                              let j = (taille - 1) in
+                                              let rec h i =
+                                                (if (i <= j)
+                                                 then (
+                                                        (Printf.printf "%c" message.(i));
+                                                        (h (i + 1))
+                                                        )
+                                                 
+                                                 else (Printf.printf "\n")) in
+                                                (h 0)
+                                              )
+                                            
+                                            )
+                          )
+                          )
+                        
                         )
   )
 

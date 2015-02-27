@@ -57,17 +57,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                             
 
 find0 len tab cache x y =
@@ -92,43 +91,39 @@ find0 len tab cache x y =
                     return r)
 
 find len tab =
-  (array_init_withenv len (\ i b ->
-                            (array_init_withenv (i + 1) (\ j d ->
-                                                          let c = 0
-                                                                  in return ((), c)) ()) >>= (\ (d, tab3) ->
-                                                                                               let a = tab3
-                                                                                                       in return ((), a))) ()) >>= (\ (b, tab2) ->
-                                                                                                                                     find0 len tab tab2 0 0)
+  do tab2 <- array_init len (\ i ->
+                              do tab3 <- array_init (i + 1) (\ j ->
+                                                              return 0)
+                                 return tab3)
+     find0 len tab tab2 0 0
 
 main =
   do let len = 0
      q <- read_int
      let u = q
      skip_whitespaces
-     (array_init_withenv u (\ i f ->
-                             (array_init_withenv (i + 1) (\ j o ->
+     tab <- array_init u (\ i ->
+                           do tab2 <- array_init (i + 1) (\ j ->
                                                            do let tmp = 0
                                                               p <- read_int
                                                               let v = p
                                                               skip_whitespaces
-                                                              let n = v
-                                                              return ((), n)) ()) >>= (\ (o, tab2) ->
-                                                                                        let e = tab2
-                                                                                                in return ((), e))) ()) >>= (\ (f, tab) ->
-                                                                                                                              do printf "%d" =<< (find u tab :: IO Int)
-                                                                                                                                 printf "\n" :: IO ()
-                                                                                                                                 let m = u - 1
-                                                                                                                                 let g k =
-                                                                                                                                       if k <= m
-                                                                                                                                       then let h l =
-                                                                                                                                                  if l <= k
-                                                                                                                                                  then do printf "%d" =<< (join $ readIOA <$> (readIOA tab k) <*> return l :: IO Int)
-                                                                                                                                                          printf " " :: IO ()
-                                                                                                                                                          h (l + 1)
-                                                                                                                                                  else do printf "\n" :: IO ()
-                                                                                                                                                          g (k + 1) in
-                                                                                                                                                  h 0
-                                                                                                                                       else return () in
-                                                                                                                                       g 0)
+                                                              return v)
+                              return tab2)
+     printf "%d" =<< (find u tab :: IO Int)
+     printf "\n" :: IO ()
+     let m = u - 1
+     let g k =
+           if k <= m
+           then let h l =
+                      if l <= k
+                      then do printf "%d" =<< (join $ readIOA <$> (readIOA tab k) <*> return l :: IO Int)
+                              printf " " :: IO ()
+                              h (l + 1)
+                      else do printf "\n" :: IO ()
+                              g (k + 1) in
+                      h 0
+           else return () in
+           g 0
 
 

@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 periode restes len a b =
@@ -60,23 +59,22 @@ periode restes len a b =
         c a len
 
 main =
-  (array_init_withenv 1000 (\ j g ->
-                             let f = 0
-                                     in return ((), f)) ()) >>= (\ (g, t) ->
-                                                                  do let m = 0
-                                                                     let mi = 0
-                                                                     let h i q r =
-                                                                           if i <= 1000
-                                                                           then do p <- periode t 0 1 i
-                                                                                   if p > q
-                                                                                   then do let s = i
-                                                                                           let u = p
-                                                                                           h (i + 1) u s
-                                                                                   else h (i + 1) q r
-                                                                           else do printf "%d" (r :: Int) :: IO ()
-                                                                                   printf "\n" :: IO ()
-                                                                                   printf "%d" (q :: Int) :: IO ()
-                                                                                   printf "\n" :: IO () in
-                                                                           h 1 m mi)
+  do t <- array_init 1000 (\ j ->
+                            return 0)
+     let m = 0
+     let mi = 0
+     let h i q r =
+           if i <= 1000
+           then do p <- periode t 0 1 i
+                   if p > q
+                   then do let s = i
+                           let u = p
+                           h (i + 1) u s
+                   else h (i + 1) q r
+           else do printf "%d" (r :: Int) :: IO ()
+                   printf "\n" :: IO ()
+                   printf "%d" (q :: Int) :: IO ()
+                   printf "\n" :: IO () in
+           h 1 m mi
 
 

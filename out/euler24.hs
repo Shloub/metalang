@@ -18,17 +18,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 fact n =
@@ -41,41 +40,39 @@ fact n =
            q 2 prod
 
 show0 lim nth =
-  (array_init_withenv lim (\ i b ->
-                            let a = i
-                                    in return ((), a)) ()) >>= (\ (b, t) ->
-                                                                 (array_init_withenv lim (\ j d ->
-                                                                                           let c = False
-                                                                                                   in return ((), c)) ()) >>= (\ (d, pris) ->
-                                                                                                                                do let p = lim - 1
-                                                                                                                                   let g k u =
-                                                                                                                                         if k <= p
-                                                                                                                                         then do n <- fact (lim - k)
-                                                                                                                                                 let nchiffre = u `quot` n
-                                                                                                                                                 let v = u `rem` n
-                                                                                                                                                 let o = lim - 1
-                                                                                                                                                 let h l w =
-                                                                                                                                                       if l <= o
-                                                                                                                                                       then ifM (fmap not (readIOA pris l))
-                                                                                                                                                                (do if w == 0
-                                                                                                                                                                    then do printf "%d" (l :: Int) :: IO ()
-                                                                                                                                                                            writeIOA pris l True
-                                                                                                                                                                    else return ()
-                                                                                                                                                                    let x = w - 1
-                                                                                                                                                                    h (l + 1) x)
-                                                                                                                                                                (h (l + 1) w)
-                                                                                                                                                       else g (k + 1) v in
-                                                                                                                                                       h 0 nchiffre
-                                                                                                                                         else do let f = lim - 1
-                                                                                                                                                 let e m =
-                                                                                                                                                       if m <= f
-                                                                                                                                                       then ifM (fmap not (readIOA pris m))
-                                                                                                                                                                (do printf "%d" (m :: Int) :: IO ()
-                                                                                                                                                                    e (m + 1))
-                                                                                                                                                                (e (m + 1))
-                                                                                                                                                       else printf "\n" :: IO () in
-                                                                                                                                                       e 0 in
-                                                                                                                                         g 1 nth))
+  do t <- array_init lim (\ i ->
+                           return i)
+     pris <- array_init lim (\ j ->
+                              return False)
+     let p = lim - 1
+     let g k u =
+           if k <= p
+           then do n <- fact (lim - k)
+                   let nchiffre = u `quot` n
+                   let v = u `rem` n
+                   let o = lim - 1
+                   let h l w =
+                         if l <= o
+                         then ifM (fmap not (readIOA pris l))
+                                  (do if w == 0
+                                      then do printf "%d" (l :: Int) :: IO ()
+                                              writeIOA pris l True
+                                      else return ()
+                                      let x = w - 1
+                                      h (l + 1) x)
+                                  (h (l + 1) w)
+                         else g (k + 1) v in
+                         h 0 nchiffre
+           else do let f = lim - 1
+                   let e m =
+                         if m <= f
+                         then ifM (fmap not (readIOA pris m))
+                                  (do printf "%d" (m :: Int) :: IO ()
+                                      e (m + 1))
+                                  (e (m + 1))
+                         else printf "\n" :: IO () in
+                         e 0 in
+           g 1 nth
 
 main =
   do show0 10 999999

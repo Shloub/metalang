@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let eratostene t max0 =
   let n = 0 in
   let w = (max0 - 1) in
@@ -73,13 +62,15 @@ let rec sumdivaux t n i =
             else ((out0 + 1) * o)) in
            (c 1 out0 p)))
 let sumdiv nprimes primes n =
-  ((fun  (b, t) -> let max0 = (fillPrimesFactors t n primes nprimes) in
-  (sumdivaux t max0 0)) (Array.init_withenv (n + 1) (fun  i b -> let a = 0 in
-  ((), a)) ()))
+  let t = (Array.init (n + 1) (fun  i -> 0)) in
+  let max0 = (fillPrimesFactors t n primes nprimes) in
+  (sumdivaux t max0 0)
 let main =
   let maximumprimes = 30001 in
-  ((fun  (y, era) -> let nprimes = (eratostene era maximumprimes) in
-  ((fun  (ba, primes) -> let l = 0 in
+  let era = (Array.init maximumprimes (fun  s -> s)) in
+  let nprimes = (eratostene era maximumprimes) in
+  let primes = (Array.init nprimes (fun  t -> 0)) in
+  let l = 0 in
   let bk = (maximumprimes - 1) in
   let rec bj k l =
     (if (k <= bk)
@@ -93,7 +84,9 @@ let main =
            else (bj (k + 1) l))
      else let n = 100 in
      (*  28124 ça prend trop de temps mais on arrive a passer le test  *)
-     ((fun  (bc, abondant) -> ((fun  (be, summable) -> let sum = 0 in
+     let abondant = (Array.init (n + 1) (fun  p -> false)) in
+     let summable = (Array.init (n + 1) (fun  q -> false)) in
+     let sum = 0 in
      let rec bi r =
        (if (r <= n)
         then let other = ((sumdiv nprimes primes r) - r) in
@@ -129,10 +122,6 @@ let main =
                         ) in
                        (bf 1 sum)) in
                (bg 1)) in
-       (bi 2)) (Array.init_withenv (n + 1) (fun  q be -> let bd = false in
-     ((), bd)) ()))) (Array.init_withenv (n + 1) (fun  p bc -> let bb = false in
-     ((), bb)) ()))) in
-    (bj 2 l)) (Array.init_withenv nprimes (fun  t ba -> let z = 0 in
-  ((), z)) ()))) (Array.init_withenv maximumprimes (fun  s y -> let x = s in
-  ((), x)) ()))
+       (bi 2)) in
+    (bj 2 l)
 

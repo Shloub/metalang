@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -60,20 +52,17 @@
        ((lambda (len) 
           (block
             (mread-blank)
-            ((lambda (internal_env) (apply (lambda (e tab) 
-                                                  (let ([a (devine0 nombre tab len)])
-                                                  (if a
-                                                  (display "True")
-                                                  (display "False")))) internal_env)) (array_init_withenv len 
-            (lambda (i) 
-              (lambda (e) 
-                ((lambda (tmp) 
-                   (block
-                     (mread-blank)
-                     (let ([d tmp])
-                     (list '() d))
-                     )) (mread-int)))) '()))
-     )) (mread-int))
+            (let ([tab (build-vector len (lambda (i) 
+                                           ((lambda (tmp) 
+                                              (block
+                                                (mread-blank)
+                                                tmp
+                                                )) (mread-int))))])
+          (let ([a (devine0 nombre tab len)])
+          (if a
+          (display "True")
+          (display "False"))))
+       )) (mread-int))
 )) (mread-int))
 )
 

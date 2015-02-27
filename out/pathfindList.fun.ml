@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let rec pathfind_aux cache tab len pos =
   (if (pos >= (len - 1))
    then 0
@@ -32,24 +21,24 @@ let rec pathfind_aux cache tab len pos =
                 )
          ))
 let pathfind tab len =
-  ((fun  (b, cache) -> (pathfind_aux cache tab len 0)) (Array.init_withenv len (fun  i b -> let a = (- 1) in
-  ((), a)) ()))
+  let cache = (Array.init len (fun  i -> (- 1))) in
+  (pathfind_aux cache tab len 0)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
   (fun  f -> let len = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (d, tab) -> let result = (pathfind tab len) in
-    (Printf.printf "%d" result)) (Array.init_withenv len (fun  i d -> let tmp = 0 in
+    let tab = (Array.init len (fun  i -> let tmp = 0 in
     Scanf.scanf "%d"
     (fun  e -> let tmp = e in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let c = tmp in
-      ((), c)
+      tmp
       )
-    )) ()))
+    ))) in
+    let result = (pathfind tab len) in
+    (Printf.printf "%d" result)
     )
   )
 

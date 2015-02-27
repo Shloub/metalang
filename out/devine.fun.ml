@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let devine0 nombre tab len =
   let min0 = tab.(0) in
   let max0 = tab.(1) in
@@ -37,16 +26,16 @@ let main =
                     Scanf.scanf "%d"
                     (fun  len -> (
                                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                   ((fun  (e, tab) -> let a = (devine0 nombre tab len) in
-                                   (if a
-                                    then (Printf.printf "True")
-                                    else (Printf.printf "False"))) (Array.init_withenv len (fun  i e -> Scanf.scanf "%d"
+                                   let tab = (Array.init len (fun  i -> Scanf.scanf "%d"
                                    (fun  tmp -> (
                                                   (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                                  let d = tmp in
-                                                  ((), d)
+                                                  tmp
                                                   )
-                                   )) ()))
+                                   ))) in
+                                   let a = (devine0 nombre tab len) in
+                                   (if a
+                                    then (Printf.printf "True")
+                                    else (Printf.printf "False"))
                                    )
                     )
                     )

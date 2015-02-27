@@ -57,24 +57,22 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                             
 
 copytab tab len =
-  (array_init_withenv len (\ i g ->
-                            do f <- readIOA tab i
-                               return ((), f)) ()) >>= (\ (g, o) ->
-                                                         return o)
+  do o <- array_init len (\ i ->
+                           readIOA tab i)
+     return o
 
 bubblesort tab len =
   do let e = len - 1
@@ -129,32 +127,31 @@ main =
      r <- read_int
      let x = r
      skip_whitespaces
-     (array_init_withenv x (\ i_ k ->
-                             do let tmp = 0
-                                q <- read_int
-                                let z = q
-                                skip_whitespaces
-                                let h = z
-                                return ((), h)) ()) >>= (\ (k, tab) ->
-                                                          do tab2 <- copytab tab x
-                                                             bubblesort tab2 x
-                                                             let p = x - 1
-                                                             let n i =
-                                                                   if i <= p
-                                                                   then do printf "%d" =<< (readIOA tab2 i :: IO Int)
-                                                                           printf " " :: IO ()
-                                                                           n (i + 1)
-                                                                   else do printf "\n" :: IO ()
-                                                                           tab3 <- copytab tab x
-                                                                           qsort0 tab3 x 0 (x - 1)
-                                                                           let m = x - 1
-                                                                           let l y =
-                                                                                 if y <= m
-                                                                                 then do printf "%d" =<< (readIOA tab3 y :: IO Int)
-                                                                                         printf " " :: IO ()
-                                                                                         l (y + 1)
-                                                                                 else printf "\n" :: IO () in
-                                                                                 l 0 in
-                                                                   n 0)
+     tab <- array_init x (\ i_ ->
+                           do let tmp = 0
+                              q <- read_int
+                              let y = q
+                              skip_whitespaces
+                              return y)
+     tab2 <- copytab tab x
+     bubblesort tab2 x
+     let p = x - 1
+     let n i =
+           if i <= p
+           then do printf "%d" =<< (readIOA tab2 i :: IO Int)
+                   printf " " :: IO ()
+                   n (i + 1)
+           else do printf "\n" :: IO ()
+                   tab3 <- copytab tab x
+                   qsort0 tab3 x 0 (x - 1)
+                   let m = x - 1
+                   let l z =
+                         if z <= m
+                         then do printf "%d" =<< (readIOA tab3 z :: IO Int)
+                                 printf " " :: IO ()
+                                 l (z + 1)
+                         else printf "\n" :: IO () in
+                         l 0 in
+           n 0
 
 

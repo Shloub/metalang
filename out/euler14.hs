@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 next0 n =
@@ -56,24 +55,23 @@ find n m =
                     readIOA m n)
 
 main =
-  (array_init_withenv 1000000 (\ j b ->
-                                let a = 0
-                                        in return ((), a)) ()) >>= (\ (b, m) ->
-                                                                     do let max0 = 0
-                                                                        let maxi = 0
-                                                                        let c i d e =
-                                                                              if i <= 999
-                                                                              then {- normalement on met 999999 mais ça dépasse les int32... -}
-                                                                                   do n2 <- find i m
-                                                                                      if n2 > d
-                                                                                      then do let f = n2
-                                                                                              let g = i
-                                                                                              c (i + 1) f g
-                                                                                      else c (i + 1) d e
-                                                                              else do printf "%d" (d :: Int) :: IO ()
-                                                                                      printf "\n" :: IO ()
-                                                                                      printf "%d" (e :: Int) :: IO ()
-                                                                                      printf "\n" :: IO () in
-                                                                              c 1 max0 maxi)
+  do m <- array_init 1000000 (\ j ->
+                               return 0)
+     let max0 = 0
+     let maxi = 0
+     let c i d e =
+           if i <= 999
+           then {- normalement on met 999999 mais ça dépasse les int32... -}
+                do n2 <- find i m
+                   if n2 > d
+                   then do let f = n2
+                           let g = i
+                           c (i + 1) f g
+                   else c (i + 1) d e
+           else do printf "%d" (d :: Int) :: IO ()
+                   printf "\n" :: IO ()
+                   printf "%d" (e :: Int) :: IO ()
+                   printf "\n" :: IO () in
+           c 1 max0 maxi
 
 

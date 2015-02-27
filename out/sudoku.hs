@@ -57,26 +57,24 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                             
 
 read_sudoku () =
-  (array_init_withenv (9 * 9) (\ i g ->
-                                do k <- read_int
-                                   skip_whitespaces
-                                   let f = k
-                                   return ((), f)) ()) >>= (\ (g, out0) ->
-                                                             return out0)
+  do out0 <- array_init (9 * 9) (\ i ->
+                                  do k <- read_int
+                                     skip_whitespaces
+                                     return k)
+     return out0
 
 print_sudoku sudoku0 =
   let d y =

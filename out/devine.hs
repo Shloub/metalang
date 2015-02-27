@@ -55,17 +55,16 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
 
 
 devine0 nombre tab len =
@@ -95,14 +94,13 @@ main =
      skip_whitespaces
      len <- read_int
      skip_whitespaces
-     (array_init_withenv len (\ i e ->
-                               do tmp <- read_int
-                                  skip_whitespaces
-                                  let d = tmp
-                                  return ((), d)) ()) >>= (\ (e, tab) ->
-                                                            do a <- devine0 nombre tab len
-                                                               if a
-                                                               then printf "True" :: IO ()
-                                                               else printf "False" :: IO ())
+     tab <- array_init len (\ i ->
+                             do tmp <- read_int
+                                skip_whitespaces
+                                return tmp)
+     a <- devine0 nombre tab len
+     if a
+     then printf "True" :: IO ()
+     else printf "False" :: IO ()
 
 

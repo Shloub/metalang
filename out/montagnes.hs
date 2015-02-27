@@ -57,17 +57,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                             
 
 montagnes0 tab len =
@@ -98,13 +97,12 @@ main =
      f <- read_int
      let r = f
      skip_whitespaces
-     (array_init_withenv r (\ i d ->
-                             do let x = 0
-                                e <- read_int
-                                let s = e
-                                skip_whitespaces
-                                let c = s
-                                return ((), c)) ()) >>= (\ (d, tab) ->
-                                                          printf "%d" =<< (montagnes0 tab r :: IO Int))
+     tab <- array_init r (\ i ->
+                           do let x = 0
+                              e <- read_int
+                              let s = e
+                              skip_whitespaces
+                              return s)
+     printf "%d" =<< (montagnes0 tab r :: IO Int)
 
 

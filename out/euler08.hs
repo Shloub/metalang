@@ -27,6 +27,7 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
+
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
   do (env, li) <- g 0 env
@@ -38,7 +39,8 @@ array_init_withenv len f env =
            else do (env', item) <- f i env
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
-                                                                                                                                 
+
+
 
 
 max2_ a b =

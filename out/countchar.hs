@@ -55,17 +55,16 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
 
 
 nth tab tofind len =
@@ -89,13 +88,12 @@ main =
      hGetChar stdin >>= ((\ f ->
                            do let l = f
                               skip_whitespaces
-                              (array_init_withenv k (\ i d ->
-                                                      do let tmp = '\000'
-                                                         hGetChar stdin >>= ((\ e ->
-                                                                               let m = e
-                                                                                       in let c = m
-                                                                                                  in return ((), c)))) ()) >>= (\ (d, tab) ->
-                                                                                                                                 do result <- nth tab l k
-                                                                                                                                    printf "%d" (result :: Int) :: IO ())))
+                              tab <- array_init k (\ i ->
+                                                    do let tmp = '\000'
+                                                       hGetChar stdin >>= ((\ e ->
+                                                                             let m = e
+                                                                                     in return m)))
+                              result <- nth tab l k
+                              printf "%d" (result :: Int) :: IO ()))
 
 

@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let rec okdigits ok n =
   (if (n = 0)
    then true
@@ -27,33 +16,30 @@ let rec okdigits ok n =
     else false))
 let main =
   let count = 0 in
-  ((fun  (g, allowed) -> ((fun  (k, counted) -> let rec l e count =
-                                                  (if (e <= 9)
-                                                   then (
-                                                          allowed.(e) <- false;
-                                                          let rec m b count =
-                                                            (if (b <= 9)
-                                                             then (if allowed.(b)
-                                                                   then (
-                                                                          allowed.(b) <- false;
-                                                                          let be = ((b * e) mod 10) in
-                                                                          let count = (
-                                                                          if allowed.(be)
-                                                                          then (
-                                                                                allowed.(be) <- false;
-                                                                                let rec p a count =
-                                                                                (if (a <= 9)
-                                                                                then (
-                                                                                if allowed.(a)
-                                                                                then 
-                                                                                (
-                                                                                allowed.(a) <- false;
-                                                                                let rec q c count =
-                                                                                (if (c <= 9)
-                                                                                then (
-                                                                                if allowed.(c)
-                                                                                then 
-                                                                                (
+  let allowed = (Array.init 10 (fun  i -> (i <> 0))) in
+  let counted = (Array.init 100000 (fun  j -> false)) in
+  let rec l e count =
+    (if (e <= 9)
+     then (
+            allowed.(e) <- false;
+            let rec m b count =
+              (if (b <= 9)
+               then (if allowed.(b)
+                     then (
+                            allowed.(b) <- false;
+                            let be = ((b * e) mod 10) in
+                            let count = (if allowed.(be)
+                                         then (
+                                                allowed.(be) <- false;
+                                                let rec p a count =
+                                                  (if (a <= 9)
+                                                   then (if allowed.(a)
+                                                         then (
+                                                                allowed.(a) <- false;
+                                                                let rec q c count =
+                                                                  (if (c <= 9)
+                                                                   then (if allowed.(c)
+                                                                         then (
                                                                                 allowed.(c) <- false;
                                                                                 let rec r d count =
                                                                                 (if (d <= 9)
@@ -110,49 +96,45 @@ let main =
                                                                                 ) in
                                                                                 (r 1 count)
                                                                                 )
-                                                                                
-                                                                                else (q (c + 1) count))
-                                                                                else 
-                                                                                (
-                                                                                allowed.(a) <- true;
-                                                                                (p (a + 1) count)
-                                                                                )
-                                                                                ) in
-                                                                                (q 1 count)
-                                                                                )
-                                                                                
-                                                                                else (p (a + 1) count))
-                                                                                else 
-                                                                                (
-                                                                                allowed.(be) <- true;
-                                                                                count
-                                                                                )
-                                                                                ) in
-                                                                                (p 1 count)
-                                                                                )
-                                                                          
-                                                                          else count) in
-                                                                          (
-                                                                            allowed.(b) <- true;
-                                                                            (m (b + 1) count)
-                                                                            )
-                                                                          
+                                                                         
+                                                                         else (q (c + 1) count))
+                                                                   else (
+                                                                          allowed.(a) <- true;
+                                                                          (p (a + 1) count)
                                                                           )
-                                                                   
-                                                                   else (m (b + 1) count))
-                                                             else (
-                                                                    allowed.(e) <- true;
-                                                                    (l (e + 1) count)
-                                                                    )
-                                                             ) in
-                                                            (m 1 count)
-                                                          )
-                                                   
+                                                                   ) in
+                                                                  (q 1 count)
+                                                                )
+                                                         
+                                                         else (p (a + 1) count))
                                                    else (
-                                                          (Printf.printf "%d\n" count)
+                                                          allowed.(be) <- true;
+                                                          count
                                                           )
                                                    ) in
-                                                  (l 1 count)) (Array.init_withenv 100000 (fun  j k -> let h = false in
-  ((), h)) ()))) (Array.init_withenv 10 (fun  i g -> let f = (i <> 0) in
-  ((), f)) ()))
+                                                  (p 1 count)
+                                                )
+                                         
+                                         else count) in
+                            (
+                              allowed.(b) <- true;
+                              (m (b + 1) count)
+                              )
+                            
+                            )
+                     
+                     else (m (b + 1) count))
+               else (
+                      allowed.(e) <- true;
+                      (l (e + 1) count)
+                      )
+               ) in
+              (m 1 count)
+            )
+     
+     else (
+            (Printf.printf "%d\n" count)
+            )
+     ) in
+    (l 1 count)
 

@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 type toto = {mutable foo : int; mutable bar : int; mutable blah : int;}
 let mktoto v1 =
   let t = {foo=v1;
@@ -29,7 +18,8 @@ let result t len =
      else out0) in
     (a 0 out0)
 let main =
-  ((fun  (d, t) -> Scanf.scanf "%d"
+  let t = (Array.init 4 (fun  i -> (mktoto i))) in
+  Scanf.scanf "%d"
   (fun  f -> (
                t.(0).bar <- f;
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
@@ -44,6 +34,5 @@ let main =
                             )
                )
                )
-  )) (Array.init_withenv 4 (fun  i d -> let c = (mktoto i) in
-  ((), c)) ()))
+  )
 

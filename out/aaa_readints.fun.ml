@@ -1,19 +1,14 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d=len\n" len);
-    ((fun  (h, tab1) -> let v = (len - 1) in
+    let tab1 = (Array.init len (fun  a -> Scanf.scanf "%d"
+    (fun  b -> (
+                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                 b
+                 )
+    ))) in
+    let v = (len - 1) in
     let rec u i =
       (if (i <= v)
        then (
@@ -22,7 +17,14 @@ let main =
               )
        
        else let len = (Scanf.scanf "%d " (fun x -> x)) in
-       ((fun  (l, tab2) -> let q = (len - 2) in
+       let tab2 = (Array.init (len - 1) (fun  c -> let e = (Array.init len (fun  f -> Scanf.scanf "%d"
+       (fun  d -> (
+                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                    d
+                    )
+       ))) in
+       e)) in
+       let q = (len - 2) in
        let rec m i =
          (if (i <= q)
           then let p = (len - 1) in
@@ -40,21 +42,8 @@ let main =
              ) in
             (o 0)
           else ()) in
-         (m 0)) (Array.init_withenv (len - 1) (fun  c l -> ((fun  (s, e) -> let k = e in
-       ((), k)) (Array.init_withenv len (fun  f s -> Scanf.scanf "%d"
-       (fun  d -> (
-                    (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                    let r = d in
-                    ((), r)
-                    )
-       )) ()))) ()))) in
-      (u 0)) (Array.init_withenv len (fun  a h -> Scanf.scanf "%d"
-    (fun  b -> (
-                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                 let g = b in
-                 ((), g)
-                 )
-    )) ()))
+         (m 0)) in
+      (u 0)
     )
   
 

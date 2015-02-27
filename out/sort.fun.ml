@@ -1,17 +1,6 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let copytab tab len =
-  ((fun  (g, o) -> o) (Array.init_withenv len (fun  i g -> let f = tab.(i) in
-  ((), f)) ()))
+  let o = (Array.init len (fun  i -> tab.(i))) in
+  o
 let bubblesort tab len =
   let e = (len - 1) in
   let rec b i =
@@ -76,7 +65,15 @@ let main =
   (fun  r -> let len = r in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (k, tab) -> let tab2 = (copytab tab len) in
+    let tab = (Array.init len (fun  i_ -> let tmp = 0 in
+    Scanf.scanf "%d"
+    (fun  q -> let tmp = q in
+    (
+      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+      tmp
+      )
+    ))) in
+    let tab2 = (copytab tab len) in
     (
       (bubblesort tab2 len);
       let p = (len - 1) in
@@ -108,15 +105,7 @@ let main =
          ) in
         (n 0)
       )
-    ) (Array.init_withenv len (fun  i_ k -> let tmp = 0 in
-    Scanf.scanf "%d"
-    (fun  q -> let tmp = q in
-    (
-      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-      let h = tmp in
-      ((), h)
-      )
-    )) ()))
+    
     )
   )
 

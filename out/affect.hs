@@ -52,17 +52,16 @@ read_int =
       num <- read_int_a 0
       return (num * sign)
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
 data Toto = Toto {
@@ -90,16 +89,14 @@ result t_ t2_ =
      let m = k
      writeIORef (_blah l) =<< (((+) 1) <$> (readIORef (_blah l)))
      let len = 1
-     (array_init_withenv len (\ i b ->
-                               let a = - i
-                                       in return ((), a)) ()) >>= (\ (b, cache0) ->
-                                                                    (array_init_withenv len (\ j d ->
-                                                                                              let c = j
-                                                                                                      in return ((), c)) ()) >>= (\ (d, cache1) ->
-                                                                                                                                   do let cache2 = cache0
-                                                                                                                                      let n = cache1
-                                                                                                                                      let o = n
-                                                                                                                                      ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))))
+     cache0 <- array_init len (\ i ->
+                                return (- i))
+     cache1 <- array_init len (\ j ->
+                                return j)
+     let cache2 = cache0
+     let n = cache1
+     let o = n
+     ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))
 
 main =
   do t <- mktoto 4

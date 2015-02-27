@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 min2_ a b =
@@ -68,59 +67,56 @@ eratostene t max0 =
 
 main =
   do let maximumprimes = 1000001
-     (array_init_withenv maximumprimes (\ j g ->
-                                         let f = j
-                                                 in return ((), f)) ()) >>= (\ (g, era) ->
-                                                                              do nprimes <- eratostene era maximumprimes
-                                                                                 (array_init_withenv nprimes (\ o m ->
-                                                                                                               let h = 0
-                                                                                                                       in return ((), h)) ()) >>= (\ (m, primes) ->
-                                                                                                                                                    do let l = 0
-                                                                                                                                                       let v = maximumprimes - 1
-                                                                                                                                                       let u k ba =
-                                                                                                                                                             if k <= v
-                                                                                                                                                             then ifM (((==) k) <$> (readIOA era k))
-                                                                                                                                                                      (do writeIOA primes ba k
-                                                                                                                                                                          let bb = ba + 1
-                                                                                                                                                                          u (k + 1) bb)
-                                                                                                                                                                      (u (k + 1) ba)
-                                                                                                                                                             else do printf "%d" (ba :: Int) :: IO ()
-                                                                                                                                                                     printf " == " :: IO ()
-                                                                                                                                                                     printf "%d" (nprimes :: Int) :: IO ()
-                                                                                                                                                                     printf "\n" :: IO ()
-                                                                                                                                                                     (array_init_withenv nprimes (\ i_ q ->
-                                                                                                                                                                                                   do p <- readIOA primes i_
-                                                                                                                                                                                                      return ((), p)) ()) >>= (\ (q, sum) ->
-                                                                                                                                                                                                                                do let maxl = 0
-                                                                                                                                                                                                                                   let process = True
-                                                                                                                                                                                                                                   let stop = maximumprimes - 1
-                                                                                                                                                                                                                                   let len = 1
-                                                                                                                                                                                                                                   let resp = 1
-                                                                                                                                                                                                                                   let r bc bd be bf bg =
-                                                                                                                                                                                                                                         if be
-                                                                                                                                                                                                                                         then do let bh = False
-                                                                                                                                                                                                                                                 let s i bi bj bk bl =
-                                                                                                                                                                                                                                                       if i <= bl
-                                                                                                                                                                                                                                                       then if i + bc < nprimes
-                                                                                                                                                                                                                                                            then do writeIOA sum i =<< ((+) <$> (readIOA sum i) <*> (readIOA primes (i + bc)))
-                                                                                                                                                                                                                                                                    ifM (((>) maximumprimes) <$> (readIOA sum i))
-                                                                                                                                                                                                                                                                        (do let bm = True
-                                                                                                                                                                                                                                                                            ifM ((==) <$> (readIOA era =<< (readIOA sum i)) <*> (readIOA sum i))
-                                                                                                                                                                                                                                                                                (do let bn = bc
-                                                                                                                                                                                                                                                                                    bo <- readIOA sum i
-                                                                                                                                                                                                                                                                                    s (i + 1) bn bm bo bl)
-                                                                                                                                                                                                                                                                                (s (i + 1) bi bm bk bl))
-                                                                                                                                                                                                                                                                        (do bp <- min2_ bl i
-                                                                                                                                                                                                                                                                            s (i + 1) bi bj bk bp)
-                                                                                                                                                                                                                                                            else s (i + 1) bi bj bk bl
-                                                                                                                                                                                                                                                       else do let bq = bc + 1
-                                                                                                                                                                                                                                                               r bq bi bj bk bl in
-                                                                                                                                                                                                                                                       s 0 bd bh bf bg
-                                                                                                                                                                                                                                         else do printf "%d" (bf :: Int) :: IO ()
-                                                                                                                                                                                                                                                 printf "\n" :: IO ()
-                                                                                                                                                                                                                                                 printf "%d" (bd :: Int) :: IO ()
-                                                                                                                                                                                                                                                 printf "\n" :: IO () in
-                                                                                                                                                                                                                                         r len maxl process resp stop) in
-                                                                                                                                                             u 2 l))
+     era <- array_init maximumprimes (\ j ->
+                                       return j)
+     nprimes <- eratostene era maximumprimes
+     primes <- array_init nprimes (\ o ->
+                                    return 0)
+     let l = 0
+     let v = maximumprimes - 1
+     let u k ba =
+           if k <= v
+           then ifM (((==) k) <$> (readIOA era k))
+                    (do writeIOA primes ba k
+                        let bb = ba + 1
+                        u (k + 1) bb)
+                    (u (k + 1) ba)
+           else do printf "%d" (ba :: Int) :: IO ()
+                   printf " == " :: IO ()
+                   printf "%d" (nprimes :: Int) :: IO ()
+                   printf "\n" :: IO ()
+                   sum <- array_init nprimes (\ i_ ->
+                                               readIOA primes i_)
+                   let maxl = 0
+                   let process = True
+                   let stop = maximumprimes - 1
+                   let len = 1
+                   let resp = 1
+                   let r bc bd be bf bg =
+                         if be
+                         then do let bh = False
+                                 let s i bi bj bk bl =
+                                       if i <= bl
+                                       then if i + bc < nprimes
+                                            then do writeIOA sum i =<< ((+) <$> (readIOA sum i) <*> (readIOA primes (i + bc)))
+                                                    ifM (((>) maximumprimes) <$> (readIOA sum i))
+                                                        (do let bm = True
+                                                            ifM ((==) <$> (readIOA era =<< (readIOA sum i)) <*> (readIOA sum i))
+                                                                (do let bn = bc
+                                                                    bo <- readIOA sum i
+                                                                    s (i + 1) bn bm bo bl)
+                                                                (s (i + 1) bi bm bk bl))
+                                                        (do bp <- min2_ bl i
+                                                            s (i + 1) bi bj bk bp)
+                                            else s (i + 1) bi bj bk bl
+                                       else do let bq = bc + 1
+                                               r bq bi bj bk bl in
+                                       s 0 bd bh bf bg
+                         else do printf "%d" (bf :: Int) :: IO ()
+                                 printf "\n" :: IO ()
+                                 printf "%d" (bd :: Int) :: IO ()
+                                 printf "\n" :: IO () in
+                         r len maxl process resp stop in
+           u 2 l
 
 

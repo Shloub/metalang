@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let main =
   (* 
 a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
@@ -18,7 +7,8 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   d ^ 5 +
   e ^ 5
  *)
-  ((fun  (h, p) -> let sum = 0 in
+  let p = (Array.init 10 (fun  i -> ((((i * i) * i) * i) * i))) in
+  let sum = 0 in
   let rec j a sum =
     (if (a <= 9)
      then let rec k b sum =
@@ -52,6 +42,5 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
              else (j (a + 1) sum)) in
             (k 0 sum)
      else (Printf.printf "%d" sum)) in
-    (j 0 sum)) (Array.init_withenv 10 (fun  i h -> let g = ((((i * i) * i) * i) * i) in
-  ((), g)) ()))
+    (j 0 sum)
 

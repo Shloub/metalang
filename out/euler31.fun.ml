@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let rec result sum t maxIndex cache =
   (if (cache.(sum).(maxIndex) <> 0)
    then cache.(sum).(maxIndex)
@@ -27,19 +16,19 @@ let rec result sum t maxIndex cache =
             ) in
            (a 0 out0)))
 let main =
-  ((fun  (c, t) -> (
-                     t.(0) <- 1;
-                     t.(1) <- 2;
-                     t.(2) <- 5;
-                     t.(3) <- 10;
-                     t.(4) <- 20;
-                     t.(5) <- 50;
-                     t.(6) <- 100;
-                     t.(7) <- 200;
-                     ((fun  (e, cache) -> (Printf.printf "%d" (result 200 t 7 cache))) (Array.init_withenv 201 (fun  j e -> ((fun  (g, o) -> let d = o in
-                     ((), d)) (Array.init_withenv 8 (fun  k g -> let f = 0 in
-                     ((), f)) ()))) ()))
-                     )
-  ) (Array.init_withenv 8 (fun  i c -> let b = 0 in
-  ((), b)) ()))
+  let t = (Array.init 8 (fun  i -> 0)) in
+  (
+    t.(0) <- 1;
+    t.(1) <- 2;
+    t.(2) <- 5;
+    t.(3) <- 10;
+    t.(4) <- 20;
+    t.(5) <- 50;
+    t.(6) <- 100;
+    t.(7) <- 200;
+    let cache = (Array.init 201 (fun  j -> let o = (Array.init 8 (fun  k -> 0)) in
+    o)) in
+    (Printf.printf "%d" (result 200 t 7 cache))
+    )
+  
 

@@ -57,17 +57,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                             
 
 pathfind_aux cache tab len pos =
@@ -88,24 +87,22 @@ pathfind_aux cache tab len pos =
                return g)
 
 pathfind tab len =
-  (array_init_withenv len (\ i b ->
-                            let a = - 1
-                                    in return ((), a)) ()) >>= (\ (b, cache) ->
-                                                                 pathfind_aux cache tab len 0)
+  do cache <- array_init len (\ i ->
+                               return (- 1))
+     pathfind_aux cache tab len 0
 
 main =
   do let len = 0
      f <- read_int
      let k = f
      skip_whitespaces
-     (array_init_withenv k (\ i d ->
-                             do let tmp = 0
-                                e <- read_int
-                                let l = e
-                                skip_whitespaces
-                                let c = l
-                                return ((), c)) ()) >>= (\ (d, tab) ->
-                                                          do result <- pathfind tab k
-                                                             printf "%d" (result :: Int) :: IO ())
+     tab <- array_init k (\ i ->
+                           do let tmp = 0
+                              e <- read_int
+                              let l = e
+                              skip_whitespaces
+                              return l)
+     result <- pathfind tab k
+     printf "%d" (result :: Int) :: IO ()
 
 

@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -66,41 +58,27 @@
   ((lambda (n) 
      (block
        (mread-blank)
-       ((lambda (internal_env) (apply (lambda (h passepartout) 
-                                             ((lambda (m) 
-                                                (block
-                                                  (mread-blank)
-                                                  ((lambda (internal_env) (apply (lambda
-                                                   (p serrures) 
-                                                  (display (nbPassePartout n passepartout m serrures))) internal_env)) (array_init_withenv m 
-                                                  (lambda (k) 
-                                                    (lambda (p) 
-                                                      ((lambda (internal_env) (apply (lambda
-                                                       (r out1) 
-                                                      (let ([o out1])
-                                                      (list '() o))) internal_env)) (array_init_withenv 2 
-                                                      (lambda (l) 
-                                                        (lambda (r) 
-                                                          ((lambda (out_) 
-                                                             (block
-                                                               (mread-blank)
-                                                               (let ([q out_])
-                                                               (list '() q))
-                                                               )) (mread-int)))) '())))) '()))
-  )) (mread-int))) internal_env)) (array_init_withenv n (lambda (i) 
-                                                          (lambda (h) 
-                                                            ((lambda (internal_env) (apply (lambda
-                                                             (u out0) 
-                                                            (let ([g out0])
-                                                            (list '() g))) internal_env)) (array_init_withenv 2 
-                                                            (lambda (j) 
-                                                              (lambda (u) 
-                                                                ((lambda (out01) 
-                                                                   (block
-                                                                     (mread-blank)
-                                                                     (let ([s out01])
-                                                                     (list '() s))
-                                                                     )) (mread-int)))) '())))) '()))
+       (let ([passepartout (build-vector n (lambda (i) 
+                                             (let ([out0 (build-vector 2 (lambda (j) 
+                                                                           ((lambda (out01) 
+                                                                              (block
+                                                                                (mread-blank)
+                                                                                out01
+                                                                                )) (mread-int))))])
+       out0)))])
+  ((lambda (m) 
+     (block
+       (mread-blank)
+       (let ([serrures (build-vector m (lambda (k) 
+                                         (let ([out1 (build-vector 2 (lambda (l) 
+                                                                       ((lambda (out_) 
+                                                                          (block
+                                                                            (mread-blank)
+                                                                            out_
+                                                                            )) (mread-int))))])
+       out1)))])
+  (display (nbPassePartout n passepartout m serrures)))
+)) (mread-int)))
 )) (mread-int))
 )
 

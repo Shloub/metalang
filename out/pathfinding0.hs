@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 min2_ a b =
@@ -66,15 +65,13 @@ pathfind_aux cache tab x y posX posY =
                          return out0))
 
 pathfind tab x y =
-  (array_init_withenv y (\ i h ->
-                          (array_init_withenv x (\ j l ->
-                                                  do printf "%c" =<< (join $ readIOA <$> (readIOA tab i) <*> return j :: IO Char)
-                                                     let k = - 1
-                                                     return ((), k)) ()) >>= (\ (l, tmp) ->
-                                                                               do printf "\n" :: IO ()
-                                                                                  let g = tmp
-                                                                                  return ((), g))) ()) >>= (\ (h, cache) ->
-                                                                                                             pathfind_aux cache tab x y 0 0)
+  do cache <- array_init y (\ i ->
+                             do tmp <- array_init x (\ j ->
+                                                      do printf "%c" =<< (join $ readIOA <$> (readIOA tab i) <*> return j :: IO Char)
+                                                         return (- 1))
+                                printf "\n" :: IO ()
+                                return tmp)
+     pathfind_aux cache tab x y 0 0
 
 main =
   do x <- (fmap read getLine)
@@ -83,11 +80,10 @@ main =
      printf " " :: IO ()
      printf "%d" (y :: Int) :: IO ()
      printf "\n" :: IO ()
-     (array_init_withenv y (\ f o ->
-                             do m <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return x)) <*> getLine))
-                                return ((), m)) ()) >>= (\ (o, e) ->
-                                                          do let tab = e
-                                                             result <- pathfind tab x y
-                                                             printf "%d" (result :: Int) :: IO ())
+     e <- array_init y (\ f ->
+                         (join (newListArray <$> (fmap (\x -> (0, x-1)) (return x)) <*> getLine)))
+     let tab = e
+     result <- pathfind tab x y
+     printf "%d" (result :: Int) :: IO ()
 
 

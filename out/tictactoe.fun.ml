@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 type gamestate = {mutable cases : int array array; mutable firstToPlay : bool; mutable note : int; mutable ended : bool;}
 type move = {mutable x : int; mutable y : int;}
 let print_state g =
@@ -206,12 +195,12 @@ let play g =
      ) in
     (e 0 minNote)
 let init0 () =
-  ((fun  (b, cases) -> {cases=cases;
+  let cases = (Array.init 3 (fun  i -> let tab = (Array.init 3 (fun  j -> 0)) in
+  tab)) in
+  {cases=cases;
   firstToPlay=true;
   note=0;
-  ended=false}) (Array.init_withenv 3 (fun  i b -> ((fun  (d, tab) -> let a = tab in
-  ((), a)) (Array.init_withenv 3 (fun  j d -> let c = 0 in
-  ((), c)) ()))) ()))
+  ended=false}
 let read_move () =
   Scanf.scanf "%d"
   (fun  x -> (

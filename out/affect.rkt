@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -52,20 +44,14 @@
   (block
     (set-toto-blah! t0 (+ (toto-blah t0) 1))
     (let ([len 1])
-    ((lambda (internal_env) (apply (lambda (b cache0) 
-                                          ((lambda (internal_env) (apply (lambda (d cache1) 
-                                                                                (let ([cache2 cache0])
-                                                                                (let ([cache0 cache1])
-                                                                                (let ([cache2 cache0])
-                                                                                (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))))) internal_env)) (array_init_withenv len 
-                                          (lambda (j) 
-                                            (lambda (d) 
-                                              (let ([c j])
-                                              (list '() c)))) '()))) internal_env)) (array_init_withenv len 
-  (lambda (i) 
-    (lambda (b) 
-      (let ([a (- i)])
-      (list '() a)))) '())))
+    (let ([cache0 (build-vector len (lambda (i) 
+                                      (- i)))])
+    (let ([cache1 (build-vector len (lambda (j) 
+                                      j))])
+    (let ([cache2 cache0])
+    (let ([cache0 cache1])
+    (let ([cache2 cache0])
+    (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0)))))))))
   )))))))
 )
 (define main

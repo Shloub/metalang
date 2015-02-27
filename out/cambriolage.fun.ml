@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let nbPassePartout n passepartout m serrures =
   let max_ancient = 0 in
   let max_recent = 0 in
@@ -43,26 +32,26 @@ let main =
   Scanf.scanf "%d"
   (fun  n -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               ((fun  (h, passepartout) -> Scanf.scanf "%d"
-               (fun  m -> (
-                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                            ((fun  (p, serrures) -> (Printf.printf "%d" (nbPassePartout n passepartout m serrures))) (Array.init_withenv m (fun  k p -> ((fun  (r, out1) -> let o = out1 in
-                            ((), o)) (Array.init_withenv 2 (fun  l r -> Scanf.scanf "%d"
-                            (fun  out_ -> (
-                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                            let q = out_ in
-                                            ((), q)
-                                            )
-                            )) ()))) ()))
-                            )
-               )) (Array.init_withenv n (fun  i h -> ((fun  (t, out0) -> let g = out0 in
-               ((), g)) (Array.init_withenv 2 (fun  j t -> Scanf.scanf "%d"
+               let passepartout = (Array.init n (fun  i -> let out0 = (Array.init 2 (fun  j -> Scanf.scanf "%d"
                (fun  out01 -> (
                                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                let s = out01 in
-                                ((), s)
+                                out01
                                 )
-               )) ()))) ()))
+               ))) in
+               out0)) in
+               Scanf.scanf "%d"
+               (fun  m -> (
+                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                            let serrures = (Array.init m (fun  k -> let out1 = (Array.init 2 (fun  l -> Scanf.scanf "%d"
+                            (fun  out_ -> (
+                                            (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                                            out_
+                                            )
+                            ))) in
+                            out1)) in
+                            (Printf.printf "%d" (nbPassePartout n passepartout m serrures))
+                            )
+               )
                )
   )
 

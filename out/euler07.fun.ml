@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let divisible n t size =
   let c = (size - 1) in
   let rec b i =
@@ -35,9 +24,9 @@ let find n t used nth =
     (a n used)
 let main =
   let n = 10001 in
-  ((fun  (e, t) -> (
-                     (Printf.printf "%d\n" (find 3 t 1 n))
-                     )
-  ) (Array.init_withenv n (fun  i e -> let d = 2 in
-  ((), d)) ()))
+  let t = (Array.init n (fun  i -> 2)) in
+  (
+    (Printf.printf "%d\n" (find 3 t 1 n))
+    )
+  
 

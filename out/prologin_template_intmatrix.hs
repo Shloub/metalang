@@ -25,17 +25,16 @@ main :: IO ()
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                             
 
 
@@ -58,10 +57,9 @@ programme_candidat tableau x y =
 main =
   do taille_x <- (fmap read getLine)
      taille_y <- (fmap read getLine)
-     (array_init_withenv taille_y (\ a g ->
-                                    do f <- (join (newListArray . (,) 0 . subtract 1 <$> return taille_x <*> fmap (map read . words) getLine))
-                                       return ((), f)) ()) >>= (\ (g, tableau) ->
-                                                                 do printf "%d" =<< (programme_candidat tableau taille_x taille_y :: IO Int)
-                                                                    printf "\n" :: IO ())
+     tableau <- array_init taille_y (\ a ->
+                                      (join (newListArray . (,) 0 . subtract 1 <$> return taille_x <*> fmap (map read . words) getLine)))
+     printf "%d" =<< (programme_candidat tableau taille_x taille_y :: IO Int)
+     printf "\n" :: IO ()
 
 

@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 eratostene t max0 =
@@ -64,11 +63,10 @@ eratostene t max0 =
 main =
   do let n = 100000
      {- normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages -}
-     (array_init_withenv n (\ i e ->
-                             let d = i
-                                     in return ((), d)) ()) >>= (\ (e, t) ->
-                                                                  do writeIOA t 1 0
-                                                                     printf "%d" =<< (eratostene t n :: IO Int)
-                                                                     printf "\n" :: IO ())
+     do t <- array_init n (\ i ->
+                            return i)
+        writeIOA t 1 0
+        printf "%d" =<< (eratostene t n :: IO Int)
+        printf "\n" :: IO ()
 
 

@@ -55,17 +55,16 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
 
 
 max2_ a b =
@@ -107,24 +106,20 @@ nbPassePartout n passepartout m serrures =
 main =
   do n <- read_int
      skip_whitespaces
-     (array_init_withenv n (\ i h ->
-                             (array_init_withenv 2 (\ j t ->
-                                                     do out01 <- read_int
-                                                        skip_whitespaces
-                                                        let s = out01
-                                                        return ((), s)) ()) >>= (\ (t, out0) ->
-                                                                                  let g = out0
-                                                                                          in return ((), g))) ()) >>= (\ (h, passepartout) ->
-                                                                                                                        do m <- read_int
-                                                                                                                           skip_whitespaces
-                                                                                                                           (array_init_withenv m (\ k p ->
-                                                                                                                                                   (array_init_withenv 2 (\ l r ->
-                                                                                                                                                                           do out_ <- read_int
-                                                                                                                                                                              skip_whitespaces
-                                                                                                                                                                              let q = out_
-                                                                                                                                                                              return ((), q)) ()) >>= (\ (r, out1) ->
-                                                                                                                                                                                                        let o = out1
-                                                                                                                                                                                                                in return ((), o))) ()) >>= (\ (p, serrures) ->
-                                                                                                                                                                                                                                              printf "%d" =<< (nbPassePartout n passepartout m serrures :: IO Int)))
+     passepartout <- array_init n (\ i ->
+                                    do out0 <- array_init 2 (\ j ->
+                                                              do out01 <- read_int
+                                                                 skip_whitespaces
+                                                                 return out01)
+                                       return out0)
+     m <- read_int
+     skip_whitespaces
+     serrures <- array_init m (\ k ->
+                                do out1 <- array_init 2 (\ l ->
+                                                          do out_ <- read_int
+                                                             skip_whitespaces
+                                                             return out_)
+                                   return out1)
+     printf "%d" =<< (nbPassePartout n passepartout m serrures :: IO Int)
 
 

@@ -1,18 +1,8 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let is_number c =
   (((int_of_char (c)) <= (int_of_char ('9'))) && ((int_of_char (c)) >= (int_of_char ('0'))))
 let npi0 str len =
-  ((fun  (b, stack) -> let ptrStack = 0 in
+  let stack = (Array.init len (fun  i -> 0)) in
+  let ptrStack = 0 in
   let ptrStr = 0 in
   let rec d ptrStack ptrStr =
     (if (ptrStr < len)
@@ -43,20 +33,19 @@ let npi0 str len =
                        
                        else (d ptrStack ptrStr))))
      else stack.(0)) in
-    (d ptrStack ptrStr)) (Array.init_withenv len (fun  i b -> let a = 0 in
-  ((), a)) ()))
+    (d ptrStack ptrStr)
 let main =
   let len = 0 in
   Scanf.scanf "%d"
   (fun  j -> let len = j in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-    ((fun  (g, tab) -> let result = (npi0 tab len) in
-    (Printf.printf "%d" result)) (Array.init_withenv len (fun  i g -> let tmp = '\000' in
+    let tab = (Array.init len (fun  i -> let tmp = '\000' in
     Scanf.scanf "%c"
     (fun  h -> let tmp = h in
-    let f = tmp in
-    ((), f))) ()))
+    tmp))) in
+    let result = (npi0 tab len) in
+    (Printf.printf "%d" result)
     )
   )
 

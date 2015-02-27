@@ -1,13 +1,5 @@
 #lang racket
 (require racket/block)
-(define array_init_withenv (lambda (len f env)
-  (let ((tab (build-vector len (lambda (i)
-    (let ([o ((f i) env)])
-      (block
-        (set! env (car o))
-        (cadr o)
-      )
-    ))))) (list env tab))))
 (define last-char 0)
 (define next-char (lambda () (set! last-char (read-char (current-input-port)))))
 (next-char)
@@ -51,23 +43,20 @@
   (a 0 out0))))
 )
 (define main
-  ((lambda (internal_env) (apply (lambda (d t0) 
-                                        ((lambda (f) 
-                                           (block
-                                             (set-toto-bar! (vector-ref t0 0) f)
-                                             (mread-blank)
-                                             ((lambda (e) 
-                                                (block
-                                                  (set-toto-blah! (vector-ref t0 1) e)
-                                                  (let ([titi (result t0 4)])
-                                                  (block
-                                                    (map display (list titi (toto-blah (vector-ref t0 2))))
-                                                    ))
-                                                  )) (mread-int))
-                                           )) (mread-int))) internal_env)) (array_init_withenv 4 
-(lambda (i) 
-  (lambda (d) 
-    (let ([c (mktoto i)])
-    (list '() c)))) '()))
+  (let ([t0 (build-vector 4 (lambda (i) 
+                              (mktoto i)))])
+  ((lambda (f) 
+     (block
+       (set-toto-bar! (vector-ref t0 0) f)
+       (mread-blank)
+       ((lambda (e) 
+          (block
+            (set-toto-blah! (vector-ref t0 1) e)
+            (let ([titi (result t0 4)])
+            (block
+              (map display (list titi (toto-blah (vector-ref t0 2))))
+              ))
+            )) (mread-int))
+     )) (mread-int)))
 )
 

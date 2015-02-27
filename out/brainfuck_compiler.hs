@@ -27,93 +27,91 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 
 main =
   do let input = ' '
      let current_pos = 500
-     (array_init_withenv 1000 (\ i b ->
-                                let a = 0
-                                        in return ((), a)) ()) >>= (\ (b, mem) ->
-                                                                     do writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
-                                                                        let d = current_pos + 1
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
-                                                                        let c e =
-                                                                              ifM (((/=) 0) <$> (readIOA mem e))
-                                                                                  (do writeIOA mem e =<< ((-) <$> (readIOA mem e) <*> (return 1))
-                                                                                      let f = e - 1
-                                                                                      writeIOA mem f =<< (((+) 1) <$> (readIOA mem f))
-                                                                                      printf "%c" =<< (((fmap chr (readIOA mem f))) :: IO Char)
-                                                                                      let g = f + 1
-                                                                                      c g)
-                                                                                  (return ()) in
-                                                                              c d)
+     mem <- array_init 1000 (\ i ->
+                              return 0)
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
+     let d = current_pos + 1
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     writeIOA mem d =<< (((+) 1) <$> (readIOA mem d))
+     let c e =
+           ifM (((/=) 0) <$> (readIOA mem e))
+               (do writeIOA mem e =<< ((-) <$> (readIOA mem e) <*> (return 1))
+                   let f = e - 1
+                   writeIOA mem f =<< (((+) 1) <$> (readIOA mem f))
+                   printf "%c" =<< (((fmap chr (readIOA mem f))) :: IO Char)
+                   let g = f + 1
+                   c g)
+               (return ()) in
+           c d
 
 

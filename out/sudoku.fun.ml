@@ -1,22 +1,11 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let read_sudoku () =
-  ((fun  (g, out0) -> out0) (Array.init_withenv (9 * 9) (fun  i g -> Scanf.scanf "%d"
+  let out0 = (Array.init (9 * 9) (fun  i -> Scanf.scanf "%d"
   (fun  k -> (
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-               let f = k in
-               ((), f)
+               k
                )
-  )) ()))
+  ))) in
+  out0
 let print_sudoku sudoku0 =
   let rec d y =
     (if (y <= 8)

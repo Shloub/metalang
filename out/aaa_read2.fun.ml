@@ -1,19 +1,14 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
     (Printf.printf "%d=len\n" len);
-    ((fun  (k, tab) -> let y = (len - 1) in
+    let tab = (Array.init len (fun  a -> Scanf.scanf "%d"
+    (fun  b -> (
+                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                 b
+                 )
+    ))) in
+    let y = (len - 1) in
     let rec x i =
       (if (i <= y)
        then (
@@ -23,7 +18,13 @@ let main =
        
        else (
               (Printf.printf "\n" );
-              ((fun  (m, tab2) -> let w = (len - 1) in
+              let tab2 = (Array.init len (fun  d -> Scanf.scanf "%d"
+              (fun  e -> (
+                           (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                           e
+                           )
+              ))) in
+              let w = (len - 1) in
               let rec v i_ =
                 (if (i_ <= w)
                  then (
@@ -34,59 +35,47 @@ let main =
                  else let strlen = (Scanf.scanf "%d " (fun x -> x)) in
                  (
                    (Printf.printf "%d=strlen\n" strlen);
-                   ((fun  (p, tab4) -> (
-                                         (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                                         let u = (strlen - 1) in
-                                         let rec s i3 =
-                                           (if (i3 <= u)
-                                            then let tmpc = tab4.(i3) in
-                                            let c = (int_of_char (tmpc)) in
-                                            (
-                                              (Printf.printf "%c:%d " tmpc c);
-                                              let c = (if (tmpc <> ' ')
-                                                       then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
-                                                       c
-                                                       else c) in
-                                              (
-                                                tab4.(i3) <- (char_of_int (c));
-                                                (s (i3 + 1))
-                                                )
-                                              
-                                              )
-                                            
-                                            else let r = (strlen - 1) in
-                                            let rec q j =
-                                              (if (j <= r)
-                                               then (
-                                                      (Printf.printf "%c" tab4.(j));
-                                                      (q (j + 1))
-                                                      )
-                                               
-                                               else ()) in
-                                              (q 0)) in
-                                           (s 0)
-                                         )
-                   ) (Array.init_withenv strlen (fun  f p -> Scanf.scanf "%c"
-                   (fun  g -> let o = g in
-                   ((), o))) ()))
+                   let tab4 = (Array.init strlen (fun  f -> Scanf.scanf "%c"
+                   (fun  g -> g))) in
+                   (
+                     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
+                     let u = (strlen - 1) in
+                     let rec s i3 =
+                       (if (i3 <= u)
+                        then let tmpc = tab4.(i3) in
+                        let c = (int_of_char (tmpc)) in
+                        (
+                          (Printf.printf "%c:%d " tmpc c);
+                          let c = (if (tmpc <> ' ')
+                                   then let c = ((((c - (int_of_char ('a'))) + 13) mod 26) + (int_of_char ('a'))) in
+                                   c
+                                   else c) in
+                          (
+                            tab4.(i3) <- (char_of_int (c));
+                            (s (i3 + 1))
+                            )
+                          
+                          )
+                        
+                        else let r = (strlen - 1) in
+                        let rec q j =
+                          (if (j <= r)
+                           then (
+                                  (Printf.printf "%c" tab4.(j));
+                                  (q (j + 1))
+                                  )
+                           
+                           else ()) in
+                          (q 0)) in
+                       (s 0)
+                     )
+                   
                    )
                  ) in
-                (v 0)) (Array.init_withenv len (fun  d m -> Scanf.scanf "%d"
-              (fun  e -> (
-                           (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                           let l = e in
-                           ((), l)
-                           )
-              )) ()))
+                (v 0)
               )
        ) in
-      (x 0)) (Array.init_withenv len (fun  a k -> Scanf.scanf "%d"
-    (fun  b -> (
-                 (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                 let h = b in
-                 ((), h)
-                 )
-    )) ()))
+      (x 0)
     )
   
 

@@ -46,28 +46,26 @@ readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
 
 
 main =
-  (array_init_withenv 2 (\ d b ->
-                          do out0 <- read_int
-                             skip_whitespaces
-                             let a = out0
-                             return ((), a)) ()) >>= (\ (b, t) ->
-                                                       do printf "%d" =<< (readIOA t 0 :: IO Int)
-                                                          printf " - " :: IO ()
-                                                          printf "%d" =<< (readIOA t 1 :: IO Int)
-                                                          printf "\n" :: IO ())
+  do t <- array_init 2 (\ d ->
+                         do out0 <- read_int
+                            skip_whitespaces
+                            return out0)
+     printf "%d" =<< (readIOA t 0 :: IO Int)
+     printf " - " :: IO ()
+     printf "%d" =<< (readIOA t 1 :: IO Int)
+     printf "\n" :: IO ()
 
 

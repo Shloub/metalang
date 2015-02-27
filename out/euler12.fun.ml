@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let eratostene t max0 =
   let n = 0 in
   let ba = (max0 - 1) in
@@ -51,8 +40,10 @@ let fillPrimesFactors t n primes nprimes =
     (v 0 n)
 let find ndiv2 =
   let maximumprimes = 110 in
-  ((fun  (e, era) -> let nprimes = (eratostene era maximumprimes) in
-  ((fun  (g, primes) -> let l = 0 in
+  let era = (Array.init maximumprimes (fun  j -> j)) in
+  let nprimes = (eratostene era maximumprimes) in
+  let primes = (Array.init nprimes (fun  o -> 0)) in
+  let l = 0 in
   let u = (maximumprimes - 1) in
   let rec s k l =
     (if (k <= u)
@@ -66,7 +57,8 @@ let find ndiv2 =
            else (s (k + 1) l))
      else let rec h n =
             (if (n <= 10000)
-             then ((fun  (q, primesFactors) -> let max0 = ((max ((fillPrimesFactors primesFactors n primes nprimes)) ((fillPrimesFactors primesFactors (n + 1) primes nprimes)))) in
+             then let primesFactors = (Array.init (n + 2) (fun  m -> 0)) in
+             let max0 = ((max ((fillPrimesFactors primesFactors n primes nprimes)) ((fillPrimesFactors primesFactors (n + 1) primes nprimes)))) in
              (
                primesFactors.(2) <- (primesFactors.(2) - 1);
                let ndivs = 1 in
@@ -82,13 +74,10 @@ let find ndiv2 =
                         (h (n + 1)))) in
                  (r 0 ndivs)
                )
-             ) (Array.init_withenv (n + 2) (fun  m q -> let p = 0 in
-             ((), p)) ()))
+             
              else 0) in
             (h 1)) in
-    (s 2 l)) (Array.init_withenv nprimes (fun  o g -> let f = 0 in
-  ((), f)) ()))) (Array.init_withenv maximumprimes (fun  j e -> let c = j in
-  ((), c)) ()))
+    (s 2 l)
 let main =
   (
     (Printf.printf "%d\n" (find 500));

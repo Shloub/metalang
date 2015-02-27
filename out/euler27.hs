@@ -27,17 +27,16 @@ writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
+array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f =
+  do li <- g 0
+     newListArray (0, len - 1) li
+  where g i =
            if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
+           then return []
+           else do item <- f i
+                   li <- g (i+1)
+                   return (item:li)
                                                                                                                                  
 
 eratostene t max0 =
@@ -86,63 +85,61 @@ test a b primes len =
 
 main =
   do let maximumprimes = 1000
-     (array_init_withenv maximumprimes (\ j m ->
-                                         let h = j
-                                                 in return ((), h)) ()) >>= (\ (m, era) ->
-                                                                              do let result = 0
-                                                                                 let max0 = 0
-                                                                                 nprimes <- eratostene era maximumprimes
-                                                                                 (array_init_withenv nprimes (\ o q ->
-                                                                                                               let p = 0
-                                                                                                                       in return ((), p)) ()) >>= (\ (q, primes) ->
-                                                                                                                                                    do let l = 0
-                                                                                                                                                       let v = maximumprimes - 1
-                                                                                                                                                       let u k be =
-                                                                                                                                                             if k <= v
-                                                                                                                                                             then ifM (((==) k) <$> (readIOA era k))
-                                                                                                                                                                      (do writeIOA primes be k
-                                                                                                                                                                          let bf = be + 1
-                                                                                                                                                                          u (k + 1) bf)
-                                                                                                                                                                      (u (k + 1) be)
-                                                                                                                                                             else do printf "%d" (be :: Int) :: IO ()
-                                                                                                                                                                     printf " == " :: IO ()
-                                                                                                                                                                     printf "%d" (nprimes :: Int) :: IO ()
-                                                                                                                                                                     printf "\n" :: IO ()
-                                                                                                                                                                     let ma = 0
-                                                                                                                                                                     let mb = 0
-                                                                                                                                                                     let r b bg bh bi bj =
-                                                                                                                                                                           if b <= 999
-                                                                                                                                                                           then ifM (((==) b) <$> (readIOA era b))
-                                                                                                                                                                                    (let s a bk bl bm bn =
-                                                                                                                                                                                           if a <= 999
-                                                                                                                                                                                           then do n1 <- test a b primes nprimes
-                                                                                                                                                                                                   n2 <- test a (- b) primes nprimes
-                                                                                                                                                                                                   (\ (bo, bp, bq, br) ->
-                                                                                                                                                                                                     if n2 > bp
-                                                                                                                                                                                                     then do let bs = n2
-                                                                                                                                                                                                             let bt = - a * b
-                                                                                                                                                                                                             let bu = a
-                                                                                                                                                                                                             let bv = - b
-                                                                                                                                                                                                             s (a + 1) bu bs bv bt
-                                                                                                                                                                                                     else s (a + 1) bo bp bq br) (if n1 > bl
-                                                                                                                                                                                                                                  then let bw = n1
-                                                                                                                                                                                                                                                in let bx = a * b
-                                                                                                                                                                                                                                                            in let by = a
-                                                                                                                                                                                                                                                                        in let bz = b
-                                                                                                                                                                                                                                                                                    in (by, bw, bz, bx)
-                                                                                                                                                                                                                                  else (bk, bl, bm, bn))
-                                                                                                                                                                                           else r (b + 1) bk bl bm bn in
-                                                                                                                                                                                           s (- 999) bg bh bi bj)
-                                                                                                                                                                                    (r (b + 1) bg bh bi bj)
-                                                                                                                                                                           else do printf "%d" (bg :: Int) :: IO ()
-                                                                                                                                                                                   printf " " :: IO ()
-                                                                                                                                                                                   printf "%d" (bi :: Int) :: IO ()
-                                                                                                                                                                                   printf "\n" :: IO ()
-                                                                                                                                                                                   printf "%d" (bh :: Int) :: IO ()
-                                                                                                                                                                                   printf "\n" :: IO ()
-                                                                                                                                                                                   printf "%d" (bj :: Int) :: IO ()
-                                                                                                                                                                                   printf "\n" :: IO () in
-                                                                                                                                                                           r 3 ma max0 mb result in
-                                                                                                                                                             u 2 l))
+     era <- array_init maximumprimes (\ j ->
+                                       return j)
+     let result = 0
+     let max0 = 0
+     nprimes <- eratostene era maximumprimes
+     primes <- array_init nprimes (\ o ->
+                                    return 0)
+     let l = 0
+     let v = maximumprimes - 1
+     let u k be =
+           if k <= v
+           then ifM (((==) k) <$> (readIOA era k))
+                    (do writeIOA primes be k
+                        let bf = be + 1
+                        u (k + 1) bf)
+                    (u (k + 1) be)
+           else do printf "%d" (be :: Int) :: IO ()
+                   printf " == " :: IO ()
+                   printf "%d" (nprimes :: Int) :: IO ()
+                   printf "\n" :: IO ()
+                   let ma = 0
+                   let mb = 0
+                   let r b bg bh bi bj =
+                         if b <= 999
+                         then ifM (((==) b) <$> (readIOA era b))
+                                  (let s a bk bl bm bn =
+                                         if a <= 999
+                                         then do n1 <- test a b primes nprimes
+                                                 n2 <- test a (- b) primes nprimes
+                                                 (\ (bo, bp, bq, br) ->
+                                                   if n2 > bp
+                                                   then do let bs = n2
+                                                           let bt = - a * b
+                                                           let bu = a
+                                                           let bv = - b
+                                                           s (a + 1) bu bs bv bt
+                                                   else s (a + 1) bo bp bq br) (if n1 > bl
+                                                                                then let bw = n1
+                                                                                              in let bx = a * b
+                                                                                                          in let by = a
+                                                                                                                      in let bz = b
+                                                                                                                                  in (by, bw, bz, bx)
+                                                                                else (bk, bl, bm, bn))
+                                         else r (b + 1) bk bl bm bn in
+                                         s (- 999) bg bh bi bj)
+                                  (r (b + 1) bg bh bi bj)
+                         else do printf "%d" (bg :: Int) :: IO ()
+                                 printf " " :: IO ()
+                                 printf "%d" (bi :: Int) :: IO ()
+                                 printf "\n" :: IO ()
+                                 printf "%d" (bh :: Int) :: IO ()
+                                 printf "\n" :: IO ()
+                                 printf "%d" (bj :: Int) :: IO ()
+                                 printf "\n" :: IO () in
+                         r 3 ma max0 mb result in
+           u 2 l
 
 

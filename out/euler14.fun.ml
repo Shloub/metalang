@@ -1,14 +1,3 @@
-module Array = struct
-  include Array
-  let init_withenv len f env =
-    let refenv = ref env in
-    let tab = Array.init len (fun i ->
-      let env, out = f i !refenv in
-      refenv := env;
-      out
-    ) in !refenv, tab
-end
-
 let next0 n =
   (if ((n mod 2) = 0)
    then (n / 2)
@@ -26,7 +15,8 @@ let rec find n m =
                       )
                )))
 let main =
-  ((fun  (b, m) -> let max0 = 0 in
+  let m = (Array.init 1000000 (fun  j -> 0)) in
+  let max0 = 0 in
   let maxi = 0 in
   let rec c i max0 maxi =
     (if (i <= 999)
@@ -41,6 +31,5 @@ let main =
             (Printf.printf "%d\n%d\n" max0 maxi)
             )
      ) in
-    (c 1 max0 maxi)) (Array.init_withenv 1000000 (fun  j b -> let a = 0 in
-  ((), a)) ()))
+    (c 1 max0 maxi)
 
