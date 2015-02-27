@@ -37,6 +37,7 @@ open CPrinter
 class pyPrinter = object(self)
   inherit cPrinter as super
 
+  method declare_for s f li = ()
   method separator f () = ()
 
   method tuple f li =

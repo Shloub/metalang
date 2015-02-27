@@ -38,6 +38,8 @@ open CppPrinter
 class javaPrinter = object(self) (* TODO scanf et printf*)
   inherit cppPrinter as cppprinter
 
+  method declare_for s f li = ()
+
   method combine_formats () = true
 
   method lang () = "java"
