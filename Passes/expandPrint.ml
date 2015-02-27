@@ -39,22 +39,18 @@ open PassesUtils
 
 type acc0 = unit
 
-let rec write_bool e =
-  Instr.if_ (Expr.access (Mutable.var e))
+let write_bool e =
+  Instr.if_ e
     [ Instr.print Type.string (Expr.string "True") ]
     [ Instr.print Type.string (Expr.string "False") ]
 
-let rec rewrite (i : 'lex Instr.t) : 'lex Instr.t list = match
-    Instr.unfix i with
-    | Instr.Print(Type.Fixed.F (_, Type.Bool), Expr.Fixed.F (annot,
-                                                             Expr.Access ( Mutable.Fixed.F
-                                                                             (_, Mutable.Var b))
-    ) ) ->
-      [write_bool b]
-    | j -> [ Instr.deep_map_bloc (List.flatten @* List.map rewrite) j |> Instr.fixa (Instr.Fixed.annot i) ]
+let rewrite i = match Instr.unfix i with
+    | Instr.Print(Type.Fixed.F (_, Type.Bool), b) -> write_bool b
+    | j -> j
+    |> Instr.fixa (Instr.Fixed.annot i)
 
 type 'lex acc = unit
 let init_acc _ = ()
 let process acc i =
-  acc, List.map rewrite i |> List.flatten
+  acc, List.map (Instr.Writer.Deep.map rewrite) i
 
