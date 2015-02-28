@@ -101,6 +101,8 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 let nop = -100
 let fun_priority = 20
+let fun_priority_op = 18
+let lambda_priority = 18
 
 let parens ~(p:int) p2 f fmt =
   let fmt = if p >= p2 then let open Format in "(" ^^ fmt ^^ ")" else fmt in
@@ -237,13 +239,13 @@ class haskellPrinter = object(self)
 
   method comment fe f str c = Format.fprintf f "@[<v>{-%s-}@\n%a@]" str fe c
 
-  method fun_ f params e =
+  method fun_ ~p f params e =
     let pparams, e = self#extract_fun_params (E.fun_ params e) (fun f () -> ()) in
-    Format.fprintf f "@[<v 2>(\\%a ->@\n%a)@]" pparams () self#eM e
+    parens ~p lambda_priority f "@[<v 2>\\%a ->@\n%a@]" pparams () self#eM e
 
-  method funtuple f params e =
+  method funtuple ~p f params e =
     let pparams, e = self#extract_fun_params (E.funtuple params e) (fun f () -> ()) in
-    Format.fprintf f "@[<v 2>(\\%a ->@\n%a)@]" pparams () self#eM e
+    parens ~p lambda_priority f "@[<v 2>(\\%a ->@\n%a)@]" pparams () self#eM e
 
   method letrecin ~p f name params e1 e2 = match params with
   | [] -> parens ~p (fun_priority -1) f "let %a @[<v>() =@\n%a in@\n%a@]"
@@ -357,6 +359,11 @@ class haskellPrinter = object(self)
 	     ) ->
 	       Format.fprintf f "@[<h>%a <- read_int@]@\n%a" self#binding name
 	         self#blockContent [next]
+        | E.ReadIn( Type.Fixed.F(_, Type.Char),
+	      E.Fixed.F(_, E.Fun ( [name], next))
+	     ) ->
+	       Format.fprintf f "@[<h>%a <- getChar@]@\n%a" self#binding name
+	         self#blockContent [next]
         | E.Block li -> self#blockContent f li
         | E.LetIn (s, v, e) ->
             let isfun, (pparams, a) = self#extract_fun_params' v (fun f () -> ()) in
@@ -399,8 +406,8 @@ class haskellPrinter = object(self)
   | E.LetRecIn (name, params, e1, e2) -> self#letrecin ~p f name params e1 e2
   | E.BinOp (a, op, b) -> self#binop ~p f a op b
   | E.UnOp (a, op) -> self#unop ~p f a op
-  | E.Fun (params, e) -> self#fun_ f params e
-  | E.FunTuple (params, e) -> self#funtuple f params e
+  | E.Fun (params, e) -> self#fun_ ~p f params e
+  | E.FunTuple (params, e) -> self#funtuple ~p f params e
   | E.Apply (e, li) -> self#apply ~p f e li
   | E.Tuple li -> self#tuple f li
   | E.Lief l -> self#lief ~p f l
@@ -456,11 +463,20 @@ class haskellPrinter = object(self)
 
   method read ~p f ty next =
     match Type.unfix ty, E.unfix next with
-    | Type.Integer, E.Fun ( [name], next) ->
+
+    | t, E.Fun ([o], E.Fixed.F(_, E.Lief (E.Binding o2) )) when o = o2 ->
+        begin match t with
+        | Type.Char -> Format.fprintf f "getChar"
+        | Type.Integer -> Format.fprintf f "read_int"
+        end
+    | _, E.Fun ([_], _ ) ->
+        self#block ~p f [ E.readin next ty]
+(*
          parens ~p (fun_priority-1) f "do @[<v>@[<h>%a <- read_int@]@\n%a@]" self#binding name
           self#blockContent [next]
+*)
     | Type.Integer, _ ->  parens ~p (fun_priority-1) f "@[<h>read_int >>=@[<v> (%a)@]@]" self#expr next
-    | Type.Char, _ -> parens ~p (fun_priority-1) f "@[<h>hGetChar stdin >>=@[<v> (%a)@]@]" self#expr next
+    | Type.Char, _ -> parens ~p (fun_priority-1) f "@[<h>getChar >>=@[<v> (%a)@]@]" self#expr next
     | _ -> assert false
 
   method arraymake ~p f len lambda env =
