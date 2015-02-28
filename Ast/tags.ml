@@ -33,9 +33,14 @@
 
 open Stdlib
 
+let set_topLVL = ref StringSet.empty
 let set = ref StringSet.empty
 
-let reset () = set := StringSet.empty
+let reset () = set := !set_topLVL
+
+let tag_topLVL s =
+  set := StringSet.add s !set;
+  set_topLVL := StringSet.add s !set_topLVL
 
 let tag s = set := StringSet.add s !set
 let is_taged s = StringSet.mem s !set

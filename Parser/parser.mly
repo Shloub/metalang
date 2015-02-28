@@ -336,6 +336,9 @@ define :
     { P.DeclareType ($3, (T.struct_ $4 )) }
 | ENUM AT IDENT ENUM_FIELD* END
     { P.DeclareType ($3, T.enum $4 ) }
+
+| TAG IDENT define { Tags.tag_topLVL $2; $3 }
+
 ;
 
 decl_field :

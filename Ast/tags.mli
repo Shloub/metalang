@@ -33,4 +33,5 @@
 
 val reset : unit -> unit
 val tag : string -> unit
+val tag_topLVL : string -> unit
 val is_taged : string -> bool
