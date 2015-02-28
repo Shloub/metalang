@@ -39,7 +39,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   e ^ 5
 -}
   do p <- array_init 10 (\ i ->
-                          return (i * i * i * i * i))
+                           return (i * i * i * i * i))
      let sum = 0
      let j a q =
            if a <= 9

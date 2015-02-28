@@ -52,7 +52,7 @@ periode restes len a b =
 
 main =
   do t <- array_init 1000 (\ j ->
-                            return 0)
+                             return 0)
      let m = 0
      let mi = 0
      let h i q r =

@@ -48,7 +48,7 @@ result sum t maxIndex cache =
 
 main =
   do t <- array_init 8 (\ i ->
-                         return 0)
+                          return 0)
      writeIOA t 0 1
      writeIOA t 1 2
      writeIOA t 2 5
@@ -58,9 +58,9 @@ main =
      writeIOA t 6 100
      writeIOA t 7 200
      cache <- array_init 201 (\ j ->
-                               do o <- array_init 8 (\ k ->
-                                                      return 0)
-                                  return o)
+                                do o <- array_init 8 (\ k ->
+                                                        return 0)
+                                   return o)
      printf "%d" =<< (result 200 t 7 cache :: IO Int)
 
 

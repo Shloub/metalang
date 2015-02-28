@@ -48,9 +48,9 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 main :: IO ()
 main =
   do t <- array_init 2 (\ d ->
-                         do out0 <- read_int
-                            skip_whitespaces
-                            return out0)
+                          do out0 <- read_int
+                             skip_whitespaces
+                             return out0)
      printf "%d" =<< (readIOA t 0 :: IO Int)
      printf " - " :: IO ()
      printf "%d" =<< (readIOA t 1 :: IO Int)

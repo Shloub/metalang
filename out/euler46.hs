@@ -55,10 +55,10 @@ eratostene t max0 =
 main =
   do let maximumprimes = 6000
      era <- array_init maximumprimes (\ j_ ->
-                                       return j_)
+                                        return j_)
      nprimes <- eratostene era maximumprimes
      primes <- array_init nprimes (\ o ->
-                                    return 0)
+                                     return 0)
      let l = 0
      let x = maximumprimes - 1
      let w k bc =
@@ -73,7 +73,7 @@ main =
                    printf "%d" (nprimes :: Int) :: IO ()
                    printf "\n" :: IO ()
                    canbe <- array_init maximumprimes (\ i_ ->
-                                                       return False)
+                                                        return False)
                    let v = nprimes - 1
                    let r i =
                          if i <= v

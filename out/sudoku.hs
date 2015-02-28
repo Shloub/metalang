@@ -59,9 +59,9 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 main :: IO ()
 read_sudoku () =
   do out0 <- array_init (9 * 9) (\ i ->
-                                  do k <- read_int
-                                     skip_whitespaces
-                                     return k)
+                                   do k <- read_int
+                                      skip_whitespaces
+                                      return k)
      return out0
 
 print_sudoku sudoku0 =

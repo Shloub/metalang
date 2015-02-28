@@ -45,9 +45,9 @@ okdigits ok n =
 main =
   do let count = 0
      allowed <- array_init 10 (\ i ->
-                                return (i /= 0))
+                                 return (i /= 0))
      counted <- array_init 100000 (\ j ->
-                                    return False)
+                                     return False)
      let l e s =
            if e <= 9
            then do writeIOA allowed e False

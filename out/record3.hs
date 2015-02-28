@@ -80,7 +80,7 @@ result t len =
 
 main =
   do t <- array_init 4 (\ i ->
-                         mktoto i)
+                          mktoto i)
      f <- read_int
      join $ writeIORef <$> (_bar <$> (readIOA t 0)) <*> return f
      skip_whitespaces

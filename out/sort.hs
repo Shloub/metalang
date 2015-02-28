@@ -59,7 +59,7 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 main :: IO ()
 copytab tab len =
   do o <- array_init len (\ i ->
-                           readIOA tab i)
+                            readIOA tab i)
      return o
 
 bubblesort tab len =
@@ -116,11 +116,11 @@ main =
      let x = r
      skip_whitespaces
      tab <- array_init x (\ i_ ->
-                           do let tmp = 0
-                              q <- read_int
-                              let y = q
-                              skip_whitespaces
-                              return y)
+                            do let tmp = 0
+                               q <- read_int
+                               let y = q
+                               skip_whitespaces
+                               return y)
      tab2 <- copytab tab x
      bubblesort tab2 x
      let p = x - 1

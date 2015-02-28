@@ -56,7 +56,7 @@ main =
   do let n = 100000
      {- normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages -}
      do t <- array_init n (\ i ->
-                            return i)
+                             return i)
         writeIOA t 1 0
         printf "%d" =<< (eratostene t n :: IO Int)
         printf "\n" :: IO ()

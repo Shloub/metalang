@@ -79,9 +79,9 @@ result t_ t2_ =
      writeIORef (_blah l) =<< (((+) 1) <$> (readIORef (_blah l)))
      let len = 1
      cache0 <- array_init len (\ i ->
-                                return (- i))
+                                 return (- i))
      cache1 <- array_init len (\ j ->
-                                return j)
+                                 return j)
      let cache2 = cache0
      let n = cache1
      let o = n

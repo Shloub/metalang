@@ -6,15 +6,6 @@ import Data.Array.IO
 import Data.Char
 import System.IO
 import Data.IORef
-
-(<&&>) a b =
-	do c <- a
-	   if c then b
-		 else return False
-(<||>) a b =
-	do c <- a
-	   if c then return True
-		 else b
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM c i e =
   do b <- c
@@ -68,38 +59,38 @@ main =
      printf "\n" :: IO ()
      let m = l `quot` 2
      tab <- array_init m (\ i ->
-                           do tmpi1 <- read_int
-                              skip_whitespaces
-                              printf "%d" (i :: Int) :: IO ()
-                              printf "=>" :: IO ()
-                              printf "%d" (tmpi1 :: Int) :: IO ()
-                              printf " " :: IO ()
-                              return tmpi1)
+                            do tmpi1 <- read_int
+                               skip_whitespaces
+                               printf "%d" (i :: Int) :: IO ()
+                               printf "=>" :: IO ()
+                               printf "%d" (tmpi1 :: Int) :: IO ()
+                               printf " " :: IO ()
+                               return tmpi1)
      printf "\n" :: IO ()
      tab2 <- array_init m (\ i_ ->
-                            do tmpi2 <- read_int
-                               skip_whitespaces
-                               printf "%d" (i_ :: Int) :: IO ()
-                               printf "==>" :: IO ()
-                               printf "%d" (tmpi2 :: Int) :: IO ()
-                               printf " " :: IO ()
-                               return tmpi2)
+                             do tmpi2 <- read_int
+                                skip_whitespaces
+                                printf "%d" (i_ :: Int) :: IO ()
+                                printf "==>" :: IO ()
+                                printf "%d" (tmpi2 :: Int) :: IO ()
+                                printf " " :: IO ()
+                                return tmpi2)
      strlen <- read_int
      skip_whitespaces
      printf "%d" (strlen :: Int) :: IO ()
      printf "=strlen\n" :: IO ()
      tab4 <- array_init strlen (\ toto ->
-                                 hGetChar stdin >>= ((\ tmpc ->
-                                                       do c <- ((fmap ord (return tmpc)))
-                                                          printf "%c" (tmpc :: Char) :: IO ()
-                                                          printf ":" :: IO ()
-                                                          printf "%d" (c :: Int) :: IO ()
-                                                          printf " " :: IO ()
-                                                          n <- if tmpc /= ' '
-                                                               then do o <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> (return 26)) <*> ((fmap ord (return 'a'))))
-                                                                       return o
-                                                               else return c
-                                                          ((fmap chr (return n))))))
+                                  do tmpc <- getChar
+                                     let c = (ord tmpc)
+                                     printf "%c" (tmpc :: Char) :: IO ()
+                                     printf ":" :: IO ()
+                                     printf "%d" (c :: Int) :: IO ()
+                                     printf " " :: IO ()
+                                     let n = if tmpc /= ' '
+                                             then let o = ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
+                                                          in o
+                                             else c
+                                     return (chr n))
      let k = strlen - 1
      let h j =
            if j <= k

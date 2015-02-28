@@ -86,11 +86,11 @@ main =
      let r = f
      skip_whitespaces
      tab <- array_init r (\ i ->
-                           do let x = 0
-                              e <- read_int
-                              let s = e
-                              skip_whitespaces
-                              return s)
+                            do let x = 0
+                               e <- read_int
+                               let s = e
+                               skip_whitespaces
+                               return s)
      printf "%d" =<< (montagnes0 tab r :: IO Int)
 
 

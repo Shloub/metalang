@@ -89,11 +89,11 @@ main =
      let p = h
      skip_whitespaces
      tab <- array_init p (\ i ->
-                           do let tmp = 0
-                              g <- read_int
-                              let q = g
-                              skip_whitespaces
-                              return q)
+                            do let tmp = 0
+                               g <- read_int
+                               let q = g
+                               skip_whitespaces
+                               return q)
      printf "%d" =<< (plus_petit0 tab p :: IO Int)
 
 

@@ -26,7 +26,7 @@ main :: IO ()
 
 result len tab =
   do tab2 <- array_init len (\ i ->
-                              return False)
+                               return False)
      let f = len - 1
      let e i1 =
            if i1 <= f

@@ -36,9 +36,9 @@ main =
      {- normalement on doit mettre 20 mais là on se tape un overflow -}
      do let w = n + 1
         tab <- array_init w (\ i ->
-                              do tab2 <- array_init w (\ j ->
-                                                        return 0)
-                                 return tab2)
+                               do tab2 <- array_init w (\ j ->
+                                                          return 0)
+                                  return tab2)
         let t = w - 1
         let s l =
               if l <= t

@@ -80,9 +80,9 @@ find0 len tab cache x y =
 
 find len tab =
   do tab2 <- array_init len (\ i ->
-                              do tab3 <- array_init (i + 1) (\ j ->
-                                                              return 0)
-                                 return tab3)
+                               do tab3 <- array_init (i + 1) (\ j ->
+                                                                return 0)
+                                  return tab3)
      find0 len tab tab2 0 0
 
 main =
@@ -91,13 +91,13 @@ main =
      let u = q
      skip_whitespaces
      tab <- array_init u (\ i ->
-                           do tab2 <- array_init (i + 1) (\ j ->
-                                                           do let tmp = 0
-                                                              p <- read_int
-                                                              let v = p
-                                                              skip_whitespaces
-                                                              return v)
-                              return tab2)
+                            do tab2 <- array_init (i + 1) (\ j ->
+                                                             do let tmp = 0
+                                                                p <- read_int
+                                                                let v = p
+                                                                skip_whitespaces
+                                                                return v)
+                               return tab2)
      printf "%d" =<< (find u tab :: IO Int)
      printf "\n" :: IO ()
      let m = u - 1

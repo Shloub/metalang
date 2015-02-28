@@ -6,15 +6,6 @@ import Data.Array.IO
 import Data.Char
 import System.IO
 import Data.IORef
-
-(<&&>) a b =
-	do c <- a
-	   if c then b
-		 else return False
-(<||>) a b =
-	do c <- a
-	   if c then return True
-		 else b
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM c i e =
   do b <- c
@@ -60,15 +51,15 @@ main :: IO ()
 
 
 position_alphabet c =
-  do i <- ((fmap ord (return c)))
-     ifM ((((<=) i) <$> ((fmap ord (return 'Z')))) <&&> (((>=) i) <$> ((fmap ord (return 'A')))))
-         (((-) i) <$> ((fmap ord (return 'A'))))
-         (ifM ((((<=) i) <$> ((fmap ord (return 'z')))) <&&> (((>=) i) <$> ((fmap ord (return 'a')))))
-              (((-) i) <$> ((fmap ord (return 'a'))))
-              (return (- 1)))
+  let i = (ord c)
+          in return (if i <= (ord 'Z') && i >= (ord 'A')
+                     then i - (ord 'A')
+                     else if i <= (ord 'z') && i >= (ord 'a')
+                          then i - (ord 'a')
+                          else - 1)
 
 of_position_alphabet c =
-  ((fmap chr ((((+) c) <$> ((fmap ord (return 'a')))))))
+  return (chr (c + (ord 'a')))
 
 crypte taille_cle cle taille message =
   do let b = taille - 1
@@ -88,14 +79,12 @@ main =
   do taille_cle <- read_int
      skip_whitespaces
      cle <- array_init taille_cle (\ index ->
-                                    hGetChar stdin >>= ((\ out0 ->
-                                                          return out0)))
+                                     getChar)
      skip_whitespaces
      taille <- read_int
      skip_whitespaces
      message <- array_init taille (\ index2 ->
-                                    hGetChar stdin >>= ((\ out2 ->
-                                                          return out2)))
+                                     getChar)
      crypte taille_cle cle taille message
      let j = taille - 1
      let h i =

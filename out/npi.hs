@@ -59,11 +59,11 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 main :: IO ()
 
 is_number c =
-  (((<=) <$> ((fmap ord (return c))) <*> ((fmap ord (return '9')))) <&&> ((>=) <$> ((fmap ord (return c))) <*> ((fmap ord (return '0')))))
+  return ((ord c) <= (ord '9') && (ord c) >= (ord '0'))
 
 npi0 str len =
   do stack <- array_init len (\ i ->
-                               return 0)
+                                return 0)
      let ptrStack = 0
      let ptrStr = 0
      let d k l =
@@ -75,7 +75,7 @@ npi0 str len =
                          (do let num = 0
                              let e n o =
                                    ifM (((/=) ' ') <$> (readIOA str o))
-                                       (do p <- ((-) <$> (((+) (n * 10)) <$> ((fmap ord (readIOA str o)))) <*> ((fmap ord (return '0'))))
+                                       (do p <- ((-) <$> (((+) (n * 10)) <$> (fmap ord (readIOA str o))) <*> (return (ord '0')))
                                            let q = o + 1
                                            e p q)
                                        (do writeIOA stack k n
@@ -97,10 +97,10 @@ main =
      let u = j
      skip_whitespaces
      tab <- array_init u (\ i ->
-                           do let tmp = '\000'
-                              hGetChar stdin >>= ((\ h ->
-                                                    let v = h
-                                                            in return v)))
+                            do let tmp = '\000'
+                               h <- getChar
+                               let v = h
+                               return v)
      result <- npi0 tab u
      printf "%d" (result :: Int) :: IO ()
 

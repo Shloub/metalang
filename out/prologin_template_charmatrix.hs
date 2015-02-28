@@ -40,7 +40,7 @@ programme_candidat tableau taille_x taille_y =
            then do let e = taille_x - 1
                    let d j l =
                          if j <= e
-                         then do m <- (((+) l) <$> (((*) (i + j * 2)) <$> ((fmap ord (join $ readIOA <$> (readIOA tableau i) <*> return j)))))
+                         then do m <- (((+) l) <$> (((*) (i + j * 2)) <$> (fmap ord (join $ readIOA <$> (readIOA tableau i) <*> return j))))
                                  printf "%c" =<< (join $ readIOA <$> (readIOA tableau i) <*> return j :: IO Char)
                                  d (j + 1) m
                          else do printf "--\n" :: IO ()
@@ -53,7 +53,7 @@ main =
   do taille_x <- (fmap read getLine)
      taille_y <- (fmap read getLine)
      a <- array_init taille_y (\ b ->
-                                (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille_x)) <*> getLine)))
+                                 (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille_x)) <*> getLine)))
      let tableau = a
      printf "%d" =<< (programme_candidat tableau taille_x taille_y :: IO Int)
      printf "\n" :: IO ()

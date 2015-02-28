@@ -31,14 +31,14 @@ programme_candidat tableau1 taille1 tableau2 taille2 =
      let d = taille1 - 1
      let c i e =
            if i <= d
-           then do f <- (((+) e) <$> (((*) i) <$> ((fmap ord (readIOA tableau1 i)))))
+           then do f <- (((+) e) <$> (((*) i) <$> (fmap ord (readIOA tableau1 i))))
                    printf "%c" =<< (readIOA tableau1 i :: IO Char)
                    c (i + 1) f
            else do printf "--\n" :: IO ()
                    let b = taille2 - 1
                    let a j g =
                          if j <= b
-                         then do h <- (((+) g) <$> (((*) (j * 100)) <$> ((fmap ord (readIOA tableau2 j)))))
+                         then do h <- (((+) g) <$> (((*) (j * 100)) <$> (fmap ord (readIOA tableau2 j))))
                                  printf "%c" =<< (readIOA tableau2 j :: IO Char)
                                  a (j + 1) h
                          else do printf "--\n" :: IO ()

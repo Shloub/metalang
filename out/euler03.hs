@@ -17,23 +17,23 @@ main =
   do let maximum = 1
      let b0 = 2
      let a = 408464633
-     sqrtia <- ((fmap (floor . sqrt . fromIntegral) (return a)))
+     let sqrtia = ((floor . sqrt . fromIntegral) a)
      let d f g h =
            if f /= 1
            then do let b = g
                    let found = False
                    let e i j k l m =
                          if j <= m
-                         then (if (i `rem` j) == 0
-                               then do let t = i `quot` j
-                                       let u = j
-                                       let v = t
-                                       w <- ((fmap (floor . sqrt . fromIntegral) (return t)))
-                                       let x = True
-                                       return (t, v, u, x, w)
-                               else return (i, j, k, l, m)) >>= (\ (n, o, p, q, r) ->
-                                                                  do let s = o + 1
-                                                                     e n s p q r)
+                         then (\ (n, o, p, q, r) ->
+                                do let s = o + 1
+                                   e n s p q r) (if (i `rem` j) == 0
+                                                 then let t = i `quot` j
+                                                              in let u = j
+                                                                         in let v = t
+                                                                                    in let w = ((floor . sqrt . fromIntegral) t)
+                                                                                               in let x = True
+                                                                                                          in (t, v, u, x, w)
+                                                 else (i, j, k, l, m))
                          else if not l
                               then do printf "%d" (i :: Int) :: IO ()
                                       printf "\n" :: IO ()

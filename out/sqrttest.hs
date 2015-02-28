@@ -10,17 +10,17 @@ import Data.IORef
 main :: IO ()
 
 main =
-  do printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 4))) :: IO Int)
+  do printf "%d" (((floor . sqrt . fromIntegral) 4) :: Int) :: IO ()
      printf " " :: IO ()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 16))) :: IO Int)
+     printf "%d" (((floor . sqrt . fromIntegral) 16) :: Int) :: IO ()
      printf " " :: IO ()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 20))) :: IO Int)
+     printf "%d" (((floor . sqrt . fromIntegral) 20) :: Int) :: IO ()
      printf " " :: IO ()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 1000))) :: IO Int)
+     printf "%d" (((floor . sqrt . fromIntegral) 1000) :: Int) :: IO ()
      printf " " :: IO ()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 500))) :: IO Int)
+     printf "%d" (((floor . sqrt . fromIntegral) 500) :: Int) :: IO ()
      printf " " :: IO ()
-     printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 10))) :: IO Int)
+     printf "%d" (((floor . sqrt . fromIntegral) 10) :: Int) :: IO ()
      printf " " :: IO ()
 
 

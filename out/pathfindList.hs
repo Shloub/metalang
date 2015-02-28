@@ -76,7 +76,7 @@ pathfind_aux cache tab len pos =
 
 pathfind tab len =
   do cache <- array_init len (\ i ->
-                               return (- 1))
+                                return (- 1))
      pathfind_aux cache tab len 0
 
 main =
@@ -85,11 +85,11 @@ main =
      let k = f
      skip_whitespaces
      tab <- array_init k (\ i ->
-                           do let tmp = 0
-                              e <- read_int
-                              let l = e
-                              skip_whitespaces
-                              return l)
+                            do let tmp = 0
+                               e <- read_int
+                               let l = e
+                               skip_whitespaces
+                               return l)
      result <- pathfind tab k
      printf "%d" (result :: Int) :: IO ()
 

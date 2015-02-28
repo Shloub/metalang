@@ -44,24 +44,24 @@ find n m x y dx dy =
 
 main =
   do directions <- array_init 8 (\ i ->
-                                  return (if i == 0
-                                          then (0, 1)
-                                          else if i == 1
-                                               then (1, 0)
-                                               else if i == 2
-                                                    then (0, - 1)
-                                                    else if i == 3
-                                                         then (- 1, 0)
-                                                         else if i == 4
-                                                              then (1, 1)
-                                                              else if i == 5
-                                                                   then (1, - 1)
-                                                                   else if i == 6
-                                                                        then (- 1, 1)
-                                                                        else (- 1, - 1)))
+                                   return (if i == 0
+                                           then (0, 1)
+                                           else if i == 1
+                                                then (1, 0)
+                                                else if i == 2
+                                                     then (0, - 1)
+                                                     else if i == 3
+                                                          then (- 1, 0)
+                                                          else if i == 4
+                                                               then (1, 1)
+                                                               else if i == 5
+                                                                    then (1, - 1)
+                                                                    else if i == 6
+                                                                         then (- 1, 1)
+                                                                         else (- 1, - 1)))
      let max0 = 0
      m <- array_init 20 (\ c ->
-                          (join (newListArray . (,) 0 . subtract 1 <$> return 20 <*> fmap (map read . words) getLine)))
+                           (join (newListArray . (,) 0 . subtract 1 <$> return 20 <*> fmap (map read . words) getLine)))
      let h j o =
            if j <= 7
            then (readIOA directions j) >>= (\ (dx, dy) ->

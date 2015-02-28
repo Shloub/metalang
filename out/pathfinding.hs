@@ -82,9 +82,9 @@ pathfind_aux cache tab x y posX posY =
 
 pathfind tab x y =
   do cache <- array_init y (\ i ->
-                             do tmp <- array_init x (\ j ->
-                                                      return (- 1))
-                                return tmp)
+                              do tmp <- array_init x (\ j ->
+                                                        return (- 1))
+                                 return tmp)
      pathfind_aux cache tab x y 0 0
 
 main =
@@ -97,13 +97,13 @@ main =
      let s = p
      skip_whitespaces
      tab <- array_init s (\ i ->
-                           do tab2 <- array_init r (\ j ->
-                                                     do let tmp = '\000'
-                                                        hGetChar stdin >>= ((\ o ->
-                                                                              let t = o
-                                                                                      in return t)))
-                              skip_whitespaces
-                              return tab2)
+                            do tab2 <- array_init r (\ j ->
+                                                       do let tmp = '\000'
+                                                          o <- getChar
+                                                          let t = o
+                                                          return t)
+                               skip_whitespaces
+                               return tab2)
      result <- pathfind tab r s
      printf "%d" (result :: Int) :: IO ()
 

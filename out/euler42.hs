@@ -54,8 +54,8 @@ is_triangular n =
    n = k * (k + 1) / 2
 	  n * 2 = k * (k + 1)
    -}
-  do a <- ((fmap (floor . sqrt . fromIntegral) (return (n * 2))))
-     return (a * (a + 1) == n * 2)
+  let a = ((floor . sqrt . fromIntegral) (n * 2))
+          in return (a * (a + 1) == n * 2)
 
 score () =
   do skip_whitespaces
@@ -64,10 +64,10 @@ score () =
      let sum = 0
      let b i f =
            if i <= len
-           then hGetChar stdin >>= ((\ c ->
-                                      do g <- (((+) f) <$> (((+) 1) <$> ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return 'A'))))))
-                                         {-		print c print " " print sum print " " -}
-                                         b (i + 1) g))
+           then do c <- getChar
+                   let g = f + (ord c) - (ord 'A') + 1
+                   {-		print c print " " print sum print " " -}
+                   b (i + 1) g
            else ifM (is_triangular f)
                     (return 1)
                     (return 0) in

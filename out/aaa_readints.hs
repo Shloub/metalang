@@ -37,7 +37,7 @@ main =
                    h (i + 1)
            else do l <- (fmap read getLine)
                    tab2 <- array_init (l - 1) (\ a ->
-                                                (join (newListArray . (,) 0 . subtract 1 <$> return l <*> fmap (map read . words) getLine)))
+                                                 (join (newListArray . (,) 0 . subtract 1 <$> return l <*> fmap (map read . words) getLine)))
                    let g = l - 2
                    let d m =
                          if m <= g

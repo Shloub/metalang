@@ -55,10 +55,10 @@ score () =
      let sum = 0
      let a i d =
            if i <= len
-           then hGetChar stdin >>= ((\ c ->
-                                      do e <- (((+) d) <$> (((+) 1) <$> ((-) <$> ((fmap ord (return c))) <*> ((fmap ord (return 'A'))))))
-                                         {-		print c print " " print sum print " " -}
-                                         a (i + 1) e))
+           then do c <- getChar
+                   let e = d + (ord c) - (ord 'A') + 1
+                   {-		print c print " " print sum print " " -}
+                   a (i + 1) e
            else return d in
            a 1 sum
 

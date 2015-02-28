@@ -66,8 +66,8 @@ data Bigint = Bigint {
 
 read_bigint len =
   do chiffres <- array_init len (\ j ->
-                                  hGetChar stdin >>= ((\ c ->
-                                                        ((fmap ord (return c))))))
+                                   do c <- getChar
+                                      return (ord c))
      let cf = (len - 1) `quot` 2
      let ce i =
             if i <= cf
@@ -135,24 +135,24 @@ add_bigint_positif a b =
   do len <- (((+) 1) <$> (join $ max2_ <$> (readIORef (_bigint_len a)) <*> (readIORef (_bigint_len b))))
      let retenue = 0
      (array_init_withenv len (\ i ck ->
-                               do let tmp = ck
-                                  cl <- ifM (((<) i) <$> (readIORef (_bigint_len a)))
-                                            (do cm <- (((+) tmp) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
-                                                return cm)
-                                            (return tmp)
-                                  cn <- ifM (((<) i) <$> (readIORef (_bigint_len b)))
-                                            (do co <- (((+) cl) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
-                                                return co)
-                                            (return cl)
-                                  let cp = cn `quot` 10
-                                  let bt = cn `rem` 10
-                                  return (cp, bt)) retenue) >>= (\ (ch, chiffres) ->
-                                                                  let bv ci =
-                                                                         ifM ((return (ci > 0)) <&&> (((==) 0) <$> (readIOA chiffres (ci - 1))))
-                                                                             (do let cj = ci - 1
-                                                                                 bv cj)
-                                                                             (Bigint <$> (newIORef True) <*> (newIORef ci) <*> (newIORef chiffres)) in
-                                                                         bv len)
+                                do let tmp = ck
+                                   cl <- ifM (((<) i) <$> (readIORef (_bigint_len a)))
+                                             (do cm <- (((+) tmp) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
+                                                 return cm)
+                                             (return tmp)
+                                   cn <- ifM (((<) i) <$> (readIORef (_bigint_len b)))
+                                             (do co <- (((+) cl) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
+                                                 return co)
+                                             (return cl)
+                                   let cp = cn `quot` 10
+                                   let bt = cn `rem` 10
+                                   return (cp, bt)) retenue) >>= (\ (ch, chiffres) ->
+                                                                   let bv ci =
+                                                                          ifM ((return (ci > 0)) <&&> (((==) 0) <$> (readIOA chiffres (ci - 1))))
+                                                                              (do let cj = ci - 1
+                                                                                  bv cj)
+                                                                              (Bigint <$> (newIORef True) <*> (newIORef ci) <*> (newIORef chiffres)) in
+                                                                          bv len)
 
 sub_bigint_positif a b =
   {- Une soustraction ou on en a rien a faire des signes
@@ -161,25 +161,25 @@ Pré-requis : a > b
   do len <- readIORef (_bigint_len a)
      let retenue = 0
      (array_init_withenv len (\ i ct ->
-                               do tmp <- (((+) ct) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
-                                  cu <- ifM (((<) i) <$> (readIORef (_bigint_len b)))
-                                            (do cv <- (((-) tmp) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
-                                                return cv)
-                                            (return tmp)
-                                  (\ (cw, cx) ->
-                                    let bq = cx
-                                             in return (cw, bq)) (if cu < 0
-                                                                  then let cy = cu + 10
-                                                                                in let cz = - 1
-                                                                                            in (cz, cy)
-                                                                  else let da = 0
-                                                                                in (da, cu))) retenue) >>= (\ (cq, chiffres) ->
-                                                                                                             let bs cr =
-                                                                                                                    ifM ((return (cr > 0)) <&&> (((==) 0) <$> (readIOA chiffres (cr - 1))))
-                                                                                                                        (do let cs = cr - 1
-                                                                                                                            bs cs)
-                                                                                                                        (Bigint <$> (newIORef True) <*> (newIORef cr) <*> (newIORef chiffres)) in
-                                                                                                                    bs len)
+                                do tmp <- (((+) ct) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
+                                   cu <- ifM (((<) i) <$> (readIORef (_bigint_len b)))
+                                             (do cv <- (((-) tmp) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres b)) <*> return i))
+                                                 return cv)
+                                             (return tmp)
+                                   (\ (cw, cx) ->
+                                     let bq = cx
+                                              in return (cw, bq)) (if cu < 0
+                                                                   then let cy = cu + 10
+                                                                                 in let cz = - 1
+                                                                                             in (cz, cy)
+                                                                   else let da = 0
+                                                                                 in (da, cu))) retenue) >>= (\ (cq, chiffres) ->
+                                                                                                              let bs cr =
+                                                                                                                     ifM ((return (cr > 0)) <&&> (((==) 0) <$> (readIOA chiffres (cr - 1))))
+                                                                                                                         (do let cs = cr - 1
+                                                                                                                             bs cs)
+                                                                                                                         (Bigint <$> (newIORef True) <*> (newIORef cr) <*> (newIORef chiffres)) in
+                                                                                                                     bs len)
 
 neg_bigint a =
   (Bigint <$> ((fmap not (readIORef (_bigint_sign a))) >>= newIORef) <*> ((readIORef (_bigint_len a)) >>= newIORef) <*> ((readIORef (_bigint_chiffres a)) >>= newIORef))
@@ -208,7 +208,7 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. -}
   do len <- (((+) 1) <$> ((+) <$> (readIORef (_bigint_len a)) <*> (readIORef (_bigint_len b))))
      chiffres <- array_init len (\ k ->
-                                  return 0)
+                                   return 0)
      bp <- ((-) <$> (readIORef (_bigint_len a)) <*> (return 1))
      let bm i =
             if i <= bp
@@ -246,9 +246,9 @@ bigint_premiers_chiffres a i =
 
 bigint_shift a i =
   do chiffres <- join $ array_init <$> (((+) i) <$> (readIORef (_bigint_len a))) <*> return (\ k ->
-                                                                                              if k >= i
-                                                                                              then join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return (k - i)
-                                                                                              else return 0)
+                                                                                               if k >= i
+                                                                                               then join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return (k - i)
+                                                                                               else return 0)
      (Bigint <$> ((readIORef (_bigint_sign a)) >>= newIORef) <*> ((((+) i) <$> (readIORef (_bigint_len a))) >>= newIORef) <*> (newIORef chiffres))
 
 mul_bigint aa bb =
@@ -289,7 +289,7 @@ bigint_of_int i =
                             in dm
               else size
      t <- array_init dl (\ j ->
-                          return 0)
+                           return 0)
      let be = dl - 1
      let bc k dn =
             if k <= be
@@ -381,11 +381,11 @@ euler29 () =
   do let maxA = 5
      let maxB = 5
      a_bigint <- array_init (maxA + 1) (\ j ->
-                                         bigint_of_int (j * j))
+                                          bigint_of_int (j * j))
      a0_bigint <- array_init (maxA + 1) (\ j2 ->
-                                          bigint_of_int j2)
+                                           bigint_of_int j2)
      b <- array_init (maxA + 1) (\ k ->
-                                  return 2)
+                                   return 2)
      let n = 0
      let found = True
      let q ei ej =

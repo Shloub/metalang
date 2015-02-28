@@ -94,17 +94,17 @@ sumdivaux t n i =
 
 sumdiv nprimes primes n =
   do t <- array_init (n + 1) (\ i ->
-                               return 0)
+                                return 0)
      max0 <- fillPrimesFactors t n primes nprimes
      sumdivaux t max0 0
 
 main =
   do let maximumprimes = 1001
      era <- array_init maximumprimes (\ j ->
-                                       return j)
+                                        return j)
      nprimes <- eratostene era maximumprimes
      primes <- array_init nprimes (\ o ->
-                                    return 0)
+                                     return 0)
      let l = 0
      let ba = maximumprimes - 1
      let z k bo =

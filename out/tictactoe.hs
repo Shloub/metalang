@@ -240,9 +240,9 @@ play g =
 
 init0 () =
   do cases <- array_init 3 (\ i ->
-                             do tab <- array_init 3 (\ j ->
-                                                      return 0)
-                                return tab)
+                              do tab <- array_init 3 (\ j ->
+                                                        return 0)
+                                 return tab)
      (Gamestate <$> (newIORef cases) <*> (newIORef True) <*> (newIORef 0) <*> (newIORef False))
 
 read_move () =

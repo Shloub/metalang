@@ -6,15 +6,6 @@ import Data.Array.IO
 import Data.Char
 import System.IO
 import Data.IORef
-
-(<&&>) a b =
-	do c <- a
-	   if c then b
-		 else return False
-(<||>) a b =
-	do c <- a
-	   if c then return True
-		 else b
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM c i e =
   do b <- c
@@ -61,16 +52,16 @@ main =
                                  let d i3 =
                                        if i3 <= e
                                        then do tmpc <- readIOA tab4 i3
-                                               c <- ((fmap ord (return tmpc)))
+                                               let c = (ord tmpc)
                                                printf "%c" (tmpc :: Char) :: IO ()
                                                printf ":" :: IO ()
                                                printf "%d" (c :: Int) :: IO ()
                                                printf " " :: IO ()
-                                               l <- if tmpc /= ' '
-                                                    then do m <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> (return 26)) <*> ((fmap ord (return 'a'))))
-                                                            return m
-                                                    else return c
-                                               writeIOA tab4 i3 =<< ((fmap chr (return l)))
+                                               let l = if tmpc /= ' '
+                                                       then let m = ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
+                                                                    in m
+                                                       else c
+                                               writeIOA tab4 i3 (chr l)
                                                d (i3 + 1)
                                        else do let b = strlen - 1
                                                let a j =

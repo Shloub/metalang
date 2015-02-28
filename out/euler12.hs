@@ -75,10 +75,10 @@ fillPrimesFactors t n primes nprimes =
 find ndiv2 =
   do let maximumprimes = 110
      era <- array_init maximumprimes (\ j ->
-                                       return j)
+                                        return j)
      nprimes <- eratostene era maximumprimes
      primes <- array_init nprimes (\ o ->
-                                    return 0)
+                                     return 0)
      let l = 0
      let u = maximumprimes - 1
      let s k bi =
@@ -91,7 +91,7 @@ find ndiv2 =
            else let h n =
                       if n <= 10000
                       then do primesFactors <- array_init (n + 2) (\ m ->
-                                                                    return 0)
+                                                                     return 0)
                               max0 <- join $ max2_ <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)
                               writeIOA primesFactors 2 =<< ((-) <$> (readIOA primesFactors 2) <*> (return 1))
                               let ndivs = 1

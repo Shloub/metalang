@@ -95,19 +95,19 @@ main =
   do n <- read_int
      skip_whitespaces
      passepartout <- array_init n (\ i ->
-                                    do out0 <- array_init 2 (\ j ->
-                                                              do out01 <- read_int
-                                                                 skip_whitespaces
-                                                                 return out01)
-                                       return out0)
+                                     do out0 <- array_init 2 (\ j ->
+                                                                do out01 <- read_int
+                                                                   skip_whitespaces
+                                                                   return out01)
+                                        return out0)
      m <- read_int
      skip_whitespaces
      serrures <- array_init m (\ k ->
-                                do out1 <- array_init 2 (\ l ->
-                                                          do out_ <- read_int
-                                                             skip_whitespaces
-                                                             return out_)
-                                   return out1)
+                                 do out1 <- array_init 2 (\ l ->
+                                                            do out_ <- read_int
+                                                               skip_whitespaces
+                                                               return out_)
+                                    return out1)
      printf "%d" =<< (nbPassePartout n passepartout m serrures :: IO Int)
 
 

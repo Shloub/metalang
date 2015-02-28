@@ -36,7 +36,7 @@ main =
   do let input = ' '
      let current_pos = 500
      mem <- array_init 1000 (\ i ->
-                              return 0)
+                               return 0)
      writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
      writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
      writeIOA mem current_pos =<< (((+) 1) <$> (readIOA mem current_pos))
@@ -100,7 +100,7 @@ main =
                (do writeIOA mem e =<< ((-) <$> (readIOA mem e) <*> (return 1))
                    let f = e - 1
                    writeIOA mem f =<< (((+) 1) <$> (readIOA mem f))
-                   printf "%c" =<< (((fmap chr (readIOA mem f))) :: IO Char)
+                   printf "%c" =<< ((fmap chr (readIOA mem f)) :: IO Char)
                    let g = f + 1
                    c g)
                (return ()) in

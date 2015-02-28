@@ -58,11 +58,11 @@ pathfind_aux cache tab x y posX posY =
 
 pathfind tab x y =
   do cache <- array_init y (\ i ->
-                             do tmp <- array_init x (\ j ->
-                                                      do printf "%c" =<< (join $ readIOA <$> (readIOA tab i) <*> return j :: IO Char)
-                                                         return (- 1))
-                                printf "\n" :: IO ()
-                                return tmp)
+                              do tmp <- array_init x (\ j ->
+                                                        do printf "%c" =<< (join $ readIOA <$> (readIOA tab i) <*> return j :: IO Char)
+                                                           return (- 1))
+                                 printf "\n" :: IO ()
+                                 return tmp)
      pathfind_aux cache tab x y 0 0
 
 main =
@@ -73,7 +73,7 @@ main =
      printf "%d" (y :: Int) :: IO ()
      printf "\n" :: IO ()
      e <- array_init y (\ f ->
-                         (join (newListArray <$> (fmap (\x -> (0, x-1)) (return x)) <*> getLine)))
+                          (join (newListArray <$> (fmap (\x -> (0, x-1)) (return x)) <*> getLine)))
      let tab = e
      result <- pathfind tab x y
      printf "%d" (result :: Int) :: IO ()

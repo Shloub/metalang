@@ -79,11 +79,11 @@ main =
      let n = f
      skip_whitespaces
      tab <- array_init n (\ i ->
-                           do let tmp = 0
-                              e <- read_int
-                              let o = e
-                              skip_whitespaces
-                              return o)
+                            do let tmp = 0
+                               e <- read_int
+                               let o = e
+                               skip_whitespaces
+                               return o)
      result <- summax tab n
      printf "%d" (result :: Int) :: IO ()
 

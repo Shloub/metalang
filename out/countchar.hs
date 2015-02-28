@@ -73,15 +73,15 @@ main =
      let k = g
      skip_whitespaces
      let tofind = '\000'
-     hGetChar stdin >>= ((\ f ->
-                           do let l = f
-                              skip_whitespaces
-                              tab <- array_init k (\ i ->
-                                                    do let tmp = '\000'
-                                                       hGetChar stdin >>= ((\ e ->
-                                                                             let m = e
-                                                                                     in return m)))
-                              result <- nth tab l k
-                              printf "%d" (result :: Int) :: IO ()))
+     f <- getChar
+     let l = f
+     skip_whitespaces
+     tab <- array_init k (\ i ->
+                            do let tmp = '\000'
+                               e <- getChar
+                               let m = e
+                               return m)
+     result <- nth tab l k
+     printf "%d" (result :: Int) :: IO ()
 
 

@@ -94,17 +94,17 @@ sumdivaux t n i =
 
 sumdiv nprimes primes n =
   do t <- array_init (n + 1) (\ i ->
-                               return 0)
+                                return 0)
      max0 <- fillPrimesFactors t n primes nprimes
      sumdivaux t max0 0
 
 main =
   do let maximumprimes = 30001
      era <- array_init maximumprimes (\ s ->
-                                       return s)
+                                        return s)
      nprimes <- eratostene era maximumprimes
      primes <- array_init nprimes (\ t ->
-                                    return 0)
+                                     return 0)
      let l = 0
      let bk = maximumprimes - 1
      let bj k by =
@@ -117,9 +117,9 @@ main =
             else do let n = 100
                     {- 28124 ça prend trop de temps mais on arrive a passer le test -}
                     do abondant <- array_init (n + 1) (\ p ->
-                                                        return False)
+                                                         return False)
                        summable <- array_init (n + 1) (\ q ->
-                                                        return False)
+                                                         return False)
                        let sum = 0
                        let bi r =
                               if r <= n

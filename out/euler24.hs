@@ -33,9 +33,9 @@ fact n =
 
 show0 lim nth =
   do t <- array_init lim (\ i ->
-                           return i)
+                            return i)
      pris <- array_init lim (\ j ->
-                              return False)
+                               return False)
      let p = lim - 1
      let g k u =
            if k <= p

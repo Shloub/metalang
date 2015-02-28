@@ -78,12 +78,12 @@ test a b primes len =
 main =
   do let maximumprimes = 1000
      era <- array_init maximumprimes (\ j ->
-                                       return j)
+                                        return j)
      let result = 0
      let max0 = 0
      nprimes <- eratostene era maximumprimes
      primes <- array_init nprimes (\ o ->
-                                    return 0)
+                                     return 0)
      let l = 0
      let v = maximumprimes - 1
      let u k be =

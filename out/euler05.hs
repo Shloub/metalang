@@ -38,7 +38,7 @@ max2_ a b =
 
 primesfactors n =
   do tab <- array_init (n + 1) (\ i ->
-                                 return 0)
+                                  return 0)
      let d = 2
      let f v w =
            if w /= 1 && v * v <= w
@@ -55,7 +55,7 @@ primesfactors n =
 main =
   do let lim = 20
      o <- array_init (lim + 1) (\ m ->
-                                 return 0)
+                                  return 0)
      let s i =
            if i <= lim
            then do t <- primesfactors i

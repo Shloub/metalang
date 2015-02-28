@@ -60,10 +60,10 @@ eratostene t max0 =
 main =
   do let maximumprimes = 1000001
      era <- array_init maximumprimes (\ j ->
-                                       return j)
+                                        return j)
      nprimes <- eratostene era maximumprimes
      primes <- array_init nprimes (\ o ->
-                                    return 0)
+                                     return 0)
      let l = 0
      let v = maximumprimes - 1
      let u k ba =
@@ -78,7 +78,7 @@ main =
                    printf "%d" (nprimes :: Int) :: IO ()
                    printf "\n" :: IO ()
                    sum <- array_init nprimes (\ i_ ->
-                                               readIOA primes i_)
+                                                readIOA primes i_)
                    let maxl = 0
                    let process = True
                    let stop = maximumprimes - 1

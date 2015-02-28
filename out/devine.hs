@@ -83,9 +83,9 @@ main =
      len <- read_int
      skip_whitespaces
      tab <- array_init len (\ i ->
-                             do tmp <- read_int
-                                skip_whitespaces
-                                return tmp)
+                              do tmp <- read_int
+                                 skip_whitespaces
+                                 return tmp)
      a <- devine0 nombre tab len
      if a
      then printf "True" :: IO ()

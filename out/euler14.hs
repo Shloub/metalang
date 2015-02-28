@@ -48,7 +48,7 @@ find n m =
 
 main =
   do m <- array_init 1000000 (\ j ->
-                               return 0)
+                                return 0)
      let max0 = 0
      let maxi = 0
      let c i d e =

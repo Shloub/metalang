@@ -31,7 +31,7 @@ programme_candidat tableau taille =
      let b = taille - 1
      let a i c =
            if i <= b
-           then do d <- (((+) c) <$> (((*) i) <$> ((fmap ord (readIOA tableau i)))))
+           then do d <- (((+) c) <$> (((*) i) <$> (fmap ord (readIOA tableau i))))
                    printf "%c" =<< (readIOA tableau i :: IO Char)
                    a (i + 1) d
            else do printf "--\n" :: IO ()

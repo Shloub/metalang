@@ -6,15 +6,6 @@ import Data.Array.IO
 import Data.Char
 import System.IO
 import Data.IORef
-
-(<&&>) a b =
-	do c <- a
-	   if c then b
-		 else return False
-(<||>) a b =
-	do c <- a
-	   if c then return True
-		 else b
 ifM :: IO Bool -> IO a -> IO a -> IO a
 ifM c i e =
   do b <- c
@@ -61,13 +52,13 @@ main =
   do strlen <- read_int
      skip_whitespaces
      tab4 <- array_init strlen (\ toto ->
-                                 hGetChar stdin >>= ((\ tmpc ->
-                                                       do c <- ((fmap ord (return tmpc)))
-                                                          f <- if tmpc /= ' '
-                                                               then do g <- ((+) <$> (rem <$> (((+) 13) <$> (((-) c) <$> ((fmap ord (return 'a'))))) <*> (return 26)) <*> ((fmap ord (return 'a'))))
-                                                                       return g
-                                                               else return c
-                                                          ((fmap chr (return f))))))
+                                  do tmpc <- getChar
+                                     let c = (ord tmpc)
+                                     let f = if tmpc /= ' '
+                                             then let g = ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
+                                                          in g
+                                             else c
+                                     return (chr f))
      let e = strlen - 1
      let d j =
            if j <= e
