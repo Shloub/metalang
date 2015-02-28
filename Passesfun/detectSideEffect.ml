@@ -45,7 +45,15 @@ let side_effects acc e =
       has_side_effects acc a || has_side_effects acc b
     | Expr.Fun _ -> false
     | Expr.FunTuple _ -> false
-    | Expr.Apply (a, li) -> true
+    | Expr.Apply (a, li) ->
+        begin match Expr.unfix a with
+        | Expr.Lief (Expr.Binding a) ->
+            if Tags.is_taged ("macro_" ^ a ^ "_pure")
+            then
+              List.exists (has_side_effects acc) li
+            else true
+        | _ -> true
+        end
 (*
       List.exists (has_side_effects acc) li || has_side_effects acc a (* TODO sur l'application de a ... on devrait faire un typage a effets... *) *)
     | Expr.Tuple li ->

@@ -293,24 +293,24 @@ class haskellPrinter = object(self)
 
   method expand_macro_call f name t params code li =
     let lang = self#lang () in
+    let canBePure = List.for_all self#isPure li in
     let code_to_expand = List.fold_left
         (fun acc (clang, expantion) ->
-          match acc with
-          | Some _ -> acc
-          | None ->
-              if clang = "" || clang = lang then
-                Some expantion
-              else None
+          if clang = "" || clang = lang then
+            if acc = None then Some (self#eM, expantion) else acc
+          else if canBePure && ( clang = "" || clang = lang  ^ "_pure") then
+            Some (self#expr_, expantion)
+          else acc
         ) None
         code
     in match code_to_expand with
     | None -> failwith ("no definition for macro "^name^" in language "^lang)
-    | Some s ->
+    | Some (pr, s) ->
         let listr = List.map
             (fun e ->
               let b = Buffer.create 1 in
               let fb = Format.formatter_of_buffer b in
-              Format.fprintf fb "@[<h>%a@]%!" self#eM e;
+              Format.fprintf fb "@[<h>%a@]%!" pr e;
               Buffer.contents b
             ) li in
         let expanded = List.fold_left

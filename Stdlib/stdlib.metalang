@@ -24,9 +24,12 @@ macro int sqrt_(int c)
   objc do "(int)sqrt($c)"
   ada do "Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float($c))))"
   vb do "Int(Math.Sqrt($c))"
-  hs do "(fmap (floor . sqrt . fromIntegral) ($c))"
+  hs do "fmap (floor . sqrt . fromIntegral) ($c)"
+  hs_pure do "(floor . sqrt . fromIntegral) $c"
   * do "sqrt($c)"
 end
+
+tag macro_sqrt__pure
 
 def inline int isqrt(int c)
   tag use_math
@@ -50,9 +53,11 @@ macro char char_of_int(int c)
   objc do "(char)($c)"
   ada do "Character'Val($c)"
   vb do "Chr($c)"
-  hs do "(fmap chr ($c))"
+  hs do "fmap chr ($c)"
+  hs_pure do "chr $c"
   *  do "$c"
 end
+tag macro_char_of_int_pure
 
 macro int int_of_char(char c)
   ml do "int_of_char ($c)"
@@ -70,9 +75,11 @@ macro int int_of_char(char c)
   objc do "(int)($c)"
   ada do "Character'Pos($c)"
   vb do "Asc($c)"
-  hs do "(fmap ord ($c))"
+  hs do "fmap ord ($c)"
+  hs_pure do "ord $c"
   *  do "$c"
 end
+tag macro_int_of_char_pure
 
 def bool is_number(char c)
 	return int_of_char(c) <= int_of_char('9') &&
