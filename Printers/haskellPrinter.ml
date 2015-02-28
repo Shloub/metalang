@@ -36,46 +36,38 @@ module Type = Ast.Type
 
 let prelude_and = "
 (<&&>) a b =
-	do aa <- a
-	   if aa then b
-		 else return False
-"
+	do c <- a
+	   if c then b
+		 else return False"
 let prelude_or = "(<||>) a b =
-	do aa <- a
-	   if aa then return True
-		 else b
-"
+	do c <- a
+	   if c then return True
+		 else b"
 let prelude_ifm = "ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
-"
+ifM c i e =
+  do b <- c
+     if b then i else e"
 let prelude_writeIOA = "writeIOA :: IOArray Int a -> Int -> a -> IO ()
-writeIOA = writeArray
-"
+writeIOA = writeArray"
 let prelude_readIOA = "readIOA :: IOArray Int a -> Int -> IO a
-readIOA = readArray
-"
-let prelude_skip = "
-
-skip_whitespaces :: IO ()
+readIOA = readArray"
+let prelude_skip = "skip_whitespaces :: IO ()
 skip_whitespaces =
-  ifM (hIsEOF stdin)
+  ifM isEOF
       (return ())
       (do c <- hLookAhead stdin
           if c == ' ' || c == '\\n' || c == '\\t' || c == '\\r' then
-           do hGetChar stdin
+           do getChar
               skip_whitespaces
-           else return ())
-"
+           else return ())"
 
 let prelude_readint = "read_int_a :: Int -> IO Int
 read_int_a b =
-  ifM (hIsEOF stdin)
+  ifM isEOF
       (return b)
       (do c <- hLookAhead stdin
-          if c >= '0' && c <= '9' then
-           do hGetChar stdin
+          if isNumber c then
+           do getChar
               read_int_a (b * 10 + ord c - 48)
            else return b)
 
@@ -85,10 +77,27 @@ read_int =
       sign <- if c == '-'
                  then fmap (\\x -> -1::Int) $ hGetChar stdin
                  else return 1
-      num <- read_int_a 0
-      return (num * sign)
-"
+      (* sign) <$> read_int_a 0"
 
+let array_init_withenv = "array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
+array_init_withenv len f env =
+  do (env, li) <- g 0 env
+     (,) env <$> newListArray (0, len - 1) li
+  where g i env =
+           if i == len
+           then return (env, [])
+           else do (env', item) <- f i env
+                   (env'', li) <- g (i+1) env'
+                   return (env'', item:li)"
+
+let array_init1 = "array_init len f = fmap snd (array_init_withenv len (\\x () -> fmap ((,) ()) (f x)) ())"
+
+let array_init2 = "array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
+array_init len f = newListArray (0, len - 1) =<< g 0
+  where g i =
+           if i == len
+           then return []
+           else fmap (:) (f i) <*> g (i + 1)"
 
 let nop = -100
 let fun_priority = 20
@@ -569,51 +578,22 @@ class haskellPrinter = object(self)
       "System.IO";
       "Data.IORef"
     ] in
-    Format.fprintf f "@[%a@]@\n@\n%a%a%a@\nmain :: IO ()@\n@[%a@]@[%a@]@[%a@]@[%a@]@[%a@]@\n"
+    Format.fprintf f "@[%a@]@\n%a%a%a%a%a%a%a%a@\nmain :: IO ()"
           (Printer.print_list (fun f s -> Format.fprintf f "import %s" s)
              (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
           imports
-      (fun f () -> if binand then Format.fprintf f "%s" prelude_and) ()
-      (fun f () -> if binor then Format.fprintf f "%s" prelude_or) ()
-      (fun f () -> if ifm then Format.fprintf f "%s" prelude_ifm) ()
-      (fun f () -> if need_stdinsep then Format.fprintf f "%s" prelude_skip) ()
-      (fun f () -> if need_readint then Format.fprintf f "%s" prelude_readint) ()
-      (fun f () -> if write_array then Format.fprintf f "%s" prelude_writeIOA) ()
-      (fun f () -> if read_array then Format.fprintf f "%s" prelude_readIOA) ()
+      (fun f () -> if binand then Format.fprintf f "%s@\n" prelude_and) ()
+      (fun f () -> if binor then Format.fprintf f "%s@\n" prelude_or) ()
+      (fun f () -> if ifm then Format.fprintf f "%s@\n" prelude_ifm) ()
+      (fun f () -> if need_stdinsep then Format.fprintf f "%s@\n" prelude_skip) ()
+      (fun f () -> if need_readint then Format.fprintf f "%s@\n" prelude_readint) ()
+      (fun f () -> if write_array then Format.fprintf f "%s@\n" prelude_writeIOA) ()
+      (fun f () -> if read_array then Format.fprintf f "%s@\n" prelude_readIOA) ()
       (fun f () ->
-let array_init_withenv = "
-
-array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
-array_init_withenv len f env =
-  do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
-  where g i env =
-           if i == len
-           then return (env, [])
-           else do (env', item) <- f i env
-                   (env'', li) <- g (i+1) env'
-                   return (env'', item:li)
-
-" in
          match array_init, array_make with
-         | (true, true) ->
-      Format.fprintf f "%s
-array_init len f = fmap snd (array_init_withenv len (\\x () -> fmap ((,) ()) (f x)) ())@\n" array_init_withenv
-         | true, false ->
-Format.fprintf f "
-array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
-array_init len f =
-  do li <- g 0
-     newListArray (0, len - 1) li
-  where g i =
-           if i == len
-           then return []
-           else do item <- f i
-                   li <- g (i+1)
-                   return (item:li)@\n"
-         | false, true ->
-             Format.fprintf f "%s" array_init_withenv
+         | (true, true) -> Format.fprintf f "%s@\n%s@\n" array_init_withenv array_init1
+         | true, false -> Format.fprintf f "%s@\n" array_init2
+         | false, true -> Format.fprintf f "%s@\n" array_init_withenv
          | false, false -> ()
 ) ()
 
