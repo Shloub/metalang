@@ -7,10 +7,7 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 main :: IO ()
-
-
 foo a b =
   return (a + b)
 

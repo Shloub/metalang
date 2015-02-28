@@ -7,38 +7,30 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 (<&&>) a b =
-	do aa <- a
-	   if aa then b
+	do c <- a
+	   if c then b
 		 else return False
 (<||>) a b =
-	do aa <- a
-	   if aa then return True
+	do c <- a
+	   if c then return True
 		 else b
 ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
-
-main :: IO ()
+ifM c i e =
+  do b <- c
+     if b then i else e
 writeIOA :: IOArray Int a -> Int -> a -> IO ()
 writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
-
 array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
-array_init len f =
-  do li <- g 0
-     newListArray (0, len - 1) li
+array_init len f = newListArray (0, len - 1) =<< g 0
   where g i =
            if i == len
            then return []
-           else do item <- f i
-                   li <- g (i+1)
-                   return (item:li)
-                                                                                                                                 
+           else fmap (:) (f i) <*> g (i + 1)
 
+main :: IO ()
 eratostene t max0 =
   do let sum = 0
      let c = max0 - 1

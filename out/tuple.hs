@@ -7,10 +7,7 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 main :: IO ()
-
-
 f tuple0 =
   (\ (a, b) ->
     return (a + 1, b + 1)) tuple0

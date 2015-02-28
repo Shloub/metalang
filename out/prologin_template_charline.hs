@@ -7,25 +7,22 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 (<&&>) a b =
-	do aa <- a
-	   if aa then b
+	do c <- a
+	   if c then b
 		 else return False
 (<||>) a b =
-	do aa <- a
-	   if aa then return True
+	do c <- a
+	   if c then return True
 		 else b
 ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
-
-main :: IO ()
+ifM c i e =
+  do b <- c
+     if b then i else e
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
 
-
+main :: IO ()
 
 
 

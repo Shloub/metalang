@@ -7,10 +7,7 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 main :: IO ()
-
-
 
 main =
   do printf "%d" =<< (((fmap (floor . sqrt . fromIntegral) (return 4))) :: IO Int)

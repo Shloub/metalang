@@ -7,10 +7,7 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 main :: IO ()
-
-
 main =
   do let i = 0
      let a = i - 1

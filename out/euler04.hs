@@ -7,23 +7,20 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 (<&&>) a b =
-	do aa <- a
-	   if aa then b
+	do c <- a
+	   if c then b
 		 else return False
 (<||>) a b =
-	do aa <- a
-	   if aa then return True
+	do c <- a
+	   if c then return True
 		 else b
 ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
+ifM c i e =
+  do b <- c
+     if b then i else e
 
 main :: IO ()
-
-
 max2_ a b =
   return (if a > b
           then a

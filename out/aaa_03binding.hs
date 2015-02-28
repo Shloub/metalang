@@ -7,10 +7,7 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 main :: IO ()
-
-
 g i =
   let j = i * 4
           in return (if (j `rem` 2) == 1

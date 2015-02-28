@@ -6,28 +6,20 @@ import Data.Array.IO
 import Data.Char
 import System.IO
 import Data.IORef
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
-
-main :: IO ()
+ifM c i e =
+  do b <- c
+     if b then i else e
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
-
 array_init :: Int -> ( Int -> IO out ) -> IO (IOArray Int out)
-array_init len f =
-  do li <- g 0
-     newListArray (0, len - 1) li
+array_init len f = newListArray (0, len - 1) =<< g 0
   where g i =
            if i == len
            then return []
-           else do item <- f i
-                   li <- g (i+1)
-                   return (item:li)
-                                                            
+           else fmap (:) (f i) <*> g (i + 1)
 
+main :: IO ()
 
 
 main =

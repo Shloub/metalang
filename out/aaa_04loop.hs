@@ -6,15 +6,12 @@ import Data.Array.IO
 import Data.Char
 import System.IO
 import Data.IORef
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
+ifM c i e =
+  do b <- c
+     if b then i else e
 
 main :: IO ()
-
-
 h i =
   {-  for j = i - 2 to i + 2 do
     if i % j == 5 then return true end

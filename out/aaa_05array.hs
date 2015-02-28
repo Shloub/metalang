@@ -6,24 +6,18 @@ import Data.Array.IO
 import Data.Char
 import System.IO
 import Data.IORef
-
 ifM :: IO Bool -> IO a -> IO a -> IO a
-ifM cond if_ els_ =
-  do b <- cond
-     if b then if_ else els_
-
-main :: IO ()
+ifM c i e =
+  do b <- c
+     if b then i else e
 writeIOA :: IOArray Int a -> Int -> a -> IO ()
 writeIOA = writeArray
 readIOA :: IOArray Int a -> Int -> IO a
 readIOA = readArray
-
-
 array_init_withenv :: Int -> ( Int -> env -> IO(env, tabcontent)) -> env -> IO(env, IOArray Int tabcontent)
 array_init_withenv len f env =
   do (env, li) <- g 0 env
-     o <- newListArray (0, len - 1) li
-     return (env, o)
+     (,) env <$> newListArray (0, len - 1) li
   where g i env =
            if i == len
            then return (env, [])
@@ -31,8 +25,7 @@ array_init_withenv len f env =
                    (env'', li) <- g (i+1) env'
                    return (env'', item:li)
 
-
-
+main :: IO ()
 id0 b =
   return b
 

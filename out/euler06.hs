@@ -7,10 +7,7 @@ import Data.Char
 import System.IO
 import Data.IORef
 
-
 main :: IO ()
-
-
 main =
   do let lim = 100
      let sum = (lim * (lim + 1)) `quot` 2
