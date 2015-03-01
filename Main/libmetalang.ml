@@ -150,7 +150,6 @@ let clike_passes prog =
     a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
   |> snd |> Typer.process
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -160,7 +159,6 @@ let clike_passes prog =
 let python_passes prog =
   prog |> default_passes
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -169,7 +167,6 @@ let python_passes prog =
  
 let common_lisp_passes prog =
   prog |> default_passes
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> (fun (a, prog) -> (* TODO ne plus appliquer cette passe... *)
     let tuples, prog = DeclareTuples.apply a prog in
@@ -188,7 +185,6 @@ let common_lisp_passes prog =
 
 let ocaml_passes prog =
   prog |> default_passes
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> snd |> Typer.process
@@ -198,7 +194,6 @@ let ocaml_passes prog =
 
 let fun_passes config prog =
   prog |> default_passes
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
@@ -214,7 +209,6 @@ let php_passes prog =
     a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
   |> snd |> Typer.process
   |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> snd |> Typer.process
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -223,7 +217,6 @@ let php_passes prog =
 
 let hs_passes prog =
   prog |> default_passes
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
@@ -233,6 +226,7 @@ let hs_passes prog =
   |> (fun (a, b) -> a, Makelet.apply {Makelet.curry=false} b)
   |> (fun (a, b) -> a, MergePrint.apply b)
   |> (fun (a, b) -> a, RenameFun.apply b)
+  |> (fun (a, b) -> a, FunInline.apply b)
   |> (fun (a, b) -> a, DetectSideEffect.apply b)
 
 let no_passes prog =
