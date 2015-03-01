@@ -46,6 +46,12 @@ module Expr = struct
   | Enum of string
   | Binding of string
 
+  type formatPart =
+    | IntFormat
+    | StringFormat
+    | CharFormat
+    | StringConstant of string
+
   type 'a tofix =
   | Skip
   | LetRecIn of string * string list * 'a * 'a
@@ -59,6 +65,7 @@ module Expr = struct
   | Comment of string * 'a
   | If of 'a * 'a * 'a
   | Print of 'a * Ast.Type.t
+  | MultiPrint of (formatPart list) * ('a * Ast.Type.t) list
   | ReadIn of Ast.Type.t * 'a
   | Block of 'a list
   | Record of ('a * string) list
@@ -95,7 +102,7 @@ module Expr = struct
       | ArrayAccess (tab, indexes) -> ArrayAccess (f tab, List.map f indexes)
       | ArrayMake (len, lambda, env) -> ArrayMake (f len, f lambda, f env)
       | ArrayInit (len, lambda) -> ArrayInit (f len, f lambda)
-
+      | MultiPrint (format, li) -> MultiPrint (format, List.map (fun (a, b) -> (f a, b)) li)
       | ArrayAffect (tab, indexes, v) -> ArrayAffect (f tab, List.map f indexes, f v)
       | LetIn (binding, e, b) -> LetIn (binding, f e, f b)
     let next () = next ()
@@ -190,6 +197,13 @@ module Expr = struct
 						let acc, e = f acc e in
 						let acc, b = f acc b in
 						acc, LetIn (binding, e, b)
+
+      | MultiPrint (format, li) ->
+	 let acc, li = List.fold_left_map (fun acc (a, b) ->
+					   let acc, a = f acc a in
+					   acc, (a, b)) acc li in
+	 acc, MultiPrint (format, li)
+
       in acc, fixa annot unfixed
   end)
   let letrecin name params e1 e2 = fix (LetRecIn (name, params, e1, e2))
@@ -209,6 +223,7 @@ module Expr = struct
   let if_ e1 e2 e3 = fix (If (e1, e2, e3))
   let block li = fix (Block li)
   let print e ty next = block [ fix (Print (e, ty)); next]
+  let multiprint fs exprs = fix (MultiPrint (fs, exprs))
   let print_ e ty = fix (Print (e, ty))
   let readin e ty = fix (ReadIn (ty, e))
   let skipin e = block [fix Skip; e]

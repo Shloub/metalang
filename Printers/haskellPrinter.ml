@@ -34,6 +34,16 @@ open Stdlib
 module E = AstFun.Expr
 module Type = Ast.Type
 
+
+let format_to_string li =
+  let li = List.map (function
+		      | E.IntFormat -> "%d"
+		      | E.StringFormat -> "%s"
+		      | E.CharFormat -> "%c"
+		      | E.StringConstant s -> String.replace "%" "%%" s
+		    ) li
+  in String.concat "" li
+
 let prelude_and = "
 (<&&>) a b =
 	do c <- a
@@ -380,8 +390,23 @@ class haskellPrinter = object(self)
 			
   method block ~p f li =
     parens ~p (fun_priority -1) f "do @[<v>%a@]" self#blockContent li
-			
+	
+  method print_format f formats =
+    Format.fprintf f "%S" (format_to_string formats)
+
   method printf f () = Format.fprintf f "printf"
+  method multiprint ~p f formats exprs =
+    let exprs = List.map (fun (e, ty) ->
+			  let pure = self#isPure e in
+			  pure, (fun ~p f () ->
+				 if pure then
+				   Format.fprintf f "(%a::%a)" (self#expr' ~p) e self#ptype ty
+				 else Format.fprintf f "(%a::IO %a)" (self#expr' ~p) e self#ptype ty
+				), ()
+			 ) exprs in
+    let params = (true, (fun ~p f () -> self#print_format f formats), ()) :: exprs in
+    parens ~p fun_priority f "%a :: IO()"
+	   (fun f () -> hsapply ~p f self#printf true params) ()
 
   method print ~p f expr t =
     match E.unfix expr with
@@ -403,6 +428,7 @@ class haskellPrinter = object(self)
   method expr f e = self#expr' ~p:nop f e
   method expr_ f e = self#expr' ~p:fun_priority f e
   method expr' ~p f e = match E.unfix e with
+    | E.MultiPrint (formats, exprs) -> self#multiprint ~p f formats exprs
   | E.LetRecIn (name, params, e1, e2) -> self#letrecin ~p f name params e1 e2
   | E.BinOp (a, op, b) -> self#binop ~p f a op b
   | E.UnOp (a, op) -> self#unop ~p f a op

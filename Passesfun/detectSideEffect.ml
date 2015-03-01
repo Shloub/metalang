@@ -79,6 +79,7 @@ let side_effects acc e =
     | Expr.ArrayAccess _ -> true
     | Expr.ArrayAffect _ -> true
     | Expr.LetIn (binding, e1, e) -> has_side_effects acc e || has_side_effects acc e1
+    | Expr.MultiPrint (_, _) -> true
 		| Expr.Tuple (li) ->
 			List.exists (has_side_effects acc) li
 

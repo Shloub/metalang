@@ -230,6 +230,7 @@ let hs_passes prog =
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply {Makelet.curry=false} b)
+  |> (fun (a, b) -> a, MergePrint.apply b)
   |> (fun (a, b) -> a, RenameFun.apply b)
   |> (fun (a, b) -> a, DetectSideEffect.apply b)
 
