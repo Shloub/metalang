@@ -214,7 +214,8 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
         F.Expr.letrecin loop (var::affected) content
            (F.Expr.apply (F.Expr.binding loop) (from_::returnenv))
       in begin match F.Expr.unfix end_ with
-      | F.Expr.Lief _ -> c end_
+	       | F.Expr.BinOp (F.Expr.Fixed.F (_, F.Expr.Lief _), _, F.Expr.Fixed.F (_, F.Expr.Lief _)) (* les variables ne peuvent pas être écrasées là ou apparait c.*)
+	       | F.Expr.Lief _ -> c end_
       | _ ->
           let n = Fresh.fresh_user () in
           F.Expr.apply (F.Expr.fun_ [n] (c (F.Expr.binding n))) [end_]
