@@ -126,8 +126,7 @@ main =
      let p = x - 1
      let n i =
            if i <= p
-           then do printf "%d" =<< (readIOA tab2 i :: IO Int)
-                   printf " " :: IO ()
+           then do printf "%d " =<< ((readIOA tab2 i)::IO Int) :: IO()
                    n (i + 1)
            else do printf "\n" :: IO ()
                    tab3 <- copytab tab x
@@ -135,8 +134,7 @@ main =
                    let m = x - 1
                    let l z =
                          if z <= m
-                         then do printf "%d" =<< (readIOA tab3 z :: IO Int)
-                                 printf " " :: IO ()
+                         then do printf "%d " =<< ((readIOA tab3 z)::IO Int) :: IO()
                                  l (z + 1)
                          else printf "\n" :: IO () in
                          l 0 in

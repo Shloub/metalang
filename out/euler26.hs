@@ -63,10 +63,7 @@ main =
                            let u = p
                            h (i + 1) u s
                    else h (i + 1) q r
-           else do printf "%d" (r :: Int) :: IO ()
-                   printf "\n" :: IO ()
-                   printf "%d" (q :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n%d\n" (r::Int) (q::Int) :: IO() in
            h 1 m mi
 
 

@@ -15,7 +15,6 @@ foo a =
 main =
   do let a = 0
      foo a
-     printf "%d" (a :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (a::Int) :: IO()
 
 

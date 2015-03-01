@@ -144,9 +144,7 @@ main =
                                                                (do let cb = ca + o
                                                                    bf (o + 1) cb)
                                                                (bf (o + 1) ca)
-                                                      else do printf "\n" :: IO ()
-                                                              printf "%d" (ca :: Int) :: IO ()
-                                                              printf "\n" :: IO () in
+                                                      else printf "\n%d\n" (ca::Int) :: IO() in
                                                       bf 1 sum in
                                           bg 1 in
                               bi 2 in

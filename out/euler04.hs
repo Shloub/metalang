@@ -60,8 +60,7 @@ main =
                                  i 0 o
                       else g (a + 1) o in
                       h 1 n
-           else do printf "%d" (n :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n" (n::Int) :: IO() in
            g 0 m
 
 

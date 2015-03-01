@@ -75,8 +75,7 @@ main =
                                                q (l + 1) bb
                                        else p (k + 1) ba in
                                        q 1 z
-                         else do printf "%d" (z :: Int) :: IO ()
-                                 printf "\n" :: IO () in
+                         else printf "%d\n" (z::Int) :: IO() in
                          p 1 product in
            s 1
 

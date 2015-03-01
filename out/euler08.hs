@@ -71,8 +71,7 @@ main =
                                                                                                              let t = (o + 1) `rem` 5
                                                                                                              u <- max2_ p r
                                                                                                              l (k + 1) r t u s)
-                                                                   else do printf "%d" (p :: Int) :: IO ()
-                                                                           printf "\n" :: IO () in
+                                                                   else printf "%d\n" (p::Int) :: IO() in
                                                                    l 1 m index max0 nskipdiv)
 
 

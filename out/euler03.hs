@@ -35,8 +35,7 @@ main =
                                                                                                           in (t, v, u, x, w)
                                                  else (i, j, k, l, m))
                          else if not l
-                              then do printf "%d" (i :: Int) :: IO ()
-                                      printf "\n" :: IO ()
+                              then do printf "%d\n" (i::Int) :: IO()
                                       let y = 1
                                       d y k m
                               else d i k m in

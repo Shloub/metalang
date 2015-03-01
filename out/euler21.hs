@@ -114,10 +114,7 @@ main =
                         let bp = bo + 1
                         z (k + 1) bp)
                     (z (k + 1) bo)
-           else do printf "%d" (bo :: Int) :: IO ()
-                   printf " == " :: IO ()
-                   printf "%d" (nprimes :: Int) :: IO ()
-                   printf "\n" :: IO ()
+           else do printf "%d == %d\n" (bo::Int) (nprimes::Int) :: IO()
                    let sum = 0
                    let y n bq =
                          if n <= 1000
@@ -125,17 +122,12 @@ main =
                                  if other > n
                                  then do othersum <- ((-) <$> (sumdiv nprimes primes other) <*> (return other))
                                          if othersum == n
-                                         then do printf "%d" (other :: Int) :: IO ()
-                                                 printf " & " :: IO ()
-                                                 printf "%d" (n :: Int) :: IO ()
-                                                 printf "\n" :: IO ()
+                                         then do printf "%d & %d\n" (other::Int) (n::Int) :: IO()
                                                  let br = bq + other + n
                                                  y (n + 1) br
                                          else y (n + 1) bq
                                  else y (n + 1) bq
-                         else do printf "\n" :: IO ()
-                                 printf "%d" (bq :: Int) :: IO ()
-                                 printf "\n" :: IO () in
+                         else printf "\n%d\n" (bq::Int) :: IO() in
                          y 2 sum in
            z 2 l
 

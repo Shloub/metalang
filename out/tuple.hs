@@ -15,9 +15,6 @@ f tuple0 =
 main =
   do t <- f (0, 1)
      (\ (a, b) ->
-       do printf "%d" (a :: Int) :: IO ()
-          printf " -- " :: IO ()
-          printf "%d" (b :: Int) :: IO ()
-          printf "--\n" :: IO ()) t
+       printf "%d -- %d--\n" (a::Int) (b::Int) :: IO()) t
 
 

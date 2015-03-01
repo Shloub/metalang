@@ -93,10 +93,7 @@ main =
                         let bf = be + 1
                         u (k + 1) bf)
                     (u (k + 1) be)
-           else do printf "%d" (be :: Int) :: IO ()
-                   printf " == " :: IO ()
-                   printf "%d" (nprimes :: Int) :: IO ()
-                   printf "\n" :: IO ()
+           else do printf "%d == %d\n" (be::Int) (nprimes::Int) :: IO()
                    let ma = 0
                    let mb = 0
                    let r b bg bh bi bj =
@@ -123,14 +120,7 @@ main =
                                          else r (b + 1) bk bl bm bn in
                                          s (- 999) bg bh bi bj)
                                   (r (b + 1) bg bh bi bj)
-                         else do printf "%d" (bg :: Int) :: IO ()
-                                 printf " " :: IO ()
-                                 printf "%d" (bi :: Int) :: IO ()
-                                 printf "\n" :: IO ()
-                                 printf "%d" (bh :: Int) :: IO ()
-                                 printf "\n" :: IO ()
-                                 printf "%d" (bj :: Int) :: IO ()
-                                 printf "\n" :: IO () in
+                         else printf "%d %d\n%d\n%d\n" (bg::Int) (bi::Int) (bh::Int) (bj::Int) :: IO() in
                          r 3 ma max0 mb result in
            u 2 l
 

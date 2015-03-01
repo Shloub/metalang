@@ -43,10 +43,7 @@ main =
                                       then do let a = i * 10 + j
                                               let b = j * 10 + k
                                               if a * k == i * b
-                                              then do printf "%d" (a :: Int) :: IO ()
-                                                      printf "/" :: IO ()
-                                                      printf "%d" (b :: Int) :: IO ()
-                                                      printf "\n" :: IO ()
+                                              then do printf "%d/%d\n" (a::Int) (b::Int) :: IO()
                                                       let r = q * a
                                                       let s = o * b
                                                       g (k + 1) s r
@@ -56,16 +53,9 @@ main =
                                  g 1 m n
                       else e (i + 1) m n in
                       f 1 h l
-           else do printf "%d" (l :: Int) :: IO ()
-                   printf "/" :: IO ()
-                   printf "%d" (h :: Int) :: IO ()
-                   printf "\n" :: IO ()
+           else do printf "%d/%d\n" (l::Int) (h::Int) :: IO()
                    p <- pgcd l h
-                   printf "pgcd=" :: IO ()
-                   printf "%d" (p :: Int) :: IO ()
-                   printf "\n" :: IO ()
-                   printf "%d" (h `quot` p :: Int) :: IO ()
-                   printf "\n" :: IO () in
+                   printf "pgcd=%d\n%d\n" (p::Int) ((h `quot` p)::Int) :: IO() in
            e 1 bottom top
 
 

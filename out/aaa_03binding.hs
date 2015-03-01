@@ -15,8 +15,7 @@ g i =
                      else j)
 
 h i =
-  do printf "%d" (i :: Int) :: IO ()
-     printf "\n" :: IO ()
+  printf "%d\n" (i::Int) :: IO()
 
 main =
   do h 14

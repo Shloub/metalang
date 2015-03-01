@@ -26,8 +26,7 @@ main =
                    let j = f
                    let k = f + c
                    d j k h
-           else do printf "%d" (g :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n" (g::Int) :: IO() in
            d a b sum
 
 

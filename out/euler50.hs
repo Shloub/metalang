@@ -73,10 +73,7 @@ main =
                         let bb = ba + 1
                         u (k + 1) bb)
                     (u (k + 1) ba)
-           else do printf "%d" (ba :: Int) :: IO ()
-                   printf " == " :: IO ()
-                   printf "%d" (nprimes :: Int) :: IO ()
-                   printf "\n" :: IO ()
+           else do printf "%d == %d\n" (ba::Int) (nprimes::Int) :: IO()
                    sum <- array_init nprimes (\ i_ ->
                                                 readIOA primes i_)
                    let maxl = 0
@@ -104,10 +101,7 @@ main =
                                        else do let bq = bc + 1
                                                r bq bi bj bk bl in
                                        s 0 bd bh bf bg
-                         else do printf "%d" (bf :: Int) :: IO ()
-                                 printf "\n" :: IO ()
-                                 printf "%d" (bd :: Int) :: IO ()
-                                 printf "\n" :: IO () in
+                         else printf "%d\n%d\n" (bf::Int) (bd::Int) :: IO() in
                          r len maxl process resp stop in
            u 2 l
 

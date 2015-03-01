@@ -22,19 +22,12 @@ main =
                 a <- readIOA d 0
                 b <- readIOA d 1
                 c <- readIOA d 2
-                printf "a = " :: IO ()
-                printf "%d" (a :: Int) :: IO ()
-                printf " b = " :: IO ()
-                printf "%d" (b :: Int) :: IO ()
-                printf "c =" :: IO ()
-                printf "%d" (c :: Int) :: IO ()
-                printf "\n" :: IO ()
+                printf "a = %d b = %dc =%d\n" (a::Int) (b::Int) (c::Int) :: IO()
                 f (i + 1)
         else do l <- (join (newListArray . (,) 0 . subtract 1 <$> return 10 <*> fmap (map read . words) getLine))
                 let e j =
                       if j <= 9
-                      then do printf "%d" =<< (readIOA l j :: IO Int)
-                              printf "\n" :: IO ()
+                      then do printf "%d\n" =<< ((readIOA l j)::IO Int) :: IO()
                               e (j + 1)
                       else return () in
                       e 0 in

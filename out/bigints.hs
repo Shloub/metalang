@@ -421,8 +421,7 @@ euler29 () =
            q found n
 
 main =
-  do printf "%d" =<< (euler29 () :: IO Int)
-     printf "\n" :: IO ()
+  do printf "%d\n" =<< ((euler29 ())::IO Int) :: IO()
      sum <- read_bigint 50
      let cg i er =
             if i <= 100
@@ -432,17 +431,9 @@ main =
                     cg (i + 1) es
             else do printf "euler13 = " :: IO ()
                     print_bigint er
-                    printf "\n" :: IO ()
-                    printf "euler25 = " :: IO ()
-                    printf "%d" =<< (euler25 () :: IO Int)
-                    printf "\n" :: IO ()
-                    printf "euler16 = " :: IO ()
-                    printf "%d" =<< (euler16 () :: IO Int)
-                    printf "\n" :: IO ()
+                    join $ printf "\neuler25 = %d\neuler16 = %d\n" <$> ((euler25 ())::IO Int) <*> ((euler16 ())::IO Int) :: IO()
                     euler48 ()
-                    printf "euler20 = " :: IO ()
-                    printf "%d" =<< (euler20 () :: IO Int)
-                    printf "\n" :: IO ()
+                    printf "euler20 = %d\n" =<< ((euler20 ())::IO Int) :: IO()
                     a <- bigint_of_int 999999
                     b <- bigint_of_int 9951263
                     print_bigint a

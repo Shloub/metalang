@@ -39,8 +39,7 @@ main =
                                  let l = k + i
                                  let e = (i `rem` 2) == 0
                                  return (l, e)) j) >>= (\ (h, a) ->
-                                                         do printf "%d" (h :: Int) :: IO ()
-                                                            printf " " :: IO ()
+                                                         do printf "%d " (h::Int) :: IO()
                                                             c <- readIOA a 0
                                                             if c
                                                             then printf "True" :: IO ()

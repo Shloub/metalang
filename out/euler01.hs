@@ -20,8 +20,7 @@ main =
                 then do let c = b + i
                         a (i + 1) c
                 else a (i + 1) b
-           else do printf "%d" (b :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n" (b::Int) :: IO() in
            a 0 sum
 
 

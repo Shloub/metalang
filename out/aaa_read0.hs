@@ -11,7 +11,6 @@ main :: IO ()
 
 main =
   do len <- (fmap read getLine)
-     printf "%d" (len :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (len::Int) :: IO()
 
 

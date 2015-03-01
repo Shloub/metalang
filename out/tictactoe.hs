@@ -216,12 +216,7 @@ play g =
                       then ifM (can_move_xy x y g)
                                (do apply_move_xy x y g
                                    currentNote <- minmax g
-                                   printf "%d" (x :: Int) :: IO ()
-                                   printf ", " :: IO ()
-                                   printf "%d" (y :: Int) :: IO ()
-                                   printf ", " :: IO ()
-                                   printf "%d" (currentNote :: Int) :: IO ()
-                                   printf "\n" :: IO ()
+                                   printf "%d, %d, %d\n" (x::Int) (y::Int) (currentNote::Int) :: IO()
                                    cancel_move_xy x y g
                                    if currentNote < bv
                                    then do let bw = currentNote
@@ -232,9 +227,7 @@ play g =
                                (f (y + 1) bv)
                       else e (x + 1) bv in
                       f 0 bu
-           else do printf "%d" =<< (readIORef (_x minMove) :: IO Int)
-                   printf "%d" =<< (readIORef (_y minMove) :: IO Int)
-                   printf "\n" :: IO ()
+           else do join $ printf "%d%d\n" <$> ((readIORef (_x minMove))::IO Int) <*> ((readIORef (_y minMove))::IO Int) :: IO()
                    return minMove in
            e 0 minNote
 
@@ -270,8 +263,7 @@ main =
                                       s ())
                                   (s ()))
                           (do print_state state
-                              printf "%d" =<< (readIORef (_note state) :: IO Int)
-                              printf "\n" :: IO ()
+                              printf "%d\n" =<< ((readIORef (_note state))::IO Int) :: IO()
                               r (i + 1)) in
                       s ()
         else return () in

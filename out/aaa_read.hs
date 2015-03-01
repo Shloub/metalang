@@ -51,41 +51,28 @@ main :: IO ()
 main =
   do len <- read_int
      skip_whitespaces
-     printf "%d" (len :: Int) :: IO ()
-     printf "=len\n" :: IO ()
+     printf "%d=len\n" (len::Int) :: IO()
      let l = len * 2
-     printf "len*2=" :: IO ()
-     printf "%d" (l :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "len*2=%d\n" (l::Int) :: IO()
      let m = l `quot` 2
      tab <- array_init m (\ i ->
                             do tmpi1 <- read_int
                                skip_whitespaces
-                               printf "%d" (i :: Int) :: IO ()
-                               printf "=>" :: IO ()
-                               printf "%d" (tmpi1 :: Int) :: IO ()
-                               printf " " :: IO ()
+                               printf "%d=>%d " (i::Int) (tmpi1::Int) :: IO()
                                return tmpi1)
      printf "\n" :: IO ()
      tab2 <- array_init m (\ i_ ->
                              do tmpi2 <- read_int
                                 skip_whitespaces
-                                printf "%d" (i_ :: Int) :: IO ()
-                                printf "==>" :: IO ()
-                                printf "%d" (tmpi2 :: Int) :: IO ()
-                                printf " " :: IO ()
+                                printf "%d==>%d " (i_::Int) (tmpi2::Int) :: IO()
                                 return tmpi2)
      strlen <- read_int
      skip_whitespaces
-     printf "%d" (strlen :: Int) :: IO ()
-     printf "=strlen\n" :: IO ()
+     printf "%d=strlen\n" (strlen::Int) :: IO()
      tab4 <- array_init strlen (\ toto ->
                                   do tmpc <- getChar
                                      let c = (ord tmpc)
-                                     printf "%c" (tmpc :: Char) :: IO ()
-                                     printf ":" :: IO ()
-                                     printf "%d" (c :: Int) :: IO ()
-                                     printf " " :: IO ()
+                                     printf "%c:%d " (tmpc::Char) (c::Int) :: IO()
                                      let n = if tmpc /= ' '
                                              then let o = ((c - (ord 'a') + 13) `rem` 26) + (ord 'a')
                                                           in o

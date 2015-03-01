@@ -31,8 +31,7 @@ main =
      let c k f =
            if k <= 10
            then do let g = f + k
-                   printf "%d" (g :: Int) :: IO ()
-                   printf "\n" :: IO ()
+                   printf "%d\n" (g::Int) :: IO()
                    c (k + 1) g
            else do let i = 4
                    let b l m =
@@ -41,9 +40,7 @@ main =
                                  let n = l + 1
                                  let o = m + n
                                  b n o
-                         else do printf "%d" (m :: Int) :: IO ()
-                                 printf "%d" (l :: Int) :: IO ()
-                                 printf "FIN TEST\n" :: IO () in
+                         else printf "%d%dFIN TEST\n" (m::Int) (l::Int) :: IO() in
                          b i f in
            c 0 j
 

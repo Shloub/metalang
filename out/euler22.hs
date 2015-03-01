@@ -69,8 +69,7 @@ main =
            if i <= n
            then do g <- (((+) f) <$> (((*) i) <$> (score ())))
                    b (i + 1) g
-           else do printf "%d" (f :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n" (f::Int) :: IO() in
            b 1 sum
 
 

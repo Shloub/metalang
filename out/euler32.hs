@@ -75,8 +75,7 @@ main =
                                                                                                                y <- ifM ((fmap not (readIOA counted product)) <&&> (okdigits allowed (product `quot` 10)))
                                                                                                                         (do writeIOA counted product True
                                                                                                                             let z = x + product
-                                                                                                                            printf "%d" (product :: Int) :: IO ()
-                                                                                                                            printf " " :: IO ()
+                                                                                                                            printf "%d " (product::Int) :: IO()
                                                                                                                             return z)
                                                                                                                         (return x)
                                                                                                                {- 1  * 4 digits -}
@@ -84,8 +83,7 @@ main =
                                                                                                                   ba <- ifM ((fmap not (readIOA counted product2)) <&&> (okdigits allowed (product2 `quot` 10)))
                                                                                                                             (do writeIOA counted product2 True
                                                                                                                                 let bb = y + product2
-                                                                                                                                printf "%d" (product2 :: Int) :: IO ()
-                                                                                                                                printf " " :: IO ()
+                                                                                                                                printf "%d " (product2::Int) :: IO()
                                                                                                                                 return bb)
                                                                                                                             (return y)
                                                                                                                   writeIOA allowed d True
@@ -109,8 +107,7 @@ main =
                          else do writeIOA allowed e True
                                  l (e + 1) t in
                          m 1 s
-           else do printf "%d" (s :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n" (s::Int) :: IO() in
            l 1 count
 
 

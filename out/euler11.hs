@@ -75,8 +75,7 @@ main =
                                                               l 0 p
                                                    else h (j + 1) p in
                                                    k 0 o)
-           else do printf "%d" (o :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n" (o::Int) :: IO() in
            h 0 max0
 
 

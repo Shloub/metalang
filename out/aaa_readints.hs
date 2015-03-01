@@ -24,16 +24,12 @@ main :: IO ()
 
 main =
   do len <- (fmap read getLine)
-     printf "%d" (len :: Int) :: IO ()
-     printf "=len\n" :: IO ()
+     printf "%d=len\n" (len::Int) :: IO()
      tab1 <- (join (newListArray . (,) 0 . subtract 1 <$> return len <*> fmap (map read . words) getLine))
      let k = len - 1
      let h i =
            if i <= k
-           then do printf "%d" (i :: Int) :: IO ()
-                   printf "=>" :: IO ()
-                   printf "%d" =<< (readIOA tab1 i :: IO Int)
-                   printf "\n" :: IO ()
+           then do printf "%d=>%d\n" (i::Int) =<< ((readIOA tab1 i)::IO Int) :: IO()
                    h (i + 1)
            else do l <- (fmap read getLine)
                    tab2 <- array_init (l - 1) (\ a ->
@@ -44,8 +40,7 @@ main =
                          then do let f = l - 1
                                  let e j =
                                        if j <= f
-                                       then do printf "%d" =<< (join $ readIOA <$> (readIOA tab2 m) <*> return j :: IO Int)
-                                               printf " " :: IO ()
+                                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab2 m) <*> return j)::IO Int) :: IO()
                                                e (j + 1)
                                        else do printf "\n" :: IO ()
                                                d (m + 1) in

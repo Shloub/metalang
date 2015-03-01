@@ -60,10 +60,7 @@ main =
                            let g = i
                            c (i + 1) f g
                    else c (i + 1) d e
-           else do printf "%d" (d :: Int) :: IO ()
-                   printf "\n" :: IO ()
-                   printf "%d" (e :: Int) :: IO ()
-                   printf "\n" :: IO () in
+           else printf "%d\n%d\n" (d::Int) (e::Int) :: IO() in
            c 1 max0 maxi
 
 

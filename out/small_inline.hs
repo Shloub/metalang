@@ -51,9 +51,6 @@ main =
                           do out0 <- read_int
                              skip_whitespaces
                              return out0)
-     printf "%d" =<< (readIOA t 0 :: IO Int)
-     printf " - " :: IO ()
-     printf "%d" =<< (readIOA t 1 :: IO Int)
-     printf "\n" :: IO ()
+     join $ printf "%d - %d\n" <$> ((readIOA t 0)::IO Int) <*> ((readIOA t 1)::IO Int) :: IO()
 
 

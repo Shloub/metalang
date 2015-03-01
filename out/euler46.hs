@@ -68,10 +68,7 @@ main =
                         let bd = bc + 1
                         w (k + 1) bd)
                     (w (k + 1) bc)
-           else do printf "%d" (bc :: Int) :: IO ()
-                   printf " == " :: IO ()
-                   printf "%d" (nprimes :: Int) :: IO ()
-                   printf "\n" :: IO ()
+           else do printf "%d == %d\n" (bc::Int) (nprimes::Int) :: IO()
                    canbe <- array_init maximumprimes (\ i_ ->
                                                         return False)
                    let v = nprimes - 1
@@ -91,8 +88,7 @@ main =
                                     if m <= maximumprimes
                                     then do let m2 = m * 2 + 1
                                             ifM ((return (m2 < maximumprimes)) <&&> (fmap not (readIOA canbe m2)))
-                                                (do printf "%d" (m2 :: Int) :: IO ()
-                                                    printf "\n" :: IO ()
+                                                (do printf "%d\n" (m2::Int) :: IO()
                                                     q (m + 1))
                                                 (q (m + 1))
                                     else return () in

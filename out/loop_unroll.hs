@@ -11,19 +11,14 @@ main :: IO ()
 main =
   do let j = 0
      let a = 0
-     printf "%d" (a :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (a::Int) :: IO()
      let b = 1
-     printf "%d" (b :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (b::Int) :: IO()
      let c = 2
-     printf "%d" (c :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (c::Int) :: IO()
      let d = 3
-     printf "%d" (d :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (d::Int) :: IO()
      let e = 4
-     printf "%d" (e :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (e::Int) :: IO()
 
 

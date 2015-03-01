@@ -87,7 +87,6 @@ main =
      e <- read_int
      join $ writeIORef <$> (_blah <$> (readIOA t 1)) <*> return e
      titi <- result t 4
-     printf "%d" (titi :: Int) :: IO ()
-     printf "%d" =<< ((_blah <$> (readIOA t 2)) >>= readIORef :: IO Int)
+     printf "%d%d" (titi::Int) =<< (((_blah <$> (readIOA t 2)) >>= readIORef)::IO Int) :: IO()
 
 

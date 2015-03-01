@@ -77,8 +77,7 @@ main =
   let e i =
         if i <= 55
         then ifM (is_triangular i)
-                 (do printf "%d" (i :: Int) :: IO ()
-                     printf " " :: IO ()
+                 (do printf "%d " (i::Int) :: IO()
                      e (i + 1))
                  (e (i + 1))
         else do printf "\n" :: IO ()
@@ -88,8 +87,7 @@ main =
                       if h <= n
                       then do k <- (((+) j) <$> (score ()))
                               d (h + 1) k
-                      else do printf "%d" (j :: Int) :: IO ()
-                              printf "\n" :: IO () in
+                      else printf "%d\n" (j::Int) :: IO() in
                       d 1 sum in
         e 1
 

@@ -58,7 +58,6 @@ main =
   do let n = 10001
      t <- array_init n (\ i ->
                           return 2)
-     printf "%d" =<< (find 3 t 1 n :: IO Int)
-     printf "\n" :: IO ()
+     printf "%d\n" =<< ((find 3 t 1 n)::IO Int) :: IO()
 
 

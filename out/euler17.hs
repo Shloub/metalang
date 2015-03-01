@@ -38,12 +38,10 @@ main =
      let ninety = 6
      let hundred = 7
      let thousand = 8
-     printf "%d" (one + two + three + four + five :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" ((one + two + three + four + five)::Int) :: IO()
      let hundred_and = 10
      let one_to_nine = one + two + three + four + five + six + seven + eight + nine
-     printf "%d" (one_to_nine :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (one_to_nine::Int) :: IO()
      let one_to_ten = one_to_nine + ten
      let one_to_twenty = one_to_ten + eleven + twelve + thirteen + fourteen + fifteen + sixteen + seventeen + eighteen + nineteen + twenty
      let one_to_thirty = one_to_twenty + twenty * 9 + one_to_nine + thirty
@@ -54,9 +52,6 @@ main =
      let one_to_eighty = one_to_seventy + seventy * 9 + one_to_nine + eighty
      let one_to_ninety = one_to_eighty + eighty * 9 + one_to_nine + ninety
      let one_to_ninety_nine = one_to_ninety + ninety * 9 + one_to_nine
-     printf "%d" (one_to_ninety_nine :: Int) :: IO ()
-     printf "\n" :: IO ()
-     printf "%d" (100 * one_to_nine + one_to_ninety_nine * 10 + hundred_and * 9 * 99 + hundred * 9 + one + thousand :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n%d\n" (one_to_ninety_nine::Int) ((100 * one_to_nine + one_to_ninety_nine * 10 + hundred_and * 9 * 99 + hundred * 9 + one + thousand)::Int) :: IO()
 
 

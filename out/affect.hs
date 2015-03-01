@@ -101,7 +101,6 @@ main =
      skip_whitespaces
      e <- read_int
      writeIORef (_blah t2) e
-     printf "%d" =<< (result t t2 :: IO Int)
-     printf "%d" =<< (readIORef (_blah t) :: IO Int)
+     join $ printf "%d%d" <$> ((result t t2)::IO Int) <*> ((readIORef (_blah t))::IO Int) :: IO()
 
 

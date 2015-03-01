@@ -24,14 +24,7 @@ main =
                            let a2b2 = a * a + b * b
                            let cc = c * c
                            if cc == a2b2 && c > a
-                           then do printf "%d" (a :: Int) :: IO ()
-                                   printf "\n" :: IO ()
-                                   printf "%d" (b :: Int) :: IO ()
-                                   printf "\n" :: IO ()
-                                   printf "%d" (c :: Int) :: IO ()
-                                   printf "\n" :: IO ()
-                                   printf "%d" (a * b * c :: Int) :: IO ()
-                                   printf "\n" :: IO ()
+                           then do printf "%d\n%d\n%d\n%d\n" (a::Int) (b::Int) (c::Int) ((a * b * c)::Int) :: IO()
                                    e (b + 1)
                            else e (b + 1)
                    else d (a + 1) in

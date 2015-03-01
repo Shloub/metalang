@@ -30,8 +30,7 @@ result len tab =
      let f = len - 1
      let e i1 =
            if i1 <= f
-           then do printf "%d" =<< (readIOA tab i1 :: IO Int)
-                   printf " " :: IO ()
+           then do printf "%d " =<< ((readIOA tab i1)::IO Int) :: IO()
                    join $ writeIOA tab2 <$> (readIOA tab i1) <*> return True
                    e (i1 + 1)
            else do printf "\n" :: IO ()
@@ -47,10 +46,8 @@ result len tab =
 
 main =
   do len <- (fmap read getLine)
-     printf "%d" (len :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d\n" (len::Int) :: IO()
      tab <- (join (newListArray . (,) 0 . subtract 1 <$> return len <*> fmap (map read . words) getLine))
-     printf "%d" =<< (result len tab :: IO Int)
-     printf "\n" :: IO ()
+     printf "%d\n" =<< ((result len tab)::IO Int) :: IO()
 
 

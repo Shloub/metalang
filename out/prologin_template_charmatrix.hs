@@ -55,7 +55,6 @@ main =
      a <- array_init taille_y (\ b ->
                                  (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille_x)) <*> getLine)))
      let tableau = a
-     printf "%d" =<< (programme_candidat tableau taille_x taille_y :: IO Int)
-     printf "\n" :: IO ()
+     printf "%d\n" =<< ((programme_candidat tableau taille_x taille_y)::IO Int) :: IO()
 
 

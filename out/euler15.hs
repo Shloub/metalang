@@ -61,14 +61,12 @@ main =
                                        then do let e = w - 1
                                                let d k =
                                                      if k <= e
-                                                     then do printf "%d" =<< (join $ readIOA <$> (readIOA tab m) <*> return k :: IO Int)
-                                                             printf " " :: IO ()
+                                                     then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab m) <*> return k)::IO Int) :: IO()
                                                              d (k + 1)
                                                      else do printf "\n" :: IO ()
                                                              c (m + 1) in
                                                      d 0
-                                       else do printf "%d" =<< (join $ readIOA <$> (readIOA tab 0) <*> return 0 :: IO Int)
-                                               printf "\n" :: IO () in
+                                       else printf "%d\n" =<< ((join $ readIOA <$> (readIOA tab 0) <*> return 0)::IO Int) :: IO() in
                                        c 0 in
                          g 2 in
               s 0

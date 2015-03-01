@@ -68,10 +68,7 @@ pathfind tab x y =
 main =
   do x <- (fmap read getLine)
      y <- (fmap read getLine)
-     printf "%d" (x :: Int) :: IO ()
-     printf " " :: IO ()
-     printf "%d" (y :: Int) :: IO ()
-     printf "\n" :: IO ()
+     printf "%d %d\n" (x::Int) (y::Int) :: IO()
      e <- array_init y (\ f ->
                           (join (newListArray <$> (fmap (\x -> (0, x-1)) (return x)) <*> getLine)))
      let tab = e

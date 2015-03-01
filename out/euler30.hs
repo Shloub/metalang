@@ -56,15 +56,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
                                                                   then do s <- ((+) <$> ((+) <$> ((+) <$> ((+) <$> ((+) <$> (readIOA p a) <*> (readIOA p b)) <*> (readIOA p c)) <*> (readIOA p d)) <*> (readIOA p e)) <*> (readIOA p f))
                                                                           let r = a + b * 10 + c * 100 + d * 1000 + e * 10000 + f * 100000
                                                                           if s == r && r /= 1
-                                                                          then do printf "%d" (f :: Int) :: IO ()
-                                                                                  printf "%d" (e :: Int) :: IO ()
-                                                                                  printf "%d" (d :: Int) :: IO ()
-                                                                                  printf "%d" (c :: Int) :: IO ()
-                                                                                  printf "%d" (b :: Int) :: IO ()
-                                                                                  printf "%d" (a :: Int) :: IO ()
-                                                                                  printf " " :: IO ()
-                                                                                  printf "%d" (r :: Int) :: IO ()
-                                                                                  printf "\n" :: IO ()
+                                                                          then do printf "%d%d%d%d%d%d %d\n" (f::Int) (e::Int) (d::Int) (c::Int) (b::Int) (a::Int) (r::Int) :: IO()
                                                                                   let y = x + r
                                                                                   o (f + 1) y
                                                                           else o (f + 1) x

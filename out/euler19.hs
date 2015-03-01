@@ -64,8 +64,7 @@ main =
                                                       in let l = e + 1
                                                                  in (k, l)
                                          else (g, e))
-              else do printf "%d" (b :: Int) :: IO ()
-                      printf "\n" :: IO () in
+              else printf "%d\n" (b::Int) :: IO() in
               a count dayofweek month year
 
 
