@@ -37,8 +37,7 @@ min2_ a b =
           else b)
 
 eratostene t max0 =
-  do let n = 0
-     let e = max0 - 1
+  do let e = max0 - 1
      let c i w =
            if i <= e
            then ifM (((==) i) <$> (readIOA t i))
@@ -55,17 +54,15 @@ eratostene t max0 =
                         else c (i + 1) x)
                     (c (i + 1) w)
            else return w in
-           c 2 n
+           c 2 0
 
 main =
-  do let maximumprimes = 1000001
-     era <- array_init maximumprimes (\ j ->
-                                        return j)
-     nprimes <- eratostene era maximumprimes
+  do era <- array_init 1000001 (\ j ->
+                                  return j)
+     nprimes <- eratostene era 1000001
      primes <- array_init nprimes (\ o ->
                                      return 0)
-     let l = 0
-     let v = maximumprimes - 1
+     let v = 1000001 - 1
      let u k ba =
            if k <= v
            then ifM (((==) k) <$> (readIOA era k))
@@ -76,33 +73,26 @@ main =
            else do printf "%d == %d\n" (ba::Int) (nprimes::Int) :: IO()
                    sum <- array_init nprimes (\ i_ ->
                                                 readIOA primes i_)
-                   let maxl = 0
-                   let process = True
-                   let stop = maximumprimes - 1
-                   let len = 1
-                   let resp = 1
+                   let stop = 1000001 - 1
                    let r bc bd be bf bg =
                          if be
-                         then do let bh = False
-                                 let s i bi bj bk bl =
-                                       if i <= bl
-                                       then if i + bc < nprimes
-                                            then do writeIOA sum i =<< ((+) <$> (readIOA sum i) <*> (readIOA primes (i + bc)))
-                                                    ifM (((>) maximumprimes) <$> (readIOA sum i))
-                                                        (do let bm = True
-                                                            ifM ((==) <$> (readIOA era =<< (readIOA sum i)) <*> (readIOA sum i))
-                                                                (do let bn = bc
-                                                                    bo <- readIOA sum i
-                                                                    s (i + 1) bn bm bo bl)
-                                                                (s (i + 1) bi bm bk bl))
-                                                        (do bp <- min2_ bl i
-                                                            s (i + 1) bi bj bk bp)
-                                            else s (i + 1) bi bj bk bl
-                                       else do let bq = bc + 1
-                                               r bq bi bj bk bl in
-                                       s 0 bd bh bf bg
+                         then let s i bi bj bk bl =
+                                    if i <= bl
+                                    then if i + bc < nprimes
+                                         then do writeIOA sum i =<< ((+) <$> (readIOA sum i) <*> (readIOA primes (i + bc)))
+                                                 ifM (((>) 1000001) <$> (readIOA sum i))
+                                                     (ifM ((==) <$> (readIOA era =<< (readIOA sum i)) <*> (readIOA sum i))
+                                                          (do bo <- readIOA sum i
+                                                              s (i + 1) bc True bo bl)
+                                                          (s (i + 1) bi True bk bl))
+                                                     (do bp <- min2_ bl i
+                                                         s (i + 1) bi bj bk bp)
+                                         else s (i + 1) bi bj bk bl
+                                    else do let bq = bc + 1
+                                            r bq bi bj bk bl in
+                                    s 0 bd False bf bg
                          else printf "%d\n%d\n" (bf::Int) (bd::Int) :: IO() in
-                         r len maxl process resp stop in
-           u 2 l
+                         r 1 0 True 1 stop in
+           u 2 0
 
 

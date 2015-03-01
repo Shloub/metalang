@@ -37,8 +37,7 @@ max2_ a b =
           else b)
 
 eratostene t max0 =
-  do let n = 0
-     let ba = max0 - 1
+  do let ba = max0 - 1
      let y i bb =
            if i <= ba
            then ifM (((==) i) <$> (readIOA t i))
@@ -53,7 +52,7 @@ eratostene t max0 =
                               z j)
                     (y (i + 1) bb)
            else return bb in
-           y 2 n
+           y 2 0
 
 fillPrimesFactors t n primes nprimes =
   do let x = nprimes - 1
@@ -73,14 +72,12 @@ fillPrimesFactors t n primes nprimes =
            v 0 n
 
 find ndiv2 =
-  do let maximumprimes = 110
-     era <- array_init maximumprimes (\ j ->
-                                        return j)
-     nprimes <- eratostene era maximumprimes
+  do era <- array_init 110 (\ j ->
+                              return j)
+     nprimes <- eratostene era 110
      primes <- array_init nprimes (\ o ->
                                      return 0)
-     let l = 0
-     let u = maximumprimes - 1
+     let u = 110 - 1
      let s k bi =
            if k <= u
            then ifM (((==) k) <$> (readIOA era k))
@@ -94,7 +91,6 @@ find ndiv2 =
                                                                      return 0)
                               max0 <- join $ max2_ <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)
                               writeIOA primesFactors 2 =<< ((-) <$> (readIOA primesFactors 2) <*> (return 1))
-                              let ndivs = 1
                               let r i bk =
                                     if i <= max0
                                     then ifM (((/=) 0) <$> (readIOA primesFactors i))
@@ -105,10 +101,10 @@ find ndiv2 =
                                          then return ((n * (n + 1)) `quot` 2)
                                          else {- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" -}
                                               h (n + 1) in
-                                    r 0 ndivs
+                                    r 0 1
                       else return 0 in
                       h 1 in
-           s 2 l
+           s 2 0
 
 main =
   do printf "%d\n" =<< ((find 500)::IO Int)

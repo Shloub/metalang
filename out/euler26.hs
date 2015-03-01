@@ -53,17 +53,13 @@ periode restes len a b =
 main =
   do t <- array_init 1000 (\ j ->
                              return 0)
-     let m = 0
-     let mi = 0
      let h i q r =
            if i <= 1000
            then do p <- periode t 0 1 i
                    if p > q
-                   then do let s = i
-                           let u = p
-                           h (i + 1) u s
+                   then h (i + 1) p i
                    else h (i + 1) q r
            else printf "%d\n%d\n" (r::Int) (q::Int) :: IO() in
-           h 1 m mi
+           h 1 0 0
 
 

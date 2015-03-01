@@ -71,8 +71,7 @@ main =
      printf "%d %d\n" (x::Int) (y::Int) :: IO()
      e <- array_init y (\ f ->
                           (join (newListArray <$> (fmap (\x -> (0, x-1)) (return x)) <*> getLine)))
-     let tab = e
-     result <- pathfind tab x y
+     result <- pathfind e x y
      printf "%d" (result :: Int) :: IO ()
 
 

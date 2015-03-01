@@ -68,15 +68,14 @@ mktoto v1 =
      return t
 
 result t len =
-  do let out0 = 0
-     let b = len - 1
+  do let b = len - 1
      let a j g =
            if j <= b
            then do join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> (((+) 1) <$> ((_blah <$> (readIOA t j)) >>= readIORef))
                    h <- ((+) <$> ((+) <$> (((+) g) <$> ((_foo <$> (readIOA t j)) >>= readIORef)) <*> ((*) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> ((_bar <$> (readIOA t j)) >>= readIORef))) <*> ((*) <$> ((_bar <$> (readIOA t j)) >>= readIORef) <*> ((_foo <$> (readIOA t j)) >>= readIORef)))
                    a (j + 1) h
            else return g in
-           a 0 out0
+           a 0 0
 
 main =
   do t <- array_init 4 (\ i ->

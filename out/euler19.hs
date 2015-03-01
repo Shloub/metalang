@@ -45,26 +45,21 @@ ndayinmonth month year =
                                                                  else 0)
 
 main =
-  do let month = 0
-     let year = 1901
-     let dayofweek = 1
-     {- 01-01-1901 : mardi -}
-     do let count = 0
-        let a b c d e =
-              if e /= 2001
-              then do ndays <- ndayinmonth d e
-                      let f = (c + ndays) `rem` 7
-                      let g = d + 1
-                      (\ (h, i) ->
-                        if (f `rem` 7) == 6
-                        then do let j = b + 1
-                                a j f h i
-                        else a b f h i) (if g == 12
-                                         then let k = 0
-                                                      in let l = e + 1
-                                                                 in (k, l)
-                                         else (g, e))
-              else printf "%d\n" (b::Int) :: IO() in
-              a count dayofweek month year
+  {- 01-01-1901 : mardi -}
+  let a b c d e =
+        if e /= 2001
+        then do ndays <- ndayinmonth d e
+                let f = (c + ndays) `rem` 7
+                let g = d + 1
+                (\ (h, i) ->
+                  if (f `rem` 7) == 6
+                  then do let j = b + 1
+                          a j f h i
+                  else a b f h i) (if g == 12
+                                   then let l = e + 1
+                                                in (0, l)
+                                   else (g, e))
+        else printf "%d\n" (b::Int) :: IO() in
+        a 0 1 0 1901
 
 

@@ -9,8 +9,7 @@ import Data.IORef
 
 main :: IO ()
 main =
-  do let i = 0
-     let a = i - 1
+  do let a = 0 - 1
      printf "%d\n" (a::Int) :: IO()
      let b = a + 55
      printf "%d\n" (b::Int) :: IO()

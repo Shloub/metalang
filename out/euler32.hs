@@ -43,8 +43,7 @@ okdigits ok n =
               (return False)
 
 main =
-  do let count = 0
-     allowed <- array_init 10 (\ i ->
+  do allowed <- array_init 10 (\ i ->
                                  return (i /= 0))
      counted <- array_init 100000 (\ j ->
                                      return False)
@@ -108,6 +107,6 @@ main =
                                  l (e + 1) t in
                          m 1 s
            else printf "%d\n" (s::Int) :: IO() in
-           l 1 count
+           l 1 0
 
 

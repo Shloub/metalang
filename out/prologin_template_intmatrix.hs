@@ -32,8 +32,7 @@ main :: IO ()
 
 
 programme_candidat tableau x y =
-  do let out0 = 0
-     let e = y - 1
+  do let e = y - 1
      let b i h =
            if i <= e
            then do let d = x - 1
@@ -44,7 +43,7 @@ programme_candidat tableau x y =
                          else b (i + 1) k in
                          c 0 h
            else return h in
-           b 0 out0
+           b 0 0
 
 main =
   do taille_x <- (fmap read getLine)

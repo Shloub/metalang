@@ -64,24 +64,21 @@ is_number c =
 npi0 str len =
   do stack <- array_init len (\ i ->
                                 return 0)
-     let ptrStack = 0
-     let ptrStr = 0
      let d k l =
            if l < len
            then ifM (((==) ' ') <$> (readIOA str l))
                     (do let m = l + 1
                         d k m)
                     (ifM ((readIOA str l) >>= is_number)
-                         (do let num = 0
-                             let e n o =
-                                   ifM (((/=) ' ') <$> (readIOA str o))
-                                       (do p <- ((-) <$> (((+) (n * 10)) <$> (fmap ord (readIOA str o))) <*> (return (ord '0')))
-                                           let q = o + 1
-                                           e p q)
-                                       (do writeIOA stack k n
-                                           let r = k + 1
-                                           d r o) in
-                                   e num l)
+                         (let e n o =
+                                ifM (((/=) ' ') <$> (readIOA str o))
+                                    (do p <- ((-) <$> (((+) (n * 10)) <$> (fmap ord (readIOA str o))) <*> (return (ord '0')))
+                                        let q = o + 1
+                                        e p q)
+                                    (do writeIOA stack k n
+                                        let r = k + 1
+                                        d r o) in
+                                e 0 l)
                          (ifM (((==) '+') <$> (readIOA str l))
                               (do writeIOA stack (k - 2) =<< ((+) <$> (readIOA stack (k - 2)) <*> (readIOA stack (k - 1)))
                                   let s = k - 1
@@ -89,19 +86,14 @@ npi0 str len =
                                   d s t)
                               (d k l)))
            else readIOA stack 0 in
-           d ptrStack ptrStr
+           d 0 0
 
 main =
-  do let len = 0
-     j <- read_int
-     let u = j
+  do j <- read_int
      skip_whitespaces
-     tab <- array_init u (\ i ->
-                            do let tmp = '\000'
-                               h <- getChar
-                               let v = h
-                               return v)
-     result <- npi0 tab u
+     tab <- array_init j (\ i ->
+                            getChar)
+     result <- npi0 tab j
      printf "%d" (result :: Int) :: IO ()
 
 

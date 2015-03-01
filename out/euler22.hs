@@ -52,7 +52,6 @@ score () =
   do skip_whitespaces
      len <- read_int
      skip_whitespaces
-     let sum = 0
      let a i d =
            if i <= len
            then do c <- getChar
@@ -60,16 +59,15 @@ score () =
                    {-		print c print " " print sum print " " -}
                    a (i + 1) e
            else return d in
-           a 1 sum
+           a 1 0
 
 main =
-  do let sum = 0
-     n <- read_int
+  do n <- read_int
      let b i f =
            if i <= n
            then do g <- (((+) f) <$> (((*) i) <$> (score ())))
                    b (i + 1) g
            else printf "%d\n" (f::Int) :: IO() in
-           b 1 sum
+           b 1 0
 
 

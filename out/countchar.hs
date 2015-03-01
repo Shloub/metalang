@@ -56,8 +56,7 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 nth tab tofind len =
-  do let out0 = 0
-     let b = len - 1
+  do let b = len - 1
      let a i h =
            if i <= b
            then ifM (((==) tofind) <$> (readIOA tab i))
@@ -65,23 +64,16 @@ nth tab tofind len =
                         a (i + 1) j)
                     (a (i + 1) h)
            else return h in
-           a 0 out0
+           a 0 0
 
 main =
-  do let len = 0
-     g <- read_int
-     let k = g
+  do g <- read_int
      skip_whitespaces
-     let tofind = '\000'
      f <- getChar
-     let l = f
      skip_whitespaces
-     tab <- array_init k (\ i ->
-                            do let tmp = '\000'
-                               e <- getChar
-                               let m = e
-                               return m)
-     result <- nth tab l k
+     tab <- array_init g (\ i ->
+                            getChar)
+     result <- nth tab f g
      printf "%d" (result :: Int) :: IO ()
 
 

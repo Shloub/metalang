@@ -32,8 +32,7 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  do let n = 0
-     let g = max0 - 1
+  do let g = max0 - 1
      let e i w =
            if i <= g
            then ifM (((==) i) <$> (readIOA t i))
@@ -48,11 +47,10 @@ eratostene t max0 =
                               f j)
                     (e (i + 1) w)
            else return w in
-           e 2 n
+           e 2 0
 
 isPrime n primes len =
-  do let i = 0
-     let ba = if n < 0
+  do let ba = if n < 0
               then let bb = - n
                             in bb
               else n
@@ -63,7 +61,7 @@ isPrime n primes len =
                     (do let bd = bc + 1
                         d bd))
                (return True) in
-           d i
+           d 0
 
 test a b primes len =
   let c n =
@@ -76,16 +74,12 @@ test a b primes len =
         c 0
 
 main =
-  do let maximumprimes = 1000
-     era <- array_init maximumprimes (\ j ->
-                                        return j)
-     let result = 0
-     let max0 = 0
-     nprimes <- eratostene era maximumprimes
+  do era <- array_init 1000 (\ j ->
+                               return j)
+     nprimes <- eratostene era 1000
      primes <- array_init nprimes (\ o ->
                                      return 0)
-     let l = 0
-     let v = maximumprimes - 1
+     let v = 1000 - 1
      let u k be =
            if k <= v
            then ifM (((==) k) <$> (readIOA era k))
@@ -94,8 +88,6 @@ main =
                         u (k + 1) bf)
                     (u (k + 1) be)
            else do printf "%d == %d\n" (be::Int) (nprimes::Int) :: IO()
-                   let ma = 0
-                   let mb = 0
                    let r b bg bh bi bj =
                          if b <= 999
                          then ifM (((==) b) <$> (readIOA era b))
@@ -105,23 +97,18 @@ main =
                                                  n2 <- test a (- b) primes nprimes
                                                  (\ (bo, bp, bq, br) ->
                                                    if n2 > bp
-                                                   then do let bs = n2
-                                                           let bt = - a * b
-                                                           let bu = a
+                                                   then do let bt = - a * b
                                                            let bv = - b
-                                                           s (a + 1) bu bs bv bt
+                                                           s (a + 1) a n2 bv bt
                                                    else s (a + 1) bo bp bq br) (if n1 > bl
-                                                                                then let bw = n1
-                                                                                              in let bx = a * b
-                                                                                                          in let by = a
-                                                                                                                      in let bz = b
-                                                                                                                                  in (by, bw, bz, bx)
+                                                                                then let bx = a * b
+                                                                                              in (a, n1, b, bx)
                                                                                 else (bk, bl, bm, bn))
                                          else r (b + 1) bk bl bm bn in
                                          s (- 999) bg bh bi bj)
                                   (r (b + 1) bg bh bi bj)
                          else printf "%d %d\n%d\n%d\n" (bg::Int) (bi::Int) (bh::Int) (bj::Int) :: IO() in
-                         r 3 ma max0 mb result in
-           u 2 l
+                         r 3 0 0 0 0 in
+           u 2 0
 
 

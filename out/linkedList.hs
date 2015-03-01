@@ -50,18 +50,16 @@ rev empty torev =
   rev2 empty empty torev
 
 test empty =
-  do let list = empty
-     let i = - 1
+  do let i = - 1
      let a c d =
            if c /= 0
            then do b <- read_int
-                   let e = b
-                   if e /= 0
-                   then do f <- cons d e
-                           a e f
-                   else a e d
+                   if b /= 0
+                   then do f <- cons d b
+                           a b f
+                   else a b d
            else return () in
-           a i list
+           a i empty
 
 main =
   return ()

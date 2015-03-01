@@ -23,13 +23,12 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 fact n =
-  do let prod = 1
-     let q i r =
-           if i <= n
-           then do let s = r * i
-                   q (i + 1) s
-           else return r in
-           q 2 prod
+  let q i r =
+        if i <= n
+        then do let s = r * i
+                q (i + 1) s
+        else return r in
+        q 2 1
 
 show0 lim nth =
   do t <- array_init lim (\ i ->

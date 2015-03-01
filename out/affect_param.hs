@@ -9,12 +9,10 @@ import Data.IORef
 
 main :: IO ()
 foo a =
-  let b = 4
-          in return ()
+  return ()
 
 main =
-  do let a = 0
-     foo a
-     printf "%d\n" (a::Int) :: IO()
+  do foo 0
+     printf "%d\n" (0::Int) :: IO()
 
 

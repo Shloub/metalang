@@ -9,10 +9,9 @@ import Data.IORef
 
 main :: IO ()
 main =
-  do let lim = 100
-     let sum = (lim * (lim + 1)) `quot` 2
+  do let sum = (100 * (100 + 1)) `quot` 2
      let carressum = sum * sum
-     let sumcarres = (lim * (lim + 1) * (2 * lim + 1)) `quot` 6
+     let sumcarres = (100 * (100 + 1) * (2 * 100 + 1)) `quot` 6
      printf "%d" (carressum - sumcarres :: Int) :: IO ()
 
 

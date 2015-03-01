@@ -27,21 +27,19 @@ h i =
            a j
 
 main =
-  do let j = 0
-     let c k f =
-           if k <= 10
-           then do let g = f + k
-                   printf "%d\n" (g::Int) :: IO()
-                   c (k + 1) g
-           else do let i = 4
-                   let b l m =
-                         if l < 10
-                         then do printf "%d" (l :: Int) :: IO ()
-                                 let n = l + 1
-                                 let o = m + n
-                                 b n o
-                         else printf "%d%dFIN TEST\n" (m::Int) (l::Int) :: IO() in
-                         b i f in
-           c 0 j
+  let c k f =
+        if k <= 10
+        then do let g = f + k
+                printf "%d\n" (g::Int) :: IO()
+                c (k + 1) g
+        else let b l m =
+                   if l < 10
+                   then do printf "%d" (l :: Int) :: IO ()
+                           let n = l + 1
+                           let o = m + n
+                           b n o
+                   else printf "%d%dFIN TEST\n" (m::Int) (l::Int) :: IO() in
+                   b 4 f in
+        c 0 0
 
 

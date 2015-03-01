@@ -22,8 +22,7 @@ foo () =
 bar () =
   let b i =
         if i <= 10
-        then do let a = 0
-                b (i + 1)
+        then b (i + 1)
         else return 0 in
         b 0
 

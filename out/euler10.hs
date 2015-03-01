@@ -32,8 +32,7 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  do let sum = 0
-     let c = max0 - 1
+  do let c = max0 - 1
      let a i f =
            if i <= c
            then ifM (((==) i) <$> (readIOA t i))
@@ -50,14 +49,13 @@ eratostene t max0 =
                         else a (i + 1) g)
                     (a (i + 1) f)
            else return f in
-           a 2 sum
+           a 2 0
 
 main =
-  do let n = 100000
-     {- normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages -}
-     do t <- array_init n (\ i ->
-                             return i)
-        writeIOA t 1 0
-        printf "%d\n" =<< ((eratostene t n)::IO Int)
+  {- normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages -}
+  do t <- array_init 100000 (\ i ->
+                               return i)
+     writeIOA t 1 0
+     printf "%d\n" =<< ((eratostene t 100000)::IO Int)
 
 

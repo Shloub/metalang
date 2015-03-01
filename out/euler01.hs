@@ -13,14 +13,13 @@ ifM c i e =
 
 main :: IO ()
 main =
-  do let sum = 0
-     let a i b =
-           if i <= 999
-           then if (i `rem` 3) == 0 || (i `rem` 5) == 0
-                then do let c = b + i
-                        a (i + 1) c
-                else a (i + 1) b
-           else printf "%d\n" (b::Int) :: IO() in
-           a 0 sum
+  let a i b =
+        if i <= 999
+        then if (i `rem` 3) == 0 || (i `rem` 5) == 0
+             then do let c = b + i
+                     a (i + 1) c
+             else a (i + 1) b
+        else printf "%d\n" (b::Int) :: IO() in
+        a 0 0
 
 

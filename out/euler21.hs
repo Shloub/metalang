@@ -32,8 +32,7 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  do let n = 0
-     let s = max0 - 1
+  do let s = max0 - 1
      let q i bb =
            if i <= s
            then ifM (((==) i) <$> (readIOA t i))
@@ -48,7 +47,7 @@ eratostene t max0 =
                               r j)
                     (q (i + 1) bb)
            else return bb in
-           q 2 n
+           q 2 0
 
 fillPrimesFactors t n primes nprimes =
   do let m = nprimes - 1
@@ -81,8 +80,6 @@ sumdivaux t n i =
   else ifM (((==) 0) <$> (readIOA t i))
            (sumdivaux t n =<< (sumdivaux2 t n (i + 1)))
            (do o <- sumdivaux t n =<< (sumdivaux2 t n (i + 1))
-               let out0 = 0
-               let p = i
                e <- readIOA t i
                let c j bk bl =
                      if j <= e
@@ -90,7 +87,7 @@ sumdivaux t n i =
                              let bn = bl * i
                              c (j + 1) bm bn
                      else return ((bk + 1) * o) in
-                     c 1 out0 p)
+                     c 1 0 i)
 
 sumdiv nprimes primes n =
   do t <- array_init (n + 1) (\ i ->
@@ -99,14 +96,12 @@ sumdiv nprimes primes n =
      sumdivaux t max0 0
 
 main =
-  do let maximumprimes = 1001
-     era <- array_init maximumprimes (\ j ->
-                                        return j)
-     nprimes <- eratostene era maximumprimes
+  do era <- array_init 1001 (\ j ->
+                               return j)
+     nprimes <- eratostene era 1001
      primes <- array_init nprimes (\ o ->
                                      return 0)
-     let l = 0
-     let ba = maximumprimes - 1
+     let ba = 1001 - 1
      let z k bo =
            if k <= ba
            then ifM (((==) k) <$> (readIOA era k))
@@ -115,7 +110,6 @@ main =
                         z (k + 1) bp)
                     (z (k + 1) bo)
            else do printf "%d == %d\n" (bo::Int) (nprimes::Int) :: IO()
-                   let sum = 0
                    let y n bq =
                          if n <= 1000
                          then do other <- ((-) <$> (sumdiv nprimes primes n) <*> (return n))
@@ -128,7 +122,7 @@ main =
                                          else y (n + 1) bq
                                  else y (n + 1) bq
                          else printf "\n%d\n" (bq::Int) :: IO() in
-                         y 2 sum in
-           z 2 l
+                         y 2 0 in
+           z 2 0
 
 

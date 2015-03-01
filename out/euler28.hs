@@ -14,8 +14,6 @@ ifM c i e =
 main :: IO ()
 sumdiag n =
   do let nterms = n * 2 - 1
-     let un = 1
-     let sum = 1
      let b = nterms - 2
      let a i c e =
            if i <= b
@@ -25,7 +23,7 @@ sumdiag n =
                    do let g = c + f
                       a (i + 1) g f
            else return c in
-           a 0 sum un
+           a 0 1 1
 
 main =
   printf "%d" =<< (sumdiag 1001 :: IO Int)

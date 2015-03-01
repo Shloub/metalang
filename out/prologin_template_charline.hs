@@ -27,8 +27,7 @@ main :: IO ()
 
 
 programme_candidat tableau taille =
-  do let out0 = 0
-     let b = taille - 1
+  do let b = taille - 1
      let a i c =
            if i <= b
            then do d <- (((+) c) <$> (((*) i) <$> (fmap ord (readIOA tableau i))))
@@ -36,7 +35,7 @@ programme_candidat tableau taille =
                    a (i + 1) d
            else do printf "--\n" :: IO ()
                    return c in
-           a 0 out0
+           a 0 0
 
 main =
   do taille <- (fmap read getLine)

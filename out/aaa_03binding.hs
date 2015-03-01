@@ -19,13 +19,9 @@ h i =
 
 main =
   do h 14
-     let a = 4
-     let b = 5
-     printf "%d" (a + b :: Int) :: IO ()
+     printf "%d" (4 + 5 :: Int) :: IO ()
      {- main -}
      do h 15
-        let c = 2
-        let d = 1
-        printf "%d" (c + d :: Int) :: IO ()
+        printf "%d" (2 + 1 :: Int) :: IO ()
 
 

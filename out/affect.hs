@@ -70,22 +70,13 @@ mktoto2 v1 =
      return t
 
 result t_ t2_ =
-  do let t = t_
-     let t2 = t2_
-     t3 <- (Toto <$> (newIORef 0) <*> (newIORef 0) <*> (newIORef 0))
-     let k = t2
-     let l = t2
-     let m = k
-     writeIORef (_blah l) =<< (((+) 1) <$> (readIORef (_blah l)))
-     let len = 1
-     cache0 <- array_init len (\ i ->
-                                 return (- i))
-     cache1 <- array_init len (\ j ->
-                                 return j)
-     let cache2 = cache0
-     let n = cache1
-     let o = n
-     ((+) <$> ((+) <$> (readIORef (_foo l)) <*> ((*) <$> (readIORef (_blah l)) <*> (readIORef (_bar l)))) <*> ((*) <$> (readIORef (_bar l)) <*> (readIORef (_foo l))))
+  do t3 <- (Toto <$> (newIORef 0) <*> (newIORef 0) <*> (newIORef 0))
+     writeIORef (_blah t2_) =<< (((+) 1) <$> (readIORef (_blah t2_)))
+     cache0 <- array_init 1 (\ i ->
+                               return (- i))
+     cache1 <- array_init 1 (\ j ->
+                               return j)
+     ((+) <$> ((+) <$> (readIORef (_foo t2_)) <*> ((*) <$> (readIORef (_blah t2_)) <*> (readIORef (_bar t2_)))) <*> ((*) <$> (readIORef (_bar t2_)) <*> (readIORef (_foo t2_))))
 
 main =
   do t <- mktoto 4

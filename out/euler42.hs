@@ -61,7 +61,6 @@ score () =
   do skip_whitespaces
      len <- read_int
      skip_whitespaces
-     let sum = 0
      let b i f =
            if i <= len
            then do c <- getChar
@@ -71,7 +70,7 @@ score () =
            else ifM (is_triangular f)
                     (return 1)
                     (return 0) in
-           b 1 sum
+           b 1 0
 
 main =
   let e i =
@@ -81,14 +80,13 @@ main =
                      e (i + 1))
                  (e (i + 1))
         else do printf "\n" :: IO ()
-                let sum = 0
                 n <- read_int
                 let d h j =
                       if h <= n
                       then do k <- (((+) j) <$> (score ()))
                               d (h + 1) k
                       else printf "%d\n" (j::Int) :: IO() in
-                      d 1 sum in
+                      d 1 0 in
         e 1
 
 

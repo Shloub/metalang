@@ -30,11 +30,10 @@ read_int =
 
 main :: IO ()
 foo () =
-  let a = 0
-          in {- test -}
-             let d = a + 1
-                     in {- test 2 -}
-                        return ()
+  {- test -}
+  let d = 0 + 1
+          in {- test 2 -}
+             return ()
 
 foo2 () =
   return ()
@@ -46,27 +45,24 @@ foo3 () =
 
 sumdiv n =
   {- On désire renvoyer la somme des diviseurs -}
-  do let out0 = 0
-     {- On déclare un entier qui contiendra la somme -}
-     let b i e =
-           if i <= n
-           then {- La boucle : i est le diviseur potentiel-}
-                if (n `rem` i) == 0
-                then {- Si i divise -}
-                     do let f = e + i
-                        {- On incrémente -}
-                        b (i + 1) f
-                else {- nop -}
-                     b (i + 1) e
-           else return e in
-           b 1 out0
+  {- On déclare un entier qui contiendra la somme -}
+  let b i e =
+        if i <= n
+        then {- La boucle : i est le diviseur potentiel-}
+             if (n `rem` i) == 0
+             then {- Si i divise -}
+                  do let f = e + i
+                     {- On incrémente -}
+                     b (i + 1) f
+             else {- nop -}
+                  b (i + 1) e
+        else return e in
+        b 1 0
 
 main =
   {- Programme principal -}
-  do let n = 0
-     c <- read_int
-     let g = c
+  do c <- read_int
      {- Lecture de l'entier -}
-     printf "%d" =<< (sumdiv g :: IO Int)
+     printf "%d" =<< (sumdiv c :: IO Int)
 
 

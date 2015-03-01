@@ -67,8 +67,7 @@ find0 len tab cache x y =
        then return (- 10000)
        else ifM (((/=) 0) <$> (join $ readIOA <$> (readIOA cache y) <*> return x))
                 (join $ readIOA <$> (readIOA cache y) <*> return x)
-                (do let result = 0
-                    out0 <- find0 len tab cache x (y + 1)
+                (do out0 <- find0 len tab cache x (y + 1)
                     out1 <- find0 len tab cache (x + 1) (y + 1)
                     r <- if out0 > out1
                          then do s <- (((+) out0) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
@@ -86,20 +85,16 @@ find len tab =
      find0 len tab tab2 0 0
 
 main =
-  do let len = 0
-     q <- read_int
-     let u = q
+  do q <- read_int
      skip_whitespaces
-     tab <- array_init u (\ i ->
+     tab <- array_init q (\ i ->
                             do tab2 <- array_init (i + 1) (\ j ->
-                                                             do let tmp = 0
-                                                                p <- read_int
-                                                                let v = p
+                                                             do p <- read_int
                                                                 skip_whitespaces
-                                                                return v)
+                                                                return p)
                                return tab2)
-     printf "%d\n" =<< ((find u tab)::IO Int)
-     let m = u - 1
+     printf "%d\n" =<< ((find q tab)::IO Int)
+     let m = q - 1
      let g k =
            if k <= m
            then let h l =

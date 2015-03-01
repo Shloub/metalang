@@ -56,13 +56,9 @@ exp0 a b =
        else (((*) a) <$> (exp0 a (b - 1)))
 
 main =
-  do let a = 0
-     let b = 0
-     d <- read_int
-     let e = d
+  do d <- read_int
      skip_whitespaces
      c <- read_int
-     let f = c
-     printf "%d" =<< (exp0 e f :: IO Int)
+     printf "%d" =<< (exp0 d c :: IO Int)
 
 

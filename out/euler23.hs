@@ -32,8 +32,7 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  do let n = 0
-     let w = max0 - 1
+  do let w = max0 - 1
      let u i bl =
            if i <= w
            then ifM (((==) i) <$> (readIOA t i))
@@ -48,7 +47,7 @@ eratostene t max0 =
                               v j)
                     (u (i + 1) bl)
            else return bl in
-           u 2 n
+           u 2 0
 
 fillPrimesFactors t n primes nprimes =
   do let m = nprimes - 1
@@ -81,8 +80,6 @@ sumdivaux t n i =
   else ifM (((==) 0) <$> (readIOA t i))
            (sumdivaux t n =<< (sumdivaux2 t n (i + 1)))
            (do o <- sumdivaux t n =<< (sumdivaux2 t n (i + 1))
-               let out0 = 0
-               let p = i
                e <- readIOA t i
                let c j bu bv =
                      if j <= e
@@ -90,7 +87,7 @@ sumdivaux t n i =
                              let bx = bv * i
                              c (j + 1) bw bx
                      else return ((bu + 1) * o) in
-                     c 1 out0 p)
+                     c 1 0 i)
 
 sumdiv nprimes primes n =
   do t <- array_init (n + 1) (\ i ->
@@ -99,14 +96,12 @@ sumdiv nprimes primes n =
      sumdivaux t max0 0
 
 main =
-  do let maximumprimes = 30001
-     era <- array_init maximumprimes (\ s ->
-                                        return s)
-     nprimes <- eratostene era maximumprimes
+  do era <- array_init 30001 (\ s ->
+                                return s)
+     nprimes <- eratostene era 30001
      primes <- array_init nprimes (\ t ->
                                      return 0)
-     let l = 0
-     let bk = maximumprimes - 1
+     let bk = 30001 - 1
      let bj k by =
             if k <= bk
             then ifM (((==) k) <$> (readIOA era k))
@@ -114,40 +109,38 @@ main =
                          let bz = by + 1
                          bj (k + 1) bz)
                      (bj (k + 1) by)
-            else do let n = 100
-                    {- 28124 ça prend trop de temps mais on arrive a passer le test -}
-                    do abondant <- array_init (n + 1) (\ p ->
-                                                         return False)
-                       summable <- array_init (n + 1) (\ q ->
-                                                         return False)
-                       let sum = 0
-                       let bi r =
-                              if r <= n
-                              then do other <- ((-) <$> (sumdiv nprimes primes r) <*> (return r))
-                                      if other > r
-                                      then do writeIOA abondant r True
-                                              bi (r + 1)
-                                      else bi (r + 1)
-                              else let bg i =
-                                          if i <= n
-                                          then let bh j =
-                                                      if j <= n
-                                                      then ifM (((&&) (i + j <= n)) <$> ((readIOA abondant i) <&&> (readIOA abondant j)))
-                                                               (do writeIOA summable (i + j) True
-                                                                   bh (j + 1))
-                                                               (bh (j + 1))
-                                                      else bg (i + 1) in
-                                                      bh 1
-                                          else let bf o ca =
-                                                      if o <= n
-                                                      then ifM (fmap not (readIOA summable o))
-                                                               (do let cb = ca + o
-                                                                   bf (o + 1) cb)
-                                                               (bf (o + 1) ca)
-                                                      else printf "\n%d\n" (ca::Int) :: IO() in
-                                                      bf 1 sum in
-                                          bg 1 in
-                              bi 2 in
-            bj 2 l
+            else {- 28124 ça prend trop de temps mais on arrive a passer le test -}
+                 do abondant <- array_init (100 + 1) (\ p ->
+                                                        return False)
+                    summable <- array_init (100 + 1) (\ q ->
+                                                        return False)
+                    let bi r =
+                           if r <= 100
+                           then do other <- ((-) <$> (sumdiv nprimes primes r) <*> (return r))
+                                   if other > r
+                                   then do writeIOA abondant r True
+                                           bi (r + 1)
+                                   else bi (r + 1)
+                           else let bg i =
+                                       if i <= 100
+                                       then let bh j =
+                                                   if j <= 100
+                                                   then ifM (((&&) (i + j <= 100)) <$> ((readIOA abondant i) <&&> (readIOA abondant j)))
+                                                            (do writeIOA summable (i + j) True
+                                                                bh (j + 1))
+                                                            (bh (j + 1))
+                                                   else bg (i + 1) in
+                                                   bh 1
+                                       else let bf o ca =
+                                                   if o <= 100
+                                                   then ifM (fmap not (readIOA summable o))
+                                                            (do let cb = ca + o
+                                                                bf (o + 1) cb)
+                                                            (bf (o + 1) ca)
+                                                   else printf "\n%d\n" (ca::Int) :: IO() in
+                                                   bf 1 0 in
+                                       bg 1 in
+                           bi 2 in
+            bj 2 0
 
 

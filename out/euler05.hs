@@ -39,7 +39,6 @@ max2_ a b =
 primesfactors n =
   do tab <- array_init (n + 1) (\ i ->
                                   return 0)
-     let d = 2
      let f v w =
            if w /= 1 && v * v <= w
            then if (w `rem` v) == 0
@@ -50,14 +49,13 @@ primesfactors n =
                         f y w
            else do writeIOA tab w =<< (((+) 1) <$> (readIOA tab w))
                    return tab in
-           f d n
+           f 2 n
 
 main =
-  do let lim = 20
-     o <- array_init (lim + 1) (\ m ->
-                                  return 0)
+  do o <- array_init (20 + 1) (\ m ->
+                                 return 0)
      let s i =
-           if i <= lim
+           if i <= 20
            then do t <- primesfactors i
                    let u j =
                          if j <= i
@@ -65,18 +63,17 @@ main =
                                  u (j + 1)
                          else s (i + 1) in
                          u 1
-           else do let product = 1
-                   let p k z =
-                         if k <= lim
-                         then do r <- readIOA o k
-                                 let q l ba =
-                                       if l <= r
-                                       then do let bb = ba * k
-                                               q (l + 1) bb
-                                       else p (k + 1) ba in
-                                       q 1 z
-                         else printf "%d\n" (z::Int) :: IO() in
-                         p 1 product in
+           else let p k z =
+                      if k <= 20
+                      then do r <- readIOA o k
+                              let q l ba =
+                                    if l <= r
+                                    then do let bb = ba * k
+                                            q (l + 1) bb
+                                    else p (k + 1) ba in
+                                    q 1 z
+                      else printf "%d\n" (z::Int) :: IO() in
+                      p 1 1 in
            s 1
 
 

@@ -59,7 +59,6 @@ main =
                                                                     else if i == 6
                                                                          then (- 1, 1)
                                                                          else (- 1, - 1)))
-     let max0 = 0
      m <- array_init 20 (\ c ->
                            (join (newListArray . (,) 0 . subtract 1 <$> return 20 <*> fmap (map read . words) getLine)))
      let h j o =
@@ -76,6 +75,6 @@ main =
                                                    else h (j + 1) p in
                                                    k 0 o)
            else printf "%d\n" (o::Int) :: IO() in
-           h 0 max0
+           h 0 0
 
 

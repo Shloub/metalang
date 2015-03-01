@@ -39,32 +39,21 @@ read_int =
 
 main :: IO ()
 fibo0 a b i =
-  do let out0 = 0
-     let a2 = a
-     let b2 = b
-     let d = i + 1
+  do let d = i + 1
      let c j h k l =
            if j <= d
            then do let m = l + h
-                   let tmp = k
                    let n = k + h
-                   let o = tmp
-                   c (j + 1) o n m
+                   c (j + 1) k n m
            else return l in
-           c 0 a2 b2 out0
+           c 0 a b 0
 
 main =
-  do let a = 0
-     let b = 0
-     let i = 0
-     g <- read_int
-     let p = g
+  do g <- read_int
      skip_whitespaces
      f <- read_int
-     let q = f
      skip_whitespaces
      e <- read_int
-     let r = e
-     printf "%d" =<< (fibo0 p q r :: IO Int)
+     printf "%d" =<< (fibo0 g f e :: IO Int)
 
 

@@ -9,11 +9,10 @@ import Data.IORef
 
 main :: IO ()
 main =
-  do let i = 4
-     {-while i < 10 do -}
-     do printf "%d" (i :: Int) :: IO ()
-        let a = i + 1
-        {-  end -}
-        printf "%d" (a :: Int) :: IO ()
+  {-while i < 10 do -}
+  do printf "%d" (4 :: Int) :: IO ()
+     let a = 4 + 1
+     {-  end -}
+     printf "%d" (a :: Int) :: IO ()
 
 

@@ -33,8 +33,7 @@ main :: IO ()
 
 
 programme_candidat tableau taille_x taille_y =
-  do let out0 = 0
-     let f = taille_y - 1
+  do let f = taille_y - 1
      let c i k =
            if i <= f
            then do let e = taille_x - 1
@@ -47,14 +46,13 @@ programme_candidat tableau taille_x taille_y =
                                  c (i + 1) l in
                          d 0 k
            else return k in
-           c 0 out0
+           c 0 0
 
 main =
   do taille_x <- (fmap read getLine)
      taille_y <- (fmap read getLine)
      a <- array_init taille_y (\ b ->
                                  (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille_x)) <*> getLine)))
-     let tableau = a
-     printf "%d\n" =<< ((programme_candidat tableau taille_x taille_y)::IO Int)
+     printf "%d\n" =<< ((programme_candidat a taille_x taille_y)::IO Int)
 
 
