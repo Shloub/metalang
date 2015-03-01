@@ -35,14 +35,6 @@ module E = AstFun.Expr
 module Type = Ast.Type
 
 
-let format_to_string li =
-  let li = List.map (function
-		      | E.IntFormat -> "%d"
-		      | E.StringFormat -> "%s"
-		      | E.CharFormat -> "%c"
-		      | E.StringConstant s -> String.replace "%" "%%" s
-		    ) li
-  in String.concat "" li
 
 let prelude_and = "
 (<&&>) a b =
@@ -392,10 +384,11 @@ class haskellPrinter = object(self)
     parens ~p (fun_priority -1) f "do @[<v>%a@]" self#blockContent li
 	
   method print_format f formats =
-    Format.fprintf f "%S" (format_to_string formats)
+    Format.fprintf f "%S" (OcamlFunPrinter.format_to_string formats)
 
   method printf f () = Format.fprintf f "printf"
   method multiprint ~p f formats exprs =
+    let side_effect =  List.exists (fun (e, _) -> self#isSideEffect e) exprs in
     let exprs = List.map (fun (e, ty) ->
 			  let pure = self#isPure e in
 			  pure, (fun ~p f () ->
@@ -405,7 +398,7 @@ class haskellPrinter = object(self)
 				), ()
 			 ) exprs in
     let params = (true, (fun ~p f () -> self#print_format f formats), ()) :: exprs in
-    parens ~p fun_priority f "%a :: IO()"
+    parens ~p fun_priority f (if side_effect then "%a" else "%a :: IO()")
 	   (fun f () -> hsapply ~p f self#printf true params) ()
 
   method print ~p f expr t =

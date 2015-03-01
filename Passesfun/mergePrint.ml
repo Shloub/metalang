@@ -52,9 +52,9 @@ let combine_prints li =
 let rec extract_prints acc = function
   | [] -> List.rev acc, []
   | hd::tl -> match Expr.unfix hd with
-		| Expr.Print (e, ty) ->
-		   extract_prints ((e, ty)::acc) tl
-		| _ -> List.rev acc, hd::tl
+	      | Expr.Block li -> extract_prints acc (List.append tl li)
+	      | Expr.Print (e, ty) -> extract_prints ((e, ty)::acc) tl
+	      | _ -> List.rev acc, hd::tl
 
 let rec merge li =
   if li = [] then [] else

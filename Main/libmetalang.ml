@@ -206,6 +206,7 @@ let fun_passes config prog =
   |> typed "merging if" Passes.WalkIfMerge.apply
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply config b)
+  |> (fun (a, b) -> a, MergePrint.apply b)
 
 let php_passes prog =
   prog |> default_passes

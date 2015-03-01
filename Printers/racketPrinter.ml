@@ -38,6 +38,15 @@ module E = AstFun.Expr
 module Type = Ast.Type
 module TypeSet = Ast.TypeSet
 
+let format_to_string li =
+  let li = List.map (function
+		      | E.IntFormat -> "~a"
+		      | E.StringFormat -> "~s"
+		      | E.CharFormat -> "~c"
+		      | E.StringConstant s -> String.replace "~" "~~" s
+		    ) li
+  in String.concat "" li
+
 class racketPrinter = object(self)
   inherit OcamlFunPrinter.camlFunPrinter as super
   method lang () = "rkt"
@@ -212,13 +221,23 @@ Format.fprintf f "#lang racket
        (fun f func -> func f ())
        (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)) li
 
+  method block f li = Format.fprintf f "@[<v 2>(block@\n%a@\n)@]"
+    (Printer.print_list self#expr
+       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)) li
+
+  method print_format f formats =
+    Format.fprintf f "%S" (format_to_string formats)
+
+  method multiprint f formats exprs =
+    Format.fprintf f "(printf %a %a)"
+		   self#print_format formats
+		   (Printer.print_list
+		      (fun f (a, ty) -> self#expr f a)
+		      (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) exprs
+
   method print f e ty =
     Format.fprintf f "(display %a)"
       self#expr e
-
-  method print_list f li =
-    match li with [e, ty] -> self#print f e ty
-    | _ -> Format.fprintf f "(map display (list %a))" (Printer.print_list self#expr Printer.sep_space) (List.map fst li)
 
   method tuple f li =
     Format.fprintf f "(list %a)"
