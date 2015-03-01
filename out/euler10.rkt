@@ -4,9 +4,8 @@
 (define (eratostene t0 max0)
   ;toto
   (let ([sum 0])
-  (let ([c (- max0 1)])
   (letrec ([a (lambda (i sum) 
-                (if (<= i c)
+                (if (<= i (- max0 1))
                 (if (eq? (vector-ref t0 i) i)
                 (let ([sum (+ sum i)])
                 (if (> (quotient max0 i) i)
@@ -23,7 +22,7 @@
                 (a (+ i 1) sum)))
                 (a (+ i 1) sum))
                 sum))])
-  (a 2 sum))))
+  (a 2 sum)))
 )
 (define main
   (let ([n 100000])

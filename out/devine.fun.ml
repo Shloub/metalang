@@ -1,9 +1,8 @@
 let devine0 nombre tab len =
   let min0 = tab.(0) in
   let max0 = tab.(1) in
-  let c = (len - 1) in
   let rec b i max0 min0 =
-    (if (i <= c)
+    (if (i <= (len - 1))
      then (if ((tab.(i) > max0) || (tab.(i) < min0))
            then false
            else let min0 = (if (tab.(i) < nombre)

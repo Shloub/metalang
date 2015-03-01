@@ -61,31 +61,29 @@ max2_ a b =
           else b)
 
 nbPassePartout n passepartout m serrures =
-  do let f = m - 1
-     let e i u v =
-           if i <= f
-           then do w <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) u) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                            (do x <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                                return x)
-                            (return u)
-                   ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) v) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
-                       (do y <- join $ readIOA <$> (readIOA serrures i) <*> return 1
-                           e (i + 1) w y)
-                       (e (i + 1) w v)
-           else do let d = n - 1
-                   let c z ba bb =
-                         if z <= d
-                         then do pp <- readIOA passepartout z
-                                 ifM ((((<=) u) <$> (readIOA pp 0)) <&&> (((<=) v) <$> (readIOA pp 1)))
-                                     (return 1)
-                                     (do bc <- max2_ ba =<< (readIOA pp 0)
-                                         bd <- max2_ bb =<< (readIOA pp 1)
-                                         c (z + 1) bc bd)
-                         else return (if ba >= u && bb >= v
-                                      then 2
-                                      else 0) in
-                         c 0 0 0 in
-           e 0 0 0
+  let d i s t =
+        if i <= m - 1
+        then do u <- ifM ((((==) (- 1)) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) s) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
+                         (do v <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                             return v)
+                         (return s)
+                ifM ((((==) 1) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 0)) <&&> (((<) t) <$> (join $ readIOA <$> (readIOA serrures i) <*> return 1)))
+                    (do w <- join $ readIOA <$> (readIOA serrures i) <*> return 1
+                        d (i + 1) u w)
+                    (d (i + 1) u t)
+        else let c x y z =
+                   if x <= n - 1
+                   then do pp <- readIOA passepartout x
+                           ifM ((((<=) s) <$> (readIOA pp 0)) <&&> (((<=) t) <$> (readIOA pp 1)))
+                               (return 1)
+                               (do ba <- max2_ y =<< (readIOA pp 0)
+                                   bb <- max2_ z =<< (readIOA pp 1)
+                                   c (x + 1) ba bb)
+                   else return (if y >= s && z >= t
+                                then 2
+                                else 0) in
+                   c 0 0 0 in
+        d 0 0 0
 
 main =
   do n <- read_int

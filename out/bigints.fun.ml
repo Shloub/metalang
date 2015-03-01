@@ -13,35 +13,35 @@ type bigint = {mutable bigint_sign : bool; mutable bigint_len : int; mutable big
 let read_bigint len =
   let chiffres = (Array.init len (fun  j -> Scanf.scanf "%c"
   (fun  c -> (int_of_char (c))))) in
-  let cf = ((len - 1) / 2) in
-  let rec ce i =
-    (if (i <= cf)
+  let ce = ((len - 1) / 2) in
+  let rec cd i =
+    (if (i <= ce)
      then let tmp = chiffres.(i) in
      (
        chiffres.(i) <- chiffres.(((len - 1) - i));
        chiffres.(((len - 1) - i)) <- tmp;
-       (ce (i + 1))
+       (cd (i + 1))
        )
      
      else {bigint_sign=true;
      bigint_len=len;
      bigint_chiffres=chiffres}) in
-    (ce 0)
+    (cd 0)
 let print_bigint a =
   (
     (if (not a.bigint_sign)
      then (Printf.printf "%c" '-')
      else ());
-    let cb = (a.bigint_len - 1) in
-    let rec ca i =
-      (if (i <= cb)
+    let ca = (a.bigint_len - 1) in
+    let rec bz i =
+      (if (i <= ca)
        then (
               (Printf.printf "%d" a.bigint_chiffres.(((a.bigint_len - 1) - i)));
-              (ca (i + 1))
+              (bz (i + 1))
               )
        
        else ()) in
-      (ca 0)
+      (bz 0)
     )
   
 let bigint_eq a b =
@@ -50,14 +50,14 @@ let bigint_eq a b =
    then false
    else (if (a.bigint_len <> b.bigint_len)
          then false
-         else let bz = (a.bigint_len - 1) in
-         let rec by i =
-           (if (i <= bz)
+         else let by = (a.bigint_len - 1) in
+         let rec bx i =
+           (if (i <= by)
             then (if (a.bigint_chiffres.(i) <> b.bigint_chiffres.(i))
                   then false
-                  else (by (i + 1)))
+                  else (bx (i + 1)))
             else true) in
-           (by 0)))
+           (bx 0)))
 let bigint_gt a b =
   (*  Renvoie vrai si a > b  *)
   (if (a.bigint_sign && (not b.bigint_sign))
@@ -68,31 +68,31 @@ let bigint_gt a b =
                then a.bigint_sign
                else (if (a.bigint_len < b.bigint_len)
                      then (not a.bigint_sign)
-                     else let bx = (a.bigint_len - 1) in
-                     let rec bw i =
-                       (if (i <= bx)
+                     else let bw = (a.bigint_len - 1) in
+                     let rec bv i =
+                       (if (i <= bw)
                         then let j = ((a.bigint_len - 1) - i) in
                         (if (a.bigint_chiffres.(j) > b.bigint_chiffres.(j))
                          then a.bigint_sign
                          else (if (a.bigint_chiffres.(j) < b.bigint_chiffres.(j))
                                then (not a.bigint_sign)
-                               else (bw (i + 1))))
+                               else (bv (i + 1))))
                         else true) in
-                       (bw 0)))))
+                       (bv 0)))))
 let bigint_lt a b =
   (not (bigint_gt a b))
 let add_bigint_positif a b =
   (*  Une addition ou on en a rien a faire des signes  *)
   let len = (((max (a.bigint_len) (b.bigint_len))) + 1) in
   let retenue = 0 in
-  ((fun  (retenue, chiffres) -> let rec bv len =
+  ((fun  (retenue, chiffres) -> let rec bu len =
                                   (if ((len > 0) && (chiffres.((len - 1)) = 0))
                                    then let len = (len - 1) in
-                                   (bv len)
+                                   (bu len)
                                    else {bigint_sign=true;
                                    bigint_len=len;
                                    bigint_chiffres=chiffres}) in
-                                  (bv len)) (Array.init_withenv len (fun  i retenue -> let tmp = retenue in
+                                  (bu len)) (Array.init_withenv len (fun  i retenue -> let tmp = retenue in
   let tmp = (if (i < a.bigint_len)
              then let tmp = (tmp + a.bigint_chiffres.(i)) in
              tmp
@@ -102,28 +102,28 @@ let add_bigint_positif a b =
              tmp
              else tmp) in
   let retenue = (tmp / 10) in
-  let bt = (tmp mod 10) in
-  (retenue, bt)) retenue))
+  let bs = (tmp mod 10) in
+  (retenue, bs)) retenue))
 let sub_bigint_positif a b =
   (*  Une soustraction ou on en a rien a faire des signes
 Pré-requis : a > b
  *)
   let len = a.bigint_len in
   let retenue = 0 in
-  ((fun  (retenue, chiffres) -> let rec bs len =
+  ((fun  (retenue, chiffres) -> let rec br len =
                                   (if ((len > 0) && (chiffres.((len - 1)) = 0))
                                    then let len = (len - 1) in
-                                   (bs len)
+                                   (br len)
                                    else {bigint_sign=true;
                                    bigint_len=len;
                                    bigint_chiffres=chiffres}) in
-                                  (bs len)) (Array.init_withenv len (fun  i retenue -> let tmp = (retenue + a.bigint_chiffres.(i)) in
+                                  (br len)) (Array.init_withenv len (fun  i retenue -> let tmp = (retenue + a.bigint_chiffres.(i)) in
   let tmp = (if (i < b.bigint_len)
              then let tmp = (tmp - b.bigint_chiffres.(i)) in
              tmp
              else tmp) in
-  ((fun  (retenue, tmp) -> let bq = tmp in
-  (retenue, bq)) (if (tmp < 0)
+  ((fun  (retenue, tmp) -> let bp = tmp in
+  (retenue, bp)) (if (tmp < 0)
                   then let tmp = (tmp + 10) in
                   let retenue = (- 1) in
                   (retenue, tmp)
@@ -155,55 +155,55 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction.  *)
   let len = ((a.bigint_len + b.bigint_len) + 1) in
   let chiffres = (Array.init len (fun  k -> 0)) in
-  let bp = (a.bigint_len - 1) in
-  let rec bm i =
-    (if (i <= bp)
+  let bo = (a.bigint_len - 1) in
+  let rec bl i =
+    (if (i <= bo)
      then let retenue = 0 in
-     let bo = (b.bigint_len - 1) in
-     let rec bn j retenue =
-       (if (j <= bo)
+     let bn = (b.bigint_len - 1) in
+     let rec bm j retenue =
+       (if (j <= bn)
         then (
                chiffres.((i + j)) <- (chiffres.((i + j)) + (retenue + (b.bigint_chiffres.(j) * a.bigint_chiffres.(i))));
                let retenue = (chiffres.((i + j)) / 10) in
                (
                  chiffres.((i + j)) <- (chiffres.((i + j)) mod 10);
-                 (bn (j + 1) retenue)
+                 (bm (j + 1) retenue)
                  )
                
                )
         
         else (
                chiffres.((i + b.bigint_len)) <- (chiffres.((i + b.bigint_len)) + retenue);
-               (bm (i + 1))
+               (bl (i + 1))
                )
         ) in
-       (bn 0 retenue)
+       (bm 0 retenue)
      else (
             chiffres.((a.bigint_len + b.bigint_len)) <- (chiffres.(((a.bigint_len + b.bigint_len) - 1)) / 10);
             chiffres.(((a.bigint_len + b.bigint_len) - 1)) <- (chiffres.(((a.bigint_len + b.bigint_len) - 1)) mod 10);
-            let rec bl l len =
+            let rec bk l len =
               (if (l <= 2)
                then (if ((len <> 0) && (chiffres.((len - 1)) = 0))
                      then let len = (len - 1) in
-                     (bl (l + 1) len)
-                     else (bl (l + 1) len))
+                     (bk (l + 1) len)
+                     else (bk (l + 1) len))
                else {bigint_sign=(a.bigint_sign = b.bigint_sign);
                bigint_len=len;
                bigint_chiffres=chiffres}) in
-              (bl 0 len)
+              (bk 0 len)
             )
      ) in
-    (bm 0)
+    (bl 0)
 let bigint_premiers_chiffres a i =
   let len = ((min (i) (a.bigint_len))) in
-  let rec bi len =
+  let rec bh len =
     (if ((len <> 0) && (a.bigint_chiffres.((len - 1)) = 0))
      then let len = (len - 1) in
-     (bi len)
+     (bh len)
      else {bigint_sign=a.bigint_sign;
      bigint_len=len;
      bigint_chiffres=a.bigint_chiffres}) in
-    (bi len)
+    (bh len)
 let bigint_shift a i =
   let chiffres = (Array.init (a.bigint_len + i) (fun  k -> (if (k >= i)
                                                             then a.bigint_chiffres.((k - i))
@@ -233,13 +233,13 @@ let rec mul_bigint aa bb =
                (add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split)))))
 let log10 a =
   let out0 = 1 in
-  let rec bf a out0 =
+  let rec be a out0 =
     (if (a >= 10)
      then let a = (a / 10) in
      let out0 = (out0 + 1) in
-     (bf a out0)
+     (be a out0)
      else out0) in
-    (bf a out0)
+    (be a out0)
 let bigint_of_int i =
   let size = (log10 i) in
   let size = (if (i = 0)
@@ -247,9 +247,8 @@ let bigint_of_int i =
               size
               else size) in
   let t = (Array.init size (fun  j -> 0)) in
-  let be = (size - 1) in
   let rec bc k i =
-    (if (k <= be)
+    (if (k <= (size - 1))
      then (
             t.(k) <- (i mod 10);
             let i = (i / 10) in
@@ -379,13 +378,13 @@ let main =
   (
     (Printf.printf "%d\n" (euler29 ()));
     let sum = (read_bigint 50) in
-    let rec cg i sum =
+    let rec cf i sum =
       (if (i <= 100)
        then (
               (Scanf.scanf "%[\n \010]" (fun _ -> ()));
               let tmp = (read_bigint 50) in
               let sum = (add_bigint sum tmp) in
-              (cg (i + 1) sum)
+              (cf (i + 1) sum)
               )
        
        else (
@@ -447,7 +446,7 @@ let main =
               
               )
        ) in
-      (cg 2 sum)
+      (cf 2 sum)
     )
   
 

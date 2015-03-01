@@ -40,15 +40,14 @@
                                                       c)
                                                       c)])
                                              (integer->char c)))) (mread-char))))])
-     (let ([e (- strlen 1)])
      (letrec ([d (lambda (j) 
-                   (if (<= j e)
+                   (if (<= j (- strlen 1))
                    (block
                      (display (vector-ref tab4 j))
                      (d (+ j 1))
                      )
                    '()))])
-     (d 0))))
+     (d 0)))
 )) (mread-int))
 )
 

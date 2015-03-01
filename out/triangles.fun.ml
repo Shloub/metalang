@@ -28,12 +28,12 @@ let find len tab =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  q -> let len = q in
+  (fun  p -> let len = p in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i -> let tab2 = (Array.init (i + 1) (fun  j -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  p -> let tmp = p in
+    (fun  o -> let tmp = o in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp
@@ -42,9 +42,8 @@ let main =
     tab2)) in
     (
       (Printf.printf "%d\n" (find len tab));
-      let m = (len - 1) in
       let rec g k =
-        (if (k <= m)
+        (if (k <= (len - 1))
          then let rec h l =
                 (if (l <= k)
                  then (

@@ -1,23 +1,21 @@
 let fact n =
   let prod = 1 in
-  let rec q i prod =
+  let rec h i prod =
     (if (i <= n)
      then let prod = (prod * i) in
-     (q (i + 1) prod)
+     (h (i + 1) prod)
      else prod) in
-    (q 2 prod)
+    (h 2 prod)
 let show lim nth =
   let t = (Array.init lim (fun  i -> i)) in
   let pris = (Array.init lim (fun  j -> false)) in
-  let p = (lim - 1) in
-  let rec g k nth =
-    (if (k <= p)
+  let rec f k nth =
+    (if (k <= (lim - 1))
      then let n = (fact (lim - k)) in
      let nchiffre = (nth / n) in
      let nth = (nth mod n) in
-     let o = (lim - 1) in
-     let rec h l nchiffre =
-       (if (l <= o)
+     let rec g l nchiffre =
+       (if (l <= (lim - 1))
         then (if (not pris.(l))
               then (
                      (if (nchiffre = 0)
@@ -28,25 +26,24 @@ let show lim nth =
                       
                       else ());
                      let nchiffre = (nchiffre - 1) in
-                     (h (l + 1) nchiffre)
+                     (g (l + 1) nchiffre)
                      )
               
-              else (h (l + 1) nchiffre))
-        else (g (k + 1) nth)) in
-       (h 0 nchiffre)
-     else let f = (lim - 1) in
-     let rec e m =
-       (if (m <= f)
-        then (if (not pris.(m))
-              then (
-                     (Printf.printf "%d" m);
-                     (e (m + 1))
-                     )
-              
-              else (e (m + 1)))
-        else (Printf.printf "\n")) in
-       (e 0)) in
-    (g 1 nth)
+              else (g (l + 1) nchiffre))
+        else (f (k + 1) nth)) in
+       (g 0 nchiffre)
+     else let rec e m =
+            (if (m <= (lim - 1))
+             then (if (not pris.(m))
+                   then (
+                          (Printf.printf "%d" m);
+                          (e (m + 1))
+                          )
+                   
+                   else (e (m + 1)))
+             else (Printf.printf "\n")) in
+            (e 0)) in
+    (f 1 nth)
 let main =
   (
     (show 10 999999);

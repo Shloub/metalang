@@ -13,15 +13,14 @@ ifM c i e =
 
 main :: IO ()
 fibo a b i =
-  do let d = i + 1
-     let c j e f g =
-           if j <= d
-           then do printf "%d" (j :: Int) :: IO ()
-                   let h = g + e
-                   let k = f + e
-                   c (j + 1) f k h
-           else return g in
-           c 0 a b 0
+  let c j d e f =
+        if j <= i + 1
+        then do printf "%d" (j :: Int) :: IO ()
+                let g = f + d
+                let h = e + d
+                c (j + 1) e h g
+        else return f in
+        c 0 a b 0
 
 main =
   printf "%d" =<< (fibo 1 2 4 :: IO Int)

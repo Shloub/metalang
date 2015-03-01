@@ -4,9 +4,8 @@
 (define (programme_candidat tableau taille)
   ;toto
   (let ([out0 0])
-  (let ([b (- taille 1)])
   (letrec ([a (lambda (i out0) 
-                (if (<= i b)
+                (if (<= i (- taille 1))
                 (let ([out0 (+ out0 (* (char->integer (vector-ref tableau i)) i))])
                 (block
                   (display (vector-ref tableau i))
@@ -16,7 +15,7 @@
                   (display "--\n")
                   out0
                   )))])
-  (a 0 out0))))
+  (a 0 out0)))
 )
 (define main
   (let ([taille (string->number (read-line))])

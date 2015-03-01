@@ -1,15 +1,13 @@
 let programme_candidat tableau x y =
   let out0 = 0 in
-  let h = (y - 1) in
   let rec e i out0 =
-    (if (i <= h)
-     then let g = (x - 1) in
-     let rec f j out0 =
-       (if (j <= g)
-        then let out0 = (out0 + (tableau.(i).(j) * ((i * 2) + j))) in
-        (f (j + 1) out0)
-        else (e (i + 1) out0)) in
-       (f 0 out0)
+    (if (i <= (y - 1))
+     then let rec f j out0 =
+            (if (j <= (x - 1))
+             then let out0 = (out0 + (tableau.(i).(j) * ((i * 2) + j))) in
+             (f (j + 1) out0)
+             else (e (i + 1) out0)) in
+            (f 0 out0)
      else out0) in
     (e 0 out0)
 let main =

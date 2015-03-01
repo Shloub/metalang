@@ -32,18 +32,16 @@ main :: IO ()
 
 
 programme_candidat tableau x y =
-  do let e = y - 1
-     let b i h =
-           if i <= e
-           then do let d = x - 1
-                   let c j k =
-                         if j <= d
-                         then do l <- (((+) k) <$> (((*) (i * 2 + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
-                                 c (j + 1) l
-                         else b (i + 1) k in
-                         c 0 h
-           else return h in
-           b 0 0
+  let b i f =
+        if i <= y - 1
+        then let c j g =
+                   if j <= x - 1
+                   then do h <- (((+) g) <$> (((*) (i * 2 + j)) <$> (join $ readIOA <$> (readIOA tableau i) <*> return j)))
+                           c (j + 1) h
+                   else b (i + 1) g in
+                   c 0 f
+        else return f in
+        b 0 0
 
 main =
   do taille_x <- (fmap read getLine)

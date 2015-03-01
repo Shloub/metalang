@@ -27,22 +27,20 @@ main :: IO ()
 result len tab =
   do tab2 <- array_init len (\ i ->
                                return False)
-     let f = len - 1
-     let e i1 =
-           if i1 <= f
+     let d i1 =
+           if i1 <= len - 1
            then do printf "%d " =<< ((readIOA tab i1)::IO Int)
                    join $ writeIOA tab2 <$> (readIOA tab i1) <*> return True
-                   e (i1 + 1)
+                   d (i1 + 1)
            else do printf "\n" :: IO ()
-                   let d = len - 1
                    let c i2 =
-                         if i2 <= d
+                         if i2 <= len - 1
                          then ifM (fmap not (readIOA tab2 i2))
                                   (return i2)
                                   (c (i2 + 1))
                          else return (- 1) in
                          c 0 in
-           e 0
+           d 0
 
 main =
   do len <- (fmap read getLine)

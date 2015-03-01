@@ -69,13 +69,13 @@ find0 len tab cache x y =
                 (join $ readIOA <$> (readIOA cache y) <*> return x)
                 (do out0 <- find0 len tab cache x (y + 1)
                     out1 <- find0 len tab cache (x + 1) (y + 1)
-                    r <- if out0 > out1
-                         then do s <- (((+) out0) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
+                    q <- if out0 > out1
+                         then do r <- (((+) out0) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
+                                 return r
+                         else do s <- (((+) out1) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
                                  return s
-                         else do t <- (((+) out1) <$> (join $ readIOA <$> (readIOA tab y) <*> return x))
-                                 return t
-                    join $ writeIOA <$> (readIOA cache y) <*> return x <*> return r
-                    return r)
+                    join $ writeIOA <$> (readIOA cache y) <*> return x <*> return q
+                    return q)
 
 find len tab =
   do tab2 <- array_init len (\ i ->
@@ -85,18 +85,17 @@ find len tab =
      find0 len tab tab2 0 0
 
 main =
-  do q <- read_int
+  do p <- read_int
      skip_whitespaces
-     tab <- array_init q (\ i ->
+     tab <- array_init p (\ i ->
                             do tab2 <- array_init (i + 1) (\ j ->
-                                                             do p <- read_int
+                                                             do o <- read_int
                                                                 skip_whitespaces
-                                                                return p)
+                                                                return o)
                                return tab2)
-     printf "%d\n" =<< ((find q tab)::IO Int)
-     let m = q - 1
+     printf "%d\n" =<< ((find p tab)::IO Int)
      let g k =
-           if k <= m
+           if k <= p - 1
            then let h l =
                       if l <= k
                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab k) <*> return l)::IO Int)

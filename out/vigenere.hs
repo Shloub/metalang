@@ -62,18 +62,17 @@ of_position_alphabet c =
   return (chr (c + (ord 'a')))
 
 crypte taille_cle cle taille message =
-  do let b = taille - 1
-     let a i =
-           if i <= b
-           then do lettre <- (readIOA message i) >>= position_alphabet
-                   if lettre /= - 1
-                   then do addon <- (readIOA cle (i `rem` taille_cle)) >>= position_alphabet
-                           let new0 = (addon + lettre) `rem` 26
-                           writeIOA message i =<< (of_position_alphabet new0)
-                           a (i + 1)
-                   else a (i + 1)
-           else return () in
-           a 0
+  let a i =
+        if i <= taille - 1
+        then do lettre <- (readIOA message i) >>= position_alphabet
+                if lettre /= - 1
+                then do addon <- (readIOA cle (i `rem` taille_cle)) >>= position_alphabet
+                        let new0 = (addon + lettre) `rem` 26
+                        writeIOA message i =<< (of_position_alphabet new0)
+                        a (i + 1)
+                else a (i + 1)
+        else return () in
+        a 0
 
 main =
   do taille_cle <- read_int
@@ -86,12 +85,11 @@ main =
      message <- array_init taille (\ index2 ->
                                      getChar)
      crypte taille_cle cle taille message
-     let j = taille - 1
-     let h i =
-           if i <= j
+     let g i =
+           if i <= taille - 1
            then do printf "%c" =<< (readIOA message i :: IO Char)
-                   h (i + 1)
+                   g (i + 1)
            else printf "\n" :: IO () in
-           h 0
+           g 0
 
 

@@ -38,9 +38,8 @@ let main =
                                          (char_of_int (c))
                                          )
                                        ))) in
-                                       let k = (strlen - 1) in
                                        let rec h j =
-                                         (if (j <= k)
+                                         (if (j <= (strlen - 1))
                                           then (
                                                  (Printf.printf "%c" tab4.(j));
                                                  (h (j + 1))

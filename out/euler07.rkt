@@ -3,14 +3,13 @@
 
 (define (divisible n t0 size)
   ;toto
-  (let ([c (- size 1)])
   (letrec ([b (lambda (i) 
-                (if (<= i c)
+                (if (<= i (- size 1))
                 (if (eq? (remainder n (vector-ref t0 i)) 0)
                 #t
                 (b (+ i 1)))
                 #f))])
-  (b 0)))
+  (b 0))
 )
 (define (find0 n t0 used nth0)
   ;toto

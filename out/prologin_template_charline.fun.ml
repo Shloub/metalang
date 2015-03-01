@@ -1,8 +1,7 @@
 let programme_candidat tableau taille =
   let out0 = 0 in
-  let d = (taille - 1) in
   let rec c i out0 =
-    (if (i <= d)
+    (if (i <= (taille - 1))
      then let out0 = (out0 + ((int_of_char (tableau.(i))) * i)) in
      (
        (Printf.printf "%c" tableau.(i));

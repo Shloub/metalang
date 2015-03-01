@@ -2,9 +2,8 @@ let fibo0 a b i =
   let out0 = 0 in
   let a2 = a in
   let b2 = b in
-  let d = (i + 1) in
   let rec c j a2 b2 out0 =
-    (if (j <= d)
+    (if (j <= (i + 1))
      then let out0 = (out0 + a2) in
      let tmp = b2 in
      let b2 = (b2 + a2) in
@@ -17,15 +16,15 @@ let main =
   let b = 0 in
   let i = 0 in
   Scanf.scanf "%d"
-  (fun  g -> let a = g in
+  (fun  f -> let a = f in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     Scanf.scanf "%d"
-    (fun  f -> let b = f in
+    (fun  e -> let b = e in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       Scanf.scanf "%d"
-      (fun  e -> let i = e in
+      (fun  d -> let i = d in
       (Printf.printf "%d" (fibo0 a b i)))
       )
     )

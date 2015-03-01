@@ -5,26 +5,24 @@
   ;toto
   (let ([tab2 (build-vector len (lambda (i) 
                                   #f))])
-  (let ([f (- len 1)])
-  (letrec ([e (lambda (i1) 
-                (if (<= i1 f)
+  (letrec ([d (lambda (i1) 
+                (if (<= i1 (- len 1))
                 (block
                   (printf "~a " (vector-ref tab i1))
                   (vector-set! tab2 (vector-ref tab i1) #t)
-                  (e (+ i1 1))
+                  (d (+ i1 1))
                   )
                 (block
                   (display "\n")
-                  (let ([d (- len 1)])
                   (letrec ([c (lambda (i2) 
-                                (if (<= i2 d)
+                                (if (<= i2 (- len 1))
                                 (if (not (vector-ref tab2 i2))
                                 i2
                                 (c (+ i2 1)))
                                 (- 1)))])
-                  (c 0)))
+                  (c 0))
                 )))])
-  (e 0))))
+(d 0)))
 )
 (define main
   (let ([len (string->number (read-line))])

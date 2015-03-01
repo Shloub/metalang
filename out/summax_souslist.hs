@@ -56,27 +56,26 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 summax lst len =
-  do let b = len - 1
-     let a i g h =
-           if i <= b
-           then do j <- (((+) g) <$> (readIOA lst i))
-                   let k = if j < 0
-                           then 0
-                           else j
-                   if h < k
-                   then a (i + 1) k k
-                   else a (i + 1) k h
-           else return h in
-           a 0 0 0
+  let a i f g =
+        if i <= len - 1
+        then do h <- (((+) f) <$> (readIOA lst i))
+                let j = if h < 0
+                        then 0
+                        else h
+                if g < j
+                then a (i + 1) j j
+                else a (i + 1) j g
+        else return g in
+        a 0 0 0
 
 main =
-  do f <- read_int
+  do e <- read_int
      skip_whitespaces
-     tab <- array_init f (\ i ->
-                            do e <- read_int
+     tab <- array_init e (\ i ->
+                            do d <- read_int
                                skip_whitespaces
-                               return e)
-     result <- summax tab f
+                               return d)
+     result <- summax tab e
      printf "%d" (result :: Int) :: IO ()
 
 

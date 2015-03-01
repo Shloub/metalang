@@ -26,9 +26,8 @@
   ;toto
   (let ([current 0])
   (let ([max0 0])
-  (let ([b (- len 1)])
   (letrec ([a (lambda (i current max0) 
-                (if (<= i b)
+                (if (<= i (- len 1))
                 (let ([current (+ current (vector-ref lst i))])
                 (let ([current (if (< current 0)
                                (let ([current 0])
@@ -39,18 +38,18 @@
                 (a (+ i 1) current max0))
                 (a (+ i 1) current max0))))
                 max0))])
-  (a 0 current max0)))))
+  (a 0 current max0))))
 )
 (define main
   (let ([len 0])
-  ((lambda (f) 
-     (let ([len f])
+  ((lambda (e) 
+     (let ([len e])
      (block
        (mread-blank)
        (let ([tab (build-vector len (lambda (i) 
                                       (let ([tmp 0])
-                                      ((lambda (e) 
-                                         (let ([tmp e])
+                                      ((lambda (d) 
+                                         (let ([tmp d])
                                          (block
                                            (mread-blank)
                                            tmp

@@ -8,12 +8,11 @@ let main =
                  b
                  )
     ))) in
-    let y = (len - 1) in
-    let rec x i =
-      (if (i <= y)
+    let rec u i =
+      (if (i <= (len - 1))
        then (
               (Printf.printf "%d=>%d " i tab.(i));
-              (x (i + 1))
+              (u (i + 1))
               )
        
        else (
@@ -24,12 +23,11 @@ let main =
                            e
                            )
               ))) in
-              let w = (len - 1) in
-              let rec v i_ =
-                (if (i_ <= w)
+              let rec s i_ =
+                (if (i_ <= (len - 1))
                  then (
                         (Printf.printf "%d==>%d " i_ tab2.(i_));
-                        (v (i_ + 1))
+                        (s (i_ + 1))
                         )
                  
                  else let strlen = (Scanf.scanf "%d " (fun x -> x)) in
@@ -39,9 +37,8 @@ let main =
                    (fun  g -> g))) in
                    (
                      (Scanf.scanf "%[\n \010]" (fun _ -> ()));
-                     let u = (strlen - 1) in
-                     let rec s i3 =
-                       (if (i3 <= u)
+                     let rec r i3 =
+                       (if (i3 <= (strlen - 1))
                         then let tmpc = tab4.(i3) in
                         let c = (int_of_char (tmpc)) in
                         (
@@ -52,30 +49,29 @@ let main =
                                    else c) in
                           (
                             tab4.(i3) <- (char_of_int (c));
-                            (s (i3 + 1))
+                            (r (i3 + 1))
                             )
                           
                           )
                         
-                        else let r = (strlen - 1) in
-                        let rec q j =
-                          (if (j <= r)
-                           then (
-                                  (Printf.printf "%c" tab4.(j));
-                                  (q (j + 1))
-                                  )
-                           
-                           else ()) in
-                          (q 0)) in
-                       (s 0)
+                        else let rec q j =
+                               (if (j <= (strlen - 1))
+                                then (
+                                       (Printf.printf "%c" tab4.(j));
+                                       (q (j + 1))
+                                       )
+                                
+                                else ()) in
+                               (q 0)) in
+                       (r 0)
                      )
                    
                    )
                  ) in
-                (v 0)
+                (s 0)
               )
        ) in
-      (x 0)
+      (u 0)
     )
   
 

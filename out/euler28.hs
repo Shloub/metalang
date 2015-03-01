@@ -14,15 +14,14 @@ ifM c i e =
 main :: IO ()
 sumdiag n =
   do let nterms = n * 2 - 1
-     let b = nterms - 2
-     let a i c e =
-           if i <= b
+     let a i b c =
+           if i <= nterms - 2
            then do let d = 2 * (1 + (i `quot` 4))
-                   let f = e + d
+                   let e = c + d
                    {- print int d print "=>" print un print " " -}
-                   do let g = c + f
-                      a (i + 1) g f
-           else return c in
+                   do let f = b + e
+                      a (i + 1) f e
+           else return b in
            a 0 1 1
 
 main =

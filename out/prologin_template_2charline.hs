@@ -27,23 +27,21 @@ main :: IO ()
 
 
 programme_candidat tableau1 taille1 tableau2 taille2 =
-  do let d = taille1 - 1
-     let c i e =
-           if i <= d
-           then do f <- (((+) e) <$> (((*) i) <$> (fmap ord (readIOA tableau1 i))))
-                   printf "%c" =<< (readIOA tableau1 i :: IO Char)
-                   c (i + 1) f
-           else do printf "--\n" :: IO ()
-                   let b = taille2 - 1
-                   let a j g =
-                         if j <= b
-                         then do h <- (((+) g) <$> (((*) (j * 100)) <$> (fmap ord (readIOA tableau2 j))))
-                                 printf "%c" =<< (readIOA tableau2 j :: IO Char)
-                                 a (j + 1) h
-                         else do printf "--\n" :: IO ()
-                                 return g in
-                         a 0 e in
-           c 0 0
+  let b i c =
+        if i <= taille1 - 1
+        then do d <- (((+) c) <$> (((*) i) <$> (fmap ord (readIOA tableau1 i))))
+                printf "%c" =<< (readIOA tableau1 i :: IO Char)
+                b (i + 1) d
+        else do printf "--\n" :: IO ()
+                let a j e =
+                      if j <= taille2 - 1
+                      then do f <- (((+) e) <$> (((*) (j * 100)) <$> (fmap ord (readIOA tableau2 j))))
+                              printf "%c" =<< (readIOA tableau2 j :: IO Char)
+                              a (j + 1) f
+                      else do printf "--\n" :: IO ()
+                              return e in
+                      a 0 c in
+        b 0 0
 
 main =
   do taille1 <- (fmap read getLine)

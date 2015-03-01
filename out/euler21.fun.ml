@@ -1,28 +1,26 @@
 let eratostene t max0 =
   let n = 0 in
-  let s = (max0 - 1) in
-  let rec q i n =
-    (if (i <= s)
+  let rec m i n =
+    (if (i <= (max0 - 1))
      then (if (t.(i) = i)
            then let n = (n + 1) in
            let j = (i * i) in
-           let rec r j =
+           let rec q j =
              (if ((j < max0) && (j > 0))
               then (
                      t.(j) <- 0;
                      let j = (j + i) in
-                     (r j)
+                     (q j)
                      )
               
-              else (q (i + 1) n)) in
-             (r j)
-           else (q (i + 1) n))
+              else (m (i + 1) n)) in
+             (q j)
+           else (m (i + 1) n))
      else n) in
-    (q 2 n)
+    (m 2 n)
 let fillPrimesFactors t n primes nprimes =
-  let m = (nprimes - 1) in
   let rec g i n =
-    (if (i <= m)
+    (if (i <= (nprimes - 1))
      then let d = primes.(i) in
      let rec h n =
        (if ((n mod d) = 0)
@@ -71,21 +69,20 @@ let main =
   let nprimes = (eratostene era maximumprimes) in
   let primes = (Array.init nprimes (fun  o -> 0)) in
   let l = 0 in
-  let ba = (maximumprimes - 1) in
-  let rec z k l =
-    (if (k <= ba)
+  let rec x k l =
+    (if (k <= (maximumprimes - 1))
      then (if (era.(k) = k)
            then (
                   primes.(l) <- k;
                   let l = (l + 1) in
-                  (z (k + 1) l)
+                  (x (k + 1) l)
                   )
            
-           else (z (k + 1) l))
+           else (x (k + 1) l))
      else (
             (Printf.printf "%d == %d\n" l nprimes);
             let sum = 0 in
-            let rec y n sum =
+            let rec w n sum =
               (if (n <= 1000)
                then let other = ((sumdiv nprimes primes n) - n) in
                (if (other > n)
@@ -94,14 +91,14 @@ let main =
                  then (
                         (Printf.printf "%d & %d\n" other n);
                         let sum = (sum + (other + n)) in
-                        (y (n + 1) sum)
+                        (w (n + 1) sum)
                         )
                  
-                 else (y (n + 1) sum))
-                else (y (n + 1) sum))
+                 else (w (n + 1) sum))
+                else (w (n + 1) sum))
                else (Printf.printf "\n%d\n" sum)) in
-              (y 2 sum)
+              (w 2 sum)
             )
      ) in
-    (z 2 l)
+    (x 2 l)
 

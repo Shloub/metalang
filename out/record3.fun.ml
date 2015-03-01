@@ -6,9 +6,8 @@ let mktoto v1 =
   t
 let result t len =
   let out0 = 0 in
-  let b = (len - 1) in
   let rec a j out0 =
-    (if (j <= b)
+    (if (j <= (len - 1))
      then (
             t.(j).blah <- (t.(j).blah + 1);
             let out0 = (((out0 + t.(j).foo) + (t.(j).blah * t.(j).bar)) + (t.(j).bar * t.(j).foo)) in
@@ -20,12 +19,12 @@ let result t len =
 let main =
   let t = (Array.init 4 (fun  i -> (mktoto i))) in
   Scanf.scanf "%d"
-  (fun  f -> (
-               t.(0).bar <- f;
+  (fun  e -> (
+               t.(0).bar <- e;
                (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                Scanf.scanf "%d"
-               (fun  e -> (
-                            t.(1).blah <- e;
+               (fun  d -> (
+                            t.(1).blah <- d;
                             let titi = (result t 4) in
                             (Printf.printf "%d%d" titi t.(2).blah)
                             )

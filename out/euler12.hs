@@ -37,39 +37,37 @@ max2_ a b =
           else b)
 
 eratostene t max0 =
-  do let ba = max0 - 1
-     let y i bb =
-           if i <= ba
-           then ifM (((==) i) <$> (readIOA t i))
-                    (do let j = i * i
-                        let bc = bb + 1
-                        let z bd =
-                              if bd < max0 && bd > 0
-                              then do writeIOA t bd 0
-                                      let be = bd + i
-                                      z be
-                              else y (i + 1) bc in
-                              z j)
-                    (y (i + 1) bb)
-           else return bb in
-           y 2 0
+  let w i y =
+        if i <= max0 - 1
+        then ifM (((==) i) <$> (readIOA t i))
+                 (do let j = i * i
+                     let z = y + 1
+                     let x ba =
+                           if ba < max0 && ba > 0
+                           then do writeIOA t ba 0
+                                   let bb = ba + i
+                                   x bb
+                           else w (i + 1) z in
+                           x j)
+                 (w (i + 1) y)
+        else return y in
+        w 2 0
 
 fillPrimesFactors t n primes nprimes =
-  do let x = nprimes - 1
-     let v i bf =
-           if i <= x
-           then do d <- readIOA primes i
-                   let w bg =
-                         if (bg `rem` d) == 0
-                         then do writeIOA t d =<< (((+) 1) <$> (readIOA t d))
-                                 let bh = bg `quot` d
-                                 w bh
-                         else if bg == 1
-                              then readIOA primes i
-                              else v (i + 1) bg in
-                         w bf
-           else return bf in
-           v 0 n
+  let u i bc =
+        if i <= nprimes - 1
+        then do d <- readIOA primes i
+                let v bd =
+                      if (bd `rem` d) == 0
+                      then do writeIOA t d =<< (((+) 1) <$> (readIOA t d))
+                              let be = bd `quot` d
+                              v be
+                      else if bd == 1
+                           then readIOA primes i
+                           else u (i + 1) bd in
+                      v bc
+        else return bc in
+        u 0 n
 
 find ndiv2 =
   do era <- array_init 110 (\ j ->
@@ -77,27 +75,26 @@ find ndiv2 =
      nprimes <- eratostene era 110
      primes <- array_init nprimes (\ o ->
                                      return 0)
-     let u = 110 - 1
-     let s k bi =
-           if k <= u
+     let s k bf =
+           if k <= 110 - 1
            then ifM (((==) k) <$> (readIOA era k))
-                    (do writeIOA primes bi k
-                        let bj = bi + 1
-                        s (k + 1) bj)
-                    (s (k + 1) bi)
+                    (do writeIOA primes bf k
+                        let bg = bf + 1
+                        s (k + 1) bg)
+                    (s (k + 1) bf)
            else let h n =
                       if n <= 10000
                       then do primesFactors <- array_init (n + 2) (\ m ->
                                                                      return 0)
                               max0 <- join $ max2_ <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)
                               writeIOA primesFactors 2 =<< ((-) <$> (readIOA primesFactors 2) <*> (return 1))
-                              let r i bk =
+                              let r i bh =
                                     if i <= max0
                                     then ifM (((/=) 0) <$> (readIOA primesFactors i))
-                                             (do bl <- (((*) bk) <$> (((+) 1) <$> (readIOA primesFactors i)))
-                                                 r (i + 1) bl)
-                                             (r (i + 1) bk)
-                                    else if bk > ndiv2
+                                             (do bi <- (((*) bh) <$> (((+) 1) <$> (readIOA primesFactors i)))
+                                                 r (i + 1) bi)
+                                             (r (i + 1) bh)
+                                    else if bh > ndiv2
                                          then return ((n * (n + 1)) `quot` 2)
                                          else {- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" -}
                                               h (n + 1) in

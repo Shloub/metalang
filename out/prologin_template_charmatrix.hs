@@ -33,20 +33,18 @@ main :: IO ()
 
 
 programme_candidat tableau taille_x taille_y =
-  do let f = taille_y - 1
-     let c i k =
-           if i <= f
-           then do let e = taille_x - 1
-                   let d j l =
-                         if j <= e
-                         then do m <- (((+) l) <$> (((*) (i + j * 2)) <$> (fmap ord (join $ readIOA <$> (readIOA tableau i) <*> return j))))
-                                 printf "%c" =<< (join $ readIOA <$> (readIOA tableau i) <*> return j :: IO Char)
-                                 d (j + 1) m
-                         else do printf "--\n" :: IO ()
-                                 c (i + 1) l in
-                         d 0 k
-           else return k in
-           c 0 0
+  let c i g =
+        if i <= taille_y - 1
+        then let d j h =
+                   if j <= taille_x - 1
+                   then do k <- (((+) h) <$> (((*) (i + j * 2)) <$> (fmap ord (join $ readIOA <$> (readIOA tableau i) <*> return j))))
+                           printf "%c" =<< (join $ readIOA <$> (readIOA tableau i) <*> return j :: IO Char)
+                           d (j + 1) k
+                   else do printf "--\n" :: IO ()
+                           c (i + 1) h in
+                   d 0 g
+        else return g in
+        c 0 0
 
 main =
   do taille_x <- (fmap read getLine)

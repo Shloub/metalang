@@ -63,75 +63,71 @@ copytab tab len =
      return o
 
 bubblesort tab len =
-  do let e = len - 1
-     let b i =
-           if i <= e
-           then do let d = len - 1
-                   let c j =
-                         if j <= d
-                         then ifM ((>) <$> (readIOA tab i) <*> (readIOA tab j))
-                                  (do tmp <- readIOA tab i
-                                      writeIOA tab i =<< (readIOA tab j)
-                                      writeIOA tab j tmp
-                                      c (j + 1))
-                                  (c (j + 1))
-                         else b (i + 1) in
-                         c (i + 1)
-           else return () in
-           b 0
+  let b i =
+        if i <= len - 1
+        then let c j =
+                   if j <= len - 1
+                   then ifM ((>) <$> (readIOA tab i) <*> (readIOA tab j))
+                            (do tmp <- readIOA tab i
+                                writeIOA tab i =<< (readIOA tab j)
+                                writeIOA tab j tmp
+                                c (j + 1))
+                            (c (j + 1))
+                   else b (i + 1) in
+                   c (i + 1)
+        else return () in
+        b 0
 
 qsort0 tab len i j =
   if i < j
   then {- pivot : tab[0] -}
-       let a s t =
-             if s /= t
-             then ifM ((>) <$> (readIOA tab s) <*> (readIOA tab t))
-                      (if s == t - 1
+       let a n p =
+             if n /= p
+             then ifM ((>) <$> (readIOA tab n) <*> (readIOA tab p))
+                      (if n == p - 1
                        then {- on inverse simplement-}
-                            do tmp <- readIOA tab s
-                               writeIOA tab s =<< (readIOA tab t)
-                               writeIOA tab t tmp
-                               let u = s + 1
-                               a u t
+                            do tmp <- readIOA tab n
+                               writeIOA tab n =<< (readIOA tab p)
+                               writeIOA tab p tmp
+                               let q = n + 1
+                               a q p
                        else {- on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] -}
-                            do tmp <- readIOA tab s
-                               writeIOA tab s =<< (readIOA tab t)
-                               writeIOA tab t =<< (readIOA tab (s + 1))
-                               writeIOA tab (s + 1) tmp
-                               let v = s + 1
-                               a v t)
-                      (do let w = t - 1
-                          a s w)
-             else do qsort0 tab len i (s - 1)
-                     qsort0 tab len (s + 1) j
+                            do tmp <- readIOA tab n
+                               writeIOA tab n =<< (readIOA tab p)
+                               writeIOA tab p =<< (readIOA tab (n + 1))
+                               writeIOA tab (n + 1) tmp
+                               let r = n + 1
+                               a r p)
+                      (do let s = p - 1
+                          a n s)
+             else do qsort0 tab len i (n - 1)
+                     qsort0 tab len (n + 1) j
                      return () in
              a i j
   else return ()
 
 main =
-  do r <- read_int
+  do m <- read_int
      skip_whitespaces
-     tab <- array_init r (\ i_ ->
-                            do q <- read_int
+     tab <- array_init m (\ i_ ->
+                            do l <- read_int
                                skip_whitespaces
-                               return q)
-     tab2 <- copytab tab r
-     bubblesort tab2 r
-     let p = r - 1
-     let n i =
-           if i <= p
+                               return l)
+     tab2 <- copytab tab m
+     bubblesort tab2 m
+     let k i =
+           if i <= m - 1
            then do printf "%d " =<< ((readIOA tab2 i)::IO Int)
-                   n (i + 1)
+                   k (i + 1)
            else do printf "\n" :: IO ()
-                   tab3 <- copytab tab r
-                   qsort0 tab3 r 0 (r - 1)
-                   let m = r - 1
-                   let l z =
-                         if z <= m
-                         then do printf "%d " =<< ((readIOA tab3 z)::IO Int)
-                                 l (z + 1)
+                   tab3 <- copytab tab m
+                   qsort0 tab3 m 0 (m - 1)
+                   let h v =
+                         if v <= m - 1
+                         then do printf "%d " =<< ((readIOA tab3 v)::IO Int)
+                                 h (v + 1)
                          else printf "\n" :: IO () in
-                         l 0 in
-           n 0
+                         h 0 in
+           k 0
 
 

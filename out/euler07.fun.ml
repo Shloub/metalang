@@ -1,7 +1,6 @@
 let divisible n t size =
-  let c = (size - 1) in
   let rec b i =
-    (if (i <= c)
+    (if (i <= (size - 1))
      then (if ((n mod t.(i)) = 0)
            then true
            else (b (i + 1)))

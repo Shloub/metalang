@@ -1,19 +1,17 @@
 let programme_candidat tableau1 taille1 tableau2 taille2 =
   let out0 = 0 in
-  let h = (taille1 - 1) in
-  let rec g i out0 =
-    (if (i <= h)
+  let rec f i out0 =
+    (if (i <= (taille1 - 1))
      then let out0 = (out0 + ((int_of_char (tableau1.(i))) * i)) in
      (
        (Printf.printf "%c" tableau1.(i));
-       (g (i + 1) out0)
+       (f (i + 1) out0)
        )
      
      else (
             (Printf.printf "--\n");
-            let f = (taille2 - 1) in
             let rec e j out0 =
-              (if (j <= f)
+              (if (j <= (taille2 - 1))
                then let out0 = (out0 + ((int_of_char (tableau2.(j))) * (j * 100))) in
                (
                  (Printf.printf "%c" tableau2.(j));
@@ -28,7 +26,7 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
               (e 0 out0)
             )
      ) in
-    (g 0 out0)
+    (f 0 out0)
 let main =
   let taille1 = (Scanf.scanf "%d " (fun x -> x)) in
   let taille2 = (Scanf.scanf "%d " (fun x -> x)) in

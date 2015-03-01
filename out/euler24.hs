@@ -23,47 +23,44 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 fact n =
-  let q i r =
+  let h i o =
         if i <= n
-        then do let s = r * i
-                q (i + 1) s
-        else return r in
-        q 2 1
+        then do let p = o * i
+                h (i + 1) p
+        else return o in
+        h 2 1
 
 show0 lim nth =
   do t <- array_init lim (\ i ->
                             return i)
      pris <- array_init lim (\ j ->
                                return False)
-     let p = lim - 1
-     let g k u =
-           if k <= p
+     let f k q =
+           if k <= lim - 1
            then do n <- fact (lim - k)
-                   let nchiffre = u `quot` n
-                   let v = u `rem` n
-                   let o = lim - 1
-                   let h l w =
-                         if l <= o
+                   let nchiffre = q `quot` n
+                   let r = q `rem` n
+                   let g l s =
+                         if l <= lim - 1
                          then ifM (fmap not (readIOA pris l))
-                                  (do if w == 0
+                                  (do if s == 0
                                       then do printf "%d" (l :: Int) :: IO ()
                                               writeIOA pris l True
                                       else return ()
-                                      let x = w - 1
-                                      h (l + 1) x)
-                                  (h (l + 1) w)
-                         else g (k + 1) v in
-                         h 0 nchiffre
-           else do let f = lim - 1
-                   let e m =
-                         if m <= f
-                         then ifM (fmap not (readIOA pris m))
-                                  (do printf "%d" (m :: Int) :: IO ()
-                                      e (m + 1))
-                                  (e (m + 1))
-                         else printf "\n" :: IO () in
-                         e 0 in
-           g 1 nth
+                                      let u = s - 1
+                                      g (l + 1) u)
+                                  (g (l + 1) s)
+                         else f (k + 1) r in
+                         g 0 nchiffre
+           else let e m =
+                      if m <= lim - 1
+                      then ifM (fmap not (readIOA pris m))
+                               (do printf "%d" (m :: Int) :: IO ()
+                                   e (m + 1))
+                               (e (m + 1))
+                      else printf "\n" :: IO () in
+                      e 0 in
+           f 1 nth
 
 main =
   do show0 10 999999

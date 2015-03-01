@@ -8,9 +8,8 @@ let position_alphabet c =
 let of_position_alphabet c =
   (char_of_int ((c + (int_of_char ('a')))))
 let crypte taille_cle cle taille message =
-  let b = (taille - 1) in
   let rec a i =
-    (if (i <= b)
+    (if (i <= (taille - 1))
      then let lettre = (position_alphabet message.(i)) in
      (if (lettre <> (- 1))
       then let addon = (position_alphabet cle.((i mod taille_cle))) in
@@ -38,16 +37,15 @@ let main =
                                             (fun  out2 -> out2))) in
                                             (
                                               (crypte taille_cle cle taille message);
-                                              let j = (taille - 1) in
-                                              let rec h i =
-                                                (if (i <= j)
+                                              let rec g i =
+                                                (if (i <= (taille - 1))
                                                  then (
                                                         (Printf.printf "%c" message.(i));
-                                                        (h (i + 1))
+                                                        (g (i + 1))
                                                         )
                                                  
                                                  else (Printf.printf "\n")) in
-                                                (h 0)
+                                                (g 0)
                                               )
                                             
                                             )

@@ -1,8 +1,7 @@
 let eratostene t max0 =
   let sum = 0 in
-  let c = (max0 - 1) in
   let rec a i sum =
-    (if (i <= c)
+    (if (i <= (max0 - 1))
      then (if (t.(i) = i)
            then let sum = (sum + i) in
            (if ((max0 / i) > i)

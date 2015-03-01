@@ -58,22 +58,21 @@ main :: IO ()
 devine0 nombre tab len =
   do min0 <- readIOA tab 0
      max0 <- readIOA tab 1
-     let c = len - 1
-     let b i f g =
-           if i <= c
-           then ifM ((((<) f) <$> (readIOA tab i)) <||> (((>) g) <$> (readIOA tab i)))
+     let b i e f =
+           if i <= len - 1
+           then ifM ((((<) e) <$> (readIOA tab i)) <||> (((>) f) <$> (readIOA tab i)))
                     (return False)
-                    (do h <- ifM (((>) nombre) <$> (readIOA tab i))
-                                 (do j <- readIOA tab i
-                                     return j)
-                                 (return g)
-                        k <- ifM (((<) nombre) <$> (readIOA tab i))
-                                 (do l <- readIOA tab i
-                                     return l)
+                    (do g <- ifM (((>) nombre) <$> (readIOA tab i))
+                                 (do h <- readIOA tab i
+                                     return h)
                                  (return f)
+                        j <- ifM (((<) nombre) <$> (readIOA tab i))
+                                 (do k <- readIOA tab i
+                                     return k)
+                                 (return e)
                         ifM (((&&) (len /= i + 1)) <$> (((==) nombre) <$> (readIOA tab i)))
                             (return False)
-                            (b (i + 1) k h))
+                            (b (i + 1) j g))
            else return True in
            b 2 max0 min0
 

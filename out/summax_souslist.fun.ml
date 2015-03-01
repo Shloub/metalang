@@ -1,9 +1,8 @@
 let summax lst len =
   let current = 0 in
   let max0 = 0 in
-  let b = (len - 1) in
   let rec a i current max0 =
-    (if (i <= b)
+    (if (i <= (len - 1))
      then let current = (current + lst.(i)) in
      let current = (if (current < 0)
                     then let current = 0 in
@@ -18,12 +17,12 @@ let summax lst len =
 let main =
   let len = 0 in
   Scanf.scanf "%d"
-  (fun  f -> let len = f in
+  (fun  e -> let len = e in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  e -> let tmp = e in
+    (fun  d -> let tmp = d in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp

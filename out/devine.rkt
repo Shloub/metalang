@@ -26,9 +26,8 @@
   ;toto
   (let ([min0 (vector-ref tab 0)])
   (let ([max0 (vector-ref tab 1)])
-  (let ([c (- len 1)])
   (letrec ([b (lambda (i max0 min0) 
-                (if (<= i c)
+                (if (<= i (- len 1))
                 (if (or (> (vector-ref tab i) max0) (< (vector-ref tab i) min0))
                 #f
                 (let ([min0 (if (< (vector-ref tab i) nombre)
@@ -43,7 +42,7 @@
                 #f
                 (b (+ i 1) max0 min0)))))
                 #t))])
-  (b 2 max0 min0)))))
+  (b 2 max0 min0))))
 )
 (define main
   ((lambda (nombre) 

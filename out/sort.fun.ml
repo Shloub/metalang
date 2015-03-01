@@ -2,23 +2,21 @@ let copytab tab len =
   let o = (Array.init len (fun  i -> tab.(i))) in
   o
 let bubblesort tab len =
-  let e = (len - 1) in
   let rec b i =
-    (if (i <= e)
-     then let d = (len - 1) in
-     let rec c j =
-       (if (j <= d)
-        then (if (tab.(i) > tab.(j))
-              then let tmp = tab.(i) in
-              (
-                tab.(i) <- tab.(j);
-                tab.(j) <- tmp;
-                (c (j + 1))
-                )
-              
-              else (c (j + 1)))
-        else (b (i + 1))) in
-       (c (i + 1))
+    (if (i <= (len - 1))
+     then let rec c j =
+            (if (j <= (len - 1))
+             then (if (tab.(i) > tab.(j))
+                   then let tmp = tab.(i) in
+                   (
+                     tab.(i) <- tab.(j);
+                     tab.(j) <- tmp;
+                     (c (j + 1))
+                     )
+                   
+                   else (c (j + 1)))
+             else (b (i + 1))) in
+            (c (i + 1))
      else ()) in
     (b 0)
 let rec qsort0 tab len i j =
@@ -62,12 +60,12 @@ let rec qsort0 tab len i j =
 let main =
   let len = 2 in
   Scanf.scanf "%d"
-  (fun  r -> let len = r in
+  (fun  m -> let len = m in
   (
     (Scanf.scanf "%[\n \010]" (fun _ -> ()));
     let tab = (Array.init len (fun  i_ -> let tmp = 0 in
     Scanf.scanf "%d"
-    (fun  q -> let tmp = q in
+    (fun  l -> let tmp = l in
     (
       (Scanf.scanf "%[\n \010]" (fun _ -> ()));
       tmp
@@ -76,12 +74,11 @@ let main =
     let tab2 = (copytab tab len) in
     (
       (bubblesort tab2 len);
-      let p = (len - 1) in
-      let rec n i =
-        (if (i <= p)
+      let rec k i =
+        (if (i <= (len - 1))
          then (
                 (Printf.printf "%d " tab2.(i));
-                (n (i + 1))
+                (k (i + 1))
                 )
          
          else (
@@ -89,21 +86,20 @@ let main =
                 let tab3 = (copytab tab len) in
                 (
                   (qsort0 tab3 len 0 (len - 1));
-                  let m = (len - 1) in
-                  let rec l i =
-                    (if (i <= m)
+                  let rec h i =
+                    (if (i <= (len - 1))
                      then (
                             (Printf.printf "%d " tab3.(i));
-                            (l (i + 1))
+                            (h (i + 1))
                             )
                      
                      else (Printf.printf "\n")) in
-                    (l 0)
+                    (h 0)
                   )
                 
                 )
          ) in
-        (n 0)
+        (k 0)
       )
     
     )

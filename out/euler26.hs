@@ -32,20 +32,19 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 periode restes len a b =
-  let c k l =
-        if k /= 0
-        then do let chiffre = k `quot` b
-                let reste = k `rem` b
-                let e = l - 1
+  let c h k =
+        if h /= 0
+        then do let chiffre = h `quot` b
+                let reste = h `rem` b
                 let d i =
-                      if i <= e
+                      if i <= k - 1
                       then ifM (((==) reste) <$> (readIOA restes i))
-                               (return (l - i))
+                               (return (k - i))
                                (d (i + 1))
-                      else do writeIOA restes l reste
-                              let n = l + 1
-                              let o = reste * 10
-                              c o n in
+                      else do writeIOA restes k reste
+                              let l = k + 1
+                              let n = reste * 10
+                              c n l in
                       d 0
         else return 0 in
         c a len
@@ -53,13 +52,13 @@ periode restes len a b =
 main =
   do t <- array_init 1000 (\ j ->
                              return 0)
-     let h i q r =
+     let g i o q =
            if i <= 1000
            then do p <- periode t 0 1 i
-                   if p > q
-                   then h (i + 1) p i
-                   else h (i + 1) q r
-           else printf "%d\n%d\n" (r::Int) (q::Int) :: IO() in
-           h 1 0 0
+                   if p > o
+                   then g (i + 1) p i
+                   else g (i + 1) o q
+           else printf "%d\n%d\n" (q::Int) (o::Int) :: IO() in
+           g 1 0 0
 
 

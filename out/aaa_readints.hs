@@ -26,27 +26,24 @@ main =
   do len <- (fmap read getLine)
      printf "%d=len\n" (len::Int) :: IO()
      tab1 <- (join (newListArray . (,) 0 . subtract 1 <$> return len <*> fmap (map read . words) getLine))
-     let k = len - 1
-     let h i =
-           if i <= k
+     let f i =
+           if i <= len - 1
            then do printf "%d=>%d\n" (i::Int) =<< ((readIOA tab1 i)::IO Int)
-                   h (i + 1)
-           else do l <- (fmap read getLine)
-                   tab2 <- array_init (l - 1) (\ a ->
-                                                 (join (newListArray . (,) 0 . subtract 1 <$> return l <*> fmap (map read . words) getLine)))
-                   let g = l - 2
-                   let d m =
-                         if m <= g
-                         then do let f = l - 1
-                                 let e j =
-                                       if j <= f
-                                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab2 m) <*> return j)::IO Int)
-                                               e (j + 1)
-                                       else do printf "\n" :: IO ()
-                                               d (m + 1) in
-                                       e 0
+                   f (i + 1)
+           else do g <- (fmap read getLine)
+                   tab2 <- array_init (g - 1) (\ a ->
+                                                 (join (newListArray . (,) 0 . subtract 1 <$> return g <*> fmap (map read . words) getLine)))
+                   let d h =
+                         if h <= g - 2
+                         then let e j =
+                                    if j <= g - 1
+                                    then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab2 h) <*> return j)::IO Int)
+                                            e (j + 1)
+                                    else do printf "\n" :: IO ()
+                                            d (h + 1) in
+                                    e 0
                          else return () in
                          d 0 in
-           h 0
+           f 0
 
 

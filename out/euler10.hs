@@ -32,24 +32,23 @@ array_init len f = newListArray (0, len - 1) =<< g 0
 
 main :: IO ()
 eratostene t max0 =
-  do let c = max0 - 1
-     let a i f =
-           if i <= c
-           then ifM (((==) i) <$> (readIOA t i))
-                    (do let g = f + i
-                        if (max0 `quot` i) > i
-                        then do let j = i * i
-                                let b h =
-                                      if h < max0 && h > 0
-                                      then do writeIOA t h 0
-                                              let k = h + i
-                                              b k
-                                      else a (i + 1) g in
-                                      b j
-                        else a (i + 1) g)
-                    (a (i + 1) f)
-           else return f in
-           a 2 0
+  let a i e =
+        if i <= max0 - 1
+        then ifM (((==) i) <$> (readIOA t i))
+                 (do let f = e + i
+                     if (max0 `quot` i) > i
+                     then do let j = i * i
+                             let b g =
+                                   if g < max0 && g > 0
+                                   then do writeIOA t g 0
+                                           let h = g + i
+                                           b h
+                                   else a (i + 1) f in
+                                   b j
+                     else a (i + 1) f)
+                 (a (i + 1) e)
+        else return e in
+        a 2 0
 
 main =
   {- normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages -}

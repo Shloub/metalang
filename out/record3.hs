@@ -68,23 +68,22 @@ mktoto v1 =
      return t
 
 result t len =
-  do let b = len - 1
-     let a j g =
-           if j <= b
-           then do join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> (((+) 1) <$> ((_blah <$> (readIOA t j)) >>= readIORef))
-                   h <- ((+) <$> ((+) <$> (((+) g) <$> ((_foo <$> (readIOA t j)) >>= readIORef)) <*> ((*) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> ((_bar <$> (readIOA t j)) >>= readIORef))) <*> ((*) <$> ((_bar <$> (readIOA t j)) >>= readIORef) <*> ((_foo <$> (readIOA t j)) >>= readIORef)))
-                   a (j + 1) h
-           else return g in
-           a 0 0
+  let a j f =
+        if j <= len - 1
+        then do join $ writeIORef <$> (_blah <$> (readIOA t j)) <*> (((+) 1) <$> ((_blah <$> (readIOA t j)) >>= readIORef))
+                g <- ((+) <$> ((+) <$> (((+) f) <$> ((_foo <$> (readIOA t j)) >>= readIORef)) <*> ((*) <$> ((_blah <$> (readIOA t j)) >>= readIORef) <*> ((_bar <$> (readIOA t j)) >>= readIORef))) <*> ((*) <$> ((_bar <$> (readIOA t j)) >>= readIORef) <*> ((_foo <$> (readIOA t j)) >>= readIORef)))
+                a (j + 1) g
+        else return f in
+        a 0 0
 
 main =
   do t <- array_init 4 (\ i ->
                           mktoto i)
-     f <- read_int
-     join $ writeIORef <$> (_bar <$> (readIOA t 0)) <*> return f
-     skip_whitespaces
      e <- read_int
-     join $ writeIORef <$> (_blah <$> (readIOA t 1)) <*> return e
+     join $ writeIORef <$> (_bar <$> (readIOA t 0)) <*> return e
+     skip_whitespaces
+     d <- read_int
+     join $ writeIORef <$> (_blah <$> (readIOA t 1)) <*> return d
      titi <- result t 4
      printf "%d%d" (titi::Int) =<< (((_blah <$> (readIOA t 2)) >>= readIORef)::IO Int)
 

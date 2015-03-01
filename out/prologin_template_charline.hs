@@ -27,15 +27,14 @@ main :: IO ()
 
 
 programme_candidat tableau taille =
-  do let b = taille - 1
-     let a i c =
-           if i <= b
-           then do d <- (((+) c) <$> (((*) i) <$> (fmap ord (readIOA tableau i))))
-                   printf "%c" =<< (readIOA tableau i :: IO Char)
-                   a (i + 1) d
-           else do printf "--\n" :: IO ()
-                   return c in
-           a 0 0
+  let a i b =
+        if i <= taille - 1
+        then do c <- (((+) b) <$> (((*) i) <$> (fmap ord (readIOA tableau i))))
+                printf "%c" =<< (readIOA tableau i :: IO Char)
+                a (i + 1) c
+        else do printf "--\n" :: IO ()
+                return b in
+        a 0 0
 
 main =
   do taille <- (fmap read getLine)

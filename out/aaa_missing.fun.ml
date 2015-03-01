@@ -1,19 +1,17 @@
 let result len tab =
   let tab2 = (Array.init len (fun  i -> false)) in
-  let h = (len - 1) in
-  let rec g i1 =
-    (if (i1 <= h)
+  let rec f i1 =
+    (if (i1 <= (len - 1))
      then (
             (Printf.printf "%d " tab.(i1));
             tab2.(tab.(i1)) <- true;
-            (g (i1 + 1))
+            (f (i1 + 1))
             )
      
      else (
             (Printf.printf "\n");
-            let f = (len - 1) in
             let rec e i2 =
-              (if (i2 <= f)
+              (if (i2 <= (len - 1))
                then (if (not tab2.(i2))
                      then i2
                      else (e (i2 + 1)))
@@ -21,7 +19,7 @@ let result len tab =
               (e 0)
             )
      ) in
-    (g 0)
+    (f 0)
 let main =
   let len = (Scanf.scanf "%d " (fun x -> x)) in
   (
