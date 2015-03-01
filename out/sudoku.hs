@@ -69,7 +69,7 @@ print_sudoku sudoku0 =
         if y <= 8
         then let e x =
                    if x <= 8
-                   then do printf "%d " =<< ((readIOA sudoku0 (x + y * 9))::IO Int) :: IO()
+                   then do printf "%d " =<< ((readIOA sudoku0 (x + y * 9))::IO Int)
                            if (x `rem` 3) == 2
                            then do printf " " :: IO ()
                                    e (x + 1)

@@ -38,15 +38,12 @@ let main =
                           )
                    
                    else (
-                          (Printf.printf "\n" );
+                          (Printf.printf "\n");
                           (c (m + 1))
                           )
                    ) in
                   (d 0)
-                else (
-                       (Printf.printf "%d\n" tab.(0).(0))
-                       )
-                ) in
+                else (Printf.printf "%d\n" tab.(0).(0))) in
                (c 0)) in
             (g 2)) in
     (s 0)

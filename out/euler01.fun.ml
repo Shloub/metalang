@@ -6,9 +6,6 @@ let main =
            then let sum = (sum + i) in
            (a (i + 1) sum)
            else (a (i + 1) sum))
-     else (
-            (Printf.printf "%d\n" sum)
-            )
-     ) in
+     else (Printf.printf "%d\n" sum)) in
     (a 0 sum)
 

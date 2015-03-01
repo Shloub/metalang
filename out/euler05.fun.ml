@@ -43,10 +43,7 @@ let main =
            (q (l + 1) product)
            else (p (k + 1) product)) in
           (q 1 product)
-        else (
-               (Printf.printf "%d\n" product)
-               )
-        ) in
+        else (Printf.printf "%d\n" product)) in
        (p 1 product)) in
     (s 1)
 

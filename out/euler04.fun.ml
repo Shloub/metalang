@@ -31,9 +31,6 @@ let main =
                     (i 0 m)
              else (g (a + 1) m)) in
             (h 1 m)
-     else (
-            (Printf.printf "%d\n" m)
-            )
-     ) in
+     else (Printf.printf "%d\n" m)) in
     (g 0 m)
 

@@ -12,9 +12,6 @@ let main =
      let a = b in
      let b = (b + c) in
      (d a b sum)
-     else (
-            (Printf.printf "%d\n" sum)
-            )
-     ) in
+     else (Printf.printf "%d\n" sum)) in
     (d a b sum)
 

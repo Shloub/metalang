@@ -111,7 +111,7 @@ find ndiv2 =
            s 2 l
 
 main =
-  do printf "%d\n" =<< ((find 500)::IO Int) :: IO()
+  do printf "%d\n" =<< ((find 500)::IO Int)
      return ()
 
 

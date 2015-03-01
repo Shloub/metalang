@@ -89,10 +89,7 @@ let main =
                              else (r (b + 1) ma max0 mb result)) in
                             (s (- 999) ma max0 mb result)
                      else (r (b + 1) ma max0 mb result))
-               else (
-                      (Printf.printf "%d %d\n%d\n%d\n" ma mb max0 result)
-                      )
-               ) in
+               else (Printf.printf "%d %d\n%d\n%d\n" ma mb max0 result)) in
               (r 3 ma max0 mb result)
             )
      ) in

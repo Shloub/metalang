@@ -44,7 +44,7 @@
                   )
                 (w (+ k 1) l))
                 (block
-                  (map display (list l " == " nprimes "\n"))
+                  (printf "~a == ~a\n" l nprimes)
                   (let ([canbe (build-vector maximumprimes (lambda (i_) 
                                                              #f))])
                   (let ([v (- nprimes 1)])
@@ -67,7 +67,7 @@
                                               (let ([m2 (+ (* m 2) 1)])
                                               (if (and (< m2 maximumprimes) (not (vector-ref canbe m2)))
                                               (block
-                                                (map display (list m2 "\n"))
+                                                (printf "~a\n" m2)
                                                 (q (+ m 1))
                                                 )
                                               (q (+ m 1))))

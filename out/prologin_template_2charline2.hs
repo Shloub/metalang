@@ -51,6 +51,6 @@ main =
      taille2 <- (fmap read getLine)
      tableau1 <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille1)) <*> getLine))
      tableau2 <- (join (newListArray <$> (fmap (\x -> (0, x-1)) (return taille2)) <*> getLine))
-     printf "%d\n" =<< ((programme_candidat tableau1 taille1 tableau2 taille2)::IO Int) :: IO()
+     printf "%d\n" =<< ((programme_candidat tableau1 taille1 tableau2 taille2)::IO Int)
 
 

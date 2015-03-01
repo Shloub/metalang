@@ -13,10 +13,7 @@ let main =
         (
           (Printf.printf "%d\n" j);
           let j = 4 in
-          (
-            (Printf.printf "%d\n" j)
-            )
-          
+          (Printf.printf "%d\n" j)
           )
         
         )

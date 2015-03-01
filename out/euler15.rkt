@@ -36,7 +36,7 @@
                                             (letrec ([d (lambda (k) 
                                                           (if (<= k e)
                                                           (block
-                                                            (map display (list (vector-ref (vector-ref tab m) k) " "))
+                                                            (printf "~a " (vector-ref (vector-ref tab m) k))
                                                             (d (+ k 1))
                                                             )
                                                           (block
@@ -44,9 +44,7 @@
                                                             (c (+ m 1))
                                                             )))])
                                             (d 0)))
-                                            (block
-                                              (map display (list (vector-ref (vector-ref tab 0) 0) "\n"))
-                                              )))])
+                                            (printf "~a\n" (vector-ref (vector-ref tab 0) 0))))])
                               (c 0)))))])
   (g 2))))])
 (s 0))))))

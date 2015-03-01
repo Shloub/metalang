@@ -98,13 +98,13 @@ main =
                                                                 skip_whitespaces
                                                                 return v)
                                return tab2)
-     printf "%d\n" =<< ((find u tab)::IO Int) :: IO()
+     printf "%d\n" =<< ((find u tab)::IO Int)
      let m = u - 1
      let g k =
            if k <= m
            then let h l =
                       if l <= k
-                      then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab k) <*> return l)::IO Int) :: IO()
+                      then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab k) <*> return l)::IO Int)
                               h (l + 1)
                       else do printf "\n" :: IO ()
                               g (k + 1) in

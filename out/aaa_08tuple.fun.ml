@@ -9,10 +9,7 @@ let main =
                             (Scanf.scanf "%[\n \010]" (fun _ -> ()));
                             let t = {foo=(c, d);
                             bar=bar_} in
-                            ((fun  (a, b) -> (
-                                               (Printf.printf "%d %d %d\n" a b t.bar)
-                                               )
-                            ) t.foo)
+                            ((fun  (a, b) -> (Printf.printf "%d %d %d\n" a b t.bar)) t.foo)
                             )
                )
                )

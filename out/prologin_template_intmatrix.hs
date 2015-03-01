@@ -51,6 +51,6 @@ main =
      taille_y <- (fmap read getLine)
      tableau <- array_init taille_y (\ a ->
                                        (join (newListArray . (,) 0 . subtract 1 <$> return taille_x <*> fmap (map read . words) getLine)))
-     printf "%d\n" =<< ((programme_candidat tableau taille_x taille_y)::IO Int) :: IO()
+     printf "%d\n" =<< ((programme_candidat tableau taille_x taille_y)::IO Int)
 
 

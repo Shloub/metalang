@@ -29,8 +29,6 @@
   (let ([a (build-vector taille_y (lambda (b) 
                                     (list->vector (string->list (read-line)))))])
   (let ([tableau a])
-  (block
-    (map display (list (programme_candidat tableau taille_x taille_y) "\n"))
-    )))))
+  (printf "~a\n" (programme_candidat tableau taille_x taille_y))))))
 )
 

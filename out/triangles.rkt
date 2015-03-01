@@ -71,14 +71,14 @@
                                                                                ))) (mread-int)))))])
        tab2)))])
      (block
-       (map display (list (find01 len tab) "\n"))
+       (printf "~a\n" (find01 len tab))
        (let ([m (- len 1)])
        (letrec ([g (lambda (k) 
                      (if (<= k m)
                      (letrec ([h (lambda (l) 
                                    (if (<= l k)
                                    (block
-                                     (map display (list (vector-ref (vector-ref tab k) l) " "))
+                                     (printf "~a " (vector-ref (vector-ref tab k) l))
                                      (h (+ l 1))
                                      )
                                    (block

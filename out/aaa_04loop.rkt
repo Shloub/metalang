@@ -22,7 +22,7 @@
                 (if (<= k 10)
                 (let ([j (+ j k)])
                 (block
-                  (map display (list j "\n"))
+                  (printf "~a\n" j)
                   (c (+ k 1) j)
                   ))
                 (let ([i 4])
@@ -34,9 +34,7 @@
                                 (let ([j (+ j i)])
                                 (b i j)))
                                 )
-                              (block
-                                (map display (list j i "FIN TEST\n"))
-                                )))])
+                              (printf "~a~aFIN TEST\n" j i)))])
                 (b i j)))))])
   (c 0 j)))
 )

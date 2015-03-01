@@ -27,9 +27,6 @@ let main =
       let maxi = i in
       (c (i + 1) max0 maxi)
       else (c (i + 1) max0 maxi))
-     else (
-            (Printf.printf "%d\n%d\n" max0 maxi)
-            )
-     ) in
+     else (Printf.printf "%d\n%d\n" max0 maxi)) in
     (c 1 max0 maxi)
 

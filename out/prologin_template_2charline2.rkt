@@ -35,8 +35,6 @@
   (let ([taille2 (string->number (read-line))])
   (let ([tableau1 (list->vector (string->list (read-line)))])
   (let ([tableau2 (list->vector (string->list (read-line)))])
-  (block
-    (map display (list (programme_candidat tableau1 taille1 tableau2 taille2) "\n"))
-    )))))
+  (printf "~a\n" (programme_candidat tableau1 taille1 tableau2 taille2))))))
 )
 

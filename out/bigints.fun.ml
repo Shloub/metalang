@@ -308,9 +308,9 @@ let euler48 () =
      let sum = (bigint_premiers_chiffres sum 10) in
      (v (i + 1) sum)
      else (
-            (Printf.printf "euler 48 = " );
+            (Printf.printf "euler 48 = ");
             (print_bigint sum);
-            (Printf.printf "\n" )
+            (Printf.printf "\n")
             )
      ) in
     (v 1 sum)
@@ -389,7 +389,7 @@ let main =
               )
        
        else (
-              (Printf.printf "euler13 = " );
+              (Printf.printf "euler13 = ");
               (print_bigint sum);
               (Printf.printf "\neuler25 = %d\neuler16 = %d\n" (euler25 ()) (euler16 ()));
               (euler48 ());
@@ -398,49 +398,49 @@ let main =
               let b = (bigint_of_int 9951263) in
               (
                 (print_bigint a);
-                (Printf.printf ">>1=" );
+                (Printf.printf ">>1=");
                 (print_bigint (bigint_shift a (- 1)));
-                (Printf.printf "\n" );
+                (Printf.printf "\n");
                 (print_bigint a);
-                (Printf.printf "*" );
+                (Printf.printf "*");
                 (print_bigint b);
-                (Printf.printf "=" );
+                (Printf.printf "=");
                 (print_bigint (mul_bigint a b));
-                (Printf.printf "\n" );
+                (Printf.printf "\n");
                 (print_bigint a);
-                (Printf.printf "*" );
+                (Printf.printf "*");
                 (print_bigint b);
-                (Printf.printf "=" );
+                (Printf.printf "=");
                 (print_bigint (mul_bigint_cp a b));
-                (Printf.printf "\n" );
+                (Printf.printf "\n");
                 (print_bigint a);
-                (Printf.printf "+" );
+                (Printf.printf "+");
                 (print_bigint b);
-                (Printf.printf "=" );
+                (Printf.printf "=");
                 (print_bigint (add_bigint a b));
-                (Printf.printf "\n" );
+                (Printf.printf "\n");
                 (print_bigint b);
-                (Printf.printf "-" );
+                (Printf.printf "-");
                 (print_bigint a);
-                (Printf.printf "=" );
+                (Printf.printf "=");
                 (print_bigint (sub_bigint b a));
-                (Printf.printf "\n" );
+                (Printf.printf "\n");
                 (print_bigint a);
-                (Printf.printf "-" );
+                (Printf.printf "-");
                 (print_bigint b);
-                (Printf.printf "=" );
+                (Printf.printf "=");
                 (print_bigint (sub_bigint a b));
-                (Printf.printf "\n" );
+                (Printf.printf "\n");
                 (print_bigint a);
-                (Printf.printf ">" );
+                (Printf.printf ">");
                 (print_bigint b);
-                (Printf.printf "=" );
+                (Printf.printf "=");
                 let e = (bigint_gt a b) in
                 (
                   (if e
                    then (Printf.printf "True")
                    else (Printf.printf "False"));
-                  (Printf.printf "\n" )
+                  (Printf.printf "\n")
                   )
                 
                 )

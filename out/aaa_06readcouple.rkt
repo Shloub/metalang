@@ -6,14 +6,14 @@
                 (if (<= i 3)
                 ((lambda (internal_env) (apply (lambda (a b) 
                                                       (block
-                                                        (map display (list "a = " a " b = " b "\n"))
+                                                        (printf "a = ~a b = ~a\n" a b)
                                                         (d (+ i 1))
                                                         )) internal_env)) (map string->number (regexp-split " " (read-line))))
                 (let ([l (list->vector (map string->number (regexp-split " " (read-line))))])
                 (letrec ([c (lambda (j) 
                               (if (<= j 9)
                               (block
-                                (map display (list (vector-ref l j) "\n"))
+                                (printf "~a\n" (vector-ref l j))
                                 (c (+ j 1))
                                 )
                               '()))])

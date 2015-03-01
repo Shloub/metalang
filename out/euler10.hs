@@ -58,6 +58,6 @@ main =
      do t <- array_init n (\ i ->
                              return i)
         writeIOA t 1 0
-        printf "%d\n" =<< ((eratostene t n)::IO Int) :: IO()
+        printf "%d\n" =<< ((eratostene t n)::IO Int)
 
 

@@ -27,10 +27,7 @@ let main =
                (fun  e -> (
                             t.(1).blah <- e;
                             let titi = (result t 4) in
-                            (
-                              (Printf.printf "%d%d" titi t.(2).blah)
-                              )
-                            
+                            (Printf.printf "%d%d" titi t.(2).blah)
                             )
                )
                )

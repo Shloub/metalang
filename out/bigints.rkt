@@ -429,7 +429,7 @@
 )
 (define main
   (block
-    (map display (list (euler29 'nil) "\n"))
+    (printf "~a\n" (euler29 'nil))
     (let ([sum (read_bigint 50)])
     (letrec ([cg (lambda (i sum) 
                    (if (<= i 100)
@@ -442,9 +442,9 @@
                    (block
                      (display "euler13 = ")
                      (print_bigint sum)
-                     (map display (list "\n" "euler25 = " (euler25 'nil) "\n" "euler16 = " (euler16 'nil) "\n"))
+                     (printf "\neuler25 = ~a\neuler16 = ~a\n" (euler25 'nil) (euler16 'nil))
                      (euler48 'nil)
-                     (map display (list "euler20 = " (euler20 'nil) "\n"))
+                     (printf "euler20 = ~a\n" (euler20 'nil))
                      (let ([a (bigint_of_int 999999)])
                      (let ([b (bigint_of_int 9951263)])
                      (block

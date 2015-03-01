@@ -47,9 +47,7 @@
                                             (q (+ l 1) product))
                                             (p (+ k 1) product)))])
                               (q 1 product)))
-                              (block
-                                (map display (list product "\n"))
-                                )))])
+                              (printf "~a\n" product)))])
                 (p 1 product)))))])
 (s 1))))
 )

@@ -63,7 +63,7 @@
                 (if (<= i 55)
                 (if (is_triangular i)
                 (block
-                  (map display (list i " "))
+                  (printf "~a " i)
                   (e (+ i 1))
                   )
                 (e (+ i 1)))
@@ -75,9 +75,7 @@
                                    (if (<= i n)
                                    (let ([sum (+ sum (score 'nil))])
                                    (d (+ i 1) sum))
-                                   (block
-                                     (map display (list sum "\n"))
-                                     )))])
+                                   (printf "~a\n" sum)))])
                      (d 1 sum))) (mread-int)))
                 )))])
 (e 1))

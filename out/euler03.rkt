@@ -25,7 +25,7 @@
                               (list a b b0 found sqrtia)))
                               (if (not found)
                               (block
-                                (map display (list a "\n"))
+                                (printf "~a\n" a)
                                 (let ([a 1])
                                 (d a b0 sqrtia))
                                 )

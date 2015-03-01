@@ -129,9 +129,7 @@
                                                               (let ([sum (+ sum o)])
                                                               (bf (+ o 1) sum))
                                                               (bf (+ o 1) sum))
-                                                              (block
-                                                                (map display (list "\n" sum "\n"))
-                                                                )))])
+                                                              (printf "\n~a\n" sum)))])
                                                (bf 1 sum))))])
                    (bg 1))))])
                  (bi 2))))))))])

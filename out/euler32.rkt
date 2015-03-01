@@ -60,7 +60,7 @@
                                                                                 (vector-set! counted product #t)
                                                                                 (let ([count (+ count product)])
                                                                                 (block
-                                                                                (map display (list product " "))
+                                                                                (printf "~a " product)
                                                                                 count
                                                                                 ))
                                                                                 )
@@ -73,7 +73,7 @@
                                                                                 (vector-set! counted product2 #t)
                                                                                 (let ([count (+ count product2)])
                                                                                 (block
-                                                                                (map display (list product2 " "))
+                                                                                (printf "~a " product2)
                                                                                 count
                                                                                 ))
                                                                                 )
@@ -117,9 +117,7 @@
                     )))])
     (m 1 count))
   )
-  (block
-    (map display (list count "\n"))
-    )))])
+  (printf "~a\n" count)))])
 (l 1 count)))))
 )
 

@@ -13,7 +13,7 @@ let programme_candidat tableau taille_x taille_y =
           )
         
         else (
-               (Printf.printf "--\n" );
+               (Printf.printf "--\n");
                (f (i + 1) out0)
                )
         ) in
@@ -31,8 +31,5 @@ let main =
     )
   )) in
   let tableau = a in
-  (
-    (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
-    )
-  
+  (Printf.printf "%d\n" (programme_candidat tableau taille_x taille_y))
 

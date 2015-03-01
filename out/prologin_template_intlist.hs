@@ -38,6 +38,6 @@ programme_candidat tableau taille =
 main =
   do taille <- (fmap read getLine)
      tableau <- (join (newListArray . (,) 0 . subtract 1 <$> return taille <*> fmap (map read . words) getLine))
-     printf "%d\n" =<< ((programme_candidat tableau taille)::IO Int) :: IO()
+     printf "%d\n" =<< ((programme_candidat tableau taille)::IO Int)
 
 

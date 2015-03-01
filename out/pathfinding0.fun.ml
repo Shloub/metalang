@@ -28,7 +28,7 @@ let pathfind tab x y =
                                                                             )
   )) in
   (
-    (Printf.printf "\n" );
+    (Printf.printf "\n");
     tmp
     )
   )) in

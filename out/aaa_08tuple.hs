@@ -21,6 +21,6 @@ main =
   do bar_ <- (fmap read getLine)
      t <- (Toto <$> (( (fmap read . head . reads) <$> getLine :: IO (Int, Int)) >>= newIORef) <*> (newIORef bar_))
      (readIORef (_foo t)) >>= (\ (a, b) ->
-                                printf "%d %d %d\n" (a::Int) (b::Int) =<< ((readIORef (_bar t))::IO Int) :: IO())
+                                printf "%d %d %d\n" (a::Int) (b::Int) =<< ((readIORef (_bar t))::IO Int))
 
 

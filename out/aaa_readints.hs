@@ -29,7 +29,7 @@ main =
      let k = len - 1
      let h i =
            if i <= k
-           then do printf "%d=>%d\n" (i::Int) =<< ((readIOA tab1 i)::IO Int) :: IO()
+           then do printf "%d=>%d\n" (i::Int) =<< ((readIOA tab1 i)::IO Int)
                    h (i + 1)
            else do l <- (fmap read getLine)
                    tab2 <- array_init (l - 1) (\ a ->
@@ -40,7 +40,7 @@ main =
                          then do let f = l - 1
                                  let e j =
                                        if j <= f
-                                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab2 m) <*> return j)::IO Int) :: IO()
+                                       then do printf "%d " =<< ((join $ readIOA <$> (readIOA tab2 m) <*> return j)::IO Int)
                                                e (j + 1)
                                        else do printf "\n" :: IO ()
                                                d (m + 1) in

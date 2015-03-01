@@ -25,7 +25,7 @@ main =
         else do l <- (join (newListArray . (,) 0 . subtract 1 <$> return 10 <*> fmap (map read . words) getLine))
                 let c j =
                       if j <= 9
-                      then do printf "%d\n" =<< ((readIOA l j)::IO Int) :: IO()
+                      then do printf "%d\n" =<< ((readIOA l j)::IO Int)
                               c (j + 1)
                       else return () in
                       c 0 in

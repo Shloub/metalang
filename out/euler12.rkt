@@ -88,7 +88,7 @@
 )
 (define main
   (block
-    (map display (list (find0 500) "\n"))
+    (printf "~a\n" (find0 500))
     '()
     )
 )

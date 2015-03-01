@@ -9,7 +9,7 @@
   (letrec ([e (lambda (i1) 
                 (if (<= i1 f)
                 (block
-                  (map display (list (vector-ref tab i1) " "))
+                  (printf "~a " (vector-ref tab i1))
                   (vector-set! tab2 (vector-ref tab i1) #t)
                   (e (+ i1 1))
                   )
@@ -29,11 +29,9 @@
 (define main
   (let ([len (string->number (read-line))])
   (block
-    (map display (list len "\n"))
+    (printf "~a\n" len)
     (let ([tab (list->vector (map string->number (regexp-split " " (read-line))))])
-    (block
-      (map display (list (result len tab) "\n"))
-      ))
+    (printf "~a\n" (result len tab)))
     ))
 )
 

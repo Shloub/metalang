@@ -53,9 +53,7 @@
           (block
             (set-toto-blah! (vector-ref t0 1) e)
             (let ([titi (result t0 4)])
-            (block
-              (map display (list titi (toto-blah (vector-ref t0 2))))
-              ))
+            (printf "~a~a" titi (toto-blah (vector-ref t0 2))))
             )) (mread-int))
      )) (mread-int)))
 )

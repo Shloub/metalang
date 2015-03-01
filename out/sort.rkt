@@ -107,7 +107,7 @@
        (letrec ([n (lambda (i) 
                      (if (<= i p)
                      (block
-                       (map display (list (vector-ref tab2 i) " "))
+                       (printf "~a " (vector-ref tab2 i))
                        (n (+ i 1))
                        )
                      (block
@@ -119,7 +119,7 @@
                          (letrec ([l (lambda (i) 
                                        (if (<= i m)
                                        (block
-                                         (map display (list (vector-ref tab3 i) " "))
+                                         (printf "~a " (vector-ref tab3 i))
                                          (l (+ i 1))
                                          )
                                        (display "\n")))])

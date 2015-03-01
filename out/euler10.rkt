@@ -32,7 +32,7 @@
                               i))])
   (block
     (vector-set! t0 1 0)
-    (map display (list (eratostene t0 n) "\n"))
+    (printf "~a\n" (eratostene t0 n))
     )))
 )
 

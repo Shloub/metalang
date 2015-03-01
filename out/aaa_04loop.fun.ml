@@ -31,10 +31,7 @@ let main =
                (b i j)
                )
         
-        else (
-               (Printf.printf "%d%dFIN TEST\n" j i)
-               )
-        ) in
+        else (Printf.printf "%d%dFIN TEST\n" j i)) in
        (b i j)) in
     (c 0 j)
 

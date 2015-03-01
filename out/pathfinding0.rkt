@@ -42,7 +42,7 @@
   (let ([x (string->number (read-line))])
   (let ([y (string->number (read-line))])
   (block
-    (map display (list x " " y "\n"))
+    (printf "~a ~a\n" x y)
     (let ([e (build-vector y (lambda (f) 
                                (list->vector (string->list (read-line)))))])
     (let ([tab e])

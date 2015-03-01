@@ -39,7 +39,7 @@ out0)
                 (letrec ([e (lambda (x) 
                               (if (<= x 8)
                               (block
-                                (map display (list (vector-ref sudoku0 (+ x (* y 9))) " "))
+                                (printf "~a " (vector-ref sudoku0 (+ x (* y 9))))
                                 (if (eq? (remainder x 3) 2)
                                 (block
                                   (display " ")

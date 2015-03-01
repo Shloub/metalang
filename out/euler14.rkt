@@ -34,9 +34,7 @@
                 (let ([maxi i])
                 (c (+ i 1) max0 maxi)))
                 (c (+ i 1) max0 maxi)))
-                (block
-                  (map display (list max0 "\n" maxi "\n"))
-                  )))])
+                (printf "~a\n~a\n" max0 maxi)))])
   (c 1 max0 maxi)))))
 )
 

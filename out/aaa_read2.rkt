@@ -4,13 +4,13 @@
 (define main
   (let ([len (string->number (read-line))])
   (block
-    (map display (list len "=len\n"))
+    (printf "~a=len\n" len)
     (let ([tab (list->vector (map string->number (regexp-split " " (read-line))))])
     (let ([k (- len 1)])
     (letrec ([h (lambda (i) 
                   (if (<= i k)
                   (block
-                    (map display (list i "=>" (vector-ref tab i) " "))
+                    (printf "~a=>~a " i (vector-ref tab i))
                     (h (+ i 1))
                     )
                   (block
@@ -20,12 +20,12 @@
                     (letrec ([f (lambda (i_) 
                                   (if (<= i_ g)
                                   (block
-                                    (map display (list i_ "==>" (vector-ref tab2 i_) " "))
+                                    (printf "~a==>~a " i_ (vector-ref tab2 i_))
                                     (f (+ i_ 1))
                                     )
                                   (let ([strlen (string->number (read-line))])
                                   (block
-                                    (map display (list strlen "=strlen\n"))
+                                    (printf "~a=strlen\n" strlen)
                                     (let ([tab4 (list->vector (string->list (read-line)))])
                                     (let ([e (- strlen 1)])
                                     (letrec ([d (lambda (i3) 
@@ -33,7 +33,7 @@
                                                   (let ([tmpc (vector-ref tab4 i3)])
                                                   (let ([c (char->integer tmpc)])
                                                   (block
-                                                    (map display (list tmpc ":" c " "))
+                                                    (printf "~c:~a " tmpc c)
                                                     (let ([c (if (not (eq? tmpc #\Space))
                                                              (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
                                                              c)

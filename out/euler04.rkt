@@ -37,9 +37,7 @@
                 (i 0 m))
                 (g (+ a 1) m)))])
   (h 1 m))
-(block
-  (map display (list m "\n"))
-  )))])
+(printf "~a\n" m)))])
 (g 0 m)))
 )
 

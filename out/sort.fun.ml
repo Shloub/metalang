@@ -85,7 +85,7 @@ let main =
                 )
          
          else (
-                (Printf.printf "\n" );
+                (Printf.printf "\n");
                 let tab3 = (copytab tab len) in
                 (
                   (qsort0 tab3 len 0 (len - 1));

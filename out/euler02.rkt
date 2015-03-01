@@ -15,9 +15,7 @@
                 (let ([a b])
                 (let ([b (+ b c)])
                 (d a b sum)))))
-                (block
-                  (map display (list sum "\n"))
-                  )))])
+                (printf "~a\n" sum)))])
   (d a b sum)))))
 )
 

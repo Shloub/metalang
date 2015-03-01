@@ -30,7 +30,7 @@
                                                                             (let ([r (+ (+ (+ (+ (+ a (* b 10)) (* c 100)) (* d 1000)) (* e 10000)) (* f 100000))])
                                                                             (if (and (eq? s r) (not (eq? r 1)))
                                                                             (block
-                                                                              (map display (list f e d c b a " " r "\n"))
+                                                                              (printf "~a~a~a~a~a~a ~a\n" f e d c b a r)
                                                                               (let ([sum (+ sum r)])
                                                                               (o (+ f 1) sum))
                                                                               )

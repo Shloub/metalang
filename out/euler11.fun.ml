@@ -41,9 +41,6 @@ let main =
                                        (q 0 max0)
                                 else (o (j + 1) max0)) in
                                (p 0 max0)) directions.(j))
-     else (
-            (Printf.printf "%d\n" max0)
-            )
-     ) in
+     else (Printf.printf "%d\n" max0)) in
     (o 0 max0)
 

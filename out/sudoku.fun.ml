@@ -15,7 +15,7 @@ let print_sudoku sudoku0 =
                     (Printf.printf "%d " sudoku0.((x + (y * 9))));
                     (if ((x mod 3) = 2)
                      then (
-                            (Printf.printf " " );
+                            (Printf.printf " ");
                             (e (x + 1))
                             )
                      
@@ -23,10 +23,10 @@ let print_sudoku sudoku0 =
                     )
              
              else (
-                    (Printf.printf "\n" );
+                    (Printf.printf "\n");
                     (if ((y mod 3) = 2)
                      then (
-                            (Printf.printf "\n" );
+                            (Printf.printf "\n");
                             (d (y + 1))
                             )
                      

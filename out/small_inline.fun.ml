@@ -5,8 +5,5 @@ let main =
                   out0
                   )
   ))) in
-  (
-    (Printf.printf "%d - %d\n" t.(0) t.(1))
-    )
-  
+  (Printf.printf "%d - %d\n" t.(0) t.(1))
 

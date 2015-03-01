@@ -15,8 +15,5 @@ let main =
                b
                )
   ))) in
-  (
-    (Printf.printf "%d\n" (programme_candidat tableau taille))
-    )
-  
+  (Printf.printf "%d\n" (programme_candidat tableau taille))
 

@@ -42,9 +42,7 @@
                                                                     (l 0 max0))
                                                                     (h (+ j 1) max0)))])
                 (k 0 max0))) internal_env)) (vector-ref directions j))
-    (block
-      (map display (list max0 "\n"))
-      )))])
+    (printf "~a\n" max0)))])
 (h 0 max0)))))
 )
 

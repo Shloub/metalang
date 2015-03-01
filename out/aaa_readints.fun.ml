@@ -36,7 +36,7 @@ let main =
                     )
              
              else (
-                    (Printf.printf "\n" );
+                    (Printf.printf "\n");
                     (m (i + 1))
                     )
              ) in

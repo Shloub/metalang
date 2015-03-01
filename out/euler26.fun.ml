@@ -31,9 +31,6 @@ let main =
       let m = p in
       (h (i + 1) m mi)
       else (h (i + 1) m mi))
-     else (
-            (Printf.printf "%d\n%d\n" mi m)
-            )
-     ) in
+     else (Printf.printf "%d\n%d\n" mi m)) in
     (h 1 m mi)
 

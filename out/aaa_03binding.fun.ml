@@ -4,10 +4,7 @@ let g i =
    then 0
    else j)
 let h i =
-  (
-    (Printf.printf "%d\n" i)
-    )
-  
+  (Printf.printf "%d\n" i)
 let main =
   (
     (h 14);

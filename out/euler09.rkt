@@ -14,7 +14,7 @@
                               (let ([cc (* c c)])
                               (if (and (eq? cc a2b2) (> c a))
                               (block
-                                (map display (list a "\n" b "\n" c "\n" (* (* a b) c) "\n"))
+                                (printf "~a\n~a\n~a\n~a\n" a b c (* (* a b) c))
                                 (e (+ b 1))
                                 )
                               (e (+ b 1))))))

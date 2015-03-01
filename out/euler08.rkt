@@ -47,9 +47,7 @@
                                                                              i)])
                                                                              (let ([nskipdiv (- nskipdiv 1)])
                                                                              (list i nskipdiv)))))))) (mread-char))
-                                                      (block
-                                                        (map display (list max0 "\n"))
-                                                        )))])
+                                                      (printf "~a\n" max0)))])
                                         (l 1 i index max0 nskipdiv)))))) internal_env)) (array_init_withenv 5 
 (lambda (j) 
   (lambda (i) 

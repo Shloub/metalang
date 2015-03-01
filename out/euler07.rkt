@@ -32,8 +32,6 @@
   (let ([n 10001])
   (let ([t0 (build-vector n (lambda (i) 
                               2))])
-  (block
-    (map display (list (find0 3 t0 1 n) "\n"))
-    )))
+  (printf "~a\n" (find0 3 t0 1 n))))
 )
 

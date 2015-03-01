@@ -37,17 +37,14 @@ let main =
            
            else (e (i + 1)))
      else (
-            (Printf.printf "\n" );
+            (Printf.printf "\n");
             let sum = 0 in
             Scanf.scanf "%d"
             (fun  n -> let rec d i sum =
                          (if (i <= n)
                           then let sum = (sum + (score ())) in
                           (d (i + 1) sum)
-                          else (
-                                 (Printf.printf "%d\n" sum)
-                                 )
-                          ) in
+                          else (Printf.printf "%d\n" sum)) in
                          (d 1 sum))
             )
      ) in

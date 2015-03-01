@@ -1,6 +1,6 @@
 let main =
   (
-    (Printf.printf "Hello World" );
+    (Printf.printf "Hello World");
     let a = 5 in
     (
       (Printf.printf "%d \n%dfoo" ((4 + 6) * 2) a);
@@ -9,7 +9,7 @@ let main =
         (if b
          then (Printf.printf "True")
          else (Printf.printf "False"));
-        (Printf.printf "\n" );
+        (Printf.printf "\n");
         let c = ((((3 * ((4 + 5) + 6)) * 2) = 45) = false) in
         (
           (if c
@@ -26,7 +26,7 @@ let main =
               (if e
                then (Printf.printf "True")
                else (Printf.printf "False"));
-              (Printf.printf "\n" )
+              (Printf.printf "\n")
               )
             
             )

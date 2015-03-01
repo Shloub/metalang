@@ -56,9 +56,7 @@
                 (let ([year (+ year 1)])
                 (list month year)))
                 (list month year))))))
-                (block
-                  (map display (list count "\n"))
-                  )))])
+                (printf "~a\n" count)))])
   (a count dayofweek month year))))))
 )
 

@@ -35,10 +35,7 @@ let main =
                  else i) in
         let nskipdiv = (nskipdiv - 1) in
         (i, nskipdiv))))
-     else (
-            (Printf.printf "%d\n" max0)
-            )
-     ) in
+     else (Printf.printf "%d\n" max0)) in
     (l 1 i index max0 nskipdiv)) (Array.init_withenv 5 (fun  j i -> Scanf.scanf "%c"
   (fun  c -> let d = ((int_of_char (c)) - (int_of_char ('0'))) in
   let i = (i * d) in

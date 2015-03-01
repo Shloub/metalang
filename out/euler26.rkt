@@ -36,9 +36,7 @@
                 (let ([m p])
                 (h (+ i 1) m mi)))
                 (h (+ i 1) m mi)))
-                (block
-                  (map display (list mi "\n" m "\n"))
-                  )))])
+                (printf "~a\n~a\n" mi m)))])
   (h 1 m mi)))))
 )
 

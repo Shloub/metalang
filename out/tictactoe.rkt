@@ -201,7 +201,7 @@
                                 (apply_move_xy x y g)
                                 (let ([currentNote (minmax g)])
                                 (block
-                                  (map display (list x ", " y ", " currentNote "\n"))
+                                  (printf "~a, ~a, ~a\n" x y currentNote)
                                   (cancel_move_xy x y g)
                                   (if (< currentNote minNote)
                                   (let ([minNote currentNote])
@@ -217,7 +217,7 @@
                               (e (+ x 1) minNote)))])
                 (f 0 minNote))
                 (block
-                  (map display (list (move-x minMove) (move-y minMove) "\n"))
+                  (printf "~a~a\n" (move-x minMove) (move-y minMove))
                   minMove
                   )))])
   (e 0 minNote))))
@@ -266,7 +266,7 @@
                                   )
                                 (block
                                   (print_state state)
-                                  (map display (list (gamestate-note state) "\n"))
+                                  (printf "~a\n" (gamestate-note state))
                                   (r (+ i 1))
                                   )))])
                   (s 'nil))

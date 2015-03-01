@@ -10,7 +10,7 @@ let programme_candidat tableau taille =
        )
      
      else (
-            (Printf.printf "--\n" );
+            (Printf.printf "--\n");
             out0
             )
      ) in

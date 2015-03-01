@@ -10,9 +10,7 @@
 )
 (define (h i)
   ;toto
-  (block
-    (map display (list i "\n"))
-    )
+  (printf "~a\n" i)
 )
 (define main
   (block

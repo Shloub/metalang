@@ -71,7 +71,7 @@
                   )
                 (u (+ k 1) l))
                 (block
-                  (map display (list l " == " nprimes "\n"))
+                  (printf "~a == ~a\n" l nprimes)
                   (let ([ma 0])
                   (let ([mb 0])
                   (letrec ([r (lambda (b ma max0 mb result) 
@@ -100,9 +100,7 @@
                                               (r (+ b 1) ma max0 mb result)))])
                                 (s (- 999) ma max0 mb result))
                                 (r (+ b 1) ma max0 mb result))
-                                (block
-                                  (map display (list ma " " mb "\n" max0 "\n" result "\n"))
-                                  )))])
+                                (printf "~a ~a\n~a\n~a\n" ma mb max0 result)))])
                   (r 3 ma max0 mb result))))
                 )))])
   (u 2 l))))))))))

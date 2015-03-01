@@ -9,8 +9,6 @@
 (define main
   (let ([t0 (f (list 0 1))])
   ((lambda (internal_env) (apply (lambda (a b) 
-                                        (block
-                                          (map display (list a " -- " b "--\n"))
-                                          )) internal_env)) t0))
+                                        (printf "~a -- ~a--\n" a b)) internal_env)) t0))
 )
 

@@ -10,7 +10,7 @@ let result len tab =
             )
      
      else (
-            (Printf.printf "\n" );
+            (Printf.printf "\n");
             let f = (len - 1) in
             let rec e i2 =
               (if (i2 <= f)
@@ -32,10 +32,7 @@ let main =
                  b
                  )
     ))) in
-    (
-      (Printf.printf "%d\n" (result len tab))
-      )
-    
+    (Printf.printf "%d\n" (result len tab))
     )
   
 

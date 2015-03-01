@@ -24,9 +24,6 @@ let main =
                (if (i <= n)
                 then let sum = (sum + (i * (score ()))) in
                 (b (i + 1) sum)
-                else (
-                       (Printf.printf "%d\n" sum)
-                       )
-                ) in
+                else (Printf.printf "%d\n" sum)) in
                (b 1 sum))
 

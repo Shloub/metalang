@@ -227,7 +227,7 @@ play g =
                                (f (y + 1) bv)
                       else e (x + 1) bv in
                       f 0 bu
-           else do join $ printf "%d%d\n" <$> ((readIORef (_x minMove))::IO Int) <*> ((readIORef (_y minMove))::IO Int) :: IO()
+           else do join $ printf "%d%d\n" <$> ((readIORef (_x minMove))::IO Int) <*> ((readIORef (_y minMove))::IO Int)
                    return minMove in
            e 0 minNote
 
@@ -263,7 +263,7 @@ main =
                                       s ())
                                   (s ()))
                           (do print_state state
-                              printf "%d\n" =<< ((readIORef (_note state))::IO Int) :: IO()
+                              printf "%d\n" =<< ((readIORef (_note state))::IO Int)
                               r (i + 1)) in
                       s ()
         else return () in

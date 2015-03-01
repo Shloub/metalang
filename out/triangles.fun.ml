@@ -53,7 +53,7 @@ let main =
                         )
                  
                  else (
-                        (Printf.printf "\n" );
+                        (Printf.printf "\n");
                         (g (k + 1))
                         )
                  ) in

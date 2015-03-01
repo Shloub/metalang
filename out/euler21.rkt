@@ -96,7 +96,7 @@
                   )
                 (z (+ k 1) l))
                 (block
-                  (map display (list l " == " nprimes "\n"))
+                  (printf "~a == ~a\n" l nprimes)
                   (let ([sum 0])
                   (letrec ([y (lambda (n sum) 
                                 (if (<= n 1000)
@@ -105,15 +105,13 @@
                                 (let ([othersum (- (sumdiv nprimes primes other) other)])
                                 (if (eq? othersum n)
                                 (block
-                                  (map display (list other " & " n "\n"))
+                                  (printf "~a & ~a\n" other n)
                                   (let ([sum (+ sum (+ other n))])
                                   (y (+ n 1) sum))
                                   )
                                 (y (+ n 1) sum)))
                                 (y (+ n 1) sum)))
-                                (block
-                                  (map display (list "\n" sum "\n"))
-                                  )))])
+                                (printf "\n~a\n" sum)))])
                   (y 2 sum)))
                 )))])
   (z 2 l))))))))

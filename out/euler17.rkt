@@ -32,11 +32,11 @@
   (let ([hundred 7])
   (let ([thousand 8])
   (block
-    (map display (list (+ (+ (+ (+ one two) three) four) five) "\n"))
+    (printf "~a\n" (+ (+ (+ (+ one two) three) four) five))
     (let ([hundred_and 10])
     (let ([one_to_nine (+ (+ (+ (+ (+ (+ (+ (+ one two) three) four) five) six) seven) eight) nine)])
     (block
-      (map display (list one_to_nine "\n"))
+      (printf "~a\n" one_to_nine)
       (let ([one_to_ten (+ one_to_nine ten)])
       (let ([one_to_twenty (+ (+ (+ (+ (+ (+ (+ (+ (+ (+ one_to_ten eleven) twelve) thirteen) fourteen) fifteen) sixteen) seventeen) eighteen) nineteen) twenty)])
       (let ([one_to_thirty (+ (+ (+ one_to_twenty (* twenty 9)) one_to_nine) thirty)])
@@ -47,9 +47,7 @@
       (let ([one_to_eighty (+ (+ (+ one_to_seventy (* seventy 9)) one_to_nine) eighty)])
       (let ([one_to_ninety (+ (+ (+ one_to_eighty (* eighty 9)) one_to_nine) ninety)])
       (let ([one_to_ninety_nine (+ (+ one_to_ninety (* ninety 9)) one_to_nine)])
-      (block
-        (map display (list one_to_ninety_nine "\n" (+ (+ (+ (+ (+ (* 100 one_to_nine) (* one_to_ninety_nine 10)) (* (* hundred_and 9) 99)) (* hundred 9)) one) thousand) "\n"))
-        )))))))))))
+      (printf "~a\n~a\n" one_to_ninety_nine (+ (+ (+ (+ (+ (* 100 one_to_nine) (* one_to_ninety_nine 10)) (* (* hundred_and 9) 99)) (* hundred 9)) one) thousand))))))))))))
       )))
     ))))))))))))))))))))))))))))))
 )

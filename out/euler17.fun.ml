@@ -44,10 +44,7 @@ let main =
       let one_to_eighty = (((one_to_seventy + (seventy * 9)) + one_to_nine) + eighty) in
       let one_to_ninety = (((one_to_eighty + (eighty * 9)) + one_to_nine) + ninety) in
       let one_to_ninety_nine = ((one_to_ninety + (ninety * 9)) + one_to_nine) in
-      (
-        (Printf.printf "%d\n%d\n" one_to_ninety_nine ((((((100 * one_to_nine) + (one_to_ninety_nine * 10)) + ((hundred_and * 9) * 99)) + (hundred * 9)) + one) + thousand))
-        )
-      
+      (Printf.printf "%d\n%d\n" one_to_ninety_nine ((((((100 * one_to_nine) + (one_to_ninety_nine * 10)) + ((hundred_and * 9) * 99)) + (hundred * 9)) + one) + thousand))
       )
     
     )

@@ -24,7 +24,7 @@
                                             (let ([b (+ (* j 10) k)])
                                             (if (eq? (* a k) (* i b))
                                             (block
-                                              (map display (list a "/" b "\n"))
+                                              (printf "~a/~a\n" a b)
                                               (let ([top (* top a)])
                                               (let ([bottom (* bottom b)])
                                               (g (+ k 1) bottom top)))
@@ -36,11 +36,9 @@
                               (e (+ i 1) bottom top)))])
                 (f 1 bottom top))
     (block
-      (map display (list top "/" bottom "\n"))
+      (printf "~a/~a\n" top bottom)
       (let ([p (pgcd top bottom)])
-      (block
-        (map display (list "pgcd=" p "\n" (quotient bottom p) "\n"))
-        ))
+      (printf "pgcd=~a\n~a\n" p (quotient bottom p)))
       )))])
   (e 1 bottom top))))
 )

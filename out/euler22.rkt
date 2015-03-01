@@ -54,9 +54,7 @@
                    (if (<= i n)
                    (let ([sum (+ sum (* i (score 'nil)))])
                    (b (+ i 1) sum))
-                   (block
-                     (map display (list sum "\n"))
-                     )))])
+                   (printf "~a\n" sum)))])
      (b 1 sum))) (mread-int)))
 )
 

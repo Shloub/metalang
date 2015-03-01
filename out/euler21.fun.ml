@@ -99,10 +99,7 @@ let main =
                  
                  else (y (n + 1) sum))
                 else (y (n + 1) sum))
-               else (
-                      (Printf.printf "\n%d\n" sum)
-                      )
-               ) in
+               else (Printf.printf "\n%d\n" sum)) in
               (y 2 sum)
             )
      ) in

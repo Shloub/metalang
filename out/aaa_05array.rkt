@@ -21,7 +21,7 @@
   (let ([j 0])
   ((lambda (internal_env) (apply (lambda (j a) 
                                         (block
-                                          (map display (list j " "))
+                                          (printf "~a " j)
                                           (let ([c (vector-ref a 0)])
                                           (block
                                             (if c

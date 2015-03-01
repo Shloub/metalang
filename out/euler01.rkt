@@ -9,9 +9,7 @@
                 (let ([sum (+ sum i)])
                 (a (+ i 1) sum))
                 (a (+ i 1) sum))
-                (block
-                  (map display (list sum "\n"))
-                  )))])
+                (printf "~a\n" sum)))])
   (a 0 sum)))
 )
 

@@ -34,10 +34,7 @@ let main =
      else (
             (Printf.printf "%d/%d\n" top bottom);
             let p = (pgcd top bottom) in
-            (
-              (Printf.printf "pgcd=%d\n%d\n" p (bottom / p))
-              )
-            
+            (Printf.printf "pgcd=%d\n%d\n" p (bottom / p))
             )
      ) in
     (e 1 bottom top)

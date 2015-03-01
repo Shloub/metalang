@@ -44,7 +44,7 @@
                   )
                 (u (+ k 1) l))
                 (block
-                  (map display (list l " == " nprimes "\n"))
+                  (printf "~a == ~a\n" l nprimes)
                   (let ([sum (build-vector nprimes (lambda (i_) 
                                                      (vector-ref primes i_)))])
                   (let ([maxl 0])
@@ -74,9 +74,7 @@
                                               (let ([len (+ len 1)])
                                               (r len maxl process resp stop))))])
                                 (s 0 maxl process resp stop)))
-                                (block
-                                  (map display (list resp "\n" maxl "\n"))
-                                  )))])
+                                (printf "~a\n~a\n" resp maxl)))])
                   (r len maxl process resp stop))))))))
     )))])
   (u 2 l))))))))

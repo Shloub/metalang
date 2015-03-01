@@ -6,7 +6,7 @@
     (display "Hello World")
     (let ([a 5])
     (block
-      (map display (list (* (+ 4 6) 2) " " "\n" a "foo" ""))
+      (printf "~a \n~afoo" (* (+ 4 6) 2) a)
       (let ([b (and (eq? (- (- (+ 1 (quotient (* (* (+ 1 1) 2) (+ 3 8)) 4)) (- 1 2)) 3) 12) #t)])
       (block
         (if b
@@ -18,7 +18,7 @@
           (if c
           (display "True")
           (display "False"))
-          (map display (list (quotient (quotient (+ 4 1) 3) (+ 2 1)) (quotient (quotient (* 4 1) 3) (* 2 1))))
+          (printf "~a~a" (quotient (quotient (+ 4 1) 3) (+ 2 1)) (quotient (quotient (* 4 1) 3) (* 2 1)))
           (let ([d (not (and (not (eq? a 0)) (not (eq? a 4))))])
           (block
             (if d

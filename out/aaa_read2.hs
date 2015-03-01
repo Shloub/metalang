@@ -28,14 +28,14 @@ main =
      let k = len - 1
      let h i =
            if i <= k
-           then do printf "%d=>%d " (i::Int) =<< ((readIOA tab i)::IO Int) :: IO()
+           then do printf "%d=>%d " (i::Int) =<< ((readIOA tab i)::IO Int)
                    h (i + 1)
            else do printf "\n" :: IO ()
                    tab2 <- (join (newListArray . (,) 0 . subtract 1 <$> return len <*> fmap (map read . words) getLine))
                    let g = len - 1
                    let f i_ =
                          if i_ <= g
-                         then do printf "%d==>%d " (i_::Int) =<< ((readIOA tab2 i_)::IO Int) :: IO()
+                         then do printf "%d==>%d " (i_::Int) =<< ((readIOA tab2 i_)::IO Int)
                                  f (i_ + 1)
                          else do strlen <- (fmap read getLine)
                                  printf "%d=strlen\n" (strlen::Int) :: IO()

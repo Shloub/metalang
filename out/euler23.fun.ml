@@ -116,10 +116,7 @@ let main =
                               then let sum = (sum + o) in
                               (bf (o + 1) sum)
                               else (bf (o + 1) sum))
-                        else (
-                               (Printf.printf "\n%d\n" sum)
-                               )
-                        ) in
+                        else (Printf.printf "\n%d\n" sum)) in
                        (bf 1 sum)) in
                (bg 1)) in
        (bi 2)) in

@@ -69,10 +69,7 @@ let main =
                   else let len = (len + 1) in
                   (r len maxl process resp stop)) in
                  (s 0 maxl process resp stop)
-               else (
-                      (Printf.printf "%d\n%d\n" resp maxl)
-                      )
-               ) in
+               else (Printf.printf "%d\n%d\n" resp maxl)) in
               (r len maxl process resp stop)
             )
      ) in

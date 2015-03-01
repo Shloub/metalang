@@ -29,8 +29,6 @@
                                    (mread-blank)
                                    out0
                                    )) (mread-int))))])
-(block
-  (map display (list (vector-ref t0 0) " - " (vector-ref t0 1) "\n"))
-  ))
+(printf "~a - ~a\n" (vector-ref t0 0) (vector-ref t0 1)))
 )
 

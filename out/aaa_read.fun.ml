@@ -15,7 +15,7 @@ let main =
                                     )
                    ))) in
                    (
-                     (Printf.printf "\n" );
+                     (Printf.printf "\n");
                      let tab2 = (Array.init len (fun  i_ -> Scanf.scanf "%d"
                      (fun  tmpi2 -> (
                                       (Scanf.scanf "%[\n \010]" (fun _ -> ()));

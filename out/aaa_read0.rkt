@@ -3,8 +3,6 @@
 
 (define main
   (let ([len (string->number (read-line))])
-  (block
-    (map display (list len "\n"))
-    ))
+  (printf "~a\n" len))
 )
 

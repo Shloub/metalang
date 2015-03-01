@@ -5,20 +5,18 @@
   (let ([j 0])
   (let ([j 0])
   (block
-    (map display (list j "\n"))
+    (printf "~a\n" j)
     (let ([j 1])
     (block
-      (map display (list j "\n"))
+      (printf "~a\n" j)
       (let ([j 2])
       (block
-        (map display (list j "\n"))
+        (printf "~a\n" j)
         (let ([j 3])
         (block
-          (map display (list j "\n"))
+          (printf "~a\n" j)
           (let ([j 4])
-          (block
-            (map display (list j "\n"))
-            ))
+          (printf "~a\n" j))
           ))
         ))
       ))

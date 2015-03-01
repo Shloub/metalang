@@ -10,7 +10,7 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
        )
      
      else (
-            (Printf.printf "--\n" );
+            (Printf.printf "--\n");
             let f = (taille2 - 1) in
             let rec e j out0 =
               (if (j <= f)
@@ -21,7 +21,7 @@ let programme_candidat tableau1 taille1 tableau2 taille2 =
                  )
                
                else (
-                      (Printf.printf "--\n" );
+                      (Printf.printf "--\n");
                       out0
                       )
                ) in

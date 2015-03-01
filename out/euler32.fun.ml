@@ -132,9 +132,6 @@ let main =
               (m 1 count)
             )
      
-     else (
-            (Printf.printf "%d\n" count)
-            )
-     ) in
+     else (Printf.printf "%d\n" count)) in
     (l 1 count)
 

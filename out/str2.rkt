@@ -3,7 +3,7 @@
 
 (define main
   (block
-    (map display (list "ma petite chaine" " en or"))
+    (printf "ma petite chaine en or" )
     '()
     )
 )

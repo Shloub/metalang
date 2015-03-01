@@ -32,16 +32,16 @@
   ((lambda (len) 
      (block
        (mread-blank)
-       (map display (list len "=len\n"))
+       (printf "~a=len\n" len)
        (let ([len (* len 2)])
        (block
-         (map display (list "len*2=" len "\n"))
+         (printf "len*2=~a\n" len)
          (let ([len (quotient len 2)])
          (let ([tab (build-vector len (lambda (i) 
                                         ((lambda (tmpi1) 
                                            (block
                                              (mread-blank)
-                                             (map display (list i "=>" tmpi1 " "))
+                                             (printf "~a=>~a " i tmpi1)
                                              tmpi1
                                              )) (mread-int))))])
          (block
@@ -50,18 +50,18 @@
                                            ((lambda (tmpi2) 
                                               (block
                                                 (mread-blank)
-                                                (map display (list i_ "==>" tmpi2 " "))
+                                                (printf "~a==>~a " i_ tmpi2)
                                                 tmpi2
                                                 )) (mread-int))))])
          ((lambda (strlen) 
             (block
               (mread-blank)
-              (map display (list strlen "=strlen\n"))
+              (printf "~a=strlen\n" strlen)
               (let ([tab4 (build-vector strlen (lambda (toto) 
                                                  ((lambda (tmpc) 
                                                     (let ([c (char->integer tmpc)])
                                                     (block
-                                                      (map display (list tmpc ":" c " "))
+                                                      (printf "~c:~a " tmpc c)
                                                       (let ([c (if (not (eq? tmpc #\Space))
                                                                (let ([c (+ (remainder (+ (- c (char->integer #\a)) 13) 26) (char->integer #\a))])
                                                                c)

@@ -22,14 +22,14 @@ let main =
                        (if c
                         then (Printf.printf "True")
                         else (Printf.printf "False"));
-                       (Printf.printf "\n" );
+                       (Printf.printf "\n");
                        (g (id a) 0);
                        let d = a.(0) in
                        (
                          (if d
                           then (Printf.printf "True")
                           else (Printf.printf "False"));
-                         (Printf.printf "\n" )
+                         (Printf.printf "\n")
                          )
                        
                        )

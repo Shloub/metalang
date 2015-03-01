@@ -2,7 +2,7 @@ type gamestate = {mutable cases : int array array; mutable firstToPlay : bool; m
 type move = {mutable x : int; mutable y : int;}
 let print_state g =
   (
-    (Printf.printf "\n|" );
+    (Printf.printf "\n|");
     let rec p y =
       (if (y <= 2)
        then let rec q x =
@@ -13,13 +13,13 @@ let print_state g =
                        else (if (g.cases.(x).(y) = 1)
                              then (Printf.printf "O")
                              else (Printf.printf "X")));
-                      (Printf.printf "|" );
+                      (Printf.printf "|");
                       (q (x + 1))
                       )
                
                else (if (y <> 2)
                      then (
-                            (Printf.printf "\n|-|-|-|\n|" );
+                            (Printf.printf "\n|-|-|-|\n|");
                             (p (y + 1))
                             )
                      
