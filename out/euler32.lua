@@ -1,30 +1,7 @@
 
-
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-
-buffer =  ""
-function readint()
-    if buffer == "" then buffer = io.read("*line") end
-    local num, buffer0 = string.match(buffer, '^([\-0-9]*)(.*)')
-    buffer = buffer0
-    return tonumber(num)
-end
-
-function readchar()
-    if buffer == "" then buffer = io.read("*line") end
-    local c = string.byte(buffer)
-    buffer = string.sub(buffer, 2, -1)
-    return c
-end
-
-function stdinsep()
-    if buffer == "" then buffer = io.read("*line") end
-    if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
-end
-
-
 --[[
 We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
 for example, the 5-digit number, 15234, is 1 through 5 pandigital.
