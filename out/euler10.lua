@@ -1,0 +1,58 @@
+
+
+function trunc(x)
+  return x>=0 and math.floor(x) or math.ceil(x)
+end
+
+buffer =  ""
+function readint()
+    if buffer == "" then buffer = io.read("*line") end
+    local num, buffer0 = string.match(buffer, '^([\-0-9]*)(.*)')
+    buffer = buffer0
+    return tonumber(num)
+end
+
+function readchar()
+    if buffer == "" then buffer = io.read("*line") end
+    local c = string.byte(buffer)
+    buffer = string.sub(buffer, 2, -1)
+    return c
+end
+
+function stdinsep()
+    if buffer == "" then buffer = io.read("*line") end
+    if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
+end
+
+
+
+function eratostene( t, max0 )
+  local sum = 0
+  for i = 2,max0 - 1 do
+  if t[i] == i
+    then
+      sum = sum + i;
+      if trunc(max0 / i) > i
+      then
+        local j = i * i
+        while j < max0 and j > 0
+        do
+        t[j] = 0;
+        j = j + i;
+        end
+      end
+    end
+    end
+    return sum
+  end
+  
+  
+  local n = 100000
+  --[[ normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages --]]
+  local t = {}
+  for i = 0,n - 1 do
+  t[i] = i;
+    end
+    t[1] = 0;
+    io.write(string.format("%d\n", eratostene(t, n)))
+    
