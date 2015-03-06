@@ -1,33 +1,27 @@
-buffer =  ""
-function readint()
-    if buffer == "" then buffer = io.read("*line") end
-    local num, buffer0 = string.match(buffer, '^([\-0-9]*)(.*)')
-    buffer = buffer0
-    return tonumber(num)
+
+function readintline()
+  local tab = {}
+  local i = 0
+  for a in string.gmatch(io.read("*l"), "-?%d+") do
+    tab[i] = tonumber(a)
+    i = i + 1
+  end
+  return tab
 end
 
-function stdinsep()
-    if buffer == "" then buffer = io.read("*line") end
-    if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
-end
 
 
-
-local bar_ = readint()
-stdinsep()
-local c = readint()
-stdinsep()
-local d = readint()
-stdinsep()
-local e = {
-  tuple_int_int_field_0=c,
-  tuple_int_int_field_1=d
+local bar_ = tonumber(io.read('*l'))
+local c = readintline()
+local d = {
+  tuple_int_int_field_0=c[0],
+  tuple_int_int_field_1=c[1]
 }
 local t = {
-  foo=e,
+  foo=d,
   bar=bar_
 }
-local f = t.foo
-local a = f.tuple_int_int_field_0
-local b = f.tuple_int_int_field_1
+local e = t.foo
+local a = e.tuple_int_int_field_0
+local b = e.tuple_int_int_field_1
 io.write(string.format("%d %d %d\n", a, b, t.bar))

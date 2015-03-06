@@ -1,30 +1,22 @@
-buffer =  ""
-function readint()
-    if buffer == "" then buffer = io.read("*line") end
-    local num, buffer0 = string.match(buffer, '^([\-0-9]*)(.*)')
-    buffer = buffer0
-    return tonumber(num)
-end
 
-function stdinsep()
-    if buffer == "" then buffer = io.read("*line") end
-    if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
+function readintline()
+  local tab = {}
+  local i = 0
+  for a in string.gmatch(io.read("*l"), "-?%d+") do
+    tab[i] = tonumber(a)
+    i = i + 1
+  end
+  return tab
 end
 function programme_candidat( tableau, taille )
   local out0 = 0
   for i = 0,taille - 1 do
-  out0 = out0 + tableau[i];
-    end
-    return out0
+    out0 = out0 + tableau[i];
   end
-  
-  
-  local taille = readint()
-  stdinsep()
-  local tableau = {}
-  for a = 0,taille - 1 do
-  tableau[a] = readint()
-    stdinsep()
-    end
-    io.write(string.format("%d\n", programme_candidat(tableau, taille)))
-    
+  return out0
+end
+
+
+local taille = tonumber(io.read('*l'))
+local tableau = readintline()
+io.write(string.format("%d\n", programme_candidat(tableau, taille)))

@@ -28,18 +28,17 @@ end
 
 local m = {}
 for j = 0,1000000 - 1 do
-m[j] = 0;
-  end
-  local max0 = 0
-  local maxi = 0
-  for i = 1,999 do
+  m[j] = 0;
+end
+local max0 = 0
+local maxi = 0
+for i = 1,999 do
   --[[ normalement on met 999999 mais ça dépasse les int32... --]]
-    local n2 = find(i, m)
-    if n2 > max0
-    then
-      max0 = n2;
-      maxi = i;
-    end
-    end
-    io.write(string.format("%d\n%d\n", max0, maxi))
-    
+  local n2 = find(i, m)
+  if n2 > max0
+  then
+    max0 = n2;
+    maxi = i;
+  end
+end
+io.write(string.format("%d\n%d\n", max0, maxi))

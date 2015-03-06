@@ -17,15 +17,14 @@ end
 
 local j = 0
 for k = 0,10 do
-j = j + k;
+  j = j + k;
   io.write(string.format("%d\n", j))
-  end
-  local i = 4
-  while i < 10
-  do
-  io.write(i)
-  i = i + 1;
-  j = j + i;
-  end
-  io.write(string.format("%d%dFIN TEST\n", j, i))
-  
+end
+local i = 4
+while i < 10
+do
+io.write(i)
+i = i + 1;
+j = j + i;
+end
+io.write(string.format("%d%dFIN TEST\n", j, i))

@@ -47,67 +47,66 @@ end
 local count = 0
 local allowed = {}
 for i = 0,10 - 1 do
-allowed[i] = i ~= 0;
-  end
-  local counted = {}
-  for j = 0,100000 - 1 do
+  allowed[i] = i ~= 0;
+end
+local counted = {}
+for j = 0,100000 - 1 do
   counted[j] = false;
-    end
-    for e = 1,9 do
-    allowed[e] = false;
-      for b = 1,9 do
-      if allowed[b]
-        then
-          allowed[b] = false;
-          local be = math.mod(b * e, 10)
-          if allowed[be]
+end
+for e = 1,9 do
+  allowed[e] = false;
+  for b = 1,9 do
+    if allowed[b]
+    then
+      allowed[b] = false;
+      local be = math.mod(b * e, 10)
+      if allowed[be]
+      then
+        allowed[be] = false;
+        for a = 1,9 do
+          if allowed[a]
           then
-            allowed[be] = false;
-            for a = 1,9 do
-            if allowed[a]
+            allowed[a] = false;
+            for c = 1,9 do
+              if allowed[c]
               then
-                allowed[a] = false;
-                for c = 1,9 do
-                if allowed[c]
+                allowed[c] = false;
+                for d = 1,9 do
+                  if allowed[d]
                   then
-                    allowed[c] = false;
-                    for d = 1,9 do
-                    if allowed[d]
-                      then
-                        allowed[d] = false;
-                        --[[ 2 * 3 digits --]]
-                        local product = (a * 10 + b) * (c * 100 + d * 10 + e)
-                        if not(counted[product]) and okdigits(allowed,
-                        trunc(product / 10))
-                        then
-                          counted[product] = true;
-                          count = count + product;
-                          io.write(string.format("%d ", product))
-                        end
-                        --[[ 1  * 4 digits --]]
-                        local product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-                        if not(counted[product2]) and okdigits(allowed,
-                        trunc(product2 / 10))
-                        then
-                          counted[product2] = true;
-                          count = count + product2;
-                          io.write(string.format("%d ", product2))
-                        end
-                        allowed[d] = true;
-                      end
-                      end
-                      allowed[c] = true;
+                    allowed[d] = false;
+                    --[[ 2 * 3 digits --]]
+                    local product = (a * 10 + b) * (c * 100 + d * 10 + e)
+                    if not(counted[product]) and okdigits(allowed,
+                    trunc(product / 10))
+                    then
+                      counted[product] = true;
+                      count = count + product;
+                      io.write(string.format("%d ", product))
                     end
+                    --[[ 1  * 4 digits --]]
+                    local product2 = b * (a * 1000 + c * 100 + d * 10 + e)
+                    if not(counted[product2]) and okdigits(allowed,
+                    trunc(product2 / 10))
+                    then
+                      counted[product2] = true;
+                      count = count + product2;
+                      io.write(string.format("%d ", product2))
                     end
-                    allowed[a] = true;
+                    allowed[d] = true;
                   end
-                  end
-                  allowed[be] = true;
                 end
-                allowed[b] = true;
+                allowed[c] = true;
               end
-              end
-              allowed[e] = true;
-              end
-              io.write(string.format("%d\n", count))
-              
+            end
+            allowed[a] = true;
+          end
+        end
+        allowed[be] = true;
+      end
+      allowed[b] = true;
+    end
+  end
+  allowed[e] = true;
+end
+io.write(string.format("%d\n", count))

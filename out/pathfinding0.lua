@@ -1,30 +1,13 @@
-buffer =  ""
-function readint()
-    if buffer == "" then buffer = io.read("*line") end
-    local num, buffer0 = string.match(buffer, '^([\-0-9]*)(.*)')
-    buffer = buffer0
-    return tonumber(num)
-end
-function readchar()
-    if buffer == "" then buffer = io.read("*line") end
-    local c = string.byte(buffer)
-    buffer = string.sub(buffer, 2, -1)
-    return c
-end
 
-function stdinsep()
-    if buffer == "" then buffer = io.read("*line") end
-    if buffer ~= nil then buffer = string.gsub(buffer, '^%s*', "") end
-end
-function min2_( a, b )
-  if a < b
-  then
-    return a
-  else
-    return b
+function readcharline()
+  local tab = {}
+  local i = 0
+  for a in string.gmatch(io.read("*l"), ".") do
+    tab[i] = string.byte(a)
+    i = i + 1
   end
+  return tab
 end
-
 function pathfind_aux( cache, tab, x, y, posX, posY )
   if posX == x - 1 and posY == y - 1 then
     return 0
@@ -41,7 +24,7 @@ function pathfind_aux( cache, tab, x, y, posX, posY )
     local val2 = pathfind_aux(cache, tab, x, y, posX - 1, posY)
     local val3 = pathfind_aux(cache, tab, x, y, posX, posY - 1)
     local val4 = pathfind_aux(cache, tab, x, y, posX, posY + 1)
-    local out0 = 1 + min2_(min2_(min2_(val1, val2), val3), val4)
+    local out0 = 1 + math.min(val1, val2, val3, val4)
     cache[posY][posX] = out0;
     return out0
   end
@@ -50,33 +33,25 @@ end
 function pathfind( tab, x, y )
   local cache = {}
   for i = 0,y - 1 do
-  local tmp = {}
+    local tmp = {}
     for j = 0,x - 1 do
-    io.write(string.format("%c", tab[i][j]))
+      io.write(string.format("%c", tab[i][j]))
       tmp[j] = -1;
-      end
-      io.write("\n")
-      cache[i] = tmp;
-      end
-      return pathfind_aux(cache, tab, x, y, 0, 0)
     end
-    
-    
-    local x = readint()
-    stdinsep()
-    local y = readint()
-    stdinsep()
-    io.write(string.format("%d %d\n", x, y))
-    local e = {}
-    for f = 0,y - 1 do
-    local g = {}
-      for h = 0,x - 1 do
-      g[h] = readchar()
-        end
-        stdinsep()
-        e[f] = g;
-        end
-        local tab = e
-        local result = pathfind(tab, x, y)
-        io.write(result)
-        
+    io.write("\n")
+    cache[i] = tmp;
+  end
+  return pathfind_aux(cache, tab, x, y, 0, 0)
+end
+
+
+local x = tonumber(io.read('*l'))
+local y = tonumber(io.read('*l'))
+io.write(string.format("%d %d\n", x, y))
+local e = {}
+for f = 0,y - 1 do
+  e[f] = readcharline();
+end
+local tab = e
+local result = pathfind(tab, x, y)
+io.write(result)

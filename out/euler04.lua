@@ -2,15 +2,6 @@
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
 end
-function max2_( a, b )
-  if a > b
-  then
-    return a
-  else
-    return b
-  end
-end
-
 --[[
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -41,25 +32,25 @@ end
 
 local m = 1
 for a = 0,9 do
-for f = 1,9 do
-for d = 0,9 do
-for c = 1,9 do
-for b = 0,9 do
-for e = 0,9 do
-local mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c *
+  for f = 1,9 do
+    for d = 0,9 do
+      for c = 1,9 do
+        for b = 0,9 do
+          for e = 0,9 do
+            local mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e +
+                                                               c * d) + 1000 * (c *
                                                                                 e +
                                                                                 b *
                                                                                 f) + 10000 * c * f
-  if chiffre(0, mul) == chiffre(5, mul) and chiffre(1, mul) == chiffre(4,
-  mul) and chiffre(2, mul) == chiffre(3, mul)
-  then
-    m = max2_(mul, m);
+            if chiffre(0, mul) == chiffre(5, mul) and chiffre(1, mul) ==
+            chiffre(4, mul) and chiffre(2, mul) == chiffre(3, mul)
+            then
+              m = math.max(mul, m);
+            end
+          end
+        end
+      end
+    end
   end
-  end
-  end
-  end
-  end
-  end
-  end
-  io.write(string.format("%d\n", m))
-  
+end
+io.write(string.format("%d\n", m))

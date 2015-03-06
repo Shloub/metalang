@@ -43,35 +43,34 @@ end
 function find( len, tab )
   local tab2 = {}
   for i = 0,len - 1 do
-  local tab3 = {}
+    local tab3 = {}
     for j = 0,i + 1 - 1 do
-    tab3[j] = 0;
-      end
-      tab2[i] = tab3;
-      end
-      return find0(len, tab, tab2, 0, 0)
+      tab3[j] = 0;
     end
-    
-    
-    local len = 0
-    len = readint()
+    tab2[i] = tab3;
+  end
+  return find0(len, tab, tab2, 0, 0)
+end
+
+
+local len = 0
+len = readint()
+stdinsep()
+local tab = {}
+for i = 0,len - 1 do
+  local tab2 = {}
+  for j = 0,i + 1 - 1 do
+    local tmp = 0
+    tmp = readint()
     stdinsep()
-    local tab = {}
-    for i = 0,len - 1 do
-    local tab2 = {}
-      for j = 0,i + 1 - 1 do
-      local tmp = 0
-        tmp = readint()
-        stdinsep()
-        tab2[j] = tmp;
-        end
-        tab[i] = tab2;
-        end
-        io.write(string.format("%d\n", find(len, tab)))
-        for k = 0,len - 1 do
-        for l = 0,k do
-        io.write(string.format("%d ", tab[k][l]))
-          end
-          io.write("\n")
-          end
-          
+    tab2[j] = tmp;
+  end
+  tab[i] = tab2;
+end
+io.write(string.format("%d\n", find(len, tab)))
+for k = 0,len - 1 do
+  for l = 0,k do
+    io.write(string.format("%d ", tab[k][l]))
+  end
+  io.write("\n")
+end

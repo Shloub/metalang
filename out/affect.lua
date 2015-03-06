@@ -47,27 +47,26 @@ function result( t_, t2_ )
   local len = 1
   local cache0 = {}
   for i = 0,len - 1 do
-  cache0[i] = -i;
-    end
-    local cache1 = {}
-    for j = 0,len - 1 do
+    cache0[i] = -i;
+  end
+  local cache1 = {}
+  for j = 0,len - 1 do
     cache1[j] = j;
-      end
-      local cache2 = cache0
-      cache0 = cache1;
-      cache2 = cache0;
-      return t.foo + t.blah * t.bar + t.bar * t.foo
-    end
-    
-    
-    local t = mktoto(4)
-    local t2 = mktoto(5)
-    t.bar = readint()
-    stdinsep()
-    t.blah = readint()
-    stdinsep()
-    t2.bar = readint()
-    stdinsep()
-    t2.blah = readint()
-    io.write(string.format("%d%d", result(t, t2), t.blah))
-    
+  end
+  local cache2 = cache0
+  cache0 = cache1;
+  cache2 = cache0;
+  return t.foo + t.blah * t.bar + t.bar * t.foo
+end
+
+
+local t = mktoto(4)
+local t2 = mktoto(5)
+t.bar = readint()
+stdinsep()
+t.blah = readint()
+stdinsep()
+t2.bar = readint()
+stdinsep()
+t2.blah = readint()
+io.write(string.format("%d%d", result(t, t2), t.blah))

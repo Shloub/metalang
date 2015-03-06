@@ -19,27 +19,26 @@ end
 function nth( tab, tofind, len )
   local out0 = 0
   for i = 0,len - 1 do
-  if tab[i] == tofind
+    if tab[i] == tofind
     then
       out0 = out0 + 1;
     end
-    end
-    return out0
   end
-  
-  
-  local len = 0
-  len = readint()
-  stdinsep()
-  local tofind = 0
-  tofind = readchar()
-  stdinsep()
-  local tab = {}
-  for i = 0,len - 1 do
+  return out0
+end
+
+
+local len = 0
+len = readint()
+stdinsep()
+local tofind = 0
+tofind = readchar()
+stdinsep()
+local tab = {}
+for i = 0,len - 1 do
   local tmp = 0
-    tmp = readchar()
-    tab[i] = tmp;
-    end
-    local result = nth(tab, tofind, len)
-    io.write(result)
-    
+  tmp = readchar()
+  tab[i] = tmp;
+end
+local result = nth(tab, tofind, len)
+io.write(result)

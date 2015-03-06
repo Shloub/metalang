@@ -35,22 +35,21 @@ end
 function pathfind( tab, len )
   local cache = {}
   for i = 0,len - 1 do
-  cache[i] = -1;
-    end
-    return pathfind_aux(cache, tab, len, 0)
+    cache[i] = -1;
   end
-  
-  
-  local len = 0
-  len = readint()
-  stdinsep()
-  local tab = {}
-  for i = 0,len - 1 do
+  return pathfind_aux(cache, tab, len, 0)
+end
+
+
+local len = 0
+len = readint()
+stdinsep()
+local tab = {}
+for i = 0,len - 1 do
   local tmp = 0
-    tmp = readint()
-    stdinsep()
-    tab[i] = tmp;
-    end
-    local result = pathfind(tab, len)
-    io.write(result)
-    
+  tmp = readint()
+  stdinsep()
+  tab[i] = tmp;
+end
+local result = pathfind(tab, len)
+io.write(result)

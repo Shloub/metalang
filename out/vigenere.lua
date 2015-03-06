@@ -34,35 +34,34 @@ end
 
 function crypte( taille_cle, cle, taille, message )
   for i = 0,taille - 1 do
-  local lettre = position_alphabet(message[i])
+    local lettre = position_alphabet(message[i])
     if lettre ~= -1
     then
       local addon = position_alphabet(cle[math.mod(i, taille_cle)])
       local new0 = math.mod(addon + lettre, 26)
       message[i] = of_position_alphabet(new0);
     end
-    end
   end
-  
-  
-  local taille_cle = readint()
-  stdinsep()
-  local cle = {}
-  for index = 0,taille_cle - 1 do
+end
+
+
+local taille_cle = readint()
+stdinsep()
+local cle = {}
+for index = 0,taille_cle - 1 do
   local out0 = readchar()
-    cle[index] = out0;
-    end
-    stdinsep()
-    local taille = readint()
-    stdinsep()
-    local message = {}
-    for index2 = 0,taille - 1 do
-    local out2 = readchar()
-      message[index2] = out2;
-      end
-      crypte(taille_cle, cle, taille, message);
-      for i = 0,taille - 1 do
-      io.write(string.format("%c", message[i]))
-        end
-        io.write("\n")
-        
+  cle[index] = out0;
+end
+stdinsep()
+local taille = readint()
+stdinsep()
+local message = {}
+for index2 = 0,taille - 1 do
+  local out2 = readchar()
+  message[index2] = out2;
+end
+crypte(taille_cle, cle, taille, message);
+for i = 0,taille - 1 do
+  io.write(string.format("%c", message[i]))
+end
+io.write("\n")

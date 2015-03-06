@@ -24,15 +24,14 @@ local strlen = readint()
 stdinsep()
 local tab4 = {}
 for toto = 0,strlen - 1 do
-local tmpc = readchar()
+  local tmpc = readchar()
   local c = tmpc
   if tmpc ~= 32
   then
     c = math.mod((c - 97) + 13, 26) + 97;
   end
   tab4[toto] = c;
-  end
-  for j = 0,strlen - 1 do
+end
+for j = 0,strlen - 1 do
   io.write(string.format("%c", tab4[j]))
-    end
-    
+end

@@ -38,10 +38,9 @@ len = readint()
 stdinsep()
 local tab = {}
 for i = 0,len - 1 do
-local x = 0
+  local x = 0
   x = readint()
   stdinsep()
   tab[i] = x;
-  end
-  io.write(montagnes0(tab, len))
-  
+end
+io.write(montagnes0(tab, len))

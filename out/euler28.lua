@@ -22,14 +22,13 @@ function sumdiag( n )
   local un = 1
   local sum = 1
   for i = 0,nterms - 2 do
-  local d = 2 * (1 + trunc(i / 4))
+    local d = 2 * (1 + trunc(i / 4))
     un = un + d;
     --[[ print int d print "=>" print un print " " --]]
     sum = sum + un;
-    end
-    return sum
   end
-  
-  
-  io.write(sumdiag(1001))
-  
+  return sum
+end
+
+
+io.write(sumdiag(1001))

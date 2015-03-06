@@ -28,7 +28,7 @@ function sumdiv( n )
   local out0 = 0
   --[[ On déclare un entier qui contiendra la somme --]]
   for i = 1,n do
-  --[[ La boucle : i est le diviseur potentiel--]]
+    --[[ La boucle : i est le diviseur potentiel--]]
     if (math.mod(n, i)) == 0
     then
       --[[ Si i divise --]]
@@ -37,15 +37,14 @@ function sumdiv( n )
     else
       --[[ nop --]]
     end
-    end
-    return out0
-    --[[On renvoie out--]]
   end
-  
-  
-  --[[ Programme principal --]]
-  local n = 0
-  n = readint()
-  --[[ Lecture de l'entier --]]
-  io.write(sumdiv(n))
-  
+  return out0
+  --[[On renvoie out--]]
+end
+
+
+--[[ Programme principal --]]
+local n = 0
+n = readint()
+--[[ Lecture de l'entier --]]
+io.write(sumdiv(n))

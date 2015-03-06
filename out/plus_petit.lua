@@ -57,10 +57,9 @@ len = readint()
 stdinsep()
 local tab = {}
 for i = 0,len - 1 do
-local tmp = 0
+  local tmp = 0
   tmp = readint()
   stdinsep()
   tab[i] = tmp;
-  end
-  io.write(plus_petit0(tab, len))
-  
+end
+io.write(plus_petit0(tab, len))

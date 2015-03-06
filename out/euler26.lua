@@ -8,32 +8,31 @@ function periode( restes, len, a, b )
   local chiffre = trunc(a / b)
   local reste = math.mod(a, b)
   for i = 0,len - 1 do
-  if restes[i] == reste
+    if restes[i] == reste
     then
       return len - i
     end
-    end
-    restes[len] = reste;
-    len = len + 1;
-    a = reste * 10;
+  end
+  restes[len] = reste;
+  len = len + 1;
+  a = reste * 10;
   end
   return 0
-  end
-  
-  
-  local t = {}
-  for j = 0,1000 - 1 do
+end
+
+
+local t = {}
+for j = 0,1000 - 1 do
   t[j] = 0;
-    end
-    local m = 0
-    local mi = 0
-    for i = 1,1000 do
-    local p = periode(t, 0, 1, i)
-      if p > m
-      then
-        mi = i;
-        m = p;
-      end
-      end
-      io.write(string.format("%d\n%d\n", mi, m))
-      
+end
+local m = 0
+local mi = 0
+for i = 1,1000 do
+  local p = periode(t, 0, 1, i)
+  if p > m
+  then
+    mi = i;
+    m = p;
+  end
+end
+io.write(string.format("%d\n%d\n", mi, m))

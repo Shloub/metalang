@@ -5,7 +5,7 @@ end
 function eratostene( t, max0 )
   local sum = 0
   for i = 2,max0 - 1 do
-  if t[i] == i
+    if t[i] == i
     then
       sum = sum + i;
       if trunc(max0 / i) > i
@@ -18,17 +18,16 @@ function eratostene( t, max0 )
         end
       end
     end
-    end
-    return sum
   end
-  
-  
-  local n = 100000
-  --[[ normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages --]]
-  local t = {}
-  for i = 0,n - 1 do
+  return sum
+end
+
+
+local n = 100000
+--[[ normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages --]]
+local t = {}
+for i = 0,n - 1 do
   t[i] = i;
-    end
-    t[1] = 0;
-    io.write(string.format("%d\n", eratostene(t, n)))
-    
+end
+t[1] = 0;
+io.write(string.format("%d\n", eratostene(t, n)))

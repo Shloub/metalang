@@ -23,20 +23,19 @@ end
 function result( t, len )
   local out0 = 0
   for j = 0,len - 1 do
-  t[j].blah = t[j].blah + 1;
+    t[j].blah = t[j].blah + 1;
     out0 = out0 + t[j].foo + t[j].blah * t[j].bar + t[j].bar * t[j].foo;
-    end
-    return out0
   end
-  
-  
-  local t = {}
-  for i = 0,4 - 1 do
+  return out0
+end
+
+
+local t = {}
+for i = 0,4 - 1 do
   t[i] = mktoto(i);
-    end
-    t[0].bar = readint()
-    stdinsep()
-    t[1].blah = readint()
-    local titi = result(t, 4)
-    io.write(string.format("%d%d", titi, t[2].blah))
-    
+end
+t[0].bar = readint()
+stdinsep()
+t[1].blah = readint()
+local titi = result(t, 4)
+io.write(string.format("%d%d", titi, t[2].blah))

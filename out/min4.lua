@@ -1,11 +1,2 @@
-function min2_( a, b )
-  if a < b
-  then
-    return a
-  else
-    return b
-  end
-end
 
-
-io.write(string.format("%d %d %d %d %d %d\n%d %d %d %d %d %d\n%d %d %d %d %d %d\n%d %d %d %d %d %d\n", min2_(min2_(min2_(1, 2), 3), 4), min2_(min2_(min2_(1, 2), 4), 3), min2_(min2_(min2_(1, 3), 2), 4), min2_(min2_(min2_(1, 3), 4), 2), min2_(min2_(min2_(1, 4), 2), 3), min2_(min2_(min2_(1, 4), 3), 2), min2_(min2_(min2_(2, 1), 3), 4), min2_(min2_(min2_(2, 1), 4), 3), min2_(min2_(min2_(2, 3), 1), 4), min2_(min2_(min2_(2, 3), 4), 1), min2_(min2_(min2_(2, 4), 1), 3), min2_(min2_(min2_(2, 4), 3), 1), min2_(min2_(min2_(3, 1), 2), 4), min2_(min2_(min2_(3, 1), 4), 2), min2_(min2_(min2_(3, 2), 1), 4), min2_(min2_(min2_(3, 2), 4), 1), min2_(min2_(min2_(3, 4), 1), 2), min2_(min2_(min2_(3, 4), 2), 1), min2_(min2_(min2_(4, 1), 2), 3), min2_(min2_(min2_(4, 1), 3), 2), min2_(min2_(min2_(4, 2), 1), 3), min2_(min2_(min2_(4, 2), 3), 1), min2_(min2_(min2_(4, 3), 1), 2), min2_(min2_(min2_(4, 3), 2), 1)))
+io.write(string.format("%d %d %d %d %d %d\n%d %d %d %d %d %d\n%d %d %d %d %d %d\n%d %d %d %d %d %d\n", math.min(1, 2, 3, 4), math.min(1, 2, 4, 3), math.min(1, 3, 2, 4), math.min(1, 3, 4, 2), math.min(1, 4, 2, 3), math.min(1, 4, 3, 2), math.min(2, 1, 3, 4), math.min(2, 1, 4, 3), math.min(2, 3, 1, 4), math.min(2, 3, 4, 1), math.min(2, 4, 1, 3), math.min(2, 4, 3, 1), math.min(3, 1, 2, 4), math.min(3, 1, 4, 2), math.min(3, 2, 1, 4), math.min(3, 2, 4, 1), math.min(3, 4, 1, 2), math.min(3, 4, 2, 1), math.min(4, 1, 2, 3), math.min(4, 1, 3, 2), math.min(4, 2, 1, 3), math.min(4, 2, 3, 1), math.min(4, 3, 1, 2), math.min(4, 3, 2, 1)))
