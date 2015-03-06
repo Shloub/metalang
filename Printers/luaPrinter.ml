@@ -45,7 +45,18 @@ class luaPrinter = object(self)
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "%a%a%a%a%a%a%a%a@\n%a"
-  (fun f () -> if Tags.is_taged "use_readintline" then Format.fprintf f "
+  (fun f () -> if Tags.is_taged "use_readintline" then
+if Tags.is_taged "use_readtuple" then
+Format.fprintf f "
+function readintline()
+  local tab = {}
+  for a in string.gmatch(io.read(\"*l\"), \"-?%%d+\") do
+    table.insert(tab, tonumber(a))
+  end
+  return tab
+end@\n"
+else
+Format.fprintf f "
 function readintline()
   local tab = {}
   local i = 0
@@ -54,17 +65,30 @@ function readintline()
     i = i + 1
   end
   return tab
-end@\n") ()
-  (fun f () -> if Tags.is_taged "use_readcharline" then Format.fprintf f "
+end@\n"
+) ()
+  (fun f () -> if Tags.is_taged "use_readcharline" then
+if Tags.is_taged "use_readtuple" then
+Format.fprintf f "
 function readcharline()
   local tab = {}
   local i = 0
   for a in string.gmatch(io.read(\"*l\"), \".\") do
-    tab[i] = string.byte(a)
-    i = i + 1
+    table.insert(tab, string.byte(a))
   end
   return tab
-end@\n") ()
+end@\n"
+else
+Format.fprintf f "function readcharline()
+   local tab = {}
+   local i = 0
+   for a in string.gmatch(io.read(\"*l\"), \".\") do
+    tab[i] = string.byte(a)
+    i = i + 1
+   end
+   return tab
+end@\n"
+) ()
   (fun f () -> if Tags.is_taged "__internal__div" then Format.fprintf f "
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
@@ -144,6 +168,21 @@ end@\n") ()
         self#expr e
         self#instructions ifcase
         self#instructions elsecase
+
+  method mutable_ f m0 =
+    match Mutable.unfix m0 with
+    | Mutable.Array (m, indexes) ->
+        if Tags.is_taged "use_readtuple" then
+          Format.fprintf f "%a[%a]"
+            self#mutable_ m
+            (print_list
+               (fun f e -> Format.fprintf f "%a+1" self#expr e)
+               (fun f f1 e1 f2 e2 ->
+                 Format.fprintf f "%a][%a" f1 e1 f2 e2
+               ))
+            indexes
+        else super#mutable_ f m0
+    | _ -> super#mutable_ f m0
 
   method multi_print f format exprs =
     match exprs with

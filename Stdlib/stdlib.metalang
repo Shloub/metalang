@@ -452,6 +452,7 @@ end
 
 macro (int, int) native_expand_read_int_couple()
   py do "list(map(int, input().split()))"
+  lua do "readintline()"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
@@ -463,8 +464,7 @@ end
 def lexems expand_read_int_couple()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
-     current_language() == LANG_Java ||
-     current_language() == LANG_Lua
+     current_language() == LANG_Java
   then
     return { def array<int> l = read_int_line(2)
     return (l[0], l[1]) }
@@ -473,9 +473,14 @@ def lexems expand_read_int_couple()
     current_language() == LANG_Rb ||
     current_language() == LANG_Rkt ||
     current_language() == LANG_Pl ||
+     current_language() == LANG_Lua ||
     current_language() == LANG_Hs
   then
-    return { return native_expand_read_int_couple() }
+    return {
+      tag use_readintline
+      tag use_readtuple
+      return native_expand_read_int_couple()
+    }
   else
     return {
     def inline read int a skip
@@ -493,6 +498,7 @@ end
 
 macro (int, int, int) native_expand_read_3ints()
   py do "list(map(int, input().split()))"
+  lua do "readintline()"
   php do "array_map(\"intval\", explode(\" \", fgets(STDIN)))"
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
@@ -503,7 +509,6 @@ end
 def lexems expand_read_3ints()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
-     current_language() == LANG_Lua ||
      current_language() == LANG_Hs ||
      current_language() == LANG_Java then
     return { def array<int> l = read_int_line(3)
@@ -511,10 +516,15 @@ def lexems expand_read_3ints()
   elsif current_language() == LANG_Py ||
     current_language() == LANG_Php ||
     current_language() == LANG_Rb ||
+     current_language() == LANG_Lua ||
     current_language() == LANG_Rkt ||
     current_language() == LANG_Pl
   then
-    return { return native_expand_read_3ints() }
+    return {
+      tag use_readtuple
+      tag use_readintline
+      return native_expand_read_3ints()
+    }
   else
     return {
     def inline read int a skip
