@@ -34,5 +34,6 @@ compileVB
 allsources
 *.test_hs_ml
 *.test_cl_ml
+*.test_lua_ml
 *.exeVB
 
