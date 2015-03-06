@@ -44,34 +44,30 @@ class luaPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "
-
+    Format.fprintf f "%a%a%a%a%a%a@\n%a"
+  (fun f () -> if Tags.is_taged "__internal__div" then Format.fprintf f "
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)
-end
-
-buffer =  \"\"
-function readint()
+end@\n") ()
+(fun f () -> if need then Format.fprintf f "buffer =  \"\"@\n") ()
+(fun f () -> if need_readint then Format.fprintf f "function readint()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     local num, buffer0 = string.match(buffer, '^([\\-0-9]*)(.*)')
     buffer = buffer0
     return tonumber(num)
-end
-
-function readchar()
+end@\n") ()
+(fun f () -> if need_readchar then Format.fprintf f "function readchar()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     local c = string.byte(buffer)
     buffer = string.sub(buffer, 2, -1)
     return c
-end
-
+end@\n") ()
+(fun f () -> if need_stdinsep then Format.fprintf f "
 function stdinsep()
     if buffer == \"\" then buffer = io.read(\"*line\") end
     if buffer ~= nil then buffer = string.gsub(buffer, '^%%s*', \"\") end
-end
+end@\n") ()
 
-
-%a@\n%a"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
