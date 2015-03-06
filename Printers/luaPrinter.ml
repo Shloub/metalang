@@ -111,6 +111,23 @@ end@\n") ()
 
   method decl_type f name t = ()
 
+  method record f li =
+    Format.fprintf f "@[<h>{%a}@]"
+      (self#def_fields (InternalName 0)) li
+
+  method tuple f li =
+    Format.fprintf f "@[<h>{%a}@]"
+      (print_list self#expr
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) li
+
+  method untuple f li e =
+    Format.fprintf f "@[<h>%a = unpack(%a)@]"
+      (print_list self#binding
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) (List.map snd li)
+      self#expr e
+
   method if_ f e ifcase elsecase =
     match elsecase with
     | [] ->
