@@ -266,6 +266,7 @@ let languages, printers =
     "vb",      (false, clike_passes)   => new VbDotNetPrinter.vbDotNetPrinter ;
     "java",    (true, clike_passes)   => new JavaPrinter.javaPrinter ;
     "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
+    "lua",      (true, clike_passes)   => new LuaPrinter.luaPrinter ;
     "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
     "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
     "hs",      (false, hs_passes) => new HaskellPrinter.haskellPrinter ;
@@ -437,6 +438,7 @@ enum @target_language
   LANG_Hs
   LANG_Java
   LANG_Js
+  LANG_Lua
   LANG_M
   LANG_Ml
   LANG_Pas

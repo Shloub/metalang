@@ -26,6 +26,7 @@ macro int sqrt_(int c)
   vb do "Int(Math.Sqrt($c))"
   hs do "fmap (floor . sqrt . fromIntegral) ($c)"
   hs_pure do "(floor . sqrt . fromIntegral) $c"
+  lua do "math.floor(math.sqrt($c))"
   * do "sqrt($c)"
 end
 
@@ -55,6 +56,7 @@ macro char char_of_int(int c)
   vb do "Chr($c)"
   hs do "fmap chr ($c)"
   hs_pure do "chr $c"
+  lua  do "$c"
   *  do "$c"
 end
 tag macro_char_of_int_pure
@@ -77,6 +79,7 @@ macro int int_of_char(char c)
   vb do "Asc($c)"
   hs do "fmap ord ($c)"
   hs_pure do "ord $c"
+  lua  do "$c"
   *  do "$c"
 end
 tag macro_int_of_char_pure

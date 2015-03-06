@@ -24,6 +24,7 @@ unit:
 	ocamlbuild Stdlib/unit.byte
 	./unit.byte
 
+lua	?=	lua5.1
 java	?=	java
 python	?=	python3
 
@@ -95,6 +96,8 @@ TMPFILES	:=\
 	$(addsuffix .adb, $(TESTS)) \
 	$(addsuffix .adb.bin, $(TESTS)) \
 	$(addsuffix .adb.bin.out, $(TESTS)) \
+	$(addsuffix .lua, $(TESTS)) \
+	$(addsuffix .lua.out, $(TESTS)) \
 	$(addsuffix .test, $(TESTS)) \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)) \
 	$(addsuffix .outs, $(TESTS)) \
@@ -252,6 +255,13 @@ out/%.rkt : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
 	 ./metalang -quiet -o out -lang rkt $< || exit 1; \
 	fi
 
+out/%.lua : tests/prog/%.metalang metalang Stdlib/stdlib.metalang
+	@if [ -e "$(basename $<).compiler_input" ]; then \
+	./metalang -o out -lang lua $< < "$(basename $<).compiler_input" || exit 1; \
+	else \
+	 ./metalang -quiet -o out -lang lua $< || exit 1; \
+	fi
+
 out/%.metalang.test : out/%.metalang Stdlib/stdlib.metalang metalang
 	@mkdir -p out/foo/out
 	@./metalang -nostdlib -quiet -o out/foo/out $(basename $<).metalang
@@ -346,6 +356,9 @@ out/%.class.out : out/%.class
 out/%.js.out : out/%.js
 	node $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
+out/%.lua.out : out/%.lua
+	$(lua) $< < tests/prog/$(basename $*).in > $@ || exit 1;
+
 out/%.pl.out : out/%.pl
 	perl $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
@@ -373,7 +386,7 @@ out/%.exeVB.out : out/%.exeVB
 out/%.rkt.out : out/%.rkt
 	racket $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
-out/%.test : out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out
+out/%.test : out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out out/%.lua.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -541,6 +554,22 @@ out/%.test_fun_ml : out/%.fun.ml.out out/%.ml.out
 	cp $< $@ ;\
 	echo "$(green)OK $(basename $*)$(reset)";
 
+out/%.test_lua_ml : out/%.lua.out out/%.ml.out
+	@for i in $^; do \
+	if diff "$$i" "$<" > /dev/null; then \
+	echo "" > /dev/null; \
+	else \
+	echo "-------------------- $$i != $< "; \
+	echo "FAIL $^" > $@; \
+	echo "$(red)FAIL $^$(reset)"; \
+	return 1; \
+	fi; \
+	done; \
+	cp $< $@ ;\
+	echo "$(green)OK $(basename $*)$(reset)";
+
+testLUA : $(addsuffix .test_lua_ml, $(TESTS))
+
 testRacket : $(addsuffix .test_rkt_ml, $(TESTS))
 
 testLisp : $(addsuffix .test_cl_ml, $(TESTS))
@@ -567,7 +596,7 @@ testJava : compileJAVA $(addsuffix .test_java_ml, $(TESTS))
 	@echo "$(green)$@ OK$(reset) $*"
 	@echo "ok" > $@
 
-allsources: pl.sources m.sources ml.sources py.sources php.sources rb.sources js.sources cc.sources c.sources pas.sources java.sources rkt.sources fun.ml.sources cs.sources go.sources cl.sources vb.sources hs.sources
+allsources: pl.sources m.sources ml.sources py.sources php.sources rb.sources js.sources cc.sources c.sources pas.sources java.sources rkt.sources fun.ml.sources cs.sources go.sources cl.sources vb.sources hs.sources lua.sources
 	@echo "$(green)all sources OK$(reset) $*"
 	@echo "ok" > $@
 
@@ -703,6 +732,11 @@ execRKT: $(EXECRKTDEPS)
 
 EXECPLDEPS := $(addsuffix .pl.out, $(TESTS))
 execPL: $(EXECPLDEPS)
+	@echo "$(green)@$ OK$(reset)"
+	@echo "ok" > $@
+
+EXECLUADEPS := $(addsuffix .lua.out, $(TESTS))
+execLUA: $(EXECLUADEPS)
 	@echo "$(green)@$ OK$(reset)"
 	@echo "ok" > $@
 
