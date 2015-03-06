@@ -172,7 +172,7 @@ end@\n") ()
       self#expr e
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<v 2>@[<h>for@ %a@ =@ %a,%a do@\n@]%a@\nend"
+    Format.fprintf f "@[<v2>@[<h>for@ %a@ =@ %a,%a do@]@\n%a@]@\nend"
       self#binding varname
       self#expr expr1
       self#expr expr2
