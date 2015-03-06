@@ -44,7 +44,27 @@ class luaPrinter = object(self)
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
     let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
     let need = need_stdinsep || need_readint || need_readchar in
-    Format.fprintf f "%a%a%a%a%a%a@\n%a"
+    Format.fprintf f "%a%a%a%a%a%a%a%a@\n%a"
+  (fun f () -> if Tags.is_taged "use_readintline" then Format.fprintf f "
+function readintline()
+  local tab = {}
+  local i = 0
+  for a in string.gmatch(io.read(\"*l\"), \"-?%%d+\") do
+    tab[i] = tonumber(a)
+    i = i + 1
+  end
+  return tab
+end@\n") ()
+  (fun f () -> if Tags.is_taged "use_readcharline" then Format.fprintf f "
+function readcharline()
+  local tab = {}
+  local i = 0
+  for a in string.gmatch(io.read(\"*l\"), \".\") do
+    tab[i] = string.byte(a)
+    i = i + 1
+  end
+  return tab
+end@\n") ()
   (fun f () -> if Tags.is_taged "__internal__div" then Format.fprintf f "
 function trunc(x)
   return x>=0 and math.floor(x) or math.ceil(x)

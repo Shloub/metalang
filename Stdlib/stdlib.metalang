@@ -101,6 +101,7 @@ macro int native_macro_max2(int a, int b)
   rkt do "max $a $b"
   clisp do "(max $a $b)"
   ruby do "[$a, $b].max"
+  lua do "math.max($a, $b)"
   * do "max($a, $b)"
 end
 
@@ -119,6 +120,7 @@ def lexems macro_max2(lexems a, lexems b)
   current_language() == LANG_Fun_ml ||
   current_language() == LANG_Py ||
   current_language() == LANG_Pl ||
+  current_language() == LANG_Lua ||
   current_language() == LANG_Rb
   then
     return { 
@@ -145,6 +147,7 @@ macro int native_macro_min2(int a, int b)
   clisp do "(min $a $b)"
   ruby do "[$a, $b].min"
   pl do "min($a, $b)"
+  lua do "math.min($a, $b)"
   * do "min($a, $b)"
 end
 
@@ -156,6 +159,7 @@ macro int native_macro_min3(int a, int b, int c)
   clisp do "(min $a $b $c)"
   ruby do "[$a, $b, $c].min"
   pl do "min($a, $b, $c)"
+  lua do "math.min($a, $b, $c)"
   * do "min($a, $b, $c)"
 end
 
@@ -167,6 +171,7 @@ macro int native_macro_min4(int a, int b, int c, int d)
   clisp do "(min $a $b $c $d)"
   ruby do "[$a, $b, $c, $d].min"
   pl do "min($a, $b, $c, $d)"
+  lua do "math.min($a, $b, $c, $d)"
   * do "min($a, $b, $c, $d)"
 end
 
@@ -187,7 +192,8 @@ def lexems macro_min2(lexems a, lexems b)
   current_language() == LANG_Cl ||
   current_language() == LANG_Rb ||
   current_language() == LANG_Vb ||
-  current_language() == LANG_Pl
+  current_language() == LANG_Pl ||
+  current_language() == LANG_Lua
   then
     return { 
     tag perl_use_list_min
@@ -209,7 +215,8 @@ def lexems macro_min3(lexems a, lexems b, lexems c)
   current_language() == LANG_Cl ||
   current_language() == LANG_Rb ||
   current_language() == LANG_Pl ||
-  current_language() == LANG_Pl
+  current_language() == LANG_Pl ||
+  current_language() == LANG_Lua
   then
     return { tag perl_use_list_min return native_macro_min3( ${a}, ${b}, ${c}) }
   else
@@ -228,7 +235,8 @@ def lexems macro_min4(lexems a, lexems b, lexems c, lexems d)
   current_language() == LANG_Rkt ||
   current_language() == LANG_Cl ||
   current_language() == LANG_Rb ||
-  current_language() == LANG_Pl
+  current_language() == LANG_Pl ||
+  current_language() == LANG_Lua
   then
     return { tag perl_use_list_min return native_macro_min4( ${a}, ${b}, ${c}, ${d}) }
   else
@@ -260,6 +268,7 @@ macro array<int> native_expand_read_int_line(int c)
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   java do "read_int_line()"
+  lua do "readintline()"
   hs do "join (newListArray . (,) 0 . subtract 1 <$> $c <*> fmap (map read . words) getLine)"
   *  do "E R R O R"
 end
@@ -273,6 +282,7 @@ macro array<char> native_expand_read_char_line(int c)
   rkt do "list->vector (string->list (read-line))"
   ruby do "STDIN.readline.split(//)"
   pl do "[split(//, <STDIN>)]"
+  lua do "readcharline()"
   java do "scanner.nextLine().toCharArray()"
   hs do "join (newListArray <$> (fmap (\\x -> (0, x-1)) ($c)) <*> getLine)"
   *  do "E R R O R"
@@ -293,6 +303,7 @@ macro int native_expand_read_int()
   rkt do "string->number (read-line)"
   ruby do "STDIN.readline.to_i(10)"
   pl do "int( <STDIN> )"
+  lua do "tonumber(io.read('*l'))"
   java do "Integer.parseInt(scanner.nextLine())"
   hs do "fmap read getLine"
   *  do "E R R O R"
@@ -313,6 +324,7 @@ then
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Java ||
 	current_language() == LANG_Rb ||
+	current_language() == LANG_Lua ||
 	current_language() == LANG_Hs
 	then
     return {
@@ -338,9 +350,11 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Java ||
 	current_language() == LANG_Rb ||
+	current_language() == LANG_Lua ||
 	current_language() == LANG_Hs
 	  then
       return {
+        tag use_readintline
         tag use_java_readline
         tag use_readmacros
         tag use_readline
@@ -362,10 +376,12 @@ def inline array<int> read_int_line(int n)
 end
 
 def lexems expand_read_char_line(lexems a)
-  if current_language() == LANG_Cc
+  if current_language() == LANG_Lua ||
+  current_language() == LANG_Cc
   then
     return {
       tag use_cc_readline
+      tag use_readcharline
     return native_expand_read_char_line(${a})
     }
   elsif current_language() == LANG_Py ||
@@ -447,7 +463,8 @@ end
 def lexems expand_read_int_couple()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
-     current_language() == LANG_Java
+     current_language() == LANG_Java ||
+     current_language() == LANG_Lua
   then
     return { def array<int> l = read_int_line(2)
     return (l[0], l[1]) }
@@ -486,6 +503,7 @@ end
 def lexems expand_read_3ints()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
+     current_language() == LANG_Lua ||
      current_language() == LANG_Hs ||
      current_language() == LANG_Java then
     return { def array<int> l = read_int_line(3)
