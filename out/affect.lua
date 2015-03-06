@@ -15,31 +15,25 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
 --]]
 
 function mktoto( v1 )
-  local t = {
-    foo=v1,
-    bar=v1,
-    blah=v1
-  }
+  local t = {foo=v1,
+             bar=v1,
+             blah=v1}
   return t
 end
 
 function mktoto2( v1 )
-  local t = {
-    foo=v1 + 3,
-    bar=v1 + 2,
-    blah=v1 + 1
-  }
+  local t = {foo=v1 + 3,
+             bar=v1 + 2,
+             blah=v1 + 1}
   return t
 end
 
 function result( t_, t2_ )
   local t = t_
   local t2 = t2_
-  local t3 = {
-    foo=0,
-    bar=0,
-    blah=0
-  }
+  local t3 = {foo=0,
+              bar=0,
+              blah=0}
   t3 = t2;
   t = t2;
   t2 = t3;

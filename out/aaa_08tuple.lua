@@ -10,18 +10,9 @@ function readintline()
 end
 
 
-
 local bar_ = tonumber(io.read('*l'))
 local c = readintline()
-local d = {
-  tuple_int_int_field_0=c[0],
-  tuple_int_int_field_1=c[1]
-}
-local t = {
-  foo=d,
-  bar=bar_
-}
-local e = t.foo
-local a = e.tuple_int_int_field_0
-local b = e.tuple_int_int_field_1
+local t = {foo={c[0], c[1]},
+           bar=bar_}
+a, b = unpack(t.foo)
 io.write(string.format("%d %d %d\n", a, b, t.bar))

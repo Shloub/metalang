@@ -164,10 +164,8 @@ end
 Renvoie le coup de l'IA
 --]]
 function play( g )
-  local minMove = {
-    x=0,
-    y=0
-  }
+  local minMove = {x=0,
+                   y=0}
   local minNote = 10000
   for x = 0,2 do
     for y = 0,2 do
@@ -199,13 +197,10 @@ function init0(  )
     end
     cases[i] = tab;
   end
-  local a = {
-    cases=cases,
-    firstToPlay=true,
-    note=0,
-    ended=false
-  }
-  return a
+  return {cases=cases,
+          firstToPlay=true,
+          note=0,
+          ended=false}
 end
 
 function read_move(  )
@@ -213,26 +208,17 @@ function read_move(  )
   stdinsep()
   local y = readint()
   stdinsep()
-  local b = {
-    x=x,
-    y=y
-  }
-  return b
+  return {x=x,
+          y=y}
 end
 
 
 for i = 0,1 do
   local state = init0()
-  local c = {
-    x=1,
-    y=1
-  }
-  apply_move(c, state);
-  local d = {
-    x=0,
-    y=0
-  }
-  apply_move(d, state);
+  apply_move({x=1,
+              y=1}, state);
+  apply_move({x=0,
+              y=0}, state);
   while not(state.ended)
   do
   print_state(state);

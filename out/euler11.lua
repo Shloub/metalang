@@ -20,69 +20,34 @@ function find( n, m, x, y, dx, dy )
 end
 
 
-
 local directions = {}
 for i = 0,8 - 1 do
   if i == 0 then
-    local c = {
-      tuple_int_int_field_0=0,
-      tuple_int_int_field_1=1
-    }
-    directions[i] = c;
+    directions[i] = {0, 1};
   elseif i == 1 then
-    local d = {
-      tuple_int_int_field_0=1,
-      tuple_int_int_field_1=0
-    }
-    directions[i] = d;
+    directions[i] = {1, 0};
   elseif i == 2 then
-    local e = {
-      tuple_int_int_field_0=0,
-      tuple_int_int_field_1=-1
-    }
-    directions[i] = e;
+    directions[i] = {0, -1};
   elseif i == 3 then
-    local f = {
-      tuple_int_int_field_0=-1,
-      tuple_int_int_field_1=0
-    }
-    directions[i] = f;
+    directions[i] = {-1, 0};
   elseif i == 4 then
-    local g = {
-      tuple_int_int_field_0=1,
-      tuple_int_int_field_1=1
-    }
-    directions[i] = g;
+    directions[i] = {1, 1};
   elseif i == 5 then
-    local h = {
-      tuple_int_int_field_0=1,
-      tuple_int_int_field_1=-1
-    }
-    directions[i] = h;
+    directions[i] = {1, -1};
   elseif i == 6
   then
-    local k = {
-      tuple_int_int_field_0=-1,
-      tuple_int_int_field_1=1
-    }
-    directions[i] = k;
+    directions[i] = {-1, 1};
   else
-    local l = {
-      tuple_int_int_field_0=-1,
-      tuple_int_int_field_1=-1
-    }
-    directions[i] = l;
+    directions[i] = {-1, -1};
   end
 end
 local max0 = 0
 local m = {}
-for o = 0,20 - 1 do
-  m[o] = readintline();
+for c = 0,20 - 1 do
+  m[c] = readintline();
 end
 for j = 0,7 do
-  local p = directions[j]
-  local dx = p.tuple_int_int_field_0
-  local dy = p.tuple_int_int_field_1
+  dx, dy = unpack(directions[j])
   for x = 0,19 do
     for y = 0,19 do
       max0 = math.max(max0, find(4, m, x, y, dx, dy));

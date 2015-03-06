@@ -26,12 +26,9 @@ function read_bigint( len )
     chiffres[i] = chiffres[len - 1 - i];
     chiffres[len - 1 - i] = tmp;
   end
-  local e = {
-    bigint_sign=true,
-    bigint_len=len,
-    bigint_chiffres=chiffres
-  }
-  return e
+  return {bigint_sign=true,
+          bigint_len=len,
+          bigint_chiffres=chiffres}
 end
 
 function print_bigint( a )
@@ -116,12 +113,9 @@ function add_bigint_positif( a, b )
   do
   len = len - 1;
   end
-  local f = {
-    bigint_sign=true,
-    bigint_len=len,
-    bigint_chiffres=chiffres
-  }
-  return f
+  return {bigint_sign=true,
+          bigint_len=len,
+          bigint_chiffres=chiffres}
 end
 
 function sub_bigint_positif( a, b )
@@ -150,21 +144,16 @@ Pré-requis : a > b
   do
   len = len - 1;
   end
-  local g = {
-    bigint_sign=true,
-    bigint_len=len,
-    bigint_chiffres=chiffres
-  }
-  return g
+  return {bigint_sign=true,
+          bigint_len=len,
+          bigint_chiffres=chiffres}
 end
 
 function neg_bigint( a )
-  local h = {
-    bigint_sign=not(a.bigint_sign),
-    bigint_len=a.bigint_len,
-    bigint_chiffres=a.bigint_chiffres
-  }
-  return h
+  return
+  {bigint_sign=not(a.bigint_sign),
+   bigint_len=a.bigint_len,
+   bigint_chiffres=a.bigint_chiffres}
 end
 
 function add_bigint( a, b )
@@ -228,13 +217,11 @@ D'ou le nom de la fonction. --]]
       len = len - 1;
     end
   end
-  local m = {
-    bigint_sign=a.bigint_sign ==
-    b.bigint_sign,
-    bigint_len=len,
-    bigint_chiffres=chiffres
-  }
-  return m
+  return
+  {bigint_sign=a.bigint_sign ==
+   b.bigint_sign,
+   bigint_len=len,
+   bigint_chiffres=chiffres}
 end
 
 function bigint_premiers_chiffres( a, i )
@@ -243,12 +230,10 @@ function bigint_premiers_chiffres( a, i )
   do
   len = len - 1;
   end
-  local o = {
-    bigint_sign=a.bigint_sign,
-    bigint_len=len,
-    bigint_chiffres=a.bigint_chiffres
-  }
-  return o
+  return
+  {bigint_sign=a.bigint_sign,
+   bigint_len=len,
+   bigint_chiffres=a.bigint_chiffres}
 end
 
 function bigint_shift( a, i )
@@ -261,12 +246,10 @@ function bigint_shift( a, i )
       chiffres[k] = 0;
     end
   end
-  local p = {
-    bigint_sign=a.bigint_sign,
-    bigint_len=a.bigint_len + i,
-    bigint_chiffres=chiffres
-  }
-  return p
+  return
+  {bigint_sign=a.bigint_sign,
+   bigint_len=a.bigint_len + i,
+   bigint_chiffres=chiffres}
 end
 
 function mul_bigint( aa, bb )
@@ -323,12 +306,9 @@ function bigint_of_int( i )
     t[k] = math.mod(i, 10);
     i = trunc(i / 10);
   end
-  local q = {
-    bigint_sign=true,
-    bigint_len=size,
-    bigint_chiffres=t
-  }
-  return q
+  return {bigint_sign=true,
+          bigint_len=size,
+          bigint_chiffres=t}
 end
 
 function fact_bigint( a )
@@ -521,8 +501,8 @@ print_bigint(a);
 io.write(">")
 print_bigint(b);
 io.write("=")
-local r = bigint_gt(a, b)
-if r
+local e = bigint_gt(a, b)
+if e
 then
   io.write("True")
 else

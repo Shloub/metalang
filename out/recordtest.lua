@@ -12,10 +12,8 @@ function stdinsep()
 end
 
 
-local param = {
-  foo=0,
-  bar=0
-}
+local param = {foo=0,
+               bar=0}
 param.bar = readint()
 stdinsep()
 param.foo = readint()

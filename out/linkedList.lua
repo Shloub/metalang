@@ -7,10 +7,8 @@ function readint()
 end
 
 function cons( list, i )
-  local out0 = {
-    head=i,
-    tail=list
-  }
+  local out0 = {head=i,
+                tail=list}
   return out0
 end
 
@@ -19,10 +17,8 @@ function rev2( empty, acc, torev )
   then
     return acc
   else
-    local acc2 = {
-      head=torev.head,
-      tail=acc
-    }
+    local acc2 = {head=torev.head,
+                  tail=acc}
     return rev2(empty, acc, torev.tail)
   end
 end
