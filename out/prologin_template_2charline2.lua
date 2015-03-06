@@ -1,12 +1,11 @@
-
 function readcharline()
-  local tab = {}
-  local i = 0
-  for a in string.gmatch(io.read("*l"), ".") do
+   local tab = {}
+   local i = 0
+   for a in string.gmatch(io.read("*l"), ".") do
     tab[i] = string.byte(a)
     i = i + 1
-  end
-  return tab
+   end
+   return tab
 end
 function programme_candidat( tableau1, taille1, tableau2, taille2 )
   local out0 = 0

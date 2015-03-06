@@ -8,15 +8,14 @@ function readintline()
   end
   return tab
 end
-
 function readcharline()
-  local tab = {}
-  local i = 0
-  for a in string.gmatch(io.read("*l"), ".") do
+   local tab = {}
+   local i = 0
+   for a in string.gmatch(io.read("*l"), ".") do
     tab[i] = string.byte(a)
     i = i + 1
-  end
-  return tab
+   end
+   return tab
 end
 --[[
 Ce test permet de vérifier si les différents backends pour les langages implémentent bien
