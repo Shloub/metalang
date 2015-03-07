@@ -3,9 +3,7 @@ Langage & Compilateur :
   C if indentation
   structures as couples pour les langages qui le supportent
   tableau constant lors d'une initialisation
-  cleaner un peu la lib standard
   types abstract (pour ouvrir un fichier par exemple)
-  commentaires indentation
   type option
   une lib standard avec des listes et des arbres
 
@@ -16,10 +14,9 @@ outils :
   une man page
 
 autres printers :
-  haskell
   f#
   scala
-  LUA
+  clojure
 
 portage windows
 
