@@ -14,7 +14,7 @@ let devine0 nombre tab len =
     if tab.(i) = nombre && len <> i + 1 then
       raise (Found_1(false))
   done;
-  raise (Found_1(true))
+  true
   with Found_1 (out) -> out
 
 let () =

@@ -28,7 +28,7 @@ let isPrime n primes _len =
         raise (Found_1(false));
       i := (!i) + 1
   done;
-  raise (Found_1(true))
+  true
   with Found_1 (out) -> out
 
 exception Found_2 of int
@@ -40,7 +40,7 @@ let test a b primes len =
     if not (isPrime j primes len) then
       raise (Found_2(n))
   done;
-  raise (Found_2(200))
+  200
   with Found_2 (out) -> out
 
 let () =

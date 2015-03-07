@@ -32,16 +32,16 @@ let bigint_eq a b =
   try
   (* Renvoie vrai si a = b *)
   if a.bigint_sign <> b.bigint_sign then
-    raise (Found_1(false))
+    false
   else if a.bigint_len <> b.bigint_len then
-    raise (Found_1(false))
+    false
   else
     begin
       for i = 0 to a.bigint_len - 1 do
         if a.bigint_chiffres.(i) <> b.bigint_chiffres.(i) then
           raise (Found_1(false))
       done;
-      raise (Found_1(true))
+      true
     end
   with Found_1 (out) -> out
 
@@ -51,9 +51,9 @@ let bigint_gt a b =
   try
   (* Renvoie vrai si a > b *)
   if a.bigint_sign && not b.bigint_sign then
-    raise (Found_2(true))
+    true
   else if not a.bigint_sign && b.bigint_sign then
-    raise (Found_2(false))
+    false
   else
     begin
       if a.bigint_len > b.bigint_len then
@@ -68,7 +68,7 @@ let bigint_gt a b =
           else if a.bigint_chiffres.(j) < b.bigint_chiffres.(j) then
             raise (Found_2(not a.bigint_sign))
         done;
-      raise (Found_2(true))
+      true
     end
   with Found_2 (out) -> out
 

@@ -30,7 +30,7 @@ let sudoku_done s =
     if s.(i) = 0 then
       raise (Found_1(false))
   done;
-  raise (Found_1(true))
+  true
   with Found_1 (out) -> out
 
 (* dit si il y a une erreur dans le sudoku *)
@@ -2953,9 +2953,9 @@ let rec solve sudoku0 =
                                                                                 0 &&
                                                                                 sudoku0.(79) =
                                                                                 sudoku0.(80)) then
-    raise (Found_2(false))
+    false
   else if sudoku_done sudoku0 then
-    raise (Found_2(true))
+    true
   else
     begin
       for i = 0 to 80 do
@@ -2970,7 +2970,7 @@ let rec solve sudoku0 =
             raise (Found_2(false))
           end
       done;
-      raise (Found_2(false))
+      false
     end
   with Found_2 (out) -> out
 

@@ -29,7 +29,7 @@ let fillPrimesFactors t n primes nprimes =
     if (!n) = 1 then
       raise (Found_1(primes.(i)))
   done;
-  raise (Found_1((!n)))
+  (!n)
   with Found_1 (out) -> out
 
 exception Found_2 of int
@@ -64,7 +64,7 @@ let find ndiv2 =
       raise (Found_2((n * (n + 1)) / 2))
     (* print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" *)
   done;
-  raise (Found_2(0))
+  0
   with Found_2 (out) -> out
 
 let () =

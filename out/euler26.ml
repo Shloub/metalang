@@ -16,7 +16,7 @@ let periode restes len a b =
       len := (!len) + 1;
       a := reste * 10
   done;
-  raise (Found_1(0))
+  0
   with Found_1 (out) -> out
 
 let () =

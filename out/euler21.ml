@@ -29,7 +29,7 @@ let fillPrimesFactors t n primes nprimes =
     if (!n) = 1 then
       raise (Found_1(primes.(i)))
   done;
-  raise (Found_1((!n)))
+  (!n)
   with Found_1 (out) -> out
 
 let sumdivaux2 t n i =

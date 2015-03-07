@@ -6,7 +6,7 @@ let divisible n t size =
     if (n mod t.(i)) = 0 then
       raise (Found_1(true))
   done;
-  raise (Found_1(false))
+  false
   with Found_1 (out) -> out
 
 let find n t used nth =

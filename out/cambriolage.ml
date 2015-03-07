@@ -20,9 +20,9 @@ let nbPassePartout n passepartout m serrures =
     max_recent_pp := (max ((!max_recent_pp)) (pp.(1)))
   done;
   if (!max_ancient_pp) >= (!max_ancient) && (!max_recent_pp) >= (!max_recent) then
-    raise (Found_1(2))
+    2
   else
-    raise (Found_1(0))
+    0
   with Found_1 (out) -> out
 
 let () =

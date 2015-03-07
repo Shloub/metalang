@@ -12,7 +12,7 @@ let h i =
         raise (Found_1(true));
       j := (!j) + 1
   done;
-  raise (Found_1(false))
+  false
   with Found_1 (out) -> out
 
 let () =
