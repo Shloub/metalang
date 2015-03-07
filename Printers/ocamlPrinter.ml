@@ -32,27 +32,53 @@ open Stdlib
 open Ast
 open Printer
 
+let collect_return acc li =
+  let f f acc i = match Instr.unfix i with
+  | Instr.Return e -> IntSet.add (Expr.Fixed.annot e) acc
+  | Instr.AllocArray _ -> acc
+  | _ -> f acc i
+  in List.fold_left (f (Instr.Writer.Traverse.fold f)) acc li
+
 (** returns true if a list of instructions contains a return *)
 let contains_return li =
-  List.exists (Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
-  | Instr.Return _ -> true
+  let f f acc i = match Instr.unfix i with
+  | Instr.Return e -> true
   | Instr.AllocArray _ -> acc
-  | _ -> acc) false) li
+  | _ -> f acc i
+  in List.fold_left (f (Instr.Writer.Traverse.fold f)) false li
+
+let nocomment li =
+  List.filter (fun i -> match Instr.unfix i with
+  | Instr.Comment _ -> false
+  | _ -> true ) li
 
 (** returns true if a list of instructions contains a return that
     ocaml cannot execute (it's compiled into an exception) *)
-let rec contains_sad_return instrs =
+let rec collect_sad_return acc instrs =
   let rec f tra acc i = match Instr.unfix i with
-    | Instr.AllocArray _ -> acc
-    | Instr.Loop(_, _, _, li) -> acc || ( contains_return li)
-    | Instr.While (_, li) -> acc || (contains_return li)
+    | Instr.AllocArray _ -> acc (* c'est interdit par d'autres passes *)
+    | Instr.Loop(_, _, _, li) -> collect_return acc li
+    | Instr.While (_, li) -> collect_return acc li
     | Instr.If (_, li1, li2) ->
-      acc ||
-        (contains_sad_return li1) || (contains_sad_return li2) ||
-        (( contains_return li1) && not( contains_return li2)) ||
-        (( contains_return li2) && not( contains_return li1))
+        let cli1 = contains_return li1
+        and cli2 = contains_return li2 in
+        if (cli1 && not cli2 ) || (cli2 && not cli1) then
+          collect_return (collect_return acc li2) li1
+        else
+          let acc = collect_sad_return acc li1 in
+          let acc = collect_sad_return acc li2 in
+          acc
     | _ -> tra acc i
-  in List.fold_left (f (Instr.Writer.Traverse.fold f)) false instrs
+  in
+  match List.rev (nocomment instrs) with
+  | hd::tl ->
+      let acc = f (Instr.Writer.Traverse.fold f) acc hd in
+      collect_return acc tl
+  | [] -> acc
+
+let collect_sad_return instrs = collect_sad_return IntSet.empty instrs
+
+let contains_sad_return instrs = IntSet.empty <> collect_sad_return instrs
 
 let collect_sad_returns ty instrs =
   let add acc l type_ =
@@ -80,7 +106,7 @@ class camlPrinter = object(self)
   (** bindings by reference *)
   val mutable refbindings = BindingSet.empty
   (** sad return in the current function *)
-  val mutable sad_returns = false
+  val mutable sad_returns = IntSet.empty
   val mutable printed_exn = TypeMap.empty
   (** true if we are processing an expression *)
   val mutable in_expr = false
@@ -169,7 +195,7 @@ class camlPrinter = object(self)
 
   (** show the main *)
   method main f main =
-    sad_returns <- contains_sad_return main;
+    sad_returns <- collect_sad_return main;
     self#calc_refs main;
     self#calc_used_variables main;
     Format.fprintf f "@[<v 2>@[<h>let () =@\nbegin@\n@[<v 2>  %a@]@\nend@\n"
@@ -224,13 +250,8 @@ class camlPrinter = object(self)
         self#bloc ifcase
         self#bloc elsecase
 
-  method nocomment li = List.filter (fun i -> match Instr.unfix i with
-  | Instr.Comment _ -> false
-  | _ -> true
-  ) li
-
   method ends_with_stop instr1 instrs2 =
-    let instrs2 = self#nocomment instrs2 in
+    let instrs2 = nocomment instrs2 in
     if instrs2 = [] then false else
     if self#is_stdin instr1
     then false
@@ -317,7 +338,7 @@ class camlPrinter = object(self)
 
   (** returns true if the function need to returns unit *)
   method need_unit instrs =
-    let instrs = self#nocomment instrs in
+    let instrs = nocomment instrs in
     if instrs = [] then true
     else if (List.for_all self#is_stdin instrs) && List.exists (fun i -> match Instr.unfix i with
     | Instr.DeclRead _ -> true
@@ -487,17 +508,17 @@ class camlPrinter = object(self)
     let is_rec = self#is_rec funname instrs in
     let proto = if is_rec then self#print_rec_proto else self#print_proto in
     let sad_types = collect_sad_returns t instrs in
-    let () = sad_returns <- contains_sad_return instrs in
+    let () = sad_returns <- collect_sad_return instrs in
     match t with
     | Type.Fixed.F (_, Type.Void) ->
-      if sad_returns then failwith("return in a void function : "^funname)
+      if sad_returns <> IntSet.empty then failwith("return in a void function : "^funname)
       else
         Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
           proto (funname, t, li)
           self#ref_alias li
           self#instructions instrs
     | _ ->
-      if not(sad_returns) then
+      if sad_returns = IntSet.empty then
         Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a%a@]@\n"
           proto (funname, t, li)
           self#ref_alias li
@@ -548,7 +569,7 @@ class camlPrinter = object(self)
     Format.fprintf f "(*%s*)" str
 
   method return f e =
-    if sad_returns then
+    if IntSet.mem (Expr.Fixed.annot e) sad_returns then
       Format.fprintf f "@[<h>raise (%a(%a))@]"
         self#print_exnName (Typer.get_type (self#getTyperEnv ())  e)
         self#expr e
@@ -557,7 +578,7 @@ class camlPrinter = object(self)
 
   method allocarray_lambda f binding type_ len binding2 lambda _ =
     let next_sad_return =sad_returns in
-    sad_returns <- contains_sad_return lambda;
+    sad_returns <- collect_sad_return lambda;
     let b = BindingSet.mem binding refbindings in
     Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@ in@]"
       self#binding binding
@@ -571,11 +592,11 @@ class camlPrinter = object(self)
       ) len
       self#binding binding2
       (fun f () ->
-        if sad_returns then Format.fprintf f "@ try@\n"
+        if sad_returns <> IntSet.empty then Format.fprintf f "@ try@\n"
       ) ()
       self#instructions lambda
       (fun f () ->
-        if sad_returns then Format.fprintf f "@\nwith %a@ out -> out@\n"
+        if sad_returns <> IntSet.empty then Format.fprintf f "@\nwith %a@ out -> out@\n"
           self#print_exnName type_
       ) ()
       (fun t () ->
