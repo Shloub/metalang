@@ -93,12 +93,6 @@ let collect_sad_returns ty instrs =
   (add TypeSet.empty instrs ty)
   instrs
 
-
-(* TODO
-   virer plus de refs
-   virer plus de nopending : inliner un peu
-*)
-
 (** the main class : the ocaml printer *)
 class camlPrinter = object(self)
   inherit printer as super
@@ -120,7 +114,6 @@ class camlPrinter = object(self)
          (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
       ) (List.map snd li)
       self#expr e
-
 
   method record f li =
     Format.fprintf f "{@\n  @[<v>%a@]@\n}"
@@ -577,9 +570,23 @@ class camlPrinter = object(self)
       Format.fprintf f "@[<h>%a@]" self#expr e
 
   method allocarray_lambda f binding type_ len binding2 lambda _ =
+    let b = BindingSet.mem binding refbindings in
+    match List.map (Instr.unfix) lambda with
+    | [Instr.Return ( Expr.Fixed.F(_, Expr.Lief lief))] ->
+        Format.fprintf f "@[<h>let %a@ =@ %aArray.make@ %a %a in@]"
+          self#binding binding
+          (fun t () ->
+            if b then
+              Format.fprintf t "ref(@ "
+          ) ()
+          (fun f e ->
+            if self#nop (Expr.unfix e) then self#expr f e
+            else Format.fprintf f "(%a)" self#expr e
+          ) len
+          self#lief lief
+    | _ ->
     let next_sad_return =sad_returns in
     sad_returns <- collect_sad_return lambda;
-    let b = BindingSet.mem binding refbindings in
     Format.fprintf f "@[<h>let %a@ =@ %aArray.init@ %a@ (fun@ %a@ ->%a@\n@[<v 2>  %a%a@])%a@ in@]"
       self#binding binding
       (fun t () ->
