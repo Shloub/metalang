@@ -1,6 +1,5 @@
 let foo a =
-  let a = ref a in
-  a := 4
+  let a = 4 in ()
 
 let () =
 begin

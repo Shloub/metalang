@@ -286,10 +286,10 @@ let sum_chiffres_bigint a =
 
 (* http://projecteuler.net/problem=20 *)
 let euler20 () =
-  let a = ref( bigint_of_int 15 ) in
+  let a = bigint_of_int 15 in
   (* normalement c'est 100 *)
-  a := fact_bigint (!a);
-  sum_chiffres_bigint (!a)
+  let a = fact_bigint a in
+  sum_chiffres_bigint a
 
 let rec bigint_exp a b =
   if b = 1 then
@@ -300,14 +300,13 @@ let rec bigint_exp a b =
     mul_bigint a (bigint_exp a (b - 1))
 
 let rec bigint_exp_10chiffres a b =
-  let a = ref a in
-  a := bigint_premiers_chiffres (!a) 10;
+  let a = bigint_premiers_chiffres a 10 in
   if b = 1 then
-    (!a)
+    a
   else if (b mod 2) = 0 then
-    bigint_exp_10chiffres (mul_bigint (!a) (!a)) (b / 2)
+    bigint_exp_10chiffres (mul_bigint a a) (b / 2)
   else
-    mul_bigint (!a) (bigint_exp_10chiffres (!a) (b - 1))
+    mul_bigint a (bigint_exp_10chiffres a (b - 1))
 
 let euler48 () =
   let sum = ref( bigint_of_int 0 ) in
@@ -323,10 +322,10 @@ let euler48 () =
   Printf.printf "\n"
 
 let euler16 () =
-  let a = ref( bigint_of_int 2 ) in
-  a := bigint_exp (!a) 100;
+  let a = bigint_of_int 2 in
+  let a = bigint_exp a 100 in
   (* 1000 normalement *)
-  sum_chiffres_bigint (!a)
+  sum_chiffres_bigint a
 
 let euler25 () =
   let i = ref( 2 ) in

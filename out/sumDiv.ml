@@ -1,8 +1,8 @@
 let foo () =
-  let a = ref( 0 ) in
+  let a = 0 in
   (* test *)
-  a := (!a) + 1
-  (* test 2 *)
+  let a = a + 1 in
+  (* test 2 *) ()
 
 let foo2 () =
    ()

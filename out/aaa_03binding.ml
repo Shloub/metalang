@@ -11,13 +11,13 @@ let h i =
 let () =
 begin
   h 14;
-  let a = ref( 4 ) in
-  let b = ref( 5 ) in
-  Printf.printf "%d" ((!a) + (!b));
+  let a = 4 in
+  let b = 5 in
+  Printf.printf "%d" (a + b);
   (* main *)
   h 15;
-  a := 2;
-  b := 1;
-  Printf.printf "%d" ((!a) + (!b))
+  let a = 2 in
+  let b = 1 in
+  Printf.printf "%d" (a + b)
 end
  

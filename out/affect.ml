@@ -24,26 +24,26 @@ let mktoto2 v1 =
   t
 
 let result t_ t2_ =
-  let t = ref( t_ ) in
-  let t2 = ref( t2_ ) in
-  let t3 = ref( {
+  let t = t_ in
+  let t2 = t2_ in
+  let t3 = {
     foo=0;
     bar=0;
     blah=0;
-  } ) in
-  t3 := (!t2);
-  t := (!t2);
-  t2 := (!t3);
-  (!t).blah <- (!t).blah + 1;
+  } in
+  let t3 = t2 in
+  let t = t2 in
+  let t2 = t3 in
+  t.blah <- t.blah + 1;
   let len = 1 in
-  let cache0 = ref( Array.init len (fun i ->
-    -i)) in
+  let cache0 = Array.init len (fun i ->
+    -i) in
   let cache1 = Array.init len (fun j ->
     j) in
-  let cache2 = ref( (!cache0) ) in
-  cache0 := cache1;
-  cache2 := (!cache0);
-  (!t).foo + (!t).blah * (!t).bar + (!t).bar * (!t).foo
+  let cache2 = cache0 in
+  let cache0 = cache1 in
+  let cache2 = cache0 in
+  t.foo + t.blah * t.bar + t.bar * t.foo
 
 let () =
 begin
