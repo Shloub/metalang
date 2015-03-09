@@ -17,7 +17,7 @@ def fibo( a, b, i )
       b2 += a2
       a2 = tmp
     end
-    return (out_);
+    return (out_)
 end
 
 printf "%d", fibo(1, 2, 4)

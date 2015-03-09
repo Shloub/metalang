@@ -8,20 +8,19 @@ def periode( restes, len, a, b )
       reste = mod(a, b)
       for i in (0 ..  len - 1) do
         if restes[i] == reste then
-          return (len - i);
+          return (len - i)
         end
       end
       restes[len] = reste
       len += 1
       a = reste * 10
     end
-    return (0);
+    return (0)
 end
 
-t = [];
-for j in (0 ..  1000 - 1) do
-  t[j] = 0
-end
+t = [*0..1000 - 1].map { |j|
+  next (0)
+  }
 m = 0
 mi = 0
 for i in (1 ..  1000) do

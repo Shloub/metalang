@@ -1,6 +1,6 @@
 require "scanf.rb"
 def is_number( c )
-    return (c.ord <= "9".ord && c.ord >= "0".ord);
+    return (c.ord <= "9".ord && c.ord >= "0".ord)
 end
 
 
@@ -11,10 +11,9 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 =end
 
 def npi0( str, len )
-    stack = [];
-    for i in (0 ..  len - 1) do
-      stack[i] = 0
-    end
+    stack = [*0..len - 1].map { |i|
+      next (0)
+      }
     ptrStack = 0
     ptrStr = 0
     while ptrStr < len do
@@ -34,18 +33,17 @@ def npi0( str, len )
         ptrStr += 1
       end
     end
-    return (stack[0]);
+    return (stack[0])
 end
 
 len = 0
-len=scanf("%d")[0];
-scanf("%*\n");
-tab = [];
-for i in (0 ..  len - 1) do
+len=scanf("%d")[0]
+scanf("%*\n")
+tab = [*0..len - 1].map { |i|
   tmp = "\000"
-  tmp=scanf("%c")[0];
-  tab[i] = tmp
-end
+  tmp=scanf("%c")[0]
+  next (tmp)
+  }
 result = npi0(tab, len)
 printf "%d", result
 

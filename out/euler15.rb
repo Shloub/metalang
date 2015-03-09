@@ -6,14 +6,12 @@ n = 10
 =end
 
 n += 1
-tab = [];
-for i in (0 ..  n - 1) do
-  tab2 = [];
-  for j in (0 ..  n - 1) do
-    tab2[j] = 0
-  end
-  tab[i] = tab2
-end
+tab = [*0..n - 1].map { |i|
+  tab2 = [*0..n - 1].map { |j|
+    next (0)
+    }
+  next (tab2)
+  }
 for l in (0 ..  n - 1) do
   tab[n - 1][l] = 1
   tab[l][n - 1] = 1
@@ -29,7 +27,7 @@ for m in (0 ..  n - 1) do
   for k in (0 ..  n - 1) do
     printf "%d ", tab[m][k]
   end
-  print "\n";
+  print "\n"
 end
 printf "%d\n", tab[0][0]
 

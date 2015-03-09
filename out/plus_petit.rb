@@ -3,9 +3,9 @@ def go0( tab, a, b )
     m = ((a + b).to_f / 2).to_i
     if a == m then
       if tab[a] == m then
-        return (b);
+        return (b)
       else
-        return (a);
+        return (a)
       end
     end
     i = a
@@ -21,25 +21,24 @@ def go0( tab, a, b )
       end
     end
     if i < m then
-      return (go0(tab, a, m));
+      return (go0(tab, a, m))
     else
-      return (go0(tab, m, b));
+      return (go0(tab, m, b))
     end
 end
 
 def plus_petit0( tab, len )
-    return (go0(tab, 0, len));
+    return (go0(tab, 0, len))
 end
 
 len = 0
-len=scanf("%d")[0];
-scanf("%*\n");
-tab = [];
-for i in (0 ..  len - 1) do
+len=scanf("%d")[0]
+scanf("%*\n")
+tab = [*0..len - 1].map { |i|
   tmp = 0
-  tmp=scanf("%d")[0];
-  scanf("%*\n");
-  tab[i] = tmp
-end
+  tmp=scanf("%d")[0]
+  scanf("%*\n")
+  next (tmp)
+  }
 printf "%d", plus_petit0(tab, len)
 

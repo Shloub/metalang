@@ -7,18 +7,16 @@ def fact( n )
     for i in (2 ..  n) do
       prod *= i
     end
-    return (prod);
+    return (prod)
 end
 
 def show( lim, nth )
-    t = [];
-    for i in (0 ..  lim - 1) do
-      t[i] = i
-    end
-    pris = [];
-    for j in (0 ..  lim - 1) do
-      pris[j] = false
-    end
+    t = [*0..lim - 1].map { |i|
+      next (i)
+      }
+    pris = [*0..lim - 1].map { |j|
+      next (false)
+      }
     for k in (1 ..  lim - 1) do
       n = fact(lim - k)
       nchiffre = (nth.to_f / n).to_i
@@ -38,7 +36,7 @@ def show( lim, nth )
         printf "%d", m
       end
     end
-    print "\n";
+    print "\n"
 end
 
 show(10, 999999)

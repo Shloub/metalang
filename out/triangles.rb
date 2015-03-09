@@ -17,11 +17,11 @@ def find0( len, tab, cache, x, y )
 =end
 
     if y == len - 1 then
-      return (tab[y][x]);
+      return (tab[y][x])
     elsif x > y then
-      return (-10000);
+      return (-10000)
     elsif cache[y][x] != 0 then
-      return (cache[y][x]);
+      return (cache[y][x])
     end
     result = 0
     out0 = find0(len, tab, cache, x, y + 1)
@@ -32,40 +32,36 @@ def find0( len, tab, cache, x, y )
       result = out1 + tab[y][x]
     end
     cache[y][x] = result
-    return (result);
+    return (result)
 end
 
 def find( len, tab )
-    tab2 = [];
-    for i in (0 ..  len - 1) do
-      tab3 = [];
-      for j in (0 ..  i + 1 - 1) do
-        tab3[j] = 0
-      end
-      tab2[i] = tab3
-    end
-    return (find0(len, tab, tab2, 0, 0));
+    tab2 = [*0..len - 1].map { |i|
+      tab3 = [*0..i + 1 - 1].map { |j|
+        next (0)
+        }
+      next (tab3)
+      }
+    return (find0(len, tab, tab2, 0, 0))
 end
 
 len = 0
-len=scanf("%d")[0];
-scanf("%*\n");
-tab = [];
-for i in (0 ..  len - 1) do
-  tab2 = [];
-  for j in (0 ..  i + 1 - 1) do
+len=scanf("%d")[0]
+scanf("%*\n")
+tab = [*0..len - 1].map { |i|
+  tab2 = [*0..i + 1 - 1].map { |j|
     tmp = 0
-    tmp=scanf("%d")[0];
-    scanf("%*\n");
-    tab2[j] = tmp
-  end
-  tab[i] = tab2
-end
+    tmp=scanf("%d")[0]
+    scanf("%*\n")
+    next (tmp)
+    }
+  next (tab2)
+  }
 printf "%d\n", find(len, tab)
 for k in (0 ..  len - 1) do
   for l in (0 ..  k) do
     printf "%d ", tab[k][l]
   end
-  print "\n";
+  print "\n"
 end
 

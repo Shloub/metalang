@@ -16,7 +16,7 @@ tab = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
 for i in (0 ..  len - 1) do
   printf "%d=>%d ", i, tab[i]
 end
-print "\n";
+print "\n"
 tab2 = STDIN.readline.split(" ").map{ |x| x.to_i(10) }
 for i_ in (0 ..  len - 1) do
   printf "%d==>%d ", i_, tab2[i_]

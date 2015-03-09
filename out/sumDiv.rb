@@ -65,7 +65,7 @@ def sumdiv( n )
 
       end
     end
-    return (out0);
+    return (out0)
     
 =begin
 On renvoie out
@@ -79,7 +79,7 @@ end
 =end
 
 n = 0
-n=scanf("%d")[0];
+n=scanf("%d")[0]
 
 =begin
  Lecture de l'entier 

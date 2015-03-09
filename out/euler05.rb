@@ -3,10 +3,9 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 def primesfactors( n )
-    tab = [];
-    for i in (0 ..  n + 1 - 1) do
-      tab[i] = 0
-    end
+    tab = [*0..n + 1 - 1].map { |i|
+      next (0)
+      }
     d = 2
     while n != 1 && d * d <= n do
       if (mod(n, d)) == 0 then
@@ -17,14 +16,13 @@ def primesfactors( n )
       end
     end
     tab[n] = tab[n] + 1
-    return (tab);
+    return (tab)
 end
 
 lim = 20
-o = [];
-for m in (0 ..  lim + 1 - 1) do
-  o[m] = 0
-end
+o = [*0..lim + 1 - 1].map { |m|
+  next (0)
+  }
 for i in (1 ..  lim) do
   t = primesfactors(i)
   for j in (1 ..  i) do

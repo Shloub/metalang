@@ -14,7 +14,7 @@ def eratostene( t, max0 )
         end
       end
     end
-    return (n);
+    return (n)
 end
 
 def isPrime( n, primes, len )
@@ -24,35 +24,33 @@ def isPrime( n, primes, len )
     end
     while primes[i] * primes[i] < n do
       if (mod(n, primes[i])) == 0 then
-        return (false);
+        return (false)
       end
       i += 1
     end
-    return (true);
+    return (true)
 end
 
 def test( a, b, primes, len )
     for n in (0 ..  200) do
       j = n * n + a * n + b
       if not(isPrime(j, primes, len)) then
-        return (n);
+        return (n)
       end
     end
-    return (200);
+    return (200)
 end
 
 maximumprimes = 1000
-era = [];
-for j in (0 ..  maximumprimes - 1) do
-  era[j] = j
-end
+era = [*0..maximumprimes - 1].map { |j|
+  next (j)
+  }
 result = 0
 max0 = 0
 nprimes = eratostene(era, maximumprimes)
-primes = [];
-for o in (0 ..  nprimes - 1) do
-  primes[o] = 0
-end
+primes = [*0..nprimes - 1].map { |o|
+  next (0)
+  }
 l = 0
 for k in (2 ..  maximumprimes - 1) do
   if era[k] == k then

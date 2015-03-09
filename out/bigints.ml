@@ -165,8 +165,7 @@ let mul_bigint_cp a b =
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. *)
   let len = ref( a.bigint_len + b.bigint_len + 1 ) in
-  let chiffres = Array.init (!len) (fun _k ->
-    0) in
+  let chiffres = Array.make (!len) 0 in
   for i = 0 to a.bigint_len - 1 do
     let retenue = ref( 0 ) in
     for j = 0 to b.bigint_len - 1 do
@@ -256,8 +255,7 @@ let bigint_of_int i =
   let size = ref( log10 (!i) ) in
   if (!i) = 0 then
     size := 0;
-  let t = Array.init (!size) (fun _j ->
-    0) in
+  let t = Array.make (!size) 0 in
   for k = 0 to (!size) - 1 do
     t.(k) <- (!i) mod 10;
     i := (!i) / 10
@@ -351,8 +349,7 @@ let euler29 () =
     bigint_of_int (j * j)) in
   let a0_bigint = Array.init (maxA + 1) (fun j2 ->
     bigint_of_int j2) in
-  let b = Array.init (maxA + 1) (fun _k ->
-    2) in
+  let b = Array.make (maxA + 1) 2 in
   let n = ref( 0 ) in
   let found = ref( true ) in
   while (!found)

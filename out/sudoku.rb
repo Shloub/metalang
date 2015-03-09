@@ -8,13 +8,12 @@ end
 =end
 
 def read_sudoku(  )
-    out0 = [];
-    for i in (0 ..  9 * 9 - 1) do
-      k=scanf("%d")[0];
-      scanf("%*\n");
-      out0[i] = k
-    end
-    return (out0);
+    out0 = [*0..9 * 9 - 1].map { |i|
+      k=scanf("%d")[0]
+      scanf("%*\n")
+      next (k)
+      }
+    return (out0)
 end
 
 
@@ -27,15 +26,15 @@ def print_sudoku( sudoku0 )
       for x in (0 ..  8) do
         printf "%d ", sudoku0[x + y * 9]
         if (mod(x, 3)) == 2 then
-          print " ";
+          print " "
         end
       end
-      print "\n";
+      print "\n"
       if (mod(y, 3)) == 2 then
-        print "\n";
+        print "\n"
       end
     end
-    print "\n";
+    print "\n"
 end
 
 
@@ -56,10 +55,10 @@ end
 def sudoku_done( s )
     for i in (0 ..  80) do
       if s[i] == 0 then
-        return (false);
+        return (false)
       end
     end
-    return (true);
+    return (true)
 end
 
 
@@ -2944,24 +2943,24 @@ def solve( sudoku0 )
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 0 &&
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 sudoku0[79] ==
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 sudoku0[80]) then
-      return (false);
+      return (false)
     end
     if sudoku_done(sudoku0) then
-      return (true);
+      return (true)
     end
     for i in (0 ..  80) do
       if sudoku0[i] == 0 then
         for p in (1 ..  9) do
           sudoku0[i] = p
           if solve(sudoku0) then
-            return (true);
+            return (true)
           end
         end
         sudoku0[i] = 0
-        return (false);
+        return (false)
       end
     end
-    return (false);
+    return (false)
 end
 
 sudoku0 = read_sudoku()
@@ -2969,6 +2968,6 @@ print_sudoku(sudoku0)
 if solve(sudoku0) then
   print_sudoku(sudoku0)
 else
-  print "no solution\n";
+  print "no solution\n"
 end
 

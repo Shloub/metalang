@@ -3,7 +3,7 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 def id( b )
-    return (b);
+    return (b)
 end
 
 def g( t, index )
@@ -11,26 +11,25 @@ def g( t, index )
 end
 
 j = 0
-a = [];
-for i in (0 ..  5 - 1) do
+a = [*0..5 - 1].map { |i|
   printf "%d", i
   j += i
-  a[i] = (mod(i, 2)) == 0
-end
+  next ((mod(i, 2)) == 0)
+  }
 printf "%d ", j
 c = a[0]
 if c then
-  print "True";
+  print "True"
 else
-  print "False";
+  print "False"
 end
-print "\n";
+print "\n"
 g(id(a), 0)
 d = a[0]
 if d then
-  print "True";
+  print "True"
 else
-  print "False";
+  print "False"
 end
-print "\n";
+print "\n"
 

@@ -4,8 +4,7 @@ begin
   (* normalement on doit mettre 20 mais là on se tape un overflow *)
   n := (!n) + 1;
   let tab = Array.init (!n) (fun _i ->
-    let tab2 = Array.init (!n) (fun _j ->
-      0) in
+    let tab2 = Array.make (!n) 0 in
     tab2) in
   for l = 0 to (!n) - 1 do
     tab.((!n) - 1).(l) <- 1;

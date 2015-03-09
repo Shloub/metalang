@@ -5,8 +5,8 @@ def programme_candidat( tableau, taille )
       out0 += tableau[i].ord * i
       printf "%c", tableau[i]
     end
-    print "--\n";
-    return (out0);
+    print "--\n"
+    return (out0)
 end
 
 taille = STDIN.readline.to_i(10)

@@ -5,7 +5,7 @@ def mktoto( v1 )
       "foo" => v1,
       "bar" => 0,
       "blah" => 0}
-    return (t);
+    return (t)
 end
 
 def result( t, len )
@@ -14,16 +14,15 @@ def result( t, len )
       t[j]["blah"] = t[j]["blah"] + 1
       out0 = out0 + t[j]["foo"] + t[j]["blah"] * t[j]["bar"] + t[j]["bar"] * t[j]["foo"]
     end
-    return (out0);
+    return (out0)
 end
 
-t = [];
-for i in (0 ..  4 - 1) do
-  t[i] = mktoto(i)
-end
-t[0]["bar"]=scanf("%d")[0];
-scanf("%*\n");
-t[1]["blah"]=scanf("%d")[0];
+t = [*0..4 - 1].map { |i|
+  next (mktoto(i))
+  }
+t[0]["bar"]=scanf("%d")[0]
+scanf("%*\n")
+t[1]["blah"]=scanf("%d")[0]
 titi = result(t, 4)
 printf "%d%d", titi, t[2]["blah"]
 

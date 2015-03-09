@@ -11,6 +11,6 @@ for i in (0 ..  len - 2) do
   for j in (0 ..  len - 1) do
     printf "%d ", tab2[i][j]
   end
-  print "\n";
+  print "\n"
 end
 

@@ -10,40 +10,37 @@ read int, read char et skip
 
 =end
 
-len=scanf("%d")[0];
-scanf("%*\n");
+len=scanf("%d")[0]
+scanf("%*\n")
 printf "%d=len\n", len
 len *= 2
 printf "len*2=%d\n", len
 len = (len.to_f / 2).to_i
-tab = [];
-for i in (0 ..  len - 1) do
-  tmpi1=scanf("%d")[0];
-  scanf("%*\n");
+tab = [*0..len - 1].map { |i|
+  tmpi1=scanf("%d")[0]
+  scanf("%*\n")
   printf "%d=>%d ", i, tmpi1
-  tab[i] = tmpi1
-end
-print "\n";
-tab2 = [];
-for i_ in (0 ..  len - 1) do
-  tmpi2=scanf("%d")[0];
-  scanf("%*\n");
+  next (tmpi1)
+  }
+print "\n"
+tab2 = [*0..len - 1].map { |i_|
+  tmpi2=scanf("%d")[0]
+  scanf("%*\n")
   printf "%d==>%d ", i_, tmpi2
-  tab2[i_] = tmpi2
-end
-strlen=scanf("%d")[0];
-scanf("%*\n");
+  next (tmpi2)
+  }
+strlen=scanf("%d")[0]
+scanf("%*\n")
 printf "%d=strlen\n", strlen
-tab4 = [];
-for toto in (0 ..  strlen - 1) do
-  tmpc=scanf("%c")[0];
+tab4 = [*0..strlen - 1].map { |toto|
+  tmpc=scanf("%c")[0]
   c = tmpc.ord
   printf "%c:%d ", tmpc, c
   if tmpc != " " then
     c = mod((c - "a".ord) + 13, 26) + "a".ord
   end
-  tab4[toto] = c
-end
+  next (c)
+  }
 for j in (0 ..  strlen - 1) do
   printf "%c", tab4[j]
 end

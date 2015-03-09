@@ -24,23 +24,23 @@ Tictactoe : un tictactoe avec une IA
 =end
 
 def print_state( g )
-    print "\n|";
+    print "\n|"
     for y in (0 ..  2) do
       for x in (0 ..  2) do
         if g["cases"][x][y] == 0 then
-          print " ";
+          print " "
         elsif g["cases"][x][y] == 1 then
-          print "O";
+          print "O"
         else
-          print "X";
+          print "X"
         end
-        print "|";
+        print "|"
       end
       if y != 2 then
-        print "\n|-|-|-|\n|";
+        print "\n|-|-|-|\n|"
       end
     end
-    print "\n";
+    print "\n"
 end
 
 
@@ -124,11 +124,11 @@ def cancel_move( m, g )
 end
 
 def can_move_xy( x, y, g )
-    return (g["cases"][x][y] == 0);
+    return (g["cases"][x][y] == 0)
 end
 
 def can_move( m, g )
-    return (can_move_xy(m["x"], m["y"], g));
+    return (can_move_xy(m["x"], m["y"], g))
 end
 
 
@@ -141,7 +141,7 @@ Un minimax classique, renvoie la note du plateau
 def minmax( g )
     eval0(g)
     if g["ended"] then
-      return (g["note"]);
+      return (g["note"])
     end
     maxNote = -10000
     if not(g["firstToPlay"]) then
@@ -164,7 +164,7 @@ def minmax( g )
         end
       end
     end
-    return (maxNote);
+    return (maxNote)
 end
 
 
@@ -195,33 +195,31 @@ def play( g )
       end
     end
     printf "%d%d\n", minMove["x"], minMove["y"]
-    return (minMove);
+    return (minMove)
 end
 
 def init0(  )
-    cases = [];
-    for i in (0 ..  3 - 1) do
-      tab = [];
-      for j in (0 ..  3 - 1) do
-        tab[j] = 0
-      end
-      cases[i] = tab
-    end
+    cases = [*0..3 - 1].map { |i|
+      tab = [*0..3 - 1].map { |j|
+        next (0)
+        }
+      next (tab)
+      }
     return ({
       "cases" => cases,
       "firstToPlay" => true,
       "note" => 0,
-      "ended" => false});
+      "ended" => false})
 end
 
 def read_move(  )
-    x=scanf("%d")[0];
-    scanf("%*\n");
-    y=scanf("%d")[0];
-    scanf("%*\n");
+    x=scanf("%d")[0]
+    scanf("%*\n")
+    y=scanf("%d")[0]
+    scanf("%*\n")
     return ({
       "x" => x,
-      "y" => y});
+      "y" => y})
 end
 
 for i in (0 ..  1) do

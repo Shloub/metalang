@@ -58,8 +58,7 @@ let rec sumdivaux t n i =
     end
 
 let sumdiv nprimes primes n =
-  let t = Array.init (n + 1) (fun _i ->
-    0) in
+  let t = Array.make (n + 1) 0 in
   let max0 = fillPrimesFactors t n primes nprimes in
   sumdivaux t max0 0
 
@@ -69,8 +68,7 @@ begin
   let era = Array.init maximumprimes (fun s ->
     s) in
   let nprimes = eratostene era maximumprimes in
-  let primes = Array.init nprimes (fun _t ->
-    0) in
+  let primes = Array.make nprimes 0 in
   let l = ref( 0 ) in
   for k = 2 to maximumprimes - 1 do
     if era.(k) = k then
@@ -81,10 +79,8 @@ begin
   done;
   let n = 100 in
   (* 28124 ça prend trop de temps mais on arrive a passer le test *)
-  let abondant = Array.init (n + 1) (fun _p ->
-    false) in
-  let summable = Array.init (n + 1) (fun _q ->
-    false) in
+  let abondant = Array.make (n + 1) false in
+  let summable = Array.make (n + 1) false in
   let sum = ref( 0 ) in
   for r = 2 to n do
     let other = sumdiv nprimes primes r - r in

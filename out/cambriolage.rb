@@ -15,41 +15,37 @@ def nbPassePartout( n, passepartout, m, serrures )
     for i in (0 ..  n - 1) do
       pp = passepartout[i]
       if pp[0] >= max_ancient && pp[1] >= max_recent then
-        return (1);
+        return (1)
       end
       max_ancient_pp = [max_ancient_pp, pp[0]].max
       max_recent_pp = [max_recent_pp, pp[1]].max
     end
     if max_ancient_pp >= max_ancient && max_recent_pp >= max_recent then
-      return (2);
+      return (2)
     else
-      return (0);
+      return (0)
     end
 end
 
-n=scanf("%d")[0];
-scanf("%*\n");
-passepartout = [];
-for i in (0 ..  n - 1) do
-  out0 = [];
-  for j in (0 ..  2 - 1) do
-    out01=scanf("%d")[0];
-    scanf("%*\n");
-    out0[j] = out01
-  end
-  passepartout[i] = out0
-end
-m=scanf("%d")[0];
-scanf("%*\n");
-serrures = [];
-for k in (0 ..  m - 1) do
-  out1 = [];
-  for l in (0 ..  2 - 1) do
-    out_=scanf("%d")[0];
-    scanf("%*\n");
-    out1[l] = out_
-  end
-  serrures[k] = out1
-end
+n=scanf("%d")[0]
+scanf("%*\n")
+passepartout = [*0..n - 1].map { |i|
+  out0 = [*0..2 - 1].map { |j|
+    out01=scanf("%d")[0]
+    scanf("%*\n")
+    next (out01)
+    }
+  next (out0)
+  }
+m=scanf("%d")[0]
+scanf("%*\n")
+serrures = [*0..m - 1].map { |k|
+  out1 = [*0..2 - 1].map { |l|
+    out_=scanf("%d")[0]
+    scanf("%*\n")
+    next (out_)
+    }
+  next (out1)
+  }
 printf "%d", nbPassePartout(n, passepartout, m, serrures)
 

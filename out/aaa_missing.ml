@@ -5,8 +5,7 @@ exception Found_1 of int
 
 let result len tab =
   try
-  let tab2 = Array.init len (fun _i ->
-    false) in
+  let tab2 = Array.make len false in
   for i1 = 0 to len - 1 do
     Printf.printf "%d " tab.(i1);
     tab2.(tab.(i1)) <- true

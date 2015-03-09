@@ -3,18 +3,17 @@ def mod(x, y)
   return x - y * (x.to_f / y).to_i
 end
 i = 1
-last = [];
-for j in (0 ..  5 - 1) do
-  c=scanf("%c")[0];
+last = [*0..5 - 1].map { |j|
+  c=scanf("%c")[0]
   d = c.ord - "0".ord
   i *= d
-  last[j] = d
-end
+  next (d)
+  }
 max0 = i
 index = 0
 nskipdiv = 0
 for k in (1 ..  995) do
-  e=scanf("%c")[0];
+  e=scanf("%c")[0]
   f = e.ord - "0".ord
   if f == 0 then
     i = 1

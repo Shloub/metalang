@@ -19,8 +19,7 @@ let rec find n m =
 
 let () =
 begin
-  let m = Array.init 1000000 (fun _j ->
-    0) in
+  let m = Array.make 1000000 0 in
   let max0 = ref( 0 ) in
   let maxi = ref( 0 ) in
   for i = 1 to 999 do

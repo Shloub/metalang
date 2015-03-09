@@ -6,7 +6,7 @@ def programme_candidat( tableau, x, y )
         out0 += tableau[i][j] * (i * 2 + j)
       end
     end
-    return (out0);
+    return (out0)
 end
 
 taille_x = STDIN.readline.to_i(10)

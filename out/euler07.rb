@@ -5,10 +5,10 @@ end
 def divisible( n, t, size )
     for i in (0 ..  size - 1) do
       if (mod(n, t[i])) == 0 then
-        return (true);
+        return (true)
       end
     end
-    return (false);
+    return (false)
 end
 
 def find( n, t, used, nth )
@@ -21,13 +21,12 @@ def find( n, t, used, nth )
         used += 1
       end
     end
-    return (t[used - 1]);
+    return (t[used - 1])
 end
 
 n = 10001
-t = [];
-for i in (0 ..  n - 1) do
-  t[i] = 2
-end
+t = [*0..n - 1].map { |i|
+  next (2)
+  }
 printf "%d\n", find(3, t, 1, n)
 

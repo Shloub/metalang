@@ -6,21 +6,20 @@ def nth( tab, tofind, len )
         out0 += 1
       end
     end
-    return (out0);
+    return (out0)
 end
 
 len = 0
-len=scanf("%d")[0];
-scanf("%*\n");
+len=scanf("%d")[0]
+scanf("%*\n")
 tofind = "\000"
-tofind=scanf("%c")[0];
-scanf("%*\n");
-tab = [];
-for i in (0 ..  len - 1) do
+tofind=scanf("%c")[0]
+scanf("%*\n")
+tab = [*0..len - 1].map { |i|
   tmp = "\000"
-  tmp=scanf("%c")[0];
-  tab[i] = tmp
-end
+  tmp=scanf("%c")[0]
+  next (tmp)
+  }
 result = nth(tab, tofind, len)
 printf "%d", result
 

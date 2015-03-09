@@ -32,7 +32,7 @@ def sumdiag( n )
 
       sum += un
     end
-    return (sum);
+    return (sum)
 end
 
 printf "%d", sumdiag(1001)

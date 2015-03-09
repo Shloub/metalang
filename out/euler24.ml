@@ -9,8 +9,7 @@ let show lim nth =
   let nth = ref nth in
   let _t = Array.init lim (fun i ->
     i) in
-  let pris = Array.init lim (fun _j ->
-    false) in
+  let pris = Array.make lim false in
   for k = 1 to lim - 1 do
     let n = fact (lim - k) in
     let nchiffre = ref( (!nth) / n ) in

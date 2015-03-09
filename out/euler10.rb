@@ -13,7 +13,7 @@ def eratostene( t, max0 )
         end
       end
     end
-    return (sum);
+    return (sum)
 end
 
 n = 100000
@@ -22,10 +22,9 @@ n = 100000
  normalement on met 2000 000 mais là on se tape des int overflow dans plein de langages 
 =end
 
-t = [];
-for i in (0 ..  n - 1) do
-  t[i] = i
-end
+t = [*0..n - 1].map { |i|
+  next (i)
+  }
 t[1] = 0
 printf "%d\n", eratostene(t, n)
 

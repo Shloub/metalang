@@ -8,12 +8,12 @@ def is_pair( i )
       j = 2
       if i == 0 then
         j = 4
-        return (true);
+        return (true)
       end
       j = 3
       if i == 2 then
         j = 4
-        return (true);
+        return (true)
       end
       j = 5
     end
@@ -24,7 +24,7 @@ def is_pair( i )
       end
       j = 8
     end
-    return ((mod(i, 2)) == 0);
+    return ((mod(i, 2)) == 0)
 end
 
 

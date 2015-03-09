@@ -15,18 +15,17 @@ def montagnes0( tab, len )
       end
       i -= 1
     end
-    return (max0);
+    return (max0)
 end
 
 len = 0
-len=scanf("%d")[0];
-scanf("%*\n");
-tab = [];
-for i in (0 ..  len - 1) do
+len=scanf("%d")[0]
+scanf("%*\n")
+tab = [*0..len - 1].map { |i|
   x = 0
-  x=scanf("%d")[0];
-  scanf("%*\n");
-  tab[i] = x
-end
+  x=scanf("%d")[0]
+  scanf("%*\n")
+  next (x)
+  }
 printf "%d", montagnes0(tab, len)
 

@@ -13,19 +13,17 @@ def eratostene( t, max0 )
         end
       end
     end
-    return (n);
+    return (n)
 end
 
 maximumprimes = 1000001
-era = [];
-for j in (0 ..  maximumprimes - 1) do
-  era[j] = j
-end
+era = [*0..maximumprimes - 1].map { |j|
+  next (j)
+  }
 nprimes = eratostene(era, maximumprimes)
-primes = [];
-for o in (0 ..  nprimes - 1) do
-  primes[o] = 0
-end
+primes = [*0..nprimes - 1].map { |o|
+  next (0)
+  }
 l = 0
 for k in (2 ..  maximumprimes - 1) do
   if era[k] == k then
@@ -34,10 +32,9 @@ for k in (2 ..  maximumprimes - 1) do
   end
 end
 printf "%d == %d\n", l, nprimes
-sum = [];
-for i_ in (0 ..  nprimes - 1) do
-  sum[i_] = primes[i_]
-end
+sum = [*0..nprimes - 1].map { |i_|
+  next (primes[i_])
+  }
 maxl = 0
 process = true
 stop = maximumprimes - 1

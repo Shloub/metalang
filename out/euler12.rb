@@ -14,7 +14,7 @@ def eratostene( t, max0 )
         end
       end
     end
-    return (n);
+    return (n)
 end
 
 def fillPrimesFactors( t, n, primes, nprimes )
@@ -25,23 +25,21 @@ def fillPrimesFactors( t, n, primes, nprimes )
         n = (n.to_f / d).to_i
       end
       if n == 1 then
-        return (primes[i]);
+        return (primes[i])
       end
     end
-    return (n);
+    return (n)
 end
 
 def find( ndiv2 )
     maximumprimes = 110
-    era = [];
-    for j in (0 ..  maximumprimes - 1) do
-      era[j] = j
-    end
+    era = [*0..maximumprimes - 1].map { |j|
+      next (j)
+      }
     nprimes = eratostene(era, maximumprimes)
-    primes = [];
-    for o in (0 ..  nprimes - 1) do
-      primes[o] = 0
-    end
+    primes = [*0..nprimes - 1].map { |o|
+      next (0)
+      }
     l = 0
     for k in (2 ..  maximumprimes - 1) do
       if era[k] == k then
@@ -50,10 +48,9 @@ def find( ndiv2 )
       end
     end
     for n in (1 ..  10000) do
-      primesFactors = [];
-      for m in (0 ..  n + 2 - 1) do
-        primesFactors[m] = 0
-      end
+      primesFactors = [*0..n + 2 - 1].map { |m|
+        next (0)
+        }
       max0 = [fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes)].max
       primesFactors[2] -= 1
       ndivs = 1
@@ -63,7 +60,7 @@ def find( ndiv2 )
         end
       end
       if ndivs > ndiv2 then
-        return (((n * (n + 1)).to_f / 2).to_i);
+        return (((n * (n + 1)).to_f / 2).to_i)
       end
       
 =begin
@@ -71,7 +68,7 @@ def find( ndiv2 )
 =end
 
     end
-    return (0);
+    return (0)
 end
 
 printf "%d\n", find(500)

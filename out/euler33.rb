@@ -7,9 +7,9 @@ def pgcd( a, b )
     d = [a, b].max
     reste = mod(d, c)
     if reste == 0 then
-      return (c);
+      return (c)
     else
-      return (pgcd(c, reste));
+      return (pgcd(c, reste))
     end
 end
 

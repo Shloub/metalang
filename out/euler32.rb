@@ -31,29 +31,27 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
 
 def okdigits( ok, n )
     if n == 0 then
-      return (true);
+      return (true)
     else
       digit = mod(n, 10)
       if ok[digit] then
         ok[digit] = false
         o = okdigits(ok, (n.to_f / 10).to_i)
         ok[digit] = true
-        return (o);
+        return (o)
       else
-        return (false);
+        return (false)
       end
     end
 end
 
 count = 0
-allowed = [];
-for i in (0 ..  10 - 1) do
-  allowed[i] = i != 0
-end
-counted = [];
-for j in (0 ..  100000 - 1) do
-  counted[j] = false
-end
+allowed = [*0..10 - 1].map { |i|
+  next (i != 0)
+  }
+counted = [*0..100000 - 1].map { |j|
+  next (false)
+  }
 for e in (1 ..  9) do
   allowed[e] = false
   for b in (1 ..  9) do

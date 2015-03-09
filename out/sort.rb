@@ -1,10 +1,9 @@
 require "scanf.rb"
 def copytab( tab, len )
-    o = [];
-    for i in (0 ..  len - 1) do
-      o[i] = tab[i]
-    end
-    return (o);
+    o = [*0..len - 1].map { |i|
+      next (tab[i])
+      }
+    return (o)
 end
 
 def bubblesort( tab, len )
@@ -62,25 +61,24 @@ def qsort0( tab, len, i, j )
 end
 
 len = 2
-len=scanf("%d")[0];
-scanf("%*\n");
-tab = [];
-for i_ in (0 ..  len - 1) do
+len=scanf("%d")[0]
+scanf("%*\n")
+tab = [*0..len - 1].map { |i_|
   tmp = 0
-  tmp=scanf("%d")[0];
-  scanf("%*\n");
-  tab[i_] = tmp
-end
+  tmp=scanf("%d")[0]
+  scanf("%*\n")
+  next (tmp)
+  }
 tab2 = copytab(tab, len)
 bubblesort(tab2, len)
 for i in (0 ..  len - 1) do
   printf "%d ", tab2[i]
 end
-print "\n";
+print "\n"
 tab3 = copytab(tab, len)
 qsort0(tab3, len, 0, len - 1)
 for i in (0 ..  len - 1) do
   printf "%d ", tab3[i]
 end
-print "\n";
+print "\n"
 

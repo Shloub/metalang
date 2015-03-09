@@ -11,10 +11,9 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
 
 =end
 
-p = [];
-for i in (0 ..  10 - 1) do
-  p[i] = i * i * i * i * i
-end
+p = [*0..10 - 1].map { |i|
+  next (i * i * i * i * i)
+  }
 sum = 0
 for a in (0 ..  9) do
   for b in (0 ..  9) do

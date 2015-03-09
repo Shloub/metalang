@@ -9,16 +9,16 @@ def is_triangular( n )
 =end
 
     a = Math.sqrt(n * 2).to_i
-    return (a * (a + 1) == n * 2);
+    return (a * (a + 1) == n * 2)
 end
 
 def score(  )
-    scanf("%*\n");
-    len=scanf("%d")[0];
-    scanf("%*\n");
+    scanf("%*\n")
+    len=scanf("%d")[0]
+    scanf("%*\n")
     sum = 0
     for i in (1 ..  len) do
-      c=scanf("%c")[0];
+      c=scanf("%c")[0]
       sum += (c.ord - "A".ord) + 1
       
 =begin
@@ -27,9 +27,9 @@ def score(  )
 
     end
     if is_triangular(sum) then
-      return (1);
+      return (1)
     else
-      return (0);
+      return (0)
     end
 end
 
@@ -38,9 +38,9 @@ for i in (1 ..  55) do
     printf "%d ", i
   end
 end
-print "\n";
+print "\n"
 sum = 0
-n=scanf("%d")[0];
+n=scanf("%d")[0]
 for i in (1 ..  n) do
   sum += score()
 end

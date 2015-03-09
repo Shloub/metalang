@@ -157,8 +157,7 @@ let play g =
 
 let init0 () =
   let cases = Array.init 3 (fun _i ->
-    let tab = Array.init 3 (fun _j ->
-      0) in
+    let tab = Array.make 3 0 in
     tab) in
   {
     cases=cases;

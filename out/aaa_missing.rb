@@ -7,21 +7,20 @@ require "scanf.rb"
 =end
 
 def result( len, tab )
-    tab2 = [];
-    for i in (0 ..  len - 1) do
-      tab2[i] = false
-    end
+    tab2 = [*0..len - 1].map { |i|
+      next (false)
+      }
     for i1 in (0 ..  len - 1) do
       printf "%d ", tab[i1]
       tab2[tab[i1]] = true
     end
-    print "\n";
+    print "\n"
     for i2 in (0 ..  len - 1) do
       if not(tab2[i2]) then
-        return (i2);
+        return (i2)
       end
     end
-    return (-1);
+    return (-1)
 end
 
 len = STDIN.readline.to_i(10)

@@ -11,19 +11,18 @@ def summax( lst, len )
         max0 = current
       end
     end
-    return (max0);
+    return (max0)
 end
 
 len = 0
-len=scanf("%d")[0];
-scanf("%*\n");
-tab = [];
-for i in (0 ..  len - 1) do
+len=scanf("%d")[0]
+scanf("%*\n")
+tab = [*0..len - 1].map { |i|
   tmp = 0
-  tmp=scanf("%d")[0];
-  scanf("%*\n");
-  tab[i] = tmp
-end
+  tmp=scanf("%d")[0]
+  scanf("%*\n")
+  next (tmp)
+  }
 result = summax(tab, len)
 printf "%d", result
 

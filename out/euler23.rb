@@ -14,7 +14,7 @@ def eratostene( t, max0 )
         end
       end
     end
-    return (n);
+    return (n)
 end
 
 def fillPrimesFactors( t, n, primes, nprimes )
@@ -25,24 +25,24 @@ def fillPrimesFactors( t, n, primes, nprimes )
         n = (n.to_f / d).to_i
       end
       if n == 1 then
-        return (primes[i]);
+        return (primes[i])
       end
     end
-    return (n);
+    return (n)
 end
 
 def sumdivaux2( t, n, i )
     while i < n && t[i] == 0 do
       i += 1
     end
-    return (i);
+    return (i)
 end
 
 def sumdivaux( t, n, i )
     if i > n then
-      return (1);
+      return (1)
     elsif t[i] == 0 then
-      return (sumdivaux(t, n, sumdivaux2(t, n, i + 1)));
+      return (sumdivaux(t, n, sumdivaux2(t, n, i + 1)))
     else
       o = sumdivaux(t, n, sumdivaux2(t, n, i + 1))
       out0 = 0
@@ -51,29 +51,26 @@ def sumdivaux( t, n, i )
         out0 += p
         p *= i
       end
-      return ((out0 + 1) * o);
+      return ((out0 + 1) * o)
     end
 end
 
 def sumdiv( nprimes, primes, n )
-    t = [];
-    for i in (0 ..  n + 1 - 1) do
-      t[i] = 0
-    end
+    t = [*0..n + 1 - 1].map { |i|
+      next (0)
+      }
     max0 = fillPrimesFactors(t, n, primes, nprimes)
-    return (sumdivaux(t, max0, 0));
+    return (sumdivaux(t, max0, 0))
 end
 
 maximumprimes = 30001
-era = [];
-for s in (0 ..  maximumprimes - 1) do
-  era[s] = s
-end
+era = [*0..maximumprimes - 1].map { |s|
+  next (s)
+  }
 nprimes = eratostene(era, maximumprimes)
-primes = [];
-for t in (0 ..  nprimes - 1) do
-  primes[t] = 0
-end
+primes = [*0..nprimes - 1].map { |t|
+  next (0)
+  }
 l = 0
 for k in (2 ..  maximumprimes - 1) do
   if era[k] == k then
@@ -87,14 +84,12 @@ n = 100
  28124 ça prend trop de temps mais on arrive a passer le test 
 =end
 
-abondant = [];
-for p in (0 ..  n + 1 - 1) do
-  abondant[p] = false
-end
-summable = [];
-for q in (0 ..  n + 1 - 1) do
-  summable[q] = false
-end
+abondant = [*0..n + 1 - 1].map { |p|
+  next (false)
+  }
+summable = [*0..n + 1 - 1].map { |q|
+  next (false)
+  }
 sum = 0
 for r in (2 ..  n) do
   other = sumdiv(nprimes, primes, r) - r

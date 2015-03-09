@@ -7,8 +7,7 @@ let () =
 begin
   let _input = ' ' in
   let current_pos = ref( 500 ) in
-  let mem = Array.init 1000 (fun _i ->
-    0) in
+  let mem = Array.make 1000 0 in
   mem.((!current_pos)) <- mem.((!current_pos)) + 1;
   mem.((!current_pos)) <- mem.((!current_pos)) + 1;
   mem.((!current_pos)) <- mem.((!current_pos)) + 1;

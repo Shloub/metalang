@@ -1,7 +1,6 @@
 let primesfactors n =
   let n = ref n in
-  let tab = Array.init ((!n) + 1) (fun _i ->
-    0) in
+  let tab = Array.make ((!n) + 1) 0 in
   let d = ref( 2 ) in
   while (!n) <> 1 && (!d) * (!d) <= (!n)
   do
@@ -19,8 +18,7 @@ let primesfactors n =
 let () =
 begin
   let lim = 20 in
-  let o = Array.init (lim + 1) (fun _m ->
-    0) in
+  let o = Array.make (lim + 1) 0 in
   for i = 1 to lim do
     let t = primesfactors i in
     for j = 1 to i do

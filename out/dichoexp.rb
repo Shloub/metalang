@@ -4,20 +4,20 @@ def mod(x, y)
 end
 def exp0( a, b )
     if b == 0 then
-      return (1);
+      return (1)
     end
     if (mod(b, 2)) == 0 then
       o = exp0(a, (b.to_f / 2).to_i)
-      return (o * o);
+      return (o * o)
     else
-      return (a * exp0(a, b - 1));
+      return (a * exp0(a, b - 1))
     end
 end
 
 a = 0
 b = 0
-a=scanf("%d")[0];
-scanf("%*\n");
-b=scanf("%d")[0];
+a=scanf("%d")[0]
+scanf("%*\n")
+b=scanf("%d")[0]
 printf "%d", exp0(a, b)
 

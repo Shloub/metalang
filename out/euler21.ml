@@ -58,8 +58,7 @@ let rec sumdivaux t n i =
     end
 
 let sumdiv nprimes primes n =
-  let t = Array.init (n + 1) (fun _i ->
-    0) in
+  let t = Array.make (n + 1) 0 in
   let max0 = fillPrimesFactors t n primes nprimes in
   sumdivaux t max0 0
 
@@ -69,8 +68,7 @@ begin
   let era = Array.init maximumprimes (fun j ->
     j) in
   let nprimes = eratostene era maximumprimes in
-  let primes = Array.init nprimes (fun _o ->
-    0) in
+  let primes = Array.make nprimes 0 in
   let l = ref( 0 ) in
   for k = 2 to maximumprimes - 1 do
     if era.(k) = k then

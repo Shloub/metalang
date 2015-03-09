@@ -1,11 +1,11 @@
 require "scanf.rb"
 def score(  )
-    scanf("%*\n");
-    len=scanf("%d")[0];
-    scanf("%*\n");
+    scanf("%*\n")
+    len=scanf("%d")[0]
+    scanf("%*\n")
     sum = 0
     for i in (1 ..  len) do
-      c=scanf("%c")[0];
+      c=scanf("%c")[0]
       sum += (c.ord - "A".ord) + 1
       
 =begin
@@ -13,11 +13,11 @@ def score(  )
 =end
 
     end
-    return (sum);
+    return (sum)
 end
 
 sum = 0
-n=scanf("%d")[0];
+n=scanf("%d")[0]
 for i in (1 ..  n) do
   sum += i * score()
 end

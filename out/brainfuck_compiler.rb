@@ -10,10 +10,9 @@ et qui produit les macros metalang correspondante
 
 input = " "
 current_pos = 500
-mem = [];
-for i in (0 ..  1000 - 1) do
-  mem[i] = 0
-end
+mem = [*0..1000 - 1].map { |i|
+  next (0)
+  }
 mem[current_pos] = mem[current_pos] + 1
 mem[current_pos] = mem[current_pos] + 1
 mem[current_pos] = mem[current_pos] + 1
