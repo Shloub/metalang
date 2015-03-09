@@ -249,6 +249,7 @@ class camlPrinter = object(self)
     if self#is_stdin instr1
     then false
     else match Instr.unfix instr1 with
+    | Instr.Affect ( Mutable.Fixed.F (_, Mutable.Var v), _) when not (BindingSet.mem v refbindings) -> false
     | Instr.AllocRecord _  (* letin -> pas de ; *)
     | Instr.AllocArray _
     | Instr.Declare _ 
@@ -340,6 +341,8 @@ class camlPrinter = object(self)
     then true
     else match List.map Instr.unfix instrs |> List.rev with
     | (Instr.AllocArray _ | Instr.Declare _ | Instr.DeclRead _ | Instr.Untuple _) :: _ -> true
+    | (Instr.Affect ( Mutable.Fixed.F (_, Mutable.Var v), _)) :: _
+      when not( BindingSet.mem v refbindings) -> true
     | _ -> false
 
   (** show a bloc of instructions *)
@@ -372,14 +375,20 @@ class camlPrinter = object(self)
 
   (** show an affectation *)
   method affect f m expr =
-    Format.fprintf f "@[<h>%a@ %s@ %a@]"
-      self#mutable_ m
-      (match m |> Mutable.Fixed.unfix with
-      | Mutable.Var _ -> ":="
-      | Mutable.Array _ -> "<-"
-      | Mutable.Dot _ -> "<-"
-      )
-      self#expr expr
+    match Mutable.Fixed.unfix m with
+      | Mutable.Var var ->
+          if BindingSet.mem var refbindings
+          then Format.fprintf f "@[<h>%a@ := %a@]"
+              self#mutable_ m 
+              self#expr expr
+          else
+              Format.fprintf f "@[<h>let %a@ = %a in@]"
+              self#mutable_ m 
+              self#expr expr
+      | _ ->
+          Format.fprintf f "@[<h>%a@ <- %a@]"
+            self#mutable_ m 
+            self#expr expr
 
   (** show a declaration *)
   method declaration f var t e =
@@ -411,17 +420,23 @@ class camlPrinter = object(self)
 
   (** find references variables from a list of instructions *)
   method calc_refs instrs =
-    refbindings <-
-      List.fold_left
-      (Instr.Writer.Deep.fold
-         (fun acc i ->
-           match Instr.unfix i with
-           | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
-           | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
-           | _ -> acc
-         ))
-      BindingSet.empty
-      instrs
+    let g acc i = Instr.Writer.Deep.fold
+        (fun acc i ->
+          match Instr.unfix i with
+          | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+          | Instr.Affect (Mutable.Fixed.F (_, Mutable.Var varname), _) -> BindingSet.add varname acc
+          | _ -> acc
+        ) acc i
+    in let f tra acc i = match Instr.unfix i with
+    | Instr.Read (_, Mutable.Fixed.F (_, Mutable.Var varname)) -> BindingSet.add varname acc
+    | Instr.Loop (_, _, _, li)
+    | Instr.While (_, li) -> List.fold_left g acc li
+    | Instr.AllocArray (_, _, _, Some (_, li), _) -> List.fold_left g acc li
+    | Instr.If (_, li1, li2) ->
+        let acc = List.fold_left g acc li1 in
+        List.fold_left g acc li2
+    | _ -> tra acc i
+    in refbindings <- List.fold_left (f (Instr.Writer.Traverse.fold f)) BindingSet.empty instrs
 
   (** print an expression *)
   method expr f e =
