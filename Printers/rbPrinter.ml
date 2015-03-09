@@ -91,24 +91,24 @@ end
   method read f t mutable_ =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[%a=scanf(\"%%d\")[0];@]"
+      Format.fprintf f "@[%a=scanf(\"%%d\")[0]@]"
         self#mutable_ mutable_
     | Type.Char ->
-      Format.fprintf f "@[%a=scanf(\"%%c\")[0];@]"
+      Format.fprintf f "@[%a=scanf(\"%%c\")[0]@]"
         self#mutable_ mutable_
     | _ -> assert false (* types non gérés *)
 
   method read_decl f t v =
     match Type.unfix t with
     | Type.Integer ->
-      Format.fprintf f "@[%a=scanf(\"%%d\")[0];@]"
+      Format.fprintf f "@[%a=scanf(\"%%d\")[0]@]"
         self#binding v
     | Type.Char ->
-      Format.fprintf f "@[%a=scanf(\"%%c\")[0];@]"
+      Format.fprintf f "@[%a=scanf(\"%%c\")[0]@]"
         self#binding v
     | _ -> assert false (* types non gérés *)
 
-  method stdin_sep f = Format.fprintf f "@[scanf(\"%%*\\n\");@]"
+  method stdin_sep f = Format.fprintf f "@[scanf(\"%%*\\n\")@]"
 
   method declaration f var t e =
     Format.fprintf f "@[<h>%a@ =@ %a@]" self#binding var self#expr e
@@ -158,6 +158,18 @@ end
         self#expr b
     | _ -> super#sbinop f op a b
 
+val mutable inlambda = false
+
+  method allocarray_lambda f binding type_ len binding2 lambda _ =
+    let exv = inlambda in
+    inlambda <- true;
+    Format.fprintf f "@[<v 2>%a = [*0..@[<h>%a@]].map { |%a|@\n%a@\n}@]"
+      self#binding binding
+      self#expr (Expr.binop Expr.Sub len (Expr.integer 1))
+      self#binding binding2
+      self#instructions lambda;
+    inlambda <- exv;
+
   method forloop_content f (varname, expr1, expr2, li) =
     Format.fprintf f "@[<h>for@ %a@ in@ (%a .. @ %a) do@\n@]%a@\nend"
       self#binding varname
@@ -167,7 +179,7 @@ end
 
   method multi_print f format exprs =
     if exprs = [] then
-      Format.fprintf f "@[<h>printf \"%s\";@]" format
+      Format.fprintf f "@[<h>printf \"%s\"@]" format
     else
       Format.fprintf f "@[<h>printf \"%s\", %a@]" format
         (print_list
@@ -176,7 +188,7 @@ end
              "%a,@ %a" f1 e1 f2 e2)) exprs
 
   method print f t expr = match Expr.unfix expr with
-  | Expr.Lief (Expr.String s) -> Format.fprintf f "@[print %s;@]" ( self#noformat s )
+  | Expr.Lief (Expr.String s) -> Format.fprintf f "@[print %s@]" ( self#noformat s )
   | _ -> Format.fprintf f "@[printf \"%a\", %a@]"
     self#format_type t
     self#expr expr
@@ -201,14 +213,16 @@ end
         self#bloc elsecase
 
   method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>%a@ =@ [];@]" self#binding binding
+    Format.fprintf f "@[<h>%a@ =@ []@]" self#binding binding
 
-  method return f e = Format.fprintf f "@[<h>return@ (%a);@]" self#expr e
+  method return f e =
+    if inlambda then Format.fprintf f "@[<h>next@ (%a)@]" self#expr e
+    else Format.fprintf f "@[<h>return@ (%a)@]" self#expr e
 
   method field f field = Format.fprintf f "%S" field
 
   method allocrecord f name t el =
-    Format.fprintf f "%a = {@[<v>%a@]};"
+    Format.fprintf f "%a = {@[<v>%a@]}"
       self#binding name
       (self#def_fields name) el
 

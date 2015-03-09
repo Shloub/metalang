@@ -164,6 +164,14 @@ let python_passes prog =
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
   |> typed "remove internals" Passes.WalkRemoveInternal.apply
+
+let ruby_passes prog =
+  prog |> default_passes
+  |> typed "inline vars" Passes.WalkInlineVars.apply
+  |> snd |> Typer.process
+  |> typed_ "read analysis" ReadAnalysis.apply
+  |> check_reads
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply
  
 let common_lisp_passes prog =
   prog |> default_passes
@@ -271,7 +279,7 @@ let languages, printers =
     "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
     "hs",      (false, hs_passes) => new HaskellPrinter.haskellPrinter ;
     "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
-    "rb",      (false, python_passes) => new RbPrinter.rbPrinter ;
+    "rb",      (false, ruby_passes) => new RbPrinter.rbPrinter ;
     "py",      (false, python_passes) => new PyPrinter.pyPrinter ;
     "go",      (true, clike_passes)   => new GoPrinter.goPrinter ;
     "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
