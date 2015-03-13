@@ -304,7 +304,7 @@ out/%.exe : out/%.cs
 	@gmcs $< || exit 1
 
 out/%.exeVB : out/%.vb
-	@vbnc2 $< -out:$@ || exit 1
+	@vbnc2 -debug $< -out:$@ || exit 1
 
 out/%.fun.ml.native : out/%.fun.ml
 	@ocamlopt -w +A -g out/$(basename $*).fun.ml -o out/$(basename $*).fun.ml.native || exit 1
@@ -378,10 +378,10 @@ out/%.rb.out : out/%.rb
 	ruby $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.exe.out : out/%.exe
-	mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	mono --debug $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.exeVB.out : out/%.exeVB
-	mono $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	mono --debug $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.rkt.out : out/%.rkt
 	racket $< < tests/prog/$(basename $*).in > $@ || exit 1;
