@@ -1,0 +1,91 @@
+#lang racket
+(require racket/block)
+
+(define (exp0 a e)
+  ;toto
+  (let ([o 1])
+  (letrec ([c (lambda (i o) 
+                (if (<= i e)
+                (let ([o (* o a)])
+                (c (+ i 1) o))
+                o))])
+  (c 1 o)))
+)
+(define (e t0 n)
+  ;toto
+  (letrec ([b (lambda (i n) 
+                (if (<= i 8)
+                (if (>= n (* (vector-ref t0 i) i))
+                (let ([n (- n (* (vector-ref t0 i) i))])
+                (b (+ i 1) n))
+                (let ([nombre (+ (exp0 10 (- i 1)) (quotient n i))])
+                (let ([chiffre (- (- i 1) (remainder n i))])
+                (remainder (quotient nombre (exp0 10 chiffre)) 10))))
+                (- 1)))])
+  (b 1 n))
+)
+(define main
+  (let ([t0 (build-vector 9 (lambda (i) 
+                              (- (exp0 10 i) (exp0 10 (- i 1)))))])
+  (letrec ([r (lambda (i2) 
+                (if (<= i2 8)
+                (block
+                  (printf "~a => ~a\n" i2 (vector-ref t0 i2))
+                  (r (+ i2 1))
+                  )
+                (letrec ([q (lambda (j) 
+                              (if (<= j 80)
+                              (block
+                                (display (e t0 j))
+                                (q (+ j 1))
+                                )
+                              (block
+                                (display "\n")
+                                (letrec ([p (lambda (k) 
+                                              (if (<= k 50)
+                                              (block
+                                                (display k)
+                                                (p (+ k 1))
+                                                )
+                                              (block
+                                                (display "\n")
+                                                (letrec ([m (lambda (j2) 
+                                                              (if (<= j2 220)
+                                                              (block
+                                                                (display (e t0 j2))
+                                                                (m (+ j2 1))
+                                                                )
+                                                              (block
+                                                                (display "\n")
+                                                                (letrec ([h (lambda (k2) 
+                                                                              (if (<= k2 110)
+                                                                              (block
+                                                                                (display k2)
+                                                                                (h (+ k2 1))
+                                                                                )
+                                                                              (block
+                                                                                (display "\n")
+                                                                                (let ([out0 1])
+                                                                                (letrec ([g 
+                                                                                (lambda (l out0) 
+                                                                                (if (<= l 6)
+                                                                                (let ([puiss (exp0 10 l)])
+                                                                                (let ([v (e t0 (- puiss 1))])
+                                                                                (let ([out0 (* out0 v)])
+                                                                                (block
+                                                                                (printf "10^~a=~a v=~a\n" l puiss v)
+                                                                                (g (+ l 1) out0)
+                                                                                ))))
+                                                                                (printf "~a\n" out0)))])
+                                                                                (g 0 out0)))
+                                                                              )))])
+                                                              (h 90))
+                                                              )))])
+                                              (m 169))
+                                  )))])
+                  (p 1))
+                )))])
+(q 0))))])
+(r 1)))
+)
+

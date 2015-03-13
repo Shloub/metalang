@@ -1,0 +1,59 @@
+
+def int triangle(int n)
+  if n % 2 == 0 then
+    return n / 2 * (n + 1)
+  else
+    return n * ( (n + 1) / 2)
+  end
+end
+
+def int penta(int n)
+  if n % 2 == 0 then
+    return n /2 * (3*n - 1)
+  else
+    return (3*n - 1) / 2 * n
+  end
+end
+
+def int hexa(int n)
+    return n * (2*n - 1)
+end
+
+def bool findPenta2(int n, int a, int b)
+    if b == a + 1 then
+      return penta(a) == n || penta(b) == n
+    end
+    def c = (a + b) / 2
+    def p = penta(c)
+    if p == n then
+      return true
+    elsif p < n then
+      return findPenta2(n, c, b)
+    else
+      return findPenta2(n, a, c)
+    end
+end
+
+def bool findHexa2(int n, int a, int b)
+    if b == a + 1 then
+      return hexa(a) == n || hexa(b) == n
+    end
+    def c = (a + b) / 2
+    def p = hexa(c)
+    if p == n then
+      return true
+    elsif p < n then
+      return findHexa2(n, c, b)
+    else
+      return findHexa2(n, a, c)
+    end
+end
+
+main
+  for n = 285 to 55385 do
+    def t = triangle(n)
+    if findPenta2(t, n/5, n) && findHexa2(t, n/5, n/2+10) then
+      print n print "\n" print t print "\n"
+    end
+  end
+end

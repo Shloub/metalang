@@ -1,0 +1,52 @@
+
+def int exp(int a, int e)
+  def o = 1
+  for i = 1 to e do
+    o *= a
+  end
+  return o
+end
+
+def int e(array<int> t, int n)
+  for i = 1 to 8 do
+  if n >= t[i] * i then
+    n -= t[i] * i
+  else
+    def nombre = exp(10, i - 1) + n / i
+    def chiffre = i - 1 - (n % i)
+    return (nombre / exp(10, chiffre)) % 10
+  end
+  end
+  return -1
+end
+
+main
+  def t[9] with i do return exp(10, i) - exp(10, i-1) end
+  for i2 = 1 to 8 do
+      print i2 print " => " print t[i2] print "\n"
+  end
+  for j = 0 to 80 do
+    print e(t, j)
+  end
+  print "\n"
+  for k = 1 to 50 do
+    print k
+  end
+  print "\n"
+  for j2 = 169 to 220 do
+    print e(t, j2)
+  end
+  print "\n"
+  for k2 = 90 to 110 do
+    print k2
+  end
+  print "\n"
+  def out = 1
+  for l = 0 to 6 do
+    def puiss = exp(10, l)
+    def v = e(t, puiss-1)
+    out *= v
+    print "10^" print l print "=" print puiss print " v=" print v print "\n"
+  end
+  print out print "\n"
+end
