@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func nth(tab []byte, tofind byte, len int) int{
   var out0 int = 0
   for i := 0 ; i <= len - 1; i++ {

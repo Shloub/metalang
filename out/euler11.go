@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func max2_(a int, b int) int{
   if a > b {
     return a

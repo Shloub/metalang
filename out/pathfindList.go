@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func pathfind_aux(cache []int, tab []int, len int, pos int) int{
   if pos >= len - 1 {
     return 0

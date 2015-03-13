@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func montagnes0(tab []int, len int) int{
   var max0 int = 1
   var j int = 1

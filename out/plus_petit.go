@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func go0(tab []int, a int, b int) int{
   var m int = (a + b) / 2
   if a == m {

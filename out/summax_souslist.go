@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func summax(lst []int, len int) int{
   var current int = 0
   var max0 int = 0

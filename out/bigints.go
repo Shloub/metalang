@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func max2_(a int, b int) int{
   if a > b {
     return a
@@ -214,17 +213,14 @@ D'ou le nom de la fonction. */
   for i := 0 ; i <= (*a).bigint_len - 1; i++ {
     var retenue int = 0
       for j := 0 ; j <= (*b).bigint_len - 1; j++ {
-        chiffres[i + j] = chiffres[i + j] + retenue + (*b).bigint_chiffres[j] *
-        (*a).bigint_chiffres[i];
+        chiffres[i + j] = chiffres[i + j] + retenue + (*b).bigint_chiffres[j] * (*a).bigint_chiffres[i];
           retenue = chiffres[i + j] / 10;
           chiffres[i + j] = chiffres[i + j] % 10;
       }
       chiffres[i + (*b).bigint_len] = chiffres[i + (*b).bigint_len] + retenue;
   }
-  chiffres[(*a).bigint_len + (*b).bigint_len] = chiffres[(*a).bigint_len +
-  (*b).bigint_len - 1] / 10;
-  chiffres[(*a).bigint_len + (*b).bigint_len - 1] = chiffres[(*a).bigint_len +
-  (*b).bigint_len - 1] % 10;
+  chiffres[(*a).bigint_len + (*b).bigint_len] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] / 10;
+  chiffres[(*a).bigint_len + (*b).bigint_len - 1] = chiffres[(*a).bigint_len + (*b).bigint_len - 1] % 10;
   for l := 0 ; l <= 2; l++ {
     if len != 0 && chiffres[len - 1] == 0 {
         len --;

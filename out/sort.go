@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func copytab(tab []int, len int) []int{
   var o []int = make([]int, len)
   for i := 0 ; i <= len - 1; i++ {

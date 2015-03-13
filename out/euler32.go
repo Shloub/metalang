@@ -67,20 +67,14 @@ func main() {
                                     if allowed[d] {
                                         allowed[d] = false;
                                           /* 2 * 3 digits */
-                                          var product int = (a * 10 + b) * (c *
-                                                                             100 +
-                                                                             d *
-                                                                             10 +
-                                                                             e)
+                                          var product int = (a * 10 + b) * (c * 100 + d * 10 + e)
                                           if !counted[product] && okdigits(allowed, product / 10) {
                                             counted[product] = true;
                                               count += product;
                                               fmt.Printf("%d ", product);
                                           }
                                           /* 1  * 4 digits */
-                                          var product2 int = b * (a * 1000 + c *
-                                                                   100 + d *
-                                                                   10 + e)
+                                          var product2 int = b * (a * 1000 + c * 100 + d * 10 + e)
                                           if !counted[product2] && okdigits(allowed, product2 / 10) {
                                             counted[product2] = true;
                                               count += product2;

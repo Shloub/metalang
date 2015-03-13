@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func devine0(nombre int, tab []int, len int) bool{
   var min0 int = tab[0]
   var max0 int = tab[1]

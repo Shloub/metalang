@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func is_number(c byte) bool{
   return (int)(c) <= (int)('9') && (int)(c) >= (int)('0')
 }

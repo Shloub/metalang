@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func programme_candidat(tableau []byte, taille int) int{
   var out0 int = 0
   for i := 0 ; i <= taille - 1; i++ {

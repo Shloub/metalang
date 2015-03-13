@@ -13,7 +13,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func exp0(a int, b int) int{
   if b == 0 {
     return 1

@@ -14,7 +14,6 @@ func skip() {
     reader.UnreadByte()
   }
 }
-
 func is_triangular(n int) bool{
   /*
    n = k * (k + 1) / 2
