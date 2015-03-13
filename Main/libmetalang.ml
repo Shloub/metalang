@@ -281,7 +281,7 @@ let languages, printers =
     "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
     "rb",      (false, ruby_passes) => new RbPrinter.rbPrinter ;
     "py",      (false, python_passes) => new PyPrinter.pyPrinter ;
-    "go",      (true, clike_passes)   => new GoPrinter.goPrinter ;
+    "go",      (false, clike_passes)   => new GoPrinter.goPrinter ;
     "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
     "rkt",     (true, fun_passes {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
     "pl",      (true, python_passes)       => new PerlPrinter.perlPrinter ;
