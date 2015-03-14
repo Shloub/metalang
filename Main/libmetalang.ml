@@ -285,7 +285,6 @@ let languages, printers =
     "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
     "rkt",     (true, fun_passes {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
     "pl",      (true, python_passes)       => new PerlPrinter.perlPrinter ;
-(*    "metalang_parsed", (true, no_passes) => new Printer.printer ; *)
   ] in
   let langs : string list = List.map fst ls in
   let map = L.from_list ls
