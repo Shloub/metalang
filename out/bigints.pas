@@ -1,4 +1,5 @@
 program bigints;
+Uses math;
 
 var global_char : char;
 var global_has_char : boolean;
@@ -42,32 +43,6 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
-
-function min2_(a : Longint; b : Longint) : Longint;
-begin
-  if a < b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
-
 type
     bigint=^bigint_r;
     bigint_r = record
@@ -209,7 +184,7 @@ var
   tmp : Longint;
 begin
   { Une addition ou on en a rien a faire des signes }
-  len := max2_(a^.bigint_len, b^.bigint_len) + 1;
+  len := Max(a^.bigint_len, b^.bigint_len) + 1;
   retenue := 0;
   SetLength(chiffres, len);
   for i := 0 to  len - 1 do
@@ -399,7 +374,7 @@ var
   len : Longint;
   o : bigint;
 begin
-  len := min2_(i, a^.bigint_len);
+  len := Min(i, a^.bigint_len);
   while (len <> 0) and (a^.bigint_chiffres[len - 1] = 0) do
   begin
     len := len - 1;
@@ -467,7 +442,7 @@ begin
       exit(mul_bigint_cp(aa, bb));
     end;;;
   { Algorithme de Karatsuba }
-  split := min2_(aa^.bigint_len, bb^.bigint_len) Div 2;
+  split := Min(aa^.bigint_len, bb^.bigint_len) Div 2;
   a := bigint_shift(aa, -split);
   b := bigint_premiers_chiffres(aa, split);
   c := bigint_shift(bb, -split);

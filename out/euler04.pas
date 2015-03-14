@@ -1,17 +1,5 @@
 program euler04;
-
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
+Uses math;
 
 {
 
@@ -79,7 +67,7 @@ begin
                                                                                 mul))
               then
                 begin
-                  m := max2_(mul, m);
+                  m := Max(mul, m);
                 end;
             end;
           end;

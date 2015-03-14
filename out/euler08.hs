@@ -36,10 +36,6 @@ array_init_withenv len f env =
 
 main :: IO ()
 
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
 main =
   (array_init_withenv 5 (\ j bb ->
@@ -62,7 +58,7 @@ main =
                                                                               return (y, ba)) >>= (\ (r, s) ->
                                                                                                     do writeIOA last o f
                                                                                                        let t = (o + 1) `rem` 5
-                                                                                                       u <- max2_ p r
+                                                                                                       let u = (max p r)
                                                                                                        l (k + 1) r t u s)
                                                              else printf "%d\n" (p::Int) :: IO() in
                                                              l 1 m 0 m 0)

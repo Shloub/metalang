@@ -1,4 +1,5 @@
 program cambriolage;
+Uses math;
 
 var global_char : char;
 var global_has_char : boolean;
@@ -61,19 +62,6 @@ begin
    until false;
 end;
 
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
-
 type c = array of Longint;
 type d = array of c;
 function nbPassePartout(n : Longint; passepartout : d; m : Longint; serrures : d) : Longint;
@@ -110,8 +98,8 @@ begin
       begin
         exit(1);
       end;
-    max_ancient_pp := max2_(max_ancient_pp, pp[0]);
-    max_recent_pp := max2_(max_recent_pp, pp[1]);
+    max_ancient_pp := Max(max_ancient_pp, pp[0]);
+    max_recent_pp := Max(max_recent_pp, pp[1]);
   end;
   if (max_ancient_pp >= max_ancient) and (max_recent_pp >= max_recent)
   then

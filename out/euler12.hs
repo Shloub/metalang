@@ -31,10 +31,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
 eratostene t max0 =
   let w i y =
@@ -86,7 +82,7 @@ find ndiv2 =
                       if n <= 10000
                       then do primesFactors <- array_init (n + 2) (\ m ->
                                                                      return 0)
-                              max0 <- join $ max2_ <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)
+                              max0 <- ((max <$> (fillPrimesFactors primesFactors n primes nprimes) <*> (fillPrimesFactors primesFactors (n + 1) primes nprimes)))
                               writeIOA primesFactors 2 =<< ((-) <$> (readIOA primesFactors 2) <*> (return 1))
                               let r i bh =
                                     if i <= max0

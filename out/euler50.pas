@@ -1,17 +1,5 @@
 program euler50;
-
-function min2_(a : Longint; b : Longint) : Longint;
-begin
-  if a < b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
+Uses math;
 
 type c = array of Longint;
 function eratostene(t : c; max0 : Longint) : Longint;
@@ -119,7 +107,7 @@ begin
             end
           else
             begin
-              stop := min2_(stop, i);
+              stop := Min(stop, i);
             end;
         end;
     end;

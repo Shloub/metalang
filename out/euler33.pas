@@ -1,30 +1,5 @@
 program euler33;
-
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
-
-function min2_(a : Longint; b : Longint) : Longint;
-begin
-  if a < b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
+Uses math;
 
 function pgcd(a : Longint; b : Longint) : Longint;
 var
@@ -32,8 +7,8 @@ var
   d : Longint;
   reste : Longint;
 begin
-  c := min2_(a, b);
-  d := max2_(a, b);
+  c := Min(a, b);
+  d := Max(a, b);
   reste := d Mod c;
   if reste = 0
   then

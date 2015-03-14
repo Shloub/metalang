@@ -31,10 +31,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-min2_ a b =
-  return (if a < b
-          then a
-          else b)
 
 
 
@@ -48,7 +44,7 @@ main =
            then let j iy =
                       if iy <= y - 1
                       then ifM (((==) 1) <$> (join $ readIOA <$> (readIOA tab iy) <*> return ix))
-                               (do join $ writeIOA <$> (readIOA tab iy) <*> return ix <*> (((+) 1) <$> (join $ min2_ <$> (join $ min2_ <$> (join $ readIOA <$> (readIOA tab iy) <*> return (ix - 1)) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return ix)) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return (ix - 1))))
+                               (do join $ writeIOA <$> (readIOA tab iy) <*> return ix <*> (((+) 1) <$> ((min <$> (((min <$> (join $ readIOA <$> (readIOA tab iy) <*> return (ix - 1)) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return ix)))) <*> (join $ readIOA <$> (readIOA tab (iy - 1)) <*> return (ix - 1)))))
                                    j (iy + 1))
                                (j (iy + 1))
                       else i (ix + 1) in

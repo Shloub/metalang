@@ -21,10 +21,6 @@ ifM c i e =
      if b then i else e
 
 main :: IO ()
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
 chiffre c m =
   if c == 0
@@ -46,7 +42,7 @@ main =
                                                                if e <= 9
                                                                then do let mul = a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c * d) + 1000 * (c * e + b * f) + 10000 * c * f
                                                                        ifM ((((==) <$> (chiffre 0 mul) <*> (chiffre 5 mul)) <&&> ((==) <$> (chiffre 1 mul) <*> (chiffre 4 mul))) <&&> ((==) <$> (chiffre 2 mul) <*> (chiffre 3 mul)))
-                                                                           (do t <- max2_ mul s
+                                                                           (do let t = (max mul s)
                                                                                l (e + 1) t)
                                                                            (l (e + 1) s)
                                                                else k (b + 1) s in

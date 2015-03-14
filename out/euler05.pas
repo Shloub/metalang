@@ -1,17 +1,5 @@
 program euler05;
-
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
+Uses math;
 
 type c = array of Longint;
 function primesfactors(n : Longint) : c;
@@ -66,7 +54,7 @@ begin
     t := primesfactors(i);
     for j := 1 to  i do
     begin
-      o[j] := max2_(o[j], t[j]);
+      o[j] := Max(o[j], t[j]);
     end;
   end;
   product := 1;

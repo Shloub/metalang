@@ -102,8 +102,12 @@ macro int native_macro_max2(int a, int b)
   clisp do "(max $a $b)"
   ruby do "[$a, $b].max"
   lua do "math.max($a, $b)"
+  pas do "Max($a, $b)"
+  hs do "(max <$> ($a) <*> ($b))"
+  hs_pure do "max $a $b"
   * do "max($a, $b)"
 end
+tag macro_native_macro_max2_pure
 
 def int max2_(int a, int b)
  if a > b then return a else return b end
@@ -121,9 +125,12 @@ def lexems macro_max2(lexems a, lexems b)
   current_language() == LANG_Py ||
   current_language() == LANG_Pl ||
   current_language() == LANG_Lua ||
+  current_language() == LANG_Pas ||
+  current_language() == LANG_Hs ||
   current_language() == LANG_Rb
   then
     return { 
+    tag use_pascal_math
     tag perl_use_list_min
     return native_macro_max2( ${a}, ${b}) }
   else
@@ -148,8 +155,13 @@ macro int native_macro_min2(int a, int b)
   ruby do "[$a, $b].min"
   pl do "min($a, $b)"
   lua do "math.min($a, $b)"
+  pas do "Min($a, $b)"
+  hs do "(min <$> ($a) <*> ($b))"
+  hs_pure do "min $a $b"
   * do "min($a, $b)"
 end
+
+tag macro_native_macro_min2_pure
 
 macro int native_macro_min3(int a, int b, int c)
   js do "Math.min($a, $b, $c)"
@@ -193,9 +205,12 @@ def lexems macro_min2(lexems a, lexems b)
   current_language() == LANG_Rb ||
   current_language() == LANG_Vb ||
   current_language() == LANG_Pl ||
-  current_language() == LANG_Lua
+  current_language() == LANG_Pas ||
+  current_language() == LANG_Lua||
+  current_language() == LANG_Hs
   then
     return { 
+    tag use_pascal_math
     tag perl_use_list_min
     return native_macro_min2( ${a}, ${b}) }
   else

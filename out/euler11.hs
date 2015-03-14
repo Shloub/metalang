@@ -29,10 +29,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
 
 find n m x y dx dy =
@@ -68,7 +64,7 @@ main =
                                                    if x <= 19
                                                    then let l y q =
                                                               if y <= 19
-                                                              then do r <- max2_ q =<< (find 4 m x y dx dy)
+                                                              then do r <- ((max <$> (return q) <*> (find 4 m x y dx dy)))
                                                                       l (y + 1) r
                                                               else k (x + 1) q in
                                                               l 0 p

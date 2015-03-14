@@ -1,17 +1,5 @@
 program euler12;
-
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
+Uses math;
 
 type c = array of Longint;
 function eratostene(t : c; max0 : Longint) : Longint;
@@ -106,7 +94,7 @@ begin
     begin
       primesFactors[m] := 0;
     end;
-    max0 := max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    max0 := Max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
     primesFactors[2] := primesFactors[2] - 1;
     ndivs := 1;
     for i := 0 to  max0 do

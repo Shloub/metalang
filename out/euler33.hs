@@ -12,19 +12,11 @@ ifM c i e =
      if b then i else e
 
 main :: IO ()
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
-min2_ a b =
-  return (if a < b
-          then a
-          else b)
 
 pgcd a b =
-  do c <- min2_ a b
-     d <- max2_ a b
+  do let c = (min a b)
+     let d = (max a b)
      let reste = d `rem` c
      if reste == 0
      then return c

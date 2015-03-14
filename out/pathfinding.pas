@@ -1,4 +1,5 @@
 program pathfinding;
+Uses math;
 
 var global_char : char;
 var global_has_char : boolean;
@@ -69,19 +70,6 @@ begin
    until false;
 end;
 
-function min2_(a : Longint; b : Longint) : Longint;
-begin
-  if a < b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
-
 type e = array of Longint;
 type f = array of array of Longint;
 type g = array of char;
@@ -118,7 +106,7 @@ begin
       val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY);
       val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1);
       val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      out0 := 1 + min2_(min2_(min2_(val1, val2), val3), val4);
+      out0 := 1 + Min(Min(Min(val1, val2), val3), val4);
       cache[posY][posX] := out0;
       exit(out0);
     end;;;;

@@ -1,4 +1,5 @@
 program carre;
+Uses math;
 
 var global_char : char;
 var global_has_char : boolean;
@@ -61,19 +62,6 @@ begin
    until false;
 end;
 
-function min2_(a : Longint; b : Longint) : Longint;
-begin
-  if a < b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
-
 type g = array of Longint;
 type h = array of array of Longint;
 
@@ -111,7 +99,7 @@ begin
       if tab[iy][ix] = 1
       then
         begin
-          tab[iy][ix] := min2_(min2_(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1;
+          tab[iy][ix] := Min(Min(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1;
         end;
     end;
   end;

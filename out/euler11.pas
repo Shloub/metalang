@@ -1,4 +1,5 @@
 program euler11;
+Uses math;
 
 var global_char : char;
 var global_has_char : boolean;
@@ -59,19 +60,6 @@ begin
       else
          exit(i * sign);
    until false;
-end;
-
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
 end;
 
 type s = array of Longint;
@@ -207,7 +195,7 @@ begin
     begin
       for y := 0 to  19 do
       begin
-        max0 := max2_(max0, find(4, m, x, y, dx, dy));
+        max0 := Max(max0, find(4, m, x, y, dx, dy));
       end;
     end;
   end;

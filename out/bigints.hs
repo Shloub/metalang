@@ -46,15 +46,7 @@ array_init len f = fmap snd (array_init_withenv len (\x () -> fmap ((,) ()) (f x
 
 main :: IO ()
 
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
-min2_ a b =
-  return (if a < b
-          then a
-          else b)
 
 data Bigint = Bigint {
                         _bigint_sign :: IORef Bool,
@@ -132,7 +124,7 @@ bigint_lt a b =
 
 add_bigint_positif a b =
   {- Une addition ou on en a rien a faire des signes -}
-  do len <- (((+) 1) <$> (join $ max2_ <$> (readIORef (_bigint_len a)) <*> (readIORef (_bigint_len b))))
+  do len <- (((+) 1) <$> ((max <$> (readIORef (_bigint_len a)) <*> (readIORef (_bigint_len b)))))
      (array_init_withenv len (\ i cj ->
                                 do ck <- ifM (((<) i) <$> (readIORef (_bigint_len a)))
                                              (do cl <- (((+) cj) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return i))
@@ -230,7 +222,7 @@ D'ou le nom de la fonction. -}
             bl 0
 
 bigint_premiers_chiffres a i =
-  do len <- min2_ i =<< (readIORef (_bigint_len a))
+  do len <- ((min <$> (return i) <*> (readIORef (_bigint_len a))))
      let bh de =
             ifM ((return (de /= 0)) <&&> (((==) 0) <$> (join $ readIOA <$> (readIORef (_bigint_chiffres a)) <*> return (de - 1))))
                 (do let df = de - 1
@@ -253,7 +245,7 @@ mul_bigint aa bb =
            (ifM ((((>) 3) <$> (readIORef (_bigint_len aa))) <||> (((>) 3) <$> (readIORef (_bigint_len bb))))
                 (mul_bigint_cp aa bb)
                 {- Algorithme de Karatsuba -}
-                (do split <- (quot <$> (join $ min2_ <$> (readIORef (_bigint_len aa)) <*> (readIORef (_bigint_len bb))) <*> (return 2))
+                (do split <- (quot <$> ((min <$> (readIORef (_bigint_len aa)) <*> (readIORef (_bigint_len bb)))) <*> (return 2))
                     a <- bigint_shift aa (- split)
                     b <- bigint_premiers_chiffres aa split
                     c <- bigint_shift bb (- split)

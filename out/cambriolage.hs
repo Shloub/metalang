@@ -55,10 +55,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
 nbPassePartout n passepartout m serrures =
   let d i s t =
@@ -76,8 +72,8 @@ nbPassePartout n passepartout m serrures =
                    then do pp <- readIOA passepartout x
                            ifM ((((<=) s) <$> (readIOA pp 0)) <&&> (((<=) t) <$> (readIOA pp 1)))
                                (return 1)
-                               (do ba <- max2_ y =<< (readIOA pp 0)
-                                   bb <- max2_ z =<< (readIOA pp 1)
+                               (do ba <- ((max <$> (return y) <*> (readIOA pp 0)))
+                                   bb <- ((max <$> (return z) <*> (readIOA pp 1)))
                                    c (x + 1) ba bb)
                    else return (if y >= s && z >= t
                                 then 2

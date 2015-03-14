@@ -1,4 +1,5 @@
 program euler08;
+Uses math;
 
 var global_char : char;
 var global_has_char : boolean;
@@ -26,19 +27,6 @@ begin
    skip_char();
    read_char_ := c;
 end;
-function max2_(a : Longint; b : Longint) : Longint;
-begin
-  if a > b
-  then
-    begin
-      exit(a);
-    end
-  else
-    begin
-      exit(b);
-    end;
-end;
-
 type g = array of Longint;
 
 var
@@ -88,7 +76,7 @@ begin
       end;
     last[index] := f;
     index := (index + 1) Mod 5;
-    max0 := max2_(max0, i);
+    max0 := Max(max0, i);
   end;
   Write(max0);
   Write(''#10'');

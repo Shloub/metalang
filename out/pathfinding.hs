@@ -57,10 +57,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-min2_ a b =
-  return (if a < b
-          then a
-          else b)
 
 pathfind_aux cache tab x y posX posY =
   if posX == x - 1 && posY == y - 1
@@ -76,7 +72,7 @@ pathfind_aux cache tab x y posX posY =
                          val2 <- pathfind_aux cache tab x y (posX - 1) posY
                          val3 <- pathfind_aux cache tab x y posX (posY - 1)
                          val4 <- pathfind_aux cache tab x y posX (posY + 1)
-                         out0 <- (((+) 1) <$> (join $ min2_ <$> (join $ min2_ <$> (min2_ val1 val2) <*> return val3) <*> return val4))
+                         let out0 = 1 + (min (min (min val1 val2) val3) val4)
                          join $ writeIOA <$> (readIOA cache posY) <*> return posX <*> return out0
                          return out0))
 

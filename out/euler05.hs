@@ -31,10 +31,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-max2_ a b =
-  return (if a > b
-          then a
-          else b)
 
 primesfactors n =
   do tab <- array_init (n + 1) (\ i ->
@@ -59,7 +55,7 @@ main =
            then do t <- primesfactors i
                    let u j =
                          if j <= i
-                         then do writeIOA o j =<< (join $ max2_ <$> (readIOA o j) <*> (readIOA t j))
+                         then do writeIOA o j =<< ((max <$> (readIOA o j) <*> (readIOA t j)))
                                  u (j + 1)
                          else s (i + 1) in
                          u 1

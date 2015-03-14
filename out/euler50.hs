@@ -31,10 +31,6 @@ array_init len f = newListArray (0, len - 1) =<< g 0
            else fmap (:) (f i) <*> g (i + 1)
 
 main :: IO ()
-min2_ a b =
-  return (if a < b
-          then a
-          else b)
 
 eratostene t max0 =
   let c i u =
@@ -83,7 +79,7 @@ main =
                                                           (do bm <- readIOA sum i
                                                               r (i + 1) ba True bm bj)
                                                           (r (i + 1) bg True bi bj))
-                                                     (do bn <- min2_ bj i
+                                                     (do let bn = (min bj i)
                                                          r (i + 1) bg bh bi bn)
                                          else r (i + 1) bg bh bi bj
                                     else do let bo = ba + 1
