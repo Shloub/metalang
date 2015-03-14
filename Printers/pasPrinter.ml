@@ -377,7 +377,8 @@ class pasPrinter = object(self)
     Format.fprintf f "program %s;@\n%a%s%s%s%s%s@\n%a%a.@\n@\n"
       prog.Prog.progname
       (fun f () ->
-        if Tags.is_taged "use_math"
+        if Tags.is_taged "use_math" ||
+        Tags.is_taged "use_pascal_math"
         then Format.fprintf f "Uses math;@\n"
       ) ()
       (if need then "
