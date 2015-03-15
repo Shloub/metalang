@@ -16,6 +16,11 @@ outils :
 autres printers :
   f#
   scala
+  tcl
+  erlang
+  rhino
+  gforth
+  smalltalk
   clojure
 
 portage windows
