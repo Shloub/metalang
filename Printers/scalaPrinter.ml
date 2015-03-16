@@ -87,11 +87,15 @@ class scalaPrinter = object(self)
   | InternalName i -> Format.fprintf f "internal__%d" i
 
   method header f prog =
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
     Format.fprintf f "%s%s%s%s@\n"
-      buffer
-      readint
-      readchar
-      skip
+      (if need then buffer else "")
+      (if need_readint then readint else "")
+      (if need_readchar then readchar else "")
+      (if need_stdinsep then skip else "")
      
   method stdin_sep f = Format.fprintf f "@[skip();@]"
 
