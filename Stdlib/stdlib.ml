@@ -258,6 +258,7 @@ module String = struct
   let ends_with s s' =
     let l = String.length s in
     let l' = String.length s' in
+    if l' > l then false else
     let s = String.sub s (l - l') l' in
     s = s'
 
