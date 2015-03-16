@@ -16,17 +16,6 @@ def read_int() : Int = {
   }
   return c * sign;
 }
-def read_char() : Char = {
-  if (buffer != null && buffer == "") buffer = readLine();
-  var c = buffer.charAt(0);
-  buffer = buffer.substring(1);
-  return c;
-}
-def skip() {
-  if (buffer != null && buffer == "") buffer = readLine();
-  while (buffer != null && buffer != "" && (buffer.charAt(0) == ' ' || buffer.charAt(0) == '\t' || buffer.charAt(0) == '\n' || buffer.charAt(0) == '\r'))
-    buffer = buffer.substring(1);
-}
 
   class Intlist(_head: Int, _tail: Intlist){
     var head: Int=_head;
