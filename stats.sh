@@ -23,6 +23,7 @@ ada=$(st "out" "*.adb")
 vb=$(st "out" "*.vb")
 hs=$(st "out" "*.hs")
 lua=$(st "out" "*.lua")
+scala=$(st "out" "*.scala")
 
 ml=$(( $ml - $funml ))
 
@@ -46,6 +47,7 @@ java=$(( $java * 1000 / $metalang))
 ada=$(( $ada * 1000 / $metalang))
 hs=$(( $hs * 1000 / $metalang))
 lua=$(( $lua * 1000 / $metalang))
+scala=$(( $scala * 1000 / $metalang))
 
 file="stats_repartition.dat"
 
@@ -92,6 +94,7 @@ ada $ada
 vb $vb
 hs $hs
 lua $lua
+scala $scala
 java $java" | swap | sort | swap ) > "$file"
 
 filestatsplot(){
