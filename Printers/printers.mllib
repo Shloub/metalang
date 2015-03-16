@@ -20,4 +20,5 @@ Printer
 PyPrinter
 RacketPrinter
 RbPrinter
+ScalaPrinter
 VbDotNetPrinter

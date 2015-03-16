@@ -27,6 +27,7 @@ macro int sqrt_(int c)
   hs do "fmap (floor . sqrt . fromIntegral) ($c)"
   hs_pure do "(floor . sqrt . fromIntegral) $c"
   lua do "math.floor(math.sqrt($c))"
+  scala do "math.sqrt($c).toInt"
   * do "sqrt($c)"
 end
 
@@ -56,6 +57,7 @@ macro char char_of_int(int c)
   vb do "Chr($c)"
   hs do "fmap chr ($c)"
   hs_pure do "chr $c"
+  scala do "($c).toChar"
   lua  do "$c"
   *  do "$c"
 end
@@ -79,6 +81,7 @@ macro int int_of_char(char c)
   vb do "Asc($c)"
   hs do "fmap ord ($c)"
   hs_pure do "ord $c"
+  scala do "($c).toInt"
   lua  do "$c"
   *  do "$c"
 end
@@ -285,6 +288,7 @@ macro array<int> native_expand_read_int_line(int c)
   java do "read_int_line()"
   lua do "readintline()"
   hs do "join (newListArray . (,) 0 . subtract 1 <$> $c <*> fmap (map read . words) getLine)"
+  scala do "readLine().split(\" \").map(_.toInt)"
   *  do "E R R O R"
 end
 
@@ -300,6 +304,7 @@ macro array<char> native_expand_read_char_line(int c)
   lua do "readcharline()"
   java do "scanner.nextLine().toCharArray()"
   hs do "join (newListArray <$> (fmap (\\x -> (0, x-1)) ($c)) <*> getLine)"
+  scala do "readInt().toCharArray()"
   *  do "E R R O R"
 end
 
@@ -321,6 +326,7 @@ macro int native_expand_read_int()
   lua do "tonumber(io.read('*l'))"
   java do "Integer.parseInt(scanner.nextLine())"
   hs do "fmap read getLine"
+  scala do "readInt().toInt"
   *  do "E R R O R"
 end
 
@@ -473,6 +479,7 @@ macro (int, int) native_expand_read_int_couple()
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   rkt do "map string->number (regexp-split \" \" (read-line))"
   hs do " (fmap read . head . reads) <$> getLine :: IO (Int, Int)"
+  scala do "readf2(\"{0,number} {1,number}\")"
   *  do "E R R O R"
 end
 
@@ -518,6 +525,7 @@ macro (int, int, int) native_expand_read_3ints()
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   rkt do "map string->number (regexp-split \" \" (read-line))"
+  scala do "readf3(\"{0,number} {1,number} {2,number}\")"
   *  do "E R R O R"
 end
 

@@ -98,6 +98,8 @@ TMPFILES	:=\
 	$(addsuffix .adb.bin.out, $(TESTS)) \
 	$(addsuffix .lua, $(TESTS)) \
 	$(addsuffix .lua.out, $(TESTS)) \
+	$(addsuffix .scala, $(TESTS)) \
+	$(addsuffix .scala.out, $(TESTS)) \
 	$(addsuffix .test, $(TESTS)) \
 	$(addsuffix .not_compile, $(TESTSNOTCOMPILEFILES)) \
 	$(addsuffix .outs, $(TESTS)) \
@@ -124,7 +126,7 @@ out/%.$1 : tests/prog/%.metalang tests/prog/%.in metalang Stdlib/stdlib.metalang
 	 ./metalang -quiet -o out -lang $1 $$< || exit 1; \
 	fi
 endef
-$(foreach i, metalang lua rkt php cc c py rb hs ml pl fun.ml adb pas vb cs js java m cl go, $(eval $(call GENERATION,$(i))))
+$(foreach i, scala metalang lua rkt php cc c py rb hs ml pl fun.ml adb pas vb cs js java m cl go, $(eval $(call GENERATION,$(i))))
 
 # compilation dans les différents langages
 
@@ -213,6 +215,9 @@ out/%.lua.out : out/%.lua
 out/%.pl.out : out/%.pl
 	perl $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
+out/%.scala.out : out/%.scala
+	scala $< < tests/prog/$(basename $*).in > $@ || exit 1;
+
 out/%.ml.out : out/%.ml
 	ocaml $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
@@ -239,7 +244,7 @@ out/%.rkt.out : out/%.rkt
 
 # test global
 
-out/%.test : out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out out/%.lua.out
+out/%.test : out/%.exeVB.out out/%.adb.bin.out out/%.rkt.out out/%.fun.ml.out out/%.pl.out out/%.rkt.out out/%.m.bin.out out/%.ml.out out/%.py.out out/%.php.out out/%.rb.out out/%.eval.out out/%.js.out out/%.cc.bin.out out/%.c.bin.out out/%.ml.native.out out/%.pas.bin.out out/%.class.out out/%.exe.out out/%.go.out out/%.cl.out out/%.fun.ml.native.out out/%.hs.exe.out out/%.lua.out out/%.scala.out
 	@for i in $^; do \
 	if diff "$$i" "$<" > /dev/null; then \
 	echo "" > /dev/null; \
@@ -278,7 +283,7 @@ test_$1 : $(addsuffix .test_$1, $(TESTS))
 
 endef
 
-$(foreach i, exeVB adb.bin rkt fun.ml pl rkt m.bin ml py php rb eval js cc.bin c.bin ml.native pas.bin class exe go cl fun.ml.native hs.exe lua , $(eval $(call TEST2,$(i))))
+$(foreach i, exeVB adb.bin rkt fun.ml pl rkt m.bin ml py php rb eval js cc.bin c.bin ml.native pas.bin class exe go cl fun.ml.native hs.exe lua scala, $(eval $(call TEST2,$(i))))
 
 # tests qui ne doivent pas compiler
 

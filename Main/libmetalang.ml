@@ -273,6 +273,7 @@ let languages, printers =
     "cs",      (true, clike_passes)   => new CsharpPrinter.csharpPrinter ;
     "vb",      (false, clike_passes)   => new VbDotNetPrinter.vbDotNetPrinter ;
     "java",    (true, clike_passes)   => new JavaPrinter.javaPrinter ;
+    "scala",    (false, clike_passes)   => new ScalaPrinter.scalaPrinter ;
     "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
     "lua",      (true, python_passes)   => new LuaPrinter.luaPrinter ;
     "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
@@ -454,6 +455,7 @@ enum @target_language
   LANG_Py
   LANG_Rb
   LANG_Rkt
+  LANG_Scala
   LANG_Vb
   LANG_Metalang_parsed
 end
