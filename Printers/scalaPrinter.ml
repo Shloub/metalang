@@ -99,6 +99,13 @@ class scalaPrinter = object(self)
      
   method stdin_sep f = Format.fprintf f "@[skip();@]"
 
+  method untuple f li e =
+    Format.fprintf f "var (%a) = %a"
+      (print_list self#binding
+         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+      ) (List.map snd li)
+      self#expr e
+
   method read_decl f t v =
     Format.fprintf f "var %a"
       (fun f () -> self#read f t (Mutable.var v)) ()
@@ -199,7 +206,11 @@ class scalaPrinter = object(self)
     | Type.Named n -> self#typename f n
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct _ -> Format.fprintf f "a struct"
-    | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
+    | Type.Tuple li -> Format.fprintf f "(%a)" (print_list self#ptype
+                                                  (fun f f1 e1 f2 e2 ->
+                                                    Format.fprintf f "%a, %a" f1 e1 f2 e2
+                                                  )) li
+    | Type.Auto | Type.Lexems -> assert false
 
   method typename f n = Format.fprintf f "%s" (String.capitalize n)
 
@@ -238,17 +249,25 @@ class scalaPrinter = object(self)
           self#typename name
     | _ -> assert false
 
+  method record f li =
+    match li with
+    | (field, _)::_ ->
+        let t = Typer.typename_for_field field (self#getTyperEnv ()) in
+        Format.fprintf f "new %a(%a)"
+          self#typename t
+          (print_list
+             (fun f (fieldname, expr) -> self#expr f expr)
+             (fun t f1 e1 f2 e2 ->
+               Format.fprintf t
+                 "%a, %a" f1 e1 f2 e2)
+          )
+          li
+    | _ -> assert false
+
   method allocrecord f name t el = (* TODO trier les champs *)
-    Format.fprintf f "var %a = new %a(%a)%a"
+    Format.fprintf f "var %a = %a%a"
       self#binding name
-      self#ptype t
-      (print_list
-         (fun f (fieldname, expr) -> self#expr f expr)
-         (fun t f1 e1 f2 e2 ->
-           Format.fprintf t
-             "%a, %a" f1 e1 f2 e2)
-      )
-      el
+      self#record el
       self#separator ()
 
   method mutable_ f m =

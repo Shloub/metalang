@@ -304,7 +304,7 @@ macro array<char> native_expand_read_char_line(int c)
   lua do "readcharline()"
   java do "scanner.nextLine().toCharArray()"
   hs do "join (newListArray <$> (fmap (\\x -> (0, x-1)) ($c)) <*> getLine)"
-  scala do "readInt().toCharArray()"
+  scala do "readLine().toCharArray()"
   *  do "E R R O R"
 end
 
@@ -346,7 +346,8 @@ then
 	current_language() == LANG_Java ||
 	current_language() == LANG_Rb ||
 	current_language() == LANG_Lua ||
-	current_language() == LANG_Hs
+	current_language() == LANG_Hs ||
+	current_language() == LANG_Scala
 	then
     return {
     tag use_readline
@@ -372,6 +373,7 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Java ||
 	current_language() == LANG_Rb ||
 	current_language() == LANG_Lua ||
+	current_language() == LANG_Scala ||
 	current_language() == LANG_Hs
 	  then
       return {
@@ -413,7 +415,8 @@ def lexems expand_read_char_line(lexems a)
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Java ||
 	current_language() == LANG_Rb ||
-	current_language() == LANG_Hs
+	current_language() == LANG_Hs ||
+	current_language() == LANG_Scala
 	  then
       return {
       tag use_readline
@@ -479,7 +482,7 @@ macro (int, int) native_expand_read_int_couple()
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   rkt do "map string->number (regexp-split \" \" (read-line))"
   hs do " (fmap read . head . reads) <$> getLine :: IO (Int, Int)"
-  scala do "readf2(\"{0,number} {1,number}\")"
+  scala do "readf2(\"{0,number} {1,number}\").asInstanceOf[(Long, Long)] match { case x => (x._1.toInt, x._2.toInt) }"
   *  do "E R R O R"
 end
 
@@ -496,7 +499,8 @@ def lexems expand_read_int_couple()
     current_language() == LANG_Rkt ||
     current_language() == LANG_Pl ||
      current_language() == LANG_Lua ||
-    current_language() == LANG_Hs
+    current_language() == LANG_Hs ||
+     current_language() == LANG_Scala
   then
     return {
       tag use_readintline
@@ -525,7 +529,7 @@ macro (int, int, int) native_expand_read_3ints()
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   rkt do "map string->number (regexp-split \" \" (read-line))"
-  scala do "readf3(\"{0,number} {1,number} {2,number}\")"
+  scala do "readf3(\"{0,number} {1,number} {2,number}\").asInstanceOf[(Long, Long, Long)] match { case x => (x._1.toInt, x._2.toInt, x._3.toInt) }"
   *  do "E R R O R"
 end
 
@@ -541,6 +545,7 @@ def lexems expand_read_3ints()
     current_language() == LANG_Rb ||
      current_language() == LANG_Lua ||
     current_language() == LANG_Rkt ||
+    current_language() == LANG_Scala ||
     current_language() == LANG_Pl
   then
     return {
