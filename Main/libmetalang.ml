@@ -255,8 +255,8 @@ let languages, printers =
 	        Format.pp_set_max_indent out 80;
         end
         else begin
-          Format.pp_set_margin out 801;
-	        Format.pp_set_max_indent out 800;
+          Format.pp_set_margin out 16001;
+	        Format.pp_set_max_indent out 16000;
         end;
         pr#setTyperEnv typerEnv;
         pr#prog out processed
