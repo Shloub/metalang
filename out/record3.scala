@@ -29,7 +29,7 @@ def skip() {
   }
   
   def mktoto(v1 : Int): Toto = {
-    var t = new Toto(v1, 0, 0);
+    var t: Toto = new Toto(v1, 0, 0);
     return t;
   }
   

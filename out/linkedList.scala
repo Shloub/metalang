@@ -23,7 +23,7 @@ def read_int() : Int = {
   }
   
   def cons(list : Intlist, i : Int): Intlist = {
-    var out0 = new Intlist(i, list);
+    var out0: Intlist = new Intlist(i, list);
     return out0;
   }
   
@@ -32,7 +32,7 @@ def read_int() : Int = {
       return acc;
     else
     {
-      var acc2 = new Intlist(torev.head, acc);
+      var acc2: Intlist = new Intlist(torev.head, acc);
       return rev2(empty, acc, torev.tail);
     }
   }

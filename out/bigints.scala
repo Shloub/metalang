@@ -49,8 +49,7 @@ def skip() {
       chiffres(i) = chiffres(len - 1 - i);
       chiffres(len - 1 - i) = tmp;
     }
-    var e = new Bigint(true, len, chiffres);
-    return e;
+    return new Bigint(true, len, chiffres);
   }
   
   def print_bigint(a : Bigint){
@@ -125,8 +124,7 @@ def skip() {
     }
     while (len > 0 && chiffres(len - 1) == 0)
       len = len - 1;
-    var f = new Bigint(true, len, chiffres);
-    return f;
+    return new Bigint(true, len, chiffres);
   }
   
   def sub_bigint_positif(a : Bigint, b : Bigint): Bigint = {
@@ -153,13 +151,11 @@ Pré-requis : a > b
     }
     while (len > 0 && chiffres(len - 1) == 0)
       len = len - 1;
-    var g = new Bigint(true, len, chiffres);
-    return g;
+    return new Bigint(true, len, chiffres);
   }
   
   def neg_bigint(a : Bigint): Bigint = {
-    var h = new Bigint(!a.bigint_sign, a.bigint_len, a.bigint_chiffres);
-    return h;
+    return new Bigint(!a.bigint_sign, a.bigint_len, a.bigint_chiffres);
   }
   
   def add_bigint(a : Bigint, b : Bigint): Bigint = {
@@ -220,17 +216,14 @@ D'ou le nom de la fonction. */
     for (l <- 0 to 2)
       if (len != 0 && chiffres(len - 1) == 0)
       len = len - 1;
-    var m = new Bigint(a.bigint_sign ==
-    b.bigint_sign, len, chiffres);
-    return m;
+    return new Bigint(a.bigint_sign == b.bigint_sign, len, chiffres);
   }
   
   def bigint_premiers_chiffres(a : Bigint, i : Int): Bigint = {
     var len: Int = min2_(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres(len - 1) == 0)
       len = len - 1;
-    var o = new Bigint(a.bigint_sign, len, a.bigint_chiffres);
-    return o;
+    return new Bigint(a.bigint_sign, len, a.bigint_chiffres);
   }
   
   def bigint_shift(a : Bigint, i : Int): Bigint = {
@@ -241,9 +234,7 @@ D'ou le nom de la fonction. */
       chiffres(k) = a.bigint_chiffres(k - i);
     else
       chiffres(k) = 0;
-    var p = new Bigint(a.bigint_sign, a.bigint_len +
-    i, chiffres);
-    return p;
+    return new Bigint(a.bigint_sign, a.bigint_len + i, chiffres);
   }
   
   def mul_bigint(aa : Bigint, bb : Bigint): Bigint = {
@@ -299,8 +290,7 @@ Modulo
       t(k) = i % 10;
       i = i / 10;
     }
-    var q = new Bigint(true, size, t);
-    return q;
+    return new Bigint(true, size, t);
   }
   
   def fact_bigint(_a : Bigint): Bigint = {
@@ -496,8 +486,8 @@ Modulo
     printf(">");
     print_bigint(b);
     printf("=");
-    var r: Boolean = bigint_gt(a, b);
-    if (r)
+    var e: Boolean = bigint_gt(a, b);
+    if (e)
       printf("True");
     else
       printf("False");

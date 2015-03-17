@@ -171,7 +171,7 @@ Renvoie le coup de l'IA
   def play(g : Gamestate): Move = {
     var x: Int=0;
     var y: Int=0;
-    var minMove = new Move(0, 0);
+    var minMove: Move = new Move(0, 0);
     var minNote: Int = 10000;
     for (x <- 0 to 2)
       for (y <- 0 to 2)
@@ -203,8 +203,7 @@ Renvoie le coup de l'IA
         tab(j) = 0;
       cases(i) = tab;
     }
-    var a = new Gamestate(cases, true, 0, false);
-    return a;
+    return new Gamestate(cases, true, 0, false);
   }
   
   def read_move(): Move = {
@@ -212,8 +211,7 @@ Renvoie le coup de l'IA
     skip();
     var y = read_int()
     skip();
-    var b = new Move(x, y);
-    return b;
+    return new Move(x, y);
   }
   
   
@@ -222,10 +220,8 @@ Renvoie le coup de l'IA
     for (i <- 0 to 1)
     {
       var state: Gamestate = init0();
-      var c = new Move(1, 1);
-      apply_move(c, state);
-      var d = new Move(0, 0);
-      apply_move(d, state);
+      apply_move(new Move(1, 1), state);
+      apply_move(new Move(0, 0), state);
       while (!state.ended)
       {
         print_state(state);

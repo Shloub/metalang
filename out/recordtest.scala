@@ -30,7 +30,7 @@ def skip() {
   
   def main(args : Array[String])
   {
-    var param = new Toto(0, 0);
+    var param: Toto = new Toto(0, 0);
     param.bar = read_int()
     skip();
     param.foo = read_int()

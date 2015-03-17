@@ -32,15 +32,12 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
   }
   
   def mktoto(v1 : Int): Toto = {
-    var t = new Toto(v1, v1, v1);
+    var t: Toto = new Toto(v1, v1, v1);
     return t;
   }
   
   def mktoto2(v1 : Int): Toto = {
-    var t = new Toto(v1 +
-    3, v1 +
-    2, v1 +
-    1);
+    var t: Toto = new Toto(v1 + 3, v1 + 2, v1 + 1);
     return t;
   }
   
@@ -49,7 +46,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     var i: Int=0;
     var t: Toto = t_U;
     var t2: Toto = t2_U;
-    var t3 = new Toto(0, 0, 0);
+    var t3: Toto = new Toto(0, 0, 0);
     t3 = t2;
     t = t2;
     t2 = t3;

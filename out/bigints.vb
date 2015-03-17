@@ -425,13 +425,11 @@ End Sub
               Function euler29() As Integer
                 Dim maxA As Integer = 5
                 Dim maxB As Integer = 5
-                Dim a_bigint(maxA +
-                1) As bigint
+                Dim a_bigint(maxA + 1) As bigint
                 For  j As Integer  = 0 to  maxA + 1 - 1
                   a_bigint(j) = bigint_of_int(j * j)
                 Next
-                Dim a0_bigint(maxA +
-                1) As bigint
+                Dim a0_bigint(maxA + 1) As bigint
                 For  j2 As Integer  = 0 to  maxA + 1 - 1
                   a0_bigint(j2) = bigint_of_int(j2)
                 Next
