@@ -15,6 +15,7 @@ metalang
 exec*
 compile*
 allsources
-*.test_*_ml
+*.test_*
+*.mdb
 *.exeVB
 
