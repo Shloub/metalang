@@ -51,8 +51,8 @@ let locatee loc e =
 let locatem loc m =
   PosMap.add (Mutable.Fixed.annot m) loc; m
 
-let rec process (acc:'lex acc) i =
-  let rec inner_map t0 : 'lex Instr.t list =
+let process () i =
+  let inner_map t0 : 'lex Instr.t list =
     match Instr.unfix t0 with
     | Instr.AllocArray(
       _, _,
@@ -68,7 +68,7 @@ let rec process (acc:'lex acc) i =
            | Expr.Lief _
        )
       )) ->
-      [fixed_map t0]
+      [t0]
     | Instr.Print(t, e) ->
       begin match Type.unfix t with
       | Type.Bool ->
@@ -84,13 +84,6 @@ let rec process (acc:'lex acc) i =
       end
     | Instr.AllocArray(b0, t, e, lambdaopt, opt) ->
       let annot = Instr.Fixed.annot t0 in
-      let lambdaopt = match lambdaopt with
-        | None -> None
-        | Some (name, li) ->
-          let li = List.map inner_map li in
-          let li = List.flatten li in
-          Some (name, li)
-      in
       let loc = PosMap.get (Instr.Fixed.annot t0) in
       let b = Fresh.fresh_internal () in
       [
@@ -99,12 +92,14 @@ let rec process (acc:'lex acc) i =
                          Expr.access (Mutable.var b),
                          lambdaopt, opt) |> Instr.fixa annot  |> locate loc;
       ]
-    | _ -> [fixed_map t0]
-  and fixed_map (t:'lex Instr.t) =
+    | _ -> [t0]
+  in let fixed_map (t:'lex Instr.t) =
     Instr.deep_map_bloc
       (List.flatten @* (List.map inner_map))
       (Instr.unfix t)
       |> Instr.fixa (Instr.Fixed.annot t)
-  in acc, List.flatten (List.map inner_map i)
+  in
+  let i = List.flatten (List.map (inner_map @* fixed_map) i) in
+  (), i
 
 let init_acc () = ()

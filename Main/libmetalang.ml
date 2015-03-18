@@ -99,10 +99,14 @@ let pass_base_print (a, prog) =
   base_printer#setTyperEnv a;
   base_print prog;
   (a, prog)
-
 let typed name f (a, b) =
 (*      let before = Passes.WalkCountNoPosition.fold () b in *)
-  let b = f () b in (*
+  (*let startTime = Sys.time () in *)
+  let b = f () b in
+(*   let delta = Sys.time () -. startTime in
+  Format.printf "%3.5f Pass : %s@\n%!" delta name;
+*)
+(*
                       let after = Passes.WalkCountNoPosition.fold () b in
                       Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
 (*  base_print b; *)

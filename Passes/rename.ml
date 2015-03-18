@@ -151,5 +151,5 @@ let process acc p =
                       (List.map (process_instr acc) instrs), opt)
 		| Prog.DeclareType (tyname, ty) ->
 				Prog.DeclareType (mapname_ty acc tyname, mapty acc ty)
-    | _ -> p (* TODO *)
+    | _ -> p
   in acc, p
