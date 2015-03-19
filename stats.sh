@@ -24,6 +24,7 @@ vb=$(st "out" "*.vb")
 hs=$(st "out" "*.hs")
 lua=$(st "out" "*.lua")
 scala=$(st "out" "*.scala")
+smalltalk=$(st "out" "*.st")
 
 ml=$(( $ml - $funml ))
 
@@ -48,6 +49,7 @@ ada=$(( $ada * 1000 / $metalang))
 hs=$(( $hs * 1000 / $metalang))
 lua=$(( $lua * 1000 / $metalang))
 scala=$(( $scala * 1000 / $metalang))
+smalltalk=$(( $smalltalk * 1000 / $metalang))
 
 file="stats_repartition.dat"
 
@@ -94,6 +96,7 @@ ada $ada
 vb $vb
 hs $hs
 lua $lua
+smalltalk $smalltalk
 scala $scala
 java $java" | swap | sort -n | swap ) > "$file"
 

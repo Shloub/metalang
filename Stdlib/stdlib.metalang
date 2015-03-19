@@ -28,6 +28,7 @@ macro int sqrt_(int c)
   hs_pure do "(floor . sqrt . fromIntegral) $c"
   lua do "math.floor(math.sqrt($c))"
   scala do "math.sqrt($c).toInt"
+st do "(($c) sqrt floor)"
   * do "sqrt($c)"
 end
 
@@ -59,6 +60,7 @@ macro char char_of_int(int c)
   hs_pure do "chr $c"
   scala do "($c).toChar"
   lua  do "$c"
+  st do "(($c) asCharacter)"
   *  do "$c"
 end
 tag macro_char_of_int_pure
@@ -83,6 +85,7 @@ macro int int_of_char(char c)
   hs_pure do "ord $c"
   scala do "($c).toInt"
   lua  do "$c"
+  st do "(($c) asciiValue)"
   *  do "$c"
 end
 tag macro_int_of_char_pure
@@ -327,6 +330,7 @@ macro int native_expand_read_int()
   java do "Integer.parseInt(scanner.nextLine())"
   hs do "fmap read getLine"
   scala do "readInt().toInt"
+  st do "stdin nextLine asInteger"
   *  do "E R R O R"
 end
 

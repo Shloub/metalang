@@ -285,6 +285,7 @@ let languages, printers =
     "hs",      (false, hs_passes) => new HaskellPrinter.haskellPrinter ;
     "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
     "rb",      (false, ruby_passes) => new RbPrinter.rbPrinter ;
+    "st",      (false, clike_passes) => new SmalltalkPrinter.smalltalkPrinter ;
     "py",      (false, python_passes) => new PyPrinter.pyPrinter ;
     "go",      (false, clike_passes)   => new GoPrinter.goPrinter ;
     "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
@@ -460,6 +461,7 @@ enum @target_language
   LANG_Rb
   LANG_Rkt
   LANG_Scala
+  LANG_St
   LANG_Vb
   LANG_Metalang_parsed
 end
