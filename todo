@@ -1,3 +1,6 @@
+accélérer les tests :
+  euler07
+  euler43
 
 Langage & Compilateur :
   C if indentation
@@ -15,7 +18,6 @@ outils :
 
 autres printers :
   f#
-  scala
   tcl
   erlang
   rhino
