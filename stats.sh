@@ -95,7 +95,7 @@ vb $vb
 hs $hs
 lua $lua
 scala $scala
-java $java" | swap | sort | swap ) > "$file"
+java $java" | swap | sort -n | swap ) > "$file"
 
 filestatsplot(){
     IFS='
