@@ -1,0 +1,86 @@
+Object subclass: euler19 [
+  |buffer|
+  read_int [|o|
+    ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
+     o := 0.
+    (buffer isNil) ifFalse:[
+    (buffer =~ '^(-?\d+)' asRegex) ifMatched: [:match |
+    o := match at: 1.
+    buffer := buffer allButFirst:(o size).
+    ].
+    ^o asInteger. ]
+  ]
+  skip [
+     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
+    (buffer isNil) ifFalse:[
+    (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
+    ]
+  ]
+  read_char [|o|
+     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
+    (buffer isNil) ifFalse:[
+    o := buffer at: 1.
+    buffer := buffer allButFirst:1.
+    ^o.
+    ]
+  ]
+   is_leap: year  [
+    ^ ((((year rem: 400) = 0)) ifTrue:[true] ifFalse: [((((year rem: 100) ~= 0)) ifTrue:[((year rem: 4) = 0)] ifFalse: [false])])
+  ]
+  
+   ndayinmonth: month year: year [
+    (month = 0)
+      ifTrue:[^ 31]
+      ifFalse:[(month = 1)
+                ifTrue:[(self is_leap: year)
+                         ifTrue:[^ 29]
+                         ifFalse:[^ 28].]
+                ifFalse:[(month = 2)
+                          ifTrue:[^ 31]
+                          ifFalse:[(month = 3)
+                                    ifTrue:[^ 30]
+                                    ifFalse:[(month = 4)
+                                              ifTrue:[^ 31]
+                                              ifFalse:[(month = 5)
+                                                        ifTrue:[^ 30]
+                                                        ifFalse:[(month = 6)
+                                                                  ifTrue:[^ 31]
+                                                                  ifFalse:[(month = 7)
+                                                                            ifTrue:[^ 31]
+                                                                            ifFalse:[(month = 8)
+                                                                                      ifTrue:[^ 30]
+                                                                                      ifFalse:[(month = 9)
+                                                                                                ifTrue:[^ 31]
+                                                                                                ifFalse:[(month = 10)
+                                                                                                          ifTrue:[^ 30]
+                                                                                                          ifFalse:[(month = 11)
+                                                                                                                    ifTrue:[^ 31].].].].].].].].].].].].
+    ^ 0
+  ]
+  
+  main [
+    |year ndays month dayofweek count|month := 0.
+    year := 1901.
+    dayofweek := 1.
+    " 01-01-1901 : mardi "
+    count := 0.
+    [(year ~= 2001)] whileTrue:
+    [
+    ndays := (self ndayinmonth: month year: year).
+    dayofweek :=  ((dayofweek + ndays) rem: 7).
+    month :=  (month + 1).
+    (month = 12)
+      ifTrue:[
+             month :=  0.
+             year :=  (year + 1).
+      ].
+    ((dayofweek rem: 7) = 6)
+      ifTrue:[count :=  (count + 1).].
+    ].
+    (count) display.
+    '
+' display.
+    ]
+]
+Eval [ (euler19 new) main. ]
+
