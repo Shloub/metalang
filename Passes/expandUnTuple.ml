@@ -54,7 +54,7 @@ let name_of_field (i: int) (t : Type.t) (acc, _) =
 let locate loc instr =
   PosMap.add (Instr.Fixed.annot instr) loc; instr
 (* TODO positions *)
-let rec rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
+let rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i with
   | Instr.Untuple (li, e, opt) ->
     let loc = PosMap.get (Instr.Fixed.annot i) in
     let t = Type.auto () in
@@ -66,7 +66,11 @@ let rec rewrite acc (i : Utils.instr) : Utils.instr list = match Instr.unfix i w
       Instr.Declare (name, t, Expr.access (Mutable.dot vb fieldname), opt) |> Instr.fix |> locate loc
     ) li in
     (Instr.Declare (b, t, e, opt) |> Instr.fix |> locate loc)::access
-  | j -> [ Instr.deep_map_bloc (List.flatten @* List.map (rewrite acc)) j |> Instr.fixa (Instr.Fixed.annot i) ]
+  | j -> [i]
+
+let rewrite acc i =
+  let i = Instr.deep_map_bloc (List.collect (rewrite acc)) (Instr.unfix i)
+  in rewrite acc (Instr.fix i)
 
 type acc0 = Typer.env * DeclareTuples.acc
 type 'lex acc = Typer.env * DeclareTuples.acc
