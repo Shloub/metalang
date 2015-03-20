@@ -1,14 +1,15 @@
 accélérer les tests :
   euler07
-  euler43
 
 Langage & Compilateur :
   C if indentation
+  smalltalk macros
   structures as couples pour les langages qui le supportent
   tableau constant lors d'une initialisation
-  types abstract (pour ouvrir un fichier par exemple)
+  types abstract & types alias (pour ouvrir un fichier ou pour les bigints par exemple)
   type option
   une lib standard avec des listes et des arbres
+  un pseudo systeme objet
 
 outils :
   un meilleur mode vim
@@ -22,7 +23,6 @@ autres printers :
   erlang
   rhino
   gforth
-  smalltalk
   clojure
 
 portage windows
