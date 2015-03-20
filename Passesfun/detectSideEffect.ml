@@ -27,7 +27,9 @@ open Stdlib
 open AstFun
 
 (**
-   Passes de transformations sur l'ast fonctionnel
+   Cette passe renvoie une map qui permet de déterminer si une expression effectue des
+   effets de bords.
+   Elle est très utilisée par le printer Haskell.
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)

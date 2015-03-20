@@ -23,7 +23,7 @@
  *
  *)
 
-(** scheme Printer
+(** Common lisp Printer
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)

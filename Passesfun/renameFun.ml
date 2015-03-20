@@ -28,6 +28,7 @@ open AstFun
 
 (**
    Passes de transformations sur l'ast fonctionnel
+   Cette passe permet de supprimer la ré-affectation d'une variable.
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)

@@ -118,12 +118,18 @@ module Option = struct
   let snoc xs = map_default xs (snoc xs)
 end
 
+(**
+   Either module
+*)
 module Either = struct
   type ('a, 'b) t =
   | A of 'a
   | B of 'b
 end
 
+(**
+   List module
+*)
 module List = struct
   include List
   (* TODO faire plus efficace*)
@@ -216,6 +222,10 @@ module List = struct
     | hd :: tl -> hd :: sep :: join sep tl
 
 end
+
+(**
+   String module
+*)
 
 module String = struct
   include String

@@ -23,8 +23,8 @@
  *
  *)
 
-(** Main printer
-    This printer write metalang code.
+(** html printer
+    This printer write metalang code in html code.
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)

@@ -24,7 +24,6 @@
  *)
 
 (** some utility functions for printers
-    This printer write metalang code.
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)

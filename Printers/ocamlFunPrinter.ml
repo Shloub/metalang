@@ -23,6 +23,13 @@
  *
  *)
 
+
+(** Ocaml printer for functional AST
+    @see <http://prologin.org> Prologin
+    @author Prologin (info\@prologin.org)
+    @author Maxime Audouin (coucou747\@gmail.com)
+*)
+
 open Stdlib
 open Helper
 

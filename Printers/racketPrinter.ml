@@ -28,8 +28,6 @@
     @see <http://prologin.org> Prologin
     @author Prologin (info\@prologin.org)
     @author Maxime Audouin (coucou747\@gmail.com)
-    Pour l'adapter à un autre scheme / lisp / etc...:
-    @see http://hyperpolyglot.org/lisp
 *)
 
 open Stdlib

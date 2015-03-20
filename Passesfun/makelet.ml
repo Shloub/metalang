@@ -27,7 +27,8 @@ open Stdlib
 open AstFun
 
 (**
-   Passes de transformations sur l'ast fonctionnel
+   Passes de transformations sur l'ast fonctionnel :
+   on transforme (fun x -> ...a) ...b en let x = ...b in ...a
    @see <http://prologin.org> Prologin
    @author Prologin (info\@prologin.org)
    @author Maxime Audouin (coucou747\@gmail.com)
