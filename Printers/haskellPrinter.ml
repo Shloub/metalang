@@ -30,6 +30,7 @@
     *)
 
 open Stdlib
+open Helper
 
 module E = AstFun.Expr
 module Type = Ast.Type
@@ -257,9 +258,7 @@ class haskellPrinter = object(self)
   | _ ->
       parens ~p (fun_priority -1) f "let %a @[<v>%a =@\n%a in@\n%a@]"
         self#binding name
-        (Printer.print_list
-           self#binding
-           Printer.sep_space) params
+        (print_list self#binding sep_space) params
         self#expr e1
         self#expr e2
 
@@ -341,10 +340,10 @@ class haskellPrinter = object(self)
 
   method tuple f li =
     if List.for_all self#isPure li then
-      Format.fprintf f "(%a)" (Printer.print_list self#expr (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
+      Format.fprintf f "(%a)" (print_list self#expr sep_c) li
     else
       let li = List.map (fun e -> self#isPure e, self#expr', e) li in
-      hsapply ~p:nop f (fun f () -> Format.fprintf f "(%a)" (Printer.print_list (fun _ _ -> ()) (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li)
+      hsapply ~p:nop f (fun f () -> Format.fprintf f "(%a)" (print_list (fun _ _ -> ()) sep_c) li)
         false li
 
   method if_ ~p f e1 e2 e3 =
@@ -353,7 +352,7 @@ class haskellPrinter = object(self)
     else parens ~p (fun_priority - 1) f "@[<h>ifM @[<v>%a@\n%a@\n%a@]@]" self#eM_ e1 self#eM_ e2 self#eM_ e3
         
   method blockContent f li =
-    Printer.print_list
+    print_list
       (fun f e ->
         match E.unfix e with
         | E.ReadIn( Type.Fixed.F(_, Type.Integer),
@@ -377,8 +376,7 @@ class haskellPrinter = object(self)
 	Format.fprintf f "@[<h>%a%a <-@[<v> %a@]@]@\n%a" self#binding s pparams () self#expr a
 	  self#blockContent [e]
         | _ -> self#eM f e
-      )
-      (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b) f li
+      ) sep_nl f li
 			
   method block ~p f li =
     parens ~p (fun_priority -1) f "do @[<v>%a@]" self#blockContent li
@@ -472,7 +470,7 @@ class haskellPrinter = object(self)
     let t = Typer.typename_for_field (snd (List.hd li) ) typerEnv in
     Format.fprintf f "@[<v>(%a <$> %a)@]"
       self#tname t
-      (Printer.print_list
+      (print_list
          (fun f (expr, field) ->
            hsapply ~p:fun_priority f (fun f () -> Format.fprintf f "newIORef") true
              [self#isPure expr, self#expr', expr])
@@ -537,7 +535,7 @@ class haskellPrinter = object(self)
     | Type.Named n -> self#tname f n
     | Type.Struct li ->
       Format.fprintf f "{@[<v 2>@\n%a@\n}@]"
-        (Printer.print_list
+        (print_list
            (fun t (name, type_) ->
              Format.fprintf t "_%s :: IORef %a" name self#ptype type_
            )
@@ -545,7 +543,7 @@ class haskellPrinter = object(self)
         ) li
     | Type.Enum li ->
       Format.fprintf f "%a"
-        (Printer.print_list
+        (print_list
            (fun t name ->
              Format.fprintf t "%s" name
            )
@@ -555,7 +553,7 @@ class haskellPrinter = object(self)
     | Type.Auto -> assert false
     | Type.Tuple li ->
       Format.fprintf f "(%a)"
-        (Printer.print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)) li
+        (print_list self#ptype sep_c) li
 
   method extract_fun_params e acc = snd @$ self#extract_fun_params' e acc
 
@@ -564,10 +562,10 @@ class haskellPrinter = object(self)
     let acc f () = Format.fprintf f "%a ()" acc ()
     in true, self#extract_fun_params e acc
   | E.Fun (params, e) ->
-    let acc f () = Format.fprintf f "%a %a" acc () (Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+    let acc f () = Format.fprintf f "%a %a" acc () (print_list self#binding sep_space) params
     in true, self#extract_fun_params e acc
   | E.FunTuple (params, e) ->
-    let acc f () = Format.fprintf f "%a (%a)" acc () (Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) params
+    let acc f () = Format.fprintf f "%a (%a)" acc () (print_list self#binding sep_c) params
     in true, self#extract_fun_params e acc
   | _ -> false, (acc, e)
 
@@ -614,9 +612,7 @@ class haskellPrinter = object(self)
       "Data.IORef"
     ] in
     Format.fprintf f "@[%a@]@\n%a%a%a%a%a%a%a%a@\nmain :: IO ()"
-          (Printer.print_list (fun f s -> Format.fprintf f "import %s" s)
-             (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
-          imports
+          (print_list (fun f s -> Format.fprintf f "import %s" s) sep_nl) imports
       (fun f () -> if binand then Format.fprintf f "%s@\n" prelude_and) ()
       (fun f () -> if binor then Format.fprintf f "%s@\n" prelude_or) ()
       (fun f () -> if ifm then Format.fprintf f "%s@\n" prelude_ifm) ()
@@ -664,10 +660,9 @@ class haskellPrinter = object(self)
     | E.ArrayMake _ -> true
     | _ -> false ) prog.AstFun.declarations in
     Format.fprintf f "%a@\n@[%a@]@\n"
-    (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) array_init array_make ifm read_array write_array) prog.AstFun.options
-    (Printer.print_list self#decl
-       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
-prog.AstFun.declarations
+      (self#header (unsafeop Ast.Expr.And) (unsafeop Ast.Expr.Or) array_init array_make ifm read_array write_array) prog.AstFun.options
+      (print_list self#decl sep_nl)
+      prog.AstFun.declarations
 
 
 

@@ -30,6 +30,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 
@@ -116,11 +117,7 @@ class commonLispPrinter = object(self)
     funname_ <- funname;
     Format.fprintf f "%a (%a)"
       self#funname funname
-      (print_list
-         (fun f (n, t) ->
-           self#binding f n)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a@ %a" f1 e1 f2 e2)) li
+      (print_list (fun f (n, t) -> self#binding f n) sep_space) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>(defun@ %a@\n%a)@]@\n"
@@ -185,17 +182,7 @@ class commonLispPrinter = object(self)
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_apply f var t params code li
-    | None ->
-      Format.fprintf
-        f
-        "@[<h>(%a %a)@]"
-        self#funname var
-        (print_list
-           self#expr
-           (fun t f1 e1 f2 e2 ->
-             Format.fprintf t "%a@ %a" f1 e1 f2 e2
-           )
-        ) li
+    | None -> Format.fprintf f "@[<h>(%a %a)@]" self#funname var (print_list self#expr sep_space) li
 
   method call (f:Format.formatter) (var:funname) (li:Utils.expr list) : unit = self#apply f var li
 
@@ -213,10 +200,7 @@ class commonLispPrinter = object(self)
         Format.fprintf f ":%a %a"
           self#field fieldname
           self#expr expr
-      )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a@\n%a" f1 e1 f2 e2)
+      ) sep_nl
       f
       li
 
@@ -262,9 +246,7 @@ class commonLispPrinter = object(self)
 	method multi_print f format exprs =
 		Format.fprintf f "@[<v>(format t %a %a)@]"
 			self#string format
-      (print_list
-         (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a %a" f1 e1 f2 e2)) exprs
+      (print_list (fun f (t, e) -> self#expr f e) sep_space) exprs
 
   method bloc f li =
     match li with
@@ -390,8 +372,7 @@ class commonLispPrinter = object(self)
         (print_list
            (fun t (name, type_) ->
              Format.fprintf t "%a@\n" self#field name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+           ) nosep
         ) li
     | Type.Enum li -> ()
     | _ ->

@@ -29,6 +29,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 
@@ -110,9 +111,7 @@ class camlPrinter = object(self)
 
   method untuple f li e =
     Format.fprintf f "@[<h>let (%a) = %a in@]"
-      (print_list self#binding
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) (List.map snd li)
+      (print_list self#binding sep_c) (List.map snd li)
       self#expr e
 
   method record f li =
@@ -137,8 +136,7 @@ class camlPrinter = object(self)
         (print_list
            (fun t (name, type_) ->
              Format.fprintf t "%s : %a;" name self#ptype type_
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+           ) nosep
         ) li
     | Type.Enum li ->
       Format.fprintf f "%a"
@@ -220,10 +218,7 @@ class camlPrinter = object(self)
       Format.fprintf f "let@ %a%a@ %a ="
         self#rec_ rec_
         self#funname funname
-        (print_list
-           (fun t (a, b) -> self#binding t a)
-           (fun t f1 e1 f2 e2 -> Format.fprintf t
-             "%a@ %a" f1 e1 f2 e2)) li
+        (print_list self#binding sep_space) (List.map fst li)
 
   (** show an if then else *)
   method if_ f e ifcase elsecase =
@@ -680,9 +675,7 @@ class camlPrinter = object(self)
                if self#nop (Expr.unfix e) then self#expr f e
                else Format.fprintf f "(%a)" self#expr e
              )
-             (fun t f1 e1 f2 e2 ->
-               Format.fprintf t "%a@ %a" f1 e1 f2 e2
-             )
+             sep_space
           ) li
 
   method call f var li =
@@ -707,11 +700,7 @@ class camlPrinter = object(self)
           self#field fieldname
           self#expr expr
       )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a@\n%a" f1 e1 f2 e2)
-      f
-      li
+      sep_nl f li
 
   method allocrecord f name t el =
     let b = BindingSet.mem name refbindings in
@@ -737,8 +726,7 @@ class camlPrinter = object(self)
                Format.fprintf t "@[<h>mutable %s : %a;@]"
                  name
                  self#ptype type_
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li
     | Type.Enum li ->
       Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
@@ -784,8 +772,7 @@ class camlPrinter = object(self)
                  | _ -> assert false
                in
                if BindingSet.mem v refbindings then Format.fprintf f "ref v_%d" i
-               else Format.fprintf f "v_%d" i)
-             (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b))
+               else Format.fprintf f "v_%d" i) sep_c)
       declares )
     in
     let print_in : Format.formatter -> unit -> unit  = match declares with
@@ -797,8 +784,7 @@ class camlPrinter = object(self)
       | [] -> fun f () -> Format.fprintf f "()"
       | _ ->
         fun f () ->
-          print_list (fun f (i, b, m) -> Format.fprintf f "v_%d" i)
-            (fun t fa a fb b -> Format.fprintf t "%a %a" fa a fb b)
+          print_list (fun f (i, b, m) -> Format.fprintf f "v_%d" i) sep_space
             f
             variables
     in
@@ -807,8 +793,7 @@ class camlPrinter = object(self)
       | li -> (fun f () ->
         Format.fprintf f "let %a = "
           (print_list
-             (fun f (_, _, v) -> self#mutable_ f v)
-             (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b))
+             (fun f (_, _, v) -> self#mutable_ f v) sep_c)
       declares )
     in Format.fprintf f "%aScanf.scanf \"%s\" (fun %a -> @[<v>%a%a@])%a"
       print_let ()
@@ -838,7 +823,6 @@ class camlPrinter = object(self)
            (fun f (t, expr) ->
              (if self#nop (Expr.unfix expr) then
                  self#expr
-              else self#printp) f expr)
-           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@ %a" f1 e1 f2 e2)) exprs
+              else self#printp) f expr) sep_space ) exprs
 
 end

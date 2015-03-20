@@ -32,58 +32,18 @@
 
 open Ast
 open Stdlib
-
-type oppart =
-| Left | Right
-
-let print_option (f : Format.formatter -> 'a -> unit) t obj =
-  match obj with
-  | None -> ()
-  | Some s -> f t s
-
-let print_list
-    (func : Format.formatter -> 'a -> unit)
-    (sep :
-       Format.formatter ->
-     (Format.formatter -> 'a -> unit) -> 'a ->
-     (Format.formatter -> 'a list -> unit) -> 'a list ->
-     unit
-    )
-    (f : Format.formatter)
-    (li : 'a list)
-    : unit
-    =
-  let rec p t = function
-    | [] -> ()
-    | [hd] -> func t hd
-    | hd::tl ->
-      sep
-        t
-        func hd
-        p tl
-  in p f li
-
-let sep_space f pa a pb b = Format.fprintf f "%a %a" pa a pb b
-
-let print_list_indexed print sep f li =
-  print_list
-    (fun f (toprint, index) ->
-      print f toprint index
-    )
-    sep
-    f
-    (snd (List.fold_left_map
-            (fun i m -> (i+1), (m, i))
-            0
-            li
-     ))
+open Helper
 
 let format_type t = match Type.unfix t with
   | Type.Integer -> "%d"
   | Type.Char -> "%c"
   | Type.String ->  "%s"
   | Type.Bool -> "%b"
-  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
+  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t))
+)
+
+type oppart =
+| Left | Right
 
 class printer = object(self)
 
@@ -196,8 +156,7 @@ class printer = object(self)
     Format.fprintf f "@[<hov>%a@ =@ %a%a@]" self#mutable_ mutable_ self#expr expr self#separator ()
 
   method bloc f li = Format.fprintf f "@[<v>do@\n%a@]@\nend"
-    (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-      "%a@\n%a" f1 e1 f2 e2)) li
+    (print_list self#instr sep_nl) li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<hov>for@ %a=%a@ to@ %a@\n@]%a"
@@ -222,9 +181,7 @@ class printer = object(self)
     match Type.unfix t with
     | Type.Tuple li ->
       Format.fprintf f "@[<hov>(%a)@]"
-        (print_list self#ptype
-           (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-        ) li
+        (print_list self#ptype sep_c) li
     | Type.Auto -> ()
     | Type.Integer -> Format.fprintf f "int"
     | Type.String -> Format.fprintf f "string"
@@ -244,12 +201,7 @@ class printer = object(self)
         ) li
     | Type.Enum li ->
       Format.fprintf f "enum{%a}"
-        (print_list
-           (fun t name ->
-             Format.fprintf t "%a " self#enumfield name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
-        ) li
+        (print_list self#enumfield sep_space) li
 
   method p_option f = function
   | { Ast.Instr.useless = true } -> Format.fprintf f "useless "
@@ -334,12 +286,7 @@ class printer = object(self)
         f
         "@[<hov>%a(%a)%a@]"
         self#funname var
-        (print_list
-           self#expr
-           (fun t f1 e1 f2 e2 ->
-             Format.fprintf t "%a,@ %a" f1 e1 f2 e2
-           )
-        ) li
+        (print_list self#expr sep_c) li
 	self#separator ()
 
   method separator f () = Format.fprintf f ";"
@@ -354,12 +301,7 @@ class printer = object(self)
         f
         "%a(%a)"
         self#funname var
-        (print_list
-           self#expr
-           (fun t f1 e1 f2 e2 ->
-             Format.fprintf t "%a,@ %a" f1 e1 f2 e2
-           )
-        ) li
+        (print_list self#expr sep_c) li
 
   method stdin_sep f =
     Format.fprintf f "skip"
@@ -371,10 +313,7 @@ class printer = object(self)
            Format.fprintf f "%a = %a"
              self#field fieldname
              self#expr expr
-         )
-         (fun t f1 e1 f2 e2 ->
-           Format.fprintf t
-             "%a@\n%a" f1 e1 f2 e2))
+         ) sep_nl)
       li
 
   method allocrecord f name t el =
@@ -463,9 +402,7 @@ class printer = object(self)
 
   method untuple f li e =
     Format.fprintf f "(%a) = %a"
-      (print_list self#binding
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) (List.map snd li)
+      (print_list self#binding sep_c) (List.map snd li)
       self#expr e
 
 
@@ -612,9 +549,7 @@ class printer = object(self)
 
   method tuple f li =
     Format.fprintf f "(%a)"
-      (print_list self#expr
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) li
+      (print_list self#expr sep_c) li
 
   method record f li =
     Format.fprintf f "record %a end"
@@ -633,9 +568,7 @@ class printer = object(self)
          (fun f (n, t) ->
            Format.fprintf f "%a@ %a"
              self#ptype t
-             self#binding n)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) li
+             self#binding n) sep_c) li
 
 
   method print_fun f funname t li instrs =
@@ -668,8 +601,7 @@ class printer = object(self)
         (print_list
            (fun t (name, type_) ->
              Format.fprintf t "%a %a;@\n" self#ptype type_ self#field name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+           ) nosep
         ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a @\n@[<v2>  %a@]@\nend@\n"
@@ -677,8 +609,7 @@ class printer = object(self)
         (print_list
            (fun t name ->
              self#enumfield t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
+           ) sep_nl
         ) li
     | _ ->
       Format.fprintf f "type %a = %a;" self#typename name self#ptype t
@@ -690,19 +621,11 @@ class printer = object(self)
 
   method multi_print f format exprs =
     Format.fprintf f "@[<v>%a@]"
-      (print_list
-         (fun f (t, e) -> self#print f t e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)) exprs
+      (print_list (fun f (t, e) -> self#print f t e) sep_nl ) exprs
 
   method combine_formats () = false
 
-  method multiread f instrs =
-    (print_list
-       self#instr
-       (fun t print1 item1 print2 item2 ->
-         Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-       )
-    ) f instrs
+  method multiread f instrs = (print_list self#instr sep_nl) f instrs
 
   method is_print i = match Instr.unfix i with
   | Instr.Print _ -> true
@@ -748,13 +671,7 @@ class printer = object(self)
         else exprs
       in
       self#multi_print f format exprs
-    else
-      (print_list
-         self#instr
-         (fun t print1 item1 print2 item2 ->
-           Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-         )
-      ) f instrs
+    else (print_list self#instr sep_nl) f instrs
 
   method instructions f instrs =
     let rec g kind acc1 acc2 = function
@@ -767,21 +684,10 @@ class printer = object(self)
     in
     let lili = g (false, false) [] [] instrs in
     let lili = List.filter ( (<>) [] ) lili in
-    (print_list
-       self#instructions0
-       (fun t print1 item1 print2 item2 ->
-         Format.fprintf t "%a@\n%a" print1 item1 print2 item2
-       )
-    ) f lili
+    (print_list self#instructions0 sep_nl) f lili
 
   method proglist f funs =
-    Format.fprintf f "%a"
-      (print_list
-         self#prog_item
-         (fun t print1 item1 print2 item2 ->
-           Format.fprintf t "%a%a" print1 item1 print2 item2
-         )
-      ) funs
+    Format.fprintf f "%a" (print_list self#prog_item nosep) funs
 
   method main f (main : Utils.instr list) =
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"

@@ -32,6 +32,7 @@
 
 open Stdlib
 open Ast
+open Helper
 open Printer
 open CPrinter
 
@@ -187,7 +188,7 @@ class cppPrinter = object(self)
              (fun t (name, type_) ->
                Format.fprintf t "%a %a;" self#ptype type_ self#field name
              )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             sep_nl
           ) li
     | Type.Enum li ->
       Format.fprintf f "typedef enum %a {@\n@[<v2>  %a@]@\n} %a;"
@@ -238,8 +239,7 @@ class cppPrinter = object(self)
             (if b then "" else "no");
         lastSkip := b;
         skipSet := true;
-       )
-         (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b))
+       ) nosep )
       (List.rev variables)
 
 end

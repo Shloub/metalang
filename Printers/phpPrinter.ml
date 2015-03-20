@@ -31,6 +31,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 open CPrinter
@@ -40,22 +41,15 @@ class phpPrinter = object(self)
 
   method declare_for s f li = ()
 
-  method tuple f li =
-    Format.fprintf f "array(%a)"
-      (print_list self#expr
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) li
+  method tuple f li = Format.fprintf f "array(%a)" (print_list self#expr sep_c) li
 
-  method record f li =
-    Format.fprintf f "array(@\n  @[<v>%a@])"
+  method record f li = Format.fprintf f "array(@\n  @[<v>%a@])"
       (self#def_fields (InternalName 0)) li
 
 
   method untuple f li e =
     Format.fprintf f "@[<h>list(%a) = %a;@]"
-      (print_list self#binding
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) (List.map snd li)
+      (print_list self#binding sep_c) (List.map snd li)
       self#expr e
 
 
@@ -170,9 +164,7 @@ function nextChar(){
   method multi_print f format exprs =
     Format.fprintf f "@[<h>echo %a;@]"
       (print_list
-         (fun f (t, e) -> (self#eprint t) f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) exprs
+         (fun f (t, e) -> (self#eprint t) f e) sep_c) exprs
 
   method print f t expr = Format.fprintf f "@[echo@ %a;@]" (self#eprint t) expr
 
@@ -190,9 +182,7 @@ function nextChar(){
            Format.fprintf t
              "%a%a"
              self#prototype type_
-             self#binding a)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) li
+             self#binding a) sep_c ) li
 
 
   method binding f i = Format.fprintf f "$%a" super#binding i

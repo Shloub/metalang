@@ -33,6 +33,7 @@
 *)
 
 open Stdlib
+open Helper
 
 module E = AstFun.Expr
 module Type = Ast.Type
@@ -93,9 +94,8 @@ class racketPrinter = object(self)
   method comment f s c =
     let lic = String.split s '\n' in
     Format.fprintf f "%a%a"
-      (Printer.print_list
-	 (fun f s -> Format.fprintf f ";%s@\n" s)
-	 (fun f pa a pb b -> Format.fprintf f "%a%a" pa a pb b))
+      (print_list
+	 (fun f s -> Format.fprintf f ";%s@\n" s) nosep)
       lic
       self#expr c
 
@@ -107,8 +107,7 @@ class racketPrinter = object(self)
   method fun_ f params e =
     let params = if params = [] then ["_"] else params in
     Format.fprintf f "@[<v 2>(lambda (%a) @\n%a@])@]"
-      (Printer.print_list self#binding
-      (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b))
+      (print_list self#binding sep_space)
       params
       self#expr e
 
@@ -180,7 +179,7 @@ Format.fprintf f "#lang racket
     | E.Fun (params, e) ->
       let params = if params = [] then ["_"] else params in
       Format.fprintf f "@[<v2>(define (%a %a)@\n;toto@\n%a@]@\n)@\n" self#binding name
-	(Printer.print_list self#binding Printer.sep_space) params
+	(print_list self#binding sep_space) params
 	self#expr e
     | _ -> Format.fprintf f "@[<v2>(define %a@\n%a@]@\n)@\n" self#binding name self#expr e
 
@@ -190,8 +189,8 @@ Format.fprintf f "#lang racket
       let fields = List.sort String.compare @$ List.map fst fields in
       Format.fprintf f "@[<v 2>(struct %a (%a)@])@\n"
 	self#binding name
-	(Printer.print_list (fun f name -> Format.fprintf f "[%s #:mutable]" name)
-	Printer.sep_space) fields
+	(print_list (fun f name -> Format.fprintf f "[%s #:mutable]" name)
+	sep_space) fields
     | _ -> ()
 
 
@@ -201,29 +200,23 @@ Format.fprintf f "#lang racket
     match params with
     | [] -> Format.fprintf f "(lambda (_) %a)" self#expr e
     | _ -> Format.fprintf f "(lambda (internal_env) (apply (lambda@[ (%a) @\n%a@]) internal_env))"
-      (Printer.print_list
-         self#binding
-	 Printer.sep_space) params
+      (print_list self#binding sep_space) params
       self#expr e
 
   method letin f params b  = Format.fprintf f "@[(let (%a)@\n%a@])"
-    (Printer.print_list
+    (print_list
        (fun f (s, a) ->
 	 Format.fprintf f "[%a %a]"
 	   self#binding s self#expr a
-       )
-       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b))
+       ) sep_nl)
     params
     self#expr b
 
   method block1 f li = Format.fprintf f "@[<v 2>(block@\n%a@\n)@]"
-    (Printer.print_list
-       (fun f func -> func f ())
-       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)) li
+    (print_list (fun f func -> func f ()) sep_nl) li
 
   method block f li = Format.fprintf f "@[<v 2>(block@\n%a@\n)@]"
-    (Printer.print_list self#expr
-       (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)) li
+    (print_list self#expr sep_nl) li
 
   method print_format f formats =
     Format.fprintf f "%S" (format_to_string formats)
@@ -231,9 +224,7 @@ Format.fprintf f "#lang racket
   method multiprint f formats exprs =
     Format.fprintf f "(printf %a %a)"
 		   self#print_format formats
-		   (Printer.print_list
-		      (fun f (a, ty) -> self#expr f a)
-		      (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) exprs
+		   (print_list (fun f (a, ty) -> self#expr f a) sep_space) exprs
 
   method print f e ty =
     Format.fprintf f "(display %a)"
@@ -241,16 +232,11 @@ Format.fprintf f "#lang racket
 
   method tuple f li =
     Format.fprintf f "(list %a)"
-      (Printer.print_list self#expr
-      Printer.sep_space) li
+      (print_list self#expr sep_space) li
 
   method apply_nomacros f e li =
-    if li = [] then
-      Format.fprintf f "(%a 'nil)" self#expr e
-    else
-      Format.fprintf f "(%a %a)"
-	self#expr e
-	(Printer.print_list self#expr Printer.sep_space) li
+    if li = [] then Format.fprintf f "(%a 'nil)" self#expr e
+    else Format.fprintf f "(%a %a)" self#expr e (print_list self#expr sep_space) li
       
 
   method letrecin f name params e1 e2 = (* TODO *)
@@ -302,9 +288,9 @@ Format.fprintf f "#lang racket
     let f1 = snd @$ List.hd li in
     Format.fprintf f "(%s %a)"
       (self#typename_of_field f1)
-      (Printer.print_list
+      (print_list
 	 (fun f (expr, field) -> Format.fprintf f "%a" self#expr expr)
-	 Printer.sep_space) li
+	 sep_space) li
 
 
 end

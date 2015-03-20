@@ -30,6 +30,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 
@@ -101,9 +102,7 @@ class scalaPrinter = object(self)
 
   method untuple f li e =
     Format.fprintf f "var (%a) = %a"
-      (print_list self#binding
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) (List.map snd li)
+      (print_list self#binding sep_c) (List.map snd li)
       self#expr e
 
   method read_decl f t v =
@@ -174,9 +173,7 @@ class scalaPrinter = object(self)
              Format.fprintf t "_%a :@ %a" self#binding binding self#ptype type_
            else
              Format.fprintf t "%a :@ %a" self#binding binding self#ptype type_
-         )
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)
+         ) sep_c
       ) li
       (fun f t ->
         match Type.unfix t with
@@ -206,10 +203,7 @@ class scalaPrinter = object(self)
     | Type.Named n -> self#typename f n
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct _ -> Format.fprintf f "a struct"
-    | Type.Tuple li -> Format.fprintf f "(%a)" (print_list self#ptype
-                                                  (fun f f1 e1 f2 e2 ->
-                                                    Format.fprintf f "%a, %a" f1 e1 f2 e2
-                                                  )) li
+    | Type.Tuple li -> Format.fprintf f "(%a)" (print_list self#ptype sep_c) li
     | Type.Auto | Type.Lexems -> assert false
 
   method typename f n = Format.fprintf f "%s" (String.capitalize n)
@@ -226,15 +220,13 @@ class scalaPrinter = object(self)
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "_%a: %a" self#field name self#ptype type_
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+             ) sep_c
           ) li
 
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "var %a: %a=_%a%a" self#field name self#ptype type_ self#field name self#separator ()
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li
     | Type.Enum li ->
       Format.fprintf f "object %a extends Enumeration {@\n  type %a = Value;@\n  val %a = Value@\n}@\nimport %a._"
@@ -243,8 +235,7 @@ class scalaPrinter = object(self)
         (print_list
            (fun f name ->
              Format.fprintf f "%s" name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
+           ) sep_c
         ) li
           self#typename name
     | _ -> assert false
@@ -256,10 +247,7 @@ class scalaPrinter = object(self)
         Format.fprintf f "new %a(%a)"
           self#typename t
           (print_list
-             (fun f (fieldname, expr) -> self#expr f expr)
-             (fun t f1 e1 f2 e2 ->
-               Format.fprintf t
-                 "%a, %a" f1 e1 f2 e2)
+             (fun f (fieldname, expr) -> self#expr f expr) sep_c
           )
           li
     | _ -> assert false
@@ -298,9 +286,9 @@ class scalaPrinter = object(self)
 
   method declare_for s f li =
     if li <> [] then
-        Format.fprintf f "%a@\n" (print_list (fun f b -> Format.fprintf f "var %a: Int=0;" self#binding b)
-           (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)
-        ) li
+      Format.fprintf f "%a@\n"
+        (print_list (fun f b -> Format.fprintf f "var %a: Int=0;" self#binding b)
+           sep_nl ) li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for (%a <- %a to %a)@\n%a@]"

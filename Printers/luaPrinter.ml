@@ -30,6 +30,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 
@@ -141,15 +142,11 @@ end@\n") ()
 
   method tuple f li =
     Format.fprintf f "@[<h>{%a}@]"
-      (print_list self#expr
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) li
+      (print_list self#expr sep_c) li
 
   method untuple f li e =
     Format.fprintf f "@[<h>%a = unpack(%a)@]"
-      (print_list self#binding
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) (List.map snd li)
+      (print_list self#binding sep_c) (List.map snd li)
       self#expr e
 
   method if_ f e ifcase elsecase =
@@ -190,9 +187,7 @@ end@\n") ()
     | _ ->
         Format.fprintf f "@[<h>io.write(string.format(\"%s\", %a))@]" format
           (print_list
-             (fun f (t, e) -> self#expr f e)
-             (fun t f1 e1 f2 e2 -> Format.fprintf t
-                 "%a,@ %a" f1 e1 f2 e2)) exprs
+             (fun f (t, e) -> self#expr f e) sep_c) exprs
 
   method print f t expr =
     match Type.unfix t with
@@ -264,11 +259,7 @@ end@\n") ()
   method print_proto f (funname, t, li) =
     Format.fprintf f "function %a( %a )"
       self#funname funname
-      (print_list
-         (fun t (a, type_) ->
-           self#binding t a)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) li
+      (print_list (fun t (a, type_) -> self#binding t a) sep_c) li
 
 
   method binop f op a b =

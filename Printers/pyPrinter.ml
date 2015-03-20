@@ -30,6 +30,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 open CPrinter
@@ -42,9 +43,7 @@ class pyPrinter = object(self)
 
   method tuple f li =
     Format.fprintf f "@[<h>(%a)@]"
-      (print_list self#expr
-         (fun t fa a fb b -> Format.fprintf t "%a,@ %a" fa a fb b)
-      ) li
+      (print_list self#expr sep_c) li
 
   method record f li =
     Format.fprintf f "{@\n  @[<v>%a@]}"
@@ -268,11 +267,7 @@ def skipchar():
   method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a ):"
       self#funname funname
-      (print_list
-         (fun t (a, type_) ->
-           self#binding t a)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) li
+      (print_list (fun t (a, type_) -> self#binding t a) sep_c) li
 
   method print_args =
     print_list
@@ -280,8 +275,7 @@ def skipchar():
         (if self#nop (Expr.unfix expr) then
             self#expr
          else self#printp) f expr)
-      (fun t f1 e1 f2 e2 -> Format.fprintf t
-        "%a,@ %a" f1 e1 f2 e2)
+      sep_c
 
   method multi_print f format exprs =
     if exprs = [] then
@@ -319,12 +313,7 @@ def skipchar():
         Format.fprintf f "@[<h>%a:%a@]"
           self#field fieldname
           self#expr expr
-      )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a,@ %a" f1 e1 f2 e2)
-      f
-      li
+      ) sep_cnl f li
 
   method allocrecord f name t el =
     Format.fprintf f "%a = {%a}" self#binding name (self#def_fields name) el

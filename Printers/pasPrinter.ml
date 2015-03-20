@@ -31,6 +31,7 @@
 open Stdlib
 open Ast
 open Printer
+open Helper
 
 class pasPrinter = object(self)
   inherit printer as super
@@ -178,8 +179,7 @@ class pasPrinter = object(self)
              self#binding binding
              self#ptype type_
          )
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a;@ %a" f1 e1 f2 e2)
+         sep_dc
       ) li
 
   method decl_function f funname t li =
@@ -191,8 +191,7 @@ class pasPrinter = object(self)
                self#binding binding
                self#ptype type_
            )
-           (fun t f1 e1 f2 e2 -> Format.fprintf t
-             "%a;@ %a" f1 e1 f2 e2)
+           sep_dc
         ) li
         self#ptype t
 
@@ -332,10 +331,7 @@ class pasPrinter = object(self)
           self#binding name
           self#field fieldname
           self#expr expr
-      )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a@\n%a" f1 e1 f2 e2)
+      ) sep_nl
       f
       li
 
@@ -467,8 +463,7 @@ end;
 
 
   method bloc f li = Format.fprintf f "@[<v 2>begin@\n%a@]@\nend"
-    (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-      "%a@\n%a" f1 e1 f2 e2)) li
+    (print_list self#instr sep_nl) li
 
   method return f e =
     (*    Format.fprintf f "@[<h>%a@ :=@ %a;@]"
@@ -488,8 +483,7 @@ end;
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "%a : %a;" self#field name self#ptype type_
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li
 
 
@@ -499,8 +493,7 @@ end;
         (print_list
            (fun t name ->
              self#enum t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+           ) sep_c
         ) li
 
     | _ ->

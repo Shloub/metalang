@@ -30,6 +30,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 open JavaPrinter
@@ -211,7 +212,7 @@ static int readInt(){
                Format.fprintf t "public %a %a%a" self#ptype type_ self#field name
 		 self#separator ()
              )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             sep_nl
           ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"

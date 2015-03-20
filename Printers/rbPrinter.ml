@@ -32,6 +32,7 @@
 
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 open PyPrinter
@@ -43,11 +44,7 @@ class rbPrinter = object(self)
 
 
 
-  method tuple f li =
-    Format.fprintf f "[%a]"
-      (print_list self#expr
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) li
+  method tuple f li = Format.fprintf f "[%a]" (print_list self#expr sep_c) li
 
   method header f prog = Format.fprintf f "require \"scanf.rb\"
 %s"
@@ -72,11 +69,7 @@ end
   method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a )"
       self#funname funname
-      (print_list
-         (fun t (a, type_) ->
-           self#binding t a)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) li
+      (print_list (fun t (a, type_) -> self#binding t a) sep_c) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\nend@\n"
@@ -182,10 +175,7 @@ val mutable inlambda = false
       Format.fprintf f "@[<h>printf \"%s\"@]" format
     else
       Format.fprintf f "@[<h>printf \"%s\", %a@]" format
-        (print_list
-           (fun f (t, e) -> self#expr f e)
-           (fun t f1 e1 f2 e2 -> Format.fprintf t
-             "%a,@ %a" f1 e1 f2 e2)) exprs
+        (print_list (fun f (t, e) -> self#expr f e) sep_c) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.Lief (Expr.String s) -> Format.fprintf f "@[print %s@]" ( self#noformat s )

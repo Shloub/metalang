@@ -30,6 +30,7 @@
 *)
 
 open Ast
+open Helper
 open Stdlib
 open Printer
 
@@ -142,8 +143,7 @@ class smalltalkPrinter = object(self)
     | [] -> Format.fprintf f "[]"
     | [i] -> Format.fprintf f "@[<v>[%a]@]" self#instr i
     | li -> Format.fprintf f "@[<v>[@\n%a@]@\n]"
-          (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-              "%a@\n%a" f1 e1 f2 e2)) li
+          (print_list self#instr sep_nl) li
 
   method print f t expr = Format.fprintf f "@[%a display.@]" self#exprp expr
 
@@ -186,9 +186,7 @@ class smalltalkPrinter = object(self)
                    Format.fprintf f "%a: %a"
                      a ()
                      self#expr b)
-                 (fun t f1 e1 f2 e2 ->
-                   Format.fprintf t "%a@ %a" f1 e1 f2 e2
-                 )
+                 sep_space
               ) (List.zip (StringMap.find var prototypes) li)
 
   method whileloop f expr li =
@@ -219,9 +217,7 @@ class smalltalkPrinter = object(self)
           )
           bindings  []
       in Format.fprintf f "@[|%a|@]"
-        (print_list self#binding
-        (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)
-        ) li
+        (print_list self#binding sep_space) li
 
   method main f (main : Utils.instr list) =
     Format.fprintf f "@[<v 2>main [@\n%a%a@\n@]]"
@@ -249,9 +245,7 @@ class smalltalkPrinter = object(self)
              (fun f (n, t) -> if BindingSet.mem n refbindings
              then Format.fprintf f "%a: _%a" self#binding n self#binding n
              else Format.fprintf f "%a: %a" self#binding n self#binding n
-             )
-             (fun t f1 e1 f2 e2 -> Format.fprintf t
-                 "%a@ %a" f1 e1 f2 e2)) tl
+             ) sep_space ) tl
     end
 
   (** find references variables from a list of instructions *)
@@ -270,7 +264,7 @@ class smalltalkPrinter = object(self)
       Format.fprintf f "%a := %a.@\n"
         self#binding a
         self#binding b)
-      (fun f pa a pb b -> Format.fprintf f "%a%a" pa a pb b) f li
+      nosep f li
 
   method print_fun f funname t li instrs =
     self#calc_refs instrs;
@@ -297,10 +291,7 @@ class smalltalkPrinter = object(self)
     | _ -> assert false
 
   method header f prog =
-    let p f li =
-      print_list (fun f s -> Format.fprintf f "%s" s)
-        (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)
-         f li
+    let p f li = print_list (fun f s -> Format.fprintf f "%s" s) sep_nl f li
     in
     let pf bool name tmp f li =
       if bool then Format.fprintf f "@[<v 2>%s [%a@\n%a@]@\n]@\n"
@@ -309,7 +300,7 @@ class smalltalkPrinter = object(self)
             | [] -> ()
             | li -> Format.fprintf f "|%a|"
                   (print_list (fun f n -> Format.fprintf f "%s" n)
-                     (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li) tmp
+                     sep_space) li) tmp
           p li
     in
     let need_stdinsep = prog.Prog.hasSkip in
@@ -351,10 +342,7 @@ class smalltalkPrinter = object(self)
              self#binding name
              self#field fieldname
              self#expr expr
-         )
-         (fun t f1 e1 f2 e2 ->
-           Format.fprintf t
-             "%a@\n%a" f1 e1 f2 e2) f li
+         ) sep_nl f li
 
   method ptype f (t:Type.t) =
     match Type.unfix t with
@@ -391,10 +379,7 @@ class smalltalkPrinter = object(self)
         | _ -> ()
       end
       | _ -> ())
-      (fun t print1 item1 print2 item2 ->
-        Format.fprintf t "%a%a" print1 item1 print2 item2
-      )
-      f li
+      nosep f li
 
   method prog f (prog: Utils.prog) =
     Format.fprintf f "%a@[<v2>Object subclass: %s [@\n%a%a%a@]@\n]@\nEval [ (%s new) main. ]@\n"

@@ -1,5 +1,6 @@
 
 open Ast
+open Helper
 open Stdlib
 open Printer
 open CPrinter
@@ -87,9 +88,7 @@ func skip() {
            Format.fprintf t "%a@ %a"
              self#binding binding
              self#prototype type_
-         )
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)
+         ) sep_c
       ) li
       self#ptype t
 
@@ -107,10 +106,7 @@ func skip() {
           self#binding name
           self#field fieldname
           self#expr expr
-      )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a@\n%a" f1 e1 f2 e2)
+      ) sep_nl
       f
       li
 
@@ -214,8 +210,7 @@ func skip() {
         (print_list
            (fun t (name, type_) ->
              Format.fprintf t "%a %a;" self#field name self#ptype type_
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+           ) sep_nl
         ) li
     | Type.Enum li ->
       Format.fprintf f "type %a int@\nconst (@\n@[<v2>  %a@]@\n);"
@@ -225,8 +220,7 @@ func skip() {
              Format.fprintf t "%a %a = iota"
                self#enum fname
                self#enum name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+           ) sep_nl
         ) li
     | _ -> Format.fprintf f "type %a %a;" self#typename name self#ptype t
 

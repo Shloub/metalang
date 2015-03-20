@@ -32,6 +32,7 @@
 
 open Stdlib
 open Ast
+open Helper
 open Printer
 open CppPrinter
 
@@ -70,8 +71,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "public %a %a;" self#ptype type_ self#field name
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
@@ -184,8 +184,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
         (print_list
            (fun f (t, e) -> self#expr f e)
-           (fun t f1 e1 f2 e2 -> Format.fprintf t
-             "%a,@ %a" f1 e1 f2 e2)) exprs
+           sep_c ) exprs
 
   method print f t expr = match Expr.unfix expr with
   | Expr.Lief (Expr.String s) -> Format.fprintf f "@[System.out.print(%S);@]" s
@@ -200,10 +199,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
           self#field fieldname
           self#expr expr
 	  self#separator ()
-      )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a@\n%a" f1 e1 f2 e2)
+      ) sep_nl
       f
       li
 

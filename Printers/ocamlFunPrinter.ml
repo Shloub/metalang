@@ -24,6 +24,7 @@
  *)
 
 open Stdlib
+open Helper
 
 module E = AstFun.Expr
 module Type = Ast.Type
@@ -87,9 +88,7 @@ class camlFunPrinter = object(self)
   | _ ->
     Format.fprintf f "@[<v 2>let rec %a %a =@\n%a in@\n%a@]"
       self#binding name
-      (Printer.print_list
-         self#binding
-	 Printer.sep_space) params
+      (print_list self#binding sep_space) params
       self#expr e1
       self#expr e2
 
@@ -111,9 +110,9 @@ class camlFunPrinter = object(self)
   method multiprint f formats exprs =
     Format.fprintf f "(Printf.printf %a %a)"
 		   self#print_format formats
-		   (Printer.print_list
+		   (print_list
 		      (fun f (a, ty) -> self#expr f a)
-		      (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) exprs
+		      sep_space) exprs
 
   method read f ty next =
     Format.fprintf f "Scanf.scanf %S@\n%a"
@@ -165,7 +164,7 @@ class camlFunPrinter = object(self)
     match li with
     | [] -> Format.fprintf f "(%a ())" self#expr e
     | _ -> Format.fprintf f "(%a %a)"
-      self#expr e (Printer.print_list self#expr Printer.sep_space) li
+      self#expr e (print_list self#expr sep_space) li
 
   method apply f e li =
     let default () = self#apply_nomacros f e li in
@@ -178,13 +177,12 @@ class camlFunPrinter = object(self)
     | _ -> default ()
 
   method tuple f li = Format.fprintf f "(%a)"
-    (Printer.print_list self#expr
-       (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) li
+    (print_list self#expr sep_c) li
 
   method if_ f e1 e2 e3 = Format.fprintf f "(@[if %a@\nthen %a@\nelse %a)@]" self#expr e1 self#expr e2 self#expr e3
 
   method block f li = Format.fprintf f "@[<v 2>(@\n%a@\n)@]@\n"
-    (Printer.print_list
+    (print_list
        self#expr
        (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
 
@@ -223,7 +221,7 @@ class camlFunPrinter = object(self)
 
   method record f li =
     Format.fprintf f "{%a}"
-      (Printer.print_list
+      (print_list
 	 (fun f (expr, field) -> Format.fprintf f "%s=%a" field self#expr expr)
 	 (fun f pa a pb b -> Format.fprintf f "%a;@\n%a" pa a pb b)) li
 
@@ -236,18 +234,18 @@ class camlFunPrinter = object(self)
   method arrayindex f tab indexes =
     Format.fprintf f "%a.(%a)"
       self#expr tab
-      (Printer.print_list self#expr
+      (print_list self#expr
 	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
 
   method arrayaffect f tab indexes v =
     Format.fprintf f "%a.(%a) <- %a"
       self#expr tab
-      (Printer.print_list self#expr
+      (print_list self#expr
 	 (fun f pa a pb b -> Format.fprintf f "%a).(%a" pa a pb b)) indexes
       self#expr v
 
   method letin f params b  = Format.fprintf f "let %a in@\n%a"
-    (Printer.print_list
+    (print_list
        (fun f (s, a) ->
 	 let pparams, a = self#extract_fun_params a (fun f () -> ()) in
 	 Format.fprintf f "%a%a = %a"
@@ -269,15 +267,15 @@ class camlFunPrinter = object(self)
     | Type.Named n -> Format.fprintf f "%s" n
     | Type.Struct li ->
       Format.fprintf f "{%a}"
-        (Printer.print_list
+        (print_list
            (fun t (name, type_) ->
              Format.fprintf t "mutable %s : %a;" name self#ptype type_
            )
-           Printer.sep_space
+           sep_space
         ) li
     | Type.Enum li ->
       Format.fprintf f "%a"
-        (Printer.print_list
+        (print_list
            (fun t name ->
              Format.fprintf t "%s" name
            )
@@ -287,7 +285,7 @@ class camlFunPrinter = object(self)
     | Type.Auto -> assert false
     | Type.Tuple li ->
       Format.fprintf f "(%a)"
-        (Printer.print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a * %a" fa a fb b)) li
+        (print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a * %a" fa a fb b)) li
 
   method is_rec name e =
     E.Writer.Deep.fold (fun acc e -> acc || match E.unfix e with
@@ -299,10 +297,10 @@ class camlFunPrinter = object(self)
     let acc f () = Format.fprintf f "%a ()" acc ()
     in self#extract_fun_params e acc
   | E.Fun (params, e) ->
-    let acc f () = Format.fprintf f "%a %a" acc () (Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) params
+    let acc f () = Format.fprintf f "%a %a" acc () (print_list self#binding sep_space) params
     in self#extract_fun_params e acc
   | E.FunTuple (params, e) ->
-    let acc f () = Format.fprintf f "%a (%a)" acc () (Printer.print_list self#binding (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)) params
+    let acc f () = Format.fprintf f "%a (%a)" acc () (print_list self#binding sep_c) params
     in self#extract_fun_params e acc
   | _ -> acc, e
 

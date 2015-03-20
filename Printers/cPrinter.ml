@@ -31,6 +31,7 @@
 
 open Ast
 open Stdlib
+open Helper
 open Printer
 
 class cPrinter = object(self)
@@ -89,10 +90,7 @@ class cPrinter = object(self)
              self#field fieldname
              self#expr expr
              self#separator ()
-         )
-         (fun t f1 e1 f2 e2 ->
-           Format.fprintf t
-             "%a@\n%a" f1 e1 f2 e2)
+         ) sep_nl
       )
       li
 
@@ -173,9 +171,7 @@ class cPrinter = object(self)
            Format.fprintf t "%a@ %a"
              self#prototype type_
              self#binding binding
-         )
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)
+         ) sep_c
       ) li
 
   method stdin_sep f = Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\");@]"
@@ -213,8 +209,7 @@ class cPrinter = object(self)
     else
       Format.fprintf f "@[<h>%a(\"%s\", %a)%a@]" self#printf () format
         (print_list
-           (fun f (t, e) -> self#expr f e)
-           (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
+           (fun f (t, e) -> self#expr f e) sep_c ) exprs
         self#separator ()
 
   method print f t expr = match Expr.unfix expr with
@@ -244,8 +239,7 @@ class cPrinter = object(self)
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "%a %a%a" self#ptype type_ self#field name self#separator ()
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li
           self#typename name
           self#separator ()
@@ -255,8 +249,7 @@ class cPrinter = object(self)
         (print_list
            (fun t name ->
              self#enum t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+           ) sep_c
         ) li
         self#typename name
         self#separator ()
@@ -285,9 +278,7 @@ class cPrinter = object(self)
     if li <> [] then
       Format.fprintf f "%s %a%a@\n"
         s
-        (print_list self#binding
-           (fun f pa a pb b -> Format.fprintf f "%a, %a" pa a pb b)
-        ) li
+        (print_list self#binding sep_c) li
         self#separator ()
 
   method print_fun f funname t li instrs =
@@ -340,7 +331,6 @@ class cPrinter = object(self)
     in
     Format.fprintf f "scanf(\"%s\"%a);"
       format
-      (print_list (fun f x -> Format.fprintf f ", &%a" self#mutable_ x)
-         (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b))
+      (print_list (fun f x -> Format.fprintf f ", &%a" self#mutable_ x) nosep)
       (List.rev variables)
 end

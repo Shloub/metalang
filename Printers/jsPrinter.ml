@@ -29,6 +29,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 open CPrinter
@@ -81,9 +82,7 @@ class jsPrinter = object(self)
          (fun t (binding, type_) ->
            Format.fprintf t "%a"
              self#binding binding
-         )
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)
+         ) sep_c
       ) li
 
   method prog f prog =
@@ -140,10 +139,7 @@ function read_int_(){
 
   method multi_print f format exprs =
     Format.fprintf f "@[<h>util.print(%a);@]"
-      (print_list
-         (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) exprs
+      (print_list (fun f (t, e) -> self#expr f e) sep_c) exprs
 
   method print f t expr =
     Format.fprintf f "@[util.print(%a);@]" self#expr expr
@@ -183,10 +179,7 @@ function read_int_(){
            Format.fprintf f "%a : %a"
              self#field fieldname
              self#expr expr
-         )
-         (fun t f1 e1 f2 e2 ->
-           Format.fprintf t
-             "%a,@\n%a" f1 e1 f2 e2)
+         ) sep_cnl
       )
       li
 

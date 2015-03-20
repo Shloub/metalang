@@ -31,6 +31,7 @@
 *)
 
 open Ast
+open Helper
 open Stdlib
 open Printer
 
@@ -52,8 +53,7 @@ class htmlPrinter = object(self)
       self#expr e
 
   method bloc f li = Format.fprintf f "<div class=\"metalang_bloc\"><span class=\"keyword\">do</span><div class=\"metalang_bloc_content\">@\n%a</div>@\n<span class=\"keyword\">end</span></div>@\n"
-    (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-      "%a@\n%a" f1 e1 f2 e2)) li
+    (print_list self#instr sep_nl) li
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "<span class=\"keyword\">for</span>@ %a=%a@ <span class=\"keyword\">to</span>@ %a@\n%a"
@@ -155,9 +155,7 @@ class htmlPrinter = object(self)
          (fun f (n, t) ->
            Format.fprintf f "%a@ %a"
              self#ptype t
-             self#binding n)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)) li
+             self#binding n) sep_c) li
 
   method print_fun f funname t li instrs =
     Format.fprintf f "<div class==\"metalang_function\"><span class=\"proto\">%a</span>@\n<div class=\"metalang_bloc_content\">%a@]</div><span class=\"keyword\">end</span></div>"
@@ -172,8 +170,7 @@ class htmlPrinter = object(self)
         (print_list
            (fun t (name, type_) ->
              Format.fprintf t "%a %a;<br />@\n" self#ptype type_ self#field name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+           ) nosep
         ) li
     | Type.Enum li ->
       Format.fprintf f "<span class=\"keyword\">enum</span> <span class=\"type\">@@%s</span> @\n<div class=\"metalang_bloc_content\">@[<v2>  %a@]</div>@\n<span class=\"keyword\">end</span>@\n"
@@ -181,8 +178,7 @@ class htmlPrinter = object(self)
         (print_list
            (fun t name ->
              self#enum t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n %a" fa a fb b)
+           ) sep_nl
         ) li
     | _ ->
       Format.fprintf f "<span class=\"keyword\">type</span> %a = %a;" self#typename name self#ptype t

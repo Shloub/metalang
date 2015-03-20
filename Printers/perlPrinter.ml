@@ -30,6 +30,7 @@
 *)
 
 open Ast
+open Helper
 open Stdlib
 open CPrinter
 open Printer
@@ -84,9 +85,7 @@ class perlPrinter = object(self)
 
   method multi_print f format exprs =
     Format.fprintf f "@[<h>print(%a);@]"
-      (print_list
-         (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a,@ %a" f1 e1 f2 e2)) exprs
+      (print_list self#expr  sep_c ) (List.map snd exprs)
 
   method print_proto f (funname, t, li) =
     if li = [] then Format.fprintf f "sub %a{" self#funname funname
@@ -95,9 +94,7 @@ class perlPrinter = object(self)
       self#funname funname
       (print_list
          (fun t (binding, type_) -> Format.fprintf t "%a" self#binding binding
-         )
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)
+         ) sep_c
       ) li
 
 
@@ -165,11 +162,7 @@ class perlPrinter = object(self)
 
   method comment f s =
     let lic = String.split s '\n' in
-      (Printer.print_list
-	 (fun f s -> Format.fprintf f "#%s@\n" s)
-	 (fun f pa a pb b -> Format.fprintf f "%a%a" pa a pb b))
-	f
-      lic
+      print_list (fun f s -> Format.fprintf f "#%s@\n" s) nosep f lic
 
   method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>my %a = [];@]"
@@ -202,18 +195,9 @@ class perlPrinter = object(self)
 	  (fun f pa a pb b -> Format.fprintf f "%a,@\n%a" pa a pb b)
       ) el
 
-  method record f li =
-    Format.fprintf f "{%a}"
-      (self#def_fields (InternalName 0)) li
-
-  method field f field =
-    Format.fprintf f "%S" field
-
-  method tuple f li =
-    Format.fprintf f "[%a]"
-      (print_list self#expr
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) li
+  method record f li = Format.fprintf f "{%a}" (self#def_fields (InternalName 0)) li
+  method field f field = Format.fprintf f "%S" field
+  method tuple f li = Format.fprintf f "[%a]" (print_list self#expr sep_c) li
 
   method def_fields name f li =
     Format.fprintf f "@[<h>%a@]"
@@ -230,10 +214,7 @@ class perlPrinter = object(self)
 
   method untuple f li e =
     Format.fprintf f "my (%a) = @@{ %a };"
-      (print_list self#binding
-         (fun t fa a fb b -> Format.fprintf t "%a, %a" fa a fb b)
-      ) (List.map snd li)
-      self#expr e
+      (print_list self#binding sep_c) (List.map snd li) self#expr e
 
   method selfAssoc f m e2 op = match op with
   | Expr.Mod ->

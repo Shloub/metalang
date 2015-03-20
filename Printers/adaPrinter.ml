@@ -29,6 +29,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 open PasPrinter
@@ -87,9 +88,8 @@ class adaPrinter = object(self)
 
   method comment f s =
     let lic = String.split s '\n' in
-    Printer.print_list
-      (fun f s -> Format.fprintf f "--%s@\n" s)
-      (fun f pa a pb b -> Format.fprintf f "%a%a" pa a pb b)
+    print_list
+      (fun f s -> Format.fprintf f "--%s@\n" s) nosep
       f
       lic
 
@@ -104,9 +104,7 @@ class adaPrinter = object(self)
              Format.fprintf t "%a : in %a"
                self#binding binding
                self#ptype type_
-           )
-           (fun t f1 e1 f2 e2 -> Format.fprintf t
-             "%a;@ %a" f1 e1 f2 e2)
+           ) sep_dc
 	) li) li
 
   method return f e =
@@ -127,9 +125,7 @@ class adaPrinter = object(self)
              Format.fprintf t "%a : in %a"
                self#binding binding
                self#ptype type_
-           )
-           (fun t f1 e1 f2 e2 -> Format.fprintf t
-             "%a;@ %a" f1 e1 f2 e2)
+           ) sep_dc
         ) li
         self#ptype t
 
@@ -173,30 +169,14 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
       if li = [] then Format.fprintf f "%a;" self#funname var
       else Format.fprintf f "@[<hov>%a(%a);@]"
         self#funname var
-        (print_list
-           self#expr
-           (fun t f1 e1 f2 e2 ->
-             Format.fprintf t "%a,@ %a" f1 e1 f2 e2
-           )
-        ) li
+        (print_list self#expr sep_c) li
  method apply f var li =
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_apply f var t params code li
     | None ->
-      if li = [] then
-	Format.fprintf f "%a" self#funname var
-      else
-	Format.fprintf
-          f
-          "%a(%a)"
-          self#funname var
-          (print_list
-             self#expr
-             (fun t f1 e1 f2 e2 ->
-               Format.fprintf t "%a,@ %a" f1 e1 f2 e2
-             )
-          ) li
+      if li = [] then Format.fprintf f "%a" self#funname var
+      else Format.fprintf f "%a(%a)" self#funname var (print_list self#expr sep_c) li
 
   method if_ f e ifcase elsecase =
     match elsecase with
@@ -280,10 +260,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
         )
         bindings
 	[]
-      in
-      Format.fprintf f "@\n  @[<v>%a@]"
-        (print_list (fun p f -> f p ())
-      (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)) li;
+      in Format.fprintf f "@\n  @[<v>%a@]" (print_list (fun p f -> f p ()) sep_nl) li;
 
   val mutable declared_types_assoc = StringMap.empty
 
@@ -300,8 +277,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "%a : %a;" self#field name self#ptype type_
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li;
 
     | Type.Enum li ->
@@ -366,8 +342,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
       self#instructions instrs
 
   method bloc f li = Format.fprintf f "@[<v 2>begin@\n%a@]@\nend;"
-    (print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-      "%a@\n%a" f1 e1 f2 e2)) li
+    (print_list self#instr sep_nl) li
 
   method mutable_ f m =
     match Mutable.unfix m with
@@ -393,10 +368,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
           self#binding name
           self#field fieldname
           self#expr expr
-      )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a@\n%a" f1 e1 f2 e2)
+      ) sep_nl
       f
       li
 

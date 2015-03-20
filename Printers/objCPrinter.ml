@@ -30,6 +30,7 @@
 *)
 
 open Ast
+open Helper
 open Stdlib
 open Printer
 open CPrinter
@@ -88,8 +89,7 @@ class objCPrinter = object(self)
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "@@public %a %a;" self#ptype type_ self#field name
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li
           self#typename name
     | Type.Enum li ->

@@ -30,6 +30,7 @@
 *)
 
 open Stdlib
+open Helper
 open Ast
 open Printer
 open CsharpPrinter
@@ -172,9 +173,7 @@ End Function" else "")
 	     self#val_or_ref type_
              self#binding binding
              self#prototype type_
-         )
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a,@ %a" f1 e1 f2 e2)
+         ) sep_c
       ) li
       (fun f () -> match Type.unfix t with
       | Type.Void -> ()
@@ -287,9 +286,8 @@ End Function" else "")
 
   method comment f s =
     let lic = String.split s '\n' in
-    Printer.print_list
-      (fun f s -> Format.fprintf f "'%s@\n" s)
-      (fun f pa a pb b -> Format.fprintf f "%a%a" pa a pb b)
+    print_list
+      (fun f s -> Format.fprintf f "'%s@\n" s) nosep
       f
       lic
 
@@ -301,8 +299,7 @@ End Function" else "")
       self#bloc li
 
   method bloc f li = 
-    print_list self#instr (fun t f1 e1 f2 e2 -> Format.fprintf t
-      "%a@\n%a" f1 e1 f2 e2) f li
+    print_list self#instr sep_nl f li
 
   method mutable_ f m =
     match Mutable.unfix m with
@@ -342,8 +339,7 @@ End Function" else "")
              (fun t (name, type_) ->
                Format.fprintf t "Public %a As %a%a" self#field name self#ptype type_ 
 		 self#separator ()
-             )
-             (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+             ) sep_nl
           ) li
     | Type.Enum li ->
       Format.fprintf f "Enum %a@\n  @[<v>%a@]@\nEnd Enum@\n"
@@ -351,8 +347,7 @@ End Function" else "")
         (print_list
            (fun t name ->
              self#enumfield t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n%a" fa a fb b)
+           ) sep_nl
         ) li
     | _ -> super#decl_type f name t
 
