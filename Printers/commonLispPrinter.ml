@@ -42,8 +42,8 @@ class commonLispPrinter = object(self)
   method char f c = match c with
   | ' ' -> Format.fprintf f "#\\Space"
   | '\n' -> Format.fprintf f "#\\NewLine"
-  | x -> if (x >= 'a' && x <= 'z') or
-      (x >= '0' && x <= '9') or
+  | x -> if (x >= 'a' && x <= 'z') ||
+      (x >= '0' && x <= '9') ||
       (x >= 'A' && x <= 'Z')
     then Format.fprintf f "#\\%c" x
     else Format.fprintf f "(code-char %d)" (int_of_char c)
@@ -175,6 +175,7 @@ class commonLispPrinter = object(self)
     | Expr.Lexems e -> assert false
     | Expr.Record e -> self#record f e
     | Expr.Lief l -> self#lief f l
+    | Expr.Tuple _ -> assert false
 
   method enum f e = Format.fprintf f "'%s" e
 

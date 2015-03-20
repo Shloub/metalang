@@ -60,7 +60,7 @@ let rec returns instrs =
 and returns_i acc i = match Instr.unfix i with
   | Instr.Return _ -> true
   | Instr.If (_, li1, li2) ->
-    acc or ( (returns li1) && returns li2 )
+    acc || ( (returns li1) && returns li2 )
   | _ -> acc
 
 type acc0 = unit

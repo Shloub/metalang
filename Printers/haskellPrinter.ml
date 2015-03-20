@@ -485,6 +485,7 @@ class haskellPrinter = object(self)
         begin match t with
         | Type.Char -> Format.fprintf f "getChar"
         | Type.Integer -> Format.fprintf f "read_int"
+        | _ -> assert false
         end
     | _, E.Fun ([_], _ ) ->
         self#block ~p f [ E.readin next ty]

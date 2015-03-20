@@ -253,7 +253,7 @@ class printer = object(self)
         match acc with
         | Some _ -> acc
         | None ->
-          if clang = "" or clang = lang then
+          if clang = "" || clang = lang then
             Some expantion
           else None
       ) None

@@ -96,8 +96,9 @@ let typeof = function
   | String _ -> "string"
   | Record _ -> "record"
   | Array _ -> "array"
-  | Nil _ -> "Nil"
+  | Nil -> "Nil"
   | Lexems _ -> "Lexems"
+  | Tuple _ -> "Tuple"
 
 (** extract an ocaml array from a value *)
 let get_tuple = function
@@ -722,7 +723,7 @@ module EvalF (IO : EvalIO) = struct
     | Instr.DeclRead (t, var, _) ->
       let env, r = add_in_env env var in
       env, (fun execenv -> read t (fun v -> execenv.(r) <- v))
-    | Instr.StdinSep _ ->
+    | Instr.StdinSep ->
       let f execenv = IO.skip () in
       env, f
     | Instr.Tag _ -> env, (fun _ -> ())
