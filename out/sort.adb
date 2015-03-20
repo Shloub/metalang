@@ -40,8 +40,7 @@ begin
   end loop;
 end;
 
-procedure qsort0(tab : in a_PTR; len : in Integer; b : in Integer;
-c : in Integer) is
+procedure qsort0(tab : in a_PTR; len : in Integer; b : in Integer; c : in Integer) is
   tmp : Integer;
   j0 : Integer;
   j : Integer;

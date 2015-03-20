@@ -72,6 +72,5 @@ begin
     SkipSpaces;
     tab(i) := tmp;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(plus_petit0(tab,
-  len)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(plus_petit0(tab, len)), Left));
 end;

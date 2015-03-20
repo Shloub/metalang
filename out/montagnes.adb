@@ -55,6 +55,5 @@ begin
     SkipSpaces;
     tab(i) := x;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(montagnes0(tab,
-  len)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(montagnes0(tab, len)), Left));
 end;

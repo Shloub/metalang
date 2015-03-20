@@ -273,8 +273,8 @@ function mul_bigint( aa, bb )
   local bd = mul_bigint(b, d)
   local amoinsbcmoinsd = mul_bigint(amoinsb, cmoinsd)
   local acdec = bigint_shift(ac, 2 * split)
-  return add_bigint(add_bigint(acdec, bd),
-  bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
+  return
+  add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split))
   --[[ ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd --]]
 end
 

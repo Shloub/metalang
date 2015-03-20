@@ -65,10 +65,7 @@ Object subclass: vigenere [
       out2 := self read_char.
       message at: (index2 + 1) put:  out2.
     ].
-    (self crypte: taille_cle
-    cle: cle
-    taille: taille
-    message: message).
+    (self crypte: taille_cle cle: cle taille: taille message: message).
     (0 to: (taille - 1)) do: [:i|
       ((message at: (i + 1))) display.
     ].

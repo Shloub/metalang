@@ -147,8 +147,7 @@ begin
   return (not bigint_gt(a, b));
 end;
 
-function add_bigint_positif(a : in bigint_PTR;
-b : in bigint_PTR) return bigint_PTR is
+function add_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
   tmp : Integer;
   retenue : Integer;
   len : Integer;
@@ -183,8 +182,7 @@ begin
   return f;
 end;
 
-function sub_bigint_positif(a : in bigint_PTR;
-b : in bigint_PTR) return bigint_PTR is
+function sub_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
   tmp : Integer;
   retenue : Integer;
   len : Integer;
@@ -272,8 +270,7 @@ begin
   return add_bigint(a, neg_bigint(b));
 end;
 
-function mul_bigint_cp(a : in bigint_PTR;
-b : in bigint_PTR) return bigint_PTR is
+function mul_bigint_cp(a : in bigint_PTR; b : in bigint_PTR) return bigint_PTR is
   retenue : Integer;
   m : bigint_PTR;
   len : Integer;
@@ -313,8 +310,7 @@ begin
   return m;
 end;
 
-function bigint_premiers_chiffres(a : in bigint_PTR;
-i : in Integer) return bigint_PTR is
+function bigint_premiers_chiffres(a : in bigint_PTR; i : in Integer) return bigint_PTR is
   o : bigint_PTR;
   len : Integer;
 begin
@@ -390,8 +386,7 @@ begin
   bd := mul_bigint(b, d);
   amoinsbcmoinsd := mul_bigint(amoinsb, cmoinsd);
   acdec := bigint_shift(ac, (2) * split);
-  return add_bigint(add_bigint(acdec, bd),
-  bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split));
+  return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split));
   -- ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
   
 end;
@@ -493,8 +488,7 @@ begin
   end if;
 end;
 
-function bigint_exp_10chiffres(x : in bigint_PTR;
-b : in Integer) return bigint_PTR is
+function bigint_exp_10chiffres(x : in bigint_PTR; b : in Integer) return bigint_PTR is
   a : bigint_PTR;
 begin
   a := x;

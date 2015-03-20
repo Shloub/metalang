@@ -37,8 +37,7 @@ foreach my $i2 (1 .. 8) {
   print($i2, " => ", $t->[$i2], "\n");
 }
 foreach my $j (0 .. 80) {
-  print e($t,
-  $j);
+  print e($t, $j);
 }
 print "\n";
 foreach my $k (1 .. 50) {
@@ -46,8 +45,7 @@ foreach my $k (1 .. 50) {
 }
 print "\n";
 foreach my $j2 (169 .. 220) {
-  print e($t,
-  $j2);
+  print e($t, $j2);
 }
 print "\n";
 foreach my $k2 (90 .. 110) {

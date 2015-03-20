@@ -77,8 +77,8 @@ for e = 1,9 do
                     allowed[d] = false;
                     --[[ 2 * 3 digits --]]
                     local product = (a * 10 + b) * (c * 100 + d * 10 + e)
-                    if not(counted[product]) and okdigits(allowed,
-                    trunc(product / 10))
+                    if not(counted[product]) and
+                    okdigits(allowed, trunc(product / 10))
                     then
                       counted[product] = true;
                       count = count + product;
@@ -86,8 +86,8 @@ for e = 1,9 do
                     end
                     --[[ 1  * 4 digits --]]
                     local product2 = b * (a * 1000 + c * 100 + d * 10 + e)
-                    if not(counted[product2]) and okdigits(allowed,
-                    trunc(product2 / 10))
+                    if not(counted[product2]) and
+                    okdigits(allowed, trunc(product2 / 10))
                     then
                       counted[product2] = true;
                       count = count + product2;

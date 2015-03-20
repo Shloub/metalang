@@ -7,8 +7,7 @@ type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 type b is Array (Integer range <>) of a_PTR;
 type b_PTR is access b;
-function result(sum : in Integer; t : in a_PTR; maxIndex : in Integer;
-cache : in b_PTR) return Integer is
+function result(sum : in Integer; t : in a_PTR; maxIndex : in Integer; cache : in b_PTR) return Integer is
   out0 : Integer;
   div : Integer;
 begin
@@ -56,6 +55,5 @@ begin
     end loop;
     cache(j) := o;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result((200),
-  t, (7), cache)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result((200), t, (7), cache)), Left));
 end;

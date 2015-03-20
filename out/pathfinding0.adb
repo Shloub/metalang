@@ -31,8 +31,7 @@ type m is Array (Integer range <>) of Character;
 type m_PTR is access m;
 type o is Array (Integer range <>) of m_PTR;
 type o_PTR is access o;
-function pathfind_aux(cache : in l_PTR; tab : in o_PTR; x : in Integer;
-y : in Integer; posX : in Integer; posY : in Integer) return Integer is
+function pathfind_aux(cache : in l_PTR; tab : in o_PTR; x : in Integer; y : in Integer; posX : in Integer; posY : in Integer) return Integer is
   val4 : Integer;
   val3 : Integer;
   val2 : Integer;
@@ -69,8 +68,7 @@ begin
   end if;
 end;
 
-function pathfind(tab : in o_PTR; x : in Integer;
-y : in Integer) return Integer is
+function pathfind(tab : in o_PTR; x : in Integer; y : in Integer) return Integer is
   tmp : k_PTR;
   cache : l_PTR;
 begin

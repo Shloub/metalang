@@ -1,9 +1,7 @@
 program test_enum;
 
 Type foo_t = (
-  Foo,
-   Bar,
-   Blah);
+  Foo, Bar, Blah);
 
 
 var

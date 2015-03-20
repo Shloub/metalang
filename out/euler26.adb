@@ -5,8 +5,7 @@ use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 procedure euler26 is
 type e is Array (Integer range <>) of Integer;
 type e_PTR is access e;
-function periode(restes : in e_PTR; c : in Integer; d : in Integer;
-b : in Integer) return Integer is
+function periode(restes : in e_PTR; c : in Integer; d : in Integer; b : in Integer) return Integer is
   reste : Integer;
   len : Integer;
   chiffre : Integer;

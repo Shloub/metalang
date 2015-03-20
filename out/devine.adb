@@ -15,8 +15,7 @@ begin
 end;
 type b is Array (Integer range <>) of Integer;
 type b_PTR is access b;
-function devine0(nombre : in Integer; tab : in b_PTR;
-len : in Integer) return Boolean is
+function devine0(nombre : in Integer; tab : in b_PTR; len : in Integer) return Boolean is
   min0 : Integer;
   max0 : Integer;
 begin

@@ -28,8 +28,7 @@ begin
   return n * ((2) * n - (1));
 end;
 
-function findPenta2(n : in Integer; a : in Integer;
-b : in Integer) return Boolean is
+function findPenta2(n : in Integer; a : in Integer; b : in Integer) return Boolean is
   p : Integer;
   c : Integer;
 begin
@@ -52,8 +51,7 @@ begin
   end if;
 end;
 
-function findHexa2(n : in Integer; a : in Integer;
-b : in Integer) return Boolean is
+function findHexa2(n : in Integer; a : in Integer; b : in Integer) return Boolean is
   p : Integer;
   c : Integer;
 begin

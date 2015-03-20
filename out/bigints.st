@@ -460,48 +460,42 @@ Modulo
     b := (self bigint_of_int: 9951263).
     (self print_bigint: a).
     '>>1=' display.
-    (self print_bigint: (self bigint_shift: a
-    i: (0-(1)))).
+    (self print_bigint: (self bigint_shift: a i: (0-(1)))).
     '
 ' display.
     (self print_bigint: a).
     '*' display.
     (self print_bigint: b).
     '=' display.
-    (self print_bigint: (self mul_bigint: a
-    bb: b)).
+    (self print_bigint: (self mul_bigint: a bb: b)).
     '
 ' display.
     (self print_bigint: a).
     '*' display.
     (self print_bigint: b).
     '=' display.
-    (self print_bigint: (self mul_bigint_cp: a
-    b: b)).
+    (self print_bigint: (self mul_bigint_cp: a b: b)).
     '
 ' display.
     (self print_bigint: a).
     '+' display.
     (self print_bigint: b).
     '=' display.
-    (self print_bigint: (self add_bigint: a
-    b: b)).
+    (self print_bigint: (self add_bigint: a b: b)).
     '
 ' display.
     (self print_bigint: b).
     '-' display.
     (self print_bigint: a).
     '=' display.
-    (self print_bigint: (self sub_bigint: b
-    b: a)).
+    (self print_bigint: (self sub_bigint: b b: a)).
     '
 ' display.
     (self print_bigint: a).
     '-' display.
     (self print_bigint: b).
     '=' display.
-    (self print_bigint: (self sub_bigint: a
-    b: b)).
+    (self print_bigint: (self sub_bigint: a b: b)).
     '
 ' display.
     (self print_bigint: a).

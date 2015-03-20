@@ -167,8 +167,7 @@ begin
   apply_move_xy(m.x, m.y, g);
 end;
 
-procedure cancel_move_xy(x : in Integer; y : in Integer;
-g : in gamestate_PTR) is
+procedure cancel_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) is
 begin
   g.cases(x)(y) := (0);
   g.firstToPlay := (not g.firstToPlay);
@@ -180,8 +179,7 @@ begin
   cancel_move_xy(m.x, m.y, g);
 end;
 
-function can_move_xy(x : in Integer; y : in Integer;
-g : in gamestate_PTR) return Boolean is
+function can_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) return Boolean is
 begin
   return g.cases(x)(y) = (0);
 end;

@@ -34,8 +34,7 @@ begin
   return n;
 end;
 
-function fillPrimesFactors(t : in c_PTR; e : in Integer; primes : in c_PTR;
-nprimes : in Integer) return Integer is
+function fillPrimesFactors(t : in c_PTR; e : in Integer; primes : in c_PTR; nprimes : in Integer) return Integer is
   n : Integer;
   d : Integer;
 begin

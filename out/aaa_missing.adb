@@ -56,7 +56,6 @@ begin
     Get(tab(a));
     SkipSpaces;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result(len,
-  tab)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result(len, tab)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

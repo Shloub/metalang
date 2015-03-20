@@ -24,8 +24,7 @@ begin
   return n;
 end;
 
-function isPrime(d : in Integer; primes : in c_PTR;
-len : in Integer) return Boolean is
+function isPrime(d : in Integer; primes : in c_PTR; len : in Integer) return Boolean is
   n : Integer;
   i : Integer;
 begin
@@ -45,8 +44,7 @@ begin
   return TRUE;
 end;
 
-function test(a : in Integer; b : in Integer; primes : in c_PTR;
-len : in Integer) return Integer is
+function test(a : in Integer; b : in Integer; primes : in c_PTR; len : in Integer) return Integer is
   j : Integer;
 begin
   for n in integer range (0)..(200) loop

@@ -28,6 +28,5 @@ end;
 
 
 begin
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(fibo((1),
-  (2), (4))), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(fibo((1), (2), (4))), Left));
 end;

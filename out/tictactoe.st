@@ -113,9 +113,7 @@ Tictactoe : un tictactoe avec une IA
   ]
   
    apply_move: m g: g [
-    (self apply_move_xy: (m x)
-    y: (m y)
-    g: g).
+    (self apply_move_xy: (m x) y: (m y) g: g).
   ]
   
    cancel_move_xy: x y: y g: g [
@@ -125,9 +123,7 @@ Tictactoe : un tictactoe avec une IA
   ]
   
    cancel_move: m g: g [
-    (self cancel_move_xy: (m x)
-    y: (m y)
-    g: g).
+    (self cancel_move_xy: (m x) y: (m y) g: g).
   ]
   
    can_move_xy: x y: y g: g [
@@ -152,13 +148,9 @@ Un minimax classique, renvoie la note du plateau
       (0 to: 2) do: [:y|
         (self can_move_xy: x y: y g: g)
           ifTrue:[
-                 (self apply_move_xy: x
-                 y: y
-                 g: g).
+                 (self apply_move_xy: x y: y g: g).
                  currentNote := (self minmax: g).
-                 (self cancel_move_xy: x
-                 y: y
-                 g: g).
+                 (self cancel_move_xy: x y: y g: g).
                  " Minimum ou Maximum selon le coté ou l'on joue"
                  ((currentNote > maxNote) = (g firstToPlay))
                    ifTrue:[maxNote :=  currentNote.].
@@ -180,9 +172,7 @@ Renvoie le coup de l'IA
       (0 to: 2) do: [:y|
         (self can_move_xy: x y: y g: g)
           ifTrue:[
-                 (self apply_move_xy: x
-                 y: y
-                 g: g).
+                 (self apply_move_xy: x y: y g: g).
                  currentNote := (self minmax: g).
                  (x) display.
                  ', ' display.
@@ -191,9 +181,7 @@ Renvoie le coup de l'IA
                  (currentNote) display.
                  '
 ' display.
-                 (self cancel_move_xy: x
-                 y: y
-                 g: g).
+                 (self cancel_move_xy: x y: y g: g).
                  (currentNote < minNote)
                    ifTrue:[
                           minNote :=  currentNote.
@@ -244,24 +232,20 @@ Renvoie le coup de l'IA
                  c := move new.
                  c x: 1.
                  c y: 1.
-                 (self apply_move: c
-                 g: state).
+                 (self apply_move: c g: state).
                  d := move new.
                  d x: 0.
                  d y: 0.
-                 (self apply_move: d
-                 g: state).
+                 (self apply_move: d g: state).
                  [(((state ended)) not)] whileTrue:
                  [
                  (self print_state: state).
-                 (self apply_move: (self play: state)
-                 g: state).
+                 (self apply_move: (self play: state) g: state).
                  (self eval0: state).
                  (self print_state: state).
                  (((state ended)) not)
                    ifTrue:[
-                          (self apply_move: (self play: state)
-                          g: state).
+                          (self apply_move: (self play: state) g: state).
                           (self eval0: state).
                    ].
                  ].

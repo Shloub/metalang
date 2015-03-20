@@ -48,6 +48,5 @@ begin
   Get(b);
   SkipSpaces;
   Get(i);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(fibo0(a,
-  b, i)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(fibo0(a, b, i)), Left));
 end;

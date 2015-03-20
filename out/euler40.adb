@@ -52,8 +52,7 @@ begin
     String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   end loop;
   for j in integer range (0)..(80) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(e(t,
-    j)), Left));
+    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(e(t, j)), Left));
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   for k in integer range (1)..(50) loop
@@ -61,8 +60,7 @@ begin
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   for j2 in integer range (169)..(220) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(e(t,
-    j2)), Left));
+    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(e(t, j2)), Left));
   end loop;
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   for k2 in integer range (90)..(110) loop

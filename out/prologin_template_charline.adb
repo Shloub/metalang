@@ -15,8 +15,7 @@ begin
 end;
 type b is Array (Integer range <>) of Character;
 type b_PTR is access b;
-function programme_candidat(tableau : in b_PTR;
-taille : in Integer) return Integer is
+function programme_candidat(tableau : in b_PTR; taille : in Integer) return Integer is
   out0 : Integer;
 begin
   out0 := (0);
@@ -39,7 +38,6 @@ begin
     Get(tableau(a));
   end loop;
   SkipSpaces;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,
-  taille)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau, taille)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

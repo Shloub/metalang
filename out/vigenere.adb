@@ -37,8 +37,7 @@ end;
 
 type a is Array (Integer range <>) of Character;
 type a_PTR is access a;
-procedure crypte(taille_cle : in Integer; cle : in a_PTR; taille : in Integer;
-message : in a_PTR) is
+procedure crypte(taille_cle : in Integer; cle : in a_PTR; taille : in Integer; message : in a_PTR) is
   new0 : Integer;
   lettre : Integer;
   addon : Integer;

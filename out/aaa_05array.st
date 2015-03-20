@@ -23,8 +23,7 @@ Object subclass: aaa_05array [
       ifFalse:['False' display.].
     '
 ' display.
-    (self g: (self id: a)
-    index: 0).
+    (self g: (self id: a) index: 0).
     d := (a at: (0 + 1)).
     d
       ifTrue:['True' display.]

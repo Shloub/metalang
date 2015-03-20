@@ -38,6 +38,5 @@ begin
   Get(a);
   SkipSpaces;
   Get(b);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(exp0(a,
-  b)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(exp0(a, b)), Left));
 end;

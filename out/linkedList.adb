@@ -20,8 +20,7 @@ begin
   return out0;
 end;
 
-function rev2(empty : in intlist_PTR; acc : in intlist_PTR;
-torev : in intlist_PTR) return intlist_PTR is
+function rev2(empty : in intlist_PTR; acc : in intlist_PTR; torev : in intlist_PTR) return intlist_PTR is
   acc2 : intlist_PTR;
 begin
   if torev = empty
@@ -35,8 +34,7 @@ begin
   end if;
 end;
 
-function rev(empty : in intlist_PTR;
-torev : in intlist_PTR) return intlist_PTR is
+function rev(empty : in intlist_PTR; torev : in intlist_PTR) return intlist_PTR is
 begin
   return rev2(empty, empty, torev);
 end;

@@ -15,8 +15,7 @@ begin
 end;
 type a is Array (Integer range <>) of Character;
 type a_PTR is access a;
-function nth(tab : in a_PTR; tofind : in Character;
-len : in Integer) return Integer is
+function nth(tab : in a_PTR; tofind : in Character; len : in Integer) return Integer is
   out0 : Integer;
 begin
   out0 := (0);

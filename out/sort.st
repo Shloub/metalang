@@ -64,14 +64,8 @@ Object subclass: sort [
                                 i :=  (i + 1).
                         ].]
                ifFalse:[j :=  (j - 1).].].
-             (self qsort0: tab
-             len: len
-             a: i0
-             b: (i - 1)).
-             (self qsort0: tab
-             len: len
-             a: (i + 1)
-             b: j0).
+             (self qsort0: tab len: len a: i0 b: (i - 1)).
+             (self qsort0: tab len: len a: (i + 1) b: j0).
       ].
   ]
   
@@ -87,8 +81,7 @@ Object subclass: sort [
       tab at: (i_ + 1) put:  tmp.
     ].
     tab2 := (self copytab: tab len: len).
-    (self bubblesort: tab2
-    len: len).
+    (self bubblesort: tab2 len: len).
     (0 to: (len - 1)) do: [:i|
       ((tab2 at: (i + 1))) display.
       ' ' display.
@@ -96,10 +89,7 @@ Object subclass: sort [
     '
 ' display.
     tab3 := (self copytab: tab len: len).
-    (self qsort0: tab3
-    len: len
-    a: 0
-    b: (len - 1)).
+    (self qsort0: tab3 len: len a: 0 b: (len - 1)).
     (0 to: (len - 1)) do: [:i|
       ((tab3 at: (i + 1))) display.
       ' ' display.

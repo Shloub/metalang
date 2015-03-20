@@ -17,8 +17,7 @@ type d is Array (Integer range <>) of Integer;
 type d_PTR is access d;
 type e is Array (Integer range <>) of d_PTR;
 type e_PTR is access e;
-function programme_candidat(tableau : in e_PTR; x : in Integer;
-y : in Integer) return Integer is
+function programme_candidat(tableau : in e_PTR; x : in Integer; y : in Integer) return Integer is
   out0 : Integer;
 begin
   out0 := (0);
@@ -49,7 +48,6 @@ begin
     end loop;
     tableau(a) := b;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau,
-  taille_x, taille_y)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau, taille_x, taille_y)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
 end;

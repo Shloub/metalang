@@ -98,7 +98,6 @@ begin
   Get(t2.bar);
   SkipSpaces;
   Get(t2.blah);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result(t,
-  t2)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result(t, t2)), Left));
   String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t.blah), Left));
 end;

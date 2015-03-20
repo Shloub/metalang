@@ -61,8 +61,8 @@ end
 
 for n = 285,55385 do
   local t = triangle(n)
-  if findPenta2(t, trunc(n / 5), n) and findHexa2(t, trunc(n / 5),
-  trunc(n / 2) + 10)
+  if findPenta2(t, trunc(n / 5), n) and
+  findHexa2(t, trunc(n / 5), trunc(n / 2) + 10)
   then
     io.write(string.format("%d\n%d\n", n, t))
   end

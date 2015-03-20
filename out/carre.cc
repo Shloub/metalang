@@ -24,8 +24,9 @@ int main(){
   for (int ix = 1 ; ix < x; ix++)
     for (int iy = 1 ; iy < y; iy++)
       if (tab->at(iy)->at(ix) == 1)
-    tab->at(iy)->at(ix) = min2_(min2_(tab->at(iy)->at(ix - 1),
-    tab->at(iy - 1)->at(ix)), tab->at(iy - 1)->at(ix - 1)) + 1;
+    tab->at(iy)->at(ix) =
+    min2_(min2_(tab->at(iy)->at(ix - 1), tab->at(iy - 1)->at(ix)), tab->at(iy - 1)->at(ix - 1)) +
+    1;
   for (int jy = 0 ; jy < y; jy++)
   {
     for (int jx = 0 ; jx < x; jx++)

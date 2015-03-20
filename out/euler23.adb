@@ -24,8 +24,7 @@ begin
   return n;
 end;
 
-function fillPrimesFactors(t : in a_PTR; b : in Integer; primes : in a_PTR;
-nprimes : in Integer) return Integer is
+function fillPrimesFactors(t : in a_PTR; b : in Integer; primes : in a_PTR; nprimes : in Integer) return Integer is
   n : Integer;
   d : Integer;
 begin
@@ -44,8 +43,7 @@ begin
   return n;
 end;
 
-function sumdivaux2(t : in a_PTR; n : in Integer;
-c : in Integer) return Integer is
+function sumdivaux2(t : in a_PTR; n : in Integer; c : in Integer) return Integer is
   i : Integer;
 begin
   i := c;
@@ -55,8 +53,7 @@ begin
   return i;
 end;
 
-function sumdivaux(t : in a_PTR; n : in Integer;
-i : in Integer) return Integer is
+function sumdivaux(t : in a_PTR; n : in Integer; i : in Integer) return Integer is
   p : Integer;
   out0 : Integer;
   o : Integer;
@@ -81,8 +78,7 @@ begin
   end if;
 end;
 
-function sumdiv(nprimes : in Integer; primes : in a_PTR;
-n : in Integer) return Integer is
+function sumdiv(nprimes : in Integer; primes : in a_PTR; n : in Integer) return Integer is
   t : a_PTR;
   max0 : Integer;
 begin

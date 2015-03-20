@@ -15,8 +15,7 @@ begin
 end;
 type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
-function pathfind_aux(cache : in a_PTR; tab : in a_PTR; len : in Integer;
-pos : in Integer) return Integer is
+function pathfind_aux(cache : in a_PTR; tab : in a_PTR; len : in Integer; pos : in Integer) return Integer is
   posval : Integer;
   out0 : Integer;
   oneval : Integer;

@@ -42,8 +42,7 @@ Object subclass: euler24 [
   ]
   
   main [
-    (self show: 10
-    a: 999999).
+    (self show: 10 a: 999999).
     ]
 ]
 Eval [ (euler24 new) main. ]

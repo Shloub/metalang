@@ -23,8 +23,7 @@ type a is Array (Integer range <>) of Integer;
 type a_PTR is access a;
 type b is Array (Integer range <>) of a_PTR;
 type b_PTR is access b;
-function find0(len : in Integer; tab : in b_PTR; cache : in b_PTR;
-x : in Integer; y : in Integer) return Integer is
+function find0(len : in Integer; tab : in b_PTR; cache : in b_PTR; x : in Integer; y : in Integer) return Integer is
   result : Integer;
   out1 : Integer;
   out0 : Integer;
@@ -95,8 +94,7 @@ begin
     end loop;
     tab(i) := tab2;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(find(len,
-  tab)), Left));
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(find(len, tab)), Left));
   String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
   for k in integer range (0)..len - (1) loop
     for l in integer range (0)..k loop
