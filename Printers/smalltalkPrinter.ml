@@ -104,6 +104,7 @@ class smalltalkPrinter = object(self)
         self#bloc ifcase
         self#bloc elsecase
 
+  method enum f i = Format.fprintf f "#%s" i
   method mutable_ f m = self#mutable0 true f m 
 
   method mutable0 p f m =
