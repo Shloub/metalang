@@ -16,14 +16,6 @@ Object subclass: montagnes [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  read_char [|o|
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    o := buffer at: 1.
-    buffer := buffer allButFirst:1.
-    ^o.
-    ]
-  ]
    montagnes0: tab len: len [|x max0 j i|
     max0 := 1.
     j := 1.

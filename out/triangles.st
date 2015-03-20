@@ -16,14 +16,6 @@ Object subclass: triangles [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  read_char [|o|
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    o := buffer at: 1.
-    buffer := buffer allButFirst:1.
-    ^o.
-    ]
-  ]
   " Ce code a été généré par metalang
    Il gère les entrées sorties pour un programme dynamique classique
    dans les épreuves de prologin

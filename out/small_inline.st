@@ -16,14 +16,6 @@ Object subclass: small_inline [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  read_char [|o|
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    o := buffer at: 1.
-    buffer := buffer allButFirst:1.
-    ^o.
-    ]
-  ]
   main [
     |t|t := Array new: 2.
     (0 to: (2 - 1)) do: [:d|

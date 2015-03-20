@@ -34,14 +34,6 @@ Object subclass: tictactoe [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  read_char [|o|
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    o := buffer at: 1.
-    buffer := buffer allButFirst:1.
-    ^o.
-    ]
-  ]
   "
 Tictactoe : un tictactoe avec une IA
 "

@@ -16,14 +16,6 @@ Object subclass: plus_petit [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  read_char [|o|
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    o := buffer at: 1.
-    buffer := buffer allButFirst:1.
-    ^o.
-    ]
-  ]
    go0: tab a: a b: b [|m j i e|
     m := ((a + b) quo: 2).
     (a = m)

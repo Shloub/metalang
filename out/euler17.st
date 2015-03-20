@@ -1,29 +1,4 @@
 Object subclass: euler17 [
-  |buffer|
-  read_int [|o|
-    ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-     o := 0.
-    (buffer isNil) ifFalse:[
-    (buffer =~ '^(-?\d+)' asRegex) ifMatched: [:match |
-    o := match at: 1.
-    buffer := buffer allButFirst:(o size).
-    ].
-    ^o asInteger. ]
-  ]
-  skip [
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
-    ]
-  ]
-  read_char [|o|
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    o := buffer at: 1.
-    buffer := buffer allButFirst:1.
-    ^o.
-    ]
-  ]
   main [
     |two twenty twelve three thousand thirty thirteen ten sixty sixteen six seventy seventeen seven one_to_twenty one_to_thirty one_to_ten one_to_sixty one_to_seventy one_to_ninety_nine one_to_ninety one_to_nine one_to_forty one_to_fifty one_to_eighty one ninety nineteen nine hundred_and hundred fourteen four forty five fifty fifteen eleven eighty eighteen eight|one := 3.
     two := 3.

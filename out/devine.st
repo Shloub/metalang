@@ -16,14 +16,6 @@ Object subclass: devine [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-  read_char [|o|
-     ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-    (buffer isNil) ifFalse:[
-    o := buffer at: 1.
-    buffer := buffer allButFirst:1.
-    ^o.
-    ]
-  ]
    devine0: nombre tab: tab len: len [|min0 max0|
     min0 := (tab at: (0 + 1)).
     max0 := (tab at: (1 + 1)).

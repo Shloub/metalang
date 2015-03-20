@@ -9,16 +9,6 @@ Object subclass: bigint [
 ]
 Object subclass: bigints [
   |buffer|
-  read_int [|o|
-    ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
-     o := 0.
-    (buffer isNil) ifFalse:[
-    (buffer =~ '^(-?\d+)' asRegex) ifMatched: [:match |
-    o := match at: 1.
-    buffer := buffer allButFirst:(o size).
-    ].
-    ^o asInteger. ]
-  ]
   skip [
      ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].
     (buffer isNil) ifFalse:[
