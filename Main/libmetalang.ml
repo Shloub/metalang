@@ -35,6 +35,8 @@
 open Stdlib
 open Ast
 
+let benchmark = false
+
 (** Liste des mots clés à ne pas utiliser en metalang *)
 let keywords lang=
   let li = [
@@ -99,20 +101,36 @@ let pass_base_print (a, prog) =
   base_printer#setTyperEnv a;
   base_print prog;
   (a, prog)
-let typed name f (a, b) =
+
+let funit a = ()
+
+let typed name f acc (a, b) =
 (*      let before = Passes.WalkCountNoPosition.fold () b in *)
-  (*let startTime = Sys.time () in *)
-  let b = f () b in
-(*   let delta = Sys.time () -. startTime in
-  Format.printf "%3.5f Pass : %s@\n%!" delta name;
-*)
+  let startTime = Sys.time () in
+  let b = f (acc a) b in
+  if benchmark then begin let delta = Sys.time () -. startTime in
+  Format.printf "%3.5f Pass : %s@\n%!" delta name end;
+
 (*
                       let after = Passes.WalkCountNoPosition.fold () b in
                       Format.fprintf Format.std_formatter "Pass : %s lost %d positions (%d missing)@\n" name (after - before) after; *)
 (*  base_print b; *)
   (a, b)
 
-let typed_ name f (a, b) = (a, f b)
+
+let typer_process (a, b) =
+  let startTime = Sys.time () in
+  let o = Typer.process b in
+  if benchmark then begin let delta = Sys.time () -. startTime in
+  Format.printf "%3.5f Pass : Typer@\n%!" delta end;
+  o
+
+let typed_ name f (a, b) =
+  let startTime = Sys.time () in
+  let b = f b in
+  if benchmark then begin let delta = Sys.time () -. startTime in
+  Format.printf "%3.5f Pass : %s@\n%!" delta name end;
+  (a, f b)
 
 let check_reads = (fun (tyenv, prog) ->
   (if Tags.is_taged "use_readmacros" then
@@ -129,117 +147,72 @@ let check_reads = (fun (tyenv, prog) ->
 let default_passes (prog : Typer.env * Utils.prog) :
     (Typer.env * Utils.prog ) =
   prog
-  |> typed "check naming" Passes.WalkCheckNaming.apply
+  |> typed "check naming" Passes.WalkCheckNaming.apply funit
   |> CheckUseVoid.apply
-  |> typed "check return" CheckReturn.apply
-  |> typed "remove tags" Passes.WalkRemoveTags.apply
-  |> typed "rename" Passes.WalkRename.apply
-  |> typed "expand" Passes.WalkNopend.apply
-  |> typed "expend print" Passes.WalkExpandPrint.apply
-  |> typed "internal tags" Passes.WalkInternalTags.apply
-  |> typed "inline functions" Passes.WalkInlineFuncs.apply
+  |> typed "check return" CheckReturn.apply funit
+  |> typed "remove tags" Passes.WalkRemoveTags.apply funit
+  |> typed "rename" Passes.WalkRename.apply funit
+  |> typed "expand" Passes.WalkNopend.apply funit
+  |> typed "expend print" Passes.WalkExpandPrint.apply funit
+  |> typed "internal tags" Passes.WalkInternalTags.apply funit
+  |> typed "inline functions" Passes.WalkInlineFuncs.apply funit
   (*  |> (fun (a, b) -> base_print b; (a, b)) *)
-  |> typed "inline vars" Passes.WalkInlineVars.apply
+  |> typed "inline vars" Passes.WalkInlineVars.apply funit
   (*  |> (fun (a, b) -> base_print b; (a, b)) *)
-  |> snd |> Typer.process
+  |> typer_process
 
-let clike_passes prog =
+let clike_passes
+    ~tuple
+    ~record
+    ~array
+    ~mergeif
+    prog =
   prog |> default_passes
   |> (fun (a, prog) ->
-    let tuples, prog = DeclareTuples.apply a prog in
-    let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog
-    in a, b)
-  |> snd |> Typer.process
-  |> (fun (a, b) ->
-    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
-  |> snd |> Typer.process
-  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> snd |> Typer.process
+      if tuple then
+        let startTime = Sys.time () in
+        let tuples, prog = DeclareTuples.apply a prog in
+        if benchmark then begin let delta = Sys.time () -. startTime in
+        Format.printf "%3.5f Pass : DeclareTuples@\n%!" delta end;
+        let startTime = Sys.time () in
+        let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog in
+        if benchmark then begin let delta = Sys.time () -. startTime
+        in Format.printf "%3.5f Pass : Expand UnTuple@\n%!" delta end;
+        typer_process (a, b)
+      else
+        (a, prog))
+  |> (if record then
+      typed "record 2 expr" Passes.WalkRecordExprToInstr.apply
+        Passes.WalkRecordExprToInstr.init_acc
+  else id)
+  |> (if record then typer_process else id)
+  |> (if mergeif then typed "merging if" Passes.WalkIfMerge.apply funit else id)
+  |> (if mergeif then typer_process else id)
+  |> (if array then typed "array expand" Passes.WalkAllocArrayExpend.apply funit else id)
+  |> typed "inline vars" Passes.WalkInlineVars.apply funit
+  |> typer_process
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
-
-let python_passes prog =
-  prog |> default_passes
-  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> snd |> Typer.process
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
-
-let ruby_passes prog =
-  prog |> default_passes
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> snd |> Typer.process
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply funit
  
-let common_lisp_passes prog =
+let fun_passes
+    ~rename
+    ~fun_inline
+    ~detect_effects
+    config prog =
   prog |> default_passes
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> (fun (a, prog) -> (* TODO ne plus appliquer cette passe... *)
-    let tuples, prog = DeclareTuples.apply a prog in
-    let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog
-    in a, b)
-  |> snd |> Typer.process
-  |> (fun (a, b) ->
-    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
-  |> snd |> Typer.process
-  |> typed "merging if" Passes.WalkIfMerge.apply
-  |> snd |> Typer.process
+  |> typed "inline vars" Passes.WalkInlineVars.apply funit
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
-
-
-let ocaml_passes prog =
-  prog |> default_passes
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> typed "merging if" Passes.WalkIfMerge.apply
-  |> snd |> Typer.process
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
-
-let fun_passes config prog =
-  prog |> default_passes
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
-  |> typed "merging if" Passes.WalkIfMerge.apply
+  |> typed "remove internals" Passes.WalkRemoveInternal.apply funit
+  |> typed "merging if" Passes.WalkIfMerge.apply funit
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
   |> (fun (a, b) -> a, Makelet.apply config b)
   |> (fun (a, b) -> a, MergePrint.apply b)
 
-let php_passes prog =
-  prog |> default_passes
-  |> (fun (a, b) ->
-    a, Passes.WalkRecordExprToInstr.apply (Passes.WalkRecordExprToInstr.init_acc a) b)
-  |> snd |> Typer.process
-  |> typed "array expand" Passes.WalkAllocArrayExpend.apply
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> snd |> Typer.process
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
-
-let hs_passes prog =
-  prog |> default_passes
-  |> typed "inline vars" Passes.WalkInlineVars.apply
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply
-  |> typed "merging if" Passes.WalkIfMerge.apply
-  |> (fun (a, b) -> a, TransformFun.transform (a, b))
-  |> (fun (a, b) -> a, Makelet.apply {Makelet.curry=false} b)
-  |> (fun (a, b) -> a, MergePrint.apply b)
-  |> (fun (a, b) -> a, RenameFun.apply b)
-  |> (fun (a, b) -> a, FunInline.apply b)
-  |> (fun (a, b) -> a, DetectSideEffect.apply b)
+  |> (if rename then fun (a, b) -> a, RenameFun.apply b else id)
+  |> (if fun_inline then fun (a, b) -> a, FunInline.apply b else id)
+  |> (if detect_effects then fun (a, b) -> a, DetectSideEffect.apply b else id)
 
 let no_passes prog =
   prog
@@ -269,28 +242,28 @@ let languages, printers =
       
   in
   let ls = [
-    "c",       (true, clike_passes)   => new CPrinter.cPrinter ;
-    "m",       (true, clike_passes)   => new ObjCPrinter.objCPrinter ;
-    "pas",     (true, clike_passes)   => new PasPrinter.pasPrinter ;
-    "adb",     (true, clike_passes)   => new AdaPrinter.adaPrinter ;
-    "cc",      (true, clike_passes)   => new CppPrinter.cppPrinter ;
-    "cs",      (true, clike_passes)   => new CsharpPrinter.csharpPrinter ;
-    "vb",      (false, clike_passes)   => new VbDotNetPrinter.vbDotNetPrinter ;
-    "java",    (true, clike_passes)   => new JavaPrinter.javaPrinter ;
-    "scala",    (false, python_passes)   => new ScalaPrinter.scalaPrinter ;
-    "js",      (true, clike_passes)   => new JsPrinter.jsPrinter ;
-    "lua",      (true, python_passes)   => new LuaPrinter.luaPrinter ;
-    "ml",      (true, ocaml_passes)   => new OcamlPrinter.camlPrinter ;
-    "fun.ml",  (true, fun_passes {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
-    "hs",      (false, hs_passes) => new HaskellPrinter.haskellPrinter ;
-    "php",     (true, php_passes)     => new PhpPrinter.phpPrinter ;
-    "rb",      (false, ruby_passes) => new RbPrinter.rbPrinter ;
-    "st",      (false, clike_passes) => new SmalltalkPrinter.smalltalkPrinter ;
-    "py",      (false, python_passes) => new PyPrinter.pyPrinter ;
-    "go",      (false, clike_passes)   => new GoPrinter.goPrinter ;
-    "cl",      (true, common_lisp_passes) => new CommonLispPrinter.commonLispPrinter ;
-    "rkt",     (true, fun_passes {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
-    "pl",      (true, python_passes)       => new PerlPrinter.perlPrinter ;
+    "c",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new CPrinter.cPrinter ;
+    "m",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new ObjCPrinter.objCPrinter ;
+    "pas",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new PasPrinter.pasPrinter ;
+    "adb",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new AdaPrinter.adaPrinter ;
+    "cc",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new CppPrinter.cppPrinter ;
+    "cs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new CsharpPrinter.csharpPrinter ;
+    "vb",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new VbDotNetPrinter.vbDotNetPrinter ;
+    "java",    (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new JavaPrinter.javaPrinter ;
+    "js",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new JsPrinter.jsPrinter ;
+    "st",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new SmalltalkPrinter.smalltalkPrinter ;
+    "go",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new GoPrinter.goPrinter ;
+    "cl",      (true , clike_passes ~tuple:true  ~record:true  ~array:false ~mergeif:true ) => new CommonLispPrinter.commonLispPrinter ;
+    "php",     (true , clike_passes ~tuple:false ~record:true  ~array:true  ~mergeif:false) => new PhpPrinter.phpPrinter ;
+    "scala",   (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false) => new ScalaPrinter.scalaPrinter ;
+    "lua",     (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false) => new LuaPrinter.luaPrinter ;
+    "py",      (false, clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false) => new PyPrinter.pyPrinter ;
+    "pl",      (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false) => new PerlPrinter.perlPrinter ;
+    "ml",      (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true ) => new OcamlPrinter.camlPrinter ;
+    "rb",      (false, clike_passes ~tuple:false ~record:false ~array:false ~mergeif:false) => new RbPrinter.rbPrinter ;
+    "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
+    "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
+    "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  {Makelet.curry=true}) => new HaskellPrinter.haskellPrinter ;
   ] in
   let langs : string list = List.map fst ls in
   let map = L.from_list ls
