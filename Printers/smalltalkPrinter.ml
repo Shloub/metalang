@@ -296,13 +296,31 @@ class smalltalkPrinter = object(self)
     | Type.Integer -> Format.fprintf f "%a%a self read_int." (self#mutable0 false) m self#operator_affect m
     | _ -> assert false
 
-  method header f () =
+  method header f prog =
     let p f li =
       print_list (fun f s -> Format.fprintf f "%s" s)
         (fun t f1 e1 f2 e2 -> Format.fprintf t "%a@\n%a" f1 e1 f2 e2)
          f li
-    in Format.fprintf f "|buffer|@\n@[<v 2>read_int [|o|@\n%a@]@\n]@\n@[<v 2>skip [@\n%a@]@\n]@\n@[<v 2>read_char [|o|@\n%a@]@\n]@\n"
-      p [ 
+    in
+    let pf bool name tmp f li =
+      if bool then Format.fprintf f "@[<v 2>%s [%a@\n%a@]@\n]@\n"
+          name
+          (fun f -> function
+            | [] -> ()
+            | li -> Format.fprintf f "|%a|"
+                  (print_list (fun f n -> Format.fprintf f "%s" n)
+                     (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)) li) tmp
+          p li
+    in
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    Format.fprintf f "%a%a%a%a"
+      (fun f () -> if need then
+        Format.fprintf f "|buffer|@\n"
+      ) ()
+      (pf need_readint "read_int" [ "o" ] ) [ 
     "((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].";
     " o := 0.";
     "(buffer isNil) ifFalse:[";
@@ -311,12 +329,12 @@ class smalltalkPrinter = object(self)
     "buffer := buffer allButFirst:(o size).";
     "].";
     "^o asInteger. ]" ]
-      p [
+      (pf need_stdinsep "skip" [] ) [
     " ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].";
     "(buffer isNil) ifFalse:[";
     "(buffer =~ '^(\\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].";
     "]"]
-      p [
+      (pf need_readchar "read_char" [ "o" ] )  [
     " ((buffer isNil) | ((buffer size) = 0)) ifTrue: [ buffer := FileStream stdin nextLine. ].";
     "(buffer isNil) ifFalse:[";
     "o := buffer at: 1.";
@@ -382,7 +400,7 @@ class smalltalkPrinter = object(self)
     Format.fprintf f "%a@[<v2>Object subclass: %s [@\n%a%a%a@]@\n]@\nEval [ (%s new) main. ]@\n"
       self#structDeclarations prog.Prog.funs
       prog.Prog.progname
-      self#header ()
+      self#header prog
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
       prog.Prog.progname
