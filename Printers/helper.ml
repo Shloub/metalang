@@ -79,4 +79,8 @@ let print_list_indexed print sep f li =
             li
      ))
 
+let print_ntimes n f s =
+  for i = 1 to n do
+    Format.fprintf f "%s" s
+  done
 

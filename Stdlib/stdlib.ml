@@ -272,6 +272,13 @@ module String = struct
     let s = String.sub s (l - l') l' in
     s = s'
 
+  let starts_with s s' =
+    let l = String.length s in
+    let l' = String.length s' in
+    if l' > l then false else
+    let s = String.sub s 0 l' in
+    s = s'
+
   let is_prefix s s' = match_from s s' 0
 
   let is_capitalised s = let c = s.[0] in c >= 'A' && c <= 'Z'

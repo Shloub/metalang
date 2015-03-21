@@ -167,6 +167,7 @@ sig
   val join : string list -> string
   val split : string -> char -> string list
   val ends_with : string -> string -> bool
+  val starts_with : string -> string -> bool
   val length : string -> int
   val get : string -> int -> char
   val set : string -> int -> char -> unit
