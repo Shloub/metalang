@@ -80,8 +80,8 @@ class forthPrinter = object(self)
       | Expr.Add -> "+"
       | Expr.Sub -> "-"
       | Expr.Mul -> "*"
-      | Expr.Div -> "/MOD"
-      | Expr.Mod -> "MOD"
+      | Expr.Div -> "//"
+      | Expr.Mod -> "%"
       | Expr.Or -> "OR"
       | Expr.And -> "AND"
       | Expr.Lower -> "<"
@@ -89,7 +89,7 @@ class forthPrinter = object(self)
       | Expr.Higher -> ">"
       | Expr.HigherEq -> ">="
       | Expr.Eq -> "="
-      | Expr.Diff -> "~="
+      | Expr.Diff -> "<>"
       )
 
   method if_ f e ifcase elsecase =
@@ -118,7 +118,7 @@ class forthPrinter = object(self)
       self#bloc li
 
   method forloop f varname expr1 expr2 li =
-    Format.fprintf f "@[<hov>%a %a BEGIN 2dup >= WHILE DUP { %a } %a@\n 1 + REPEAT"
+    Format.fprintf f "@[<hov>%a %a BEGIN 2dup >= WHILE DUP { %a }@] %a@\n 1 + REPEAT 2DROP"
       self#expr expr2
       self#expr expr1
       self#binding varname
@@ -132,6 +132,16 @@ class forthPrinter = object(self)
 
   method prog f (prog: Utils.prog) =
     Format.fprintf f "
+
+: // { a b }
+  a b /
+  a 0 < b 0 < XOR IF 1 + THEN
+;
+
+: %% { a b }
+  a b MOD
+  a 0 < b 0 < XOR IF b - THEN
+ ;
 VARIABLE buffer-index 0
 VARIABLE NEOF 1
 VARIABLE buffer-max 0
@@ -207,20 +217,18 @@ bufferc 128 stdin read-line 2DROP buffer-max !
         self#funname var
 	        self#separator ()
 
-  method print_proto f (funname, t, li) =
-    Format.fprintf f ":@ %a { %a }"
-      self#funname funname
-      (print_list self#binding sep_space) (List.map fst li)
-
   method print_fun f funname t li instrs =
-    Format.fprintf f "@[<hov>%a@]@\n@[<v 2>  %a@]@\n;@\n"
-      self#print_proto (funname, t, li)
+    Format.fprintf f "@[<hov>: %a%a { %a }@]@\n@[<v 2>  %a@]@\n;@\n"
+      self#funname funname
+      (fun f () -> if self#is_rec funname instrs then
+        Format.fprintf f " recursive") ()
+      (print_list self#binding sep_space) (List.map fst li)
       self#instructions instrs
 
   method mutable0 f m =
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a.%a"
+      Format.fprintf f "%a %a"
         self#mutable_ m
         self#field field
     | Mutable.Var binding -> self#binding f binding
@@ -260,6 +268,51 @@ bufferc 128 stdin read-line 2DROP buffer-max !
 
   method read_decl f t v =
     Format.fprintf f "@[%a { %a }@]" self#readtype t self#binding v
+
+  method decl_type f name t =
+    match (Type.unfix t) with
+    | Type.Struct li ->
+      Format.fprintf f "@[<v 2>struct@\n%a@]@\nend-struct %a@\n"
+        (print_list
+           (fun t (name, type_) ->
+             Format.fprintf t "cell%% field %a" self#field name
+           ) sep_nl
+        ) li
+        self#typename name
+    | Type.Enum li ->
+        print_list_indexed
+          (fun t name index ->
+            Format.fprintf t "%d constant %a"
+              index
+              self#enumfield name
+          ) sep_nl
+          f li
+    | _ -> ()
+
+  method def_fields name f li =
+    Format.fprintf f "@[<hov>%a@]"
+      (print_list
+         (fun f (fieldname, expr) ->
+           Format.fprintf f "%a %a %a !"
+             self#expr expr
+             self#binding name
+             self#field fieldname
+         ) sep_nl)
+      li
+
+  method allocrecord f name t el =
+    Format.fprintf f "%a %%allot { %a }@\n%a"
+      self#ptype t
+      self#binding name
+      (self#def_fields name) el
+
+
+  method typename f i = Format.fprintf f "%s%%" i
+  method ptype f (t:Type.t) =
+    match Type.unfix t with
+    | Type.Named n -> self#typename f n
+    | _ -> assert false
+
 
 end
 
