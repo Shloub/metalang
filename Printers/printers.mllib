@@ -3,6 +3,7 @@ CommonLispPrinter
 CppPrinter
 CPrinter
 CsharpPrinter
+ForthPrinter
 GoPrinter
 HaskellPrinter
 HtmlPrinter

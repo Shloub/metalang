@@ -243,6 +243,7 @@ let languages, printers =
   in
   let ls = [
     "c",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new CPrinter.cPrinter ;
+    "fs",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new ForthPrinter.forthPrinter ;
     "m",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new ObjCPrinter.objCPrinter ;
     "pas",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new PasPrinter.pasPrinter ;
     "adb",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new AdaPrinter.adaPrinter ;
@@ -420,6 +421,7 @@ enum @target_language
   LANG_Cl
   LANG_Cs
   LANG_Fun_ml
+  LANG_Fs
   LANG_Go
   LANG_Hs
   LANG_Java
