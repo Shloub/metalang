@@ -229,7 +229,7 @@ out/%.php.out : out/%.php
 	php $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.fs.out : out/%.fs
-	gforth $< < tests/prog/$(basename $*).in > $@ || exit 1;
+	gforth -m 2000M $< < tests/prog/$(basename $*).in > $@ || exit 1;
 
 out/%.py.out : out/%.py
 	$(python) $< < tests/prog/$(basename $*).in > $@ || exit 1;

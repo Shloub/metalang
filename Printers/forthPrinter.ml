@@ -145,13 +145,17 @@ class forthPrinter = object(self)
   a b MOD
   a 0 < b 0 < XOR IF b - THEN
  ;
-VARIABLE buffer-index 0
-VARIABLE NEOF 1
-VARIABLE buffer-max 0
+
+
+VARIABLE buffer-index
+0 buffer-index !
+VARIABLE NEOF
+1 NEOF !
+VARIABLE buffer-max
+0 buffer-max !
 create bufferc 128 allot
 bufferc 128 stdin read-line 2DROP buffer-max !
-10 bufferc buffer-max @@ + !
-
+13 bufferc buffer-max c@@ + !
 
 : current-char bufferc buffer-index @@ + c@@ ;
 
@@ -159,14 +163,13 @@ bufferc 128 stdin read-line 2DROP buffer-max !
   buffer-index @@ 1 + buffer-index !
   buffer-index @@ buffer-max @@ > IF
     0 buffer-index !
-    bufferc 128 stdin read-line 2DROP DUP buffer-max !
-    0 = IF 0 NEOF ! ELSE
-    10 bufferc buffer-max @@ + ! THEN
+    bufferc 128 stdin read-line DROP -1 = NEOF ! buffer-max !
+    10 bufferc buffer-max @@ + !
   THEN
 ;
 
 : skipspaces
-  BEGIN NEOF current-char 13 = current-char 32 = OR current-char 10 = OR AND
+  BEGIN NEOF @@ current-char 13 = current-char 32 = OR current-char 10 = OR AND
   WHILE next-char REPEAT
 ;
 
