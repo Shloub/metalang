@@ -28,7 +28,8 @@ macro int sqrt_(int c)
   hs_pure do "(floor . sqrt . fromIntegral) $c"
   lua do "math.floor(math.sqrt($c))"
   scala do "math.sqrt($c).toInt"
-st do "(($c) sqrt floor)"
+  st do "(($c) sqrt floor)"
+  fs do "$c s>f fsqrt f>s"
   * do "sqrt($c)"
 end
 
@@ -111,6 +112,7 @@ macro int native_macro_max2(int a, int b)
   pas do "Max($a, $b)"
   hs do "(max <$> ($a) <*> ($b))"
   hs_pure do "max $a $b"
+  fs do "$a $b max"
   * do "max($a, $b)"
 end
 tag macro_native_macro_max2_pure
@@ -133,7 +135,8 @@ def lexems macro_max2(lexems a, lexems b)
   current_language() == LANG_Lua ||
   current_language() == LANG_Pas ||
   current_language() == LANG_Hs ||
-  current_language() == LANG_Rb
+  current_language() == LANG_Rb ||
+  current_language() == LANG_Fs
   then
     return { 
     tag use_pascal_math
@@ -164,6 +167,7 @@ macro int native_macro_min2(int a, int b)
   pas do "Min($a, $b)"
   hs do "(min <$> ($a) <*> ($b))"
   hs_pure do "min $a $b"
+  fs do "$a $b min"
   * do "min($a, $b)"
 end
 
@@ -209,6 +213,7 @@ def lexems macro_min2(lexems a, lexems b)
   current_language() == LANG_Rkt ||
   current_language() == LANG_Cl ||
   current_language() == LANG_Rb ||
+  current_language() == LANG_Fs ||
   current_language() == LANG_Vb ||
   current_language() == LANG_Pl ||
   current_language() == LANG_Pas ||

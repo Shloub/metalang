@@ -117,12 +117,15 @@ class forthPrinter = object(self)
       self#expr expr
       self#bloc li
 
+  val mutable ndrop = 0
   method forloop f varname expr1 expr2 li =
+    ndrop <- ndrop + 2;
     Format.fprintf f "@[<hov>%a %a BEGIN 2dup >= WHILE DUP { %a }@] %a@\n 1 + REPEAT 2DROP"
       self#expr expr2
       self#expr expr1
       self#binding varname
-      self#bloc li
+      self#bloc li;
+    ndrop <- ndrop - 2
 
   method print f t expr = match Type.unfix t with
   | Type.Char -> Format.fprintf f "@[%a EMIT@]" self#expr expr
@@ -201,7 +204,9 @@ bufferc 128 stdin read-line 2DROP buffer-max !
     else Format.fprintf f "%d" ci (* TODO gérer la taille *)
 
   method separator f () = Format.fprintf f ""
-  method return f e = Format.fprintf f "@[<hov>%a exit@]" self#expr e
+  method return f e = Format.fprintf f "@[<hov>%a%a exit@]"
+      (print_ntimes ndrop) "DROP "
+      self#expr e
 
   method hasSelfAffect op = false
 

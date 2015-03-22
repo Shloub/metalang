@@ -71,6 +71,7 @@ let keywords lang=
   | "m" -> "log10" :: "id" :: li
   | "vb" -> "stop" :: li
   | "hs" -> "id" :: "show" :: "head" :: "tail" :: li
+  | "fs" -> "find" :: "rot" :: "over" :: "dup" :: li
   | _ -> li
 
 let conf_rename lang prog =
