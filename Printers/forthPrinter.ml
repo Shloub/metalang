@@ -132,25 +132,45 @@ class forthPrinter = object(self)
 
   method prog f (prog: Utils.prog) =
     Format.fprintf f "
+VARIABLE buffer-index 0
+VARIABLE NEOF 1
+VARIABLE buffer-max 0
+create bufferc 128 allot
+bufferc 128 stdin read-line 2DROP buffer-max !
+10 bufferc buffer-max @@ + !
 
-VARIABLE buffer-index 1
-create buff 128 allot
-buff 128 stdin read-line throw
 
-: current_char
+: current-char bufferc buffer-index @@ + c@@ ;
 
+: next-char
+  buffer-index @@ 1 + buffer-index !
+  buffer-index @@ buffer-max @@ > IF
+    0 buffer-index !
+    bufferc 128 stdin read-line 2DROP DUP buffer-max !
+    0 = IF 0 NEOF ! ELSE
+    10 bufferc buffer-max @@ + ! THEN
+  THEN
 ;
 
-: read_char
-
+: skipspaces
+  BEGIN NEOF current-char 13 = current-char 32 = OR current-char 10 = OR AND
+  WHILE next-char REPEAT
 ;
 
-: skip
-
+: read-int
+  1 { sign }
+  [char] - current-char = IF
+    0 1 - TO sign
+    next-char
+  THEN
+  0 { o }
+  BEGIN current-char [char] 0 >= current-char [char] 9 <= AND
+  WHILE o 10 * current-char [char] 0 - + TO o next-char REPEAT
+  o sign *
 ;
-: read_int
 
-;
+: read-char current-char next-char ;
+
 
 %a%a@\nmain@\nBYE@\n"
       self#proglist prog.Prog.funs
@@ -163,6 +183,12 @@ buff 128 stdin read-line throw
     Format.fprintf f "@[<hov>HERE %a cells allot { %a }@]"
       self#expr len
       self#binding binding
+
+  method char f c =
+    let ci = int_of_char c in
+    if ci >= 48 && ci <= 127 then
+      Format.fprintf f "[char] %c" c
+    else Format.fprintf f "%d" ci (* TODO gérer la taille *)
 
   method separator f () = Format.fprintf f ""
   method return f e = Format.fprintf f "@[<hov>%a exit@]" self#expr e
@@ -223,10 +249,10 @@ buff 128 stdin read-line throw
       self#expr expr
       self#mutablea mutable_
 
-  method stdin_sep f = Format.fprintf f "skip"
+  method stdin_sep f = Format.fprintf f "skipspaces"
   method readtype f t = match Type.unfix t with
-  | Type.Integer -> Format.fprintf f "read_int"
-  | Type.Char -> Format.fprintf f "read_char"
+  | Type.Integer -> Format.fprintf f "read-int"
+  | Type.Char -> Format.fprintf f "read-char"
   | _ -> assert false
 
   method read f t mutable_ =

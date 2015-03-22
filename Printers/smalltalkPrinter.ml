@@ -49,7 +49,6 @@ class smalltalkPrinter = object(self)
     | Mutable.Array _ -> Format.fprintf f " put:"
     | Mutable.Dot (_, _) -> Format.fprintf f ":"
 
-
   method affect f mutable_ (expr : 'lex Expr.t) =
     Format.fprintf f "@[<hov>%a%a @ %a%a@]"
       (self#mutable0 false) mutable_
