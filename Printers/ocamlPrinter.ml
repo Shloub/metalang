@@ -475,21 +475,6 @@ class camlPrinter = object(self)
                f2 e2
            )) indexes
 
-  (** returns true if the function is recursive *)
-  method is_rec funname instrs =
-    let is_rec i =
-      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
-      | Instr.Call (name, _) -> acc || name = funname
-      | _ -> acc
-      ) false i ||
-        Instr.fold_expr (fun acc e ->
-          Expr.Writer.Deep.fold (fun acc e -> match Expr.unfix e with
-          | Expr.Call (name, _) -> acc || name = funname
-          | _ -> acc
-          ) acc e
-        ) false i
-    in List.fold_left (fun acc i -> acc || is_rec i) false instrs
-
   method print_exnName f (t : unit Type.Fixed.t) =
     try
       Format.fprintf f "%s" (TypeMap.find t printed_exn)
