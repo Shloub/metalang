@@ -292,16 +292,7 @@ class printer = object(self)
   method separator f () = Format.fprintf f ";"
 
 
-  method apply f var li =
-    match StringMap.find_opt var macros with
-    | Some ( (t, params, code) ) ->
-      self#expand_macro_apply f var t params code li
-    | None ->
-      Format.fprintf
-        f
-        "%a(%a)"
-        self#funname var
-        (print_list self#expr sep_c) li
+  method apply f var li = self#call f var li
 
   method stdin_sep f =
     Format.fprintf f "skip"
