@@ -1,0 +1,25 @@
+
+main
+  def array<int> t[1001] with i do return 0 end
+  
+  for a = 1 to 1000 do
+    for b = 1 to 1000 do
+      def c2 = a * a + b * b
+      def c = isqrt(c2)
+      if c * c == c2 then
+        def p = a + b + c
+        if p <= 1000 then
+          t[p] ++
+        end
+      end
+    end
+  end
+
+  def j = 0
+  for k = 1 to 1000 do
+    if t[k] > t[j] then
+      j = k
+    end
+  end
+  print j
+end

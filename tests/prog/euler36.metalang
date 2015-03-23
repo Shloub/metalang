@@ -1,0 +1,70 @@
+
+def bool palindrome2(array<int> pow2, int n)
+  def array<bool> t[20] with i do
+    return n / pow2[i] % 2 == 1
+  end
+
+  def nnum = 0
+  for j = 1 to 19 do
+    if t[j] then
+      nnum = j
+    end
+  end
+  for k = 0 to nnum / 2 do
+    if t[k] != t[nnum - k] then
+      return false
+    end
+  end
+  return true
+end
+
+main
+  def p = 1
+  def array<int> pow2[20] with i do
+    p *= 2
+    return p / 2
+  end
+  def sum = 0
+
+  for d = 1 to 9 do
+    if palindrome2(pow2, d) then
+      print d print "\n"
+      sum += d
+    end
+    if palindrome2(pow2, d * 10 + d) then
+      print d * 10 + d print "\n"
+      sum += d * 10 + d
+    end
+  end
+
+  for a0 = 0 to 4 do
+        
+
+    def a = a0 * 2 + 1
+    for b = 0 to 9 do
+      for c = 0 to 9 do
+        def num0 = a *100000+b*10000 +c * 1000 + c*100+ b*10+ a
+        if palindrome2(pow2, num0) then
+          print num0 print "\n"
+          sum += num0
+        end
+        def num1 = a *10000+b*1000+ c*100+ b*10+ a
+        if palindrome2(pow2, num1) then
+          print num1 print "\n"
+          sum += num1
+        end
+      end
+      def num2 = a *100+b*10+ a
+      if palindrome2(pow2, num2) then
+        print num2 print "\n"
+        sum += num2
+      end
+      def num3 = a * 1000 + b * 100 + b * 10 +  a
+      if palindrome2(pow2, num3) then
+        print num3 print "\n"
+        sum += num3
+      end
+    end
+  end
+  print "sum=" print sum print "\n"
+end
