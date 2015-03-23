@@ -4,6 +4,7 @@ accélérer les tests :
 Langage & Compilateur :
   C if indentation
   smalltalk macros
+  forth macros & return intelligent
   structures as couples pour les langages qui le supportent
   tableau constant lors d'une initialisation
   types abstract & types alias (pour ouvrir un fichier ou pour les bigints par exemple)
@@ -22,8 +23,8 @@ autres printers :
   tcl
   erlang
   rhino
-  gforth
   clojure
+  rust
 
 portage windows
 
