@@ -87,7 +87,7 @@ let conf_rename lang prog =
   List.iter Rename.add (keywords lang);
   List.iter Fresh.add (keywords lang)
 
-(** {2 Languages definition } *)
+(** {2 debug printers definition } *)
 
 let debug_printer = new PosPrinter.posPrinter
 let debug_print prog = debug_printer#prog Format.std_formatter prog
@@ -103,8 +103,10 @@ let pass_base_print (a, prog) =
   base_print prog;
   (a, prog)
 
+(** return unit : the default accumulator for a lot of passes *)
 let funit a = ()
 
+(** apply a pass with an accumulator computed for typer env *)
 let typed name f acc (a, b) =
 (*      let before = Passes.WalkCountNoPosition.fold () b in *)
   let startTime = Sys.time () in
@@ -118,7 +120,7 @@ let typed name f acc (a, b) =
 (*  base_print b; *)
   (a, b)
 
-
+(** this function call the typer *)
 let typer_process (a, b) =
   let startTime = Sys.time () in
   let o = Typer.process b in
@@ -126,13 +128,16 @@ let typer_process (a, b) =
   Format.printf "%3.5f Pass : Typer@\n%!" delta end;
   o
 
+(** apply a pass without accumulator *)
 let typed_ name f (a, b) =
   let startTime = Sys.time () in
   let b = f b in
   if benchmark then begin let delta = Sys.time () -. startTime in
   Format.printf "%3.5f Pass : %s@\n%!" delta name end;
-  (a, f b)
+  (a, b)
 
+(** check if we use both read macros and skip or read keywords (it's forbiden) *)
+(** this pass may assert in a language and fail in another language *)
 let check_reads = (fun (tyenv, prog) ->
   (if Tags.is_taged "use_readmacros" then
       let need_stdinsep = prog.Prog.hasSkip in
@@ -145,6 +150,7 @@ let check_reads = (fun (tyenv, prog) ->
         end );
   (tyenv, prog))
 
+(** passes applyed for all languages *)
 let default_passes (prog : Typer.env * Utils.prog) :
     (Typer.env * Utils.prog ) =
   prog
@@ -157,11 +163,10 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "expend print" Passes.WalkExpandPrint.apply funit
   |> typed "internal tags" Passes.WalkInternalTags.apply funit
   |> typed "inline functions" Passes.WalkInlineFuncs.apply funit
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typed "inline vars" Passes.WalkInlineVars.apply funit
-  (*  |> (fun (a, b) -> base_print b; (a, b)) *)
   |> typer_process
 
+(** passes for imperatives languages like C, C++, python, etc... *)
 let clike_passes
     ~tuple
     ~record
@@ -195,12 +200,13 @@ let clike_passes
   |> typed_ "read analysis" ReadAnalysis.apply
   |> check_reads
   |> typed "remove internals" Passes.WalkRemoveInternal.apply funit
- 
+
+ (** passes for functional languages like ocaml, racket and haskell *)
 let fun_passes
     ~rename
     ~fun_inline
     ~detect_effects
-    config prog =
+    ~curry prog =
   prog |> default_passes
   |> typed "inline vars" Passes.WalkInlineVars.apply funit
   |> typed_ "read analysis" ReadAnalysis.apply
@@ -208,15 +214,14 @@ let fun_passes
   |> typed "remove internals" Passes.WalkRemoveInternal.apply funit
   |> typed "merging if" Passes.WalkIfMerge.apply funit
   |> (fun (a, b) -> a, TransformFun.transform (a, b))
-  |> (fun (a, b) -> a, Makelet.apply config b)
+  |> (fun (a, b) -> a, Makelet.apply curry b)
   |> (fun (a, b) -> a, MergePrint.apply b)
 
   |> (if rename then fun (a, b) -> a, RenameFun.apply b else id)
   |> (if fun_inline then fun (a, b) -> a, FunInline.apply b else id)
   |> (if detect_effects then fun (a, b) -> a, DetectSideEffect.apply b else id)
 
-let no_passes prog =
-  prog
+let no_passes prog = prog
 
 module L = StringMap
 let languages, printers =
@@ -263,9 +268,9 @@ let languages, printers =
     "pl",      (true , clike_passes ~tuple:false ~record:false ~array:true  ~mergeif:false) => new PerlPrinter.perlPrinter ;
     "ml",      (true , clike_passes ~tuple:false ~record:false ~array:false ~mergeif:true ) => new OcamlPrinter.camlPrinter ;
     "rb",      (false, clike_passes ~tuple:false ~record:false ~array:false ~mergeif:false) => new RbPrinter.rbPrinter ;
-    "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false {Makelet.curry=true}) => new OcamlFunPrinter.camlFunPrinter ;
-    "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false {Makelet.curry=false}) => new RacketPrinter.racketPrinter ;
-    "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  {Makelet.curry=true}) => new HaskellPrinter.haskellPrinter ;
+    "fun.ml",  (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:true ) => new OcamlFunPrinter.camlFunPrinter ;
+    "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:false) => new RacketPrinter.racketPrinter ;
+    "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  ~curry:true ) => new HaskellPrinter.haskellPrinter ;
   ] in
   let langs : string list = List.map fst ls in
   let map = L.from_list ls
