@@ -278,21 +278,22 @@ class printer = object(self)
       in Format.fprintf f "%s" expanded
 
   method call f var li =
+    Format.fprintf f "%a%a" (fun f () -> self#apply f var li) ()
+      self#separator ()
+
+  method separator f () = Format.fprintf f ";"
+
+
+  method apply f var li = 
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
       self#expand_macro_call f var t params code li
     | None ->
       Format.fprintf
         f
-        "@[<hov>%a(%a)%a@]"
+        "@[<hov>%a(%a)@]"
         self#funname var
         (print_list self#expr sep_c) li
-	self#separator ()
-
-  method separator f () = Format.fprintf f ";"
-
-
-  method apply f var li = self#call f var li
 
   method stdin_sep f =
     Format.fprintf f "skip"
