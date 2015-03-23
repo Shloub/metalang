@@ -10,10 +10,8 @@ sub result{
     my $out0 = 0;
     my $div = int(($sum) / ($t->[$maxIndex]));
     foreach my $i (0 .. $div) {
-      $out0 = $out0 + result($sum -
-      $i *
-      $t->[$maxIndex], $t, $maxIndex -
-      1, $cache);
+      $out0 = $out0 + result($sum - $i * $t->[$maxIndex], $t, $maxIndex -
+                      1, $cache);
     }
     $cache->[$sum]->[$maxIndex] = $out0;
     return $out0;

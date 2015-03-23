@@ -59,7 +59,8 @@ int find(int ndiv2){
     std::vector<int > *primesFactors = new std::vector<int>( n + 2 );
     for (int m = 0 ; m < n + 2; m++)
       primesFactors->at(m) = 0;
-    int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n +
+                                                                           1, primes, nprimes));
     primesFactors->at(2) --;
     int ndivs = 1;
     for (int i = 0 ; i <= max0; i ++)

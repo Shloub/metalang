@@ -9,7 +9,11 @@ int min2_(int a, int b){
 }
 
 int main(void){
-  printf("%d %d %d %d %d %d\n", min2_(min2_(2, 3), 4), min2_(min2_(2, 4), 3), min2_(min2_(3, 2), 4), min2_(min2_(3, 4), 2), min2_(min2_(4, 2), 3), min2_(min2_(4, 3), 2));
+  printf("%d %d %d %d %d %d\n", min2_(min2_(2, 3), 4), min2_(min2_(2, 4), 3), min2_(
+                                                                              min2_(3, 2), 4), min2_(
+                                                                                min2_(3, 4), 2), min2_(
+                                                                                min2_(4, 2), 3), min2_(
+                                                                                min2_(4, 3), 2));
   return 0;
 }
 

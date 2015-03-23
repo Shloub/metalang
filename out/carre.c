@@ -24,8 +24,8 @@ int main(void){
   for (ix = 1 ; ix < x; ix++)
     for (iy = 1 ; iy < y; iy++)
       if (tab[iy][ix] == 1)
-    tab[iy][ix] = min2_(min2_(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy -
-    1][ix - 1]) + 1;
+    tab[iy][ix] =
+    min2_(min2_(tab[iy][ix - 1], tab[iy - 1][ix]), tab[iy - 1][ix - 1]) + 1;
   for (jy = 0 ; jy < y; jy++)
   {
     for (jx = 0 ; jx < x; jx++)

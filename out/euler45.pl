@@ -62,7 +62,8 @@ sub findHexa2{
 
 foreach my $n (285 .. 55385) {
   my $t = triangle($n);
-  if (findPenta2($t, int(($n) / (5)), $n) && findHexa2($t, int(($n) / (5)), int(($n) / (2)) + 10)) {
+  if (findPenta2($t, int(($n) / (5)), $n) && findHexa2($t, int(($n) / (5)), int(($n) / (2)) +
+                                             10)) {
     print($n, "\n", $t, "\n");
   }
 }
