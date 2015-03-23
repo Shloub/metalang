@@ -95,32 +95,30 @@ class forthPrinter = object(self)
   method if_ f e ifcase elsecase =
     match elsecase with
     | [] ->
-      Format.fprintf f "%a@\nIF%a@\nTHEN"
+      Format.fprintf f "%a@\n@[<v 2>IF@\n%a@]@\nTHEN"
         self#expr e
         self#bloc ifcase
     | _ ->
-      Format.fprintf f "%a@\nIF%a@\nELSE%a@\nTHEN"
+      Format.fprintf f "%a@\n@[<v 2>IF@\n%a@]@\n@[<v 2>ELSE@\n%a@]@\nTHEN"
         self#expr e
         self#bloc ifcase
         self#bloc elsecase
 
-  method bloc f li =
-    Format.fprintf f "@[<v>@\n%a@]"
-      (print_list self#instr sep_nl) li
+  method bloc f li = print_list self#instr sep_nl f li
 
   method main f main =
-    Format.fprintf f "@[<v 2>: main @\n%a@\n;@]"
+    Format.fprintf f "@[<v 2>: main@\n%a@\n;@]"
       self#instructions main
 
   method whileloop f expr li =
-    Format.fprintf f "@[<v 2>BEGIN@\n%a@]@\nWHILE%a@\nREPEAT"
+    Format.fprintf f "@[<v 2>BEGIN@\n%a@]@\n@[<v 2>WHILE@\n%a@]@\nREPEAT"
       self#expr expr
       self#bloc li
 
   val mutable ndrop = 0
   method forloop f varname expr1 expr2 li =
     ndrop <- ndrop + 2;
-    Format.fprintf f "@[<hov>%a %a BEGIN 2dup >= WHILE DUP { %a }@] %a@\n 1 + REPEAT 2DROP"
+    Format.fprintf f "@[<v 2>@[<h>%a %a BEGIN 2dup >= WHILE DUP { %a }@]@\n%a@]@\n 1 + REPEAT 2DROP"
       self#expr expr2
       self#expr expr1
       self#binding varname
@@ -148,16 +146,12 @@ class forthPrinter = object(self)
 
 
 VARIABLE buffer-index
-0 buffer-index !
+1000 buffer-index !
 VARIABLE NEOF
 1 NEOF !
 VARIABLE buffer-max
 0 buffer-max !
 create bufferc 128 allot
-bufferc 128 stdin read-line 2DROP buffer-max !
-13 bufferc buffer-max c@@ + !
-
-: current-char bufferc buffer-index @@ + c@@ ;
 
 : next-char
   buffer-index @@ 1 + buffer-index !
@@ -168,21 +162,25 @@ bufferc 128 stdin read-line 2DROP buffer-max !
   THEN
 ;
 
+: current-char
+  buffer-index @@ buffer-max @@ > IF next-char THEN
+  bufferc buffer-index @@ + c@@ ;
+
 : skipspaces
   BEGIN NEOF @@ current-char 13 = current-char 32 = OR current-char 10 = OR AND
   WHILE next-char REPEAT
 ;
 
 : read-int
-  1 { sign }
   [char] - current-char = IF
-    0 1 - TO sign
+    -1
     next-char
+  ELSE 1
   THEN
-  0 { o }
+  0
   BEGIN current-char [char] 0 >= current-char [char] 9 <= AND
-  WHILE o 10 * current-char [char] 0 - + TO o next-char REPEAT
-  o sign *
+  WHILE 10 * current-char [char] 0 - + next-char REPEAT
+  *
 ;
 
 : read-char current-char next-char ;
