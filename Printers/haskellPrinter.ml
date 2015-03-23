@@ -601,7 +601,6 @@ class haskellPrinter = object(self)
   method header binand binor array_init array_make ifm read_array write_array f opts =
     let need_stdinsep = opts.AstFun.hasSkip in
     let need_readint = Ast.TypeSet.mem (Type.integer) opts.AstFun.reads in
-    let need_readchar = Ast.TypeSet.mem (Type.char) opts.AstFun.reads in
     let imports = [
       "Text.Printf";
       "Control.Applicative";

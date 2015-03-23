@@ -320,7 +320,6 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
   | PreTyped (Type.Struct li, loc1), Typed (Type.Fixed.F (_, Type.Struct li2), loc2) ->
     let all = List.fold_left
       (fun all (name, t) ->
-        let (_, t2) = List.find ((String.equals name) @* fst) li2 in
         let self_typed = match !t with
           | Typed _ -> true
           | _ -> false
@@ -889,7 +888,7 @@ let type_for_enum en env =
   try
     let (t, _) = StringMap.find en env.enum in
     t
-  with Not_found _ ->
+  with Not_found ->
     raise ( Error (fun f ->
       Format.fprintf f "Cannot find type for enum field %s\n" en))
 
@@ -897,7 +896,7 @@ let typename_for_enum en env =
   try
     let (_, name) = StringMap.find en env.enum in
     name
-  with Not_found _ ->
+  with Not_found ->
     raise ( Error (fun f ->
       Format.fprintf f "Cannot find typename for enum %s\n" en))
 
@@ -905,7 +904,7 @@ let typename_for_field en env =
   try
     let (_, _, name) = StringMap.find en env.fields in
     name
-  with Not_found _ ->
+  with Not_found ->
     raise ( Error (fun f ->
       Format.fprintf f "Cannot find typename for field %s\n" en))
 

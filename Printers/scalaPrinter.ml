@@ -211,9 +211,6 @@ class scalaPrinter = object(self)
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        let b = List.exists (fun (n, t) -> match Type.unfix t with
-          | Type.Named n -> n = name
-          | _ -> false) li in
         (* TODO trier les champs *)
         Format.fprintf f "class %a(%a){@\n@[<v 2>  %a@]@\n}@\n"
           self#typename name
@@ -222,7 +219,6 @@ class scalaPrinter = object(self)
                Format.fprintf t "_%a: %a" self#field name self#ptype type_
              ) sep_c
           ) li
-
           (print_list
              (fun t (name, type_) ->
                Format.fprintf t "var %a: %a=_%a%a" self#field name self#ptype type_ self#field name self#separator ()
