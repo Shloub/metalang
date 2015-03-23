@@ -6,50 +6,20 @@ public class euler17
   
   public static void main(String args[])
   {
-    int one = 3;
-    int two = 3;
-    int three = 5;
-    int four = 4;
-    int five = 4;
-    int six = 3;
-    int seven = 5;
-    int eight = 5;
-    int nine = 4;
-    int ten = 3;
-    int eleven = 6;
-    int twelve = 6;
-    int thirteen = 8;
-    int fourteen = 8;
-    int fifteen = 7;
-    int sixteen = 7;
-    int seventeen = 9;
-    int eighteen = 8;
-    int nineteen = 8;
-    int twenty = 6;
-    int thirty = 6;
-    int forty = 5;
-    int fifty = 5;
-    int sixty = 5;
-    int seventy = 7;
-    int eighty = 6;
-    int ninety = 6;
-    int hundred = 7;
-    int thousand = 8;
-    System.out.printf("%d\n", one + two + three + four + five);
-    int hundred_and = 10;
-    int one_to_nine = one + two + three + four + five + six + seven + eight + nine;
+    System.out.printf("%d\n", 3 + 3 + 5 + 4 + 4);
+    int one_to_nine = 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4;
     System.out.printf("%d\n", one_to_nine);
-    int one_to_ten = one_to_nine + ten;
-    int one_to_twenty = one_to_ten + eleven + twelve + thirteen + fourteen + fifteen + sixteen + seventeen + eighteen + nineteen + twenty;
-    int one_to_thirty = one_to_twenty + twenty * 9 + one_to_nine + thirty;
-    int one_to_forty = one_to_thirty + thirty * 9 + one_to_nine + forty;
-    int one_to_fifty = one_to_forty + forty * 9 + one_to_nine + fifty;
-    int one_to_sixty = one_to_fifty + fifty * 9 + one_to_nine + sixty;
-    int one_to_seventy = one_to_sixty + sixty * 9 + one_to_nine + seventy;
-    int one_to_eighty = one_to_seventy + seventy * 9 + one_to_nine + eighty;
-    int one_to_ninety = one_to_eighty + eighty * 9 + one_to_nine + ninety;
-    int one_to_ninety_nine = one_to_ninety + ninety * 9 + one_to_nine;
-    System.out.printf("%d\n%d\n", one_to_ninety_nine, 100 * one_to_nine + one_to_ninety_nine * 10 + hundred_and * 9 * 99 + hundred * 9 + one + thousand);
+    int one_to_ten = one_to_nine + 3;
+    int one_to_twenty = one_to_ten + 6 + 6 + 8 + 8 + 7 + 7 + 9 + 8 + 8 + 6;
+    int one_to_thirty = one_to_twenty + 6 * 9 + one_to_nine + 6;
+    int one_to_forty = one_to_thirty + 6 * 9 + one_to_nine + 5;
+    int one_to_fifty = one_to_forty + 5 * 9 + one_to_nine + 5;
+    int one_to_sixty = one_to_fifty + 5 * 9 + one_to_nine + 5;
+    int one_to_seventy = one_to_sixty + 5 * 9 + one_to_nine + 7;
+    int one_to_eighty = one_to_seventy + 7 * 9 + one_to_nine + 6;
+    int one_to_ninety = one_to_eighty + 6 * 9 + one_to_nine + 6;
+    int one_to_ninety_nine = one_to_ninety + 6 * 9 + one_to_nine;
+    System.out.printf("%d\n%d\n", one_to_ninety_nine, 100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 3 + 8);
   }
   
 }

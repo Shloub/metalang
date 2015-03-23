@@ -4,50 +4,20 @@ object euler17
   
   def main(args : Array[String])
   {
-    var one: Int = 3;
-    var two: Int = 3;
-    var three: Int = 5;
-    var four: Int = 4;
-    var five: Int = 4;
-    var six: Int = 3;
-    var seven: Int = 5;
-    var eight: Int = 5;
-    var nine: Int = 4;
-    var ten: Int = 3;
-    var eleven: Int = 6;
-    var twelve: Int = 6;
-    var thirteen: Int = 8;
-    var fourteen: Int = 8;
-    var fifteen: Int = 7;
-    var sixteen: Int = 7;
-    var seventeen: Int = 9;
-    var eighteen: Int = 8;
-    var nineteen: Int = 8;
-    var twenty: Int = 6;
-    var thirty: Int = 6;
-    var forty: Int = 5;
-    var fifty: Int = 5;
-    var sixty: Int = 5;
-    var seventy: Int = 7;
-    var eighty: Int = 6;
-    var ninety: Int = 6;
-    var hundred: Int = 7;
-    var thousand: Int = 8;
-    printf("%d\n", one + two + three + four + five);
-    var hundred_and: Int = 10;
-    var one_to_nine: Int = one + two + three + four + five + six + seven + eight + nine;
+    printf("%d\n", 3 + 3 + 5 + 4 + 4);
+    var one_to_nine: Int = 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4;
     printf("%d\n", one_to_nine);
-    var one_to_ten: Int = one_to_nine + ten;
-    var one_to_twenty: Int = one_to_ten + eleven + twelve + thirteen + fourteen + fifteen + sixteen + seventeen + eighteen + nineteen + twenty;
-    var one_to_thirty: Int = one_to_twenty + twenty * 9 + one_to_nine + thirty;
-    var one_to_forty: Int = one_to_thirty + thirty * 9 + one_to_nine + forty;
-    var one_to_fifty: Int = one_to_forty + forty * 9 + one_to_nine + fifty;
-    var one_to_sixty: Int = one_to_fifty + fifty * 9 + one_to_nine + sixty;
-    var one_to_seventy: Int = one_to_sixty + sixty * 9 + one_to_nine + seventy;
-    var one_to_eighty: Int = one_to_seventy + seventy * 9 + one_to_nine + eighty;
-    var one_to_ninety: Int = one_to_eighty + eighty * 9 + one_to_nine + ninety;
-    var one_to_ninety_nine: Int = one_to_ninety + ninety * 9 + one_to_nine;
-    printf("%d\n%d\n", one_to_ninety_nine, 100 * one_to_nine + one_to_ninety_nine * 10 + hundred_and * 9 * 99 + hundred * 9 + one + thousand);
+    var one_to_ten: Int = one_to_nine + 3;
+    var one_to_twenty: Int = one_to_ten + 6 + 6 + 8 + 8 + 7 + 7 + 9 + 8 + 8 + 6;
+    var one_to_thirty: Int = one_to_twenty + 6 * 9 + one_to_nine + 6;
+    var one_to_forty: Int = one_to_thirty + 6 * 9 + one_to_nine + 5;
+    var one_to_fifty: Int = one_to_forty + 5 * 9 + one_to_nine + 5;
+    var one_to_sixty: Int = one_to_fifty + 5 * 9 + one_to_nine + 5;
+    var one_to_seventy: Int = one_to_sixty + 5 * 9 + one_to_nine + 7;
+    var one_to_eighty: Int = one_to_seventy + 7 * 9 + one_to_nine + 6;
+    var one_to_ninety: Int = one_to_eighty + 6 * 9 + one_to_nine + 6;
+    var one_to_ninety_nine: Int = one_to_ninety + 6 * 9 + one_to_nine;
+    printf("%d\n%d\n", one_to_ninety_nine, 100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 3 + 8);
   }
   
 }

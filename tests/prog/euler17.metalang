@@ -1,41 +1,41 @@
 
 main
-  def one = 3
-  def two = 3
-  def three = 5
-  def four = 4
-  def five = 4
-  def six = 3
-  def seven = 5
-  def eight = 5
-  def nine = 4
-  
-  def ten = 3
+  def inline one = 3
+  def inline two = 3
+  def inline three = 5
+  def inline four = 4
+  def inline five = 4
+  def inline six = 3
+  def inline seven = 5
+  def inline eight = 5
+  def inline nine = 4
 
-  def eleven = 6
-  def twelve = 6
-  def thirteen = 8
-  def fourteen = 8
-  def fifteen = 7
-  def sixteen = 7
-  def seventeen = 9
-  def eighteen = 8
-  def nineteen = 8
+  def inline ten = 3
 
-  def twenty = 6
-  def thirty = 6
-  def forty = 5
-  def fifty = 5
-  def sixty = 5
-  def seventy = 7
-  def eighty = 6
-  def ninety = 6
-  def hundred = 7
-  def thousand = 8
+  def inline eleven = 6
+  def inline twelve = 6
+  def inline thirteen = 8
+  def inline fourteen = 8
+  def inline fifteen = 7
+  def inline sixteen = 7
+  def inline seventeen = 9
+  def inline eighteen = 8
+  def inline nineteen = 8
 
-print one + two + three + four + five print "\n"
+  def inline twenty = 6
+  def inline thirty = 6
+  def inline forty = 5
+  def inline fifty = 5
+  def inline sixty = 5
+  def inline seventy = 7
+  def inline eighty = 6
+  def inline ninety = 6
+  def inline hundred = 7
+  def inline thousand = 8
 
-  def hundred_and = 10
+  print one + two + three + four + five print "\n"
+
+  def inline hundred_and = 10
 
   def one_to_nine = one + two + three + four + five + six + seven + eight + nine
   print one_to_nine print "\n"
