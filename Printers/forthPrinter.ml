@@ -134,61 +134,50 @@ class forthPrinter = object(self)
   | _ -> assert false
 
   method prog f (prog: Utils.prog) =
-    Format.fprintf f "
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    Format.fprintf f "%a%a%a%a%a%a%a%a@\nmain@\nBYE@\n"
+                     (fun f () ->
+                       if Tags.is_taged "__internal__div" then
+                         Format.fprintf f ": // { a b } a b / a 0 < b 0 < XOR IF 1 + THEN ;@\n") ()
+                     (fun f () ->
+                       if Tags.is_taged "__internal__mod" then
+                         Format.fprintf f ": %% { a b } a b MOD a 0 < b 0 < XOR IF b - THEN ;@\n" ) ()
+                     (fun f () -> if need then
+print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
+["VARIABLE buffer-index";
+"1000 buffer-index !";
+"VARIABLE NEOF";
+"1 NEOF !";
+"VARIABLE buffer-max";
+"0 buffer-max !";
+"create bufferc 128 allot";
+": next-char";
+"  buffer-index @ 1 + buffer-index !";
+"  buffer-index @ buffer-max @ > IF";
+"    0 buffer-index !";
+"    bufferc 128 stdin read-line DROP -1 = NEOF ! buffer-max !";
+"    10 bufferc buffer-max @ + !";
+"  THEN ;";
+": current-char";
+"  buffer-index @ buffer-max @ > IF next-char THEN";
+"  bufferc buffer-index @ + c@ ;"
+]
+) ()
+(fun f () -> if need_stdinsep then print_list (fun f s -> Format.fprintf f "%s@\n" s) nosep f
+[": skipspaces";
+"  BEGIN NEOF @ current-char 13 = current-char 32 = OR current-char 10 = OR AND";
+"  WHILE next-char REPEAT ;"]) ()
+(fun f () -> if need_readint then print_list (fun f s -> Format.fprintf f "%s@\n" s) nosep f
+[ ": read-int";
+"  [char] - current-char = IF -1 next-char ELSE 1 THEN";
+"  0 BEGIN current-char [char] 0 >= current-char [char] 9 <= AND";
+"  WHILE 10 * current-char [char] 0 - + next-char REPEAT * ;"
+]) ()
+(fun f () -> if need_readchar then Format.fprintf f ": read-char current-char next-char ;@\n") ()
 
-: // { a b }
-  a b /
-  a 0 < b 0 < XOR IF 1 + THEN
-;
-
-: %% { a b }
-  a b MOD
-  a 0 < b 0 < XOR IF b - THEN
- ;
-
-
-VARIABLE buffer-index
-1000 buffer-index !
-VARIABLE NEOF
-1 NEOF !
-VARIABLE buffer-max
-0 buffer-max !
-create bufferc 128 allot
-
-: next-char
-  buffer-index @@ 1 + buffer-index !
-  buffer-index @@ buffer-max @@ > IF
-    0 buffer-index !
-    bufferc 128 stdin read-line DROP -1 = NEOF ! buffer-max !
-    10 bufferc buffer-max @@ + !
-  THEN
-;
-
-: current-char
-  buffer-index @@ buffer-max @@ > IF next-char THEN
-  bufferc buffer-index @@ + c@@ ;
-
-: skipspaces
-  BEGIN NEOF @@ current-char 13 = current-char 32 = OR current-char 10 = OR AND
-  WHILE next-char REPEAT
-;
-
-: read-int
-  [char] - current-char = IF
-    -1
-    next-char
-  ELSE 1
-  THEN
-  0
-  BEGIN current-char [char] 0 >= current-char [char] 9 <= AND
-  WHILE 10 * current-char [char] 0 - + next-char REPEAT
-  *
-;
-
-: read-char current-char next-char ;
-
-
-%a%a@\nmain@\nBYE@\n"
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
