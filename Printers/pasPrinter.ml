@@ -316,11 +316,7 @@ class pasPrinter = object(self)
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
         self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a" f1 e1 f2 e2
-           ))
+        (print_list self#expr (sep "%a][%a"))
         indexes
 
 

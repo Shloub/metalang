@@ -283,13 +283,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
     | Type.Enum li ->
       Format.fprintf f "Type %a is (@\n@[<v2>  %a@]);@\n"
         self#typename name
-        (print_list
-           (fun t name ->
-             self#enum t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
-        ) li
-
+        (print_list self#enum (sep "%a,@\n %a")) li
     | _ ->
       Format.fprintf f "type %a = %a;"
         super#ptype t
@@ -354,12 +348,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a(%a)"
         self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a)(%a" f1 e1 f2 e2
-           ))
-        indexes
+        (print_list self#expr (sep "%a)(%a")) indexes
 
   method def_fields name f li =
     print_list

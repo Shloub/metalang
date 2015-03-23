@@ -118,9 +118,7 @@ class smalltalkPrinter = object(self)
         self#mutable_ m
         (print_list
            (fun f e -> self#expr f (Expr.binop Expr.Add e (Expr.integer 1) ))
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a at: %a" f1 e1 f2 e2
-           ))
+           (sep "%a at: %a"))
         indexes
 
   method allocarray f binding type_ len useless =
@@ -366,15 +364,15 @@ class smalltalkPrinter = object(self)
               name
               (print_list
                  (fun f (name, t) -> Format.fprintf f "%s" name)
-                 (fun f pa a pb b -> Format.fprintf f "%a %a" pa a pb b)
+                 sep_space
               ) li
               (print_list
                  (fun f (name, t) -> Format.fprintf f "%s [ ^%s ]" name name)
-                 (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)
+                 sep_nl
               ) li
               (print_list
                  (fun f (name, t) -> Format.fprintf f "%s: %s [ %s := %s. ] " name n name n)
-                 (fun f pa a pb b -> Format.fprintf f "%a@\n%a" pa a pb b)
+                 sep_nl
               ) li
         | _ -> ()
       end

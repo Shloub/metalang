@@ -311,12 +311,7 @@ End Function" else "")
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a(%a)"
         self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a)(%a" f1 e1 f2 e2
-           ))
-        indexes
+        (print_list self#expr (sep "%a)(%a")) indexes
 
   method allocarray f binding type_ len useless =
     let rec g f t = match Type.unfix t with

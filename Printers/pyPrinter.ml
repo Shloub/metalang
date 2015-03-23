@@ -267,7 +267,7 @@ def skipchar():
   method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a ):"
       self#funname funname
-      (print_list (fun t (a, type_) -> self#binding t a) sep_c) li
+      (print_list self#binding sep_c) (List.map fst li)
 
   method print_args =
     print_list
@@ -326,14 +326,7 @@ def skipchar():
         self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a" f1 e1 f2 e2
-           ))
-        indexes
+      Format.fprintf f "%a[%a]" self#mutable_ m (print_list self#expr (sep "%a][%a")) indexes
 
 
   method multiread f instrs = self#basemultiread f instrs

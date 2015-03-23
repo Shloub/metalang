@@ -123,7 +123,7 @@ class camlPrinter = object(self)
     match Type.Fixed.unfix t with
     | Type.Tuple li ->
       Format.fprintf f "(%a)"
-        (print_list self#ptype (fun t fa a fb b -> Format.fprintf t "%a * %a" fa a fb b)) li
+        (print_list self#ptype (sep "%a * %a")) li
     | Type.Integer -> Format.fprintf f "int"
     | Type.String -> Format.fprintf f "string"
     | Type.Array a -> Format.fprintf f "%a array" self#ptype a
@@ -144,7 +144,7 @@ class camlPrinter = object(self)
            (fun t name ->
              Format.fprintf t "%s" name
            )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
+           (sep "%a@\n| %a")
         ) li
     | Type.Lexems -> assert false
     | Type.Auto -> assert false
@@ -467,13 +467,7 @@ class camlPrinter = object(self)
     | Mutable.Array (mut, indexes) ->
       Format.fprintf f "@[<h>%a.(%a)@]"
         self#mutable_rec mut
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a).(%a"
-               f1 e1
-               f2 e2
-           )) indexes
+        (print_list self#expr (sep "%a).(%a")) indexes
 
   method print_exnName f (t : unit Type.Fixed.t) =
     try
@@ -625,11 +619,7 @@ class camlPrinter = object(self)
   method affectarray f binding indexes e2 =
     Format.fprintf f "@[<h>%a.(%a)@ <-@ %a@]"
       self#binding binding
-      (print_list
-         self#expr
-         (fun f f1 e1 f2 e2 ->
-           Format.fprintf f "%a).(%a" f1 e1 f2 e2
-         )) indexes
+      (print_list self#expr (sep "%a).(%a")) indexes
       self#expr e2
 
 
@@ -715,13 +705,7 @@ class camlPrinter = object(self)
           ) li
     | Type.Enum li ->
       Format.fprintf f "type %s = @\n@[<v2>    %a@]@\n"
-        name
-        (print_list
-           (fun t name ->
-             Format.fprintf t "%s" name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
-        ) li
+        name (print_list self#enum (sep "%a@\n| %a")) li
     | _ ->
       Format.fprintf f "type %a = %a;;"
         super#typename name
@@ -793,7 +777,7 @@ class camlPrinter = object(self)
         | Mutable.Array _ -> "<-"
         | Mutable.Dot _ -> "<-"
         ) i)
-         (fun t fa a fb b -> Format.fprintf t "%a;@\n%a" fa a fb b))
+         (sep "%a;@\n%a"))
       affect
       print_return ()
       print_in ()

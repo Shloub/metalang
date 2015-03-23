@@ -217,11 +217,7 @@ static int readInt(){
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
         self#typename name
-        (print_list
-           (fun t name ->
-             self#enumfield t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
+        (print_list self#enumfield (sep "%a,@\n %a")
         ) li
     | _ -> super#decl_type f name t
 

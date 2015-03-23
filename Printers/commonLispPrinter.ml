@@ -117,7 +117,7 @@ class commonLispPrinter = object(self)
     funname_ <- funname;
     Format.fprintf f "%a (%a)"
       self#funname funname
-      (print_list (fun f (n, t) -> self#binding f n) sep_space) li
+      (print_list self#binding sep_space) (List.map fst li)
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>(defun@ %a@\n%a)@]@\n"

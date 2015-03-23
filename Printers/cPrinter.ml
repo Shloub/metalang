@@ -188,9 +188,7 @@ class cPrinter = object(self)
         self#mutable_ m
         (print_list
            self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a" f1 e1 f2 e2
-           ))
+           (sep "%a][%a"))
         indexes
 
   method read_decl f t v =

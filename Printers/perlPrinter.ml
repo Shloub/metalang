@@ -85,17 +85,14 @@ class perlPrinter = object(self)
 
   method multi_print f format exprs =
     Format.fprintf f "@[<h>print(%a);@]"
-      (print_list self#expr  sep_c ) (List.map snd exprs)
+      (print_list self#expr sep_c ) (List.map snd exprs)
 
   method print_proto f (funname, t, li) =
     if li = [] then Format.fprintf f "sub %a{" self#funname funname
     else
     Format.fprintf f "sub %a{@\n@[<h>my(%a) = @@_;@]"
       self#funname funname
-      (print_list
-         (fun t (binding, type_) -> Format.fprintf t "%a" self#binding binding
-         ) sep_c
-      ) li
+      (print_list self#binding sep_c) (List.map fst li)
 
 
   method print_fun f funname t li instrs =
@@ -191,9 +188,8 @@ class perlPrinter = object(self)
     Format.fprintf f "my %a = {@[<v>%a@]};"
       self#binding name
       ( print_list (fun f (fieldname, expr) ->
-	Format.fprintf f "%S=>@[<h>%a@]" fieldname self#expr expr)
-	  (fun f pa a pb b -> Format.fprintf f "%a,@\n%a" pa a pb b)
-      ) el
+	      Format.fprintf f "%S=>@[<h>%a@]" fieldname self#expr expr)
+	        (sep "%a,@\n%a")) el
 
   method record f li = Format.fprintf f "{%a}" (self#def_fields (InternalName 0)) li
   method field f field = Format.fprintf f "%S" field
@@ -207,9 +203,7 @@ class perlPrinter = object(self)
              self#field fieldname
              self#expr expr
          )
-         (fun t f1 e1 f2 e2 ->
-           Format.fprintf t
-             "%a,@\n%a" f1 e1 f2 e2))
+         (sep "%a,@\n%a"))
       li
 
   method untuple f li e =
@@ -246,12 +240,7 @@ class perlPrinter = object(self)
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a->[%a]"
         self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a" f1 e1 f2 e2
-           ))
-        indexes
+        (print_list self#expr (sep "%a][%a")) indexes
 
   method binop f op a b = match op with
   | Expr.Mod -> Format.fprintf f "remainder(%a, %a)" self#expr a self#expr b

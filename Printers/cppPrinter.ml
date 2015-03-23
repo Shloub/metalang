@@ -139,11 +139,7 @@ class cppPrinter = object(self)
         self#mutable_ m
         (print_list
            self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a)->at(%a"
-               f1 e1
-               f2 e2
-           )) index
+           (sep "%a)->at(%a")) index
 
   method forloop f varname expr1 expr2 li =
     let default () =
@@ -170,10 +166,7 @@ class cppPrinter = object(self)
   method combine_formats () = false
   method multi_print f format exprs =
     Format.fprintf f "@[<h>std::cout << %a;@]"
-      (print_list
-         (fun f (t, e) -> self#expr f e)
-         (fun t f1 e1 f2 e2 -> Format.fprintf t
-           "%a@ <<@ %a" f1 e1 f2 e2)) exprs
+      (print_list self#expr (sep "%a@ <<@ %a")) (List.map snd exprs)
 
   method print f t expr =
     Format.fprintf f "@[std::cout << %a;@]"
@@ -195,7 +188,7 @@ class cppPrinter = object(self)
         self#typename name
         (print_list
            (fun t name -> self#enumfield t name)
-           (fun t fa a fb b -> Format.fprintf t "%a,@\n%a" fa a fb b)
+           (sep "%a,@\n%a")
         ) li
         self#typename name
     | _ ->

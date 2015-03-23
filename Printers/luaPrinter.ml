@@ -174,9 +174,7 @@ end@\n") ()
             self#mutable_ m
             (print_list
                (fun f e -> Format.fprintf f "%a+1" self#expr e)
-               (fun f f1 e1 f2 e2 ->
-                 Format.fprintf f "%a][%a" f1 e1 f2 e2
-               ))
+               (sep "%a][%a"))
             indexes
         else super#mutable_ f m0
     | _ -> super#mutable_ f m0
@@ -208,9 +206,7 @@ end@\n") ()
              self#field fieldname
              self#expr expr
          )
-         (fun t f1 e1 f2 e2 ->
-           Format.fprintf t
-             "%a,@\n%a" f1 e1 f2 e2))
+         (sep "%a,@\n%a"))
       li
 
   method allocarray f binding type_ len _ =

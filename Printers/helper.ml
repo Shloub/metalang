@@ -58,12 +58,14 @@ let print_list
         p tl
   in p f li
 
-let nosep f pa a pb b = Format.fprintf f "%a%a" pa a pb b
-let sep_space f pa a pb b = Format.fprintf f "%a %a" pa a pb b
-let sep_nl f pa a pb b = Format.fprintf f "%a@\n%a" pa a pb b
-let sep_c f pa a pb b = Format.fprintf f "%a, %a" pa a pb b
-let sep_cnl f pa a pb b = Format.fprintf f "%a,@\n%a" pa a pb b
-let sep_dc f pa a pb b = Format.fprintf f "%a; %a" pa a pb b
+
+let sep format f pa a pb b = Format.fprintf f format pa a pb b
+let nosep f = sep "%a%a" f
+let sep_space f = sep "%a %a" f
+let sep_nl f = sep "%a@\n%a" f
+let sep_c f = sep "%a, %a" f
+let sep_cnl f = sep "%a,@\n%a" f
+let sep_dc f = sep "%a; %a" f
 
 
 let print_list_indexed print sep f li =

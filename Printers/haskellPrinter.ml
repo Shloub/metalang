@@ -474,7 +474,7 @@ class haskellPrinter = object(self)
          (fun f (expr, field) ->
            hsapply ~p:fun_priority f (fun f () -> Format.fprintf f "newIORef") true
              [self#isPure expr, self#expr', expr])
-         (fun f pa a pb b -> Format.fprintf f "%a <*> %a" pa a pb b)) li
+         (sep "%a <*> %a")) li
 
   method skip f = Format.fprintf f "skip_whitespaces"
 
@@ -540,7 +540,7 @@ class haskellPrinter = object(self)
            (fun t (name, type_) ->
              Format.fprintf t "_%s :: IORef %a" name self#ptype type_
            )
-           (fun f pa a pb b -> Format.fprintf f "%a,@\n%a" pa a pb b)
+           (sep "%a,@\n%a")
         ) li
     | Type.Enum li ->
       Format.fprintf f "%a"
@@ -548,7 +548,7 @@ class haskellPrinter = object(self)
            (fun t name ->
              Format.fprintf t "%s" name
            )
-           (fun t fa a fb b -> Format.fprintf t "%a@\n| %a" fa a fb b)
+           (sep "%a@\n| %a")
         ) li
     | Type.Lexems -> assert false
     | Type.Auto -> assert false

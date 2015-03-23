@@ -234,9 +234,7 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
         self#mutable_ m
         (print_list
            (fun f e -> Format.fprintf f "%a cells +" self#expr e)
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a @ %a" f1 e1 f2 e2
-           ))
+           sep_space)
         indexes
 
   method mutable_ f m =

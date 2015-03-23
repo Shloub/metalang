@@ -196,8 +196,7 @@ class printer = object(self)
         (print_list
            (fun t (name, type_) ->
              Format.fprintf t "%a : %a;" self#field name self#ptype type_
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a%a" fa a fb b)
+           ) nosep
         ) li
     | Type.Enum li ->
       Format.fprintf f "enum{%a}"
@@ -232,14 +231,7 @@ class printer = object(self)
         self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a" f1 e1 f2 e2
-           ))
-        indexes
+      Format.fprintf f "%a[%a]" self#mutable_ m (print_list self#expr (sep "%a][%a")) indexes
 
   method expand_macro_apply f name t params code li =
     self#expand_macro_call f name t params code li

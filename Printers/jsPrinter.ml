@@ -78,12 +78,7 @@ class jsPrinter = object(self)
   method print_proto f (funname, t, li) =
     Format.fprintf f "function %a(%a)"
       self#funname funname
-      (print_list
-         (fun t (binding, type_) ->
-           Format.fprintf t "%a"
-             self#binding binding
-         ) sep_c
-      ) li
+      (print_list self#binding sep_c) (List.map fst li)
 
   method prog f prog =
     let need_stdinsep = prog.Prog.hasSkip in
@@ -139,7 +134,7 @@ function read_int_(){
 
   method multi_print f format exprs =
     Format.fprintf f "@[<h>util.print(%a);@]"
-      (print_list (fun f (t, e) -> self#expr f e) sep_c) exprs
+      (print_list self#expr sep_c) (List.map snd exprs)
 
   method print f t expr =
     Format.fprintf f "@[util.print(%a);@]" self#expr expr
@@ -164,11 +159,7 @@ function read_int_(){
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a[%a]"
         self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a" f1 e1 f2 e2
-           ))
+        (print_list self#expr (sep "%a][%a"))
         indexes
 
 

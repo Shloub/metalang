@@ -101,13 +101,7 @@ class phpPrinter = object(self)
         self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a" f1 e1 f2 e2
-           ))
+      Format.fprintf f "%a[%a]" self#mutable_ m (print_list self#expr (sep "%a][%a"))
         indexes
 
   method main f main = self#instructions f main
@@ -205,9 +199,7 @@ function nextChar(){
           self#field fieldname
           self#expr expr
       )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a,@\n%a" f1 e1 f2 e2)
+      (sep "%a,@\n%a")
       f
       li
 

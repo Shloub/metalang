@@ -76,12 +76,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
         self#typename name
-        (print_list
-           (fun t name ->
-             self#enumfield t name
-           )
-           (fun t fa a fb b -> Format.fprintf t "%a,@\n %a" fa a fb b)
-        ) li
+        (print_list self#enumfield (sep "%a,@\n %a")) li
     | _ -> cppprinter#decl_type f name t
 
   method enum f e =
@@ -182,9 +177,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     | [] -> Format.fprintf f "@[<h>System.out.print(\"%s\");@]" format
     | _ ->
       Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
-        (print_list
-           (fun f (t, e) -> self#expr f e)
-           sep_c ) exprs
+        (print_list self#expr sep_c ) (List.map snd exprs)
 
   method print f t expr = match Expr.unfix expr with
   | Expr.Lief (Expr.String s) -> Format.fprintf f "@[System.out.print(%S);@]" s
@@ -223,13 +216,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     | Mutable.Array (m, index) ->
       Format.fprintf f "@[<h>%a[%a]@]"
         self#mutable_ m
-        (print_list
-           self#expr
-           (fun f f1 e1 f2 e2 ->
-             Format.fprintf f "%a][%a"
-               f1 e1
-               f2 e2
-           )) index
+        (print_list self#expr (sep "%a][%a")) index
 
   method multiread f instrs = self#basemultiread f instrs
 end

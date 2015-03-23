@@ -69,7 +69,7 @@ end
   method print_proto f (funname, t, li) =
     Format.fprintf f "def %a( %a )"
       self#funname funname
-      (print_list (fun t (a, type_) -> self#binding t a) sep_c) li
+      (print_list self#binding sep_c) (List.map fst li)
 
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<h>%a@]@\n@[<v 2>  %a@]@\nend@\n"
@@ -175,7 +175,7 @@ val mutable inlambda = false
       Format.fprintf f "@[<h>printf \"%s\"@]" format
     else
       Format.fprintf f "@[<h>printf \"%s\", %a@]" format
-        (print_list (fun f (t, e) -> self#expr f e) sep_c) exprs
+        (print_list self#expr sep_c) (List.map snd exprs)
 
   method print f t expr = match Expr.unfix expr with
   | Expr.Lief (Expr.String s) -> Format.fprintf f "@[print %s@]" ( self#noformat s )
@@ -223,9 +223,5 @@ val mutable inlambda = false
           self#field fieldname
           self#expr expr
       )
-      (fun t f1 e1 f2 e2 ->
-        Format.fprintf t
-          "%a,@\n%a" f1 e1 f2 e2)
-      f
-      li
+      (sep "%a,@\n%a") f li
 end

@@ -232,11 +232,7 @@ class scalaPrinter = object(self)
       Format.fprintf f "object %a extends Enumeration {@\n  type %a = Value;@\n  val %a = Value@\n}@\nimport %a._"
         self#typename name
         self#typename name
-        (print_list
-           (fun f name ->
-             Format.fprintf f "%s" name
-           ) sep_c
-        ) li
+        (print_list self#enum sep_c) li
           self#typename name
     | _ -> assert false
 
