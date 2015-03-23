@@ -25,6 +25,7 @@ hs=$(st "out" "*.hs")
 lua=$(st "out" "*.lua")
 scala=$(st "out" "*.scala")
 smalltalk=$(st "out" "*.st")
+forth=$(st "out" "*.fs")
 
 ml=$(( $ml - $funml ))
 
@@ -50,6 +51,7 @@ hs=$(( $hs * 1000 / $metalang))
 lua=$(( $lua * 1000 / $metalang))
 scala=$(( $scala * 1000 / $metalang))
 smalltalk=$(( $smalltalk * 1000 / $metalang))
+forth=$(( $forth * 1000 / $metalang))
 
 file="stats_repartition.dat"
 
@@ -98,6 +100,7 @@ hs $hs
 lua $lua
 smalltalk $smalltalk
 scala $scala
+forth $forth
 java $java" | swap | sort -n | swap ) > "$file"
 
 filestatsplot(){
