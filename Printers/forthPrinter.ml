@@ -59,6 +59,8 @@ class forthPrinter = object(self)
       Format.fprintf f "\"";
     print_ntimes !nappend f " S+"
 
+  method field f i = Format.fprintf f "->%s" i
+
   method comment f s =
     let lic = String.split s '\n' in
     print_list (fun f s -> Format.fprintf f "\\ %s@\n" s) nosep f lic
