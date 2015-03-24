@@ -529,6 +529,14 @@ module Expr = struct
     | Type.Enum _ -> failwith ("new enum is not an expression")
     | Type.Tuple _ -> failwith ("new tuple is not an expression")
 
+  let is_integer i e = match unfix e with
+  | Lief (Integer i2) when i = i2 -> true
+  | _ -> false
+
+  let saddi a b = match unfix a with
+  | BinOp (a, Sub, c) when is_integer b c -> a
+  | _ -> binop Add a (integer b)
+
 end
 
 (**
