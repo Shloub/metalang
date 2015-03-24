@@ -86,6 +86,17 @@ let print_ntimes n f s =
     Format.fprintf f "%s" s
   done
 
+let simple_expression e =
+  let f tra acc e = match Ast.Expr.unfix e with
+  | Ast.Expr.Access m -> begin match Ast.Mutable.unfix m with
+    | Ast.Mutable.Var _ -> acc
+    | _ -> false
+  end
+  | Ast.Expr.Lief l -> acc
+  | Ast.Expr.UnOp _
+  | Ast.Expr.BinOp _ -> tra acc e
+  | _ -> false
+  in f (Ast.Expr.Writer.Traverse.fold f) true e
 
 let contains_instr f prog =
     let cli = List.exists (Ast.Instr.Writer.Deep.exists f) in

@@ -82,8 +82,8 @@ class smalltalkPrinter = object(self)
 
   method binopl f op a b =
     match op with
-    | Expr.Or -> Format.fprintf f "(%a) or: [%a]" self#expr a self#expr b
-    | Expr.And -> Format.fprintf f "(%a) and: [%a]" self#expr a self#expr b
+    | Expr.Or when not (simple_expression b) -> Format.fprintf f "(%a) or: [%a]" self#expr a self#expr b
+    | Expr.And when not (simple_expression b) -> Format.fprintf f "(%a) and: [%a]" self#expr a self#expr b
     | _ ->
         let d () = Format.fprintf f "%a %a %a" self#expr a self#print_op op self#expr b in
         if self#pop op then d () else
