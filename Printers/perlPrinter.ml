@@ -178,8 +178,8 @@ class perlPrinter = object(self)
   | _ -> assert false
 
   method read f t mutable_ = match Type.unfix t with
-  | Type.Char -> Format.fprintf f "%a = readchar();" self#mutable_ mutable_
-  | Type.Integer ->  Format.fprintf f "%a = readint();" self#mutable_ mutable_
+  | Type.Char -> Format.fprintf f "%a = readchar();" self#mutable_set mutable_
+  | Type.Integer ->  Format.fprintf f "%a = readint();" self#mutable_set mutable_
   | _ -> assert false
 
   method stdin_sep f = Format.fprintf f "@[readspaces();@]"
@@ -210,36 +210,18 @@ class perlPrinter = object(self)
     Format.fprintf f "my (%a) = @@{ %a };"
       (print_list self#binding sep_c) (List.map snd li) self#expr e
 
-  method selfAssoc f m e2 op = match op with
-  | Expr.Mod ->
-    Format.fprintf f "%a = remainder(%a, %a);"
-      self#mutable_ m
-      self#mutable_ m
-      self#expr e2
-  | Expr.Div ->
-    Format.fprintf f "%a = int((%a) / (%a));"
-      self#mutable_ m
-      self#mutable_ m
-      self#expr e2
-  | _ ->
-    Format.fprintf f "%a = %a %a %a;"
-      self#mutable_ m
-      self#mutable_ m
-      self#print_op op
-      self#expr e2
+  method hasSelfAffect op = false
 
   method bloc f li =
     Format.fprintf f "@[<v 2>{@\n%a@]@\n}" self#instructions li
 
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a->{%S}" self#mutable_ m field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
+  method m_field f m field = 
+      Format.fprintf f "%a->{%S}" self#mutable_get m field
+
+  method m_array f m indexes =
       Format.fprintf f "%a->[%a]"
-        self#mutable_ m
+        self#mutable_get m
         (print_list self#expr (sep "%a][%a")) indexes
 
   method binop f op a b = match op with

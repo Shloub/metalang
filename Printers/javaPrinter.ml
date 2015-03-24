@@ -154,10 +154,10 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[<h>if (scanner.hasNext(\"^-\")){@\n  scanner.next(\"^-\");@\n  %a = -scanner.nextInt();@\n}else{@\n  %a = scanner.nextInt();@\n}@]"
-        self#mutable_ m
-        self#mutable_ m
+        self#mutable_set m
+        self#mutable_set m
     | Type.Char -> Format.fprintf f "@[<h>%a = scanner.findWithinHorizon(\".\", 1).charAt(0);@]"
-      self#mutable_ m
+      self#mutable_set m
     | _ -> failwith("unsuported read")
 
   method read_decl f t v =
@@ -204,19 +204,15 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       self#ptype t
       (self#def_fields name) el
 
-
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
+  method m_field f m field = 
       Format.fprintf f "%a.%s"
-        self#mutable_ m
+        self#mutable_get m
         field
-    | Mutable.Var b ->
-      self#binding f b
-    | Mutable.Array (m, index) ->
+
+  method m_array f m indexes =
       Format.fprintf f "@[<h>%a[%a]@]"
-        self#mutable_ m
-        (print_list self#expr (sep "%a][%a")) index
+        self#mutable_get m
+        (print_list self#expr (sep "%a][%a")) indexes
 
   method multiread f instrs = self#basemultiread f instrs
 end

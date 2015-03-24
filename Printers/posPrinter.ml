@@ -69,9 +69,4 @@ class posPrinter = object(self)
     Format.fprintf f "%a%a"
       self#ploc loc super#ptype e
 
-  method mutable_ f e =
-    let loc = Ast.PosMap.get (Mutable.Fixed.annot e) in
-    Format.fprintf f "%a%a"
-      self#ploc loc super#mutable_ e
-
 end

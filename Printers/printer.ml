@@ -153,7 +153,7 @@ class printer = object(self)
       self#expr e
 
   method affect f mutable_ (expr : 'lex Expr.t) =
-    Format.fprintf f "@[<hov>%a@ =@ %a%a@]" self#mutable_ mutable_ self#expr expr self#separator ()
+    Format.fprintf f "@[<hov>%a@ =@ %a%a@]" self#mutable_set mutable_ self#expr expr self#separator ()
 
   method bloc f li = Format.fprintf f "@[<v>do@\n%a@]@\nend"
     (print_list self#instr sep_nl) li
@@ -223,15 +223,29 @@ class printer = object(self)
       self#binding binding2
       self#instructions lambda
 
-  method mutable_ f m =
+  method m_variable f b = self#binding f b
+  method m_variable_get f b = self#m_variable f b
+  method m_variable_set f b = self#m_variable f b
+
+  method m_field f m field = Format.fprintf f "%a.%a" self#mutable_get m self#field field
+  method m_field_get f m field = self#m_field f m field
+  method m_field_set f m field = self#m_field f m field
+
+  method m_array f m indexes = Format.fprintf f "%a[%a]" self#mutable_get m (print_list self#expr (sep "%a][%a")) indexes
+  method m_array_get f m indexes = self#m_array f m indexes
+  method m_array_set f m indexes = self#m_array f m indexes
+
+  method mutable_set f m = 
     match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a.%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]" self#mutable_ m (print_list self#expr (sep "%a][%a")) indexes
+    | Mutable.Dot (m, field) -> self#m_field_set f m field
+    | Mutable.Var binding -> self#m_variable_set f binding
+    | Mutable.Array (m, indexes) -> self#m_array_set f m indexes
+
+  method mutable_get f m = 
+    match Mutable.unfix m with
+    | Mutable.Dot (m, field) -> self#m_field_get f m field
+    | Mutable.Var binding -> self#m_variable_get f binding
+    | Mutable.Array (m, indexes) -> self#m_array_get f m indexes
 
   method expand_macro_apply f name t params code li =
     self#expand_macro_call f name t params code li
@@ -309,25 +323,25 @@ class printer = object(self)
   method selfAssoc f m e2 = function
   | Expr.Add -> begin match Expr.unfix e2 with
     | Expr.Lief (Expr.Integer 1) ->
-      Format.fprintf f "@[<hov>%a ++;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a ++;@]" self#mutable_set m
     | _ ->
-      Format.fprintf f "@[<hov>%a += %a;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a += %a;@]" self#mutable_set m
         self#expr e2
   end
   | Expr.Sub ->
     begin match Expr.unfix e2 with
     | Expr.Lief (Expr.Integer 1) ->
-      Format.fprintf f "@[<hov>%a --;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a --;@]" self#mutable_set m
     | _ ->
-      Format.fprintf f "@[<hov>%a -= %a;@]" self#mutable_ m
+      Format.fprintf f "@[<hov>%a -= %a;@]" self#mutable_set m
         self#expr e2
     end
   | Expr.Mul ->
-    Format.fprintf f "@[<hov>%a *= %a;@]" self#mutable_ m self#expr e2
+    Format.fprintf f "@[<hov>%a *= %a;@]" self#mutable_set m self#expr e2
   | Expr.Div ->
-    Format.fprintf f "@[<hov>%a /= %a;@]" self#mutable_ m self#expr e2
+    Format.fprintf f "@[<hov>%a /= %a;@]" self#mutable_set m self#expr e2
   | Expr.Mod ->
-    Format.fprintf f "@[<hov>%a %%= %a;@]" self#mutable_ m self#expr e2
+    Format.fprintf f "@[<hov>%a %%= %a;@]" self#mutable_set m self#expr e2
   | _ -> assert false
 
   method hasSelfAffect op = true
@@ -396,7 +410,7 @@ class printer = object(self)
   method format_type f (t:Type.t) = Format.fprintf f "%s" (format_type t)
 
   method read f t mutable_ =
-    Format.fprintf f "@[read %a %a@]" self#ptype t self#mutable_ mutable_
+    Format.fprintf f "@[read %a %a@]" self#ptype t self#mutable_set mutable_
 
   method read_decl f t v =
     Format.fprintf f "@[def read %a %a@]"
@@ -542,7 +556,7 @@ class printer = object(self)
   method char f c = Format.fprintf f "%C" c
 
   method access f m =
-    self#mutable_ f m
+    self#mutable_get f m
 
   method print_proto f (funname, t, li) =
     Format.fprintf f "def@ %a %a(%a)"

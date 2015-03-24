@@ -126,7 +126,7 @@ end@\n") ()
     Format.fprintf f "@[stdinsep()@]"
 
   method read f t mutable_ =
-    Format.fprintf f "@[%a = read%a()@]" self#mutable_ mutable_
+    Format.fprintf f "@[%a = read%a()@]" self#mutable_set mutable_
       self#ptype t
 
   method read_decl f t v =
@@ -166,18 +166,15 @@ end@\n") ()
         self#instructions ifcase
         self#instructions elsecase
 
-  method mutable_ f m0 =
-    match Mutable.unfix m0 with
-    | Mutable.Array (m, indexes) ->
+  method m_array f m indexes =
         if Tags.is_taged "use_readtuple" then
           Format.fprintf f "%a[%a]"
-            self#mutable_ m
+            self#mutable_get m
             (print_list
                (fun f e -> Format.fprintf f "%a+1" self#expr e)
                (sep "%a][%a"))
             indexes
-        else super#mutable_ f m0
-    | _ -> super#mutable_ f m0
+        else super#m_array f m indexes
 
   method multi_print f format exprs =
     match exprs with

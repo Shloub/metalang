@@ -76,10 +76,10 @@ class phpPrinter = object(self)
     match Type.unfix t with
     | Type.Char ->
       Format.fprintf f "@[%a = nextChar();@]"
-        self#mutable_ m
+        self#mutable_set m
     | _ ->
       Format.fprintf f "@[list(%a) = scan(\"%a\");@]"
-        self#mutable_ m
+        self#mutable_set m
         self#format_type t
 
   method read_decl f t v =
@@ -93,16 +93,7 @@ class phpPrinter = object(self)
         self#format_type t
 
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a[\"%a\"]"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]" self#mutable_ m (print_list self#expr (sep "%a][%a"))
-        indexes
+  method m_field f m field = Format.fprintf f "%a[%S]" self#mutable_get m field
 
   method main f main = self#instructions f main
 

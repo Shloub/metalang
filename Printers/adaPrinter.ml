@@ -134,9 +134,9 @@ class adaPrinter = object(self)
 
   method read f t m = match Type.unfix t with
   | Type.Integer ->
-    Format.fprintf f "@[<hov>Get(%a);@]" self#mutable_ m
+    Format.fprintf f "@[<hov>Get(%a);@]" self#mutable_get m
   | Type.Char ->
-    Format.fprintf f "@[<hov>Get(%a);@]" self#mutable_ m
+    Format.fprintf f "@[<hov>Get(%a);@]" self#mutable_get m
   | _ -> assert false (* type non géré*)
 
   method read_decl f t v = match Type.unfix t with
@@ -338,16 +338,11 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
   method bloc f li = Format.fprintf f "@[<v 2>begin@\n%a@]@\nend;"
     (print_list self#instr sep_nl) li
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a.%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
+  method m_field f m field = super#base_m_field f m field
+
+  method m_array f m indexes =
       Format.fprintf f "%a(%a)"
-        self#mutable_ m
+        self#mutable_get m
         (print_list self#expr (sep "%a)(%a")) indexes
 
   method def_fields name f li =

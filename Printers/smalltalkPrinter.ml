@@ -43,16 +43,9 @@ class smalltalkPrinter = object(self)
 
   method separator f () = Format.fprintf f "."
 
-  method operator_affect f mutable_ =
-    match Mutable.unfix mutable_ with
-    | Mutable.Var v -> Format.fprintf f " :="
-    | Mutable.Array _ -> Format.fprintf f " put:"
-    | Mutable.Dot (_, _) -> Format.fprintf f ":"
-
   method affect f mutable_ (expr : 'lex Expr.t) =
-    Format.fprintf f "@[<hov>%a%a @ %a%a@]"
-      (self#mutable0 false) mutable_
-      self#operator_affect mutable_
+    Format.fprintf f "@[<hov>%a @ %a%a@]"
+      self#mutable_set mutable_
       self#expr expr self#separator ()
 
   method declaration f var t e =
@@ -104,18 +97,20 @@ class smalltalkPrinter = object(self)
         self#bloc elsecase
 
   method enum f i = Format.fprintf f "#%s" i
-  method mutable_ f m = self#mutable0 true f m 
 
-  method mutable0 p f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f (if p then "(%a %a)" else "%a %a")
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f (if p then "(%a at: %a)" else "%a at: %a")
-        self#mutable_ m
+  method m_variable_set f b = Format.fprintf f "%a :=" self#binding b
+  method m_field_set f m field = Format.fprintf f "%a %a:" self#mutable_get m self#field field
+  method m_array_set f m indexes = Format.fprintf f "%a at: %a put:"
+        self#mutable_get m
+        (print_list
+           (fun f e -> self#expr f (Expr.binop Expr.Add e (Expr.integer 1) ))
+           (sep "%a at: %a"))
+        indexes
+
+  method m_field_get f m field = Format.fprintf f "(%a %a)" self#mutable_get m self#field field
+
+  method m_array_get f m indexes = Format.fprintf f "(%a at: %a)"
+        self#mutable_get m
         (print_list
            (fun f e -> self#expr f (Expr.binop Expr.Add e (Expr.integer 1) ))
            (sep "%a at: %a"))
@@ -284,8 +279,8 @@ class smalltalkPrinter = object(self)
 
   method read f t m =
     match Type.unfix t with
-    | Type.Char -> Format.fprintf f "%a%a self read_char." (self#mutable0 false) m self#operator_affect m
-    | Type.Integer -> Format.fprintf f "%a%a self read_int." (self#mutable0 false) m self#operator_affect m
+    | Type.Char -> Format.fprintf f "%a self read_char." self#mutable_set  m
+    | Type.Integer -> Format.fprintf f "%a self read_int." self#mutable_set m
     | _ -> assert false
 
   method header f prog =

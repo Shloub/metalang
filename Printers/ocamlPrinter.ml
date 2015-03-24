@@ -374,15 +374,15 @@ class camlPrinter = object(self)
       | Mutable.Var var ->
           if BindingSet.mem var refbindings
           then Format.fprintf f "@[<h>%a@ := %a@]"
-              self#mutable_ m 
+              self#mutable_set m 
               self#expr expr
           else
               Format.fprintf f "@[<h>let %a@ = %a in@]"
-              self#mutable_ m 
+              self#mutable_set m 
               self#expr expr
       | _ ->
           Format.fprintf f "@[<h>%a@ <- %a@]"
-            self#mutable_ m 
+            self#mutable_set m 
             self#expr expr
 
   (** show a declaration *)
@@ -400,7 +400,7 @@ class camlPrinter = object(self)
   method read f t m =
     Format.fprintf f "@[Scanf.scanf \"%a\" (fun value -> %a %s value)@]"
       self#format_type t
-      self#mutable_ m
+      self#mutable_set m
       (match m |> Mutable.Fixed.unfix with
       | Mutable.Var _ -> ":="
       | Mutable.Array _ -> "<-"
@@ -441,33 +441,13 @@ class camlPrinter = object(self)
       in_expr <- false;
     end
 
-  (** print mutable values *)
-  method mutable_ f m =
-    match m |> Mutable.Fixed.unfix with
-    | Mutable.Var binding ->
-      if in_expr && BindingSet.mem binding refbindings
-      then
-        Format.fprintf f "(!%a)" self#binding binding
-      else
-        self#binding f binding
-    | _ -> self#mutable_rec f m
+  method m_variable f binding = if in_expr && BindingSet.mem binding refbindings
+  then Format.fprintf f "(!%a)" self#binding binding
+  else self#binding f binding
 
-  method mutable_rec f m =
-    match m |> Mutable.unfix with
-    | Mutable.Var binding ->
-      if BindingSet.mem binding refbindings
-      then
-        Format.fprintf f "(!%a)" self#binding binding
-      else
-        self#binding f binding
-    | Mutable.Dot (mutable_, field) ->
-      Format.fprintf f "@[<h>%a.%a@]"
-        self#mutable_rec mutable_
-        self#field field
-    | Mutable.Array (mut, indexes) ->
-      Format.fprintf f "@[<h>%a.(%a)@]"
-        self#mutable_rec mut
-        (print_list self#expr (sep "%a).(%a")) indexes
+  method m_array f m indexes = Format.fprintf f "@[<h>%a.(%a)@]"
+      self#mutable_get m
+      (print_list self#expr (sep "%a).(%a")) indexes
 
   method print_exnName f (t : unit Type.Fixed.t) =
     try
@@ -762,7 +742,7 @@ class camlPrinter = object(self)
       | li -> (fun f () ->
         Format.fprintf f "let %a = "
           (print_list
-             (fun f (_, _, v) -> self#mutable_ f v) sep_c)
+             (fun f (_, _, v) -> self#mutable_get f v) sep_c)
       declares )
     in Format.fprintf f "%aScanf.scanf \"%s\" (fun %a -> @[<v>%a%a@])%a"
       print_let ()
@@ -771,7 +751,7 @@ class camlPrinter = object(self)
       print_variables ()
 
       (print_list (fun f (i, b, m) -> Format.fprintf f "%a %s v_%d"
-        self#mutable_ m
+        self#mutable_get m
         (match Mutable.Fixed.unfix m with
         | Mutable.Var _ -> ":="
         | Mutable.Array _ -> "<-"

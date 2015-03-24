@@ -63,13 +63,7 @@ class commonLispPrinter = object(self)
 
   method comment f str = Format.fprintf f "#|%s|#" str
 
-  method selfAssoc f m e2 = function
-  | Expr.Add -> Format.fprintf f "@[<h>(%a %a ( + %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
-  | Expr.Sub -> Format.fprintf f "@[<h>(%a %a ( - %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
-  | Expr.Mul -> Format.fprintf f "@[<h>(%a %a ( * %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
-  | Expr.Div -> Format.fprintf f "@[<h>(%a %a ( quotient %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
-  | Expr.Mod -> Format.fprintf f "@[<h>(%a %a ( remainder %a %a))@]" self#affectop m self#mutable_ m self#mutable_ m self#expr e2
-  | _ -> assert false
+  method hasSelfAffect op = false
 
   method allocarray_lambda f binding type_ len binding2 lambda _ =
     let () = nlet <- nlet + 1 in
@@ -93,22 +87,20 @@ class commonLispPrinter = object(self)
     | Type.Char -> self#affect f mutable_ (Expr.call "mread-char" [])
     | _ -> assert false
 
-  method mutable_ f m =
-    match m |> Mutable.unfix with
-    | Mutable.Var binding ->
-      self#binding f binding
-    | Mutable.Dot (mutable_, field) ->
+
+  method m_field f m field =
       Format.fprintf f "@[<h>(%s-%a %a)@]"
         (self#typename_of_field field)
         self#field field
-        self#mutable_ mutable_
-    | Mutable.Array (mut, indexes) ->
+        self#mutable_get m
+
+  method m_array f m indexes =
       List.fold_left (fun func e f () ->
         Format.fprintf f "(aref %a %a)"
           func ()
           self#expr e
       )
-        (fun f () -> self#mutable_ f mut)
+        (fun f () -> self#mutable_get f m)
         indexes
         f
         ()
@@ -223,7 +215,7 @@ class commonLispPrinter = object(self)
       self#blocnonnull li
 
   method affect f mutable_ expr =
-    Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#affectop mutable_ self#mutable_ mutable_ self#expr expr
+    Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#affectop mutable_ self#mutable_set mutable_ self#expr expr
 
   method return f e =
     Format.fprintf f "@[<h>(return-from %s %a)@]" funname_ self#expr e

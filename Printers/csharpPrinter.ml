@@ -148,9 +148,6 @@ static int readInt(){
   method stdin_sep f  =
     Format.fprintf f "@[stdin_sep()%a@]" self#separator ()
 
-  method length f tab =
-    Format.fprintf f "%a.Length" self#mutable_ tab
-
   method concat_operator f () = Format.fprintf f "+"
 
   method multi_print f format exprs =
@@ -183,9 +180,9 @@ static int readInt(){
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[<h>%a = readInt()%a@]"
-        self#mutable_ m self#separator ()
+        self#mutable_set m self#separator ()
     | Type.Char -> Format.fprintf f "@[<h>%a = readChar()%a@]"
-      self#mutable_ m self#separator ()
+      self#mutable_set m self#separator ()
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
   method read_decl f t v =

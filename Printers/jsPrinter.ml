@@ -149,19 +149,9 @@ function read_int_(){
       self#binding binding
       self#expr len
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a.%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        (print_list self#expr (sep "%a][%a"))
-        indexes
-
+  method m_field f m field = Format.fprintf f "%a.%a"
+      self#mutable_get m
+      self#field field
 
   method def_fields name f li =
     Format.fprintf f "@[<h>%a@]"
@@ -179,10 +169,10 @@ function read_int_(){
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[%a=read_int_();@]"
-        self#mutable_ mutable_
+        self#mutable_set mutable_
     | Type.Char ->
       Format.fprintf f "@[%a=read_char_();@]"
-        self#mutable_ mutable_
+        self#mutable_set mutable_
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
       (Type.type_t_to_string t)
     ))

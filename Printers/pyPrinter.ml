@@ -50,11 +50,11 @@ class pyPrinter = object(self)
       (self#def_fields (InternalName 0) ) li
 
   method selfAssoc f m e2 = function
-  | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
-  | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_ m self#expr e2
-  | Expr.Mul -> Format.fprintf f "@[<h>%a *= %a@]" self#mutable_ m self#expr e2
-  | Expr.Div -> Format.fprintf f "@[<h>%a = math.trunc(%a / %a)@]" self#mutable_ m self#mutable_ m self#expr e2
-  | Expr.Mod -> Format.fprintf f "@[<h>%a = mod(%a, %a)@]" self#mutable_ m self#mutable_ m self#expr e2
+  | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_set m self#expr e2
+  | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_set m self#expr e2
+  | Expr.Mul -> Format.fprintf f "@[<h>%a *= %a@]" self#mutable_set m self#expr e2
+  | Expr.Div -> Format.fprintf f "@[<h>%a = math.trunc(%a / %a)@]" self#mutable_set m self#mutable_get m self#expr e2
+  | Expr.Mod -> Format.fprintf f "@[<h>%a = mod(%a, %a)@]" self#mutable_set m self#mutable_get m self#expr e2
   | _ -> assert false
 
   method lang () = "py"
@@ -106,10 +106,10 @@ class pyPrinter = object(self)
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[%a=readint()@]"
-        self#mutable_ mutable_
+        self#mutable_set mutable_
     | Type.Char ->
       Format.fprintf f "@[%a=readchar()@]"
-        self#mutable_ mutable_
+        self#mutable_set mutable_
     | _ -> raise (Warner.Error (fun f -> Format.fprintf f "Error : cannot print type %s"
       (Type.type_t_to_string t)
     ))
@@ -318,16 +318,7 @@ def skipchar():
   method allocrecord f name t el =
     Format.fprintf f "%a = {%a}" self#binding name (self#def_fields name) el
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]" self#mutable_ m (print_list self#expr (sep "%a][%a")) indexes
-
+  method m_field f m field = Format.fprintf f "%a[%a]" self#mutable_get m self#field field
 
   method multiread f instrs = self#basemultiread f instrs
 end

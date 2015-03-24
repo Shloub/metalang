@@ -141,20 +141,10 @@ func skip() {
       f
       li
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "(*%a).%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        (print_list
-           self#expr
-           (sep "%a][%a"))
-        indexes
+ method m_field f m field =
+   Format.fprintf f "(*%a).%a"
+     self#mutable_get m
+     self#field field
 
   method ptype f t = match Type.unfix t with
   | Type.Array a -> Format.fprintf f "[]%a" self#ptype a
@@ -209,7 +199,7 @@ func skip() {
       self#binding v
 
   method read f t m =
-    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a)@]" self#format_type t self#mutable_ m
+    Format.fprintf f "@[fmt.Fscanf(reader, \"%a\", &%a)@]" self#format_type t self#mutable_get m
 
   method if_ f e ifcase elsecase =
     match elsecase with

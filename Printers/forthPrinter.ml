@@ -226,23 +226,23 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
     match Mutable.unfix m with
     | Mutable.Dot (m, field) ->
       Format.fprintf f "%a %a"
-        self#mutable_ m
+        self#mutable_get m
         self#field field
     | Mutable.Var binding -> self#binding f binding
     | Mutable.Array (m, indexes) ->
       Format.fprintf f "%a %a"
-        self#mutable_ m
+        self#mutable_get m
         (print_list
            (fun f e -> Format.fprintf f "%a cells +" self#expr e)
            sep_space)
         indexes
 
-  method mutable_ f m =
+  method mutable_get f m =
     match Mutable.unfix m with
     | Mutable.Var v -> self#mutable0 f m
     | _ -> Format.fprintf f "%a @" self#mutable0 m
 
-  method mutablea f mutable_ =
+  method mutable_set f mutable_ =
     match Mutable.unfix mutable_ with
     | Mutable.Var v -> Format.fprintf f "TO %a" self#binding v
     | _ -> Format.fprintf f "%a !" self#mutable0 mutable_
@@ -250,7 +250,7 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
   method affect f mutable_ (expr : 'lex Expr.t) =
     Format.fprintf f "%a %a"
       self#expr expr
-      self#mutablea mutable_
+      self#mutable_set mutable_
 
   method stdin_sep f = Format.fprintf f "skipspaces"
   method readtype f t = match Type.unfix t with
@@ -259,7 +259,7 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
   | _ -> assert false
 
   method read f t mutable_ =
-        Format.fprintf f "@[%a %a@]" self#readtype t self#mutablea mutable_
+        Format.fprintf f "@[%a %a@]" self#readtype t self#mutable_set mutable_
 
   method read_decl f t v =
     Format.fprintf f "@[%a { %a }@]" self#readtype t self#binding v

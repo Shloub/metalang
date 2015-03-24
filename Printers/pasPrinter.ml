@@ -305,20 +305,11 @@ class pasPrinter = object(self)
       self#binding name
       (self#def_fields name) el
 
-
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a^.%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        (print_list self#expr (sep "%a][%a"))
-        indexes
-
+  method base_m_field f m field = super#m_field f m field
+  method m_field f m field =
+    Format.fprintf f "%a^.%a"
+      self#mutable_get m
+      self#field field
 
   method def_fields name f li =
     print_list
@@ -338,10 +329,10 @@ class pasPrinter = object(self)
   method read f t m = match Type.unfix t with
   | Type.Integer ->
     Format.fprintf f "@[<h>%a := read_int_();@]"
-      self#mutable_ m
+      self#mutable_set m
   | Type.Char ->
     Format.fprintf f "@[<h>%a := read_char_();@]"
-      self#mutable_ m
+      self#mutable_set m
   | _ -> assert false (* type non géré*)
 
   method read_decl f t v = match Type.unfix t with
@@ -455,7 +446,7 @@ end;
     self#print_body f main
 
   method affect f mutable_ (expr : Utils.expr) =
-    Format.fprintf f "@[<h>%a@ :=@ %a;@]" self#mutable_ mutable_ self#expr expr
+    Format.fprintf f "@[<h>%a@ :=@ %a;@]" self#mutable_set mutable_ self#expr expr
 
 
   method bloc f li = Format.fprintf f "@[<v 2>begin@\n%a@]@\nend"

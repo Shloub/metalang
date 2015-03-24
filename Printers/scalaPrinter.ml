@@ -111,8 +111,8 @@ class scalaPrinter = object(self)
 
   method read f t m =
     match Type.unfix t with
-    | Type.Char -> Format.fprintf f "%a = read_char()" self#mutable_ m
-    | Type.Integer -> Format.fprintf f "%a = read_int()" self#mutable_ m
+    | Type.Char -> Format.fprintf f "%a = read_char()" self#mutable_set m
+    | Type.Integer -> Format.fprintf f "%a = read_int()" self#mutable_set m
     | _ -> assert false
 
   method multiread f instrs = self#basemultiread f instrs
@@ -250,16 +250,11 @@ class scalaPrinter = object(self)
       self#record el
       self#separator ()
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a.%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
+  method m_field f m field = Format.fprintf f "%a.%a" self#mutable_get m self#field field
+
+  method m_array f m indexes =
       Format.fprintf f "%a(%a)"
-        self#mutable_ m
+        self#mutable_get m
         (print_list
            self#expr
            (fun f f1 e1 f2 e2 ->

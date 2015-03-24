@@ -85,10 +85,10 @@ end
     match Type.unfix t with
     | Type.Integer ->
       Format.fprintf f "@[%a=scanf(\"%%d\")[0]@]"
-        self#mutable_ mutable_
+        self#mutable_set mutable_
     | Type.Char ->
       Format.fprintf f "@[%a=scanf(\"%%c\")[0]@]"
-        self#mutable_ mutable_
+        self#mutable_set mutable_
     | _ -> assert false (* types non gérés *)
 
   method read_decl f t v =
@@ -130,11 +130,11 @@ end
   | false -> Format.fprintf f "false"
 
   method selfAssoc f m e2 = function
-  | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_ m self#expr e2
-  | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_ m self#expr e2
-  | Expr.Mul -> Format.fprintf f "@[<h>%a *= %a@]" self#mutable_ m self#expr e2
-  | Expr.Div -> Format.fprintf f "@[<h>%a = (%a.to_f / %a).to_i@]" self#mutable_ m self#mutable_ m self#expr e2
-  | Expr.Mod -> Format.fprintf f "@[<h>%a = mod(%a, %a)@]" self#mutable_ m self#mutable_ m self#expr e2
+  | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_set m self#expr e2
+  | Expr.Sub -> Format.fprintf f "@[<h>%a -= %a@]" self#mutable_set m self#expr e2
+  | Expr.Mul -> Format.fprintf f "@[<h>%a *= %a@]" self#mutable_set m self#expr e2
+  | Expr.Div -> Format.fprintf f "@[<h>%a = (%a.to_f / %a).to_i@]" self#mutable_set m self#mutable_get m self#expr e2
+  | Expr.Mod -> Format.fprintf f "@[<h>%a = mod(%a, %a)@]" self#mutable_set m self#mutable_get m self#expr e2
   | _ -> assert false
 
   method binop f op a b =

@@ -176,20 +176,9 @@ class cPrinter = object(self)
 
   method stdin_sep f = Format.fprintf f "@[scanf(\"%%*[ \\t\\r\\n]c\");@]"
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a->%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a[%a]"
-        self#mutable_ m
-        (print_list
-           self#expr
-           (sep "%a][%a"))
-        indexes
+  method m_field f m field = Format.fprintf f "%a->%a"
+      self#mutable_get m
+      self#field field
 
   method read_decl f t v =
     Format.fprintf f "@[scanf(\"%a\", &%a);@]"
@@ -197,7 +186,7 @@ class cPrinter = object(self)
       self#binding v
 
   method read f t m =
-    Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#mutable_ m
+    Format.fprintf f "@[scanf(\"%a\", &%a);@]" self#format_type t self#mutable_get m
 
   method printf f () = Format.fprintf f "printf"
   method combine_formats () = true
@@ -329,6 +318,6 @@ class cPrinter = object(self)
     in
     Format.fprintf f "scanf(\"%s\"%a);"
       format
-      (print_list (fun f x -> Format.fprintf f ", &%a" self#mutable_ x) nosep)
+      (print_list (fun f x -> Format.fprintf f ", &%a" self#mutable_get x) nosep)
       (List.rev variables)
 end

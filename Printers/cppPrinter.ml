@@ -126,20 +126,17 @@ class cppPrinter = object(self)
         (self#def_fields name) el
     | _ -> assert false
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
+  method m_field f m field =
       Format.fprintf f "%a->%s"
-        self#mutable_ m
+        self#mutable_get m
         field
-    | Mutable.Var b ->
-      self#binding f b
-    | Mutable.Array (m, index) ->
+
+  method m_array f m indexes =
       Format.fprintf f "@[<h>%a->at(%a)@]"
-        self#mutable_ m
+        self#mutable_get m
         (print_list
            self#expr
-           (sep "%a)->at(%a")) index
+           (sep "%a)->at(%a")) indexes
 
   method forloop f varname expr1 expr2 li =
     let default () =
@@ -198,7 +195,7 @@ class cppPrinter = object(self)
 
   method stdin_sep f = Format.fprintf f "@[std::cin >> std::skipws;@]"
 
-  method read f t m = Format.fprintf f "@[std::cin >> %a;@]" self#mutable_ m
+  method read f t m = Format.fprintf f "@[std::cin >> %a;@]" self#mutable_get m
   method read_decl f t v = Format.fprintf f "@[std::cin >> %a;@]" self#binding v
 
   method multiread f instrs = (* TODO, quand on a plusieurs noskip ou skip à la suite, il faut les virer*)
@@ -226,9 +223,9 @@ class cppPrinter = object(self)
       ) skipfirst
       (print_list (fun f (t, x, b) ->
         if !lastSkip = b && !skipSet then
-          Format.fprintf f " >> %a" self#mutable_ x
+          Format.fprintf f " >> %a" self#mutable_get x
         else
-          Format.fprintf f " >> %a >> std::%sskipws" self#mutable_ x
+          Format.fprintf f " >> %a >> std::%sskipws" self#mutable_get x
             (if b then "" else "no");
         lastSkip := b;
         skipSet := true;

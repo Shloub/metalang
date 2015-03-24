@@ -298,20 +298,12 @@ End Function" else "")
       self#expr expr
       self#bloc li
 
-  method bloc f li = 
-    print_list self#instr sep_nl f li
+  method bloc f li = print_list self#instr sep_nl f li
 
-  method mutable_ f m =
-    match Mutable.unfix m with
-    | Mutable.Dot (m, field) ->
-      Format.fprintf f "%a.%a"
-        self#mutable_ m
-        self#field field
-    | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a(%a)"
-        self#mutable_ m
-        (print_list self#expr (sep "%a)(%a")) indexes
+  method m_array f m indexes =
+    Format.fprintf f "%a(%a)"
+      self#mutable_get m
+      (print_list self#expr (sep "%a)(%a")) indexes
 
   method allocarray f binding type_ len useless =
     let rec g f t = match Type.unfix t with

@@ -114,7 +114,7 @@ class htmlPrinter = object(self)
       (self#def_fields name) el
 
   method read f t mutable_ =
-    Format.fprintf f "<span class=\"keyword\">read</span> %a %a" self#ptype t self#mutable_ mutable_
+    Format.fprintf f "<span class=\"keyword\">read</span> %a %a" self#ptype t self#mutable_set mutable_
 
   method read_decl f t v =
     Format.fprintf f "<span class=\"keyword\">def</span> <span class=\"keyword\">read</span> %a %a"
