@@ -13,5 +13,5 @@ for i = 1,3 do
 end
 local l = readintline()
 for j = 0,9 do
-  io.write(string.format("%d\n", l[j+1]))
+  io.write(string.format("%d\n", l[j + 1]))
 end

@@ -5,7 +5,7 @@ Object subclass: euler34 [
       f at: (j + 1) put:  1.
     ].
     (1 to: 9) do: [:i|
-      f at: (i + 1) put:  ((f at: (i + 1)) * (i * (f at: (i - 1 + 1)))).
+      f at: (i + 1) put:  ((f at: (i + 1)) * (i * (f at: i))).
       ((f at: (i + 1))) display.
       ' ' display.
     ].

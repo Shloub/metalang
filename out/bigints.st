@@ -105,7 +105,7 @@ Object subclass: bigints [
       retenue :=  (tmp quo: 10).
       chiffres at: (i + 1) put:  (tmp rem: 10).
     ].
-    [(((len > 0)) and: [((chiffres at: (len - 1 + 1)) = 0)])] whileTrue:
+    [(((len > 0)) and: [((chiffres at: len) = 0)])] whileTrue:
     [len :=  (len - 1).].
     f := bigint new.
     f bigint_sign: true.
@@ -133,7 +133,7 @@ Pré-requis : a > b
         ifFalse:[retenue :=  0.].
       chiffres at: (i + 1) put:  tmp.
     ].
-    [(((len > 0)) and: [((chiffres at: (len - 1 + 1)) = 0)])] whileTrue:
+    [(((len > 0)) and: [((chiffres at: len) = 0)])] whileTrue:
     [len :=  (len - 1).].
     g := bigint new.
     g bigint_sign: true.
@@ -192,10 +192,10 @@ D'ou le nom de la fonction. "
       ].
       chiffres at: (i + (b bigint_len) + 1) put:  ((chiffres at: (i + (b bigint_len) + 1)) + retenue).
     ].
-    chiffres at: ((a bigint_len) + (b bigint_len) + 1) put:  ((chiffres at: ((a bigint_len) + (b bigint_len) - 1 + 1)) quo: 10).
-    chiffres at: ((a bigint_len) + (b bigint_len) - 1 + 1) put:  ((chiffres at: ((a bigint_len) + (b bigint_len) - 1 + 1)) rem: 10).
+    chiffres at: ((a bigint_len) + (b bigint_len) + 1) put:  ((chiffres at: ((a bigint_len) + (b bigint_len))) quo: 10).
+    chiffres at: ((a bigint_len) + (b bigint_len)) put:  ((chiffres at: ((a bigint_len) + (b bigint_len))) rem: 10).
     (0 to: 2) do: [:l|
-      (((len ~= 0)) and: [((chiffres at: (len - 1 + 1)) = 0)])
+      (((len ~= 0)) and: [((chiffres at: len) = 0)])
         ifTrue:[len :=  (len - 1).].
     ].
     m := bigint new.
@@ -207,7 +207,7 @@ D'ou le nom de la fonction. "
   
    bigint_premiers_chiffres: a i: i [|o len|
     len := ((i) min: ((a bigint_len))).
-    [(((len ~= 0)) and: [(((a bigint_chiffres) at: (len - 1 + 1)) = 0)])] whileTrue:
+    [(((len ~= 0)) and: [(((a bigint_chiffres) at: len) = 0)])] whileTrue:
     [len :=  (len - 1).].
     o := bigint new.
     o bigint_sign: (a bigint_sign).
