@@ -86,3 +86,10 @@ let print_ntimes n f s =
     Format.fprintf f "%s" s
   done
 
+
+let contains_instr f prog =
+    let cli = List.exists (Ast.Instr.Writer.Deep.exists f) in
+    Option.map_default false cli prog.Ast.Prog.main ||
+    (List.exists (function Ast.Prog.DeclarFun (_, _, _, instrs, _) -> cli instrs | _ -> false)
+    prog.Ast.Prog.funs)
+
