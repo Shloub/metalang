@@ -3,20 +3,28 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler27 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 type c is Array (Integer range <>) of Integer;
 type c_PTR is access c;
 function eratostene(t : in c_PTR; max0 : in Integer) return Integer is
   n : Integer;
   j : Integer;
 begin
-  n := (0);
-  for i in integer range (2)..max0 - (1) loop
+  n := 0;
+  for i in integer range 2..max0 - 1 loop
     if t(i) = i
     then
-      n := n + (1);
+      n := n + 1;
       j := i * i;
-      while j < max0 and then j > (0) loop
-        t(j) := (0);
+      while j < max0 and then j > 0 loop
+        t(j) := 0;
         j := j + i;
       end loop;
     end if;
@@ -29,17 +37,17 @@ function isPrime(d : in Integer; primes : in c_PTR; len : in Integer) return Boo
   i : Integer;
 begin
   n := d;
-  i := (0);
-  if n < (0)
+  i := 0;
+  if n < 0
   then
     n := (-n);
   end if;
   while primes(i) * primes(i) < n loop
-    if (n rem primes(i)) = (0)
+    if (n rem primes(i)) = 0
     then
       return FALSE;
     end if;
-    i := i + (1);
+    i := i + 1;
   end loop;
   return TRUE;
 end;
@@ -47,14 +55,14 @@ end;
 function test(a : in Integer; b : in Integer; primes : in c_PTR; len : in Integer) return Integer is
   j : Integer;
 begin
-  for n in integer range (0)..(200) loop
+  for n in integer range 0..200 loop
     j := n * n + a * n + b;
     if (not isPrime(j, primes, len))
     then
       return n;
     end if;
   end loop;
-  return (200);
+  return 200;
 end;
 
 
@@ -70,36 +78,36 @@ end;
   l : Integer;
   era : c_PTR;
 begin
-  maximumprimes := (1000);
+  maximumprimes := 1000;
   era := new c (0..maximumprimes);
-  for j in integer range (0)..maximumprimes - (1) loop
+  for j in integer range 0..maximumprimes - 1 loop
     era(j) := j;
   end loop;
-  result := (0);
-  max0 := (0);
+  result := 0;
+  max0 := 0;
   nprimes := eratostene(era, maximumprimes);
   primes := new c (0..nprimes);
-  for o in integer range (0)..nprimes - (1) loop
-    primes(o) := (0);
+  for o in integer range 0..nprimes - 1 loop
+    primes(o) := 0;
   end loop;
-  l := (0);
-  for k in integer range (2)..maximumprimes - (1) loop
+  l := 0;
+  for k in integer range 2..maximumprimes - 1 loop
     if era(k) = k
     then
       primes(l) := k;
-      l := l + (1);
+      l := l + 1;
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l), Left));
-  String'Write (Text_Streams.Stream (Current_Output), " == ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nprimes), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  ma := (0);
-  mb := (0);
-  for b in integer range (3)..(999) loop
+  PInt(l);
+  PString(" == ");
+  PInt(nprimes);
+  PString("" & Character'Val(10));
+  ma := 0;
+  mb := 0;
+  for b in integer range 3..999 loop
     if era(b) = b
     then
-      for a in integer range (-(999))..(999) loop
+      for a in integer range (-999)..999 loop
         n1 := test(a, b, primes, nprimes);
         n2 := test(a, (-b), primes, nprimes);
         if n1 > max0
@@ -119,12 +127,12 @@ begin
       end loop;
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(ma), Left));
-  String'Write (Text_Streams.Stream (Current_Output), " ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(mb), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(max0), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(ma);
+  PString(" ");
+  PInt(mb);
+  PString("" & Character'Val(10));
+  PInt(max0);
+  PString("" & Character'Val(10));
+  PInt(result);
+  PString("" & Character'Val(10));
 end;

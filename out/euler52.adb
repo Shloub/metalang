@@ -3,25 +3,34 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler52 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 function chiffre_sort(a : in Integer) return Integer is
   e : Integer;
   d : Integer;
   c : Integer;
   b : Integer;
 begin
-  if a < (10)
+  if a < 10
   then
     return a;
   else
-    b := chiffre_sort(a / (10));
-    c := a rem (10);
-    d := b rem (10);
-    e := b / (10);
+    b := chiffre_sort(a / 10);
+    c := a rem 10;
+    d := b rem 10;
+    e := b / 10;
     if c < d
     then
-      return c + b * (10);
+      return c + b * 10;
     else
-      return d + chiffre_sort(c + e * (10)) * (10);
+      return d + chiffre_sort(c + e * 10) * 10;
     end if;
   end if;
 end;
@@ -37,25 +46,20 @@ end;
 
   num : Integer;
 begin
-  num := (142857);
-  if same_numbers(num, num * (2), num * (3), num * (4), num * (6), num * (5))
+  num := 142857;
+  if same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5)
   then
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num *
-    (2)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num *
-    (3)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num *
-    (4)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num *
-    (5)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num *
-    (6)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+    PInt(num);
+    PString(" ");
+    PInt(num * 2);
+    PString(" ");
+    PInt(num * 3);
+    PString(" ");
+    PInt(num * 4);
+    PString(" ");
+    PInt(num * 5);
+    PString(" ");
+    PInt(num * 6);
+    PString("" & Character'Val(10));
   end if;
 end;

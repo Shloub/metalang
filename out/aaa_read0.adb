@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure aaa_read0 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -18,6 +27,6 @@ end;
 begin
   Get(len);
   SkipSpaces;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(len);
+  PString("" & Character'Val(10));
 end;

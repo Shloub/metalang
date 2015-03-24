@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure tictactoe is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -47,28 +56,28 @@ end record;
 
 procedure print_state(g : in gamestate_PTR) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "|");
-  for y in integer range (0)..(2) loop
-    for x in integer range (0)..(2) loop
-      if g.cases(x)(y) = (0)
+  PString("" & Character'Val(10) & "|");
+  for y in integer range 0..2 loop
+    for x in integer range 0..2 loop
+      if g.cases(x)(y) = 0
       then
-        String'Write (Text_Streams.Stream (Current_Output), " ");
+        PString(" ");
       else
-        if g.cases(x)(y) = (1)
+        if g.cases(x)(y) = 1
         then
-          String'Write (Text_Streams.Stream (Current_Output), "O");
+          PString("O");
         else
-          String'Write (Text_Streams.Stream (Current_Output), "X");
+          PString("X");
         end if;
       end if;
-      String'Write (Text_Streams.Stream (Current_Output), "|");
+      PString("|");
     end loop;
-    if y /= (2)
+    if y /= 2
     then
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10) & "|-|-|-|" & Character'Val(10) & "|");
+      PString("" & Character'Val(10) & "|-|-|-|" & Character'Val(10) & "|");
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;
 
 -- On dit qui gagne (info stoquées dans g.ended et g.note ) 
@@ -81,69 +90,67 @@ procedure eval0(g : in gamestate_PTR) is
   colv : Integer;
   col : Integer;
 begin
-  win := (0);
-  freecase := (0);
-  for y in integer range (0)..(2) loop
-    col := (-(1));
-    lin := (-(1));
-    for x in integer range (0)..(2) loop
-      if g.cases(x)(y) = (0)
+  win := 0;
+  freecase := 0;
+  for y in integer range 0..2 loop
+    col := (-1);
+    lin := (-1);
+    for x in integer range 0..2 loop
+      if g.cases(x)(y) = 0
       then
-        freecase := freecase + (1);
+        freecase := freecase + 1;
       end if;
       colv := g.cases(x)(y);
       linv := g.cases(y)(x);
-      if col = (-(1)) and then colv /= (0)
+      if col = (-1) and then colv /= 0
       then
         col := colv;
       else
         if colv /= col
         then
-          col := (-(2));
+          col := (-2);
         end if;
       end if;
-      if lin = (-(1)) and then linv /= (0)
+      if lin = (-1) and then linv /= 0
       then
         lin := linv;
       else
         if linv /= lin
         then
-          lin := (-(2));
+          lin := (-2);
         end if;
       end if;
     end loop;
-    if col >= (0)
+    if col >= 0
     then
       win := col;
     else
-      if lin >= (0)
+      if lin >= 0
       then
         win := lin;
       end if;
     end if;
   end loop;
-  for x in integer range (1)..(2) loop
-    if g.cases((0))((0)) = x and then g.cases((1))((1)) = x and then
-    g.cases((2))((2)) = x
+  for x in integer range 1..2 loop
+    if g.cases(0)(0) = x and then g.cases(1)(1) = x and then g.cases(2)(2) = x
     then
       win := x;
     end if;
-    if g.cases((0))((2)) = x and then g.cases((1))((1)) = x and then
-    g.cases((2))((0)) = x
+    if g.cases(0)(2) = x and then g.cases(1)(1) = x and then g.cases(2)(0) = x
     then
       win := x;
     end if;
   end loop;
-  g.ended := win /= (0) or else freecase = (0);
-  if win = (1)
+  g.ended := win /= 0 or else freecase = 0;
+  if win = 1
   then
-    g.note := (1000);
+    g.note := 1000;
   else
-    if win = (2)
+    if win = 2
     then
-      g.note := (-(1000));
+      g.note := (-1000);
     else
-      g.note := (0);
+      g.note := 0;
     end if;
   end if;
 end;
@@ -153,10 +160,10 @@ end;
 procedure apply_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) is
   player : Integer;
 begin
-  player := (2);
+  player := 2;
   if g.firstToPlay
   then
-    player := (1);
+    player := 1;
   end if;
   g.cases(x)(y) := player;
   g.firstToPlay := (not g.firstToPlay);
@@ -169,7 +176,7 @@ end;
 
 procedure cancel_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) is
 begin
-  g.cases(x)(y) := (0);
+  g.cases(x)(y) := 0;
   g.firstToPlay := (not g.firstToPlay);
   g.ended := FALSE;
 end;
@@ -181,7 +188,7 @@ end;
 
 function can_move_xy(x : in Integer; y : in Integer; g : in gamestate_PTR) return Boolean is
 begin
-  return g.cases(x)(y) = (0);
+  return g.cases(x)(y) = 0;
 end;
 
 function can_move(m : in move_PTR; g : in gamestate_PTR) return Boolean is
@@ -202,13 +209,13 @@ begin
   then
     return g.note;
   end if;
-  maxNote := (-(10000));
+  maxNote := (-10000);
   if (not g.firstToPlay)
   then
-    maxNote := (10000);
+    maxNote := 10000;
   end if;
-  for x in integer range (0)..(2) loop
-    for y in integer range (0)..(2) loop
+  for x in integer range 0..2 loop
+    for y in integer range 0..2 loop
       if can_move_xy(x, y, g)
       then
         apply_move_xy(x, y, g);
@@ -236,21 +243,21 @@ function play(g : in gamestate_PTR) return move_PTR is
   currentNote : Integer;
 begin
   minMove := new move;
-  minMove.x := (0);
-  minMove.y := (0);
-  minNote := (10000);
-  for x in integer range (0)..(2) loop
-    for y in integer range (0)..(2) loop
+  minMove.x := 0;
+  minMove.y := 0;
+  minNote := 10000;
+  for x in integer range 0..2 loop
+    for y in integer range 0..2 loop
       if can_move_xy(x, y, g)
       then
         apply_move_xy(x, y, g);
         currentNote := minmax(g);
-        String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(x), Left));
-        String'Write (Text_Streams.Stream (Current_Output), ", ");
-        String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(y), Left));
-        String'Write (Text_Streams.Stream (Current_Output), ", ");
-        String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(currentNote), Left));
-        String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+        PInt(x);
+        PString(", ");
+        PInt(y);
+        PString(", ");
+        PInt(currentNote);
+        PString("" & Character'Val(10));
         cancel_move_xy(x, y, g);
         if currentNote < minNote
         then
@@ -261,9 +268,9 @@ begin
       end if;
     end loop;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(minMove.x), Left));
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(minMove.y), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(minMove.x);
+  PInt(minMove.y);
+  PString("" & Character'Val(10));
   return minMove;
 end;
 
@@ -272,18 +279,18 @@ function init0 return gamestate_PTR is
   cases : f_PTR;
   a : gamestate_PTR;
 begin
-  cases := new f (0..(3));
-  for i in integer range (0)..(3) - (1) loop
-    tab := new e (0..(3));
-    for j in integer range (0)..(3) - (1) loop
-      tab(j) := (0);
+  cases := new f (0..3);
+  for i in integer range 0..3 - 1 loop
+    tab := new e (0..3);
+    for j in integer range 0..3 - 1 loop
+      tab(j) := 0;
     end loop;
     cases(i) := tab;
   end loop;
   a := new gamestate;
   a.cases := cases;
   a.firstToPlay := TRUE;
-  a.note := (0);
+  a.note := 0;
   a.ended := FALSE;
   return a;
 end;
@@ -308,15 +315,15 @@ end;
   d : move_PTR;
   c : move_PTR;
 begin
-  for i in integer range (0)..(1) loop
+  for i in integer range 0..1 loop
     state := init0;
     c := new move;
-    c.x := (1);
-    c.y := (1);
+    c.x := 1;
+    c.y := 1;
     apply_move(c, state);
     d := new move;
-    d.x := (0);
-    d.y := (0);
+    d.x := 0;
+    d.y := 0;
     apply_move(d, state);
     while (not state.ended) loop
       print_state(state);
@@ -330,7 +337,7 @@ begin
       end if;
     end loop;
     print_state(state);
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(state.note), Left));
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+    PInt(state.note);
+    PString("" & Character'Val(10));
   end loop;
 end;

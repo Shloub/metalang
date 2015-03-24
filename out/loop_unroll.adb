@@ -3,6 +3,14 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure loop_unroll is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 --
 --Ce test permet de vérifier le comportement des macros
 --Il effectue du loop unrolling
@@ -11,20 +19,20 @@ procedure loop_unroll is
 
   j : Integer;
 begin
-  j := (0);
-  j := (0);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  j := (1);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  j := (2);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  j := (3);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  j := (4);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  j := 0;
+  j := 0;
+  PInt(j);
+  PString("" & Character'Val(10));
+  j := 1;
+  PInt(j);
+  PString("" & Character'Val(10));
+  j := 2;
+  PInt(j);
+  PString("" & Character'Val(10));
+  j := 3;
+  PInt(j);
+  PString("" & Character'Val(10));
+  j := 4;
+  PInt(j);
+  PString("" & Character'Val(10));
 end;

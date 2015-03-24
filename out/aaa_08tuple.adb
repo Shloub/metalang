@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure aaa_08tuple is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -54,10 +63,10 @@ begin
   f := t.foo;
   a := f.tuple_int_int_field_0;
   b := f.tuple_int_int_field_1;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(a), Left));
-  String'Write (Text_Streams.Stream (Current_Output), " ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(b), Left));
-  String'Write (Text_Streams.Stream (Current_Output), " ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t.bar), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(a);
+  PString(" ");
+  PInt(b);
+  PString(" ");
+  PInt(t.bar);
+  PString("" & Character'Val(10));
 end;

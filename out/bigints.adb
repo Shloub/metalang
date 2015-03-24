@@ -3,6 +3,19 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure bigints is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PChar(c : in Character) is
+begin
+  Character'Write (Text_Streams.Stream (Current_Output), c);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -51,14 +64,14 @@ function read_bigint(len : in Integer) return bigint_PTR is
   c : Character;
 begin
   chiffres := new s (0..len);
-  for j in integer range (0)..len - (1) loop
+  for j in integer range 0..len - 1 loop
     Get(c);
     chiffres(j) := Character'Pos(c);
   end loop;
-  for i in integer range (0)..(len - (1)) / (2) loop
+  for i in integer range 0..(len - 1) / 2 loop
     tmp := chiffres(i);
-    chiffres(i) := chiffres(len - (1) - i);
-    chiffres(len - (1) - i) := tmp;
+    chiffres(i) := chiffres(len - 1 - i);
+    chiffres(len - 1 - i) := tmp;
   end loop;
   e := new bigint;
   e.bigint_sign := TRUE;
@@ -71,11 +84,10 @@ procedure print_bigint(a : in bigint_PTR) is
 begin
   if (not a.bigint_sign)
   then
-    Character'Write (Text_Streams.Stream (Current_Output), '-');
+    PChar('-');
   end if;
-  for i in integer range (0)..a.bigint_len - (1) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(a.bigint_chiffres(a.bigint_len -
-    (1) - i)), Left));
+  for i in integer range 0..a.bigint_len - 1 loop
+    PInt(a.bigint_chiffres(a.bigint_len - 1 - i));
   end loop;
 end;
 
@@ -91,7 +103,7 @@ begin
     then
       return FALSE;
     else
-      for i in integer range (0)..a.bigint_len - (1) loop
+      for i in integer range 0..a.bigint_len - 1 loop
         if a.bigint_chiffres(i) /= b.bigint_chiffres(i)
         then
           return FALSE;
@@ -123,8 +135,8 @@ begin
         then
           return (not a.bigint_sign);
         else
-          for i in integer range (0)..a.bigint_len - (1) loop
-            j := a.bigint_len - (1) - i;
+          for i in integer range 0..a.bigint_len - 1 loop
+            j := a.bigint_len - 1 - i;
             if a.bigint_chiffres(j) > b.bigint_chiffres(j)
             then
               return a.bigint_sign;
@@ -156,10 +168,10 @@ function add_bigint_positif(a : in bigint_PTR; b : in bigint_PTR) return bigint_
 begin
   -- Une addition ou on en a rien a faire des signes 
   
-  len := max2_0(a.bigint_len, b.bigint_len) + (1);
-  retenue := (0);
+  len := max2_0(a.bigint_len, b.bigint_len) + 1;
+  retenue := 0;
   chiffres := new s (0..len);
-  for i in integer range (0)..len - (1) loop
+  for i in integer range 0..len - 1 loop
     tmp := retenue;
     if i < a.bigint_len
     then
@@ -169,11 +181,11 @@ begin
     then
       tmp := tmp + b.bigint_chiffres(i);
     end if;
-    retenue := tmp / (10);
-    chiffres(i) := tmp rem (10);
+    retenue := tmp / 10;
+    chiffres(i) := tmp rem 10;
   end loop;
-  while len > (0) and then chiffres(len - (1)) = (0) loop
-    len := len - (1);
+  while len > 0 and then chiffres(len - 1) = 0 loop
+    len := len - 1;
   end loop;
   f := new bigint;
   f.bigint_sign := TRUE;
@@ -194,25 +206,25 @@ begin
   --
   
   len := a.bigint_len;
-  retenue := (0);
+  retenue := 0;
   chiffres := new s (0..len);
-  for i in integer range (0)..len - (1) loop
+  for i in integer range 0..len - 1 loop
     tmp := retenue + a.bigint_chiffres(i);
     if i < b.bigint_len
     then
       tmp := tmp - b.bigint_chiffres(i);
     end if;
-    if tmp < (0)
+    if tmp < 0
     then
-      tmp := tmp + (10);
-      retenue := (-(1));
+      tmp := tmp + 10;
+      retenue := (-1);
     else
-      retenue := (0);
+      retenue := 0;
     end if;
     chiffres(i) := tmp;
   end loop;
-  while len > (0) and then chiffres(len - (1)) = (0) loop
-    len := len - (1);
+  while len > 0 and then chiffres(len - 1) = 0 loop
+    len := len - 1;
   end loop;
   g := new bigint;
   g.bigint_sign := TRUE;
@@ -280,26 +292,26 @@ begin
   --C'est le même que celui qu'on enseigne aux enfants en CP.
   --D'ou le nom de la fonction. 
   
-  len := a.bigint_len + b.bigint_len + (1);
+  len := a.bigint_len + b.bigint_len + 1;
   chiffres := new s (0..len);
-  for k in integer range (0)..len - (1) loop
-    chiffres(k) := (0);
+  for k in integer range 0..len - 1 loop
+    chiffres(k) := 0;
   end loop;
-  for i in integer range (0)..a.bigint_len - (1) loop
-    retenue := (0);
-    for j in integer range (0)..b.bigint_len - (1) loop
+  for i in integer range 0..a.bigint_len - 1 loop
+    retenue := 0;
+    for j in integer range 0..b.bigint_len - 1 loop
       chiffres(i + j) := chiffres(i + j) + retenue + b.bigint_chiffres(j) * a.bigint_chiffres(i);
-      retenue := chiffres(i + j) / (10);
-      chiffres(i + j) := chiffres(i + j) rem (10);
+      retenue := chiffres(i + j) / 10;
+      chiffres(i + j) := chiffres(i + j) rem 10;
     end loop;
     chiffres(i + b.bigint_len) := chiffres(i + b.bigint_len) + retenue;
   end loop;
-  chiffres(a.bigint_len + b.bigint_len) := chiffres(a.bigint_len + b.bigint_len - (1)) / (10);
-  chiffres(a.bigint_len + b.bigint_len - (1)) := chiffres(a.bigint_len + b.bigint_len - (1)) rem (10);
-  for l in integer range (0)..(2) loop
-    if len /= (0) and then chiffres(len - (1)) = (0)
+  chiffres(a.bigint_len + b.bigint_len) := chiffres(a.bigint_len + b.bigint_len - 1) / 10;
+  chiffres(a.bigint_len + b.bigint_len - 1) := chiffres(a.bigint_len + b.bigint_len - 1) rem 10;
+  for l in integer range 0..2 loop
+    if len /= 0 and then chiffres(len - 1) = 0
     then
-      len := len - (1);
+      len := len - 1;
     end if;
   end loop;
   m := new bigint;
@@ -315,8 +327,8 @@ function bigint_premiers_chiffres(a : in bigint_PTR; i : in Integer) return bigi
   len : Integer;
 begin
   len := min2_0(i, a.bigint_len);
-  while len /= (0) and then a.bigint_chiffres(len - (1)) = (0) loop
-    len := len - (1);
+  while len /= 0 and then a.bigint_chiffres(len - 1) = 0 loop
+    len := len - 1;
   end loop;
   o := new bigint;
   o.bigint_sign := a.bigint_sign;
@@ -330,12 +342,12 @@ function bigint_shift(a : in bigint_PTR; i : in Integer) return bigint_PTR is
   chiffres : s_PTR;
 begin
   chiffres := new s (0..a.bigint_len + i);
-  for k in integer range (0)..a.bigint_len + i - (1) loop
+  for k in integer range 0..a.bigint_len + i - 1 loop
     if k >= i
     then
       chiffres(k) := a.bigint_chiffres(k - i);
     else
-      chiffres(k) := (0);
+      chiffres(k) := 0;
     end if;
   end loop;
   p := new bigint;
@@ -359,15 +371,15 @@ function mul_bigint(aa : in bigint_PTR; bb : in bigint_PTR) return bigint_PTR is
   ac : bigint_PTR;
   a : bigint_PTR;
 begin
-  if aa.bigint_len = (0)
+  if aa.bigint_len = 0
   then
     return aa;
   else
-    if bb.bigint_len = (0)
+    if bb.bigint_len = 0
     then
       return bb;
     else
-      if aa.bigint_len < (3) or else bb.bigint_len < (3)
+      if aa.bigint_len < 3 or else bb.bigint_len < 3
       then
         return mul_bigint_cp(aa, bb);
       end if;
@@ -375,7 +387,7 @@ begin
   end if;
   -- Algorithme de Karatsuba 
   
-  split := min2_0(aa.bigint_len, bb.bigint_len) / (2);
+  split := min2_0(aa.bigint_len, bb.bigint_len) / 2;
   a := bigint_shift(aa, (-split));
   b := bigint_premiers_chiffres(aa, split);
   c := bigint_shift(bb, (-split));
@@ -385,7 +397,7 @@ begin
   ac := mul_bigint(a, c);
   bd := mul_bigint(b, d);
   amoinsbcmoinsd := mul_bigint(amoinsb, cmoinsd);
-  acdec := bigint_shift(ac, (2) * split);
+  acdec := bigint_shift(ac, 2 * split);
   return add_bigint(add_bigint(acdec, bd), bigint_shift(sub_bigint(add_bigint(ac, bd), amoinsbcmoinsd), split));
   -- ac × 102k + (ac + bd – (a – b)(c – d)) × 10k + bd 
   
@@ -401,10 +413,10 @@ function log10(u : in Integer) return Integer is
   a : Integer;
 begin
   a := u;
-  out0 := (1);
-  while a >= (10) loop
-    a := a / (10);
-    out0 := out0 + (1);
+  out0 := 1;
+  while a >= 10 loop
+    a := a / 10;
+    out0 := out0 + 1;
   end loop;
   return out0;
 end;
@@ -417,17 +429,17 @@ function bigint_of_int(v : in Integer) return bigint_PTR is
 begin
   i := v;
   size := log10(i);
-  if i = (0)
+  if i = 0
   then
-    size := (0);
+    size := 0;
   end if;
   t := new s (0..size);
-  for j in integer range (0)..size - (1) loop
-    t(j) := (0);
+  for j in integer range 0..size - 1 loop
+    t(j) := 0;
   end loop;
-  for k in integer range (0)..size - (1) loop
-    t(k) := i rem (10);
-    i := i / (10);
+  for k in integer range 0..size - 1 loop
+    t(k) := i rem 10;
+    i := i / 10;
   end loop;
   q := new bigint;
   q.bigint_sign := TRUE;
@@ -442,7 +454,7 @@ function fact_bigint(w : in bigint_PTR) return bigint_PTR is
   a : bigint_PTR;
 begin
   a := w;
-  one := bigint_of_int((1));
+  one := bigint_of_int(1);
   out0 := one;
   while (not bigint_eq(a, one)) loop
     out0 := mul_bigint(a, out0);
@@ -454,8 +466,8 @@ end;
 function sum_chiffres_bigint(a : in bigint_PTR) return Integer is
   out0 : Integer;
 begin
-  out0 := (0);
-  for i in integer range (0)..a.bigint_len - (1) loop
+  out0 := 0;
+  for i in integer range 0..a.bigint_len - 1 loop
     out0 := out0 + a.bigint_chiffres(i);
   end loop;
   return out0;
@@ -466,7 +478,7 @@ end;
 function euler20 return Integer is
   a : bigint_PTR;
 begin
-  a := bigint_of_int((15));
+  a := bigint_of_int(15);
   -- normalement c'est 100 
   
   a := fact_bigint(a);
@@ -475,15 +487,15 @@ end;
 
 function bigint_exp(a : in bigint_PTR; b : in Integer) return bigint_PTR is
 begin
-  if b = (1)
+  if b = 1
   then
     return a;
   else
-    if (b rem (2)) = (0)
+    if (b rem 2) = 0
     then
-      return bigint_exp(mul_bigint(a, a), b / (2));
+      return bigint_exp(mul_bigint(a, a), b / 2);
     else
-      return mul_bigint(a, bigint_exp(a, b - (1)));
+      return mul_bigint(a, bigint_exp(a, b - 1));
     end if;
   end if;
 end;
@@ -492,16 +504,16 @@ function bigint_exp_10chiffres(x : in bigint_PTR; b : in Integer) return bigint_
   a : bigint_PTR;
 begin
   a := x;
-  a := bigint_premiers_chiffres(a, (10));
-  if b = (1)
+  a := bigint_premiers_chiffres(a, 10);
+  if b = 1
   then
     return a;
   else
-    if (b rem (2)) = (0)
+    if (b rem 2) = 0
     then
-      return bigint_exp_10chiffres(mul_bigint(a, a), b / (2));
+      return bigint_exp_10chiffres(mul_bigint(a, a), b / 2);
     else
-      return mul_bigint(a, bigint_exp_10chiffres(a, b - (1)));
+      return mul_bigint(a, bigint_exp_10chiffres(a, b - 1));
     end if;
   end if;
 end;
@@ -511,25 +523,25 @@ procedure euler48 is
   ibeib : bigint_PTR;
   ib : bigint_PTR;
 begin
-  sum := bigint_of_int((0));
-  for i in integer range (1)..(100) loop
+  sum := bigint_of_int(0);
+  for i in integer range 1..100 loop
     -- 1000 normalement 
     
     ib := bigint_of_int(i);
     ibeib := bigint_exp_10chiffres(ib, i);
     sum := add_bigint(sum, ibeib);
-    sum := bigint_premiers_chiffres(sum, (10));
+    sum := bigint_premiers_chiffres(sum, 10);
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "euler 48 = ");
+  PString("euler 48 = ");
   print_bigint(sum);
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;
 
 function euler16 return Integer is
   a : bigint_PTR;
 begin
-  a := bigint_of_int((2));
-  a := bigint_exp(a, (100));
+  a := bigint_of_int(2);
+  a := bigint_exp(a, 100);
   -- 1000 normalement 
   
   return sum_chiffres_bigint(a);
@@ -541,16 +553,16 @@ function euler25 return Integer is
   b : bigint_PTR;
   a : bigint_PTR;
 begin
-  i := (2);
-  a := bigint_of_int((1));
-  b := bigint_of_int((1));
-  while b.bigint_len < (100) loop
+  i := 2;
+  a := bigint_of_int(1);
+  b := bigint_of_int(1);
+  while b.bigint_len < 100 loop
     -- 1000 normalement 
     
     c := add_bigint(a, b);
     a := b;
     b := c;
-    i := i + (1);
+    i := i + 1;
   end loop;
   return i;
 end;
@@ -567,26 +579,26 @@ function euler29 return Integer is
   a_bigint : y_PTR;
   a0_bigint : y_PTR;
 begin
-  maxA := (5);
-  maxB := (5);
-  a_bigint := new y (0..maxA + (1));
-  for j in integer range (0)..maxA + (1) - (1) loop
+  maxA := 5;
+  maxB := 5;
+  a_bigint := new y (0..maxA + 1);
+  for j in integer range 0..maxA + 1 - 1 loop
     a_bigint(j) := bigint_of_int(j * j);
   end loop;
-  a0_bigint := new y (0..maxA + (1));
-  for j2 in integer range (0)..maxA + (1) - (1) loop
+  a0_bigint := new y (0..maxA + 1);
+  for j2 in integer range 0..maxA + 1 - 1 loop
     a0_bigint(j2) := bigint_of_int(j2);
   end loop;
-  b := new s (0..maxA + (1));
-  for k in integer range (0)..maxA + (1) - (1) loop
-    b(k) := (2);
+  b := new s (0..maxA + 1);
+  for k in integer range 0..maxA + 1 - 1 loop
+    b(k) := 2;
   end loop;
-  n := (0);
+  n := 0;
   found := TRUE;
   while found loop
-    min0 := a0_bigint((0));
+    min0 := a0_bigint(0);
     found := FALSE;
-    for i in integer range (2)..maxA loop
+    for i in integer range 2..maxA loop
       if b(i) <= maxB
       then
         if found
@@ -603,11 +615,11 @@ begin
     end loop;
     if found
     then
-      n := n + (1);
-      for l in integer range (2)..maxA loop
+      n := n + 1;
+      for l in integer range 2..maxA loop
         if bigint_eq(a_bigint(l), min0) and then b(l) <= maxB
         then
-          b(l) := b(l) + (1);
+          b(l) := b(l) + 1;
           a_bigint(l) := mul_bigint(a_bigint(l), a0_bigint(l));
         end if;
       end loop;
@@ -623,73 +635,73 @@ end;
   b : bigint_PTR;
   a : bigint_PTR;
 begin
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler29), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  sum := read_bigint((50));
-  for i in integer range (2)..(100) loop
+  PInt(euler29);
+  PString("" & Character'Val(10));
+  sum := read_bigint(50);
+  for i in integer range 2..100 loop
     SkipSpaces;
-    tmp := read_bigint((50));
+    tmp := read_bigint(50);
     sum := add_bigint(sum, tmp);
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "euler13 = ");
+  PString("euler13 = ");
   print_bigint(sum);
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  String'Write (Text_Streams.Stream (Current_Output), "euler25 = ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler25), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  String'Write (Text_Streams.Stream (Current_Output), "euler16 = ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler16), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
+  PString("euler25 = ");
+  PInt(euler25);
+  PString("" & Character'Val(10));
+  PString("euler16 = ");
+  PInt(euler16);
+  PString("" & Character'Val(10));
   euler48;
-  String'Write (Text_Streams.Stream (Current_Output), "euler20 = ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(euler20), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  a := bigint_of_int((999999));
-  b := bigint_of_int((9951263));
+  PString("euler20 = ");
+  PInt(euler20);
+  PString("" & Character'Val(10));
+  a := bigint_of_int(999999);
+  b := bigint_of_int(9951263);
   print_bigint(a);
-  String'Write (Text_Streams.Stream (Current_Output), ">>1=");
-  print_bigint(bigint_shift(a, (-(1))));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString(">>1=");
+  print_bigint(bigint_shift(a, (-1)));
+  PString("" & Character'Val(10));
   print_bigint(a);
-  String'Write (Text_Streams.Stream (Current_Output), "*");
+  PString("*");
   print_bigint(b);
-  String'Write (Text_Streams.Stream (Current_Output), "=");
+  PString("=");
   print_bigint(mul_bigint(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
   print_bigint(a);
-  String'Write (Text_Streams.Stream (Current_Output), "*");
+  PString("*");
   print_bigint(b);
-  String'Write (Text_Streams.Stream (Current_Output), "=");
+  PString("=");
   print_bigint(mul_bigint_cp(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
   print_bigint(a);
-  String'Write (Text_Streams.Stream (Current_Output), "+");
+  PString("+");
   print_bigint(b);
-  String'Write (Text_Streams.Stream (Current_Output), "=");
+  PString("=");
   print_bigint(add_bigint(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
   print_bigint(b);
-  String'Write (Text_Streams.Stream (Current_Output), "-");
+  PString("-");
   print_bigint(a);
-  String'Write (Text_Streams.Stream (Current_Output), "=");
+  PString("=");
   print_bigint(sub_bigint(b, a));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
   print_bigint(a);
-  String'Write (Text_Streams.Stream (Current_Output), "-");
+  PString("-");
   print_bigint(b);
-  String'Write (Text_Streams.Stream (Current_Output), "=");
+  PString("=");
   print_bigint(sub_bigint(a, b));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
   print_bigint(a);
-  String'Write (Text_Streams.Stream (Current_Output), ">");
+  PString(">");
   print_bigint(b);
-  String'Write (Text_Streams.Stream (Current_Output), "=");
+  PString("=");
   r := bigint_gt(a, b);
   if r
   then
-    String'Write (Text_Streams.Stream (Current_Output), "True");
+    PString("True");
   else
-    String'Write (Text_Streams.Stream (Current_Output), "False");
+    PString("False");
   end if;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;

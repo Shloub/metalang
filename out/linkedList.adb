@@ -44,10 +44,10 @@ procedure test(empty : in intlist_PTR) is
   i : Integer;
 begin
   list := empty;
-  i := (-(1));
-  while i /= (0) loop
+  i := (-1);
+  while i /= 0 loop
     Get(i);
-    if i /= (0)
+    if i /= 0
     then
       list := cons(list, i);
     end if;

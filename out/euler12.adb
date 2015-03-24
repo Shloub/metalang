@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler12 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 function max2_0(a : in Integer; b : in Integer) return Integer is
 begin
   if a > b
@@ -19,14 +28,14 @@ function eratostene(t : in c_PTR; max0 : in Integer) return Integer is
   n : Integer;
   j : Integer;
 begin
-  n := (0);
-  for i in integer range (2)..max0 - (1) loop
+  n := 0;
+  for i in integer range 2..max0 - 1 loop
     if t(i) = i
     then
       j := i * i;
-      n := n + (1);
-      while j < max0 and then j > (0) loop
-        t(j) := (0);
+      n := n + 1;
+      while j < max0 and then j > 0 loop
+        t(j) := 0;
         j := j + i;
       end loop;
     end if;
@@ -39,13 +48,13 @@ function fillPrimesFactors(t : in c_PTR; e : in Integer; primes : in c_PTR; npri
   d : Integer;
 begin
   n := e;
-  for i in integer range (0)..nprimes - (1) loop
+  for i in integer range 0..nprimes - 1 loop
     d := primes(i);
-    while (n rem d) = (0) loop
-      t(d) := t(d) + (1);
+    while (n rem d) = 0 loop
+      t(d) := t(d) + 1;
       n := n / d;
     end loop;
-    if n = (1)
+    if n = 1
     then
       return primes(i);
     end if;
@@ -63,50 +72,50 @@ function find(ndiv2 : in Integer) return Integer is
   l : Integer;
   era : c_PTR;
 begin
-  maximumprimes := (110);
+  maximumprimes := 110;
   era := new c (0..maximumprimes);
-  for j in integer range (0)..maximumprimes - (1) loop
+  for j in integer range 0..maximumprimes - 1 loop
     era(j) := j;
   end loop;
   nprimes := eratostene(era, maximumprimes);
   primes := new c (0..nprimes);
-  for o in integer range (0)..nprimes - (1) loop
-    primes(o) := (0);
+  for o in integer range 0..nprimes - 1 loop
+    primes(o) := 0;
   end loop;
-  l := (0);
-  for k in integer range (2)..maximumprimes - (1) loop
+  l := 0;
+  for k in integer range 2..maximumprimes - 1 loop
     if era(k) = k
     then
       primes(l) := k;
-      l := l + (1);
+      l := l + 1;
     end if;
   end loop;
-  for n in integer range (1)..(10000) loop
-    primesFactors := new c (0..n + (2));
-    for m in integer range (0)..n + (2) - (1) loop
-      primesFactors(m) := (0);
+  for n in integer range 1..10000 loop
+    primesFactors := new c (0..n + 2);
+    for m in integer range 0..n + 2 - 1 loop
+      primesFactors(m) := 0;
     end loop;
-    max0 := max2_0(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + (1), primes, nprimes));
-    primesFactors((2)) := primesFactors((2)) - (1);
-    ndivs := (1);
-    for i in integer range (0)..max0 loop
-      if primesFactors(i) /= (0)
+    max0 := max2_0(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+    primesFactors(2) := primesFactors(2) - 1;
+    ndivs := 1;
+    for i in integer range 0..max0 loop
+      if primesFactors(i) /= 0
       then
-        ndivs := ndivs * ((1) + primesFactors(i));
+        ndivs := ndivs * (1 + primesFactors(i));
       end if;
     end loop;
     if ndivs > ndiv2
     then
-      return (n * (n + (1))) / (2);
+      return (n * (n + 1)) / 2;
     end if;
     -- print "n=" print n print "\t" print (n * (n + 1) / 2 ) print " " print ndivs print "\n" 
     
   end loop;
-  return (0);
+  return 0;
 end;
 
 
 begin
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(find((500))), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(find(500));
+  PString("" & Character'Val(10));
 end;

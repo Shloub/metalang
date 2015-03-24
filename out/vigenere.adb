@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure vigenere is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PChar(c : in Character) is
+begin
+  Character'Write (Text_Streams.Stream (Current_Output), c);
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -25,7 +34,7 @@ begin
     then
       return i - Character'Pos('a');
     else
-      return (-(1));
+      return (-1);
     end if;
   end if;
 end;
@@ -42,12 +51,12 @@ procedure crypte(taille_cle : in Integer; cle : in a_PTR; taille : in Integer; m
   lettre : Integer;
   addon : Integer;
 begin
-  for i in integer range (0)..taille - (1) loop
+  for i in integer range 0..taille - 1 loop
     lettre := position_alphabet(message(i));
-    if lettre /= (-(1))
+    if lettre /= (-1)
     then
       addon := position_alphabet(cle(i rem taille_cle));
-      new0 := (addon + lettre) rem (26);
+      new0 := (addon + lettre) rem 26;
       message(i) := of_position_alphabet(new0);
     end if;
   end loop;
@@ -64,7 +73,7 @@ begin
   Get(taille_cle);
   SkipSpaces;
   cle := new a (0..taille_cle);
-  for index in integer range (0)..taille_cle - (1) loop
+  for index in integer range 0..taille_cle - 1 loop
     Get(out0);
     cle(index) := out0;
   end loop;
@@ -72,13 +81,13 @@ begin
   Get(taille);
   SkipSpaces;
   message := new a (0..taille);
-  for index2 in integer range (0)..taille - (1) loop
+  for index2 in integer range 0..taille - 1 loop
     Get(out2);
     message(index2) := out2;
   end loop;
   crypte(taille_cle, cle, taille, message);
-  for i in integer range (0)..taille - (1) loop
-    Character'Write (Text_Streams.Stream (Current_Output), message(i));
+  for i in integer range 0..taille - 1 loop
+    PChar(message(i));
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;

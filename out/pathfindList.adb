@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure pathfindList is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -20,23 +25,23 @@ function pathfind_aux(cache : in a_PTR; tab : in a_PTR; len : in Integer; pos : 
   out0 : Integer;
   oneval : Integer;
 begin
-  if pos >= len - (1)
+  if pos >= len - 1
   then
-    return (0);
+    return 0;
   else
-    if cache(pos) /= (-(1))
+    if cache(pos) /= (-1)
     then
       return cache(pos);
     else
-      cache(pos) := len * (2);
+      cache(pos) := len * 2;
       posval := pathfind_aux(cache, tab, len, tab(pos));
-      oneval := pathfind_aux(cache, tab, len, pos + (1));
-      out0 := (0);
+      oneval := pathfind_aux(cache, tab, len, pos + 1);
+      out0 := 0;
       if posval < oneval
       then
-        out0 := (1) + posval;
+        out0 := 1 + posval;
       else
-        out0 := (1) + oneval;
+        out0 := 1 + oneval;
       end if;
       cache(pos) := out0;
       return out0;
@@ -48,10 +53,10 @@ function pathfind(tab : in a_PTR; len : in Integer) return Integer is
   cache : a_PTR;
 begin
   cache := new a (0..len);
-  for i in integer range (0)..len - (1) loop
-    cache(i) := (-(1));
+  for i in integer range 0..len - 1 loop
+    cache(i) := (-1);
   end loop;
-  return pathfind_aux(cache, tab, len, (0));
+  return pathfind_aux(cache, tab, len, 0);
 end;
 
 
@@ -60,16 +65,16 @@ end;
   result : Integer;
   len : Integer;
 begin
-  len := (0);
+  len := 0;
   Get(len);
   SkipSpaces;
   tab := new a (0..len);
-  for i in integer range (0)..len - (1) loop
-    tmp := (0);
+  for i in integer range 0..len - 1 loop
+    tmp := 0;
     Get(tmp);
     SkipSpaces;
     tab(i) := tmp;
   end loop;
   result := pathfind(tab, len);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result), Left));
+  PInt(result);
 end;

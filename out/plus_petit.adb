@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure plus_petit is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -21,7 +26,7 @@ function go0(tab : in c_PTR; a : in Integer; b : in Integer) return Integer is
   i : Integer;
   e : Integer;
 begin
-  m := (a + b) / (2);
+  m := (a + b) / 2;
   if a = m
   then
     if tab(a) = m
@@ -37,9 +42,9 @@ begin
     e := tab(i);
     if e < m
     then
-      i := i + (1);
+      i := i + 1;
     else
-      j := j - (1);
+      j := j - 1;
       tab(i) := tab(j);
       tab(j) := e;
     end if;
@@ -54,7 +59,7 @@ end;
 
 function plus_petit0(tab : in c_PTR; len : in Integer) return Integer is
 begin
-  return go0(tab, (0), len);
+  return go0(tab, 0, len);
 end;
 
 
@@ -62,15 +67,15 @@ end;
   tab : c_PTR;
   len : Integer;
 begin
-  len := (0);
+  len := 0;
   Get(len);
   SkipSpaces;
   tab := new c (0..len);
-  for i in integer range (0)..len - (1) loop
-    tmp := (0);
+  for i in integer range 0..len - 1 loop
+    tmp := 0;
     Get(tmp);
     SkipSpaces;
     tab(i) := tmp;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(plus_petit0(tab, len)), Left));
+  PInt(plus_petit0(tab, len));
 end;

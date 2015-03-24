@@ -3,6 +3,19 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure prologin_template_2charline2 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PChar(c : in Character) is
+begin
+  Character'Write (Text_Streams.Stream (Current_Output), c);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -18,17 +31,17 @@ type c_PTR is access c;
 function programme_candidat(tableau1 : in c_PTR; taille1 : in Integer; tableau2 : in c_PTR; taille2 : in Integer) return Integer is
   out0 : Integer;
 begin
-  out0 := (0);
-  for i in integer range (0)..taille1 - (1) loop
+  out0 := 0;
+  for i in integer range 0..taille1 - 1 loop
     out0 := out0 + Character'Pos(tableau1(i)) * i;
-    Character'Write (Text_Streams.Stream (Current_Output), tableau1(i));
+    PChar(tableau1(i));
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10));
-  for j in integer range (0)..taille2 - (1) loop
-    out0 := out0 + Character'Pos(tableau2(j)) * j * (100);
-    Character'Write (Text_Streams.Stream (Current_Output), tableau2(j));
+  PString("--" & Character'Val(10));
+  for j in integer range 0..taille2 - 1 loop
+    out0 := out0 + Character'Pos(tableau2(j)) * j * 100;
+    PChar(tableau2(j));
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10));
+  PString("--" & Character'Val(10));
   return out0;
 end;
 
@@ -43,15 +56,15 @@ begin
   Get(taille2);
   SkipSpaces;
   tableau1 := new c (0..taille1);
-  for a in integer range (0)..taille1 - (1) loop
+  for a in integer range 0..taille1 - 1 loop
     Get(tableau1(a));
   end loop;
   SkipSpaces;
   tableau2 := new c (0..taille2);
-  for b in integer range (0)..taille2 - (1) loop
+  for b in integer range 0..taille2 - 1 loop
     Get(tableau2(b));
   end loop;
   SkipSpaces;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau1, taille1, tableau2, taille2)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(programme_candidat(tableau1, taille1, tableau2, taille2));
+  PString("" & Character'Val(10));
 end;

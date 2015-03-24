@@ -3,6 +3,10 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure calc is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 --
 --La suite de fibonaci
 --
@@ -13,11 +17,11 @@ function fibo(a : in Integer; b : in Integer; i : in Integer) return Integer is
   b2 : Integer;
   a2 : Integer;
 begin
-  out_0 := (0);
+  out_0 := 0;
   a2 := a;
   b2 := b;
-  for j in integer range (0)..i + (1) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
+  for j in integer range 0..i + 1 loop
+    PInt(j);
     out_0 := out_0 + a2;
     tmp := b2;
     b2 := b2 + a2;
@@ -28,5 +32,5 @@ end;
 
 
 begin
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(fibo((1), (2), (4))), Left));
+  PInt(fibo(1, 2, 4));
 end;

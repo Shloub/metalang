@@ -3,6 +3,14 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 with Ada.Numerics.Elementary_Functions;
 procedure euler03 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 
   sqrtia : Integer;
   maximum : Integer;
@@ -11,15 +19,15 @@ procedure euler03 is
   b : Integer;
   a : Integer;
 begin
-  maximum := (1);
-  b0 := (2);
-  a := (408464633);
+  maximum := 1;
+  b0 := 2;
+  a := 408464633;
   sqrtia := Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float(a))));
-  while a /= (1) loop
+  while a /= 1 loop
     b := b0;
     found := FALSE;
     while b <= sqrtia loop
-      if (a rem b) = (0)
+      if (a rem b) = 0
       then
         a := a / b;
         b0 := b;
@@ -27,13 +35,13 @@ begin
         sqrtia := Integer(Float'Truncation(Ada.Numerics.Elementary_Functions.Sqrt(Float(a))));
         found := TRUE;
       end if;
-      b := b + (1);
+      b := b + 1;
     end loop;
     if (not found)
     then
-      String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(a), Left));
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-      a := (1);
+      PInt(a);
+      PString("" & Character'Val(10));
+      a := 1;
     end if;
   end loop;
 end;

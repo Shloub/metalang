@@ -3,6 +3,14 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler43 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 type a is Array (Integer range <>) of Boolean;
 type a_PTR is access a;
 
@@ -40,70 +48,70 @@ begin
   --(d5 * 2 + d6 * 3 + d7) % 7 == 0
   --
   
-  allowed := new a (0..(10));
-  for i in integer range (0)..(10) - (1) loop
+  allowed := new a (0..10);
+  for i in integer range 0..10 - 1 loop
     allowed(i) := TRUE;
   end loop;
-  for i6 in integer range (0)..(1) loop
-    d6 := i6 * (5);
+  for i6 in integer range 0..1 loop
+    d6 := i6 * 5;
     if allowed(d6)
     then
       allowed(d6) := FALSE;
-      for d7 in integer range (0)..(9) loop
+      for d7 in integer range 0..9 loop
         if allowed(d7)
         then
           allowed(d7) := FALSE;
-          for d8 in integer range (0)..(9) loop
+          for d8 in integer range 0..9 loop
             if allowed(d8)
             then
               allowed(d8) := FALSE;
-              for d9 in integer range (0)..(9) loop
+              for d9 in integer range 0..9 loop
                 if allowed(d9)
                 then
                   allowed(d9) := FALSE;
-                  for d10 in integer range (1)..(9) loop
+                  for d10 in integer range 1..9 loop
                     if allowed(d10) and then
-                    ((d6 * (100) + d7 * (10) + d8) rem (11)) = (0) and then
-                    ((d7 * (100) + d8 * (10) + d9) rem (13)) = (0) and then
-                    ((d8 * (100) + d9 * (10) + d10) rem (17)) = (0)
+                    ((d6 * 100 + d7 * 10 + d8) rem 11) = 0 and then
+                    ((d7 * 100 + d8 * 10 + d9) rem 13) = 0 and then
+                    ((d8 * 100 + d9 * 10 + d10) rem 17) = 0
                     then
                       allowed(d10) := FALSE;
-                      for d5 in integer range (0)..(9) loop
+                      for d5 in integer range 0..9 loop
                         if allowed(d5)
                         then
                           allowed(d5) := FALSE;
-                          if ((d5 * (100) + d6 * (10) + d7) rem (7)) = (0)
+                          if ((d5 * 100 + d6 * 10 + d7) rem 7) = 0
                           then
-                            for i4 in integer range (0)..(4) loop
-                              d4 := i4 * (2);
+                            for i4 in integer range 0..4 loop
+                              d4 := i4 * 2;
                               if allowed(d4)
                               then
                                 allowed(d4) := FALSE;
-                                for d3 in integer range (0)..(9) loop
+                                for d3 in integer range 0..9 loop
                                   if allowed(d3)
                                   then
                                     allowed(d3) := FALSE;
-                                    if ((d3 + d4 + d5) rem (3)) = (0)
+                                    if ((d3 + d4 + d5) rem 3) = 0
                                     then
-                                      for d2 in integer range (0)..(9) loop
+                                      for d2 in integer range 0..9 loop
                                         if allowed(d2)
                                         then
                                           allowed(d2) := FALSE;
-                                          for d1 in integer range (0)..(9) loop
+                                          for d1 in integer range 0..9 loop
                                             if allowed(d1)
                                             then
                                               allowed(d1) := FALSE;
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d1), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d2), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d3), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d4), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d5), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d6), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d7), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d8), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d9), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d10), Left));
-                                              String'Write (Text_Streams.Stream (Current_Output), " + ");
+                                              PInt(d1);
+                                              PInt(d2);
+                                              PInt(d3);
+                                              PInt(d4);
+                                              PInt(d5);
+                                              PInt(d6);
+                                              PInt(d7);
+                                              PInt(d8);
+                                              PInt(d9);
+                                              PInt(d10);
+                                              PString(" + ");
                                               allowed(d1) := TRUE;
                                             end if;
                                           end loop;
@@ -136,6 +144,6 @@ begin
       allowed(d6) := TRUE;
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image((0)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(0);
+  PString("" & Character'Val(10));
 end;

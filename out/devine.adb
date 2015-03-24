@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure devine is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -19,9 +24,9 @@ function devine0(nombre : in Integer; tab : in b_PTR; len : in Integer) return B
   min0 : Integer;
   max0 : Integer;
 begin
-  min0 := tab((0));
-  max0 := tab((1));
-  for i in integer range (2)..len - (1) loop
+  min0 := tab(0);
+  max0 := tab(1);
+  for i in integer range 2..len - 1 loop
     if tab(i) > max0 or else tab(i) < min0
     then
       return FALSE;
@@ -34,7 +39,7 @@ begin
     then
       max0 := tab(i);
     end if;
-    if tab(i) = nombre and then len /= i + (1)
+    if tab(i) = nombre and then len /= i + 1
     then
       return FALSE;
     end if;
@@ -54,7 +59,7 @@ begin
   Get(len);
   SkipSpaces;
   tab := new b (0..len);
-  for i in integer range (0)..len - (1) loop
+  for i in integer range 0..len - 1 loop
     Get(tmp);
     SkipSpaces;
     tab(i) := tmp;
@@ -62,8 +67,8 @@ begin
   a := devine0(nombre, tab, len);
   if a
   then
-    String'Write (Text_Streams.Stream (Current_Output), "True");
+    PString("True");
   else
-    String'Write (Text_Streams.Stream (Current_Output), "False");
+    PString("False");
   end if;
 end;

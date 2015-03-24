@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler04 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 function max2_0(a : in Integer; b : in Integer) return Integer is
 begin
   if a > b
@@ -34,11 +43,11 @@ end;
 
 function chiffre(c : in Integer; m : in Integer) return Integer is
 begin
-  if c = (0)
+  if c = 0
   then
-    return m rem (10);
+    return m rem 10;
   else
-    return chiffre(c - (1), m / (10));
+    return chiffre(c - 1, m / 10);
   end if;
 end;
 
@@ -46,21 +55,18 @@ end;
   mul : Integer;
   m : Integer;
 begin
-  m := (1);
-  for a in integer range (0)..(9) loop
-    for f in integer range (1)..(9) loop
-      for d in integer range (0)..(9) loop
-        for c in integer range (1)..(9) loop
-          for b in integer range (0)..(9) loop
-            for e in integer range (0)..(9) loop
-              mul := a * d + (10) * (a * e + b * d) + (100) * (a * f + b * e +
-                                                                c * d) + (1000) * (c *
-                                                                                e +
-                                                                                b *
-                                                                                f) + (10000) * c * f;
-              if chiffre((0), mul) = chiffre((5), mul) and then
-              chiffre((1), mul) = chiffre((4), mul) and then chiffre((2), mul) =
-              chiffre((3), mul)
+  m := 1;
+  for a in integer range 0..9 loop
+    for f in integer range 1..9 loop
+      for d in integer range 0..9 loop
+        for c in integer range 1..9 loop
+          for b in integer range 0..9 loop
+            for e in integer range 0..9 loop
+              mul := a * d + 10 * (a * e + b * d) + 100 * (a * f + b * e + c *
+                                                            d) + 1000 * (c * e +
+                                                                          b * f) + 10000 * c * f;
+              if chiffre(0, mul) = chiffre(5, mul) and then chiffre(1, mul) =
+              chiffre(4, mul) and then chiffre(2, mul) = chiffre(3, mul)
               then
                 m := max2_0(mul, m);
               end if;
@@ -70,6 +76,6 @@ begin
       end loop;
     end loop;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(m), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(m);
+  PString("" & Character'Val(10));
 end;

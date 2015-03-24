@@ -3,13 +3,18 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure sumDiv is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure foo is
   a : Integer;
 begin
-  a := (0);
+  a := 0;
   -- test 
   
-  a := a + (1);
+  a := a + 1;
   -- test 2 
   
 end;
@@ -22,7 +27,7 @@ end;
 
 procedure foo3 is
 begin
-  if (1) = (1)
+  if 1 = 1
   then
     NULL;
     
@@ -34,13 +39,13 @@ function sumdiv(n : in Integer) return Integer is
 begin
   -- On désire renvoyer la somme des diviseurs 
   
-  out0 := (0);
+  out0 := 0;
   -- On déclare un entier qui contiendra la somme 
   
-  for i in integer range (1)..n loop
+  for i in integer range 1..n loop
     -- La boucle : i est le diviseur potentiel
     
-    if (n rem i) = (0)
+    if (n rem i) = 0
     then
       -- Si i divise 
       
@@ -62,9 +67,9 @@ end;
 begin
   -- Programme principal 
   
-  n := (0);
+  n := 0;
   Get(n);
   -- Lecture de l'entier 
   
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(sumdiv(n)), Left));
+  PInt(sumdiv(n));
 end;

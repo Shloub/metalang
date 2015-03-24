@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure cambriolage is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -34,34 +39,34 @@ function nbPassePartout(n : in Integer; passepartout : in d_PTR; m : in Integer;
   max_ancient_pp : Integer;
   max_ancient : Integer;
 begin
-  max_ancient := (0);
-  max_recent := (0);
-  for i in integer range (0)..m - (1) loop
-    if serrures(i)((0)) = (-(1)) and then serrures(i)((1)) > max_ancient
+  max_ancient := 0;
+  max_recent := 0;
+  for i in integer range 0..m - 1 loop
+    if serrures(i)(0) = (-1) and then serrures(i)(1) > max_ancient
     then
-      max_ancient := serrures(i)((1));
+      max_ancient := serrures(i)(1);
     end if;
-    if serrures(i)((0)) = (1) and then serrures(i)((1)) > max_recent
+    if serrures(i)(0) = 1 and then serrures(i)(1) > max_recent
     then
-      max_recent := serrures(i)((1));
+      max_recent := serrures(i)(1);
     end if;
   end loop;
-  max_ancient_pp := (0);
-  max_recent_pp := (0);
-  for i in integer range (0)..n - (1) loop
+  max_ancient_pp := 0;
+  max_recent_pp := 0;
+  for i in integer range 0..n - 1 loop
     pp := passepartout(i);
-    if pp((0)) >= max_ancient and then pp((1)) >= max_recent
+    if pp(0) >= max_ancient and then pp(1) >= max_recent
     then
-      return (1);
+      return 1;
     end if;
-    max_ancient_pp := max2_0(max_ancient_pp, pp((0)));
-    max_recent_pp := max2_0(max_recent_pp, pp((1)));
+    max_ancient_pp := max2_0(max_ancient_pp, pp(0));
+    max_recent_pp := max2_0(max_recent_pp, pp(1));
   end loop;
   if max_ancient_pp >= max_ancient and then max_recent_pp >= max_recent
   then
-    return (2);
+    return 2;
   else
-    return (0);
+    return 0;
   end if;
 end;
 
@@ -78,9 +83,9 @@ begin
   Get(n);
   SkipSpaces;
   passepartout := new d (0..n);
-  for i in integer range (0)..n - (1) loop
-    out0 := new c (0..(2));
-    for j in integer range (0)..(2) - (1) loop
+  for i in integer range 0..n - 1 loop
+    out0 := new c (0..2);
+    for j in integer range 0..2 - 1 loop
       Get(out01);
       SkipSpaces;
       out0(j) := out01;
@@ -90,14 +95,14 @@ begin
   Get(m);
   SkipSpaces;
   serrures := new d (0..m);
-  for k in integer range (0)..m - (1) loop
-    out1 := new c (0..(2));
-    for l in integer range (0)..(2) - (1) loop
+  for k in integer range 0..m - 1 loop
+    out1 := new c (0..2);
+    for l in integer range 0..2 - 1 loop
       Get(out_0);
       SkipSpaces;
       out1(l) := out_0;
     end loop;
     serrures(k) := out1;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nbPassePartout(n, passepartout, m, serrures)), Left));
+  PInt(nbPassePartout(n, passepartout, m, serrures));
 end;

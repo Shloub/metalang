@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure sort is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -19,7 +28,7 @@ function copytab(tab : in a_PTR; len : in Integer) return a_PTR is
   o : a_PTR;
 begin
   o := new a (0..len);
-  for i in integer range (0)..len - (1) loop
+  for i in integer range 0..len - 1 loop
     o(i) := tab(i);
   end loop;
   return o;
@@ -28,8 +37,8 @@ end;
 procedure bubblesort(tab : in a_PTR; len : in Integer) is
   tmp : Integer;
 begin
-  for i in integer range (0)..len - (1) loop
-    for j in integer range i + (1)..len - (1) loop
+  for i in integer range 0..len - 1 loop
+    for j in integer range i + 1..len - 1 loop
       if tab(i) > tab(j)
       then
         tmp := tab(i);
@@ -58,29 +67,31 @@ begin
     while i /= j loop
       if tab(i) > tab(j)
       then
-        if i = j - (1)
+        if i = j - 1
         then
           -- on inverse simplement
           
           tmp := tab(i);
           tab(i) := tab(j);
           tab(j) := tmp;
-          i := i + (1);
+          i := i + 1;
         else
           -- on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] 
           
           tmp := tab(i);
           tab(i) := tab(j);
-          tab(j) := tab(i + (1));
-          tab(i + (1)) := tmp;
-          i := i + (1);
+          tab(j) := tab(i + 1);
+          tab(i + 1) := tmp;
+          i := i + 1;
         end if;
       else
-        j := j - (1);
+        j := j - 1;
       end if;
     end loop;
-    qsort0(tab, len, i0, i - (1));
-    qsort0(tab, len, i + (1), j0);
+    qsort0(tab, len, i0, i -
+    1);
+    qsort0(tab, len, i +
+    1, j0);
   end if;
 end;
 
@@ -93,28 +104,29 @@ end;
   j : Integer;
   i : Integer;
 begin
-  len := (2);
+  len := 2;
   Get(len);
   SkipSpaces;
   tab := new a (0..len);
-  for i_0 in integer range (0)..len - (1) loop
-    tmp := (0);
+  for i_0 in integer range 0..len - 1 loop
+    tmp := 0;
     Get(tmp);
     SkipSpaces;
     tab(i_0) := tmp;
   end loop;
   tab2 := copytab(tab, len);
   bubblesort(tab2, len);
-  for i in integer range (0)..len - (1) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab2(i)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
+  for i in integer range 0..len - 1 loop
+    PInt(tab2(i));
+    PString(" ");
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
   tab3 := copytab(tab, len);
-  qsort0(tab3, len, (0), len - (1));
-  for i in integer range (0)..len - (1) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab3(i)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
+  qsort0(tab3, len, 0, len -
+  1);
+  for i in integer range 0..len - 1 loop
+    PInt(tab3(i));
+    PString(" ");
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;

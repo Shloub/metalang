@@ -3,6 +3,19 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure prologin_template_charmatrix is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PChar(c : in Character) is
+begin
+  Character'Write (Text_Streams.Stream (Current_Output), c);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -20,13 +33,13 @@ type f_PTR is access f;
 function programme_candidat(tableau : in f_PTR; taille_x : in Integer; taille_y : in Integer) return Integer is
   out0 : Integer;
 begin
-  out0 := (0);
-  for i in integer range (0)..taille_y - (1) loop
-    for j in integer range (0)..taille_x - (1) loop
-      out0 := out0 + Character'Pos(tableau(i)(j)) * (i + j * (2));
-      Character'Write (Text_Streams.Stream (Current_Output), tableau(i)(j));
+  out0 := 0;
+  for i in integer range 0..taille_y - 1 loop
+    for j in integer range 0..taille_x - 1 loop
+      out0 := out0 + Character'Pos(tableau(i)(j)) * (i + j * 2);
+      PChar(tableau(i)(j));
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "--" & Character'Val(10));
+    PString("--" & Character'Val(10));
   end loop;
   return out0;
 end;
@@ -43,15 +56,15 @@ begin
   Get(taille_y);
   SkipSpaces;
   a := new f (0..taille_y);
-  for b in integer range (0)..taille_y - (1) loop
+  for b in integer range 0..taille_y - 1 loop
     c := new e (0..taille_x);
-    for d in integer range (0)..taille_x - (1) loop
+    for d in integer range 0..taille_x - 1 loop
       Get(c(d));
     end loop;
     SkipSpaces;
     a(b) := c;
   end loop;
   tableau := a;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau, taille_x, taille_y)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(programme_candidat(tableau, taille_x, taille_y));
+  PString("" & Character'Val(10));
 end;

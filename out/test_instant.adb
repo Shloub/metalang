@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure test_instant is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 function foo(a : in Integer; b : in Integer) return Integer is
 begin
   return a + b;
@@ -10,5 +15,5 @@ end;
 
 
 begin
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image((10)), Left));
+  PInt(10);
 end;

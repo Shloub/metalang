@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure rot13 is
+procedure PChar(c : in Character) is
+begin
+  Character'Write (Text_Streams.Stream (Current_Output), c);
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -28,16 +33,16 @@ begin
   Get(strlen);
   SkipSpaces;
   tab4 := new a (0..strlen);
-  for toto in integer range (0)..strlen - (1) loop
+  for toto in integer range 0..strlen - 1 loop
     Get(tmpc);
     c := Character'Pos(tmpc);
     if tmpc /= ' '
     then
-      c := ((c - Character'Pos('a')) + (13)) rem (26) + Character'Pos('a');
+      c := ((c - Character'Pos('a')) + 13) rem 26 + Character'Pos('a');
     end if;
     tab4(toto) := Character'Val(c);
   end loop;
-  for j in integer range (0)..strlen - (1) loop
-    Character'Write (Text_Streams.Stream (Current_Output), tab4(j));
+  for j in integer range 0..strlen - 1 loop
+    PChar(tab4(j));
   end loop;
 end;

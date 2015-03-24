@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure npi is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -34,36 +39,36 @@ function npi0(str : in b_PTR; len : in Integer) return Integer is
   num : Integer;
 begin
   stack := new a (0..len);
-  for i in integer range (0)..len - (1) loop
-    stack(i) := (0);
+  for i in integer range 0..len - 1 loop
+    stack(i) := 0;
   end loop;
-  ptrStack := (0);
-  ptrStr := (0);
+  ptrStack := 0;
+  ptrStr := 0;
   while ptrStr < len loop
     if str(ptrStr) = ' '
     then
-      ptrStr := ptrStr + (1);
+      ptrStr := ptrStr + 1;
     else
       if is_number(str(ptrStr))
       then
-        num := (0);
+        num := 0;
         while str(ptrStr) /= ' ' loop
-          num := num * (10) + Character'Pos(str(ptrStr)) - Character'Pos('0');
-          ptrStr := ptrStr + (1);
+          num := num * 10 + Character'Pos(str(ptrStr)) - Character'Pos('0');
+          ptrStr := ptrStr + 1;
         end loop;
         stack(ptrStack) := num;
-        ptrStack := ptrStack + (1);
+        ptrStack := ptrStack + 1;
       else
         if str(ptrStr) = '+'
         then
-          stack(ptrStack - (2)) := stack(ptrStack - (2)) + stack(ptrStack - (1));
-          ptrStack := ptrStack - (1);
-          ptrStr := ptrStr + (1);
+          stack(ptrStack - 2) := stack(ptrStack - 2) + stack(ptrStack - 1);
+          ptrStack := ptrStack - 1;
+          ptrStr := ptrStr + 1;
         end if;
       end if;
     end if;
   end loop;
-  return stack((0));
+  return stack(0);
 end;
 
 
@@ -72,15 +77,15 @@ end;
   result : Integer;
   len : Integer;
 begin
-  len := (0);
+  len := 0;
   Get(len);
   SkipSpaces;
   tab := new b (0..len);
-  for i in integer range (0)..len - (1) loop
+  for i in integer range 0..len - 1 loop
     tmp := Character'Val(0);
     Get(tmp);
     tab(i) := tmp;
   end loop;
   result := npi0(tab, len);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result), Left));
+  PInt(result);
 end;

@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure montagnes is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -21,21 +26,21 @@ function montagnes0(tab : in a_PTR; len : in Integer) return Integer is
   j : Integer;
   i : Integer;
 begin
-  max0 := (1);
-  j := (1);
-  i := len - (2);
-  while i >= (0) loop
+  max0 := 1;
+  j := 1;
+  i := len - 2;
+  while i >= 0 loop
     x := tab(i);
-    while j >= (0) and then x > tab(len - j) loop
-      j := j - (1);
+    while j >= 0 and then x > tab(len - j) loop
+      j := j - 1;
     end loop;
-    j := j + (1);
+    j := j + 1;
     tab(len - j) := x;
     if j > max0
     then
       max0 := j;
     end if;
-    i := i - (1);
+    i := i - 1;
   end loop;
   return max0;
 end;
@@ -45,15 +50,15 @@ end;
   tab : a_PTR;
   len : Integer;
 begin
-  len := (0);
+  len := 0;
   Get(len);
   SkipSpaces;
   tab := new a (0..len);
-  for i in integer range (0)..len - (1) loop
-    x := (0);
+  for i in integer range 0..len - 1 loop
+    x := 0;
     Get(x);
     SkipSpaces;
     tab(i) := x;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(montagnes0(tab, len)), Left));
+  PInt(montagnes0(tab, len));
 end;

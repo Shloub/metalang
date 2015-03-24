@@ -3,6 +3,14 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler36 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 type e is Array (Integer range <>) of Boolean;
 type e_PTR is access e;
 type f is Array (Integer range <>) of Integer;
@@ -11,18 +19,18 @@ function palindrome2(pow2 : in f_PTR; n : in Integer) return Boolean is
   t : e_PTR;
   nnum : Integer;
 begin
-  t := new e (0..(20));
-  for i in integer range (0)..(20) - (1) loop
-    t(i) := ((n / pow2(i)) rem (2)) = (1);
+  t := new e (0..20);
+  for i in integer range 0..20 - 1 loop
+    t(i) := ((n / pow2(i)) rem 2) = 1;
   end loop;
-  nnum := (0);
-  for j in integer range (1)..(19) loop
+  nnum := 0;
+  for j in integer range 1..19 loop
     if t(j)
     then
       nnum := j;
     end if;
   end loop;
-  for k in integer range (0)..nnum / (2) loop
+  for k in integer range 0..nnum / 2 loop
     if t(k) /= t(nnum - k)
     then
       return FALSE;
@@ -41,64 +49,63 @@ end;
   num0 : Integer;
   a : Integer;
 begin
-  p := (1);
-  pow2 := new f (0..(20));
-  for i in integer range (0)..(20) - (1) loop
-    p := p * (2);
-    pow2(i) := p / (2);
+  p := 1;
+  pow2 := new f (0..20);
+  for i in integer range 0..20 - 1 loop
+    p := p * 2;
+    pow2(i) := p / 2;
   end loop;
-  sum := (0);
-  for d in integer range (1)..(9) loop
+  sum := 0;
+  for d in integer range 1..9 loop
     if palindrome2(pow2, d)
     then
-      String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d), Left));
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+      PInt(d);
+      PString("" & Character'Val(10));
       sum := sum + d;
     end if;
-    if palindrome2(pow2, d * (10) + d)
+    if palindrome2(pow2, d * 10 + d)
     then
-      String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(d *
-      (10) + d), Left));
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-      sum := sum + d * (10) + d;
+      PInt(d * 10 + d);
+      PString("" & Character'Val(10));
+      sum := sum + d * 10 + d;
     end if;
   end loop;
-  for a0 in integer range (0)..(4) loop
-    a := a0 * (2) + (1);
-    for b in integer range (0)..(9) loop
-      for c in integer range (0)..(9) loop
-        num0 := a * (100000) + b * (10000) + c * (1000) + c * (100) + b * (10) + a;
+  for a0 in integer range 0..4 loop
+    a := a0 * 2 + 1;
+    for b in integer range 0..9 loop
+      for c in integer range 0..9 loop
+        num0 := a * 100000 + b * 10000 + c * 1000 + c * 100 + b * 10 + a;
         if palindrome2(pow2, num0)
         then
-          String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num0), Left));
-          String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+          PInt(num0);
+          PString("" & Character'Val(10));
           sum := sum + num0;
         end if;
-        num1 := a * (10000) + b * (1000) + c * (100) + b * (10) + a;
+        num1 := a * 10000 + b * 1000 + c * 100 + b * 10 + a;
         if palindrome2(pow2, num1)
         then
-          String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num1), Left));
-          String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+          PInt(num1);
+          PString("" & Character'Val(10));
           sum := sum + num1;
         end if;
       end loop;
-      num2 := a * (100) + b * (10) + a;
+      num2 := a * 100 + b * 10 + a;
       if palindrome2(pow2, num2)
       then
-        String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num2), Left));
-        String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+        PInt(num2);
+        PString("" & Character'Val(10));
         sum := sum + num2;
       end if;
-      num3 := a * (1000) + b * (100) + b * (10) + a;
+      num3 := a * 1000 + b * 100 + b * 10 + a;
       if palindrome2(pow2, num3)
       then
-        String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(num3), Left));
-        String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+        PInt(num3);
+        PString("" & Character'Val(10));
         sum := sum + num3;
       end if;
     end loop;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "sum=");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(sum), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("sum=");
+  PInt(sum);
+  PString("" & Character'Val(10));
 end;

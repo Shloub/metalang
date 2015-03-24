@@ -3,6 +3,14 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure aaa_05array is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 type e is Array (Integer range <>) of Boolean;
 type e_PTR is access e;
 function id(b : in e_PTR) return e_PTR is
@@ -21,30 +29,30 @@ end;
   c : Boolean;
   a : e_PTR;
 begin
-  j := (0);
-  a := new e (0..(5));
-  for i in integer range (0)..(5) - (1) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+  j := 0;
+  a := new e (0..5);
+  for i in integer range 0..5 - 1 loop
+    PInt(i);
     j := j + i;
-    a(i) := (i rem (2)) = (0);
+    a(i) := (i rem 2) = 0;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(j), Left));
-  String'Write (Text_Streams.Stream (Current_Output), " ");
-  c := a((0));
+  PInt(j);
+  PString(" ");
+  c := a(0);
   if c
   then
-    String'Write (Text_Streams.Stream (Current_Output), "True");
+    PString("True");
   else
-    String'Write (Text_Streams.Stream (Current_Output), "False");
+    PString("False");
   end if;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  g(id(a), (0));
-  d := a((0));
+  PString("" & Character'Val(10));
+  g(id(a), 0);
+  d := a(0);
   if d
   then
-    String'Write (Text_Streams.Stream (Current_Output), "True");
+    PString("True");
   else
-    String'Write (Text_Streams.Stream (Current_Output), "False");
+    PString("False");
   end if;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;

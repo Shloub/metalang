@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler50 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 function min2_0(a : in Integer; b : in Integer) return Integer is
 begin
   if a < b
@@ -19,16 +28,16 @@ function eratostene(t : in c_PTR; max0 : in Integer) return Integer is
   n : Integer;
   j : Integer;
 begin
-  n := (0);
-  for i in integer range (2)..max0 - (1) loop
+  n := 0;
+  for i in integer range 2..max0 - 1 loop
     if t(i) = i
     then
-      n := n + (1);
+      n := n + 1;
       if max0 / i > i
       then
         j := i * i;
-        while j < max0 and then j > (0) loop
-          t(j) := (0);
+        while j < max0 and then j > 0 loop
+          t(j) := 0;
           j := j + i;
         end loop;
       end if;
@@ -50,40 +59,40 @@ end;
   l : Integer;
   era : c_PTR;
 begin
-  maximumprimes := (1000001);
+  maximumprimes := 1000001;
   era := new c (0..maximumprimes);
-  for j in integer range (0)..maximumprimes - (1) loop
+  for j in integer range 0..maximumprimes - 1 loop
     era(j) := j;
   end loop;
   nprimes := eratostene(era, maximumprimes);
   primes := new c (0..nprimes);
-  for o in integer range (0)..nprimes - (1) loop
-    primes(o) := (0);
+  for o in integer range 0..nprimes - 1 loop
+    primes(o) := 0;
   end loop;
-  l := (0);
-  for k in integer range (2)..maximumprimes - (1) loop
+  l := 0;
+  for k in integer range 2..maximumprimes - 1 loop
     if era(k) = k
     then
       primes(l) := k;
-      l := l + (1);
+      l := l + 1;
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l), Left));
-  String'Write (Text_Streams.Stream (Current_Output), " == ");
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(nprimes), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(l);
+  PString(" == ");
+  PInt(nprimes);
+  PString("" & Character'Val(10));
   sum := new c (0..nprimes);
-  for i_0 in integer range (0)..nprimes - (1) loop
+  for i_0 in integer range 0..nprimes - 1 loop
     sum(i_0) := primes(i_0);
   end loop;
-  maxl := (0);
+  maxl := 0;
   process := TRUE;
-  stop := maximumprimes - (1);
-  len := (1);
-  resp := (1);
+  stop := maximumprimes - 1;
+  len := 1;
+  resp := 1;
   while process loop
     process := FALSE;
-    for i in integer range (0)..stop loop
+    for i in integer range 0..stop loop
       if i + len < nprimes
       then
         sum(i) := sum(i) + primes(i + len);
@@ -100,10 +109,10 @@ begin
         end if;
       end if;
     end loop;
-    len := len + (1);
+    len := len + 1;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(resp), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(maxl), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(resp);
+  PString("" & Character'Val(10));
+  PInt(maxl);
+  PString("" & Character'Val(10));
 end;

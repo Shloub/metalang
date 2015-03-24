@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure pathfinding is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -38,28 +43,28 @@ function pathfind_aux(cache : in f_PTR; tab : in h_PTR; x : in Integer; y : in I
   val1 : Integer;
   out0 : Integer;
 begin
-  if posX = x - (1) and then posY = y - (1)
+  if posX = x - 1 and then posY = y - 1
   then
-    return (0);
+    return 0;
   else
-    if posX < (0) or else posY < (0) or else posX >= x or else posY >= y
+    if posX < 0 or else posY < 0 or else posX >= x or else posY >= y
     then
-      return x * y * (10);
+      return x * y * 10;
     else
       if tab(posY)(posX) = '#'
       then
-        return x * y * (10);
+        return x * y * 10;
       else
-        if cache(posY)(posX) /= (-(1))
+        if cache(posY)(posX) /= (-1)
         then
           return cache(posY)(posX);
         else
-          cache(posY)(posX) := x * y * (10);
-          val1 := pathfind_aux(cache, tab, x, y, posX + (1), posY);
-          val2 := pathfind_aux(cache, tab, x, y, posX - (1), posY);
-          val3 := pathfind_aux(cache, tab, x, y, posX, posY - (1));
-          val4 := pathfind_aux(cache, tab, x, y, posX, posY + (1));
-          out0 := (1) + min2_0(min2_0(min2_0(val1, val2), val3), val4);
+          cache(posY)(posX) := x * y * 10;
+          val1 := pathfind_aux(cache, tab, x, y, posX + 1, posY);
+          val2 := pathfind_aux(cache, tab, x, y, posX - 1, posY);
+          val3 := pathfind_aux(cache, tab, x, y, posX, posY - 1);
+          val4 := pathfind_aux(cache, tab, x, y, posX, posY + 1);
+          out0 := 1 + min2_0(min2_0(min2_0(val1, val2), val3), val4);
           cache(posY)(posX) := out0;
           return out0;
         end if;
@@ -73,14 +78,14 @@ function pathfind(tab : in h_PTR; x : in Integer; y : in Integer) return Integer
   cache : f_PTR;
 begin
   cache := new f (0..y);
-  for i in integer range (0)..y - (1) loop
+  for i in integer range 0..y - 1 loop
     tmp := new e (0..x);
-    for j in integer range (0)..x - (1) loop
-      tmp(j) := (-(1));
+    for j in integer range 0..x - 1 loop
+      tmp(j) := (-1);
     end loop;
     cache(i) := tmp;
   end loop;
-  return pathfind_aux(cache, tab, x, y, (0), (0));
+  return pathfind_aux(cache, tab, x, y, 0, 0);
 end;
 
 
@@ -91,16 +96,16 @@ end;
   tab : h_PTR;
   result : Integer;
 begin
-  x := (0);
-  y := (0);
+  x := 0;
+  y := 0;
   Get(x);
   SkipSpaces;
   Get(y);
   SkipSpaces;
   tab := new h (0..y);
-  for i in integer range (0)..y - (1) loop
+  for i in integer range 0..y - 1 loop
     tab2 := new g (0..x);
-    for j in integer range (0)..x - (1) loop
+    for j in integer range 0..x - 1 loop
       tmp := Character'Val(0);
       Get(tmp);
       tab2(j) := tmp;
@@ -109,5 +114,5 @@ begin
     tab(i) := tab2;
   end loop;
   result := pathfind(tab, x, y);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result), Left));
+  PInt(result);
 end;

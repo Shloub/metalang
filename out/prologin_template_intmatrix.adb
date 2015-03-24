@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure prologin_template_intmatrix is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -20,10 +29,10 @@ type e_PTR is access e;
 function programme_candidat(tableau : in e_PTR; x : in Integer; y : in Integer) return Integer is
   out0 : Integer;
 begin
-  out0 := (0);
-  for i in integer range (0)..y - (1) loop
-    for j in integer range (0)..x - (1) loop
-      out0 := out0 + tableau(i)(j) * (i * (2) + j);
+  out0 := 0;
+  for i in integer range 0..y - 1 loop
+    for j in integer range 0..x - 1 loop
+      out0 := out0 + tableau(i)(j) * (i * 2 + j);
     end loop;
   end loop;
   return out0;
@@ -40,14 +49,14 @@ begin
   Get(taille_y);
   SkipSpaces;
   tableau := new e (0..taille_y);
-  for a in integer range (0)..taille_y - (1) loop
+  for a in integer range 0..taille_y - 1 loop
     b := new d (0..taille_x);
-    for c in integer range (0)..taille_x - (1) loop
+    for c in integer range 0..taille_x - 1 loop
       Get(b(c));
       SkipSpaces;
     end loop;
     tableau(a) := b;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(programme_candidat(tableau, taille_x, taille_y)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(programme_candidat(tableau, taille_x, taille_y));
+  PString("" & Character'Val(10));
 end;

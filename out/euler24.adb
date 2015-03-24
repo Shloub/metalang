@@ -3,11 +3,20 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler24 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 function fact(n : in Integer) return Integer is
   prod : Integer;
 begin
-  prod := (1);
-  for i in integer range (2)..n loop
+  prod := 1;
+  for i in integer range 2..n loop
     prod := prod * i;
   end loop;
   return prod;
@@ -26,40 +35,40 @@ procedure show(lim : in Integer; a : in Integer) is
 begin
   nth := a;
   t := new b (0..lim);
-  for i in integer range (0)..lim - (1) loop
+  for i in integer range 0..lim - 1 loop
     t(i) := i;
   end loop;
   pris := new c (0..lim);
-  for j in integer range (0)..lim - (1) loop
+  for j in integer range 0..lim - 1 loop
     pris(j) := FALSE;
   end loop;
-  for k in integer range (1)..lim - (1) loop
+  for k in integer range 1..lim - 1 loop
     n := fact(lim - k);
     nchiffre := nth / n;
     nth := nth rem n;
-    for l in integer range (0)..lim - (1) loop
+    for l in integer range 0..lim - 1 loop
       if (not pris(l))
       then
-        if nchiffre = (0)
+        if nchiffre = 0
         then
-          String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(l), Left));
+          PInt(l);
           pris(l) := TRUE;
         end if;
-        nchiffre := nchiffre - (1);
+        nchiffre := nchiffre - 1;
       end if;
     end loop;
   end loop;
-  for m in integer range (0)..lim - (1) loop
+  for m in integer range 0..lim - 1 loop
     if (not pris(m))
     then
-      String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(m), Left));
+      PInt(m);
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;
 
 
   nth : Integer;
 begin
-  show((10), (999999));
+  show(10, 999999);
 end;

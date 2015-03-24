@@ -3,6 +3,10 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler28 is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 --
 --
 --43 44 45 46 47 48 49
@@ -25,11 +29,11 @@ function sumdiag(n : in Integer) return Integer is
   nterms : Integer;
   d : Integer;
 begin
-  nterms := n * (2) - (1);
-  un := (1);
-  sum := (1);
-  for i in integer range (0)..nterms - (2) loop
-    d := (2) * ((1) + i / (4));
+  nterms := n * 2 - 1;
+  un := 1;
+  sum := 1;
+  for i in integer range 0..nterms - 2 loop
+    d := 2 * (1 + i / 4);
     un := un + d;
     -- print int d print "=>" print un print " " 
     
@@ -40,5 +44,5 @@ end;
 
 
 begin
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(sumdiag((1001))), Left));
+  PInt(sumdiag(1001));
 end;

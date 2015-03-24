@@ -6,33 +6,33 @@ procedure test_returns is
 function is_pair(i : in Integer) return Boolean is
   j : Integer;
 begin
-  j := (1);
-  if i < (10)
+  j := 1;
+  if i < 10
   then
-    j := (2);
-    if i = (0)
+    j := 2;
+    if i = 0
     then
-      j := (4);
+      j := 4;
       return TRUE;
     end if;
-    j := (3);
-    if i = (2)
+    j := 3;
+    if i = 2
     then
-      j := (4);
+      j := 4;
       return TRUE;
     end if;
-    j := (5);
+    j := 5;
   end if;
-  j := (6);
-  if i < (20)
+  j := 6;
+  if i < 20
   then
-    if i = (22)
+    if i = 22
     then
-      j := (0);
+      j := 0;
     end if;
-    j := (8);
+    j := 8;
   end if;
-  return (i rem (2)) = (0);
+  return (i rem 2) = 0;
 end;
 
 

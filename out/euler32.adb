@@ -3,6 +3,14 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler32 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
 --
 --We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once;
 --for example, the 5-digit number, 15234, is 1 through 5 pandigital.
@@ -33,15 +41,15 @@ function okdigits(ok : in f_PTR; n : in Integer) return Boolean is
   o : Boolean;
   digit : Integer;
 begin
-  if n = (0)
+  if n = 0
   then
     return TRUE;
   else
-    digit := n rem (10);
+    digit := n rem 10;
     if ok(digit)
     then
       ok(digit) := FALSE;
-      o := okdigits(ok, n / (10));
+      o := okdigits(ok, n / 10);
       ok(digit) := TRUE;
       return o;
     else
@@ -58,58 +66,58 @@ end;
   be : Integer;
   allowed : f_PTR;
 begin
-  count := (0);
-  allowed := new f (0..(10));
-  for i in integer range (0)..(10) - (1) loop
-    allowed(i) := i /= (0);
+  count := 0;
+  allowed := new f (0..10);
+  for i in integer range 0..10 - 1 loop
+    allowed(i) := i /= 0;
   end loop;
-  counted := new f (0..(100000));
-  for j in integer range (0)..(100000) - (1) loop
+  counted := new f (0..100000);
+  for j in integer range 0..100000 - 1 loop
     counted(j) := FALSE;
   end loop;
-  for e in integer range (1)..(9) loop
+  for e in integer range 1..9 loop
     allowed(e) := FALSE;
-    for b in integer range (1)..(9) loop
+    for b in integer range 1..9 loop
       if allowed(b)
       then
         allowed(b) := FALSE;
-        be := (b * e) rem (10);
+        be := (b * e) rem 10;
         if allowed(be)
         then
           allowed(be) := FALSE;
-          for a in integer range (1)..(9) loop
+          for a in integer range 1..9 loop
             if allowed(a)
             then
               allowed(a) := FALSE;
-              for c in integer range (1)..(9) loop
+              for c in integer range 1..9 loop
                 if allowed(c)
                 then
                   allowed(c) := FALSE;
-                  for d in integer range (1)..(9) loop
+                  for d in integer range 1..9 loop
                     if allowed(d)
                     then
                       allowed(d) := FALSE;
                       -- 2 * 3 digits 
                       
-                      product := (a * (10) + b) * (c * (100) + d * (10) + e);
+                      product := (a * 10 + b) * (c * 100 + d * 10 + e);
                       if (not counted(product)) and then
-                      okdigits(allowed, product / (10))
+                      okdigits(allowed, product / 10)
                       then
                         counted(product) := TRUE;
                         count := count + product;
-                        String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(product), Left));
-                        String'Write (Text_Streams.Stream (Current_Output), " ");
+                        PInt(product);
+                        PString(" ");
                       end if;
                       -- 1  * 4 digits 
                       
-                      product2 := b * (a * (1000) + c * (100) + d * (10) + e);
+                      product2 := b * (a * 1000 + c * 100 + d * 10 + e);
                       if (not counted(product2)) and then
-                      okdigits(allowed, product2 / (10))
+                      okdigits(allowed, product2 / 10)
                       then
                         counted(product2) := TRUE;
                         count := count + product2;
-                        String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(product2), Left));
-                        String'Write (Text_Streams.Stream (Current_Output), " ");
+                        PInt(product2);
+                        PString(" ");
                       end if;
                       allowed(d) := TRUE;
                     end if;
@@ -127,6 +135,6 @@ begin
     end loop;
     allowed(e) := TRUE;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(count), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(count);
+  PString("" & Character'Val(10));
 end;

@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure record3 is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -27,8 +32,8 @@ function mktoto(v1 : in Integer) return toto_PTR is
 begin
   t := new toto;
   t.foo := v1;
-  t.bar := (0);
-  t.blah := (0);
+  t.bar := 0;
+  t.blah := 0;
   return t;
 end;
 
@@ -37,9 +42,9 @@ type a_PTR is access a;
 function result(t : in a_PTR; len : in Integer) return Integer is
   out0 : Integer;
 begin
-  out0 := (0);
-  for j in integer range (0)..len - (1) loop
-    t(j).blah := t(j).blah + (1);
+  out0 := 0;
+  for j in integer range 0..len - 1 loop
+    t(j).blah := t(j).blah + 1;
     out0 := out0 + t(j).foo + t(j).blah * t(j).bar + t(j).bar * t(j).foo;
   end loop;
   return out0;
@@ -49,14 +54,14 @@ end;
   titi : Integer;
   t : a_PTR;
 begin
-  t := new a (0..(4));
-  for i in integer range (0)..(4) - (1) loop
+  t := new a (0..4);
+  for i in integer range 0..4 - 1 loop
     t(i) := mktoto(i);
   end loop;
-  Get(t((0)).bar);
+  Get(t(0).bar);
   SkipSpaces;
-  Get(t((1)).blah);
-  titi := result(t, (4));
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(titi), Left));
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(t((2)).blah), Left));
+  Get(t(1).blah);
+  titi := result(t, 4);
+  PInt(titi);
+  PInt(t(2).blah);
 end;

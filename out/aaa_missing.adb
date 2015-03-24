@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure aaa_missing is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -25,22 +34,22 @@ function result(len : in Integer; tab : in c_PTR) return Integer is
   tab2 : b_PTR;
 begin
   tab2 := new b (0..len);
-  for i in integer range (0)..len - (1) loop
+  for i in integer range 0..len - 1 loop
     tab2(i) := FALSE;
   end loop;
-  for i1 in integer range (0)..len - (1) loop
-    String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab(i1)), Left));
-    String'Write (Text_Streams.Stream (Current_Output), " ");
+  for i1 in integer range 0..len - 1 loop
+    PInt(tab(i1));
+    PString(" ");
     tab2(tab(i1)) := TRUE;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  for i2 in integer range (0)..len - (1) loop
+  PString("" & Character'Val(10));
+  for i2 in integer range 0..len - 1 loop
     if (not tab2(i2))
     then
       return i2;
     end if;
   end loop;
-  return (-(1));
+  return (-1);
 end;
 
 
@@ -49,13 +58,13 @@ end;
 begin
   Get(len);
   SkipSpaces;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(len), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(len);
+  PString("" & Character'Val(10));
   tab := new c (0..len);
-  for a in integer range (0)..len - (1) loop
+  for a in integer range 0..len - 1 loop
     Get(tab(a));
     SkipSpaces;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(result(len, tab)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(result(len, tab));
+  PString("" & Character'Val(10));
 end;

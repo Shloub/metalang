@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure euler22 is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -21,10 +30,10 @@ begin
   SkipSpaces;
   Get(len);
   SkipSpaces;
-  sum := (0);
-  for i in integer range (1)..len loop
+  sum := 0;
+  for i in integer range 1..len loop
     Get(c);
-    sum := sum + (Character'Pos(c) - Character'Pos('A')) + (1);
+    sum := sum + (Character'Pos(c) - Character'Pos('A')) + 1;
     --		print c print " " print sum print " " 
     
   end loop;
@@ -35,11 +44,11 @@ end;
   sum : Integer;
   n : Integer;
 begin
-  sum := (0);
+  sum := 0;
   Get(n);
-  for i in integer range (1)..n loop
+  for i in integer range 1..n loop
     sum := sum + i * score;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(sum), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PInt(sum);
+  PString("" & Character'Val(10));
 end;

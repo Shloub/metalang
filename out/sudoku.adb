@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure sudoku is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -21,8 +30,8 @@ function read_sudoku return a_PTR is
   out0 : a_PTR;
   k : Integer;
 begin
-  out0 := new a (0..(9) * (9));
-  for i in integer range (0)..(9) * (9) - (1) loop
+  out0 := new a (0..9 * 9);
+  for i in integer range 0..9 * 9 - 1 loop
     Get(k);
     SkipSpaces;
     out0(i) := k;
@@ -34,23 +43,22 @@ end;
 
 procedure print_sudoku(sudoku0 : in a_PTR) is
 begin
-  for y in integer range (0)..(8) loop
-    for x in integer range (0)..(8) loop
-      String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(sudoku0(x +
-      y * (9))), Left));
-      String'Write (Text_Streams.Stream (Current_Output), " ");
-      if (x rem (3)) = (2)
+  for y in integer range 0..8 loop
+    for x in integer range 0..8 loop
+      PInt(sudoku0(x + y * 9));
+      PString(" ");
+      if (x rem 3) = 2
       then
-        String'Write (Text_Streams.Stream (Current_Output), " ");
+        PString(" ");
       end if;
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-    if (y rem (3)) = (2)
+    PString("" & Character'Val(10));
+    if (y rem 3) = 2
     then
-      String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+      PString("" & Character'Val(10));
     end if;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+  PString("" & Character'Val(10));
 end;
 
 -- dit si les variables sont toutes différentes 
@@ -61,8 +69,8 @@ end;
 
 function sudoku_done(s : in a_PTR) return Boolean is
 begin
-  for i in integer range (0)..(80) loop
-    if s(i) = (0)
+  for i in integer range 0..80 loop
+    if s(i) = 0
     then
       return FALSE;
     end if;
@@ -78,1470 +86,1476 @@ function sudoku_error(s : in a_PTR) return Boolean is
   out1 : Boolean;
 begin
   out1 := FALSE;
-  for x in integer range (0)..(8) loop
-    out1 := out1 or else (s(x) /= (0) and then s(x) = s(x + (9))) or else (s(x) /=
-                                                                            (0) and then
-                                                                            s(x) =
-                                                                            s(x +
-                                                                            (9) *
-                                                                            (2))) or else (s(x +
-                                                                                (9)) /=
-                                                                                (0) and then
+  for x in integer range 0..8 loop
+    out1 := out1 or else (s(x) /= 0 and then s(x) = s(x + 9)) or else (s(x) /=
+                                                                        0 and then
+                                                                        s(x) =
+                                                                        s(x +
+                                                                        9 * 2)) or else (s(x +
+                                                                                9) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9)) =
+                                                                                9) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (2))) or else (s(x) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                2)) or else (s(x) /=
+                                                                                0 and then
                                                                                 s(x) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3))) or else (s(x +
-                                                                                (9)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                3)) or else (s(x +
+                                                                                9) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9)) =
+                                                                                9) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3))) or else (s(x +
-                                                                                (9) *
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                3)) or else (s(x +
+                                                                                9 *
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (2)) =
+                                                                                9 *
+                                                                                2) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3))) or else (s(x) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                3)) or else (s(x) /=
+                                                                                0 and then
                                                                                 s(x) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4))) or else (s(x +
-                                                                                (9)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                4)) or else (s(x +
+                                                                                9) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9)) =
+                                                                                9) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4))) or else (s(x +
-                                                                                (9) *
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                4)) or else (s(x +
+                                                                                9 *
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (2)) =
+                                                                                9 *
+                                                                                2) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4))) or else (s(x +
-                                                                                (9) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                4)) or else (s(x +
+                                                                                9 *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3)) =
+                                                                                9 *
+                                                                                3) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4))) or else (s(x) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                4)) or else (s(x) /=
+                                                                                0 and then
                                                                                 s(x) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5))) or else (s(x +
-                                                                                (9)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                5)) or else (s(x +
+                                                                                9) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9)) =
+                                                                                9) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5))) or else (s(x +
-                                                                                (9) *
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                5)) or else (s(x +
+                                                                                9 *
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (2)) =
+                                                                                9 *
+                                                                                2) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5))) or else (s(x +
-                                                                                (9) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                5)) or else (s(x +
+                                                                                9 *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3)) =
+                                                                                9 *
+                                                                                3) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5))) or else (s(x +
-                                                                                (9) *
-                                                                                (4)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                5)) or else (s(x +
+                                                                                9 *
+                                                                                4) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4)) =
+                                                                                9 *
+                                                                                4) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5))) or else (s(x) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                5)) or else (s(x) /=
+                                                                                0 and then
                                                                                 s(x) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6))) or else (s(x +
-                                                                                (9)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                6)) or else (s(x +
+                                                                                9) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9)) =
+                                                                                9) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6))) or else (s(x +
-                                                                                (9) *
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                6)) or else (s(x +
+                                                                                9 *
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (2)) =
+                                                                                9 *
+                                                                                2) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6))) or else (s(x +
-                                                                                (9) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                6)) or else (s(x +
+                                                                                9 *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3)) =
+                                                                                9 *
+                                                                                3) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6))) or else (s(x +
-                                                                                (9) *
-                                                                                (4)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                6)) or else (s(x +
+                                                                                9 *
+                                                                                4) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4)) =
+                                                                                9 *
+                                                                                4) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6))) or else (s(x +
-                                                                                (9) *
-                                                                                (5)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                6)) or else (s(x +
+                                                                                9 *
+                                                                                5) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5)) =
+                                                                                9 *
+                                                                                5) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6))) or else (s(x) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                6)) or else (s(x) /=
+                                                                                0 and then
                                                                                 s(x) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7))) or else (s(x +
-                                                                                (9)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                7)) or else (s(x +
+                                                                                9) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9)) =
+                                                                                9) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7))) or else (s(x +
-                                                                                (9) *
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                7)) or else (s(x +
+                                                                                9 *
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (2)) =
+                                                                                9 *
+                                                                                2) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7))) or else (s(x +
-                                                                                (9) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                7)) or else (s(x +
+                                                                                9 *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3)) =
+                                                                                9 *
+                                                                                3) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7))) or else (s(x +
-                                                                                (9) *
-                                                                                (4)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                7)) or else (s(x +
+                                                                                9 *
+                                                                                4) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4)) =
+                                                                                9 *
+                                                                                4) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7))) or else (s(x +
-                                                                                (9) *
-                                                                                (5)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                7)) or else (s(x +
+                                                                                9 *
+                                                                                5) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5)) =
+                                                                                9 *
+                                                                                5) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7))) or else (s(x +
-                                                                                (9) *
-                                                                                (6)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                7)) or else (s(x +
+                                                                                9 *
+                                                                                6) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6)) =
+                                                                                9 *
+                                                                                6) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7))) or else (s(x) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                7)) or else (s(x) /=
+                                                                                0 and then
                                                                                 s(x) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8))) or else (s(x +
-                                                                                (9)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                8)) or else (s(x +
+                                                                                9) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9)) =
+                                                                                9) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8))) or else (s(x +
-                                                                                (9) *
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                8)) or else (s(x +
+                                                                                9 *
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (2)) =
+                                                                                9 *
+                                                                                2) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8))) or else (s(x +
-                                                                                (9) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                8)) or else (s(x +
+                                                                                9 *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (3)) =
+                                                                                9 *
+                                                                                3) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8))) or else (s(x +
-                                                                                (9) *
-                                                                                (4)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                8)) or else (s(x +
+                                                                                9 *
+                                                                                4) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (4)) =
+                                                                                9 *
+                                                                                4) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8))) or else (s(x +
-                                                                                (9) *
-                                                                                (5)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                8)) or else (s(x +
+                                                                                9 *
+                                                                                5) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (5)) =
+                                                                                9 *
+                                                                                5) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8))) or else (s(x +
-                                                                                (9) *
-                                                                                (6)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                8)) or else (s(x +
+                                                                                9 *
+                                                                                6) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (6)) =
+                                                                                9 *
+                                                                                6) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8))) or else (s(x +
-                                                                                (9) *
-                                                                                (7)) /=
-                                                                                (0) and then
+                                                                                9 *
+                                                                                8)) or else (s(x +
+                                                                                9 *
+                                                                                7) /=
+                                                                                0 and then
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (7)) =
+                                                                                9 *
+                                                                                7) =
                                                                                 s(x +
-                                                                                (9) *
-                                                                                (8)));
+                                                                                9 *
+                                                                                8));
   end loop;
   out2 := FALSE;
-  for x in integer range (0)..(8) loop
-    out2 := out2 or else (s(x * (9)) /= (0) and then s(x * (9)) = s(x * (9) +
-                           (1))) or else (s(x * (9)) /= (0) and then s(x *
-                                           (9)) = s(x * (9) + (2))) or else (s(x *
-                                                                              (9) +
-                                                                              (1)) /=
-                                                                              (0) and then
-                                                                              s(x *
-                                                                              (9) +
-                                                                              (1)) =
-                                                                              s(x *
-                                                                              (9) +
-                                                                              (2))) or else (s(x *
-                                                                                (9)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3))) or else (s(x *
-                                                                                (9) +
-                                                                                (1)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (1)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3))) or else (s(x *
-                                                                                (9) +
-                                                                                (2)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (2)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3))) or else (s(x *
-                                                                                (9)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4))) or else (s(x *
-                                                                                (9) +
-                                                                                (1)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (1)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4))) or else (s(x *
-                                                                                (9) +
-                                                                                (2)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (2)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4))) or else (s(x *
-                                                                                (9) +
-                                                                                (3)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4))) or else (s(x *
-                                                                                (9)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5))) or else (s(x *
-                                                                                (9) +
-                                                                                (1)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (1)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5))) or else (s(x *
-                                                                                (9) +
-                                                                                (2)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (2)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5))) or else (s(x *
-                                                                                (9) +
-                                                                                (3)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5))) or else (s(x *
-                                                                                (9) +
-                                                                                (4)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5))) or else (s(x *
-                                                                                (9)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6))) or else (s(x *
-                                                                                (9) +
-                                                                                (1)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (1)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6))) or else (s(x *
-                                                                                (9) +
-                                                                                (2)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (2)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6))) or else (s(x *
-                                                                                (9) +
-                                                                                (3)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6))) or else (s(x *
-                                                                                (9) +
-                                                                                (4)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6))) or else (s(x *
-                                                                                (9) +
-                                                                                (5)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6))) or else (s(x *
-                                                                                (9)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7))) or else (s(x *
-                                                                                (9) +
-                                                                                (1)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (1)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7))) or else (s(x *
-                                                                                (9) +
-                                                                                (2)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (2)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7))) or else (s(x *
-                                                                                (9) +
-                                                                                (3)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7))) or else (s(x *
-                                                                                (9) +
-                                                                                (4)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7))) or else (s(x *
-                                                                                (9) +
-                                                                                (5)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7))) or else (s(x *
-                                                                                (9) +
-                                                                                (6)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7))) or else (s(x *
-                                                                                (9)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8))) or else (s(x *
-                                                                                (9) +
-                                                                                (1)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (1)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8))) or else (s(x *
-                                                                                (9) +
-                                                                                (2)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (2)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8))) or else (s(x *
-                                                                                (9) +
-                                                                                (3)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (3)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8))) or else (s(x *
-                                                                                (9) +
-                                                                                (4)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (4)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8))) or else (s(x *
-                                                                                (9) +
-                                                                                (5)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (5)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8))) or else (s(x *
-                                                                                (9) +
-                                                                                (6)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (6)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8))) or else (s(x *
-                                                                                (9) +
-                                                                                (7)) /=
-                                                                                (0) and then
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (7)) =
-                                                                                s(x *
-                                                                                (9) +
-                                                                                (8)));
+  for x in integer range 0..8 loop
+    out2 := out2 or else (s(x * 9) /= 0 and then s(x * 9) = s(x * 9 + 1)) or else (s(x *
+                                                                                9) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                2)) or else (s(x *
+                                                                                9 +
+                                                                                1) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                1) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                2)) or else (s(x *
+                                                                                9) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                3)) or else (s(x *
+                                                                                9 +
+                                                                                1) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                1) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                3)) or else (s(x *
+                                                                                9 +
+                                                                                2) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                2) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                3)) or else (s(x *
+                                                                                9) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                4)) or else (s(x *
+                                                                                9 +
+                                                                                1) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                1) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                4)) or else (s(x *
+                                                                                9 +
+                                                                                2) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                2) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                4)) or else (s(x *
+                                                                                9 +
+                                                                                3) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                3) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                4)) or else (s(x *
+                                                                                9) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                5)) or else (s(x *
+                                                                                9 +
+                                                                                1) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                1) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                5)) or else (s(x *
+                                                                                9 +
+                                                                                2) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                2) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                5)) or else (s(x *
+                                                                                9 +
+                                                                                3) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                3) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                5)) or else (s(x *
+                                                                                9 +
+                                                                                4) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                4) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                5)) or else (s(x *
+                                                                                9) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                6)) or else (s(x *
+                                                                                9 +
+                                                                                1) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                1) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                6)) or else (s(x *
+                                                                                9 +
+                                                                                2) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                2) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                6)) or else (s(x *
+                                                                                9 +
+                                                                                3) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                3) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                6)) or else (s(x *
+                                                                                9 +
+                                                                                4) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                4) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                6)) or else (s(x *
+                                                                                9 +
+                                                                                5) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                5) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                6)) or else (s(x *
+                                                                                9) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                7)) or else (s(x *
+                                                                                9 +
+                                                                                1) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                1) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                7)) or else (s(x *
+                                                                                9 +
+                                                                                2) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                2) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                7)) or else (s(x *
+                                                                                9 +
+                                                                                3) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                3) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                7)) or else (s(x *
+                                                                                9 +
+                                                                                4) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                4) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                7)) or else (s(x *
+                                                                                9 +
+                                                                                5) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                5) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                7)) or else (s(x *
+                                                                                9 +
+                                                                                6) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                6) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                7)) or else (s(x *
+                                                                                9) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8)) or else (s(x *
+                                                                                9 +
+                                                                                1) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                1) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8)) or else (s(x *
+                                                                                9 +
+                                                                                2) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                2) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8)) or else (s(x *
+                                                                                9 +
+                                                                                3) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                3) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8)) or else (s(x *
+                                                                                9 +
+                                                                                4) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                4) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8)) or else (s(x *
+                                                                                9 +
+                                                                                5) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                5) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8)) or else (s(x *
+                                                                                9 +
+                                                                                6) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                6) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8)) or else (s(x *
+                                                                                9 +
+                                                                                7) /=
+                                                                                0 and then
+                                                                                s(x *
+                                                                                9 +
+                                                                                7) =
+                                                                                s(x *
+                                                                                9 +
+                                                                                8));
   end loop;
   out3 := FALSE;
-  for x in integer range (0)..(8) loop
-    out3 := out3 or else (s((x rem (3)) * (3) * (9) + (x / (3)) * (3)) /=
-                           (0) and then s((x rem (3)) * (3) * (9) + (x / (3)) *
-                           (3)) = s((x rem (3)) * (3) * (9) + (x / (3)) * (3) +
-                           (1))) or else (s((x rem (3)) * (3) * (9) +
-                                           (x / (3)) * (3)) /= (0) and then
-                                           s((x rem (3)) * (3) * (9) +
-                                           (x / (3)) * (3)) = s((x rem (3)) *
-                                           (3) * (9) + (x / (3)) * (3) + (2))) or else (s(
+  for x in integer range 0..8 loop
+    out3 := out3 or else (s((x rem 3) * 3 * 9 + (x / 3) * 3) /= 0 and then
+                           s((x rem 3) * 3 * 9 + (x / 3) * 3) = s((x rem 3) *
+                           3 * 9 + (x / 3) * 3 + 1)) or else (s((x rem 3) * 3 *
+                                                               9 + (x / 3) *
+                                                               3) /= 0 and then
+                                                               s((x rem 3) * 3 *
+                                                               9 + (x / 3) *
+                                                               3) =
+                                                               s((x rem 3) * 3 *
+                                                               9 + (x / 3) * 3 +
+                                                               2)) or else (s((x rem
+                                                                                3) *
+                                                                             3 *
+                                                                             9 +
+                                                                             (x /
+                                                                               3) *
+                                                                             3 +
+                                                                             1) /=
+                                                                             0 and then
+                                                                             s((x rem
+                                                                                3) *
+                                                                             3 *
+                                                                             9 +
+                                                                             (x /
+                                                                               3) *
+                                                                             3 +
+                                                                             1) =
+                                                                             s((x rem
+                                                                                3) *
+                                                                             3 *
+                                                                             9 +
+                                                                             (x /
+                                                                               3) *
+                                                                             3 +
+                                                                             2)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
-                                                                                s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
-                                                                                (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
-                                                                                (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
-                                                                                (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
-                                                                                s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
-                                                                                (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3))) or else (s(
+                                                                                3) *
+                                                                                3)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                1)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 (x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s((x rem
-                                                                                (3)) *
-                                                                                (3) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                2) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                1) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                2) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3)) =
+                                                                                3) *
+                                                                                3) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2))) or else (s(
+                                                                                3) *
+                                                                                3 +
+                                                                                2)) or else (s(
                                                                                 ((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) /=
-                                                                                (0) and then
+                                                                                3) *
+                                                                                3 +
+                                                                                1) /=
+                                                                                0 and then
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (1)) =
+                                                                                3) *
+                                                                                3 +
+                                                                                1) =
                                                                                 s(((x rem
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)) *
-                                                                                (9) +
+                                                                                3) *
+                                                                                3 +
+                                                                                2) *
+                                                                                9 +
                                                                                 (x /
-                                                                                (3)) *
-                                                                                (3) +
-                                                                                (2)));
+                                                                                3) *
+                                                                                3 +
+                                                                                2));
   end loop;
   return out1 or else out2 or else out3;
 end;
@@ -1558,17 +1572,17 @@ begin
   then
     return TRUE;
   end if;
-  for i in integer range (0)..(80) loop
-    if sudoku0(i) = (0)
+  for i in integer range 0..80 loop
+    if sudoku0(i) = 0
     then
-      for p in integer range (1)..(9) loop
+      for p in integer range 1..9 loop
         sudoku0(i) := p;
         if solve(sudoku0)
         then
           return TRUE;
         end if;
       end loop;
-      sudoku0(i) := (0);
+      sudoku0(i) := 0;
       return FALSE;
     end if;
   end loop;
@@ -1584,6 +1598,6 @@ begin
   then
     print_sudoku(sudoku0);
   else
-    String'Write (Text_Streams.Stream (Current_Output), "no solution" & Character'Val(10));
+    PString("no solution" & Character'Val(10));
   end if;
 end;

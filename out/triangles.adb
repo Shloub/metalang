@@ -3,6 +3,15 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure triangles is
+procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -32,23 +41,23 @@ begin
   --	Cette fonction est récursive
   --	
   
-  if y = len - (1)
+  if y = len - 1
   then
     return tab(y)(x);
   else
     if x > y
     then
-      return (-(10000));
+      return (-10000);
     else
-      if cache(y)(x) /= (0)
+      if cache(y)(x) /= 0
       then
         return cache(y)(x);
       end if;
     end if;
   end if;
-  result := (0);
-  out0 := find0(len, tab, cache, x, y + (1));
-  out1 := find0(len, tab, cache, x + (1), y + (1));
+  result := 0;
+  out0 := find0(len, tab, cache, x, y + 1);
+  out1 := find0(len, tab, cache, x + 1, y + 1);
   if out0 > out1
   then
     result := out0 + tab(y)(x);
@@ -64,14 +73,14 @@ function find(len : in Integer; tab : in b_PTR) return Integer is
   tab2 : b_PTR;
 begin
   tab2 := new b (0..len);
-  for i in integer range (0)..len - (1) loop
-    tab3 := new a (0..i + (1));
-    for j in integer range (0)..i + (1) - (1) loop
-      tab3(j) := (0);
+  for i in integer range 0..len - 1 loop
+    tab3 := new a (0..i + 1);
+    for j in integer range 0..i + 1 - 1 loop
+      tab3(j) := 0;
     end loop;
     tab2(i) := tab3;
   end loop;
-  return find0(len, tab, tab2, (0), (0));
+  return find0(len, tab, tab2, 0, 0);
 end;
 
 
@@ -80,27 +89,27 @@ end;
   tab : b_PTR;
   len : Integer;
 begin
-  len := (0);
+  len := 0;
   Get(len);
   SkipSpaces;
   tab := new b (0..len);
-  for i in integer range (0)..len - (1) loop
-    tab2 := new a (0..i + (1));
-    for j in integer range (0)..i + (1) - (1) loop
-      tmp := (0);
+  for i in integer range 0..len - 1 loop
+    tab2 := new a (0..i + 1);
+    for j in integer range 0..i + 1 - 1 loop
+      tmp := 0;
       Get(tmp);
       SkipSpaces;
       tab2(j) := tmp;
     end loop;
     tab(i) := tab2;
   end loop;
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(find(len, tab)), Left));
-  String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
-  for k in integer range (0)..len - (1) loop
-    for l in integer range (0)..k loop
-      String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(tab(k)(l)), Left));
-      String'Write (Text_Streams.Stream (Current_Output), " ");
+  PInt(find(len, tab));
+  PString("" & Character'Val(10));
+  for k in integer range 0..len - 1 loop
+    for l in integer range 0..k loop
+      PInt(tab(k)(l));
+      PString(" ");
     end loop;
-    String'Write (Text_Streams.Stream (Current_Output), "" & Character'Val(10));
+    PString("" & Character'Val(10));
   end loop;
 end;

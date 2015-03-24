@@ -3,6 +3,11 @@ with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fix
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
 
 procedure fibo is
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
 procedure SkipSpaces is
   C : Character;
   Eol : Boolean;
@@ -23,10 +28,10 @@ function fibo0(a : in Integer; b : in Integer; i : in Integer) return Integer is
   b2 : Integer;
   a2 : Integer;
 begin
-  out0 := (0);
+  out0 := 0;
   a2 := a;
   b2 := b;
-  for j in integer range (0)..i + (1) loop
+  for j in integer range 0..i + 1 loop
     out0 := out0 + a2;
     tmp := b2;
     b2 := b2 + a2;
@@ -40,13 +45,13 @@ end;
   b : Integer;
   a : Integer;
 begin
-  a := (0);
-  b := (0);
-  i := (0);
+  a := 0;
+  b := 0;
+  i := 0;
   Get(a);
   SkipSpaces;
   Get(b);
   SkipSpaces;
   Get(i);
-  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(fibo0(a, b, i)), Left));
+  PInt(fibo0(a, b, i));
 end;
