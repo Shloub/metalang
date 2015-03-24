@@ -68,7 +68,7 @@ class adaPrinter = object(self)
   | false -> Format.fprintf f "FALSE"
 
   method integer f i =
-    Format.fprintf f "(%d)" i
+    Format.fprintf f "%d" i
 
   method unop f op a =
     Format.fprintf f "(%a)" (fun f () -> super#unop f op a) ()
@@ -82,9 +82,9 @@ class adaPrinter = object(self)
 
   method print f t expr =
     match Type.unfix t with
-    | Type.Integer -> Format.fprintf f "@[<hov>String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(%a), Left));@]" self#expr expr
-    | Type.Char -> Format.fprintf f "@[<hov>Character'Write (Text_Streams.Stream (Current_Output), %a);@]" self#expr expr
-    | _ -> Format.fprintf f "@[<hov>String'Write (Text_Streams.Stream (Current_Output), %a);@]" self#expr expr
+    | Type.Integer -> Format.fprintf f "@[<hov>PInt(%a);@]" self#expr expr
+    | Type.Char -> Format.fprintf f "@[<hov>PChar(%a);@]" self#expr expr
+    | _ -> Format.fprintf f "@[<hov>PString(%a);@]" self#expr expr
 
   method comment f s =
     let lic = String.split s '\n' in
@@ -147,13 +147,38 @@ class adaPrinter = object(self)
   | _ -> assert false (* type non géré*)
 
   method prog f prog =
+    let contains t0 =
+      contains_instr (fun i -> match Instr.unfix i with
+      | Instr.Print (t, _) -> Type.unfix t = t0
+      | _ -> false) prog
+    in
     Format.fprintf f "
 with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
 use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
-%a%a@\n%a%a%a"
+%a%a@\n%a%a%a%a%a%a"
 (fun f () -> if Tags.is_taged "use_math"
 then Format.fprintf f "with Ada.Numerics.Elementary_Functions;@\n") ()
 (fun f () -> self#decl_procedure f prog.Prog.progname [] ) ()
+(fun f () -> if contains Type.String then
+Format.fprintf f "procedure PString(s : String) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), s);
+end;
+") ()
+(fun f () -> if contains Type.Char then
+Format.fprintf f "procedure PChar(c : in Character) is
+begin
+  Character'Write (Text_Streams.Stream (Current_Output), c);
+end;
+") ()
+(fun f () -> if contains Type.Integer then
+Format.fprintf f "procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+") ()
+
+
 (fun f () ->
 if prog.Prog.hasSkip then
 Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : Boolean;@]@\nbegin@\n  @[<v>loop@\n  @[<v>Look_Ahead(C, Eol);@\nexit when Eol or C /= ' ';@\nGet(C);@]@\nend loop;@]@\nend;@]@\n"
