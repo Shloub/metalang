@@ -26,7 +26,7 @@ Object subclass: devine [
         ifTrue:[min0 :=  (tab at: (i + 1)).].
       ((tab at: (i + 1)) > nombre)
         ifTrue:[max0 :=  (tab at: (i + 1)).].
-      ((((tab at: (i + 1)) = nombre)) and: [(len ~= (i + 1))])
+      (((tab at: (i + 1)) = nombre) & (len ~= (i + 1)))
         ifTrue:[^ false].
     ].
     ^ true

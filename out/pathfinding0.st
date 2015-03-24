@@ -25,9 +25,9 @@ Object subclass: pathfinding0 [
     ]
   ]
    pathfind_aux: cache tab: tab x: x y: y posX: posX posY: posY [|val4 val3 val2 val1 out0|
-    (((posX = (x - 1))) and: [(posY = (y - 1))])
+    ((posX = (x - 1)) & (posY = (y - 1)))
       ifTrue:[^ 0]
-      ifFalse:[(((((((posX < 0)) or: [(posY < 0)])) or: [(posX >= x)])) or: [(posY >= y)])
+      ifFalse:[((((posX < 0) | (posY < 0)) | (posX >= x)) | (posY >= y))
                 ifTrue:[^ (x * y * 10)]
                 ifFalse:[(((tab at: (posY + 1)) at: (posX + 1)) = $#)
                           ifTrue:[^ (x * y * 10)]

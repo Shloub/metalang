@@ -6,7 +6,7 @@ Object subclass: euler05 [
       tab at: (i + 1) put:  0.
     ].
     d := 2.
-    [(((n ~= 1)) and: [(d * d <= n)])] whileTrue:
+    [((n ~= 1) & (d * d <= n))] whileTrue:
     [((n rem: d) = 0)
       ifTrue:[
              tab at: (d + 1) put:  ((tab at: (d + 1)) + 1).

@@ -14,7 +14,7 @@ Object subclass: euler33 [
     (1 to: 9) do: [:i|
       (1 to: 9) do: [:j|
         (1 to: 9) do: [:k|
-          (((i ~= j)) and: [(j ~= k)])
+          ((i ~= j) & (j ~= k))
             ifTrue:[
                    a := (i * 10 + j).
                    b := (j * 10 + k).

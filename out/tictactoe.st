@@ -75,11 +75,11 @@ Tictactoe : un tictactoe avec une IA
           ifTrue:[freecase :=  (freecase + 1).].
         colv := (((g cases) at: (x + 1)) at: (y + 1)).
         linv := (((g cases) at: (y + 1)) at: (x + 1)).
-        (((col = (0-(1)))) and: [(colv ~= 0)])
+        ((col = (0-(1))) & (colv ~= 0))
           ifTrue:[col :=  colv.]
           ifFalse:[(colv ~= col)
                     ifTrue:[col :=  (0-(2)).].].
-        (((lin = (0-(1)))) and: [(linv ~= 0)])
+        ((lin = (0-(1))) & (linv ~= 0))
           ifTrue:[lin :=  linv.]
           ifFalse:[(linv ~= lin)
                     ifTrue:[lin :=  (0-(2)).].].
@@ -95,7 +95,7 @@ Tictactoe : un tictactoe avec une IA
       ((((((((g cases) at: (0 + 1)) at: (2 + 1)) = x)) and: [((((g cases) at: (1 + 1)) at: (1 + 1)) = x)])) and: [((((g cases) at: (2 + 1)) at: (0 + 1)) = x)])
         ifTrue:[win :=  x.].
     ].
-    g ended:  (((win ~= 0)) or: [(freecase = 0)]).
+    g ended:  ((win ~= 0) | (freecase = 0)).
     (win = 1)
       ifTrue:[g note:  1000.]
       ifFalse:[(win = 2)

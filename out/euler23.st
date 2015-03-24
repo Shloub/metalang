@@ -6,7 +6,7 @@ Object subclass: euler23 [
         ifTrue:[
                n :=  (n + 1).
                j := (i * i).
-               [(((j < max0)) and: [(j > 0)])] whileTrue:
+               [((j < max0) & (j > 0))] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -101,7 +101,7 @@ Object subclass: euler23 [
     ].
     (1 to: n) do: [:i|
       (1 to: n) do: [:j|
-        (((((abondant at: (i + 1))) and: [(abondant at: (j + 1))])) and: [(i + j <= n)])
+        ((((abondant at: (i + 1))) and: [(abondant at: (j + 1))]) & (i + j <= n))
           ifTrue:[summable at: (i + j + 1) put:  true.].
       ].
     ].

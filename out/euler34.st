@@ -34,7 +34,7 @@ Object subclass: euler34 [
                                     ].
                            ].
                   ].
-                (((((sum = num)) and: [(sum ~= 1)])) and: [(sum ~= 2)])
+                (((sum = num) & (sum ~= 1)) & (sum ~= 2))
                   ifTrue:[
                          out0 :=  (out0 + num).
                          (num) display.

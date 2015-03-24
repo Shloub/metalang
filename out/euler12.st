@@ -6,7 +6,7 @@ Object subclass: euler12 [
         ifTrue:[
                j := (i * i).
                n :=  (n + 1).
-               [(((j < max0)) and: [(j > 0)])] whileTrue:
+               [((j < max0) & (j > 0))] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).

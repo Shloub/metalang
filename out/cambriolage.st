@@ -34,7 +34,7 @@ Object subclass: cambriolage [
       max_ancient_pp :=  ((max_ancient_pp) max: ((pp at: (0 + 1)))).
       max_recent_pp :=  ((max_recent_pp) max: ((pp at: (1 + 1)))).
     ].
-    (((max_ancient_pp >= max_ancient)) and: [(max_recent_pp >= max_recent)])
+    ((max_ancient_pp >= max_ancient) & (max_recent_pp >= max_recent))
       ifTrue:[^ 2]
       ifFalse:[^ 0].
   ]

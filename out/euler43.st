@@ -51,7 +51,7 @@ d6 = 5 ou d6 = 0
                                          ifTrue:[
                                                 allowed at: (d9 + 1) put:  false.
                                                 (1 to: 9) do: [:d10|
-                                                  (((((((allowed at: (d10 + 1))) and: [(((d6 * 100 + (d7 * 10) + d8) rem: 11) = 0)])) and: [(((d7 * 100 + (d8 * 10) + d9) rem: 13) = 0)])) and: [(((d8 * 100 + (d9 * 10) + d10) rem: 17) = 0)])
+                                                  ((((allowed at: (d10 + 1)) & (((d6 * 100 + (d7 * 10) + d8) rem: 11) = 0)) & (((d7 * 100 + (d8 * 10) + d9) rem: 13) = 0)) & (((d8 * 100 + (d9 * 10) + d10) rem: 17) = 0))
                                                     ifTrue:[
                                                            allowed at: (d10 + 1) put:  false.
                                                            (0 to: 9) do: [:d5|

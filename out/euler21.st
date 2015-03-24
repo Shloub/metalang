@@ -6,7 +6,7 @@ Object subclass: euler21 [
         ifTrue:[
                n :=  (n + 1).
                j := (i * i).
-               [(((j < max0)) and: [(j > 0)])] whileTrue:
+               [((j < max0) & (j > 0))] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).

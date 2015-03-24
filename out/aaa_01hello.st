@@ -9,7 +9,7 @@ Object subclass: aaa_01hello [
     (a) display.
     'foo' display.
     '' display.
-    b := (((1 + ((1 + 1 * 2 * (3 + 8)) quo: 4) - (1 - 2) - 3 = 12)) and: [true]).
+    b := ((1 + ((1 + 1 * 2 * (3 + 8)) quo: 4) - (1 - 2) - 3 = 12) & true).
     b
       ifTrue:['True' display.]
       ifFalse:['False' display.].
@@ -21,11 +21,11 @@ Object subclass: aaa_01hello [
       ifFalse:['False' display.].
     (((4 + 1) quo: 3) quo: (2 + 1)) display.
     (((4 * 1) quo: 3) quo: (2 * 1)) display.
-    d := (((((((a = 0)) not)) and: [(((a = 4)) not)])) not).
+    d := ((((((a = 0)) not) & (((a = 4)) not))) not).
     d
       ifTrue:['True' display.]
       ifFalse:['False' display.].
-    e := ((((true) and: [((false) not)])) and: [((((true) and: [false])) not)]).
+    e := ((true & ((false) not)) & (((true & false)) not)).
     e
       ifTrue:['True' display.]
       ifFalse:['False' display.].

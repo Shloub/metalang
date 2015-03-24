@@ -24,7 +24,7 @@ Object subclass: euler11 [
     ]
   ]
    find: n m: m x: x y: y dx: dx dy: dy [
-    (((((((x < 0)) or: [(x = 20)])) or: [(y < 0)])) or: [(y = 20)])
+    ((((x < 0) | (x = 20)) | (y < 0)) | (y = 20))
       ifTrue:[^ (0-(1))]
       ifFalse:[(n = 0)
                 ifTrue:[^ 1]

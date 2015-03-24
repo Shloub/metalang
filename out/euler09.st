@@ -8,7 +8,7 @@ Object subclass: euler09 [
         c := (1000 - a - b).
         a2b2 := (a * a + (b * b)).
         cc := (c * c).
-        (((cc = a2b2)) and: [(c > a)])
+        ((cc = a2b2) & (c > a))
           ifTrue:[
                  (a) display.
                  '
