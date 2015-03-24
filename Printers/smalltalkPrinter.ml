@@ -78,11 +78,27 @@ class smalltalkPrinter = object(self)
       | Expr.Diff -> "~="
       )
 
-  method binop f op a b =
+  method pop op = op = Expr.Div || op = Expr.Mod || op = Expr.Or || op = Expr.And
+
+  method binopl f op a b =
     match op with
-    | Expr.Or -> Format.fprintf f "((%a) ifTrue:[true] ifFalse: [%a])" self#expr a self#expr b
-    | Expr.And -> Format.fprintf f "((%a) ifTrue:[%a] ifFalse: [false])" self#expr a self#expr b
-    | _ -> Format.fprintf f "(%a %a %a)" self#expr a self#print_op op self#expr b
+    | Expr.Or -> Format.fprintf f "(%a) or: [%a]" self#expr a self#expr b
+    | Expr.And -> Format.fprintf f "(%a) and: [%a]" self#expr a self#expr b
+    | _ ->
+        let d () = Format.fprintf f "%a %a %a" self#expr a self#print_op op self#expr b in
+        if self#pop op then d () else
+        match Expr.unfix a with
+        | Expr.BinOp (c, op2, d) when not(self#pop op2) ->
+            Format.fprintf f "%a %a %a" (fun f () -> self#binopl f op2 c d) () self#print_op op self#expr b
+        | _ -> d ()
+
+  method binop f op a b =
+    match Expr.unfix a with
+    | Expr.BinOp (c, op2, d) when not(self#pop op) && not(self#pop op2) ->
+        Format.fprintf f "(%a %a %a)" (fun f () -> self#binopl f op2 c d) () self#print_op op self#expr b
+    | _ -> Format.fprintf f "(%a)" (fun f () -> self#binopl f op a b) ()
+
+
           
   method if_ f e ifcase elsecase =
     match elsecase with
