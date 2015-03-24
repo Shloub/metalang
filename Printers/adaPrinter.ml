@@ -161,15 +161,8 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
       self#proglist prog.Prog.funs
       (print_option self#main) prog.Prog.main
 
-  method call f var li =
-    match StringMap.find_opt var macros with
-    | Some ( (t, params, code) ) ->
-      self#expand_macro_call f var t params code li
-    | None ->
-      if li = [] then Format.fprintf f "%a;" self#funname var
-      else Format.fprintf f "@[<hov>%a(%a);@]"
-        self#funname var
-        (print_list self#expr sep_c) li
+  method call f var li = Format.fprintf f "%a;" (fun f () -> self#apply f var li) ()
+
  method apply f var li =
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
