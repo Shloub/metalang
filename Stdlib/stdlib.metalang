@@ -113,6 +113,7 @@ macro int native_macro_max2(int a, int b)
   hs do "(max <$> ($a) <*> ($b))"
   hs_pure do "max $a $b"
   fs do "$a $b max"
+  st do "(($a) max: ($b))"
   * do "max($a, $b)"
 end
 tag macro_native_macro_max2_pure
@@ -136,6 +137,7 @@ def lexems macro_max2(lexems a, lexems b)
   current_language() == LANG_Pas ||
   current_language() == LANG_Hs ||
   current_language() == LANG_Rb ||
+  current_language() == LANG_St ||
   current_language() == LANG_Fs
   then
     return { 
@@ -168,6 +170,7 @@ macro int native_macro_min2(int a, int b)
   hs do "(min <$> ($a) <*> ($b))"
   hs_pure do "min $a $b"
   fs do "$a $b min"
+  st do "(($a) min: ($b))"
   * do "min($a, $b)"
 end
 
@@ -217,7 +220,8 @@ def lexems macro_min2(lexems a, lexems b)
   current_language() == LANG_Vb ||
   current_language() == LANG_Pl ||
   current_language() == LANG_Pas ||
-  current_language() == LANG_Lua||
+  current_language() == LANG_Lua ||
+  current_language() == LANG_St ||
   current_language() == LANG_Hs
   then
     return { 
