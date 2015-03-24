@@ -1,19 +1,7 @@
 Object subclass: euler33 [
-   max2_: a b: b [
-    (a > b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
-   min2_: a b: b [
-    (a < b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
    pgcd: a b: b [|reste d c|
-    c := (self min2_: a b: b).
-    d := (self max2_: a b: b).
+    c := ((a) min: (b)).
+    d := ((a) max: (b)).
     reste := (d rem: c).
     (reste = 0)
       ifTrue:[^ c]
@@ -26,11 +14,11 @@ Object subclass: euler33 [
     (1 to: 9) do: [:i|
       (1 to: 9) do: [:j|
         (1 to: 9) do: [:k|
-          (((i ~= j)) ifTrue:[(j ~= k)] ifFalse: [false])
+          (((i ~= j)) and: [(j ~= k)])
             ifTrue:[
-                   a := ((i * 10) + j).
-                   b := ((j * 10) + k).
-                   ((a * k) = (i * b))
+                   a := (i * 10 + j).
+                   b := (j * 10 + k).
+                   (a * k = (i * b))
                      ifTrue:[
                             (a) display.
                             '/' display.

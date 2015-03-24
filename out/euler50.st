@@ -1,10 +1,4 @@
 Object subclass: euler50 [
-   min2_: a b: b [
-    (a < b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
    eratostene: t max0: max0 [|n j|
     n := 0.
     (2 to: (max0 - 1)) do: [:i|
@@ -14,7 +8,7 @@ Object subclass: euler50 [
                ((max0 quo: i) > i)
                  ifTrue:[
                         j := (i * i).
-                        [(((j < max0)) ifTrue:[(j > 0)] ifFalse: [false])] whileTrue:
+                        [(((j < max0)) and: [(j > 0)])] whileTrue:
                         [
                         t at: (j + 1) put:  0.
                         j :=  (j + i).
@@ -62,9 +56,9 @@ Object subclass: euler50 [
     [
     process :=  false.
     (0 to: stop) do: [:i|
-      ((i + len) < nprimes)
+      (i + len < nprimes)
         ifTrue:[
-               sum at: (i + 1) put:  ((sum at: (i + 1)) + (primes at: ((i + len) + 1))).
+               sum at: (i + 1) put:  ((sum at: (i + 1)) + (primes at: (i + len + 1))).
                (maximumprimes > (sum at: (i + 1)))
                  ifTrue:[
                         process :=  true.
@@ -74,7 +68,7 @@ Object subclass: euler50 [
                                  resp :=  (sum at: (i + 1)).
                           ].
                  ]
-                 ifFalse:[stop :=  (self min2_: stop b: i).].
+                 ifFalse:[stop :=  ((stop) min: (i)).].
         ].
     ].
     len :=  (len + 1).

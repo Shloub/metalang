@@ -23,14 +23,8 @@ Object subclass: euler11 [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-   max2_: a b: b [
-    (a > b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
    find: n m: m x: x y: y dx: dx dy: dy [
-    (((((((x < 0)) ifTrue:[true] ifFalse: [(x = 20)])) ifTrue:[true] ifFalse: [(y < 0)])) ifTrue:[true] ifFalse: [(y = 20)])
+    (((((((x < 0)) or: [(x = 20)])) or: [(y < 0)])) or: [(y = 20)])
       ifTrue:[^ (0-(1))]
       ifFalse:[(n = 0)
                 ifTrue:[^ 1]
@@ -113,7 +107,7 @@ Object subclass: euler11 [
       dy := (r tuple_int_int_field_1).
       (0 to: 19) do: [:x|
         (0 to: 19) do: [:y|
-          max0 :=  (self max2_: max0 b: (self find: 4 m: m x: x y: y dx: dx dy: dy)).
+          max0 :=  ((max0) max: ((self find: 4 m: m x: x y: y dx: dx dy: dy))).
         ].
       ].
     ].

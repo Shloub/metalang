@@ -18,7 +18,7 @@ Object subclass: euler07 [
               n :=  (n + 1).
               used :=  (used + 1).
       ].].
-    ^ (t at: ((used - 1) + 1))
+    ^ (t at: (used - 1 + 1))
   ]
   
   main [

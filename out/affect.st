@@ -68,7 +68,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     cache2 := cache0.
     cache0 :=  cache1.
     cache2 :=  cache0.
-    ^ (((t foo) + ((t blah) * (t bar))) + ((t bar) * (t foo)))
+    ^ ((t foo) + ((t blah) * (t bar)) + ((t bar) * (t foo)))
   ]
   
   main [

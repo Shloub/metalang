@@ -16,12 +16,6 @@ Object subclass: carre [
     (buffer =~ '^(\s+)') ifMatched: [:match | buffer := buffer allButFirst:((match at: 1) size).].
     ]
   ]
-   min2_: a b: b [
-    (a < b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
   main [
     |y x tab e|x := self read_int.
     self skip.
@@ -39,7 +33,7 @@ Object subclass: carre [
     (1 to: (x - 1)) do: [:ix|
       (1 to: (y - 1)) do: [:iy|
         (((tab at: (iy + 1)) at: (ix + 1)) = 1)
-          ifTrue:[(tab at: (iy + 1)) at: (ix + 1) put:  ((self min2_: (self min2_: ((tab at: (iy + 1)) at: ((ix - 1) + 1)) b: ((tab at: ((iy - 1) + 1)) at: (ix + 1))) b: ((tab at: ((iy - 1) + 1)) at: ((ix - 1) + 1))) + 1).].
+          ifTrue:[(tab at: (iy + 1)) at: (ix + 1) put:  (((((((tab at: (iy + 1)) at: (ix - 1 + 1))) min: (((tab at: (iy - 1 + 1)) at: (ix + 1))))) min: (((tab at: (iy - 1 + 1)) at: (ix - 1 + 1)))) + 1).].
       ].
     ].
     (0 to: (y - 1)) do: [:jy|

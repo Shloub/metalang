@@ -1,10 +1,4 @@
 Object subclass: euler12 [
-   max2_: a b: b [
-    (a > b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
    eratostene: t max0: max0 [|n j|
     n := 0.
     (2 to: (max0 - 1)) do: [:i|
@@ -12,7 +6,7 @@ Object subclass: euler12 [
         ifTrue:[
                j := (i * i).
                n :=  (n + 1).
-               [(((j < max0)) ifTrue:[(j > 0)] ifFalse: [false])] whileTrue:
+               [(((j < max0)) and: [(j > 0)])] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -58,10 +52,10 @@ Object subclass: euler12 [
     ].
     (1 to: 10000) do: [:n|
       primesFactors := Array new: (n + 2).
-      (0 to: ((n + 2) - 1)) do: [:m|
+      (0 to: (n + 2 - 1)) do: [:m|
         primesFactors at: (m + 1) put:  0.
       ].
-      max0 := (self max2_: (self fillPrimesFactors: primesFactors c: n primes: primes nprimes: nprimes) b: (self fillPrimesFactors: primesFactors c: (n + 1) primes: primes nprimes: nprimes)).
+      max0 := (((self fillPrimesFactors: primesFactors c: n primes: primes nprimes: nprimes)) max: ((self fillPrimesFactors: primesFactors c: (n + 1) primes: primes nprimes: nprimes))).
       primesFactors at: (2 + 1) put:  ((primesFactors at: (2 + 1)) - 1).
       ndivs := 1.
       (0 to: max0) do: [:i|

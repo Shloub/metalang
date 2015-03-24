@@ -23,18 +23,6 @@ Object subclass: bigints [
     ^o.
     ]
   ]
-   max2_: a b: b [
-    (a > b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
-   min2_: a b: b [
-    (a < b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
   
    read_bigint: len  [|tmp e chiffres c|
     chiffres := Array new: len.
@@ -44,8 +32,8 @@ Object subclass: bigints [
     ].
     (0 to: ((len - 1) quo: 2)) do: [:i|
       tmp := (chiffres at: (i + 1)).
-      chiffres at: (i + 1) put:  (chiffres at: (((len - 1) - i) + 1)).
-      chiffres at: (((len - 1) - i) + 1) put:  tmp.
+      chiffres at: (i + 1) put:  (chiffres at: (len - 1 - i + 1)).
+      chiffres at: (len - 1 - i + 1) put:  tmp.
     ].
     e := bigint new.
     e bigint_sign: true.
@@ -58,7 +46,7 @@ Object subclass: bigints [
     (((a bigint_sign)) not)
       ifTrue:[$- display.].
     (0 to: ((a bigint_len) - 1)) do: [:i|
-      (((a bigint_chiffres) at: ((((a bigint_len) - 1) - i) + 1))) display.
+      (((a bigint_chiffres) at: ((a bigint_len) - 1 - i + 1))) display.
     ].
   ]
   
@@ -79,9 +67,9 @@ Object subclass: bigints [
   
    bigint_gt: a b: b [|j|
     " Renvoie vrai si a > b "
-    (((a bigint_sign)) ifTrue:[(((b bigint_sign)) not)] ifFalse: [false])
+    (((a bigint_sign)) and: [(((b bigint_sign)) not)])
       ifTrue:[^ true]
-      ifFalse:[(((((a bigint_sign)) not)) ifTrue:[(b bigint_sign)] ifFalse: [false])
+      ifFalse:[(((((a bigint_sign)) not)) and: [(b bigint_sign)])
                 ifTrue:[^ false]
                 ifFalse:[
                         ((a bigint_len) > (b bigint_len))
@@ -89,7 +77,7 @@ Object subclass: bigints [
                           ifFalse:[((a bigint_len) < (b bigint_len))
                                     ifTrue:[^ (((a bigint_sign)) not)]
                                     ifFalse:[(0 to: ((a bigint_len) - 1)) do: [:i|
-                                               j := (((a bigint_len) - 1) - i).
+                                               j := ((a bigint_len) - 1 - i).
                                                (((a bigint_chiffres) at: (j + 1)) > ((b bigint_chiffres) at: (j + 1)))
                                                  ifTrue:[^ (a bigint_sign)]
                                                  ifFalse:[(((a bigint_chiffres) at: (j + 1)) < ((b bigint_chiffres) at: (j + 1)))
@@ -105,7 +93,7 @@ Object subclass: bigints [
   
    add_bigint_positif: a b: b [|tmp retenue len f chiffres|
     " Une addition ou on en a rien a faire des signes "
-    len := ((self max2_: (a bigint_len) b: (b bigint_len)) + 1).
+    len := ((((a bigint_len)) max: ((b bigint_len))) + 1).
     retenue := 0.
     chiffres := Array new: len.
     (0 to: (len - 1)) do: [:i|
@@ -117,7 +105,7 @@ Object subclass: bigints [
       retenue :=  (tmp quo: 10).
       chiffres at: (i + 1) put:  (tmp rem: 10).
     ].
-    [(((len > 0)) ifTrue:[((chiffres at: ((len - 1) + 1)) = 0)] ifFalse: [false])] whileTrue:
+    [(((len > 0)) and: [((chiffres at: (len - 1 + 1)) = 0)])] whileTrue:
     [len :=  (len - 1).].
     f := bigint new.
     f bigint_sign: true.
@@ -145,7 +133,7 @@ Pré-requis : a > b
         ifFalse:[retenue :=  0.].
       chiffres at: (i + 1) put:  tmp.
     ].
-    [(((len > 0)) ifTrue:[((chiffres at: ((len - 1) + 1)) = 0)] ifFalse: [false])] whileTrue:
+    [(((len > 0)) and: [((chiffres at: (len - 1 + 1)) = 0)])] whileTrue:
     [len :=  (len - 1).].
     g := bigint new.
     g bigint_sign: true.
@@ -190,7 +178,7 @@ Pré-requis : a > b
     " Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. "
-    len := (((a bigint_len) + (b bigint_len)) + 1).
+    len := ((a bigint_len) + (b bigint_len) + 1).
     chiffres := Array new: len.
     (0 to: (len - 1)) do: [:k|
       chiffres at: (k + 1) put:  0.
@@ -198,16 +186,16 @@ D'ou le nom de la fonction. "
     (0 to: ((a bigint_len) - 1)) do: [:i|
       retenue := 0.
       (0 to: ((b bigint_len) - 1)) do: [:j|
-        chiffres at: ((i + j) + 1) put:  ((chiffres at: ((i + j) + 1)) + (retenue + (((b bigint_chiffres) at: (j + 1)) * ((a bigint_chiffres) at: (i + 1))))).
-        retenue :=  ((chiffres at: ((i + j) + 1)) quo: 10).
-        chiffres at: ((i + j) + 1) put:  ((chiffres at: ((i + j) + 1)) rem: 10).
+        chiffres at: (i + j + 1) put:  ((chiffres at: (i + j + 1)) + (retenue + (((b bigint_chiffres) at: (j + 1)) * ((a bigint_chiffres) at: (i + 1))))).
+        retenue :=  ((chiffres at: (i + j + 1)) quo: 10).
+        chiffres at: (i + j + 1) put:  ((chiffres at: (i + j + 1)) rem: 10).
       ].
-      chiffres at: ((i + (b bigint_len)) + 1) put:  ((chiffres at: ((i + (b bigint_len)) + 1)) + retenue).
+      chiffres at: (i + (b bigint_len) + 1) put:  ((chiffres at: (i + (b bigint_len) + 1)) + retenue).
     ].
-    chiffres at: (((a bigint_len) + (b bigint_len)) + 1) put:  ((chiffres at: ((((a bigint_len) + (b bigint_len)) - 1) + 1)) quo: 10).
-    chiffres at: ((((a bigint_len) + (b bigint_len)) - 1) + 1) put:  ((chiffres at: ((((a bigint_len) + (b bigint_len)) - 1) + 1)) rem: 10).
+    chiffres at: ((a bigint_len) + (b bigint_len) + 1) put:  ((chiffres at: ((a bigint_len) + (b bigint_len) - 1 + 1)) quo: 10).
+    chiffres at: ((a bigint_len) + (b bigint_len) - 1 + 1) put:  ((chiffres at: ((a bigint_len) + (b bigint_len) - 1 + 1)) rem: 10).
     (0 to: 2) do: [:l|
-      (((len ~= 0)) ifTrue:[((chiffres at: ((len - 1) + 1)) = 0)] ifFalse: [false])
+      (((len ~= 0)) and: [((chiffres at: (len - 1 + 1)) = 0)])
         ifTrue:[len :=  (len - 1).].
     ].
     m := bigint new.
@@ -218,8 +206,8 @@ D'ou le nom de la fonction. "
   ]
   
    bigint_premiers_chiffres: a i: i [|o len|
-    len := (self min2_: i b: (a bigint_len)).
-    [(((len ~= 0)) ifTrue:[(((a bigint_chiffres) at: ((len - 1) + 1)) = 0)] ifFalse: [false])] whileTrue:
+    len := ((i) min: ((a bigint_len))).
+    [(((len ~= 0)) and: [(((a bigint_chiffres) at: (len - 1 + 1)) = 0)])] whileTrue:
     [len :=  (len - 1).].
     o := bigint new.
     o bigint_sign: (a bigint_sign).
@@ -230,9 +218,9 @@ D'ou le nom de la fonction. "
   
    bigint_shift: a i: i [|p chiffres|
     chiffres := Array new: ((a bigint_len) + i).
-    (0 to: (((a bigint_len) + i) - 1)) do: [:k|
+    (0 to: ((a bigint_len) + i - 1)) do: [:k|
       (k >= i)
-        ifTrue:[chiffres at: (k + 1) put:  ((a bigint_chiffres) at: ((k - i) + 1)).]
+        ifTrue:[chiffres at: (k + 1) put:  ((a bigint_chiffres) at: (k - i + 1)).]
         ifFalse:[chiffres at: (k + 1) put:  0.].
     ].
     p := bigint new.
@@ -247,10 +235,10 @@ D'ou le nom de la fonction. "
       ifTrue:[^ aa]
       ifFalse:[((bb bigint_len) = 0)
                 ifTrue:[^ bb]
-                ifFalse:[((((aa bigint_len) < 3)) ifTrue:[true] ifFalse: [((bb bigint_len) < 3)])
+                ifFalse:[((((aa bigint_len) < 3)) or: [((bb bigint_len) < 3)])
                           ifTrue:[^ (self mul_bigint_cp: aa b: bb)].].].
     " Algorithme de Karatsuba "
-    split := ((self min2_: (aa bigint_len) b: (bb bigint_len)) quo: 2).
+    split := ((((aa bigint_len)) min: ((bb bigint_len))) quo: 2).
     a := (self bigint_shift: aa i: (0-(split))).
     b := (self bigint_premiers_chiffres: aa i: split).
     c := (self bigint_shift: bb i: (0-(split))).
@@ -387,15 +375,15 @@ Modulo
     maxA := 5.
     maxB := 5.
     a_bigint := Array new: (maxA + 1).
-    (0 to: ((maxA + 1) - 1)) do: [:j|
+    (0 to: (maxA + 1 - 1)) do: [:j|
       a_bigint at: (j + 1) put:  (self bigint_of_int: (j * j)).
     ].
     a0_bigint := Array new: (maxA + 1).
-    (0 to: ((maxA + 1) - 1)) do: [:j2|
+    (0 to: (maxA + 1 - 1)) do: [:j2|
       a0_bigint at: (j2 + 1) put:  (self bigint_of_int: j2).
     ].
     b := Array new: (maxA + 1).
-    (0 to: ((maxA + 1) - 1)) do: [:k|
+    (0 to: (maxA + 1 - 1)) do: [:k|
       b at: (k + 1) put:  2.
     ].
     n := 0.
@@ -418,7 +406,7 @@ Modulo
       ifTrue:[
              n :=  (n + 1).
              (2 to: maxA) do: [:l|
-               (((self bigint_eq: (a_bigint at: (l + 1)) b: min0)) ifTrue:[((b at: (l + 1)) <= maxB)] ifFalse: [false])
+               (((self bigint_eq: (a_bigint at: (l + 1)) b: min0)) and: [((b at: (l + 1)) <= maxB)])
                  ifTrue:[
                         b at: (l + 1) put:  ((b at: (l + 1)) + 1).
                         a_bigint at: (l + 1) put:  (self mul_bigint: (a_bigint at: (l + 1)) bb: (a0_bigint at: (l + 1))).

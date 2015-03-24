@@ -75,11 +75,11 @@ Tictactoe : un tictactoe avec une IA
           ifTrue:[freecase :=  (freecase + 1).].
         colv := (((g cases) at: (x + 1)) at: (y + 1)).
         linv := (((g cases) at: (y + 1)) at: (x + 1)).
-        (((col = (0-(1)))) ifTrue:[(colv ~= 0)] ifFalse: [false])
+        (((col = (0-(1)))) and: [(colv ~= 0)])
           ifTrue:[col :=  colv.]
           ifFalse:[(colv ~= col)
                     ifTrue:[col :=  (0-(2)).].].
-        (((lin = (0-(1)))) ifTrue:[(linv ~= 0)] ifFalse: [false])
+        (((lin = (0-(1)))) and: [(linv ~= 0)])
           ifTrue:[lin :=  linv.]
           ifFalse:[(linv ~= lin)
                     ifTrue:[lin :=  (0-(2)).].].
@@ -90,12 +90,12 @@ Tictactoe : un tictactoe avec une IA
                   ifTrue:[win :=  lin.].].
     ].
     (1 to: 2) do: [:x|
-      ((((((((g cases) at: (0 + 1)) at: (0 + 1)) = x)) ifTrue:[((((g cases) at: (1 + 1)) at: (1 + 1)) = x)] ifFalse: [false])) ifTrue:[((((g cases) at: (2 + 1)) at: (2 + 1)) = x)] ifFalse: [false])
+      ((((((((g cases) at: (0 + 1)) at: (0 + 1)) = x)) and: [((((g cases) at: (1 + 1)) at: (1 + 1)) = x)])) and: [((((g cases) at: (2 + 1)) at: (2 + 1)) = x)])
         ifTrue:[win :=  x.].
-      ((((((((g cases) at: (0 + 1)) at: (2 + 1)) = x)) ifTrue:[((((g cases) at: (1 + 1)) at: (1 + 1)) = x)] ifFalse: [false])) ifTrue:[((((g cases) at: (2 + 1)) at: (0 + 1)) = x)] ifFalse: [false])
+      ((((((((g cases) at: (0 + 1)) at: (2 + 1)) = x)) and: [((((g cases) at: (1 + 1)) at: (1 + 1)) = x)])) and: [((((g cases) at: (2 + 1)) at: (0 + 1)) = x)])
         ifTrue:[win :=  x.].
     ].
-    g ended:  (((win ~= 0)) ifTrue:[true] ifFalse: [(freecase = 0)]).
+    g ended:  (((win ~= 0)) or: [(freecase = 0)]).
     (win = 1)
       ifTrue:[g note:  1000.]
       ifFalse:[(win = 2)
@@ -152,7 +152,7 @@ Un minimax classique, renvoie la note du plateau
                  currentNote := (self minmax: g).
                  (self cancel_move_xy: x y: y g: g).
                  " Minimum ou Maximum selon le coté ou l'on joue"
-                 ((currentNote > maxNote) = (g firstToPlay))
+                 (currentNote > maxNote = (g firstToPlay))
                    ifTrue:[maxNote :=  currentNote.].
           ].
       ].

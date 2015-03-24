@@ -2,7 +2,7 @@ Object subclass: euler31 [
    result: sum t: t maxIndex: maxIndex cache: cache [|out0 div|
     (((cache at: (sum + 1)) at: (maxIndex + 1)) ~= 0)
       ifTrue:[^ ((cache at: (sum + 1)) at: (maxIndex + 1))]
-      ifFalse:[(((sum = 0)) ifTrue:[true] ifFalse: [(maxIndex = 0)])
+      ifFalse:[(((sum = 0)) or: [(maxIndex = 0)])
                 ifTrue:[^ 1]
                 ifFalse:[
                         out0 := 0.

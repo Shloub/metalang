@@ -59,8 +59,8 @@ Object subclass: sort [
                                 " on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] "
                                 tmp := (tab at: (i + 1)).
                                 tab at: (i + 1) put:  (tab at: (j + 1)).
-                                tab at: (j + 1) put:  (tab at: ((i + 1) + 1)).
-                                tab at: ((i + 1) + 1) put:  tmp.
+                                tab at: (j + 1) put:  (tab at: (i + 1 + 1)).
+                                tab at: (i + 1 + 1) put:  tmp.
                                 i :=  (i + 1).
                         ].]
                ifFalse:[j :=  (j - 1).].].

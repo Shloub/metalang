@@ -71,8 +71,8 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                                     ifTrue:[
                                                            allowed at: (d + 1) put:  false.
                                                            " 2 * 3 digits "
-                                                           product := (((a * 10) + b) * (((c * 100) + (d * 10)) + e)).
-                                                           (((((counted at: (product + 1))) not)) ifTrue:[(self okdigits: allowed n: (product quo: 10))] ifFalse: [false])
+                                                           product := (a * 10 + b * (c * 100 + (d * 10) + e)).
+                                                           (((((counted at: (product + 1))) not)) and: [(self okdigits: allowed n: (product quo: 10))])
                                                              ifTrue:[
                                                                     counted at: (product + 1) put:  true.
                                                                     count :=  (count + product).
@@ -80,8 +80,8 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                                                     ' ' display.
                                                              ].
                                                            " 1  * 4 digits "
-                                                           product2 := (b * ((((a * 1000) + (c * 100)) + (d * 10)) + e)).
-                                                           (((((counted at: (product2 + 1))) not)) ifTrue:[(self okdigits: allowed n: (product2 quo: 10))] ifFalse: [false])
+                                                           product2 := (b * (a * 1000 + (c * 100) + (d * 10) + e)).
+                                                           (((((counted at: (product2 + 1))) not)) and: [(self okdigits: allowed n: (product2 quo: 10))])
                                                              ifTrue:[
                                                                     counted at: (product2 + 1) put:  true.
                                                                     count :=  (count + product2).

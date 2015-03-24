@@ -8,7 +8,7 @@ Object subclass: euler46 [
                ((max0 quo: i) > i)
                  ifTrue:[
                         j := (i * i).
-                        [(((j < max0)) ifTrue:[(j > 0)] ifFalse: [false])] whileTrue:
+                        [(((j < max0)) and: [(j > 0)])] whileTrue:
                         [
                         t at: (j + 1) put:  0.
                         j :=  (j + i).
@@ -49,14 +49,14 @@ Object subclass: euler46 [
     ].
     (0 to: (nprimes - 1)) do: [:i|
       (0 to: (maximumprimes - 1)) do: [:j|
-        n := ((primes at: (i + 1)) + ((2 * j) * j)).
+        n := ((primes at: (i + 1)) + (2 * j * j)).
         (n < maximumprimes)
           ifTrue:[canbe at: (n + 1) put:  true.].
       ].
     ].
     (1 to: maximumprimes) do: [:m|
-      m2 := ((m * 2) + 1).
-      (((m2 < maximumprimes)) ifTrue:[(((canbe at: (m2 + 1))) not)] ifFalse: [false])
+      m2 := (m * 2 + 1).
+      (((m2 < maximumprimes)) and: [(((canbe at: (m2 + 1))) not)])
         ifTrue:[
                (m2) display.
                '

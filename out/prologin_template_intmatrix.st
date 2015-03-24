@@ -20,7 +20,7 @@ Object subclass: prologin_template_intmatrix [
     out0 := 0.
     (0 to: (y - 1)) do: [:i|
       (0 to: (x - 1)) do: [:j|
-        out0 :=  (out0 + (((tableau at: (i + 1)) at: (j + 1)) * ((i * 2) + j))).
+        out0 :=  (out0 + (((tableau at: (i + 1)) at: (j + 1)) * (i * 2 + j))).
       ].
     ].
     ^ out0

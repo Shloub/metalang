@@ -8,7 +8,7 @@ Object subclass: euler10 [
                ((max0 quo: i) > i)
                  ifTrue:[
                         j := (i * i).
-                        [(((j < max0)) ifTrue:[(j > 0)] ifFalse: [false])] whileTrue:
+                        [(((j < max0)) and: [(j > 0)])] whileTrue:
                         [
                         t at: (j + 1) put:  0.
                         j :=  (j + i).

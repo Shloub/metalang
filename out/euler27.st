@@ -6,7 +6,7 @@ Object subclass: euler27 [
         ifTrue:[
                n :=  (n + 1).
                j := (i * i).
-               [(((j < max0)) ifTrue:[(j > 0)] ifFalse: [false])] whileTrue:
+               [(((j < max0)) and: [(j > 0)])] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -21,7 +21,7 @@ Object subclass: euler27 [
     i := 0.
     (n < 0)
       ifTrue:[n :=  (0-(n)).].
-    [(((primes at: (i + 1)) * (primes at: (i + 1))) < n)] whileTrue:
+    [((primes at: (i + 1)) * (primes at: (i + 1)) < n)] whileTrue:
     [
     ((n rem: (primes at: (i + 1))) = 0)
       ifTrue:[^ false].
@@ -32,7 +32,7 @@ Object subclass: euler27 [
   
    test: a b: b primes: primes len: len [|j|
     (0 to: 200) do: [:n|
-      j := (((n * n) + (a * n)) + b).
+      j := (n * n + (a * n) + b).
       (((self isPrime: j primes: primes len: len)) not)
         ifTrue:[^ n].
     ].

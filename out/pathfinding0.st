@@ -24,28 +24,22 @@ Object subclass: pathfinding0 [
     ^o.
     ]
   ]
-   min2_: a b: b [
-    (a < b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
    pathfind_aux: cache tab: tab x: x y: y posX: posX posY: posY [|val4 val3 val2 val1 out0|
-    (((posX = (x - 1))) ifTrue:[(posY = (y - 1))] ifFalse: [false])
+    (((posX = (x - 1))) and: [(posY = (y - 1))])
       ifTrue:[^ 0]
-      ifFalse:[(((((((posX < 0)) ifTrue:[true] ifFalse: [(posY < 0)])) ifTrue:[true] ifFalse: [(posX >= x)])) ifTrue:[true] ifFalse: [(posY >= y)])
-                ifTrue:[^ ((x * y) * 10)]
+      ifFalse:[(((((((posX < 0)) or: [(posY < 0)])) or: [(posX >= x)])) or: [(posY >= y)])
+                ifTrue:[^ (x * y * 10)]
                 ifFalse:[(((tab at: (posY + 1)) at: (posX + 1)) = $#)
-                          ifTrue:[^ ((x * y) * 10)]
+                          ifTrue:[^ (x * y * 10)]
                           ifFalse:[(((cache at: (posY + 1)) at: (posX + 1)) ~= (0-(1)))
                                     ifTrue:[^ ((cache at: (posY + 1)) at: (posX + 1))]
                                     ifFalse:[
-                                            (cache at: (posY + 1)) at: (posX + 1) put:  ((x * y) * 10).
+                                            (cache at: (posY + 1)) at: (posX + 1) put:  (x * y * 10).
                                             val1 := (self pathfind_aux: cache tab: tab x: x y: y posX: (posX + 1) posY: posY).
                                             val2 := (self pathfind_aux: cache tab: tab x: x y: y posX: (posX - 1) posY: posY).
                                             val3 := (self pathfind_aux: cache tab: tab x: x y: y posX: posX posY: (posY - 1)).
                                             val4 := (self pathfind_aux: cache tab: tab x: x y: y posX: posX posY: (posY + 1)).
-                                            out0 := (1 + (self min2_: (self min2_: (self min2_: val1 b: val2) b: val3) b: val4)).
+                                            out0 := (1 + ((((((val1) min: (val2))) min: (val3))) min: (val4))).
                                             (cache at: (posY + 1)) at: (posX + 1) put:  out0.
                                             ^ out0
                                     ].].].].

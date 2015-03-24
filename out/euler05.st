@@ -1,18 +1,12 @@
 Object subclass: euler05 [
-   max2_: a b: b [
-    (a > b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
    primesfactors: c  [|tab n d|
     n := c.
     tab := Array new: (n + 1).
-    (0 to: ((n + 1) - 1)) do: [:i|
+    (0 to: (n + 1 - 1)) do: [:i|
       tab at: (i + 1) put:  0.
     ].
     d := 2.
-    [(((n ~= 1)) ifTrue:[((d * d) <= n)] ifFalse: [false])] whileTrue:
+    [(((n ~= 1)) and: [(d * d <= n)])] whileTrue:
     [((n rem: d) = 0)
       ifTrue:[
              tab at: (d + 1) put:  ((tab at: (d + 1)) + 1).
@@ -26,13 +20,13 @@ Object subclass: euler05 [
   main [
     |t product o lim|lim := 20.
     o := Array new: (lim + 1).
-    (0 to: ((lim + 1) - 1)) do: [:m|
+    (0 to: (lim + 1 - 1)) do: [:m|
       o at: (m + 1) put:  0.
     ].
     (1 to: lim) do: [:i|
       t := (self primesfactors: i).
       (1 to: i) do: [:j|
-        o at: (j + 1) put:  (self max2_: (o at: (j + 1)) b: (t at: (j + 1))).
+        o at: (j + 1) put:  (((o at: (j + 1))) max: ((t at: (j + 1)))).
       ].
     ].
     product := 1.

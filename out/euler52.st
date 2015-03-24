@@ -15,7 +15,7 @@ Object subclass: euler52 [
   
    same_numbers: a b: b c: c d: d e: e f: f [|ca|
     ca := (self chiffre_sort: a).
-    ^ (((((((((ca = (self chiffre_sort: b))) ifTrue:[(ca = (self chiffre_sort: c))] ifFalse: [false])) ifTrue:[(ca = (self chiffre_sort: d))] ifFalse: [false])) ifTrue:[(ca = (self chiffre_sort: e))] ifFalse: [false])) ifTrue:[(ca = (self chiffre_sort: f))] ifFalse: [false])
+    ^ (((((((((ca = (self chiffre_sort: b))) and: [(ca = (self chiffre_sort: c))])) and: [(ca = (self chiffre_sort: d))])) and: [(ca = (self chiffre_sort: e))])) and: [(ca = (self chiffre_sort: f))])
   ]
   
   main [

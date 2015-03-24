@@ -2,7 +2,7 @@ Object subclass: euler14 [
    next0: n  [
     ((n rem: 2) = 0)
       ifTrue:[^ (n quo: 2)]
-      ifFalse:[^ ((3 * n) + 1)].
+      ifFalse:[^ (3 * n + 1)].
   ]
   
    find: n m: m [

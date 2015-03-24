@@ -6,7 +6,7 @@ Object subclass: euler23 [
         ifTrue:[
                n :=  (n + 1).
                j := (i * i).
-               [(((j < max0)) ifTrue:[(j > 0)] ifFalse: [false])] whileTrue:
+               [(((j < max0)) and: [(j > 0)])] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -33,7 +33,7 @@ Object subclass: euler23 [
   
    sumdivaux2: t n: n b: b [|i|
     i := b.
-    [(((i < n)) ifTrue:[((t at: (i + 1)) = 0)] ifFalse: [false])] whileTrue:
+    [(((i < n)) and: [((t at: (i + 1)) = 0)])] whileTrue:
     [i :=  (i + 1).].
     ^ i
   ]
@@ -51,13 +51,13 @@ Object subclass: euler23 [
                           out0 :=  (out0 + p).
                           p :=  (p * i).
                         ].
-                        ^ ((out0 + 1) * o)
+                        ^ (out0 + 1 * o)
                 ].].
   ]
   
    sumdiv: nprimes primes: primes n: n [|t max0|
     t := Array new: (n + 1).
-    (0 to: ((n + 1) - 1)) do: [:i|
+    (0 to: (n + 1 - 1)) do: [:i|
       t at: (i + 1) put:  0.
     ].
     max0 := (self fillPrimesFactors: t a: n primes: primes nprimes: nprimes).
@@ -86,11 +86,11 @@ Object subclass: euler23 [
     n := 100.
     " 28124 ça prend trop de temps mais on arrive a passer le test "
     abondant := Array new: (n + 1).
-    (0 to: ((n + 1) - 1)) do: [:p|
+    (0 to: (n + 1 - 1)) do: [:p|
       abondant at: (p + 1) put:  false.
     ].
     summable := Array new: (n + 1).
-    (0 to: ((n + 1) - 1)) do: [:q|
+    (0 to: (n + 1 - 1)) do: [:q|
       summable at: (q + 1) put:  false.
     ].
     sum := 0.
@@ -101,8 +101,8 @@ Object subclass: euler23 [
     ].
     (1 to: n) do: [:i|
       (1 to: n) do: [:j|
-        (((((abondant at: (i + 1))) ifTrue:[(abondant at: (j + 1))] ifFalse: [false])) ifTrue:[((i + j) <= n)] ifFalse: [false])
-          ifTrue:[summable at: ((i + j) + 1) put:  true.].
+        (((((abondant at: (i + 1))) and: [(abondant at: (j + 1))])) and: [(i + j <= n)])
+          ifTrue:[summable at: (i + j + 1) put:  true.].
       ].
     ].
     (1 to: n) do: [:o|

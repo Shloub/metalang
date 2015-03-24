@@ -23,10 +23,10 @@ Object subclass: montagnes [
     [(i >= 0)] whileTrue:
     [
     x := (tab at: (i + 1)).
-    [(((j >= 0)) ifTrue:[(x > (tab at: ((len - j) + 1)))] ifFalse: [false])] whileTrue:
+    [(((j >= 0)) and: [(x > (tab at: (len - j + 1)))])] whileTrue:
     [j :=  (j - 1).].
     j :=  (j + 1).
-    tab at: ((len - j) + 1) put:  x.
+    tab at: (len - j + 1) put:  x.
     (j > max0)
       ifTrue:[max0 :=  j.].
     i :=  (i - 1).

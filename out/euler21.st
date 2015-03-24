@@ -6,7 +6,7 @@ Object subclass: euler21 [
         ifTrue:[
                n :=  (n + 1).
                j := (i * i).
-               [(((j < max0)) ifTrue:[(j > 0)] ifFalse: [false])] whileTrue:
+               [(((j < max0)) and: [(j > 0)])] whileTrue:
                [
                t at: (j + 1) put:  0.
                j :=  (j + i).
@@ -33,7 +33,7 @@ Object subclass: euler21 [
   
    sumdivaux2: t n: n b: b [|i|
     i := b.
-    [(((i < n)) ifTrue:[((t at: (i + 1)) = 0)] ifFalse: [false])] whileTrue:
+    [(((i < n)) and: [((t at: (i + 1)) = 0)])] whileTrue:
     [i :=  (i + 1).].
     ^ i
   ]
@@ -51,13 +51,13 @@ Object subclass: euler21 [
                           out0 :=  (out0 + p).
                           p :=  (p * i).
                         ].
-                        ^ ((out0 + 1) * o)
+                        ^ (out0 + 1 * o)
                 ].].
   ]
   
    sumdiv: nprimes primes: primes n: n [|t max0|
     t := Array new: (n + 1).
-    (0 to: ((n + 1) - 1)) do: [:i|
+    (0 to: (n + 1 - 1)) do: [:i|
       t at: (i + 1) put:  0.
     ].
     max0 := (self fillPrimesFactors: t a: n primes: primes nprimes: nprimes).

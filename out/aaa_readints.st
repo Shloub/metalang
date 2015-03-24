@@ -37,7 +37,7 @@ Object subclass: aaa_readints [
     len := self read_int.
     self skip.
     tab2 := Array new: (len - 1).
-    (0 to: ((len - 1) - 1)) do: [:b|
+    (0 to: (len - 1 - 1)) do: [:b|
       c := Array new: len.
       (0 to: (len - 1)) do: [:d|
         c at: (d + 1) put: self read_int.

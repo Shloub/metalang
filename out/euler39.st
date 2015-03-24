@@ -6,11 +6,11 @@ Object subclass: euler39 [
     ].
     (1 to: 1000) do: [:a|
       (1 to: 1000) do: [:b|
-        c2 := ((a * a) + (b * b)).
+        c2 := (a * a + (b * b)).
         c := ((c2) sqrt floor).
-        ((c * c) = c2)
+        (c * c = c2)
           ifTrue:[
-                 p := ((a + b) + c).
+                 p := (a + b + c).
                  (p <= 1000)
                    ifTrue:[t at: (p + 1) put:  ((t at: (p + 1)) + 1).].
           ].

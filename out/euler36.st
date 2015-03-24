@@ -10,7 +10,7 @@ Object subclass: euler36 [
         ifTrue:[nnum :=  j.].
     ].
     (0 to: (nnum quo: 2)) do: [:k|
-      ((t at: (k + 1)) ~= (t at: ((nnum - k) + 1)))
+      ((t at: (k + 1)) ~= (t at: (nnum - k + 1)))
         ifTrue:[^ false].
     ].
     ^ true
@@ -32,19 +32,19 @@ Object subclass: euler36 [
 ' display.
                sum :=  (sum + d).
         ].
-      (self palindrome2: pow2 n: ((d * 10) + d))
+      (self palindrome2: pow2 n: (d * 10 + d))
         ifTrue:[
-               ((d * 10) + d) display.
+               (d * 10 + d) display.
                '
 ' display.
-               sum :=  (sum + ((d * 10) + d)).
+               sum :=  (sum + (d * 10 + d)).
         ].
     ].
     (0 to: 4) do: [:a0|
-      a := ((a0 * 2) + 1).
+      a := (a0 * 2 + 1).
       (0 to: 9) do: [:b|
         (0 to: 9) do: [:c|
-          num0 := ((((((a * 100000) + (b * 10000)) + (c * 1000)) + (c * 100)) + (b * 10)) + a).
+          num0 := (a * 100000 + (b * 10000) + (c * 1000) + (c * 100) + (b * 10) + a).
           (self palindrome2: pow2 n: num0)
             ifTrue:[
                    (num0) display.
@@ -52,7 +52,7 @@ Object subclass: euler36 [
 ' display.
                    sum :=  (sum + num0).
             ].
-          num1 := (((((a * 10000) + (b * 1000)) + (c * 100)) + (b * 10)) + a).
+          num1 := (a * 10000 + (b * 1000) + (c * 100) + (b * 10) + a).
           (self palindrome2: pow2 n: num1)
             ifTrue:[
                    (num1) display.
@@ -61,7 +61,7 @@ Object subclass: euler36 [
                    sum :=  (sum + num1).
             ].
         ].
-        num2 := (((a * 100) + (b * 10)) + a).
+        num2 := (a * 100 + (b * 10) + a).
         (self palindrome2: pow2 n: num2)
           ifTrue:[
                  (num2) display.
@@ -69,7 +69,7 @@ Object subclass: euler36 [
 ' display.
                  sum :=  (sum + num2).
           ].
-        num3 := ((((a * 1000) + (b * 100)) + (b * 10)) + a).
+        num3 := (a * 1000 + (b * 100) + (b * 10) + a).
         (self palindrome2: pow2 n: num3)
           ifTrue:[
                  (num3) display.

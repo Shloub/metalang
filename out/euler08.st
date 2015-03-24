@@ -8,12 +8,6 @@ Object subclass: euler08 [
     ^o.
     ]
   ]
-   max2_: a b: b [
-    (a > b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
   main [
     |nskipdiv max0 last index i f e d c|i := 1.
     last := Array new: 5.
@@ -42,7 +36,7 @@ Object subclass: euler08 [
         ].
       last at: (index + 1) put:  f.
       index :=  ((index + 1) rem: 5).
-      max0 :=  (self max2_: max0 b: i).
+      max0 :=  ((max0) max: (i)).
     ].
     (max0) display.
     '

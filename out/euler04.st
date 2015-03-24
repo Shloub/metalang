@@ -1,10 +1,4 @@
 Object subclass: euler04 [
-   max2_: a b: b [
-    (a > b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
   "
 
 (a + b * 10 + c * 100) * (d + e * 10 + f * 100) =
@@ -37,9 +31,9 @@ c * f * 10000
           (1 to: 9) do: [:c|
             (0 to: 9) do: [:b|
               (0 to: 9) do: [:e|
-                mul := (((((a * d) + (10 * ((a * e) + (b * d)))) + (100 * (((a * f) + (b * e)) + (c * d)))) + (1000 * ((c * e) + (b * f)))) + ((10000 * c) * f)).
-                ((((((self chiffre: 0 m: mul) = (self chiffre: 5 m: mul))) ifTrue:[((self chiffre: 1 m: mul) = (self chiffre: 4 m: mul))] ifFalse: [false])) ifTrue:[((self chiffre: 2 m: mul) = (self chiffre: 3 m: mul))] ifFalse: [false])
-                  ifTrue:[m :=  (self max2_: mul b: m).].
+                mul := (a * d + (10 * (a * e + (b * d))) + (100 * (a * f + (b * e) + (c * d))) + (1000 * (c * e + (b * f))) + (10000 * c * f)).
+                ((((((self chiffre: 0 m: mul) = (self chiffre: 5 m: mul))) and: [((self chiffre: 1 m: mul) = (self chiffre: 4 m: mul))])) and: [((self chiffre: 2 m: mul) = (self chiffre: 3 m: mul))])
+                  ifTrue:[m :=  ((mul) max: (m)).].
               ].
             ].
           ].

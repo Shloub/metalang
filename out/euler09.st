@@ -5,10 +5,10 @@ Object subclass: euler09 [
 	"
     (1 to: 1000) do: [:a|
       ((a + 1) to: 1000) do: [:b|
-        c := ((1000 - a) - b).
-        a2b2 := ((a * a) + (b * b)).
+        c := (1000 - a - b).
+        a2b2 := (a * a + (b * b)).
         cc := (c * c).
-        (((cc = a2b2)) ifTrue:[(c > a)] ifFalse: [false])
+        (((cc = a2b2)) and: [(c > a)])
           ifTrue:[
                  (a) display.
                  '
@@ -19,7 +19,7 @@ Object subclass: euler09 [
                  (c) display.
                  '
 ' display.
-                 ((a * b) * c) display.
+                 (a * b * c) display.
                  '
 ' display.
           ].

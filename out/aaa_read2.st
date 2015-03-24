@@ -76,7 +76,7 @@ read int, read char et skip
       (c) display.
       ' ' display.
       (tmpc ~= $ )
-        ifTrue:[c :=  ((((c - (($a) asciiValue)) + 13) rem: 26) + (($a) asciiValue)).].
+        ifTrue:[c :=  (((c - (($a) asciiValue) + 13) rem: 26) + (($a) asciiValue)).].
       tab4 at: (i3 + 1) put:  ((c) asCharacter).
     ].
     (0 to: (strlen - 1)) do: [:j|

@@ -12,14 +12,14 @@ Object subclass: euler15 [
       tab at: (i + 1) put:  tab2.
     ].
     (0 to: (n - 1)) do: [:l|
-      (tab at: ((n - 1) + 1)) at: (l + 1) put:  1.
-      (tab at: (l + 1)) at: ((n - 1) + 1) put:  1.
+      (tab at: (n - 1 + 1)) at: (l + 1) put:  1.
+      (tab at: (l + 1)) at: (n - 1 + 1) put:  1.
     ].
     (2 to: n) do: [:o|
       r := (n - o).
       (2 to: n) do: [:p|
         q := (n - p).
-        (tab at: (r + 1)) at: (q + 1) put:  (((tab at: ((r + 1) + 1)) at: (q + 1)) + ((tab at: (r + 1)) at: ((q + 1) + 1))).
+        (tab at: (r + 1)) at: (q + 1) put:  (((tab at: (r + 1 + 1)) at: (q + 1)) + ((tab at: (r + 1)) at: (q + 1 + 1))).
       ].
     ].
     (0 to: (n - 1)) do: [:m|

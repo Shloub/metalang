@@ -51,14 +51,14 @@ d6 = 5 ou d6 = 0
                                          ifTrue:[
                                                 allowed at: (d9 + 1) put:  false.
                                                 (1 to: 9) do: [:d10|
-                                                  (((((((allowed at: (d10 + 1))) ifTrue:[(((((d6 * 100) + (d7 * 10)) + d8) rem: 11) = 0)] ifFalse: [false])) ifTrue:[(((((d7 * 100) + (d8 * 10)) + d9) rem: 13) = 0)] ifFalse: [false])) ifTrue:[(((((d8 * 100) + (d9 * 10)) + d10) rem: 17) = 0)] ifFalse: [false])
+                                                  (((((((allowed at: (d10 + 1))) and: [(((d6 * 100 + (d7 * 10) + d8) rem: 11) = 0)])) and: [(((d7 * 100 + (d8 * 10) + d9) rem: 13) = 0)])) and: [(((d8 * 100 + (d9 * 10) + d10) rem: 17) = 0)])
                                                     ifTrue:[
                                                            allowed at: (d10 + 1) put:  false.
                                                            (0 to: 9) do: [:d5|
                                                              (allowed at: (d5 + 1))
                                                                ifTrue:[
                                                                       allowed at: (d5 + 1) put:  false.
-                                                                      (((((d5 * 100) + (d6 * 10)) + d7) rem: 7) = 0)
+                                                                      (((d5 * 100 + (d6 * 10) + d7) rem: 7) = 0)
                                                                         ifTrue:[(0 to: 4) do: [:i4|
                                                                                   d4 := (i4 * 2).
                                                                                   (allowed at: (d4 + 1))
@@ -68,7 +68,7 @@ d6 = 5 ou d6 = 0
                                                                                              (allowed at: (d3 + 1))
                                                                                                ifTrue:[
                                                                                                       allowed at: (d3 + 1) put:  false.
-                                                                                                      ((((d3 + d4) + d5) rem: 3) = 0)
+                                                                                                      (((d3 + d4 + d5) rem: 3) = 0)
                                                                                                         ifTrue:[(0 to: 9) do: [:d2|
                                                                                                                   (allowed at: (d2 + 1))
                                                                                                                     ifTrue:[

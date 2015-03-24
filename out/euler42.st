@@ -30,7 +30,7 @@ Object subclass: euler42 [
 	  n * 2 = k * (k + 1)
    "
     a := (((n * 2)) sqrt floor).
-    ^ ((a * (a + 1)) = (n * 2))
+    ^ (a * (a + 1) = (n * 2))
   ]
   
   score [|sum len c|
@@ -40,7 +40,7 @@ Object subclass: euler42 [
     sum := 0.
     (1 to: len) do: [:i|
       c := self read_char.
-      sum :=  (sum + ((((c) asciiValue) - (($A) asciiValue)) + 1)).
+      sum :=  (sum + (((c) asciiValue) - (($A) asciiValue) + 1)).
       "		print c print "" "" print sum print "" "" "
     ].
     (self is_triangular: sum)

@@ -14,7 +14,7 @@ Object subclass: euler40 [
         ifTrue:[n :=  (n - ((t at: (i + 1)) * i)).]
         ifFalse:[
                 nombre := ((self exp0: 10 e: (i - 1)) + (n quo: i)).
-                chiffre := ((i - 1) - (n rem: i)).
+                chiffre := (i - 1 - (n rem: i)).
                 ^ ((nombre quo: (self exp0: 10 e: chiffre)) rem: 10)
         ].
     ].

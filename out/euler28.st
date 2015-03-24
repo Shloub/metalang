@@ -15,7 +15,7 @@ Object subclass: euler28 [
 
 "
    sumdiag: n  [|un sum nterms d|
-    nterms := ((n * 2) - 1).
+    nterms := (n * 2 - 1).
     un := 1.
     sum := 1.
     (0 to: (nterms - 2)) do: [:i|

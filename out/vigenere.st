@@ -26,9 +26,9 @@ Object subclass: vigenere [
   ]
    position_alphabet: c  [|i|
     i := ((c) asciiValue).
-    (((i <= (($Z) asciiValue))) ifTrue:[(i >= (($A) asciiValue))] ifFalse: [false])
+    (((i <= (($Z) asciiValue))) and: [(i >= (($A) asciiValue))])
       ifTrue:[^ (i - (($A) asciiValue))]
-      ifFalse:[(((i <= (($z) asciiValue))) ifTrue:[(i >= (($a) asciiValue))] ifFalse: [false])
+      ifFalse:[(((i <= (($z) asciiValue))) and: [(i >= (($a) asciiValue))])
                 ifTrue:[^ (i - (($a) asciiValue))]
                 ifFalse:[^ (0-(1))].].
   ]

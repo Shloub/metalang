@@ -31,7 +31,7 @@ Object subclass: euler22 [
     sum := 0.
     (1 to: len) do: [:i|
       c := self read_char.
-      sum :=  (sum + ((((c) asciiValue) - (($A) asciiValue)) + 1)).
+      sum :=  (sum + (((c) asciiValue) - (($A) asciiValue) + 1)).
       "		print c print "" "" print sum print "" "" "
     ].
     ^ sum

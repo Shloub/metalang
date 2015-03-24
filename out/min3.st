@@ -1,22 +1,16 @@
 Object subclass: min3 [
-   min2_: a b: b [
-    (a < b)
-      ifTrue:[^ a]
-      ifFalse:[^ b].
-  ]
-  
   main [
-    ((self min2_: (self min2_: 2 b: 3) b: 4)) display.
+    (((((2) min: (3))) min: (4))) display.
     ' ' display.
-    ((self min2_: (self min2_: 2 b: 4) b: 3)) display.
+    (((((2) min: (4))) min: (3))) display.
     ' ' display.
-    ((self min2_: (self min2_: 3 b: 2) b: 4)) display.
+    (((((3) min: (2))) min: (4))) display.
     ' ' display.
-    ((self min2_: (self min2_: 3 b: 4) b: 2)) display.
+    (((((3) min: (4))) min: (2))) display.
     ' ' display.
-    ((self min2_: (self min2_: 4 b: 2) b: 3)) display.
+    (((((4) min: (2))) min: (3))) display.
     ' ' display.
-    ((self min2_: (self min2_: 4 b: 3) b: 2)) display.
+    (((((4) min: (3))) min: (2))) display.
     '
 ' display.
     ]
