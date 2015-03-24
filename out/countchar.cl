@@ -38,7 +38,7 @@
     (loop for i from 0 to (- len 1) do
       (if
         (eq (aref tab i) tofind)
-        (setq out0 ( + out0 1))))
+        (setq out0 (+ out0 1))))
     (return-from nth0 out0)
   )))
 

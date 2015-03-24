@@ -30,7 +30,7 @@
 (progn
   (let ((out0 0))
     (loop for i from 0 to (- taille 1) do
-      (setq out0 ( + out0 (aref tableau i))))
+      (setq out0 (+ out0 (aref tableau i))))
     (return-from programme_candidat out0)
   )))
 

@@ -18,8 +18,7 @@ sub e{
   my($t, $n) = @_;
   foreach my $i (1 .. 8) {
     if ($n >= $t->[$i] * $i) {
-      $n = $n - $t->[$i] *
-      $i;
+      $n = $n - $t->[$i] * $i;
     }else{
       my $nombre = exp0(10, $i - 1) + int(($n) / ($i));
       my $chiffre = $i - 1 - remainder($n, $i);

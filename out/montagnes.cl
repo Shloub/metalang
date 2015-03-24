@@ -35,14 +35,14 @@
         do (progn
              (let ((x (aref tab i)))
                (loop while (and (>= j 0) (> x (aref tab (- len j))))
-               do (setq j ( - j 1))
+               do (setq j (- j 1))
                )
-               (setq j ( + j 1))
+               (setq j (+ j 1))
                (setf (aref tab (- len j)) x)
                (if
                  (> j max0)
                  (setq max0 j))
-               (setq i ( - i 1))
+               (setq i (- i 1))
              ))
         )
         (return-from montagnes0 max0)

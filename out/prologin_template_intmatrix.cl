@@ -31,7 +31,7 @@
   (let ((out0 0))
     (loop for i from 0 to (- y 1) do
       (loop for j from 0 to (- x 1) do
-        (setq out0 ( + out0 (* (aref (aref tableau i) j) (+ (* i 2) j))))))
+        (setq out0 (+ out0 (* (aref (aref tableau i) j) (+ (* i 2) j))))))
     (return-from programme_candidat out0)
   )))
 

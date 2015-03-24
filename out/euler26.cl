@@ -21,7 +21,7 @@
                (= (aref restes i) reste)
                (return-from periode (- len i))))
            (setf (aref restes len) reste)
-           (setq len ( + len 1))
+           (setq len (+ len 1))
            (setq a (* reste 10))
          )))
   )

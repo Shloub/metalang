@@ -37,14 +37,14 @@
   (let ((out0 0))
     (loop for i from 0 to (- taille1 1) do
       (progn
-        (setq out0 ( + out0 (* (char-code (aref tableau1 i)) i)))
+        (setq out0 (+ out0 (* (char-code (aref tableau1 i)) i)))
         (princ (aref tableau1 i))
       ))
     (princ "--
 ")
     (loop for j from 0 to (- taille2 1) do
       (progn
-        (setq out0 ( + out0 (* (char-code (aref tableau2 j)) (* j 100))))
+        (setq out0 (+ out0 (* (char-code (aref tableau2 j)) (* j 100))))
         (princ (aref tableau2 j))
       ))
     (princ "--

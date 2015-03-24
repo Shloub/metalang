@@ -22,7 +22,7 @@
             (function (lambda (i)
             (block lambda_1
               (princ i)
-              (setq j ( + j i))
+              (setq j (+ j i))
               (return-from lambda_1 (= (remainder i 2) 0))
             ))
             ))))

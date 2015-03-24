@@ -36,25 +36,25 @@
                       (if
                         (= a 0)
                         (progn
-                          (setq sum ( - sum 1))
+                          (setq sum (- sum 1))
                           (if
                             (= b 0)
                             (progn
-                              (setq sum ( - sum 1))
+                              (setq sum (- sum 1))
                               (if
                                 (= c 0)
                                 (progn
-                                  (setq sum ( - sum 1))
+                                  (setq sum (- sum 1))
                                   (if
                                     (= d 0)
-                                    (setq sum ( - sum 1)))
+                                    (setq sum (- sum 1)))
                                 ))
                             ))
                         ))
                       (if
                         (and (and (= sum num) (not (= sum 1))) (not (= sum 2)))
                         (progn
-                          (setq out0 ( + out0 num))
+                          (setq out0 (+ out0 num))
                           (format t "~D " num)
                         ))
                     )))))))))

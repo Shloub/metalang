@@ -32,7 +32,7 @@
     (let ((max0 0))
       (loop for i from 0 to (- len 1) do
         (progn
-          (setq current ( + current (aref lst i)))
+          (setq current (+ current (aref lst i)))
           (if
             (< current 0)
             (setq current 0))

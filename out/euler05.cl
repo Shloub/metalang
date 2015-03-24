@@ -32,9 +32,9 @@
          (= (remainder n d) 0)
          (progn
            (setf (aref tab d) (+ (aref tab d) 1))
-           (setq n ( quotient n d))
+           (setq n (quotient n d))
          )
-         (setq d ( + d 1)))
+         (setq d (+ d 1)))
     )
     (setf (aref tab n) (+ (aref tab n) 1))
     (return-from primesfactors tab)
@@ -59,7 +59,7 @@
     (let ((product 1))
       (loop for k from 1 to lim do
         (loop for l from 1 to (aref o k) do
-          (setq product ( * product k))))
+          (setq product (* product k))))
       (format t "~D~%" product)
     ))))
 

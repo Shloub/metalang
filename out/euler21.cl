@@ -17,12 +17,12 @@
       (if
         (= (aref t0 i) i)
         (progn
-          (setq n ( + n 1))
+          (setq n (+ n 1))
           (let ((j (* i i)))
             (loop while (and (< j max0) (> j 0))
             do (progn
                  (setf (aref t0 j) 0)
-                 (setq j ( + j i))
+                 (setq j (+ j i))
                  )
             )
           ))))
@@ -37,7 +37,7 @@
         (loop while (= (remainder n d) 0)
         do (progn
              (setf (aref t0 d) (+ (aref t0 d) 1))
-             (setq n ( quotient n d))
+             (setq n (quotient n d))
              )
         )
         (if
@@ -50,7 +50,7 @@
 (defun sumdivaux2 (t0 n i)
 (progn
   (loop while (and (< i n) (= (aref t0 i) 0))
-  do (setq i ( + i 1))
+  do (setq i (+ i 1))
   )
   (return-from sumdivaux2 i)
 ))
@@ -68,8 +68,8 @@
           (let ((p i))
             (loop for j from 1 to (aref t0 i) do
               (progn
-                (setq out0 ( + out0 p))
-                (setq p ( * p i))
+                (setq out0 (+ out0 p))
+                (setq p (* p i))
               ))
             (return-from sumdivaux (* (+ out0 1) o))
           )))))))
@@ -113,7 +113,7 @@
             (= (aref era k) k)
             (progn
               (setf (aref primes l) k)
-              (setq l ( + l 1))
+              (setq l (+ l 1))
             )))
         (format t "~D == ~D~%" l nprimes)
         (let ((sum 0))
@@ -128,7 +128,7 @@
                         (= othersum n)
                         (progn
                           (format t "~D & ~D~%" other n)
-                          (setq sum ( + sum (+ other n)))
+                          (setq sum (+ sum (+ other n)))
                         ))
                     )))
               )))

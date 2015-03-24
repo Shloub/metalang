@@ -53,7 +53,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
       (loop while (< ptrStr len)
       do (if
            (eq (aref str ptrStr) #\Space)
-           (setq ptrStr ( + ptrStr 1))
+           (setq ptrStr (+ ptrStr 1))
            (if
              (is_number (aref str ptrStr))
              (progn
@@ -61,18 +61,18 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
                  (loop while (not (eq (aref str ptrStr) #\Space))
                  do (progn
                       (setq num (- (+ (* num 10) (char-code (aref str ptrStr))) (char-code #\0)))
-                      (setq ptrStr ( + ptrStr 1))
+                      (setq ptrStr (+ ptrStr 1))
                       )
                  )
                  (setf (aref stack ptrStack) num)
-                 (setq ptrStack ( + ptrStack 1))
+                 (setq ptrStack (+ ptrStack 1))
                ))
              (if
                (eq (aref str ptrStr) (code-char 43))
                (progn
                  (setf (aref stack (- ptrStack 2)) (+ (aref stack (- ptrStack 2)) (aref stack (- ptrStack 1))))
-                 (setq ptrStack ( - ptrStack 1))
-                 (setq ptrStr ( + ptrStr 1))
+                 (setq ptrStack (- ptrStack 1))
+                 (setq ptrStr (+ ptrStr 1))
                ))))
       )
       (return-from npi0 (aref stack 0))

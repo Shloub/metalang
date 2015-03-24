@@ -39,7 +39,7 @@
       (progn
         (loop for j from 0 to (- taille_x 1) do
           (progn
-            (setq out0 ( + out0 (* (char-code (aref (aref tableau i) j)) (+ i (* j 2)))))
+            (setq out0 (+ out0 (* (char-code (aref (aref tableau i) j)) (+ i (* j 2)))))
             (princ (aref (aref tableau i) j))
           ))
         (princ "--

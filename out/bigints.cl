@@ -130,16 +130,16 @@
                        (let ((tmp retenue))
                          (if
                            (< i (bigint-bigint_len a))
-                           (setq tmp ( + tmp (aref (bigint-bigint_chiffres a) i))))
+                           (setq tmp (+ tmp (aref (bigint-bigint_chiffres a) i))))
                          (if
                            (< i (bigint-bigint_len b))
-                           (setq tmp ( + tmp (aref (bigint-bigint_chiffres b) i))))
+                           (setq tmp (+ tmp (aref (bigint-bigint_chiffres b) i))))
                          (setq retenue (quotient tmp 10))
                          (return-from lambda_2 (remainder tmp 10))
                        )))
                      ))))
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
-      do (setq len ( - len 1))
+      do (setq len (- len 1))
       )
       (let ((f (make-bigint :bigint_sign t
                             :bigint_len len
@@ -162,11 +162,11 @@ Pré-requis : a > b
                        (let ((tmp (+ retenue (aref (bigint-bigint_chiffres a) i))))
                          (if
                            (< i (bigint-bigint_len b))
-                           (setq tmp ( - tmp (aref (bigint-bigint_chiffres b) i))))
+                           (setq tmp (- tmp (aref (bigint-bigint_chiffres b) i))))
                          (if
                            (< tmp 0)
                            (progn
-                             (setq tmp ( + tmp 10))
+                             (setq tmp (+ tmp 10))
                              (setq retenue (- 0 1))
                            )
                            (setq retenue 0))
@@ -174,7 +174,7 @@ Pré-requis : a > b
                        )))
                      ))))
       (loop while (and (> len 0) (= (aref chiffres (- len 1)) 0))
-      do (setq len ( - len 1))
+      do (setq len (- len 1))
       )
       (let ((g (make-bigint :bigint_sign t
                             :bigint_len len
@@ -247,7 +247,7 @@ D'ou le nom de la fonction. |#
     (loop for l from 0 to 2 do
       (if
         (and (not (= len 0)) (= (aref chiffres (- len 1)) 0))
-        (setq len ( - len 1))))
+        (setq len (- len 1))))
     (let ((m (make-bigint :bigint_sign (eq (bigint-bigint_sign a) (bigint-bigint_sign b))
                           :bigint_len len
                           :bigint_chiffres chiffres)))
@@ -258,7 +258,7 @@ D'ou le nom de la fonction. |#
 (progn
   (let ((len (min i (bigint-bigint_len a))))
     (loop while (and (not (= len 0)) (= (aref (bigint-bigint_chiffres a) (- len 1)) 0))
-    do (setq len ( - len 1))
+    do (setq len (- len 1))
     )
     (let ((o (make-bigint :bigint_sign (bigint-bigint_sign a)
                           :bigint_len len
@@ -321,8 +321,8 @@ Modulo
   (let ((out0 1))
     (loop while (>= a 10)
     do (progn
-         (setq a ( quotient a 10))
-         (setq out0 ( + out0 1))
+         (setq a (quotient a 10))
+         (setq out0 (+ out0 1))
          )
     )
     (return-from log10 out0)
@@ -345,7 +345,7 @@ Modulo
     (loop for k from 0 to (- size 1) do
       (progn
         (setf (aref t0 k) (remainder i 10))
-        (setq i ( quotient i 10))
+        (setq i (quotient i 10))
       ))
     (let ((q (make-bigint :bigint_sign t
                           :bigint_len size
@@ -370,7 +370,7 @@ Modulo
 (progn
   (let ((out0 0))
     (loop for i from 0 to (- (bigint-bigint_len a) 1) do
-      (setq out0 ( + out0 (aref (bigint-bigint_chiffres a) i))))
+      (setq out0 (+ out0 (aref (bigint-bigint_chiffres a) i))))
     (return-from sum_chiffres_bigint out0)
   )))
 
@@ -440,7 +440,7 @@ Modulo
              (let ((c (add_bigint a b)))
                (setq a b)
                (setq b c)
-               (setq i ( + i 1))
+               (setq i (+ i 1))
              ))
         )
         (return-from euler25 i)
@@ -495,7 +495,7 @@ Modulo
                  (if
                    found
                    (progn
-                     (setq n ( + n 1))
+                     (setq n (+ n 1))
                      (loop for l from 2 to maxA do
                        (if
                          (and (bigint_eq (aref a_bigint l) min0) (<= (aref b l) maxB))

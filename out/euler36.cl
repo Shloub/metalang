@@ -39,7 +39,7 @@
                20
                (function (lambda (i)
                (block lambda_2
-                 (setq p ( * p 2))
+                 (setq p (* p 2))
                  (return-from lambda_2 (quotient p 2))
                ))
                ))))
@@ -50,13 +50,13 @@
             (palindrome2 pow2 d)
             (progn
               (format t "~D~%" d)
-              (setq sum ( + sum d))
+              (setq sum (+ sum d))
             ))
           (if
             (palindrome2 pow2 (+ (* d 10) d))
             (progn
               (format t "~D~%" (+ (* d 10) d))
-              (setq sum ( + sum (+ (* d 10) d)))
+              (setq sum (+ sum (+ (* d 10) d)))
             ))
         ))
       (loop for a0 from 0 to 4 do
@@ -71,14 +71,14 @@
                         (palindrome2 pow2 num0)
                         (progn
                           (format t "~D~%" num0)
-                          (setq sum ( + sum num0))
+                          (setq sum (+ sum num0))
                         ))
                       (let ((num1 (+ (+ (+ (+ (* a 10000) (* b 1000)) (* c 100)) (* b 10)) a)))
                         (if
                           (palindrome2 pow2 num1)
                           (progn
                             (format t "~D~%" num1)
-                            (setq sum ( + sum num1))
+                            (setq sum (+ sum num1))
                           ))
                       ))))
                 (let ((num2 (+ (+ (* a 100) (* b 10)) a)))
@@ -86,14 +86,14 @@
                     (palindrome2 pow2 num2)
                     (progn
                       (format t "~D~%" num2)
-                      (setq sum ( + sum num2))
+                      (setq sum (+ sum num2))
                     ))
                   (let ((num3 (+ (+ (+ (* a 1000) (* b 100)) (* b 10)) a)))
                     (if
                       (palindrome2 pow2 num3)
                       (progn
                         (format t "~D~%" num3)
-                        (setq sum ( + sum num3))
+                        (setq sum (+ sum num3))
                       ))
                   ))))
           )))

@@ -20,7 +20,7 @@
 (progn
   (let ((a 0))
     #| test |#
-    (setq a ( + a 1))
+    (setq a (+ a 1))
     #| test 2 |#
   )))
 
@@ -44,7 +44,7 @@
           (= (remainder n i) 0)
           (progn
             #| Si i divise |#
-            (setq out0 ( + out0 i))
+            (setq out0 (+ out0 i))
             #| On incrémente |#
           )
           #| nop |#)

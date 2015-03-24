@@ -33,7 +33,7 @@
       (loop for i from 1 to len do
         (progn
           (let ((c (mread-char )))
-            (setq sum ( + sum (+ (- (char-code c) (char-code #\A)) 1)))
+            (setq sum (+ sum (+ (- (char-code c) (char-code #\A)) 1)))
             #|		print c print " " print sum print " " |#
           )))
       (return-from score sum)
@@ -43,7 +43,7 @@
   (let ((sum 0))
     (let ((n (mread-int )))
       (loop for i from 1 to n do
-        (setq sum ( + sum (* i (score )))))
+        (setq sum (+ sum (* i (score )))))
       (format t "~D~%" sum)
     )))
 

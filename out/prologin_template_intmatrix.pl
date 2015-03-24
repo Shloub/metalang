@@ -5,8 +5,7 @@ sub programme_candidat{
   my $out0 = 0;
   foreach my $i (0 .. $y - 1) {
     foreach my $j (0 .. $x - 1) {
-      $out0 = $out0 + $tableau->[$i]->[$j] *
-      ($i * 2 + $j);
+      $out0 = $out0 + $tableau->[$i]->[$j] * ($i * 2 + $j);
     }
   }
   return $out0;

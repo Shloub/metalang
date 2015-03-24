@@ -22,11 +22,11 @@
   (loop while (not (= used nth0))
   do (if
        (divisible n t0 used)
-       (setq n ( + n 1))
+       (setq n (+ n 1))
        (progn
          (setf (aref t0 used) n)
-         (setq n ( + n 1))
-         (setq used ( + used 1))
+         (setq n (+ n 1))
+         (setq used (+ used 1))
        ))
   )
   (return-from find0 (aref t0 (- used 1)))

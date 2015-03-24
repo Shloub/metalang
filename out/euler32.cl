@@ -101,7 +101,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                           (and (not (aref counted product)) (okdigits allowed (quotient product 10)))
                                           (progn
                                             (setf (aref counted product) t)
-                                            (setq count ( + count product))
+                                            (setq count (+ count product))
                                             (format t "~D " product)
                                           ))
                                         #| 1  * 4 digits |#
@@ -110,7 +110,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                             (and (not (aref counted product2)) (okdigits allowed (quotient product2 10)))
                                             (progn
                                               (setf (aref counted product2) t)
-                                              (setq count ( + count product2))
+                                              (setq count (+ count product2))
                                               (format t "~D " product2)
                                             ))
                                           (setf (aref allowed d) t)

@@ -10,7 +10,7 @@
                                                             (if
                                                               (= (remainder i j) 5)
                                                               (return-from h t))
-                                                            (setq j ( + j 1))
+                                                            (setq j (+ j 1))
                                                             )
                                                        )
                                                        (return-from h nil)
@@ -20,15 +20,15 @@
   (let ((j 0))
     (loop for k from 0 to 10 do
       (progn
-        (setq j ( + j k))
+        (setq j (+ j k))
         (format t "~D~%" j)
       ))
     (let ((i 4))
       (loop while (< i 10)
       do (progn
            (princ i)
-           (setq i ( + i 1))
-           (setq j ( + j i))
+           (setq i (+ i 1))
+           (setq j (+ j i))
            )
       )
       (format t "~D~DFIN TEST~%" j i)

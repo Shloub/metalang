@@ -9,9 +9,9 @@ La suite de fibonaci
         (loop for j from 0 to (+ i 1) do
           (progn
             (princ j)
-            (setq out_ ( + out_ a2))
+            (setq out_ (+ out_ a2))
             (let ((tmp b2))
-              (setq b2 ( + b2 a2))
+              (setq b2 (+ b2 a2))
               (setq a2 tmp)
             )))
         (return-from fibo out_)

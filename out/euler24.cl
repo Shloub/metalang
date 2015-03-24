@@ -14,7 +14,7 @@
 (progn
   (let ((prod 1))
     (loop for i from 2 to n do
-      (setq prod ( * prod i)))
+      (setq prod (* prod i)))
     (return-from fact prod)
   )))
 
@@ -40,7 +40,7 @@
     (progn
       (let ((n (fact (- lim k))))
         (let ((nchiffre (quotient nth0 n)))
-          (setq nth0 ( remainder nth0 n))
+          (setq nth0 (remainder nth0 n))
           (loop for l from 0 to (- lim 1) do
             (if
               (not (aref pris l))
@@ -51,7 +51,7 @@
                     (princ l)
                     (setf (aref pris l) t)
                   ))
-                (setq nchiffre ( - nchiffre 1))
+                (setq nchiffre (- nchiffre 1))
               )))
         ))))
   (loop for m from 0 to (- lim 1) do

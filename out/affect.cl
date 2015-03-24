@@ -60,7 +60,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
       (setq t3 t2)
       (setq t0 t2)
       (setq t2 t3)
-      (setf (toto-blah t0) ( + (toto-blah t0) 1))
+      (setf (toto-blah t0) (+ (toto-blah t0) 1))
       (let ((len 1))
         (let
          ((cache0 (array_init

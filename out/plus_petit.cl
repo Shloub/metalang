@@ -45,9 +45,9 @@
                  (let ((e (aref tab i)))
                    (if
                      (< e m)
-                     (setq i ( + i 1))
+                     (setq i (+ i 1))
                      (progn
-                       (setq j ( - j 1))
+                       (setq j (- j 1))
                        (setf (aref tab i) (aref tab j))
                        (setf (aref tab j) e)
                      ))

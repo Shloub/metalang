@@ -68,8 +68,7 @@ sub find{
     my $ndivs = 1;
     foreach my $i (0 .. $max0) {
       if ($primesFactors->[$i] ne 0) {
-        $ndivs = $ndivs * 1 +
-        $primesFactors->[$i];
+        $ndivs = $ndivs * (1 + $primesFactors->[$i]);
       }
     }
     if ($ndivs > $ndiv2) {

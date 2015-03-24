@@ -67,7 +67,7 @@
                  (let ((tmp (aref tab i)))
                    (setf (aref tab i) (aref tab j))
                    (setf (aref tab j) tmp)
-                   (setq i ( + i 1))
+                   (setq i (+ i 1))
                  ))
                (progn
                  #| on place tab[i+1] à la place de tab[j], tab[j] à la place de tab[i] et tab[i] à la place de tab[i+1] |#
@@ -75,9 +75,9 @@
                    (setf (aref tab i) (aref tab j))
                    (setf (aref tab j) (aref tab (+ i 1)))
                    (setf (aref tab (+ i 1)) tmp)
-                   (setq i ( + i 1))
+                   (setq i (+ i 1))
                  )))
-             (setq j ( - j 1)))
+             (setq j (- j 1)))
         )
         (qsort0 tab len i0 (- i 1))
         (qsort0 tab len (+ i 1) j0)

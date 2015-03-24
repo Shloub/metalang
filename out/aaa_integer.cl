@@ -4,19 +4,19 @@
 
 (progn
   (let ((i 0))
-    (setq i ( - i 1))
+    (setq i (- i 1))
     (format t "~D~%" i)
-    (setq i ( + i 55))
+    (setq i (+ i 55))
     (format t "~D~%" i)
-    (setq i ( * i 13))
+    (setq i (* i 13))
     (format t "~D~%" i)
-    (setq i ( quotient i 2))
+    (setq i (quotient i 2))
     (format t "~D~%" i)
-    (setq i ( + i 1))
+    (setq i (+ i 1))
     (format t "~D~%" i)
-    (setq i ( quotient i 3))
+    (setq i (quotient i 3))
     (format t "~D~%" i)
-    (setq i ( - i 1))
+    (setq i (- i 1))
     (format t "~D~%" i)
     #|
 http://fr.wikipedia.org/wiki/Modulo_(op%C3%A9ration)#Trois_d.C3.A9finitions_de_la_fonction_modulo

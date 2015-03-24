@@ -37,7 +37,7 @@
   (let ((out0 0))
     (loop for i from 0 to (- taille 1) do
       (progn
-        (setq out0 ( + out0 (* (char-code (aref tableau i)) i)))
+        (setq out0 (+ out0 (* (char-code (aref tableau i)) i)))
         (princ (aref tableau i))
       ))
     (princ "--

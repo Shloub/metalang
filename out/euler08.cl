@@ -34,7 +34,7 @@
                (block lambda_1
                  (let ((c (mread-char )))
                    (let ((d (- (char-code c) (char-code #\0))))
-                     (setq i ( * i d))
+                     (setq i (* i d))
                      (return-from lambda_1 d)
                    ))))
                ))))
@@ -52,11 +52,11 @@
                       (setq nskipdiv 4)
                     )
                     (progn
-                      (setq i ( * i f))
+                      (setq i (* i f))
                       (if
                         (< nskipdiv 0)
-                        (setq i ( quotient i (aref last index))))
-                      (setq nskipdiv ( - nskipdiv 1))
+                        (setq i (quotient i (aref last index))))
+                      (setq nskipdiv (- nskipdiv 1))
                     ))
                   (setf (aref last index) f)
                   (setq index (remainder (+ index 1) 5))

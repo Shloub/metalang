@@ -23,9 +23,9 @@
         (loop for i from 0 to (- nterms 2) do
           (progn
             (let ((d (* 2 (+ 1 (quotient i 4)))))
-              (setq un ( + un d))
+              (setq un (+ un d))
               #| print int d print "=>" print un print " " |#
-              (setq sum ( + sum un))
+              (setq sum (+ sum un))
             )))
         (return-from sumdiag sum)
       )))))

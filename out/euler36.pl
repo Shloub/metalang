@@ -39,9 +39,7 @@ foreach my $d (1 .. 9) {
   }
   if (palindrome2($pow2, $d * 10 + $d)) {
     print($d * 10 + $d, "\n");
-    $sum = $sum + $d *
-    10 +
-    $d;
+    $sum = $sum + $d * 10 + $d;
   }
 }
 foreach my $a0 (0 .. 4) {

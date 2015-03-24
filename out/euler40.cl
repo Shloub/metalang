@@ -14,7 +14,7 @@
 (progn
   (let ((o 1))
     (loop for i from 1 to e do
-      (setq o ( * o a)))
+      (setq o (* o a)))
     (return-from exp0 o)
   )))
 
@@ -23,7 +23,7 @@
   (loop for i from 1 to 8 do
     (if
       (>= n (* (aref t0 i) i))
-      (setq n ( - n (* (aref t0 i) i)))
+      (setq n (- n (* (aref t0 i) i)))
       (progn
         (let ((nombre (+ (exp0 10 (- i 1)) (quotient n i))))
           (let ((chiffre (- (- i 1) (remainder n i))))
@@ -64,7 +64,7 @@
       (progn
         (let ((puiss (exp0 10 l)))
           (let ((v (e t0 (- puiss 1))))
-            (setq out0 ( * out0 v))
+            (setq out0 (* out0 v))
             (format t "10^~D=~D v=~D~%" l puiss v)
           ))))
     (format t "~D~%" out0)

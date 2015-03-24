@@ -100,8 +100,7 @@ foreach my $n (2 .. 1000) {
     my $othersum = sumdiv($nprimes, $primes, $other) - $other;
     if ($othersum eq $n) {
       print($other, " & ", $n, "\n");
-      $sum = $sum + $other +
-      $n;
+      $sum = $sum + $other + $n;
     }
   }
 }

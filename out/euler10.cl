@@ -16,7 +16,7 @@
       (if
         (= (aref t0 i) i)
         (progn
-          (setq sum ( + sum i))
+          (setq sum (+ sum i))
           (if
             (> (quotient max0 i) i)
             (progn
@@ -24,7 +24,7 @@
                 (loop while (and (< j max0) (> j 0))
                 do (progn
                      (setf (aref t0 j) 0)
-                     (setq j ( + j i))
+                     (setq j (+ j i))
                      )
                 )
               )))

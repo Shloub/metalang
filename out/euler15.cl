@@ -10,7 +10,7 @@
 (progn
   (let ((n 10))
     #| normalement on doit mettre 20 mais là on se tape un overflow |#
-    (setq n ( + n 1))
+    (setq n (+ n 1))
     (let
      ((tab (array_init
               n

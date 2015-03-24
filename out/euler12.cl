@@ -24,11 +24,11 @@
         (= (aref t0 i) i)
         (progn
           (let ((j (* i i)))
-            (setq n ( + n 1))
+            (setq n (+ n 1))
             (loop while (and (< j max0) (> j 0))
             do (progn
                  (setf (aref t0 j) 0)
-                 (setq j ( + j i))
+                 (setq j (+ j i))
                  )
             )
           ))))
@@ -43,7 +43,7 @@
         (loop while (= (remainder n d) 0)
         do (progn
              (setf (aref t0 d) (+ (aref t0 d) 1))
-             (setq n ( quotient n d))
+             (setq n (quotient n d))
              )
         )
         (if
@@ -79,7 +79,7 @@
             (= (aref era k) k)
             (progn
               (setf (aref primes l) k)
-              (setq l ( + l 1))
+              (setq l (+ l 1))
             )))
         (loop for n from 1 to 10000 do
           (progn
@@ -92,12 +92,12 @@
                                 ))
                                 ))))
             (let ((max0 (max2_ (fillPrimesFactors primesFactors n primes nprimes) (fillPrimesFactors primesFactors (+ n 1) primes nprimes))))
-              (setf (aref primesFactors 2) ( - (aref primesFactors 2) 1))
+              (setf (aref primesFactors 2) (- (aref primesFactors 2) 1))
               (let ((ndivs 1))
                 (loop for i from 0 to max0 do
                   (if
                     (not (= (aref primesFactors i) 0))
-                    (setq ndivs ( * ndivs (+ 1 (aref primesFactors i))))))
+                    (setq ndivs (* ndivs (+ 1 (aref primesFactors i))))))
                 (if
                   (> ndivs ndiv2)
                   (return-from find0 (quotient (* n (+ n 1)) 2)))

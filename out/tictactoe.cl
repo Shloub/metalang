@@ -83,7 +83,7 @@ Tictactoe : un tictactoe avec une IA
                 (progn
                   (if
                     (= (aref (aref (gamestate-cases g) x) y) 0)
-                    (setq freecase ( + freecase 1)))
+                    (setq freecase (+ freecase 1)))
                   (let ((colv (aref (aref (gamestate-cases g) x) y)))
                     (let ((linv (aref (aref (gamestate-cases g) y) x)))
                       (if

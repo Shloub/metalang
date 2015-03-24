@@ -15,12 +15,12 @@
       (if
         (= (aref t0 i) i)
         (progn
-          (setq n ( + n 1))
+          (setq n (+ n 1))
           (let ((j (* i i)))
             (loop while (and (< j max0) (> j 0))
             do (progn
                  (setf (aref t0 j) 0)
-                 (setq j ( + j i))
+                 (setq j (+ j i))
                  )
             )
           ))))
@@ -38,7 +38,7 @@
          (if
            (= (remainder n (aref primes i)) 0)
            (return-from isPrime nil))
-         (setq i ( + i 1))
+         (setq i (+ i 1))
          )
     )
     (return-from isPrime t)
@@ -83,7 +83,7 @@
                 (= (aref era k) k)
                 (progn
                   (setf (aref primes l) k)
-                  (setq l ( + l 1))
+                  (setq l (+ l 1))
                 )))
             (format t "~D == ~D~%" l nprimes)
             (let ((ma 0))

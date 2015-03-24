@@ -20,7 +20,7 @@
       (let ((out0 0))
         (let ((div (quotient sum (aref t0 maxIndex))))
           (loop for i from 0 to div do
-            (setq out0 ( + out0 (result (- sum (* i (aref t0 maxIndex))) t0 (- maxIndex 1) cache))))
+            (setq out0 (+ out0 (result (- sum (* i (aref t0 maxIndex))) t0 (- maxIndex 1) cache))))
           (setf (aref (aref cache sum) maxIndex) out0)
           (return-from result out0)
         ))))))

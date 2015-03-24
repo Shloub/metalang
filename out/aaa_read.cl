@@ -42,9 +42,9 @@ read int, read char et skip
   (let ((len (mread-int )))
     (mread-blank)
     (format t "~D=len~%" len)
-    (setq len ( * len 2))
+    (setq len (* len 2))
     (format t "len*2=~D~%" len)
-    (setq len ( quotient len 2))
+    (setq len (quotient len 2))
     (let
      ((tab (array_init
               len

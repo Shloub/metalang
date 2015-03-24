@@ -34,8 +34,8 @@
                       (= (* a k) (* i b))
                       (progn
                         (format t "~D/~D~%" a b)
-                        (setq top ( * top a))
-                        (setq bottom ( * bottom b))
+                        (setq top (* top a))
+                        (setq bottom (* bottom b))
                       ))
                   )))))))
       (format t "~D/~D~%" top bottom)

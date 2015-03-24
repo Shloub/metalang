@@ -54,16 +54,16 @@
           do (progn
                (let ((ndays (ndayinmonth month year)))
                  (setq dayofweek (remainder (+ dayofweek ndays) 7))
-                 (setq month ( + month 1))
+                 (setq month (+ month 1))
                  (if
                    (= month 12)
                    (progn
                      (setq month 0)
-                     (setq year ( + year 1))
+                     (setq year (+ year 1))
                    ))
                  (if
                    (= (remainder dayofweek 7) 6)
-                   (setq count ( + count 1)))
+                   (setq count (+ count 1)))
                ))
           )
           (format t "~D~%" count)

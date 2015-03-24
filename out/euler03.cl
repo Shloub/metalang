@@ -16,13 +16,13 @@
                         (if
                           (= (remainder a b) 0)
                           (progn
-                            (setq a ( quotient a b))
+                            (setq a (quotient a b))
                             (setq b0 b)
                             (setq b a)
                             (setq sqrtia (isqrt a))
                             (setq found t)
                           ))
-                        (setq b ( + b 1))
+                        (setq b (+ b 1))
                         )
                    )
                    (if
