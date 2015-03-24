@@ -171,7 +171,7 @@ end@\n") ()
           Format.fprintf f "%a[%a]"
             self#mutable_get m
             (print_list
-               (fun f e -> Format.fprintf f "%a+1" self#expr e)
+               (fun f e -> Format.fprintf f "%a" self#expr (Expr.saddi e 1))
                (sep "%a][%a"))
             indexes
         else super#m_array f m indexes
@@ -187,8 +187,7 @@ end@\n") ()
   method print f t expr =
     match Type.unfix t with
     | Type.Char ->Format.fprintf f "@[<h>io.write(string.format(\"%%c\", %a))@]" self#expr expr
-    | _ ->
-        Format.fprintf f "@[<h>io.write(%a)@]" self#expr expr
+    | _ -> Format.fprintf f "@[<h>io.write(%a)@]" self#expr expr
 
   method allocrecord f name t el =
     Format.fprintf f "@[<h>@[<v2>local %a = {@\n%a@]@\n}@]"

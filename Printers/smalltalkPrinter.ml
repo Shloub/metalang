@@ -119,7 +119,7 @@ class smalltalkPrinter = object(self)
   method m_array_set f m indexes = Format.fprintf f "%a at: %a put:"
         self#mutable_get m
         (print_list
-           (fun f e -> self#expr f (Expr.binop Expr.Add e (Expr.integer 1) ))
+           (fun f e -> self#expr f (Expr.saddi e 1))
            (sep "%a at: %a"))
         indexes
 
@@ -128,9 +128,9 @@ class smalltalkPrinter = object(self)
   method m_array_get f m indexes = Format.fprintf f "(%a at: %a)"
         self#mutable_get m
         (print_list
-           (fun f e -> self#expr f (Expr.binop Expr.Add e (Expr.integer 1) ))
+           (fun f e -> self#expr f (Expr.saddi e 1))
            (sep "%a at: %a"))
-        indexes
+           indexes
 
   method allocarray f binding type_ len useless =
     Format.fprintf f "@[<h>%a := Array new: %a.@]"
