@@ -94,7 +94,7 @@ module Walk (T:SigPass) = struct
       )
       acc
       p
-  let apply acc0 ( prog : 'lex Prog.t ) : 'lex Prog.t  =
+  let foldmap acc0 ( prog : 'lex Prog.t ) =
     let acc = T.init_acc acc0 in
     let acc, p = apply_prog acc prog.Prog.funs in
     let acc, m = match prog.Prog.main with
@@ -102,8 +102,10 @@ module Walk (T:SigPass) = struct
       | Some m -> match apply_instr acc m with
         | (a, b) -> a, Some b
     in
-    {prog with
+    acc, {prog with
       Prog.main = m;
       Prog.funs = p;
     }
+ let apply acc0 p  = snd (foldmap acc0 p)
+ let fold acc0 p  = fst (foldmap acc0 p)
 end

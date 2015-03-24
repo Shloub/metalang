@@ -51,6 +51,9 @@ class camlFunPrinter = object(self)
 
   val mutable macros = StringMap.empty
 
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+
   val mutable typerEnv : Typer.env = Typer.empty
   method getTyperEnv () = typerEnv
   method setTyperEnv t = typerEnv <- t

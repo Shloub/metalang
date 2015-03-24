@@ -58,6 +58,8 @@ module WalkInlineFuncs = struct
 end
 module WalkInlineVars = WalkTop(InlineVars);;
 
+module WalkDetectRecursion = WalkTop(DetectRecursion);;
+
 (* TODO rentrer dans la structure du type *)
 let no_macro = function
   | Prog.DeclarFun (_, ty, li, instrs, opt) ->

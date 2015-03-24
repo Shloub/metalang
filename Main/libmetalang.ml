@@ -138,21 +138,19 @@ let typed_ name f (a, b) =
 
 (** check if we use both read macros and skip or read keywords (it's forbiden) *)
 (** this pass may assert in a language and fail in another language *)
-let check_reads = (fun (tyenv, prog) ->
-  (if Tags.is_taged "use_readmacros" then
-      let need_stdinsep = prog.Prog.hasSkip in
-      let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
-      let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
-      let need = need_stdinsep || need_readint || need_readchar in
-      if need then
-        begin
-          raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
-        end );
-  (tyenv, prog))
+let check_reads prog =
+  if Tags.is_taged "use_readmacros" then
+    let need_stdinsep = prog.Prog.hasSkip in
+    let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in
+    let need_readchar = TypeSet.mem (Type.char) prog.Prog.reads in
+    let need = need_stdinsep || need_readint || need_readchar in
+    if need then
+      begin
+        raise (Warner.Error (fun f -> Format.fprintf f "Cannot use macros like read_int, read_char_line, read_int_line and skip or read.\n"))
+      end
 
 (** passes applyed for all languages *)
-let default_passes (prog : Typer.env * Utils.prog) :
-    (Typer.env * Utils.prog ) =
+let default_passes (prog : Typer.env * Utils.prog) =
   prog
   |> typed "check naming" Passes.WalkCheckNaming.apply funit
   |> CheckUseVoid.apply
@@ -165,6 +163,10 @@ let default_passes (prog : Typer.env * Utils.prog) :
   |> typed "inline functions" Passes.WalkInlineFuncs.apply funit
   |> typed "inline vars" Passes.WalkInlineVars.apply funit
   |> typer_process
+  |> (fun (ty, p) ->
+      let acc = Passes.WalkDetectRecursion.fold () p in
+      acc, ty, p
+     )
 
 (** passes for imperatives languages like C, C++, python, etc... *)
 let clike_passes
@@ -173,33 +175,26 @@ let clike_passes
     ~array
     ~mergeif
     prog =
-  prog |> default_passes
-  |> (fun (a, prog) ->
-      if tuple then
-        let startTime = Sys.time () in
-        let tuples, prog = DeclareTuples.apply a prog in
-        if benchmark then begin let delta = Sys.time () -. startTime in
-        Format.printf "%3.5f Pass : DeclareTuples@\n%!" delta end;
-        let startTime = Sys.time () in
-        let b = Passes.WalkExpandUnTuple.apply (a, tuples) prog in
-        if benchmark then begin let delta = Sys.time () -. startTime
-        in Format.printf "%3.5f Pass : Expand UnTuple@\n%!" delta end;
-        typer_process (a, b)
-      else
-        (a, prog))
-  |> (if record then
-      typed "record 2 expr" Passes.WalkRecordExprToInstr.apply
-        Passes.WalkRecordExprToInstr.init_acc
-  else id)
-  |> (if record then typer_process else id)
-  |> (if mergeif then typed "merging if" Passes.WalkIfMerge.apply funit else id)
-  |> (if mergeif then typer_process else id)
-  |> (if array then typed "array expand" Passes.WalkAllocArrayExpend.apply funit else id)
-  |> typed "inline vars" Passes.WalkInlineVars.apply funit
-  |> typer_process
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply funit
+  let rec_, ty, p = default_passes prog in
+  let ty, p = if tuple then
+    let tuples, p = DeclareTuples.apply ty p in
+    let p = Passes.WalkExpandUnTuple.apply (ty, tuples) p in
+    Typer.process p
+  else ty, p
+  in let ty, p = if record then
+    Passes.WalkRecordExprToInstr.apply
+      (Passes.WalkRecordExprToInstr.init_acc ty) p |> Typer.process
+  else ty, p in
+  let ty, p =
+    if mergeif then Passes.WalkIfMerge.apply () p |> Typer.process
+    else ty, p
+  in let p = if array then Passes.WalkAllocArrayExpend.apply () p else p in
+  let p = Passes.WalkInlineVars.apply () p in
+  let ty, p = Typer.process p in
+  let p = ReadAnalysis.apply p in
+  let () = check_reads p in
+  let p = Passes.WalkRemoveInternal.apply () p in
+   (rec_, ty, p)
 
  (** passes for functional languages like ocaml, racket and haskell *)
 let fun_passes
@@ -207,19 +202,19 @@ let fun_passes
     ~fun_inline
     ~detect_effects
     ~curry prog =
-  prog |> default_passes
-  |> typed "inline vars" Passes.WalkInlineVars.apply funit
-  |> typed_ "read analysis" ReadAnalysis.apply
-  |> check_reads
-  |> typed "remove internals" Passes.WalkRemoveInternal.apply funit
-  |> typed "merging if" Passes.WalkIfMerge.apply funit
-  |> (fun (a, b) -> a, TransformFun.transform (a, b))
-  |> (fun (a, b) -> a, Makelet.apply curry b)
-  |> (fun (a, b) -> a, MergePrint.apply b)
-
-  |> (if rename then fun (a, b) -> a, RenameFun.apply b else id)
-  |> (if fun_inline then fun (a, b) -> a, FunInline.apply b else id)
-  |> (if detect_effects then fun (a, b) -> a, DetectSideEffect.apply b else id)
+  let rec_, ty, p = default_passes prog in
+  let p = Passes.WalkInlineVars.apply () p in
+  let p = ReadAnalysis.apply p in
+  let () = check_reads p in
+  let p = Passes.WalkRemoveInternal.apply () p in
+  let p = Passes.WalkIfMerge.apply () p in
+  let p = TransformFun.transform (ty, p) in
+  let p = Makelet.apply curry p in
+  let p = MergePrint.apply p in
+  let p = if rename then RenameFun.apply p else p in
+  let p = if fun_inline then FunInline.apply p else p in
+  let p = if detect_effects then DetectSideEffect.apply p else p in
+  (rec_, ty, p)
 
 let no_passes prog = prog
 
@@ -228,19 +223,17 @@ let languages, printers =
   let ( => ) (cut, pa) pr out prog
     =
     (fun (err : ((Format.formatter -> unit) -> unit)) ->
-      let typerEnv, processed  =
-        pa prog
-      in
+      let rec_, typerEnv, processed = pa prog in
       begin
-
-	      if cut then begin
+        if cut then begin
           Format.pp_set_margin out 81;
-	        Format.pp_set_max_indent out 80;
+          Format.pp_set_max_indent out 80;
         end
         else begin
           Format.pp_set_margin out 16001;
-	        Format.pp_set_max_indent out 16000;
+          Format.pp_set_max_indent out 16000;
         end;
+        pr#setRecursive rec_;
         pr#setTyperEnv typerEnv;
         pr#prog out processed
       end)

@@ -467,7 +467,7 @@ class camlPrinter = object(self)
   method print_fun f funname (t : unit Type.Fixed.t) li instrs =
     self#calc_refs instrs;
     self#calc_used_variables instrs;
-    let is_rec = self#is_rec funname instrs in
+    let is_rec = self#is_rec funname in
     let proto = if is_rec then self#print_rec_proto else self#print_proto in
     let sad_types = collect_sad_returns t instrs in
     let () = sad_returns <- collect_sad_return instrs in

@@ -687,20 +687,10 @@ class printer = object(self)
   method proglist f funs =
     Format.fprintf f "%a" (print_list self#prog_item nosep) funs
 
-  (** returns true if the function is recursive *)
-  method is_rec funname (instrs: Utils.instr list) =
-    let is_rec i =
-      Instr.Writer.Deep.fold (fun acc i -> match Instr.unfix i with
-      | Instr.Call (name, _) -> acc || name = funname
-      | _ -> acc
-      ) false i ||
-        Instr.fold_expr (fun acc e ->
-          Expr.Writer.Deep.fold (fun acc e -> match Expr.unfix e with
-          | Expr.Call (name, _) -> acc || name = funname
-          | _ -> acc
-          ) acc e
-        ) false i
-    in List.fold_left (fun acc i -> acc || is_rec i) false instrs
+
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+  method is_rec funname = StringSet.mem funname recursives_definitions
 
   method main f (main : Utils.instr list) =
     Format.fprintf f "main@\n@[<v 2>  %a@]@\nend"

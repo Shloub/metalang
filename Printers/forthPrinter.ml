@@ -217,7 +217,7 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
   method print_fun f funname t li instrs =
     Format.fprintf f "@[<hov>: %a%a { %a }@]@\n@[<v 2>  %a@]@\n;@\n"
       self#funname funname
-      (fun f () -> if self#is_rec funname instrs then
+      (fun f () -> if self#is_rec funname then
         Format.fprintf f " recursive") ()
       (print_list self#binding sep_space) (List.map fst li)
       self#instructions instrs

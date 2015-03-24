@@ -160,6 +160,9 @@ class haskellPrinter = object(self)
   method setTyperEnv t = typerEnv <- t
   method typename_of_field field = Typer.typename_for_field field typerEnv
 
+  val mutable recursives_definitions = StringSet.empty
+  method setRecursive b = recursives_definitions <- b
+
   method tname f name = Format.fprintf f "%s" (String.capitalize name)
 
   method binopstr = function
