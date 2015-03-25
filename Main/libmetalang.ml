@@ -246,6 +246,7 @@ let languages, printers =
     "m",       (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new ObjCPrinter.objCPrinter ;
     "pas",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new PasPrinter.pasPrinter ;
     "adb",     (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new AdaPrinter.adaPrinter ;
+    "tcl",     (false , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new TclPrinter.tclPrinter ;
     "cc",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new CppPrinter.cppPrinter ;
     "cs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new CsharpPrinter.csharpPrinter ;
     "vb",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new VbDotNetPrinter.vbDotNetPrinter ;
@@ -436,6 +437,7 @@ enum @target_language
   LANG_Rkt
   LANG_Scala
   LANG_St
+  LANG_Tcl
   LANG_Vb
   LANG_Metalang_parsed
 end

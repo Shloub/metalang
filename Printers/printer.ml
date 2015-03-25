@@ -289,7 +289,6 @@ class printer = object(self)
 
   method separator f () = Format.fprintf f ";"
 
-
   method apply f var li = 
     match StringMap.find_opt var macros with
     | Some ( (t, params, code) ) ->
