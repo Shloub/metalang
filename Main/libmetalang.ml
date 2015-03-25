@@ -265,7 +265,7 @@ let languages, printers =
     "rkt",     (true , fun_passes ~rename:false ~fun_inline:false ~detect_effects:false ~curry:false) => new RacketPrinter.racketPrinter ;
     "hs",      (false, fun_passes ~rename:true  ~fun_inline:true  ~detect_effects:true  ~curry:true ) => new HaskellPrinter.haskellPrinter ;
   ] in
-  let langs : string list = List.map fst ls in
+  let langs : string list = List.map fst ls |> List.sort String.compare in
   let map = L.from_list ls
   in langs, map
 
