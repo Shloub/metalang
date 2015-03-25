@@ -359,21 +359,21 @@ let rec unify env (t1 : typeContrainte ref) (t2 : typeContrainte ref) : bool =
   | _ -> raise (Error (fun f -> Format.fprintf f "FAIL %S %S" (contr2str !t1) (contr2str !t2)))
 
 (** {2 Accessors}*)
-let is_int env expr =
-  match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
-  | Typed (Type.Fixed.F (_, Type.Integer), _) -> true
-  | _ -> false
 
-let is_bool env expr =
-  match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
-  | Typed (Type.Fixed.F (_, Type.Bool), _) -> true
-  | _ -> false
-
-let get_type env expr =
-  match !(IntMap.find (Expr.Fixed.annot expr) env.contrainteMap) with
+let get_type_a env a =
+  match !(IntMap.find a env.contrainteMap) with
   | Typed (t, _) -> t
   | c -> raise (Error (fun f -> Format.fprintf f "@\nNo type : %s@\n%!"
     (contr2str c)))
+
+let is_int_a env a = Type.Integer = Type.unfix (get_type_a env a)
+let is_bool_a env a = Type.Bool = Type.unfix (get_type_a env a)
+
+let is_int env expr = Expr.Fixed.annot expr |> is_int_a env
+let is_bool env expr = Expr.Fixed.annot expr |> is_bool_a env
+
+
+let get_type env expr = Expr.Fixed.annot expr |> get_type_a env
 
 let typed env expr =
   try
