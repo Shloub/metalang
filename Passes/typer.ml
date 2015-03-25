@@ -509,7 +509,9 @@ and collect_contraintes_mutable env mut =
         BindingMap.find name env.locales
       with Not_found ->
         not_found name tloc
-    in
+    in let env = { env with
+                   contrainteMap = IntMap.add (Mutable.Fixed.annot mut) ty env.contrainteMap
+                 } in
     env, ty
   | Mutable.Array (mut, eli) ->
     let env = List.fold_left (fun env e ->
@@ -521,7 +523,8 @@ and collect_contraintes_mutable env mut =
     let env, contrainte_mut = collect_contraintes_mutable env mut in
     let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, loc mut) ) in
     let env = { env with contraintes =
-        (contrainte_mut, contrainte_mut2) :: env.contraintes
+        (contrainte_mut, contrainte_mut2) :: env.contraintes;
+                contrainteMap = IntMap.add (Mutable.Fixed.annot mut) contrainte env.contrainteMap
               } in
     env, contrainte
   | Mutable.Dot (mut, name) ->
@@ -536,7 +539,8 @@ and collect_contraintes_mutable env mut =
     let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
     let env, ty_dot = ty2typeContrainte env ty_dot tloc in
     let env = {env with
-      contraintes = (contrainte, contrainte2) :: env.contraintes} in
+      contraintes = (contrainte, contrainte2) :: env.contraintes;
+               contrainteMap = IntMap.add (Mutable.Fixed.annot mut) ty_dot env.contrainteMap} in
     env, ty_dot
 
 let rec collect_contraintes_instructions env instructions
