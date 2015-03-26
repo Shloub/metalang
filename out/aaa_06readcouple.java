@@ -4,8 +4,8 @@ public class aaa_06readcouple
 {
   static Scanner scanner = new Scanner(System.in);
     static int[] read_int_line(){
-        String s[] = scanner.nextLine().split(" ");
-        int out[] = new int[s.length];
+        String[] s = scanner.nextLine().split(" ");
+        int[] out = new int[s.length];
         for (int i = 0; i < s.length; i ++)
           out[i] = Integer.parseInt(s[i]);
         return out;
