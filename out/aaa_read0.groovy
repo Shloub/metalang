@@ -1,21 +1,8 @@
-import java.util.*;
+import groovy.transform.Field
+import java.util.*
 
-public class aaa_read0
-{
-  static Scanner scanner = new Scanner(System.in);
-  
-  static void main(String[] args)
-  {
-    int len;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      len = scanner.nextInt();
-    } else {
-      len = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    System.out.printf("%s\n", len);
-  }
-  
-}
+
+@Field Scanner scanner = new Scanner(System.in)
+int len = Integer.parseInt(scanner.nextLine())
+System.out.printf("%s\n", len);
 

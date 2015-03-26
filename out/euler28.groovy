@@ -1,9 +1,6 @@
-import java.util.*;
+import java.util.*
 
-public class euler28
-{
-  
-  /*
+/*
 
 43 44 45 46 47 48 49
 42 21 22 23 24 25 26
@@ -18,26 +15,22 @@ public class euler28
 
 
 */
-  static int sumdiag(int n)
+int sumdiag(int n)
+{
+  int nterms = n * 2 - 1
+  int un = 1
+  int sum = 1
+  for (int i = 0 ; i <= nterms - 2; i ++)
   {
-    int nterms = n * 2 - 1;
-    int un = 1;
-    int sum = 1;
-    for (int i = 0 ; i <= nterms - 2; i ++)
-    {
-      int d = 2 * (1 + (int)(i / 4));
-      un += d;
-      /* print int d print "=>" print un print " " */
-      sum += un;
-    }
-    return sum;
+    int d = 2 * (1 + (int)(i / 4))
+    un += d;
+    /* print int d print "=>" print un print " " */
+    sum += un;
   }
-  
-  
-  static void main(String[] args)
-  {
-    print(sumdiag(1001));
-  }
-  
+  return sum
 }
+
+
+
+print(sumdiag(1001))
 

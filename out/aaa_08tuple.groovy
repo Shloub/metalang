@@ -1,54 +1,34 @@
-import java.util.*;
+import groovy.transform.Field
+import java.util.*
 
-public class aaa_08tuple
-{
-  static Scanner scanner = new Scanner(System.in);
-  static class Tuple_int_int {
-    int tuple_int_int_field_0;
-    int tuple_int_int_field_1;
-  }
-  static class Toto {
-    Tuple_int_int foo;
-    int bar;
-  }
-  
-  static void main(String[] args)
-  {
-    int bar_;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      bar_ = scanner.nextInt();
-    } else {
-      bar_ = scanner.nextInt();
+    int[] read_int_line(){
+        String[] s = scanner.nextLine().split(" ");
+        int[] out = new int[s.length];
+        for (int i = 0; i < s.length; i ++)
+          out[i] = Integer.parseInt(s[i]);
+        return out;
     }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    int c;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      c = scanner.nextInt();
-    } else {
-      c = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    int d;
-    if (scanner.hasNext("^-")){
-      scanner.next("^-");
-      d = scanner.nextInt();
-    } else {
-      d = scanner.nextInt();
-    }
-    scanner.findWithinHorizon("[\n\r ]*", 1);
-    Tuple_int_int e = new Tuple_int_int();
-    e.tuple_int_int_field_0 = c;
-    e.tuple_int_int_field_1 = d;
-    Toto t = new Toto();
-    t.foo = e;
-    t.bar = bar_;
-    Tuple_int_int f = t.foo;
-    int a = f.tuple_int_int_field_0;
-    int b = f.tuple_int_int_field_1;
-    System.out.printf("%s %s %s\n", a, b, t.bar);
-  }
-  
+
+class Tuple_int_int {
+  int tuple_int_int_field_0
+  int tuple_int_int_field_1
 }
+class Toto {
+  Tuple_int_int foo
+  int bar
+}
+
+@Field Scanner scanner = new Scanner(System.in)
+int bar_ = Integer.parseInt(scanner.nextLine())
+int[] c = read_int_line()
+Tuple_int_int d = new Tuple_int_int()
+d.tuple_int_int_field_0 = c[0]
+d.tuple_int_int_field_1 = c[1]
+Toto t = new Toto()
+t.foo = d
+t.bar = bar_
+Tuple_int_int e = t.foo
+int a = e.tuple_int_int_field_0
+int b = e.tuple_int_int_field_1
+System.out.printf("%s %s %s\n", a, b, t.bar);
 

@@ -1,18 +1,11 @@
-import java.util.*;
+import java.util.*
 
-public class test_instant
+int foo(int a, int b)
 {
-  
-  static int foo(int a, int b)
-  {
-    return a + b;
-  }
-  
-  
-  static void main(String[] args)
-  {
-    print(10);
-  }
-  
+  return a + b
 }
+
+
+
+print(10)
 
