@@ -48,7 +48,8 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method prototype f t = self#ptype f t
 
   method stdin_sep f =
-    Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1);@]"
+    Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1)%a@]"
+      self#separator ()
 
   method ptype f t =
     match Type.unfix t with
@@ -63,12 +64,13 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     | Type.Struct li -> Format.fprintf f "a struct"
     | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
 
-  method decl_field f (name, type_) = Format.fprintf f "public %a %a;" self#ptype type_ self#field name
+  method decl_field f (name, type_) = Format.fprintf f "public %a %a%a" self#ptype type_ self#field name self#separator ()
 
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
-        Format.fprintf f "@[<v 2>static class %a {@\n%a@]@\n}"
+        Format.fprintf f "@[<v 2>%aclass %a {@\n%a@]@\n}"
+          self#static ()
           self#typename name
           (print_list self#decl_field sep_nl) li
     | Type.Enum li ->
@@ -107,19 +109,20 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
   method allocarray f binding type_ len _ =
     match Type.unfix type_ with
     | Type.Array t2 ->
-      Format.fprintf f "@[<h>%a[] %a = new %a[%a]%a;@]"
+      Format.fprintf f "@[<h>%a[] %a = new %a[%a]%a%a@]"
         self#ptype type_
         self#binding binding
-
         self#prefix_type t2
         self#expr len
         self#suffix_type type_
+          self#separator ()
     | _ ->
-      Format.fprintf f "@[<h>%a[] %a = new %a[%a];@]"
+      Format.fprintf f "@[<h>%a[] %a = new %a[%a]%a@]"
         self#ptype type_
         self#binding binding
         self#ptype type_
         self#expr len
+          self#separator ()
 
   method main f main =
     Format.fprintf f "public static void main(String args[])@\n@[<v 2>{@\n%a@]@\n}@\n"
@@ -131,22 +134,28 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
       self#instructions instrs
 
   method print_proto f triplet =
-    Format.fprintf f "static %a"
+    Format.fprintf f "%a%a"
+      self#static ()
       cppprinter#print_proto triplet
 
+  method static f () = Format.fprintf f "static "
+
   method print_scanner f () =
-    Format.fprintf f "@[<h>static Scanner scanner = new Scanner(System.in);@]"
+    Format.fprintf f "@[<h>%aScanner scanner = new Scanner(System.in)%a@]"
+      self#static ()
+      self#separator ()
 
   method print_datareader f () =
     Format.fprintf f "@[<h>
-    static int[] read_int_line(){
-        String s[] = scanner.nextLine().split(\" \");
-        int out[] = new int[s.length];
+    %aint[] read_int_line(){
+        String[] s = scanner.nextLine().split(\" \");
+        int[] out = new int[s.length];
         for (int i = 0; i < s.length; i ++)
           out[i] = Integer.parseInt(s[i]);
         return out;
     }
 @]"
+  self#static ()
 
   method read f t m =
     match Type.unfix t with
@@ -196,12 +205,13 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
 
 
   method allocrecord f name t el =
-    Format.fprintf f "%a %a = new %a();@\n%a"
+    Format.fprintf f "%a %a = new %a()%a@\n%a"
       self#ptype t
       self#binding name
       self#ptype t
+      self#separator ()
       (self#def_fields name) el
-
+      
   method m_field f m field = 
       Format.fprintf f "%a.%s"
         self#mutable_get m

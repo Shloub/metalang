@@ -304,6 +304,7 @@ macro array<int> native_expand_read_int_line(int c)
   ruby do "STDIN.readline.split(\" \").map{ |x| x.to_i(10) }"
   pl do "[ map { int($_) } split(/\\s+/, <STDIN>) ]"
   java do "read_int_line()"
+  groovy do "read_int_line()"
   lua do "readintline()"
   hs do "join (newListArray . (,) 0 . subtract 1 <$> $c <*> fmap (map read . words) getLine)"
   scala do "readLine().split(\" \").map(_.toInt)"
@@ -321,6 +322,7 @@ macro array<char> native_expand_read_char_line(int c)
   pl do "[split(//, <STDIN>)]"
   lua do "readcharline()"
   java do "scanner.nextLine().toCharArray()"
+  groovy do "scanner.nextLine().toCharArray()"
   hs do "join (newListArray <$> (fmap (\\x -> (0, x-1)) ($c)) <*> getLine)"
   scala do "readLine().toCharArray()"
   *  do "E R R O R"
@@ -343,6 +345,7 @@ macro int native_expand_read_int()
   pl do "int( <STDIN> )"
   lua do "tonumber(io.read('*l'))"
   java do "Integer.parseInt(scanner.nextLine())"
+  groovy do "Integer.parseInt(scanner.nextLine())"
   hs do "fmap read getLine"
   scala do "readInt().toInt"
   st do "stdin nextLine asInteger"
@@ -363,6 +366,7 @@ then
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Java ||
+	current_language() == LANG_Groovy ||
 	current_language() == LANG_Rb ||
 	current_language() == LANG_Lua ||
 	current_language() == LANG_Hs ||
@@ -390,6 +394,7 @@ def lexems expand_read_int_line(lexems a)
 	current_language() == LANG_Pl ||
 	current_language() == LANG_Rkt ||
 	current_language() == LANG_Java ||
+	current_language() == LANG_Groovy ||
 	current_language() == LANG_Rb ||
 	current_language() == LANG_Lua ||
 	current_language() == LANG_Scala ||
@@ -433,6 +438,7 @@ def lexems expand_read_char_line(lexems a)
 	current_language() == LANG_Cs ||
 	current_language() == LANG_Vb ||
 	current_language() == LANG_Java ||
+	current_language() == LANG_Groovy ||
 	current_language() == LANG_Rb ||
 	current_language() == LANG_Hs ||
 	current_language() == LANG_Scala
@@ -508,7 +514,8 @@ end
 def lexems expand_read_int_couple()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
-     current_language() == LANG_Java
+     current_language() == LANG_Java ||
+     current_language() == LANG_Groovy
   then
     return { def array<int> l = read_int_line(2)
     return (l[0], l[1]) }
@@ -556,6 +563,7 @@ def lexems expand_read_3ints()
   if current_language() == LANG_Vb ||
      current_language() == LANG_Cs ||
      current_language() == LANG_Hs ||
+     current_language() == LANG_Groovy ||
      current_language() == LANG_Java then
     return { def array<int> l = read_int_line(3)
     return (l[0], l[1], l[2]) }

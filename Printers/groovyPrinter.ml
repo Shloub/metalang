@@ -40,20 +40,19 @@ class groovyPrinter = object(self)
 
   method lang () = "groovy"
 
-
-  method main f main =
-    Format.fprintf f "static void main(String[] args)@\n@[<v 2>{@\n%a@]@\n}@\n"
-      self#instructions main
+  method main f main = self#instructions f main
 
   method formater_type t = "%s"
 
+  method separator f () = ()
+  method static f () = ()
   method char f c = Format.fprintf f "(char)%C" c
 
-  method decl_field f (name, type_) = Format.fprintf f "%a %a;" self#ptype type_ self#field name
+  method decl_field f (name, type_) = Format.fprintf f "%a %a" self#ptype type_ self#field name
 
   method typename f n = Format.fprintf f "%s" (String.capitalize n)
 
-  method print f t expr = Format.fprintf f "@[<h>print(%a);@]" self#expr expr
+  method print f t expr = Format.fprintf f "@[<h>print(%a)@]" self#expr expr
 
   method binop f op a b =
     match op with
@@ -70,6 +69,23 @@ class groovyPrinter = object(self)
     | _ ->
       Format.fprintf f "@[<h>System.out.printf(\"%s\", %a);@]" format
         (print_list self#expr sep_c ) (List.map snd exprs)
+
+
+  method print_scanner f () =
+    Format.fprintf f "@[<h>@Field %aScanner scanner = new Scanner(System.in)%a@]"
+      self#static ()
+      self#separator ()
+
+  method prog f prog =
+    let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in
+    let datareader = Tags.is_taged "use_java_readline" in
+    Format.fprintf f
+      "%aimport java.util.*@\n%a@\n%a@\n%a@\n%a@\n"
+      (fun f () -> if reader || datareader then Format.fprintf f "import groovy.transform.Field@\n") ()
+      (if datareader then self#print_datareader else fun f () -> ()) ()
+      self#proglist prog.Prog.funs
+      (if reader || datareader then self#print_scanner else fun f () -> ()) ()
+      (print_option self#main) prog.Prog.main
 
 
 end
