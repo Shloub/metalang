@@ -58,21 +58,19 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
     | Type.Void ->  Format.fprintf f "void"
     | Type.Bool -> Format.fprintf f "boolean"
     | Type.Char -> Format.fprintf f "char"
-    | Type.Named n -> Format.fprintf f "%s" n
+    | Type.Named n -> self#typename f n
     | Type.Enum _ -> Format.fprintf f "an enum"
     | Type.Struct li -> Format.fprintf f "a struct"
     | Type.Auto | Type.Tuple _ | Type.Lexems -> assert false
+
+  method decl_field f (name, type_) = Format.fprintf f "public %a %a;" self#ptype type_ self#field name
 
   method decl_type f name t =
     match (Type.unfix t) with
       Type.Struct li ->
         Format.fprintf f "@[<v 2>static class %a {@\n%a@]@\n}"
           self#typename name
-          (print_list
-             (fun t (name, type_) ->
-               Format.fprintf t "public %a %a;" self#ptype type_ self#field name
-             ) sep_nl
-          ) li
+          (print_list self#decl_field sep_nl) li
     | Type.Enum li ->
       Format.fprintf f "enum %a { @\n@[<v2>  %a@]}@\n"
         self#typename name
@@ -81,7 +79,7 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
 
   method enum f e =
     let t = Typer.typename_for_enum e (cppprinter#getTyperEnv ()) in
-    Format.fprintf f "%s.%s" t e
+    Format.fprintf f "%a.%s" self#typename t e
 
   method prog f prog =
     let reader = Tags.is_taged "use_readmacros" || prog.Prog.hasSkip || TypeSet.cardinal prog.Prog.reads <> 0 in

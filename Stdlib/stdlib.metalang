@@ -14,6 +14,7 @@ macro int sqrt_(int c)
   ruby do "Math.sqrt($c).to_i"
   pas do "Floor(Sqrt($c))"
   java do "(int)Math.sqrt($c)"
+  groovy do "(int)Math.sqrt($c)"
   clisp do "(isqrt $c)"
   go do "int(math.Sqrt(float64($c)))"
   php do "intval(sqrt($c))"
@@ -44,6 +45,7 @@ macro char char_of_int(int c)
   ml do "char_of_int ($c)"
   pas do "chr($c)"
   java do "(char)($c)"
+  groovy do "(char)($c)"
   js do "String.fromCharCode($c)"
   csharp do "(char)($c)"
   php do "chr($c)"
@@ -100,6 +102,7 @@ macro int native_macro_max2(int a, int b)
   ml do "(max ($a) ($b))"
   js do "Math.max($a, $b)"
   java do "Math.max($a, $b)"
+  groovy do "Math.max($a, $b)"
   csharp do "Math.Max($a, $b)"
   vb do "Math.Max($a, $b)"
   php do "max($a, $b)"
@@ -124,6 +127,7 @@ end
 
 def lexems macro_max2(lexems a, lexems b)
   if current_language() == LANG_Java ||
+  current_language() == LANG_Groovy ||
   current_language() == LANG_Js ||
   current_language() == LANG_Php ||
   current_language() == LANG_Cs ||
@@ -157,6 +161,7 @@ macro int native_macro_min2(int a, int b)
   ml do "(min ($a) ($b))"
   js do "Math.min($a, $b)"
   java do "Math.min($a, $b)"
+  groovy do "Math.min($a, $b)"
   csharp do "Math.Min($a, $b)"
   vb do  "Math.Min($a, $b)"
   php do "min($a, $b)"
@@ -206,6 +211,7 @@ end
 
 def lexems macro_min2(lexems a, lexems b)
   if current_language() == LANG_Java ||
+  current_language() == LANG_Groovy ||
   current_language() == LANG_Js ||
   current_language() == LANG_Php ||
   current_language() == LANG_Cs ||

@@ -250,6 +250,7 @@ let languages, printers =
     "cs",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new CsharpPrinter.csharpPrinter ;
     "vb",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new VbDotNetPrinter.vbDotNetPrinter ;
     "java",    (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new JavaPrinter.javaPrinter ;
+    "groovy",  (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new GroovyPrinter.groovyPrinter ;
     "js",      (true , clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new JsPrinter.jsPrinter ;
     "st",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new SmalltalkPrinter.smalltalkPrinter ;
     "go",      (false, clike_passes ~tuple:true  ~record:true  ~array:true  ~mergeif:false) => new GoPrinter.goPrinter ;
@@ -422,6 +423,7 @@ enum @target_language
   LANG_Fun_ml
   LANG_Fs
   LANG_Go
+  LANG_Groovy
   LANG_Hs
   LANG_Java
   LANG_Js

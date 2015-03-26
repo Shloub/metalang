@@ -5,6 +5,7 @@ CPrinter
 CsharpPrinter
 ForthPrinter
 GoPrinter
+GroovyPrinter
 HaskellPrinter
 HtmlPrinter
 JavaPrinter

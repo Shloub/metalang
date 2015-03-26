@@ -26,6 +26,7 @@ lua=$(st "out" "*.lua")
 scala=$(st "out" "*.scala")
 smalltalk=$(st "out" "*.st")
 forth=$(st "out" "*.fs")
+groovy=$(st "out" "*.groovy")
 
 ml=$(( $ml - $funml ))
 
@@ -52,6 +53,7 @@ lua=$(( $lua * 1000 / $metalang))
 scala=$(( $scala * 1000 / $metalang))
 smalltalk=$(( $smalltalk * 1000 / $metalang))
 forth=$(( $forth * 1000 / $metalang))
+groovy=$(( $groovy * 1000 / $metalang))
 
 file="stats_repartition.dat"
 
@@ -101,7 +103,9 @@ lua $lua
 smalltalk $smalltalk
 scala $scala
 forth $forth
-java $java" | swap | sort -n | swap ) > "$file"
+java $java
+groovy $groovy
+" | swap | sort -n | swap ) > "$file"
 
 filestatsplot(){
     IFS='
@@ -114,7 +118,7 @@ filestatsplot(){
     done
     position="center screen 0.5, 0.5"
     echo "
-set terminal pngcairo transparent size 600, 600
+set terminal pngcairo transparent size 800, 600
 set output 'repartition.png'
 set title \"repartition des langages\"
 set style fill solid 0.25 noborder
