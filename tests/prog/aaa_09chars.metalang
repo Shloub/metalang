@@ -1,0 +1,13 @@
+
+def lexems e()
+  def out = {}
+  for i = 1 to 127 do
+    def c = char_of_int(i)
+    out = { ${out}
+      print ${i} print "=>" print ${c} print "\n"
+    }
+  end
+  return out
+end
+
+main ${e()} end
