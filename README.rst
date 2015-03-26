@@ -35,8 +35,7 @@ Pour générer uniquement une langue ::
 
   ./metalang -lang lang1,lang2,...
 
-Les langues possibles sont : c, m, pas, cc, cs, java, js, ml, fun.ml, hs, php, rb, py, go, cl, rkt, pl, metalang_parsed
-metalang_parsed correspond au fichier metalang tel qu'il a été parsé.
+Les langues possibles sont : adb, c, cc, cl, cs, fs, fun.ml, go, hs, java, js, lua, m, ml, pas, php, pl, py, rb, rkt, scala, st, vb
 fun.ml correspond à une version fonctionelle, en ocaml, du code metalang.
 
 L'option -o vous permet de choisir le dossier de destination. Comme nous générons plusieurs fichiers, on ne peut pas choisir le nom des fichiers générés.
@@ -55,37 +54,28 @@ Backends
 ----------------
 Langages cibles :
 
+* Ada
 * C
-* Objective-C
-* Pascal
 * C++
-* java
+* common lisp (se lance avec sbcl dans les tests)
 * C#
-* common lisp
-* scheme (racket)
-* ocaml
+* Forth (se lance avec gforth dans les tests)
+* Go (Version 1.1 minimum, sinon on a des soucis avec leur test qui vérifie si chaque fonction renvoie bien.)
+* Haskell
+* java
+* javascript
+* Lua
+* Objective-C
+* Ocaml
+* Pascal
+* php
 * perl
 * python
 * ruby
-* php
-* javascript
-* Go (Version 1.1 minimum, sinon on a des soucis avec leur test qui vérifie si chaque fonction renvoie bien.)
-
-Nous avons testé :
-
-* la compilation objective-C avec gcc `gnustep-config --objc-flags` -lgnustep-base
-* La compilation C avec gcc
-* La compilation C++ avec g++
-* La compilation pascal avec fpc
-* La compilation java avec l'open jdk 1.7
-* La compilation C# avec mono : gmcs
-* La compilation ocaml avec ocaml 3.12
-* Le javascript avec nodeJS
-* La compilation go avec go 1.1 (ne fonctionne pas sous go 1.0)
-* Le common lisp avec gcl 2.6.7
-* Le ruby avec ruby 1.9
-* le python avec python 3
-* le scheme avec racket 5.2.1
+* scheme (racket)
+* scala
+* smalltalk
+* visual basic (.net)
 
 Pour installer go 1.1 ::
 
@@ -110,7 +100,7 @@ Modes
 Pour vous permettre une édition plus confortable, nous fournissons quelques modes pour vos éditeurs préférés :
 
 
-Le dossier tools contient des outils comme le mode emacs et un mode vim, pour l'installer,
+Le dossier tools contient des outils comme le mode emacs et un mode vim, pour installer le mode emacs,
 il faut ajouter ces lignes dans son .emacs::
   (setq auto-mode-alist (cons '("\\.metalang$" . metalang-mode) auto-mode-alist))
   (autoload 'metalang-mode "CHEMIN_ABSOLU/tools/metalang-mode.el" "Mode majeur pour éditer du code Metalang" t)
@@ -148,11 +138,11 @@ Respectivement :
 
 Ces trois méthodes peuvent générer du code dégueu dans certains langages (ceux qui n'ont pas scanf, donc python, C#, php, etc...)
 
-Pour éviter ce problème, on a deux fonctions alternatives dans la lib standard : read_int et read_int_line. Il ne FAUT PAS melanger ces deux façons de parser, sinon ça risque de faire tout planter.
+Pour éviter ce problème, on a plusieurs fonctions alternatives dans la lib standard : read_int et read_int_line. Il ne FAUT PAS melanger ces deux façons de parser, sinon ça risque de faire tout planter (le compilateur vérifie ça pour certains langages).
 
-En metalang, on ne peut pas savoir quelle est la taille d'une ligne, donc on ne peut pas parser une ligne et récupérer un tableau d'entier de taille variable. On ne peut pas non plus le faire pour une chaine de caractères.
+En metalang, on ne peut pas savoir quelle est la taille d'une ligne, donc on ne peut pas parser une ligne et récupérer un tableau d'entier de taille variable. On ne peut pas non plus le faire pour une chaine de caractères. La fonction read_int_line prend en paramètre le nombre d'entiers à parser.
 
-Les exemples suivant présentent du code du même type que deux des codes à compléter pour les demies finales :
+Les exemples suivant présentent du code du même type que certains des codes à compléter pour les demies finales :
 
 * tests/prog/prologin_template_2charline2.metalang
 * tests/prog/prologin_template_charmatrix.metalang
@@ -162,7 +152,7 @@ Les exemples suivant présentent du code du même type que deux des codes à com
 * tests/prog/prologin_template_intmatrix.metalang
 
 
-Normalement, avec cet outil, vous avez les moyens de faire des codes à compléter. N'oubliez pas de tester vos codes générés.
+Normalement, avec cet outil, vous avez les moyens de faire des codes à compléter. N'oubliez pas de tester vos codes générés (en printant simplement une addition des valeurs parsées par exemple).
 
 Types simples manipulables
 ----------------
@@ -183,7 +173,7 @@ Commentaires
 
 Il existe deux types de commentaires :
 
-* Les commentaires sont compris entre /* et */ sont retranscrits dans les codes générés.
+* Les commentaires sont compris entre /* et */ sont retranscrits dans les codes générés. Ils doivent etre placés comme des instructions.
 * après le caractère #, la fin de la ligne est ignorée. Ces commentaires là ne sont pas retranscrits dans les codes générés.
 
 Declaration de variables
@@ -356,6 +346,8 @@ Elle comprend aussi les fonctions suivantes :
 * array<char> read_char_line(int len)
 * array<array<char>> read_char_matrix(int x, int y)
 * array<array<int>> read_int_matrix(int x, int y)
+* (int, int) read_int_couple()
+* (int, int, int) read_3ints()
 * @target_language current_language ()
 
 Elles sont définies dans le fichier Stdlib/stdlib.metalang.
@@ -452,3 +444,12 @@ Pour tester si on compile bien dans un langage précis, on peut utiliser la fonc
   end
 
 Cette méthode est utilisée aussi pour minimiser les lectures sur l'entrée standard.
+
+
+Quels langages ne seront probablement jamais gérés dans Metalang ?
+----------------
+
+* TCL : le passage des tableaux par référence n'est pas une feature propre du langage, et le retour d'un tableau par référence ne fonctionne pas.
+* Bash pour les memes raisons.
+
+Tout les langages qui ne se testent pas facilement sous linux.
