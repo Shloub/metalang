@@ -238,7 +238,7 @@ module String = struct
       (String.sub s 0 index) :: (split (String.sub s (index +1) ((String.length s) - index - 1)) c)
     with Not_found -> [s]
 
-
+  let from_char c = make 1 c
   let of_string (s:string) = (s:t)
   let equals a b = 0 = compare a b
   let lines = Str.split $ Str.regexp "\n+"
