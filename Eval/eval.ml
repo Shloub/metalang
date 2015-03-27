@@ -147,6 +147,7 @@ let get_tokens = function
   | Bool false -> [ Parser.FALSE ]
   | Bool true -> [ Parser.TRUE ]
   | Integer i -> [ Parser.INT i ]
+  | Char c -> [ Parser.CHAR c ]
   | x -> err_token_expected x
 
 (** execution environment *)
@@ -171,14 +172,17 @@ and precompiledExpr =
 let flatten_lexems li =
   List.fold_left (fun acc li ->
     match (acc, li) with
-    | Result (Lexems li1), Result (Lexems li2) ->
-      Result (Lexems (List.append li1 li2) )
-    | WithEnv f, Result (Lexems li2) ->
+    | Result r1, Result r2 ->
+       let l1 = get_tokens r1
+       and l2 = get_tokens r2 in Result (Lexems (List.append l1 l2))
+    | WithEnv f, Result r2 ->
+       let li2 = get_tokens r2 in
       WithEnv (fun execenv ->
         let li1 = f execenv |> get_tokens in
         Lexems (List.append li1 li2)
       )
-    | Result  (Lexems li1), WithEnv f ->
+    | Result r1, WithEnv f ->
+       let li1 = get_tokens r1 in
       WithEnv (fun execenv ->
         let li2 = f execenv |> get_tokens in
         Lexems (List.append li1 li2)
@@ -189,8 +193,6 @@ let flatten_lexems li =
         let li2 = f2 execenv |> get_tokens in
         Lexems (List.append li1 li2)
       )
-    | Result r, _ -> err_token_expected r
-    | _, Result r -> err_token_expected r
   ) (Result (Lexems []))  li
 
 (** returns an empty environment
@@ -482,18 +484,16 @@ module EvalF (IO : EvalIO) = struct
       | Lexems.UnQuote e ->
         let li = precompiledExpr_of_lexems_list e env in
         match li with
-        | Result (Lexems li) ->
-          let e = expr_of_lexems_list li
-          in precompile_expr e env
-        | Result x -> err_token_expected x
+        | Result r ->
+	   let li = get_tokens r in
+           let e = expr_of_lexems_list li
+           in precompile_expr e env
         | WithEnv f ->
           WithEnv (fun execenv ->
-            match f execenv with
-            | Lexems li ->
-              let e = expr_of_lexems_list li in
-              let r = precompile_expr e env in
-              eval_expr execenv r
-            | x -> err_token_expected x
+            let li = get_tokens (f execenv) in
+            let e = expr_of_lexems_list li in
+            let r = precompile_expr e env in
+            eval_expr execenv r
           )
     ) li
     in flatten_lexems li
@@ -896,18 +896,12 @@ module EvalConstantes = struct
             (Lexems.map_expr (fun x -> EVAL.precompile_expr x acc)
             ) li in
           let execenv = init_eenv 0 in
-          begin match EVAL.precompiledExpr_of_lexems_list li acc
-              |> eval_expr execenv with
-                | Lexems li -> instrs_of_lexems_list li
-                | x -> err_token_expected x
-          end
+          EVAL.precompiledExpr_of_lexems_list li acc
+          |> eval_expr execenv |> get_tokens |> instrs_of_lexems_list
         | _ ->
           let execenv = init_eenv 0 in
-          begin match EVAL.precompile_expr e acc
-              |> eval_expr execenv with
-                | Lexems li -> instrs_of_lexems_list li
-                | x -> err_token_expected x
-          end
+          EVAL.precompile_expr e acc
+          |> eval_expr execenv |> get_tokens |> instrs_of_lexems_list
         end
       | _ -> [i]
     in
@@ -940,18 +934,12 @@ module EvalConstantes = struct
           (Lexems.map_expr (fun x -> EVAL.precompile_expr x acc)
           ) li in
         let execenv = init_eenv 0 in
-        begin match EVAL.precompiledExpr_of_lexems_list li acc
-            |> eval_expr execenv with
-              | Lexems li -> w li
-              | x -> err_token_expected x
-        end
+         EVAL.precompiledExpr_of_lexems_list li acc
+         |> eval_expr execenv |> get_tokens |> w
       | _ ->
         let execenv = init_eenv 0 in
-        begin match EVAL.precompile_expr e acc
-            |> eval_expr execenv with
-              | Lexems li -> w li
-              | x -> err_token_expected x
-        end
+        EVAL.precompile_expr e acc
+        |> eval_expr execenv |> get_tokens |> w
       end
     | _ -> acc, [p]
 
