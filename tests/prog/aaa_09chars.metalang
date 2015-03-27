@@ -1,11 +1,10 @@
 
 def lexems e()
-  def out = {def c = ' '}
+  def out = {}
   for i = 0 to 255 do
     def c = char_of_int(i)
     out = { ${out}
-      c := ${c}
-      print ${i} print "=>" print c print "\n"
+      print ${i} print "=>" print ${c} print "\n"
     }
   end
   return out
