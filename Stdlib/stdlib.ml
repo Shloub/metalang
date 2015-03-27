@@ -132,6 +132,15 @@ end
 *)
 module List = struct
   include List
+
+  let pack n li =
+    let rec f acc1 acc2 i = function
+      | [] -> List.rev (List.rev acc1 :: acc2)
+      | hd::tl -> if i = 1 then
+          f [hd] (List.rev acc1::acc2) n tl
+      else f (hd::acc1) acc2 (i - 1) tl
+    in f [] [] (n +1) li
+
   (* TODO faire plus efficace*)
   let collect f li = map f li |> flatten
 

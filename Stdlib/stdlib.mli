@@ -158,6 +158,7 @@ sig
     ('a -> 'b -> 'a * 'c) -> 'a -> 'b list -> 'a * 'c list
   val find_opt : ('a -> bool) -> 'a list -> 'a option
   val join : 'a -> 'a list -> 'a list
+val pack : int -> 'a list -> 'a list list
 end
 
 module String :
