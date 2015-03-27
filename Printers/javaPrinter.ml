@@ -47,6 +47,8 @@ class javaPrinter = object(self) (* TODO scanf et printf*)
 
   method prototype f t = self#ptype f t
 
+  method char f c = self#unicode f c
+
   method stdin_sep f =
     Format.fprintf f "@[<v>scanner.findWithinHorizon(\"[\\n\\r ]*\", 1)%a@]"
       self#separator ()

@@ -103,7 +103,21 @@ class printer = object(self)
   method typename f i = Format.fprintf f "%s" i
   method string f i = Format.fprintf f "%S" i
 
-  method is_printable_i i = i > 10 && i < 128
+  method is_printable_i i =
+    let lowerchar = i >= (int_of_char 'a') && i <= (int_of_char 'z') in
+    let upperchar = i >= (int_of_char 'A') && i <= (int_of_char 'Z') in
+    let digit = i >= (int_of_char '0') && i <= (int_of_char '9') in
+    let specials = List.map int_of_char [ ' '; '|';
+					  '"'; '#'; '&'; '(';
+					  ')'; '*'; '+'; ','; '-';
+					  '.'; '/'; ':'; ';'; '<';
+					  '='; '>'; '_'; '|'; '!';
+					  '$'; '%'; '?'; '@'; '[';
+					  ']'; '^'; '`'; '{';
+					  '}'; '~']
+	in let specials = List.mem i specials
+	   in lowerchar || upperchar || digit || specials
+
   method is_printable c = self#is_printable_i (int_of_char c)
 
   method string_noprintable print_first_char f s =
@@ -407,7 +421,7 @@ class printer = object(self)
   method noformat s = let s = Format.sprintf "%S" s
                       in String.replace "%" "%%" s
 
-  method format_type f (t:Type.t) = Format.fprintf f "%s" (format_type t)
+  method format_type f (t:Type.t) = Format.fprintf f "%s" (self#formater_type t)
 
   method read f t mutable_ =
     Format.fprintf f "@[read %a %a@]" self#ptype t self#mutable_set mutable_
@@ -553,7 +567,19 @@ class printer = object(self)
     Format.fprintf f "record %a end"
       (self#def_fields (InternalName 0)) li
 
-  method char f c = Format.fprintf f "%C" c
+  method unicode f c =
+    let cs = Printf.sprintf "%C" c in
+    if String.length cs == 6 then
+      Format.fprintf f "'\\u00%02x'" (int_of_char c)
+    else
+      Format.fprintf f "%s" cs
+
+  method char f c =
+    let cs = Printf.sprintf "%C" c in
+    if String.length cs == 6 then
+      Format.fprintf f "'\\x%02x'" (int_of_char c)
+    else
+      Format.fprintf f "%s" cs
 
   method access f m =
     self#mutable_get f m
@@ -635,13 +661,18 @@ class printer = object(self)
   | Instr.StdinSep -> true
   | _ -> false
 
-	method formater_type t = format_type t
+  method formater_type t = format_type t
+  method limit_nprint () = 100000
 
   method instructions0 f instrs =
     if List.for_all self#is_stdin instrs then
       self#multiread f instrs
     else if (match instrs with [_] -> false | _ -> true)
       && List.for_all self#is_print instrs then
+      if List.length instrs > self#limit_nprint () then
+        print_list self#instructions0 sep_nl f
+          (List.pack (self#limit_nprint ()) instrs)
+      else
       let li = List.map (fun i -> match Instr.unfix i with
         | Instr.Print (t, i) -> self#formater_type t, (t, i)
         | _ -> assert false

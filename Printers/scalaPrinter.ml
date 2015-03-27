@@ -77,6 +77,8 @@ class scalaPrinter = object(self)
   | true -> Format.fprintf f "true"
   | false -> Format.fprintf f "false"
 
+  method char f c = self#unicode f c
+
   method binding f = function
   | UserName i ->
       if String.ends_with i "_U" then

@@ -38,6 +38,7 @@ class luaPrinter = object(self)
   inherit printer as super
 
   method combine_formats () = true
+  method limit_nprint () = 255
 
   method lang () = "lua"
   method prog f prog =

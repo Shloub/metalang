@@ -39,6 +39,14 @@ open CPrinter
 class phpPrinter = object(self)
   inherit cPrinter as super
 
+
+  method char f c =
+    let cs = Printf.sprintf "%C" c in
+    if String.length cs == 6 || c == '\b' then
+      Format.fprintf f "\"\\x%02x\"" (int_of_char c)
+    else
+      Format.fprintf f "%S" (String.from_char c)
+
   method declare_for s f li = ()
 
   method tuple f li = Format.fprintf f "array(%a)" (print_list self#expr sep_c) li
@@ -52,11 +60,7 @@ class phpPrinter = object(self)
       (print_list self#binding sep_c) (List.map snd li)
       self#expr e
 
-
   method lang () = "php"
-
-  method char f c =
-    Format.fprintf f "%S" (String.make 1 c)
 
   method prototype f t =
     match Type.unfix t with
