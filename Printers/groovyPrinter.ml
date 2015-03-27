@@ -37,6 +37,7 @@ open JavaPrinter
 class groovyPrinter = object(self)
   inherit javaPrinter as super
 
+  method limit_nprint () = 254
 
   method lang () = "groovy"
 
@@ -46,7 +47,12 @@ class groovyPrinter = object(self)
 
   method separator f () = ()
   method static f () = ()
-  method char f c = Format.fprintf f "(char)%C" c
+  method char f c =
+    let cs = Printf.sprintf "%C" c in
+    if String.length cs == 6 then
+      Format.fprintf f "(char)%d" (int_of_char c)
+    else
+      Format.fprintf f "(char)%s" cs
 
   method decl_field f (name, type_) = Format.fprintf f "%a %a" self#ptype type_ self#field name
 
