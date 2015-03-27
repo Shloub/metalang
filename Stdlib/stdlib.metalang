@@ -63,6 +63,7 @@ macro char char_of_int(int c)
   hs_pure do "chr $c"
   scala do "($c).toChar"
   lua  do "$c"
+  ruby do "($c).chr"
   st do "(($c) asCharacter)"
   *  do "$c"
 end
