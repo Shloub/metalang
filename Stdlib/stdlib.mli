@@ -173,6 +173,7 @@ sig
   val set : string -> int -> char -> unit
   val create : int -> string
   val make : int -> char -> string
+  val from_char : char -> string
   val copy : string -> string
   val sub : string -> int -> int -> string
   val fill : string -> int -> int -> char -> unit
