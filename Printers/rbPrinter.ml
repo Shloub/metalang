@@ -43,6 +43,12 @@ class rbPrinter = object(self)
   method lang () = "ruby"
 
 
+  method char f c =
+    let cs = Printf.sprintf "%C" c in
+    if String.length cs == 6 then
+      Format.fprintf f "\"\\u%04x\"" (int_of_char c)
+    else
+      Format.fprintf f "%S" (String.from_char c)
 
   method tuple f li = Format.fprintf f "[%a]" (print_list self#expr sep_c) li
 
@@ -54,10 +60,15 @@ class rbPrinter = object(self)
 end
 " else "")
 
-  method char f c =
-    Format.fprintf f "%S" (String.make 1 c)
-
   method comment f str = Format.fprintf f "\n=begin\n%s\n=end\n" str
+
+
+  method formater_type t = match Type.unfix t with
+  | Type.Integer -> "%d"
+  | Type.Char -> "%s"
+  | Type.String ->  "%s"
+  | Type.Bool -> "%b"
+  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
 
   method unop f op a =
     let pop g f a = match op with
