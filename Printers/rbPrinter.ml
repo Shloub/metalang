@@ -61,14 +61,6 @@ end
 
   method comment f str = Format.fprintf f "\n=begin\n%s\n=end\n" str
 
-
-  method formater_type t = match Type.unfix t with
-  | Type.Integer -> "%d"
-  | Type.Char -> "%s"
-  | Type.String ->  "%s"
-  | Type.Bool -> "%b"
-  | _ -> raise (Warner.Error (fun f -> Format.fprintf f "invalid type %s for format\n" (Type.type_t_to_string t)))
-
   method unop f op a =
     let pop g f a = match op with
       | Expr.Neg -> Format.fprintf f "-%a" g a
