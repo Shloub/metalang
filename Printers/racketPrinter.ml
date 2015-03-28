@@ -98,8 +98,22 @@ class racketPrinter = object(self)
       self#expr c
 
   method binop f a op b =
+    let rec collect e li = match E.unfix e with
+    | E.BinOp (a, op2, b) when op2 = op ->
+        let li = collect b li in
+        let li = collect a li in
+        li
+    | _ -> e::li
+    in
     match op with
     | Ast.Expr.Diff -> Format.fprintf f "(not (eq? %a %a))" self#expr a self#expr b
+    | Ast.Expr.Add
+    | Ast.Expr.Mul
+    | Ast.Expr.Or
+    | Ast.Expr.And ->
+        let li = collect b [] in
+        let li = collect a li in
+        Format.fprintf f "(%a %a)" self#pbinop op (print_list self#expr sep_space) li
     | _ -> Format.fprintf f "(%a %a %a)" self#pbinop op self#expr a self#expr b
 
   method fun_ f params e =

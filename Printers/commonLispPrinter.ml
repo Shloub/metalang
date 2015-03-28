@@ -144,7 +144,14 @@ class commonLispPrinter = object(self)
   | Expr.Not -> Format.fprintf f "(not %a)" self#expr a
 
   method expr f t =
-    let binop op a b = match op with
+    let binop op a b =
+      let rec collect e li = match Expr.unfix e with
+      | Expr.BinOp (a, op2, b) when op2 = op ->
+          let li = collect b li in
+          let li = collect a li in
+          li
+      | _ -> e::li
+      in match op with
       | Expr.Eq ->
         if Typer.is_int (super#getTyperEnv ()) a then
           Format.fprintf f "@[<h>(= %a@ %a)@]" self#expr a self#expr b
@@ -155,6 +162,13 @@ class commonLispPrinter = object(self)
           Format.fprintf f "@[<h>(not (= %a@ %a))@]" self#expr a self#expr b
         else
           Format.fprintf f "@[<h>(not (eq %a@ %a))@]" self#expr a self#expr b
+      | Ast.Expr.Add
+      | Ast.Expr.Mul
+      | Ast.Expr.Or
+      | Ast.Expr.And ->
+          let li = collect b [] in
+          let li = collect a li in
+          Format.fprintf f "(%a %a)" self#print_op op (print_list self#expr sep_space) li
       | _ ->
         Format.fprintf f "@[<h>(%a@ %a@ %a)@]" self#print_op op self#expr a self#expr b
     in
