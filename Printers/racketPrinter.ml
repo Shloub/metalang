@@ -40,7 +40,7 @@ module TypeSet = Ast.TypeSet
 let format_to_string li =
   let li = List.map (function
 		      | E.IntFormat -> "~a"
-		      | E.StringFormat -> "~s"
+		      | E.StringFormat -> "~a"
 		      | E.CharFormat -> "~c"
 		      | E.StringConstant s -> String.replace "~" "~~" s
 		    ) li
