@@ -176,7 +176,7 @@ Format.fprintf f "#lang racket
     match E.unfix e with
     | E.Fun (params, e) ->
       let params = if params = [] then ["_"] else params in
-      Format.fprintf f "@[<v2>(define (%a %a)@\n;toto@\n%a@]@\n)@\n" self#binding name
+      Format.fprintf f "@[<v2>(define (%a %a)@\n%a@]@\n)@\n" self#binding name
 	(print_list self#binding sep_space) params
 	self#expr e
     | _ -> Format.fprintf f "@[<v2>(define %a@\n%a@]@\n)@\n" self#binding name self#expr e
