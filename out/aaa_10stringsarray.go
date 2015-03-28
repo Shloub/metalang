@@ -1,14 +1,21 @@
 package main
 import "fmt"
-/*
-TODO ajouter un record qui contient des chaines.
-*/
+
+type toto struct {
+  s string;
+  v int;
+}
+
 func idstring(s string) string{
   return s
 }
 
 func printstring(s string) {
   fmt.Printf("%s\n", idstring(s));
+}
+
+func print_toto(t * toto) {
+  fmt.Printf("%s = %d\n", (*t).s, (*t).v);
 }
 
 func main() {
@@ -19,5 +26,9 @@ func main() {
   for j := 0 ; j <= 1; j++ {
     printstring(idstring(tab[j]));
   }
+  var a * toto = new (toto)
+  (*a).s="one"
+  (*a).v=1
+  print_toto(a);
 }
 

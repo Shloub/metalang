@@ -1,11 +1,16 @@
-(*
-TODO ajouter un record qui contient des chaines.
-*)
+type toto = {
+  mutable s : string;
+  mutable v : int;
+};;
+
 let idstring s =
   s
 
 let printstring s =
   Printf.printf "%s\n" (idstring s)
+
+let print_toto t =
+  Printf.printf "%s = %d\n" t.s t.v
 
 let () =
 begin
@@ -13,6 +18,10 @@ begin
     idstring "chaine de test") in
   for j = 0 to 1 do
     printstring (idstring tab.(j))
-  done
+  done;
+  print_toto {
+    s="one";
+    v=1;
+  }
 end
  

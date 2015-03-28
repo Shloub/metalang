@@ -1,6 +1,9 @@
-/*
-TODO ajouter un record qui contient des chaines.
-*/
+
+record @toto
+  s : string
+  v : int
+end
+
 def string idstring(string s)
   return s
 end
@@ -9,9 +12,17 @@ def void printstring( string s)
   print idstring(s) print "\n"
 end
 
+def void print_toto( @toto t)
+  print t.s print " = " print t.v print "\n"
+end
+
 main
   def array<string> tab[2] with i do return idstring("chaine de test") end
   for j = 0 to 1 do
     printstring(idstring(tab[j]))
   end
+  print_toto(record
+    s = "one"
+    v = 1
+  end)
 end

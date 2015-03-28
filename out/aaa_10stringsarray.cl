@@ -6,14 +6,19 @@
         (setf (aref out i) (funcall fun i)))
       out
     )))
-#|
-TODO ajouter un record qui contient des chaines.
-|#
+(defstruct (toto (:type list) :named)
+  s
+  v
+  )
+
 (defun idstring (s)
 (return-from idstring s))
 
 (defun printstring (s)
 (format t "~A~%" (idstring s)))
+
+(defun print_toto (t0)
+(format t "~A = ~D~%" (toto-s t0) (toto-v t0)))
 
 (progn
   (let
@@ -26,6 +31,9 @@ TODO ajouter un record qui contient des chaines.
             ))))
   (loop for j from 0 to 1 do
     (printstring (idstring (aref tab j))))
-  ))
+  (let ((a (make-toto :s "one"
+                      :v 1)))
+  (print_toto a)
+  )))
 
 

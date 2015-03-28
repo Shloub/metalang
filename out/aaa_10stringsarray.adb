@@ -10,9 +10,17 @@ procedure PString(s : stringptr) is
 begin
   String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
---
---TODO ajouter un record qui contient des chaines.
---
+procedure PInt(i : in Integer) is
+begin
+  String'Write (Text_Streams.Stream (Current_Output), Trim(Integer'Image(i), Left));
+end;
+
+type toto;
+type toto_PTR is access toto;
+type toto is record
+  s : stringptr;
+  v : Integer;
+end record;
 
 function idstring(s : in stringptr) return stringptr is
 begin
@@ -25,16 +33,29 @@ begin
   PString(new char_array'( To_C("" & Character'Val(10))));
 end;
 
-type a is Array (Integer range <>) of stringptr;
-type a_PTR is access a;
-
-  tab : a_PTR;
+procedure print_toto(t : in toto_PTR) is
 begin
-  tab := new a (0..2);
+  PString(t.s);
+  PString(new char_array'( To_C(" = ")));
+  PInt(t.v);
+  PString(new char_array'( To_C("" & Character'Val(10))));
+end;
+
+type b is Array (Integer range <>) of stringptr;
+type b_PTR is access b;
+
+  tab : b_PTR;
+  a : toto_PTR;
+begin
+  tab := new b (0..2);
   for i in integer range 0..2 - 1 loop
     tab(i) := idstring(new char_array'( To_C("chaine de test")));
   end loop;
   for j in integer range 0..1 loop
     printstring(idstring(tab(j)));
   end loop;
+  a := new toto;
+  a.s := new char_array'( To_C("one"));
+  a.v := 1;
+  print_toto(a);
 end;

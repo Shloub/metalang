@@ -1,8 +1,12 @@
 program aaa_10stringsarray;
 
-{
-TODO ajouter un record qui contient des chaines.
-}
+type
+    toto=^toto_r;
+    toto_r = record
+      s : string;
+      v : Longint;
+    end;
+
 function idstring(s : string) : string;
 begin
   exit(s);
@@ -14,12 +18,21 @@ begin
   Write(''#10'');
 end;
 
-type a = array of string;
+procedure print_toto(t : toto);
+begin
+  Write(t^.s);
+  Write(' = ');
+  Write(t^.v);
+  Write(''#10'');
+end;
+
+type b = array of string;
 
 var
+  a : toto;
   i : Longint;
   j : Longint;
-  tab : a;
+  tab : b;
 begin
   SetLength(tab, 2);
   for i := 0 to  2 - 1 do
@@ -30,6 +43,10 @@ begin
   begin
     printstring(idstring(tab[j]));
   end;
+  new(a);
+  a^.s := 'one';
+  a^.v := 1;
+  print_toto(a);
 end.
 
 

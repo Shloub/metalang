@@ -2,9 +2,10 @@ using System;
 
 public class aaa_10stringsarray
 {
-  /*
-TODO ajouter un record qui contient des chaines.
-*/
+  public class toto {
+    public String s;
+    public int v;
+  }
   static String idstring(String s)
   {
     return s;
@@ -15,6 +16,11 @@ TODO ajouter un record qui contient des chaines.
     Console.Write("" + idstring(s) + "\n");
   }
   
+  static void print_toto(toto t)
+  {
+    Console.Write("" + t.s + " = " + t.v + "\n");
+  }
+  
   
   public static void Main(String[] args)
   {
@@ -23,6 +29,10 @@ TODO ajouter un record qui contient des chaines.
       tab[i] = idstring("chaine de test");
     for (int j = 0 ; j <= 1; j ++)
       printstring(idstring(tab[j]));
+    toto a = new toto();
+    a.s = "one";
+    a.v = 1;
+    print_toto(a);
   }
   
 }

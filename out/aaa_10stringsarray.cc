@@ -1,14 +1,21 @@
 #include <iostream>
 #include <vector>
-/*
-TODO ajouter un record qui contient des chaines.
-*/
+class toto {
+public:
+  std::string s;
+  int v;
+};
+
 std::string idstring(std::string s){
   return s;
 }
 
 void printstring(std::string s){
   std::cout << idstring(s) << "\n";
+}
+
+void print_toto(toto * t){
+  std::cout << t->s << " = " << t->v << "\n";
 }
 
 
@@ -18,6 +25,10 @@ int main(){
     tab->at(i) = idstring("chaine de test");
   for (int j = 0 ; j <= 1; j ++)
     printstring(idstring(tab->at(j)));
+  toto * a = new toto();
+  a->s="one";
+  a->v=1;
+  print_toto(a);
   return 0;
 }
 
