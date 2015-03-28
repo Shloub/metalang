@@ -23,7 +23,6 @@
 ))
 
 (define (exp0 a b)
-  ;toto
   (if (eq? b 0)
   1
   (if (eq? (remainder b 2) 0)

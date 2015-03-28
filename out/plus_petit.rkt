@@ -23,7 +23,6 @@
 ))
 
 (define (go0 tab a b)
-  ;toto
   (let ([m (quotient (+ a b) 2)])
   (if (eq? a m)
   (if (eq? (vector-ref tab a) m)
@@ -49,7 +48,6 @@
   (c i j))))))
 )
 (define (plus_petit0 tab len)
-  ;toto
   (go0 tab 0 len)
 )
 (define main

@@ -2,13 +2,11 @@
 (require racket/block)
 
 (define (next0 n)
-  ;toto
   (if (eq? (remainder n 2) 0)
   (quotient n 2)
   (+ (* 3 n) 1))
 )
 (define (find0 n m)
-  ;toto
   (if (eq? n 1)
   1
   (if (>= n 1000000)

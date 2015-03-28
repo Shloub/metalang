@@ -29,7 +29,6 @@
 ))
 
 (define (position_alphabet c)
-  ;toto
   (let ([i (char->integer c)])
   (if (and (<= i (char->integer #\Z)) (>= i (char->integer #\A)))
   (- i (char->integer #\A))
@@ -38,11 +37,9 @@
   (- 1))))
 )
 (define (of_position_alphabet c)
-  ;toto
   (integer->char (+ c (char->integer #\a)))
 )
 (define (crypte taille_cle cle taille message)
-  ;toto
   (letrec ([a (lambda (i) 
                 (if (<= i (- taille 1))
                 (let ([lettre (position_alphabet (vector-ref message i))])

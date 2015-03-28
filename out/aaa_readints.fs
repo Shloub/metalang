@@ -29,13 +29,15 @@ create bufferc 128 allot
    s" =len" NEWLINE S+ TYPE
   HERE len cells allot { tab1 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { a }
-    read-int tab1 a cells + !
+    read-int tab1 a cells +
+     !
     skipspaces
    1 + REPEAT 2DROP
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     i s>d 0 d.r
      s" =>" TYPE
-    tab1 i cells + @ s>d 0 d.r
+    tab1 i cells +
+     @ s>d 0 d.r
     NEWLINE TYPE
    1 + REPEAT 2DROP
   read-int TO len
@@ -44,14 +46,18 @@ create bufferc 128 allot
   len 1 - 1 - 0 BEGIN 2dup >= WHILE DUP { b }
     HERE len cells allot { c }
     len 1 - 0 BEGIN 2dup >= WHILE DUP { d }
-      read-int c d cells + !
+      read-int c d cells +
+       !
       skipspaces
      1 + REPEAT 2DROP
-    c tab2 b cells + !
+    c tab2 b cells +
+     !
    1 + REPEAT 2DROP
   len 2 - 0 BEGIN 2dup >= WHILE DUP { i }
     len 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-      tab2 i cells + @ j cells + @ s>d 0 d.r
+      tab2 i cells +
+       @ j cells +
+       @ s>d 0 d.r
        s"  " TYPE
      1 + REPEAT 2DROP
     NEWLINE TYPE

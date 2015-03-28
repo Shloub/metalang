@@ -29,7 +29,6 @@
 ))
 
 (define (is_triangular n)
-  ;toto
   ;
   ;   n = k * (k + 1) / 2
   ;	  n * 2 = k * (k + 1)
@@ -38,7 +37,6 @@
   (eq? (* a (+ a 1)) (* n 2)))
 )
 (define (score _)
-  ;toto
   (block
     (mread-blank)
     ((lambda (len) 

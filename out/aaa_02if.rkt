@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (f i)
-  ;toto
   (if (eq? i 0)
   #t
   #f)

@@ -23,7 +23,6 @@
 
 (struct bigint ([bigint_chiffres #:mutable] [bigint_len #:mutable] [bigint_sign #:mutable]))
 (define (read_bigint len)
-  ;toto
   (let ([chiffres (build-vector len (lambda (j) 
                                       ((lambda (c) 
                                          (char->integer c)) (mread-char))))])
@@ -40,7 +39,6 @@
 (cd 0))))
 )
 (define (print_bigint a)
-  ;toto
   (block
     (if (not (bigint-bigint_sign a))
     (display (integer->char 45))
@@ -57,7 +55,6 @@
   )
 )
 (define (bigint_eq a b)
-  ;toto
   ; Renvoie vrai si a = b 
   (if (not (eq? (bigint-bigint_sign a) (bigint-bigint_sign b)))
   #f
@@ -73,7 +70,6 @@
   (bx 0)))))
 )
 (define (bigint_gt a b)
-  ;toto
   ; Renvoie vrai si a > b 
   (if (and (bigint-bigint_sign a) (not (bigint-bigint_sign b)))
   #t
@@ -96,11 +92,9 @@
   (bv 0)))))))
 )
 (define (bigint_lt a b)
-  ;toto
   (not (bigint_gt a b))
 )
 (define (add_bigint_positif a b)
-  ;toto
   ; Une addition ou on en a rien a faire des signes 
   (let ([len (+ (max (bigint-bigint_len a) (bigint-bigint_len b)) 1)])
   (let ([retenue 0])
@@ -127,7 +121,6 @@
       (list retenue bs)))))))) retenue))))
 )
 (define (sub_bigint_positif a b)
-  ;toto
   ; Une soustraction ou on en a rien a faire des signes
   ;Pré-requis : a > b
   ;
@@ -157,11 +150,9 @@
                                                                                (list retenue tmp)))))))) retenue))))
 )
 (define (neg_bigint a)
-  ;toto
   (bigint (bigint-bigint_chiffres a) (bigint-bigint_len a) (not (bigint-bigint_sign a)))
 )
 (define (add_bigint a b)
-  ;toto
   (if (eq? (bigint-bigint_sign a) (bigint-bigint_sign b))
   (if (bigint-bigint_sign a)
   (add_bigint_positif a b)
@@ -177,11 +168,9 @@
   (sub_bigint_positif b a))))
 )
 (define (sub_bigint a b)
-  ;toto
   (add_bigint a (neg_bigint b))
 )
 (define (mul_bigint_cp a b)
-  ;toto
   ; Cet algorithm est quadratique.
   ;C'est le même que celui qu'on enseigne aux enfants en CP.
   ;D'ou le nom de la fonction. 
@@ -223,7 +212,6 @@
   (bl 0)))))
 )
 (define (bigint_premiers_chiffres a i)
-  ;toto
   (let ([len (min i (bigint-bigint_len a))])
   (letrec ([bh (lambda (len) 
                  (if (and (not (eq? len 0)) (eq? (vector-ref (bigint-bigint_chiffres a) (- len 1)) 0))
@@ -233,7 +221,6 @@
   (bh len)))
 )
 (define (bigint_shift a i)
-  ;toto
   (let ([chiffres (build-vector (+ (bigint-bigint_len a) i) (lambda (k) 
                                                               (if (>= k i)
                                                               (vector-ref (bigint-bigint_chiffres a) (- k i))
@@ -241,7 +228,6 @@
   (bigint chiffres (+ (bigint-bigint_len a) i) (bigint-bigint_sign a)))
 )
 (define (mul_bigint aa bb)
-  ;toto
   (if (eq? (bigint-bigint_len aa) 0)
   aa
   (if (eq? (bigint-bigint_len bb) 0)
@@ -263,7 +249,6 @@
   (add_bigint (add_bigint acdec bd) (bigint_shift (sub_bigint (add_bigint ac bd) amoinsbcmoinsd) split))))))))))))))))
 )
 (define (log10 a)
-  ;toto
   (let ([out0 1])
   (letrec ([be (lambda (a out0) 
                  (if (>= a 10)
@@ -274,7 +259,6 @@
   (be a out0)))
 )
 (define (bigint_of_int i)
-  ;toto
   (let ([size (log10 i)])
   (let ([size (if (eq? i 0)
               (let ([size 0])
@@ -293,7 +277,6 @@
   (bc 0 i)))))
 )
 (define (fact_bigint a)
-  ;toto
   (let ([one (bigint_of_int 1)])
   (let ([out0 one])
   (letrec ([y (lambda (a out0) 
@@ -305,7 +288,6 @@
   (y a out0))))
 )
 (define (sum_chiffres_bigint a)
-  ;toto
   (let ([out0 0])
   (let ([x (- (bigint-bigint_len a) 1)])
   (letrec ([w (lambda (i out0) 
@@ -316,14 +298,12 @@
   (w 0 out0))))
 )
 (define (euler20 _)
-  ;toto
   (let ([a (bigint_of_int 15)])
   ; normalement c'est 100 
   (let ([a (fact_bigint a)])
   (sum_chiffres_bigint a)))
 )
 (define (bigint_exp a b)
-  ;toto
   (if (eq? b 1)
   a
   (if (eq? (remainder b 2) 0)
@@ -331,7 +311,6 @@
   (mul_bigint a (bigint_exp a (- b 1)))))
 )
 (define (bigint_exp_10chiffres a b)
-  ;toto
   (let ([a (bigint_premiers_chiffres a 10)])
   (if (eq? b 1)
   a
@@ -340,7 +319,6 @@
   (mul_bigint a (bigint_exp_10chiffres a (- b 1))))))
 )
 (define (euler48 _)
-  ;toto
   (let ([sum (bigint_of_int 0)])
   (letrec ([v (lambda (i sum) 
                 (if (<= i 100)
@@ -358,14 +336,12 @@
   (v 1 sum)))
 )
 (define (euler16 _)
-  ;toto
   (let ([a (bigint_of_int 2)])
   (let ([a (bigint_exp a 100)])
   ; 1000 normalement 
   (sum_chiffres_bigint a)))
 )
 (define (euler25 _)
-  ;toto
   (let ([i 2])
   (let ([a (bigint_of_int 1)])
   (let ([b (bigint_of_int 1)])
@@ -381,7 +357,6 @@
   (u a b i)))))
 )
 (define (euler29 _)
-  ;toto
   (let ([maxA 5])
   (let ([maxB 5])
   (let ([a_bigint (build-vector (+ maxA 1) (lambda (j) 

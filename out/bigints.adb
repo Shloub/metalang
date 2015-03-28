@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure bigints is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PChar(c : in Character) is
 begin
@@ -532,9 +535,9 @@ begin
     sum := add_bigint(sum, ibeib);
     sum := bigint_premiers_chiffres(sum, 10);
   end loop;
-  PString("euler 48 = ");
+  PString(new char_array'( To_C("euler 48 = ")));
   print_bigint(sum);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;
 
 function euler16 return Integer is
@@ -636,72 +639,72 @@ end;
   a : bigint_PTR;
 begin
   PInt(euler29);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   sum := read_bigint(50);
   for i in integer range 2..100 loop
     SkipSpaces;
     tmp := read_bigint(50);
     sum := add_bigint(sum, tmp);
   end loop;
-  PString("euler13 = ");
+  PString(new char_array'( To_C("euler13 = ")));
   print_bigint(sum);
-  PString("" & Character'Val(10));
-  PString("euler25 = ");
+  PString(new char_array'( To_C("" & Character'Val(10))));
+  PString(new char_array'( To_C("euler25 = ")));
   PInt(euler25);
-  PString("" & Character'Val(10));
-  PString("euler16 = ");
+  PString(new char_array'( To_C("" & Character'Val(10))));
+  PString(new char_array'( To_C("euler16 = ")));
   PInt(euler16);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   euler48;
-  PString("euler20 = ");
+  PString(new char_array'( To_C("euler20 = ")));
   PInt(euler20);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   a := bigint_of_int(999999);
   b := bigint_of_int(9951263);
   print_bigint(a);
-  PString(">>1=");
+  PString(new char_array'( To_C(">>1=")));
   print_bigint(bigint_shift(a, (-1)));
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   print_bigint(a);
-  PString("*");
+  PString(new char_array'( To_C("*")));
   print_bigint(b);
-  PString("=");
+  PString(new char_array'( To_C("=")));
   print_bigint(mul_bigint(a, b));
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   print_bigint(a);
-  PString("*");
+  PString(new char_array'( To_C("*")));
   print_bigint(b);
-  PString("=");
+  PString(new char_array'( To_C("=")));
   print_bigint(mul_bigint_cp(a, b));
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   print_bigint(a);
-  PString("+");
+  PString(new char_array'( To_C("+")));
   print_bigint(b);
-  PString("=");
+  PString(new char_array'( To_C("=")));
   print_bigint(add_bigint(a, b));
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   print_bigint(b);
-  PString("-");
+  PString(new char_array'( To_C("-")));
   print_bigint(a);
-  PString("=");
+  PString(new char_array'( To_C("=")));
   print_bigint(sub_bigint(b, a));
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   print_bigint(a);
-  PString("-");
+  PString(new char_array'( To_C("-")));
   print_bigint(b);
-  PString("=");
+  PString(new char_array'( To_C("=")));
   print_bigint(sub_bigint(a, b));
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   print_bigint(a);
-  PString(">");
+  PString(new char_array'( To_C(">")));
   print_bigint(b);
-  PString("=");
+  PString(new char_array'( To_C("=")));
   r := bigint_gt(a, b);
   if r
   then
-    PString("True");
+    PString(new char_array'( To_C("True")));
   else
-    PString("False");
+    PString(new char_array'( To_C("False")));
   end if;
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;

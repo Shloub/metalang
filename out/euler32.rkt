@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (okdigits ok n)
-  ;toto
   (if (eq? n 0)
   #t
   (let ([digit (remainder n 10)])

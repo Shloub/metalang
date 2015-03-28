@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (fact n)
-  ;toto
   (let ([prod 1])
   (letrec ([h (lambda (i prod) 
                 (if (<= i n)
@@ -12,7 +11,6 @@
   (h 2 prod)))
 )
 (define (show lim nth0)
-  ;toto
   (let ([t0 (build-vector lim (lambda (i) 
                                 i))])
   (let ([pris (build-vector lim (lambda (j) 

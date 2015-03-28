@@ -1,8 +1,11 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure test_returns is
+
+
+type stringptr is access all char_array;
 function is_pair(i : in Integer) return Boolean is
   j : Integer;
 begin

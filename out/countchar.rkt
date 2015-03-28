@@ -29,7 +29,6 @@
 ))
 
 (define (nth0 tab tofind len)
-  ;toto
   (let ([out0 0])
   (letrec ([a (lambda (i out0) 
                 (if (<= i (- len 1))

@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure tictactoe is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -56,28 +59,28 @@ end record;
 
 procedure print_state(g : in gamestate_PTR) is
 begin
-  PString("" & Character'Val(10) & "|");
+  PString(new char_array'( To_C("" & Character'Val(10) & "|")));
   for y in integer range 0..2 loop
     for x in integer range 0..2 loop
       if g.cases(x)(y) = 0
       then
-        PString(" ");
+        PString(new char_array'( To_C(" ")));
       else
         if g.cases(x)(y) = 1
         then
-          PString("O");
+          PString(new char_array'( To_C("O")));
         else
-          PString("X");
+          PString(new char_array'( To_C("X")));
         end if;
       end if;
-      PString("|");
+      PString(new char_array'( To_C("|")));
     end loop;
     if y /= 2
     then
-      PString("" & Character'Val(10) & "|-|-|-|" & Character'Val(10) & "|");
+      PString(new char_array'( To_C("" & Character'Val(10) & "|-|-|-|" & Character'Val(10) & "|")));
     end if;
   end loop;
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;
 
 -- On dit qui gagne (info stoquées dans g.ended et g.note ) 
@@ -253,11 +256,11 @@ begin
         apply_move_xy(x, y, g);
         currentNote := minmax(g);
         PInt(x);
-        PString(", ");
+        PString(new char_array'( To_C(", ")));
         PInt(y);
-        PString(", ");
+        PString(new char_array'( To_C(", ")));
         PInt(currentNote);
-        PString("" & Character'Val(10));
+        PString(new char_array'( To_C("" & Character'Val(10))));
         cancel_move_xy(x, y, g);
         if currentNote < minNote
         then
@@ -270,7 +273,7 @@ begin
   end loop;
   PInt(minMove.x);
   PInt(minMove.y);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   return minMove;
 end;
 
@@ -338,6 +341,6 @@ begin
     end loop;
     print_state(state);
     PInt(state.note);
-    PString("" & Character'Val(10));
+    PString(new char_array'( To_C("" & Character'Val(10))));
   end loop;
 end;

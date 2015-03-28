@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (pathfind_aux cache tab x y posX posY)
-  ;toto
   (if (and (eq? posX (- x 1)) (eq? posY (- y 1)))
   0
   (if (or (or (or (< posX 0) (< posY 0)) (>= posX x)) (>= posY y))
@@ -25,7 +24,6 @@
     )))))
 )
 (define (pathfind tab x y)
-  ;toto
   (let ([cache (build-vector y (lambda (i) 
                                  (let ([tmp (build-vector x (lambda (j) 
                                                               (block

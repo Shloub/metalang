@@ -31,7 +31,9 @@ create bufferc 128 allot
     IF
       1 exit
     ELSE
-      m y cells + @ x cells + @ n 1 - m x dx + y dy + dx dy find0 * exit
+      m y cells +
+       @ x cells +
+       @ n 1 - m x dx + y dy + dx dy find0 * exit
     THEN
   THEN
 ;
@@ -49,54 +51,62 @@ end-struct tuple_int_int%
       tuple_int_int% %allot { c }
       0 c ->tuple_int_int_field_0 !
       1 c ->tuple_int_int_field_1 !
-      c directions i cells + !
+      c directions i cells +
+       !
     ELSE
       i 1 =
       IF
         tuple_int_int% %allot { d }
         1 d ->tuple_int_int_field_0 !
         0 d ->tuple_int_int_field_1 !
-        d directions i cells + !
+        d directions i cells +
+         !
       ELSE
         i 2 =
         IF
           tuple_int_int% %allot { e }
           0 e ->tuple_int_int_field_0 !
           1 NEGATE e ->tuple_int_int_field_1 !
-          e directions i cells + !
+          e directions i cells +
+           !
         ELSE
           i 3 =
           IF
             tuple_int_int% %allot { f }
             1 NEGATE f ->tuple_int_int_field_0 !
             0 f ->tuple_int_int_field_1 !
-            f directions i cells + !
+            f directions i cells +
+             !
           ELSE
             i 4 =
             IF
               tuple_int_int% %allot { g }
               1 g ->tuple_int_int_field_0 !
               1 g ->tuple_int_int_field_1 !
-              g directions i cells + !
+              g directions i cells +
+               !
             ELSE
               i 5 =
               IF
                 tuple_int_int% %allot { h }
                 1 h ->tuple_int_int_field_0 !
                 1 NEGATE h ->tuple_int_int_field_1 !
-                h directions i cells + !
+                h directions i cells +
+                 !
               ELSE
                 i 6 =
                 IF
                   tuple_int_int% %allot { k }
                   1 NEGATE k ->tuple_int_int_field_0 !
                   1 k ->tuple_int_int_field_1 !
-                  k directions i cells + !
+                  k directions i cells +
+                   !
                 ELSE
                   tuple_int_int% %allot { l }
                   1 NEGATE l ->tuple_int_int_field_0 !
                   1 NEGATE l ->tuple_int_int_field_1 !
-                  l directions i cells + !
+                  l directions i cells +
+                   !
                 THEN
               THEN
             THEN
@@ -110,13 +120,16 @@ end-struct tuple_int_int%
   20 1 - 0 BEGIN 2dup >= WHILE DUP { o }
     HERE 20 cells allot { p }
     20 1 - 0 BEGIN 2dup >= WHILE DUP { q }
-      read-int p q cells + !
+      read-int p q cells +
+       !
       skipspaces
      1 + REPEAT 2DROP
-    p m o cells + !
+    p m o cells +
+     !
    1 + REPEAT 2DROP
   7 0 BEGIN 2dup >= WHILE DUP { j }
-    directions j cells + @ { r }
+    directions j cells +
+     @ { r }
     r ->tuple_int_int_field_0 @ { dx }
     r ->tuple_int_int_field_1 @ { dy }
     19 0 BEGIN 2dup >= WHILE DUP { x }

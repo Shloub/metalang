@@ -1,14 +1,14 @@
 program euler36;
 
-type e = array of boolean;
-type f = array of Longint;
-function palindrome2(pow2 : f; n : Longint) : boolean;
+type e = array of Longint;
+type f = array of boolean;
+function palindrome2(pow2 : e; n : Longint) : boolean;
 var
   i : Longint;
   j : Longint;
   k : Longint;
   nnum : Longint;
-  t : e;
+  t : f;
 begin
   SetLength(t, 20);
   for i := 0 to  20 - 1 do
@@ -48,7 +48,7 @@ var
   num2 : Longint;
   num3 : Longint;
   p : Longint;
-  pow2 : f;
+  pow2 : e;
   sum : Longint;
 begin
   p := 1;

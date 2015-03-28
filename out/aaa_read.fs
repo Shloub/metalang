@@ -48,7 +48,8 @@ create bufferc 128 allot
      s" =>" TYPE
     tmpi1 s>d 0 d.r
      s"  " TYPE
-    tmpi1 tab i cells + !
+    tmpi1 tab i cells +
+     !
    1 + REPEAT 2DROP
   NEWLINE TYPE
   HERE len cells allot { tab2 }
@@ -59,7 +60,8 @@ create bufferc 128 allot
      s" ==>" TYPE
     tmpi2 s>d 0 d.r
      s"  " TYPE
-    tmpi2 tab2 i_ cells + !
+    tmpi2 tab2 i_ cells +
+     !
    1 + REPEAT 2DROP
   read-int { strlen }
   skipspaces
@@ -77,10 +79,12 @@ create bufferc 128 allot
     IF
       c [char] a - 13 + 26 % [char] a + TO c
     THEN
-    c tab4 toto cells + !
+    c tab4 toto cells +
+     !
    1 + REPEAT 2DROP
   strlen 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    tab4 j cells + @ EMIT
+    tab4 j cells +
+     @ EMIT
    1 + REPEAT 2DROP
   ;
 main

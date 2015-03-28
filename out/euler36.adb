@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure euler36 is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -60,13 +63,13 @@ begin
     if palindrome2(pow2, d)
     then
       PInt(d);
-      PString("" & Character'Val(10));
+      PString(new char_array'( To_C("" & Character'Val(10))));
       sum := sum + d;
     end if;
     if palindrome2(pow2, d * 10 + d)
     then
       PInt(d * 10 + d);
-      PString("" & Character'Val(10));
+      PString(new char_array'( To_C("" & Character'Val(10))));
       sum := sum + d * 10 + d;
     end if;
   end loop;
@@ -78,14 +81,14 @@ begin
         if palindrome2(pow2, num0)
         then
           PInt(num0);
-          PString("" & Character'Val(10));
+          PString(new char_array'( To_C("" & Character'Val(10))));
           sum := sum + num0;
         end if;
         num1 := a * 10000 + b * 1000 + c * 100 + b * 10 + a;
         if palindrome2(pow2, num1)
         then
           PInt(num1);
-          PString("" & Character'Val(10));
+          PString(new char_array'( To_C("" & Character'Val(10))));
           sum := sum + num1;
         end if;
       end loop;
@@ -93,19 +96,19 @@ begin
       if palindrome2(pow2, num2)
       then
         PInt(num2);
-        PString("" & Character'Val(10));
+        PString(new char_array'( To_C("" & Character'Val(10))));
         sum := sum + num2;
       end if;
       num3 := a * 1000 + b * 100 + b * 10 + a;
       if palindrome2(pow2, num3)
       then
         PInt(num3);
-        PString("" & Character'Val(10));
+        PString(new char_array'( To_C("" & Character'Val(10))));
         sum := sum + num3;
       end if;
     end loop;
   end loop;
-  PString("sum=");
+  PString(new char_array'( To_C("sum=")));
   PInt(sum);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;

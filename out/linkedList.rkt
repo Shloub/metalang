@@ -21,23 +21,19 @@
 
 (struct intlist ([head #:mutable] [tail #:mutable]))
 (define (cons0 list i)
-  ;toto
   (let ([out0 (intlist i list)])
   out0)
 )
 (define (rev2 empty acc torev)
-  ;toto
   (if (eq? torev empty)
   acc
   (let ([acc2 (intlist (intlist-head torev) acc)])
   (rev2 empty acc (intlist-tail torev))))
 )
 (define (rev empty torev)
-  ;toto
   (rev2 empty empty torev)
 )
 (define (test empty)
-  ;toto
   (let ([list empty])
   (let ([i (- 1)])
   (letrec ([a (lambda (i list) 

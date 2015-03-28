@@ -23,7 +23,6 @@
 ))
 
 (define (read_sudoku _)
-  ;toto
   (let ([out0 (build-vector (* 9 9) (lambda (i) 
                                       ((lambda (k) 
                                          (block
@@ -33,7 +32,6 @@
 out0)
 )
 (define (print_sudoku sudoku0)
-  ;toto
   (letrec ([g (lambda (y) 
                 (if (<= y 8)
                 (letrec ([h (lambda (x) 
@@ -61,7 +59,6 @@ out0)
 (g 0))
 )
 (define (sudoku_done s)
-  ;toto
   (letrec ([f (lambda (i) 
                 (if (<= i 80)
                 (if (eq? (vector-ref s i) 0)
@@ -71,7 +68,6 @@ out0)
   (f 0))
 )
 (define (sudoku_error s)
-  ;toto
   (let ([out1 #f])
   (letrec ([e (lambda (x out1) 
                 (if (<= x 8)
@@ -93,7 +89,6 @@ out0)
 (e 0 out1)))
 )
 (define (solve sudoku0)
-  ;toto
   (if (sudoku_error sudoku0)
   #f
   (if (sudoku_done sudoku0)

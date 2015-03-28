@@ -3,17 +3,22 @@
 : palindrome2 { pow2 n }
   HERE 20 cells allot { t }
   20 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    n pow2 i cells + @ // 2 % 1 = t i cells + !
+    n pow2 i cells +
+     @ // 2 % 1 = t i cells +
+     !
    1 + REPEAT 2DROP
   0 { nnum }
   19 1 BEGIN 2dup >= WHILE DUP { j }
-    t j cells + @
+    t j cells +
+     @
     IF
       j TO nnum
     THEN
    1 + REPEAT 2DROP
   nnum 2 // 0 BEGIN 2dup >= WHILE DUP { k }
-    t k cells + @ t nnum k - cells + @ <>
+    t k cells +
+     @ t nnum k - cells +
+     @ <>
     IF
       DROP DROP false exit
     THEN
@@ -26,7 +31,8 @@
   HERE 20 cells allot { pow2 }
   20 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     p 2 * TO p
-    p 2 // pow2 i cells + !
+    p 2 // pow2 i cells +
+     !
    1 + REPEAT 2DROP
   0 { sum }
   9 1 BEGIN 2dup >= WHILE DUP { d }

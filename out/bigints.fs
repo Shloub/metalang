@@ -31,12 +31,17 @@ end-struct bigint%
   HERE len cells allot { chiffres }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { j }
     read-char { c }
-    c chiffres j cells + !
+    c chiffres j cells +
+     !
    1 + REPEAT 2DROP
   len 1 - 2 // 0 BEGIN 2dup >= WHILE DUP { i }
-    chiffres i cells + @ { tmp }
-    chiffres len 1 - i - cells + @ chiffres i cells + !
-    tmp chiffres len 1 - i - cells + !
+    chiffres i cells +
+     @ { tmp }
+    chiffres len 1 - i - cells +
+     @ chiffres i cells +
+     !
+    tmp chiffres len 1 - i - cells +
+     !
    1 + REPEAT 2DROP
   bigint% %allot { e }
   true e ->bigint_sign !
@@ -51,7 +56,8 @@ end-struct bigint%
     45 EMIT
   THEN
   a ->bigint_len @ 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    a ->bigint_chiffres @ a ->bigint_len @ 1 - i - cells + @ s>d 0 d.r
+    a ->bigint_chiffres @ a ->bigint_len @ 1 - i - cells +
+     @ s>d 0 d.r
    1 + REPEAT 2DROP
 ;
 
@@ -67,7 +73,9 @@ end-struct bigint%
       false exit
     ELSE
       a ->bigint_len @ 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-        a ->bigint_chiffres @ i cells + @ b ->bigint_chiffres @ i cells + @ <>
+        a ->bigint_chiffres @ i cells +
+         @ b ->bigint_chiffres @ i cells +
+         @ <>
         IF
           DROP DROP false exit
         THEN
@@ -98,11 +106,15 @@ end-struct bigint%
         ELSE
           a ->bigint_len @ 1 - 0 BEGIN 2dup >= WHILE DUP { i }
             a ->bigint_len @ 1 - i - { j }
-            a ->bigint_chiffres @ j cells + @ b ->bigint_chiffres @ j cells + @ >
+            a ->bigint_chiffres @ j cells +
+             @ b ->bigint_chiffres @ j cells +
+             @ >
             IF
               DROP DROP a ->bigint_sign @ exit
             ELSE
-              a ->bigint_chiffres @ j cells + @ b ->bigint_chiffres @ j cells + @ <
+              a ->bigint_chiffres @ j cells +
+               @ b ->bigint_chiffres @ j cells +
+               @ <
               IF
                 DROP DROP a ->bigint_sign @ INVERT exit
               THEN
@@ -129,17 +141,21 @@ end-struct bigint%
     retenue { tmp }
     i a ->bigint_len @ <
     IF
-      tmp a ->bigint_chiffres @ i cells + @ + TO tmp
+      tmp a ->bigint_chiffres @ i cells +
+       @ + TO tmp
     THEN
     i b ->bigint_len @ <
     IF
-      tmp b ->bigint_chiffres @ i cells + @ + TO tmp
+      tmp b ->bigint_chiffres @ i cells +
+       @ + TO tmp
     THEN
     tmp 10 // TO retenue
-    tmp 10 % chiffres i cells + !
+    tmp 10 % chiffres i cells +
+     !
    1 + REPEAT 2DROP
   BEGIN
-    len 0 > chiffres len 1 - cells + @ 0 = AND
+    len 0 > chiffres len 1 - cells +
+     @ 0 = AND
   WHILE
     len 1 - TO len
   REPEAT
@@ -159,10 +175,12 @@ end-struct bigint%
   0 { retenue }
   HERE len cells allot { chiffres }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    retenue a ->bigint_chiffres @ i cells + @ + { tmp }
+    retenue a ->bigint_chiffres @ i cells +
+     @ + { tmp }
     i b ->bigint_len @ <
     IF
-      tmp b ->bigint_chiffres @ i cells + @ - TO tmp
+      tmp b ->bigint_chiffres @ i cells +
+       @ - TO tmp
     THEN
     tmp 0 <
     IF
@@ -171,10 +189,12 @@ end-struct bigint%
     ELSE
       0 TO retenue
     THEN
-    tmp chiffres i cells + !
+    tmp chiffres i cells +
+     !
    1 + REPEAT 2DROP
   BEGIN
-    len 0 > chiffres len 1 - cells + @ 0 = AND
+    len 0 > chiffres len 1 - cells +
+     @ 0 = AND
   WHILE
     len 1 - TO len
   REPEAT
@@ -238,21 +258,36 @@ end-struct bigint%
   a ->bigint_len @ b ->bigint_len @ + 1 + { len }
   HERE len cells allot { chiffres }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { k }
-    0 chiffres k cells + !
+    0 chiffres k cells +
+     !
    1 + REPEAT 2DROP
   a ->bigint_len @ 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     0 { retenue }
     b ->bigint_len @ 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-      chiffres i j + cells + @ retenue b ->bigint_chiffres @ j cells + @ a ->bigint_chiffres @ i cells + @ * + + chiffres i j + cells + !
-      chiffres i j + cells + @ 10 // TO retenue
-      chiffres i j + cells + @ 10 % chiffres i j + cells + !
+      chiffres i j + cells +
+       @ retenue b ->bigint_chiffres @ j cells +
+       @ a ->bigint_chiffres @ i cells +
+       @ * + + chiffres i j + cells +
+       !
+      chiffres i j + cells +
+       @ 10 // TO retenue
+      chiffres i j + cells +
+       @ 10 % chiffres i j + cells +
+       !
      1 + REPEAT 2DROP
-    chiffres i b ->bigint_len @ + cells + @ retenue + chiffres i b ->bigint_len @ + cells + !
+    chiffres i b ->bigint_len @ + cells +
+     @ retenue + chiffres i b ->bigint_len @ + cells +
+     !
    1 + REPEAT 2DROP
-  chiffres a ->bigint_len @ b ->bigint_len @ + 1 - cells + @ 10 // chiffres a ->bigint_len @ b ->bigint_len @ + cells + !
-  chiffres a ->bigint_len @ b ->bigint_len @ + 1 - cells + @ 10 % chiffres a ->bigint_len @ b ->bigint_len @ + 1 - cells + !
+  chiffres a ->bigint_len @ b ->bigint_len @ + 1 - cells +
+   @ 10 // chiffres a ->bigint_len @ b ->bigint_len @ + cells +
+   !
+  chiffres a ->bigint_len @ b ->bigint_len @ + 1 - cells +
+   @ 10 % chiffres a ->bigint_len @ b ->bigint_len @ + 1 - cells +
+   !
   2 0 BEGIN 2dup >= WHILE DUP { l }
-    len 0 <> chiffres len 1 - cells + @ 0 = AND
+    len 0 <> chiffres len 1 - cells +
+     @ 0 = AND
     IF
       len 1 - TO len
     THEN
@@ -267,7 +302,8 @@ end-struct bigint%
 : bigint_premiers_chiffres { a i }
   i a ->bigint_len @ min { len }
   BEGIN
-    len 0 <> a ->bigint_chiffres @ len 1 - cells + @ 0 = AND
+    len 0 <> a ->bigint_chiffres @ len 1 - cells +
+     @ 0 = AND
   WHILE
     len 1 - TO len
   REPEAT
@@ -283,9 +319,12 @@ end-struct bigint%
   a ->bigint_len @ i + 1 - 0 BEGIN 2dup >= WHILE DUP { k }
     k i >=
     IF
-      a ->bigint_chiffres @ k i - cells + @ chiffres k cells + !
+      a ->bigint_chiffres @ k i - cells +
+       @ chiffres k cells +
+       !
     ELSE
-      0 chiffres k cells + !
+      0 chiffres k cells +
+       !
     THEN
    1 + REPEAT 2DROP
   bigint% %allot { p }
@@ -352,10 +391,12 @@ end-struct bigint%
   THEN
   HERE size cells allot { t }
   size 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    0 t j cells + !
+    0 t j cells +
+     !
    1 + REPEAT 2DROP
   size 1 - 0 BEGIN 2dup >= WHILE DUP { k }
-    i 10 % t k cells + !
+    i 10 % t k cells +
+     !
     i 10 // TO i
    1 + REPEAT 2DROP
   bigint% %allot { q }
@@ -380,7 +421,8 @@ end-struct bigint%
 : sum_chiffres_bigint { a }
   0 { out0 }
   a ->bigint_len @ 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    out0 a ->bigint_chiffres @ i cells + @ + TO out0
+    out0 a ->bigint_chiffres @ i cells +
+     @ + TO out0
    1 + REPEAT 2DROP
   out0 exit
 ;
@@ -469,34 +511,42 @@ end-struct bigint%
   5 { maxB }
   HERE maxA 1 + cells allot { a_bigint }
   maxA 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    j j * bigint_of_int a_bigint j cells + !
+    j j * bigint_of_int a_bigint j cells +
+     !
    1 + REPEAT 2DROP
   HERE maxA 1 + cells allot { a0_bigint }
   maxA 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { j2 }
-    j2 bigint_of_int a0_bigint j2 cells + !
+    j2 bigint_of_int a0_bigint j2 cells +
+     !
    1 + REPEAT 2DROP
   HERE maxA 1 + cells allot { b }
   maxA 1 + 1 - 0 BEGIN 2dup >= WHILE DUP { k }
-    2 b k cells + !
+    2 b k cells +
+     !
    1 + REPEAT 2DROP
   0 { n }
   true { found }
   BEGIN
     found
   WHILE
-    a0_bigint 0 cells + @ { min0 }
+    a0_bigint 0 cells +
+     @ { min0 }
     false TO found
     maxA 2 BEGIN 2dup >= WHILE DUP { i }
-      b i cells + @ maxB <=
+      b i cells +
+       @ maxB <=
       IF
         found
         IF
-          a_bigint i cells + @ min0 bigint_lt
+          a_bigint i cells +
+           @ min0 bigint_lt
           IF
-            a_bigint i cells + @ TO min0
+            a_bigint i cells +
+             @ TO min0
           THEN
         ELSE
-          a_bigint i cells + @ TO min0
+          a_bigint i cells +
+           @ TO min0
           true TO found
         THEN
       THEN
@@ -505,10 +555,17 @@ end-struct bigint%
     IF
       n 1 + TO n
       maxA 2 BEGIN 2dup >= WHILE DUP { l }
-        a_bigint l cells + @ min0 bigint_eq b l cells + @ maxB <= AND
+        a_bigint l cells +
+         @ min0 bigint_eq b l cells +
+         @ maxB <= AND
         IF
-          b l cells + @ 1 + b l cells + !
-          a_bigint l cells + @ a0_bigint l cells + @ mul_bigint a_bigint l cells + !
+          b l cells +
+           @ 1 + b l cells +
+           !
+          a_bigint l cells +
+           @ a0_bigint l cells +
+           @ mul_bigint a_bigint l cells +
+           !
         THEN
        1 + REPEAT 2DROP
     THEN

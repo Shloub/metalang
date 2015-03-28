@@ -20,7 +20,6 @@
       )))]) (w 0)))))
 
 (define (foo _)
-  ;toto
   (let ([a 0])
   ; test 
   (let ([a (+ a 1)])
@@ -28,17 +27,14 @@
   '()))
 )
 (define (foo2 _)
-  ;toto
   '()
 )
 (define (foo3 _)
-  ;toto
   (if (eq? 1 1)
   '()
   '())
 )
 (define (sumdiv n)
-  ;toto
   ; On désire renvoyer la somme des diviseurs 
   (let ([out0 0])
   ; On déclare un entier qui contiendra la somme 

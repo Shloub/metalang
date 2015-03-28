@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (programme_candidat tableau x y)
-  ;toto
   (let ([out0 0])
   (letrec ([b (lambda (i out0) 
                 (if (<= i (- y 1))

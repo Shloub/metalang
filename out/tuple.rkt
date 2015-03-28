@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (f tuple0)
-  ;toto
   ((lambda (internal_env) (apply (lambda (a b) 
                                         (list (+ a 1) (+ b 1))) internal_env)) tuple0)
 )

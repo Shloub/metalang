@@ -25,7 +25,8 @@ create bufferc 128 allot
     read-char { c }
     c [char] 0 - { d }
     i d * TO i
-    d last j cells + !
+    d last j cells +
+     !
    1 + REPEAT 2DROP
   i { max0 }
   0 { index }
@@ -41,11 +42,13 @@ create bufferc 128 allot
       i f * TO i
       nskipdiv 0 <
       IF
-        i last index cells + @ // TO i
+        i last index cells +
+         @ // TO i
       THEN
       nskipdiv 1 - TO nskipdiv
     THEN
-    f last index cells + !
+    f last index cells +
+     !
     index 1 + 5 % TO index
     max0 i max TO max0
    1 + REPEAT 2DROP

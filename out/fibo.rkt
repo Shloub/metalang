@@ -23,7 +23,6 @@
 ))
 
 (define (fibo0 a b i)
-  ;toto
   (let ([out0 0])
   (let ([a2 a])
   (let ([b2 b])

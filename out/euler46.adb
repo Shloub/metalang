@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure euler46 is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -66,9 +69,9 @@ begin
     end if;
   end loop;
   PInt(l);
-  PString(" == ");
+  PString(new char_array'( To_C(" == ")));
   PInt(nprimes);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   canbe := new b (0..maximumprimes);
   for i_0 in integer range 0..maximumprimes - 1 loop
     canbe(i_0) := FALSE;
@@ -87,7 +90,7 @@ begin
     if m2 < maximumprimes and then (not canbe(m2))
     then
       PInt(m2);
-      PString("" & Character'Val(10));
+      PString(new char_array'( To_C("" & Character'Val(10))));
     end if;
   end loop;
 end;

@@ -32,21 +32,31 @@ create bufferc 128 allot
     IF
       x y * 10 * exit
     ELSE
-      tab posY cells + @ posX cells + @ 35 =
+      tab posY cells +
+       @ posX cells +
+       @ 35 =
       IF
         x y * 10 * exit
       ELSE
-        cache posY cells + @ posX cells + @ 1 NEGATE <>
+        cache posY cells +
+         @ posX cells +
+         @ 1 NEGATE <>
         IF
-          cache posY cells + @ posX cells + @ exit
+          cache posY cells +
+           @ posX cells +
+           @ exit
         ELSE
-          x y * 10 * cache posY cells + @ posX cells + !
+          x y * 10 * cache posY cells +
+           @ posX cells +
+           !
           cache tab x y posX 1 + posY pathfind_aux { val1 }
           cache tab x y posX 1 - posY pathfind_aux { val2 }
           cache tab x y posX posY 1 - pathfind_aux { val3 }
           cache tab x y posX posY 1 + pathfind_aux { val4 }
           1 val1 val2 min val3 min val4 min + { out0 }
-          out0 cache posY cells + @ posX cells + !
+          out0 cache posY cells +
+           @ posX cells +
+           !
           out0 exit
         THEN
       THEN
@@ -59,11 +69,15 @@ create bufferc 128 allot
   y 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     HERE x cells allot { tmp }
     x 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-      tab i cells + @ j cells + @ EMIT
-      1 NEGATE tmp j cells + !
+      tab i cells +
+       @ j cells +
+       @ EMIT
+      1 NEGATE tmp j cells +
+       !
      1 + REPEAT 2DROP
     NEWLINE TYPE
-    tmp cache i cells + !
+    tmp cache i cells +
+     !
    1 + REPEAT 2DROP
   cache tab x y 0 0 pathfind_aux exit
 ;
@@ -81,10 +95,12 @@ create bufferc 128 allot
   y 1 - 0 BEGIN 2dup >= WHILE DUP { f }
     HERE x cells allot { g }
     x 1 - 0 BEGIN 2dup >= WHILE DUP { h }
-      read-char g h cells + !
+      read-char g h cells +
+       !
      1 + REPEAT 2DROP
     skipspaces
-    g e f cells + !
+    g e f cells +
+     !
    1 + REPEAT 2DROP
   e { tab }
   tab x y pathfind { result }

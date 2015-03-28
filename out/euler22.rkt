@@ -29,7 +29,6 @@
 ))
 
 (define (score _)
-  ;toto
   (block
     (mread-blank)
     ((lambda (len) 

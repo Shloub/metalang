@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (exp0 a e)
-  ;toto
   (let ([o 1])
   (letrec ([c (lambda (i o) 
                 (if (<= i e)
@@ -12,7 +11,6 @@
   (c 1 o)))
 )
 (define (e t0 n)
-  ;toto
   (letrec ([b (lambda (i n) 
                 (if (<= i 8)
                 (if (>= n (* (vector-ref t0 i) i))

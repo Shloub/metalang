@@ -23,7 +23,6 @@
 ))
 
 (define (pathfind_aux cache tab len pos)
-  ;toto
   (if (>= pos (- len 1))
   0
   (if (not (eq? (vector-ref cache pos) (- 1)))
@@ -45,7 +44,6 @@
     )))
 )
 (define (pathfind tab len)
-  ;toto
   (let ([cache (build-vector len (lambda (i) 
                                    (- 1)))])
   (pathfind_aux cache tab len 0))

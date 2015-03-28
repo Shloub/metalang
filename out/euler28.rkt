@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (sumdiag n)
-  ;toto
   (let ([nterms (- (* n 2) 1)])
   (let ([un 1])
   (let ([sum 1])

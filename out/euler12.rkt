@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (eratostene t0 max0)
-  ;toto
   (let ([n 0])
   (letrec ([w (lambda (i n) 
                 (if (<= i (- max0 1))
@@ -23,7 +22,6 @@
   (w 2 n)))
 )
 (define (fillPrimesFactors t0 n primes nprimes)
-  ;toto
   (letrec ([u (lambda (i n) 
                 (if (<= i (- nprimes 1))
                 (let ([d (vector-ref primes i)])
@@ -42,7 +40,6 @@
 (u 0 n))
 )
 (define (find0 ndiv2)
-  ;toto
   (let ([maximumprimes 110])
   (let ([era (build-vector maximumprimes (lambda (j) 
                                            j))])

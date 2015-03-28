@@ -23,7 +23,6 @@
 ))
 
 (define (find0 len tab cache x y)
-  ;toto
   ;
   ;	Cette fonction est récursive
   ;	
@@ -47,7 +46,6 @@
     ))))))))
 )
 (define (find01 len tab)
-  ;toto
   (let ([tab2 (build-vector len (lambda (i) 
                                   (let ([tab3 (build-vector (+ i 1) (lambda (j) 
                                                                       0))])

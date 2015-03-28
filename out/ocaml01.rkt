@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (foo _)
-  ;toto
   (letrec ([c (lambda (i) 
                 (if (<= i 10)
                 (c (+ i 1))
@@ -10,7 +9,6 @@
   (c 0))
 )
 (define (bar _)
-  ;toto
   (letrec ([b (lambda (i) 
                 (if (<= i 10)
                 (let ([a 0])

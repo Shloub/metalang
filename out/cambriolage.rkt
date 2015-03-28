@@ -23,7 +23,6 @@
 ))
 
 (define (nbPassePartout n passepartout m serrures)
-  ;toto
   (let ([max_ancient 0])
   (let ([max_recent 0])
   (letrec ([d (lambda (i max_ancient max_recent) 

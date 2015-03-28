@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (foo a)
-  ;toto
   (let ([a 4])
   '())
 )

@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (primesfactors n)
-  ;toto
   (let ([tab (build-vector (+ n 1) (lambda (i) 
                                      0))])
   (let ([d 2])

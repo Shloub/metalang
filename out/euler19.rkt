@@ -2,11 +2,9 @@
 (require racket/block)
 
 (define (is_leap year)
-  ;toto
   (or (eq? (remainder year 400) 0) (and (not (eq? (remainder year 100) 0)) (eq? (remainder year 4) 0)))
 )
 (define (ndayinmonth month year)
-  ;toto
   (if (eq? month 0)
   31
   (if (eq? month 1)

@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (result len tab)
-  ;toto
   (let ([tab2 (build-vector len (lambda (i) 
                                   #f))])
   (letrec ([d (lambda (i1) 

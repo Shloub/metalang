@@ -39,10 +39,12 @@ create bufferc 128 allot
     IF
       c [char] a - 13 + 26 % [char] a + TO c
     THEN
-    c tab4 toto cells + !
+    c tab4 toto cells +
+     !
    1 + REPEAT 2DROP
   strlen 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    tab4 j cells + @ EMIT
+    tab4 j cells +
+     @ EMIT
    1 + REPEAT 2DROP
   ;
 main

@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure prologin_template_2charline2 is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PChar(c : in Character) is
 begin
@@ -36,12 +39,12 @@ begin
     out0 := out0 + Character'Pos(tableau1(i)) * i;
     PChar(tableau1(i));
   end loop;
-  PString("--" & Character'Val(10));
+  PString(new char_array'( To_C("--" & Character'Val(10))));
   for j in integer range 0..taille2 - 1 loop
     out0 := out0 + Character'Pos(tableau2(j)) * j * 100;
     PChar(tableau2(j));
   end loop;
-  PString("--" & Character'Val(10));
+  PString(new char_array'( To_C("--" & Character'Val(10))));
   return out0;
 end;
 
@@ -66,5 +69,5 @@ begin
   end loop;
   SkipSpaces;
   PInt(programme_candidat(tableau1, taille1, tableau2, taille2));
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;

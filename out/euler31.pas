@@ -1,7 +1,7 @@
 program euler31;
 
 type a = array of Longint;
-type b = array of array of Longint;
+type b = array of a;
 function result(sum : Longint; t : a; maxIndex : Longint; cache : b) : Longint;
 var
   div0 : Longint;

@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure euler52 is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -50,16 +53,16 @@ begin
   if same_numbers(num, num * 2, num * 3, num * 4, num * 6, num * 5)
   then
     PInt(num);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     PInt(num * 2);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     PInt(num * 3);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     PInt(num * 4);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     PInt(num * 5);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     PInt(num * 6);
-    PString("" & Character'Val(10));
+    PString(new char_array'( To_C("" & Character'Val(10))));
   end if;
 end;

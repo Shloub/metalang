@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure aaa_read is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PChar(c : in Character) is
 begin
@@ -49,45 +52,45 @@ begin
   Get(len);
   SkipSpaces;
   PInt(len);
-  PString("=len" & Character'Val(10));
+  PString(new char_array'( To_C("=len" & Character'Val(10))));
   len := len * 2;
-  PString("len*2=");
+  PString(new char_array'( To_C("len*2=")));
   PInt(len);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   len := len / 2;
   tab := new a (0..len);
   for i in integer range 0..len - 1 loop
     Get(tmpi1);
     SkipSpaces;
     PInt(i);
-    PString("=>");
+    PString(new char_array'( To_C("=>")));
     PInt(tmpi1);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     tab(i) := tmpi1;
   end loop;
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   tab2 := new a (0..len);
   for i_0 in integer range 0..len - 1 loop
     Get(tmpi2);
     SkipSpaces;
     PInt(i_0);
-    PString("==>");
+    PString(new char_array'( To_C("==>")));
     PInt(tmpi2);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     tab2(i_0) := tmpi2;
   end loop;
   Get(strlen);
   SkipSpaces;
   PInt(strlen);
-  PString("=strlen" & Character'Val(10));
+  PString(new char_array'( To_C("=strlen" & Character'Val(10))));
   tab4 := new b (0..strlen);
   for toto in integer range 0..strlen - 1 loop
     Get(tmpc);
     c := Character'Pos(tmpc);
     PChar(tmpc);
-    PString(":");
+    PString(new char_array'( To_C(":")));
     PInt(c);
-    PString(" ");
+    PString(new char_array'( To_C(" ")));
     if tmpc /= ' '
     then
       c := ((c - Character'Pos('a')) + 13) rem 26 + Character'Pos('a');

@@ -24,12 +24,10 @@
 
 (struct toto ([bar #:mutable] [blah #:mutable] [foo #:mutable]))
 (define (mktoto v1)
-  ;toto
   (let ([t0 (toto 0 0 v1)])
   t0)
 )
 (define (result t0 len)
-  ;toto
   (let ([out0 0])
   (letrec ([a (lambda (j out0) 
                 (if (<= j (- len 1))

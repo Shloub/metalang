@@ -24,17 +24,14 @@
 
 (struct toto ([bar #:mutable] [blah #:mutable] [foo #:mutable]))
 (define (mktoto v1)
-  ;toto
   (let ([t0 (toto v1 v1 v1)])
   t0)
 )
 (define (mktoto2 v1)
-  ;toto
   (let ([t0 (toto (+ v1 2) (+ v1 1) (+ v1 3))])
   t0)
 )
 (define (result t_ t2_)
-  ;toto
   (let ([t0 t_])
   (let ([t2 t2_])
   (let ([t3 (toto 0 0 0)])

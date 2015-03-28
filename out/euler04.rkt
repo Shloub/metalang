@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (chiffre c m)
-  ;toto
   (if (eq? c 0)
   (remainder m 10)
   (chiffre (- c 1) (quotient m 10)))

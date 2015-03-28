@@ -23,7 +23,6 @@
 ))
 
 (define (devine0 nombre tab len)
-  ;toto
   (let ([min0 (vector-ref tab 0)])
   (let ([max0 (vector-ref tab 1)])
   (letrec ([b (lambda (i max0 min0) 

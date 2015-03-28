@@ -23,7 +23,6 @@
 ))
 
 (define (montagnes0 tab len)
-  ;toto
   (let ([max0 1])
   (let ([j 1])
   (let ([i (- len 2)])

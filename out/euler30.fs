@@ -10,7 +10,8 @@
   
   HERE 10 cells allot { p }
   10 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    i i * i * i * i * p i cells + !
+    i i * i * i * i * p i cells +
+     !
    1 + REPEAT 2DROP
   0 { sum }
   9 0 BEGIN 2dup >= WHILE DUP { a }
@@ -19,8 +20,13 @@
         9 0 BEGIN 2dup >= WHILE DUP { d }
           9 0 BEGIN 2dup >= WHILE DUP { e }
             9 0 BEGIN 2dup >= WHILE DUP { f }
-              p a cells + @ p b cells + @ + p c cells + @ + p d cells + @ + p e cells + @ + p f cells + @ +
-              { s }
+              p a cells +
+               @ p b cells +
+               @ + p c cells +
+               @ + p d cells +
+               @ + p e cells +
+               @ + p f cells +
+               @ + { s }
               a b 10 * + c 100 * + d 1000 * + e 10000 * + f 100000 * + { r }
               s r = r 1 <> AND
               IF

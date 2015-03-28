@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (pgcd a b)
-  ;toto
   (let ([c (min a b)])
   (let ([d (max a b)])
   (let ([reste (remainder d c)])

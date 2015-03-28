@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (result sum t0 maxIndex cache)
-  ;toto
   (if (not (eq? (vector-ref (vector-ref cache sum) maxIndex) 0))
   (vector-ref (vector-ref cache sum) maxIndex)
   (if (or (eq? sum 0) (eq? maxIndex 0))

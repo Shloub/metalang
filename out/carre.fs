@@ -31,22 +31,36 @@ create bufferc 128 allot
   y 1 - 0 BEGIN 2dup >= WHILE DUP { d }
     HERE x cells allot { e }
     x 1 - 0 BEGIN 2dup >= WHILE DUP { f }
-      read-int e f cells + !
+      read-int e f cells +
+       !
       skipspaces
      1 + REPEAT 2DROP
-    e tab d cells + !
+    e tab d cells +
+     !
    1 + REPEAT 2DROP
   x 1 - 1 BEGIN 2dup >= WHILE DUP { ix }
     y 1 - 1 BEGIN 2dup >= WHILE DUP { iy }
-      tab iy cells + @ ix cells + @ 1 =
+      tab iy cells +
+       @ ix cells +
+       @ 1 =
       IF
-        tab iy cells + @ ix 1 - cells + @ tab iy 1 - cells + @ ix cells + @ min tab iy 1 - cells + @ ix 1 - cells + @ min 1 + tab iy cells + @ ix cells + !
+        tab iy cells +
+ @ ix 1 - cells +
+ @ tab iy 1 - cells +
+ @ ix cells +
+ @ min tab iy 1 - cells +
+ @ ix 1 - cells +
+ @ min 1 + tab iy cells +
+         @ ix cells +
+         !
       THEN
      1 + REPEAT 2DROP
    1 + REPEAT 2DROP
   y 1 - 0 BEGIN 2dup >= WHILE DUP { jy }
     x 1 - 0 BEGIN 2dup >= WHILE DUP { jx }
-      tab jy cells + @ jx cells + @ s>d 0 d.r
+      tab jy cells +
+       @ jx cells +
+       @ s>d 0 d.r
        s"  " TYPE
      1 + REPEAT 2DROP
     NEWLINE TYPE

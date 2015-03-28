@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (is_pair i)
-  ;toto
   (let ([j 1])
   (let ([a (lambda (j) 
              (let ([j 6])

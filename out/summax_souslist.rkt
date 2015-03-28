@@ -23,7 +23,6 @@
 ))
 
 (define (summax lst len)
-  ;toto
   (let ([current 0])
   (let ([max0 0])
   (letrec ([a (lambda (i current max0) 

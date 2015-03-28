@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure euler33 is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -67,9 +70,9 @@ begin
           if a * k = i * b
           then
             PInt(a);
-            PString("/");
+            PString(new char_array'( To_C("/")));
             PInt(b);
-            PString("" & Character'Val(10));
+            PString(new char_array'( To_C("" & Character'Val(10))));
             top := top * a;
             bottom := bottom * b;
           end if;
@@ -78,13 +81,13 @@ begin
     end loop;
   end loop;
   PInt(top);
-  PString("/");
+  PString(new char_array'( To_C("/")));
   PInt(bottom);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   p := pgcd(top, bottom);
-  PString("pgcd=");
+  PString(new char_array'( To_C("pgcd=")));
   PInt(p);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   PInt(bottom / p);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;

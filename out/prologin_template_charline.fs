@@ -26,8 +26,10 @@ create bufferc 128 allot
 : programme_candidat { tableau taille }
   0 { out0 }
   taille 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    out0 tableau i cells + @ i * + TO out0
-    tableau i cells + @ EMIT
+    out0 tableau i cells +
+ @ i * + TO out0
+    tableau i cells +
+     @ EMIT
    1 + REPEAT 2DROP
    s" --" NEWLINE S+ TYPE
   out0 exit
@@ -38,7 +40,8 @@ create bufferc 128 allot
   skipspaces
   HERE taille cells allot { tableau }
   taille 1 - 0 BEGIN 2dup >= WHILE DUP { a }
-    read-char tableau a cells + !
+    read-char tableau a cells +
+     !
    1 + REPEAT 2DROP
   skipspaces
   tableau taille programme_candidat s>d 0 d.r

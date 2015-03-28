@@ -2,7 +2,8 @@
 : eratostene { t max0 }
   0 { n }
   max0 1 - 2 BEGIN 2dup >= WHILE DUP { i }
-    t i cells + @ i =
+    t i cells +
+     @ i =
     IF
       n 1 + TO n
       max0 i // i >
@@ -11,7 +12,8 @@
         BEGIN
           j max0 < j 0 > AND
         WHILE
-          0 t j cells + !
+          0 t j cells +
+           !
           j i + TO j
         REPEAT
       THEN
@@ -24,18 +26,22 @@
   1000001 { maximumprimes }
   HERE maximumprimes cells allot { era }
   maximumprimes 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    j era j cells + !
+    j era j cells +
+     !
    1 + REPEAT 2DROP
   era maximumprimes eratostene { nprimes }
   HERE nprimes cells allot { primes }
   nprimes 1 - 0 BEGIN 2dup >= WHILE DUP { o }
-    0 primes o cells + !
+    0 primes o cells +
+     !
    1 + REPEAT 2DROP
   0 { l }
   maximumprimes 1 - 2 BEGIN 2dup >= WHILE DUP { k }
-    era k cells + @ k =
+    era k cells +
+     @ k =
     IF
-      k primes l cells + !
+      k primes l cells +
+       !
       l 1 + TO l
     THEN
    1 + REPEAT 2DROP
@@ -45,7 +51,9 @@
   NEWLINE TYPE
   HERE nprimes cells allot { sum }
   nprimes 1 - 0 BEGIN 2dup >= WHILE DUP { i_ }
-    primes i_ cells + @ sum i_ cells + !
+    primes i_ cells +
+     @ sum i_ cells +
+     !
    1 + REPEAT 2DROP
   0 { maxl }
   true { process }
@@ -59,14 +67,22 @@
     stop 0 BEGIN 2dup >= WHILE DUP { i }
       i len + nprimes <
       IF
-        sum i cells + @ primes i len + cells + @ + sum i cells + !
-        maximumprimes sum i cells + @ >
+        sum i cells +
+         @ primes i len + cells +
+         @ + sum i cells +
+         !
+        maximumprimes sum i cells +
+         @ >
         IF
           true TO process
-          era sum i cells + @ cells + @ sum i cells + @ =
+          era sum i cells +
+           @ cells +
+           @ sum i cells +
+           @ =
           IF
             len TO maxl
-            sum i cells + @ TO resp
+            sum i cells +
+             @ TO resp
           THEN
         ELSE
           stop i min TO stop

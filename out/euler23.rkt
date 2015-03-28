@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (eratostene t0 max0)
-  ;toto
   (let ([n 0])
   (letrec ([m (lambda (i n) 
                 (if (<= i (- max0 1))
@@ -23,7 +22,6 @@
   (m 2 n)))
 )
 (define (fillPrimesFactors t0 n primes nprimes)
-  ;toto
   (letrec ([g (lambda (i n) 
                 (if (<= i (- nprimes 1))
                 (let ([d (vector-ref primes i)])
@@ -42,7 +40,6 @@
 (g 0 n))
 )
 (define (sumdivaux2 t0 n i)
-  ;toto
   (letrec ([f (lambda (i) 
                 (if (and (< i n) (eq? (vector-ref t0 i) 0))
                 (let ([i (+ i 1)])
@@ -51,7 +48,6 @@
   (f i))
 )
 (define (sumdivaux t0 n i)
-  ;toto
   (if (> i n)
   1
   (if (eq? (vector-ref t0 i) 0)
@@ -69,7 +65,6 @@
   (c 1 out0 p))))))))
 )
 (define (sumdiv nprimes primes n)
-  ;toto
   (let ([t0 (build-vector (+ n 1) (lambda (i) 
                                     0))])
   (let ([max0 (fillPrimesFactors t0 n primes nprimes)])

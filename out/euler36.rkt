@@ -10,7 +10,6 @@
     ))))) (list env tab))))
 
 (define (palindrome2 pow2 n)
-  ;toto
   (let ([t0 (build-vector 20 (lambda (i) 
                                (eq? (remainder (quotient n (vector-ref pow2 i)) 2) 1)))])
   (let ([nnum 0])

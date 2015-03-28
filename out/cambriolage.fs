@@ -26,25 +26,42 @@ create bufferc 128 allot
   0 { max_ancient }
   0 { max_recent }
   m 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    serrures i cells + @ 0 cells + @ 1 NEGATE = serrures i cells + @ 1 cells + @ max_ancient > AND
+    serrures i cells +
+     @ 0 cells +
+     @ 1 NEGATE = serrures i cells +
+     @ 1 cells +
+     @ max_ancient > AND
     IF
-      serrures i cells + @ 1 cells + @ TO max_ancient
+      serrures i cells +
+       @ 1 cells +
+       @ TO max_ancient
     THEN
-    serrures i cells + @ 0 cells + @ 1 = serrures i cells + @ 1 cells + @ max_recent > AND
+    serrures i cells +
+     @ 0 cells +
+     @ 1 = serrures i cells +
+     @ 1 cells +
+     @ max_recent > AND
     IF
-      serrures i cells + @ 1 cells + @ TO max_recent
+      serrures i cells +
+       @ 1 cells +
+       @ TO max_recent
     THEN
    1 + REPEAT 2DROP
   0 { max_ancient_pp }
   0 { max_recent_pp }
   n 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    passepartout i cells + @ { pp }
-    pp 0 cells + @ max_ancient >= pp 1 cells + @ max_recent >= AND
+    passepartout i cells +
+     @ { pp }
+    pp 0 cells +
+     @ max_ancient >= pp 1 cells +
+     @ max_recent >= AND
     IF
       DROP DROP 1 exit
     THEN
-    max_ancient_pp pp 0 cells + @ max TO max_ancient_pp
-    max_recent_pp pp 1 cells + @ max TO max_recent_pp
+    max_ancient_pp pp 0 cells +
+ @ max TO max_ancient_pp
+    max_recent_pp pp 1 cells +
+ @ max TO max_recent_pp
    1 + REPEAT 2DROP
   max_ancient_pp max_ancient >= max_recent_pp max_recent >= AND
   IF
@@ -63,9 +80,11 @@ create bufferc 128 allot
     2 1 - 0 BEGIN 2dup >= WHILE DUP { j }
       read-int { out01 }
       skipspaces
-      out01 out0 j cells + !
+      out01 out0 j cells +
+       !
      1 + REPEAT 2DROP
-    out0 passepartout i cells + !
+    out0 passepartout i cells +
+     !
    1 + REPEAT 2DROP
   read-int { m }
   skipspaces
@@ -75,9 +94,11 @@ create bufferc 128 allot
     2 1 - 0 BEGIN 2dup >= WHILE DUP { l }
       read-int { out_ }
       skipspaces
-      out_ out1 l cells + !
+      out_ out1 l cells +
+       !
      1 + REPEAT 2DROP
-    out1 serrures k cells + !
+    out1 serrures k cells +
+     !
    1 + REPEAT 2DROP
   n passepartout m serrures nbPassePartout s>d 0 d.r
   ;

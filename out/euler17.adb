@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure euler17 is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -25,10 +28,10 @@ end;
   one_to_eighty : Integer;
 begin
   PInt(3 + 3 + 5 + 4 + 4);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   one_to_nine := 3 + 3 + 5 + 4 + 4 + 3 + 5 + 5 + 4;
   PInt(one_to_nine);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   one_to_ten := one_to_nine + 3;
   one_to_twenty := one_to_ten + 6 + 6 + 8 + 8 + 7 + 7 + 9 + 8 + 8 + 6;
   one_to_thirty := one_to_twenty + 6 * 9 + one_to_nine + 6;
@@ -40,8 +43,8 @@ begin
   one_to_ninety := one_to_eighty + 6 * 9 + one_to_nine + 6;
   one_to_ninety_nine := one_to_ninety + 6 * 9 + one_to_nine;
   PInt(one_to_ninety_nine);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   PInt(100 * one_to_nine + one_to_ninety_nine * 10 + 10 * 9 * 99 + 7 * 9 + 3 +
   8);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;

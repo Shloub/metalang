@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (divisible n t0 size)
-  ;toto
   (letrec ([b (lambda (i) 
                 (if (<= i (- size 1))
                 (if (eq? (remainder n (vector-ref t0 i)) 0)
@@ -12,7 +11,6 @@
   (b 0))
 )
 (define (find0 n t0 used nth0)
-  ;toto
   (letrec ([a (lambda (n used) 
                 (if (not (eq? used nth0))
                 (if (divisible n t0 used)

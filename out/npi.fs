@@ -34,39 +34,50 @@ create bufferc 128 allot
 : npi0 { str len }
   HERE len cells allot { stack }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    0 stack i cells + !
+    0 stack i cells +
+     !
    1 + REPEAT 2DROP
   0 { ptrStack }
   0 { ptrStr }
   BEGIN
     ptrStr len <
   WHILE
-    str ptrStr cells + @ 32 =
+    str ptrStr cells +
+     @ 32 =
     IF
       ptrStr 1 + TO ptrStr
     ELSE
-      str ptrStr cells + @ is_number
+      str ptrStr cells +
+       @ is_number
       IF
         0 { num }
         BEGIN
-          str ptrStr cells + @ 32 <>
+          str ptrStr cells +
+           @ 32 <>
         WHILE
-          num 10 * str ptrStr cells + @ + [char] 0 - TO num
+          num 10 * str ptrStr cells +
+ @ + [char] 0 - TO num
           ptrStr 1 + TO ptrStr
         REPEAT
-        num stack ptrStack cells + !
+        num stack ptrStack cells +
+         !
         ptrStack 1 + TO ptrStack
       ELSE
-        str ptrStr cells + @ 43 =
+        str ptrStr cells +
+         @ 43 =
         IF
-          stack ptrStack 2 - cells + @ stack ptrStack 1 - cells + @ + stack ptrStack 2 - cells + !
+          stack ptrStack 2 - cells +
+           @ stack ptrStack 1 - cells +
+           @ + stack ptrStack 2 - cells +
+           !
           ptrStack 1 - TO ptrStack
           ptrStr 1 + TO ptrStr
         THEN
       THEN
     THEN
   REPEAT
-  stack 0 cells + @ exit
+  stack 0 cells +
+   @ exit
 ;
 
 : main
@@ -77,7 +88,8 @@ create bufferc 128 allot
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     0 { tmp }
     read-char TO tmp
-    tmp tab i cells + !
+    tmp tab i cells +
+     !
    1 + REPEAT 2DROP
   tab len npi0 { result }
   result s>d 0 d.r

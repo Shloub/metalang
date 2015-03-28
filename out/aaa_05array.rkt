@@ -10,11 +10,9 @@
     ))))) (list env tab))))
 
 (define (id b)
-  ;toto
   b
 )
 (define (g t0 index)
-  ;toto
   (vector-set! t0 index #f)
 )
 (define main

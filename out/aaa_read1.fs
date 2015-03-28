@@ -22,11 +22,13 @@ create bufferc 128 allot
 : main
   HERE 12 cells allot { str }
   12 1 - 0 BEGIN 2dup >= WHILE DUP { a }
-    read-char str a cells + !
+    read-char str a cells +
+     !
    1 + REPEAT 2DROP
   skipspaces
   11 0 BEGIN 2dup >= WHILE DUP { i }
-    str i cells + @ EMIT
+    str i cells +
+     @ EMIT
    1 + REPEAT 2DROP
   ;
 main

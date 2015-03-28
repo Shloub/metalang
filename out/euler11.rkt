@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (find0 n m x y dx dy)
-  ;toto
   (if (or (or (or (< x 0) (eq? x 20)) (< y 0)) (eq? y 20))
   (- 1)
   (if (eq? n 0)

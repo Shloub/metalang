@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (eratostene t0 max0)
-  ;toto
   (let ([n 0])
   (letrec ([c (lambda (i n) 
                 (if (<= i (- max0 1))

@@ -23,13 +23,11 @@
 ))
 
 (define (copytab tab len)
-  ;toto
   (let ([o (build-vector len (lambda (i) 
                                (vector-ref tab i)))])
   o)
 )
 (define (bubblesort tab len)
-  ;toto
   (letrec ([b (lambda (i) 
                 (if (<= i (- len 1))
                 (letrec ([c (lambda (j) 
@@ -48,7 +46,6 @@
 (b 0))
 )
 (define (qsort0 tab len i j)
-  ;toto
   (if (< i j)
   (let ([i0 i])
   (let ([j0 j])

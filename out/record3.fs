@@ -39,8 +39,15 @@ end-struct toto%
 : result { t len }
   0 { out0 }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { j }
-    t j cells + @ ->blah @ 1 + t j cells + @ ->blah !
-    out0 t j cells + @ ->foo @ + t j cells + @ ->blah @ t j cells + @ ->bar @ * + t j cells + @ ->bar @ t j cells + @ ->foo @ * + TO out0
+    t j cells +
+     @ ->blah @ 1 + t j cells +
+     @ ->blah !
+    out0 t j cells +
+     @ ->foo @ + t j cells +
+     @ ->blah @ t j cells +
+     @ ->bar @ * + t j cells +
+     @ ->bar @ t j cells +
+     @ ->foo @ * + TO out0
    1 + REPEAT 2DROP
   out0 exit
 ;
@@ -48,14 +55,18 @@ end-struct toto%
 : main
   HERE 4 cells allot { t }
   4 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    i mktoto t i cells + !
+    i mktoto t i cells +
+     !
    1 + REPEAT 2DROP
-  read-int t 0 cells + @ ->bar !
+  read-int t 0 cells +
+   @ ->bar !
   skipspaces
-  read-int t 1 cells + @ ->blah !
+  read-int t 1 cells +
+   @ ->blah !
   t 4 result { titi }
   titi s>d 0 d.r
-  t 2 cells + @ ->blah @ s>d 0 d.r
+  t 2 cells +
+   @ ->blah @ s>d 0 d.r
   ;
 main
 BYE

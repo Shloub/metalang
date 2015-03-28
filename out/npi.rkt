@@ -29,11 +29,9 @@
 ))
 
 (define (is_number c)
-  ;toto
   (and (<= (char->integer c) (char->integer #\9)) (>= (char->integer c) (char->integer #\0)))
 )
 (define (npi0 str len)
-  ;toto
   (let ([stack (build-vector len (lambda (i) 
                                    0))])
   (let ([ptrStack 0])

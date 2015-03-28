@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure euler21 is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -127,9 +130,9 @@ begin
     end if;
   end loop;
   PInt(l);
-  PString(" == ");
+  PString(new char_array'( To_C(" == ")));
   PInt(nprimes);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   sum := 0;
   for n in integer range 2..1000 loop
     other := sumdiv(nprimes, primes, n) - n;
@@ -139,14 +142,14 @@ begin
       if othersum = n
       then
         PInt(other);
-        PString(" & ");
+        PString(new char_array'( To_C(" & ")));
         PInt(n);
-        PString("" & Character'Val(10));
+        PString(new char_array'( To_C("" & Character'Val(10))));
         sum := sum + other + n;
       end if;
     end if;
   end loop;
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
   PInt(sum);
-  PString("" & Character'Val(10));
+  PString(new char_array'( To_C("" & Character'Val(10))));
 end;

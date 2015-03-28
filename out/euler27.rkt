@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (eratostene t0 max0)
-  ;toto
   (let ([n 0])
   (letrec ([e (lambda (i n) 
                 (if (<= i (- max0 1))
@@ -23,7 +22,6 @@
   (e 2 n)))
 )
 (define (isPrime n primes len)
-  ;toto
   (let ([i 0])
   (let ([n (if (< n 0)
            (let ([n (- n)])
@@ -39,7 +37,6 @@
   (d i))))
 )
 (define (test a b primes len)
-  ;toto
   (letrec ([c (lambda (n) 
                 (if (<= n 200)
                 (let ([j (+ (+ (* n n) (* a n)) b)])

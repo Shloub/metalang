@@ -10,9 +10,11 @@
 
 : e { t n }
   8 1 BEGIN 2dup >= WHILE DUP { i }
-    n t i cells + @ i * >=
+    n t i cells +
+     @ i * >=
     IF
-      n t i cells + @ i * - TO n
+      n t i cells +
+       @ i * - TO n
     ELSE
       10 i 1 - exp0 n i // + { nombre }
       i 1 - n i % - { chiffre }
@@ -25,12 +27,14 @@
 : main
   HERE 9 cells allot { t }
   9 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    10 i exp0 10 i 1 - exp0 - t i cells + !
+    10 i exp0 10 i 1 - exp0 - t i cells +
+     !
    1 + REPEAT 2DROP
   8 1 BEGIN 2dup >= WHILE DUP { i2 }
     i2 s>d 0 d.r
      s"  => " TYPE
-    t i2 cells + @ s>d 0 d.r
+    t i2 cells +
+     @ s>d 0 d.r
     NEWLINE TYPE
    1 + REPEAT 2DROP
   80 0 BEGIN 2dup >= WHILE DUP { j }

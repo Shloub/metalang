@@ -4,7 +4,8 @@
 ;
 
 : g { t index }
-  false t index cells + !
+  false t index cells +
+   !
 ;
 
 : main
@@ -13,11 +14,13 @@
   5 1 - 0 BEGIN 2dup >= WHILE DUP { i }
     i s>d 0 d.r
     j i + TO j
-    i 2 % 0 = a i cells + !
+    i 2 % 0 = a i cells +
+     !
    1 + REPEAT 2DROP
   j s>d 0 d.r
    s"  " TYPE
-  a 0 cells + @ { c }
+  a 0 cells +
+   @ { c }
   c
   IF
      s" True" TYPE
@@ -26,7 +29,8 @@
   THEN
   NEWLINE TYPE
   a id 0 g
-  a 0 cells + @ { d }
+  a 0 cells +
+   @ { d }
   d
   IF
      s" True" TYPE

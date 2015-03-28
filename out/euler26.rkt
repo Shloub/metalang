@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (periode restes len a b)
-  ;toto
   (letrec ([c (lambda (a len) 
                 (if (not (eq? a 0))
                 (let ([chiffre (quotient a b)])

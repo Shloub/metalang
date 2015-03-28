@@ -27,12 +27,16 @@ create bufferc 128 allot
   IF
     0 exit
   ELSE
-    cache pos cells + @ 1 NEGATE <>
+    cache pos cells +
+     @ 1 NEGATE <>
     IF
-      cache pos cells + @ exit
+      cache pos cells +
+       @ exit
     ELSE
-      len 2 * cache pos cells + !
-      cache tab len tab pos cells + @ pathfind_aux { posval }
+      len 2 * cache pos cells +
+       !
+      cache tab len tab pos cells +
+       @ pathfind_aux { posval }
       cache tab len pos 1 + pathfind_aux { oneval }
       0 { out0 }
       posval oneval <
@@ -41,7 +45,8 @@ create bufferc 128 allot
       ELSE
         1 oneval + TO out0
       THEN
-      out0 cache pos cells + !
+      out0 cache pos cells +
+       !
       out0 exit
     THEN
   THEN
@@ -50,7 +55,8 @@ create bufferc 128 allot
 : pathfind { tab len }
   HERE len cells allot { cache }
   len 1 - 0 BEGIN 2dup >= WHILE DUP { i }
-    1 NEGATE cache i cells + !
+    1 NEGATE cache i cells +
+     !
    1 + REPEAT 2DROP
   cache tab len 0 pathfind_aux exit
 ;
@@ -64,7 +70,8 @@ create bufferc 128 allot
     0 { tmp }
     read-int TO tmp
     skipspaces
-    tmp tab i cells + !
+    tmp tab i cells +
+     !
    1 + REPEAT 2DROP
   tab len pathfind { result }
   result s>d 0 d.r

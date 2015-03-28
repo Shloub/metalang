@@ -1,11 +1,14 @@
 
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
 
 procedure aaa_07triplet is
-procedure PString(s : String) is
+
+
+type stringptr is access all char_array;
+procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 procedure PInt(i : in Integer) is
 begin
@@ -37,13 +40,13 @@ begin
     SkipSpaces;
     Get(c);
     SkipSpaces;
-    PString("a = ");
+    PString(new char_array'( To_C("a = ")));
     PInt(a);
-    PString(" b = ");
+    PString(new char_array'( To_C(" b = ")));
     PInt(b);
-    PString("c =");
+    PString(new char_array'( To_C("c =")));
     PInt(c);
-    PString("" & Character'Val(10));
+    PString(new char_array'( To_C("" & Character'Val(10))));
   end loop;
   l := new e (0..10);
   for d in integer range 0..10 - 1 loop
@@ -52,6 +55,6 @@ begin
   end loop;
   for j in integer range 0..9 loop
     PInt(l(j));
-    PString("" & Character'Val(10));
+    PString(new char_array'( To_C("" & Character'Val(10))));
   end loop;
 end;

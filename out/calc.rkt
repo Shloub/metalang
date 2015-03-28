@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (fibo a b i)
-  ;toto
   (let ([out_ 0])
   (let ([a2 a])
   (let ([b2 b])

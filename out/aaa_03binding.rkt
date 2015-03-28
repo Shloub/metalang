@@ -2,14 +2,12 @@
 (require racket/block)
 
 (define (g i)
-  ;toto
   (let ([j (* i 4)])
   (if (eq? (remainder j 2) 1)
   0
   j))
 )
 (define (h i)
-  ;toto
   (printf "~a\n" i)
 )
 (define main

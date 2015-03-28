@@ -2,7 +2,6 @@
 (require racket/block)
 
 (define (chiffre_sort a)
-  ;toto
   (if (< a 10)
   a
   (let ([b (chiffre_sort (quotient a 10))])
@@ -14,7 +13,6 @@
   (+ d (* (chiffre_sort (+ c (* e 10))) 10))))))))
 )
 (define (same_numbers a b c d e f)
-  ;toto
   (let ([ca (chiffre_sort a)])
   (and (and (and (and (eq? ca (chiffre_sort b)) (eq? ca (chiffre_sort c))) (eq? ca (chiffre_sort d))) (eq? ca (chiffre_sort e))) (eq? ca (chiffre_sort f))))
 )
