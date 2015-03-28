@@ -56,18 +56,18 @@ static int readInt(){
 } 
   static int position_alphabet(char c)
   {
-    int i = c;
-    if (i <= 'Z' && i >= 'A')
-      return i - 'A';
-    else if (i <= 'z' && i >= 'a')
-      return i - 'a';
+    int i = (int)(c);
+    if (i <= (int)('Z') && i >= (int)('A'))
+      return i - (int)('A');
+    else if (i <= (int)('z') && i >= (int)('a'))
+      return i - (int)('a');
     else
       return -1;
   }
   
   static char of_position_alphabet(int c)
   {
-    return (char)(c + 'a');
+    return (char)(c + (int)('a'));
   }
   
   static void crypte(int taille_cle, char[] cle, int taille, char[] message)

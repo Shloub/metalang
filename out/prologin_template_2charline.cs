@@ -8,13 +8,13 @@ public class prologin_template_2charline
     int out0 = 0;
     for (int i = 0 ; i < taille1; i++)
     {
-      out0 += tableau1[i] * i;
+      out0 += (int)(tableau1[i]) * i;
       Console.Write(tableau1[i]);
     }
     Console.Write("--\n");
     for (int j = 0 ; j < taille2; j++)
     {
-      out0 += tableau2[j] * j * 100;
+      out0 += (int)(tableau2[j]) * j * 100;
       Console.Write(tableau2[j]);
     }
     Console.Write("--\n");

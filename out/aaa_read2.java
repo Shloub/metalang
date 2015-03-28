@@ -37,10 +37,10 @@ read int, read char et skip
     for (int i3 = 0 ; i3 < strlen; i3++)
     {
       char tmpc = tab4[i3];
-      int c = tmpc;
+      int c = (int)(tmpc);
       System.out.printf("%c:%d ", tmpc, c);
       if (tmpc != ' ')
-        c = ((c - 'a') + 13) % 26 + 'a';
+        c = ((c - (int)('a')) + 13) % 26 + (int)('a');
       tab4[i3] = (char)(c);
     }
     for (int j = 0 ; j < strlen; j++)

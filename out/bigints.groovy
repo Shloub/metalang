@@ -12,7 +12,7 @@ Bigint read_bigint(int len)
   for (int j = 0 ; j < len; j++)
   {
     char c = scanner.findWithinHorizon(".", 1).charAt(0);
-    chiffres[j] = c
+    chiffres[j] = (0+c)
   }
   for (int i = 0 ; i <= (int)((len - 1) / 2); i ++)
   {

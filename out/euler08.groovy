@@ -8,7 +8,7 @@ int[] last = new int[5]
 for (int j = 0 ; j < 5; j++)
 {
   char c = scanner.findWithinHorizon(".", 1).charAt(0);
-  int d = c - (char)'0'
+  int d = (0+c) - (0+(char)'0')
   i *= d;
   last[j] = d
 }
@@ -18,7 +18,7 @@ int nskipdiv = 0
 for (int k = 1 ; k <= 995; k ++)
 {
   char e = scanner.findWithinHorizon(".", 1).charAt(0);
-  int f = e - (char)'0'
+  int f = (0+e) - (0+(char)'0')
   if (f == 0)
   {
     i = 1

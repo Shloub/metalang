@@ -61,10 +61,10 @@ char[] tab4 = new char[strlen]
 for (int toto = 0 ; toto < strlen; toto++)
 {
   char tmpc = scanner.findWithinHorizon(".", 1).charAt(0);
-  int c = tmpc
+  int c = (0+tmpc)
   System.out.printf("%s:%s ", tmpc, c);
   if (tmpc != (char)' ')
-    c = ((c - (char)'a') + 13) % 26 + (char)'a'
+    c = ((c - (0+(char)'a')) + 13) % 26 + (0+(char)'a')
   tab4[toto] = (char)(c)
 }
 for (int j = 0 ; j < strlen; j++)

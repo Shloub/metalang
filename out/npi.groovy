@@ -3,7 +3,7 @@ import java.util.*
 
 boolean is_number(char c)
 {
-  return c <= (char)'9' && c >= (char)'0'
+  return (0+c) <= (0+(char)'9') && (0+c) >= (0+(char)'0')
 }
 
 /*
@@ -24,7 +24,7 @@ int npi0(char[] str, int len)
     int num = 0
     while (str[ptrStr] != (char)' ')
     {
-      num = num * 10 + str[ptrStr] - (char)'0'
+      num = num * 10 + (0+str[ptrStr]) - (0+(char)'0')
       ptrStr ++;
     }
     stack[ptrStack] = num

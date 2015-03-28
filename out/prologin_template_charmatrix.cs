@@ -10,7 +10,7 @@ public class prologin_template_charmatrix
     {
       for (int j = 0 ; j < taille_x; j++)
       {
-        out0 += tableau[i][j] * (i + j * 2);
+        out0 += (int)(tableau[i][j]) * (i + j * 2);
         Console.Write(tableau[i][j]);
       }
       Console.Write("--\n");

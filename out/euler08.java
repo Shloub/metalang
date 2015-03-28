@@ -11,7 +11,7 @@ public class euler08
     for (int j = 0 ; j < 5; j++)
     {
       char c = scanner.findWithinHorizon(".", 1).charAt(0);
-      int d = c - '0';
+      int d = (int)(c) - (int)('0');
       i *= d;
       last[j] = d;
     }
@@ -21,7 +21,7 @@ public class euler08
     for (int k = 1 ; k <= 995; k ++)
     {
       char e = scanner.findWithinHorizon(".", 1).charAt(0);
-      int f = e - '0';
+      int f = (int)(e) - (int)('0');
       if (f == 0)
       {
         i = 1;

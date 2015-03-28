@@ -8,7 +8,7 @@ public class prologin_template_charline
     int out0 = 0;
     for (int i = 0 ; i < taille; i++)
     {
-      out0 += tableau[i] * i;
+      out0 += (int)(tableau[i]) * i;
       Console.Write(tableau[i]);
     }
     Console.Write("--\n");

@@ -8,7 +8,7 @@ int programme_candidat(char[][] tableau, int taille_x, int taille_y)
   {
     for (int j = 0 ; j < taille_x; j++)
     {
-      out0 += tableau[i][j] * (i + j * 2);
+      out0 += (0+tableau[i][j]) * (i + j * 2);
       print(tableau[i][j])
     }
     print("--\n")

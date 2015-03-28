@@ -47,7 +47,7 @@ static void stdin_sep(){
     for (int j = 0 ; j < len; j++)
     {
       char c = readChar();
-      chiffres[j] = c;
+      chiffres[j] = (int)(c);
     }
     for (int i = 0 ; i <= (len - 1) / 2; i ++)
     {

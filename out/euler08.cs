@@ -33,7 +33,7 @@ static char readChar(){
     for (int j = 0 ; j < 5; j++)
     {
       char c = readChar();
-      int d = c - '0';
+      int d = (int)(c) - (int)('0');
       i *= d;
       last[j] = d;
     }
@@ -43,7 +43,7 @@ static char readChar(){
     for (int k = 1 ; k <= 995; k ++)
     {
       char e = readChar();
-      int f = e - '0';
+      int f = (int)(e) - (int)('0');
       if (f == 0)
       {
         i = 1;

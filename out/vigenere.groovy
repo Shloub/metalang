@@ -3,18 +3,18 @@ import java.util.*
 
 int position_alphabet(char c)
 {
-  int i = c
-  if (i <= (char)'Z' && i >= (char)'A')
-    return i - (char)'A'
-  else if (i <= (char)'z' && i >= (char)'a')
-    return i - (char)'a'
+  int i = (0+c)
+  if (i <= (0+(char)'Z') && i >= (0+(char)'A'))
+    return i - (0+(char)'A')
+  else if (i <= (0+(char)'z') && i >= (0+(char)'a'))
+    return i - (0+(char)'a')
   else
     return -1
 }
 
 char of_position_alphabet(int c)
 {
-  return (char)(c + (char)'a')
+  return (char)(c + (0+(char)'a'))
 }
 
 void crypte(int taille_cle, char[] cle, int taille, char[] message)

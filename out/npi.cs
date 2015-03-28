@@ -56,7 +56,7 @@ static int readInt(){
 } 
   static bool is_number(char c)
   {
-    return c <= '9' && c >= '0';
+    return (int)(c) <= (int)('9') && (int)(c) >= (int)('0');
   }
   
   /*
@@ -77,7 +77,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
       int num = 0;
       while (str[ptrStr] != (char)32)
       {
-        num = num * 10 + str[ptrStr] - '0';
+        num = num * 10 + (int)(str[ptrStr]) - (int)('0');
         ptrStr ++;
       }
       stack[ptrStack] = num;
