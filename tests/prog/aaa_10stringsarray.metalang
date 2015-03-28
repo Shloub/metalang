@@ -1,0 +1,17 @@
+/*
+TODO ajouter un record qui contient des chaines.
+*/
+def string idstring(string s)
+  return s
+end
+
+def void printstring( string s)
+  print idstring(s) print "\n"
+end
+
+main
+  def array<string> tab[2] with i do return idstring("chaine de test") end
+  for j = 0 to 1 do
+    printstring(idstring(tab[j]))
+  end
+end
