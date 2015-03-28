@@ -4,7 +4,9 @@ def lexems e()
   for i = 1 to 127 do
     def c = char_of_int(i)
     out = { ${out}
-      print ${i} print "=>" print ${c} print "\n"
+      print ${i} print "=>" print ${c} print " "
+      print int_of_char(${c}) print " " print char_of_int(${i})
+      print "\n"
     }
   end
   return out
