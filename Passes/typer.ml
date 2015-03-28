@@ -513,21 +513,21 @@ and collect_contraintes_mutable env mut =
                    contrainteMap = IntMap.add (Mutable.Fixed.annot mut) ty env.contrainteMap
                  } in
     env, ty
-  | Mutable.Array (mut, eli) ->
+  | Mutable.Array (mut0, eli) ->
     let env = List.fold_left (fun env e ->
       let integer_contrainte = ref (Typed (Type.integer, exprloc e)) in
       let env, contrainte_expr = collect_contraintes_expr env e in
       add_contrainte env integer_contrainte contrainte_expr
     ) env eli in
     let contrainte = ref (Unknown tloc) in
-    let env, contrainte_mut = collect_contraintes_mutable env mut in
-    let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, loc mut) ) in
+    let env, contrainte_mut = collect_contraintes_mutable env mut0 in
+    let contrainte_mut2 = ref (PreTyped (Type.Array contrainte, loc mut0) ) in
     let env = { env with contraintes =
         (contrainte_mut, contrainte_mut2) :: env.contraintes;
                 contrainteMap = IntMap.add (Mutable.Fixed.annot mut) contrainte env.contrainteMap
               } in
     env, contrainte
-  | Mutable.Dot (mut, name) ->
+  | Mutable.Dot (mut0, name) ->
     let (ty_dot, ty_mut, _) =
       try StringMap.find name env.fields
       with Not_found ->
@@ -535,7 +535,7 @@ and collect_contraintes_mutable env mut =
           Format.fprintf f "Field %s is undefined %a\n%!" name ploc tloc
         ))
     in
-    let env, contrainte = collect_contraintes_mutable env mut in
+    let env, contrainte = collect_contraintes_mutable env mut0 in
     let env, contrainte2 = ty2typeContrainte env ty_mut tloc in
     let env, ty_dot = ty2typeContrainte env ty_dot tloc in
     let env = {env with
