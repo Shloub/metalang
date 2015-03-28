@@ -160,7 +160,7 @@ class pasPrinter = object(self)
     | None ->
       match Type.unfix t with
       | Type.Integer -> Format.fprintf f "Longint"
-      | Type.String -> Format.fprintf f "char*"
+      | Type.String -> Format.fprintf f "string"
       | Type.Array a -> Format.fprintf f "array of %a" self#ptype a
       | Type.Void ->  Format.fprintf f "void"
       | Type.Bool -> Format.fprintf f "boolean"
@@ -208,6 +208,7 @@ class pasPrinter = object(self)
   method print_fun f funname t li instrs =
     let () = current_function <- funname in
     declared_types <- self#declare_type declared_types f t;
+    List.iter (fun (_, t) -> declared_types <- self#declare_type declared_types f t) li;
     self#declare_types f instrs;
     declared_types <- List.fold_left (fun declared_types(_, t) -> self#declare_type declared_types f t) declared_types li;
     Format.fprintf f "%a%a;@\n"
@@ -234,15 +235,23 @@ class pasPrinter = object(self)
   method declare_type declared_types f t =
     Type.Writer.Deep.fold (fun declared_types t ->
       match Type.unfix t with
-      | Type.Array _ ->
-	begin
-          match TypeMap.find_opt t declared_types with
+(*
+      | Type.String ->
+          begin match TypeMap.find_opt t declared_types with
           | Some _ -> declared_types
           | None ->
-            let name : string = Fresh.fresh_user () in
+              let name = Fresh.fresh_user () in
+              Format.fprintf f "type %s = %a;@\n" name self#ptype t;
+              TypeMap.add t name declared_types
+          end
+*)
+      | Type.Array _ -> begin match TypeMap.find_opt t declared_types with
+        | Some _ -> declared_types
+        | None ->
+            let name = Fresh.fresh_user () in
             Format.fprintf f "type %s = %a;@\n" name self#ptype t;
             TypeMap.add t name declared_types
-	end
+	    end
       | _ -> declared_types
     ) declared_types t
 
