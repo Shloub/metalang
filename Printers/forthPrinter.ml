@@ -294,7 +294,9 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
       Format.fprintf f "@[<v 2>struct@\n%a@]@\nend-struct %a@\n"
         (print_list
            (fun t (name, type_) ->
-             Format.fprintf t "cell%% field %a" self#field name
+             match Type.unfix type_ with
+             | Type.String -> Format.fprintf t "double%% field %a" self#field name
+             | _ -> Format.fprintf t "cell%% field %a" self#field name
            ) sep_nl
         ) li
         self#typename name
@@ -312,7 +314,9 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
     Format.fprintf f "@[<hov>%a@]"
       (print_list
          (fun f (fieldname, expr) ->
-           Format.fprintf f "%a %a %a !"
+           Format.fprintf f (match Typer.get_type (self#getTyperEnv ()) expr |> Type.unfix with
+           | Type.String -> "%a %a %a 2!"
+           | _ -> "%a %a %a !")
              self#expr expr
              self#binding name
              self#field fieldname
