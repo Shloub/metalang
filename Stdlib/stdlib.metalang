@@ -90,6 +90,9 @@ macro int int_of_char(char c)
   scala do "($c).toInt"
   lua  do "$c"
   st do "(($c) asciiValue)"
+  java do "(int)($c)"
+  csharp do "(int)($c)"
+  groovy do "(0+$c)"
   *  do "$c"
 end
 tag macro_int_of_char_pure
