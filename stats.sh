@@ -82,23 +82,23 @@ swap(){
 }
 
 (echo "c $c
-cc $cc
-ml $ml
-funml $funml
-rkt $rkt
+c++ $cc
+camlImperatif $ml
+camlFonctionnel $funml
+racket $rkt
 php $php
-pas $pas
-js $js
+pascal $pas
+javascript $js
 go $go
-cl $cl
-m $m
-py $py
-rb $rb
-cs $cs
-pl $pl
+commonLisp $cl
+objective-C $m
+python $py
+ruby $rb
+c# $cs
+perl $pl
 ada $ada
-vb $vb
-hs $hs
+vb.net $vb
+haskell $hs
 lua $lua
 smalltalk $smalltalk
 scala $scala
@@ -125,7 +125,7 @@ set style fill solid 0.25 noborder
 set boxwidth 0.75
 set grid y
 set yrange [0:*]
-set xtic rotate by -25 scale 0 font \",8\""
+set xtic rotate by -65 scale 0 font \",8\""
     exarc=0
     n=10
 # lignes commentées pour la création d'un camembert
