@@ -78,7 +78,9 @@ class adaPrinter = object(self)
     if self#is_printable_i i then Format.fprintf f "%C" c
     else Format.fprintf f "Character'Val(%d)" i
 
-  method string f s = self#string_noprintable true f s
+  method string f s =
+    Format.fprintf f "new char_array'( To_C(%a))"
+      (self#string_noprintable true) s
 
   method print f t expr =
     match Type.unfix t with
@@ -153,16 +155,19 @@ class adaPrinter = object(self)
       | _ -> false) prog
     in
     Format.fprintf f "
-with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed;
-use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed;
-%a%a@\n%a%a%a%a%a%a"
+with ada.text_io, ada.Integer_text_IO, Ada.Text_IO.Text_Streams, Ada.Strings.Fixed, Interfaces.C;
+use ada.text_io, ada.Integer_text_IO, Ada.Strings, Ada.Strings.Fixed, Interfaces.C;
+%a%a@\n
+
+type stringptr is access all char_array;
+%a%a%a%a%a%a"
 (fun f () -> if Tags.is_taged "use_math"
 then Format.fprintf f "with Ada.Numerics.Elementary_Functions;@\n") ()
 (fun f () -> self#decl_procedure f prog.Prog.progname [] ) ()
 (fun f () -> if contains Type.String then
-Format.fprintf f "procedure PString(s : String) is
+Format.fprintf f "procedure PString(s : stringptr) is
 begin
-  String'Write (Text_Streams.Stream (Current_Output), s);
+  String'Write (Text_Streams.Stream (Current_Output), To_Ada(s.all));
 end;
 ") ()
 (fun f () -> if contains Type.Char then
@@ -322,7 +327,8 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
           let name : string = Fresh.fresh_user () in
 	  let name2 = name ^ "_PTR" in
 	  self#settypes declared_types; (* hack pour informer ptype de la nouvelle map. *)
-          Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n" name self#ptype t name2 name;
+    Format.fprintf f "type %s is %a;@\ntype %s is access %s;@\n"
+      name self#ptype t name2 name;
 	  declared_types_assoc <- StringMap.add name2 name declared_types_assoc ;
 	  TypeMap.add t name2 declared_types
       end
@@ -398,7 +404,7 @@ Format.fprintf f "@[<v>procedure SkipSpaces is@\n  @[<v>C : Character;@\nEol : B
     | None ->
       match Type.unfix t with
       | Type.Integer -> Format.fprintf f "Integer"
-      | Type.String -> Format.fprintf f "String"
+      | Type.String -> Format.fprintf f "stringptr"
       | Type.Array a -> Format.fprintf f "Array (Integer range <>) of %a" self#ptype a
       | Type.Void -> assert false
       | Type.Bool -> Format.fprintf f "Boolean"
