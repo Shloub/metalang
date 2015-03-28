@@ -21,8 +21,8 @@
                                                                         (letrec ([l 
                                                                           (lambda (e m) 
                                                                             (if (<= e 9)
-                                                                            (let ([mul (+ (+ (+ (+ (* a d) (* 10 (+ (* a e) (* b d)))) (* 100 (+ (+ (* a f) (* b e)) (* c d)))) (* 1000 (+ (* c e) (* b f)))) (* (* 10000 c) f))])
-                                                                            (if (and (and (eq? (chiffre 0 mul) (chiffre 5 mul)) (eq? (chiffre 1 mul) (chiffre 4 mul))) (eq? (chiffre 2 mul) (chiffre 3 mul)))
+                                                                            (let ([mul (+ (* a d) (* 10 (+ (* a e) (* b d))) (* 100 (+ (* a f) (* b e) (* c d))) (* 1000 (+ (* c e) (* b f))) (* 10000 c f))])
+                                                                            (if (and (eq? (chiffre 0 mul) (chiffre 5 mul)) (eq? (chiffre 1 mul) (chiffre 4 mul)) (eq? (chiffre 2 mul) (chiffre 3 mul)))
                                                                             (let ([m (max mul m)])
                                                                             (l (+ e 1) m))
                                                                             (l (+ e 1) m)))

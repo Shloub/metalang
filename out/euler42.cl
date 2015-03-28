@@ -43,7 +43,7 @@
       (loop for i from 1 to len do
         (progn
           (let ((c (mread-char )))
-            (setq sum (+ sum (+ (- (char-code c) (char-code #\A)) 1)))
+            (setq sum (+ sum (- (char-code c) (char-code #\A)) 1))
             #|		print c print " " print sum print " " |#
           )))
       (if

@@ -34,7 +34,7 @@
 (defun result (t0)
 (progn
   (setf (toto-blah t0) (+ (toto-blah t0) 1))
-  (return-from result (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))
+  (return-from result (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0)) (* (toto-bar t0) (toto-foo t0))))
 ))
 
 (progn

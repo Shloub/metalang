@@ -14,7 +14,7 @@
                   (display "--\n")
                   (letrec ([a (lambda (j out0) 
                                 (if (<= j (- taille2 1))
-                                (let ([out0 (+ out0 (* (char->integer (vector-ref tableau2 j)) (* j 100)))])
+                                (let ([out0 (+ out0 (* (char->integer (vector-ref tableau2 j)) j 100))])
                                 (block
                                   (display (vector-ref tableau2 j))
                                   (a (+ j 1) out0)

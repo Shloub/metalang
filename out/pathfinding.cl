@@ -37,16 +37,16 @@
   (and (= posX (- x 1)) (= posY (- y 1)))
   (return-from pathfind_aux 0)
   (if
-    (or (or (or (< posX 0) (< posY 0)) (>= posX x)) (>= posY y))
-    (return-from pathfind_aux (* (* x y) 10))
+    (or (< posX 0) (< posY 0) (>= posX x) (>= posY y))
+    (return-from pathfind_aux (* x y 10))
     (if
       (eq (aref (aref tab posY) posX) (code-char 35))
-      (return-from pathfind_aux (* (* x y) 10))
+      (return-from pathfind_aux (* x y 10))
       (if
         (not (= (aref (aref cache posY) posX) (- 0 1)))
         (return-from pathfind_aux (aref (aref cache posY) posX))
         (progn
-          (setf (aref (aref cache posY) posX) (* (* x y) 10))
+          (setf (aref (aref cache posY) posX) (* x y 10))
           (let ((val1 (pathfind_aux cache tab x y (+ posX 1) posY)))
             (let ((val2 (pathfind_aux cache tab x y (- posX 1) posY)))
               (let ((val3 (pathfind_aux cache tab x y posX (- posY 1))))

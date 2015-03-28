@@ -48,7 +48,7 @@
     (let ([cache2 cache0])
     (let ([cache0 cache1])
     (let ([cache2 cache0])
-    (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0)))))))))
+    (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0)) (* (toto-bar t0) (toto-foo t0)))))))))
   )))))))
 )
 (define main

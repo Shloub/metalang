@@ -144,7 +144,7 @@
             (loop for i from 1 to n do
               (loop for j from 1 to n do
                 (if
-                  (and (and (aref abondant i) (aref abondant j)) (<= (+ i j) n))
+                  (and (aref abondant i) (aref abondant j) (<= (+ i j) n))
                   (setf (aref summable (+ i j)) t))))
             (loop for o from 1 to n do
               (if

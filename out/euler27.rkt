@@ -39,7 +39,7 @@
 (define (test a b primes len)
   (letrec ([c (lambda (n) 
                 (if (<= n 200)
-                (let ([j (+ (+ (* n n) (* a n)) b)])
+                (let ([j (+ (* n n) (* a n) b)])
                 (if (not (isPrime j primes len))
                 n
                 (c (+ n 1))))

@@ -30,7 +30,7 @@
 (define (result t0)
   (block
     (set-toto-blah! t0 (+ (toto-blah t0) 1))
-    (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0)))
+    (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0)) (* (toto-bar t0) (toto-foo t0)))
     )
 )
 (define main

@@ -7,7 +7,7 @@
   (letrec ([r (lambda (i) 
                 (if (<= i 9)
                 (block
-                  (vector-set! f i (* (vector-ref f i) (* i (vector-ref f (- i 1)))))
+                  (vector-set! f i (* (vector-ref f i) i (vector-ref f (- i 1))))
                   (printf "~a " (vector-ref f i))
                   (r (+ i 1))
                   )
@@ -28,7 +28,7 @@
                                                                               (letrec ([q 
                                                                                 (lambda (g out0) 
                                                                                 (if (<= g 9)
-                                                                                (let ([sum (+ (+ (+ (+ (+ (vector-ref f a) (vector-ref f b)) (vector-ref f c)) (vector-ref f d)) (vector-ref f e)) (vector-ref f g))])
+                                                                                (let ([sum (+ (vector-ref f a) (vector-ref f b) (vector-ref f c) (vector-ref f d) (vector-ref f e) (vector-ref f g))])
                                                                                 (let ([num (+ (* (+ (* (+ (* (+ (* (+ (* a 10) b) 10) c) 10) d) 10) e) 10) g)])
                                                                                 (let ([sum 
                                                                                 (if (eq? a 0)
@@ -44,7 +44,7 @@
                                                                                 sum))
                                                                                 sum))
                                                                                 sum)])
-                                                                                (if (and (and (eq? sum num) (not (eq? sum 1))) (not (eq? sum 2)))
+                                                                                (if (and (eq? sum num) (not (eq? sum 1)) (not (eq? sum 2)))
                                                                                 (let ([out0 (+ out0 num)])
                                                                                 (block
                                                                                 (printf "~a " num)

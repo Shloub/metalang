@@ -14,7 +14,7 @@
                               (let ([cc (* c c)])
                               (if (and (eq? cc a2b2) (> c a))
                               (block
-                                (printf "~a\n~a\n~a\n~a\n" a b c (* (* a b) c))
+                                (printf "~a\n~a\n~a\n~a\n" a b c (* a b c))
                                 (e (+ b 1))
                                 )
                               (e (+ b 1))))))

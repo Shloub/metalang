@@ -71,7 +71,7 @@
         (loop for i from 0 to (- nprimes 1) do
           (loop for j from 0 to (- maximumprimes 1) do
             (progn
-              (let ((n (+ (aref primes i) (* (* 2 j) j))))
+              (let ((n (+ (aref primes i) (* 2 j j))))
                 (if
                   (< n maximumprimes)
                   (setf (aref canbe n) t))

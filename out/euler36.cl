@@ -56,7 +56,7 @@
             (palindrome2 pow2 (+ (* d 10) d))
             (progn
               (format t "~D~%" (+ (* d 10) d))
-              (setq sum (+ sum (+ (* d 10) d)))
+              (setq sum (+ sum (* d 10) d))
             ))
         ))
       (loop for a0 from 0 to 4 do
@@ -66,14 +66,14 @@
               (progn
                 (loop for c from 0 to 9 do
                   (progn
-                    (let ((num0 (+ (+ (+ (+ (+ (* a 100000) (* b 10000)) (* c 1000)) (* c 100)) (* b 10)) a)))
+                    (let ((num0 (+ (* a 100000) (* b 10000) (* c 1000) (* c 100) (* b 10) a)))
                       (if
                         (palindrome2 pow2 num0)
                         (progn
                           (format t "~D~%" num0)
                           (setq sum (+ sum num0))
                         ))
-                      (let ((num1 (+ (+ (+ (+ (* a 10000) (* b 1000)) (* c 100)) (* b 10)) a)))
+                      (let ((num1 (+ (* a 10000) (* b 1000) (* c 100) (* b 10) a)))
                         (if
                           (palindrome2 pow2 num1)
                           (progn
@@ -81,14 +81,14 @@
                             (setq sum (+ sum num1))
                           ))
                       ))))
-                (let ((num2 (+ (+ (* a 100) (* b 10)) a)))
+                (let ((num2 (+ (* a 100) (* b 10) a)))
                   (if
                     (palindrome2 pow2 num2)
                     (progn
                       (format t "~D~%" num2)
                       (setq sum (+ sum num2))
                     ))
-                  (let ((num3 (+ (+ (+ (* a 1000) (* b 100)) (* b 10)) a)))
+                  (let ((num3 (+ (* a 1000) (* b 100) (* b 10) a)))
                     (if
                       (palindrome2 pow2 num3)
                       (progn

@@ -48,7 +48,7 @@
                                 (if (<= i (- nprimes 1))
                                 (letrec ([r (lambda (j) 
                                               (if (<= j (- maximumprimes 1))
-                                              (let ([n (+ (vector-ref primes i) (* (* 2 j) j))])
+                                              (let ([n (+ (vector-ref primes i) (* 2 j j))])
                                               (if (< n maximumprimes)
                                               (block
                                                 (vector-set! canbe n #t)

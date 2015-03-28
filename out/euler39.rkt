@@ -11,7 +11,7 @@
                               (let ([c2 (+ (* a a) (* b b))])
                               (let ([c (integer-sqrt c2)])
                               (if (eq? (* c c) c2)
-                              (let ([p (+ (+ a b) c)])
+                              (let ([p (+ a b c)])
                               (if (<= p 1000)
                               (block
                                 (vector-set! t0 p (+ (vector-ref t0 p) 1))

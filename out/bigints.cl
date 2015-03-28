@@ -222,7 +222,7 @@ Pré-requis : a > b
   #| Cet algorithm est quadratique.
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. |#
-  (let ((len (+ (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)))
+  (let ((len (+ (bigint-bigint_len a) (bigint-bigint_len b) 1)))
     (let
      ((chiffres (array_init
                    len
@@ -236,7 +236,7 @@ D'ou le nom de la fonction. |#
         (let ((retenue 0))
           (loop for j from 0 to (- (bigint-bigint_len b) 1) do
             (progn
-              (setf (aref chiffres (+ i j)) (+ (aref chiffres (+ i j)) (+ retenue (* (aref (bigint-bigint_chiffres b) j) (aref (bigint-bigint_chiffres a) i)))))
+              (setf (aref chiffres (+ i j)) (+ (aref chiffres (+ i j)) retenue (* (aref (bigint-bigint_chiffres b) j) (aref (bigint-bigint_chiffres a) i))))
               (setq retenue (quotient (aref chiffres (+ i j)) 10))
               (setf (aref chiffres (+ i j)) (remainder (aref chiffres (+ i j)) 10))
             ))

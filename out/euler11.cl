@@ -34,7 +34,7 @@
 
 (defun find0 (n m x y dx dy)
 (if
-  (or (or (or (< x 0) (= x 20)) (< y 0)) (= y 20))
+  (or (< x 0) (= x 20) (< y 0) (= y 20))
   (return-from find0 (- 0 1))
   (if
     (= n 0)

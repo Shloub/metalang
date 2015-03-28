@@ -128,7 +128,7 @@
                         (= othersum n)
                         (progn
                           (format t "~D & ~D~%" other n)
-                          (setq sum (+ sum (+ other n)))
+                          (setq sum (+ sum other n))
                         ))
                     )))
               )))

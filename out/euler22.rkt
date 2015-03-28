@@ -38,7 +38,7 @@
          (letrec ([a (lambda (i sum) 
                        (if (<= i len)
                        ((lambda (c) 
-                          (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
+                          (let ([sum (+ sum (- (char->integer c) (char->integer #\A)) 1)])
                           ;		print c print " " print sum print " " 
                           (a (+ i 1) sum))) (mread-char))
                        sum))])

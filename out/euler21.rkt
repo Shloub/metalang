@@ -98,7 +98,7 @@
                                 (if (eq? othersum n)
                                 (block
                                   (printf "~a & ~a\n" other n)
-                                  (let ([sum (+ sum (+ other n))])
+                                  (let ([sum (+ sum other n)])
                                   (w (+ n 1) sum))
                                   )
                                 (w (+ n 1) sum)))

@@ -174,7 +174,7 @@
   ; Cet algorithm est quadratique.
   ;C'est le même que celui qu'on enseigne aux enfants en CP.
   ;D'ou le nom de la fonction. 
-  (let ([len (+ (+ (bigint-bigint_len a) (bigint-bigint_len b)) 1)])
+  (let ([len (+ (bigint-bigint_len a) (bigint-bigint_len b) 1)])
   (let ([chiffres (build-vector len (lambda (k) 
                                       0))])
   (let ([bo (- (bigint-bigint_len a) 1)])
@@ -185,7 +185,7 @@
                  (letrec ([bm (lambda (j retenue) 
                                 (if (<= j bn)
                                 (block
-                                  (vector-set! chiffres (+ i j) (+ (vector-ref chiffres (+ i j)) (+ retenue (* (vector-ref (bigint-bigint_chiffres b) j) (vector-ref (bigint-bigint_chiffres a) i)))))
+                                  (vector-set! chiffres (+ i j) (+ (vector-ref chiffres (+ i j)) retenue (* (vector-ref (bigint-bigint_chiffres b) j) (vector-ref (bigint-bigint_chiffres a) i))))
                                   (let ([retenue (quotient (vector-ref chiffres (+ i j)) 10)])
                                   (block
                                     (vector-set! chiffres (+ i j) (remainder (vector-ref chiffres (+ i j)) 10))

@@ -109,10 +109,12 @@ Tictactoe : un tictactoe avec une IA
       (loop for x from 1 to 2 do
         (progn
           (if
-            (and (and (= (aref (aref (gamestate-cases g) 0) 0) x) (= (aref (aref (gamestate-cases g) 1) 1) x)) (= (aref (aref (gamestate-cases g) 2) 2) x))
+            (and (= (aref (aref (gamestate-cases g) 0) 0) x) (= (aref (aref (gamestate-cases g) 1) 1) x) 
+            (= (aref (aref (gamestate-cases g) 2) 2) x))
             (setq win x))
           (if
-            (and (and (= (aref (aref (gamestate-cases g) 0) 2) x) (= (aref (aref (gamestate-cases g) 1) 1) x)) (= (aref (aref (gamestate-cases g) 2) 0) x))
+            (and (= (aref (aref (gamestate-cases g) 0) 2) x) (= (aref (aref (gamestate-cases g) 1) 1) x) 
+            (= (aref (aref (gamestate-cases g) 2) 0) x))
             (setq win x))
         ))
       (setf (gamestate-ended g) (or (not (= win 0)) (= freecase 0)))

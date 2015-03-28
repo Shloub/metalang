@@ -81,7 +81,7 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
         (let ((cache2 cache0))
           (setq cache0 cache1)
           (setq cache2 cache0)
-          (return-from result (+ (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0))) (* (toto-bar t0) (toto-foo t0))))
+          (return-from result (+ (toto-foo t0) (* (toto-blah t0) (toto-bar t0)) (* (toto-bar t0) (toto-foo t0))))
         )))))))))
 
 (progn

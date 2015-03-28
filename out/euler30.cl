@@ -21,7 +21,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
           10
           (function (lambda (i)
           (block lambda_1
-            (return-from lambda_1 (* (* (* (* i i) i) i) i))
+            (return-from lambda_1 (* i i i i i))
           ))
           ))))
   (let ((sum 0))
@@ -32,8 +32,8 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
             (loop for e from 0 to 9 do
               (loop for f from 0 to 9 do
                 (progn
-                  (let ((s (+ (+ (+ (+ (+ (aref p a) (aref p b)) (aref p c)) (aref p d)) (aref p e)) (aref p f))))
-                    (let ((r (+ (+ (+ (+ (+ a (* b 10)) (* c 100)) (* d 1000)) (* e 10000)) (* f 100000))))
+                  (let ((s (+ (aref p a) (aref p b) (aref p c) (aref p d) (aref p e) (aref p f))))
+                    (let ((r (+ a (* b 10) (* c 100) (* d 1000) (* e 10000) (* f 100000))))
                       (if
                         (and (= s r) (not (= r 1)))
                         (progn

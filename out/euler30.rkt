@@ -11,7 +11,7 @@
   ;  e ^ 5
   ;
   (let ([p (build-vector 10 (lambda (i) 
-                              (* (* (* (* i i) i) i) i)))])
+                              (* i i i i i)))])
   (let ([sum 0])
   (letrec ([j (lambda (a sum) 
                 (if (<= a 9)
@@ -26,8 +26,8 @@
                                                                         (letrec ([o 
                                                                           (lambda (f sum) 
                                                                             (if (<= f 9)
-                                                                            (let ([s (+ (+ (+ (+ (+ (vector-ref p a) (vector-ref p b)) (vector-ref p c)) (vector-ref p d)) (vector-ref p e)) (vector-ref p f))])
-                                                                            (let ([r (+ (+ (+ (+ (+ a (* b 10)) (* c 100)) (* d 1000)) (* e 10000)) (* f 100000))])
+                                                                            (let ([s (+ (vector-ref p a) (vector-ref p b) (vector-ref p c) (vector-ref p d) (vector-ref p e) (vector-ref p f))])
+                                                                            (let ([r (+ a (* b 10) (* c 100) (* d 1000) (* e 10000) (* f 100000))])
                                                                             (if (and (eq? s r) (not (eq? r 1)))
                                                                             (block
                                                                               (printf "~a~a~a~a~a~a ~a\n" f e d c b a r)

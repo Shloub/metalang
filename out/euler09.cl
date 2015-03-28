@@ -10,7 +10,7 @@
             (let ((cc (* c c)))
               (if
                 (and (= cc a2b2) (> c a))
-                (format t "~D~%~D~%~D~%~D~%" a b c (* (* a b) c)))
+                (format t "~D~%~D~%~D~%~D~%" a b c (* a b c)))
             ))))))
 )
 

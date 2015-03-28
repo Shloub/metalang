@@ -14,7 +14,7 @@
 )
 (define (same_numbers a b c d e f)
   (let ([ca (chiffre_sort a)])
-  (and (and (and (and (eq? ca (chiffre_sort b)) (eq? ca (chiffre_sort c))) (eq? ca (chiffre_sort d))) (eq? ca (chiffre_sort e))) (eq? ca (chiffre_sort f))))
+  (and (eq? ca (chiffre_sort b)) (eq? ca (chiffre_sort c)) (eq? ca (chiffre_sort d)) (eq? ca (chiffre_sort e)) (eq? ca (chiffre_sort f))))
 )
 (define main
   (let ([num 142857])

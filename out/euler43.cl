@@ -70,7 +70,9 @@ d6 = 5 ou d6 = 0
                               (setf (aref allowed d9) nil)
                               (loop for d10 from 1 to 9 do
                                 (if
-                                  (and (and (and (aref allowed d10) (= (remainder (+ (+ (* d6 100) (* d7 10)) d8) 11) 0)) (= (remainder (+ (+ (* d7 100) (* d8 10)) d9) 13) 0)) (= (remainder (+ (+ (* d8 100) (* d9 10)) d10) 17) 0))
+                                  (and (aref allowed d10) (= (remainder (+ (* d6 100) (* d7 10) d8) 11) 0) 
+                                  (= (remainder (+ (* d7 100) (* d8 10) d9) 13) 0) 
+                                  (= (remainder (+ (* d8 100) (* d9 10) d10) 17) 0))
                                   (progn
                                     (setf (aref allowed d10) nil)
                                     (loop for d5 from 0 to 9 do
@@ -79,7 +81,7 @@ d6 = 5 ou d6 = 0
                                         (progn
                                           (setf (aref allowed d5) nil)
                                           (if
-                                            (= (remainder (+ (+ (* d5 100) (* d6 10)) d7) 7) 0)
+                                            (= (remainder (+ (* d5 100) (* d6 10) d7) 7) 0)
                                             (loop for i4 from 0 to 4 do
                                               (progn
                                                 (let ((d4 (* i4 2)))
@@ -93,7 +95,7 @@ d6 = 5 ou d6 = 0
                                                           (progn
                                                             (setf (aref allowed d3) nil)
                                                             (if
-                                                              (= (remainder (+ (+ d3 d4) d5) 3) 0)
+                                                              (= (remainder (+ d3 d4 d5) 3) 0)
                                                               (loop for d2 from 0 to 9 do
                                                                 (if
                                                                   (aref allowed d2)

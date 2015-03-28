@@ -45,7 +45,7 @@
     (loop for j from 0 to (- len 1) do
       (progn
         (setf (toto-blah (aref t0 j)) (+ (toto-blah (aref t0 j)) 1))
-        (setq out0 (+ (+ (+ out0 (toto-foo (aref t0 j))) (* (toto-blah (aref t0 j)) (toto-bar (aref t0 j)))) (* (toto-bar (aref t0 j)) (toto-foo (aref t0 j)))))
+        (setq out0 (+ out0 (toto-foo (aref t0 j)) (* (toto-blah (aref t0 j)) (toto-bar (aref t0 j))) (* (toto-bar (aref t0 j)) (toto-foo (aref t0 j)))))
       ))
     (return-from result out0)
   )))

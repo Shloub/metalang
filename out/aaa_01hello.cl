@@ -4,14 +4,14 @@
                                          (princ "Hello World")
                                          (let ((a 5))
                                            (format t "~D ~%~Dfoo" (* (+ 4 6) 2) a)
-                                           (let ((b (and (= (- (- (+ 1 (quotient (* (* (+ 1 1) 2) (+ 3 8)) 4)) (- 1 2)) 3) 12) t)))
+                                           (let ((b (and (= (- (- (+ 1 (quotient (* (+ 1 1) 2 (+ 3 8)) 4)) (- 1 2)) 3) 12) t)))
                                              (if
                                                b
                                                (princ "True")
                                                (princ "False"))
                                              (princ "
 ")
-                                             (let ((c (eq (= (* (* 3 (+ (+ 4 5) 6)) 2) 45) nil)))
+                                             (let ((c (eq (= (* 3 (+ 4 5 6) 2) 45) nil)))
                                                (if
                                                  c
                                                  (princ "True")
@@ -23,7 +23,7 @@
                                                    d
                                                    (princ "True")
                                                    (princ "False"))
-                                                 (let ((e (and (and t (not nil)) (not (and t nil)))))
+                                                 (let ((e (and t (not nil) (not (and t nil)))))
                                                    (if
                                                      e
                                                      (princ "True")

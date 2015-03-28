@@ -56,7 +56,7 @@
                                                                   (vector-set! allowed d9 #f)
                                                                   (letrec ([g (lambda (d10) 
                                                                                 (if (<= d10 9)
-                                                                                (if (and (and (and (vector-ref allowed d10) (eq? (remainder (+ (+ (* d6 100) (* d7 10)) d8) 11) 0)) (eq? (remainder (+ (+ (* d7 100) (* d8 10)) d9) 13) 0)) (eq? (remainder (+ (+ (* d8 100) (* d9 10)) d10) 17) 0))
+                                                                                (if (and (vector-ref allowed d10) (eq? (remainder (+ (* d6 100) (* d7 10) d8) 11) 0) (eq? (remainder (+ (* d7 100) (* d8 10) d9) 13) 0) (eq? (remainder (+ (* d8 100) (* d9 10) d10) 17) 0))
                                                                                 (block
                                                                                 (vector-set! allowed d10 #f)
                                                                                 (letrec ([h 
@@ -65,7 +65,7 @@
                                                                                 (if (vector-ref allowed d5)
                                                                                 (block
                                                                                 (vector-set! allowed d5 #f)
-                                                                                (if (eq? (remainder (+ (+ (* d5 100) (* d6 10)) d7) 7) 0)
+                                                                                (if (eq? (remainder (+ (* d5 100) (* d6 10) d7) 7) 0)
                                                                                 (letrec ([j 
                                                                                 (lambda (i4) 
                                                                                 (if (<= i4 4)
@@ -79,7 +79,7 @@
                                                                                 (if (vector-ref allowed d3)
                                                                                 (block
                                                                                 (vector-set! allowed d3 #f)
-                                                                                (if (eq? (remainder (+ (+ d3 d4) d5) 3) 0)
+                                                                                (if (eq? (remainder (+ d3 d4 d5) 3) 0)
                                                                                 (letrec ([l 
                                                                                 (lambda (d2) 
                                                                                 (if (<= d2 9)

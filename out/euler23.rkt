@@ -107,7 +107,7 @@
                                                (if (<= i n)
                                                (letrec ([bf (lambda (j) 
                                                               (if (<= j n)
-                                                              (if (and (and (vector-ref abondant i) (vector-ref abondant j)) (<= (+ i j) n))
+                                                              (if (and (vector-ref abondant i) (vector-ref abondant j) (<= (+ i j) n))
                                                               (block
                                                                 (vector-set! summable (+ i j) #t)
                                                                 (bf (+ j 1))

@@ -48,7 +48,7 @@
 (progn
   (loop for n from 0 to 200 do
     (progn
-      (let ((j (+ (+ (* n n) (* a n)) b)))
+      (let ((j (+ (* n n) (* a n) b)))
         (if
           (not (isPrime j primes len))
           (return-from test n))

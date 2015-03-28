@@ -96,7 +96,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                     (progn
                                       (setf (aref allowed d) nil)
                                       #| 2 * 3 digits |#
-                                      (let ((product (* (+ (* a 10) b) (+ (+ (* c 100) (* d 10)) e))))
+                                      (let ((product (* (+ (* a 10) b) (+ (* c 100) (* d 10) e))))
                                         (if
                                           (and (not (aref counted product)) (okdigits allowed (quotient product 10)))
                                           (progn
@@ -105,7 +105,7 @@ HINT: Some products can be obtained in more than one way so be sure to only incl
                                             (format t "~D " product)
                                           ))
                                         #| 1  * 4 digits |#
-                                        (let ((product2 (* b (+ (+ (+ (* a 1000) (* c 100)) (* d 10)) e))))
+                                        (let ((product2 (* b (+ (* a 1000) (* c 100) (* d 10) e))))
                                           (if
                                             (and (not (aref counted product2)) (okdigits allowed (quotient product2 10)))
                                             (progn

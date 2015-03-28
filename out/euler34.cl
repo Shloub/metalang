@@ -18,7 +18,7 @@
           ))))
   (loop for i from 1 to 9 do
     (progn
-      (setf (aref f i) (* (aref f i) (* i (aref f (- i 1)))))
+      (setf (aref f i) (* (aref f i) i (aref f (- i 1))))
       (format t "~D " (aref f i))
     ))
   (let ((out0 0))
@@ -31,7 +31,7 @@
             (loop for e from 0 to 9 do
               (loop for g from 0 to 9 do
                 (progn
-                  (let ((sum (+ (+ (+ (+ (+ (aref f a) (aref f b)) (aref f c)) (aref f d)) (aref f e)) (aref f g))))
+                  (let ((sum (+ (aref f a) (aref f b) (aref f c) (aref f d) (aref f e) (aref f g))))
                     (let ((num (+ (* (+ (* (+ (* (+ (* (+ (* a 10) b) 10) c) 10) d) 10) e) 10) g)))
                       (if
                         (= a 0)
@@ -52,7 +52,7 @@
                             ))
                         ))
                       (if
-                        (and (and (= sum num) (not (= sum 1))) (not (= sum 2)))
+                        (and (= sum num) (not (= sum 1)) (not (= sum 2)))
                         (progn
                           (setq out0 (+ out0 num))
                           (format t "~D " num)

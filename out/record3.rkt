@@ -33,7 +33,7 @@
                 (if (<= j (- len 1))
                 (block
                   (set-toto-blah! (vector-ref t0 j) (+ (toto-blah (vector-ref t0 j)) 1))
-                  (let ([out0 (+ (+ (+ out0 (toto-foo (vector-ref t0 j))) (* (toto-blah (vector-ref t0 j)) (toto-bar (vector-ref t0 j)))) (* (toto-bar (vector-ref t0 j)) (toto-foo (vector-ref t0 j))))])
+                  (let ([out0 (+ out0 (toto-foo (vector-ref t0 j)) (* (toto-blah (vector-ref t0 j)) (toto-bar (vector-ref t0 j))) (* (toto-bar (vector-ref t0 j)) (toto-foo (vector-ref t0 j))))])
                   (a (+ j 1) out0))
                   )
                 out0))])

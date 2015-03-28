@@ -46,7 +46,7 @@
          (letrec ([b (lambda (i sum) 
                        (if (<= i len)
                        ((lambda (c) 
-                          (let ([sum (+ sum (+ (- (char->integer c) (char->integer #\A)) 1))])
+                          (let ([sum (+ sum (- (char->integer c) (char->integer #\A)) 1)])
                           ;		print c print " " print sum print " " 
                           (b (+ i 1) sum))) (mread-char))
                        (if (is_triangular sum)

@@ -41,9 +41,10 @@ c * f * 10000
             (loop for b from 0 to 9 do
               (loop for e from 0 to 9 do
                 (progn
-                  (let ((mul (+ (+ (+ (+ (* a d) (* 10 (+ (* a e) (* b d)))) (* 100 (+ (+ (* a f) (* b e)) (* c d)))) (* 1000 (+ (* c e) (* b f)))) (* (* 10000 c) f))))
+                  (let ((mul (+ (* a d) (* 10 (+ (* a e) (* b d))) (* 100 (+ (* a f) (* b e) (* c d))) (* 1000 (+ (* c e) (* b f))) (* 10000 c f))))
                     (if
-                      (and (and (= (chiffre 0 mul) (chiffre 5 mul)) (= (chiffre 1 mul) (chiffre 4 mul))) (= (chiffre 2 mul) (chiffre 3 mul)))
+                      (and (= (chiffre 0 mul) (chiffre 5 mul)) (= (chiffre 1 mul) (chiffre 4 mul)) 
+                      (= (chiffre 2 mul) (chiffre 3 mul)))
                       (setq m (max2_ mul m)))
                   ))))))))
     (format t "~D~%" m)

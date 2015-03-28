@@ -20,15 +20,14 @@
 (defun same_numbers (a b c d e f)
 (progn
   (let ((ca (chiffre_sort a)))
-    (return-from same_numbers (and (and (and (and (= ca (chiffre_sort b)) (= ca (chiffre_sort c))) (= ca (chiffre_sort d))) (= ca (chiffre_sort e))) (= ca (chiffre_sort f))))
+    (return-from same_numbers (and (= ca (chiffre_sort b)) (= ca (chiffre_sort c)) (= ca (chiffre_sort d)) (= ca (chiffre_sort e)) (= ca (chiffre_sort f))))
   )))
 
 (progn
   (let ((num 142857))
     (if
       (same_numbers num (* num 2) (* num 3) (* num 4) (* num 6) (* num 5))
-      (format t "~D ~D ~D ~D ~D ~D~%" num (* num 2) (* num 3) (* num 4) (* num 5) 
-      (* num 6)))
+      (format t "~D ~D ~D ~D ~D ~D~%" num (* num 2) (* num 3) (* num 4) (* num 5) (* num 6)))
   ))
 
 

@@ -44,7 +44,7 @@
                                                       (if (palindrome2 pow2 (+ (* d 10) d))
                                                       (block
                                                         (printf "~a\n" (+ (* d 10) d))
-                                                        (let ([sum (+ sum (+ (* d 10) d))])
+                                                        (let ([sum (+ sum (* d 10) d)])
                                                         (s (+ d 1) sum))
                                                         )
                                                       (s (+ d 1) sum)))
@@ -56,7 +56,7 @@
                                                                                 (letrec ([r 
                                                                                 (lambda (c sum) 
                                                                                 (if (<= c 9)
-                                                                                (let ([num0 (+ (+ (+ (+ (+ (* a 100000) (* b 10000)) (* c 1000)) (* c 100)) (* b 10)) a)])
+                                                                                (let ([num0 (+ (* a 100000) (* b 10000) (* c 1000) (* c 100) (* b 10) a)])
                                                                                 (let ([sum 
                                                                                 (if (palindrome2 pow2 num0)
                                                                                 (block
@@ -65,7 +65,7 @@
                                                                                 sum)
                                                                                 )
                                                                                 sum)])
-                                                                                (let ([num1 (+ (+ (+ (+ (* a 10000) (* b 1000)) (* c 100)) (* b 10)) a)])
+                                                                                (let ([num1 (+ (* a 10000) (* b 1000) (* c 100) (* b 10) a)])
                                                                                 (if (palindrome2 pow2 num1)
                                                                                 (block
                                                                                 (printf "~a\n" num1)
@@ -73,7 +73,7 @@
                                                                                 (r (+ c 1) sum))
                                                                                 )
                                                                                 (r (+ c 1) sum)))))
-                                                                                (let ([num2 (+ (+ (* a 100) (* b 10)) a)])
+                                                                                (let ([num2 (+ (* a 100) (* b 10) a)])
                                                                                 (let ([sum 
                                                                                 (if (palindrome2 pow2 num2)
                                                                                 (block
@@ -82,7 +82,7 @@
                                                                                 sum)
                                                                                 )
                                                                                 sum)])
-                                                                                (let ([num3 (+ (+ (+ (* a 1000) (* b 100)) (* b 10)) a)])
+                                                                                (let ([num3 (+ (* a 1000) (* b 100) (* b 10) a)])
                                                                                 (if (palindrome2 pow2 num3)
                                                                                 (block
                                                                                 (printf "~a\n" num3)
