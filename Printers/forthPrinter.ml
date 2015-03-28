@@ -185,9 +185,15 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
     Format.fprintf f "@[<hov>%a@ { %a }@]" self#expr e self#binding var
 
   method allocarray f binding type_ len useless =
-    Format.fprintf f "@[<hov>HERE %a cells allot { %a }@]"
-      self#expr len
-      self#binding binding
+    match Type.unfix type_ with
+    | Type.String ->
+        Format.fprintf f "@[<h>HERE %a cells 2 * allot { %a }@]"
+          self#expr len
+          self#binding binding
+    | _ ->
+        Format.fprintf f "@[<h>HERE %a cells allot { %a }@]"
+          self#expr len
+          self#binding binding
 
   method char f c =
     let ci = int_of_char c in
@@ -219,7 +225,11 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
       self#funname funname
       (fun f () -> if self#is_rec funname then
         Format.fprintf f " recursive") ()
-      (print_list self#binding sep_space) (List.map fst li)
+      (print_list (fun f (n, t) ->
+        match Type.unfix t with
+        | Type.String -> Format.fprintf f "D: %a" self#binding n
+        | _ -> self#binding f n)
+         sep_space) li
       self#instructions instrs
 
   method mutable0 f m =
@@ -229,23 +239,37 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
         self#mutable_get m
         self#field field
     | Mutable.Var binding -> self#binding f binding
-    | Mutable.Array (m, indexes) ->
-      Format.fprintf f "%a %a"
-        self#mutable_get m
-        (print_list
-           (fun f e -> Format.fprintf f "%a cells +" self#expr e)
-           sep_space)
-        indexes
+    | Mutable.Array (m2, indexes) ->
+        match Typer.get_type_a (self#getTyperEnv ()) (Mutable.Fixed.annot m) |> Type.unfix with
+        | Type.String -> Format.fprintf f "%a %a"
+            self#mutable_get m2
+            (print_list
+               (fun f e -> Format.fprintf f "%a cells 2 * +" self#expr e)
+               sep_space)
+            indexes
+        | _ -> Format.fprintf f "%a %a"
+            self#mutable_get m2
+            (print_list
+               (fun f e -> Format.fprintf f "%a cells +@\n" self#expr e)
+               sep_space)
+            indexes
 
   method mutable_get f m =
     match Mutable.unfix m with
     | Mutable.Var v -> self#mutable0 f m
-    | _ -> Format.fprintf f "%a @" self#mutable0 m
+    | _ -> match Typer.get_type_a (self#getTyperEnv ()) (Mutable.Fixed.annot m) |> Type.unfix with
+        | Type.String -> Format.fprintf f "%a 2@@" self#mutable0 m
+        | _ -> Format.fprintf f "%a @@" self#mutable0 m
 
   method mutable_set f mutable_ =
-    match Mutable.unfix mutable_ with
-    | Mutable.Var v -> Format.fprintf f "TO %a" self#binding v
-    | _ -> Format.fprintf f "%a !" self#mutable0 mutable_
+    match Typer.get_type_a (self#getTyperEnv ()) (Mutable.Fixed.annot mutable_) |> Type.unfix with
+    | Type.String -> begin  match Mutable.unfix mutable_ with
+      | Mutable.Var v -> Format.fprintf f "2TO %a" self#binding v
+      | _ -> Format.fprintf f "%a 2!" self#mutable0 mutable_
+    end
+    | _ -> match Mutable.unfix mutable_ with
+      | Mutable.Var v -> Format.fprintf f "TO %a" self#binding v
+      | _ -> Format.fprintf f "%a !" self#mutable0 mutable_
 
   method affect f mutable_ (expr : 'lex Expr.t) =
     Format.fprintf f "%a %a"
@@ -306,7 +330,7 @@ print_list (fun f s -> if need then Format.fprintf f "%s@\n" s) nosep f
   method ptype f (t:Type.t) =
     match Type.unfix t with
     | Type.Named n -> self#typename f n
-    | _ -> assert false
+    | _ ->  super#ptype f t
 
 
 end
