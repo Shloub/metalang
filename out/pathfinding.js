@@ -78,7 +78,7 @@ for (var i = 0 ; i <= y - 1; i++)
   var tab2 = new Array(x);
   for (var j = 0 ; j <= x - 1; j++)
   {
-    var tmp = '\000';
+    var tmp = '\x00';
     tmp=read_char_();
     tab2[j] = tmp;
   }

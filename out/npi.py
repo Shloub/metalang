@@ -69,7 +69,7 @@ len=readint()
 stdinsep()
 tab = [None] * len
 for i in range(0, len):
-  tmp = '\000'
+  tmp = '\x00'
   tmp=readchar()
   tab[i] = tmp
 result = npi0(tab, len)

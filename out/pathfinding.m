@@ -56,7 +56,7 @@ int main(void){
     char *tab2 = malloc( x * sizeof(char));
     for (j = 0 ; j < x; j++)
     {
-      char tmp = '\000';
+      char tmp = '\x00';
       scanf("%c", &tmp);
       tab2[j] = tmp;
     }

@@ -66,7 +66,7 @@ func main() {
   for i := 0 ; i <= y - 1; i++ {
     var tab2 []byte = make([]byte, x)
       for j := 0 ; j <= x - 1; j++ {
-        var tmp byte = '\000'
+        var tmp byte = '\x00'
           fmt.Fscanf(reader, "%c", &tmp)
           tab2[j] = tmp;
       }

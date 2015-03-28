@@ -39,7 +39,7 @@ tab4 = [*0..strlen - 1].map { |toto|
   if tmpc != " " then
     c = mod((c - "a".ord) + 13, 26) + "a".ord
   end
-  next (c)
+  next ((c).chr)
   }
 for j in (0 ..  strlen - 1) do
   printf "%c", tab4[j]

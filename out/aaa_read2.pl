@@ -28,8 +28,8 @@ foreach my $i3 (0 .. $strlen - 1) {
   my $tmpc = $tab4->[$i3];
   my $c = ord($tmpc);
   print($tmpc, ":", $c, " ");
-  if ($tmpc ne ' ') {
-    $c = remainder(($c - ord('a')) + 13, 26) + ord('a');
+  if ($tmpc ne " ") {
+    $c = remainder(($c - ord("a")) + 13, 26) + ord("a");
   }
   $tab4->[$i3] = chr($c);
 }

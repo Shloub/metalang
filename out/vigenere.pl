@@ -31,10 +31,10 @@ sub remainder {
 sub position_alphabet{
   my($c) = @_;
   my $i = ord($c);
-  if ($i <= ord('Z') && $i >= ord('A')) {
-    return $i - ord('A');
-  }elsif ($i <= ord('z') && $i >= ord('a')) {
-    return $i - ord('a');
+  if ($i <= ord("Z") && $i >= ord("A")) {
+    return $i - ord("A");
+  }elsif ($i <= ord("z") && $i >= ord("a")) {
+    return $i - ord("a");
   }else{
     return -1;
   }
@@ -42,7 +42,7 @@ sub position_alphabet{
 
 sub of_position_alphabet{
   my($c) = @_;
-  return chr($c + ord('a'));
+  return chr($c + ord("a"));
 }
 
 sub crypte{

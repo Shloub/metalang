@@ -16,12 +16,12 @@ int main(void){
   int i;
   int len = 0;
   scanf("%d ", &len);
-  char tofind = '\000';
+  char tofind = '\x00';
   scanf("%c ", &tofind);
   char *tab = malloc( len * sizeof(char));
   for (i = 0 ; i < len; i++)
   {
-    char tmp = '\000';
+    char tmp = '\x00';
     scanf("%c", &tmp);
     tab[i] = tmp;
   }

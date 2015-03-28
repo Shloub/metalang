@@ -25,7 +25,7 @@ sub readspaces {
 
 sub is_number{
   my($c) = @_;
-  return ord($c) <= ord('9') && ord($c) >= ord('0');
+  return ord($c) <= ord("9") && ord($c) >= ord("0");
 }
 
 #
@@ -42,18 +42,18 @@ sub npi0{
   my $ptrStr = 0;
   while ($ptrStr < $len)
   {
-    if ($str->[$ptrStr] eq ' ') {
+    if ($str->[$ptrStr] eq " ") {
       $ptrStr = $ptrStr + 1;
     }elsif (is_number($str->[$ptrStr])) {
       my $num = 0;
-      while ($str->[$ptrStr] ne ' ')
+      while ($str->[$ptrStr] ne " ")
       {
-        $num = $num * 10 + ord($str->[$ptrStr]) - ord('0');
+        $num = $num * 10 + ord($str->[$ptrStr]) - ord("0");
         $ptrStr = $ptrStr + 1;
       }
       $stack->[$ptrStack] = $num;
       $ptrStack = $ptrStack + 1;
-    }elsif ($str->[$ptrStr] eq '+') {
+    }elsif ($str->[$ptrStr] eq "+") {
       $stack->[$ptrStack - 2] = $stack->[$ptrStack - 2] + $stack->[$ptrStack -
       1];
       $ptrStack = $ptrStack - 1;
@@ -68,7 +68,7 @@ $len = readint();
 readspaces();
 my $tab = [];
 foreach my $i (0 .. $len - 1) {
-  my $tmp = '\000';
+  my $tmp = "\x00";
   $tmp = readchar();
   $tab->[$i] = $tmp;
 }

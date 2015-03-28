@@ -43,13 +43,13 @@ function nth(tab, tofind, len){
 var len = 0;
 len=read_int_();
 stdinsep();
-var tofind = '\000';
+var tofind = '\x00';
 tofind=read_char_();
 stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  var tmp = '\000';
+  var tmp = '\x00';
   tmp=read_char_();
   tab[i] = tmp;
 }

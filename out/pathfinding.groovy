@@ -61,7 +61,7 @@ for (int i = 0 ; i < y; i++)
   char[] tab2 = new char[x]
   for (int j = 0 ; j < x; j++)
   {
-    char tmp = (char)'\000'
+    char tmp = (char)0
     tmp = scanner.findWithinHorizon(".", 1).charAt(0);
     tab2[j] = tmp
   }

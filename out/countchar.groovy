@@ -20,13 +20,13 @@ if (scanner.hasNext("^-")){
   len = scanner.nextInt();
 }
 scanner.findWithinHorizon("[\n\r ]*", 1)
-char tofind = (char)'\000'
+char tofind = (char)0
 tofind = scanner.findWithinHorizon(".", 1).charAt(0);
 scanner.findWithinHorizon("[\n\r ]*", 1)
 char[] tab = new char[len]
 for (int i = 0 ; i < len; i++)
 {
-  char tmp = (char)'\000'
+  char tmp = (char)0
   tmp = scanner.findWithinHorizon(".", 1).charAt(0);
   tab[i] = tmp
 }

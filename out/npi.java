@@ -55,7 +55,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     char[] tab = new char[len];
     for (int i = 0 ; i < len; i++)
     {
-      char tmp = '\000';
+      char tmp = '\u0000';
       tmp = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = tmp;
     }

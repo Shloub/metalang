@@ -74,7 +74,7 @@ tab = [None] * y
 for i in range(0, y):
   tab2 = [None] * x
   for j in range(0, x):
-    tmp = '\000'
+    tmp = '\x00'
     tmp=readchar()
     tab2[j] = tmp
   stdinsep()

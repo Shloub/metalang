@@ -38,7 +38,7 @@ y=scanf("%d")[0]
 scanf("%*\n")
 tab = [*0..y - 1].map { |i|
   tab2 = [*0..x - 1].map { |j|
-    tmp = "\000"
+    tmp = "\u0000"
     tmp=scanf("%c")[0]
     next (tmp)
     }

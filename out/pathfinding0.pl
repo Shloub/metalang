@@ -7,7 +7,7 @@ sub pathfind_aux{
     return 0;
   }elsif ($posX < 0 || $posY < 0 || $posX >= $x || $posY >= $y) {
     return $x * $y * 10;
-  }elsif ($tab->[$posY]->[$posX] eq '#') {
+  }elsif ($tab->[$posY]->[$posX] eq "#") {
     return $x * $y * 10;
   }elsif ($cache->[$posY]->[$posX] ne -1) {
     return $cache->[$posY]->[$posX];

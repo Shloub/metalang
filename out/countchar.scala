@@ -43,13 +43,13 @@ def skip() {
     var len: Int = 0;
     len = read_int()
     skip();
-    var tofind: Char = '\000';
+    var tofind: Char = '\u0000';
     tofind = read_char()
     skip();
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
     {
-      var tmp: Char = '\000';
+      var tmp: Char = '\u0000';
       tmp = read_char()
       tab(i) = tmp;
     }

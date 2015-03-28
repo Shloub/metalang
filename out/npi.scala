@@ -74,7 +74,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
     var tab :Array[Char] = new Array[Char](len);
     for (i <- 0 to len - 1)
     {
-      var tmp: Char = '\000';
+      var tmp: Char = '\u0000';
       tmp = read_char()
       tab(i) = tmp;
     }

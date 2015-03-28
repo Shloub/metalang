@@ -86,7 +86,7 @@ def skip() {
       var tab2 :Array[Char] = new Array[Char](x);
       for (j <- 0 to x - 1)
       {
-        var tmp: Char = '\000';
+        var tmp: Char = '\u0000';
         tmp = read_char()
         tab2(j) = tmp;
       }

@@ -34,7 +34,7 @@ begin
                                        y := v_1);
   let tab = Array.init (!y) (fun _i ->
     let tab2 = Array.init (!x) (fun _j ->
-      let tmp = ref( '\000' ) in
+      let tmp = ref( '\x00' ) in
       Scanf.scanf "%c" (fun v_0 -> tmp := v_0);
       (!tmp)) in
     Scanf.scanf " " (fun () -> ());

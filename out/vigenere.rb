@@ -14,7 +14,7 @@ def position_alphabet( c )
 end
 
 def of_position_alphabet( c )
-    return (c + "a".ord)
+    return ((c + "a".ord).chr)
 end
 
 def crypte( taille_cle, cle, taille, message )

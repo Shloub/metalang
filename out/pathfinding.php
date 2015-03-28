@@ -73,7 +73,7 @@ for ($i = 0 ; $i < $y; $i++)
   $tab2 = array();
   for ($j = 0 ; $j < $x; $j++)
   {
-    $tmp = "\000";
+    $tmp = "\x00";
     $tmp = nextChar();
     $tab2[$j] = $tmp;
   }

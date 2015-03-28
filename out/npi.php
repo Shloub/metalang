@@ -69,7 +69,7 @@ scantrim();
 $tab = array();
 for ($i = 0 ; $i < $len; $i++)
 {
-  $tmp = "\000";
+  $tmp = "\x00";
   $tmp = nextChar();
   $tab[$i] = $tmp;
 }

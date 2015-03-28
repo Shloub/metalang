@@ -12,12 +12,12 @@ int nth(std::vector<char> * tab, char tofind, int len){
 int main(){
   int len = 0;
   std::cin >> len >> std::skipws;
-  char tofind = '\000';
+  char tofind = '\x00';
   std::cin >> tofind >> std::skipws;
   std::vector<char > *tab = new std::vector<char>( len );
   for (int i = 0 ; i < len; i++)
   {
-    char tmp = '\000';
+    char tmp = '\x00';
     std::cin >> tmp >> std::noskipws;
     tab->at(i) = tmp;
   }

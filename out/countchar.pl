@@ -37,12 +37,12 @@ sub nth{
 my $len = 0;
 $len = readint();
 readspaces();
-my $tofind = '\000';
+my $tofind = "\x00";
 $tofind = readchar();
 readspaces();
 my $tab = [];
 foreach my $i (0 .. $len - 1) {
-  my $tmp = '\000';
+  my $tmp = "\x00";
   $tmp = readchar();
   $tab->[$i] = $tmp;
 }

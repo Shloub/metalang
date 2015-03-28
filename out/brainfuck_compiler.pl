@@ -6,7 +6,7 @@
 #et qui produit les macros metalang correspondante
 #
 
-my $input = ' ';
+my $input = " ";
 my $current_pos = 500;
 my $mem = [];
 foreach my $i (0 .. 1000 - 1) {

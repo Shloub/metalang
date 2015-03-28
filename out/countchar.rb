@@ -12,11 +12,11 @@ end
 len = 0
 len=scanf("%d")[0]
 scanf("%*\n")
-tofind = "\000"
+tofind = "\u0000"
 tofind=scanf("%c")[0]
 scanf("%*\n")
 tab = [*0..len - 1].map { |i|
-  tmp = "\000"
+  tmp = "\u0000"
   tmp=scanf("%c")[0]
   next (tmp)
   }

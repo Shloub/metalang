@@ -23,13 +23,13 @@ public class countchar
       len = scanner.nextInt();
     }
     scanner.findWithinHorizon("[\n\r ]*", 1);
-    char tofind = '\000';
+    char tofind = '\u0000';
     tofind = scanner.findWithinHorizon(".", 1).charAt(0);
     scanner.findWithinHorizon("[\n\r ]*", 1);
     char[] tab = new char[len];
     for (int i = 0 ; i < len; i++)
     {
-      char tmp = '\000';
+      char tmp = '\u0000';
       tmp = scanner.findWithinHorizon(".", 1).charAt(0);
       tab[i] = tmp;
     }

@@ -37,7 +37,7 @@ sub read_bigint{
 sub print_bigint{
   my($a) = @_;
   if (!$a->{"bigint_sign"}) {
-    print '-';
+    print "-";
   }
   foreach my $i (0 .. $a->{"bigint_len"} - 1) {
     print $a->{"bigint_chiffres"}->[$a->{"bigint_len"} -

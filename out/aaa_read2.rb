@@ -31,7 +31,7 @@ for i3 in (0 ..  strlen - 1) do
   if tmpc != " " then
     c = mod((c - "a".ord) + 13, 26) + "a".ord
   end
-  tab4[i3] = c
+  tab4[i3] = (c).chr
 end
 for j in (0 ..  strlen - 1) do
   printf "%c", tab4[j]

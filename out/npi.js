@@ -74,7 +74,7 @@ stdinsep();
 var tab = new Array(len);
 for (var i = 0 ; i <= len - 1; i++)
 {
-  var tmp = '\000';
+  var tmp = '\x00';
   tmp=read_char_();
   tab[i] = tmp;
 }
