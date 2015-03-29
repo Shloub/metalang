@@ -86,12 +86,12 @@ def skip() {
     len = read_int()
     skip();
     var tab :Array[Int] = new Array[Int](len);
-    for (i_U <- 0 to len - 1)
+    for (i_0 <- 0 to len - 1)
     {
       var tmp: Int = 0;
       tmp = read_int()
       skip();
-      tab(i_U) = tmp;
+      tab(i_0) = tmp;
     }
     var tab2: Array[Int] = copytab(tab, len);
     bubblesort(tab2, len);

@@ -14,14 +14,14 @@ def skip() {
     buffer = buffer.substring(1);
 }
 
-  def max2_(a : Int, b : Int): Int = {
+  def max2_0(a : Int, b : Int): Int = {
     if (a > b)
       return a;
     else
       return b;
   }
   
-  def min2_(a : Int, b : Int): Int = {
+  def min2_0(a : Int, b : Int): Int = {
     if (a < b)
       return a;
     else
@@ -109,7 +109,7 @@ def skip() {
   def add_bigint_positif(a : Bigint, b : Bigint): Bigint = {
     var i: Int=0;
     /* Une addition ou on en a rien a faire des signes */
-    var len: Int = max2_(a.bigint_len, b.bigint_len) + 1;
+    var len: Int = max2_0(a.bigint_len, b.bigint_len) + 1;
     var retenue: Int = 0;
     var chiffres :Array[Int] = new Array[Int](len);
     for (i <- 0 to len - 1)
@@ -220,7 +220,7 @@ D'ou le nom de la fonction. */
   }
   
   def bigint_premiers_chiffres(a : Bigint, i : Int): Bigint = {
-    var len: Int = min2_(i, a.bigint_len);
+    var len: Int = min2_0(i, a.bigint_len);
     while (len != 0 && a.bigint_chiffres(len - 1) == 0)
       len = len - 1;
     return new Bigint(a.bigint_sign, len, a.bigint_chiffres);
@@ -245,7 +245,7 @@ D'ou le nom de la fonction. */
     else if (aa.bigint_len < 3 || bb.bigint_len < 3)
       return mul_bigint_cp(aa, bb);
     /* Algorithme de Karatsuba */
-    var split: Int = min2_(aa.bigint_len, bb.bigint_len) / 2;
+    var split: Int = min2_0(aa.bigint_len, bb.bigint_len) / 2;
     var a: Bigint = bigint_shift(aa, -split);
     var b: Bigint = bigint_premiers_chiffres(aa, split);
     var c: Bigint = bigint_shift(bb, -split);

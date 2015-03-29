@@ -1,7 +1,7 @@
 object euler12
 {
   
-  def max2_(a : Int, b : Int): Int = {
+  def max2_0(a : Int, b : Int): Int = {
     if (a > b)
       return a;
     else
@@ -69,7 +69,7 @@ object euler12
       var primesFactors :Array[Int] = new Array[Int](n + 2);
       for (m <- 0 to n + 2 - 1)
         primesFactors(m) = 0;
-      var max0: Int = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
+      var max0: Int = max2_0(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes));
       primesFactors(2) = primesFactors(2) - 1;
       var ndivs: Int = 1;
       for (i <- 0 to max0)

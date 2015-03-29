@@ -41,11 +41,11 @@ Ce test permet de vérifier que l'implémentation de l'affectation fonctionne co
     return t;
   }
   
-  def result(t_U : Toto, t2_U : Toto): Int = {
+  def result(t_0 : Toto, t2_0 : Toto): Int = {
     var j: Int=0;
     var i: Int=0;
-    var t: Toto = t_U;
-    var t2: Toto = t2_U;
+    var t: Toto = t_0;
+    var t2: Toto = t2_0;
     var t3: Toto = new Toto(0, 0, 0);
     t3 = t2;
     t = t2;

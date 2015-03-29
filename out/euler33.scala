@@ -1,14 +1,14 @@
 object euler33
 {
   
-  def max2_(a : Int, b : Int): Int = {
+  def max2_0(a : Int, b : Int): Int = {
     if (a > b)
       return a;
     else
       return b;
   }
   
-  def min2_(a : Int, b : Int): Int = {
+  def min2_0(a : Int, b : Int): Int = {
     if (a < b)
       return a;
     else
@@ -16,8 +16,8 @@ object euler33
   }
   
   def pgcd(a : Int, b : Int): Int = {
-    var c: Int = min2_(a, b);
-    var d: Int = max2_(a, b);
+    var c: Int = min2_0(a, b);
+    var d: Int = max2_0(a, b);
     var reste: Int = d % c;
     if (reste == 0)
       return c;

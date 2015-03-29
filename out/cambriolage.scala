@@ -22,7 +22,7 @@ def skip() {
     buffer = buffer.substring(1);
 }
 
-  def max2_(a : Int, b : Int): Int = {
+  def max2_0(a : Int, b : Int): Int = {
     if (a > b)
       return a;
     else
@@ -47,8 +47,8 @@ def skip() {
       var pp: Array[Int] = passepartout(i);
       if (pp(0) >= max_ancient && pp(1) >= max_recent)
         return 1;
-      max_ancient_pp = max2_(max_ancient_pp, pp(0));
-      max_recent_pp = max2_(max_recent_pp, pp(1));
+      max_ancient_pp = max2_0(max_ancient_pp, pp(0));
+      max_recent_pp = max2_0(max_recent_pp, pp(1));
     }
     if (max_ancient_pp >= max_ancient && max_recent_pp >= max_recent)
       return 2;
@@ -81,9 +81,9 @@ def skip() {
       var out1 :Array[Int] = new Array[Int](2);
       for (l <- 0 to 2 - 1)
       {
-        var out_U = read_int()
+        var out_0 = read_int()
         skip();
-        out1(l) = out_U;
+        out1(l) = out_0;
       }
       serrures(k) = out1;
     }

@@ -1,7 +1,7 @@
 object euler11
 {
   
-  def max2_(a : Int, b : Int): Int = {
+  def max2_0(a : Int, b : Int): Int = {
     if (a > b)
       return a;
     else
@@ -47,7 +47,7 @@ object euler11
       var (dx, dy) = directions(j)
       for (x <- 0 to 19)
         for (y <- 0 to 19)
-          max0 = max2_(max0, find(4, m, x, y, dx, dy));
+          max0 = max2_0(max0, find(4, m, x, y, dx, dy));
     }
     printf("%d\n", max0);
   }

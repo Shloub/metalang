@@ -26,8 +26,8 @@ object euler46
   {
     var maximumprimes: Int = 6000;
     var era :Array[Int] = new Array[Int](maximumprimes);
-    for (j_U <- 0 to maximumprimes - 1)
-      era(j_U) = j_U;
+    for (j_0 <- 0 to maximumprimes - 1)
+      era(j_0) = j_0;
     var nprimes: Int = eratostene(era, maximumprimes);
     var primes :Array[Int] = new Array[Int](nprimes);
     for (o <- 0 to nprimes - 1)
@@ -41,8 +41,8 @@ object euler46
     }
     printf("%d == %d\n", l, nprimes);
     var canbe :Array[Boolean] = new Array[Boolean](maximumprimes);
-    for (i_U <- 0 to maximumprimes - 1)
-      canbe(i_U) = false;
+    for (i_0 <- 0 to maximumprimes - 1)
+      canbe(i_0) = false;
     for (i <- 0 to nprimes - 1)
       for (j <- 0 to maximumprimes - 1)
       {

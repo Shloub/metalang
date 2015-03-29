@@ -51,12 +51,12 @@ read int, read char et skip
     }
     printf("\n");
     var tab2 :Array[Int] = new Array[Int](len);
-    for (i_U <- 0 to len - 1)
+    for (i_0 <- 0 to len - 1)
     {
       var tmpi2 = read_int()
       skip();
-      printf("%d==>%d ", i_U, tmpi2);
-      tab2(i_U) = tmpi2;
+      printf("%d==>%d ", i_0, tmpi2);
+      tab2(i_0) = tmpi2;
     }
     var strlen = read_int()
     skip();

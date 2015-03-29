@@ -1,7 +1,7 @@
 object euler05
 {
   
-  def max2_(a : Int, b : Int): Int = {
+  def max2_0(a : Int, b : Int): Int = {
     if (a > b)
       return a;
     else
@@ -38,7 +38,7 @@ object euler05
     {
       var t: Array[Int] = primesfactors(i);
       for (j <- 1 to i)
-        o(j) = max2_(o(j), t(j));
+        o(j) = max2_0(o(j), t(j));
     }
     var product: Int = 1;
     for (k <- 1 to lim)

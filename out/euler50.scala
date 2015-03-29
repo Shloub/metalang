@@ -1,7 +1,7 @@
 object euler50
 {
   
-  def min2_(a : Int, b : Int): Int = {
+  def min2_0(a : Int, b : Int): Int = {
     if (a < b)
       return a;
     else
@@ -48,8 +48,8 @@ object euler50
     }
     printf("%d == %d\n", l, nprimes);
     var sum :Array[Int] = new Array[Int](nprimes);
-    for (i_U <- 0 to nprimes - 1)
-      sum(i_U) = primes(i_U);
+    for (i_0 <- 0 to nprimes - 1)
+      sum(i_0) = primes(i_0);
     var maxl: Int = 0;
     var process: Boolean = true;
     var stop: Int = maximumprimes - 1;
@@ -72,7 +72,7 @@ object euler50
           }
         }
         else
-          stop = min2_(stop, i);
+          stop = min2_0(stop, i);
       }
       len = len + 1;
     }

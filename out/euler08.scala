@@ -9,7 +9,7 @@ def read_char() : Char = {
   return c;
 }
 
-  def max2_(a : Int, b : Int): Int = {
+  def max2_0(a : Int, b : Int): Int = {
     if (a > b)
       return a;
     else
@@ -49,7 +49,7 @@ def read_char() : Char = {
       }
       last(index) = f;
       index = (index + 1) % 5;
-      max0 = max2_(max0, i);
+      max0 = max2_0(max0, i);
     }
     printf("%d\n", max0);
   }

@@ -17,9 +17,9 @@ read int, read char et skip
     }
     printf("\n");
     var tab2: Array[Int] = readLine().split(" ").map(_.toInt);
-    for (i_U <- 0 to len - 1)
+    for (i_0 <- 0 to len - 1)
     {
-      printf("%d==>%d ", i_U, tab2(i_U));
+      printf("%d==>%d ", i_0, tab2(i_0));
     }
     var strlen: Int = readInt().toInt;
     printf("%d=strlen\n", strlen);

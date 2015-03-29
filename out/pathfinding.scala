@@ -28,7 +28,7 @@ def skip() {
     buffer = buffer.substring(1);
 }
 
-  def min2_(a : Int, b : Int): Int = {
+  def min2_0(a : Int, b : Int): Int = {
     if (a < b)
       return a;
     else
@@ -51,7 +51,7 @@ def skip() {
       var val2: Int = pathfind_aux(cache, tab, x, y, posX - 1, posY);
       var val3: Int = pathfind_aux(cache, tab, x, y, posX, posY - 1);
       var val4: Int = pathfind_aux(cache, tab, x, y, posX, posY + 1);
-      var out0: Int = 1 + min2_(min2_(min2_(val1, val2), val3), val4);
+      var out0: Int = 1 + min2_0(min2_0(min2_0(val1, val2), val3), val4);
       cache(posY)(posX) = out0;
       return out0;
     }
