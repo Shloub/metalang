@@ -79,16 +79,6 @@ class scalaPrinter = object(self)
 
   method char f c = self#unicode f c
 
-  method binding f = function
-  | UserName i ->
-      if String.ends_with i "_U" then
-        Format.fprintf f "%sUU" i
-      else if String.ends_with i "_" then
-        Format.fprintf f "%sU"i
-      else
-        Format.fprintf f "%s"i
-  | InternalName i -> Format.fprintf f "internal__%d" i
-
   method header f prog =
     let need_stdinsep = prog.Prog.hasSkip in
     let need_readint = TypeSet.mem (Type.integer) prog.Prog.reads in

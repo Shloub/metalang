@@ -77,7 +77,7 @@ let keywords lang=
 let conf_rename lang prog =
   Fresh.fresh_init prog ;
   Rename.clear ();
-  if lang = "adb" then begin
+  if lang = "adb" || lang = "scala" then begin
     StringSet.iter (fun name ->
       if '_' = String.get name ((String.length name) - 1) then
 	      Rename.add name;
