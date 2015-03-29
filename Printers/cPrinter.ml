@@ -93,12 +93,10 @@ class cPrinter = object(self)
       li
 
   method allocarray f binding type_ len _ =
-    Format.fprintf f "@[<h>%a@ *%a@ =@ malloc(@ %a@ *@ sizeof(%a))%a@]"
+    Format.fprintf f "@[<h>%a@ *%a@ =@ calloc(@ %a@ , sizeof(%a))%a@]"
       self#ptype type_
       self#binding binding
-      (fun f a ->
-        if self#nop (Expr.unfix a) then self#expr f a
-        else self#printp f a) len
+      self#expr len
       self#ptype type_
       self#separator ()
 
