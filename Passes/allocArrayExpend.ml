@@ -57,8 +57,8 @@ let locati loc instr =
 let mapret tab index instructions =
   let f tra i = match Instr.unfix i with
     | Instr.Return e -> Instr.affect
-      (Instr.mutable_array
-         (Instr.mutable_var tab
+      (Mutable.array
+         (Mutable.var tab
              |> locatm (PosMap.get (Expr.Fixed.annot e))
          ) [Expr.access (Mutable.var index
                             |> locatm (PosMap.get (Expr.Fixed.annot e))

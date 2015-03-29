@@ -543,9 +543,6 @@ end
    instructions metalang
 *)
 module Instr = struct
-  let mutable_var varname = Mutable.Var varname |> Mutable.Fixed.fix
-  let mutable_array m indexes = Mutable.Array (m, indexes) |> Mutable.Fixed.fix
-  let mutable_dot m field = Mutable.Dot (m, field) |> Mutable.Fixed.fix
 
   type declaration_option =
     {
