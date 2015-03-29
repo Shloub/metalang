@@ -306,6 +306,3 @@ Format.fprintf f "#lang racket
 
 
 end
-
-let racketPrinter = new racketPrinter
-

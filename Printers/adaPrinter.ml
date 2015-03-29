@@ -63,9 +63,7 @@ class adaPrinter = object(self)
       | Expr.Diff -> "/="
       )
 
-  method bool f = function
-  | true -> Format.fprintf f "TRUE"
-  | false -> Format.fprintf f "FALSE"
+  method bool f b = Format.fprintf f (if b then "TRUE" else "FALSE")
 
   method integer f i =
     Format.fprintf f "%d" i

@@ -165,9 +165,7 @@ func skip() {
   | Type.Named n -> Format.fprintf f "%s" n
   | _ -> assert false
 
-  method bool f = function
-  | true -> Format.fprintf f "true"
-  | false -> Format.fprintf f "false"
+  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method forloop f varname expr1 expr2 li =
     Format.fprintf f "@[<h>for@ %a@ :=@ %a@ ;@ %a@ <=@ %a;@ %a++@] {@\n  @[<v 2>%a@]@\n}"

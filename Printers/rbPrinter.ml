@@ -127,9 +127,7 @@ end
       | Expr.Diff -> "!="
       )
 
-  method bool f = function
-  | true -> Format.fprintf f "true"
-  | false -> Format.fprintf f "false"
+  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method selfAssoc f m e2 = function
   | Expr.Add -> Format.fprintf f "@[<h>%a += %a@]" self#mutable_set m self#expr e2

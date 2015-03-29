@@ -41,9 +41,7 @@ class cPrinter = object(self)
 
   method lang () = "c"
 
-  method bool f = function
-  | true -> Format.fprintf f "1"
-  | false -> Format.fprintf f "0"
+  method bool f b = Format.fprintf f (if b then "1" else "0")
 
   method ptype f t =
     match Type.unfix t with

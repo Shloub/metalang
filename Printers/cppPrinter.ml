@@ -75,9 +75,7 @@ class cppPrinter = object(self)
     | Type.Struct li -> Format.fprintf f "a struct"
     | Type.Auto | Type.Lexems | Type.Tuple _ -> assert false
 
-  method bool f = function
-  | true -> Format.fprintf f "true"
-  | false -> Format.fprintf f "false"
+  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method prog f prog =
     Format.fprintf f

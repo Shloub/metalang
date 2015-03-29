@@ -98,9 +98,7 @@ class pyPrinter = object(self)
     | Expr.Diff -> "!="
     )
 
-  method bool f = function
-  | true -> Format.fprintf f "True"
-  | false -> Format.fprintf f "False"
+  method bool f b =Format.fprintf f (if b then "True" else "False")
 
   method read f t mutable_ =
     match Type.unfix t with

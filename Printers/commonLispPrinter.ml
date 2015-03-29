@@ -234,11 +234,9 @@ class commonLispPrinter = object(self)
   method return f e =
     Format.fprintf f "@[<h>(return-from %s %a)@]" funname_ self#expr e
 
-  method bool f = function
-  | true -> Format.fprintf f "t"
-  | false -> Format.fprintf f "nil"
+  method bool f b =  Format.fprintf f (if b then "t" else "nil")
 
-	method formater_type t = match Type.unfix t with
+  method formater_type t = match Type.unfix t with
   | Type.Integer -> "~D"
   | Type.Char -> "~C"
   | Type.String ->  "~A"

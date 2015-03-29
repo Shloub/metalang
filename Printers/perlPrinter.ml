@@ -56,9 +56,7 @@ class perlPrinter = object(self)
         else
           Format.fprintf f "%S" (String.from_char c)
 
-  method bool f = function
-  | true -> Format.fprintf f "1"
-  | false -> Format.fprintf f "()"
+  method bool f b = Format.fprintf f (if b then "1" else "()")
 
   method main f main = self#instructions f main
 

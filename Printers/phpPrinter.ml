@@ -72,9 +72,7 @@ class phpPrinter = object(self)
 
   method stdin_sep f = Format.fprintf f "@[scantrim();@]"
 
-  method bool f = function
-  | true -> Format.fprintf f "true"
-  | false -> Format.fprintf f "false"
+  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method read f t m =
     match Type.unfix t with

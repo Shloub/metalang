@@ -73,9 +73,7 @@ class scalaPrinter = object(self)
 
   method hasSelfAffect op = false
 
-  method bool f = function
-  | true -> Format.fprintf f "true"
-  | false -> Format.fprintf f "false"
+  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method char f c = self#unicode f c
 

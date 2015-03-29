@@ -451,9 +451,7 @@ class printer = object(self)
         self#instructions ifcase
         self#instructions elsecase
 
-  method bool f = function
-  | true -> Format.fprintf f "true"
-  | false -> Format.fprintf f "false"
+  method bool f b = Format.fprintf f (if b then "true" else "false")
 
   method print_op f op =
     Format.fprintf f
