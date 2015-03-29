@@ -490,17 +490,18 @@ module Expr = struct
 
   (** {2 utils} *)
 
-  let bool b = fix (Lief (Bool b))
+let lief l = fix (Lief l)
 
-  let enum e = fix (Lief (Enum e))
+  let bool b = lief (Bool b)
+
+  let enum e = lief (Enum e)
 
   let unop op a = fix (UnOp (a, op))
   let binop op a b = fix (BinOp (a, op, b))
 
-  let integer i = fix (Lief (Integer i))
-  let char i = fix (Lief (Char i))
-  let string f = fix (Lief (String f))
-  let boolean b = fix (Lief (Bool b))
+  let integer i = lief (Integer i)
+  let char i = lief (Char i)
+  let string f = lief (String f)
 
   let lexems li = fix (Lexems li)
 
@@ -522,7 +523,7 @@ module Expr = struct
     | Type.Array _ -> failwith ("new array is not an expression")
     | Type.Lexems -> failwith ("lexems is not an expression")
     | Type.Void -> failwith ("no dummy expression for void")
-    | Type.Bool -> boolean false
+    | Type.Bool -> bool false
     | Type.Named _ -> failwith ("new named is not an expression")
     | Type.Auto -> failwith ("auto is not an expression")
     | Type.Struct _ -> failwith ("new struct is not an expression")
