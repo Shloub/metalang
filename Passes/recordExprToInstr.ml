@@ -80,6 +80,9 @@ let expand tyenv i = match Instr.unfix i with
   | Instr.Return e ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.Return e)  ) :: instrs)
+  | Instr.AllocArrayConst (n, t, e, lief, opt2) ->
+    let instrs, e = process tyenv [] e in
+    List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocArrayConst (n, t, e, lief, opt2))  ) :: instrs)
   | Instr.AllocArray (n, t, e, opt, opt2) ->
     let instrs, e = process tyenv [] e in
     List.rev ((Instr.fixa (Instr.Fixed.annot i) (Instr.AllocArray (n, t, e, opt, opt2))  ) :: instrs)

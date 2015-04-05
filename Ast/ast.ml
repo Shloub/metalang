@@ -569,6 +569,7 @@ module Instr = struct
   | Tag of string
   | Return of 'expr
   | AllocArray of varname * Type.t * 'expr * (varname * 'a list) option * declaration_option
+  | AllocArrayConst of varname * Type.t * 'expr * Expr.lief * declaration_option
   | AllocRecord of varname * Type.t * (fieldname * 'expr) list * declaration_option
   | If of 'expr * 'a list * 'a list
   | Call of funname * 'expr list
@@ -609,6 +610,7 @@ module Instr = struct
     | Unquote e -> acc, Unquote e
     | Untuple (lis, e, opt) -> acc, Untuple (lis, e, opt)
     | Tag e -> acc, Tag e
+    | AllocArrayConst (v, t, e1, e2, d) -> acc, AllocArrayConst (v, t, e1, e2, d)
 
   let map_bloc f t = match t with
     | Declare (a, b, c, d) -> Declare (a, b, c, d)
@@ -634,6 +636,7 @@ module Instr = struct
     | Unquote e -> Unquote e
     | Untuple (lis, e, opt) -> Untuple (lis, e, opt)
     | Tag e -> Tag e
+    | AllocArrayConst (v, t, e1, e2, d) -> AllocArrayConst (v, t, e1, e2, d)
 
   let map f t =
     map_bloc (List.map f) t
@@ -711,15 +714,8 @@ module Instr = struct
       | AllocArray (b, t, l, Some (b2, li), opt) ->
         let acc, li = List.fold_left_map f acc li in
         acc, Fixed.fixa annot (AllocArray (b, t, l, Some (b2, li), opt ))
-      | AllocRecord (_, _, _, _) ->
-        acc, t
-      | Print _ -> acc, t
-      | Read _ -> acc, t
-      | DeclRead _ -> acc, t
-      | Untuple _ -> acc, t
-      | Call _ -> acc, t
-      | Unquote _ -> acc, t
-      | Tag _ -> acc, t
+      | AllocRecord (_, _, _, _) | AllocArrayConst _ | Print _
+      | Read _ | DeclRead _ | Untuple _ | Call _ | Unquote _ | Tag _ -> acc, t
   end)
 
   let foldmap_expr
@@ -774,6 +770,9 @@ module Instr = struct
             acc, Read (t, m)
           | DeclRead (t, m, opt) ->
             acc, DeclRead (t, m, opt)
+          | AllocArrayConst (v, t, e1, e2, d) ->
+              let acc, e1 = f acc e1 in
+              acc, AllocArrayConst (v, t, e1, e2, d)
           | StdinSep -> acc, StdinSep
           | Unquote e -> acc, Unquote e
           | Tag e -> acc, Tag e

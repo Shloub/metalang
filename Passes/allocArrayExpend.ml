@@ -40,9 +40,13 @@ open Ast
 open Fresh
 open PassesUtils
 
-type acc0 = unit
-type 'lex acc = unit;;
-let init_acc () = ();;
+type acc0 = bool
+type 'lex acc = {
+    make_arrayconst : bool
+  }
+let init_acc b = {
+  make_arrayconst = b;
+}
 
 let locate loc e =
   PosMap.add (Expr.Fixed.annot e) loc; e
@@ -71,7 +75,29 @@ let mapret tab index instructions =
        (f (Instr.Writer.Traverse.map f)) instructions in
      instructions
 
-let expand i = match Instr.unfix i with
+let get_const_expr e = match Expr.unfix e with
+| Expr.Lief l -> Some l
+| _ -> None
+
+let get_const_return li =
+  let li = List.filter (fun i -> match Instr.unfix i with
+  | Instr.Comment _ -> false
+  | _ -> true) li
+  in match List.map Instr.unfix li with
+  | [ Instr.Return e ] ->
+      get_const_expr e
+  | _ ->  None
+
+let is_const_return li = None <> get_const_return li
+
+let expand acc i = match Instr.unfix i with
+  | Instr.AllocArray (b,t, len, Some (b2, instrs), opt)
+    when acc.make_arrayconst &&
+      is_const_return instrs ->
+      let e = Option.extract (get_const_return instrs)
+      and annot = Instr.Fixed.annot i
+      in
+      [ Instr.fixa annot (Instr.AllocArrayConst (b, t, len, e, opt)) ]
   | Instr.AllocArray (b,t, len, Some (b2, instrs), opt) ->
     let annot = Instr.Fixed.annot i in
     [ Instr.fixa annot (Instr.AllocArray (b, t, len, None, opt) )
@@ -86,9 +112,9 @@ let expand i = match Instr.unfix i with
     ]
   | _ -> [i]
 
-let mapi i =
+let mapi acc i =
   Instr.deep_map_bloc
-    (List.flatten @* (List.map expand) )
+    (List.flatten @* (List.map (expand acc)))
     (Instr.unfix i) |> Instr.fixa (Instr.Fixed.annot i)
 
-let process () is = (), List.map mapi (List.flatten (List.map expand is))
+let process acc is = acc, List.map (mapi acc) (List.flatten (List.map (expand acc) is))

@@ -180,6 +180,12 @@ function nextChar(){
   method allocarray f binding type_ len _ =
     Format.fprintf f "@[<h>%a@ =@ array();@]" self#binding binding
 
+  method allocarrayconst f binding type_ len e opt =
+    Format.fprintf f "@[<h>%a = array_fill(0, %a, %a);@]"
+      self#binding binding
+      self#expr len
+      self#lief e
+
   method forloop f varname expr1 expr2 li =
     self#forloop_content f (varname, expr1, expr2, li)
 

@@ -220,6 +220,12 @@ let rec instrs suite contsuite (contreturn:F.Expr.t option) env = function
           let n = Fresh.fresh_user () in
           F.Expr.apply (F.Expr.fun_ [n] (c (F.Expr.binding n))) [end_]
       end
+    | A.Instr.AllocArrayConst(A.UserName name0, t, e, l, _ ) ->
+        let l = lief l |> F.Expr.lief in
+        let name = Fresh.fresh_user () in
+        let f = F.Expr.fun_ [name] l in
+        let next = instrs suite contsuite contreturn env tl in
+        F.Expr.apply (F.Expr.fun_ [name0] next) [F.Expr.arrayinit e f]
     | A.Instr.AllocArray (A.UserName name, t, e, Some (A.UserName varname, li), _) ->
       let affected = List.filter (fun x -> List.mem x env) @$ StringSet.elements @$ affected li in
       let o = Fresh.fresh_user () in
@@ -278,6 +284,8 @@ let rec instr_to_finstr i =
   | A.Instr.Comment s -> A.Instr.Comment s
   | A.Instr.Tag s -> A.Instr.Tag s
   | A.Instr.Return e -> A.Instr.Return (f e)
+  | A.Instr.AllocArrayConst (varname, ty, e, l, opt) ->
+      A.Instr.AllocArrayConst(varname, ty, f e, l, opt)
   | A.Instr.AllocArray (varname, ty, e, opt, opt2) ->
     A.Instr.AllocArray (varname, ty, f e, Option.map (fun (name, li) ->
       name, List.map instr_to_finstr li) opt, opt2)

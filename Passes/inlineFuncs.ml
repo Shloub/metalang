@@ -120,6 +120,11 @@ let rec rename_instr acc (instr:Utils.instr) =
     let newname = Fresh.fresh_internal () in
     let acc = BindingMap.add name newname acc in
     acc, Instr.AllocArray (newname, t, e, None, opt) |> Instr.fixa annot
+  | Instr.AllocArrayConst (name, t, e, lief, opt) ->
+    let e = rename_e acc e in
+    let newname = Fresh.fresh_internal () in
+    let acc = BindingMap.add name newname acc in
+    acc, Instr.AllocArrayConst (newname, t, e, lief, opt) |> Instr.fixa annot
   | Instr.AllocArray (name, t, e, Some (name2, li), opt) ->
     let e = rename_e acc e in
     let newname = Fresh.fresh_internal () in
@@ -274,6 +279,9 @@ and map_instr acc instr =
   | Instr.AllocArray (name, t, e, None, opt) ->
     let addon, e = map_e acc e in
     List.append addon [Instr.AllocArray (name, t, e, None, opt) |> Instr.fixa annot]
+  | Instr.AllocArrayConst (name, t, e, lief, opt) ->
+    let addon, e = map_e acc e in
+    List.append addon [Instr.AllocArrayConst (name, t, e, lief, opt) |> Instr.fixa annot]
   | Instr.AllocArray (name, t, e, Some (name2, li), opt) ->
     let addon, e = map_e acc e in
     let li = map_instrs acc li in

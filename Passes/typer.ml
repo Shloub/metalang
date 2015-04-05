@@ -389,6 +389,21 @@ let add_contrainte env c1 c2 =
   { env with
     contraintes = (c1, c2) :: env.contraintes
   }
+
+let contrainte_of_lief loc env = function
+  | Expr.Char _ ->
+      ref (Typed (Type.char, loc))
+  | Expr.String _ ->
+      ref (Typed (Type.string, loc))
+  | Expr.Integer _ ->
+      ref (Typed (Type.integer, loc))
+  | Expr.Bool _ ->
+      ref (Typed (Type.bool, loc))
+  | Expr.Enum en ->
+      let (t, _) = StringMap.find en env.enum in (* TODO not found*)
+      ref (Typed (t, loc) )
+
+
 (** {2 Collect contraintes functions} *)
 let rec collect_contraintes_expr env e =
   (*      let () =
@@ -442,20 +457,7 @@ let rec collect_contraintes_expr env e =
       let env, acontrainte = collect_contraintes_expr env a in
       let env = add_contrainte env acontrainte contrainte in
       env, contrainte
-    | Expr.Lief l -> begin match l with
-      | Expr.Char _ ->
-        env, ref (Typed (Type.char, loc e))
-      | Expr.String _ ->
-        env, ref (Typed (Type.string, loc e))
-      | Expr.Integer _ ->
-        env, ref (Typed (Type.integer, loc e))
-      | Expr.Bool _ ->
-        env, ref (Typed (Type.bool, loc e))
-      | Expr.Enum en ->
-        let (t, _) = StringMap.find en env.enum in (* TODO not found*)
-        let contrainte = ref (Typed (t, loc e) ) in
-        env, contrainte
-    end
+    | Expr.Lief l -> let c = contrainte_of_lief (loc e) env l in  env, c
     | Expr.Lexems li -> (* TODO typer les insertions *)
       env, ref (Typed (Type.lexems, loc e))
     | Expr.Access mut ->
@@ -614,6 +616,17 @@ let rec collect_contraintes_instructions env instructions
             (ref (PreTyped (Type.Array ty, loc)))
             env.locales}
         in env
+      | Instr.AllocArrayConst (var, ty, len, e, opt) ->
+          let c = contrainte_of_lief loc env e in
+          let ty = expand env ty loc in
+          let env, ty = ty2typeContrainte env ty loc in
+          let env = {env with
+          locales = BindingMap.add var
+            (ref (PreTyped (Type.Array ty, loc)))
+            env.locales;
+                   contraintes = (c, ty) :: env.contraintes
+                   }
+          in env
       | Instr.AllocRecord (var, ty, li, _) ->
         let ty = expand env ty loc in
         let li_type = match li with

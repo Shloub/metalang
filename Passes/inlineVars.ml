@@ -65,7 +65,6 @@ let rec name_of_mut mut = match Mutable.unfix mut with
   | Mutable.Array (m, _)
   | Mutable.Dot (m, _) -> name_of_mut m
 
-
 let rec encapsule_mut mut mut_into = match Mutable.unfix mut with
   | Mutable.Var v -> mut_into
   | Mutable.Array (m, indexes) -> Mutable.array (encapsule_mut m mut_into) indexes
@@ -128,6 +127,8 @@ let rec getinfo_i dad infos hd = match Instr.unfix hd with
   | Instr.AllocArray (name, ty, e, None, opt) ->
     let infos = getinfos_expr hd dad infos e in
     addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
+  | Instr.AllocArrayConst (name, ty, len, e, opt) ->
+      addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad}
   | Instr.AllocArray (name, ty, e, Some (var, li), opt) ->
     let infos = getinfos_expr hd dad infos e in
     let infos = addinfos infos name {instruction=hd; expression=None; affected=false; declaration=true; dad=dad} in

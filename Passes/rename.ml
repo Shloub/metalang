@@ -115,6 +115,8 @@ let rec process_instr map i =
     | Instr.Return e -> Instr.Return (process_expr map e)
     | Instr.AllocArray (name, t, e, None, opt) ->
       Instr.AllocArray (mapname map name, mapty map t, (process_expr map e), None, opt)
+    | Instr.AllocArrayConst (name, t, e, lief, opt) ->
+      Instr.AllocArrayConst (mapname map name, mapty map t, (process_expr map e), lief, opt)
     | Instr.AllocArray (name, t, e, Some ((var, li)), opt) ->
       let li2 = List.map (process_instr map) li in
       Instr.AllocArray (mapname map name, mapty map t, (process_expr map e), Some ((mapname map var, li2)), opt)

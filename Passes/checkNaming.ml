@@ -171,6 +171,9 @@ let rec check_instr funname acc instr =
   | Instr.Comment _ -> acc
   | Instr.Return e ->
     let () = check_expr funname acc e in acc
+  | Instr.AllocArrayConst (UserName v, _t, e, _l, _opt) ->
+    let () = check_expr funname acc e in
+    add_array_in_acc funname v acc loc
   | Instr.AllocArray (UserName v, t, e, liopt, _) ->
     let () = check_expr funname acc e in
     let acc = match liopt with

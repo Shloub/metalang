@@ -107,6 +107,16 @@ class cppPrinter = object(self)
       self#ptype type_
       self#expr len
 
+  method allocarrayconst f binding type_ len e opt =
+    Format.fprintf f "@[<h>std::vector<%a > *%a = new std::vector<%a>( %a );@\nstd::fill(%a->begin(), %a->end(), %a);@]"
+      self#ptype type_
+      self#binding binding
+      self#ptype type_
+      self#expr len
+      self#binding binding
+      self#binding binding
+      self#lief e
+
   method main f main =
     let li_fori, li_forc = self#collect_for main in
     Format.fprintf f "@[<v 2>int main(){@\n%a%a%a@\nreturn 0;@]@\n}"

@@ -404,30 +404,31 @@ let instrs_of_lexems_list (li:Parser.token list) : Utils.instr list =
 (** Evaluation factor *)
 module EvalF (IO : EvalIO) = struct
 
+  let precompile_lief env = function
+    | Expr.Char c -> Char c
+    | Expr.String s -> String s
+    | Expr.Integer i -> Integer i
+    | Expr.Bool b -> Bool b
+    | Expr.Enum e ->
+        let t = Typer.type_for_enum e env.tyenv in
+        begin match Type.unfix t with
+        | Type.Enum li ->
+            let rec f n = function
+              | [] -> assert false
+              | hd::tl -> if String.equals hd e then n else
+                f (n + 1) tl in
+            let v = f 0 li in
+            Integer v
+        | _ -> assert false
+        end
+
   (** precompile an expression *)
   let rec precompile_expr (t:Utils.expr) (env:env): precompiledExpr =
     let loc = PosMap.get (Expr.Fixed.annot t) in
     let res x = Result x in
     match Expr.Fixed.map (fun e -> precompile_expr e env)
       (Expr.Fixed.unfix t) with
-      | Expr.Lief l -> begin match l with
-        | Expr.Char c -> Char c |> res
-        | Expr.String s -> String s |> res
-        | Expr.Integer i -> Integer i |> res
-        | Expr.Bool b -> Bool b |> res
-        | Expr.Enum e ->
-          let t = Typer.type_for_enum e env.tyenv in
-          begin match Type.unfix t with
-          | Type.Enum li ->
-            let rec f n = function
-              | [] -> assert false
-              | hd::tl -> if String.equals hd e then n else
-                  f (n + 1) tl in
-            let v = f 0 li in
-            Integer v |> res
-          | _ -> assert false
-          end
-      end
+      | Expr.Lief l -> precompile_lief env l |> res
       | Expr.BinOp (a, op, b) ->
         binop loc op a b
       | Expr.UnOp (Result r, Expr.Neg) ->
@@ -653,6 +654,14 @@ module EvalF (IO : EvalIO) = struct
     | Instr.Return e ->
       let e = e env in
       env, fun execenv -> raise (Return (eval_expr execenv e))
+    | Instr.AllocArrayConst (var, t, e, lief, _) ->
+        let e = e env in
+        let env, r = add_in_env env var in
+        let l = precompile_lief env lief in
+        env, (fun execenv ->
+          let len = get_integer (eval_expr execenv e) in
+          execenv.(r) <- Array (Array.make len l)
+        )
     | Instr.AllocArray (var, t, e, opt, _) ->
       let e = e env in
       begin match opt with
@@ -775,6 +784,8 @@ module EvalF (IO : EvalIO) = struct
         Instr.While (precompile_expr e, precompile_instrs li)
       | Instr.Comment s -> Instr.Comment s
       | Instr.Return e -> Instr.Return (precompile_expr e)
+      | Instr.AllocArrayConst (v, t, e, l, opt) ->
+          Instr.AllocArrayConst (v, t, precompile_expr e, l, opt)
       | Instr.AllocArray (v, t, e, opt, opt2) ->
         let opt = match opt with
           | None -> None

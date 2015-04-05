@@ -98,6 +98,15 @@ class pyPrinter = object(self)
     | Expr.Diff -> "!="
     )
 
+  method allocarrayconst f binding t len e opt =
+    Format.fprintf f "@[<h>%a@ = [%a] * %a@]"
+      self#binding binding
+      self#lief e
+      (fun f e -> if self#nop (Expr.unfix e) then self#expr f e
+      else Format.fprintf f "(%a)" self#expr e)
+      len
+
+
   method bool f b =Format.fprintf f (if b then "True" else "False")
 
   method read f t mutable_ =

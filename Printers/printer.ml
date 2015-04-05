@@ -403,14 +403,17 @@ class printer = object(self)
       self#allocarray f binding type_ len u
     | Instr.AllocArray (binding, type_, len, Some ( (b, l) ), u) ->
       self#allocarray_lambda f binding type_ len b l u
+    | Instr.AllocArrayConst (b, t, len, e, opt) ->
+        self#allocarrayconst f b t len e opt
     | Instr.If (e, ifcase, elsecase) ->
       self#if_ f e ifcase elsecase
     | Instr.Call (var, li) -> self#call f var li
-
     | Instr.Read (t, mutable_) -> self#read f t mutable_
     | Instr.DeclRead (t, var, _option) -> self#read_decl f t var
     | Instr.Print (t, expr) -> self#print f t expr
     | Instr.Untuple (li, e, _) -> self#untuple f li e
+
+  method allocarrayconst f b t len e opt = assert false
 
   method untuple f li e =
     Format.fprintf f "(%a) = %a"
