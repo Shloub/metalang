@@ -83,6 +83,10 @@ end
 *)
 module Option = struct
 
+  let iter f = function
+    | None -> ()
+    | Some a -> f a
+
   (**
      Renvoie une exception quand on lui passe None en argument
      Renvoie la valeur x contenue dans Some x

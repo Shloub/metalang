@@ -76,6 +76,7 @@ module Option :
 sig
   val extract : 'a option -> 'a
   val map_default : 'a -> ('b -> 'a) -> 'b option -> 'a
+  val iter : ('a -> unit) -> 'a option -> unit
   val is_none : 'a option -> bool
   val is_some : 'a option -> bool
   val default : 'a -> 'a option -> 'a
