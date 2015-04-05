@@ -36,6 +36,10 @@ open Stdlib
 type varname = | UserName of string
                | InternalName of int
 
+let get_username = function
+  | UserName s -> Some s
+  | InternalName _ -> None
+
 type typename = string
 type funname = string
 type fieldname = string
