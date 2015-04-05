@@ -88,15 +88,15 @@ let rec mapmutable map m =
 
 and process_expr map e =
   let f e = Expr.Fixed.fixa (Expr.Fixed.annot e) (match Expr.Fixed.unfix e with
-    | Expr.Access mutable_ ->
+  | Expr.Access mutable_ ->
       Expr.Access (mapmutable map mutable_)
-    | Expr.Call (funname, li) ->
+  | Expr.Call (funname, li) ->
       Expr.Call (mapname_fun map funname, li)
-		| Expr.Lief (Expr.Enum e) -> Expr.Lief (Expr.Enum (mapname_enum map e))
-		| Expr.Record li ->
-				let li = List.map (fun (s, e) -> mapname_field map s, process_expr map e) li in
-				Expr.Record li
-    | e -> e)
+  | Expr.Lief (Expr.Enum e) -> Expr.Lief (Expr.Enum (mapname_enum map e))
+  | Expr.Record li ->
+      let li = List.map (fun (s, e) -> mapname_field map s, process_expr map e) li in
+      Expr.Record li
+  | e -> e)
   in Expr.Writer.Deep.map f e
 
 let rec process_instr map i =
@@ -151,7 +151,7 @@ let process acc p =
       Prog.DeclarFun (mapname_fun acc funname,  mapty acc t,
                       (List.map (fun (n, t) -> (mapname acc n),  mapty acc t) params),
                       (List.map (process_instr acc) instrs), opt)
-		| Prog.DeclareType (tyname, ty) ->
-				Prog.DeclareType (mapname_ty acc tyname, mapty acc ty)
+    | Prog.DeclareType (tyname, ty) ->
+        Prog.DeclareType (mapname_ty acc tyname, mapty acc ty)
     | _ -> p
   in acc, p
