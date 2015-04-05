@@ -62,7 +62,7 @@ int sumdivaux(int* t, int n, int i){
 
 int sumdiv(int nprimes, int* primes, int n){
   int i;
-  int *t = malloc( (n + 1) * sizeof(int));
+  int *t = calloc( n + 1 , sizeof(int));
   for (i = 0 ; i < n + 1; i++)
     t[i] = 0;
   int max0 = fillPrimesFactors(t, n, primes, nprimes);
@@ -72,11 +72,11 @@ int sumdiv(int nprimes, int* primes, int n){
 int main(void){
   int o, i, j, r, q, p, k, t, s;
   int maximumprimes = 30001;
-  int *era = malloc( maximumprimes * sizeof(int));
+  int *era = calloc( maximumprimes , sizeof(int));
   for (s = 0 ; s < maximumprimes; s++)
     era[s] = s;
   int nprimes = eratostene(era, maximumprimes);
-  int *primes = malloc( nprimes * sizeof(int));
+  int *primes = calloc( nprimes , sizeof(int));
   for (t = 0 ; t < nprimes; t++)
     primes[t] = 0;
   int l = 0;
@@ -88,10 +88,10 @@ int main(void){
   }
   int n = 100;
   /* 28124 ça prend trop de temps mais on arrive a passer le test */
-  int *abondant = malloc( (n + 1) * sizeof(int));
+  int *abondant = calloc( n + 1 , sizeof(int));
   for (p = 0 ; p < n + 1; p++)
     abondant[p] = 0;
-  int *summable = malloc( (n + 1) * sizeof(int));
+  int *summable = calloc( n + 1 , sizeof(int));
   for (q = 0 ; q < n + 1; q++)
     summable[q] = 0;
   int sum = 0;

@@ -9,8 +9,7 @@ int main(){
   for (int i = 0 ; i < n; i++)
   {
     std::vector<int > *tab2 = new std::vector<int>( n );
-    for (int j = 0 ; j < n; j++)
-      tab2->at(j) = 0;
+    std::fill(tab2->begin(), tab2->end(), 0);
     tab->at(i) = tab2;
   }
   for (int l = 0 ; l < n; l++)

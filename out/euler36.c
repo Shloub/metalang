@@ -3,7 +3,7 @@
 
 int palindrome2(int* pow2, int n){
   int k, j, i;
-  int *t = malloc( 20 * sizeof(int));
+  int *t = calloc( 20 , sizeof(int));
   for (i = 0 ; i < 20; i++)
     t[i] = ((n / pow2[i]) % 2) == 1;
   int nnum = 0;
@@ -19,7 +19,7 @@ int palindrome2(int* pow2, int n){
 int main(void){
   int a0, b, c, d, i;
   int p = 1;
-  int *pow2 = malloc( 20 * sizeof(int));
+  int *pow2 = calloc( 20 , sizeof(int));
   for (i = 0 ; i < 20; i++)
   {
     p *= 2;

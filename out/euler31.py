@@ -12,9 +12,7 @@ def result( sum, t, maxIndex, cache ):
       cache[sum][maxIndex] = out0
       return out0
 
-t = [None] * 8
-for i in range(0, 8):
-  t[i] = 0
+t = [0] * 8
 t[0] = 1
 t[1] = 2
 t[2] = 5
@@ -25,9 +23,7 @@ t[6] = 100
 t[7] = 200
 cache = [None] * 201
 for j in range(0, 201):
-  o = [None] * 8
-  for k in range(0, 8):
-    o[k] = 0
+  o = [0] * 8
   cache[j] = o
 print("%d" % result(200, t, 7, cache), end='')
 

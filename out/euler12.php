@@ -36,9 +36,7 @@ function find($ndiv2){
   for ($j = 0 ; $j < $maximumprimes; $j++)
     $era[$j] = $j;
   $nprimes = eratostene($era, $maximumprimes);
-  $primes = array();
-  for ($o = 0 ; $o < $nprimes; $o++)
-    $primes[$o] = 0;
+  $primes = array_fill(0, $nprimes, 0);
   $l = 0;
   for ($k = 2 ; $k < $maximumprimes; $k++)
     if ($era[$k] == $k)
@@ -48,9 +46,7 @@ function find($ndiv2){
   }
   for ($n = 1 ; $n <= 10000; $n++)
   {
-    $primesFactors = array();
-    for ($m = 0 ; $m < $n + 2; $m++)
-      $primesFactors[$m] = 0;
+    $primesFactors = array_fill(0, $n + 2, 0);
     $max0 = max(fillPrimesFactors($primesFactors, $n, $primes, $nprimes), fillPrimesFactors($primesFactors, $n + 1, $primes, $nprimes));
     $primesFactors[2] --;
     $ndivs = 1;

@@ -58,8 +58,7 @@ int sumdivaux(std::vector<int> * t, int n, int i){
 
 int sumdiv(int nprimes, std::vector<int> * primes, int n){
   std::vector<int > *t = new std::vector<int>( n + 1 );
-  for (int i = 0 ; i < n + 1; i++)
-    t->at(i) = 0;
+  std::fill(t->begin(), t->end(), 0);
   int max0 = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max0, 0);
 }
@@ -72,8 +71,7 @@ int main(){
     era->at(s) = s;
   int nprimes = eratostene(era, maximumprimes);
   std::vector<int > *primes = new std::vector<int>( nprimes );
-  for (int t = 0 ; t < nprimes; t++)
-    primes->at(t) = 0;
+  std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era->at(k) == k)
@@ -84,11 +82,9 @@ int main(){
   int n = 100;
   /* 28124 ça prend trop de temps mais on arrive a passer le test */
   std::vector<bool > *abondant = new std::vector<bool>( n + 1 );
-  for (int p = 0 ; p < n + 1; p++)
-    abondant->at(p) = false;
+  std::fill(abondant->begin(), abondant->end(), false);
   std::vector<bool > *summable = new std::vector<bool>( n + 1 );
-  for (int q = 0 ; q < n + 1; q++)
-    summable->at(q) = false;
+  std::fill(summable->begin(), summable->end(), false);
   int sum = 0;
   for (int r = 2 ; r <= n; r ++)
   {

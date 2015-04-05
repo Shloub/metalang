@@ -10,7 +10,7 @@ int main(void){
   int i;
   char input = ' ';
   int current_pos = 500;
-  int *mem = malloc( 1000 * sizeof(int));
+  int *mem = calloc( 1000 , sizeof(int));
   for (i = 0 ; i < 1000; i++)
     mem[i] = 0;
   mem[current_pos] = mem[current_pos] + 1;

@@ -10,9 +10,7 @@ function show($lim, $nth){
   $t = array();
   for ($i = 0 ; $i < $lim; $i++)
     $t[$i] = $i;
-  $pris = array();
-  for ($j = 0 ; $j < $lim; $j++)
-    $pris[$j] = false;
+  $pris = array_fill(0, $lim, false);
   for ($k = 1 ; $k < $lim; $k++)
   {
     $n = fact($lim - $k);

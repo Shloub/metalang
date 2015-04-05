@@ -33,10 +33,10 @@ int pathfind_aux(int** cache, char** tab, int x, int y, int posX, int posY){
 
 int pathfind(char** tab, int x, int y){
   int i, j;
-  int* *cache = malloc( y * sizeof(int*));
+  int* *cache = calloc( y , sizeof(int*));
   for (i = 0 ; i < y; i++)
   {
-    int *tmp = malloc( x * sizeof(int));
+    int *tmp = calloc( x , sizeof(int));
     for (j = 0 ; j < x; j++)
     {
       printf("%c", tab[i][j]);
@@ -53,10 +53,10 @@ int main(void){
   int f, h, y, x;
   scanf("%d %d ", &x, &y);
   printf("%d %d\n", x, y);
-  char* *e = malloc( y * sizeof(char*));
+  char* *e = calloc( y , sizeof(char*));
   for (f = 0 ; f < y; f++)
   {
-    char *g = malloc( x * sizeof(char));
+    char *g = calloc( x , sizeof(char));
     for (h = 0 ; h < x; h++)
       scanf("%c", &g[h]);
     scanf(" ");

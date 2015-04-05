@@ -203,9 +203,7 @@ function &mul_bigint_cp(&$a, &$b){
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   $len = $a["bigint_len"] + $b["bigint_len"] + 1;
-  $chiffres = array();
-  for ($k = 0 ; $k < $len; $k++)
-    $chiffres[$k] = 0;
+  $chiffres = array_fill(0, $len, 0);
   for ($i = 0 ; $i < $a["bigint_len"]; $i++)
   {
     $retenue = 0;
@@ -305,9 +303,7 @@ function &bigint_of_int($i){
   $size = log100($i);
   if ($i == 0)
     $size = 0;
-  $t = array();
-  for ($j = 0 ; $j < $size; $j++)
-    $t[$j] = 0;
+  $t = array_fill(0, $size, 0);
   for ($k = 0 ; $k < $size; $k++)
   {
     $t[$k] = $i % 10;
@@ -413,9 +409,7 @@ function euler29(){
   $a0_bigint = array();
   for ($j2 = 0 ; $j2 < $maxA + 1; $j2++)
     $a0_bigint[$j2] = bigint_of_int($j2);
-  $b = array();
-  for ($k = 0 ; $k < $maxA + 1; $k++)
-    $b[$k] = 2;
+  $b = array_fill(0, $maxA + 1, 2);
   $n = 0;
   $found = true;
   while ($found)

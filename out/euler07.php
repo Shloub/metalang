@@ -20,8 +20,6 @@ function find($n, &$t, $used, $nth){
 }
 
 $n = 10001;
-$t = array();
-for ($i = 0 ; $i < $n; $i++)
-  $t[$i] = 2;
+$t = array_fill(0, $n, 2);
 echo find(3, $t, 1, $n), "\n";
 ?>

@@ -42,9 +42,7 @@ def sumdivaux( t, n, i ):
       return (out0 + 1) * o
 
 def sumdiv( nprimes, primes, n ):
-    t = [None] * (n + 1)
-    for i in range(0, n + 1):
-      t[i] = 0
+    t = [0] * (n + 1)
     max0 = fillPrimesFactors(t, n, primes, nprimes)
     return sumdivaux(t, max0, 0)
 
@@ -53,9 +51,7 @@ era = [None] * maximumprimes
 for s in range(0, maximumprimes):
   era[s] = s
 nprimes = eratostene(era, maximumprimes)
-primes = [None] * nprimes
-for t in range(0, nprimes):
-  primes[t] = 0
+primes = [0] * nprimes
 l = 0
 for k in range(2, maximumprimes):
   if era[k] == k:
@@ -63,12 +59,8 @@ for k in range(2, maximumprimes):
     l += 1
 n = 100
 """ 28124 ça prend trop de temps mais on arrive a passer le test """
-abondant = [None] * (n + 1)
-for p in range(0, n + 1):
-  abondant[p] = False
-summable = [None] * (n + 1)
-for q in range(0, n + 1):
-  summable[q] = False
+abondant = [False] * (n + 1)
+summable = [False] * (n + 1)
 sum = 0
 for r in range(2, 1 + n):
   other = sumdiv(nprimes, primes, r) - r

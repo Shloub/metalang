@@ -18,9 +18,7 @@ def find( n, m ):
       m[n] = 1 + find(next0(n), m)
       return m[n]
 
-m = [None] * 1000000
-for j in range(0, 1000000):
-  m[j] = 0
+m = [0] * 1000000
 max0 = 0
 maxi = 0
 for i in range(1, 1 + 999):

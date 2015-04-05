@@ -48,8 +48,7 @@ int main(){
   for (int i = 0 ; i < 10; i++)
     allowed->at(i) = i != 0;
   std::vector<bool > *counted = new std::vector<bool>( 100000 );
-  for (int j = 0 ; j < 100000; j++)
-    counted->at(j) = false;
+  std::fill(counted->begin(), counted->end(), false);
   for (int e = 1 ; e <= 9; e ++)
   {
     allowed->at(e) = false;

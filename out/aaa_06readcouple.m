@@ -10,7 +10,7 @@ int main(void){
     scanf("%d %d ", &a, &b);
     printf("a = %d b = %d\n", a, b);
   }
-  int *l = malloc( 10 * sizeof(int));
+  int *l = calloc( 10 , sizeof(int));
   for (c = 0 ; c < 10; c++)
   {
     scanf("%d ", &l[c]);

@@ -10,7 +10,7 @@ int main(void){
   int j, toto, strlen;
   char tmpc;
   scanf("%d ", &strlen);
-  char *tab4 = malloc( strlen * sizeof(char));
+  char *tab4 = calloc( strlen , sizeof(char));
   for (toto = 0 ; toto < strlen; toto++)
   {
     scanf("%c", &tmpc);

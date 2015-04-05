@@ -41,9 +41,7 @@ count = 0
 allowed = [None] * 10
 for i in range(0, 10):
   allowed[i] = i != 0
-counted = [None] * 100000
-for j in range(0, 100000):
-  counted[j] = False
+counted = [False] * 100000
 for e in range(1, 1 + 9):
   allowed[e] = False
   for b in range(1, 1 + 9):

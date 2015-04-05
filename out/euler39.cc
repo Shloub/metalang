@@ -4,8 +4,7 @@
 
 int main(){
   std::vector<int > *t = new std::vector<int>( 1001 );
-  for (int i = 0 ; i < 1001; i++)
-    t->at(i) = 0;
+  std::fill(t->begin(), t->end(), 0);
   for (int a = 1 ; a <= 1000; a ++)
     for (int b = 1 ; b <= 1000; b ++)
     {

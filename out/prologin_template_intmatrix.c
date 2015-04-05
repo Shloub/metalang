@@ -13,10 +13,10 @@ int programme_candidat(int** tableau, int x, int y){
 int main(void){
   int a, c, taille_y, taille_x;
   scanf("%d %d ", &taille_x, &taille_y);
-  int* *tableau = malloc( taille_y * sizeof(int*));
+  int* *tableau = calloc( taille_y , sizeof(int*));
   for (a = 0 ; a < taille_y; a++)
   {
-    int *b = malloc( taille_x * sizeof(int));
+    int *b = calloc( taille_x , sizeof(int));
     for (c = 0 ; c < taille_x; c++)
     {
       scanf("%d ", &b[c]);

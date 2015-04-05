@@ -23,9 +23,7 @@ $era = array();
 for ($j_ = 0 ; $j_ < $maximumprimes; $j_++)
   $era[$j_] = $j_;
 $nprimes = eratostene($era, $maximumprimes);
-$primes = array();
-for ($o = 0 ; $o < $nprimes; $o++)
-  $primes[$o] = 0;
+$primes = array_fill(0, $nprimes, 0);
 $l = 0;
 for ($k = 2 ; $k < $maximumprimes; $k++)
   if ($era[$k] == $k)
@@ -34,9 +32,7 @@ for ($k = 2 ; $k < $maximumprimes; $k++)
   $l ++;
 }
 echo $l, " == ", $nprimes, "\n";
-$canbe = array();
-for ($i_ = 0 ; $i_ < $maximumprimes; $i_++)
-  $canbe[$i_] = false;
+$canbe = array_fill(0, $maximumprimes, false);
 for ($i = 0 ; $i < $nprimes; $i++)
   for ($j = 0 ; $j < $maximumprimes; $j++)
   {

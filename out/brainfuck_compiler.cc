@@ -10,8 +10,7 @@ int main(){
   char input = ' ';
   int current_pos = 500;
   std::vector<int > *mem = new std::vector<int>( 1000 );
-  for (int i = 0 ; i < 1000; i++)
-    mem->at(i) = 0;
+  std::fill(mem->begin(), mem->end(), 0);
   mem->at(current_pos) = mem->at(current_pos) + 1;
   mem->at(current_pos) = mem->at(current_pos) + 1;
   mem->at(current_pos) = mem->at(current_pos) + 1;

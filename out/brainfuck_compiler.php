@@ -6,9 +6,7 @@ et qui produit les macros metalang correspondante
 */
 $input = " ";
 $current_pos = 500;
-$mem = array();
-for ($i = 0 ; $i < 1000; $i++)
-  $mem[$i] = 0;
+$mem = array_fill(0, 1000, 0);
 $mem[$current_pos] = $mem[$current_pos] + 1;
 $mem[$current_pos] = $mem[$current_pos] + 1;
 $mem[$current_pos] = $mem[$current_pos] + 1;

@@ -16,7 +16,7 @@ int main(void){
   scanf("%d ", &len);
   char tofind = '\x00';
   scanf("%c ", &tofind);
-  char *tab = malloc( len * sizeof(char));
+  char *tab = calloc( len , sizeof(char));
   for (i = 0 ; i < len; i++)
   {
     char tmp = '\x00';

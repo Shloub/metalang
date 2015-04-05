@@ -28,18 +28,14 @@ def find( ndiv2 ):
     for j in range(0, maximumprimes):
       era[j] = j
     nprimes = eratostene(era, maximumprimes)
-    primes = [None] * nprimes
-    for o in range(0, nprimes):
-      primes[o] = 0
+    primes = [0] * nprimes
     l = 0
     for k in range(2, maximumprimes):
       if era[k] == k:
         primes[l] = k
         l += 1
     for n in range(1, 1 + 10000):
-      primesFactors = [None] * (n + 2)
-      for m in range(0, n + 2):
-        primesFactors[m] = 0
+      primesFactors = [0] * (n + 2)
       max0 = max(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n + 1, primes, nprimes))
       primesFactors[2] -= 1
       ndivs = 1

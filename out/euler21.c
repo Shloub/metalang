@@ -62,7 +62,7 @@ int sumdivaux(int* t, int n, int i){
 
 int sumdiv(int nprimes, int* primes, int n){
   int i;
-  int *t = malloc( (n + 1) * sizeof(int));
+  int *t = calloc( n + 1 , sizeof(int));
   for (i = 0 ; i < n + 1; i++)
     t[i] = 0;
   int max0 = fillPrimesFactors(t, n, primes, nprimes);
@@ -72,11 +72,11 @@ int sumdiv(int nprimes, int* primes, int n){
 int main(void){
   int n, k, o, j;
   int maximumprimes = 1001;
-  int *era = malloc( maximumprimes * sizeof(int));
+  int *era = calloc( maximumprimes , sizeof(int));
   for (j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   int nprimes = eratostene(era, maximumprimes);
-  int *primes = malloc( nprimes * sizeof(int));
+  int *primes = calloc( nprimes , sizeof(int));
   for (o = 0 ; o < nprimes; o++)
     primes[o] = 0;
   int l = 0;

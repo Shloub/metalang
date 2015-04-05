@@ -45,11 +45,11 @@ int fillPrimesFactors(int* t, int n, int* primes, int nprimes){
 int find(int ndiv2){
   int n, i, m, k, o, j;
   int maximumprimes = 110;
-  int *era = malloc( maximumprimes * sizeof(int));
+  int *era = calloc( maximumprimes , sizeof(int));
   for (j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   int nprimes = eratostene(era, maximumprimes);
-  int *primes = malloc( nprimes * sizeof(int));
+  int *primes = calloc( nprimes , sizeof(int));
   for (o = 0 ; o < nprimes; o++)
     primes[o] = 0;
   int l = 0;
@@ -61,7 +61,7 @@ int find(int ndiv2){
   }
   for (n = 1 ; n <= 10000; n++)
   {
-    int *primesFactors = malloc( (n + 2) * sizeof(int));
+    int *primesFactors = calloc( n + 2 , sizeof(int));
     for (m = 0 ; m < n + 2; m++)
       primesFactors[m] = 0;
     int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n +

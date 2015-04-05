@@ -19,8 +19,7 @@ int result(int sum, std::vector<int> * t, int maxIndex, std::vector<std::vector<
 
 int main(){
   std::vector<int > *t = new std::vector<int>( 8 );
-  for (int i = 0 ; i < 8; i++)
-    t->at(i) = 0;
+  std::fill(t->begin(), t->end(), 0);
   t->at(0) = 1;
   t->at(1) = 2;
   t->at(2) = 5;
@@ -33,8 +32,7 @@ int main(){
   for (int j = 0 ; j < 201; j++)
   {
     std::vector<int > *o = new std::vector<int>( 8 );
-    for (int k = 0 ; k < 8; k++)
-      o->at(k) = 0;
+    std::fill(o->begin(), o->end(), 0);
     cache->at(j) = o;
   }
   std::cout << result(200, t, 7, cache);

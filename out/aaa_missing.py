@@ -2,9 +2,7 @@
   Ce test a été généré par Metalang.
 """
 def result( len, tab ):
-    tab2 = [None] * len
-    for i in range(0, len):
-      tab2[i] = False
+    tab2 = [False] * len
     for i1 in range(0, len):
       print("%d " % ( tab[i1] ), end='')
       tab2[tab[i1]] = True

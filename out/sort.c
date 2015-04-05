@@ -3,7 +3,7 @@
 
 int* copytab(int* tab, int len){
   int i;
-  int *o = malloc( len * sizeof(int));
+  int *o = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
     o[i] = tab[i];
   return o;
@@ -59,7 +59,7 @@ int main(void){
   int i, i_;
   int len = 2;
   scanf("%d ", &len);
-  int *tab = malloc( len * sizeof(int));
+  int *tab = calloc( len , sizeof(int));
   for (i_ = 0 ; i_ < len; i_++)
   {
     int tmp = 0;

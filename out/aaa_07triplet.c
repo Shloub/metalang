@@ -8,7 +8,7 @@ int main(void){
     scanf("%d %d %d ", &a, &b, &c);
     printf("a = %d b = %dc =%d\n", a, b, c);
   }
-  int *l = malloc( 10 * sizeof(int));
+  int *l = calloc( 10 , sizeof(int));
   for (d = 0 ; d < 10; d++)
   {
     scanf("%d ", &l[d]);

@@ -24,11 +24,11 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int b, a, taille2, taille1;
   scanf("%d %d ", &taille1, &taille2);
-  char *tableau1 = malloc( taille1 * sizeof(char));
+  char *tableau1 = calloc( taille1 , sizeof(char));
   for (a = 0 ; a < taille1; a++)
     scanf("%c", &tableau1[a]);
   scanf(" ");
-  char *tableau2 = malloc( taille2 * sizeof(char));
+  char *tableau2 = calloc( taille2 , sizeof(char));
   for (b = 0 ; b < taille2; b++)
     scanf("%c", &tableau2[b]);
   scanf(" ");

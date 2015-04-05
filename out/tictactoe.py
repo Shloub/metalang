@@ -163,9 +163,7 @@ def play( g ):
 def init0(  ):
     cases = [None] * 3
     for i in range(0, 3):
-      tab = [None] * 3
-      for j in range(0, 3):
-        tab[j] = 0
+      tab = [0] * 3
       cases[i] = tab
     return {
       "cases":cases,

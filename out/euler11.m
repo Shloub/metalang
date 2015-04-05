@@ -30,7 +30,7 @@ int find(int n, int** m, int x, int y, int dx, int dy){
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int j, x, y, o, q, i;
-  tuple_int_int * *directions = malloc( 8 * sizeof(tuple_int_int *));
+  tuple_int_int * *directions = calloc( 8 , sizeof(tuple_int_int *));
   for (i = 0 ; i < 8; i++)
     if (i == 0)
   {
@@ -89,10 +89,10 @@ int main(void){
     directions[i] = l;
   }
   int max0 = 0;
-  int* *m = malloc( 20 * sizeof(int*));
+  int* *m = calloc( 20 , sizeof(int*));
   for (o = 0 ; o < 20; o++)
   {
-    int *p = malloc( 20 * sizeof(int));
+    int *p = calloc( 20 , sizeof(int));
     for (q = 0 ; q < 20; q++)
     {
       scanf("%d ", &p[q]);

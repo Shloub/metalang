@@ -34,7 +34,7 @@ int result(toto ** t, int len){
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i;
-  toto * *t = malloc( 4 * sizeof(toto *));
+  toto * *t = calloc( 4 , sizeof(toto *));
   for (i = 0 ; i < 4; i++)
     t[i] = mktoto(i);
   scanf("%d %d", &t[0]->bar, &t[1]->blah);

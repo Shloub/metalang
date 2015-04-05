@@ -3,8 +3,7 @@
 
 int main(){
   std::vector<int > *f = new std::vector<int>( 10 );
-  for (int j = 0 ; j < 10; j++)
-    f->at(j) = 1;
+  std::fill(f->begin(), f->end(), 1);
   for (int i = 1 ; i <= 9; i ++)
   {
     f->at(i) = f->at(i) * i * f->at(i - 1);

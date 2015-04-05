@@ -20,9 +20,7 @@ function find($n, &$m){
   }
 }
 
-$m = array();
-for ($j = 0 ; $j < 1000000; $j++)
-  $m[$j] = 0;
+$m = array_fill(0, 1000000, 0);
 $max0 = 0;
 $maxi = 0;
 for ($i = 1 ; $i <= 999; $i++)

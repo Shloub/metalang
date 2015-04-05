@@ -45,13 +45,13 @@ int test(int a, int b, int* primes, int len){
 int main(void){
   int b, a, k, o, j;
   int maximumprimes = 1000;
-  int *era = malloc( maximumprimes * sizeof(int));
+  int *era = calloc( maximumprimes , sizeof(int));
   for (j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   int result = 0;
   int max0 = 0;
   int nprimes = eratostene(era, maximumprimes);
-  int *primes = malloc( nprimes * sizeof(int));
+  int *primes = calloc( nprimes , sizeof(int));
   for (o = 0 ; o < nprimes; o++)
     primes[o] = 0;
   int l = 0;

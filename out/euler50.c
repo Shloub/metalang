@@ -31,11 +31,11 @@ int eratostene(int* t, int max0){
 int main(void){
   int i, i_, k, o, j;
   int maximumprimes = 1000001;
-  int *era = malloc( maximumprimes * sizeof(int));
+  int *era = calloc( maximumprimes , sizeof(int));
   for (j = 0 ; j < maximumprimes; j++)
     era[j] = j;
   int nprimes = eratostene(era, maximumprimes);
-  int *primes = malloc( nprimes * sizeof(int));
+  int *primes = calloc( nprimes , sizeof(int));
   for (o = 0 ; o < nprimes; o++)
     primes[o] = 0;
   int l = 0;
@@ -46,7 +46,7 @@ int main(void){
     l ++;
   }
   printf("%d == %d\n", l, nprimes);
-  int *sum = malloc( nprimes * sizeof(int));
+  int *sum = calloc( nprimes , sizeof(int));
   for (i_ = 0 ; i_ < nprimes; i_++)
     sum[i_] = primes[i_];
   int maxl = 0;

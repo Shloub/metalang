@@ -14,7 +14,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i;
   int j = 0;
-  int *a = malloc( 5 * sizeof(int));
+  int *a = calloc( 5 , sizeof(int));
   for (i = 0 ; i < 5; i++)
   {
     printf("%d", i);

@@ -43,9 +43,7 @@ def is_number( c ):
 Notation polonaise inversée, ce test permet d'évaluer une expression écrite en NPI
 """
 def npi0( str, len ):
-    stack = [None] * len
-    for i in range(0, len):
-      stack[i] = 0
+    stack = [0] * len
     ptrStack = 0
     ptrStr = 0
     while (ptrStr < len):

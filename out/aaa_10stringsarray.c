@@ -20,7 +20,7 @@ void print_toto(struct toto * t){
 
 int main(void){
   int j, i;
-  char* *tab = malloc( 2 * sizeof(char*));
+  char* *tab = calloc( 2 , sizeof(char*));
   for (i = 0 ; i < 2; i++)
     tab[i] = idstring("chaine de test");
   for (j = 0 ; j <= 1; j++)

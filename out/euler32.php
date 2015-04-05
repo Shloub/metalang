@@ -44,9 +44,7 @@ $count = 0;
 $allowed = array();
 for ($i = 0 ; $i < 10; $i++)
   $allowed[$i] = $i != 0;
-$counted = array();
-for ($j = 0 ; $j < 100000; $j++)
-  $counted[$j] = false;
+$counted = array_fill(0, 100000, false);
 for ($e = 1 ; $e <= 9; $e++)
 {
   $allowed[$e] = false;

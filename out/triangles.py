@@ -60,9 +60,7 @@ def find0( len, tab, cache, x, y ):
 def find( len, tab ):
     tab2 = [None] * len
     for i in range(0, len):
-      tab3 = [None] * (i + 1)
-      for j in range(0, i + 1):
-        tab3[j] = 0
+      tab3 = [0] * (i + 1)
       tab2[i] = tab3
     return find0(len, tab, tab2, 0, 0)
 

@@ -42,9 +42,7 @@ def sumdivaux( t, n, i ):
       return (out0 + 1) * o
 
 def sumdiv( nprimes, primes, n ):
-    t = [None] * (n + 1)
-    for i in range(0, n + 1):
-      t[i] = 0
+    t = [0] * (n + 1)
     max0 = fillPrimesFactors(t, n, primes, nprimes)
     return sumdivaux(t, max0, 0)
 
@@ -53,9 +51,7 @@ era = [None] * maximumprimes
 for j in range(0, maximumprimes):
   era[j] = j
 nprimes = eratostene(era, maximumprimes)
-primes = [None] * nprimes
-for o in range(0, nprimes):
-  primes[o] = 0
+primes = [0] * nprimes
 l = 0
 for k in range(2, maximumprimes):
   if era[k] == k:

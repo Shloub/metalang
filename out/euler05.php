@@ -1,8 +1,6 @@
 <?php
 function &primesfactors($n){
-  $tab = array();
-  for ($i = 0 ; $i < $n + 1; $i++)
-    $tab[$i] = 0;
+  $tab = array_fill(0, $n + 1, 0);
   $d = 2;
   while ($n != 1 && $d * $d <= $n)
     if (($n % $d) == 0)
@@ -17,9 +15,7 @@ function &primesfactors($n){
 }
 
 $lim = 20;
-$o = array();
-for ($m = 0 ; $m < $lim + 1; $m++)
-  $o[$m] = 0;
+$o = array_fill(0, $lim + 1, 0);
 for ($i = 1 ; $i <= $lim; $i++)
 {
   $t = primesfactors($i);

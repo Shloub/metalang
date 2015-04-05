@@ -20,7 +20,7 @@ int result(int sum, int* t, int maxIndex, int** cache){
 
 int main(void){
   int j, k, i;
-  int *t = malloc( 8 * sizeof(int));
+  int *t = calloc( 8 , sizeof(int));
   for (i = 0 ; i < 8; i++)
     t[i] = 0;
   t[0] = 1;
@@ -31,10 +31,10 @@ int main(void){
   t[5] = 50;
   t[6] = 100;
   t[7] = 200;
-  int* *cache = malloc( 201 * sizeof(int*));
+  int* *cache = calloc( 201 , sizeof(int*));
   for (j = 0 ; j < 201; j++)
   {
-    int *o = malloc( 8 * sizeof(int));
+    int *o = calloc( 8 , sizeof(int));
     for (k = 0 ; k < 8; k++)
       o[k] = 0;
     cache[j] = o;

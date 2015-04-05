@@ -171,8 +171,7 @@ gamestate * init0(){
   for (int i = 0 ; i < 3; i++)
   {
     std::vector<int > *tab = new std::vector<int>( 3 );
-    for (int j = 0 ; j < 3; j++)
-      tab->at(j) = 0;
+    std::fill(tab->begin(), tab->end(), 0);
     cases->at(i) = tab;
   }
   gamestate * a = new gamestate();

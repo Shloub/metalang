@@ -157,9 +157,7 @@ def mul_bigint_cp( a, b ):
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. """
     len = a["bigint_len"] + b["bigint_len"] + 1
-    chiffres = [None] * len
-    for k in range(0, len):
-      chiffres[k] = 0
+    chiffres = [0] * len
     for i in range(0, a["bigint_len"]):
       retenue = 0
       for j in range(0, b["bigint_len"]):
@@ -235,9 +233,7 @@ def bigint_of_int( i ):
     size = log10(i)
     if i == 0:
       size = 0
-    t = [None] * size
-    for j in range(0, size):
-      t[j] = 0
+    t = [0] * size
     for k in range(0, size):
       t[k] = mod(i, 10)
       i = math.trunc(i / 10)
@@ -323,9 +319,7 @@ def euler29(  ):
     a0_bigint = [None] * (maxA + 1)
     for j2 in range(0, maxA + 1):
       a0_bigint[j2] = bigint_of_int(j2)
-    b = [None] * (maxA + 1)
-    for k in range(0, maxA + 1):
-      b[k] = 2
+    b = [2] * (maxA + 1)
     n = 0
     found = True
     while (found):

@@ -5,9 +5,7 @@ et qui produit les macros metalang correspondante
 """
 input = ' '
 current_pos = 500
-mem = [None] * 1000
-for i in range(0, 1000):
-  mem[i] = 0
+mem = [0] * 1000
 mem[current_pos] = mem[current_pos] + 1
 mem[current_pos] = mem[current_pos] + 1
 mem[current_pos] = mem[current_pos] + 1

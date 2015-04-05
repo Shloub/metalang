@@ -11,10 +11,10 @@ int fact(int n){
 
 void show(int lim, int nth){
   int m, k, l, j, i;
-  int *t = malloc( lim * sizeof(int));
+  int *t = calloc( lim , sizeof(int));
   for (i = 0 ; i < lim; i++)
     t[i] = i;
-  int *pris = malloc( lim * sizeof(int));
+  int *pris = calloc( lim , sizeof(int));
   for (j = 0 ; j < lim; j++)
     pris[j] = 0;
   for (k = 1 ; k < lim; k++)

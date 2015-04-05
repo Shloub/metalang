@@ -24,7 +24,7 @@ int find(int n, int* m){
 
 int main(void){
   int i, j;
-  int *m = malloc( 1000000 * sizeof(int));
+  int *m = calloc( 1000000 , sizeof(int));
   for (j = 0 ; j < 1000000; j++)
     m[j] = 0;
   int max0 = 0;

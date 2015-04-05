@@ -33,14 +33,14 @@ int main(void){
   int i, index2, taille, index, taille_cle;
   char out2, out0;
   scanf("%d ", &taille_cle);
-  char *cle = malloc( taille_cle * sizeof(char));
+  char *cle = calloc( taille_cle , sizeof(char));
   for (index = 0 ; index < taille_cle; index++)
   {
     scanf("%c", &out0);
     cle[index] = out0;
   }
   scanf(" %d ", &taille);
-  char *message = malloc( taille * sizeof(char));
+  char *message = calloc( taille , sizeof(char));
   for (index2 = 0 ; index2 < taille; index2++)
   {
     scanf("%c", &out2);

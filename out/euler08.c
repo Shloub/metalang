@@ -12,7 +12,7 @@ int main(void){
   int k, j;
   char e, c;
   int i = 1;
-  int *last = malloc( 5 * sizeof(int));
+  int *last = calloc( 5 , sizeof(int));
   for (j = 0 ; j < 5; j++)
   {
     scanf("%c", &c);

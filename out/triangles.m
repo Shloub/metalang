@@ -30,10 +30,10 @@ int find0(int len, int** tab, int** cache, int x, int y){
 
 int find(int len, int** tab){
   int i, j;
-  int* *tab2 = malloc( len * sizeof(int*));
+  int* *tab2 = calloc( len , sizeof(int*));
   for (i = 0 ; i < len; i++)
   {
-    int *tab3 = malloc( (i + 1) * sizeof(int));
+    int *tab3 = calloc( i + 1 , sizeof(int));
     for (j = 0 ; j < i + 1; j++)
       tab3[j] = 0;
     tab2[i] = tab3;
@@ -46,10 +46,10 @@ int main(void){
   int k, l, i, j;
   int len = 0;
   scanf("%d ", &len);
-  int* *tab = malloc( len * sizeof(int*));
+  int* *tab = calloc( len , sizeof(int*));
   for (i = 0 ; i < len; i++)
   {
-    int *tab2 = malloc( (i + 1) * sizeof(int));
+    int *tab2 = calloc( i + 1 , sizeof(int));
     for (j = 0 ; j < i + 1; j++)
     {
       int tmp = 0;

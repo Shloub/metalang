@@ -22,7 +22,7 @@ int devine0(int nombre, int* tab, int len){
 int main(void){
   int i, tmp, len, nombre;
   scanf("%d %d ", &nombre, &len);
-  int *tab = malloc( len * sizeof(int));
+  int *tab = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
   {
     scanf("%d ", &tmp);

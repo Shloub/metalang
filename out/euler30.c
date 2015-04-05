@@ -11,7 +11,7 @@ a + b * 10 + c * 100 + d * 1000 + e * 10 000 =
   d ^ 5 +
   e ^ 5
 */
-  int *p = malloc( 10 * sizeof(int));
+  int *p = calloc( 10 , sizeof(int));
   for (i = 0 ; i < 10; i++)
     p[i] = i * i * i * i * i;
   int sum = 0;

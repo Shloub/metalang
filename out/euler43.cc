@@ -32,8 +32,7 @@ d6 = 5 ou d6 = 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 */
   std::vector<bool > *allowed = new std::vector<bool>( 10 );
-  for (int i = 0 ; i < 10; i++)
-    allowed->at(i) = true;
+  std::fill(allowed->begin(), allowed->end(), true);
   for (int i6 = 0 ; i6 <= 1; i6 ++)
   {
     int d6 = i6 * 5;

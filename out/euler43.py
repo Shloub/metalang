@@ -30,9 +30,7 @@ d6 = 5 ou d6 = 0
 (d3 + d4 + d5) % 3 == 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 """
-allowed = [None] * 10
-for i in range(0, 10):
-  allowed[i] = True
+allowed = [True] * 10
 for i6 in range(0, 1 + 1):
   d6 = i6 * 5
   if allowed[d6]:

@@ -4,7 +4,7 @@
 /* lit un sudoku sur l'entrée standard */
 int* read_sudoku(){
   int i, k;
-  int *out0 = malloc( (9 * 9) * sizeof(int));
+  int *out0 = calloc( 9 * 9 , sizeof(int));
   for (i = 0 ; i < 9 * 9; i++)
   {
     scanf("%d ", &k);

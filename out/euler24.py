@@ -11,9 +11,7 @@ def show( lim, nth ):
     t = [None] * lim
     for i in range(0, lim):
       t[i] = i
-    pris = [None] * lim
-    for j in range(0, lim):
-      pris[j] = False
+    pris = [False] * lim
     for k in range(1, lim):
       n = fact(lim - k)
       nchiffre = math.trunc(nth / n)

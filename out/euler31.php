@@ -15,9 +15,7 @@ function result($sum, &$t, $maxIndex, &$cache){
   }
 }
 
-$t = array();
-for ($i = 0 ; $i < 8; $i++)
-  $t[$i] = 0;
+$t = array_fill(0, 8, 0);
 $t[0] = 1;
 $t[1] = 2;
 $t[2] = 5;
@@ -29,9 +27,7 @@ $t[7] = 200;
 $cache = array();
 for ($j = 0 ; $j < 201; $j++)
 {
-  $o = array();
-  for ($k = 0 ; $k < 8; $k++)
-    $o[$k] = 0;
+  $o = array_fill(0, 8, 0);
   $cache[$j] = $o;
 }
 echo result(200, $t, 7, $cache);

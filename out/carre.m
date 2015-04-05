@@ -13,10 +13,10 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int jy, jx, ix, iy, d, f, y, x;
   scanf("%d %d ", &x, &y);
-  int* *tab = malloc( y * sizeof(int*));
+  int* *tab = calloc( y , sizeof(int*));
   for (d = 0 ; d < y; d++)
   {
-    int *e = malloc( x * sizeof(int));
+    int *e = calloc( x , sizeof(int));
     for (f = 0 ; f < x; f++)
     {
       scanf("%d ", &e[f]);

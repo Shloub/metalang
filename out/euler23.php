@@ -56,9 +56,7 @@ function sumdivaux(&$t, $n, $i){
 }
 
 function sumdiv($nprimes, &$primes, $n){
-  $t = array();
-  for ($i = 0 ; $i < $n + 1; $i++)
-    $t[$i] = 0;
+  $t = array_fill(0, $n + 1, 0);
   $max0 = fillPrimesFactors($t, $n, $primes, $nprimes);
   return sumdivaux($t, $max0, 0);
 }
@@ -68,9 +66,7 @@ $era = array();
 for ($s = 0 ; $s < $maximumprimes; $s++)
   $era[$s] = $s;
 $nprimes = eratostene($era, $maximumprimes);
-$primes = array();
-for ($t = 0 ; $t < $nprimes; $t++)
-  $primes[$t] = 0;
+$primes = array_fill(0, $nprimes, 0);
 $l = 0;
 for ($k = 2 ; $k < $maximumprimes; $k++)
   if ($era[$k] == $k)
@@ -80,12 +76,8 @@ for ($k = 2 ; $k < $maximumprimes; $k++)
 }
 $n = 100;
 /* 28124 ça prend trop de temps mais on arrive a passer le test */
-$abondant = array();
-for ($p = 0 ; $p < $n + 1; $p++)
-  $abondant[$p] = false;
-$summable = array();
-for ($q = 0 ; $q < $n + 1; $q++)
-  $summable[$q] = false;
+$abondant = array_fill(0, $n + 1, false);
+$summable = array_fill(0, $n + 1, false);
 $sum = 0;
 for ($r = 2 ; $r <= $n; $r++)
 {

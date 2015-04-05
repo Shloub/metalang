@@ -16,9 +16,7 @@ era = [None] * maximumprimes
 for j in range(0, maximumprimes):
   era[j] = j
 nprimes = eratostene(era, maximumprimes)
-primes = [None] * nprimes
-for o in range(0, nprimes):
-  primes[o] = 0
+primes = [0] * nprimes
 l = 0
 for k in range(2, maximumprimes):
   if era[k] == k:

@@ -26,11 +26,11 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int m, i, j, i_, k, o, j_;
   int maximumprimes = 6000;
-  int *era = malloc( maximumprimes * sizeof(int));
+  int *era = calloc( maximumprimes , sizeof(int));
   for (j_ = 0 ; j_ < maximumprimes; j_++)
     era[j_] = j_;
   int nprimes = eratostene(era, maximumprimes);
-  int *primes = malloc( nprimes * sizeof(int));
+  int *primes = calloc( nprimes , sizeof(int));
   for (o = 0 ; o < nprimes; o++)
     primes[o] = 0;
   int l = 0;
@@ -41,7 +41,7 @@ int main(void){
     l ++;
   }
   printf("%d == %d\n", l, nprimes);
-  int *canbe = malloc( maximumprimes * sizeof(int));
+  int *canbe = calloc( maximumprimes , sizeof(int));
   for (i_ = 0 ; i_ < maximumprimes; i_++)
     canbe[i_] = 0;
   for (i = 0 ; i < nprimes; i++)

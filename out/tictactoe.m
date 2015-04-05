@@ -180,10 +180,10 @@ move * play(gamestate * g){
 
 gamestate * init0(){
   int i, j;
-  int* *cases = malloc( 3 * sizeof(int*));
+  int* *cases = calloc( 3 , sizeof(int*));
   for (i = 0 ; i < 3; i++)
   {
-    int *tab = malloc( 3 * sizeof(int));
+    int *tab = calloc( 3 , sizeof(int));
     for (j = 0 ; j < 3; j++)
       tab[j] = 0;
     cases[i] = tab;

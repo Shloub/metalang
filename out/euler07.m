@@ -27,7 +27,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i;
   int n = 10001;
-  int *t = malloc( n * sizeof(int));
+  int *t = calloc( n , sizeof(int));
   for (i = 0 ; i < n; i++)
     t[i] = 2;
   printf("%d\n", find(3, t, 1, n));

@@ -29,7 +29,7 @@ int min2_(int a, int b){
 bigint * read_bigint(int len){
   int i, j;
   char c;
-  int *chiffres = malloc( len * sizeof(int));
+  int *chiffres = calloc( len , sizeof(int));
   for (j = 0 ; j < len; j++)
   {
     scanf("%c", &c);
@@ -107,7 +107,7 @@ bigint * add_bigint_positif(bigint * a, bigint * b){
   /* Une addition ou on en a rien a faire des signes */
   int len = max2_(a->bigint_len, b->bigint_len) + 1;
   int retenue = 0;
-  int *chiffres = malloc( len * sizeof(int));
+  int *chiffres = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
   {
     int tmp = retenue;
@@ -134,7 +134,7 @@ Pré-requis : a > b
 */
   int len = a->bigint_len;
   int retenue = 0;
-  int *chiffres = malloc( len * sizeof(int));
+  int *chiffres = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
   {
     int tmp = retenue + a->bigint_chiffres[i];
@@ -202,7 +202,7 @@ bigint * mul_bigint_cp(bigint * a, bigint * b){
 C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   int len = a->bigint_len + b->bigint_len + 1;
-  int *chiffres = malloc( len * sizeof(int));
+  int *chiffres = calloc( len , sizeof(int));
   for (k = 0 ; k < len; k++)
     chiffres[k] = 0;
   for (i = 0 ; i < a->bigint_len; i++)
@@ -244,7 +244,7 @@ bigint * bigint_premiers_chiffres(bigint * a, int i){
 
 bigint * bigint_shift(bigint * a, int i){
   int k;
-  int *chiffres = malloc( (a->bigint_len + i) * sizeof(int));
+  int *chiffres = calloc( a->bigint_len + i , sizeof(int));
   for (k = 0 ; k < a->bigint_len + i; k++)
     if (k >= i)
     chiffres[k] = a->bigint_chiffres[k - i];
@@ -299,7 +299,7 @@ bigint * bigint_of_int(int i){
   int size = log100(i);
   if (i == 0)
     size = 0;
-  int *t = malloc( size * sizeof(int));
+  int *t = calloc( size , sizeof(int));
   for (j = 0 ; j < size; j++)
     t[j] = 0;
   for (k = 0 ; k < size; k++)
@@ -402,13 +402,13 @@ int euler29(){
   int l, i, k, j2, j;
   int maxA = 5;
   int maxB = 5;
-  bigint * *a_bigint = malloc( (maxA + 1) * sizeof(bigint *));
+  bigint * *a_bigint = calloc( maxA + 1 , sizeof(bigint *));
   for (j = 0 ; j < maxA + 1; j++)
     a_bigint[j] = bigint_of_int(j * j);
-  bigint * *a0_bigint = malloc( (maxA + 1) * sizeof(bigint *));
+  bigint * *a0_bigint = calloc( maxA + 1 , sizeof(bigint *));
   for (j2 = 0 ; j2 < maxA + 1; j2++)
     a0_bigint[j2] = bigint_of_int(j2);
-  int *b = malloc( (maxA + 1) * sizeof(int));
+  int *b = calloc( maxA + 1 , sizeof(int));
   for (k = 0 ; k < maxA + 1; k++)
     b[k] = 2;
   int n = 0;

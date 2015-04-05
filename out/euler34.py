@@ -1,6 +1,4 @@
-f = [None] * 10
-for j in range(0, 10):
-  f[j] = 1
+f = [1] * 10
 for i in range(1, 1 + 9):
   f[i] = f[i] * i * f[i - 1]
   print("%d " % ( f[i] ), end='')

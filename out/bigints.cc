@@ -191,8 +191,7 @@ C'est le même que celui qu'on enseigne aux enfants en CP.
 D'ou le nom de la fonction. */
   int len = a->bigint_len + b->bigint_len + 1;
   std::vector<int > *chiffres = new std::vector<int>( len );
-  for (int k = 0 ; k < len; k++)
-    chiffres->at(k) = 0;
+  std::fill(chiffres->begin(), chiffres->end(), 0);
   for (int i = 0 ; i < a->bigint_len; i++)
   {
     int retenue = 0;
@@ -286,8 +285,7 @@ bigint * bigint_of_int(int i){
   if (i == 0)
     size = 0;
   std::vector<int > *t = new std::vector<int>( size );
-  for (int j = 0 ; j < size; j++)
-    t->at(j) = 0;
+  std::fill(t->begin(), t->end(), 0);
   for (int k = 0 ; k < size; k++)
   {
     t->at(k) = i % 10;
@@ -392,8 +390,7 @@ int euler29(){
   for (int j2 = 0 ; j2 < maxA + 1; j2++)
     a0_bigint->at(j2) = bigint_of_int(j2);
   std::vector<int > *b = new std::vector<int>( maxA + 1 );
-  for (int k = 0 ; k < maxA + 1; k++)
-    b->at(k) = 2;
+  std::fill(b->begin(), b->end(), 2);
   int n = 0;
   bool found = true;
   while (found)

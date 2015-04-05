@@ -28,9 +28,7 @@ d6 = 5 ou d6 = 0
 (d3 + d4 + d5) % 3 == 0
 (d5 * 2 + d6 * 3 + d7) % 7 == 0
 */
-$allowed = array();
-for ($i = 0 ; $i < 10; $i++)
-  $allowed[$i] = true;
+$allowed = array_fill(0, 10, true);
 for ($i6 = 0 ; $i6 <= 1; $i6++)
 {
   $d6 = $i6 * 5;

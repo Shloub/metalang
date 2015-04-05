@@ -5,9 +5,7 @@ $n ++;
 $tab = array();
 for ($i = 0 ; $i < $n; $i++)
 {
-  $tab2 = array();
-  for ($j = 0 ; $j < $n; $j++)
-    $tab2[$j] = 0;
+  $tab2 = array_fill(0, $n, 0);
   $tab[$i] = $tab2;
 }
 for ($l = 0 ; $l < $n; $l++)

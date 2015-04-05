@@ -6,7 +6,7 @@
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int k, a, b, i;
-  int *t = malloc( 1001 * sizeof(int));
+  int *t = calloc( 1001 , sizeof(int));
   for (i = 0 ; i < 1001; i++)
     t[i] = 0;
   for (a = 1 ; a <= 1000; a++)

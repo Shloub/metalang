@@ -1,7 +1,5 @@
 import math
-t = [None] * 1001
-for i in range(0, 1001):
-  t[i] = 0
+t = [0] * 1001
 for a in range(1, 1 + 1000):
   for b in range(1, 1 + 1000):
     c2 = a * a + b * b

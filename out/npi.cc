@@ -9,8 +9,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 */
 int npi0(std::vector<char> * str, int len){
   std::vector<int > *stack = new std::vector<int>( len );
-  for (int i = 0 ; i < len; i++)
-    stack->at(i) = 0;
+  std::fill(stack->begin(), stack->end(), 0);
   int ptrStack = 0;
   int ptrStr = 0;
   while (ptrStr < len)

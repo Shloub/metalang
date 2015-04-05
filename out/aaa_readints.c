@@ -5,7 +5,7 @@ int main(void){
   int j, b, d, i, a, len;
   scanf("%d ", &len);
   printf("%d=len\n", len);
-  int *tab1 = malloc( len * sizeof(int));
+  int *tab1 = calloc( len , sizeof(int));
   for (a = 0 ; a < len; a++)
   {
     scanf("%d ", &tab1[a]);
@@ -15,10 +15,10 @@ int main(void){
     printf("%d=>%d\n", i, tab1[i]);
   }
   scanf("%d ", &len);
-  int* *tab2 = malloc( (len - 1) * sizeof(int*));
+  int* *tab2 = calloc( len - 1 , sizeof(int*));
   for (b = 0 ; b < len - 1; b++)
   {
-    int *c = malloc( len * sizeof(int));
+    int *c = calloc( len , sizeof(int));
     for (d = 0 ; d < len; d++)
     {
       scanf("%d ", &c[d]);

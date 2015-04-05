@@ -179,9 +179,7 @@ function &init0(){
   $cases = array();
   for ($i = 0 ; $i < 3; $i++)
   {
-    $tab = array();
-    for ($j = 0 ; $j < 3; $j++)
-      $tab[$j] = 0;
+    $tab = array_fill(0, 3, 0);
     $cases[$i] = $tab;
   }
   $a = array(

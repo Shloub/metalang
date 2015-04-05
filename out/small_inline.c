@@ -3,7 +3,7 @@
 
 int main(void){
   int d;
-  int *t = malloc( 2 * sizeof(int));
+  int *t = calloc( 2 , sizeof(int));
   for (d = 0 ; d < 2; d++)
   {
     scanf("%d ", &t[d]);

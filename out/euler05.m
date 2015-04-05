@@ -11,7 +11,7 @@ int max2_(int a, int b){
 
 int* primesfactors(int n){
   int i;
-  int *tab = malloc( (n + 1) * sizeof(int));
+  int *tab = calloc( n + 1 , sizeof(int));
   for (i = 0 ; i < n + 1; i++)
     tab[i] = 0;
   int d = 2;
@@ -31,7 +31,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int k, l, i, j, m;
   int lim = 20;
-  int *o = malloc( (lim + 1) * sizeof(int));
+  int *o = calloc( lim + 1 , sizeof(int));
   for (m = 0 ; m < lim + 1; m++)
     o[m] = 0;
   for (i = 1 ; i <= lim; i++)

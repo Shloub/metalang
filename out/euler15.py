@@ -3,9 +3,7 @@ n = 10
 n += 1
 tab = [None] * n
 for i in range(0, n):
-  tab2 = [None] * n
-  for j in range(0, n):
-    tab2[j] = 0
+  tab2 = [0] * n
   tab[i] = tab2
 for l in range(0, n):
   tab[n - 1][l] = 1

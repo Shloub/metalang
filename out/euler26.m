@@ -21,7 +21,7 @@ int periode(int* restes, int len, int a, int b){
 int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i, j;
-  int *t = malloc( 1000 * sizeof(int));
+  int *t = calloc( 1000 , sizeof(int));
   for (j = 0 ; j < 1000; j++)
     t[j] = 0;
   int m = 0;

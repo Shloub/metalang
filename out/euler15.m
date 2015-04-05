@@ -8,10 +8,10 @@ int main(void){
   int n = 10;
   /* normalement on doit mettre 20 mais là on se tape un overflow */
   n ++;
-  int* *tab = malloc( n * sizeof(int*));
+  int* *tab = calloc( n , sizeof(int*));
   for (i = 0 ; i < n; i++)
   {
-    int *tab2 = malloc( n * sizeof(int));
+    int *tab2 = calloc( n , sizeof(int));
     for (j = 0 ; j < n; j++)
       tab2[j] = 0;
     tab[i] = tab2;

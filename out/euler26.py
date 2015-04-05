@@ -13,9 +13,7 @@ def periode( restes, len, a, b ):
       a = reste * 10
     return 0
 
-t = [None] * 1000
-for j in range(0, 1000):
-  t[j] = 0
+t = [0] * 1000
 m = 0
 mi = 0
 for i in range(1, 1 + 1000):

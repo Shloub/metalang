@@ -45,8 +45,7 @@ int find(int ndiv2){
     era->at(j) = j;
   int nprimes = eratostene(era, maximumprimes);
   std::vector<int > *primes = new std::vector<int>( nprimes );
-  for (int o = 0 ; o < nprimes; o++)
-    primes->at(o) = 0;
+  std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era->at(k) == k)
@@ -57,8 +56,7 @@ int find(int ndiv2){
   for (int n = 1 ; n <= 10000; n ++)
   {
     std::vector<int > *primesFactors = new std::vector<int>( n + 2 );
-    for (int m = 0 ; m < n + 2; m++)
-      primesFactors->at(m) = 0;
+    std::fill(primesFactors->begin(), primesFactors->end(), 0);
     int max0 = max2_(fillPrimesFactors(primesFactors, n, primes, nprimes), fillPrimesFactors(primesFactors, n +
                                                                            1, primes, nprimes));
     primesFactors->at(2) --;

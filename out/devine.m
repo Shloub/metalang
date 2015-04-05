@@ -24,7 +24,7 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int i, tmp, len, nombre;
   scanf("%d %d ", &nombre, &len);
-  int *tab = malloc( len * sizeof(int));
+  int *tab = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
   {
     scanf("%d ", &tmp);

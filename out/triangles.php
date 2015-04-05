@@ -49,9 +49,7 @@ function find($len, &$tab){
   $tab2 = array();
   for ($i = 0 ; $i < $len; $i++)
   {
-    $tab3 = array();
-    for ($j = 0 ; $j < $i + 1; $j++)
-      $tab3[$j] = 0;
+    $tab3 = array_fill(0, $i + 1, 0);
     $tab2[$i] = $tab3;
   }
   return find0($len, $tab, $tab2, 0, 0);

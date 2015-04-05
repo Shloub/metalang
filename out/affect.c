@@ -39,10 +39,10 @@ int result(struct toto * t_, struct toto * t2_){
   t2 = t3;
   t->blah ++;
   int len = 1;
-  int *cache0 = malloc( len * sizeof(int));
+  int *cache0 = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
     cache0[i] = -i;
-  int *cache1 = malloc( len * sizeof(int));
+  int *cache1 = calloc( len , sizeof(int));
   for (j = 0 ; j < len; j++)
     cache1[j] = j;
   int* cache2 = cache0;

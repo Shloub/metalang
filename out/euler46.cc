@@ -27,8 +27,7 @@ int main(){
     era->at(j_) = j_;
   int nprimes = eratostene(era, maximumprimes);
   std::vector<int > *primes = new std::vector<int>( nprimes );
-  for (int o = 0 ; o < nprimes; o++)
-    primes->at(o) = 0;
+  std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era->at(k) == k)
@@ -38,8 +37,7 @@ int main(){
   }
   std::cout << l << " == " << nprimes << "\n";
   std::vector<bool > *canbe = new std::vector<bool>( maximumprimes );
-  for (int i_ = 0 ; i_ < maximumprimes; i_++)
-    canbe->at(i_) = false;
+  std::fill(canbe->begin(), canbe->end(), false);
   for (int i = 0 ; i < nprimes; i++)
     for (int j = 0 ; j < maximumprimes; j++)
     {

@@ -31,8 +31,7 @@ int find(int len, std::vector<std::vector<int> *> * tab){
   for (int i = 0 ; i < len; i++)
   {
     std::vector<int > *tab3 = new std::vector<int>( i + 1 );
-    for (int j = 0 ; j < i + 1; j++)
-      tab3->at(j) = 0;
+    std::fill(tab3->begin(), tab3->end(), 0);
     tab2->at(i) = tab3;
   }
   return find0(len, tab, tab2, 0, 0);

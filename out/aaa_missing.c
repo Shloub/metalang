@@ -6,7 +6,7 @@
 */
 int result(int len, int* tab){
   int i2, i1, i;
-  int *tab2 = malloc( len * sizeof(int));
+  int *tab2 = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
     tab2[i] = 0;
   for (i1 = 0 ; i1 < len; i1++)
@@ -25,7 +25,7 @@ int main(void){
   int a, len;
   scanf("%d ", &len);
   printf("%d\n", len);
-  int *tab = malloc( len * sizeof(int));
+  int *tab = calloc( len , sizeof(int));
   for (a = 0 ; a < len; a++)
   {
     scanf("%d ", &tab[a]);

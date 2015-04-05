@@ -1,7 +1,5 @@
 <?php
-$f = array();
-for ($j = 0 ; $j < 10; $j++)
-  $f[$j] = 1;
+$f = array_fill(0, 10, 1);
 for ($i = 1 ; $i <= 9; $i++)
 {
   $f[$i] = $f[$i] * $i * $f[$i - 1];

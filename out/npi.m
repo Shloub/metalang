@@ -11,7 +11,7 @@ Notation polonaise inversée, ce test permet d'évaluer une expression écrite e
 */
 int npi0(char* str, int len){
   int i;
-  int *stack = malloc( len * sizeof(int));
+  int *stack = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
     stack[i] = 0;
   int ptrStack = 0;
@@ -44,7 +44,7 @@ int main(void){
   int i;
   int len = 0;
   scanf("%d ", &len);
-  char *tab = malloc( len * sizeof(char));
+  char *tab = calloc( len , sizeof(char));
   for (i = 0 ; i < len; i++)
   {
     char tmp = '\x00';

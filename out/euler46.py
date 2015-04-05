@@ -16,18 +16,14 @@ era = [None] * maximumprimes
 for j_ in range(0, maximumprimes):
   era[j_] = j_
 nprimes = eratostene(era, maximumprimes)
-primes = [None] * nprimes
-for o in range(0, nprimes):
-  primes[o] = 0
+primes = [0] * nprimes
 l = 0
 for k in range(2, maximumprimes):
   if era[k] == k:
     primes[l] = k
     l += 1
 print("%d == %d\n" % ( l, nprimes ), end='')
-canbe = [None] * maximumprimes
-for i_ in range(0, maximumprimes):
-  canbe[i_] = False
+canbe = [False] * maximumprimes
 for i in range(0, nprimes):
   for j in range(0, maximumprimes):
     n = primes[i] + 2 * j * j

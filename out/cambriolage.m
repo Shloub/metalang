@@ -40,10 +40,10 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int k, l, out_, m, i, j, out01, n;
   scanf("%d ", &n);
-  int* *passepartout = malloc( n * sizeof(int*));
+  int* *passepartout = calloc( n , sizeof(int*));
   for (i = 0 ; i < n; i++)
   {
-    int *out0 = malloc( 2 * sizeof(int));
+    int *out0 = calloc( 2 , sizeof(int));
     for (j = 0 ; j < 2; j++)
     {
       scanf("%d ", &out01);
@@ -52,10 +52,10 @@ int main(void){
     passepartout[i] = out0;
   }
   scanf("%d ", &m);
-  int* *serrures = malloc( m * sizeof(int*));
+  int* *serrures = calloc( m , sizeof(int*));
   for (k = 0 ; k < m; k++)
   {
-    int *out1 = malloc( 2 * sizeof(int));
+    int *out1 = calloc( 2 , sizeof(int));
     for (l = 0 ; l < 2; l++)
     {
       scanf("%d ", &out_);

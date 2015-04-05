@@ -20,7 +20,7 @@ int main(void){
   int i;
   int len = 0;
   scanf("%d ", &len);
-  int *tab = malloc( len * sizeof(int));
+  int *tab = calloc( len , sizeof(int));
   for (i = 0 ; i < len; i++)
   {
     int tmp = 0;

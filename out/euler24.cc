@@ -12,8 +12,7 @@ void show(int lim, int nth){
   for (int i = 0 ; i < lim; i++)
     t->at(i) = i;
   std::vector<bool > *pris = new std::vector<bool>( lim );
-  for (int j = 0 ; j < lim; j++)
-    pris->at(j) = false;
+  std::fill(pris->begin(), pris->end(), false);
   for (int k = 1 ; k < lim; k++)
   {
     int n = fact(lim - k);

@@ -45,9 +45,7 @@ for ($j = 0 ; $j < $maximumprimes; $j++)
 $result = 0;
 $max0 = 0;
 $nprimes = eratostene($era, $maximumprimes);
-$primes = array();
-for ($o = 0 ; $o < $nprimes; $o++)
-  $primes[$o] = 0;
+$primes = array_fill(0, $nprimes, 0);
 $l = 0;
 for ($k = 2 ; $k < $maximumprimes; $k++)
   if ($era[$k] == $k)

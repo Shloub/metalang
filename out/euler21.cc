@@ -58,8 +58,7 @@ int sumdivaux(std::vector<int> * t, int n, int i){
 
 int sumdiv(int nprimes, std::vector<int> * primes, int n){
   std::vector<int > *t = new std::vector<int>( n + 1 );
-  for (int i = 0 ; i < n + 1; i++)
-    t->at(i) = 0;
+  std::fill(t->begin(), t->end(), 0);
   int max0 = fillPrimesFactors(t, n, primes, nprimes);
   return sumdivaux(t, max0, 0);
 }
@@ -72,8 +71,7 @@ int main(){
     era->at(j) = j;
   int nprimes = eratostene(era, maximumprimes);
   std::vector<int > *primes = new std::vector<int>( nprimes );
-  for (int o = 0 ; o < nprimes; o++)
-    primes->at(o) = 0;
+  std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era->at(k) == k)

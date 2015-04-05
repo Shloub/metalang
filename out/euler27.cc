@@ -49,8 +49,7 @@ int main(){
   int max0 = 0;
   int nprimes = eratostene(era, maximumprimes);
   std::vector<int > *primes = new std::vector<int>( nprimes );
-  for (int o = 0 ; o < nprimes; o++)
-    primes->at(o) = 0;
+  std::fill(primes->begin(), primes->end(), 0);
   int l = 0;
   for (int k = 2 ; k < maximumprimes; k++)
     if (era->at(k) == k)

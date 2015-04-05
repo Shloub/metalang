@@ -9,7 +9,7 @@ int main(void){
   int j, i3, d, strlen, i_, b, i, a, len;
   scanf("%d ", &len);
   printf("%d=len\n", len);
-  int *tab = malloc( len * sizeof(int));
+  int *tab = calloc( len , sizeof(int));
   for (a = 0 ; a < len; a++)
   {
     scanf("%d ", &tab[a]);
@@ -19,7 +19,7 @@ int main(void){
     printf("%d=>%d ", i, tab[i]);
   }
   printf("\n");
-  int *tab2 = malloc( len * sizeof(int));
+  int *tab2 = calloc( len , sizeof(int));
   for (b = 0 ; b < len; b++)
   {
     scanf("%d ", &tab2[b]);
@@ -30,7 +30,7 @@ int main(void){
   }
   scanf("%d ", &strlen);
   printf("%d=strlen\n", strlen);
-  char *tab4 = malloc( strlen * sizeof(char));
+  char *tab4 = calloc( strlen , sizeof(char));
   for (d = 0 ; d < strlen; d++)
     scanf("%c", &tab4[d]);
   scanf(" ");

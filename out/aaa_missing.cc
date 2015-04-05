@@ -5,8 +5,7 @@
 */
 int result(int len, std::vector<int> * tab){
   std::vector<bool > *tab2 = new std::vector<bool>( len );
-  for (int i = 0 ; i < len; i++)
-    tab2->at(i) = false;
+  std::fill(tab2->begin(), tab2->end(), false);
   for (int i1 = 0 ; i1 < len; i1++)
   {
     std::cout << tab->at(i1) << " ";

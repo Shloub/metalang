@@ -47,10 +47,10 @@ int main(void){
   NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
   int e, b, a, c, d, j, i;
   int count = 0;
-  int *allowed = malloc( 10 * sizeof(int));
+  int *allowed = calloc( 10 , sizeof(int));
   for (i = 0 ; i < 10; i++)
     allowed[i] = i != 0;
-  int *counted = malloc( 100000 * sizeof(int));
+  int *counted = calloc( 100000 , sizeof(int));
   for (j = 0 ; j < 100000; j++)
     counted[j] = 0;
   for (e = 1 ; e <= 9; e++)
