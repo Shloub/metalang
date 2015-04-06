@@ -50,11 +50,11 @@ class commonLispPrinter = object(self)
 
   method is_char_printable_instring c =
     let i = int_of_char c in
-    i > 30 && i < 127 && c != '"' && c != '\\'
+    c == '\n' || (i > 30 && i < 127 && c != '"' && c != '\\')
 
   method string f s =
     if String.for_all self#is_char_printable_instring s then
-      Format.fprintf f "%S" s
+      Format.fprintf f "\"%s\"" (String.replace "\"" "\\\"" s)
     else
       Format.fprintf f "(format nil \"%a\"%a)"
         (fun f s ->
