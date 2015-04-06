@@ -818,7 +818,7 @@ module Prog = struct
     DeclarFun of funname * Type.t *
         ( varname * Type.t ) list * 'lex Expr.t Instr.t list * declaration_option
   | DeclareType of typename * Type.t
-  | Macro of funname * Type.t * (varname * Type.t) list * (string * string) list
+  | Macro of funname * Type.t * (string * Type.t) list * (string * string) list
   | Comment of string
   | Unquote of 'lex Expr.t
 

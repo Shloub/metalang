@@ -610,7 +610,7 @@ class printer = object(self)
       Format.fprintf f "@\n"
     | Prog.Macro (name, t, params, code) ->
       macros <- StringMap.add
-        name (t, List.map (function | UserName n, t -> n, t | _ -> assert false) params, code)
+        name (t, params, code)
         macros;
       ()
     | Prog.Unquote _ -> assert false

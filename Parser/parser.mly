@@ -310,7 +310,6 @@ instrs :
 | { [] }
 | instr PERIOD? instrs { $1 :: $3 }
 ;
-
 arg :
 | typ IDENT { Ast.UserName $2, $1 }
 ;
@@ -321,6 +320,16 @@ args :
 | arg COMMA args { $1 :: $3 }
 ;
 
+arg_macro :
+| typ IDENT { $2, $1 }
+;
+
+args_macro :
+| { [] }
+| arg_macro { [$1] }
+| arg_macro COMMA args_macro { $1 :: $3 }
+;
+
 define :
 | UNQUOTE_START expr END_QUOTE { P.unquote $2 }
 | COMMENT { P.comment $1 }
@@ -329,7 +338,7 @@ define :
 | DEF typ IDENT LEFT_PARENS args RIGHT_PARENS instrs END
 	{ P.declarefun $3 $2 $5 $7 P.default_declaration_option }
 
-| MACRO typ IDENT LEFT_PARENS args RIGHT_PARENS macro* END
+| MACRO typ IDENT LEFT_PARENS args_macro RIGHT_PARENS macro* END
 	{ P.macro $3 $2 $5 $7 }
 
 | RECORD AT IDENT decl_field* END
