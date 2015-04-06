@@ -205,6 +205,8 @@ sig
   val is_prefix : string -> string -> bool
   val is_capitalised : string -> bool
   val fold_left : ('a -> char -> 'a) -> 'a -> string -> 'a
+  val exists : (char -> bool) -> string -> bool
+  val for_all : (char -> bool) -> string -> bool
   val list_of_map : (char -> 'a) -> string -> 'a list
   val of_list : char list -> string
   val of_char : char -> string

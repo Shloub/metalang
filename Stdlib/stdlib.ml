@@ -305,6 +305,9 @@ module String = struct
     in go 0 x
   let list_of_map f = fold_left (flip (cons @* f)) []
 
+  let for_all f s = fold_left (fun acc c -> acc && f c) true s
+  let exists f s = fold_left (fun acc c -> acc || f c) false s
+
   let of_list li =
     let len = List.length li in
     let s = String.create len in
